@@ -19,6 +19,10 @@ Two comprehensive theme sets, **rbsimple-DE** and **modern-DE** are bundled with
 
 The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
+* Windows 10
+* Windows 8.1
+* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
+* macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
 * Linux Mint 20.2
 * Manjaro 21.1
@@ -28,10 +32,6 @@ The following operating systems have been tested (all for the x86 architecture u
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
-* macOS 10.11 "El Capitan" (v1.0 release only)
-* Windows 10
-* Windows 8.1
 
 If using a Mac with an M1 processor you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS M1 build of ES-DE is released.
 
@@ -43,31 +43,30 @@ The latest stable version is 1.1.0 (released 2021-08-10)
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others   | x64 (x86)    | [emulationstation-de-1.1.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892301/download)|
-| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892436/download)|
+| Windows installer   | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892429/download)|
 | macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892342/download)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892429/download)|
+| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.1.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892301/download)|
+| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892436/download)|
 
-The latest prerelease version is 1.2.0-beta1 (released 2021-11-14)
-
-| Package             | Operating systems                                       | Architecture | Download link  |
-| :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others   | x64 (x86)    | [emulationstation-de-1.2.0-beta1-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488823/download)|
-| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-beta1-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488829/download)|
-| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.0-beta1-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488819/download)|
-| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-beta1-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488809/download)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-beta1-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488824/download)|
-| Windows installer   | Windows 10 and 8.1                                      | x64 (x86)    | [EmulationStation-DE-1.2.0-beta1-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/21488825/download)|
-
-Flatpak will not be supported as this packaging system is too restrictive with its sandbox approach, making ES-DE virtually useless as it can't freely locate and launch emulators on the system.
-
-Unfortunately due to technical reasons, v1.0.1 (released 2021-05-01) will be the last version for legacy macOS.
+The latest prerelease version is 1.2.0-beta2 (released 2021-12-02)
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.0.1-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14888836/download)|
+| Windows installer   | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.2.0-beta2-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23092096/download)|
+| macOS DMG installer | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-beta2-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23092051/download)|
+| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-beta2-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23092118/download)|
+| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.2.0-beta2-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23092028/download)|
+| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-beta2-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23092136/download)|
+| Linux AppImage      | Most modern Linux distributions                         | x64 (x86)    | [emulationstation-de-1.2.0-beta2-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23091994/download)|
+| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.0-beta2-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23091980/download)|
+| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-beta2-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/23091969/download)|
 
-For some of the rarer operating systems listed at the top you need to build ES-DE from source.
+All previous releases can be downloaded from [here](https://gitlab.com/leonstyhre/emulationstation-de/-/packages).
+
+
+Flatpak will not be supported on Linux as this packaging system is too restrictive with its sandbox approach, making ES-DE virtually useless as it can't freely locate and launch emulators on the system.
+
+If using FreeBSD, NetBSD or OpenBSD you will need to build ES-DE from source code for the time being.
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about the releases, including known issues.
 
