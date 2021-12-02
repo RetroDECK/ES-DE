@@ -175,7 +175,7 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
 
 GuiScraperMulti::~GuiScraperMulti()
 {
-    if (mTotalSuccessful > 0) {
+    if (mTotalSuccessful > 0 || mSearchComp->getSavedNewMedia()) {
         // Sort all systems to possibly update their view style from Basic to Detailed or Video.
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
              it != SystemData::sSystemVector.cend(); ++it) {
