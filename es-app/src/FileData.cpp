@@ -893,6 +893,7 @@ void FileData::launchGame(Window* window)
 
         window->queueInfoPopup("ERROR: MISSING EMULATOR CONFIGURATION FOR '" + emulatorEntry + "'",
                                6000);
+        window->setAllowTextScrolling(true);
         return;
     }
     else if (binaryPath.empty()) {
@@ -902,6 +903,7 @@ void FileData::launchGame(Window* window)
 
         window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?",
                                6000);
+        window->setAllowTextScrolling(true);
         return;
     }
     else {
@@ -949,6 +951,7 @@ void FileData::launchGame(Window* window)
                     "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
                         Utils::String::toUpper(Utils::FileSystem::getFileName(coreFile)) + "'",
                     6000);
+                window->setAllowTextScrolling(true);
                 return;
             }
             else {
@@ -967,6 +970,7 @@ void FileData::launchGame(Window* window)
             LOG(LogError) << commandRaw;
 
             window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
+            window->setAllowTextScrolling(true);
             return;
         }
     }
@@ -979,6 +983,7 @@ void FileData::launchGame(Window* window)
         LOG(LogError) << commandRaw;
 
         window->queueInfoPopup("ERROR: MISSING CORE CONFIGURATION FOR '" + coreEntry + "'", 6000);
+        window->setAllowTextScrolling(true);
         return;
     }
 
@@ -1048,6 +1053,7 @@ void FileData::launchGame(Window* window)
             LOG(LogError) << commandRaw;
 
             window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
+            window->setAllowTextScrolling(true);
             return;
         }
     }
@@ -1064,6 +1070,7 @@ void FileData::launchGame(Window* window)
             "ERROR: COULDN'T FIND EMULATOR CORE FILE '" +
                 Utils::String::toUpper(coreName.substr(0, coreName.size()) + "'"),
             6000);
+        window->setAllowTextScrolling(true);
         return;
     }
 
@@ -1107,6 +1114,7 @@ void FileData::launchGame(Window* window)
                                    Utils::String::toUpper(metadata.get("name")) + "' (ERROR CODE " +
                                    Utils::String::toUpper(std::to_string(returnValue) + ")"),
                                6000);
+        window->setAllowTextScrolling(true);
     }
     else {
         // Stop showing the game launch notification.
