@@ -117,6 +117,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 
 ### Bug fixes
 
+* Single-scraping a game, aborting and then re-scraping without leaving the metadata editor would sometimes lead to a crash
 * Setting a really small font size in a theme would crash the application
 * Deleting the last custom collection could crash the application if the grouped "collections" system was set as the startup gamelist
 * Setting an invalid UIMode value in the configuration file could crash the application
@@ -127,6 +128,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * When scraping in interactive mode, any refining done using the "Y" button shortcut would not be shown when doing another refine using the "Refine search" button
 * When scraping in interactive mode, the first result row would get focused after the search completed even if the cursor was moved to a button beneath the list
 * The multi-scraper did not update the filter index
+* Multi-scraping and aborting before any games were fully scraped but after some game media was downloaded did not trigger a gamelist reload
 * Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
@@ -444,6 +446,8 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * There is an issue with launching games on Windows when using AMD and Intel GPUs. This causes the emulator to just output a blank screen. There is a workaround available for this which is enabled by default and that can be disabled via the menu option "AMD and Intel GPU game launch workaround". The drawback of this workaround is that a white instead of a black screen will be displayed when launching games. If using an Nvidia GPU, it should be safe to disable this option for a slightly better user experience. An alternative workaround is to enable the option "Run in background (while game is launched)".
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.
+
+* On macOS, the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window.
 
 * On Fedora 35 an issue has been observed where the screen turns completely black or flickers intensely when starting ES-DE for the first time. A workaround for this is to simply exit the application with F4 or Alt+F4 and starting it again. Everything should then render correctly, and any subsequent startups will work fine including after suspending/resuming the computer. It's currently unclear if this is limited to only some graphics drivers or if it's a general issue under Fedora and/or Wayland.
 

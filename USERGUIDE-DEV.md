@@ -33,6 +33,10 @@ To install ES-DE, just download the package or installer from [https://es-de.org
 
 The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
+* Windows 10
+* Windows 8.1
+* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
+* macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
 * Linux Mint 20.2
 * Manjaro 21.1
@@ -42,10 +46,6 @@ The following operating systems have been tested (all for the x86 architecture u
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
-* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
-* macOS 10.11 "El Capitan" (legacy release)
-* Windows 10
-* Windows 8.1
 
 If using a Mac with an M1 processor you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
@@ -183,7 +183,9 @@ If you don't allow this, you will not be able to place system BIOS ROMs in the R
 
 If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
 
-Another issue on macOS 11 Big Sur (and possibly older OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers. The issue appears to be resolved in macOS Monterey.
+Another macOS-specific requirement is that the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's currently unclear if other emulators than RetroArch are affected by this issue.
+
+Another problem on macOS 11 Big Sur (and possibly older OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers. The issue appears to be resolved in macOS Monterey.
 
 In macOS 12 Monterey there has been a quite serious OpenGL driver bug introduced by Apple which disables VSync, making the operating system always try to render as many frames as it can. This slows down ES-DE quite a lot and consumes lots of machine resources. The issue is discussed [here](https://github.com/libsdl-org/SDL/issues/4918). There is a temporary workaround available via the _macOS Monterey VSync bug workaround_ setting in the _Other settings_ menu (which is enabled by default). This will add a short 10 millisecond delay after each frame if the last frame was swapped in less than 3 milliseconds. It's not a proper fix but it should at least make ES-DE usable on Monterey until Apple releases a patch for the bug.
 
