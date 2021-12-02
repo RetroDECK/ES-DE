@@ -170,7 +170,7 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 
     if (mTextCache) {
         std::shared_ptr<Font> font = getFont();
-        float referenceSize;
+        float referenceSize{0.0f};
 
         if (mAlignRight)
             referenceSize = std::round(mParent->getSize().x * 0.1045f);
