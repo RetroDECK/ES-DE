@@ -52,7 +52,9 @@ public:
     SearchType getSearchType() const { return mSearchType; }
     bool getSavedNewMedia()
     {
-        return (mMDResolveHandle ? mMDResolveHandle->getSavedNewMedia() : false);
+        if (mMDResolveHandle != nullptr)
+            return mMDResolveHandle->getSavedNewMedia();
+        return mScrapeResult.savedNewMedia;
     }
     static bool saveMetadata(const ScraperSearchResult& result,
                              MetaDataList& metadata,

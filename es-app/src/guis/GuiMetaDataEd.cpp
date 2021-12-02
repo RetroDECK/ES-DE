@@ -658,7 +658,7 @@ void GuiMetaDataEd::save()
     if (mScraperParams.game->getType() == FOLDER)
         mScraperParams.system->sortSystem(false);
 
-    if (mSavedCallback)
+    if (mSavedCallback && !mSavedMediaAndAborted)
         mSavedCallback();
 
     if (hideGameWhileHidden) {
