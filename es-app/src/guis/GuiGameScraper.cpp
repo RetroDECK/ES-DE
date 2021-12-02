@@ -100,12 +100,10 @@ GuiGameScraper::GuiGameScraper(Window* window,
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel", [&] {
         if (mSearch->getSavedNewMedia()) {
             // If the user aborted the scraping but there was still some media downloaded,
-            // then force an unload of the textures for the game image and marquee, and make
-            // an update of the game entry. Otherwise the images would not get updated until
-            // the user scrolls up and down the gamelist.
-            TextureResource::manualUnload(mSearchParams.game->getImagePath(), false);
-            TextureResource::manualUnload(mSearchParams.game->getMarqueePath(), false);
-            ViewController::get()->onFileChanged(mSearchParams.game, true);
+            // then flag to GuiMetaDataEd that the image and marquee textures need to be
+            // manually unloaded and that the gamelist needs to be reloaded. Otherwise the
+            // images would not get updated until the user scrolls up and down the gamelist.
+            mSavedMediaAndAborted = true;
         }
         delete this;
     }));
