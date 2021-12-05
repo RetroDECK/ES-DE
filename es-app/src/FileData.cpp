@@ -1090,7 +1090,9 @@ void FileData::launchGame(Window* window)
 #endif
         Renderer::swapBuffers();
 
-    Scripting::fireEvent("game-start", romPath, getSourceFileData()->metadata.get("name"));
+    Scripting::fireEvent("game-start", romPath, getSourceFileData()->metadata.get("name"),
+                         getSourceFileData()->getSystem()->getName(),
+                         getSourceFileData()->getSystem()->getFullName());
     int returnValue = 0;
 
     LOG(LogDebug) << "Raw emulator launch command:";
@@ -1141,7 +1143,9 @@ void FileData::launchGame(Window* window)
 #endif
     }
 
-    Scripting::fireEvent("game-end", romPath, getSourceFileData()->metadata.get("name"));
+    Scripting::fireEvent("game-end", romPath, getSourceFileData()->metadata.get("name"),
+                         getSourceFileData()->getSystem()->getName(),
+                         getSourceFileData()->getSystem()->getFullName());
 
     // Unless we're running in the background while the game is launched, re-enable the text
     // scrolling that was disabled in ViewController.
