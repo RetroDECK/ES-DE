@@ -336,7 +336,6 @@
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.dylib %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.dylib %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.dylib %ROM%</command>
-        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX_STAGING% %ROM%</command>
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
