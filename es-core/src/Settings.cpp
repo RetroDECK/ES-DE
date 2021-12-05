@@ -25,8 +25,7 @@ namespace
     // the in-program settings menu. Most can be set using command-line arguments,
     // but some are debug flags that are either hardcoded or set by internal debug
     // functions.
-    std::vector<std::string> settingsSkipSaving
-    {
+    std::vector<std::string> settingsSkipSaving{
         // clang-format off
         // These options can be set using command-line arguments:
         "WindowWidth",          // Set via --resolution [width] [height]
@@ -35,9 +34,6 @@ namespace
         "IgnoreGamelist",       // --ignore-gamelist
         "SplashScreen",         // --no-splash
         "Debug",                // --debug
-        #if !defined(_WIN64)
-        "Windowed",             // --windowed
-        #endif
         "VSync",                // --vsync [1/on or 0/off]
         "ForceFull",            // --force-full
         "ForceKiosk",           // --force-kiosk
@@ -225,9 +221,6 @@ void Settings::setDefaults()
     mIntMap["MaxVRAM"] = {256, 256};
 #endif
     mIntMap["DisplayIndex"] = {1, 1};
-#if defined(__unix__)
-    mStringMap["FullscreenMode"] = {"normal", "normal"};
-#endif
 #if defined(BUILD_VLC_PLAYER)
     mStringMap["VideoPlayer"] = {"ffmpeg", "ffmpeg"};
 #endif
@@ -275,9 +268,6 @@ void Settings::setDefaults()
     mBoolMap["IgnoreGamelist"] = {false, false};
     mBoolMap["SplashScreen"] = {true, true};
     mBoolMap["VSync"] = {true, true};
-#if !defined(_WIN64)
-    mBoolMap["Windowed"] = {false, false};
-#endif
     mIntMap["WindowWidth"] = {0, 0};
     mIntMap["WindowHeight"] = {0, 0};
     mIntMap["ScreenWidth"] = {0, 0};

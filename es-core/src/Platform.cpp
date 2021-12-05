@@ -102,7 +102,7 @@ int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
 
 #if defined(_RPI_)
     // Hack to avoid that the application window occasionally loses focus when returning from
-    // a game, which only seems to happen on the Raspberry Pi.
+    // a game, which only seems to happen on Raspberry Pi OS 10.
     SDL_Delay(50);
     SDL_SetWindowInputFocus(Renderer::getSDLWindow());
 #endif

@@ -273,22 +273,6 @@ bool parseArgs(int argc, char* argv[])
             Settings::getInstance()->setInt("ScreenRotate", rotate);
             ++i;
         }
-        // On Unix, enable settings for the fullscreen mode.
-        // On macOS and Windows only windowed mode is supported.
-
-#if defined(__unix__)
-        else if (strcmp(argv[i], "--windowed") == 0) {
-            Settings::getInstance()->setBool("Windowed", true);
-        }
-        else if (strcmp(argv[i], "--fullscreen-normal") == 0) {
-            Settings::getInstance()->setString("FullscreenMode", "normal");
-            settingsNeedSaving = true;
-        }
-        else if (strcmp(argv[i], "--fullscreen-borderless") == 0) {
-            Settings::getInstance()->setString("FullscreenMode", "borderless");
-            settingsNeedSaving = true;
-        }
-#endif
         else if (strcmp(argv[i], "--vsync") == 0) {
             if (i >= argc - 1) {
                 std::cerr << "Error: No VSync value supplied.\n";
@@ -360,11 +344,6 @@ bool parseArgs(int argc, char* argv[])
 "Options:\n"
 "  --display [index 1-4]           Display/monitor to use\n"
 "  --resolution [width] [height]   Application resolution\n"
-#if defined(__unix__)
-"  --windowed                      Windowed mode, should be combined with --resolution\n"
-"  --fullscreen-normal             Normal fullscreen mode\n"
-"  --fullscreen-borderless         Borderless fullscreen mode (always on top)\n"
-#endif
 "  --vsync [1/on or 0/off]         Turn VSync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
 "  --no-splash                     Don't show the splash screen during startup\n"

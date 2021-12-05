@@ -878,25 +878,6 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-#if defined(__unix__)
-    // Fullscreen mode.
-    auto fullscreen_mode = std::make_shared<OptionListComponent<std::string>>(
-        mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
-    std::vector<std::string> screenmode;
-    screenmode.push_back("normal");
-    screenmode.push_back("borderless");
-    for (auto it = screenmode.cbegin(); it != screenmode.cend(); ++it)
-        fullscreen_mode->add(*it, *it, Settings::getInstance()->getString("FullscreenMode") == *it);
-    s->addWithLabel("FULLSCREEN MODE (REQUIRES RESTART)", fullscreen_mode);
-    s->addSaveFunc([fullscreen_mode, s] {
-        if (fullscreen_mode->getSelected() !=
-            Settings::getInstance()->getString("FullscreenMode")) {
-            Settings::getInstance()->setString("FullscreenMode", fullscreen_mode->getSelected());
-            s->setNeedsSaving();
-        }
-    });
-#endif
-
 #if defined(BUILD_VLC_PLAYER)
     // Video player.
     auto video_player = std::make_shared<OptionListComponent<std::string>>(

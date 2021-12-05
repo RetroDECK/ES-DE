@@ -172,23 +172,19 @@ namespace Renderer
         setupWindow();
 
 #if defined(_WIN64)
-        // For Windows, always set the mode to windowed, as full screen mode seems to
-        // behave quite erratic. There may be a proper fix for this, but for now windowed
-        // mode seems to behave well and it's almost completely seamless, especially with
-        // a hidden taskbar. As well, setting SDL_WINDOW_BORDERLESS introduces issues too
-        // so unfortunately this needs to be avoided.
+        // For Windows, always set the mode to windowed as full screen mode seems to behave quite
+        // erratic. There may be a proper fix for this, but for now windowed mode seems to behave
+        // well and it's almost completely seamless, especially with a hidden taskbar.
         windowFlags = getWindowFlags();
 #elif defined(__APPLE__)
-        // This seems to be the only full window mode that somehow works on macOS as a real
-        // fullscreen mode will do lots of weird stuff like preventing window switching
-        // or refusing to let emulators run at all. SDL_WINDOW_FULLSCREEN_DESKTOP almost
-        // works, but it "shuffles" windows when starting the emulator and won't return
-        // properly when the game has exited. With the current mode, the top menu is visible
-        // and hides that part of the ES window. Also, the splash screen is not displayed
-        // until the point where ES has almost completely finished loading. I'm not sure
-        // if anything can be done to improve these things as it's quite obvious that
-        // Apple has shipped a broken and/or dysfunctional window manager with their
-        // operating system.
+        // The SDL_WINDOW_BORDERLESS mode seems to be the only mode that somehow works on macOS
+        // as a real fullscreen mode will do lots of weird stuff like preventing window switching
+        // or refusing to let emulators run at all. SDL_WINDOW_FULLSCREEN_DESKTOP almost works, but
+        // it "shuffles" windows when starting the emulator and won't return properly when the game
+        // has exited. With SDL_WINDOW_BORDERLESS, the splash screen is not displayed until the
+        // point where ES-DE has almost completely finished loading. As well the emulator has to be
+        // configured to run in fullscreen mode or switching to its windows will not work when a
+        // game is launched. So there is room for improvement although it's acceptable for now.
         if (!userResolution)
             windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
         else
@@ -196,20 +192,10 @@ namespace Renderer
             // border to the window.
             windowFlags = SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
 #else
-        if (Settings::getInstance()->getBool("Windowed")) {
+        if (!userResolution)
+            windowFlags = SDL_WINDOW_FULLSCREEN_DESKTOP | getWindowFlags();
+        else
             windowFlags = getWindowFlags();
-        }
-        else if (Settings::getInstance()->getString("FullscreenMode") == "borderless") {
-            if (!userResolution)
-                windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALWAYS_ON_TOP | getWindowFlags();
-            else
-                // If the user has changed the resolution from the command line, then add a
-                // border to the window and don't make it stay on top.
-                windowFlags = getWindowFlags();
-        }
-        else {
-            windowFlags = SDL_WINDOW_FULLSCREEN | getWindowFlags();
-        }
 #endif
 
         if ((sdlWindow =
