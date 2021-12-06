@@ -1334,33 +1334,6 @@ The input configuration is described in the [User guide](USERGUIDE-DEV.md#input-
 
 You can use **--help** or **-h** to view the list of command line options, as shown here.
 
-### Unix
-
-```
---display [index 1-4]           Display/monitor to use
---resolution [width] [height]   Application resolution
---windowed                      Windowed mode, should be combined with --resolution
---fullscreen-normal             Normal fullscreen mode
---fullscreen-borderless         Borderless fullscreen mode (always on top)
---vsync [1/on or 0/off]         Turn VSync on or off (default is on)
---max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---no-splash                     Don't show the splash screen during startup
---gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
---show-hidden-files             Show hidden files and folders
---show-hidden-games             Show hidden games
---force-full                    Force the UI mode to Full
---force-kiosk                   Force the UI mode to Kiosk
---force-kid                     Force the UI mode to Kid
---force-input-config            Force configuration of input device
---home [path]                   Directory to use as home path
---debug                         Print debug information
---version, -v                   Display version information
---help, -h                      Summon a sentient, angry tuba
-```
-
-### macOS and Windows
-
 ```
 --display [index 1-4]           Display/monitor to use
 --resolution [width] [height]   Application resolution
@@ -1383,11 +1356,11 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its application home directory. Be aware that this option completely replaces what is considered the home directory, meaning the default ROM directory ~/ROMs would be resolved to ~/games/emulation/ROMs. The same is true for the emulator core locations if es_find_rules.xml is configured to look for them relative to the home directory. So of course RetroArch and other emulators would also need to be configured to use ~/games/emulation as its base directory in this instance.
 
+Setting the resolution to a lower or higher value than the display resolution will add a border to the application window.
+
 For the following options, the es_settings.xml file is immediately updated/saved when passing the parameter:
 ```
 --display
---fullscreen-normal
---fullscreen-borderless
 --max-vram
 --show-hidden-files
 --show-hidden-games
@@ -2047,20 +2020,20 @@ We'll go through two examples:
 
 **Note:** The following examples are for Unix systems, but it works the same way on macOS (which is also Unix after all), and on Windows (although .bat batch files are then used instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix).
 
-The events executed when a game starts and ends are called `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+The events executed when a game starts and ends are named `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
 
 So let's create the folders for these events in the scripts directory. The location is `~/.emulationstation/scripts`
 
 **Game log:**
 
-After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts varies depending on the type of event, but for these events the two parameters are the absolute path to the game file, and the game name as shown in the gamelist view.
+After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts vary depending on the type of event, but for these events the four parameters are the absolute path to the game file, the game name as shown in the gamelist view, the system name and the full system name.
 
 Let's name the start script `game_start_logging.sh` with the following contents:
 
 ```
 #!/bin/bash
 TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
-echo Starting game "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+echo Starting game "\""${2}"\"" "\""${4}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
 ```
 
 And let's name the end script `game_end_logging.sh` with the following contents:
@@ -2068,7 +2041,7 @@ And let's name the end script `game_end_logging.sh` with the following contents:
 ```
 #!/bin/bash
 TIMESTAMP=$(date +%Y-%m-%d' '%H:%M:%S)
-echo "Ending game  " "\""${2}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
+echo "Ending game  " "\""${2}"\"" "\""${4}"\"" "(\""${1}"\")" at $TIMESTAMP >> ~/.emulationstation/game_playlog.txt
 ```
 
 After creating the two scripts, you should have something like this on the filesystem:
@@ -2083,24 +2056,24 @@ Don't forget to make the scripts executable (e.g. "chmod 755 ./game_start_loggin
 If we now start ES-DE with the debug flag and launch a game, something like the following should show up in es_log.txt:
 
 ```
-Aug 05 14:19:24 Debug:  Scripting::fireEvent(): game-start "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
-Aug 05 14:19:24 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-start/game_start_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+Aug 05 14:19:24 Debug:  Scripting::fireEvent(): game-start "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
+Aug 05 14:19:24 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-start/game_start_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
 .
 .
-Aug 05 14:27:15 Debug:  Scripting::fireEvent(): game-end "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
-Aug 05 14:27:15 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-end/game_end_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda"
+Aug 05 14:27:15 Debug:  Scripting::fireEvent(): game-end "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System" ""
+Aug 05 14:27:15 Debug:  Executing: /home/myusername/.emulationstation/scripts/game-end/game_end_logging.sh "/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip" "The Legend Of Zelda" "nes" "Nintendo Entertainment System"
 
 ```
 
 Finally after running some games, ~/.emulationstation/game_playlog.txt should contain something like the following:
 
 ```
-Starting game "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:19:24
-Ending game   "The Legend Of Zelda" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:27:15
-Starting game "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 14:38:46
-Ending game   "Quake" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 15:13:58
-Starting game "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:15:24
-Ending game   "Pirates!" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:17:11
+Starting game "The Legend Of Zelda" "Nintendo Entertainment System" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:19:24
+Ending game   "The Legend Of Zelda" "Nintendo Entertainment System" ("/home/myusername/ROMs/nes/Legend\ of\ Zelda,\ The.zip") at 2020-08-05 14:27:15
+Starting game "Quake" "Ports" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 14:38:46
+Ending game   "Quake" "Ports" ("/home/myusername/ROMs/ports/Quakespasm/quakespasm.sh") at 2020-08-05 15:13:58
+Starting game "Pirates!" "Commodore 64" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:15:24
+Ending game   "Pirates!" "Commodore 64" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:17:11
 ```
 
 **Resolution changes:**

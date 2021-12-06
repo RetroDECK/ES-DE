@@ -28,7 +28,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Manjaro 21.1
 * Fedora 35 Workstation
 * elementary OS 6
-* Raspberry Pi OS 10 (armv7l and aarch64)
+* Raspberry Pi OS 10 and 11 (armv7l and aarch64)
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8

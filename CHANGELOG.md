@@ -34,6 +34,8 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added size options (small/medium/large) for the boxes/covers and physical media images when generating miximages
 * Added support for the Raspberry Pi 4 (Raspberry Pi OS 32-bit/armv7l and 64-bit/aarch64)
 * Bundled the new alternative theme "modern-DE" which supports all the latest features from this release
+* Changed the Unix fullscreen mode to SDL_WINDOW_FULLSCREEN_DESKTOP and removed the --windowed, --fullscreen-normal and --fullscreen-borderless command line options
+* Removed the Unix-specific menu option "Fullscreen mode (requires restart)"
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added a "winregistryvalue" find rule for Windows which can be used to retrieve emulator installation locations from arbitrary Windows Registry keys
@@ -55,6 +57,8 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added a menu option to change the application exit key combination
 * If there are no custom collections, the "Custom game collections" menu entry is now grayed out
 * Added an option to preload the gamelists on startup which leads to smoother navigation when first entering each gamelist
+* Increased the amount of arguments for the custom event scripts from two to four
+* Added the system name and full system name as additional arguments to the game-start and game-end custom events
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
 * Added support for a more advanced system view carousel logo placeholder (for unthemed systems) by allowing the combination of text and graphics
@@ -72,11 +76,14 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Changed the font size for the custom collection deletion screen to use the same size as all other menus
 * Added support for upscaling bitmap images using linear filtering
 * Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
+* Made the window corners slightly more rounded
 * Moved the Media viewer and Screensaver settings higher in the UI settings menu
 * Moved the game media directory setting to the top of the Other settings menu, following the new Alternative emulators entry
+* Moved the ScreenScraper account toggle to the bottom of the scraper account settings menu
 * Lowered the default volumes slightly for videos and navigation sounds
 * Added loading of the System view to the ViewController preload function to decrease theme extras texture pop-in
 * Changed the filter description "Text filter (game name)" to simply "Game name"
+* Improved the "AMD and Intel GPU game launch workaround" hack on Windows to provide more seamless game launches
 * Removed a margin hack from TextComponent
 * If abbreviated strings end with a space character, that space is now removed (TextComponent)
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
@@ -110,6 +117,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
 * Added CMake options to build with AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer
 * Changed two clang-format rules related to braced lists and reformatted the codebase
+* Replaced the bundled SDL version 2.0.14 with 2.0.18 for the Windows release
 * Bundled the October 2021 release of the Mozilla TLS/SSL certificates
 * Updated the MAME index files to include ROMs up to MAME version 0.237
 * rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
@@ -441,14 +449,20 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 ## Known issues
 
-**The issues below are relevant for ES-DE v1.1.0**
+**The issues below are relevant for ES-DE v1.2.0**
 
-* There is an issue with launching games on Windows when using AMD and Intel GPUs. This causes the emulator to just output a blank screen. There is a workaround available for this which is enabled by default and that can be disabled via the menu option "AMD and Intel GPU game launch workaround". The drawback of this workaround is that a white instead of a black screen will be displayed when launching games. If using an Nvidia GPU, it should be safe to disable this option for a slightly better user experience. An alternative workaround is to enable the option "Run in background (while game is launched)".
+* There is an issue with launching games on Windows when using AMD or Intel GPUs which causes the emulator to just output a blank screen. There is a workaround available for this which is enabled by default and that can be disabled via the menu option "AMD and Intel GPU game launch workaround" if using an Nvidia GPU. The workaround has the slight drawback that the screen may flicker slightly when launching a game, and there will be a single-pixel transparent line at the bottom of the screen while the emulator is loading.
 
-* On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds and as such it needs to be fixed in that library. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue will not occur.
+* On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
 
-* On macOS, the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window.
+* On macOS, the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window when a game is launched. Possibly it's the same issue with other emulators as well.
 
-* On Fedora 35 an issue has been observed where the screen turns completely black or flickers intensely when starting ES-DE for the first time. A workaround for this is to simply exit the application with F4 or Alt+F4 and starting it again. Everything should then render correctly, and any subsequent startups will work fine including after suspending/resuming the computer. It's currently unclear if this is limited to only some graphics drivers or if it's a general issue under Fedora and/or Wayland.
+* On Raspberry Pi OS 10, Sony DualShock 4 controllers have problems with some button presses that don't register correctly. The issue appears resolved in Raspberry Pi OS 11.
 
-* Sometimes when RetroArch has been upgraded to a newer version, it apparently requires a startup to get properly initialized. When ES-DE starts RetroArch it always does so by passing some specific emulator core parameters, which does not seem to initialize RetroArch after such an upgrade. What happens in this case is that the RetroArch loading screen will be shown and then it will quit right back to ES-DE. If confirmed to be the case, this is not an ES-DE issue but a RetroArch issue and starting RetroArch separately once should fix the problem.
+* On Raspberry Pi OS 11 there are various graphics issues and sometimes the application or emulator completely freezes which requires a power cycle of the machine. This is seemingly due to GPU driver bugs and we can only wait for OS updates to address these problems. These issues have not been encountered on Raspberry Pi OS 10.
+
+* On Fedora 35 a problem has been observed where the screen turns completely black or flickers intensely when starting ES-DE for the first time. A workaround for this is to simply exit the application with F4 or Alt+F4 and starting it again. Everything should then render correctly, and any subsequent startups will work fine including after suspending/resuming the computer. It's currently unclear if this is limited to only Intel GPU drivers or if it's a general issue under Fedora and/or Wayland. At least Wayland on Ubuntu 21.10 does not trigger the same issue.
+
+* There is some screen tearing present on Unix/Linux which is especially visible during horizontal slide transitions. The problem exists on both x86 and ARM as well as on Intel, AMD and Nvidia GPUs and on the Broadcom VideoCore. The problem seems to be Xorg-related as tearing has not been observed when using Wayland, and it's not present on macOS or Windows either.
+
+* Sometimes when RetroArch has been upgraded to a newer version, it apparently requires a startup to get properly initialized. When ES-DE starts RetroArch it always does so by passing some specific emulator core parameters, which does not seem to initialize RetroArch after such an upgrade. What happens in this case is that the RetroArch loading screen will be shown and then it will quit right back to ES-DE. If confirmed to be the case, this is not an ES-DE issue but a RetroArch issue and starting RetroArch separately once should fix the problem (at least until the next upgrade).

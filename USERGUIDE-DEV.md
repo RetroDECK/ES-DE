@@ -42,7 +42,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Manjaro 21.1
 * Fedora 35 Workstation
 * elementary OS 6
-* Raspberry Pi OS 10 (armv7l and aarch64)
+* Raspberry Pi OS 10 and 11 (armv7l and aarch64)
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
@@ -192,11 +192,13 @@ In macOS 12 Monterey there has been a quite serious OpenGL driver bug introduced
 
 ## Specific notes for Raspberry Pi
 
-The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MiB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
+ES-DE on the Raspberry Pi requires a desktop environment, or more specifically a window manager and a sound server (like PulseAudio or PipeWire). There are no plans to add support for direct hardware access to the framebuffer or to ALSA. If you want to use your Raspberry Pi as an appliance, take a look at [RetroPie](https://retropie.org.uk), [Recalbox](https://www.recalbox.com) or [Batocera](https://batocera.org) instead.
+
+The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MiB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible. On Raspberry Pi OS 11 the KMS option is enabled by default.
 
 In general, 720p works fine with the RPi 4, and 1080p is tolerable but not really a nice and smooth experience. Due to the relative weakness of the Rasperry Pi GPU, the video scanline rendering options for the screensaver and media viewer have been disabled (they're enabled by default on all other platforms). These options can be re-enabled via the menu if you don't mind lower video framerates.
 
-Both the 32-bit (armv7l) and 64-bit (aarch64) versions of Raspberry Pi OS are supported. Although the 64-bit version of ES-DE actually runs much better than the 32-bit version (likely due to better GPU drivers for aarch64) it's still generally recommended to go for the 32-bit OS for now. The reason is that the Raspberry Pi Foundation still has not released the 64-bit version officially so it's somewhat of a beta with some functionality apparently broken. As well there seems to be issues with installing RetroArch cores on aarch64 so you would probably need to compile them from source code.
+Both the 32-bit (armv7l) and 64-bit (aarch64) versions of Raspberry Pi OS are supported. Although the 64-bit version of ES-DE actually runs much better than the 32-bit version it's still generally recommended to go for the 32-bit OS for now. The reason is that the Raspberry Pi Foundation has still not officially released the 64-bit version of Raspberry Pi OS so it's somewhat of a beta with some functionality apparently broken. As well there seems to be issues with installing RetroArch cores on aarch64 so you would probably need to compile them from source code.
 
 At the time of writing the Snap version of RetroArch appears broken and won't start on the 32-bit OS, so the Flatpak version would have to be installed. That is accomplished using these commands:
 
@@ -211,7 +213,7 @@ Following this you need to reboot, and then run this command:
 sudo flatpak install retroarch
 ```
 
-This will download and install a few hundred megabytes of data as there are some dependencies. Unfortunately the Flatpak environment does not seem to be properly setup either so you will have to launch RetroArch like this to install your emulator cores:
+This will download and install a few hundred megabytes of data as there are some dependencies. Unfortunately the Flatpak environment does not seem to be properly setup so you will have to launch RetroArch like this to install your emulator cores:
 
 ```
 /var/lib/flatpak/exports/bin/org.libretro.RetroArch
@@ -226,7 +228,9 @@ sudo apt-get install snapd
 sudo snap install retroarch
 ```
 
-Another issue on Raspberry Pi OS is that Sony DualShock 4 controllers have problems with some button presses that don't register correctly. This has not been seen on other Linux operating systems and will hopefully be patched out in the future via an OS update.
+On Raspberry Pi OS 10 Sony DualShock 4 controllers have problems with some button presses that don't register correctly. The issue appears resolved on Raspberry Pi OS 11.
+
+On Raspberry Pi OS 11 there are various graphics issues and sometimes the application or emulator completely freezes which requires a power cycle of the machine. This is seemingly due to GPU driver bugs and we can only wait for OS updates to address these problems. These issues have not been encountered on Raspberry Pi OS 10.
 
 
 ## Game system customizations
@@ -260,9 +264,9 @@ If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie
 
 ## Running on high resolution displays
 
-ES-DE fully supports high resolution displays such as 1440p, 4K, 6K, 8K, ultrawide monitors etc. But some emulators such as RetroArch will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution. On Unix it's possible to start ES-DE with the `--resolution` option to set a lower screen resolution, which will also affect the emulators. But this is not really recommended as it's highly dependent on well-written graphics drivers for proper behavior.
+ES-DE fully supports high resolution displays such as 1440p, 4K, 6K, 8K, ultrawide monitors etc. But some emulators such as RetroArch will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution.
 
-A better approach is to use the custom event scripts functionality to set a temporary resolution upon launching a game that will be reverted when returning to ES-DE. Such a setup is detailed in [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) for Unix, but should hopefully be possible to implement similarly on macOS and Windows.
+A solution to this is to use the custom event scripts functionality to set a temporary resolution upon launching a game that will be reverted when returning to ES-DE. Such a setup is detailed in [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) for Unix, but should hopefully be possible to implement similarly on macOS and Windows. When going for this setup it's important that the setting _Run in background (while game is launched)_ is disabled or ES-DE may not be able to correctly switch to the emulator window when launching games.
 
 
 ## Input device configuration
@@ -858,10 +862,6 @@ A selection of which systems to scrape for. It's possible to automatically scrap
 
 Setup of ScreenScraper account.
 
-**Use this account for ScreenScraper**
-
-Whether to use the account that has been configured. If this is disabled, the username and password setup on this screen will be ignored during scraping. This can be useful if you have scraping issues and want to check whether it's related to your account or if it's a general problem. Note that screenscraper.fr does not seem to return a proper error message regarding incorrect username and password, but starting ES-DE with the --debug flag will indicate in the log file whether the username was included in the server response.
-
 **ScreenScraper username**
 
 Username as registered on screenscraper.fr.
@@ -869,6 +869,10 @@ Username as registered on screenscraper.fr.
 **ScreenScraper password**
 
 The password as registered on screenscraper.fr. This is masked using asterisks on the screen, and the password input field will be blank when attempting to update an existing password. This is by design and not a bug. Be aware that the es_settings.xml file contains the password in clear text.
+
+**Use this account for ScreenScraper**
+
+Whether to use the account that has been configured. If this is disabled, the username and password setup on this screen will be ignored during scraping. This can be useful if you have scraping issues and want to check whether it's related to your account or if it's a general problem. Note that screenscraper.fr does not seem to return a proper error message regarding incorrect username and password, but starting ES-DE with the --debug flag will indicate in the log file whether the username was included in the server response.
 
 #### Content settings
 
@@ -1352,10 +1356,6 @@ The amount of video RAM to use for the application. Defaults to 256 MiB (184 MiB
 
 This option sets the display to use for ES-DE for multi-monitor setups. The possible values are the monitor index numbers 1, 2, 3 or 4. If a value is set here for a display that does not actually exist, then ES-DE will set it to 1 upon startup. Index 1 is the primary display for the computer. It's also possible to override the setting by passing the --display command line argument. Doing so will also overwrite the display index setting in es_settings.xml. The Display/monitor index option only changes the display used by ES-DE; the emulators need to be configured separately (which can easily be done globally if using RetroArch).
 
-**Fullscreen mode (requires restart)** _(Unix only)_
-
-This gives you a choice between _Normal_ and _Borderless_ modes. With the borderless being more seamless as the ES-DE window will always stay on top of other windows so the taskbar will not be visible when launching and returning from games. It will however break the alt-tab application switching of your window manager. For normal fullscreen mode, if a lower resolution than the screen resolution has been set via the --resolution command line argument, ES-DE will render in full screen at the lower resolution (assuming the graphics drivers support this). If a higher resolution than the screen resolution has been set, ES-DE will run in a window. For the borderless mode, any changes to the resolution will make ES-DE run in a window.
-
 **Exit button combo**
 
 This gives the choice of which key combination to use to close the application. The default value is F4, but this can be changed to Alt + F4 on all operating systems. Additionally on macOS the Command + Q combination is selectable and on all other operating systems Alt + Q is selectable instead. Note that on Windows and most window managers on Unix/Linux, Alt + F4 will close the application regardless of the selected option as that key combination is a default which can't be restricted by ES-DE. Similarly on macOS, Command + Q always closes the application, so selecting this combination simply disables the previously selected exit button.
@@ -1378,7 +1378,7 @@ Enabling this option makes ES-DE continue to run while a game is launched. This 
 
 **AMD and Intel GPU game launch workaround** _(Windows only)_
 
-There is an issue with launching games on some Windows computers, seemingly on those with AMD and Intel GPUs. The emulator will start and work correctly, but the screen will be blank. Enabling this option is a workaround for that problem, with the drawback that the screen will become white instead of black when the emulator is loading. This option is enabled by default, so experiment with disabling it for a slightly better experience. If you're using an Nvidia GPU, chances are high that it will then work fine. An alternative workaround is to enable the _Run in background (while game is launched)_ option described above, so test which gives the best result. The two options can however not be enabled at the same time. Hopefully this whole game launching issue can be resolved completely in a future ES-DE release.
+There is an issue with launching games on some Windows computers, seemingly on those with AMD or Intel GPUs. The emulator will start and work correctly, but the screen will be blank. Enabling this option is a workaround for that problem, with the drawback that the screen may flicker slightly when launching a game, and there will be a single-pixel transparent line at the bottom of the screen while the emulator is loading. This option is enabled by default, so if you're using an Nvidia GPU you can probably disable this option.
 
 **Upscale video frame rate to 60 FPS**
 
@@ -1402,7 +1402,7 @@ You can mark games as hidden in the metadata editor, which is useful for instanc
 
 **Enable custom event scripts**
 
-It's possible to trigger custom scripts for a number of actions in ES-DE, as is discussed [below](USERGUIDE-DEV.md#custom-event-scripts), and this setting decides whether this functionality is enabled. It's recommended to leave it at its default off value unless you need it as it otherwise generates unnecessary log output.
+It's possible to trigger custom scripts for a number of actions in ES-DE, as is discussed [below](USERGUIDE-DEV.md#custom-event-scripts), and this setting decides whether this functionality is enabled.
 
 **Only show ROMs from gamelist.xml files**
 
@@ -1782,7 +1782,6 @@ https://wiki.batocera.org/themes
 _An example of a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme applied to ES-DE._
 
 
-
 ## Custom event scripts
 
 There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. By default it's deactivated so be sure to enable it to use this feature.
@@ -1876,7 +1875,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | daphne                | Daphne Arcade Laserdisc Emulator               |                                   |                                   |              |                                      |
 | desktop               | Desktop applications                           | N/A                               |                                   | No           |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
-| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM] | No           | In separate folder (one folder per game, with complete file structure retained) |
+| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [U] | No           | In separate folder (one folder per game, with complete file structure retained) |
 | dragon32              | Dragon 32                                      |                                   |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           |                                   |              |                                      |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
@@ -1928,7 +1927,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | openbor               | OpenBOR game engine                            |                                   |                                   |              |                                      |
 | oric                  | Tangerine Computer Systems Oric                |                                   |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
-| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM] | No           | In separate folder (one folder per game, with complete file structure retained) |
+| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [U] | No           | In separate folder (one folder per game, with complete file structure retained) |
 | pc88                  | NEC PC-8800 series                             | QUASI88                           |                                   |              |                                      |
 | pc98                  | NEC PC-9800 series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |
