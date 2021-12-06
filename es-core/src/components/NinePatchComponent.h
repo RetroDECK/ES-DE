@@ -57,6 +57,7 @@ public:
         mCornerSize = size;
         buildVertices();
     }
+    void setSharpCorners(bool state) { mSharpCorners = state; }
 
 private:
     void buildVertices();
@@ -66,6 +67,7 @@ private:
 
     std::string mPath;
     glm::vec2 mCornerSize;
+    bool mSharpCorners;
     unsigned int mEdgeColor;
     unsigned int mCenterColor;
     std::shared_ptr<TextureResource> mTexture;

@@ -17,12 +17,13 @@ NinePatchComponent::NinePatchComponent(Window* window,
                                        const std::string& path,
                                        unsigned int edgeColor,
                                        unsigned int centerColor)
-    : GuiComponent(window)
-    , mVertices(nullptr)
-    , mPath(path)
-    , mCornerSize(16.0f, 16.0f)
-    , mEdgeColor(edgeColor)
-    , mCenterColor(centerColor)
+    : GuiComponent{window}
+    , mVertices{nullptr}
+    , mPath{path}
+    , mCornerSize{16.0f, 16.0f}
+    , mSharpCorners{false}
+    , mEdgeColor{edgeColor}
+    , mCenterColor{centerColor}
 {
     if (!mPath.empty())
         buildVertices();
@@ -63,8 +64,9 @@ void NinePatchComponent::buildVertices()
     else {
         // Scale the corner size relative to the screen resolution (using the medium sized
         // default font as size reference).
-        relCornerSize = glm::round(
-            mCornerSize * (Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.0568f / 2.0f));
+        relCornerSize =
+            glm::round(mCornerSize * (Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() *
+                                      (mSharpCorners == true ? 0.0568f : 0.09f) / 2.0f));
     }
 
     mTexture = TextureResource::get(mPath, false, false, false);

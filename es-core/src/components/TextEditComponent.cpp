@@ -29,6 +29,7 @@ TextEditComponent::TextEditComponent(Window* window)
     , mBox{window, ":/graphics/textinput.svg"}
     , mFont{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
 {
+    mBox.setSharpCorners(true);
     addChild(&mBox);
     onFocusLost();
     setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()));

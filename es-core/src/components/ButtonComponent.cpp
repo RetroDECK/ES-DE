@@ -31,6 +31,7 @@ ButtonComponent::ButtonComponent(Window* window,
     , mFlatColorUnfocused{0x60606025}
 
 {
+    mBox.setSharpCorners(true);
     setPressedFunc(func);
     setText(text, helpText, upperCase);
 
