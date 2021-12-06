@@ -168,20 +168,6 @@ void GuiScraperMenu::openAccountOptions()
 {
     auto s = new GuiSettings(mWindow, "ACCOUNT SETTINGS");
 
-    // Whether to use the ScreenScraper account when scraping.
-    auto scraper_use_account_screenscraper = std::make_shared<SwitchComponent>(mWindow);
-    scraper_use_account_screenscraper->setState(
-        Settings::getInstance()->getBool("ScraperUseAccountScreenScraper"));
-    s->addWithLabel("USE THIS ACCOUNT FOR SCREENSCRAPER", scraper_use_account_screenscraper);
-    s->addSaveFunc([scraper_use_account_screenscraper, s] {
-        if (scraper_use_account_screenscraper->getState() !=
-            Settings::getInstance()->getBool("ScraperUseAccountScreenScraper")) {
-            Settings::getInstance()->setBool("ScraperUseAccountScreenScraper",
-                                             scraper_use_account_screenscraper->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // ScreenScraper username.
     auto scraper_username_screenscraper = std::make_shared<TextComponent>(
         mWindow, "", Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
@@ -212,6 +198,20 @@ void GuiScraperMenu::openAccountOptions()
             Settings::getInstance()->getString("ScraperPasswordScreenScraper")) {
             Settings::getInstance()->setString("ScraperPasswordScreenScraper",
                                                scraper_password_screenscraper->getHiddenValue());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Whether to use the ScreenScraper account when scraping.
+    auto scraper_use_account_screenscraper = std::make_shared<SwitchComponent>(mWindow);
+    scraper_use_account_screenscraper->setState(
+        Settings::getInstance()->getBool("ScraperUseAccountScreenScraper"));
+    s->addWithLabel("USE THIS ACCOUNT FOR SCREENSCRAPER", scraper_use_account_screenscraper);
+    s->addSaveFunc([scraper_use_account_screenscraper, s] {
+        if (scraper_use_account_screenscraper->getState() !=
+            Settings::getInstance()->getBool("ScraperUseAccountScreenScraper")) {
+            Settings::getInstance()->setBool("ScraperUseAccountScreenScraper",
+                                             scraper_use_account_screenscraper->getState());
             s->setNeedsSaving();
         }
     });
