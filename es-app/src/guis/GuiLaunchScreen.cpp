@@ -223,8 +223,7 @@ void GuiLaunchScreen::update(int deltaTime)
 void GuiLaunchScreen::render(const glm::mat4& /*parentTrans*/)
 {
     // Scale up animation.
-    if (mScaleUp < 1.0f)
-        setScale(mScaleUp);
+    setScale(mScaleUp);
 
     glm::mat4 trans{Renderer::getIdentity() * getTransform()};
     Renderer::setMatrix(trans);
