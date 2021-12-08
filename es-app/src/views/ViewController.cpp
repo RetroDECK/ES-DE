@@ -938,6 +938,10 @@ void ViewController::preload()
 {
     unsigned int systemCount = static_cast<int>(SystemData::sSystemVector.size());
 
+    // This reduces the amount of texture pop-in when loading theme extras.
+    if (!SystemData::sSystemVector.empty())
+        getSystemListView();
+
     for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
          ++it) {
         if (Settings::getInstance()->getBool("SplashScreen") &&
@@ -948,9 +952,6 @@ void ViewController::preload()
                 std::to_string(systemCount) + ")");
         }
         (*it)->getIndex()->resetFilters();
-
-        // This makes sure we avoid texture pop-in when loading theme extras.
-        getSystemListView();
 
         if (Settings::getInstance()->getBool("PreloadGamelists"))
             getGameListView(*it)->preloadGamelist();
