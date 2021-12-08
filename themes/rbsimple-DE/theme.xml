@@ -52,34 +52,34 @@ based on: 'recalbox-multi' by the Recalbox community
             <origin>1 1</origin>
         </image>
         <text name="info1" extra="true">
-            <pos>0.38 0.705</pos>
+            <pos>0.38 0.695</pos>
         </text>
         <text name="info2" extra="true">
-            <pos>0.38 0.725</pos>
+            <pos>0.38 0.716</pos>
         </text>
         <text name="info3" extra="true">
-            <pos>0.38 0.745</pos>
+            <pos>0.38 0.737</pos>
         </text>
         <text name="info4" extra="true">
-            <pos>0.38 0.765</pos>
+            <pos>0.38 0.758</pos>
         </text>
         <text name="info5" extra="true">
-            <pos>0.38 0.805</pos>
+            <pos>0.38 0.799</pos>
         </text>
         <text name="info6" extra="true">
-            <pos>0.38 0.825</pos>
+            <pos>0.38 0.820</pos>
         </text>
         <text name="info7" extra="true">
-            <pos>0.38 0.845</pos>
+            <pos>0.38 0.841</pos>
         </text>
         <text name="info8" extra="true">
-            <pos>0.38 0.865</pos>
+            <pos>0.38 0.862</pos>
         </text>
         <text name="info9" extra="true">
-            <pos>0.38 0.885</pos>
+            <pos>0.38 0.883</pos>
         </text>
         <text name="info10" extra="true">
-            <pos>0.38 0.905</pos>
+            <pos>0.38 0.904</pos>
         </text>
     </view>
 
