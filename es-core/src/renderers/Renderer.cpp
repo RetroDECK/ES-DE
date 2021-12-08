@@ -181,9 +181,8 @@ namespace Renderer
         // as a real fullscreen mode will do lots of weird stuff like preventing window switching
         // or refusing to let emulators run at all. SDL_WINDOW_FULLSCREEN_DESKTOP almost works, but
         // it "shuffles" windows when starting the emulator and won't return properly when the game
-        // has exited. With SDL_WINDOW_BORDERLESS, the splash screen is not displayed until the
-        // point where ES-DE has almost completely finished loading. As well the emulator has to be
-        // configured to run in fullscreen mode or switching to its windows will not work when a
+        // has exited. With SDL_WINDOW_BORDERLESS some emulators (like RetroArch) have to be
+        // configured to run in fullscreen mode or switching to its window will not work when a
         // game is launched. So there is room for improvement although it's acceptable for now.
         if (!userResolution)
             windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
