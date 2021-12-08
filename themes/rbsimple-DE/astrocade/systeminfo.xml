@@ -3,7 +3,25 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Bally Astrocade</text>
+            <text>Manufacturer : Bally Manufacturing</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>Year of Release : 1978</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>CPU : Zilog Z80 @ 1.789 MHz</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>RAM : 4 KB - 64 KB (with expansion modules)</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>ROM : 8 KB</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>Resolution : 160x102 or 320x204 pixels, 4/8 colors</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>Sound : 3 x oscillators with noise mixing</text>
         </text>
     </view>
 </theme>

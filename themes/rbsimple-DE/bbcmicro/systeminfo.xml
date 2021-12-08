@@ -3,7 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>BBC Micro</text>
+            <text>Manufacturer : Acorn Computers</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>Year of Release : 1981</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>OS : Acorn MOS</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>Units sold : 1.5 million</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>CPU : MOS Technology 6502/6512 @ 2 MHz</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>RAM : 16 KB to 128 KB depending on model</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>Graphics : 640x256 pixels, 8 colours</text>
+        </text>
+        <text name="info8" extra="true">
+            <text>Sound : TI SN76489, 4 channels + TMS5220 speech synthesiser</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>Media : Cassette tape, floppy disk</text>
         </text>
     </view>
 </theme>

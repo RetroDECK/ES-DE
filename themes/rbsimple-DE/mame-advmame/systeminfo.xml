@@ -24,7 +24,10 @@
             <text>on modern personal computers and other platforms.</text>
         </text>
         <text name="info8" extra="true">
-            <text>The intention is to preserve gaming history by preventing vintage games from being lost or forgotten.</text>
+            <text>The intention is to preserve gaming history by preventing</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>vintage games from being lost or forgotten.</text>
         </text>
     </view>
 </theme>

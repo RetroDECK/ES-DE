@@ -15,16 +15,16 @@
             <text>CPU : MOS Technology 6502B @ 1.8 Mhz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 8kB base, 48 kB max.</text>
+            <text>RAM : 8 KB base, 48 KB max.</text>
         </text>
         <text name="info6" extra="true">
             <text>ROM : 8KB (Atari Basic)</text>
         </text>
         <text name="info7" extra="true">
-            <text>Sound : 4× oscillators with noise mixing</text>
+            <text>Sound : 4 x oscillators with noise mixing</text>
         </text>
         <text name="info8" extra="true">
-            <text>Display : 320x192 monochrome, 160x96 with 128 colors</text>
+            <text>Display : 320x192 pixels, monochrome / 160x96 pixels, 128 colors</text>
         </text>
     </view>
 </theme>

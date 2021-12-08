@@ -12,7 +12,7 @@
             <text>OS : Multitasking 32-bit OS</text>
         </text>
         <text name="info4" extra="true">
-            <text>CPU : 32-bit RISC (ARM60) running @ 12.5 MHz</text>
+            <text>CPU : 32-bit RISC (ARM60) @ 12.5 MHz</text>
         </text>
         <text name="info5" extra="true">
             <text>RAM : 2 MB / VRAM : 1 MB</text>
@@ -21,13 +21,13 @@
             <text>ROM : 1 MB</text>
         </text>
         <text name="info7" extra="true">
-            <text>GPU : 2 Accelerated Video Co-Processors @25MHz</text>
+            <text>GPU : 2 Accelerated Video Co-Processors @ 25 MHz</text>
         </text>
         <text name="info8" extra="true">
             <text>Sound chip : 16-bit Stereo Sound with 44.1 KHz Sound Sampling Rate</text>
         </text>
         <text name="info9" extra="true">
-            <text>Resolution : 640x480 (16.7 million colours)</text>
+            <text>Resolution : 640x480 pixels, 16.7 million colors</text>
         </text>
     </view>
 </theme>

@@ -15,22 +15,19 @@
             <text>CPU : Motorola 68000 16-/32-bit CPU @ 8 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 512KB or 1MB</text>
+            <text>RAM : 512 KB or 1 MB</text>
         </text>
         <text name="info6" extra="true">
             <text>Drive : Single-sided 3½" floppy disk drive</text>
         </text>
         <text name="info7" extra="true">
-            <text>Sound Chip : Yamaha YM2149 3-voice squarewave</text>
+            <text>Sound Chip : Yamaha YM2149 3-voice square wave</text>
         </text>
         <text name="info8" extra="true">
-            <text>Display modes :</text>
+            <text>Low resolution mode: 320×200 pixels, 16 colors, (512 color palette)</text>
         </text>
         <text name="info9" extra="true">
-            <text>Low resolution: 320 × 200 (16 color), palette of 512 colors</text>
-        </text>
-        <text name="info10" extra="true">
-            <text>Medium resolution: 640 × 200 (4 color), palette of 512 colors</text>
+            <text>Medium resolution mode: 640×200 pixels, 4 colors, (512 color palette)</text>
         </text>
     </view>
 </theme>

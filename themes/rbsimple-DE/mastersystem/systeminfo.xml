@@ -15,22 +15,22 @@
             <text>Best-selling game : Alex Kidd in Miracle World</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : 8-Bit Zilog Z80 @ 3.58 MHz</text>
+            <text>CPU : 8-bit Zilog Z80 @ 3.58 MHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 8kB / VRAM : 16kB</text>
+            <text>RAM : 8 KB / VRAM : 16 KB</text>
         </text>
         <text name="info7" extra="true">
             <text>Video : Sega VDP (custom Texas Instruments TMS9918)</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 256 × 192 pixels, 32 colors (64 colors palette)</text>
+            <text>Resolution : 256×192 pixels, 32 colors (64 color palette)</text>
         </text>
         <text name="info9" extra="true">
             <text>Sound : TI SN76489 PSG / add-on module YM2413 FM</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 32kB - 1MB</text>
+            <text>Cart Size : 32 KB - 1 MB</text>
         </text>
     </view>
 </theme>

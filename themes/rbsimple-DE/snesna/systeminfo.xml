@@ -18,19 +18,19 @@
             <text>CPU : 16-bit Custom 65C816 @ 3.58 MHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 128kB / VRAM : 64kB</text>
+            <text>RAM : 128 KB / VRAM : 64 KB</text>
         </text>
         <text name="info7" extra="true">
             <text>Video : 16-bit PPU (Picture Processor Unit)</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 256x224, 256 colors (32768 colors palette)</text>
+            <text>Resolution : 256x224 pixels, 256 colors (32768 color palette)</text>
         </text>
         <text name="info9" extra="true">
             <text>Sound : 8-bit Sony SPC700, 8 channels</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 256kB - 6MB</text>
+            <text>Cart Size : 256 KB - 6 MB</text>
         </text>
     </view>
 </theme>

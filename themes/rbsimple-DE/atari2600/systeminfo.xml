@@ -24,13 +24,13 @@
             <text>Audio/Video Processor : TIA</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 160 x 192 pixels, 4 colors per line (128 colors palette)</text>
+            <text>Resolution : 160x192 pixels, 4 colors per line (128 color palette)</text>
         </text>
         <text name="info9" extra="true">
             <text>Sound : 2 channels of 1-bit monaural sound with 4-bit volume control</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 2kB - 32kB</text>
+            <text>Cart Size : 2 KB - 32 KB</text>
         </text>
     </view>
 </theme>

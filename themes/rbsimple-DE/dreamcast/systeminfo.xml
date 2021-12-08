@@ -18,19 +18,19 @@
             <text>CPU : Hitachi SH-4 32-bit RISC clocked @ 200 MHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 16MB / VRAM : 8MB</text>
+            <text>RAM : 16 MB / VRAM : 8 MB</text>
         </text>
         <text name="info7" extra="true">
             <text>Video : 100 MHz PowerVR2 (integrated with the system's ASIC)</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 640×480 pixels</text>
+            <text>Resolution : 640×480</text>
         </text>
         <text name="info9" extra="true">
             <text>Sound : Yamaha AICA[139] sound processor @ 67 MHz</text>
         </text>
         <text name="info10" extra="true">
-            <text>VMU size : 128kB</text>
+            <text>VMU size : 128 KB</text>
         </text>
     </view>
 </theme>

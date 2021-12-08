@@ -18,19 +18,19 @@
             <text>CPU : 8-bit MOS 6502 @ 1.79MHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 2kB / VRAM : 2kB</text>
+            <text>RAM : 2 KB / VRAM : 2 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Video : 8-Bit PPU (Picture Processing Unit)</text>
+            <text>Video : 8-bit PPU (Picture Processing Unit)</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 256 x 240 pixels, 25 colors (64 colors palette)</text>
+            <text>Resolution : 256x240 pixels, 25 colors (64 color palette)</text>
         </text>
         <text name="info9" extra="true">
-            <text>Sound : PSG sound (2 Square Waves, 1 Triangle Wave, 1 White Noise)</text>
+            <text>Sound : PSG sound (2 square waves, 1 triangle wave, 1 white noise)</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 8kB - 1MB</text>
+            <text>Cart Size : 8 KB - 1 MB</text>
         </text>
     </view>
 </theme>

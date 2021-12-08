@@ -21,13 +21,13 @@
             <text>CPU2 : 8-bit Zilog Z80 @ 3.58 Mhz (sound CPU)</text>
         </text>
         <text name="info7" extra="true">
-            <text>RAM : 64 kB / VRAM : 64kB / sound RAM : 8kB</text>
+            <text>RAM : 64 KB / VRAM : 64 KB / sound RAM : 8 KB</text>
         </text>
         <text name="info8" extra="true">
             <text>Video : 16-bit Sega VDP</text>
         </text>
         <text name="info9" extra="true">
-            <text>Resolution : 320×224 pixels, 64 colors (512 colors palette)</text>
+            <text>Resolution : 320×224 pixels, 64 colors (512 color palette)</text>
         </text>
         <text name="info10" extra="true">
             <text>Sound : Yamaha YM2612 FM and TI SN76489 PSG</text>

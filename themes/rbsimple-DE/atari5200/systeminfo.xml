@@ -15,16 +15,16 @@
             <text>CPU : MOS Technology 6502C 6502C @ 1.79 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 16kB</text>
+            <text>RAM : 16 KB</text>
         </text>
         <text name="info6" extra="true">
-            <text>ROM : 2KB on-board BIOS; 32 KB window for standard game cartridges</text>
+            <text>ROM : 2 KB on-board BIOS / 32 KB window for standard game cartridges</text>
         </text>
         <text name="info7" extra="true">
             <text>Sound : 4-channel POKEY chip</text>
         </text>
         <text name="info8" extra="true">
-            <text>Display : 320x192 pixels with 256 colors</text>
+            <text>Display : 320x192 pixels, 256 colors</text>
         </text>
     </view>
 </theme>

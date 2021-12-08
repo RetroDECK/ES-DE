@@ -7,28 +7,28 @@ None at the moment.
 # Missing (or not updated) theme data
 
 * 64dd : Nintendo 64DD - consolegame.svg, console.svg, game.svg
-* ags: Adventure Game Studio - system info, consolegame.svg, console.svg, controller.svg
+* ags: Adventure Game Studio - consolegame.svg, console.svg, controller.svg
 * amiga: Amiga - system info (needs improvement)
 * amigacd32: Amiga CD32 - consolegame.svg, console.svg, controller.svg, game.svg
 * android: Google Android - consolegame.svg, console.svg, controller.svg, game.svg
 * apple2gs: Apple IIGS - consolegame.svg, console.svg, controller.svg, game.svg
-* astrocade: Bally Astrocade - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* astrocade: Bally Astrocade - consolegame.svg, console.svg, controller.svg, game.svg
 * atari5200: Atari 5200 - consolegame.svg, console.svg, controller.svg, game.svg
 * atari800: Atari 800 - consolegame.svg, console.svg, controller.svg, game.svg
 * atarijaguar: Atari Jaguar - consolegame.svg, console.svg, controller.svg, game.svg
-* atarijaguarcd: Atari Jaguar CD - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* atarijaguarcd: Atari Jaguar CD - consolegame.svg, console.svg, controller.svg, game.svg
 * atarist: Atari ST - controller.svg
-* atarixe: Atari XE - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* atarixe: Atari XE - consolegame.svg, console.svg, controller.svg, game.svg
 * atomiswave: Atomiswave - consolegame.svg, console.svg, game.svg
 * auto-allgames - customized colors, consolegame.svg, (uses temporary art)
 * auto-favorites - customized colors, consolegame.svg, (uses temporary art)
 * auto-lastplayed - customized colors, consolegame.svg, (uses temporary art)
-* bbcmicro: BBC Micro - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* bbcmicro: BBC Micro - consolegame.svg, console.svg, controller.svg, game.svg
 * cdimono1: Philips CD-i - consolegame.svg, console.svg, controller.svg, game.svg
 * cdtv: Commodore CDTV - consolegame.svg, console.svg, controller.svg, game.svg
-* chailove: Löve game engine - system info, consolegame.svg, console.svg, controller.svg
+* chailove: Löve game engine - consolegame.svg, console.svg, controller.svg
 * channelf: Fairchild Channel F - consolegame.svg, console.svg, controller.svg, game.svg
-* coco: Tandy Color Computer - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* coco: Tandy Color Computer - consolegame.svg, console.svg, controller.svg, game.svg
 * custom-collections - customized colors, consolegame.svg, (uses temporary art)
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, console.svg, controller.svg, game.svg
 * desktop: Desktop applications - system info, consolegame.svg, console.svg, controller.svg
@@ -61,8 +61,8 @@ None at the moment.
 * ports: Source ports - consolegame.svg, console.svg, controller.svg, game.svg
 * ps2: Sony PlayStation 2 - consolegame.svg, console.svg, controller.svg, game.svg
 * ps3: Sony PlayStation 3 - consolegame.svg, console.svg, controller.svg, game.svg
-* ps4: Sony PlayStation 4 - system info, consolegame.svg, console.svg, controller.svg, game.svg
-* psvita: Sony PlayStation Vita - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* ps4: Sony PlayStation 4 - consolegame.svg, console.svg, controller.svg, game.svg
+* psvita: Sony PlayStation Vita - consolegame.svg, console.svg, controller.svg, game.svg
 * residualvm: ResidualVM - system info
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
 * satellaview: Nintendo Satellaview - consolegame.svg, console.svg, game.svg
@@ -79,7 +79,7 @@ None at the moment.
 * ti99: Texas Instruments TI-99 - system info, consolegame.svg, console.svg
 * tic80: TIC-80 game engine - consolegame.svg, console.svg, controller.svg
 * to8: Thomson TO8 - consolegame.svg, console.svg, controller.svg, game.svg
-* trs-80: Tandy TRS 80 - system info, consolegame.svg, console.svg, controller.svg, game.svg
+* trs-80: Tandy TRS 80 - consolegame.svg, console.svg, controller.svg, game.svg
 * uzebox: Uzebox - consolegame.svg, console.svg, game.svg
 * vectrex: Vectrex - consolegame.svg, console.svg (needs simplification as it takes a long time to rasterize)
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
@@ -87,6 +87,6 @@ None at the moment.
 * wiiu: Nintendo Wii U - consolegame.svg, console.svg, controller.svg, game.svg
 * x1:  Sharp X1 - consolegame.svg, console.svg, game.svg
 * x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
-* xbox: Microsoft Xbox - system info, controller.svg
+* xbox: Microsoft Xbox - controller.svg
 * xbox360: Microsoft Xbox - consolegame.svg, console.svg, game.svg
 * zmachine: Infocom Z-machine - system info, consolegame.svg, console.svg, controller.svg

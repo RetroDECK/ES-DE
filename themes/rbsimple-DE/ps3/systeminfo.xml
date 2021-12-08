@@ -30,7 +30,7 @@
             <text>Resolution : 480i, 480p, 720p, 1080i, 1080p</text>
         </text>
         <text name="info10" extra="true">
-            <text>Media : Blu-Ray, DVD, Compact Disc, PlayStation 1 and 2 discs, Super Audio CD</text>
+            <text>Media : Blu-ray, DVD, Compact Disc, PlayStation 1 and 2 discs</text>
         </text>
     </view>
 </theme>

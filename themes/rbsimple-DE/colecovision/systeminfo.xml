@@ -18,19 +18,19 @@
             <text>CPU : Zilog Z80 @ 3.58 MHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 1kB / VRAM : 16kB</text>
+            <text>RAM : 1 KB / VRAM : 16 KB</text>
         </text>
         <text name="info7" extra="true">
             <text>Video : Texas Instruments TMS9928A</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 256x192, 16 colors</text>
+            <text>Resolution : 256x192 pixels, 16 colors</text>
         </text>
         <text name="info9" extra="true">
             <text>Sound : Texas Instruments SN76489A</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 8kB - 32kB</text>
+            <text>Cart Size : 8 KB - 32 KB</text>
         </text>
     </view>
 </theme>
