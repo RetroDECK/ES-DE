@@ -34,7 +34,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added size options (small/medium/large) for the boxes/covers and physical media images when generating miximages
 * Added support for the Raspberry Pi 4 (Raspberry Pi OS 32-bit/armv7l and 64-bit/aarch64)
 * Bundled the new alternative theme "modern-DE" which supports all the latest features from this release
-* Changed the Unix fullscreen mode to SDL_WINDOW_FULLSCREEN_DESKTOP and removed the --windowed, --fullscreen-normal and --fullscreen-borderless command line options
+* Changed the Unix fullscreen mode and removed the --windowed, --fullscreen-normal and --fullscreen-borderless command line options
 * Removed the Unix-specific menu option "Fullscreen mode (requires restart)"
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
@@ -117,7 +117,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
 * Added CMake options to build with AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer
 * Changed two clang-format rules related to braced lists and reformatted the codebase
-* Replaced the bundled SDL version 2.0.14 with 2.0.18 for the Windows release
+* Upgraded the bundled SDL version 2.0.14 to 2.0.18 for Windows and macOS
 * Bundled the October 2021 release of the Mozilla TLS/SSL certificates
 * Updated the MAME index files to include ROMs up to MAME version 0.237
 * rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
@@ -159,6 +159,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Under some circumstances and at some screen resolutions, the last menu separator line would not get rendered (still an issue at extreme resolutions like 320x240)
 * When scrolling in menus, pressing other buttons than "Up" or "Down" did not stop the scrolling which caused all sorts of weird behavior
 * With the menu scale-up effect enabled and entering a submenu before the parent menu was completely scaled up, the parent would get stuck at a semi-scaled size
+* The launch screen text had ugly scaling artifacts if the menu opening effect was set to "Scale-up"
 * The custom collection deletion screen had incorrect row heights when running at lower resolutions such as 1280x720
 * If there was an abbreviated full system name for the "Gamelist on startup" option, that abbreviation would also get displayed when opening the selector window
 * Really long theme set names would not get abbreviated in the UI settings menu, leading to a garbled "Theme set" setting row
