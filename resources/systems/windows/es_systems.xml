@@ -22,7 +22,7 @@
     </system>
     <system>
         <name>ags</name>
-        <fullname>Adventure Game Studio game engine</fullname>
+        <fullname>Adventure Game Studio Game Engine</fullname>
         <path>%ROMPATH%\ags</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -268,7 +268,7 @@
     </system>
     <system>
         <name>chailove</name>
-        <fullname>ChaiLove game engine</fullname>
+        <fullname>ChaiLove Game Engine</fullname>
         <path>%ROMPATH%\chailove</path>
         <extension>.chai .CHAI .chailove .CHAILOVE .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\chailove_libretro.dll %ROM%</command>
@@ -304,16 +304,16 @@
     </system>
     <system>
         <name>daphne</name>
-        <fullname>Daphne Arcade Laserdisc Emulator</fullname>
+        <fullname>Daphne Arcade LaserDisc Emulator</fullname>
         <path>%ROMPATH%\daphne</path>
         <extension>.7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\daphne_libretro.dll %ROM%</command>
+        <command>PLACEHOLDER %ROM%</command>
         <platform>daphne</platform>
         <theme>daphne</theme>
     </system>
     <system>
         <name>desktop</name>
-        <fullname>Desktop applications</fullname>
+        <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%\desktop</path>
         <extension>.bat</extension>
         <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
@@ -521,7 +521,7 @@
     </system>
     <system>
         <name>kodi</name>
-        <fullname>Kodi home theatre software</fullname>
+        <fullname>Kodi Home Theatre Software</fullname>
         <path>%ROMPATH%\kodi</path>
         <extension>.bat</extension>
         <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
@@ -530,7 +530,7 @@
     </system>
     <system>
         <name>lutris</name>
-        <fullname>Lutris open gaming platform</fullname>
+        <fullname>Lutris Open Gaming Platform</fullname>
         <path>%ROMPATH%\lutris</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -539,7 +539,7 @@
     </system>
     <system>
         <name>lutro</name>
-        <fullname>Lutro game engine</fullname>
+        <fullname>Lutro Game Engine</fullname>
         <path>%ROMPATH%\lutro</path>
         <extension>.lua .LUA .lutro .LUTRO .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\lutro_libretro.dll %ROM%</command>
@@ -645,7 +645,7 @@
     </system>
     <system>
         <name>moonlight</name>
-        <fullname>Moonlight game streaming</fullname>
+        <fullname>Moonlight Game Streaming</fullname>
         <path>%ROMPATH%\moonlight</path>
         <extension>.moonlight .MOONLIGHT .7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -654,7 +654,7 @@
     </system>
     <system>
         <name>moto</name>
-        <fullname>Thomson MO/TO series</fullname>
+        <fullname>Thomson MO/TO Series</fullname>
         <path>%ROMPATH%\moto</path>
         <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\theodore_libretro.dll %ROM%</command>
@@ -828,7 +828,7 @@
     </system>
     <system>
         <name>openbor</name>
-        <fullname>OpenBOR game engine</fullname>
+        <fullname>OpenBOR Game Engine</fullname>
         <path>%ROMPATH%\openbor</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -866,7 +866,7 @@
     </system>
     <system>
         <name>pc88</name>
-        <fullname>NEC PC-8800 series</fullname>
+        <fullname>NEC PC-8800 Series</fullname>
         <path>%ROMPATH%\pc88</path>
         <extension>.d88 .D88 .u88 .U88 .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\quasi88_libretro.dll %ROM%</command>
@@ -875,7 +875,7 @@
     </system>
     <system>
         <name>pc98</name>
-        <fullname>NEC PC-9800 series</fullname>
+        <fullname>NEC PC-9800 Series</fullname>
         <path>%ROMPATH%\pc98</path>
         <extension>.2hd .2HD .88d .88D .98d .98D .d88 .D88 .d98 .D98 .cmd .CMD .dup .DUP .fdd .FDD .fdi .FDI .hdd .HDD .hdi .HDI .hdm .HDM .hdn .HDN .nhd .NHD .tfd .TFD .thd .THD . xdf .XDF .7z .7Z .zip .ZIP</extension>
         <command label="Neko Project II Kai">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\np2kai_libretro.dll %ROM%</command>
@@ -989,7 +989,7 @@
     </system>
     <system>
         <name>residualvm</name>
-        <fullname>ResidualVM game engine</fullname>
+        <fullname>ResidualVM Game Engine</fullname>
         <path>%ROMPATH%\residualvm</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -1044,7 +1044,7 @@
     </system>
     <system>
         <name>scummvm</name>
-        <fullname>ScummVM game engine</fullname>
+        <fullname>ScummVM Game Engine</fullname>
         <path>%ROMPATH%\scummvm</path>
         <extension>.scummvm .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\scummvm_libretro.dll %ROM%</command>
@@ -1131,7 +1131,7 @@
     </system>
     <system>
         <name>solarus</name>
-        <fullname>Solarus game engine</fullname>
+        <fullname>Solarus Game Engine</fullname>
         <path>%ROMPATH%\solarus</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -1158,7 +1158,7 @@
     </system>
     <system>
         <name>stratagus</name>
-        <fullname>Stratagus game engine</fullname>
+        <fullname>Stratagus Game Engine</fullname>
         <path>%ROMPATH%\stratagus</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -1245,7 +1245,7 @@
     </system>
     <system>
         <name>tic80</name>
-        <fullname>TIC-80 game engine</fullname>
+        <fullname>TIC-80 Game Engine</fullname>
         <path>%ROMPATH%\tic80</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
