@@ -838,6 +838,10 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
         mWindow->unsetLaunchedGame();
+        // Filter out the "a" button so the game is not restarted if there was such a button press
+        // queued when leaving the game.
+        if (config->isMappedTo("a", input) && input.value != 0)
+            return true;
     }
 
     // Open the main menu.
