@@ -36,6 +36,8 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Bundled the new alternative theme "modern-DE" which supports all the latest features from this release
 * Changed the Unix fullscreen mode and removed the --windowed, --fullscreen-normal and --fullscreen-borderless command line options
 * Removed the Unix-specific menu option "Fullscreen mode (requires restart)"
+* Changed the Windows fullscreen mode and removed the "AMD and Intel GPU game launch workaround" menu option
+* Made game launching more seamless on Windows for all GPU types
 * Added the ability to make complementary game system customizations without having to replace the entire bundled es_systems.xml file
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added a "winregistryvalue" find rule for Windows which can be used to retrieve emulator installation locations from arbitrary Windows Registry keys
@@ -83,7 +85,6 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Lowered the default volumes slightly for videos and navigation sounds
 * Added loading of the System view to the ViewController preload function to decrease theme extras texture pop-in
 * Changed the filter description "Text filter (game name)" to simply "Game name"
-* Improved the "AMD and Intel GPU game launch workaround" hack on Windows to provide more seamless game launches
 * Removed a margin hack from TextComponent
 * If abbreviated strings end with a space character, that space is now removed (TextComponent)
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
@@ -137,6 +138,8 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * When scraping in interactive mode, the first result row would get focused after the search completed even if the cursor was moved to a button beneath the list
 * The multi-scraper did not update the filter index
 * Multi-scraping and aborting before any games were fully scraped but after some game media was downloaded did not trigger a gamelist reload
+* (Windows) Launching a game that changed the screen resolution would offset the ES-DE application window when exiting
+* (Windows) Enabling the option to hide the taskbar would sometimes not focus the application window on startup (possibly only an issue on Windows 8.1)
 * Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
@@ -451,8 +454,6 @@ Many bugs have been fixed, and numerous features that were only partially implem
 ## Known issues
 
 **The issues below are relevant for ES-DE v1.2.0**
-
-* There is an issue with launching games on Windows when using AMD or Intel GPUs which causes the emulator to just output a blank screen. There is a workaround available for this which is enabled by default and that can be disabled via the menu option "AMD and Intel GPU game launch workaround" if using an Nvidia GPU. The workaround has the slight drawback that the screen may flicker slightly when launching a game, and there will be a single-pixel transparent line at the bottom of the screen while the emulator is loading.
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
 

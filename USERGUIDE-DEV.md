@@ -266,9 +266,11 @@ If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie
 
 ## Running on high resolution displays
 
-ES-DE fully supports high resolution displays such as 1440p, 4K, 6K, 8K, ultrawide monitors etc. But some emulators such as RetroArch will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution.
+ES-DE fully supports high resolution displays such as 1440p, 4K, 6K, 8K, ultrawide monitors etc. But many emulators (e.g. RetroArch) will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution.
 
-A solution to this is to use the custom event scripts functionality to set a temporary resolution upon launching a game that will be reverted when returning to ES-DE. Such a setup is detailed in [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) for Unix, but should hopefully be possible to implement similarly on macOS and Windows. When going for this setup it's important that the setting _Run in background (while game is launched)_ is disabled or ES-DE may not be able to correctly switch to the emulator window when launching games.
+A solution to this is to use the custom event scripts functionality to set a temporary resolution upon launching a game that will be reverted when returning to ES-DE. Such a setup is detailed in [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) for Unix, but should hopefully be possible to implement similarly on Windows. When going for this setup it's important that the setting _Run in background (while game is launched)_ is disabled or ES-DE may not be able to correctly switch to the emulator window when launching games.
+
+On macOS it's problematic to change screen resolutions on the fly or on a per-application basis as Apple has seemingly disabled most of this functionality in recent operating system releases. The only real option here is to lower the display resolution prior to launching ES-DE.
 
 
 ## Input device configuration
@@ -670,7 +672,7 @@ And on macOS with the filename `Broforce.sh`:
 
 And finally on Windows with the filename `Broforce.bat`:
 ```
-"c:\Program Files (x86)\Steam\steam.exe" steam://rungameid/26800
+"c:\Program Files (x86)\Steam\steam.exe" steam://rungameid/274190
 ```
 
 The game ID can be found by going to [https://store.steampowered.com](https://store.steampowered.com) and searching for a game. The Broforce example would have an URL such as this:
@@ -1368,7 +1370,7 @@ The metadata for a game is updated by scraping or by manual editing using the me
 
 **Hide taskbar (requires restart)** _(Windows only)_
 
-With this setting enabled, the taskbar will be hidden when launching ES-DE, and it will be restored when the application exits. This can make for a more seamless experience as the taskbar could otherwise flash by briefly when launching and when returning from games. But it can potentially cause issues on some Windows installations so it's disabled by default.
+With this setting enabled, the taskbar will be hidden when launching ES-DE, and it will be restored when the application exits. This can make for a more seamless experience as the taskbar could otherwise flash by briefly when launching and returning from games.
 
 **macOS Monterey VSync bug workaround** _(macOS only and hopefully only temporary)_
 
@@ -1376,11 +1378,7 @@ In macOS 12 Monterey an OpenGL driver bug was introduced that causes VSync to al
 
 **Run in background (while game is launched)**
 
-Enabling this option makes ES-DE continue to run while a game is launched. This is normally not recommended as it leads to a slightly strange application behavior and also removes the ability to capture return codes and log output from the emulators. But with some graphics drivers on Windows this may be a suitable workaround if there are problems launching games (also see the next option below). Note that launching Steam games on all supported operating systems always makes ES-DE continue to run in the background for technical reasons.
-
-**AMD and Intel GPU game launch workaround** _(Windows only)_
-
-There is an issue with launching games on some Windows computers, seemingly on those with AMD or Intel GPUs. The emulator will start and work correctly, but the screen will be blank. Enabling this option is a workaround for that problem, with the drawback that the screen may flicker slightly when launching a game, and there will be a single-pixel transparent line at the bottom of the screen while the emulator is loading. This option is enabled by default, so if you're using an Nvidia GPU you can probably disable this option.
+Enabling this option makes ES-DE continue to run while a game is launched. This is normally not recommended as it leads to a slightly strange application behavior and it also removes the ability to capture return codes and log output from the emulators. Generally this option should only be enabled if there are issues with launching games while suspending ES-DE. Note however that some systems like Valve Steam will always keep ES-DE running in the background because they require it for technical reasons (i.e. those systems will override this menu option).
 
 **Upscale video frame rate to 60 FPS**
 

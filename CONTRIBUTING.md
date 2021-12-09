@@ -32,6 +32,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Badges highlighting things like favorite games, completed games etc. (will require theme support)
 * Virtual (on-screen) keyboard
 * Support for the Raspberry Pi 4 (Raspberry Pi OS)
+* Improve full-screen support and make game launching more seamless, remove the temporary full-screen hacks
 * Add GLM library dependency for matrix and vector operations, decommission the built-in functions
 * AppImage release on Linux
 
@@ -40,7 +41,6 @@ This plan is under constant review so expect it to change from time to time. Sti
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
 * Add multiple new gamelist components (wheels, wall/grid etc.)
 * Move existing theme logic to legacy support, only to be used for backwards compatibility
-* Improve full-screen support and make game launching more seamless, remove the temporary full-screen hacks
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Improve text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
