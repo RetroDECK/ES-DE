@@ -459,18 +459,6 @@ int main(int argc, char* argv[])
         outputToConsole(true);
 #endif
 
-#if defined(_WIN64)
-    // Hide taskbar if the setting for this is enabled.
-    bool taskbarStateChanged = false;
-    unsigned int taskbarState;
-
-    if (Settings::getInstance()->getBool("HideTaskbar")) {
-        taskbarStateChanged = true;
-        taskbarState = getTaskbarState();
-        hideTaskbar();
-    }
-#endif
-
 #if defined(FREEIMAGE_LIB)
     // Call this ONLY when linking with FreeImage as a static library.
     FreeImage_Initialise();
@@ -565,6 +553,18 @@ int main(int argc, char* argv[])
     // This hides the mouse cursor during startup, i.e. before we have begun to capture SDL events.
     // On macOS this causes the mouse cursor to jump back to the Dock so don't do it on this OS.
     SDL_SetRelativeMouseMode(SDL_TRUE);
+#endif
+
+#if defined(_WIN64)
+    // Hide taskbar if the setting for this is enabled.
+    bool taskbarStateChanged = false;
+    unsigned int taskbarState;
+
+    if (Settings::getInstance()->getBool("HideTaskbar")) {
+        taskbarStateChanged = true;
+        taskbarState = getTaskbarState();
+        hideTaskbar();
+    }
 #endif
 
     if (splashScreen) {
