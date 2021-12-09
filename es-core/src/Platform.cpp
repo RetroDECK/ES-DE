@@ -169,27 +169,22 @@ int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool 
         int width{};
         int height{};
 
-        if (Settings::getInstance()->getBool("LaunchWorkaround")) {
-            // Hack to make the emulator window render correctly with some graphics drivers
-            // when running at full screen resolution. This is probably only an issue with AMD
-            // and Intel drivers as Nvidia and software drivers like LLVMpipe work fine without
-            // this workaround. If not used on affected drivers the emulator window will simply
-            // be black although the emulator actually works and outputs sounds, accepts input etc.
-            // There is a white flash the first time an emulator is started during the program
-            // session and a white single-pixel line will be visible at the bottom of the screen
-            // when the emulator is loading but it's at least a tolerable workaround.
-            SDL_GetWindowSize(Renderer::getSDLWindow(), &width, &height);
-            SDL_SetWindowSize(Renderer::getSDLWindow(), width, height - 1);
-            SDL_Delay(100);
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            Renderer::swapBuffers();
-        }
+        // Hack to make the emulator window render correctly when launching games while running in
+        // full screen mode. If not done, the emulator window will simply be black although the
+        // game actually works and outputs sounds, accepts input etc. There is sometimes a white
+        // flash the first time an emulator is started during the program session and a white
+        // single-pixel line will be visible at the bottom of the screen while the game is loading.
+        // But it's at least a tolerable workaround.
+        SDL_GetWindowSize(Renderer::getSDLWindow(), &width, &height);
+        SDL_SetWindowSize(Renderer::getSDLWindow(), width, height - 1);
+        SDL_Delay(100);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        Renderer::swapBuffers();
 
         WaitForSingleObject(pi.hThread, INFINITE);
         WaitForSingleObject(pi.hProcess, INFINITE);
 
-        if (Settings::getInstance()->getBool("LaunchWorkaround"))
-            SDL_SetWindowSize(Renderer::getSDLWindow(), width, height);
+        SDL_SetWindowSize(Renderer::getSDLWindow(), width, height);
     }
 
     // If the return value is false, then something failed.

@@ -159,36 +159,37 @@ namespace Renderer
             SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 #endif
 
-#if defined(__APPLE__) || defined(__unix__)
         bool userResolution = false;
         // Check if the user has changed the resolution from the command line.
         if (windowWidth != displayMode.w || windowHeight != displayMode.h)
             userResolution = true;
-            // Not sure if this could be a useful setting for some users.
-            //        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
-#endif
 
         unsigned int windowFlags;
         setupWindow();
 
 #if defined(_WIN64)
-        // For Windows, always set the mode to windowed as full screen mode seems to behave quite
-        // erratic. There may be a proper fix for this, but for now windowed mode seems to behave
-        // well and it's almost completely seamless, especially with a hidden taskbar.
-        windowFlags = getWindowFlags();
+        // For Windows we use SDL_WINDOW_BORDERLESS as "real" full screen doesn't work properly.
+        // The borderless mode seems to behave well and it's almost completely seamless, especially
+        // with a hidden taskbar.
+        if (!userResolution)
+            windowFlags = SDL_WINDOW_BORDERLESS | getWindowFlags();
+        else
+            // If the resolution has been manually set from the command line, then keep the border.
+            windowFlags = getWindowFlags();
 #elif defined(__APPLE__)
+        // Not sure if this could be a useful setting.
+        //        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
+
         // The SDL_WINDOW_BORDERLESS mode seems to be the only mode that somehow works on macOS
         // as a real fullscreen mode will do lots of weird stuff like preventing window switching
         // or refusing to let emulators run at all. SDL_WINDOW_FULLSCREEN_DESKTOP almost works, but
         // it "shuffles" windows when starting the emulator and won't return properly when the game
         // has exited. With SDL_WINDOW_BORDERLESS some emulators (like RetroArch) have to be
-        // configured to run in fullscreen mode or switching to its window will not work when a
-        // game is launched. So there is room for improvement although it's acceptable for now.
+        // configured to run in fullscreen mode or switching to its window will not work, but
+        // apart from that this mode works fine.
         if (!userResolution)
             windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
         else
-            // If the user has changed the resolution from the command line, then add a
-            // border to the window.
             windowFlags = SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
 #else
         if (!userResolution)

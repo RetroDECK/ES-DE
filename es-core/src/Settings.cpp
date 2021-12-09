@@ -233,9 +233,6 @@ void Settings::setDefaults()
     mBoolMap["VSyncWorkaround"] = {true, true};
 #endif
     mBoolMap["RunInBackground"] = {false, false};
-#if defined(_WIN64)
-    mBoolMap["LaunchWorkaround"] = {true, true};
-#endif
 #if defined(VIDEO_HW_DECODING)
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
