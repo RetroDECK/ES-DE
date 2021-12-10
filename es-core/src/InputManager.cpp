@@ -625,6 +625,12 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
 {
     // Open joystick and add it to our list.
     SDL_GameController* controller = SDL_GameControllerOpen(deviceIndex);
+
+    if (controller == nullptr) {
+        LOG(LogError) << "Couldn't add controller with device index " << deviceIndex;
+        return;
+    }
+
     SDL_Joystick* joy = SDL_GameControllerGetJoystick(controller);
 
     // Add it to our list so we can close it again later.

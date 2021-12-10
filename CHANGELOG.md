@@ -129,6 +129,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Single-scraping a game, aborting and then re-scraping without leaving the metadata editor would sometimes lead to a crash
 * Setting a really small font size in a theme would crash the application
 * Deleting the last custom collection could crash the application if the grouped "collections" system was set as the startup gamelist
+* Connecting a controller with buggy drivers could crash the application
 * Setting an invalid UIMode value in the configuration file could crash the application
 * Setting an invalid scraper service value in the configuration file could crash the application
 * When scraping in interactive mode with "Auto-accept single game matches" enabled, the game name could not be refined if there were no games found
