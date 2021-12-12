@@ -22,27 +22,48 @@ Only the latest stable version is maintained.
 
 You can contact me (Leon) via email, either at info@es-de.org or alternatively using the address I use for my code commits.
 
-### High level release plan
+### Release roadmap
 
-This plan is under constant review so expect it to change from time to time. Still it should give some feeling for which direction to move and what to work on first. These are only the larger topics, there are of course many smaller changes and improvements in addition to these.
+The roadmap is under constant review so expect it to change from time to time. Still it should give some feeling for which direction to move and what to work on first. These are only the larger topics, there are of course many smaller changes and improvements in addition to these. The plans for previous releases are shown in italics.
 
-#### v1.2
+#### _v1.0_
 
-* Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
-* Badges highlighting things like favorite games, completed games etc. (will require theme support)
-* Virtual (on-screen) keyboard
-* Support for the Raspberry Pi 4 (Raspberry Pi OS)
-* Improve full-screen support and make game launching more seamless, remove the temporary full-screen hacks
-* Add GLM library dependency for matrix and vector operations, decommission the built-in functions
-* AppImage release on Linux
+* _New gamelist sorting and media handling logic_
+* _Overhaul of the menu system_
+* _Scraping of additional images types as well as videos_
+* _OpenGL shader support for blurred backgrounds, scanline rendering etc._
+* _Navigation sound support_
+* _A comprehensive theme set bundled with the application_
+* _Ports for Windows, macOS and BSD Unix_
+* _Preconfigured system configuration files for all supported operating systems_
+* _A detailed user guide_
+
+#### _v1.1_
+
+* _Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)_
+* _Ability to show game media in full screen from the gamelist view_
+* _Proper game launching screen_
+* _New FFmpeg-based video player_
+* _Better method to find installed emulators and cores_
+* _Move to the SDL2 GameController API_
+* _Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)_
+
+#### _v1.2_
+
+* _Support for pre-defined alternative emulators and cores (configured in es_systems.xml)_
+* _Badges highlighting things like favorite games, completed games etc. (will require theme support)_
+* _Virtual (on-screen) keyboard_
+* _Support for the Raspberry Pi 4 (Raspberry Pi OS)_
+* _Improve fullscreen support and make game launching more seamless, remove the temporary fullscreen hacks_
+* _Add GLM library dependency for matrix and vector operations, decommission the built-in functions_
+* _AppImage release on Linux_
 
 #### v1.3
 
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
-* Add multiple new gamelist components (wheels, wall/grid etc.)
-* Move existing theme logic to legacy support, only to be used for backwards compatibility
+* Multiple new gamelist components (wheels, wall/grid etc.)
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
-* Improve text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
+* Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
 #### v1.4
 
@@ -63,6 +84,7 @@ This plan is under constant review so expect it to change from time to time. Sti
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Support for additional scraper services (if feasible?)
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets
+* Replacements for the abandoned NanoSVG and FreeImage libraries
 
 #### v2.0
 
