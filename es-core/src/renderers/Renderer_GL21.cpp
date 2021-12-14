@@ -414,7 +414,22 @@ namespace Renderer
 
     void swapBuffers()
     {
+#if defined(__APPLE__)
+        // On macOS when running in the background, the OpenGL driver apparently does not swap
+        // the frames which leads to a very fast swap time. This makes ES-DE use a lot of CPU
+        // resources which slows down the games significantly on slower machines. By introducing
+        // a delay if the swap time is very low we reduce CPU usage while still keeping the
+        // application functioning normally.
+        const auto beforeSwap = std::chrono::system_clock::now();
         SDL_GL_SwapWindow(getSDLWindow());
+        const auto afterSwap = std::chrono::system_clock::now();
+
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(afterSwap - beforeSwap).count() <
+            3.0)
+            SDL_Delay(10);
+#else
+        SDL_GL_SwapWindow(getSDLWindow());
+#endif
         GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     }
 
