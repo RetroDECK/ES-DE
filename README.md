@@ -35,7 +35,6 @@ The following operating systems have been tested (all for the x86 architecture u
 
 If using a Mac with an M1 processor you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS M1 build of ES-DE is released.
 
-If using macOS Monterey, there has been a quite serious OpenGL bug introduced by Apple which causes problems for ES-DE. A workaround for this issue is discussed [here](USERGUIDE-DEV.md#specific-notes-for-macos).
 
 ### Download
 

@@ -49,8 +49,6 @@ The following operating systems have been tested (all for the x86 architecture u
 
 If using a Mac with an M1 processor you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
-If using macOS Monterey, there has been a quite serious OpenGL bug introduced by Apple which causes problems for ES-DE. A workaround for this issue is discussed [below](USERGUIDE-DEV.md#specific-notes-for-macos).
-
 Additional known issues are detailed in [CHANGELOG.md](CHANGELOG.md#known-issues).
 
 As for display resolutions, the minimum pixel value is 224 and the maximum is 7680. This means that you can run ES-DE at for instance 320x224 all the way up to 7680x4320 (8K UHD). Vertical screen orientation is also supported, as well as ultra-wide resolutions like 3840x1440. Note that there could be some minor visual glitches when running in vertical orientation (this will be fixed in future ES-DE releases) and for the best experience you will probably need to use a customized theme set when running at extreme or unusual resolutions.
@@ -188,8 +186,6 @@ If you accidentally refused ES-DE the folder access, you can fix this by opening
 Another macOS-specific requirement is that the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's currently unclear if other emulators than RetroArch are affected by this issue.
 
 Another problem on macOS 11 Big Sur (and possibly older OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers. The issue appears to be resolved in macOS Monterey.
-
-In macOS 12 Monterey there has been a quite serious OpenGL driver bug introduced by Apple which disables VSync, making the operating system always try to render as many frames as it can. This slows down ES-DE quite a lot and consumes lots of machine resources. The issue is discussed [here](https://github.com/libsdl-org/SDL/issues/4918). There is a temporary workaround available via the _macOS Monterey VSync bug workaround_ setting in the _Other settings_ menu (which is enabled by default). This will add a short 10 millisecond delay after each frame if the last frame was swapped in less than 3 milliseconds. It's not a proper fix but it should at least make ES-DE usable on Monterey until Apple releases a patch for the bug.
 
 
 ## Specific notes for Raspberry Pi
@@ -1371,10 +1367,6 @@ The metadata for a game is updated by scraping or by manual editing using the me
 **Hide taskbar (requires restart)** _(Windows only)_
 
 With this setting enabled, the taskbar will be hidden when launching ES-DE, and it will be restored when the application exits. This can make for a more seamless experience as the taskbar could otherwise flash by briefly when launching and returning from games.
-
-**macOS Monterey VSync bug workaround** _(macOS only and hopefully only temporary)_
-
-In macOS 12 Monterey an OpenGL driver bug was introduced that causes VSync to always be disabled. This makes the operating system try to render as many frames as it can which slows down ES-DE quite a lot as well as consuming lots of machine resources. Using this setting (which is enabled by default), a small 10 millisecond delay is introduced after each frame if it took less than 3 milliseconds to swap the last one. This is not a proper solution, and it's not an accurate solution but it's at least something until Apple hopefully fixes the bug via an OS update. Earlier macOS releases are unaffected by this issue. To check if you have this problem, disable the setting and then enable the _Display GPU statistics overlay_ option. If your FPS counter shows really high numbers (like in the hundreds of frames per second) then the issue is present on your machine.
 
 **Run in background (while game is launched)**
 

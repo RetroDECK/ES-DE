@@ -30,33 +30,33 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 * _New gamelist sorting and media handling logic_
 * _Overhaul of the menu system_
-* _Scraping of additional images types as well as videos_
+* _Scraping of additional image types as well as videos_
 * _OpenGL shader support for blurred backgrounds, scanline rendering etc._
 * _Navigation sound support_
 * _A comprehensive theme set bundled with the application_
 * _Ports for Windows, macOS and BSD Unix_
-* _Preconfigured system configuration files for all supported operating systems_
+* _Preconfigured systems configuration files for all supported operating systems_
 * _A detailed user guide_
 
 #### _v1.1_
 
 * _Mix image generation based on screenshots, 3D boxes and marquee files (as in Skyscraper)_
-* _Ability to show game media in full screen from the gamelist view_
+* _Ability to display game media in full screen from the gamelist view_
 * _Proper game launching screen_
 * _New FFmpeg-based video player_
 * _Better method to find installed emulators and cores_
 * _Move to the SDL2 GameController API_
-* _Different button graphics and names applied depending on controller type (Xbox, PlayStation and SNES style)_
+* _Different button graphics and names applied depending on controller type (Xbox, PlayStation or SNES style)_
 
 #### _v1.2_
 
-* _Support for pre-defined alternative emulators and cores (configured in es_systems.xml)_
-* _Badges highlighting things like favorite games, completed games etc. (will require theme support)_
-* _Virtual (on-screen) keyboard_
-* _Support for the Raspberry Pi 4 (Raspberry Pi OS)_
-* _Improve fullscreen support and make game launching more seamless, remove the temporary fullscreen hacks_
-* _Add GLM library dependency for matrix and vector operations, decommission the built-in functions_
-* _AppImage release on Linux_
+* Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
+* Badges highlighting things like favorite games, completed games etc. (will require theme support)
+* Virtual (on-screen) keyboard
+* Support for the Raspberry Pi 4 (Raspberry Pi OS)
+* Improve fullscreen support and make game launching more seamless, remove the temporary fullscreen hacks
+* Add GLM library dependency for matrix and vector operations, decommission the built-in functions
+* AppImage and AUR releases on Linux
 
 #### v1.3
 

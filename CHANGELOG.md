@@ -51,6 +51,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added proper frame drop functionality to the FFmpeg video player to greatly reduce stuttering on slower machines
 * Made multiple optimizations to the FFmpeg video player to reduce CPU usage and to increase framerates on slower machines
 * Disabled the FFmpeg video player hardware decoding option (it can still be built using a CMake flag)
+* Significantly reduced the CPU usage on macOS while running in the background
 * Removed the copying of es_settings.cfg to es_settings.xml as it caused issues when migrating from other EmulationStation forks
 * Improved the gamelist filter GUI to not allow filtering of values where there is no actual data to filter, e.g. Favorites for a system with no favorite games
 * Grayed out all fields in the gamelist filter GUI where there is no data to filter, previously some fields were removed entirely and some could still be used
@@ -128,6 +129,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 
 * Single-scraping a game, aborting and then re-scraping without leaving the metadata editor would sometimes lead to a crash
 * Setting a really small font size in a theme would crash the application
+* Text containing invalid (partial) Unicode characters could crash the application
 * Deleting the last custom collection could crash the application if the grouped "collections" system was set as the startup gamelist
 * Connecting a controller with buggy drivers could crash the application
 * Setting an invalid UIMode value in the configuration file could crash the application
