@@ -141,10 +141,23 @@ void Font::unloadTextures()
 Font::FontTexture::FontTexture(const int mSize)
 {
     textureId = 0;
-    // I'm not entirely sure if the 16 and 6 constants are correct, but they seem to provide
+
+    // This is a hack to add some extra texture size when running at very low resolutions. If not
+    // doing this, the use of fallback fonts (such as Japanese characters) could result in the
+    // texture not fitting the glyphs which would crash the application.
+    int extraTextureSize{0};
+    const float screenSizeModifier =
+        std::min(Renderer::getScreenWidthModifier(), Renderer::getScreenHeightModifier());
+
+    if (screenSizeModifier < 0.2f)
+        extraTextureSize += 6;
+    if (screenSizeModifier < 0.45f)
+        extraTextureSize += 4;
+
+    // It's not entirely clear if the 18 and 6 constants are correct, but they seem to provide
     // a texture buffer large enough to hold the fonts (otherwise the application would crash).
     // This logic is obviously a hack though and needs to be properly reviewed and improved.
-    textureSize = glm::ivec2{mSize * 16, mSize * 6};
+    textureSize = glm::ivec2{mSize * (18 + extraTextureSize), mSize * (6 + extraTextureSize / 2)};
     writePos = glm::ivec2{};
     rowHeight = 0;
 }
