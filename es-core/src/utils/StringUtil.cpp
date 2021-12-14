@@ -306,7 +306,7 @@ namespace Utils
                 result = (stringArg[cursor++]);
             }
             // 11110xxx, four byte character.
-            else if (checkCharType >= 0xF0) {
+            else if (checkCharType >= 0xF0 && cursor < stringArg.length() - 2) {
                 // 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
                 result = (stringArg[cursor++] & 0x07) << 18;
                 result |= (stringArg[cursor++] & 0x3F) << 12;
@@ -314,14 +314,14 @@ namespace Utils
                 result |= stringArg[cursor++] & 0x3F;
             }
             // 1110xxxx, three byte character.
-            else if (checkCharType >= 0xE0) {
+            else if (checkCharType >= 0xE0 && cursor < stringArg.length() - 1) {
                 // 1110xxxx 10xxxxxx 10xxxxxx
                 result = (stringArg[cursor++] & 0x0F) << 12;
                 result |= (stringArg[cursor++] & 0x3F) << 6;
                 result |= stringArg[cursor++] & 0x3F;
             }
             // 110xxxxx, two byte character.
-            else if (checkCharType >= 0xC0) {
+            else if (checkCharType >= 0xC0 && cursor < stringArg.length()) {
                 // 110xxxxx 10xxxxxx
                 result = (stringArg[cursor++] & 0x1F) << 6;
                 result |= stringArg[cursor++] & 0x3F;
