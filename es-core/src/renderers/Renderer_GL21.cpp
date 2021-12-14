@@ -414,30 +414,7 @@ namespace Renderer
 
     void swapBuffers()
     {
-#if defined(__APPLE__)
-        // This is an ugly hack to work around an OpenGL VSync bug introduced in macOS 12 Monterey.
-        // What happens is that the VSync setting in SDL gets effectively ignored so the operating
-        // system will try to render as many frames as it can manage which eats all the available
-        // resources. If the corresponding setting is enabled via the main menu, a 10 millisecond
-        // delay will be introduced if the swap took less than 3 milliseconds to complete. This is
-        // very crude and not accurate at all but it will hopefully avoid the worst slowdowns until
-        // Apple releases an OS update that properly fixes the problem.
-        if (Settings::getInstance()->getBool("VSyncWorkaround")) {
-            const auto beforeSwap = std::chrono::system_clock::now();
-            SDL_GL_SwapWindow(getSDLWindow());
-            const auto afterSwap = std::chrono::system_clock::now();
-
-            if (std::chrono::duration_cast<std::chrono::milliseconds>(afterSwap - beforeSwap)
-                    .count() < 3.0)
-                SDL_Delay(10);
-        }
-        else {
-            SDL_GL_SwapWindow(getSDLWindow());
-        }
-
-#else
         SDL_GL_SwapWindow(getSDLWindow());
-#endif
         GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     }
 

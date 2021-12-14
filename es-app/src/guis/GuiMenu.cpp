@@ -962,19 +962,6 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if defined(__APPLE__)
-    // macOS Monterey VSync bug workaround (hack for broken OpenGL drivers).
-    auto vsyncWorkaround = std::make_shared<SwitchComponent>(mWindow);
-    vsyncWorkaround->setState(Settings::getInstance()->getBool("VSyncWorkaround"));
-    s->addWithLabel("MACOS MONTEREY VSYNC BUG WORKAROUND", vsyncWorkaround);
-    s->addSaveFunc([vsyncWorkaround, s] {
-        if (vsyncWorkaround->getState() != Settings::getInstance()->getBool("VSyncWorkaround")) {
-            Settings::getInstance()->setBool("VSyncWorkaround", vsyncWorkaround->getState());
-            s->setNeedsSaving();
-        }
-    });
-#endif
-
     // Run ES in the background when a game has been launched.
     auto run_in_background = std::make_shared<SwitchComponent>(mWindow);
     run_in_background->setState(Settings::getInstance()->getBool("RunInBackground"));
