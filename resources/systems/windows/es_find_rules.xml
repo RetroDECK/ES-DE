@@ -36,6 +36,12 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="XEMU">
+        <!-- Microsoft Xbox emulator xemu -->
+        <rule type="systempath">
+            <entry>xemu.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="systempath">

@@ -35,12 +35,23 @@
         </rule>
     </core>
     <emulator name="DOSBOX_STAGING">
+        <!-- DOS emulator DOSBox Staging -->
         <rule type="systempath">
             <entry>dosbox-staging</entry>
             <entry>io.github.dosbox-staging</entry>
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
+        </rule>
+    </emulator>
+    <emulator name="XEMU">
+        <!-- Microsoft Xbox emulator xemu -->
+        <rule type="systempath">
+            <entry>xemu</entry>
+            <entry>app.xemu.xemu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/app.xemu.xemu</entry>
         </rule>
     </emulator>
     <emulator name="YUZU">
