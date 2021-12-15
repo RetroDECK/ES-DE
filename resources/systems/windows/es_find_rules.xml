@@ -36,6 +36,12 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="RPCS3">
+        <!-- Sony PlayStation 3 emulator RPCS3 -->
+        <rule type="systempath">
+            <entry>rpcs3.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">

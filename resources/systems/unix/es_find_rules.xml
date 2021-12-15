@@ -44,6 +44,17 @@
             <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="RPCS3">
+        <!-- Sony PlayStation 3 emulator RPCS3 -->
+        <rule type="systempath">
+            <entry>rpcs3.AppImage</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/rpcs3.AppImage</entry>
+            <entry>~/.local/bin/rpcs3.AppImage</entry>
+            <entry>~/bin/rpcs3.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
