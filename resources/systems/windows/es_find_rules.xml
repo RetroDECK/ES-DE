@@ -48,6 +48,12 @@
             <entry>xemu.exe</entry>
         </rule>
     </emulator>
+    <emulator name="XENIA">
+        <!-- Microsoft Xbox 360 emulator xenia -->
+        <rule type="systempath">
+            <entry>xenia.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="systempath">

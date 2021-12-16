@@ -943,7 +943,7 @@
         <name>ps3</name>
         <fullname>Sony PlayStation 3</fullname>
         <path>%ROMPATH%\ps3</path>
-        <extension>.BIN</extension>
+        <extension>.bin .BIN</extension>
         <command label="RPCS3 (Standalone)">%EMULATOR_RPCS3% --no-gui %ROM%</command>
         <platform>ps3</platform>
         <theme>ps3</theme>
@@ -1382,8 +1382,8 @@
         <name>xbox360</name>
         <fullname>Microsoft Xbox 360</fullname>
         <path>%ROMPATH%\xbox360</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.iso .ISO .xex .XEX</extension>
+        <command label="xenia (Standalone)">%EMULATOR_XENIA% %ROM%</command>
         <platform>xbox360</platform>
         <theme>xbox360</theme>
     </system>
