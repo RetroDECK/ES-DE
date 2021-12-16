@@ -175,7 +175,9 @@ Unfortunately on Linux it's at the moment not possible to run the Steam release 
 
 ## Specific notes for macOS
 
-On macOS, the first time you launch a game from within ES-DE, the operating system will present you with a security option with the following description:
+The main issue with macOS is the sorry state of emulator support. Many emulators are simply not available on this operating system, or the precompiled binaries have not been notarized meaning they will not run on anything newer than macOS 10.14.5. But most RetroArch cores are available so in general macOS is still a viable retrogaming platform. And if you are willing to compile from source code then this gives access to a number of additional emulators. However the procedure for emulator compilation is beyond the scope of the ES-DE documentation and the systems configuration file has only been preconfigured for emulators that are readily available for download and that have been verified as working on current macOS releases.
+
+The first time you launch a game from within ES-DE, the operating system will present you with a security option with the following description:
 
 `"EmulationStation Desktop Edition" would like to access files in your Documents folder.`
 
@@ -527,13 +529,44 @@ What ES-DE will do is to look for _yuzu.AppImage_ in the system PATH as well as 
 ~/bin/yuzu.AppImage
 ```
 
-When downloading the AppImage from [https://yuzu-emu.org](https://yuzu-emu.org) it will be named something like `yuzu-20210621-45d9504ea.AppImage`, just rename this to yuzu.AppImage and everything should work correctly.
+When downloading the AppImage from [https://yuzu-emu.org](https://yuzu-emu.org) it will be named something like `yuzu-20210621-45d9504ea.AppImage`, just rename this to yuzu.AppImage and everything should work correctly. Another approach is to make a symlink named yuzu.AppImage, either way will work fine.
 
 Note that the name is case sensitive, so _yuzu.appimage_ will not be found by ES-DE.
 
 For Windows, ES-DE will look for _yuzu.exe_ in the system Path as well as in the default installation directory `~\AppData\Local\yuzu\yuzu-windows-msvc\`
 
 Apart from the potential difficulty in locating the emulator binary, there are some special configuration steps required for the emulator, refer to the Yuzu website for more information about this.
+
+#### Sony PlayStation 3
+
+The RPCS3 emulator is only available on Linux and Windows and requires a bit of special setup. For now only disc-based games are supported although this will likely be expanded in future ES-DE releases.
+
+On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all the application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe.
+
+On Linux RPCS3 is only shipped as an AppImage which is a bit problematic as there are no standard directories where these files are located.
+
+What ES-DE will do is to look for _rpcs3.AppImage_ in the system PATH as well as in the following locations:
+
+```
+~/Applications/rpcs3.AppImage
+~/.local/bin/rpcs3.AppImage
+~/bin/rpcs3.AppImage
+```
+
+When downloading the AppImage from [https://rpcs3.net](https://rpcs3.net) it will be named something like `rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage`, just rename this to rpcs3.AppImage and everything should work correctly. Another approach is to make a symlink named rpcs3.AppImage, either way will work fine.
+
+Note that the name is case sensitive, so _rpcs3.appimage_ will not be found by ES-DE.
+
+As for the game installation on both Windows and Linux, you need to retain the directory structure of the Blu-ray disc. The emulator needs to launch the .BIN file in the PS3_GAME/USRDIR directory, which by default is named EROOT.BIN. It's possible to rename this file and still have the game working properly, which is recommended as it makes scraping easier.
+
+This is an example of a renamed EBOOT.BIN file:
+```
+~/ROMs/ps3/Gran Turismo 5/PS3_GAME/USRDIR/Gran Turismo 5.BIN
+```
+
+Unfortunately due to the nature of PS3 emulation you need to start the game by traversing the PS3_GAME and USRDIR directories to launch the .BIN file. Attempts to symlink or relocate this file has caused issues with starting RPCS3 so this is probably just something we'll have to live with.
+
+Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the RPCS3 documentation.
 
 #### Commodore Amiga
 
@@ -1805,7 +1838,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 
 For the **Full name** column, text inside square brackets [] are comments and not part of the actual system name.
 
-The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If one or more of the platforms are not specified it means that the system is not available on those platforms. For example Lutris which only exists on Unix is marked with only a _[U]_. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core. A number of systems are marked as _Placeholder_ which means that although there is a configuration entry present, the actual emulator is not preconfigured. If you want to use such a system, you need to add a custom configuration yourself. The long term goal is to have these placeholders replaced with proper emulator configuration so all systems can be used without requiring manual setup.
+The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If one or more of the platforms are not specified it means that the system is not available on those platforms. For example Lutris which only exists on Unix is marked with only a _[U]_. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core. There is a special [W*] indication for Windows which means that you need to manually add the emulator directory to the operating system's Path environment variable. This is required as some emulators don't ship with proper installers but instead only as a zip file that can be extracted anywhere on the filesystem. A number of systems are marked as _Placeholder_ which means that although there is a configuration entry present, the actual emulator is not preconfigured. If you want to use such a system, you need to add a custom configuration yourself. The long term goal is to have these placeholders replaced with proper emulator configuration so all systems can be used without requiring manual setup.
 
 The **Alternative emulators** column lists additional emulators configured in es_systems.xml that can be selected per system and per game, as explained earlier in this guide. This does not necessarily include everything in existence, as for some platforms there are a lot of emulators to choose from. In those cases the included emulators is a curated selection. In the same manner as the _Default emulator_ column, differences between Unix, macOS and Windows are marked using square brackets. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core.
 
@@ -1815,7 +1848,7 @@ For additional details regarding which game file extensions are supported per sy
 
 If you generated the ROMs directory structure when first starting ES-DE, the systeminfo.txt files located in each game system directory will also contain information about the emulators and supported file extensions.
 
-For CD-based systems it's generally recommended to use CHD files (extension .chd) as this saves space due to compression compared to BIN/CUE, IMG, ISO etc. The CHD format is also supported by most emulators. You can convert to CHD from various formats using the MAME `chdman` utility, for example `chdman createcd -i mygame.iso -o mygame.chd`. Sometimes chdman has issues converting from the IMG and BIN formats, and in this case it's possible to first convert to ISO using `ccd2iso`, such as `ccd2iso mygame.img mygame.iso`.
+For CD-based systems it's generally recommended to use CHD files (extension .chd) as this saves space due to compression compared to BIN/CUE, IMG, ISO etc. The CHD format is also supported by most emulators. You can convert to CHD from various formats using the MAME `chdman` utility, for example `chdman createcd -i mygame.iso -o mygame.chd`. Sometimes chdman has issues converting from the IMG and BIN formats, and in this case it's possible to first convert to ISO using `ccd2iso`, such as `ccd2iso mygame.img mygame.iso` or in the case of BIN files `ccd2iso mygame.bin mygame.iso`.
 
 MAME emulation is a bit special as the choice of emulator depends on which ROM set you're using. It's recommended to go for the latest available set, as MAME is constantly improved with more complete and accurate emulation. Therefore the `arcade` system is configured to use _MAME - Current_ by default, which as the name implies will be the latest available MAME version. But if you have a really slow computer you may want to use another ROM set such as the popular 0.78. In this case, you can either select _MAME 2003-Plus_ as an alternative emulator, or you can use the `mame` system which comes configured with this emulator as the default. There are more MAME versions available as alternative emulators, as you can see in the table below.
 
@@ -1826,7 +1859,7 @@ In general .zip or .7z files are recommended for smaller-sized games like those 
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
 Default emulator/Alternative emulators columns: \
-**[U]**: Unix, **[M]**: macOS, **[W]**: Windows
+**[U]**: Unix, **[M]**: macOS, **[W]**: Windows, **[W\*]**: Windows, needs manual Path entry
 
 All emulators are RetroArch cores unless marked as **(Standalone**)
 
@@ -1928,7 +1961,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             | PCSX2 [UW]                        |                                   |              |                                      |
-| ps3                   | Sony PlayStation 3                             | _Placeholder_                     |                                   |              |                                      |
+| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UW*]      |                                   | Yes          | In separate folder (one folder per game, with complete file structure retained) |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            |                                   |              |                                      |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
@@ -1972,8 +2005,8 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      |                                   |              |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file in root folder |
 | x68000                | Sharp X68000                                   | PX68k                             |                                   |              |                                      |
-| xbox                  | Microsoft Xbox                                 | _Placeholder_                     |                                   |              |                                      |
-| xbox360               | Microsoft Xbox 360                             | _Placeholder_                     |                                   |              |                                      |
+| xbox                  | Microsoft Xbox                                 | xemu **(Standalone)** [UW*]       |                                   | Yes          | Single ISO file in root folder       |
+| xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W*]       |                                   | No           |                                      |
 | zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
 | zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              |                                   |              |                                      |

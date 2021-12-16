@@ -1622,7 +1622,7 @@ This file makes it possible to define rules for where to search for the emulator
 
 The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
 
-Here's an example es_find_rules.xml file for Unix:
+Here's an example es_find_rules.xml file for Unix (this is not the complete file shipped with ES-DE as that would be too large to include here):
 ```xml
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Unix -->
@@ -1661,6 +1661,7 @@ Here's an example es_find_rules.xml file for Unix:
         </rule>
     </core>
     <emulator name="DOSBOX_STAGING">
+        <!-- DOS emulator DOSBox Staging -->
         <rule type="systempath">
             <entry>dosbox-staging</entry>
             <entry>io.github.dosbox-staging</entry>

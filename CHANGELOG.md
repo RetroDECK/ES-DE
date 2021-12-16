@@ -42,6 +42,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added support for an optional \<systemsortname\> tag for es_systems.xml that can be used to override the default \<fullname\> systems sorting
 * Added a "winregistryvalue" find rule for Windows which can be used to retrieve emulator installation locations from arbitrary Windows Registry keys
 * Added a %RUNINBACKGROUND% es_systems.xml variable and removed the hardcoded run in background logic for the Valve Steam system
+* Added support for prefixing the %EMULATOR_% variable in the es_systems.xml file with a command, for example to use Wine to launch Windows emulators on Linux
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
 * Added scraping of controller metadata (only for ScreenScraper and only for arcade systems)
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)
@@ -64,6 +65,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added the system name and full system name as additional arguments to the game-start and game-end custom events
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
 * Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
+* Added emulator configurations for the Microsoft Xbox, Microsoft Xbox 360 and Sony PlayStation 3 systems
 * Added support for a more advanced system view carousel logo placeholder (for unthemed systems) by allowing the combination of text and graphics
 * Expanded the themeable options for "helpsystem" to support custom button graphics, dimmed text and dimmed icon colors, upper/lower/camel case and custom spacing
 * Made the scrolling speed of ScrollableContainer more consistent across various screen resolutions and display aspect ratios
