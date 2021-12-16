@@ -1739,8 +1739,15 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         </rule>
     </core>
     <emulator name="DOSBOX_STAGING">
+        <!-- DOS emulator DOSBox Staging, Homebrew version -->
         <rule type="staticpath">
-            <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
+            <entry>/usr/local/bin/dosbox-staging</entry>
+        </rule>
+    </emulator>
+    <emulator name="MUPEN64PLUS">
+        <!-- Nintendo 64 emulator Mupen64Plus, Homebrew version -->
+        <rule type="staticpath">
+            <entry>/usr/local/bin/mupen64plus</entry>
         </rule>
     </emulator>
 </ruleList>
