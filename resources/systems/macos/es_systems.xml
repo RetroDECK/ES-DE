@@ -15,7 +15,8 @@
         <fullname>Nintendo 64DD</fullname>
         <path>%ROMPATH%/64dd</path>
         <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
+        <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
+        <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% %ROM%</command>
         <platform>n64</platform>
         <theme>64dd</theme>
     </system>
@@ -336,6 +337,7 @@
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.dylib %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.dylib %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.dylib %ROM%</command>
+        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX_STAGING% %ROM%</command>
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
@@ -723,7 +725,8 @@
         <fullname>Nintendo 64</fullname>
         <path>%ROMPATH%/n64</path>
         <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
+        <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
+        <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% %ROM%</command>
         <platform>n64</platform>
         <theme>n64</theme>
     </system>
