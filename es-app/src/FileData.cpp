@@ -885,9 +885,8 @@ void FileData::launchGame(Window* window)
     // Hack to show an error message if there was no emulator entry in es_find_rules.xml.
     if (binaryPath.substr(0, 18) == "NO EMULATOR RULE: ") {
         std::string emulatorEntry = binaryPath.substr(18, binaryPath.size() - 18);
-        LOG(LogError)
-            << "Couldn't launch game, either there is no emulator entry for \"" << emulatorEntry
-            << "\" in es_find_rules.xml or there are no systempath or staticpath rules defined";
+        LOG(LogError) << "Couldn't launch game, either there is no emulator entry for \""
+                      << emulatorEntry << "\" in es_find_rules.xml or there are no rules defined";
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
@@ -1079,6 +1078,9 @@ void FileData::launchGame(Window* window)
     command = Utils::String::replace(command, "%BASENAME%", baseName);
     command = Utils::String::replace(command, "%ROMRAW%", romRaw);
 
+    // Trim any leading and trailing whitespace characters as they could cause launch issues.
+    command = Utils::String::trim(command);
+
     // swapBuffers() is called here to turn the screen black to eliminate some potential
     // flickering and to avoid showing the game launch message briefly when returning
     // from the game.
@@ -1173,9 +1175,10 @@ const std::string FileData::findEmulatorPath(std::string& command)
 {
     // Extract the emulator executable from the launch command string. There are two ways
     // that the emulator can be defined in es_systems.xml, either using the find rules in
-    // es_find_rules.xml or via the exact emulator binary name. In the former case, we
-    // need to process any configured systempath and staticpath rules, and in the latter
-    // we simply search for the emulator binary in the system path.
+    // es_find_rules.xml or via the explicit emulator binary name. In the former case, we
+    // need to process any configured systempath and staticpath rules (and for Windows also
+    // winregistrypath and winregistryvalue rules), and in the latter case we simply search
+    // for the emulator binary in the system path.
 
     std::string emuExecutable;
     std::string exePath;
@@ -1189,12 +1192,13 @@ const std::string FileData::findEmulatorPath(std::string& command)
     std::vector<std::string> emulatorSystemPaths;
     std::vector<std::string> emulatorStaticPaths;
     std::string emulatorEntry;
-    size_t endPos = 0;
+    size_t startPos{0};
+    size_t endPos{0};
 
-    if (command.find("%EMULATOR_", 0) == 0) {
-        endPos = command.find("%", 1);
+    if ((startPos = command.find("%EMULATOR_")) != std::string::npos) {
+        endPos = command.find("%", startPos + 1);
         if (endPos != std::string::npos)
-            emulatorEntry = command.substr(10, endPos - 10);
+            emulatorEntry = command.substr(startPos + 10, endPos - startPos - 10);
     }
 
     if (emulatorEntry != "") {
@@ -1209,7 +1213,13 @@ const std::string FileData::findEmulatorPath(std::string& command)
     }
 
     // Error handling in case of no emulator find rule.
+#if defined(_WIN64)
+    if (emulatorEntry != "" && emulatorWinRegistryPaths.empty() &&
+        emulatorWinRegistryValues.empty() && emulatorSystemPaths.empty() &&
+        emulatorStaticPaths.empty())
+#else
     if (emulatorEntry != "" && emulatorSystemPaths.empty() && emulatorStaticPaths.empty())
+#endif
         return "NO EMULATOR RULE: " + emulatorEntry;
 
 #if defined(_WIN64)
@@ -1249,7 +1259,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
         if (pathStatus == ERROR_SUCCESS) {
             if (Utils::FileSystem::isRegularFile(registryPath) ||
                 Utils::FileSystem::isSymlink(registryPath)) {
-                command.replace(0, endPos + 1, registryPath);
+                command.replace(startPos, endPos - startPos + 1, registryPath);
                 RegCloseKey(registryKey);
                 return registryPath;
             }
@@ -1294,7 +1304,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
         // so check for that as well.
         if (pathStatus == ERROR_SUCCESS) {
             if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
-                command.replace(0, endPos + 1, path);
+                command.replace(startPos, endPos - startPos + 1, path);
                 RegCloseKey(registryKey);
                 return path;
             }
@@ -1324,14 +1334,14 @@ const std::string FileData::findEmulatorPath(std::string& command)
         }
         if (exePath != "") {
             exePath += "\\" + path;
-            command.replace(0, endPos + 1, exePath);
+            command.replace(startPos, endPos - startPos + 1, exePath);
             return exePath;
         }
 #else
         exePath = Utils::FileSystem::getPathToBinary(path);
         if (exePath != "") {
             exePath += "/" + path;
-            command.replace(0, endPos + 1, exePath);
+            command.replace(startPos, endPos - startPos + 1, exePath);
             return exePath;
         }
 #endif
@@ -1345,7 +1355,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
         path = Utils::String::replace(path, "%ROMPATH%", getROMDirectory());
 
         if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
-            command.replace(0, endPos + 1, path);
+            command.replace(startPos, endPos - startPos + 1, path);
             return path;
         }
     }
