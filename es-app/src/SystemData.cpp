@@ -141,6 +141,7 @@ void FindRules::loadFindRules()
         emulatorRules.staticPaths.clear();
 #if defined(_WIN64)
         emulatorRules.winRegistryPaths.clear();
+        emulatorRules.winRegistryValues.clear();
 #endif
     }
 
