@@ -1963,7 +1963,7 @@ By default all controller input (keyboard and controller button presses) will be
 
 It's possible to easily create a portable installation of ES-DE on Windows, for example to place on a USB memory stick.
 
-For the sake of this example, let's assume that the removable media has the device name `F:\`
+For this example, let's assume that the removable media has the device name `F:\`
 
 These are the steps to perform:
 
@@ -1977,43 +1977,53 @@ You should end up with something like this:
 F:\EmulationStation-DE\
 F:\EmulationStation-DE\RetroArch-Win64\
 F:\EmulationStation-DE\yuzu\
+F:\EmulationStation-DE\RPCS3\
+F:\EmulationStation-DE\xemu\
+F:\EmulationStation-DE\xenia\
 F:\EmulationStation-DE\ROMs\
 F:\EmulationStation-DE\portable.txt
 ```
 
-(Yuzu is an optional Nintendo Switch emulator.)
+This is just an example, you may not have all these emulators installed and as well there will of course be many more files and directories than those listed above inside the F:\EmulationStation-DE directory.
 
-Of course there will be many more files and directories from the normal installation than those listed above.
-
-How this works is that when ES-DE finds a file named portable.txt in its executable directory, it will by default locate the .emulationstation directory directly in this folder. It's also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under F:\ in this example.
+How the portable setup works is that when ES-DE finds a file named portable.txt in its executable directory, it will by default locate the .emulationstation directory directly inside this folder. It's also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under F:\ in this example.
 
 If the --home command line parameter is passed when starting ES-DE, that will override the portable.txt file.
 
-The emulators that will be automatically searched for by ES-DE are (relative to the EmulationStation-DE directory):
+By default the emulators that will be automatically searched for by ES-DE are (relative to the EmulationStation-DE directory):
 
 ```
 RetroArch-Win64\retroarch.exe
 RetroArch\retroarch.exe
+RPCS3\rpcs3.exe
+xemu\xemu.exe
+xenia\xenia.exe
 yuzu\yuzu-windows-msvc\yuzu.exe
 ..\RetroArch-Win64\retroarch.exe
 ..\RetroArch\retroarch.exe
+..\RPCS3\rpcs3.exe
+..\xemu\xemu.exe
+..\xenia\xenia.exe
 ..\yuzu\yuzu-windows-msvc\yuzu.exe
 ```
 
 If you want to place your emulators elsewhere, you need to create a customized es_find_rules.xml file, which is explained earlier in this document.
 
-Start ES-DE from the F:\ device and check that everything works as expected.
+Start ES-DE from the F:\ device and check that everything works as expected. Just be aware that some emulators may not play that well with a portable setup and may store their configuration files in your home directory (probably on your C: drive) or at some other location. So when using the portable installation on another computer you may need to perform some additional emulator-specific setup.
 
 Following this, optionally copy any existing gamelist.xml files, game media files etc. to the removable media. For example:
 
 ```
-F:\EmulationStation-DE\.emulationstation\gamelists\
+F:\EmulationStation-DE\.emulationstation\collections\
 F:\EmulationStation-DE\.emulationstation\downloaded_media\
+F:\EmulationStation-DE\.emulationstation\gamelists\
 ```
 
-You now have a fully functional portable retro gaming installation!
+You could also copy over your entire .emulationstation directory, but in this case make sure that you have no settings in es_settings.xml that point to a specific location on your local filesystem, such as the game ROMs or game media directories.
 
-The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata etc.
+You now have a fully functional portable retrogaming installation!
+
+The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata, launch games etc.
 
 
 ## Custom event scripts

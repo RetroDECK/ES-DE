@@ -43,6 +43,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added a "winregistryvalue" find rule for Windows which can be used to retrieve emulator installation locations from arbitrary Windows Registry keys
 * Added a %RUNINBACKGROUND% es_systems.xml variable and removed the hardcoded run in background logic for the Valve Steam system
 * Added support for prefixing the %EMULATOR_% variable in the es_systems.xml file with a command, for example to use Wine to launch Windows emulators on Linux
+* Added proper support for interpreting directories as files (for use with emulators where directories rather than files are passed during game launch)
 * Added menu scroll indicators showing if there are additional entries available below or above what's currently shown on screen
 * Added scraping of controller metadata (only for ScreenScraper and only for arcade systems)
 * Improved the layout of the scraper GUIs (single-game scraper and multi-scraper)

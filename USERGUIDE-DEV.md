@@ -175,7 +175,7 @@ Unfortunately on Linux it's at the moment not possible to run the Steam release 
 
 ## Specific notes for macOS
 
-The main issue with macOS is the somewhat sorry state of emulator support. Many emulators are simply not available on this operating system, or the precompiled binaries have not been notarized meaning they will not run on anything newer than macOS 10.14.5. Using the Homebrew package manager partly compensates for this as some emulators are available there, but underlying issues like Apple's refusal to support the Vulkan and OpenGL graphics libraries means some emulators simply can't be used. Most RetroArch cores are available though, so macOS is still a viable retrogaming platform.
+The main issue with macOS is the somewhat sorry state of emulator support. Many emulators are simply not available on this operating system, or the precompiled binaries have not been notarized meaning they will not run on anything newer than macOS 10.14.5. Using the Homebrew package manager partly compensates for this as some additional emulators are available there, but Apple's lack of support for Vulkan means some emulators simply can't be used. Most RetroArch cores are available though.
 
 ES-DE currently ships only as an x86/Intel binary so if you run it on an M1 Mac, you need to also install x86 versions of all emulators including RetroArch. That's also the case for any emulators installed via Homebrew. The reason this is needed is that the Rosetta 2 translation environment does not support mixing of ARM and x86 architectures.
 
@@ -503,6 +503,28 @@ When setting up games in this fashion, it's recommended to scrape the directory 
 
 It's also recommended to use the metadata editor to set the flags _Exclude from game counter_ and _Exclude from automatic scraper_ for the actual game files so that they are not counted for the game statistics display and not scraped when running the multi-scraper. If you don't want to hide the individual game files but still want a cleaner look, it's also possible to set the flag _Hide metadata fields_ for the game files.
 
+### Directories interpreted as files
+
+There is a very special use case which ES-DE supports where you can interpret a directory as if it were a file. This is used in some cases such as for the PlayStation 3 emulator RPCS3 where a directory rather than a file is passed as an argument to the emulator during game launch.
+
+If you add the extension that is configured for the emulator to a directory name it will be loaded as if it was a file when ES-DE starts up.
+
+As an example using the Sony PlayStation 3 system, the extension in es_systems.xml is .ps3dir so this is what such a directory could look like:
+```
+~/ROMs/ps3/Gran Turismo 5.ps3dir
+```
+
+It's also possible to combine these types of special directories with normal directories, for a setup like this:
+```
+~/ROMs/ps3/racing/Gran Turismo 5.ps3dir
+```
+
+For all intents and purposes the `Gran Turismo 5.ps3dir` directory will now be considered a file within ES-DE, i.e. all file metadata fields can be used and the directory can be part of both automatic and custom collections.
+
+The only exception is that the _Delete_ button in the metadata editor will be disabled for these special types of entries as ES-DE does not support deletion of directories for safety reasons.
+
+When setting up a directory like this, make sure to not name any files or folders inside the base directory using the same extension as that will force the base directory to be processed normally, breaking the functionality.
+
 ### Special game installation considerations
 
 Not all systems are as simple as described above, or there may be multiple ways to do the configuration. Specifics for such systems will be covered here. Consider this a work in progress as there are many platforms supported by ES-DE.
@@ -541,7 +563,7 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 #### Sony PlayStation 3
 
-The RPCS3 emulator is only available on Linux and Windows and requires a bit of special setup. For now only disc-based games are supported although this will likely be expanded in future ES-DE releases.
+The RPCS3 emulator is only available on Linux and Windows and requires a bit of special setup.
 
 On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all the application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe.
 
@@ -559,14 +581,42 @@ When downloading the AppImage from [https://rpcs3.net](https://rpcs3.net) it wil
 
 Note that the name is case sensitive, so _rpcs3.appimage_ will not be found by ES-DE.
 
-As for the game installation on both Windows and Linux, you need to retain the directory structure of the Blu-ray disc. The emulator needs to launch the .BIN file in the PS3_GAME/USRDIR directory, which by default is named EROOT.BIN. It's possible to rename this file and still have the game working properly, which is recommended as it makes scraping easier.
+As for the game installation on both Windows and Linux, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3dir extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
 
-This is an example of a renamed EBOOT.BIN file:
+Here's an example of what a Blu-ray disc directory could look like:
 ```
-~/ROMs/ps3/Gran Turismo 5/PS3_GAME/USRDIR/Gran Turismo 5.BIN
+~/ROMs/ps3/Gran Turismo 5.ps3dir
 ```
 
-Unfortunately due to the nature of PS3 emulation you need to start the game by traversing the PS3_GAME and USRDIR directories to launch the .BIN file. Attempts to symlink or relocate this file has caused issues with starting RPCS3 so this is probably just something we'll have to live with.
+It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3dir extension.
+
+Here's how to do it on Linux:
+```
+cd ~/ROMs
+ln -s ~/games/PS3/Gran\ Turismo\ 5 Gran\ Turismo\ 5.ps3dir
+```
+
+And here's how to do it on Windows (you need to run this as Administrator):
+```
+cd C:\Users\Myusername\ROMs\ps3
+mklink /D "Gran Turismo 5.ps3dir" "C:\Games\PS3\Gran Turismo 5"
+```
+
+Apparently some specific games have issues launching when using symlinks so you need to test and experiment with what works for your collection.
+
+If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3dir extension:
+```
+cd ~/ROMs
+ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 NPUA30002.ps3dir
+```
+
+Or on Windows:
+```
+cd C:\Users\Myusername\ROMs\ps3
+mklink /D "NPUA30002.ps3dir" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
+```
+
+Of course you can name the symlink anything you want as long as it has the .ps3dir extension.
 
 Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the RPCS3 documentation.
 
@@ -1673,9 +1723,9 @@ Cancels any changes and closes the window.
 
 This will remove any media files for the file or folder and also remove its entry from the gamelist.xml file, effectively deleting all metadata. The actual game file or folder will however _not_ be deleted. A prompt will be shown asking for confirmation.
 
-**Delete** _(Files only)_
+**Delete** _(files only, and not for directories interpreted as files)_
 
-This will remove the actual game file, its gamelist.xml entry, its entry in any custom collections and its media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be a bit dangerous, instead use the appropriate operating system tools to handle deletion of directories.
+This will remove the actual game file, its gamelist.xml entry, its entry in any custom collections and its media files. A prompt will be shown asking for confirmation. The deletion of folders is not supported as that would potentially be dangerous, instead use the appropriate operating system tools to handle deletion of directories. Likewise, for directories that are interpreted as files (this functionality is described earlier in this document) the Delete button is disabled.
 
 ## Game media viewer
 
@@ -1818,7 +1868,7 @@ The setup for event scripts is a bit technical, so refer to the [INSTALL-DEV.md]
 
 ## Portable installation (Windows only)
 
-On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retro gaming solution. The setup is somewhat technical, refer to [INSTALL-DEV.md](INSTALL-DEV.md#portable-installation-on-windows) to see how it's done.
+On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retrogaming solution. The setup is somewhat technical, refer to [INSTALL-DEV.md](INSTALL-DEV.md#portable-installation-on-windows) to see how it's done.
 
 
 ## Command line options
@@ -1905,7 +1955,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | daphne                | Daphne Arcade LaserDisc Emulator               | _Placeholder_                     |                                   |              |                                      |
 | desktop               | Desktop Applications                           | N/A                               |                                   | No           |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
-| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM+] | No           | In separate folder (one folder per game, with complete file structure retained) |
+| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM+] | No           | In separate folder (one folder per game with complete file structure retained) |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           |                                   |              |                                      |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
@@ -1957,7 +2007,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | openbor               | OpenBOR Game Engine                            | _Placeholder_                     |                                   |              |                                      |
 | oric                  | Tangerine Computer Systems Oric                | _Placeholder_                     |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
-| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM+] | No           | In separate folder (one folder per game, with complete file structure retained) |
+| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM+] | No           | In separate folder (one folder per game with complete file structure retained) |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   |              |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |
@@ -1966,7 +2016,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             | PCSX2 [UW]                        |                                   |              |                                      |
-| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UW*]      |                                   | Yes          | In separate folder (one folder per game, with complete file structure retained) |
+| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UW*]      |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3dir extension) |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            |                                   |              |                                      |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
@@ -1976,7 +2026,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
-| scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           | In separate folder (one folder per game, with complete file structure retained) |
+| scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           | In separate folder (one folder per game with complete file structure retained) |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
