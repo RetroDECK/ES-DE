@@ -41,17 +41,32 @@
         <rule type="systempath">
             <entry>rpcs3.exe</entry>
         </rule>
+        <rule type="staticpath">
+            <!-- Portable installation -->
+            <entry>%ESPATH%\RPCS3\rpcs3.exe</entry>
+            <entry>%ESPATH%\..\RPCS3\rpcs3.exe</entry>
+        </rule>
     </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
             <entry>xemu.exe</entry>
         </rule>
+        <rule type="staticpath">
+            <!-- Portable installation -->
+            <entry>%ESPATH%\xemu\xemu.exe</entry>
+            <entry>%ESPATH%\..\xemu\xemu.exe</entry>
+        </rule>
     </emulator>
     <emulator name="XENIA">
         <!-- Microsoft Xbox 360 emulator xenia -->
         <rule type="systempath">
             <entry>xenia.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Portable installation -->
+            <entry>%ESPATH%\xenia\xenia.exe</entry>
+            <entry>%ESPATH%\..\xenia\xenia.exe</entry>
         </rule>
     </emulator>
     <emulator name="YUZU">
