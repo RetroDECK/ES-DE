@@ -385,6 +385,11 @@ void GuiGamelistOptions::openMetaDataEd()
             LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder \""
                          << file->getFullPath() << "\"";
         }
+        else if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath())) {
+            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the "
+                            "file-interpreted folder \""
+                         << file->getFullPath() << "\"";
+        }
         else {
             LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file \""
                          << file->getFullPath() << "\"";
@@ -407,6 +412,11 @@ void GuiGamelistOptions::openMetaDataEd()
             }
             file->metadata.set(it->key, it->defaultValue);
         }
+
+        // For the special case where a directory has a supported file extension and is therefore
+        // interpreted as a file, don't include the extension in the metadata name.
+        if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath()))
+            file->metadata.set("name", Utils::FileSystem::getStem(file->metadata.get("name")));
 
         // Update all collections where the game is present.
         if (file->getType() == GAME)

@@ -181,11 +181,24 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
         ssConfig.isArcadeSystem = false;
 
     if (params.nameOverride == "") {
-        if (Settings::getInstance()->getBool("ScraperSearchMetadataName"))
+        if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
             path = ssConfig.getGameSearchUrl(
                 Utils::String::removeParenthesis(params.game->metadata.get("name")));
-        else
-            path = ssConfig.getGameSearchUrl(params.game->getCleanName());
+        }
+        else {
+            std::string cleanName;
+            if (params.game->getType() == GAME &&
+                Utils::FileSystem::isDirectory(params.game->getFullPath())) {
+                // For the special case where a directory has a supported file extension and is
+                // therefore interpreted as a file, exclude the extension from the search.
+                cleanName = Utils::FileSystem::getStem(params.game->getCleanName());
+            }
+            else {
+                cleanName = params.game->getCleanName();
+            }
+
+            path = ssConfig.getGameSearchUrl(cleanName);
+        }
     }
     else {
         path = ssConfig.getGameSearchUrl(params.nameOverride);

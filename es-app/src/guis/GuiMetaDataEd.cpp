@@ -429,11 +429,19 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                     // If the user has entered a blank game name, then set the name to the ROM
                     // filename (minus the extension).
                     if (currentKey == "name" && newVal == "") {
-                        if (scraperParams.game->isArcadeGame())
+                        if (scraperParams.game->isArcadeGame()) {
                             ed->setValue(MameNames::getInstance().getCleanName(
                                 scraperParams.game->getCleanName()));
-                        else
-                            ed->setValue(gamePath);
+                        }
+                        else {
+                            // For the special case where a directory has a supported file extension
+                            // and is therefore interpreted as a file, exclude the extension.
+                            if (scraperParams.game->getType() == GAME &&
+                                Utils::FileSystem::isDirectory(scraperParams.game->getFullPath()))
+                                ed->setValue(Utils::FileSystem::getStem(gamePath));
+                            else
+                                ed->setValue(gamePath);
+                        }
                         if (gamePath == originalValue)
                             ed->setColor(DEFAULT_TEXTCOLOR);
                         else
@@ -546,7 +554,9 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                                                 clearSelfBtnFunc));
         }
 
-        if (mDeleteGameFunc) {
+        // For the special case where a directory has a supported file extension and is therefore
+        // interpreted as a file, don't add the delete button.
+        if (mDeleteGameFunc && !Utils::FileSystem::isDirectory(scraperParams.game->getPath())) {
             auto deleteFilesAndSelf = [&] {
                 mDeleteGameFunc();
                 delete this;

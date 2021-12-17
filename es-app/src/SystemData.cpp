@@ -298,14 +298,21 @@ bool SystemData::populateFolder(FileData* folder)
         // We first get the extension of the file itself:
         extension = Utils::FileSystem::getExtension(filePath);
 
-        // FYI, folders *can* also match the extension and be added as games.
-        // This is mostly just to support higan.
-        // See issue #75: https://github.com/Aloshi/EmulationStation/issues/75
-
         isGame = false;
         if (std::find(mEnvData->mSearchExtensions.cbegin(), mEnvData->mSearchExtensions.cend(),
                       extension) != mEnvData->mSearchExtensions.cend()) {
             FileData* newGame = new FileData(GAME, filePath, mEnvData, this);
+
+            // If adding a configured file extension to a directory it will get interpreted as
+            // a regular file. This is useful for some emulators that can get directories passed
+            // to them as command line parameters instead of regular files. In these instances
+            // we remove the extension from the metadata name so it does not show up in the
+            // gamelists and similar.
+            if (Utils::FileSystem::isDirectory(filePath)) {
+                const std::string folderName = newGame->metadata.get("name");
+                newGame->metadata.set(
+                    "name", folderName.substr(0, folderName.length() - extension.length()));
+            }
 
             // Prevent new arcade assets from being added.
             if (!newGame->isArcadeAsset()) {

@@ -156,10 +156,21 @@ void thegamesdb_generate_json_scraper_requests(
                 // If not searching based on the metadata name, then check whether it's an
                 // arcade game and if so expand to the full game name. This is required as
                 // TheGamesDB has issues with searching using the short MAME names.
-                if (params.game->isArcadeGame())
+                if (params.game->isArcadeGame()) {
                     cleanName = MameNames::getInstance().getCleanName(params.game->getCleanName());
-                else
-                    cleanName = params.game->getCleanName();
+                }
+                else {
+                    if (params.game->getType() == GAME &&
+                        Utils::FileSystem::isDirectory(params.game->getFullPath())) {
+                        // For the special case where a directory has a supported file extension
+                        // and is therefore interpreted as a file, exclude the extension from the
+                        // search.
+                        cleanName = Utils::FileSystem::getStem(params.game->getCleanName());
+                    }
+                    else {
+                        cleanName = params.game->getCleanName();
+                    }
+                }
             }
         }
 

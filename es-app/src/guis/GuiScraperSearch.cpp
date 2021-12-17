@@ -823,10 +823,20 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
             // in case the scraper is set to TheGamesDB and it's an arcade game. This is
             // required as TheGamesDB does not support searches using the short MAME names.
             if (params.game->isArcadeGame() &&
-                Settings::getInstance()->getString("Scraper") == "thegamesdb")
+                Settings::getInstance()->getString("Scraper") == "thegamesdb") {
                 searchString = MameNames::getInstance().getCleanName(params.game->getCleanName());
-            else
-                searchString = params.game->getCleanName();
+            }
+            else {
+                if (params.game->getType() == GAME &&
+                    Utils::FileSystem::isDirectory(params.game->getFullPath())) {
+                    // For the special case where a directory has a supported file extension and is
+                    // therefore interpreted as a file, exclude the extension from the search.
+                    searchString = Utils::FileSystem::getStem(params.game->getCleanName());
+                }
+                else {
+                    searchString = params.game->getCleanName();
+                }
+            }
         }
     }
     else {
