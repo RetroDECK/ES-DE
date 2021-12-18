@@ -47,9 +47,13 @@
     <emulator name="RPCS3">
         <!-- Sony PlayStation 3 emulator RPCS3 -->
         <rule type="systempath">
+            <entry>rpcs3</entry>
+            <entry>rpcs3-emu.rpcs3</entry>
+            <entry>net.rpcs3.RPCS3</entry>
             <entry>rpcs3.AppImage</entry>
         </rule>
         <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3</entry>
             <entry>~/Applications/rpcs3.AppImage</entry>
             <entry>~/.local/bin/rpcs3.AppImage</entry>
             <entry>~/bin/rpcs3.AppImage</entry>
