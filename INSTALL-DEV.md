@@ -339,7 +339,7 @@ update-alternatives: using /usr/bin/clang++ to provide /usr/bin/c++ (c++) in man
 
 Following this, just re-run cmake and make and the binary should be built by Clang instead.
 
-**Installing:**
+**Installing**
 
 Installing the software requires root permissions, the following command will install all the required application files:
 
@@ -448,11 +448,27 @@ And of course, you can also install the package:
 sudo dnf install ./emulationstation-de-1.2.0-x64.rpm
 ```
 
+**Creating an AppImage**
+
+The process to create a Linux AppImage is completely automated. You simply run the AppImage creation script, which has to be executed from the root of the repository:
+
+```
+tools/create_AppImage.sh
+```
+
+This script has only been tested on Ubuntu 20.04 LTS and it's recommended to go for an older operating system when building the AppImage to achieve compatibility with a large number of distributions. This does come with some sacrifices though, such as the use of an older SDL version which may not support the latest game controllers.
+
+The script will delete CMakeCache.txt and run cmake with the BUNDLED_CERTS option, as otherwise scraping wouldn't work on Fedora (and probably on openSUSE and a few other distributions as well).
+
+Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running create_AppImage.sh.
+
+After creating the AppImage it's recommended to delete CMakeCache.txt manually so the BUNDLED_CERTS option is not accidentally enabled when building the other packages.
+
 ## Building on macOS
 
 ES-DE for macOS is built using Clang/LLVM which is the default compiler for this operating system. It's pretty straightforward to build software on this OS. The main problem is that there is no native package manager, but as there are several third party package managers available, this can be partly compensated for. The use of one of them, [Homebrew](https://brew.sh), is detailed below.
 
-**Setting up the build tools:**
+**Setting up the build tools**
 
 Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply open a terminal and enter the command `clang`. This will open a dialog that will let you download and install the tools.
 
@@ -462,7 +478,7 @@ Following this, install the Homebrew package manager which will simplify the ins
 ```
 Be aware that Homebrew can be really slow, especially when it compiles packages from source code.
 
-**Package installation with Homebrew:**
+**Package installation with Homebrew**
 
 Install the required tools:
 
@@ -476,7 +492,7 @@ If building with the optional VLC video player, then run this as well:
 brew install --cask vlc
 ```
 
-**Some additional/optional steps:**
+**Some additional/optional steps**
 
 Enable developer mode to avoid annoying password requests when attaching the debugger to a process:
 ```
@@ -491,7 +507,7 @@ export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
 
 I suppose you should add this to your shell profile file or similar, but I didn't have to do this step so I'm not sure.
 
-**Cloning and compiling:**
+**Cloning and compiling**
 
 To clone the source repository, run the following:
 
@@ -591,11 +607,11 @@ export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
 
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
-**Building for the M1 (ARM) processor:**
+**Building for the M1 (ARM) processor**
 
 The build steps detailed above should in theory work identically on an M1 processor but possibly some of the dependencies will not build correctly and may need manual patching. Cross-compiling using an Intel processor has been attempted but failed due to multiple issues with dependencies refusing to build.
 
-**Code signing:**
+**Code signing**
 
 Due to the Apple notarization requirement implemented as of macOS 10.14.5 a build with simple code signing is needed for versions up to 10.13 and another build with both code signing and notarization is required for version 10.14 and higher.
 
@@ -606,20 +622,15 @@ cmake -DMACOS_CODESIGN_IDENTITY="My Name" .
 
 Assuming the code signing ceritificate is properly setup in Keychain Access, the process will be automatic and the resulting DMG package can be notarized as-is. For some reason code signing fails if run via an SSH session, so in order for the cpack command to succeed it needs to run from a terminal window started via the GUI.
 
-**Legacy build:**
+**Legacy build**
 
 Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy build for earlier operating system versions can be enabled. This has been tested with a minimum version of 10.11. It's unclear if it works with even older macOS releases.
 
-To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add "legacy" to the DMG installer file name when running CPack.
+To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add "legacy" to the DMG installer file name when running CPack. It will also enable the bundled TLS/SSL certificates. As these older macOS releases are no longer receiving patches from Apple, certificates have likely expired which would break the scraper.
 
 You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for. And finally CMAKE_OSX_DEPLOYMENT_TARGET needs to be updated in tools/macOS_dependencies_build.sh. This script then needs to be executed to rebuild all dependencies for the configured macOS version.
 
-As some older macOS releases no longer have valid TLS/SSL certificates and Apple is not providing any updates, ES-DE should be built to use the bundled certificates:
-```
-cmake -DBUNDLED_CERTS=on .
-```
-
-**Installing:**
+**Installing**
 
 As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. This is almost completely automated by the build scripts.
 
@@ -701,7 +712,7 @@ A theme is not mandatory to start the application, but ES-DE will be basically u
 
 As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
-**Creating a .dmg installer:**
+**Creating a .dmg installer**
 
 Simply run `cpack` to build a .dmg disk image/installer:
 
@@ -723,7 +734,7 @@ Although I would prefer to exclude support for MSVC, this compiler simply works 
 
 For this reason I think MSVC makes sense for development and MinGW for the releases.
 
-**MSVC setup:**
+**MSVC setup**
 
 Install Git for Windows: \
 [https://gitforwindows.org](https://gitforwindows.org)
@@ -757,7 +768,7 @@ The way the MSVC environment works is that a specific developer shell is provide
 
 It's important to choose the x64-specific shell and not the x86 variant, as ES-DE will only compile as a 64-bit application.
 
-**MinGW (GCC) setup:**
+**MinGW (GCC) setup**
 
 Download the following packages and install them:
 
@@ -774,7 +785,7 @@ Version 9.2.0 of MinGW has been confirmed to work fine, but 10.3.0 appears broke
 
 Note that most GDB builds for Windows have broken Python support so that pretty printing won't work. The recommended MinGW distribution should work fine though.
 
-**Other preparations:**
+**Other preparations**
 
 In order to get clang-format onto the system you need to download and install Clang: \
 [https://llvm.org/builds](https://llvm.org/builds)
@@ -790,7 +801,7 @@ It's strongly recommended to set line breaks to Unix-style (line feed only) dire
 In the descriptions below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
 
 
-**Download the dependency packages:**
+**Download the dependency packages**
 
 FFmpeg (choose the n4.4 package with win64-gpl-shared in the filename, the snapshot version will not work) \
 [https://github.com/BtbN/FFmpeg-Builds/releases](https://github.com/BtbN/FFmpeg-Builds/releases)
@@ -870,7 +881,7 @@ cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
 make
 ```
 
-**Clone the ES-DE repository:**
+**Clone the ES-DE repository**
 
 This works the same as on Unix or macOS, just run the following:
 
@@ -885,7 +896,7 @@ cd emulationstation-de
 git checkout stable-1.1
 ```
 
-**Setup the include directories:**
+**Setup the include directories**
 
 As there is no standardized include directory structure in Windows, you need to provide the include files manually.
 
@@ -916,7 +927,7 @@ SDL2/
 vlc/            (only if building with the VLC video player)
 ```
 
-**Copy the required library files to the ES-DE build directory:**
+**Copy the required library files to the ES-DE build directory**
 
 As there's no package manager in Windows and no way to handle dependencies, we need to ship all the required shared libraries with the application.
 
@@ -1003,7 +1014,7 @@ SDL2.dll
 vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
 ```
 
-**Additional files for both MSVC and MinGW if building with the VLC video player:**
+**Additional files for both MSVC and MinGW if building with the VLC video player**
 
 In addition to the files above, you need to copy some libraries from the VLC `plugins` folder. This contains a subdirectory structure but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
 
@@ -1031,7 +1042,7 @@ The reason to not simply copy all plugins is that the combined size of these is 
 
 Place the files in the `emulationstation-de\plugins\` directory.
 
-**Building ES-DE using MSVC:**
+**Building ES-DE using MSVC**
 
 There is a bug in libVLC when building using MSVC, so three lines need to be commented out from `libvlc_media.h`. The compiler error messages will provide you with the line numbers, but they involve the callback `libvlc_media_read_cb`.
 
@@ -1070,7 +1081,7 @@ cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../inc
 nmake
 ```
 
-**Building ES-DE using MinGW:**
+**Building ES-DE using MinGW**
 
 For a release build:
 
@@ -1100,10 +1111,13 @@ make
 
 You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 
-Note that compilation time is much longer than on Unix or macOS, and linking time is unendurable for a debug build (around 10 times longer on my computer compared to Linux). The debug binary is also much larger than on Unix.
+Note that compilation time is much longer than on Unix or macOS, and linking time is unendurable for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
 
+**TLS/SSL certificates**
 
-**Running with OpenGL software rendering:**
+On Windows the certificates supplied with the operating system will not be utilized, instead TLS/SSL certificates bundled with ES-DE will be used.
+
+**Running with OpenGL software rendering**
 
 If you are running Windows in a virtualized environment such as QEMU-KVM that does not support HW accelerated OpenGL, you can install the Mesa3D for Windows library, which can be downloaded at [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag).
 
@@ -1111,7 +1125,7 @@ You simply extract the opengl32.dll file into the ES-DE directory and this will 
 
 Obviously this library is only intended for development and will not be shipped with ES-DE.
 
-**Creating an NSIS installer:**
+**Creating an NSIS installer**
 
 To create an NSIS installer (Nullsoft Scriptable Install System) you need to first install the NSIS creation tool:
 
@@ -1227,7 +1241,7 @@ Of course you would like to get the code formatted according to the clang-format
 
 ## CA certificates and MAME ROM information
 
-**CA certificates:**
+**CA certificates**
 
 There are some files shipped with ES-DE that need to be pulled from external resources, the first one being the CA certificate bundle to get TLS/SSL support working on Windows.
 
@@ -1241,7 +1255,7 @@ After downloading the file, rename it from `cacert.pem` to `curl-ca-bundle.crt` 
 emulationstation-de/resources/certificates/curl-ca-bundle.crt
 ```
 
-**MAME ROM info:**
+**MAME ROM info**
 
 ES-DE automatically identifies and excludes MAME BIOS and device files, as well as translating the short MAME ROM names to their full game names. This is done using information from the MAME driver file shipped with the official MAME distribution. The file needs to be converted to an internal format used by ES-DE as the original file is huge and most of the information is not required.
 
@@ -1287,13 +1301,13 @@ The reason to not simply replace the BIOS and devices files with the new version
 
 ## Configuration
 
-**~/.emulationstation/es_settings.xml:**
+**~/.emulationstation/es_settings.xml**
 
 When ES-DE is first started, a configuration file will be created as `~/.emulationstation/es_settings.xml`
 
 This file will contain all supported settings at their default values. Normally you shouldn't need to modify this file manually, instead you should be able to use the menu inside ES-DE to update all the necessary settings.
 
-**Setting the ROM directory in es_settings.xml:**
+**Setting the ROM directory in es_settings.xml**
 
 This complete configuration step can normally be skipped as you're presented with a dialog to change the ROM directory upon application startup if no game files are found.
 
@@ -1321,7 +1335,7 @@ There is also support to add the variable %ESPATH% to the ROM directory setting,
 <string name="ROMDirectory" value="%ESPATH%/../ROMs" />
 ```
 
-**~/.emulationstation/es_input.xml:**
+**~/.emulationstation/es_input.xml**
 
 As ES-DE auto-configures the keyboard and controllers, neither the input configuration step or manual adjustments to the es_input.xml file should normally be needed. Actually, unless the button layout has been customized using the input configurator, the es_input.xml file will not even exist.
 
@@ -1837,7 +1851,7 @@ For example:
 ~/.emulationstation/gamelists/megadrive/gamelist.xml
 ```
 
-**gamelist.xml file structure:**
+**gamelist.xml file structure**
 
 An example gamelist.xml entry for the Commodore 64 game Popeye:
 
@@ -1861,7 +1875,7 @@ An example gamelist.xml entry for the Commodore 64 game Popeye:
 
 Everything is enclosed in a `<gameList>` tag, and the information for each game or folder is enclosed in a corresponding `<game>` or `<folder>` tag. Each piece of metadata is encoded as a string.
 
-**gamelist.xml reference:**
+**gamelist.xml reference**
 
 There are a few different data types for the metadata which the string values in the gamelist.xml files are converted to during file loading:
 
@@ -1920,7 +1934,7 @@ For folders, most of the fields are identical although some are removed. In the 
 * `controller`
 * `lastplayed` - statistic, for folders this is inherited by the latest game file launched inside the folder.
 
-**Additional gamelist.xml information:**
+**Additional gamelist.xml information**
 
 * If a value matches the default for a particular piece of metadata, ES-DE will not write it to the gamelist.xml file (for example, if `genre` isn't specified, an empty genre tag will not be written)
 
@@ -2042,7 +2056,7 @@ The events executed when a game starts and ends are named `game-start` and `game
 
 So let's create the folders for these events in the scripts directory. The location is `~/.emulationstation/scripts`
 
-**Game log:**
+**Game log**
 
 After creating the directories, we need to create the scripts to log the actual game launch and game ending. The parameters that are passed to the scripts vary depending on the type of event, but for these events the four parameters are the absolute path to the game file, the game name as shown in the gamelist view, the system name and the full system name.
 
@@ -2094,7 +2108,7 @@ Starting game "Pirates!" "Commodore 64" ("/home/myusername/ROMs/c64/Multidisk/Pi
 Ending game   "Pirates!" "Commodore 64" ("/home/myusername/ROMs/c64/Multidisk/Pirates/Pirates!.m3u") at 2020-08-05 15:17:11
 ```
 
-**Resolution changes:**
+**Resolution changes**
 
 The same directories are used as for the above example with the game log.
 

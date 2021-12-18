@@ -567,7 +567,9 @@ The RPCS3 emulator is only available on Linux and Windows and requires a bit of 
 
 On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all the application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe.
 
-On Linux RPCS3 is only shipped as an AppImage which is a bit problematic as there are no standard directories where these files are located.
+On Linux RPCS3 is shipped as a Snap package, Flatpak package or AppImage. If installed as a Snap or Flatpak or if built from source code, ES-DE should be able to easily locate the emulator binary.
+
+But if using the AppImage it's a bit problematic as there are no standard directories where these files are located.
 
 What ES-DE will do is to look for _rpcs3.AppImage_ in the system PATH as well as in the following locations:
 
@@ -602,21 +604,25 @@ cd C:\Users\Myusername\ROMs\ps3
 mklink /D "Gran Turismo 5.ps3dir" "C:\Games\PS3\Gran Turismo 5"
 ```
 
-Apparently some specific games have issues launching when using symlinks so you need to test and experiment with what works for your collection.
+If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3dir extension.
 
-If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3dir extension:
+An example on Linux:
 ```
 cd ~/ROMs
-ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 NPUA30002.ps3dir
+ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 Bejeweled2.ps3dir
 ```
 
-Or on Windows:
+This example is for the AppImage version of RPCS3, for the Snap or Flatpak versions, the installed games will be located in a different directory.
+
+Here's how to achieve the same on Windows:
 ```
 cd C:\Users\Myusername\ROMs\ps3
-mklink /D "NPUA30002.ps3dir" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
+mklink /D "Bejeweled2.ps3dir" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
 ```
 
 Of course you can name the symlink anything you want as long as it has the .ps3dir extension.
+
+Apparently some specific games have issues launching when using symlinks so you need to test and experiment with what works for your collection.
 
 Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the RPCS3 documentation.
 
