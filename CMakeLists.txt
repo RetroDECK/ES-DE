@@ -243,8 +243,13 @@ if(APPLE)
         message("-- Code signing certificate identity: " ${MACOS_CODESIGN_IDENTITY})
     endif()
     if(CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
+        set(BUNDLED_CERTS ON)
         message("-- macOS version 10.13 or lower has been set, so if code signing is enabled, Hardened Runtime will not be used")
     endif()
+endif()
+
+if(WIN32)
+    set(BUNDLED_CERTS ON)
 endif()
 
 #---------------------------------------------------------------------------------------------------
@@ -260,8 +265,9 @@ if(RPI)
     add_definitions(-D_RPI_)
 endif()
 
-if(BUNDLED_CERTS OR WIN32)
+if(BUNDLED_CERTS)
     add_definitions(-DUSE_BUNDLED_CERTIFICATES)
+    message("-- Building with bundled TLS/SSL certificates")
 endif()
 
 if(DEFINED libCEC_FOUND)
