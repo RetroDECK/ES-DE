@@ -990,15 +990,6 @@
         <theme>psx</theme>
     </system>
     <system>
-        <name>residualvm</name>
-        <fullname>ResidualVM Game Engine</fullname>
-        <path>%ROMPATH%/residualvm</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
-        <platform>residualvm</platform>
-        <theme>residualvm</theme>
-    </system>
-    <system>
         <name>samcoupe</name>
         <fullname>SAM Coupé</fullname>
         <path>%ROMPATH%/samcoupe</path>

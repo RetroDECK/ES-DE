@@ -65,6 +65,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Increased the amount of arguments for the custom event scripts from two to four
 * Added the system name and full system name as additional arguments to the game-start and game-end custom events
 * Lowered the minimum supported screen resolution from 640x480 to 224x224 to support arcade cabinet displays such as those running at 384x224 and 224x384
+* Removed the ResidualVM system as it has been merged with ScummVM
 * Added support for the Commodore VIC-20, Epic Games Store, Google Android, Java 2 Micro Edition, Philips CD-i and Symbian systems
 * Added emulator configurations for the Microsoft Xbox, Microsoft Xbox 360 and Sony PlayStation 3 systems
 * Added support for a more advanced system view carousel logo placeholder (for unthemed systems) by allowing the combination of text and graphics
