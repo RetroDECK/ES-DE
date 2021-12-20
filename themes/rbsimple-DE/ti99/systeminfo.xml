@@ -3,7 +3,34 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Texas Instruments TI-99</text>
+            <text>Manufacturer : Texas Instruments</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>Year of Release : 1979 (TI-99/4), 1981 (TI-99/4A)</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>Units sold : 2.8 million</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>OS : TI BASIC (in ROM)</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>CPU : TMS9900 @ 3 MHz</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>RAM : 256 bytes + 16 KB VRAM</text>
+        </text>
+        <text name="info7" extra="true">
+            <text>Video : TMS9918A VDP</text>
+        </text>
+        <text name="info8" extra="true">
+            <text>Resolution : 256x192 pixels, 16 colors</text>
+        </text>
+        <text name="info9" extra="true">
+            <text>Sound : TMS9919 or SN94624, 3 voices + 1 noise channel</text>
+        </text>
+        <text name="info10" extra="true">
+            <text>Media : Cartridge, cassette, floppy disk</text>
         </text>
     </view>
 </theme>

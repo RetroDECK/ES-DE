@@ -3,7 +3,16 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Stratagus game engine</text>
+            <text>Stratagus is an open-source game engine used to build real-time</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>strategy games. The engine is written in C++ and uses the Lua</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>language for implementing actual game logic. Among other</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>features it supports playing over the Internet or via LAN.</text>
         </text>
     </view>
 </theme>

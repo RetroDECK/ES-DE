@@ -31,18 +31,16 @@ None at the moment.
 * coco: Tandy Color Computer - consolegame.svg, console.svg, controller.svg, game.svg
 * custom-collections - customized colors, consolegame.svg, (uses temporary art)
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, console.svg, controller.svg, game.svg
-* desktop: Desktop applications - system info, consolegame.svg, console.svg, controller.svg
+* desktop: Desktop applications - consolegame.svg, console.svg, controller.svg
 * dragon32: Dragon 32 - consolegame.svg, console.svg, controller.svg, game.svg
 * epic: Epic Games Store - consolegame.svg, console.svg, controller.svg, game.svg
-* fba: FinalBurn Alpha - system info (needs improvement), logo.svg (needs improvement)
-* fbneo: FinalBurn Neo - system info (needs improvement), logo.svg (needs improvement)
 * gx4000: Amstrad GX4000 - consolegame.svg, console.svg, controller.svg, game.svg
 * intellivision: Intellivision - consolegame.svg, console.svg, controller.svg, game.svg
 * j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, console.svg, controller.svg, game.svg
 * kodi: Kodi home theatre software - consolegame.svg, console.svg, controller.svg
 * lutris: Lutris open gaming platform - consolegame.svg, console.svg, controller.svg, game.svg
 * macintosh: Apple Macintosh - consolegame.svg, console.svg, controller.svg, game.svg
-* mess: MESS (Multi Emulator Super System) - system info, consolegame.svg, console.svg, controller.svg
+* mess: MESS (Multi Emulator Super System) - consolegame.svg, console.svg, controller.svg
 * moto: Thomson MO/TO series - consolegame.svg, console.svg, controller.svg, game.svg
 * msxturbor: MSX Turbo R - consolegame.svg, console.svg, controller.svg, game.svg
 * multivision: Othello Multivision - consolegame.svg, console.svg, controller.svg, game.svg
@@ -63,20 +61,19 @@ None at the moment.
 * ps3: Sony PlayStation 3 - consolegame.svg, console.svg, controller.svg, game.svg
 * ps4: Sony PlayStation 4 - consolegame.svg, console.svg, controller.svg, game.svg
 * psvita: Sony PlayStation Vita - consolegame.svg, console.svg, controller.svg, game.svg
-* residualvm: ResidualVM - system info
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
 * satellaview: Nintendo Satellaview - consolegame.svg, console.svg, game.svg
 * saturn: Sega Saturn - consolegame.svg, console.svg, controller.svg, game.svg
 * saturnjp: Sega Saturn - consolegame.svg, console.svg, controller.svg, game.svg
-* solarus: Solarus game engine - consolegame.svg, console.svg, controller.svg
+* solarus: Solarus game engine - consolegame.svg, console.svg
 * spectravideo: Spectravideo - consolegame.svg, console.svg, controller.svg, game.svg
 * steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg
-* stratagus: Stratagus game engine - system info, consolegame.svg, console.svg, controller.svg
+* stratagus: Stratagus game engine - consolegame.svg, console.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg, console.svg, game.svg
 * switch: Nintendo Switch - consolegame.svg, console.svg, controller.svg, game.svg
 * symbian: Symbian - system info (needs improvement), consolegame.svg, console.svg, controller.svg, game.svg
 * tanodragon: Tano Dragon - consolegame.svg, console.svg, controller.svg, game.svg
-* ti99: Texas Instruments TI-99 - system info, consolegame.svg, console.svg
+* ti99: Texas Instruments TI-99 - consolegame.svg, console.svg
 * tic80: TIC-80 game engine - consolegame.svg, console.svg, controller.svg
 * to8: Thomson TO8 - consolegame.svg, console.svg, controller.svg, game.svg
 * trs-80: Tandy TRS 80 - consolegame.svg, console.svg, controller.svg, game.svg
@@ -89,4 +86,4 @@ None at the moment.
 * x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
 * xbox: Microsoft Xbox - controller.svg
 * xbox360: Microsoft Xbox - consolegame.svg, console.svg, game.svg
-* zmachine: Infocom Z-machine - system info, consolegame.svg, console.svg, controller.svg
+* zmachine: Infocom Z-machine - consolegame.svg, console.svg

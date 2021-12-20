@@ -3,28 +3,16 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>FB Neo or FBN as it is commonly known is an emulator</text>
+            <text>FinalBurn Neo, also known as FBNeo or FBN is an arcade system</text>
         </text>
         <text name="info2" extra="true">
-            <text>of arcade games, that is, it takes the program code, graphic data, ...</text>
+            <text>emulator that is based on FinalBurn Alpha. It's a fork of MAME</text>
         </text>
         <text name="info3" extra="true">
-            <text>from an orginal arcade game and emulate the hardware to make</text>
+            <text>and supports boards such as Capcom CPS, Neo Geo MVS and</text>
         </text>
         <text name="info4" extra="true">
-            <text>the game run in it's original form. As far as the game is concerned</text>
-        </text>
-        <text name="info5" extra="true">
-            <text>it is running in it's original cabinet. FBN is an open-source project</text>
-        </text>
-        <text name="info6" extra="true">
-            <text>and it is programmed by a group of people known as the FBNeo team.</text>
-        </text>
-        <text name="info7" extra="true">
-            <text>Many of the developers of this project also worked on FB Alpha.</text>
-        </text>
-        <text name="info8" extra="true">
-            <text>FBN is based on FinalBurn and old versions of MAME.</text>
+            <text>numerous systems from SEGA, Konami, Irem and others.</text>
         </text>
     </view>
 </theme>

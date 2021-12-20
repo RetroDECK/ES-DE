@@ -3,7 +3,22 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>MESS (Multi Emulator Super System)</text>
+            <text>Multi Emulator Super System (or MESS) is an emulator</text>
+        </text>
+        <text name="info2" extra="true">
+            <text>for various consoles and computer systems that used</text>
+        </text>
+        <text name="info3" extra="true">
+            <text>to be a standalone application but that is now a part</text>
+        </text>
+        <text name="info4" extra="true">
+            <text>of MAME.</text>
+        </text>
+        <text name="info5" extra="true">
+            <text>The version available here is the standalone legacy</text>
+        </text>
+        <text name="info6" extra="true">
+            <text>release from around 2015.</text>
         </text>
     </view>
 </theme>
