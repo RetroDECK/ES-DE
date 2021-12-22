@@ -36,6 +36,33 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="DOSBOX_STAGING">
+        <!-- DOS emulator DOSBox Staging -->
+        <rule type="systempath">
+            <entry>dosbox.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Portable installation -->
+            <entry>%ESPATH%\dosbox-staging\dosbox.exe</entry>
+            <entry>%ESPATH%\..\dosbox-staging\dosbox.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="PCSX2">
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
+        <rule type="winregistryvalue">
+            <entry>SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\pcsx2\DisplayIcon</entry>
+        </rule>
+        <rule type="systempath">
+            <entry>pcsx2.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
+            <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="RPCS3">
         <!-- Sony PlayStation 3 emulator RPCS3 -->
         <rule type="systempath">

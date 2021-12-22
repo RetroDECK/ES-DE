@@ -15,15 +15,25 @@
         </rule>
     </core>
     <emulator name="DOSBOX_STAGING">
-        <!-- DOS emulator DOSBox Staging, Homebrew version -->
+        <!-- DOS emulator DOSBox Staging -->
         <rule type="staticpath">
+            <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
+            <!-- Homebrew version -->
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">
-        <!-- Nintendo 64 emulator Mupen64Plus, Homebrew version -->
+        <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="staticpath">
+            <entry>/Applications/mupen64plus.app/Contents/MacOS/mupen64plus</entry>
+            <!-- Homebrew version -->
             <entry>/usr/local/bin/mupen64plus</entry>
+        </rule>
+    </emulator>
+    <emulator name="PCSX2">
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
+        <rule type="staticpath">
+            <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
         </rule>
     </emulator>
 </ruleList>

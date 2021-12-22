@@ -337,6 +337,7 @@
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
+        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX_STAGING% %ROM%</command>
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
@@ -861,6 +862,7 @@
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
+        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX_STAGING% %ROM%</command>
         <platform>pc</platform>
         <theme>pc</theme>
     </system>
@@ -934,8 +936,9 @@
         <name>ps2</name>
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%\ps2</path>
-        <extension>.iso .ISO .isz .ISZ .cso .CSO .bin .BIN .elf .ELF .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\pcsx2_libretro.dll %ROM%</command>
+        <extension>.iso .ISO .isz .ISZ .cso .CSO .bin .BIN .elf .ELF</extension>
+        <command label="PCSX2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\pcsx2_libretro.dll %ROM%</command>
+        <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% --nogui %ROM%</command>
         <platform>ps2</platform>
         <theme>ps2</theme>
     </system>
