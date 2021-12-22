@@ -44,13 +44,26 @@ FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType
             treeNode = children.at(key);
         }
 
-        // This is the end
+        // This is the end.
         if (path_it == --pathList.end()) {
             if (found)
                 return treeNode;
 
             if (type == FOLDER) {
                 LOG(LogWarning) << "A folder defined in the gamelist file does not exist:";
+                return nullptr;
+            }
+
+            // Handle the special situation where a file exists and has an entry in the
+            // gamelist.xml file but the file extension is not configured in es_systems.xml.
+            const std::vector<std::string> extensions =
+                system->getSystemEnvData()->mSearchExtensions;
+
+            if (std::find(extensions.cbegin(), extensions.cend(),
+                          Utils::FileSystem::getExtension(path)) == extensions.cend()) {
+                LOG(LogWarning) << "File \"" << path
+                                << "\" is present in gamelist.xml but the extension is not "
+                                   "configured in es_systems.xml";
                 return nullptr;
             }
 
