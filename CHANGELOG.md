@@ -89,6 +89,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Moved the ScreenScraper account toggle to the bottom of the scraper account settings menu
 * Lowered the default volumes slightly for videos and navigation sounds
 * Added loading of the System view to the ViewController preload function to decrease theme extras texture pop-in
+* (macOS) Disabled the application startup animations as they were very choppy and looked bad after moving to SDL 2.0.18
 * Changed the filter description "Text filter (game name)" to simply "Game name"
 * Removed a margin hack from TextComponent
 * If abbreviated strings end with a space character, that space is now removed (TextComponent)
@@ -147,6 +148,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Multi-scraping and aborting before any games were fully scraped but after some game media was downloaded did not trigger a gamelist reload
 * (Windows) Launching a game that changed the screen resolution would offset the ES-DE application window when exiting
 * (Windows) Enabling the option to hide the taskbar would sometimes not focus the application window on startup (possibly only an issue on Windows 8.1)
+* If there were gamelist.xml entries for existing files whose extensions were not setup in es_systems.xml, these would still get loaded and displayed
 * Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
@@ -475,3 +477,5 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * There is some screen tearing present on Unix/Linux which is especially visible during horizontal slide transitions. The problem exists on both x86 and ARM as well as on Intel, AMD and Nvidia GPUs and on the Broadcom VideoCore. The problem seems to be Xorg-related as tearing has not been observed when using Wayland, and it's not present on macOS or Windows either.
 
 * Sometimes when RetroArch has been upgraded to a newer version, it apparently requires a startup to get properly initialized. When ES-DE starts RetroArch it always does so by passing some specific emulator core parameters, which does not seem to initialize RetroArch after such an upgrade. What happens in this case is that the RetroArch loading screen will be shown and then it will quit right back to ES-DE. If confirmed to be the case, this is not an ES-DE issue but a RetroArch issue and starting RetroArch separately once should fix the problem (at least until the next upgrade).
+
+* There are problems with starting the standalone version of the PCSX2 PlayStation 2 emulator using some GPUs. What happens is that the emulator window does not get focused when launching a game which requires a manual Alt + Tab (or Command + Tab on macOS) to switch to the PCSX2 window. The RetroArch version of PCSX2 does not have this issue.

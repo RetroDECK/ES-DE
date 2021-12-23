@@ -79,7 +79,7 @@ Then you can use the graphical package installer or run this command, either met
 sudo dnf install ./emulationstation-de-1.2.0-x64.rpm
 ```
 
-Of course the file name will differ slightly depending on the architecture, the example above is for the x64/x86 platform.
+Of course the filename will differ slightly depending on the architecture, the example above is for the x64/x86 platform.
 
 **Running a Linux AppImage file**
 
@@ -175,11 +175,15 @@ Unfortunately on Linux it's at the moment not possible to run the Steam release 
 
 ## Specific notes for macOS
 
-The main issue with macOS is the somewhat sorry state of emulator support. Many emulators are simply not available on this operating system, or the precompiled binaries have not been notarized meaning they will not run on anything newer than macOS 10.14.5. Using the Homebrew package manager partly compensates for this as some additional emulators are available there, but Apple's lack of support for Vulkan means some emulators simply can't be used. Most RetroArch cores are available though.
+The main issue with macOS is lack of emulator support and missing (or buggy) controller drivers.
+
+As Apple refuses to support Vulkan some emulators are simply not available, and other emulators exist but have not been updated for macOS in recent years. As well many emulators are available for download but are not codesigned or notarized which require you to override the operating system's security settings to be able to use them. If you see an error popup stating the application couldn't be checked for malicious software or that the developer couldn't be verified, then go to _System Preferences_, then _Security & Privacy_ and click the _Open Anyway_ button in the _General_ tab. Just note that doing so comes with some potential risks of virus infections and similar. Additionally some emulators are available via the Homebrew package manager, and these do not have the security issues just mentioned so they should be fine to use. Most RetroArch cores are also available on macOS so overall this operating system is still fine for retrogaming albeit with some restrictions.
+
+Lack of controller support is another issue, and in some instances controller drivers are available but quite buggy. In general it seems as if Sony PlayStation controllers are better supported than Microsoft Xbox controllers. For third party controllers you need to investgate the macOS support as it seems to differ quite a lot.
 
 ES-DE currently ships only as an x86/Intel binary so if you run it on an M1 Mac, you need to also install x86 versions of all emulators including RetroArch. That's also the case for any emulators installed via Homebrew. The reason this is needed is that the Rosetta 2 translation environment does not support mixing of ARM and x86 architectures.
 
-Another macOS-specific requirement is that the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's currently unclear if other emulators than RetroArch are affected by this issue, at least some are confirmed to not having this problem.
+Another macOS-specific requirement is that the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's currently unclear if other emulators than RetroArch are affected by this issue, at least until now none of the other emulators tested have displayed this behavior. The standalone PlayStation 2 emulator PCSX2 has a similar issue but that seems to be GPU driver related and is problematic also on other operating systems. If using this emulator you need to manually switch to the PCSX2 window using Command + Tab after launching the game from ES-DE.
 
 The first time you launch a game from within ES-DE, the operating system will present you with a security option with the following description:
 
@@ -188,6 +192,8 @@ The first time you launch a game from within ES-DE, the operating system will pr
 If you don't allow this, you will not be able to place system BIOS ROMs in the RetroArch default system directory `~/Documents/RetroArch/system` even if you've already given RetroArch access to this folder. This is so because RetroArch runs as a subprocess to ES-DE and therefore inherits the security settings from the parent application. Attempting to launch a game without enabling the access will simply display an error message in the emulator that the BIOS files are missing. This of course only applies to emulators that require BIOS ROMs, all other games should work fine regardless of this security setting.
 
 If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
+
+A minor annoyance is that macOS creates metadata files starting with ._ in the filename when placing game/ROM files on some filesystem types such as exFAT. This means that you will see double entries inside ES-DE for all such games. To hide these extra files, the option _Show hidden files and folders (requires restart)_ in the _Other settings_ menu can be set to disabled.
 
 Another problem on macOS 11 Big Sur (and possibly older OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers. The issue appears to be resolved in macOS Monterey.
 
@@ -535,7 +541,7 @@ For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo an
 
 For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
-This is required by the TheGamesDB scraper where the expanded file names are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
+This is required by the TheGamesDB scraper where the expanded filenames are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
 #### Nintendo Switch
 
@@ -856,9 +862,9 @@ It's generally recommended to keep the _Auto-accept single game matches_ option 
 
 But by disabling the _Interactive mode_ option, the multi-scraper will run in a fully automatic mode, selecting the first game in case of multiple results and skipping to the next game if no results were returned. This is quite convenient for large game libraries but if the correct game is not the first one returned by the scraper service, the wrong game data will be scraped which will require manual correction using the single-game scraper.
 
-By default, ES-DE will search using the metadata name of the game. If no name has previously been defined via scraping or via manually entering it using the metadata editor, the name used for searching will correspond to the physical file name minus all text inside either normal brackets `()` or square brackets `[]`. So for example the physical filename `Mygame (U) [v2].zip` will be stripped to simply `Mygame` when performing the scraper search.
+By default, ES-DE will search using the metadata name of the game. If no name has previously been defined via scraping or via manually entering it using the metadata editor, the name used for searching will correspond to the physical filename minus all text inside either normal brackets `()` or square brackets `[]`. So for example the physical filename `Mygame (U) [v2].zip` will be stripped to simply `Mygame` when performing the scraper search.
 
-By disabling the option _Search using metadata name_, the physical file name will be used even if there is a scraped or manually entered name for the game.
+By disabling the option _Search using metadata name_, the physical filename will be used even if there is a scraped or manually entered name for the game.
 
 There is however an exception to this for arcade games (MAME and Neo Geo) when using the TheGamesDB scraper. As this service does not support searches using the short MAME names, these will be expanded to the full game names via a lookup in the MAME name database supplied with the ES-DE installation. But if using ScreenScraper the _Search using metadata name_ option is always respected as this service fully support scraping based on the short MAME names.
 
@@ -1099,7 +1105,7 @@ With this setting enabled, if any media files returned by the scraper seem to be
 
 **Search using metadata names**
 
-By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical file name regardless of such data being available, then disable this option. Note that when using TheGamesDB as scraper service for arcade games (MAME and Neo Geo), the short MAME name will always be expanded to the full game name as this scraper service does not support searches using short MAME names. In general it's recommended to disable this option if scraping arcade games using ScreenScraper as the MAME short names is much more reliable than using the metadata names.
+By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical filename regardless of such data being available, then disable this option. Note that when using TheGamesDB as scraper service for arcade games (MAME and Neo Geo), the short MAME name will always be expanded to the full game name as this scraper service does not support searches using short MAME names. In general it's recommended to disable this option if scraping arcade games using ScreenScraper as the MAME short names is much more reliable than using the metadata names.
 
 **Interactive mode** _(Multi-scraper only)_
 
@@ -1896,7 +1902,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 
 For the **Full name** column, text inside square brackets [] are comments and not part of the actual system name.
 
-The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If one or more of the platforms are not specified it means that the system is not available on those platforms. For example Lutris which only exists on Unix is marked with only a _[U]_. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core. There is a special [W*] indication for Windows which means that you need to manually add the emulator directory to the operating system's Path environment variable. This is required as some emulators don't ship with proper installers but instead only as a zip file that can be extracted anywhere on the filesystem. The [M+] indication for macOS means that the Homebrew package manager version of the emulator needs to be installed. A number of systems are marked as _Placeholder_ which means that although there is a configuration entry present, the actual emulator is not preconfigured. If you want to use such a system, you need to add a custom configuration yourself. The long term goal is to have these placeholders replaced with proper emulator configuration so all systems can be used without requiring manual setup.
+The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If one or more of the platforms are not specified it means that the system is not available on those platforms. For example Lutris which only exists on Unix is marked with only a [U]. There is a special [W*] indication for Windows which means that you need to manually add the emulator directory to the operating system's Path environment variable. This is required as some emulators don't ship with proper installers but instead only as a zip file that can be extracted anywhere on the filesystem. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core. A number of systems are marked as _Placeholder_ which means that although there is a configuration entry present, the actual emulator is not preconfigured. If you want to use such a system, you need to add a custom configuration yourself. The long term goal is to have these placeholders replaced with proper emulator configuration so all systems can be used without requiring manual setup.
 
 The **Alternative emulators** column lists additional emulators configured in es_systems.xml that can be selected per system and per game, as explained earlier in this guide. This does not necessarily include everything in existence, as for some platforms there are a lot of emulators to choose from. In those cases the included emulators is a curated selection. In the same manner as the _Default emulator_ column, differences between Unix, macOS and Windows are marked using square brackets. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core.
 
@@ -1917,17 +1923,14 @@ In general .zip or .7z files are recommended for smaller-sized games like those 
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
 Default emulator/Alternative emulators columns: \
-**[U]**: Unix, **[M]**: macOS, **[W]**: Windows
-
-Special indications: \
-**[M+]**: macOS, Homebrew package manager version, **[W\*]**: Windows, needs manual Path environment variable entry
+**[U]**: Unix, **[M]**: macOS, **[W]**: Windows, **[W\*]**: Windows, needs manual Path environment variable entry
 
 All emulators are RetroArch cores unless marked as **(Standalone**)
 
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
 | 3do                   | 3DO                                            | 4DO                               |                                   |              |                                      |
-| 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [M+] |              |                                      |
+| 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [M] |              |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Placeholder_                     |                                   |              |                                      |
 | amiga                 | Commodore Amiga                                | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
 | amiga600              | Commodore Amiga 600                            | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
@@ -1961,7 +1964,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | daphne                | Daphne Arcade LaserDisc Emulator               | _Placeholder_                     |                                   |              |                                      |
 | desktop               | Desktop Applications                           | N/A                               |                                   | No           |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
-| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM+] | No           | In separate folder (one folder per game with complete file structure retained) |
+| dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           |                                   |              |                                      |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
@@ -2001,7 +2004,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | naomi                 | Sega NAOMI                                     | Flycast                           |                                   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           |                                   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW]                        | Citra 2018 [UW]                   |              |                                      |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [M+] | No           | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>melonDS          |              |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
@@ -2013,7 +2016,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | openbor               | OpenBOR Game Engine                            | _Placeholder_                     |                                   |              |                                      |
 | oric                  | Tangerine Computer Systems Oric                | _Placeholder_                     |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
-| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UM+] | No           | In separate folder (one folder per game with complete file structure retained) |
+| pc                    | IBM PC                                         | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   |              |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |
@@ -2021,7 +2024,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   |              |                                      |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
-| ps2                   | Sony PlayStation 2                             | PCSX2 [UW]                        |                                   |              |                                      |
+| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW] | Yes          |                                      |
 | ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UW*]      |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3dir extension) |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            |                                   |              |                                      |

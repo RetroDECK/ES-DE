@@ -626,7 +626,7 @@ Assuming the code signing ceritificate is properly setup in Keychain Access, the
 
 Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy build for earlier operating system versions can be enabled. This has been tested with a minimum version of 10.11. It's unclear if it works with even older macOS releases.
 
-To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add "legacy" to the DMG installer file name when running CPack. It will also enable the bundled TLS/SSL certificates. As these older macOS releases are no longer receiving patches from Apple, certificates have likely expired which would break the scraper.
+To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add "legacy" to the DMG installer filename when running CPack. It will also enable the bundled TLS/SSL certificates. As these older macOS releases are no longer receiving patches from Apple, certificates have likely expired meaning the scraper would not work if the bundled certificates were not used.
 
 You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for. And finally CMAKE_OSX_DEPLOYMENT_TARGET needs to be updated in tools/macOS_dependencies_build.sh. This script then needs to be executed to rebuild all dependencies for the configured macOS version.
 
@@ -1259,7 +1259,7 @@ emulationstation-de/resources/certificates/curl-ca-bundle.crt
 
 ES-DE automatically identifies and excludes MAME BIOS and device files, as well as translating the short MAME ROM names to their full game names. This is done using information from the MAME driver file shipped with the official MAME distribution. The file needs to be converted to an internal format used by ES-DE as the original file is huge and most of the information is not required.
 
-To get hold of the driver file, go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like `mame0226lx.zip` and unzipping it will give you a file name such as `mame0226.xml`.
+To get hold of the driver file, go to [https://www.mamedev.org/release.php](https://www.mamedev.org/release.php) and select the Windows version, but only download the driver information in XML format and not MAME itself. This file will be named something like `mame0226lx.zip` and unzipping it will give you a filename such as `mame0226.xml`.
 
 Move the XML driver file to the resources/MAME directory and then convert it to the ES-DE internal files:
 
@@ -1445,7 +1445,7 @@ Below is an overview of the file layout with various examples. For the command t
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
 
         <!-- This example for Unix will search for RetroArch in the PATH environment variable and it also has an absolute path to
-        the snes9x_libretro core, If there are spaces in the path or file name, you must enclose them in quotation marks, such as
+        the snes9x_libretro core, If there are spaces in the path or filename, you must enclose them in quotation marks, such as
         retroarch -L "~/my configs/retroarch/cores/snes9x_libretro.so" %ROM% -->
         <command>retroarch -L ~/.config/retroarch/cores/snes9x_libretro.so %ROM%</command>
 
@@ -1753,15 +1753,25 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         </rule>
     </core>
     <emulator name="DOSBOX_STAGING">
-        <!-- DOS emulator DOSBox Staging, Homebrew version -->
+        <!-- DOS emulator DOSBox Staging -->
         <rule type="staticpath">
+            <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
+            <!-- Homebrew version -->
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">
-        <!-- Nintendo 64 emulator Mupen64Plus, Homebrew version -->
+        <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="staticpath">
+            <entry>/Applications/mupen64plus.app/Contents/MacOS/mupen64plus</entry>
+            <!-- Homebrew version -->
             <entry>/usr/local/bin/mupen64plus</entry>
+        </rule>
+    </emulator>
+    <emulator name="PCSX2">
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
+        <rule type="staticpath">
+            <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1989,12 +1999,14 @@ These are the steps to perform:
 You should end up with something like this:
 ```
 F:\EmulationStation-DE\
+F:\EmulationStation-DE\dosbox-staging\
+F:\EmulationStation-DE\PCSX2\
 F:\EmulationStation-DE\RetroArch-Win64\
-F:\EmulationStation-DE\yuzu\
+F:\EmulationStation-DE\ROMs\
 F:\EmulationStation-DE\RPCS3\
 F:\EmulationStation-DE\xemu\
 F:\EmulationStation-DE\xenia\
-F:\EmulationStation-DE\ROMs\
+F:\EmulationStation-DE\yuzu\
 F:\EmulationStation-DE\portable.txt
 ```
 
@@ -2009,12 +2021,16 @@ By default the emulators that will be automatically searched for by ES-DE are (r
 ```
 RetroArch-Win64\retroarch.exe
 RetroArch\retroarch.exe
+dosbox-staging\dosbox.exe
+PCSX2\pcsx2.exe
 RPCS3\rpcs3.exe
 xemu\xemu.exe
 xenia\xenia.exe
 yuzu\yuzu-windows-msvc\yuzu.exe
 ..\RetroArch-Win64\retroarch.exe
 ..\RetroArch\retroarch.exe
+..\dosbox-staging\dosbox.exe
+..\PCSX2\pcsx2.exe
 ..\RPCS3\rpcs3.exe
 ..\xemu\xemu.exe
 ..\xenia\xenia.exe
