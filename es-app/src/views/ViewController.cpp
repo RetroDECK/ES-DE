@@ -396,7 +396,15 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         }
     }
 
+#if defined(__APPLE__)
+    // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
+    // best user experience is to simply disable them.
+    if (applicationStartup)
+        playViewTransition(true);
+    else if (playTransition)
+#else
     if (playTransition || applicationStartup)
+#endif
         playViewTransition();
     else
         playViewTransition(true);
