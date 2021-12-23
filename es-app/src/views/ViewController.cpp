@@ -240,6 +240,13 @@ void ViewController::invalidAlternativeEmulatorDialog()
 
 void ViewController::goToStart(bool playTransition)
 {
+#if defined(__APPLE__)
+    // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
+    // best user experience is to simply disable them on this OS.
+    if (mState.viewing == NOTHING)
+        playTransition = false;
+#endif
+
     // If the system view does not exist, then create it. We do this here as it would
     // otherwise not be done if jumping directly into a specific game system on startup.
     if (!mSystemListView)
@@ -398,7 +405,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
 #if defined(__APPLE__)
     // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
-    // best user experience is to simply disable them.
+    // best user experience is to simply disable them on this OS.
     if (applicationStartup)
         playViewTransition(true);
     else if (playTransition)
