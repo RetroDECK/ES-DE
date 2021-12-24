@@ -1268,6 +1268,16 @@ const std::string FileData::findEmulatorPath(std::string& command)
     }
 
     for (std::string value : emulatorWinRegistryValues) {
+        // If the pipe character is found, then the string following this should be appended
+        // to the key value, assuming the key is found.
+        std::string appendString;
+        size_t pipePos = value.find('|');
+
+        if (pipePos != std::string::npos) {
+            appendString = value.substr(pipePos + 1, std::string::npos);
+            value = value.substr(0, pipePos);
+        }
+
         // Search for the defined value in the Windows Registry.
         std::string registryValueKey =
             Utils::String::replace(Utils::FileSystem::getParent(value), "/", "\\");
@@ -1299,6 +1309,14 @@ const std::string FileData::findEmulatorPath(std::string& command)
             RegCloseKey(registryKey);
             continue;
         }
+
+        if (strlen(path) == 0) {
+            RegCloseKey(registryKey);
+            continue;
+        }
+
+        if (!appendString.empty())
+            strncat_s(path, 1024, appendString.c_str(), appendString.length());
 
         // That a value was found does not guarantee that the emulator binary actually exists,
         // so check for that as well.
