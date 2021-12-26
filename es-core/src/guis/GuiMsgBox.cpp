@@ -13,6 +13,7 @@
 #include "components/MenuComponent.h"
 
 #define HORIZONTAL_PADDING_PX 20.0f
+#define VERTICAL_PADDING_MODIFIER 1.225f
 
 GuiMsgBox::GuiMsgBox(Window* window,
                      const HelpStyle& helpstyle,
@@ -86,8 +87,8 @@ GuiMsgBox::GuiMsgBox(Window* window,
 
     // Now that we know width, we can find height.
     mMsg->setSize(width, 0.0f); // mMsg->getSize.y() now returns the proper length.
-    const float msgHeight =
-        std::max(Font::get(FONT_SIZE_LARGE)->getHeight(), mMsg->getSize().y * 1.225f);
+    const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
+                                     mMsg->getSize().y * VERTICAL_PADDING_MODIFIER);
     setSize(width + HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier(),
             msgHeight + mButtonGrid->getSize().y);
 
@@ -102,7 +103,9 @@ GuiMsgBox::GuiMsgBox(Window* window,
 void GuiMsgBox::changeText(const std::string& newText)
 {
     mMsg->setText(newText);
-    mMsg->setSize(mMsg->getFont()->sizeText(newText));
+    glm::vec2 newSize = mMsg->getFont()->sizeText(newText);
+    newSize.y *= VERTICAL_PADDING_MODIFIER;
+    mMsg->setSize(newSize);
 
     // Adjust the width depending on the aspect ratio of the screen, to make the screen look
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
@@ -124,9 +127,12 @@ void GuiMsgBox::changeText(const std::string& newText)
     }
 
     // Now that we know width, we can find height.
-    mMsg->setSize(width, 0); // mMsg->getSize.y() now returns the proper length.
-    const float msgHeight =
-        std::max(Font::get(FONT_SIZE_LARGE)->getHeight(), mMsg->getSize().y * 1.225f);
+    mMsg->setSize(width, 0); // mMsg->getSize.y() now returns the proper height.
+    newSize = mMsg->getSize();
+    newSize.y *= VERTICAL_PADDING_MODIFIER;
+    mMsg->setSize(newSize);
+
+    const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(), mMsg->getSize().y);
     setSize(width + HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier(),
             msgHeight + mButtonGrid->getSize().y);
 }
