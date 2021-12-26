@@ -143,7 +143,8 @@ void ViewController::noGamesDialog()
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
                     mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
                     [this](const std::string& newROMDirectory) {
-                        Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                        Settings::getInstance()->setString("ROMDirectory",
+                                                           Utils::String::trim(newROMDirectory));
                         Settings::getInstance()->saveFile();
 #if defined(_WIN64)
                         mRomDirectory =
@@ -166,7 +167,8 @@ void ViewController::noGamesDialog()
                 mWindow->pushGui(new GuiTextEditPopup(
                     mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
                     [this](const std::string& newROMDirectory) {
-                        Settings::getInstance()->setString("ROMDirectory", newROMDirectory);
+                        Settings::getInstance()->setString("ROMDirectory",
+                                                           Utils::String::trim(newROMDirectory));
                         Settings::getInstance()->saveFile();
 #if defined(_WIN64)
                         mRomDirectory =
