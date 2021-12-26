@@ -3,25 +3,25 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Tsukuda Original</text>
+            <text>Manufacturer:  Tsukuda Original</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1983</text>
+            <text>Released:  1983</text>
         </text>
         <text name="info3" extra="true">
-            <text>CPU : Zilog Z80 @ 3.58 MHz</text>
+            <text>CPU:  8-bit Zilog Z80 @ 3.58 MHz</text>
         </text>
         <text name="info4" extra="true">
-            <text>RAM : 1KB / VRAM : 16KB</text>
+            <text>RAM:  1 KB / VRAM:  16 KB</text>
         </text>
         <text name="info5" extra="true">
-            <text>Video : Texas Instruments TMS9918</text>
+            <text>Graphics:  Texas Instruments TMS9918</text>
         </text>
         <text name="info6" extra="true">
-            <text>Resolution : 256×192 pixels, 16 colors (21 colors palette)</text>
+            <text>Resolution:  256×192 pixels, 16 colors (21 color palette)</text>
         </text>
         <text name="info7" extra="true">
-            <text>Sound chip : Texas Instruments SN76489 PSG</text>
+            <text>Sound:  Texas Instruments SN76489 PSG</text>
         </text>
     </view>
 </theme>

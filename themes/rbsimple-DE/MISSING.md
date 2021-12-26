@@ -8,7 +8,6 @@ None at the moment.
 
 * 64dd : Nintendo 64DD - consolegame.svg, console.svg, game.svg
 * ags: Adventure Game Studio - consolegame.svg, console.svg, controller.svg
-* amiga: Amiga - system info (needs improvement)
 * amigacd32: Amiga CD32 - consolegame.svg, console.svg, controller.svg, game.svg
 * android: Google Android - consolegame.svg, console.svg, controller.svg, game.svg
 * apple2gs: Apple IIGS - consolegame.svg, console.svg, controller.svg, game.svg

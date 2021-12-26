@@ -3,34 +3,34 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Sega</text>
+            <text>Manufacturer:  Sega</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1985</text>
+            <text>Released:  1985</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 13 million</text>
+            <text>Units sold:  18 to 21 million (incl. Tectoy variants)</text>
         </text>
         <text name="info4" extra="true">
-            <text>Best-selling game : Alex Kidd in Miracle World</text>
+            <text>Best-selling game:  Alex Kidd in Miracle World</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : 8-bit Zilog Z80 @ 3.58 MHz</text>
+            <text>CPU:  8-bit Zilog Z80 @ 3.58 MHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 8 KB / VRAM : 16 KB</text>
+            <text>RAM:  8 KB / VRAM:  16 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Video : Sega VDP (custom Texas Instruments TMS9918)</text>
+            <text>Graphics:  Sega VDP (custom TI TMS9918)</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 256×192 pixels, 32 colors (64 color palette)</text>
+            <text>Resolution:  256×192 pixels, 32 colors (64 color palette)</text>
         </text>
         <text name="info9" extra="true">
-            <text>Sound : TI SN76489 PSG / add-on module YM2413 FM</text>
+            <text>Sound:  TI SN76489 PSG, YM2413 FM add-on module</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 32 KB - 1 MB</text>
+            <text>Cart size:  32 KB to 1 MB</text>
         </text>
     </view>
 </theme>

@@ -3,31 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Apple Computer, Inc.</text>
+            <text>Manufacturer:  Apple Computer, Inc.</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1984</text>
+            <text>Released:  1984</text>
         </text>
         <text name="info3" extra="true">
-            <text>OS : System Software 1.0</text>
+            <text>OS:  System Software 1.0</text>
         </text>
         <text name="info4" extra="true">
-            <text>CPU : Motorola 68000 @ 7.8336 MHz</text>
+            <text>CPU:  16-bit Motorola 68000 @ 7.8336 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 128 KB</text>
+            <text>RAM:  128 KB</text>
         </text>
         <text name="info6" extra="true">
-            <text>ROM : 64 KB</text>
+            <text>ROM:  64 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Sound : 8 TTL chips implementing a video and sound DMA controller</text>
+            <text>Display:  Built-in 9-inch monochrome CRT</text>
         </text>
         <text name="info8" extra="true">
-            <text>Display : 9" Monochrome built-in (512×342 pixels)</text>
+            <text>Resolution:  512×342 pixels, 65536 colors</text>
         </text>
         <text name="info9" extra="true">
-            <text>Resolution : 512x512 (65536 colours)</text>
+            <text>Sound:  8 TTL chips implementing a video and sound DMA controller</text>
         </text>
     </view>
 </theme>

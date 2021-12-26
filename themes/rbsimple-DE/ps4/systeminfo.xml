@@ -3,28 +3,28 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Sony Electronics, Foxconn</text>
+            <text>Manufacturer:  Sony Electronics, Foxconn</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 2013</text>
+            <text>Released:  2013</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 116 million</text>
+            <text>Units sold:  106 million</text>
         </text>
         <text name="info4" extra="true">
-            <text>Best-selling game : God of War</text>
+            <text>Best-selling game:  God of War</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : AMD x86-64 Jaguar @ 1.6 GHz</text>
+            <text>CPU:  AMD Jaguar @ 1.6 GHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>GPU : AMD GCN Radeon @ 800 MHz or 911 MHz</text>
+            <text>RAM:  8 GB GDDR5</text>
         </text>
         <text name="info7" extra="true">
-            <text>RAM : 8 GB GDDR5</text>
+            <text>Graphics:  AMD GCN Radeon @ 800 MHz or 911 MHz</text>
         </text>
         <text name="info8" extra="true">
-            <text>Media : Blu-ray, DVD, digital distribution</text>
+            <text>Media:  Blu-ray, DVD, digital distribution</text>
         </text>
     </view>
 </theme>

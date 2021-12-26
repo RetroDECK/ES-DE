@@ -3,28 +3,28 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Bandaï</text>
+            <text>Manufacturer:  Bandai</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 2000</text>
+            <text>Released:  2000</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 740 727</text>
+            <text>Units sold:  740,727</text>
         </text>
         <text name="info4" extra="true">
-            <text>CPU : SSPGY-1002 @ 3.072 MHz 16-bit NEC V30MZ duplicate</text>
+            <text>CPU:  16-bit NEC V30 MZ @ 3.072 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>Memory : 64 kB shared VRAM/WRAM</text>
+            <text>RAM:  64 KB shared WRAM/VRAM</text>
         </text>
         <text name="info6" extra="true">
-            <text>Resolution : 224 x 144 pixels</text>
+            <text>Resolution:  224×144 pixels</text>
         </text>
         <text name="info7" extra="true">
-            <text>Display : FSTN reflective LCD, 2.8 in (71 mm), 241 colors</text>
+            <text>Display:  FSTN reflective LCD, 2.8 in (71 mm), 241 colors</text>
         </text>
-        <text name="info9" extra="true">
-            <text>Sound : One mono speaker, optional headphones (mute, soft, loud settings)</text>
+        <text name="info8" extra="true">
+            <text>Sound:  One mono speaker, optional headphones</text>
         </text>
     </view>
 </theme>

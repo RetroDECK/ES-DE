@@ -3,28 +3,28 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Atari, Inc.</text>
+            <text>Manufacturer:  Atari, Inc., Atari Corporation</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1979</text>
+            <text>Released:  1979</text>
         </text>
         <text name="info3" extra="true">
-            <text>OS : Atari OS</text>
+            <text>OS:  Atari OS</text>
         </text>
         <text name="info4" extra="true">
-            <text>CPU : MOS Technology 6502B @ 1.8 Mhz</text>
+            <text>CPU:  8-bit MOS Technology 6502B @ 1.8 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 8 KB base, 48 KB max.</text>
+            <text>RAM:  8 KB base, 48 KB max.</text>
         </text>
         <text name="info6" extra="true">
-            <text>ROM : 8KB (Atari Basic)</text>
+            <text>ROM:  8 KB (Atari BASIC)</text>
         </text>
         <text name="info7" extra="true">
-            <text>Sound : 4 x oscillators with noise mixing</text>
+            <text>Resolution:  320×192 pixels, monochrome / 160×96 pixels, 128 colors</text>
         </text>
         <text name="info8" extra="true">
-            <text>Display : 320x192 pixels, monochrome / 160x96 pixels, 128 colors</text>
+            <text>Sound:  4 x oscillators with noise mixing</text>
         </text>
     </view>
 </theme>

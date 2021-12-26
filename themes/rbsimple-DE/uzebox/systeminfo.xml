@@ -3,31 +3,28 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Developer : Belogic Software</text>
+            <text>Developer:  Belogic Software</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 2008</text>
+            <text>Released:  2008</text>
         </text>
         <text name="info3" extra="true">
-            <text>CPU : Amtel ATmega644 microcontroller @ 28.6 Mhz</text>
+            <text>CPU:  Amtel ATmega644 @ 28.6 MHz</text>
         </text>
         <text name="info4" extra="true">
-            <text>RAM : 4 K</text>
+            <text>RAM:  4 KB</text>
         </text>
         <text name="info5" extra="true">
-            <text>Program Memory : 64 K</text>
+            <text>Program Memory:  64 KB</text>
         </text>
         <text name="info6" extra="true">
-            <text>Sound : 5 channels wavetable synthesis , 8-bit mono, mixed at ~15Khz and PWM output</text>
+            <text>Resolution:  Max. 360×224 pixels in tiles-only mode, 256 colors in 3:3:2 color space</text>
         </text>
         <text name="info7" extra="true">
-            <text>Resolution : Various video modes supporting up to 360x224 pixels in tiles-only mode</text>
+            <text>Sound:  5 channels, wavetable synthesis, 8-bit mono</text>
         </text>
         <text name="info8" extra="true">
-            <text>Colors : 256 simultaneous colors arranged in a 3:3:2 color space</text>
-        </text>
-        <text name="info9" extra="true">
-            <text>Media : SD Memory Card</text>
+            <text>Media:  SD memory card</text>
         </text>
     </view>
 </theme>

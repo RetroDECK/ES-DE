@@ -3,34 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Nintendo</text>
+            <text>Manufacturer:  Nintendo</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 2004</text>
+            <text>Released:  2004</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 153.99 million</text>
+            <text>Units sold:  154.02 million</text>
         </text>
         <text name="info4" extra="true">
-            <text>Best-selling game : New Super Mario Bros.</text>
+            <text>Best-selling game:  New Super Mario Bros.</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : 66 MHz ARM9 + 33MHz ARM7</text>
+            <text>CPU:  ARM9 @ 66 MHz + ARM7 @ 33 MHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 4MB / VRAM: 656KB</text>
+            <text>RAM:  4 MB / VRAM:  656 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Screen : Reflective TFT Colour LCD</text>
+            <text>Screen:  Reflective TFT color LCD</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 256 x 192 pixels</text>
+            <text>Resolution:  256×192 pixels, 260,000 colors</text>
         </text>
         <text name="info9" extra="true">
-            <text>Display Ability : 260 000 colours</text>
-        </text>
-        <text name="info10" extra="true">
-            <text>Sound : Stereo speakers w/virtual surround, headphones</text>
+            <text>Sound:  Stereo speakers w/virtual surround, headphones</text>
         </text>
     </view>
 </theme>

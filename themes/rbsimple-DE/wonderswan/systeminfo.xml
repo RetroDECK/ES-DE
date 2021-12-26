@@ -3,25 +3,25 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Bandaï</text>
+            <text>Manufacturer:  Bandai</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1999</text>
+            <text>Released:  1999</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 3.5 million</text>
+            <text>Units sold:  3.5 million</text>
         </text>
         <text name="info4" extra="true">
-            <text>CPU : 16Bits NEC V20</text>
+            <text>CPU:  16-bit NEC V30 MZ @ 3.072 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 512k video</text>
+            <text>RAM:  64 KB shared WRAM/VRAM</text>
         </text>
         <text name="info6" extra="true">
-            <text>Resolution : 224 x 144 pixels</text>
+            <text>Resolution:  224×144 pixels</text>
         </text>
         <text name="info7" extra="true">
-            <text>Sound : 4 PCM channels, 32 samples 4Bit for each channel</text>
+            <text>Sound:  4 PCM channels, 32 samples 4-bit per channel</text>
         </text>
     </view>
 </theme>

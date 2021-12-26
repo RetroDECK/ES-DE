@@ -3,31 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Nintendo</text>
+            <text>Manufacturer:  Nintendo</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1986</text>
+            <text>Released:  1986</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 4.44 million</text>
+            <text>Units sold:  4.44 million</text>
         </text>
         <text name="info4" extra="true">
-            <text>Best-selling game : Super Mario Bros. 2</text>
+            <text>Best-selling game:  Super Mario Bros. 2</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : Ricoh 2A03 8-bit processor</text>
+            <text>CPU:  8-bit Ricoh 2A03 @ 1.66 MHz (PAL) / 1.79 MHz (NTSC)</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 32 KB</text>
+            <text>RAM:  32 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Disk space : 112 KB</text>
+            <text>Audio/Video processor:  Uses Famicom hardware</text>
         </text>
         <text name="info8" extra="true">
-            <text>Audio/Video processor : Uses Famicom hardware</text>
+            <text>Ports:  Uses Famicom hardware</text>
         </text>
         <text name="info9" extra="true">
-            <text>Ports : Uses Famicom hardware</text>
+            <text>Media:  Proprietary floppy disk with 112 KB capacity</text>
         </text>
     </view>
 </theme>

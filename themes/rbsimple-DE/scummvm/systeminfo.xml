@@ -3,19 +3,19 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Original author : Ludvig Strigeus</text>
+            <text>Original author:  Ludvig Strigeus</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 2001</text>
+            <text>Initial release:  2001</text>
         </text>
         <text name="info3" extra="true">
-            <text>Scummvm is a collection of game engine recreations.</text>
+            <text>ScummVM is a collection of game engine recreations.</text>
         </text>
         <text name="info4" extra="true">
             <text>Originally designed to play LucasArts adventure games that use</text>
         </text>
         <text name="info5" extra="true">
-            <text>the SCUMMM system, it also supports a variety of non-SCUMM</text>
+            <text>the SCUMM system, it also supports a variety of non-SCUMM</text>
         </text>
         <text name="info6" extra="true">
             <text>games by companies like Revolution Software and Adventure Soft.</text>

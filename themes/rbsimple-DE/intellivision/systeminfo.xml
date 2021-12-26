@@ -3,34 +3,34 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Mattel Electronics</text>
+            <text>Manufacturer:  Mattel Electronics</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1979</text>
+            <text>Released:  1979</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 3+ million</text>
+            <text>Units sold:  3+ million</text>
         </text>
         <text name="info4" extra="true">
-            <text>Best-selling game : Las Vegas Poker & Blackjack</text>
+            <text>Best-selling game:  Las Vegas Poker &amp; Blackjack</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : GI CP1610 @ 894.886 kHz</text>
+            <text>CPU:  16-bit GI CP1610 @ 894.886 kHz</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 1kB</text>
+            <text>RAM:  1 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Video : General Instrument AY-3-8900-1</text>
+            <text>Graphics:  General Instrument AY-3-8900-1</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 159x96, 16 colors</text>
+            <text>Resolution:  159×96 pixels, 16 colors</text>
         </text>
         <text name="info9" extra="true">
-            <text>Sound : General Instrument AY-3-8914</text>
+            <text>Sound:  General Instrument AY-3-8914</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 8kB - 32kB</text>
+            <text>Cart size:  8 to 32 KB</text>
         </text>
     </view>
 </theme>

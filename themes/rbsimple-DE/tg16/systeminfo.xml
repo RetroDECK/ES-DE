@@ -3,28 +3,28 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : NEC</text>
+            <text>Manufacturer:  NEC Home Electronics</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1987</text>
+            <text>Released:  1987</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 10 million</text>
+            <text>Units sold:  6.59 million (incl. PC Engine)</text>
         </text>
         <text name="info4" extra="true">
-            <text>CPU : HuC6280 8-bit 7,16 Mhz</text>
+            <text>CPU:  8-bit HuC6280 @ 7.16 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 8 Kbyte</text>
+            <text>RAM:  8 KB / VRAM:  64 KB</text>
         </text>
         <text name="info6" extra="true">
-            <text>Picture Processor Unit : 8-bit</text>
+            <text>Graphics:  HuC6270A Video Display Controller</text>
         </text>
         <text name="info7" extra="true">
-            <text>Video RAM : 64 Kbyte</text>
+            <text>Sound:  PSG @ 3.58 MHz, 5 to 10-bit stereo PCM</text>
         </text>
         <text name="info8" extra="true">
-            <text>Media : HU-Card, SHU-Card, CD-ROM, Super-CD-ROM</text>
+            <text>Media:  HuCard</text>
         </text>
     </view>
 </theme>

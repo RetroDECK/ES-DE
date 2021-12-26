@@ -3,34 +3,34 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Nintendo</text>
+            <text>Manufacturer:  Nintendo</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1983</text>
+            <text>Released:  1983</text>
         </text>
         <text name="info3" extra="true">
-            <text>Units sold : 61.79 million</text>
+            <text>Units sold:  61.91 million (incl. NES)</text>
         </text>
         <text name="info4" extra="true">
-            <text>Best-selling game : Super Mario Bros.</text>
+            <text>Best-selling game:  Super Mario Bros.</text>
         </text>
         <text name="info5" extra="true">
-            <text>CPU : 8-bit MOS 6502 @ 1.79MHz</text>
+            <text>CPU:  8-bit Ricoh 2A03 @ 1.66 MHz (PAL) / 1.79 MHz (NTSC)</text>
         </text>
         <text name="info6" extra="true">
-            <text>RAM : 2 KB / VRAM : 2 KB</text>
+            <text>RAM:  2 KB / VRAM:  2 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>Video : 8-bit PPU (Picture Processing Unit)</text>
+            <text>Graphics:  8-bit PPU (Picture Processing Unit)</text>
         </text>
         <text name="info8" extra="true">
-            <text>Resolution : 256x240 pixels, 25 colors (64 color palette)</text>
+            <text>Resolution:  256×240 pixels, 25 colors (64 color palette)</text>
         </text>
         <text name="info9" extra="true">
-            <text>Sound : PSG sound (2 square waves, 1 triangle wave, 1 white noise)</text>
+            <text>Sound:  PSG sound (2 square waves, 1 triangle wave, 1 white noise)</text>
         </text>
         <text name="info10" extra="true">
-            <text>Cart Size : 8 KB - 1 MB</text>
+            <text>Cart size:  8 KB to 1 MB</text>
         </text>
     </view>
 </theme>

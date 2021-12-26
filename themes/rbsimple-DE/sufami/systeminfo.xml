@@ -3,16 +3,13 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Bandai</text>
+            <text>Manufacturer:  Bandai</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1996</text>
+            <text>Released:  1996</text>
         </text>
         <text name="info3" extra="true">
-            <text>Media : SuFami Turbo Application Cartridge +  Game Cartridges</text>
-        </text>
-        <text name="info4" extra="true">
-            <text></text>
+            <text>Media:  SuFami Turbo Application Cartridge +  Game Cartridges</text>
         </text>
         <text name="info5" extra="true">
             <text>Bandai's SuFami Turbo gave developers cheaper ways to produce and</text>

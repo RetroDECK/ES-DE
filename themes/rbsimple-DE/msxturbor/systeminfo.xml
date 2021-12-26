@@ -3,31 +3,31 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Manufacturer : Panasonic</text>
+            <text>Manufacturer:  Panasonic</text>
         </text>
         <text name="info2" extra="true">
-            <text>Year of Release : 1990</text>
+            <text>Released:  1990</text>
         </text>
         <text name="info3" extra="true">
-            <text>OS : MSX BASIC V4.0 (32 kB)</text>
+            <text>OS:  MSX BASIC V4.0 (32 KB)</text>
         </text>
         <text name="info4" extra="true">
-            <text>CPU : R800 (DAR800-X0G) @ 28.64 MHz and Z80A @ 3.58</text>
+            <text>CPU:  R800 (DAR800-X0G) @ 28.64 MHz + Z80A @ 3.58 MHz</text>
         </text>
         <text name="info5" extra="true">
-            <text>RAM : 256 KB (FS-A1ST) or 512 KB (FS-A1GT) / VRAM : 128 KB</text>
+            <text>RAM:  256 KB (FS-A1ST) or 512 KB (FS-A1GT) / VRAM:  128 KB</text>
         </text>
         <text name="info6" extra="true">
-            <text>ROM : 96 KB</text>
+            <text>ROM:  96 KB</text>
         </text>
         <text name="info7" extra="true">
-            <text>GPU : Yamaha V9958</text>
+            <text>Graphics:  Yamaha V9958</text>
         </text>
         <text name="info8" extra="true">
-            <text>Sound chip : PSG (AY-3-8910 compatible), MSX-MUSIC, PCM, MSX-MIDI</text>
+            <text>Resolution:  512×212 pixels, 4 or 16 colors / 256×212 pixels, 16 to 19268 colors</text>
         </text>
         <text name="info9" extra="true">
-            <text>Resolution : 512 x 212 (4 or 16 colors) and 256 x 212 (16 to 19268 colors)</text>
+            <text>Sound:  PSG (AY-3-8910 compatible), MSX-MUSIC, PCM, MSX-MIDI</text>
         </text>
     </view>
 </theme>

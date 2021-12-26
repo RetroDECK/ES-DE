@@ -3,16 +3,16 @@
 
     <view name="system">
         <text name="info1" extra="true">
-            <text>Developers : Matt Ownby (Daphne) and Jeffrey Clark (Hypseus)</text>
+            <text>Developers:  Matt Ownby (Daphne) and Jeffrey Clark (Hypseus)</text>
         </text>
         <text name="info2" extra="true">
-            <text>Initial release : 1999</text>
+            <text>Initial release:  1999</text>
         </text>
         <text name="info3" extra="true">
-            <text>Website : http://www.daphne-emu.com/</text>
+            <text>Website:  http://www.daphne-emu.com/</text>
         </text>
         <text name="info4" extra="true">
-            <text>Written in : C++</text>
+            <text>Written in:  C++</text>
         </text>
         <text name="info5" extra="true">
             <text>Daphne is a program that lets one play the original</text>
@@ -24,10 +24,7 @@
             <text>Hypseus is a fork of Daphne to improve</text>
         </text>
         <text name="info8" extra="true">
-            <text>performance (MPEG2 decoder, SDL2 support, ...).</text>
-        </text>
-        <text name="info9" extra="true">
-            <text>Best LaserDisc games are: Dragon's Lair, Space Ace, ...</text>
+            <text>performance (e.g. MPEG2 decoder, SDL2 support).</text>
         </text>
     </view>
 </theme>
