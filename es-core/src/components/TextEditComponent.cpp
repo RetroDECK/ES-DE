@@ -61,6 +61,7 @@ void TextEditComponent::setValue(const std::string& val)
     mText = val;
     mTextOrig = val;
     onTextChanged();
+    onCursorChanged();
 }
 
 void TextEditComponent::textInput(const std::string& text)
