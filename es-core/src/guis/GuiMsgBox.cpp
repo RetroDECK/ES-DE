@@ -122,7 +122,7 @@ void GuiMsgBox::changeText(const std::string& newText)
         width = std::max(mButtonGrid->getSize().x, mMsg->getSize().x);
         width = std::max(width, minWidth);
     }
-    else {
+    else if (mButtonGrid->getSize().x > width) {
         width = mButtonGrid->getSize().x;
     }
 
