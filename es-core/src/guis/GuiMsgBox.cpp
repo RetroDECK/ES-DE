@@ -89,7 +89,7 @@ GuiMsgBox::GuiMsgBox(Window* window,
     mMsg->setSize(width, 0.0f); // mMsg->getSize.y() now returns the proper length.
     const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
                                      mMsg->getSize().y * VERTICAL_PADDING_MODIFIER);
-    setSize(width + HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier(),
+    setSize(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier()),
             msgHeight + mButtonGrid->getSize().y);
 
     // Center for good measure.
@@ -122,18 +122,18 @@ void GuiMsgBox::changeText(const std::string& newText)
         width = std::max(mButtonGrid->getSize().x, mMsg->getSize().x);
         width = std::max(width, minWidth);
     }
-    else if (mButtonGrid->getSize().x > mSize.x) {
+    else {
         width = mButtonGrid->getSize().x;
     }
 
     // Now that we know width, we can find height.
-    mMsg->setSize(width, 0); // mMsg->getSize.y() now returns the proper height.
+    mMsg->setSize(width, 0.0f); // mMsg->getSize.y() now returns the proper height.
     newSize = mMsg->getSize();
     newSize.y *= VERTICAL_PADDING_MODIFIER;
     mMsg->setSize(newSize);
 
     const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(), mMsg->getSize().y);
-    setSize(width + HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier(),
+    setSize(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier()),
             msgHeight + mButtonGrid->getSize().y);
 }
 
