@@ -50,13 +50,13 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### _v1.2_
 
-* Support for pre-defined alternative emulators and cores (configured in es_systems.xml)
-* Badges highlighting things like favorite games, completed games etc. (will require theme support)
-* Virtual (on-screen) keyboard
-* Support for the Raspberry Pi 4 (Raspberry Pi OS)
-* Improve fullscreen support and make game launching more seamless, remove the temporary fullscreen hacks
-* Add GLM library dependency for matrix and vector operations, decommission the built-in functions
-* AppImage and AUR releases on Linux
+* _Support for pre-defined alternative emulators and cores (configured in es_systems.xml)_
+* _Badges highlighting things like favorite games, completed games etc. (will require theme support)_
+* _Virtual (on-screen) keyboard_
+* _Support for the Raspberry Pi 4 (Raspberry Pi OS)_
+* _Improve fullscreen support and make game launching more seamless, remove the temporary fullscreen hacks_
+* _Add GLM library dependency for matrix and vector operations, decommission the built-in functions_
+* _AppImage and AUR releases on Linux_
 
 #### v1.3
 

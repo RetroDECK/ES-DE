@@ -8,7 +8,7 @@
 
 ### Release overview
 
-The 1.2 release introduces multiple new features and brings extensive bug fixing and lots of other small improvements. Support for alternative emulators has been added which can be selected system-wide or per game. These alternative emulators are added to the es_systems.xml file, making it easy to expand or customize the configuration. For this release, most of the available RetroArch cores have been preconfigured.
+The 1.2 release introduces multiple new features and brings extensive bug fixing and lots of other small improvements. Support for alternative emulators has been added which can be selected system-wide or per game. These alternative emulators are added to the es_systems.xml file, making it easy to expand or customize the configuration. For this release most of the available RetroArch cores have been preconfigured, and a couple of standalone emulators have been included as well.
 
 A virtual keyboard has been added (some code borrowed from Batocera.linux) which is fully integrated and can be used to input text via a game controller. By introducing this feature, a keyboard should now be completely optional for day-to-day use.
 
@@ -33,7 +33,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Added an option to rotate horizontally oriented game boxes when generating miximages
 * Added size options (small/medium/large) for the boxes/covers and physical media images when generating miximages
 * Added support for the Raspberry Pi 4 (Raspberry Pi OS 32-bit/armv7l and 64-bit/aarch64)
-* Bundled the new alternative theme "modern-DE" which supports all the latest features from this release
+* Bundled a new alternative theme "modern-DE" which supports all the latest features from this release
 * Changed the Unix fullscreen mode and removed the --windowed, --fullscreen-normal and --fullscreen-borderless command line options
 * Removed the Unix-specific menu option "Fullscreen mode (requires restart)"
 * Changed the Windows fullscreen mode and removed the "AMD and Intel GPU game launch workaround" menu option
@@ -77,20 +77,20 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Made large optimizations to the SVG rendering which reduces application startup time dramatically when many systems are populated
 * Changed to loading the default theme set rbsimple-DE instead of the first available theme if the currently configured theme set is missing
 * Added support for displaying the left and right trigger buttons in the help prompts
-* Removed the "Choose" entry from the help prompts in the gamelist view
+* Removed the "Choose" entry from the gamelist view help prompts
 * Replaced a number of help prompt hacks with proper solutions
 * Changed the "Toggle screensaver" help entry in the system view to simply "Screensaver"
 * Changed the font size for the custom collection deletion screen to use the same size as all other menus
 * Added support for upscaling bitmap images using linear filtering
-* Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and the gamelist views
+* Changed the marquee image upscale filtering from nearest neighbor to linear for the launch screen and gamelist views
 * Made the window corners slightly more rounded
 * Moved the Media viewer and Screensaver settings higher in the UI settings menu
 * Moved the game media directory setting to the top of the Other settings menu, following the new Alternative emulators entry
 * Moved the ScreenScraper account toggle to the bottom of the scraper account settings menu
 * Lowered the default volumes slightly for videos and navigation sounds
 * Added loading of the System view to the ViewController preload function to decrease theme extras texture pop-in
-* (macOS) Disabled the application startup animations as they were very choppy and looked bad after moving to SDL 2.0.18
-* Changed the filter description "Text filter (game name)" to simply "Game name"
+* Disabled the application startup animations on macOS as they were very choppy and looked bad after moving to SDL 2.0.18
+* Changed the filter description "Text filter (game name)" to simply "Game name" and a keyboard icon
 * Removed a margin hack from TextComponent
 * If abbreviated strings end with a space character, that space is now removed (TextComponent)
 * Added support for multi-select total count and exclusive multi-select to OptionListComponent
@@ -124,11 +124,12 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * Increased the minimal required compiler version to 5.0.0 for Clang/LLVM and 7.1 for GCC
 * Added CMake options to build with AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer
 * Changed two clang-format rules related to braced lists and reformatted the codebase
-* Upgraded the bundled SDL version 2.0.14 to 2.0.18 for Windows and macOS
+* Upgraded the bundled SDL version 2.0.14 to 2.0.18 on Windows and macOS
 * Bundled the October 2021 release of the Mozilla TLS/SSL certificates
 * Updated the MAME index files to include ROMs up to MAME version 0.237
-* rbsimple-DE: Added some missing graphics for the xbox360 and residualvm systems
-* rbsimple-DE: Improved existing graphics for the dos, pc, residualvm and scummvm systems
+* rbsimple-DE: Added some missing graphics for the xbox360 system
+* rbsimple-DE: Improved existing graphics for the dos, pc and scummvm systems
+* rbsimple-DE: Updated the info text for most systems
 
 ### Bug fixes
 
@@ -149,14 +150,16 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * (Windows) Launching a game that changed the screen resolution would offset the ES-DE application window when exiting
 * (Windows) Enabling the option to hide the taskbar would sometimes not focus the application window on startup (possibly only an issue on Windows 8.1)
 * If there were gamelist.xml entries for existing files whose extensions were not setup in es_systems.xml, these would still get loaded and displayed
-* Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly resized
+* Fixed multiple minor rendering issues where graphics would be slightly cut off or incorrectly sized
 * Under some circumstances ScrollableContainer (used for the game descriptions) would contain a partially rendered bottom line
 * If the TextListComponent height was not evenly dividable by the font height + line spacing, a partial bottom row would get rendered
 * The line spacing for TextListComponent was incorrectly calculated for some resolutions such as 2560x1440
 * Fixed multiple issues with scaling of images which led to various inconsistencies and sometimes cut-off graphics
 * The system time zone was not taken into consideration when using the Unix epoch which lead to various strange problems in the metadata editor
 * Removing games from custom collections did not remove their filter index entries
+* Enabling the All Games collection lead to a potentially large memory leak under some circumstances
 * Input consisting of only whitespace characters would get accepted by TextEditComponent which led to various strange behaviors
+* Leading and trailing whitespace characters would not get trimmed from the ROM directory when entering this during initial setup
 * Leading and trailing whitespace characters would not get trimmed from the collection name when creating a new custom collection
 * Leading and trailing whitespace characters would get included in scraper search refines and TheGamesDB searches
 * Leading and trailing whitespace characters would get included in game name filters
