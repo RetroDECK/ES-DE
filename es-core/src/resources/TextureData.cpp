@@ -58,8 +58,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 {
     std::unique_lock<std::mutex> lock{mMutex};
 
-    // If already initialized then don't process it again.
-    if (!mDataRGBA.empty())
+    // If already initialized then don't process it again unless it needs to be rasterized.
+    if (!mDataRGBA.empty() && !mPendingRasterization)
         return true;
 
     NSVGimage* svgImage{nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI)};
@@ -282,7 +282,7 @@ float TextureData::sourceHeight()
 void TextureData::setSourceSize(float width, float height)
 {
     if (mScalable) {
-        if ((mSourceWidth != width) || (mSourceHeight != height)) {
+        if (mSourceWidth != width || mSourceHeight != height) {
             mSourceWidth = width;
             mSourceHeight = height;
             releaseVRAM();

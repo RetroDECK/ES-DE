@@ -197,7 +197,8 @@ void TextureResource::rasterizeAt(float width, float height)
 {
     if (mTextureData != nullptr) {
         glm::vec2 textureSize = mTextureData.get()->getSize();
-        if (textureSize.x == width && textureSize.y == height)
+        if (textureSize.x == width && textureSize.y == height &&
+            !mTextureData.get()->getPendingRasterization())
             return;
     }
 
