@@ -999,7 +999,6 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
 
             // Flag the collection as not populated so it gets repopulated.
             autoSystem->isPopulated = false;
-            populateAutoCollection(autoSystem);
 
             if (systemEntries.empty())
                 return;
@@ -1013,7 +1012,6 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
             // Reset the filters so that they get rebuilt correctly when populating the collection.
             autoSystem->system->getIndex()->resetIndex();
 
-            autoSystem->isPopulated = false;
             populateAutoCollection(autoSystem);
 
             // The cursor value is now pointing to some random memory address so we need to set
