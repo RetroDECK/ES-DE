@@ -55,7 +55,7 @@ As for display resolutions, the minimum pixel value is 224 and the maximum is 76
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 
-**Installing a Linux .deb package**
+**Installing the Linux .deb package**
 
 The .deb package is intended for Linux distributions based on Debian, such as Ubuntu, Linux Mint, Raspberry Pi OS etc. Your distribution should include a graphical package installer, but if you prefer to use the command line, run the following which will install ES-DE and resolve any dependencies:
 
@@ -63,7 +63,7 @@ The .deb package is intended for Linux distributions based on Debian, such as Ub
 sudo apt install ./emulationstation-de-1.2.0-x64.deb
 ```
 
-**Installing a Linux .rpm package**
+**Installing the Linux .rpm package**
 
 On Fedora the RPM Fusion repository is a prerequisite for the installation, it can be installed like this:
 
@@ -81,7 +81,7 @@ sudo dnf install ./emulationstation-de-1.2.0-x64.rpm
 
 Of course the filename will differ slightly depending on the architecture, the example above is for the x64/x86 platform.
 
-**Running a Linux AppImage file**
+**Running the Linux AppImage file**
 
 In addition to the .deb and .rpm packages covered above, ES-DE is also available as an AppImage which should be usable on most modern x86 64-bit Linux distributions. After download you have to set the file as executable, such as this:
 ```
@@ -241,7 +241,7 @@ sudo snap connect retroarch:removable-media
 
 On Raspberry Pi OS 10 Sony DualShock 4 controllers have problems with some button presses that don't register correctly. The issue appears resolved on Raspberry Pi OS 11.
 
-On Raspberry Pi OS 11 there are various graphics issues and sometimes the application or emulator completely freezes which requires a power cycle of the machine. This is seemingly due to GPU driver bugs and we can only wait for OS updates to address these problems. These issues have not been encountered on Raspberry Pi OS 10.
+On Raspberry Pi OS 11 there are various graphics issues and sometimes the application or emulator completely freezes which requires a power cycle of the machine. This is seemingly due to GPU driver bugs and we can only wait for OS updates to address these problems. These issues have not been encountered on Raspberry Pi OS 10 so for now this older OS version is recommended.
 
 
 ## Game system customizations
@@ -1447,7 +1447,7 @@ These are mostly technical settings.
 Using this interface it's possible to select alternative emulators to use per game system, which requires that these alternatives have been defined in the es_systems.xml file. Note that only systems that you have currently populated will be listed. To change to an alternative emulator, you simply select a system from the list and choose which alternative to use from the presented options. If you select an alternative emulator and later remove its corresponding entry from the es_systems.xml file, an error message will be shown on application startup telling you to review your invalid emulator selection. Games will still launch, but the default emulator will be used in this case. How to clear an invalid entry should be self-explanatory once you access the interface. It's also possible to set alternative emulators per game using the metadata editor. If this is done, it will take precedence and override the system-wide emulator selection for the specific game. The alternative emulator badges and the corresponding gamelist filter are controlled by these per-game alternative emulator values and not by the system-wide option.
 
 ![alt text](images/es-de_alternative_emulators.png "ES-DE Scraper Settings")
-_The system-wide alternative emulators interface. An entry in bold and with a gear symbol indicates that an alternative emulator has been selected. The other entries are using the default emulators._
+_The system-wide alternative emulators interface. An entry in bold and with a gear symbol indicates that an alternative emulator has been selected._
 
 **Game media directory**
 
@@ -1816,7 +1816,7 @@ You can later add additional games to the collection by navigating to it, bringi
 _Example of custom collections, here configured as genres._
 
 ![alt text](images/es-de_custom_collections_editing.png "ES-DE Custom Collections")
-_When editing a custom collection, a tick symbol will be displayed for any game that is already part of the collection._
+_When editing a custom collection, a tick symbol will be displayed for any game that is part of the collection._
 
 
 The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder `~/.emulationstation/collections`

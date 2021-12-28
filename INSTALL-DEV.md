@@ -163,7 +163,7 @@ By default the master branch will be used, which is where development takes plac
 
 ```
 cd emulationstation-de
-git checkout stable-1.1
+git checkout stable-1.2
 cmake .
 make
 ```
@@ -550,7 +550,7 @@ By default the master branch will be used, which is where development takes plac
 
 ```
 cd emulationstation-de
-git checkout stable-1.1
+git checkout stable-1.2
 cmake .
 make
 ```
@@ -893,7 +893,7 @@ By default the master branch will be used, which is where development takes plac
 
 ```
 cd emulationstation-de
-git checkout stable-1.1
+git checkout stable-1.2
 ```
 
 **Setup the include directories**
@@ -1816,6 +1816,22 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="PCSX2">
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
+        <rule type="winregistryvalue">
+            <entry>SOFTWARE\PCSX2\Install_Dir|\pcsx2.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <entry>pcsx2.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
+            <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="systempath">

@@ -11,7 +11,7 @@ YouTube channel with installation instruction videos:\
 Discord server:\
 [https://discord.gg/EVVX4DqWAP](https://discord.gg/EVVX4DqWAP)
 
-Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Unix/Linux, macOS and Windows. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
+Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
@@ -38,30 +38,20 @@ If using a Mac with an M1 processor you need to install the x86 version of Retro
 
 ### Download
 
-The latest stable version is 1.1.0 (released 2021-08-10)
+The latest version is 1.2.0 (released 2021-12-28)
 
 | Package             | Operating systems                                       | Architecture | Download link  |
 | :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Windows installer   | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892429/download)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 11 "Big Sur"                    | x64 (x86)    | [EmulationStation-DE-1.1.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892342/download)|
-| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.1.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892301/download)|
-| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.1.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/14892436/download)|
-
-The latest prerelease version is 1.2.0-rc (released 2021-12-19)
-
-| Package             | Operating systems                                       | Architecture | Download link  |
-| :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Windows installer   | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.2.0-rc-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488187/download)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-rc-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488181/download)|
-| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-rc-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488192/download)|
-| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.2.0-rc-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488172/download)|
-| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-rc-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488198/download)|
-| Linux AppImage      | Most modern Linux distributions                         | x64 (x86)    | [emulationstation-de-1.2.0-rc-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488168/download)|
-| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.0-rc-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488160/download)|
-| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-rc-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/24488150/download)|
+| Windows installer   | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023950/download)|
+| macOS DMG installer | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023939/download)|
+| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023954/download)|
+| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.2.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023934/download)|
+| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023958/download)|
+| Linux AppImage      | Most modern Linux distributions                         | x64 (x86)    | [emulationstation-de-1.2.0-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023919/download)|
+| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.0-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023905/download)|
+| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023885/download)|
 
 All previous releases can be downloaded from [here](https://gitlab.com/leonstyhre/emulationstation-de/-/packages).
-
 
 Flatpak will not be supported on Linux as this packaging system is too restrictive with its sandbox approach, making ES-DE virtually useless as it can't freely locate and launch emulators on the system.
 
@@ -72,7 +62,7 @@ Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about the rele
 
 ### Contributing
 
-If you would like to contribute to the development of ES-DE, then that's great! Please read how to participate [here](CONTRIBUTING.md). (You can also read about planned future releases and features there).
+If you would like to contribute to the development of ES-DE, then that's great! Please read how to participate [here](CONTRIBUTING.md) where you can also read about planned future releases and features.
 
 
 # Additional information
@@ -89,13 +79,13 @@ If you would like to contribute to the development of ES-DE, then that's great! 
 
 # Some feature highlights
 
-Here are some highlights of what EmulationStation Desktop Edition provides, displayed using the default theme set rbsimple-DE. There are of course many more features available, as covered in the  [User guide](USERGUIDE.md).
+Here are some highlights of what ES-DE provides, displayed using the default theme set rbsimple-DE. There are of course many more features available, as covered in the  [User guide](USERGUIDE.md).
 
 ![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view**, which is the default starting point for the application, it's here that you browse through your game systems._
 
 ![alt text](images/es-de_gamelist_view.png "ES-DE Gamelist View")
-_The **Gamelist view**, it's here that you browse the games for a specific system. Note the support for mixing files and folders, and as well that favorite games are marked with stars. There is a game counter to the upper right, displaying the total number of games and the number of favorite games for this system._
+_The **Gamelist view**, it's here that you browse the actual games per system. Note the support for mixing files and folders, and as well that a few badges are displayed indicating that the selected game is a favorite, that it's suitable for children and that it's controlled using a joystick. There is a game counter to the upper right as well, displaying the total number of games and the number of favorite games for this system._
 
 ![alt text](images/es-de_folder_support.png "ES-DE Folder Support")
 _Another example of the gamelist view, displaying advanced folder support. You can scrape folders for game info and game media, sort folders as you would files, mark them as favorites etc. In this example ES-DE has been configured to sort favorite games above non-favorites._
@@ -110,13 +100,13 @@ _This is a view of the built-in scraper which downloads game info and game media
 _There are many settings for the scraper including options to define which type of info and media to download. The above screenshot shows only a portion of these settings._
 
 ![alt text](images/es-de_metadata_editor.png "ES-DE Metadata Editor")
-_In addition to the scraper there is a fully-featured metadata editor that can be used to modify information on a per-game basis. Here you can also toggle some additional flags which the scraper does not set, such as if the game is a favorite or if you have completed it. Some of these flags can then be filtered in the gamelist view, letting you for instance only display games that you have not played through._
+_In addition to the scraper there is a fully-featured metadata editor that can be used to modify information on a per-game basis. Here you can also toggle some additional flags which the scraper does not set, such as if the game is a favorite or if you have completed it. Most of these flags can also be filtered in the gamelist view, letting you for instance only display games that you have not played through._
 
 ![alt text](images/es-de_screensaver.png "ES-DE Screensaver")
-_There are four types of built-in screensavers available, including a slideshow and the video screensaver shown in action above. These screensavers start after a configurable number of minutes of inactivity, and randomly display game media that you have previously scraped. If the corresponding option has been enabled, you can jump to the game from the screensaver, or even start it directly. There is shader support in ES-DE to render scanlines and screen blur on top of the videos (for the slideshow screensaver, scanline rendering is provided)._
+_There are four types of built-in screensavers available, including a slideshow and the video screensaver shown in action above. These screensavers start after a configurable number of minutes of inactivity, and randomly display game media that you have previously scraped. If the corresponding option has been enabled, you can jump to the game from the screensaver, or even launch it directly. There is shader support in ES-DE to render scanlines and screen blur on top of the videos (for the slideshow screensaver, scanline rendering is provided)._
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_ES-DE is fully themeable, so if you prefer another look than what the default theme rbsimple-DE gives you, it's possible to apply another theme set. In the example above a modified version of the [Fundamental](https://github.com/G-rila/es-theme-fundamental) theme is used. Be aware though that although ES-DE is backwards compatible with older EmulationStation themes, some newer features which are specific to ES-DE will not work, at least not until the theme authors update their themes._
+_ES-DE is fully themeable, so if you prefer another look than what the default theme rbsimple-DE offers, it's possible to apply another theme set. The image above is of the modern-DE theme that is also bundled with the application. Note that although ES-DE is backward compatible with older RetroPie EmulationStation themes, some newer features which are specific to ES-DE will not work, at least not until the theme authors update their themes._
 
 ![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _A lot of effort has been spent on making ES-DE easy to setup and use. The above screenshot shows the dialog if starting the application without any game files present in the default ROM directory. ES-DE also ships with a comprehensive game systems configuration file, so unless you really want to customize your setup, you should not need to tinker with the configuration._

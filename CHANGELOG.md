@@ -2,9 +2,9 @@
 
 [[_TOC_]]
 
-## Version 1.2.0 (in development)
+## Version 1.2.0
 
-**Release date:** TBD
+**Release date:** 2021-12-28
 
 ### Release overview
 
@@ -183,6 +183,7 @@ Apart from all the above, a huge amount of work has gone into fixing bugs, refac
 * When running really low on texture memory, the menu texture would not get rendered correctly
 * At low screen resolutions, logos on the System view carousel would sometimes jump down a pixel when scaling down
 * There was a tiny and randomly occuring gap between the system carousel and systemInfo bar during slide transitions between the System and Gamelist views
+* The "no games" dialog did not have correct line wrapping when running at 1280x1024
 * SliderComponent had very inconsistent widths at different screen aspect ratios
 * SliderComponent did not properly align the knob and bar vertically
 * Buttons were not sized and padded consistently across different screen resolutions
