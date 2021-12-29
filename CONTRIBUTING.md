@@ -73,6 +73,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
 * Scrollbar component for the gamelist view which can be used by the themes
 * Web proxy support for the scraper
+* RetroAchievements.org integration
 * Add "time played" counter per game, similar to how it works in Steam
 * Improve multi-threading
 

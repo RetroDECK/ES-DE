@@ -2,6 +2,16 @@
 
 [[_TOC_]]
 
+## Version 1.3.0 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+### Bug fixes
+
 ## Version 1.2.0
 
 **Release date:** 2021-12-28

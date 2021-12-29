@@ -40,16 +40,17 @@ If using a Mac with an M1 processor you need to install the x86 version of Retro
 
 The latest version is 1.2.0 (released 2021-12-28)
 
-| Package             | Operating systems                                       | Architecture | Download link  |
-| :------------------ | :------------------------------------------------------ | :----------- | :------------- |
-| Windows installer   | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023950/download)|
-| macOS DMG installer | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023939/download)|
-| macOS DMG installer | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023954/download)|
-| Debian DEB package  | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.2.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023934/download)|
-| Fedora RPM package  | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023958/download)|
-| Linux AppImage      | Most modern Linux distributions                         | x64 (x86)    | [emulationstation-de-1.2.0-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023919/download)|
-| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.0-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023905/download)|
-| Debian DEB package  | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023885/download)|
+| Package              | Operating systems                                       | Architecture | Download link  |
+| :------------------- | :------------------------------------------------------ | :----------- | :------------- |
+| Windows installer    | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023950/download)|
+| macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023939/download)|
+| macOS DMG installer  | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023954/download)|
+| Debian DEB package   | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.2.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023934/download)|
+| Fedora RPM package   | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023958/download)|
+| Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
+| Linux AppImage       | Most modern Linux distributions                         | x64 (x86)    | [emulationstation-de-1.2.0-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023919/download)|
+| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.0-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023905/download)|
+| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023885/download)|
 
 All previous releases can be downloaded from [here](https://gitlab.com/leonstyhre/emulationstation-de/-/packages).
 

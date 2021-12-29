@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v1.2 (development version) - User guide
+# EmulationStation Desktop Edition (ES-DE) v1.3 (development version) - User guide
 
 This document is intended as a quick start guide and as a reference for the application settings and general functionality. For details on how to build ES-DE from source code and to perform more advanced configuration, please refer to [INSTALL-DEV.md](INSTALL-DEV.md).
 
