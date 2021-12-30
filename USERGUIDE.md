@@ -171,6 +171,26 @@ If you have installed RetroArch at another location, simply start the Settings a
 Unfortunately on Linux it's at the moment not possible to run the Steam release of RetroArch due to technical reasons. This RetroArch release runs as a type of container which can't be executed from ES-DE while correctly passing the necessary core and game options. Similarly it's not possible to launch RetroArch via the Steam application either as there seems to be a bug in Steam or RetroArch that prevents blankspaces from being present in game ROM files when passed as arguments (this works fine on Windows so it's definitely a Linux-specific issue and as well the same problem occurs if attempting to manually enter the launch command from a terminal window).
 
 
+## Specific notes for Windows
+
+In general it should be straightforward to run ES-DE on Windows. Almost all emulators are available on this operating system and driver quality and controller support is normally very good.
+
+But in order for ES-DE to run at all, graphics drivers with OpenGL support have to be installed. If not, the application won't start. It's still possible to run via software rendering by using [Mesa3D for Windows](https://fdossena.com/?p=mesa/index.frag) but the performance is terrible when doing this so it should only be used as a last resort. If ES-DE doesn't start, take a look in the es_log.txt file. If you see the following text, it means OpenGL drivers are missing:
+
+```
+Dec 30  Info:   Checking available OpenGL extensions...
+Dec 30  Error:  GL_ARB_texture_non_power_of_two: MISSING
+Dec 30  Error:  GL_ARB_vertex_shader: MISSING
+Dec 30  Error:  GL_ARB_fragment_shader: MISSING
+Dec 30  Error:  GL_EXT_framebuffer_blit: MISSING
+Dec 30  Error:  Required OpenGL extensions missing.
+```
+
+The log file is located in the ES-DE home directory and would be something like `C:\Users\myusername\.emulationstation\es_log.txt`
+
+An issue on Windows is that some emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with the installation path). This is the case for instance for RPCS3, xemu and xenia. Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These type of emulators are simply shipped as a ZIP file that can be unpacked anywhere on the filesystem. So in order for ES-DE to find them, the directories need to be manually added to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment Variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after doing this, but following this the emulator should be found when launching a game.
+
+
 ## Specific notes for macOS
 
 The main issue with macOS is lack of emulator support and missing (or buggy) controller drivers.
@@ -1505,7 +1525,7 @@ If enabled, only ROMs that have metadata saved to the gamelist.xml files will be
 
 **Disable desktop composition (requires restart)** _(Unix only)_
 
-The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphic cards and when running at higher resolution. As such the desktop compositor is disabled by default, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that this setting can cause problems with some graphic drivers (notably the Nvidia proprietary drivers) so if you see strange flickering and similar after quitting ES-DE, then disable the setting. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option).
+The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphic cards and when running at higher resolution. As such the desktop compositor is disabled by default, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that this setting can cause problems with some graphics drivers (notably the Nvidia proprietary drivers) so if you see strange flickering and similar after quitting ES-DE, then disable the setting. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option).
 
 **Display GPU statistics overlay**
 
