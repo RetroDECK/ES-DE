@@ -39,7 +39,7 @@ echo "\nSetting up FreeImage"
 rm -rf freeimage
 mkdir freeimage
 cd freeimage
-curl -O http://deac-ams.dl.sourceforge.net/project/freeimage/Source%20Distribution/3.18.0/FreeImage3180.zip
+curl -LO https://downloads.sourceforge.net/project/freeimage/Source%20Distribution/3.18.0/FreeImage3180.zip
 unzip FreeImage3180.zip
 cd FreeImage
 
