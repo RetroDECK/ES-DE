@@ -145,9 +145,9 @@ echo:
 echo Setting up OpenSSL
 
 if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll" (
-  curl -O https://slproweb.com/download/Win64OpenSSL_Light-1_1_1m.msi
+  curl -O https://slproweb.com/download/Win64OpenSSL_Light-1_1_1m.exe
   :: Run the installer.
-  .\Win64OpenSSL_Light-1_1_1m.msi
+  .\Win64OpenSSL_Light-1_1_1m.exe
 )
 
 :: Return to the root of the repository.

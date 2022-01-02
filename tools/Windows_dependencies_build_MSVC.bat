@@ -4,7 +4,7 @@
 ::  Windows_dependencies_build_MSVC.bat
 ::
 ::  Builds the external dependencies in-tree using MSVC.
-::  The Windows_dependencies_setup_MSVC.bat script must have been executed before this one.
+::  The Windows_dependencies_setup_MSVC.bat script must have been executed prior to this.
 ::  All libraries will be recompiled from scratch every time.
 ::
 ::  This script needs to run from the root of the repository.
