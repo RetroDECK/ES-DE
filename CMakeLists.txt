@@ -99,13 +99,18 @@ else()
     find_package(OpenGLES REQUIRED)
 endif()
 
-# Skip package dependency checks if we're on Windows.
+# On macOS and Windows all dependencies are kept in-tree in the "external" directory.
 if(APPLE)
     if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/FFmpeg)
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
     find_package(CURL REQUIRED)
-elseif(NOT WIN32)
+elseif(WIN32)
+    if(NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/libpugixml.dll AND # MinGW
+       NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)       # MSVC
+        message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
+    endif()
+else()
     find_package(CURL REQUIRED)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
@@ -321,6 +326,16 @@ if(APPLE)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL)
+elseif(WIN32)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/curl-7.80.0-win64-mingw/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/glew-2.1.0/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-n4.4-latest-win64-gpl-shared-4.4/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include  # MinGW
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include # MSVC
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.0.18)
 else()
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${FFMPEG_INCLUDE_DIRS}
@@ -328,18 +343,6 @@ else()
                             ${FREETYPE_INCLUDE_DIRS}
                             ${PUGIXML_INCLUDE_DIRS}
                             ${SDL2_INCLUDE_DIR})
-endif()
-
-# For Windows we need to add local include files for the dependency packages.
-if(WIN32)
-    set(WIN32_INCLUDE_DIR "NOT_DEFINED" CACHE FILEPATH "")
-    if(NOT EXISTS ${WIN32_INCLUDE_DIR})
-        message(SEND_ERROR "Can't find WIN32 include directory: ${WIN32_INCLUDE_DIR}")
-    endif()
-endif()
-
-if(WIN32)
-    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${WIN32_INCLUDE_DIR})
 endif()
 
 # Add libCEC include directory.
