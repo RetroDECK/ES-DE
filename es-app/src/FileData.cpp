@@ -1334,7 +1334,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
     for (std::string path : emulatorSystemPaths) {
 #if defined(_WIN64)
         std::wstring pathWide = Utils::String::stringToWideString(path);
-        // Search for the emulator using the PATH environmental variable.
+        // Search for the emulator using the PATH environment variable.
         DWORD size = SearchPathW(nullptr, pathWide.c_str(), L".exe", 0, nullptr, nullptr);
 
         if (size) {
@@ -1395,7 +1395,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
 
 #if defined(_WIN64)
     std::wstring emuExecutableWide = Utils::String::stringToWideString(emuExecutable);
-    // Search for the emulator using the PATH environmental variable.
+    // Search for the emulator using the PATH environment variable.
     DWORD size = SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr);
 
     if (size) {
