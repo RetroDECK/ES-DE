@@ -30,11 +30,6 @@ All of the required packages can be installed with apt-get:
 sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev
 ```
 
-If building with the optional VLC video player, the following packages are also needed:
-```
-sudo apt-get install vlc libvlc-dev
-```
-
 **Fedora**
 
 On Fedora you first need to install the RPM Fusion repository:
@@ -49,12 +44,6 @@ Then you can use dnf to install all the required packages:
 ```
 sudo dnf install gcc-c++ clang-tools-extra cmake rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
 ```
-If building with the optional VLC video player, the following packages are also needed:
-
-
-```
-sudo dnf install vlc vlc-devel
-```
 
 **Manjaro**
 
@@ -64,21 +53,11 @@ Use pacman to install all the required packages:
 sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml
 ```
 
-If building with the optional VLC video player, the following package is also needed:
-```
-sudo pacman -S vlc
-```
-
 **Raspberry Pi OS (Raspian)**
 
 All of the required packages can be installed with apt-get:
 ```
 sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libcurl4-gnutls-dev libpugixml-dev
-```
-
-If building with the optional VLC video player, the following packages are also needed:
-```
-sudo apt-get install vlc libvlc-dev
 ```
 
 To build with CEC support you also need to install these packages:
@@ -97,11 +76,6 @@ Use pkg to install the dependencies:
 pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage pugixml
 ```
 
-If building with the optional VLC video player, the following package is also needed:
-```
-pkg install vlc
-```
-
 Clang/LLVM and cURL should already be included in the base OS installation.
 
 **NetBSD**
@@ -111,11 +85,6 @@ Use pkgin to install the dependencies:
 pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml
 ```
 
-If building with the optional VLC video player, the following package is also needed:
-```
-pkgin vlc
-```
-
 NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
 
 **OpenBSD**
@@ -123,11 +92,6 @@ NetBSD ships with GCC by default, and although you should be able to use Clang/L
 Use pkg_add to install the dependencies:
 ```
 pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage
-```
-
-If building with the optional VLC video player, the following package is also needed:
-```
-pkg_add vlc
 ```
 
 In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
@@ -165,12 +129,6 @@ By default the master branch will be used, which is where development takes plac
 cd emulationstation-de
 git checkout stable-1.2
 cmake .
-make
-```
-
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
-```
-cmake -DVLC_PLAYER=on .
 make
 ```
 
@@ -486,12 +444,6 @@ Install the required tools:
 brew install clang-format cmake pkg-config nasm yasm
 ```
 
-If building with the optional VLC video player, then run this as well:
-
-```
-brew install --cask vlc
-```
-
 **Some additional/optional steps**
 
 Enable developer mode to avoid annoying password requests when attaching the debugger to a process:
@@ -555,12 +507,6 @@ cmake .
 make
 ```
 
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option:
-```
-cmake -DVLC_PLAYER=on .
-make
-```
-
 To generate a debug build, run this:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug .
@@ -600,11 +546,6 @@ export ASAN_OPTIONS=detect_container_overflow=0
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
-After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC was enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using _make install_. It's only needed to be able to run the binary from the build directory. You should add this to your shell profile file to avoid having to set it each time you open a new terminal window:
-```
-export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
-```
-
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
 **Building for the M1 (ARM) processor**
@@ -634,40 +575,13 @@ You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the
 
 As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. This is almost completely automated by the build scripts.
 
-The only exceptions are these libraries for the optional VLC video player:
-```
-libvlc.dylib
-libvlccore.dylib
-```
-
-If building the VLC video player, copy these files from the /Applications/VLC.app/Contents/MacOS/lib/ directory to the emulationstation-de build folder.
-
-In addition to these you need to create a `plugins` directory and copy over the following libraries, which are located in /Applications/VLC.app/Contents/MacOS/plugins/:
-
-```
-libadummy_plugin.dylib
-libamem_plugin.dylib
-libaudio_format_plugin.dylib
-libauhal_plugin.dylib
-libavcodec_plugin.dylib
-libconsole_logger_plugin.dylib
-libfilesystem_plugin.dylib
-libfreetype_plugin.dylib
-libswscale_plugin.dylib
-libtrivial_channel_mixer_plugin.dylib
-libvmem_plugin.dylib
-libwave_plugin.dylib
-libx264_plugin.dylib
-libx265_plugin.dylib
-```
-
-On macOS you can install the application as a normal user, i.e. no root privileges are required. Simply run the following:
+You can install the application as a normal user, i.e. no root privileges are required. Simply run the following:
 
 ```
 make install
 ```
 
-This will be the directory structure for the installation (the VLC-related files are optional):
+This will be the directory structure for the installation:
 
 ```
 /Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
@@ -682,8 +596,6 @@ This will be the directory structure for the installation (the VLC-related files
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpostproc.55.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswresample.3.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswscale.5.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlc.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlccore.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbis.0.4.9.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbisenc.2.0.12.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/plugins/*
@@ -815,12 +727,7 @@ cURL (Windows 64 bit binary, select the MinGW version even if using MSVC) \
 SDL2 (development libraries, MinGW or VC/MSVC) \
 [https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)
 
-libVLC (both win64 binary and source distributions)  - optional, if building with the VLC video player\
-[https://ftp.lysator.liu.se/pub/videolan/vlc](https://ftp.lysator.liu.se/pub/videolan/vlc)
-
 Uncompress the files from the above packages to a suitable directory, for example `C:\Programming\Dependencies`
-
-Append `_src` or something appropriate to the VLC source distribution directory as it has the same name as the binary distribution.
 
 GLEW\
 [http://glew.sourceforge.net](http://glew.sourceforge.net)
@@ -902,7 +809,7 @@ As there is no standardized include directory structure in Windows, you need to 
 
 Make a directory in your build environment tree, for instance under `C:\Programming\include`
 
-Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml, SDL2 and optionally VLC to this directory.
+Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml and SDL2 to this directory.
 
 You may need to create the SDL2 directory manually and copy the header files there.
 
@@ -924,7 +831,6 @@ libavutil/
 pugiconfig.hpp
 pugixml.hpp
 SDL2/
-vlc/            (only if building with the VLC video player)
 ```
 
 **Copy the required library files to the ES-DE build directory**
@@ -957,8 +863,6 @@ glew32.lib
 libcurl-x64.dll
 libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
 libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-libvlc.dll                (only if building with the VLC video player)
-libvlccore.dll            (only if building with the VLC video player)
 pugixml.dll
 pugixml.lib
 SDL2.dll
@@ -970,24 +874,14 @@ VCRUNTIME140.dll          (from Windows\System32)
 VCRUNTIME140_1.dll        (from Windows\System32)
 ```
 
-In addition to these files, you need libcurl-x64.lib and libvlc.lib (if building with the VLC video player), but these are not available for download so you need to generate them yourself from their corresponding DLL files. Do this inside the respective library directory and not within the emulationstation-de folder.
+In addition to these files, you need libcurl-x64.lib, but this file is not available for download so you need to generate it yourself from its corresponding DLL file. Do this inside the library directory and not within the emulationstation-de folder:
 
-libcurl-x64.lib:
 ```
 dumpbin /exports libcurl-x64.dll > exports.txt
 echo LIBRARY libcurl-x64 > libcurl-x64.def
 echo EXPORTS >> libcurl-x64.def
 for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libcurl-x64.def
 lib /def:libcurl-x64.def /out:libcurl-x64.lib /machine:x64
-```
-
-libvlc.lib:
-```
-dumpbin /exports libvlc.dll > exports.txt
-echo LIBRARY libvlc > libvlc.def
-echo EXPORTS >> libvlc.def
-for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libvlc.def
-lib /def:libvlc.def /out:libvlc.lib /machine:x64
 ```
 
 **Required files for MinGW:**
@@ -1008,45 +902,11 @@ libfreetype.dll
 libpugixml.dll
 libSDL2main.a
 libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-libvlc.dll                (only if building with the VLC video player)
-libvlccore.dll            (only if building with the VLC video player)
 SDL2.dll
 vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
 ```
 
-**Additional files for both MSVC and MinGW if building with the VLC video player**
-
-In addition to the files above, you need to copy some libraries from the VLC `plugins` folder. This contains a subdirectory structure but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
-
-The following libraries seem to be required to play most video and audio formats:
-
-```
-access\libfilesystem_plugin.dll
-audio_filter\libaudio_format_plugin.dll
-audio_filter\libtrivial_channel_mixer_plugin.dll
-audio_output\libadummy_plugin.dll
-audio_output\libamem_plugin.dll
-audio_output\libdirectsound_plugin.dll
-audio_output\libmmdevice_plugin.dll
-audio_output\libwasapi_plugin.dll
-audio_output\libwaveout_plugin.dll
-codec\libavcodec_plugin.dll
-codec\libx264_plugin.dll
-codec\libx265_plugin.dll
-logger\libconsole_logger_plugin.dll
-video_chroma\libswscale_plugin.dll
-video_output\libvmem_plugin.dll
-```
-
-The reason to not simply copy all plugins is that the combined size of these is around 120 MB (as of VLC version 3.0.11) and the size of the selected files listed above is around 22 MB, which is more reasonable.
-
-Place the files in the `emulationstation-de\plugins\` directory.
-
 **Building ES-DE using MSVC**
-
-There is a bug in libVLC when building using MSVC, so three lines need to be commented out from `libvlc_media.h`. The compiler error messages will provide you with the line numbers, but they involve the callback `libvlc_media_read_cb`.
-
-After doing this, ES-DE should build correctly.
 
 For a release build:
 
@@ -1075,12 +935,6 @@ Unfortunately nmake does not support parallel compiles so it's very slow. There 
 
 Be aware that MSVC links against different VC++ libraries for debug and release builds (e.g. MSVCP140.dll or MSVCP140d.dll), so any NSIS package made from a debug build will not work on computers without the MSVC development environment installed.
 
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
-```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../include -DVLC_PLAYER=on .
-nmake
-```
-
 **Building ES-DE using MinGW**
 
 For a release build:
@@ -1102,12 +956,6 @@ Unfortunately AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer d
 For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
 
 The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
-
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
-```
-cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DVLC_PLAYER=on .
-make
-```
 
 You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 

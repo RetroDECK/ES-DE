@@ -10,6 +10,18 @@
 
 ### Detailed list of changes
 
+* Removed the deprecated VideoVlcComponent
+
+### Bug fixes
+
+## Version 1.2.1 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
 ### Bug fixes
 
 ## Version 1.2.0
