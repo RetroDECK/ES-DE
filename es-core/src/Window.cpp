@@ -9,15 +9,12 @@
 
 #include "Window.h"
 
-#include "components/HelpComponent.h"
-#include "components/ImageComponent.h"
-#include "guis/GuiInfoPopup.h"
-#if defined(BUILD_VLC_PLAYER)
-#include "components/VideoVlcComponent.h"
-#endif
 #include "InputManager.h"
 #include "Log.h"
 #include "Sound.h"
+#include "components/HelpComponent.h"
+#include "components/ImageComponent.h"
+#include "guis/GuiInfoPopup.h"
 #include "resources/Font.h"
 
 #include <algorithm>
@@ -152,9 +149,6 @@ void Window::deinit()
 
     InputManager::getInstance()->deinit();
     ResourceManager::getInstance()->unloadAll();
-#if defined(BUILD_VLC_PLAYER)
-    VideoVlcComponent::deinit();
-#endif
     Renderer::deinit();
 }
 

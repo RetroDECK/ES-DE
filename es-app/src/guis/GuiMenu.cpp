@@ -878,27 +878,6 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-#if defined(BUILD_VLC_PLAYER)
-    // Video player.
-    auto video_player = std::make_shared<OptionListComponent<std::string>>(
-        mWindow, getHelpStyle(), "FULLSCREEN MODE", false);
-    std::string selectedPlayer = Settings::getInstance()->getString("VideoPlayer");
-    video_player->add("FFmpeg", "ffmpeg", selectedPlayer == "ffmpeg");
-    video_player->add("VLC", "vlc", selectedPlayer == "vlc");
-    // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the video player to VLC in this case.
-    if (video_player->getSelectedObjects().size() == 0)
-        video_player->selectEntry(0);
-    s->addWithLabel("VIDEO PLAYER", video_player);
-    s->addSaveFunc([video_player, s] {
-        if (video_player->getSelected() != Settings::getInstance()->getString("VideoPlayer")) {
-            Settings::getInstance()->setString("VideoPlayer", video_player->getSelected());
-            s->setNeedsSaving();
-            s->setNeedsReloading();
-        }
-    });
-#endif
-
     // Exit button configuration.
     auto exit_button_config = std::make_shared<OptionListComponent<std::string>>(
         mWindow, getHelpStyle(), "EXIT BUTTON COMBO", false);
@@ -977,11 +956,7 @@ void GuiMenu::openOtherOptions()
     // Whether to enable hardware decoding for the FFmpeg video player.
     auto video_hardware_decoding = std::make_shared<SwitchComponent>(mWindow);
     video_hardware_decoding->setState(Settings::getInstance()->getBool("VideoHardwareDecoding"));
-#if defined(BUILD_VLC_PLAYER)
-    s->addWithLabel("FFMPEG HARDWARE DECODING (EXPERIMENTAL)", video_hardware_decoding);
-#else
     s->addWithLabel("VIDEO HARDWARE DECODING (EXPERIMENTAL)", video_hardware_decoding);
-#endif
     s->addSaveFunc([video_hardware_decoding, s] {
         if (video_hardware_decoding->getState() !=
             Settings::getInstance()->getBool("VideoHardwareDecoding")) {
@@ -995,11 +970,7 @@ void GuiMenu::openOtherOptions()
     // Whether to upscale the video frame rate to 60 FPS.
     auto video_upscale_frame_rate = std::make_shared<SwitchComponent>(mWindow);
     video_upscale_frame_rate->setState(Settings::getInstance()->getBool("VideoUpscaleFrameRate"));
-#if defined(BUILD_VLC_PLAYER)
-    s->addWithLabel("UPSCALE VIDEO FRAME RATE TO 60 FPS (FFMPEG)", video_upscale_frame_rate);
-#else
     s->addWithLabel("UPSCALE VIDEO FRAME RATE TO 60 FPS", video_upscale_frame_rate);
-#endif
     s->addSaveFunc([video_upscale_frame_rate, s] {
         if (video_upscale_frame_rate->getState() !=
             Settings::getInstance()->getBool("VideoUpscaleFrameRate")) {

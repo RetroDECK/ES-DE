@@ -35,7 +35,6 @@ option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(BUNDLED_CERTS "Set to ON to use bundled TLS/SSL certificates" ${BUNDLED_CERTS})
 option(CEC "Set to ON to enable CEC" ${CEC})
 option(VIDEO_HW_DECODING "Set to ON to enable FFmpeg HW decoding" ${VIDEO_HW_DECODING})
-option(VLC_PLAYER "Set to ON to build the VLC-based video player" ${VLC_PLAYER})
 option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" ${CLANG_TIDY})
 option(ASAN "Set to ON to build with AddressSanitizer" ${ASAN})
 option(TSAN "Set to ON to build with ThreadSanitizer" ${TSAN})
@@ -113,9 +112,6 @@ elseif(NOT WIN32)
     find_package(Freetype REQUIRED)
     find_package(Pugixml REQUIRED)
     find_package(SDL2 REQUIRED)
-    if(VLC_PLAYER)
-        find_package(VLC REQUIRED)
-    endif()
 endif()
 
 # Add libCEC support.
@@ -278,10 +274,6 @@ if(VIDEO_HW_DECODING)
     add_definitions(-DVIDEO_HW_DECODING)
 endif()
 
-if(VLC_PLAYER)
-    add_definitions(-DBUILD_VLC_PLAYER)
-endif()
-
 if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
     add_definitions(-DLEGACY_MACOS)
 endif()
@@ -336,9 +328,6 @@ else()
                             ${FREETYPE_INCLUDE_DIRS}
                             ${PUGIXML_INCLUDE_DIRS}
                             ${SDL2_INCLUDE_DIR})
-    if(VLC_PLAYER)
-        set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} ${VLC_INCLUDE_DIR})
-    endif()
 endif()
 
 # For Windows we need to add local include files for the dependency packages.
@@ -347,11 +336,6 @@ if(WIN32)
     if(NOT EXISTS ${WIN32_INCLUDE_DIR})
         message(SEND_ERROR "Can't find WIN32 include directory: ${WIN32_INCLUDE_DIR}")
     endif()
-endif()
-
-# Temporary solution until the VLC find module has been updated to work properly on macOS.
-if(APPLE AND VLC_PLAYER)
-    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS} "/Applications/VLC.app/Contents/MacOS/include")
 endif()
 
 if(WIN32)
@@ -407,9 +391,6 @@ elseif(WIN32)
                              "${PROJECT_SOURCE_DIR}/SDL2main.lib"
                              "${PROJECT_SOURCE_DIR}/SDL2.lib"
                              "Winmm.dll")
-        if(VLC_PLAYER)
-            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} "${PROJECT_SOURCE_DIR}/libvlc.lib")
-        endif()
     else()
         set(COMMON_LIBRARIES "${PROJECT_SOURCE_DIR}/avcodec-58.dll"
                              "${PROJECT_SOURCE_DIR}/avfilter-7.dll"
@@ -426,9 +407,6 @@ elseif(WIN32)
                              "${PROJECT_SOURCE_DIR}/SDL2.dll"
                              "mingw32"
                              "Winmm.dll")
-        if(VLC_PLAYER)
-            set(COMMON_LIBRARIES ${COMMON_LIBRARIES} "${PROJECT_SOURCE_DIR}/libvlc.dll")
-        endif()
     endif()
 else()
     set(COMMON_LIBRARIES ${CURL_LIBRARIES}
@@ -437,20 +415,12 @@ else()
                          ${FREETYPE_LIBRARIES}
                          ${PUGIXML_LIBRARIES}
                          ${SDL2_LIBRARY})
-    if(VLC_PLAYER)
-        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${VLC_LIBRARIES})
-    endif()
 endif()
 
 if(APPLE)
     # See es-app/CMakeLists.txt for an explation for why an extra "Resources" directory
     # has been added to the install prefix.
     set(CMAKE_INSTALL_PREFIX "/Applications/EmulationStation Desktop Edition.app/Contents/Resources")
-
-    if(VLC_PLAYER)
-        # Required as the VLC find module doesn't work properly on macOS.
-        set(COMMON_LIBRARIES ${COMMON_LIBRARIES} "/Applications/VLC.app/Contents/MacOS/lib/libvlc.dylib")
-    endif()
 
     # Set the same rpath links for the install executable as for the build executable.
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)

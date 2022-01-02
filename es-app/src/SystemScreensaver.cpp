@@ -9,13 +9,10 @@
 
 #include "SystemScreensaver.h"
 
-#include "components/VideoFFmpegComponent.h"
-#if defined(BUILD_VLC_PLAYER)
-#include "components/VideoVlcComponent.h"
-#endif
 #include "FileData.h"
 #include "Log.h"
 #include "SystemData.h"
+#include "components/VideoFFmpegComponent.h"
 #include "resources/Font.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
@@ -159,15 +156,7 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
             if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo"))
                 generateOverlayInfo();
 
-#if defined(BUILD_VLC_PLAYER)
-            if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
-                mVideoScreensaver = new VideoVlcComponent(mWindow);
-            else
-                mVideoScreensaver = new VideoFFmpegComponent(mWindow);
-#else
             mVideoScreensaver = new VideoFFmpegComponent(mWindow);
-#endif
-
             mVideoScreensaver->topWindow(true);
             mVideoScreensaver->setOrigin(0.5f, 0.5f);
             mVideoScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,

@@ -8,13 +8,10 @@
 
 #include "views/gamelist/VideoGameListView.h"
 
-#include "animations/LambdaAnimation.h"
-#include "components/VideoFFmpegComponent.h"
-#if defined(BUILD_VLC_PLAYER)
-#include "components/VideoVlcComponent.h"
-#endif
 #include "CollectionSystemsManager.h"
 #include "SystemData.h"
+#include "animations/LambdaAnimation.h"
+#include "components/VideoFFmpegComponent.h"
 #include "utils/FileSystemUtil.h"
 #include "views/ViewController.h"
 
@@ -53,16 +50,8 @@ VideoGameListView::VideoGameListView(Window* window, FileData* root)
 {
     const float padding = 0.01f;
 
-    // Create the correct type of video window.
-
-#if defined(BUILD_VLC_PLAYER)
-    if (Settings::getInstance()->getString("VideoPlayer") == "vlc")
-        mVideo = new VideoVlcComponent(window);
-    else
-        mVideo = new VideoFFmpegComponent(window);
-#else
+    // Create the video window.
     mVideo = new VideoFFmpegComponent(window);
-#endif
 
     mList.setPosition(mSize.x * (0.50f + padding), mList.getPosition().y);
     mList.setSize(mSize.x * (0.50f - padding), mList.getSize().y);

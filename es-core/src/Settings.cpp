@@ -221,9 +221,6 @@ void Settings::setDefaults()
     mIntMap["MaxVRAM"] = {256, 256};
 #endif
     mIntMap["DisplayIndex"] = {1, 1};
-#if defined(BUILD_VLC_PLAYER)
-    mStringMap["VideoPlayer"] = {"ffmpeg", "ffmpeg"};
-#endif
     mStringMap["ExitButtonCombo"] = {"F4", "F4"};
     mStringMap["SaveGamelistsMode"] = {"always", "always"};
 #if defined(_WIN64)

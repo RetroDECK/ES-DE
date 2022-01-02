@@ -153,9 +153,6 @@ if(WIN32)
                       ../VCRUNTIME140.dll
                       ../VCRUNTIME140_1.dll
                       DESTINATION .)
-        if(VLC_PLAYER)
-            install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
-        endif()
     else()
         install(FILES ../avcodec-58.dll
                       ../avfilter-7.dll
@@ -174,13 +171,8 @@ if(WIN32)
                       ../SDL2.dll
                       ../vcomp140.dll
                       DESTINATION .)
-        if(VLC_PLAYER)
-            install(FILES ../libvlc.dll ../libvlccore.dll DESTINATION .)
-        endif()
     endif()
-    if(VLC_PLAYER)
-        install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins DESTINATION .)
-    endif()
+
     install(FILES ../LICENSE DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes DESTINATION .)
@@ -224,15 +216,6 @@ elseif(APPLE)
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-
-    if(VLC_PLAYER)
-        install(FILES ${CMAKE_SOURCE_DIR}/libvlc.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(FILES ${CMAKE_SOURCE_DIR}/libvlccore.dylib
-            PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-        install(DIRECTORY ${CMAKE_SOURCE_DIR}/plugins
-            DESTINATION ../MacOS)
-    endif()
 
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION ../Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION ../Resources)
@@ -342,9 +325,6 @@ else()
     set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://es-de.org")
     set(CPACK_DEBIAN_PACKAGE_SECTION "games")
     set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
-    if(VLC_PLAYER)
-        set(CPACK_DEBIAN_PACKAGE_DEPENDS "vlc")
-    endif()
     set(CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
     if(LINUX_CPACK_GENERATOR STREQUAL "RPM")
         set(CPACK_GENERATOR "RPM")
@@ -352,9 +332,6 @@ else()
     set(CPACK_RPM_FILE_NAME "emulationstation-de-${CPACK_PACKAGE_VERSION}-${CPU_ARCHITECTURE}.rpm")
     set(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
     set(CPACK_RPM_PACKAGE_LICENSE "MIT")
-    if(VLC_PLAYER)
-        set(CPACK_RPM_PACKAGE_REQUIRES "vlc")
-    endif()
     list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CMAKE_INSTALL_PREFIX}")
     list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CMAKE_INSTALL_PREFIX}/bin")
     list(APPEND CPACK_RPM_EXCLUDE_FROM_AUTO_FILELIST_ADDITION "${CMAKE_INSTALL_PREFIX}/share")

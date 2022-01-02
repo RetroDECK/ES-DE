@@ -60,7 +60,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextListComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoFFmpegComponent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.h
 
     # GUIs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.h
@@ -133,7 +132,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextEditComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoFFmpegComponent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/VideoVlcComponent.cpp
 
     # GUIs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiDetectDevice.cpp
