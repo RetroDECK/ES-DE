@@ -10,6 +10,7 @@
 
 ### Detailed list of changes
 
+* On Windows, moved all dependencies in-tree to the "external" directory to greatly simplify the build environment
 * Removed the deprecated VideoVlcComponent
 
 ### Bug fixes

@@ -203,7 +203,7 @@ cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
 make
 ```
 
-To get stack traces printed as well, set this environmental variable:
+To get stack traces printed as well, set this environment variable:
 ```
 export UBSAN_OPTIONS=print_stacktrace=1
 ```
@@ -584,7 +584,7 @@ cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
 make
 ```
 
-To get stack traces printed as well, set this environmental variable:
+To get stack traces printed as well, set this environment variable:
 ```
 export UBSAN_OPTIONS=print_stacktrace=1
 ```
@@ -598,7 +598,7 @@ export ASAN_OPTIONS=detect_container_overflow=0
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
-After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC was enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environmental variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using _make install_. It's only needed to be able to run the binary from the build directory. You should add this to your shell profile file to avoid having to set it each time you open a new terminal window:
+After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC was enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environment variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using _make install_. It's only needed to be able to run the binary from the build directory. You should add this to your shell profile file to avoid having to set it each time you open a new terminal window:
 ```
 export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
 ```
@@ -1456,7 +1456,7 @@ Below is an overview of the file layout with various examples. For the command t
 
         <!-- This is an example for Windows. The .exe extension is optional and both forward slashes and backslashes are allowed as
         directory separators. As there is no standardized installation directory structure for this operating system, the %EMUPATH%
-        variable is used here to find the cores relative to the RetroArch binary. The emulator binary must be in the PATH environmental
+        variable is used here to find the cores relative to the RetroArch binary. The emulator binary must be in the PATH environment
         variable or otherwise the complete path to the retroarch.exe file needs to be defined. Batch scripts (.bat) are also supported. -->
         <command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
 
@@ -1505,7 +1505,7 @@ The following variables are expanded for the `command` tag:
 
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
-`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded using either the PATH environmental variable of the operating system, or using an absolute emulator path if this has been defined.
+`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded using either the PATH environment variable of the operating system, or using an absolute emulator path if this has been defined.
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 

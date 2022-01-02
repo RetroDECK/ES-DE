@@ -45,9 +45,6 @@ http://glew.sourceforge.net
 GLM \
 https://github.com/g-truc/glm
 
-libVLC \
-https://wiki.videolan.org/LibVLC
-
 nanosvg \
 https://github.com/memononen/nanosvg
 

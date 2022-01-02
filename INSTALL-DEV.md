@@ -163,7 +163,7 @@ cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
 make
 ```
 
-To get stack traces printed as well, set this environmental variable:
+To get stack traces printed as well, set this environment variable:
 ```
 export UBSAN_OPTIONS=print_stacktrace=1
 ```
@@ -467,7 +467,7 @@ To clone the source repository, run the following:
 git clone https://gitlab.com/leonstyhre/emulationstation-de.git
 ```
 
-For macOS all dependencies are built in-tree in the `external` directory tree. There are two scripts in the tools directory that automate this entirely and they are executed such as this:
+On macOS all dependencies are built in-tree in the `external` directory tree. There are two scripts in the tools directory that automate this entirely and they are executed such as this:
 
 ```
 cd emulationstation-de
@@ -532,7 +532,7 @@ cmake -DCMAKE_BUILD_TYPE=Debug -UBSAN=on .
 make
 ```
 
-To get stack traces printed as well, set this environmental variable:
+To get stack traces printed as well, set this environment variable:
 ```
 export UBSAN_OPTIONS=print_stacktrace=1
 ```
@@ -642,9 +642,9 @@ CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.2.
 
 Both MSVC and MinGW (GCC) work fine for building ES-DE on Windows.
 
-Although I would prefer to exclude support for MSVC, this compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. But for release builds MinGW is very fast and ES-DE starts around 18% faster when built with MinGW meaning this compiler probably generates more efficient code overall. As well MSVC requires a lot more junk DLL files to be distributed with the application so it's not a good candidate for the final release build.
+Although I would prefer to exclude support for MSVC, this compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. But for release builds MinGW is very fast and ES-DE starts around 18% faster when built with MinGW, meaning this compiler probably generates more efficient code overall. As well MSVC requires a lot more DLL files to be distributed with the application and the console window is always displayed on startup for some reason.
 
-For this reason I think MSVC makes sense for development and MinGW for the releases.
+For these reasons I think MSVC makes sense for development and MinGW for the releases.
 
 **MSVC setup**
 
@@ -712,85 +712,9 @@ It's strongly recommended to set line breaks to Unix-style (line feed only) dire
 
 In the descriptions below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
 
+**Cloning and setting up dependencies**
 
-**Download the dependency packages**
-
-FFmpeg (choose the n4.4 package with win64-gpl-shared in the filename, the snapshot version will not work) \
-[https://github.com/BtbN/FFmpeg-Builds/releases](https://github.com/BtbN/FFmpeg-Builds/releases)
-
-FreeImage (binary distribution) \
-[https://sourceforge.net/projects/freeimage](https://sourceforge.net/projects/freeimage)
-
-cURL (Windows 64 bit binary, select the MinGW version even if using MSVC) \
-[https://curl.haxx.se/download.html](https://curl.haxx.se/download.html)
-
-SDL2 (development libraries, MinGW or VC/MSVC) \
-[https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)
-
-Uncompress the files from the above packages to a suitable directory, for example `C:\Programming\Dependencies`
-
-GLEW\
-[http://glew.sourceforge.net](http://glew.sourceforge.net)
-
-If using MinGW, this library needs to be compiled from source as the pre-built libraries don't seem to work with GCC. The GitHub repo seems to be somewhat broken as well, therefore the manual download is required. It's recommended to get the source in zip format and uncompress it to the same directory as the other libraries listed above.
-
-Then simply build the required glew32.dll library:
-
-```
-unzip glew-2.1.0.zip
-cd glew-2.1.0
-make
-```
-You will probably see a huge amount of compiler warnings, and the glewinfo.exe tool may fail to build, but we don't need it so it's not an issue.
-
-If using MSVC, simply download the binary distribution of GLEW.
-
-The following packages are not readily available for Windows, so clone the repos and build them yourself:
-
-[FreeType](https://www.freetype.org)
-```
-git clone git://git.savannah.gnu.org/freetype/freetype2.git
-cd freetype2
-git checkout VER-2-10-4
-mkdir build
-cd build
-```
-
-MSVC:
-```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
-nmake
-```
-
-MinGW:
-```
-cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON ..
-make
-```
-
-[pugixml](https://pugixml.org)
-```
-git clone git://github.com/zeux/pugixml.git
-cd pugixml
-git checkout v1.10
-```
-
-MSVC:
-
-```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON .
-nmake
-```
-
-MinGW:
-```
-cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
-make
-```
-
-**Clone the ES-DE repository**
-
-This works the same as on Unix or macOS, just run the following:
+To clone the source repository, run the following:
 
 ```
 git clone https://gitlab.com/leonstyhre/emulationstation-de.git
@@ -803,127 +727,46 @@ cd emulationstation-de
 git checkout stable-1.2
 ```
 
-**Setup the include directories**
+On Windows all dependencies are kept in-tree in the `external` directory tree. Most of the libraries can be downloaded in binary form, but a few need to be built from source code. There are four scripts in the tools directory that automate this entirely. Two of them are used for the MSVC compiler and the other two for MinGW.
 
-As there is no standardized include directory structure in Windows, you need to provide the include files manually.
-
-Make a directory in your build environment tree, for instance under `C:\Programming\include`
-
-Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml and SDL2 to this directory.
-
-You may need to create the SDL2 directory manually and copy the header files there.
-
-For FFmpeg, copy the directories libavcodec, libavfilter, libavformat and libavutil.
-
-It should look something like this:
-
+For MSVC, you run them like this:
 ```
-$ ls -1 include/
-curl/
-FreeImage.h
-freetype/
-ft2build.h
-GL/
-libavcodec/
-libavfilter/
-libavformat/
-libavutil/
-pugiconfig.hpp
-pugixml.hpp
-SDL2/
+cd emulationstation-de
+tools\Windows_dependencies_setup_MSVC.bat
+tools\Windows_dependencies_build_MSVC.bat
 ```
 
-**Copy the required library files to the ES-DE build directory**
-
-As there's no package manager in Windows and no way to handle dependencies, we need to ship all the required shared libraries with the application.
-
-Copy the files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide.
-
-**Required files for MSVC:**
+And for MinGW like the following:
 ```
-avcodec-58.dll
-avcodec.lib
-avfilter.lib
-avfilter-7.dll
-avformat-58.dll
-avformat.lib
-avutil-56.dll
-avutil.lib
-postproc-55.dll
-swresample-3.dll
-swresample.lib
-swscale-5.dll
-swscale.lib
-FreeImage.dll
-FreeImage.lib
-freetype.dll
-freetype.lib
-glew32.dll
-glew32.lib
-libcurl-x64.dll
-libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
-libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-pugixml.dll
-pugixml.lib
-SDL2.dll
-SDL2.lib
-SDL2main.lib
-MSVCP140.dll              (from Windows\System32)
-VCOMP140.DLL              (from Windows\System32)
-VCRUNTIME140.dll          (from Windows\System32)
-VCRUNTIME140_1.dll        (from Windows\System32)
+cd emulationstation-de
+tools/Windows_dependencies_setup_MinGW.sh
+tools/Windows_dependencies_build_MinGW.sh
 ```
 
-In addition to these files, you need libcurl-x64.lib, but this file is not available for download so you need to generate it yourself from its corresponding DLL file. Do this inside the library directory and not within the emulationstation-de folder:
+Re-running the setup script will delete and download all dependencies again, and re-running the build script will clean and rebuild from scratch. You can of course also manually recompile an individual library if needed.
 
-```
-dumpbin /exports libcurl-x64.dll > exports.txt
-echo LIBRARY libcurl-x64 > libcurl-x64.def
-echo EXPORTS >> libcurl-x64.def
-for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libcurl-x64.def
-lib /def:libcurl-x64.def /out:libcurl-x64.lib /machine:x64
-```
+The setup scripts for both MSVC and MinGW will download and launch an installer for OpenSSL for Windows if this has not already been installed on the build machine. Just run through the installer using the default settings and everything should work fine.
 
-**Required files for MinGW:**
-
-```
-avcodec-58.dll
-avfilter-7.dll
-avformat-58.dll
-avutil-56.dll
-postproc-55.dll
-swresample-3.dll
-swscale-5.dll
-FreeImage.dll
-glew32.dll
-libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
-libcurl-x64.dll
-libfreetype.dll
-libpugixml.dll
-libSDL2main.a
-libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-SDL2.dll
-vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
-```
+Following these preparations, ES-DE should be ready to be compiled.
 
 **Building ES-DE using MSVC**
 
 For a release build:
 
 ```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../include .
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release .
 nmake
 ```
 
 Or for a debug build:
 ```
-cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include .
+cmake -G "NMake Makefiles" .
 nmake
 ```
 
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
-cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include -DASAN=on .
+cmake -G "NMake Makefiles" -DASAN=on .
 nmake
 ```
 
@@ -940,26 +783,22 @@ Be aware that MSVC links against different VC++ libraries for debug and release 
 For a release build:
 
 ```
-cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include .
+cmake -G "MinGW Makefiles" .
 make
 ```
 
 Or for a debug build:
 
 ```
-cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
 
 Unfortunately AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer do not seem to be supported with MinGW.
 
-For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
-
-The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
-
 You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 
-Note that compilation time is much longer than on Unix or macOS, and linking time is unendurable for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
+Note that compilation time is much longer than on Unix or macOS, and linking is incredibly slow for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
 
 **TLS/SSL certificates**
 
@@ -1306,7 +1145,7 @@ Below is an overview of the file layout with various examples. For the command t
 
         <!-- This is an example for Windows. The .exe extension is optional and both forward slashes and backslashes are allowed as
         directory separators. As there is no standardized installation directory structure for this operating system, the %EMUPATH%
-        variable is used here to find the cores relative to the RetroArch binary. The emulator binary must be in the PATH environmental
+        variable is used here to find the cores relative to the RetroArch binary. The emulator binary must be in the PATH environment
         variable or otherwise the complete path to the retroarch.exe file needs to be defined. Batch scripts (.bat) are also supported. -->
         <command>retroarch.exe -L %EMUPATH%\cores\snes9x_libretro.dll %ROM%</command>
 
@@ -1355,7 +1194,7 @@ The following variables are expanded for the `command` tag:
 
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
-`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded using either the PATH environmental variable of the operating system, or using an absolute emulator path if this has been defined.
+`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded using either the PATH environment variable of the operating system, or using an absolute emulator path if this has been defined.
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
