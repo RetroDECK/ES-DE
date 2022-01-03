@@ -445,6 +445,15 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
     mBlockAccept = false;
     updateInfoPane();
 
+    // If there is a single result in semi-automatic mode or a single or more results in
+    // fully automatic mode, then block the ability to manually accept the entry as it will
+    // be selected as soon as the thumbnail has finished downloading. This also makes sure
+    // the busy animation will play during this time window.
+    if (!mRefinedSearch &&
+        ((mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1) ||
+         (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size() > 0)))
+        mBlockAccept = true;
+
     // If there is no thumbnail to download and we're in semi-automatic mode, proceed to return
     // the results or we'll get stuck forever waiting for a thumbnail to be downloaded.
     if (mSearchType == ACCEPT_SINGLE_MATCHES && results.size() == 1 &&
