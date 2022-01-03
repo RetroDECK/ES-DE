@@ -796,6 +796,19 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
+    // Include actual folders when scraping.
+    auto scraper_include_folders = std::make_shared<SwitchComponent>(mWindow);
+    scraper_include_folders->setState(Settings::getInstance()->getBool("ScraperIncludeFolders"));
+    s->addWithLabel("SCRAPE ACTUAL FOLDERS", scraper_include_folders);
+    s->addSaveFunc([scraper_include_folders, s] {
+        if (scraper_include_folders->getState() !=
+            Settings::getInstance()->getBool("ScraperIncludeFolders")) {
+            Settings::getInstance()->setBool("ScraperIncludeFolders",
+                                             scraper_include_folders->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Interactive scraping.
     auto scraper_interactive = std::make_shared<SwitchComponent>(mWindow);
     scraper_interactive->setState(Settings::getInstance()->getBool("ScraperInteractive"));
@@ -866,19 +879,6 @@ void GuiScraperMenu::openOtherOptions()
             ->getChild(scraper_exclude_recursively->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
     }
-
-    // Include actual folders when scraping.
-    auto scraper_include_folders = std::make_shared<SwitchComponent>(mWindow);
-    scraper_include_folders->setState(Settings::getInstance()->getBool("ScraperIncludeFolders"));
-    s->addWithLabel("SCRAPE ACTUAL FOLDERS", scraper_include_folders);
-    s->addSaveFunc([scraper_include_folders, s] {
-        if (scraper_include_folders->getState() !=
-            Settings::getInstance()->getBool("ScraperIncludeFolders")) {
-            Settings::getInstance()->setBool("ScraperIncludeFolders",
-                                             scraper_include_folders->getState());
-            s->setNeedsSaving();
-        }
-    });
 
     // Retry search on peer verification errors (TLS/certificate issues).
     auto retry_peer_verification = std::make_shared<SwitchComponent>(mWindow);

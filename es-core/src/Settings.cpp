@@ -121,11 +121,11 @@ void Settings::setDefaults()
     mBoolMap["ScraperOverwriteData"] = {true, true};
     mBoolMap["ScraperHaltOnInvalidMedia"] = {true, true};
     mBoolMap["ScraperSearchMetadataName"] = {true, true};
+    mBoolMap["ScraperIncludeFolders"] = {true, true};
     mBoolMap["ScraperInteractive"] = {true, true};
     mBoolMap["ScraperSemiautomatic"] = {true, true};
     mBoolMap["ScraperRespectExclusions"] = {true, true};
     mBoolMap["ScraperExcludeRecursively"] = {true, true};
-    mBoolMap["ScraperIncludeFolders"] = {false, false};
     mBoolMap["ScraperRetryPeerVerification"] = {false, false};
 
     // UI settings.
