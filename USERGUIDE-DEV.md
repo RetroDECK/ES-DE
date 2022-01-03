@@ -683,6 +683,23 @@ The DOS (and PC) platform uses the DOSBox emulator and the recommended approach 
 
 Apart from this, DOS games should work the same as any other system. The game folders can be scraped so that it looks nice when browsing the list of games, but make sure to also scrape the files used to launch the games or otherwise the entries in the collections _All games, Favorites_ and _Last played_ as well as any custom collections will miss the game metadata and game media. If you don't have these collections activated, then this can of course be skipped.
 
+#### ScummVM
+
+ScummVM overlaps a bit with DOS when it comes to the logic of setting it up. It's recommended to keep games in separate folders, so if you have a game distributed as a ZIP file, uncompress it to its own directory.
+
+Although ScummVM supports launching of .exe files, ES-DE is currently not configured as such and it's instead recommended to create a .scummvm file in each game directory and launch that. This makes for a cleaner setup as you don't need to run game configuration utilities like INSTALL.EXE or SETUP.EXE directly as you would with DOSBox. Rather the game configuration is done within the ScummVM emulator.
+
+The .scummvm files should simply contain a single word which is referred to as the _Game Short Name_. You can find the complete list of supported ScummVM games with their corresponding short names here:\
+[https://www.scummvm.org/compatibility](https://www.scummvm.org/compatibility)
+
+An example setup could look like the following:
+```
+~/ROMs/scummvm/Beneath a Steel Sky/sky.scummvm
+~/ROMs/scummvm/Flight of the Amazon Queen/queen.scummvm
+```
+
+To clarify, the sky.scummvm file should contain just the single word `sky` and likewise the queen.scummvm file should only contain the word `queen`.
+
 #### Ports
 
 Ports are not really executed using emulators, but are rather applications running natively on the operating system. The easiest way to handle these is to add a simple shell script or batch file where you can customize the exact launch parameters for the game.
@@ -891,6 +908,8 @@ Assuming the default _Interactive mode_ option is enabled, the process of scrapi
 It's generally recommended to keep the _Auto-accept single game matches_ option enabled as it will run the scraper in semi-automatic mode, only stopping to ask for user input if there are multiple results returned or if no game was found. If this option is disabled, the scraper will stop and ask for confirmation for every game.
 
 But by disabling the _Interactive mode_ option, the multi-scraper will run in a fully automatic mode, selecting the first game in case of multiple results and skipping to the next game if no results were returned. This is quite convenient for large game libraries but if the correct game is not the first one returned by the scraper service, the wrong game data will be scraped which will require manual correction using the single-game scraper.
+
+Under normal circumstances the scraper service will only return games for the platforms used for searching, but sometimes when it's not sure about the results it will also include games from other platforms. If this happens, these additional platform names will be displayed within square brackets after the game name in the result list. And if a game system is configured for multiple platforms, then the specific platform returned per result will always be displayed within square brackets. The exception for these two scenarios is if the multi-scraper is running in fully automatic mode as the additional platform information is then always omitted. Note that additional platform information will not affect the scraped game name, it's only used for clarification within the scraper result list.
 
 By default, ES-DE will search using the metadata name of the game. If no name has previously been defined via scraping or via manually entering it using the metadata editor, the name used for searching will correspond to the physical filename minus all text inside either normal brackets `()` or square brackets `[]`. So for example the physical filename `Mygame (U) [v2].zip` will be stripped to simply `Mygame` when performing the scraper search.
 
@@ -1137,6 +1156,10 @@ With this setting enabled, if any media files returned by the scraper seem to be
 
 By default ES-DE will perform scraper searches based on the game name that has been manually set in the metadata editor, or that has been previously scraped. If you prefer to search using the physical filename regardless of such data being available, then disable this option. Note that when using TheGamesDB as scraper service for arcade games (MAME and Neo Geo), the short MAME name will always be expanded to the full game name as this scraper service does not support searches using short MAME names. In general it's recommended to disable this option if scraping arcade games using ScreenScraper as the MAME short names is much more reliable than using the metadata names.
 
+**Scrape actual folders** _(Multi-scraper only)_
+
+Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS or ScummVM games or for multi-disc games where there is a folder for each individual game.
+
 **Interactive mode** _(Multi-scraper only)_
 
 If turned off, the scraping will be fully automatic and will not stop on multiple results or when no matching game was found.
@@ -1152,10 +1175,6 @@ It's possible to set a flag per game file or folder using the metadata editor to
 **Exclude folders recursively** _(Multi-scraper only)_
 
 If this setting is enabled and a folder has its flag set to be excluded from the scraper, then the entire folder contents are skipped when running the multi-scraper.
-
-**Scrape actual folders** _(Multi-scraper only)_
-
-Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS games or any multi-disc games where there is a folder for each individual game.
 
 **Auto-retry on peer verification errors** _(ScreenScraper only)_
 
@@ -2064,7 +2083,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
-| scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           | In separate folder (one folder per game with complete file structure retained) |
+| scummvm               | ScummVM Game Engine                            | ScummVM                           |                                   | No           | In separate folder (one folder per game with complete file structure retained) and with a .scummvm file for launching the game |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |

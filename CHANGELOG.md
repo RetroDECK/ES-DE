@@ -10,10 +10,15 @@
 
 ### Detailed list of changes
 
+* Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
+* Set the option "Scrape actual folders" as enabled by default and moved it higher up in the scraper options menu
 * On Windows, moved all dependencies in-tree to the "external" directory to greatly simplify the build environment
 * Removed the deprecated VideoVlcComponent
 
 ### Bug fixes
+
+* The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
+* During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
 
 ## Version 1.2.1 (in development)
 
