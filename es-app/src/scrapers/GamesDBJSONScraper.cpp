@@ -90,6 +90,7 @@ namespace
         {NINTENDO_SWITCH, "4971"},
         {BANDAI_SUFAMI_TURBO, "6"},
         {DOS, "1"},
+        {GAMEENGINE_SCUMMVM, "1"},
         {PC, "1"},
         {VALVE_STEAM, "1"},
         {NEC_PCFX, "4930"},
