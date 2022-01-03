@@ -445,11 +445,21 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                           << result.mdl.get("players");
         }
 
-        // Controller (only for the Arcade and SNK Neo Geo systems).
         pugi::xml_node system = game.child("systeme");
-        int platformID = system.attribute("parentid").as_int();
+        int platformID = system.attribute("id").as_int();
+        int parentPlatformID = system.attribute("parentid").as_int();
 
-        if (platformID == 75 || platformID == 142) {
+        // Platform IDs.
+        for (auto& platform : screenscraper_platformid_map) {
+            if (platform.second == platformID || platform.second == parentPlatformID)
+                result.platformIDs.push_back(platform.first);
+        }
+
+        if (result.platformIDs.empty())
+            result.platformIDs.push_back(PlatformId::PLATFORM_UNKNOWN);
+
+        // Controller (only for the Arcade and SNK Neo Geo systems).
+        if (parentPlatformID == 75 || parentPlatformID == 142) {
             std::string controller = Utils::String::toLower(game.child("controles").text().get());
             if (!controller.empty()) {
                 std::string controllerDescription = "Other";

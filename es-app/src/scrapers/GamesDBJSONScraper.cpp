@@ -333,6 +333,17 @@ namespace
     {
         ScraperSearchResult result;
 
+        // Platform IDs.
+        if (game.HasMember("platform") && game["platform"].IsInt()) {
+            for (auto& platform : gamesdb_new_platformid_map) {
+                if (platform.second == std::to_string(game["platform"].GetInt()))
+                    result.platformIDs.push_back(platform.first);
+            }
+        }
+
+        if (result.platformIDs.empty())
+            result.platformIDs.push_back(PlatformId::PLATFORM_UNKNOWN);
+
         if (game.HasMember("id") && game["id"].IsInt())
             result.gameID = std::to_string(getIntOrThrow(game, "id"));
 

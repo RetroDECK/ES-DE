@@ -351,7 +351,7 @@ void GuiScraperSearch::stop()
     mScrapeResult = {};
 }
 
-void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& results)
+void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
 {
     mResultList->clear();
 
@@ -386,11 +386,57 @@ void GuiScraperSearch::onSearchDone(const std::vector<ScraperSearchResult>& resu
         ComponentListRow row;
 
         for (size_t i = 0; i < results.size(); ++i) {
+            // If the platform IDs returned by the scraper do not match the platform IDs of the
+            // scraped game, then add the additional platform information to the end of the game
+            // name (within square brackets).
+            std::string gameName = results.at(i).mdl.get("name");
+            std::string otherPlatforms;
+
+            // As the platform names are found via reverse lookup there could be multiple entries.
+            // So if any of the entries match the platforms of the last search, then just keep
+            // this platform ID and remove the other ones.
+            for (auto& platformID : mLastSearch.system->getSystemEnvData()->mPlatformIds) {
+                if (!results.at(i).platformIDs.empty() &&
+                    std::find(results.at(i).platformIDs.begin(), results.at(i).platformIDs.end(),
+                              platformID) != results.at(i).platformIDs.end()) {
+                    results.at(i).platformIDs.clear();
+                    results.at(i).platformIDs.push_back(platformID);
+                }
+            }
+
+            bool hasOtherPlatforms = false;
+
+            for (auto& platformID : mLastSearch.system->getSystemEnvData()->mPlatformIds) {
+                if (!results.at(i).platformIDs.empty() &&
+                    std::find(results.at(i).platformIDs.cbegin(), results.at(i).platformIDs.cend(),
+                              platformID) == results.at(i).platformIDs.cend())
+                    hasOtherPlatforms = true;
+            }
+
+            if (hasOtherPlatforms) {
+                if (std::find(results.at(i).platformIDs.cbegin(), results.at(i).platformIDs.cend(),
+                              PlatformIds::PlatformId::PC) != results.at(i).platformIDs.cend()) {
+                    // The PC platform is a bit special as it's widely used by a number of
+                    // different systems. As such remove these other IDs and only display the
+                    // main PC ID as the list of platforms would otherwise be quite long.
+                    otherPlatforms = PlatformIds::getPlatformName(PlatformIds::PlatformId::PC);
+                }
+                else {
+                    for (auto& platform : results.at(i).platformIDs)
+                        otherPlatforms += PlatformIds::getPlatformName(platform) + "/";
+                }
+            }
+
+            if (otherPlatforms != "" && otherPlatforms.back() == '/')
+                otherPlatforms.pop_back();
+
+            if (otherPlatforms != "")
+                gameName.append(" [").append(otherPlatforms).append("]");
+
             row.elements.clear();
-            row.addElement(
-                std::make_shared<TextComponent>(
-                    mWindow, Utils::String::toUpper(results.at(i).mdl.get("name")), font, color),
-                false);
+            row.addElement(std::make_shared<TextComponent>(
+                               mWindow, Utils::String::toUpper(gameName), font, color),
+                           false);
             row.makeAcceptInputHandler([this, i] { returnResult(mScraperResults.at(i)); });
             mResultList->addRow(row);
         }

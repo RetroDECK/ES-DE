@@ -14,6 +14,7 @@
 #include "AsyncHandle.h"
 #include "HttpReq.h"
 #include "MetaData.h"
+#include "PlatformId.h"
 
 #include <assert.h>
 #include <functional>
@@ -52,6 +53,7 @@ struct ScraperSearchResult {
 
     MetaDataList mdl;
     std::string gameID;
+    std::vector<PlatformIds::PlatformId> platformIDs;
 
     // How many more objects the scraper service allows to be downloaded
     // within a given time period.

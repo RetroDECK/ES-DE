@@ -108,7 +108,7 @@ private:
 
     void onSearchError(const std::string& error,
                        HttpReq::Status status = HttpReq::REQ_UNDEFINED_ERROR);
-    void onSearchDone(const std::vector<ScraperSearchResult>& results);
+    void onSearchDone(std::vector<ScraperSearchResult>& results);
 
     int getSelectedIndex();
 

@@ -153,6 +153,9 @@ namespace PlatformIds
 
     const std::string getPlatformName(PlatformId id)
     {
+        if (id > platformNames.size() - 1)
+            return "unknown";
+
         // Return the platform name.
         return platformNames[id];
     }
