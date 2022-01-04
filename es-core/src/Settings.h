@@ -18,7 +18,7 @@
 class Settings
 {
 public:
-    static std::shared_ptr<Settings> getInstance();
+    static Settings* getInstance();
 
     void loadFile();
     void saveFile();

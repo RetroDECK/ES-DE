@@ -64,10 +64,10 @@ Settings::Settings()
     loadFile();
 }
 
-std::shared_ptr<Settings> Settings::getInstance()
+Settings* Settings::getInstance()
 {
-    static std::shared_ptr<Settings> instance{new Settings()};
-    return instance;
+    static Settings instance;
+    return &instance;
 }
 
 void Settings::setDefaults()
