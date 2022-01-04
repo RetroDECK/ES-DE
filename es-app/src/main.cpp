@@ -529,10 +529,8 @@ int main(int argc, char* argv[])
     }
 
     Window* window = Window::getInstance();
-
     ViewController::getInstance();
     CollectionSystemsManager::getInstance();
-
     SystemScreensaver screensaver;
     MediaViewer mediaViewer;
     GuiLaunchScreen guiLaunchScreen;
