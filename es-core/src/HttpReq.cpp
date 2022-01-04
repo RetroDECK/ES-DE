@@ -70,7 +70,7 @@ HttpReq::HttpReq(const std::string& url)
     // these latter operating systems unless the bundled file is used.
     curl_easy_setopt(mHandle, CURLOPT_CAINFO,
                      ResourceManager::getInstance()
-                         ->getResourcePath(":/certificates/curl-ca-bundle.crt")
+                         .getResourcePath(":/certificates/curl-ca-bundle.crt")
                          .c_str());
 #endif
 
