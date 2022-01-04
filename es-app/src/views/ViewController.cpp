@@ -55,7 +55,7 @@ const std::string ViewController::KEYBOARD_CHAR = "\uf11c";
 const std::string ViewController::TICKMARK_CHAR = "\uf14a";
 #endif
 
-ViewController* ViewController::get()
+ViewController* ViewController::getInstance()
 {
     static ViewController instance;
     return &instance;

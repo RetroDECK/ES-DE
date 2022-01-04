@@ -130,7 +130,7 @@ void GridGameListView::onFileChanged(FileData* file, bool reloadGameList)
 {
     if (reloadGameList) {
         // Might switch to a detailed view.
-        ViewController::get()->reloadGameListView(this);
+        ViewController::getInstance()->reloadGameListView(this);
         return;
     }
 
@@ -519,7 +519,7 @@ void GridGameListView::addPlaceholder(FileData* firstEntry)
 void GridGameListView::launch(FileData* game)
 {
     // This triggers ViewController to launch the game.
-    ViewController::get()->triggerGameLaunch(game);
+    ViewController::getInstance()->triggerGameLaunch(game);
 }
 
 void GridGameListView::remove(FileData* game, bool deleteFile)
@@ -687,7 +687,7 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
     prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
-        ViewController::get()->getState().viewing == ViewController::GAME_LIST)
+        ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST)
         prompts.push_back(HelpPrompt("a", "enter"));
     else
         prompts.push_back(HelpPrompt("a", "launch"));

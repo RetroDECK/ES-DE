@@ -502,7 +502,10 @@ void VideoGameListView::updateInfoPanel()
     }
 }
 
-void VideoGameListView::launch(FileData* game) { ViewController::get()->triggerGameLaunch(game); }
+void VideoGameListView::launch(FileData* game)
+{
+    ViewController::getInstance()->triggerGameLaunch(game);
+}
 
 std::vector<TextComponent*> VideoGameListView::getMDLabels()
 {
@@ -542,7 +545,7 @@ void VideoGameListView::update(int deltaTime)
     BasicGameListView::update(deltaTime);
     mVideo->update(deltaTime);
 
-    if (ViewController::get()->getGameLaunchTriggered() && mVideo->isAnimationPlaying(0))
+    if (ViewController::getInstance()->getGameLaunchTriggered() && mVideo->isAnimationPlaying(0))
         mVideo->finishAnimation(0);
 }
 

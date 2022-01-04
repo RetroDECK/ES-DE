@@ -182,7 +182,7 @@ GuiScraperMulti::~GuiScraperMulti()
             (*it)->sortSystem();
         }
     }
-    ViewController::get()->onPauseVideo();
+    ViewController::getInstance()->onPauseVideo();
 }
 
 void GuiScraperMulti::onSizeChanged()
@@ -324,6 +324,6 @@ std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()
 HelpStyle GuiScraperMulti::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }

@@ -29,7 +29,7 @@ class SystemView;
 class ViewController : public GuiComponent
 {
 public:
-    static ViewController* get();
+    static ViewController* getInstance();
 
     // These functions are called from main().
     void invalidSystemsFileDialog();

@@ -198,7 +198,7 @@ GuiOfflineGenerator::~GuiOfflineGenerator()
     mMiximageGenerator.reset();
 
     if (mImagesGenerated > 0)
-        ViewController::get()->reloadAll();
+        ViewController::getInstance()->reloadAll();
 }
 
 void GuiOfflineGenerator::onSizeChanged()
@@ -336,6 +336,6 @@ std::vector<HelpPrompt> GuiOfflineGenerator::getHelpPrompts()
 HelpStyle GuiOfflineGenerator::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }

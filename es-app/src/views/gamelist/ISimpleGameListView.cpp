@@ -106,14 +106,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             FileData* cursor = getCursor();
             if (cursor->getType() == GAME) {
                 onPauseVideo();
-                ViewController::get()->cancelViewTransitions();
+                ViewController::getInstance()->cancelViewTransitions();
                 stopListScrolling();
                 launch(cursor);
             }
             else {
                 // It's a folder.
                 if (cursor->getChildren().size() > 0) {
-                    ViewController::get()->cancelViewTransitions();
+                    ViewController::getInstance()->cancelViewTransitions();
                     NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
                     mCursorStack.push(cursor);
                     populateList(cursor->getChildrenListToDisplay(), cursor);
@@ -147,7 +147,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             return true;
         }
         else if (config->isMappedTo("b", input)) {
-            ViewController::get()->cancelViewTransitions();
+            ViewController::getInstance()->cancelViewTransitions();
             if (mCursorStack.size()) {
                 // Save the position to the cursor stack history.
                 mCursorStackHistory.push_back(getCursor());
@@ -168,10 +168,10 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 SystemData* systemToView = getCursor()->getSystem();
                 if (systemToView->isCustomCollection() &&
                     systemToView->getRootFolder()->getParent())
-                    ViewController::get()->goToSystemView(
+                    ViewController::getInstance()->goToSystemView(
                         systemToView->getRootFolder()->getParent()->getSystem(), true);
                 else
-                    ViewController::get()->goToSystemView(systemToView, true);
+                    ViewController::getInstance()->goToSystemView(systemToView, true);
             }
 
             return true;
@@ -184,19 +184,20 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
             else if (config->isMappedTo("x", input) &&
                      mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
                      mCursorStack.empty() &&
-                     ViewController::get()->getState().viewing == ViewController::GAME_LIST) {
+                     ViewController::getInstance()->getState().viewing ==
+                         ViewController::GAME_LIST) {
                 NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 // Jump to the randomly selected game.
                 if (mRandomGame) {
                     stopListScrolling();
-                    ViewController::get()->cancelViewTransitions();
+                    ViewController::getInstance()->cancelViewTransitions();
                     mWindow->startMediaViewer(mRandomGame);
                     return true;
                 }
             }
             else if (mRoot->getSystem()->isGameSystem()) {
                 stopListScrolling();
-                ViewController::get()->cancelViewTransitions();
+                ViewController::getInstance()->cancelViewTransitions();
                 NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 mWindow->startMediaViewer(getCursor());
                 return true;
@@ -208,7 +209,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
-                ViewController::get()->goToNextGameList();
+                ViewController::getInstance()->goToNextGameList();
                 return true;
             }
         }
@@ -218,7 +219,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
-                ViewController::get()->goToPrevGameList();
+                ViewController::getInstance()->goToPrevGameList();
                 return true;
             }
         }
@@ -238,7 +239,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         else if (config->isMappedTo("y", input) &&
                  mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
                  !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
-                 ViewController::get()->getState().viewing == ViewController::GAME_LIST) {
+                 ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST) {
             // Jump to the randomly selected game.
             if (mRandomGame) {
                 NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
@@ -420,15 +421,15 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                         mRoot->getSortTypeFromString(mRoot->getSortTypeString()),
                         Settings::getInstance()->getBool("FavoritesFirst"));
 
-                    ViewController::get()->onFileChanged(getCursor(), false);
+                    ViewController::getInstance()->onFileChanged(getCursor(), false);
 
                     // Always jump to the first entry in the gamelist if the last favorite
                     // was unmarked. We couldn't do this earlier as we didn't have the list
                     // sorted yet.
                     if (removedLastFavorite) {
-                        ViewController::get()
+                        ViewController::getInstance()
                             ->getGameListView(entryToUpdate->getSystem())
-                            ->setCursor(ViewController::get()
+                            ->setCursor(ViewController::getInstance()
                                             ->getGameListView(entryToUpdate->getSystem())
                                             ->getFirstEntry());
                     }
@@ -444,13 +445,14 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     // As the toggling of the game destroyed this object, we need to get the view
                     // from ViewController instead of using the reference that existed before the
                     // destruction. Otherwise we get random crashes.
-                    IGameListView* view = ViewController::get()->getGameListView(system).get();
+                    IGameListView* view =
+                        ViewController::getInstance()->getGameListView(system).get();
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                         !entryToUpdate->getSystem()->isCustomCollection()) {
-                        ViewController::get()
+                        ViewController::getInstance()
                             ->getGameListView(entryToUpdate->getSystem())
-                            ->setCursor(ViewController::get()
+                            ->setCursor(ViewController::getInstance()
                                             ->getGameListView(entryToUpdate->getSystem())
                                             ->getFirstGameEntry());
                     }
@@ -467,8 +469,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     if (isEditing) {
                         for (auto it = SystemData::sSystemVector.begin();
                              it != SystemData::sSystemVector.end(); ++it) {
-                            ViewController::get()->getGameListView((*it))->onFileChanged(
-                                ViewController::get()->getGameListView((*it))->getCursor(), false);
+                            ViewController::getInstance()->getGameListView((*it))->onFileChanged(
+                                ViewController::getInstance()->getGameListView((*it))->getCursor(),
+                                false);
                         }
                     }
                     return true;

@@ -85,7 +85,7 @@ GuiMenu::~GuiMenu()
     // This is required for the situation where scrolling started just before the menu
     // was openened. Without this, the scrolling would run until manually stopped after
     // the menu has been closed.
-    ViewController::get()->stopScrolling();
+    ViewController::getInstance()->stopScrolling();
 }
 
 void GuiMenu::openScraperOptions()
@@ -266,8 +266,9 @@ void GuiMenu::openUIOptions()
                         (*it)->sortSystem();
                         (*it)->getIndex()->resetFilters();
                     }
-                    ViewController::get()->reloadAll();
-                    ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
+                    ViewController::getInstance()->reloadAll();
+                    ViewController::getInstance()->goToSystem(SystemData::sSystemVector.front(),
+                                                              false);
                     mWindow->invalidateCachedBackground();
                 },
                 "NO", nullptr));
@@ -828,7 +829,7 @@ void GuiMenu::openOtherOptions()
     auto updateValMediaDir = [this](const std::string& newVal) {
         Settings::getInstance()->setString("MediaDirectory", newVal);
         Settings::getInstance()->saveFile();
-        ViewController::get()->reloadAll();
+        ViewController::getInstance()->reloadAll();
         mWindow->invalidateCachedBackground();
     };
     rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
@@ -1264,7 +1265,7 @@ void GuiMenu::close(bool closeAllWindows)
     else {
         Window* window = mWindow;
         closeFunc = [window] {
-            while (window->peekGui() != ViewController::get())
+            while (window->peekGui() != ViewController::getInstance())
                 delete window->peekGui();
         };
     }
@@ -1298,6 +1299,6 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 HelpStyle GuiMenu::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }

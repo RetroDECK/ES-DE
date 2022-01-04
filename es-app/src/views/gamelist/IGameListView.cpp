@@ -33,7 +33,7 @@ bool IGameListView::input(InputConfig* config, Input input)
     // Select button opens GuiGamelistOptions.
     if (!UIModeController::getInstance()->isUIModeKid() && // Line break.
         config->isMappedTo("back", input) && input.value) {
-        ViewController::get()->cancelViewTransitions();
+        ViewController::getInstance()->cancelViewTransitions();
         stopListScrolling();
         mWindow->pushGui(new GuiGamelistOptions(mWindow, this->mRoot->getSystem()));
         return true;
@@ -45,7 +45,7 @@ bool IGameListView::input(InputConfig* config, Input input)
              (SDL_GetModState() & (KMOD_LCTRL | KMOD_RCTRL)) && input.id == SDLK_r &&
              input.value != 0) {
         LOG(LogDebug) << "IGameListView::input(): Reloading view";
-        ViewController::get()->reloadGameListView(this, true);
+        ViewController::getInstance()->reloadGameListView(this, true);
         return true;
     }
 

@@ -1127,7 +1127,7 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
         gameList = mRootFolder->getParent()->getChildrenListToDisplay();
     }
     else {
-        gameList = ViewController::get()
+        gameList = ViewController::getInstance()
                        ->getGameListView(mRootFolder->getSystem())
                        .get()
                        ->getCursor()
@@ -1210,10 +1210,10 @@ void SystemData::sortSystem(bool reloadGamelist, bool jumpToFirstRow)
                      favoritesSorting);
 
     if (reloadGamelist)
-        ViewController::get()->reloadGameListView(this, false);
+        ViewController::getInstance()->reloadGameListView(this, false);
 
     if (jumpToFirstRow) {
-        IGameListView* gameList = ViewController::get()->getGameListView(this).get();
+        IGameListView* gameList = ViewController::getInstance()->getGameListView(this).get();
         gameList->setCursor(gameList->getFirstEntry());
     }
 }

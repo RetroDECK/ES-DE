@@ -476,7 +476,7 @@ void DetailedGameListView::updateInfoPanel()
 
 void DetailedGameListView::launch(FileData* game)
 {
-    ViewController::get()->triggerGameLaunch(game);
+    ViewController::getInstance()->triggerGameLaunch(game);
 }
 
 std::vector<TextComponent*> DetailedGameListView::getMDLabels()
@@ -512,7 +512,7 @@ void DetailedGameListView::update(int deltaTime)
     BasicGameListView::update(deltaTime);
     mImage.update(deltaTime);
 
-    if (ViewController::get()->getGameLaunchTriggered() && mImage.isAnimationPlaying(0))
+    if (ViewController::getInstance()->getGameLaunchTriggered() && mImage.isAnimationPlaying(0))
         mImage.finishAnimation(0);
 }
 

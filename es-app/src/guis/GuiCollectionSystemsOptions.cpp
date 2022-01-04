@@ -399,7 +399,7 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
         setNeedsGoToSystem(newCollection);
 
     Window* window = mWindow;
-    while (window->peekGui() && window->peekGui() != ViewController::get())
+    while (window->peekGui() && window->peekGui() != ViewController::getInstance())
         delete window->peekGui();
     CollectionSystemsManager::getInstance()->setEditMode(collectionName);
 }

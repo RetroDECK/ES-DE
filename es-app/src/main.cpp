@@ -530,7 +530,7 @@ int main(int argc, char* argv[])
 
     Window* window = Window::getInstance();
 
-    ViewController::get();
+    ViewController::getInstance();
     CollectionSystemsManager::getInstance();
 
     SystemScreensaver screensaver;
@@ -542,7 +542,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    window->pushGui(ViewController::get());
+    window->pushGui(ViewController::getInstance());
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
@@ -587,10 +587,10 @@ int main(int argc, char* argv[])
         // configure a different ROM directory as well as to generate the game systems
         // directory structure.
         if (loadSystemsStatus == INVALID_FILE) {
-            ViewController::get()->invalidSystemsFileDialog();
+            ViewController::getInstance()->invalidSystemsFileDialog();
         }
         else if (loadSystemsStatus == NO_ROMS) {
-            ViewController::get()->noGamesDialog();
+            ViewController::getInstance()->noGamesDialog();
         }
     }
 
@@ -599,7 +599,7 @@ int main(int argc, char* argv[])
     // any command tag in es_systems.xml.
     for (auto system : SystemData::sSystemVector) {
         if (system->getAlternativeEmulator().substr(0, 9) == "<INVALID>") {
-            ViewController::get()->invalidAlternativeEmulatorDialog();
+            ViewController::getInstance()->invalidAlternativeEmulatorDialog();
             break;
         }
     }
@@ -609,7 +609,7 @@ int main(int argc, char* argv[])
 
     // Preload what we can right away instead of waiting for the user to select it.
     // This makes for no delays when accessing content, but a longer startup time.
-    ViewController::get()->preload();
+    ViewController::getInstance()->preload();
 
     if (splashScreen && splashScreenProgress)
         window->renderLoadingScreen("Done");
@@ -617,11 +617,11 @@ int main(int argc, char* argv[])
     // Open the input configuration GUI if the flag to force this was passed from the command line.
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
-            window->pushGui(new GuiDetectDevice(window, false, true,
-                                                [] { ViewController::get()->goToStart(true); }));
+            window->pushGui(new GuiDetectDevice(
+                window, false, true, [] { ViewController::getInstance()->goToStart(true); }));
         }
         else {
-            ViewController::get()->goToStart(true);
+            ViewController::getInstance()->goToStart(true);
         }
     }
 
@@ -679,7 +679,7 @@ int main(int argc, char* argv[])
         Log::flush();
     }
 
-    while (window->peekGui() != ViewController::get())
+    while (window->peekGui() != ViewController::getInstance())
         delete window->peekGui();
     window->deinit();
 

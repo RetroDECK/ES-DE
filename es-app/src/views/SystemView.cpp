@@ -247,7 +247,7 @@ bool SystemView::input(InputConfig* config, Input input)
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
             LOG(LogDebug) << "SystemView::input(): Reloading all";
-            ViewController::get()->reloadAll();
+            ViewController::getInstance()->reloadAll();
             return true;
         }
 
@@ -255,12 +255,12 @@ bool SystemView::input(InputConfig* config, Input input)
             case VERTICAL:
             case VERTICAL_WHEEL:
                 if (config->isMappedLike("up", input)) {
-                    ViewController::get()->cancelViewTransitions();
+                    ViewController::getInstance()->cancelViewTransitions();
                     listInput(-1);
                     return true;
                 }
                 if (config->isMappedLike("down", input)) {
-                    ViewController::get()->cancelViewTransitions();
+                    ViewController::getInstance()->cancelViewTransitions();
                     listInput(1);
                     return true;
                 }
@@ -269,12 +269,12 @@ bool SystemView::input(InputConfig* config, Input input)
             case HORIZONTAL_WHEEL:
             default:
                 if (config->isMappedLike("left", input)) {
-                    ViewController::get()->cancelViewTransitions();
+                    ViewController::getInstance()->cancelViewTransitions();
                     listInput(-1);
                     return true;
                 }
                 if (config->isMappedLike("right", input)) {
-                    ViewController::get()->cancelViewTransitions();
+                    ViewController::getInstance()->cancelViewTransitions();
                     listInput(1);
                     return true;
                 }
@@ -283,7 +283,7 @@ bool SystemView::input(InputConfig* config, Input input)
 
         if (config->isMappedTo("a", input)) {
             stopScrolling();
-            ViewController::get()->goToGameList(getSelected());
+            ViewController::getInstance()->goToGameList(getSelected());
             NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
             return true;
         }
@@ -299,8 +299,8 @@ bool SystemView::input(InputConfig* config, Input input)
         if (!UIModeController::getInstance()->isUIModeKid() && config->isMappedTo("back", input) &&
             Settings::getInstance()->getBool("ScreensaverControls")) {
             if (!mWindow->isScreensaverActive()) {
-                ViewController::get()->stopScrolling();
-                ViewController::get()->cancelViewTransitions();
+                ViewController::getInstance()->stopScrolling();
+                ViewController::getInstance()->cancelViewTransitions();
                 mWindow->startScreensaver();
                 mWindow->renderScreensaver();
             }

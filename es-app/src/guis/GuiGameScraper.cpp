@@ -200,7 +200,7 @@ std::vector<HelpPrompt> GuiGameScraper::getHelpPrompts()
 HelpStyle GuiGameScraper::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }
 

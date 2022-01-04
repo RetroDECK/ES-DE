@@ -77,7 +77,7 @@ void GuiSettings::save()
                 (*it)->sortSystem(true);
 
             // Jump to the first row of the gamelist.
-            IGameListView* gameList = ViewController::get()->getGameListView((*it)).get();
+            IGameListView* gameList = ViewController::getInstance()->getGameListView((*it)).get();
             gameList->setCursor(gameList->getFirstEntry());
         }
     }
@@ -94,38 +94,38 @@ void GuiSettings::save()
     }
 
     if (mNeedsReloading)
-        ViewController::get()->reloadAll();
+        ViewController::getInstance()->reloadAll();
 
     if (mNeedsGoToStart)
-        ViewController::get()->goToStart(true);
+        ViewController::getInstance()->goToStart(true);
 
     if (mNeedsGoToSystem)
-        ViewController::get()->goToSystem(mGoToSystem, false);
+        ViewController::getInstance()->goToSystem(mGoToSystem, false);
 
     if (mNeedsGoToGroupedCollections) {
         bool groupedSystemExists = false;
         for (SystemData* system : SystemData::sSystemVector) {
             if (system->getThemeFolder() == "custom-collections") {
-                ViewController::get()->goToSystem(system, false);
+                ViewController::getInstance()->goToSystem(system, false);
                 groupedSystemExists = true;
                 continue;
             }
         }
         if (!groupedSystemExists)
             // No grouped custom collection system exists, so go to the first system instead.
-            ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
+            ViewController::getInstance()->goToSystem(SystemData::sSystemVector.front(), false);
     }
 
     if (mNeedsCollectionsUpdate) {
-        auto state = ViewController::get()->getState();
+        auto state = ViewController::getInstance()->getState();
         // If we're in any view other than the grouped custom collections, always jump to the
         // system view in case of any collection updates. This is overkill in some instances but
         // these views can behave a bit strange during collection changes so it's better to be on
         // the safe side.
         if (state.getSystem()->isCollection() &&
             state.getSystem()->getThemeFolder() != "custom-collections") {
-            ViewController::get()->goToStart(false);
-            ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
+            ViewController::getInstance()->goToStart(false);
+            ViewController::getInstance()->goToSystem(SystemData::sSystemVector.front(), false);
             // We don't want to invalidate the cached background when there has been a collection
             // systen change as that may show a black screen in some circumstances.
             return;
@@ -134,7 +134,7 @@ void GuiSettings::save()
         // system view).
         if (std::find(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(),
                       state.getSystem()) == SystemData::sSystemVector.end()) {
-            ViewController::get()->goToStart(false);
+            ViewController::getInstance()->goToStart(false);
             return;
         }
     }
@@ -237,7 +237,7 @@ bool GuiSettings::input(InputConfig* config, Input input)
 HelpStyle GuiSettings::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }
 

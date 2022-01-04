@@ -40,7 +40,7 @@ void BasicGameListView::onFileChanged(FileData* file, bool reloadGameList)
 {
     if (reloadGameList) {
         // Might switch to a detailed view.
-        ViewController::get()->reloadGameListView(this);
+        ViewController::getInstance()->reloadGameListView(this);
         return;
     }
 
@@ -162,7 +162,7 @@ void BasicGameListView::addPlaceholder(FileData* firstEntry)
 void BasicGameListView::launch(FileData* game)
 {
     // This triggers ViewController to launch the game.
-    ViewController::get()->triggerGameLaunch(game);
+    ViewController::getInstance()->triggerGameLaunch(game);
 }
 
 void BasicGameListView::remove(FileData* game, bool deleteFile)
@@ -310,7 +310,7 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("left/right", "system"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
-        ViewController::get()->getState().viewing == ViewController::GAME_LIST)
+        ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST)
         prompts.push_back(HelpPrompt("a", "enter"));
     else
         prompts.push_back(HelpPrompt("a", "launch"));
@@ -325,8 +325,8 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
         !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
-        ViewController::get()->getState().viewing == ViewController::GAME_LIST &&
-        ViewController::get()->getState().viewstyle != ViewController::BASIC) {
+        ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST &&
+        ViewController::getInstance()->getState().viewstyle != ViewController::BASIC) {
         prompts.push_back(HelpPrompt("y", "jump to game"));
     }
     else if (mRoot->getSystem()->isGameSystem() &&

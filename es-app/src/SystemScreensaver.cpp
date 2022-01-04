@@ -209,12 +209,12 @@ void SystemScreensaver::launchGame()
 {
     if (mCurrentGame != nullptr) {
         // Launching game
-        ViewController::get()->triggerGameLaunch(mCurrentGame);
-        ViewController::get()->goToGameList(mCurrentGame->getSystem());
+        ViewController::getInstance()->triggerGameLaunch(mCurrentGame);
+        ViewController::getInstance()->goToGameList(mCurrentGame->getSystem());
         IGameListView* view =
-            ViewController::get()->getGameListView(mCurrentGame->getSystem()).get();
+            ViewController::getInstance()->getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
-        ViewController::get()->cancelViewTransitions();
+        ViewController::getInstance()->cancelViewTransitions();
     }
 }
 
@@ -222,11 +222,11 @@ void SystemScreensaver::goToGame()
 {
     if (mCurrentGame != nullptr) {
         // Go to the game in the gamelist view, but don't launch it.
-        ViewController::get()->goToGameList(mCurrentGame->getSystem());
+        ViewController::getInstance()->goToGameList(mCurrentGame->getSystem());
         IGameListView* view =
-            ViewController::get()->getGameListView(mCurrentGame->getSystem()).get();
+            ViewController::getInstance()->getGameListView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
-        ViewController::get()->cancelViewTransitions();
+        ViewController::getInstance()->cancelViewTransitions();
     }
 }
 

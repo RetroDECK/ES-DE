@@ -39,7 +39,7 @@ void UIModeController::monitorUIMode()
 {
     std::string uimode = Settings::getInstance()->getString("UIMode");
     // UI mode was changed.
-    if (uimode != mCurrentUIMode && !ViewController::get()->isCameraMoving()) {
+    if (uimode != mCurrentUIMode && !ViewController::getInstance()->isCameraMoving()) {
         mCurrentUIMode = uimode;
         // Reset filters and sort gamelists (which will update the game counter).
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
@@ -51,7 +51,7 @@ void UIModeController::monitorUIMode()
                     customSystem->getSystem()->getIndex()->resetFilters();
             }
         }
-        ViewController::get()->ReloadAndGoToStart();
+        ViewController::getInstance()->ReloadAndGoToStart();
     }
 }
 
