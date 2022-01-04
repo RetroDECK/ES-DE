@@ -174,7 +174,7 @@ GuiInputConfig::GuiInputConfig(Window* window,
     // GUI buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     std::function<void()> okFunction = [this, okCallback] {
-        InputManager::getInstance()->writeDeviceConfig(mTargetConfig); // Save.
+        InputManager::getInstance().writeDeviceConfig(mTargetConfig); // Save.
         if (okCallback)
             okCallback();
         delete this;

@@ -27,16 +27,11 @@ public:
     VolumeControl();
     ~VolumeControl();
 
-    static VolumeControl* getInstance();
-    void deleteInstance();
-
     void init();
     void deinit();
 
     int getVolume() const;
     void setVolume(int volume);
-
-    static VolumeControl* sInstance;
 
 #if defined(__linux__)
     static std::string mixerName;

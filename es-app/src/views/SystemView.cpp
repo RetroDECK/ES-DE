@@ -77,9 +77,9 @@ void SystemView::populate()
                 auto path = logoElem->get<std::string>("path");
                 std::string defaultPath =
                     logoElem->has("default") ? logoElem->get<std::string>("default") : "";
-                if ((!path.empty() && ResourceManager::getInstance()->fileExists(path)) ||
+                if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
                     (!defaultPath.empty() &&
-                     ResourceManager::getInstance()->fileExists(defaultPath))) {
+                     ResourceManager::getInstance().fileExists(defaultPath))) {
                     auto* logo = new ImageComponent(mWindow, false, false);
                     logo->setMaxSize(glm::round(mCarousel.logoSize * mCarousel.logoScale));
                     logo->applyTheme(theme, "system", "logo", ThemeFlags::PATH | ThemeFlags::COLOR);
@@ -101,9 +101,9 @@ void SystemView::populate()
                     auto path = logoElem->get<std::string>("path");
                     std::string defaultPath =
                         logoElem->has("default") ? logoElem->get<std::string>("default") : "";
-                    if ((!path.empty() && ResourceManager::getInstance()->fileExists(path)) ||
+                    if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
                         (!defaultPath.empty() &&
-                         ResourceManager::getInstance()->fileExists(defaultPath))) {
+                         ResourceManager::getInstance().fileExists(defaultPath))) {
                         auto* logo = new ImageComponent(mWindow, false, false);
                         logo->applyTheme(theme, "system", "logoPlaceholderImage", ThemeFlags::ALL);
                         if (!logoElem->has("size"))

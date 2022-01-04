@@ -29,8 +29,8 @@
 
 #define FADE_TIME 300
 
-SystemScreensaver::SystemScreensaver(Window* window)
-    : mWindow(window)
+SystemScreensaver::SystemScreensaver()
+    : mWindow(Window::getInstance())
     , mState(STATE_INACTIVE)
     , mImageScreensaver(nullptr)
     , mVideoScreensaver(nullptr)

@@ -24,7 +24,7 @@
 #define CLOCK_BACKGROUND_CREATION false
 #endif
 
-Window::Window()
+Window::Window() noexcept
     : mScreensaver(nullptr)
     , mMediaViewer(nullptr)
     , mLaunchScreen(nullptr)
@@ -48,9 +48,6 @@ Window::Window()
     , mTopScale(0.5)
     , mChangedThemeSet(false)
 {
-    mHelp = new HelpComponent(this);
-    mBackgroundOverlay = new ImageComponent(this);
-    mBackgroundOverlayOpacity = 0;
 }
 
 Window::~Window()
@@ -65,6 +62,12 @@ Window::~Window()
         delete mInfoPopup;
 
     delete mHelp;
+}
+
+Window* Window::getInstance()
+{
+    static Window instance;
+    return &instance;
 }
 
 void Window::pushGui(GuiComponent* gui)
@@ -109,9 +112,13 @@ bool Window::init()
         return false;
     }
 
-    InputManager::getInstance()->init();
+    InputManager::getInstance().init();
 
-    ResourceManager::getInstance()->reloadAll();
+    ResourceManager::getInstance().reloadAll();
+
+    mHelp = new HelpComponent(this);
+    mBackgroundOverlay = new ImageComponent(this);
+    mBackgroundOverlayOpacity = 0;
 
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
     if (mDefaultFonts.empty()) {
@@ -147,8 +154,8 @@ void Window::deinit()
     mPostprocessedBackground.reset();
 #endif
 
-    InputManager::getInstance()->deinit();
-    ResourceManager::getInstance()->unloadAll();
+    InputManager::getInstance().deinit();
+    ResourceManager::getInstance().unloadAll();
     Renderer::deinit();
 }
 

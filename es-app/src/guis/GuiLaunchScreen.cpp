@@ -14,10 +14,10 @@
 #include "components/TextComponent.h"
 #include "utils/StringUtil.h"
 
-GuiLaunchScreen::GuiLaunchScreen(Window* window)
-    : GuiComponent(window)
-    , mWindow(window)
-    , mBackground(window, ":/graphics/frame.svg")
+GuiLaunchScreen::GuiLaunchScreen()
+    : GuiComponent(Window::getInstance())
+    , mWindow(Window::getInstance())
+    , mBackground(mWindow, ":/graphics/frame.svg")
     , mGrid(nullptr)
     , mMarquee(nullptr)
 {

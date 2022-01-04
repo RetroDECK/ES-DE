@@ -161,7 +161,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         }
     }
     // Add a dummy entry when applicable as the menu looks quite ugly if it's just blank.
-    else if (!CollectionSystemsManager::get()->isEditing() &&
+    else if (!CollectionSystemsManager::getInstance()->isEditing() &&
              mSystem->getRootFolder()->getChildren().size() == 0 && !mIsCustomCollectionGroup &&
              !mIsCustomCollection) {
         row.elements.clear();
@@ -179,7 +179,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
 
     if (UIModeController::getInstance()->isUIModeFull() &&
         (mIsCustomCollection || mIsCustomCollectionGroup)) {
-        if (CollectionSystemsManager::get()->getEditingCollection() != customSystem) {
+        if (CollectionSystemsManager::getInstance()->getEditingCollection() != customSystem) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>(mWindow,
                                                            "ADD/REMOVE GAMES TO THIS COLLECTION",
@@ -191,16 +191,17 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
     }
 
     if (UIModeController::getInstance()->isUIModeFull() &&
-        CollectionSystemsManager::get()->isEditing()) {
+        CollectionSystemsManager::getInstance()->isEditing()) {
         row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>(
-                           mWindow,
-                           "FINISH EDITING '" +
-                               Utils::String::toUpper(
-                                   CollectionSystemsManager::get()->getEditingCollection()) +
-                               "' COLLECTION",
-                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-                       true);
+        row.addElement(
+            std::make_shared<TextComponent>(
+                mWindow,
+                "FINISH EDITING '" +
+                    Utils::String::toUpper(
+                        CollectionSystemsManager::getInstance()->getEditingCollection()) +
+                    "' COLLECTION",
+                Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+            true);
         row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::exitEditMode, this));
         mMenu.addRow(row);
     }
@@ -336,7 +337,8 @@ void GuiGamelistOptions::startEditMode()
     std::string editingSystem = mSystem->getName();
     // Need to check if we're editing the collections bundle,
     // as we will want to edit the selected collection within.
-    if (editingSystem == CollectionSystemsManager::get()->getCustomCollectionsBundle()->getName()) {
+    if (editingSystem ==
+        CollectionSystemsManager::getInstance()->getCustomCollectionsBundle()->getName()) {
         FileData* file = getGamelist()->getCursor();
         // Do we have the cursor on a specific collection?.
         if (file->getType() == FOLDER)
@@ -345,7 +347,7 @@ void GuiGamelistOptions::startEditMode()
             // We are inside a specific collection. We want to edit that one.
             editingSystem = file->getSystem()->getName();
     }
-    CollectionSystemsManager::get()->setEditMode(editingSystem);
+    CollectionSystemsManager::getInstance()->setEditMode(editingSystem);
 
     // Display the indication icons which show what games are part of the custom collection
     // currently being edited. This is done cheaply using onFileChanged() which will trigger
@@ -362,7 +364,7 @@ void GuiGamelistOptions::startEditMode()
 
 void GuiGamelistOptions::exitEditMode()
 {
-    CollectionSystemsManager::get()->exitEditMode();
+    CollectionSystemsManager::getInstance()->exitEditMode();
     if (mSystem->getRootFolder()->getChildren().size() == 0)
         NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     delete this;
@@ -420,7 +422,7 @@ void GuiGamelistOptions::openMetaDataEd()
 
         // Update all collections where the game is present.
         if (file->getType() == GAME)
-            CollectionSystemsManager::get()->refreshCollectionSystems(file, true);
+            CollectionSystemsManager::getInstance()->refreshCollectionSystems(file, true);
 
         file->getSystem()->sortSystem();
         // This delay reduces the likelyhood that the SVG rasterizer which is running in a
@@ -440,7 +442,7 @@ void GuiGamelistOptions::openMetaDataEd()
     deleteGameBtnFunc = [this, file] {
         LOG(LogInfo) << "Deleting the game file \"" << file->getFullPath()
                      << "\", all its media files and its gamelist.xml entry.";
-        CollectionSystemsManager::get()->deleteCollectionFiles(file);
+        CollectionSystemsManager::getInstance()->deleteCollectionFiles(file);
         ViewController::get()->getGameListView(file->getSystem()).get()->removeMedia(file);
         ViewController::get()->getGameListView(file->getSystem()).get()->remove(file, true);
         mSystem->getRootFolder()->sort(*mListSort->getSelected(), mFavoritesSorting);
@@ -551,7 +553,7 @@ std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
 {
     auto prompts = mMenu.getHelpPrompts();
     if (mSystem->getRootFolder()->getChildren().size() > 0 || mIsCustomCollectionGroup ||
-        mIsCustomCollection || CollectionSystemsManager::get()->isEditing())
+        mIsCustomCollection || CollectionSystemsManager::getInstance()->isEditing())
         prompts.push_back(HelpPrompt("a", "select"));
     if (mSystem->getRootFolder()->getChildren().size() > 0 && mSystem->getName() != "recent") {
         prompts.push_back(HelpPrompt("b", "close (apply)"));

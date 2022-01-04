@@ -29,10 +29,7 @@ class SystemView;
 class ViewController : public GuiComponent
 {
 public:
-    static void init(Window* window);
     static ViewController* get();
-
-    virtual ~ViewController();
 
     // These functions are called from main().
     void invalidSystemsFileDialog();
@@ -131,8 +128,7 @@ public:
     static const std::string TICKMARK_CHAR;
 
 private:
-    ViewController(Window* window);
-    static ViewController* sInstance;
+    ViewController() noexcept;
 
     void launch(FileData* game);
 

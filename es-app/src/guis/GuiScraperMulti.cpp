@@ -280,7 +280,7 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
     mSearchQueue.pop();
     ++mCurrentGame;
     ++mTotalSuccessful;
-    CollectionSystemsManager::get()->refreshCollectionSystems(search.game);
+    CollectionSystemsManager::getInstance()->refreshCollectionSystems(search.game);
     doNextSearch();
 }
 

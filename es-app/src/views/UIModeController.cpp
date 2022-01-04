@@ -16,25 +16,7 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
-UIModeController* UIModeController::sInstance = nullptr;
-
-UIModeController* UIModeController::getInstance()
-{
-    if (sInstance == nullptr)
-        sInstance = new UIModeController();
-
-    return sInstance;
-}
-
-void UIModeController::deinit()
-{
-    if (sInstance) {
-        delete sInstance;
-        sInstance = nullptr;
-    }
-}
-
-UIModeController::UIModeController()
+UIModeController::UIModeController() noexcept
     : mPassKeyCounter(0)
 {
     mPassKeySequence = Settings::getInstance()->getString("UIMode_passkey");
@@ -45,6 +27,12 @@ UIModeController::UIModeController()
         Settings::getInstance()->setString("UIMode", mCurrentUIMode);
         Settings::getInstance()->saveFile();
     }
+}
+
+UIModeController* UIModeController::getInstance()
+{
+    static UIModeController instance;
+    return &instance;
 }
 
 void UIModeController::monitorUIMode()

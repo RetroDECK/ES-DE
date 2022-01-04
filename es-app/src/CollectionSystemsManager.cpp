@@ -43,12 +43,8 @@ std::string myCollectionsName = "collections";
 
 #define LAST_PLAYED_MAX 50
 
-// Handles the getting, initialization, deinitialization,
-// saving and deletion of a CollectionSystemsManager instance.
-CollectionSystemsManager* CollectionSystemsManager::sInstance = nullptr;
-
-CollectionSystemsManager::CollectionSystemsManager(Window* window)
-    : mWindow(window)
+CollectionSystemsManager::CollectionSystemsManager() noexcept
+    : mWindow(Window::getInstance())
 {
     // clang-format off
     CollectionSystemDecl systemDecls[] = {
@@ -92,8 +88,6 @@ CollectionSystemsManager::CollectionSystemsManager(Window* window)
 
 CollectionSystemsManager::~CollectionSystemsManager()
 {
-    assert(sInstance == this);
-
     // Don't attempt to remove any collections if no systems exist.
     if (SystemData::sSystemVector.size() > 0)
         removeCollectionsFromDisplayedSystems();
@@ -114,25 +108,12 @@ CollectionSystemsManager::~CollectionSystemsManager()
         delete (*it).second.system;
 
     delete mCollectionEnvData;
-    sInstance = nullptr;
 }
 
-CollectionSystemsManager* CollectionSystemsManager::get()
+CollectionSystemsManager* CollectionSystemsManager::getInstance()
 {
-    assert(sInstance);
-    return sInstance;
-}
-
-void CollectionSystemsManager::init(Window* window)
-{
-    assert(!sInstance);
-    sInstance = new CollectionSystemsManager(window);
-}
-
-void CollectionSystemsManager::deinit()
-{
-    if (sInstance)
-        delete sInstance;
+    static CollectionSystemsManager instance;
+    return &instance;
 }
 
 void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
@@ -927,8 +908,8 @@ void CollectionSystemsManager::deleteCustomCollection(const std::string& collect
         delete mWindow->peekGui();
 
     if (collectionEntry != mCustomCollectionSystemsData.end()) {
-        CollectionSystemsManager::get()->loadEnabledListFromSettings();
-        CollectionSystemsManager::get()->updateSystemsList();
+        CollectionSystemsManager::getInstance()->loadEnabledListFromSettings();
+        CollectionSystemsManager::getInstance()->updateSystemsList();
 
         ViewController::get()->removeGameListView(collectionEntry->second.system);
         ViewController::get()->reloadAll();

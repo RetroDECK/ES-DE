@@ -528,24 +528,27 @@ int main(int argc, char* argv[])
         }
     }
 
-    Window window;
-    SystemScreensaver screensaver(&window);
-    MediaViewer mediaViewer(&window);
-    GuiLaunchScreen guiLaunchScreen(&window);
-    ViewController::init(&window);
-    CollectionSystemsManager::init(&window);
-    window.pushGui(ViewController::get());
+    Window* window = Window::getInstance();
+
+    ViewController::get();
+    CollectionSystemsManager::getInstance();
+
+    SystemScreensaver screensaver;
+    MediaViewer mediaViewer;
+    GuiLaunchScreen guiLaunchScreen;
+
+    if (!window->init()) {
+        LOG(LogError) << "Window failed to initialize";
+        return 1;
+    }
+
+    window->pushGui(ViewController::get());
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
     SDL_Event event{};
 
-    if (!window.init()) {
-        LOG(LogError) << "Window failed to initialize";
-        return 1;
-    }
-
-    InputManager::getInstance()->parseEvent(event, &window);
+    InputManager::getInstance().parseEvent(event, window);
     if (event.type == SDL_QUIT)
         return 1;
 
@@ -571,7 +574,7 @@ int main(int argc, char* argv[])
         std::string progressText = "Loading...";
         if (splashScreenProgress)
             progressText = "Loading system config...";
-        window.renderLoadingScreen(progressText);
+        window->renderLoadingScreen(progressText);
     }
 
     AudioManager::getInstance();
@@ -609,13 +612,13 @@ int main(int argc, char* argv[])
     ViewController::get()->preload();
 
     if (splashScreen && splashScreenProgress)
-        window.renderLoadingScreen("Done");
+        window->renderLoadingScreen("Done");
 
     // Open the input configuration GUI if the flag to force this was passed from the command line.
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
-            window.pushGui(new GuiDetectDevice(&window, false, true,
-                                               [] { ViewController::get()->goToStart(true); }));
+            window->pushGui(new GuiDetectDevice(window, false, true,
+                                                [] { ViewController::get()->goToStart(true); }));
         }
         else {
             ViewController::get()->goToStart(true);
@@ -645,7 +648,7 @@ int main(int argc, char* argv[])
     while (running) {
         if (SDL_PollEvent(&event)) {
             do {
-                InputManager::getInstance()->parseEvent(event, &window);
+                InputManager::getInstance().parseEvent(event, window);
 
                 if (event.type == SDL_QUIT)
                     running = false;
@@ -653,7 +656,7 @@ int main(int argc, char* argv[])
             } while (SDL_PollEvent(&event));
         }
 
-        if (window.isSleeping()) {
+        if (window->isSleeping()) {
             lastTime = SDL_GetTicks();
             // This doesn't need to be accurate, we're just giving up
             // our CPU time until something wakes us up.
@@ -669,18 +672,17 @@ int main(int argc, char* argv[])
         if (deltaTime < 0)
             deltaTime = 1000;
 
-        window.update(deltaTime);
-        window.render();
+        window->update(deltaTime);
+        window->render();
         Renderer::swapBuffers();
 
         Log::flush();
     }
 
-    while (window.peekGui() != ViewController::get())
-        delete window.peekGui();
-    window.deinit();
+    while (window->peekGui() != ViewController::get())
+        delete window->peekGui();
+    window->deinit();
 
-    CollectionSystemsManager::deinit();
     SystemData::deleteSystems();
     NavigationSounds::getInstance().deinit();
 

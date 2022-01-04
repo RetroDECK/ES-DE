@@ -689,7 +689,7 @@ void GuiMetaDataEd::save()
                 // Update disabled auto collections when hiding a game, as otherwise these could
                 // get invalid gamelist cursor positions. A cursor pointing to a removed game
                 // would crash the application upon enabling the collections.
-                CollectionSystemsManager::get()->refreshCollectionSystems(hideGame, true);
+                CollectionSystemsManager::getInstance()->refreshCollectionSystems(hideGame, true);
                 // Remove the game from the index of all systems.
                 for (SystemData* sys : SystemData::sSystemVector) {
                     std::vector<FileData*> children;
@@ -706,13 +706,14 @@ void GuiMetaDataEd::save()
     }
     else {
         // Update all collections where the game is present.
-        CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+        CollectionSystemsManager::getInstance()->refreshCollectionSystems(mScraperParams.game);
     }
 
     // If game counting was re-enabled for the game, then reactivate it in any custom collections
     // where it may exist.
     if (setGameAsCounted)
-        CollectionSystemsManager::get()->reactivateCustomCollectionEntry(mScraperParams.game);
+        CollectionSystemsManager::getInstance()->reactivateCustomCollectionEntry(
+            mScraperParams.game);
 
     mScraperParams.system->onMetaDataSavePoint();
 
@@ -812,7 +813,7 @@ void GuiMetaDataEd::close()
             TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
             ViewController::get()->reloadGameListView(mScraperParams.system);
             // Update all collections where the game is present.
-            CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+            CollectionSystemsManager::getInstance()->refreshCollectionSystems(mScraperParams.game);
             mWindow->invalidateCachedBackground();
         }
         ViewController::get()->onPauseVideo();

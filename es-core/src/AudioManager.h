@@ -45,7 +45,7 @@ public:
     inline static SDL_AudioSpec sAudioFormat;
 
 private:
-    AudioManager();
+    AudioManager() noexcept;
 
     static void mixAudio(void* unused, Uint8* stream, int len);
     static void mixAudio2(void* unused, Uint8* stream, int len);

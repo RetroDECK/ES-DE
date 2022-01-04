@@ -712,14 +712,14 @@ std::vector<HelpPrompt> GridGameListView::getHelpPrompts()
         !UIModeController::getInstance()->isUIModeKid() &&
         !UIModeController::getInstance()->isUIModeKiosk() &&
         (Settings::getInstance()->getBool("FavoritesAddButton") ||
-         CollectionSystemsManager::get()->isEditing())) {
-        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+         CollectionSystemsManager::getInstance()->isEditing())) {
+        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
              mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-             CollectionSystemsManager::get()->isEditing()) {
-        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+             CollectionSystemsManager::getInstance()->isEditing()) {
+        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     return prompts;

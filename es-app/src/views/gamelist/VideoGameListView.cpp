@@ -349,8 +349,8 @@ void VideoGameListView::updateInfoPanel()
         // the first of these so that we can display its game media.
         if (file->getSystem()->isCustomCollection() &&
             file->getPath() == file->getSystem()->getName()) {
-            mRandomGame =
-                CollectionSystemsManager::get()->updateCollectionFolderMetadata(file->getSystem());
+            mRandomGame = CollectionSystemsManager::getInstance()->updateCollectionFolderMetadata(
+                file->getSystem());
             if (mRandomGame) {
                 mThumbnail.setImage(mRandomGame->getThumbnailPath());
                 mMarquee.setImage(mRandomGame->getMarqueePath(), false, true);

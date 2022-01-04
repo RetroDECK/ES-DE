@@ -21,7 +21,7 @@ class FileData;
 class GuiLaunchScreen : public Window::GuiLaunchScreen, GuiComponent
 {
 public:
-    GuiLaunchScreen(Window* window);
+    GuiLaunchScreen();
     virtual ~GuiLaunchScreen();
 
     virtual void displayLaunchScreen(FileData* game) override;

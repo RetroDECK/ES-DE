@@ -14,7 +14,7 @@
 
 #include <SDL2/SDL.h>
 
-AudioManager::AudioManager()
+AudioManager::AudioManager() noexcept
 {
     // Init on construction.
     init();

@@ -55,8 +55,8 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
     std::string editingCollection;
     std::string inCollectionPrefix;
 
-    if (CollectionSystemsManager::get()->isEditing()) {
-        editingCollection = CollectionSystemsManager::get()->getEditingCollection();
+    if (CollectionSystemsManager::getInstance()->isEditing()) {
+        editingCollection = CollectionSystemsManager::getInstance()->getEditingCollection();
         isEditing = true;
     }
 
@@ -78,7 +78,8 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
             // Add a leading tick mark icon to the game name if it's part of the custom collection
             // currently being edited.
             if (isEditing && (*it)->getType() == GAME) {
-                if (CollectionSystemsManager::get()->inCustomCollection(editingCollection, (*it))) {
+                if (CollectionSystemsManager::getInstance()->inCustomCollection(editingCollection,
+                                                                                (*it))) {
                     if (Settings::getInstance()->getBool("SpecialCharsASCII"))
                         inCollectionPrefix = "! ";
                     else
@@ -323,7 +324,7 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-        !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
+        !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
         ViewController::get()->getState().viewing == ViewController::GAME_LIST &&
         ViewController::get()->getState().viewstyle != ViewController::BASIC) {
         prompts.push_back(HelpPrompt("y", "jump to game"));
@@ -334,14 +335,14 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
              !UIModeController::getInstance()->isUIModeKid() &&
              !UIModeController::getInstance()->isUIModeKiosk() &&
              (Settings::getInstance()->getBool("FavoritesAddButton") ||
-              CollectionSystemsManager::get()->isEditing())) {
-        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+              CollectionSystemsManager::getInstance()->isEditing())) {
+        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
              mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-             CollectionSystemsManager::get()->isEditing()) {
-        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+             CollectionSystemsManager::getInstance()->isEditing()) {
+        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     return prompts;

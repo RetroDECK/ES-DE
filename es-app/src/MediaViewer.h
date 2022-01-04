@@ -17,7 +17,7 @@
 class MediaViewer : public Window::MediaViewer
 {
 public:
-    MediaViewer(Window* window);
+    MediaViewer();
     virtual ~MediaViewer();
 
     virtual bool startMediaViewer(FileData* game) override;

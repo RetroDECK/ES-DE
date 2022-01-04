@@ -66,8 +66,8 @@ void GuiSettings::save()
         mWindow->reloadHelpPrompts();
 
     if (mNeedsCollectionsUpdate) {
-        CollectionSystemsManager::get()->loadEnabledListFromSettings();
-        CollectionSystemsManager::get()->updateSystemsList();
+        CollectionSystemsManager::getInstance()->loadEnabledListFromSettings();
+        CollectionSystemsManager::getInstance()->updateSystemsList();
     }
 
     if (mNeedsSorting) {

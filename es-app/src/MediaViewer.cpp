@@ -12,8 +12,8 @@
 #include "components/VideoFFmpegComponent.h"
 #include "views/ViewController.h"
 
-MediaViewer::MediaViewer(Window* window)
-    : mWindow(window)
+MediaViewer::MediaViewer()
+    : mWindow(Window::getInstance())
     , mVideo(nullptr)
     , mImage(nullptr)
 {

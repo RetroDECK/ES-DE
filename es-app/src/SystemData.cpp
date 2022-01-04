@@ -51,14 +51,14 @@ void FindRules::loadFindRules()
     }
     else {
 #if defined(_WIN64)
-        path = ResourceManager::getInstance()->getResourcePath(
-            ":/systems/windows/es_find_rules.xml", false);
+        path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_find_rules.xml",
+                                                              false);
 #elif defined(__APPLE__)
-        path = ResourceManager::getInstance()->getResourcePath(":/systems/macos/es_find_rules.xml",
-                                                               false);
+        path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_find_rules.xml",
+                                                              false);
 #else
-        path = ResourceManager::getInstance()->getResourcePath(":/systems/unix/es_find_rules.xml",
-                                                               false);
+        path = ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml",
+                                                              false);
 #endif
     }
 
@@ -659,7 +659,7 @@ bool SystemData::loadConfig()
 
     // Don't load any collections if there are no systems available.
     if (sSystemVector.size() > 0)
-        CollectionSystemsManager::get()->loadCollectionSystems();
+        CollectionSystemsManager::getInstance()->loadCollectionSystems();
 
     return false;
 }
@@ -718,12 +718,11 @@ std::vector<std::string> SystemData::getConfigPath(bool legacyWarning)
     }
 
 #if defined(_WIN64)
-    path =
-        ResourceManager::getInstance()->getResourcePath(":/systems/windows/es_systems.xml", true);
+    path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_systems.xml", true);
 #elif defined(__APPLE__)
-    path = ResourceManager::getInstance()->getResourcePath(":/systems/macos/es_systems.xml", true);
+    path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_systems.xml", true);
 #else
-    path = ResourceManager::getInstance()->getResourcePath(":/systems/unix/es_systems.xml", true);
+    path = ResourceManager::getInstance().getResourcePath(":/systems/unix/es_systems.xml", true);
 #endif
 
     paths.push_back(path);

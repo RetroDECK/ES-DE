@@ -36,7 +36,7 @@ std::shared_ptr<Sound> Sound::getFromTheme(ThemeData* const theme,
     if (theme == nullptr) {
         LOG(LogDebug) << "Sound::getFromTheme(): Using fallback sound file for \"" << element
                       << "\"";
-        return get(ResourceManager::getInstance()->getResourcePath(":/sounds/" + element + ".wav"));
+        return get(ResourceManager::getInstance().getResourcePath(":/sounds/" + element + ".wav"));
     }
 
     LOG(LogDebug) << "Sound::getFromTheme(): Looking for tag <sound name=\"" << element << "\">";
@@ -44,7 +44,7 @@ std::shared_ptr<Sound> Sound::getFromTheme(ThemeData* const theme,
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
     if (!elem || !elem->has("path")) {
         LOG(LogDebug) << "Sound::getFromTheme(): Tag not found, using fallback sound file";
-        return get(ResourceManager::getInstance()->getResourcePath(":/sounds/" + element + ".wav"));
+        return get(ResourceManager::getInstance().getResourcePath(":/sounds/" + element + ".wav"));
     }
 
     LOG(LogDebug) << "Sound::getFromTheme(): Tag found, ready to load theme sound file";

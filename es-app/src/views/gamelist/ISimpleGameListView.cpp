@@ -237,7 +237,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedTo("y", input) &&
                  mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-                 !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
+                 !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
                  ViewController::get()->getState().viewing == ViewController::GAME_LIST) {
             // Jump to the randomly selected game.
             if (mRandomGame) {
@@ -262,21 +262,21 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
         else if (config->isMappedTo("y", input) &&
                  !Settings::getInstance()->getBool("FavoritesAddButton") &&
-                 !CollectionSystemsManager::get()->isEditing()) {
+                 !CollectionSystemsManager::getInstance()->isEditing()) {
             return true;
         }
         else if (config->isMappedTo("y", input) &&
                  !UIModeController::getInstance()->isUIModeKid() &&
                  !UIModeController::getInstance()->isUIModeKiosk()) {
             // Notify the user if attempting to add a custom collection to a custom collection.
-            if (CollectionSystemsManager::get()->isEditing() &&
+            if (CollectionSystemsManager::getInstance()->isEditing() &&
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER &&
                 getCursor()->getParent()->getPath() == "collections") {
                 NavigationSounds::getInstance().playThemeNavigationSound(FAVORITESOUND);
                 mWindow->queueInfoPopup("CAN'T ADD CUSTOM COLLECTIONS TO CUSTOM COLLECTIONS", 4000);
             }
             // Notify the user if attempting to add a placeholder to a custom collection.
-            if (CollectionSystemsManager::get()->isEditing() &&
+            if (CollectionSystemsManager::getInstance()->isEditing() &&
                 mRoot->getSystem()->isGameSystem() && getCursor()->getType() == PLACEHOLDER) {
                 NavigationSounds::getInstance().playThemeNavigationSound(FAVORITESOUND);
                 mWindow->queueInfoPopup("CAN'T ADD PLACEHOLDERS TO CUSTOM COLLECTIONS", 4000);
@@ -293,7 +293,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 bool favoritesSorting;
                 bool removedLastFavorite = false;
                 bool selectLastEntry = false;
-                bool isEditing = CollectionSystemsManager::get()->isEditing();
+                bool isEditing = CollectionSystemsManager::getInstance()->isEditing();
                 bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
                 // If the current list only contains folders, then treat it as if the folders
                 // are not sorted on top, this way the logic should work exactly as for mixed
@@ -439,7 +439,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                                             "AS GAMES TO CUSTOM COLLECTIONS",
                                             4000);
                 }
-                else if (CollectionSystemsManager::get()->toggleGameInCollection(entryToUpdate)) {
+                else if (CollectionSystemsManager::getInstance()->toggleGameInCollection(
+                             entryToUpdate)) {
                     // As the toggling of the game destroyed this object, we need to get the view
                     // from ViewController instead of using the reference that existed before the
                     // destruction. Otherwise we get random crashes.
