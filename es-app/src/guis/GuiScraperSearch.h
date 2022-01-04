@@ -98,7 +98,7 @@ public:
     void onFocusGained() override { mGrid.onFocusGained(); }
     void onFocusLost() override { mGrid.onFocusLost(); }
 
-    std::shared_ptr<ComponentList>& getResultList() { return mResultList; }
+    std::shared_ptr<ComponentList> getResultList() { return mResultList; }
 
 private:
     void updateViewStyle();

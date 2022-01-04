@@ -607,7 +607,7 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
     return &elemIt->second;
 }
 
-const std::shared_ptr<ThemeData>& ThemeData::getDefault()
+const std::shared_ptr<ThemeData> ThemeData::getDefault()
 {
     static std::shared_ptr<ThemeData> theme = nullptr;
     if (theme == nullptr) {

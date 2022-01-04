@@ -30,7 +30,7 @@ public:
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) = 0;
 
     void setTheme(const std::shared_ptr<ThemeData>& theme);
-    const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
+    const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
 
     virtual void preloadGamelist(){};
 
