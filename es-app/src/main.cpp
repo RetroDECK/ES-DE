@@ -683,6 +683,7 @@ int main(int argc, char* argv[])
         delete window->peekGui();
     window->deinit();
 
+    CollectionSystemsManager::getInstance()->deinit();
     SystemData::deleteSystems();
     NavigationSounds::getInstance().deinit();
 

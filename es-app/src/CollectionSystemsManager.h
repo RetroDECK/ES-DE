@@ -75,6 +75,9 @@ public:
     static CollectionSystemsManager* getInstance();
     void saveCustomCollection(SystemData* sys);
 
+    // Clean up all systems, called during application shutdown.
+    void deinit();
+
     // Functions to load all collections into memory, and enable the active ones:
     // Load all collection systems.
     void loadCollectionSystems();
@@ -133,7 +136,6 @@ public:
 
 private:
     CollectionSystemsManager() noexcept;
-    ~CollectionSystemsManager();
 
     SystemEnvironmentData* mCollectionEnvData;
     std::map<std::string, CollectionSystemDecl, stringComparator> mCollectionSystemDeclsIndex;

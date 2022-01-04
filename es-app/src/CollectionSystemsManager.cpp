@@ -86,34 +86,35 @@ CollectionSystemsManager::CollectionSystemsManager() noexcept
     mCustomCollectionsBundle = nullptr;
 }
 
-CollectionSystemsManager::~CollectionSystemsManager()
-{
-    // Don't attempt to remove any collections if no systems exist.
-    if (SystemData::sSystemVector.size() > 0)
-        removeCollectionsFromDisplayedSystems();
-
-    // Delete all custom collections.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
-             mCustomCollectionSystemsData.cbegin();
-         it != mCustomCollectionSystemsData.cend(); ++it)
-        delete it->second.system;
-
-    // Delete the custom collections bundle.
-    if (mCustomCollectionsBundle)
-        delete mCustomCollectionsBundle;
-
-    // Delete the auto collections systems.
-    for (auto it = mAutoCollectionSystemsData.cbegin(); // Line break.
-         it != mAutoCollectionSystemsData.cend(); ++it)
-        delete (*it).second.system;
-
-    delete mCollectionEnvData;
-}
-
 CollectionSystemsManager* CollectionSystemsManager::getInstance()
 {
     static CollectionSystemsManager instance;
     return &instance;
+}
+
+void CollectionSystemsManager::deinit()
+{
+    // Don't attempt to remove any collections if no systems exist.
+    if (SystemData::sSystemVector.size() > 0) {
+        removeCollectionsFromDisplayedSystems();
+
+        // Delete all custom collections.
+        for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
+                 mCustomCollectionSystemsData.cbegin();
+             it != mCustomCollectionSystemsData.cend(); ++it)
+            delete it->second.system;
+
+        // Delete the custom collections bundle.
+        if (mCustomCollectionsBundle)
+            delete mCustomCollectionsBundle;
+
+        // Delete the auto collections systems.
+        for (auto it = mAutoCollectionSystemsData.cbegin(); // Line break.
+             it != mAutoCollectionSystemsData.cend(); ++it)
+            delete (*it).second.system;
+    }
+
+    delete mCollectionEnvData;
 }
 
 void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
