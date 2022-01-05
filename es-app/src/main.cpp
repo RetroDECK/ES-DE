@@ -528,24 +528,25 @@ int main(int argc, char* argv[])
         }
     }
 
-    Window window;
-    SystemScreensaver screensaver(&window);
-    MediaViewer mediaViewer(&window);
-    GuiLaunchScreen guiLaunchScreen(&window);
-    ViewController::init(&window);
-    CollectionSystemsManager::init(&window);
-    window.pushGui(ViewController::get());
+    Window* window = Window::getInstance();
+    ViewController::getInstance();
+    CollectionSystemsManager::getInstance();
+    SystemScreensaver screensaver;
+    MediaViewer mediaViewer;
+    GuiLaunchScreen guiLaunchScreen;
+
+    if (!window->init()) {
+        LOG(LogError) << "Window failed to initialize";
+        return 1;
+    }
+
+    window->pushGui(ViewController::getInstance());
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
     SDL_Event event{};
 
-    if (!window.init()) {
-        LOG(LogError) << "Window failed to initialize";
-        return 1;
-    }
-
-    InputManager::getInstance()->parseEvent(event, &window);
+    InputManager::getInstance().parseEvent(event, window);
     if (event.type == SDL_QUIT)
         return 1;
 
@@ -571,7 +572,7 @@ int main(int argc, char* argv[])
         std::string progressText = "Loading...";
         if (splashScreenProgress)
             progressText = "Loading system config...";
-        window.renderLoadingScreen(progressText);
+        window->renderLoadingScreen(progressText);
     }
 
     AudioManager::getInstance();
@@ -584,10 +585,10 @@ int main(int argc, char* argv[])
         // configure a different ROM directory as well as to generate the game systems
         // directory structure.
         if (loadSystemsStatus == INVALID_FILE) {
-            ViewController::get()->invalidSystemsFileDialog();
+            ViewController::getInstance()->invalidSystemsFileDialog();
         }
         else if (loadSystemsStatus == NO_ROMS) {
-            ViewController::get()->noGamesDialog();
+            ViewController::getInstance()->noGamesDialog();
         }
     }
 
@@ -596,7 +597,7 @@ int main(int argc, char* argv[])
     // any command tag in es_systems.xml.
     for (auto system : SystemData::sSystemVector) {
         if (system->getAlternativeEmulator().substr(0, 9) == "<INVALID>") {
-            ViewController::get()->invalidAlternativeEmulatorDialog();
+            ViewController::getInstance()->invalidAlternativeEmulatorDialog();
             break;
         }
     }
@@ -606,19 +607,19 @@ int main(int argc, char* argv[])
 
     // Preload what we can right away instead of waiting for the user to select it.
     // This makes for no delays when accessing content, but a longer startup time.
-    ViewController::get()->preload();
+    ViewController::getInstance()->preload();
 
     if (splashScreen && splashScreenProgress)
-        window.renderLoadingScreen("Done");
+        window->renderLoadingScreen("Done");
 
     // Open the input configuration GUI if the flag to force this was passed from the command line.
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
-            window.pushGui(new GuiDetectDevice(&window, false, true,
-                                               [] { ViewController::get()->goToStart(true); }));
+            window->pushGui(new GuiDetectDevice(
+                window, false, true, [] { ViewController::getInstance()->goToStart(true); }));
         }
         else {
-            ViewController::get()->goToStart(true);
+            ViewController::getInstance()->goToStart(true);
         }
     }
 
@@ -645,7 +646,7 @@ int main(int argc, char* argv[])
     while (running) {
         if (SDL_PollEvent(&event)) {
             do {
-                InputManager::getInstance()->parseEvent(event, &window);
+                InputManager::getInstance().parseEvent(event, window);
 
                 if (event.type == SDL_QUIT)
                     running = false;
@@ -653,7 +654,7 @@ int main(int argc, char* argv[])
             } while (SDL_PollEvent(&event));
         }
 
-        if (window.isSleeping()) {
+        if (window->isSleeping()) {
             lastTime = SDL_GetTicks();
             // This doesn't need to be accurate, we're just giving up
             // our CPU time until something wakes us up.
@@ -669,18 +670,18 @@ int main(int argc, char* argv[])
         if (deltaTime < 0)
             deltaTime = 1000;
 
-        window.update(deltaTime);
-        window.render();
+        window->update(deltaTime);
+        window->render();
         Renderer::swapBuffers();
 
         Log::flush();
     }
 
-    while (window.peekGui() != ViewController::get())
-        delete window.peekGui();
-    window.deinit();
+    while (window->peekGui() != ViewController::getInstance())
+        delete window->peekGui();
+    window->deinit();
 
-    CollectionSystemsManager::deinit();
+    CollectionSystemsManager::getInstance()->deinit();
     SystemData::deleteSystems();
     NavigationSounds::getInstance().deinit();
 

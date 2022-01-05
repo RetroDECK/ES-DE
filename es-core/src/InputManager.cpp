@@ -10,7 +10,6 @@
 
 #include "InputManager.h"
 
-#include "CECInput.h"
 #include "Log.h"
 #include "Platform.h"
 #include "Scripting.h"
@@ -32,9 +31,7 @@ int SDL_USER_CECBUTTONUP = -1;
 static bool sAltDown = false;
 static bool sLguiDown = false;
 
-InputManager* InputManager::sInstance = nullptr;
-
-InputManager::InputManager()
+InputManager::InputManager() noexcept
     : mKeyboardInputConfig(nullptr)
 {
 }
@@ -45,12 +42,10 @@ InputManager::~InputManager()
     deinit();
 }
 
-InputManager* InputManager::getInstance()
+InputManager& InputManager::getInstance()
 {
-    if (!sInstance)
-        sInstance = new InputManager();
-
-    return sInstance;
+    static InputManager instance;
+    return instance;
 }
 
 void InputManager::init()
@@ -94,7 +89,7 @@ void InputManager::init()
         Utils::FileSystem::getHomePath() + "/.emulationstation/" + "es_controller_mappings.cfg";
 
     if (!Utils::FileSystem::exists(mappingsFile))
-        mappingsFile = ResourceManager::getInstance()->getResourcePath(
+        mappingsFile = ResourceManager::getInstance().getResourcePath(
             ":/controllers/es_controller_mappings.cfg");
 
     int controllerMappings = SDL_GameControllerAddMappingsFromFile(mappingsFile.c_str());
@@ -116,7 +111,6 @@ void InputManager::init()
 
     SDL_USER_CECBUTTONDOWN = SDL_RegisterEvents(2);
     SDL_USER_CECBUTTONUP = SDL_USER_CECBUTTONDOWN + 1;
-    CECInput::init();
     mCECInputConfig = std::make_unique<InputConfig>(DEVICE_CEC, "CEC", CEC_GUID_STRING);
     loadInputConfig(mCECInputConfig.get());
 }
@@ -138,15 +132,8 @@ void InputManager::deinit()
     mKeyboardInputConfig.reset();
     mCECInputConfig.reset();
 
-    CECInput::deinit();
-
     SDL_GameControllerEventState(SDL_DISABLE);
     SDL_QuitSubSystem(SDL_INIT_GAMECONTROLLER);
-
-    if (sInstance) {
-        delete sInstance;
-        sInstance = nullptr;
-    }
 }
 
 void InputManager::writeDeviceConfig(InputConfig* config)

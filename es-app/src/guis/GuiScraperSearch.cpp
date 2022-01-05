@@ -170,7 +170,7 @@ GuiScraperSearch::~GuiScraperSearch()
         mMiximageGeneratorThread.join();
         mMiximageGenerator.reset();
         TextureResource::manualUnload(mLastSearch.game->getMiximagePath(), false);
-        ViewController::get()->onFileChanged(mLastSearch.game, true);
+        ViewController::getInstance()->onFileChanged(mLastSearch.game, true);
     }
 }
 
@@ -1017,6 +1017,6 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
 HelpStyle GuiScraperSearch::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }

@@ -23,7 +23,6 @@ class UIModeController
 {
 public:
     static UIModeController* getInstance();
-    static void deinit();
 
     // Monitor input for UI mode change, returns true (consumes input) when a UI mode
     // change is triggered.
@@ -42,14 +41,13 @@ public:
     void setCurrentUIMode(const std::string& mode) { mCurrentUIMode = mode; }
 
 private:
-    UIModeController();
+    UIModeController() noexcept;
+
     bool inputIsMatch(InputConfig* config, Input input);
     bool isValidInput(InputConfig* config, Input input);
 
     // Return UI mode to 'full'.
     void unlockUIMode();
-
-    static UIModeController* sInstance;
 
     // Default passkeyseq = "uuddlrlrba", as defined in the setting 'UIMode_passkey'.
     std::string mPassKeySequence;

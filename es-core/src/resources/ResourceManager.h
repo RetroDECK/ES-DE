@@ -28,14 +28,14 @@ class ResourceManager;
 class IReloadable
 {
 public:
-    virtual void unload(std::shared_ptr<ResourceManager>& rm) = 0;
-    virtual void reload(std::shared_ptr<ResourceManager>& rm) = 0;
+    virtual void unload(ResourceManager& rm) = 0;
+    virtual void reload(ResourceManager& rm) = 0;
 };
 
 class ResourceManager
 {
 public:
-    static std::shared_ptr<ResourceManager>& getInstance();
+    static ResourceManager& getInstance();
 
     void addReloadable(std::weak_ptr<IReloadable> reloadable);
 
@@ -47,9 +47,8 @@ public:
     bool fileExists(const std::string& path) const;
 
 private:
-    ResourceManager() {}
+    ResourceManager() noexcept {}
 
-    static std::shared_ptr<ResourceManager> sInstance;
     std::list<std::weak_ptr<IReloadable>> mReloadables;
 
     ResourceData loadFile(const std::string& path) const;

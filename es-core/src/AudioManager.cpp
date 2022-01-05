@@ -14,7 +14,7 @@
 
 #include <SDL2/SDL.h>
 
-AudioManager::AudioManager()
+AudioManager::AudioManager() noexcept
 {
     // Init on construction.
     init();
@@ -119,6 +119,8 @@ void AudioManager::deinit()
 
     SDL_CloseAudio();
     SDL_QuitSubSystem(SDL_INIT_AUDIO);
+
+    sAudioDevice = 0;
 }
 
 void AudioManager::mixAudio(void* /*unused*/, Uint8* stream, int len)

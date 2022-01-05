@@ -128,7 +128,7 @@ std::shared_ptr<Font> Font::get(int size, const std::string& path)
 
     std::shared_ptr<Font> font = std::shared_ptr<Font>(new Font(def.second, def.first));
     sFontMap[def] = std::weak_ptr<Font>(font);
-    ResourceManager::getInstance()->addReloadable(font);
+    ResourceManager::getInstance().addReloadable(font);
     return font;
 }
 
@@ -243,25 +243,25 @@ std::vector<std::string> getFallbackFontPaths()
 
     // Standard fonts, let's include them here for exception handling purposes even though that's
     // not really the correct location. (The application will crash if they are missing.)
-    ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-Regular.ttf");
-    ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
-    ResourceManager::getInstance()->getResourcePath(":/fonts/Akrobat-Bold.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
 
     // Vera sans Unicode.
-    fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/fonts/DejaVuSans.ttf"));
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/DejaVuSans.ttf"));
     // GNU FreeFont monospaced.
-    fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/fonts/FreeMono.ttf"));
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/FreeMono.ttf"));
     // Various languages, such as Japanese and Chinese.
     fontPaths.push_back(
-        ResourceManager::getInstance()->getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
+        ResourceManager::getInstance().getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
     // Korean.
     fontPaths.push_back(
-        ResourceManager::getInstance()->getResourcePath(":/fonts/NanumMyeongjo.ttf"));
+        ResourceManager::getInstance().getResourcePath(":/fonts/NanumMyeongjo.ttf"));
     // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
     fontPaths.push_back(
-        ResourceManager::getInstance()->getResourcePath(":/fonts/fontawesome-webfont.ttf"));
+        ResourceManager::getInstance().getResourcePath(":/fonts/fontawesome-webfont.ttf"));
     // This is only needed for some really rare special characters.
-    fontPaths.push_back(ResourceManager::getInstance()->getResourcePath(":/fonts/Ubuntu-C.ttf"));
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/Ubuntu-C.ttf"));
 
     fontPaths.shrink_to_fit();
     return fontPaths;
@@ -281,7 +281,7 @@ FT_Face Font::getFaceForChar(unsigned int id)
             // i == 0 -> mPath
             // Otherwise, take from fallbackFonts.
             const std::string& path = (i == 0 ? mPath : fallbackFonts.at(i - 1));
-            ResourceData data = ResourceManager::getInstance()->getFileData(path);
+            ResourceData data = ResourceManager::getInstance().getFileData(path);
             mFaceCache[i] = std::unique_ptr<FontFace>(new FontFace(std::move(data), mSize));
             fit = mFaceCache.find(i);
         }

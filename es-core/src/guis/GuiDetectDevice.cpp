@@ -43,7 +43,7 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
 
     // Device info.
     std::stringstream deviceInfo;
-    int numDevices = InputManager::getInstance()->getNumJoysticks();
+    int numDevices = InputManager::getInstance().getNumJoysticks();
 
     if (numDevices > 0)
         deviceInfo << numDevices << " GAMEPAD" << (numDevices > 1 ? "S" : "") << " DETECTED";
@@ -148,7 +148,7 @@ void GuiDetectDevice::update(int deltaTime)
         // command line.
         if (!mForcedConfig && mFirstRun &&
             Utils::FileSystem::exists(InputManager::getConfigPath()) &&
-            InputManager::getInstance()->getNumConfiguredDevices() > 0) {
+            InputManager::getInstance().getNumConfiguredDevices() > 0) {
             if (mDoneCallback)
                 mDoneCallback();
             delete this; // Delete GUI element.

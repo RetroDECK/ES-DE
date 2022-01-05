@@ -1412,7 +1412,8 @@ void VideoFFmpegComponent::stopVideo()
     std::queue<AudioFrame>().swap(mAudioFrameQueue);
 
     // Clear the audio buffer.
-    AudioManager::getInstance().clearStream();
+    if (AudioManager::sAudioDevice != 0)
+        AudioManager::getInstance().clearStream();
 
     if (mFormatContext) {
         av_frame_free(&mVideoFrame);

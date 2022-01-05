@@ -1166,7 +1166,7 @@ void FileData::launchGame(Window* window)
                                                 gameToUpdate->metadata.get("lastplayed"));
     }
 
-    CollectionSystemsManager::get()->refreshCollectionSystems(gameToUpdate);
+    CollectionSystemsManager::getInstance()->refreshCollectionSystems(gameToUpdate);
 
     gameToUpdate->mSystem->onMetaDataSavePoint();
 }

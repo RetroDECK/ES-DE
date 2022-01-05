@@ -148,14 +148,12 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
                                                       bool linearMagnify,
                                                       bool forceRasterization)
 {
-    std::shared_ptr<ResourceManager>& rm = ResourceManager::getInstance();
-
     const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(path);
     if (canonicalPath.empty()) {
         std::shared_ptr<TextureResource> tex(
             new TextureResource("", tile, false, linearMagnify, forceRasterization));
         // Make sure we get properly deinitialized even though we do nothing on reinitialization.
-        rm->addReloadable(tex);
+        ResourceManager::getInstance().addReloadable(tex);
         return tex;
     }
 
@@ -182,7 +180,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     }
 
     // Add it to the reloadable list.
-    rm->addReloadable(tex);
+    ResourceManager::getInstance().addReloadable(tex);
 
     // Force load it if necessary. Note that it may get dumped from VRAM if we run low.
     if (forceLoad) {
@@ -241,7 +239,7 @@ size_t TextureResource::getTotalTextureSize()
     return total;
 }
 
-void TextureResource::unload(std::shared_ptr<ResourceManager>& /*rm*/)
+void TextureResource::unload(ResourceManager& /*rm*/)
 {
     // Release the texture's resources.
     std::shared_ptr<TextureData> data;
@@ -254,7 +252,7 @@ void TextureResource::unload(std::shared_ptr<ResourceManager>& /*rm*/)
     data->releaseRAM();
 }
 
-void TextureResource::reload(std::shared_ptr<ResourceManager>& /*rm*/)
+void TextureResource::reload(ResourceManager& /*rm*/)
 {
     // For dynamically loaded textures the texture manager will load them on demand.
     // For manually loaded textures we have to reload them here.

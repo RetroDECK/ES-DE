@@ -72,13 +72,11 @@ struct stringComparator {
 class CollectionSystemsManager
 {
 public:
-    CollectionSystemsManager(Window* window);
-    ~CollectionSystemsManager();
-
-    static CollectionSystemsManager* get();
-    static void init(Window* window);
-    static void deinit();
+    static CollectionSystemsManager* getInstance();
     void saveCustomCollection(SystemData* sys);
+
+    // Clean up all systems, called during application shutdown.
+    void deinit();
 
     // Functions to load all collections into memory, and enable the active ones:
     // Load all collection systems.
@@ -137,7 +135,8 @@ public:
     const std::string& getEditingCollection() const { return mEditingCollection; }
 
 private:
-    static CollectionSystemsManager* sInstance;
+    CollectionSystemsManager() noexcept;
+
     SystemEnvironmentData* mCollectionEnvData;
     std::map<std::string, CollectionSystemDecl, stringComparator> mCollectionSystemDeclsIndex;
     std::map<std::string, CollectionSystemData, stringComparator> mAutoCollectionSystemsData;

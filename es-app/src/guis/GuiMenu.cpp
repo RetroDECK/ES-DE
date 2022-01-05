@@ -85,7 +85,7 @@ GuiMenu::~GuiMenu()
     // This is required for the situation where scrolling started just before the menu
     // was openened. Without this, the scrolling would run until manually stopped after
     // the menu has been closed.
-    ViewController::get()->stopScrolling();
+    ViewController::getInstance()->stopScrolling();
 }
 
 void GuiMenu::openScraperOptions()
@@ -189,12 +189,12 @@ void GuiMenu::openUIOptions()
                 Scripting::fireEvent("theme-changed", theme_set->getSelected(),
                                      Settings::getInstance()->getString("ThemeSet"));
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
-                CollectionSystemsManager::get()->updateSystemsList();
+                CollectionSystemsManager::getInstance()->updateSystemsList();
                 mWindow->setChangedThemeSet();
                 // This is required so that the custom collection system does not disappear
                 // if the user is editing a custom collection when switching theme sets.
-                if (CollectionSystemsManager::get()->isEditing()) {
-                    CollectionSystemsManager::get()->exitEditMode();
+                if (CollectionSystemsManager::getInstance()->isEditing()) {
+                    CollectionSystemsManager::getInstance()->exitEditMode();
                     s->setNeedsCollectionsUpdate();
                 }
                 s->setNeedsSaving();
@@ -266,8 +266,9 @@ void GuiMenu::openUIOptions()
                         (*it)->sortSystem();
                         (*it)->getIndex()->resetFilters();
                     }
-                    ViewController::get()->reloadAll();
-                    ViewController::get()->goToSystem(SystemData::sSystemVector.front(), false);
+                    ViewController::getInstance()->reloadAll();
+                    ViewController::getInstance()->goToSystem(SystemData::sSystemVector.front(),
+                                                              false);
                     mWindow->invalidateCachedBackground();
                 },
                 "NO", nullptr));
@@ -609,16 +610,22 @@ void GuiMenu::openSoundOptions()
 // implemented for these operating systems.
 #if !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__OpenBSD__) && !defined(__NetBSD__)
     // System volume.
-    auto system_volume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
-    system_volume->setValue(static_cast<float>(VolumeControl::getInstance()->getVolume()));
-    s->addWithLabel("SYSTEM VOLUME", system_volume);
-    s->addSaveFunc([system_volume] {
-        VolumeControl::getInstance()->setVolume(
-            static_cast<int>(std::round(system_volume->getValue())));
-        // Explicitly delete the VolumeControl instance so that it will reinitialize the
-        // next time the menu is entered. This is the easiest way to detect new default
-        // audio devices or changes to the audio volume done by the operating system.
-        VolumeControl::getInstance()->deleteInstance();
+    // The reason to create the VolumeControl object every time instead of making it a singleton
+    // is that this is the easiest way to detect new default audio devices or changes to the
+    // audio volume done by the operating system. And we don't really need this object laying
+    // around anyway as it's only used here.
+    VolumeControl volumeControl;
+    int currentVolume = volumeControl.getVolume();
+
+    auto systemVolume = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 1.f, "%");
+    systemVolume->setValue(static_cast<float>(currentVolume));
+    s->addWithLabel("SYSTEM VOLUME", systemVolume);
+    s->addSaveFunc([systemVolume, currentVolume] {
+        // No need to create the VolumeControl object unless the volume has actually been changed.
+        if (static_cast<int>(systemVolume->getValue()) != currentVolume) {
+            VolumeControl volumeControl;
+            volumeControl.setVolume(static_cast<int>(std::round(systemVolume->getValue())));
+        }
     });
 #endif
 
@@ -822,7 +829,7 @@ void GuiMenu::openOtherOptions()
     auto updateValMediaDir = [this](const std::string& newVal) {
         Settings::getInstance()->setString("MediaDirectory", newVal);
         Settings::getInstance()->saveFile();
-        ViewController::get()->reloadAll();
+        ViewController::getInstance()->reloadAll();
         mWindow->invalidateCachedBackground();
     };
     rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
@@ -1258,7 +1265,7 @@ void GuiMenu::close(bool closeAllWindows)
     else {
         Window* window = mWindow;
         closeFunc = [window] {
-            while (window->peekGui() != ViewController::get())
+            while (window->peekGui() != ViewController::getInstance())
                 delete window->peekGui();
         };
     }
@@ -1292,6 +1299,6 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
 HelpStyle GuiMenu::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }

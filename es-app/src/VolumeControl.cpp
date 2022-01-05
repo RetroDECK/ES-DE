@@ -20,8 +20,6 @@ std::string VolumeControl::mixerName = "Master";
 std::string VolumeControl::mixerCard = "default";
 #endif
 
-VolumeControl* VolumeControl::sInstance = nullptr;
-
 VolumeControl::VolumeControl()
 #if defined(__linux__)
     : mixerIndex(0)
@@ -42,23 +40,6 @@ VolumeControl::~VolumeControl()
 #if defined(__linux__)
     snd_config_update_free_global();
 #endif
-}
-
-VolumeControl* VolumeControl::getInstance()
-{
-    // Check if a VolumeControl instance is already created, and if not then create it.
-    if (!sInstance)
-        sInstance = new VolumeControl();
-
-    return sInstance;
-}
-
-void VolumeControl::deleteInstance()
-{
-    if (sInstance) {
-        delete sInstance;
-        sInstance = nullptr;
-    }
 }
 
 void VolumeControl::init()

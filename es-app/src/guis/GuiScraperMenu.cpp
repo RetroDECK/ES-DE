@@ -1135,6 +1135,6 @@ std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 HelpStyle GuiScraperMenu::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }

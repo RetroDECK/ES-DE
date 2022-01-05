@@ -349,8 +349,8 @@ void VideoGameListView::updateInfoPanel()
         // the first of these so that we can display its game media.
         if (file->getSystem()->isCustomCollection() &&
             file->getPath() == file->getSystem()->getName()) {
-            mRandomGame =
-                CollectionSystemsManager::get()->updateCollectionFolderMetadata(file->getSystem());
+            mRandomGame = CollectionSystemsManager::getInstance()->updateCollectionFolderMetadata(
+                file->getSystem());
             if (mRandomGame) {
                 mThumbnail.setImage(mRandomGame->getThumbnailPath());
                 mMarquee.setImage(mRandomGame->getMarqueePath(), false, true);
@@ -502,7 +502,10 @@ void VideoGameListView::updateInfoPanel()
     }
 }
 
-void VideoGameListView::launch(FileData* game) { ViewController::get()->triggerGameLaunch(game); }
+void VideoGameListView::launch(FileData* game)
+{
+    ViewController::getInstance()->triggerGameLaunch(game);
+}
 
 std::vector<TextComponent*> VideoGameListView::getMDLabels()
 {
@@ -542,7 +545,7 @@ void VideoGameListView::update(int deltaTime)
     BasicGameListView::update(deltaTime);
     mVideo->update(deltaTime);
 
-    if (ViewController::get()->getGameLaunchTriggered() && mVideo->isAnimationPlaying(0))
+    if (ViewController::getInstance()->getGameLaunchTriggered() && mVideo->isAnimationPlaying(0))
         mVideo->finishAnimation(0);
 }
 

@@ -19,14 +19,10 @@
 
 auto array_deleter = [](unsigned char* p) { delete[] p; };
 
-std::shared_ptr<ResourceManager> ResourceManager::sInstance = nullptr;
-
-std::shared_ptr<ResourceManager>& ResourceManager::getInstance()
+ResourceManager& ResourceManager::getInstance()
 {
-    if (!sInstance)
-        sInstance = std::shared_ptr<ResourceManager>(new ResourceManager());
-
-    return sInstance;
+    static ResourceManager instance;
+    return instance;
 }
 
 std::string ResourceManager::getResourcePath(const std::string& path, bool terminateOnFailure) const
@@ -145,7 +141,7 @@ void ResourceManager::unloadAll()
     auto iter = mReloadables.cbegin();
     while (iter != mReloadables.cend()) {
         if (!iter->expired()) {
-            iter->lock()->unload(sInstance);
+            iter->lock()->unload(getInstance());
             ++iter;
         }
         else {
@@ -159,7 +155,7 @@ void ResourceManager::reloadAll()
     auto iter = mReloadables.cbegin();
     while (iter != mReloadables.cend()) {
         if (!iter->expired()) {
-            iter->lock()->reload(sInstance);
+            iter->lock()->reload(getInstance());
             ++iter;
         }
         else {

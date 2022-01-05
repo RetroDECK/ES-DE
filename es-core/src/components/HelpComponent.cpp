@@ -269,7 +269,7 @@ std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
         return nullptr;
     }
 
-    if (!ResourceManager::getInstance()->fileExists(pathLookup->second)) {
+    if (!ResourceManager::getInstance().fileExists(pathLookup->second)) {
         LOG(LogError) << "Couldn't load help icon \"" << name << "\" as the file \""
                       << pathLookup->second << "\" is missing";
         return nullptr;

@@ -30,8 +30,6 @@ extern "C" {
 extern int SDL_USER_CECBUTTONDOWN;
 extern int SDL_USER_CECBUTTONUP;
 
-CECInput* CECInput::sInstance = nullptr;
-
 #if defined(HAVE_LIBCEC)
 static void onAlert(void* /*cbParam*/,
                     const CEC::libcec_alert type,
@@ -79,20 +77,6 @@ static void vchi_tv_and_cec_deinit()
 }
 #endif // _RPI_
 #endif // HAVE_LIBCEC
-
-void CECInput::init()
-{
-    if (!sInstance)
-        sInstance = new CECInput();
-}
-
-void CECInput::deinit()
-{
-    if (sInstance) {
-        delete sInstance;
-        sInstance = nullptr;
-    }
-}
 
 CECInput::CECInput()
     : mlibCEC(nullptr)

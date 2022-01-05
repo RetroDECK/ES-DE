@@ -140,8 +140,8 @@ void ImageComponent::setImage(const std::string& path, bool tile, bool linearMag
         mDynamic = false;
     }
 
-    if (path.empty() || !ResourceManager::getInstance()->fileExists(path)) {
-        if (mDefaultPath.empty() || !ResourceManager::getInstance()->fileExists(mDefaultPath))
+    if (path.empty() || !ResourceManager::getInstance().fileExists(path)) {
+        if (mDefaultPath.empty() || !ResourceManager::getInstance().fileExists(mDefaultPath))
             mTexture.reset();
         else
             mTexture =

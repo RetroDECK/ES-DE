@@ -77,6 +77,7 @@ public:
     bool isPlayingThemeNavigationSound(NavigationSoundsID soundID);
 
 private:
+    NavigationSounds() noexcept {};
     std::vector<std::shared_ptr<Sound>> mNavigationSounds;
 };
 

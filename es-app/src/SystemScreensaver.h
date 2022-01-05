@@ -19,7 +19,7 @@ class VideoComponent;
 class SystemScreensaver : public Window::Screensaver
 {
 public:
-    SystemScreensaver(Window* window);
+    SystemScreensaver();
     virtual ~SystemScreensaver();
 
     virtual bool allowSleep()

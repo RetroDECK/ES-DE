@@ -253,7 +253,7 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         scrapeFiles.push_back(mediaFileInfo);
 #if defined(_WIN64)
         // Required due to the idiotic file locking that exists on this operating system.
-        ViewController::get()->onStopVideo();
+        ViewController::getInstance()->onStopVideo();
 #endif
     }
 

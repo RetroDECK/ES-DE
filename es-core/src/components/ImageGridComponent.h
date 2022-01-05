@@ -327,7 +327,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("gameImage")) {
             std::string path = elem->get<std::string>("gameImage");
 
-            if (!ResourceManager::getInstance()->fileExists(path)) {
+            if (!ResourceManager::getInstance().fileExists(path)) {
                 LOG(LogWarning) << "Could not replace default game image, check path: " << path;
             }
             else {
@@ -346,7 +346,7 @@ void ImageGridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("folderImage")) {
             std::string path = elem->get<std::string>("folderImage");
 
-            if (!ResourceManager::getInstance()->fileExists(path)) {
+            if (!ResourceManager::getInstance().fileExists(path)) {
                 LOG(LogWarning) << "Could not replace default folder image, check path: " << path;
             }
             else {
@@ -658,7 +658,7 @@ void ImageGridComponent<T>::updateTileAtPos(int tilePos,
 
         std::string imagePath = mEntries.at(imgPos).data.texturePath;
 
-        if (ResourceManager::getInstance()->fileExists(imagePath))
+        if (ResourceManager::getInstance().fileExists(imagePath))
             tile->setImage(imagePath);
         else if (mEntries.at(imgPos).object->getType() == 2)
             tile->setImage(mDefaultFolderTexture);

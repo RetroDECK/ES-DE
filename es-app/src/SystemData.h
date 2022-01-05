@@ -91,7 +91,7 @@ public:
                mEnvData->mPlatformIds.cend();
     }
 
-    const std::shared_ptr<ThemeData>& getTheme() const { return mTheme; }
+    const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
 
     std::string getGamelistPath(bool forWrite) const;
     std::string getThemePath() const;

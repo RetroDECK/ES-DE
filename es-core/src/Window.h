@@ -75,8 +75,7 @@ public:
         virtual void render(const glm::mat4& parentTrans) = 0;
     };
 
-    Window();
-    ~Window();
+    static Window* getInstance();
 
     void pushGui(GuiComponent* gui);
     void removeGui(GuiComponent* gui);
@@ -147,6 +146,9 @@ public:
     bool getChangedThemeSet() { return mChangedThemeSet; }
 
 private:
+    Window() noexcept;
+    ~Window();
+
     void onSleep() { Scripting::fireEvent("sleep"); }
     void onWake() { Scripting::fireEvent("wake"); }
 

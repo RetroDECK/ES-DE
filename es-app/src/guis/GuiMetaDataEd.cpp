@@ -511,7 +511,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata", [&] {
         save();
-        ViewController::get()->onPauseVideo();
+        ViewController::getInstance()->onPauseVideo();
         delete this;
     }));
     buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel changes",
@@ -689,7 +689,7 @@ void GuiMetaDataEd::save()
                 // Update disabled auto collections when hiding a game, as otherwise these could
                 // get invalid gamelist cursor positions. A cursor pointing to a removed game
                 // would crash the application upon enabling the collections.
-                CollectionSystemsManager::get()->refreshCollectionSystems(hideGame, true);
+                CollectionSystemsManager::getInstance()->refreshCollectionSystems(hideGame, true);
                 // Remove the game from the index of all systems.
                 for (SystemData* sys : SystemData::sSystemVector) {
                     std::vector<FileData*> children;
@@ -698,7 +698,7 @@ void GuiMetaDataEd::save()
                     if (std::find(children.begin(), children.end(), hideGame) != children.end()) {
                         sys->getIndex()->removeFromIndex(hideGame);
                         // Reload the gamelist as well as the view style may need to change.
-                        ViewController::get()->reloadGameListView(sys);
+                        ViewController::getInstance()->reloadGameListView(sys);
                     }
                 }
             }
@@ -706,13 +706,14 @@ void GuiMetaDataEd::save()
     }
     else {
         // Update all collections where the game is present.
-        CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+        CollectionSystemsManager::getInstance()->refreshCollectionSystems(mScraperParams.game);
     }
 
     // If game counting was re-enabled for the game, then reactivate it in any custom collections
     // where it may exist.
     if (setGameAsCounted)
-        CollectionSystemsManager::get()->reactivateCustomCollectionEntry(mScraperParams.game);
+        CollectionSystemsManager::getInstance()->reactivateCustomCollectionEntry(
+            mScraperParams.game);
 
     mScraperParams.system->onMetaDataSavePoint();
 
@@ -810,12 +811,12 @@ void GuiMetaDataEd::close()
             // until the user scrolls up and down the gamelist.
             TextureResource::manualUnload(mScraperParams.game->getImagePath(), false);
             TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
-            ViewController::get()->reloadGameListView(mScraperParams.system);
+            ViewController::getInstance()->reloadGameListView(mScraperParams.system);
             // Update all collections where the game is present.
-            CollectionSystemsManager::get()->refreshCollectionSystems(mScraperParams.game);
+            CollectionSystemsManager::getInstance()->refreshCollectionSystems(mScraperParams.game);
             mWindow->invalidateCachedBackground();
         }
-        ViewController::get()->onPauseVideo();
+        ViewController::getInstance()->onPauseVideo();
         delete this;
     };
 
@@ -866,6 +867,6 @@ std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
 HelpStyle GuiMetaDataEd::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::get()->getState().getSystem()->getTheme(), "system");
+    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }

@@ -40,7 +40,7 @@ void BasicGameListView::onFileChanged(FileData* file, bool reloadGameList)
 {
     if (reloadGameList) {
         // Might switch to a detailed view.
-        ViewController::get()->reloadGameListView(this);
+        ViewController::getInstance()->reloadGameListView(this);
         return;
     }
 
@@ -55,8 +55,8 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
     std::string editingCollection;
     std::string inCollectionPrefix;
 
-    if (CollectionSystemsManager::get()->isEditing()) {
-        editingCollection = CollectionSystemsManager::get()->getEditingCollection();
+    if (CollectionSystemsManager::getInstance()->isEditing()) {
+        editingCollection = CollectionSystemsManager::getInstance()->getEditingCollection();
         isEditing = true;
     }
 
@@ -78,7 +78,8 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
             // Add a leading tick mark icon to the game name if it's part of the custom collection
             // currently being edited.
             if (isEditing && (*it)->getType() == GAME) {
-                if (CollectionSystemsManager::get()->inCustomCollection(editingCollection, (*it))) {
+                if (CollectionSystemsManager::getInstance()->inCustomCollection(editingCollection,
+                                                                                (*it))) {
                     if (Settings::getInstance()->getBool("SpecialCharsASCII"))
                         inCollectionPrefix = "! ";
                     else
@@ -161,7 +162,7 @@ void BasicGameListView::addPlaceholder(FileData* firstEntry)
 void BasicGameListView::launch(FileData* game)
 {
     // This triggers ViewController to launch the game.
-    ViewController::get()->triggerGameLaunch(game);
+    ViewController::getInstance()->triggerGameLaunch(game);
 }
 
 void BasicGameListView::remove(FileData* game, bool deleteFile)
@@ -309,7 +310,7 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("left/right", "system"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
-        ViewController::get()->getState().viewing == ViewController::GAME_LIST)
+        ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST)
         prompts.push_back(HelpPrompt("a", "enter"));
     else
         prompts.push_back(HelpPrompt("a", "launch"));
@@ -323,9 +324,9 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-        !CollectionSystemsManager::get()->isEditing() && mCursorStack.empty() &&
-        ViewController::get()->getState().viewing == ViewController::GAME_LIST &&
-        ViewController::get()->getState().viewstyle != ViewController::BASIC) {
+        !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
+        ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST &&
+        ViewController::getInstance()->getState().viewstyle != ViewController::BASIC) {
         prompts.push_back(HelpPrompt("y", "jump to game"));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
@@ -334,14 +335,14 @@ std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
              !UIModeController::getInstance()->isUIModeKid() &&
              !UIModeController::getInstance()->isUIModeKiosk() &&
              (Settings::getInstance()->getBool("FavoritesAddButton") ||
-              CollectionSystemsManager::get()->isEditing())) {
-        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+              CollectionSystemsManager::getInstance()->isEditing())) {
+        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
              mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
-             CollectionSystemsManager::get()->isEditing()) {
-        std::string prompt = CollectionSystemsManager::get()->getEditingCollection();
+             CollectionSystemsManager::getInstance()->isEditing()) {
+        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
         prompts.push_back(HelpPrompt("y", prompt));
     }
     return prompts;

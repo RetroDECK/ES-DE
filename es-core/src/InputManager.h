@@ -11,6 +11,8 @@
 #ifndef ES_CORE_INPUT_MANAGER_H
 #define ES_CORE_INPUT_MANAGER_H
 
+#include "CECInput.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_joystick.h>
 
@@ -25,9 +27,7 @@ union SDL_Event;
 class InputManager
 {
 public:
-    InputManager();
-    virtual ~InputManager();
-    static InputManager* getInstance();
+    static InputManager& getInstance();
 
     void init();
     void deinit();
@@ -50,6 +50,9 @@ public:
     int getNumJoysticks() { return static_cast<int>(mJoysticks.size()); }
 
 private:
+    InputManager() noexcept;
+    virtual ~InputManager();
+
     bool initialized() const { return mKeyboardInputConfig != nullptr; }
 
     bool loadInputConfig(InputConfig* config);
@@ -59,7 +62,8 @@ private:
     void addControllerByDeviceIndex(Window* window, int deviceIndex);
     void removeControllerByJoystickID(Window* window, SDL_JoystickID joyID);
 
-    static InputManager* sInstance;
+    CECInput mCECInput;
+
     static const int DEADZONE_TRIGGERS = 18000;
     static const int DEADZONE_THUMBSTICKS = 23000;
     bool mConfigFileExists;

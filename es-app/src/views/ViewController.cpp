@@ -33,8 +33,6 @@
 #include "views/gamelist/IGameListView.h"
 #include "views/gamelist/VideoGameListView.h"
 
-ViewController* ViewController::sInstance = nullptr;
-
 #if defined(_MSC_VER) // MSVC compiler.
 const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uf11b");
 const std::string ViewController::CROSSEDCIRCLE_CHAR = Utils::String::wideStringToString(L"\uf05e");
@@ -57,20 +55,14 @@ const std::string ViewController::KEYBOARD_CHAR = "\uf11c";
 const std::string ViewController::TICKMARK_CHAR = "\uf14a";
 #endif
 
-ViewController* ViewController::get()
+ViewController* ViewController::getInstance()
 {
-    assert(sInstance);
-    return sInstance;
+    static ViewController instance;
+    return &instance;
 }
 
-void ViewController::init(Window* window)
-{
-    assert(!sInstance);
-    sInstance = new ViewController(window);
-}
-
-ViewController::ViewController(Window* window)
-    : GuiComponent(window)
+ViewController::ViewController() noexcept
+    : GuiComponent(Window::getInstance())
     , mNoGamesMessageBox(nullptr)
     , mCurrentView(nullptr)
     , mPreviousView(nullptr)
@@ -86,13 +78,6 @@ ViewController::ViewController(Window* window)
 {
     mState.viewing = NOTHING;
     mState.viewstyle = AUTOMATIC;
-}
-
-ViewController::~ViewController()
-{
-    assert(sInstance == this);
-    sInstance = nullptr;
-    UIModeController::deinit();
 }
 
 void ViewController::invalidSystemsFileDialog()

@@ -19,18 +19,14 @@ namespace CEC
 class CECInput
 {
 public:
-    static void init();
-    static void deinit();
+    CECInput();
+    ~CECInput();
+
     static std::string getAlertTypeString(const unsigned int _type);
     static std::string getOpCodeString(const unsigned int _opCode);
     static std::string getKeyCodeString(const unsigned int _keyCode);
 
 private:
-    CECInput();
-    ~CECInput();
-
-    static CECInput* sInstance;
-
     CEC::ICECAdapter* mlibCEC;
 };
 

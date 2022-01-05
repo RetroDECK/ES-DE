@@ -199,7 +199,7 @@ public:
                                                  const std::string& view,
                                                  Window* window);
 
-    static const std::shared_ptr<ThemeData>& getDefault();
+    static const std::shared_ptr<ThemeData> getDefault();
 
     static std::map<std::string, ThemeSet> getThemeSets();
     static std::string getThemeFromCurrentSet(const std::string& system);

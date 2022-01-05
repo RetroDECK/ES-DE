@@ -68,8 +68,8 @@ protected:
                     bool dynamic,
                     bool linearMagnify,
                     bool forceRasterization);
-    virtual void unload(std::shared_ptr<ResourceManager>& rm);
-    virtual void reload(std::shared_ptr<ResourceManager>& rm);
+    virtual void unload(ResourceManager& rm);
+    virtual void reload(ResourceManager& rm);
 
 private:
     // mTextureData is used for textures that are not loaded from a file - these ones

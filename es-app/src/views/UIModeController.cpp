@@ -16,25 +16,7 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
-UIModeController* UIModeController::sInstance = nullptr;
-
-UIModeController* UIModeController::getInstance()
-{
-    if (sInstance == nullptr)
-        sInstance = new UIModeController();
-
-    return sInstance;
-}
-
-void UIModeController::deinit()
-{
-    if (sInstance) {
-        delete sInstance;
-        sInstance = nullptr;
-    }
-}
-
-UIModeController::UIModeController()
+UIModeController::UIModeController() noexcept
     : mPassKeyCounter(0)
 {
     mPassKeySequence = Settings::getInstance()->getString("UIMode_passkey");
@@ -47,11 +29,17 @@ UIModeController::UIModeController()
     }
 }
 
+UIModeController* UIModeController::getInstance()
+{
+    static UIModeController instance;
+    return &instance;
+}
+
 void UIModeController::monitorUIMode()
 {
     std::string uimode = Settings::getInstance()->getString("UIMode");
     // UI mode was changed.
-    if (uimode != mCurrentUIMode && !ViewController::get()->isCameraMoving()) {
+    if (uimode != mCurrentUIMode && !ViewController::getInstance()->isCameraMoving()) {
         mCurrentUIMode = uimode;
         // Reset filters and sort gamelists (which will update the game counter).
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
@@ -63,7 +51,7 @@ void UIModeController::monitorUIMode()
                     customSystem->getSystem()->getIndex()->resetFilters();
             }
         }
-        ViewController::get()->ReloadAndGoToStart();
+        ViewController::getInstance()->ReloadAndGoToStart();
     }
 }
 
