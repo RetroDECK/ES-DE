@@ -152,7 +152,8 @@ void LottieComponent::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans{parentTrans * getTransform()};
 
-    mTexture->initFromPixels(&mBuffer2.at(mLastDisplayedFrame).at(0), mSize.x, mSize.y);
+    mTexture->initFromPixels(&mBuffer2.at(mLastDisplayedFrame).at(0), static_cast<size_t>(mSize.x),
+                             static_cast<size_t>(mSize.y));
     mTexture->bind();
 
     if (!mSkipFrame)
@@ -181,4 +182,4 @@ void LottieComponent::render(const glm::mat4& parentTrans)
                             .count()
                      << " ms";
     }
-};
+}
