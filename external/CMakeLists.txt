@@ -6,6 +6,10 @@
 #  CMake configuration for bundled dependencies built in-tree.
 #
 
-set(BUILD_SHARED_LIBS OFF)
+# On Windows, rlottie is built as a DLL file.
+if(NOT WIN32)
+    set(BUILD_SHARED_LIBS OFF)
+endif()
+
 option(LOTTIE_MODULE OFF)
 add_subdirectory("rlottie")

@@ -116,7 +116,9 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # Miscellaneous configuration.
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunused-macros")
+if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunused-macros")
+endif()
 
 #---------------------------------------------------------------------------------------------------
 # OS-specific installation and package generation setup.
@@ -153,6 +155,7 @@ if(WIN32)
                       ../libssl-1_1-x64.dll
                       ../MSVCP140.dll
                       ../pugixml.dll
+                      ../rlottie.dll
                       ../SDL2.dll
                       ../VCOMP140.DLL
                       ../VCRUNTIME140.dll
@@ -172,6 +175,7 @@ if(WIN32)
                       ../libcurl-x64.dll
                       ../libfreetype.dll
                       ../libpugixml.dll
+                      ../librlottie.dll
                       ../libssl-1_1-x64.dll
                       ../SDL2.dll
                       ../vcomp140.dll
