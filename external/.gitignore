@@ -7,3 +7,9 @@
 !nanosvg/*
 !rapidjson
 !rapidjson/*
+!rlottie
+!rlottie/*
+rlottie/*.cmake
+rlottie/Makefile
+rlottie/config.h
+rlottie/rlottie.pc
