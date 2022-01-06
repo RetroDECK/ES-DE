@@ -47,6 +47,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/IList.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageGridComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/LottieComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/MenuComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/NinePatchComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/OptionListComponent.h
@@ -122,6 +123,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/LottieComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/MenuComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/NinePatchComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.cpp
@@ -161,6 +163,11 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
 )
+
+#---------------------------------------------------------------------------------------------------
+# Miscellaneous configuration.
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunused-macros")
 
 include_directories(${COMMON_INCLUDE_DIRS})
 add_library(es-core STATIC ${CORE_SOURCES} ${CORE_HEADERS})

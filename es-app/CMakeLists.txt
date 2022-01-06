@@ -114,6 +114,11 @@ if(WIN32)
 endif()
 
 #---------------------------------------------------------------------------------------------------
+# Miscellaneous configuration.
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunused-macros")
+
+#---------------------------------------------------------------------------------------------------
 # OS-specific installation and package generation setup.
 
 # Define target.
@@ -125,7 +130,7 @@ if(APPLE OR WIN32)
 else()
     include_directories(${COMMON_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR}/src)
     add_executable(emulationstation ${ES_SOURCES} ${ES_HEADERS})
-    target_link_libraries(emulationstation ${COMMON_LIBRARIES} es-core)
+    target_link_libraries(emulationstation ${COMMON_LIBRARIES} ${CMAKE_DL_LIBS} es-core)
     set_target_properties(emulationstation PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 
