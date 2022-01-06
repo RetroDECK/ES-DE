@@ -392,6 +392,7 @@ elseif(WIN32)
                              "${PROJECT_SOURCE_DIR}/libcurl-x64.lib"
                              "${PROJECT_SOURCE_DIR}/freetype.lib"
                              "${PROJECT_SOURCE_DIR}/pugixml.lib"
+                             "${PROJECT_SOURCE_DIR}/rlottie.lib"
                              "${PROJECT_SOURCE_DIR}/SDL2main.lib"
                              "${PROJECT_SOURCE_DIR}/SDL2.lib"
                              "Winmm.dll")
@@ -408,6 +409,7 @@ elseif(WIN32)
                              "${PROJECT_SOURCE_DIR}/libfreetype.dll"
                              "${PROJECT_SOURCE_DIR}/libpugixml.dll"
                              "${PROJECT_SOURCE_DIR}/libSDL2main.a"
+                             "${PROJECT_SOURCE_DIR}/librlottie.dll"
                              "${PROJECT_SOURCE_DIR}/SDL2.dll"
                              "mingw32"
                              "Winmm.dll")
@@ -422,7 +424,9 @@ else()
 endif()
 
 # Lottie animation library rlottie.
-set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
+if(NOT WIN32)
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
+endif()
 
 if(APPLE)
     # See es-app/CMakeLists.txt for an explation for why an extra "Resources" directory
