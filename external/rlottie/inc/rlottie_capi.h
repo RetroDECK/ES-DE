@@ -25,7 +25,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <rlottiecommon.h>
+#include "rlottiecommon.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -45,6 +45,36 @@ typedef enum {
 }Lottie_Animation_Property;
 
 typedef struct Lottie_Animation_S Lottie_Animation;
+
+/**
+ *  @brief Runs lottie initialization code when rlottie library is loaded
+ * dynamically.
+ *
+ *
+ * This api should be called before any other api when rlottie library
+ * is loaded using dlopen() or equivalent.
+ *
+ *  @see lottie_shutdown()
+ *
+ *  @ingroup Lottie_Animation
+ *  @internal
+ */
+RLOTTIE_API void lottie_init(void);
+
+/**
+ *  @brief Runs lottie teardown code when rlottie library  is loaded
+ * dynamically.
+ *
+ * This api should be called before unloading the rlottie library for
+ * proper cleanup of the resource without doing so will result in undefined
+ * behaviour.
+ *
+ *  @see lottie_init()
+ *
+ *  @ingroup Lottie_Animation
+ *  @internal
+ */
+RLOTTIE_API void lottie_shutdown(void);
 
 /**
  *  @brief Constructs an animation object from file path.
@@ -273,6 +303,23 @@ RLOTTIE_API void lottie_animation_property_override(Lottie_Animation *animation,
  *  @internal
  * */
 RLOTTIE_API const LOTMarkerList* lottie_animation_get_markerlist(Lottie_Animation *animation);
+
+/**
+ *  @brief Configures rlottie model cache policy.
+ *
+ *  Provides Library level control to configure model cache
+ *  policy. Setting it to 0 will disable
+ *  the cache as well as flush all the previously cached content.
+ *
+ *  @param[in] cacheSize  Maximum Model Cache size.
+ *
+ *  @note to disable Caching configure with 0 size.
+ *  @note to flush the current Cache content configure it with 0 and
+ *        then reconfigure with the new size.
+ *
+ *  @internal
+ */
+RLOTTIE_API void lottie_configure_model_cache_size(size_t cacheSize);
 
 #ifdef __cplusplus
 }

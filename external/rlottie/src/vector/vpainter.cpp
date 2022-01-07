@@ -66,7 +66,7 @@ static void fillRect(const VRect &r, VSpanData *data)
         int i = 0;
         while (i < n) {
             spans[i].x = short(x1);
-            spans[i].len = ushort(x2 - x1);
+            spans[i].len = uint16_t(x2 - x1);
             spans[i].y = short(y + i);
             spans[i].coverage = 255;
             ++i;
@@ -84,12 +84,12 @@ void VPainter::drawBitmapUntransform(const VRect &  target,
 {
     mSpanData.initTexture(&bitmap, const_alpha, source);
     if (!mSpanData.mUnclippedBlendFunc) return;
-    mSpanData.dx = float(-target.x());
-    mSpanData.dy = float(-target.y());
 
-    VRect rr = source.translated(target.x(), target.y());
+    // update translation matrix for source texture.
+    mSpanData.dx = float(target.x() - source.x());
+    mSpanData.dy = float(target.y() - source.y());
 
-    fillRect(rr, &mSpanData);
+    fillRect(target, &mSpanData);
 }
 
 VPainter::VPainter(VBitmap *buffer)
