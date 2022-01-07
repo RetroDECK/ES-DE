@@ -20,16 +20,19 @@ LottieComponent::LottieComponent(Window* window)
     , mAnimation{nullptr}
     , mSurface{nullptr}
     , mTotalFrames{0}
-    , mLastRenderedFrame{0}
-    , mLastDisplayedFrame{0}
+    , mFrameNum{0}
     , mFrameRate{0.0}
     , mTargetPacing{0}
-    , mSkipAccumulator{0}
-    , mSkipFrame{false}
+    , mTimeAccumulator{0}
+    , mHoldFrame{false}
 {
     // Get an empty texture for rendering the animation.
     mTexture = TextureResource::get("");
-    mBuffer.clear();
+#if defined(USE_OPENGLES_10)
+    // This is not really supported by the OpenGL ES standard so hopefully it works
+    // with all drivers and on all operating systems.
+    mTexture->setFormat(Renderer::Texture::BGRA);
+#endif
 
     // TODO: Temporary test files.
     std::string filePath{":/animations/a_mountain.json"};
@@ -67,11 +70,11 @@ LottieComponent::LottieComponent(Window* window)
 
     size_t width = static_cast<size_t>(mSize.x);
     size_t height = static_cast<size_t>(mSize.y);
-    size_t bytesPerLine = width * sizeof(uint32_t);
 
-    mBuffer.resize(width * height);
+    mPictureRGBA.resize(width * height * 4);
 
-    mSurface = std::make_unique<rlottie::Surface>(&mBuffer[0], width, height, bytesPerLine);
+    mSurface = std::make_unique<rlottie::Surface>(reinterpret_cast<uint32_t*>(&mPictureRGBA[0]),
+                                                  width, height, width * sizeof(uint32_t));
 
     // Animation time in seconds.
     double duration = mAnimation->duration();
@@ -97,43 +100,14 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 void LottieComponent::update(int deltaTime)
 {
-    //    LOG(LogDebug) << "deltatime: " << deltaTime;
-
-    if (deltaTime + mSkipAccumulator < mTargetPacing) {
-        mSkipFrame = true;
-        mSkipAccumulator += deltaTime;
+    if (mTimeAccumulator < mTargetPacing) {
+        mHoldFrame = true;
+        mTimeAccumulator += deltaTime;
     }
     else {
-        mSkipFrame = false;
-        mSkipAccumulator = 0;
+        mHoldFrame = false;
+        mTimeAccumulator = mTimeAccumulator - mTargetPacing + deltaTime;
     }
-
-    if (mLastRenderedFrame == mTotalFrames)
-        return;
-
-    //    const auto updateStartTime = std::chrono::system_clock::now();
-
-    mAnimation->renderSync(mLastRenderedFrame, *mSurface);
-    mPictureRGBA.clear();
-
-    // TODO: This is way too slow.
-    for (auto i : mBuffer) {
-        mPictureRGBA.emplace_back((i >> 16) & 0xff);
-        mPictureRGBA.emplace_back((i >> 8) & 0xff);
-        mPictureRGBA.emplace_back(i & 0xff);
-        mPictureRGBA.emplace_back(i >> 24);
-    }
-
-    if (mBuffer2.size() < mTotalFrames)
-        mBuffer2.emplace_back(mPictureRGBA);
-
-    ++mLastRenderedFrame;
-
-    //    LOG(LogDebug) << "Update cycle time: "
-    //                  << std::chrono::duration_cast<std::chrono::milliseconds>(
-    //                         std::chrono::system_clock::now() - updateStartTime)
-    //                         .count()
-    //                  << " ms";
 }
 
 void LottieComponent::render(const glm::mat4& parentTrans)
@@ -141,45 +115,61 @@ void LottieComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    if (mPictureRGBA.empty())
-        return;
+    if (mFrameNum >= mTotalFrames)
+        mFrameNum = 0;
 
-    if (!mSkipFrame && mLastDisplayedFrame == mTotalFrames - 1)
-        mLastDisplayedFrame = 0;
-
-    if (mLastDisplayedFrame == 0)
+    if (mFrameNum == 0)
         mAnimationStartTime = std::chrono::system_clock::now();
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    bool renderNextFrame = false;
 
-    mTexture->initFromPixels(&mBuffer2.at(mLastDisplayedFrame).at(0), static_cast<size_t>(mSize.x),
-                             static_cast<size_t>(mSize.y));
-    mTexture->bind();
+    if (mFuture.valid()) {
+        if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
+            mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
+                                     static_cast<size_t>(mSize.y));
+            mFuture.get();
+            ++mFrameNum;
+            renderNextFrame = true;
+        }
+    }
+    else {
+        renderNextFrame = true;
+    }
 
-    if (!mSkipFrame)
-        ++mLastDisplayedFrame;
+    if (renderNextFrame && !mHoldFrame)
+        mFuture = mAnimation->render(mFrameNum, *mSurface);
 
-    // clang-format off
-    mVertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, 0xFFFFFFFF};
-    mVertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, 0xFFFFFFFF};
-    mVertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, 0xFFFFFFFF};
-    mVertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
-    // clang-format on
+    if (mTexture->getSize().x != 0.0f) {
+        mTexture->bind();
 
-    // Round vertices.
-    for (int i = 0; i < 4; ++i)
-        mVertices[i].pos = glm::round(mVertices[i].pos);
+        // clang-format off
+        mVertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, 0xFFFFFFFF};
+        mVertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, 0xFFFFFFFF};
+        mVertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, 0xFFFFFFFF};
+        mVertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
+        // clang-format on
 
-    // Render it.
-    Renderer::setMatrix(trans);
-    Renderer::drawTriangleStrips(&mVertices[0], 4, trans);
+        // Round vertices.
+        for (int i = 0; i < 4; ++i)
+            mVertices[i].pos = glm::round(mVertices[i].pos);
 
-    if (!mSkipFrame && mLastDisplayedFrame == mTotalFrames - 1) {
+#if defined(USE_OPENGL_21)
+        // Perform color space conversion from BGRA to RGBA.
+        mVertices[0].shaders = Renderer::SHADER_BGRA_TO_RGBA;
+#endif
+
+        // Render it.
+        glm::mat4 trans{parentTrans * getTransform()};
+        Renderer::setMatrix(trans);
+        Renderer::drawTriangleStrips(&mVertices[0], 4, trans);
+    }
+
+    if (!mHoldFrame && mFrameNum == mTotalFrames - 1) {
         mAnimationEndTime = std::chrono::system_clock::now();
-        LOG(LogInfo) << "Actual duration time: "
-                     << std::chrono::duration_cast<std::chrono::milliseconds>(mAnimationEndTime -
-                                                                              mAnimationStartTime)
-                            .count()
-                     << " ms";
+        LOG(LogDebug) << "LottieComponent::render(): Animation duration: "
+                      << std::chrono::duration_cast<std::chrono::milliseconds>(mAnimationEndTime -
+                                                                               mAnimationStartTime)
+                             .count()
+                      << " ms";
     }
 }

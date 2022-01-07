@@ -16,6 +16,7 @@
 #include "rlottie.h"
 
 #include <chrono>
+#include <future>
 
 class LottieComponent : public GuiComponent
 {
@@ -33,21 +34,18 @@ private:
 
     std::shared_ptr<TextureResource> mTexture;
     std::vector<uint8_t> mPictureRGBA;
-    std::vector<std::vector<uint8_t>> mBuffer2;
-
-    std::unique_ptr<rlottie::Animation> mAnimation;
 
     Renderer::Vertex mVertices[4];
 
-    std::vector<uint32_t> mBuffer;
+    std::unique_ptr<rlottie::Animation> mAnimation;
     std::unique_ptr<rlottie::Surface> mSurface;
+    std::future<rlottie::Surface> mFuture;
     size_t mTotalFrames;
-    size_t mLastRenderedFrame;
-    size_t mLastDisplayedFrame;
+    size_t mFrameNum;
     double mFrameRate;
     int mTargetPacing;
-    int mSkipAccumulator;
-    bool mSkipFrame;
+    int mTimeAccumulator;
+    bool mHoldFrame;
 
     std::chrono::time_point<std::chrono::system_clock> mAnimationStartTime;
     std::chrono::time_point<std::chrono::system_clock> mAnimationEndTime;
