@@ -45,6 +45,8 @@ public:
         return (mTextureData != nullptr ? mTextureData->getPendingRasterization() : false);
     }
 
+    void setFormat(Renderer::Texture::Type format) { mTextureData->setFormat(format); }
+
     std::string getTextureFilePath();
 
     void rasterizeAt(float width, float height);

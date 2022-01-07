@@ -26,6 +26,7 @@ namespace Renderer
     const unsigned int SHADER_BLUR_HORIZONTAL{8};
     const unsigned int SHADER_BLUR_VERTICAL{16};
     const unsigned int SHADER_SCANLINES{32};
+    const unsigned int SHADER_BGRA_TO_RGBA{64};
 
     struct shaderParameters {
         std::array<GLfloat, 2> textureSize;
@@ -94,6 +95,7 @@ namespace Renderer
     {
         enum Type {
             RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+            BGRA,
             ALPHA
         };
     }
@@ -170,6 +172,7 @@ namespace Renderer
     bool createContext();
     void destroyContext();
     unsigned int createTexture(const Texture::Type type,
+                               const Texture::Type format,
                                const bool linearMinify,
                                const bool linearMagnify,
                                const bool repeat,

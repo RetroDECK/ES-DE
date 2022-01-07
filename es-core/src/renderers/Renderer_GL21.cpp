@@ -45,6 +45,7 @@ namespace Renderer
         // clang-format off
         switch (_type) {
             case Texture::RGBA:  { return GL_RGBA;  } break;
+            case Texture::BGRA:  { return GL_BGRA;  } break;
             case Texture::ALPHA: { return GL_ALPHA; } break;
             default:             { return GL_ZERO;  }
         }
@@ -142,7 +143,7 @@ namespace Renderer
         }
 
         uint8_t data[4] = {255, 255, 255, 255};
-        whiteTexture = createTexture(Texture::RGBA, false, false, true, 1, 1, data);
+        whiteTexture = createTexture(Texture::RGBA, Texture::RGBA, false, false, true, 1, 1, data);
 
         GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GL_CHECK_ERROR(glEnable(GL_TEXTURE_2D));
@@ -167,6 +168,7 @@ namespace Renderer
     }
 
     unsigned int createTexture(const Texture::Type type,
+                               const Texture::Type format,
                                const bool linearMinify,
                                const bool linearMagnify,
                                const bool repeat,
@@ -175,6 +177,7 @@ namespace Renderer
                                void* data)
     {
         const GLenum textureType = convertTextureType(type);
+        const GLenum textureFormat = convertTextureType(format);
         unsigned int texture;
 
         GL_CHECK_ERROR(glGenTextures(1, &texture));
@@ -192,8 +195,11 @@ namespace Renderer
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
                                        linearMagnify ? static_cast<GLfloat>(GL_LINEAR) :
                                                        static_cast<GLfloat>(GL_NEAREST)));
-
-        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
+        // Setting different values for internalFormat and format is not really supported by the
+        // OpenGL standard so hopefully it works with all drivers and on all operating systems.
+        // This is only intended as a last resort anyway, normally the BGRA_TO_RGBA shader should
+        // be used for color model conversion.
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureFormat,
                                     GL_UNSIGNED_BYTE, data));
 
         return texture;
@@ -355,6 +361,16 @@ namespace Renderer
                     runShader->deactivateShaders();
                 }
             }
+
+            if (vertices->shaders & SHADER_BGRA_TO_RGBA) {
+                Shader* runShader = getShaderProgram(SHADER_BGRA_TO_RGBA);
+                if (runShader) {
+                    runShader->activateShaders();
+                    runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
+                    GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
+                    runShader->deactivateShaders();
+                }
+            }
         }
 #endif
     }
@@ -470,8 +486,8 @@ namespace Renderer
             vertices[0].saturation = parameters.fragmentSaturation;
 
         setMatrix(getIdentity());
-        GLuint screenTexture =
-            createTexture(Texture::RGBA, false, false, false, width, height, nullptr);
+        GLuint screenTexture = createTexture(Texture::RGBA, Texture::RGBA, false, false, false,
+                                             width, height, nullptr);
 
         GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
 

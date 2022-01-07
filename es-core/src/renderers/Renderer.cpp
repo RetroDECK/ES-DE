@@ -271,6 +271,7 @@ namespace Renderer
         shaderFiles.push_back(":/shaders/glsl/blur_horizontal.glsl");
         shaderFiles.push_back(":/shaders/glsl/blur_vertical.glsl");
         shaderFiles.push_back(":/shaders/glsl/scanlines.glsl");
+        shaderFiles.push_back(":/shaders/glsl/bgra_to_rgba.glsl");
 
         for (auto it = shaderFiles.cbegin(); it != shaderFiles.cend(); ++it) {
             Shader* loadShader = new Shader();

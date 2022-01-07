@@ -9,6 +9,7 @@
 #ifndef ES_CORE_RESOURCES_TEXTURE_DATA_H
 #define ES_CORE_RESOURCES_TEXTURE_DATA_H
 
+#include "renderers/Renderer.h"
 #include "utils/MathUtil.h"
 
 #include <atomic>
@@ -63,6 +64,8 @@ public:
     // Whether to rasterize the image even if a size has not been set yet.
     void setForceRasterization(bool setting) { mForceRasterization = setting; }
 
+    void setFormat(Renderer::Texture::Type format) { mFormat = format; }
+
     // Has the image been loaded but not yet been rasterized as the size was not known?
     bool getPendingRasterization() { return mPendingRasterization; }
 
@@ -77,6 +80,7 @@ private:
     std::string mPath;
     std::atomic<unsigned int> mTextureID;
     std::vector<unsigned char> mDataRGBA;
+    Renderer::Texture::Type mFormat;
     std::atomic<int> mWidth;
     std::atomic<int> mHeight;
     std::atomic<float> mSourceWidth;

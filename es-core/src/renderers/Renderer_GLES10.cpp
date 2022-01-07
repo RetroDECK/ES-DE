@@ -43,9 +43,10 @@ namespace Renderer
     {
         // clang-format off
         switch (_type) {
-            case Texture::RGBA:  { return GL_RGBA;  } break;
-            case Texture::ALPHA: { return GL_ALPHA; } break;
-            default:             { return GL_ZERO;  }
+            case Texture::RGBA:  { return GL_RGBA;     } break;
+            case Texture::BGRA:  { return GL_BGRA_EXT; } break;
+            case Texture::ALPHA: { return GL_ALPHA;    } break;
+            default:             { return GL_ZERO;     }
         }
         // clang-format on
     }
@@ -91,7 +92,7 @@ namespace Renderer
                                                                                        "MISSING");
 
         uint8_t data[4] = {255, 255, 255, 255};
-        whiteTexture = createTexture(Texture::RGBA, false, false, true, 1, 1, data);
+        whiteTexture = createTexture(Texture::RGBA, Texture::RGBA, false, false, true, 1, 1, data);
 
         GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GL_CHECK_ERROR(glEnable(GL_TEXTURE_2D));
@@ -112,6 +113,7 @@ namespace Renderer
     }
 
     unsigned int createTexture(const Texture::Type type,
+                               const Texture::Type format,
                                const bool linearMinify,
                                const bool linearMagnify,
                                const bool repeat,
@@ -120,6 +122,7 @@ namespace Renderer
                                void* data)
     {
         const GLenum textureType = convertTextureType(type);
+        const GLenum textureFormat = convertTextureType(format);
         unsigned int texture;
 
         GL_CHECK_ERROR(glGenTextures(1, &texture));
@@ -134,7 +137,11 @@ namespace Renderer
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
                                        linearMagnify ? GL_LINEAR : GL_NEAREST));
 
-        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
+        // Setting different values for internalFormat and format is not really supported by the
+        // OpenGL standard so hopefully it works with all drivers and on all operating systems.
+        // This is only intended as a last resort anyway, normally the BGRA_TO_RGBA shader should
+        // be used for color model conversion.
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureFormat,
                                     GL_UNSIGNED_BYTE, data));
 
         return texture;
