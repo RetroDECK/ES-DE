@@ -114,13 +114,6 @@ if(WIN32)
 endif()
 
 #---------------------------------------------------------------------------------------------------
-# Miscellaneous configuration.
-
-if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wunused-macros")
-endif()
-
-#---------------------------------------------------------------------------------------------------
 # OS-specific installation and package generation setup.
 
 # Define target.

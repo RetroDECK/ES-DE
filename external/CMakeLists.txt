@@ -12,10 +12,16 @@ if(NOT WIN32)
 endif()
 
 # There is a bug that makes rlottie hang forever on application shutdown if compiled using MinGW
-# with threading support enabled. Disable it for MSVC as well to keep the behavior consistent.
+# with threading support enabled. Disable it for MSVC as well to keep the behavior consistent
+# across builds with either of these compilers.
 if(WIN32)
     option(LOTTIE_THREAD OFF)
 endif()
 
 option(LOTTIE_MODULE OFF)
-add_subdirectory("rlottie")
+
+# Only use the compiler and linker flags defined by rlottie.
+unset(CMAKE_CXX_FLAGS)
+unset(CMAKE_EXE_LINKER_FLAGS)
+
+add_subdirectory("rlottie" EXCLUDE_FROM_ALL)
