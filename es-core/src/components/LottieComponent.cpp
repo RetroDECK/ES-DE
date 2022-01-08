@@ -17,6 +17,10 @@
 
 LottieComponent::LottieComponent(Window* window)
     : GuiComponent{window}
+    , mCacheFrames{true}
+    , mMaxCacheSize{0}
+    , mCacheSize{0}
+    , mFrameSize{0}
     , mAnimation{nullptr}
     , mSurface{nullptr}
     , mTotalFrames{0}
@@ -35,12 +39,30 @@ LottieComponent::LottieComponent(Window* window)
     mTexture->setFormat(Renderer::Texture::BGRA);
 #endif
 
+    // Keep per-file cache size within 0 to 1024 MiB.
+    mMaxCacheSize = static_cast<size_t>(
+        glm::clamp(Settings::getInstance()->getInt("LottieMaxFileCache"), 0, 1024) * 1024 * 1024);
+
+    // Keep total cache size within 0 to 4096 MiB.
+    int maxTotalCache =
+        glm::clamp(Settings::getInstance()->getInt("LottieMaxTotalCache"), 0, 4096) * 1024 * 1024;
+
+    if (mMaxTotalFrameCache != static_cast<size_t>(maxTotalCache))
+        mMaxTotalFrameCache = static_cast<size_t>(maxTotalCache);
+
     // Set component defaults.
     setOrigin(0.5f, 0.5f);
     setSize(Renderer::getScreenWidth() * 0.2f, Renderer::getScreenHeight() * 0.2f);
     setPosition(Renderer::getScreenWidth() * 0.3f, Renderer::getScreenHeight() * 0.3f);
     setDefaultZIndex(30.0f);
     setZIndex(30.0f);
+}
+
+LottieComponent::~LottieComponent()
+{
+    if (mFuture.valid())
+        mFuture.get();
+    mTotalFrameCache -= mCacheSize;
 }
 
 void LottieComponent::setAnimation(const std::string& path)
@@ -51,6 +73,7 @@ void LottieComponent::setAnimation(const std::string& path)
         mSurface.reset();
         mAnimation.reset();
         mPictureRGBA.clear();
+        mCacheSize = 0;
     }
 
     mPath = path;
@@ -98,6 +121,7 @@ void LottieComponent::setAnimation(const std::string& path)
     double duration = mAnimation->duration();
     mTotalFrames = mAnimation->totalFrame();
     mFrameRate = mAnimation->frameRate();
+    mFrameSize = width * height * 4;
 
     mTargetPacing = static_cast<int>(1000.0 / mFrameRate);
 
@@ -109,7 +133,8 @@ void LottieComponent::setAnimation(const std::string& path)
 void LottieComponent::onSizeChanged()
 {
     // Setting the animation again will completely reinitialize it.
-    setAnimation(mPath);
+    if (mPath != "")
+        setAnimation(mPath);
 }
 
 void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -156,16 +181,45 @@ void LottieComponent::render(const glm::mat4& parentTrans)
 
     if (mFuture.valid()) {
         if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
+            mFuture.get();
+
+            // Cache frame if caching is enabled and we're not exceeding either the per-file
+            // max cache size or the total cache size. Note that this is completely unrelated
+            // to the texture caching used for images.
+            if (mCacheFrames && mFrameCache.find(mFrameNum) == mFrameCache.end()) {
+                size_t newCacheSize = mCacheSize + mFrameSize;
+                if (newCacheSize < mMaxCacheSize &&
+                    mTotalFrameCache + mFrameSize < mMaxTotalFrameCache) {
+                    mFrameCache[mFrameNum] = mPictureRGBA;
+                    mCacheSize += mFrameSize;
+                    mTotalFrameCache += mFrameSize;
+                }
+            }
+
             mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
                                      static_cast<size_t>(mSize.y));
-            mFuture.get();
+
             ++mFrameNum;
-            renderNextFrame = true;
+
+            if (mFrameNum == mTotalFrames)
+                renderNextFrame = false;
+            else
+                renderNextFrame = true;
         }
     }
     else {
-        renderNextFrame = true;
+        if (mFrameCache.find(mFrameNum) != mFrameCache.end()) {
+            if (!mHoldFrame) {
+                mTexture->initFromPixels(&mFrameCache[mFrameNum][0], static_cast<size_t>(mSize.x),
+                                         static_cast<size_t>(mSize.y));
+                ++mFrameNum;
+            }
+        }
+        else {
+            renderNextFrame = true;
+        }
     }
+
     if (renderNextFrame && !mHoldFrame)
         mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
 
