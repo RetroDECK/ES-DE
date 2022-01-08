@@ -25,6 +25,7 @@ LottieComponent::LottieComponent(Window* window)
     , mTargetPacing{0}
     , mTimeAccumulator{0}
     , mHoldFrame{false}
+    , mKeepAspectRatio{true}
 {
     // Get an empty texture for rendering the animation.
     mTexture = TextureResource::get("");
@@ -34,37 +35,45 @@ LottieComponent::LottieComponent(Window* window)
     mTexture->setFormat(Renderer::Texture::BGRA);
 #endif
 
-    // TODO: Temporary test files.
-    std::string filePath{":/animations/a_mountain.json"};
-    //        std::string filePath{":/animations/bell.json"};
+    // Set component defaults.
+    setOrigin(0.5f, 0.5f);
+    setSize(Renderer::getScreenWidth() * 0.2f, Renderer::getScreenHeight() * 0.2f);
+    setPosition(Renderer::getScreenWidth() * 0.3f, Renderer::getScreenHeight() * 0.3f);
+    setDefaultZIndex(30.0f);
+    setZIndex(30.0f);
+}
 
-    if (filePath.empty()) {
+void LottieComponent::setAnimation(const std::string& path)
+{
+    if (mAnimation != nullptr) {
+        if (mFuture.valid())
+            mFuture.get();
+        mSurface.reset();
+        mAnimation.reset();
+        mPictureRGBA.clear();
+    }
+
+    mPath = path;
+
+    if (mPath.empty()) {
         LOG(LogError) << "Path to Lottie animation is empty";
         return;
     }
 
-    if (filePath.front() == ':')
-        filePath = ResourceManager::getInstance().getResourcePath(filePath);
+    if (mPath.front() == ':')
+        mPath = ResourceManager::getInstance().getResourcePath(mPath);
     else
-        filePath = Utils::FileSystem::expandHomePath(filePath);
+        mPath = Utils::FileSystem::expandHomePath(mPath);
 
-    if (!(Utils::FileSystem::isRegularFile(filePath) || Utils::FileSystem::isSymlink(filePath))) {
-        LOG(LogError) << "Couldn't open Lottie animation file \"" << filePath << "\"";
+    if (!(Utils::FileSystem::isRegularFile(mPath) || Utils::FileSystem::isSymlink(mPath))) {
+        LOG(LogError) << "Couldn't open Lottie animation file \"" << mPath << "\"";
         return;
     }
 
-    // TODO: Only meant for development, to be replaced with proper theming support.
-    setOrigin(0.5f, 0.5f);
-    setSize(500.0f, 500.0f);
-    setPosition(mSize.x * 0.35f, mSize.y * 0.5f);
-    setDefaultZIndex(70.0f);
-    setZIndex(70.0f);
-    setVisible(true);
-
-    mAnimation = rlottie::Animation::loadFromFile(filePath);
+    mAnimation = rlottie::Animation::loadFromFile(mPath);
 
     if (mAnimation == nullptr) {
-        LOG(LogError) << "Couldn't parse Lottie animation file \"" << filePath << "\"";
+        LOG(LogError) << "Couldn't parse Lottie animation file \"" << mPath << "\"";
         return;
     }
 
@@ -72,13 +81,21 @@ LottieComponent::LottieComponent(Window* window)
     size_t height = static_cast<size_t>(mSize.y);
 
     mPictureRGBA.resize(width * height * 4);
-
     mSurface = std::make_unique<rlottie::Surface>(reinterpret_cast<uint32_t*>(&mPictureRGBA[0]),
                                                   width, height, width * sizeof(uint32_t));
 
-    // Animation time in seconds.
-    double duration = mAnimation->duration();
+    if (mSurface == nullptr) {
+        LOG(LogError) << "Couldn't create Lottie surface for file \"" << mPath << "\"";
+        mAnimation.reset();
+        return;
+    }
 
+    // Render the first frame as a type of preload to decrease the chance of seeing a blank
+    // texture when first entering a view that uses this animation.
+    mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+
+    // Some statistics for the file.
+    double duration = mAnimation->duration();
     mTotalFrames = mAnimation->totalFrame();
     mFrameRate = mAnimation->frameRate();
 
@@ -87,6 +104,12 @@ LottieComponent::LottieComponent(Window* window)
     LOG(LogDebug) << "Total number of frames: " << mTotalFrames;
     LOG(LogDebug) << "Frame rate: " << mFrameRate;
     LOG(LogDebug) << "Duration: " << duration;
+}
+
+void LottieComponent::onSizeChanged()
+{
+    // Setting the animation again will completely reinitialize it.
+    setAnimation(mPath);
 }
 
 void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -100,6 +123,9 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 void LottieComponent::update(int deltaTime)
 {
+    if (mAnimation == nullptr)
+        return;
+
     if (mTimeAccumulator < mTargetPacing) {
         mHoldFrame = true;
         mTimeAccumulator += deltaTime;
@@ -114,6 +140,11 @@ void LottieComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible())
         return;
+
+    if (mAnimation == nullptr)
+        return;
+
+    glm::mat4 trans{parentTrans * getTransform()};
 
     if (mFrameNum >= mTotalFrames)
         mFrameNum = 0;
@@ -135,33 +166,37 @@ void LottieComponent::render(const glm::mat4& parentTrans)
     else {
         renderNextFrame = true;
     }
-
     if (renderNextFrame && !mHoldFrame)
-        mFuture = mAnimation->render(mFrameNum, *mSurface);
+        mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+
+    Renderer::setMatrix(trans);
+
+    if (Settings::getInstance()->getBool("DebugImage"))
+        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
 
     if (mTexture->getSize().x != 0.0f) {
         mTexture->bind();
 
+        Renderer::Vertex vertices[4];
+
         // clang-format off
-        mVertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, 0xFFFFFFFF};
-        mVertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, 0xFFFFFFFF};
-        mVertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, 0xFFFFFFFF};
-        mVertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
+        vertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
         // clang-format on
 
         // Round vertices.
         for (int i = 0; i < 4; ++i)
-            mVertices[i].pos = glm::round(mVertices[i].pos);
+            vertices[i].pos = glm::round(vertices[i].pos);
 
 #if defined(USE_OPENGL_21)
         // Perform color space conversion from BGRA to RGBA.
-        mVertices[0].shaders = Renderer::SHADER_BGRA_TO_RGBA;
+        vertices[0].shaders = Renderer::SHADER_BGRA_TO_RGBA;
 #endif
 
         // Render it.
-        glm::mat4 trans{parentTrans * getTransform()};
-        Renderer::setMatrix(trans);
-        Renderer::drawTriangleStrips(&mVertices[0], 4, trans);
+        Renderer::drawTriangleStrips(&vertices[0], 4, trans);
     }
 
     if (!mHoldFrame && mFrameNum == mTotalFrames - 1) {

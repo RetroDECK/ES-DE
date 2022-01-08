@@ -23,6 +23,11 @@ class LottieComponent : public GuiComponent
 public:
     LottieComponent(Window* window);
 
+    void setAnimation(const std::string& path);
+    void setKeepAspectRatio(bool value) { mKeepAspectRatio = value; }
+
+    void onSizeChanged() override;
+
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
                             const std::string& view,
                             const std::string& element,
@@ -35,17 +40,18 @@ private:
     std::shared_ptr<TextureResource> mTexture;
     std::vector<uint8_t> mPictureRGBA;
 
-    Renderer::Vertex mVertices[4];
-
     std::unique_ptr<rlottie::Animation> mAnimation;
     std::unique_ptr<rlottie::Surface> mSurface;
     std::future<rlottie::Surface> mFuture;
+    std::string mPath;
     size_t mTotalFrames;
     size_t mFrameNum;
     double mFrameRate;
     int mTargetPacing;
     int mTimeAccumulator;
     bool mHoldFrame;
+
+    bool mKeepAspectRatio;
 
     std::chrono::time_point<std::chrono::system_clock> mAnimationStartTime;
     std::chrono::time_point<std::chrono::system_clock> mAnimationEndTime;
