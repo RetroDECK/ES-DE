@@ -277,7 +277,7 @@ void Settings::setDefaults()
     mBoolMap["DebugSkipInputLogging"] = {false, false};
     mStringMap["ROMDirectory"] = {"", ""};
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
-    mIntMap["LottieMaxFileCache"] = {100, 100};
+    mIntMap["LottieMaxFileCache"] = {150, 150};
     mIntMap["LottieMaxTotalCache"] = {1024, 1024};
 
     //
