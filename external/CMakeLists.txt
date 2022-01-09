@@ -11,12 +11,10 @@ if(NOT WIN32)
     set(BUILD_SHARED_LIBS OFF)
 endif()
 
-# There is a bug that makes rlottie hang forever on application shutdown if compiled using MinGW
-# with threading support enabled. Disable it for MSVC as well to keep the behavior consistent
-# across builds with either of these compilers.
-if(WIN32)
-    option(LOTTIE_THREAD OFF)
-endif()
+# Disabled threading support for rlottie as this functionality actually leads to far worse
+# performance. As well there is a bug on Windows that makes rlottie hang forever on application
+# shutdown if compiled using MinGW with threading support enabled.
+option(LOTTIE_THREAD OFF)
 
 option(LOTTIE_MODULE OFF)
 
