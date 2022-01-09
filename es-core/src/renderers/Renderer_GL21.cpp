@@ -438,10 +438,10 @@ namespace Renderer
         // application functioning normally.
         const auto beforeSwap = std::chrono::system_clock::now();
         SDL_GL_SwapWindow(getSDLWindow());
-        const auto afterSwap = std::chrono::system_clock::now();
 
-        if (std::chrono::duration_cast<std::chrono::milliseconds>(afterSwap - beforeSwap).count() <
-            3.0)
+        if (std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() -
+                                                                  beforeSwap)
+                .count() < 3.0)
             SDL_Delay(10);
 #else
         SDL_GL_SwapWindow(getSDLWindow());

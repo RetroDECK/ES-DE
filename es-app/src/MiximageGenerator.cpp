@@ -99,12 +99,11 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
         return;
     }
     else {
-        const auto endTime = std::chrono::system_clock::now();
-
-        LOG(LogDebug)
-            << "MiximageGenerator::MiximageGenerator(): Processing completed in: "
-            << std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).count()
-            << " ms";
+        LOG(LogDebug) << "MiximageGenerator::MiximageGenerator(): Processing completed in: "
+                      << std::chrono::duration_cast<std::chrono::milliseconds>(
+                             std::chrono::system_clock::now() - startTime)
+                             .count()
+                      << " ms";
     }
 
     mResultMessage = mMessage;

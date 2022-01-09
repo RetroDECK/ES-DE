@@ -510,10 +510,9 @@ void Window::render()
                 mCachedBackground = true;
 
 #if (CLOCK_BACKGROUND_CREATION)
-                const auto backgroundEndTime = std::chrono::system_clock::now();
                 LOG(LogDebug) << "Window::render(): Time to create cached background: "
                               << std::chrono::duration_cast<std::chrono::milliseconds>(
-                                     backgroundEndTime - backgroundStartTime)
+                                     std::chrono::system_clock::now() - backgroundStartTime)
                                      .count()
                               << " ms";
 #endif

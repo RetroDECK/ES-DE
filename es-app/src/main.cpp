@@ -627,11 +627,10 @@ int main(int argc, char* argv[])
     SDL_GameControllerEventState(SDL_ENABLE);
 
     int lastTime = SDL_GetTicks();
-    const auto applicationEndTime = std::chrono::system_clock::now();
 
     LOG(LogInfo) << "Application startup time: "
-                 << std::chrono::duration_cast<std::chrono::milliseconds>(applicationEndTime -
-                                                                          applicationStartTime)
+                 << std::chrono::duration_cast<std::chrono::milliseconds>(
+                        std::chrono::system_clock::now() - applicationStartTime)
                         .count()
                  << " ms";
 
