@@ -137,6 +137,7 @@ public:
     void setLaunchedGame();
     void unsetLaunchedGame();
     void invalidateCachedBackground();
+    bool isInvalidatingCachedBackground() { return mInvalidateCacheTimer > 0; }
 
     bool getGameLaunchedState() { return mGameLaunchedState; }
     void setAllowTextScrolling(bool value) { mAllowTextScrolling = value; }
@@ -198,6 +199,8 @@ private:
     bool mAllowFileAnimation;
     bool mCachedBackground;
     bool mInvalidatedCachedBackground;
+    bool mInitiateCacheTimer;
+    int mInvalidateCacheTimer;
 
     std::atomic<int> mVideoPlayerCount;
 

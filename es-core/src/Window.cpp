@@ -45,6 +45,8 @@ Window::Window() noexcept
     , mAllowFileAnimation(true)
     , mCachedBackground(false)
     , mInvalidatedCachedBackground(false)
+    , mInitiateCacheTimer{false}
+    , mInvalidateCacheTimer{0}
     , mVideoPlayerCount(0)
     , mTopScale(0.5)
     , mChangedThemeSet(false)
@@ -304,6 +306,9 @@ void Window::logInput(InputConfig* config, Input input)
 
 void Window::update(int deltaTime)
 {
+    if (mInvalidateCacheTimer > 0)
+        mInvalidateCacheTimer = glm::clamp(mInvalidateCacheTimer - deltaTime, 0, 500);
+
     if (mNormalizeNextUpdate) {
         mNormalizeNextUpdate = false;
         mTimeSinceLastInput = 0;
@@ -397,6 +402,13 @@ bool Window::isBackgroundDimmed()
 
 void Window::render()
 {
+    // Short 50 ms delay before invalidating the cached background which will give the various
+    // components a chance to render so they don't get exclued from the new cached image.
+    if (mInitiateCacheTimer) {
+        mInvalidateCacheTimer = 50;
+        mInitiateCacheTimer = false;
+    }
+
     glm::mat4 trans{Renderer::getIdentity()};
 
     mRenderedHelpPrompts = false;
@@ -431,7 +443,7 @@ void Window::render()
 
         if (bottom != top || mRenderLaunchScreen) {
 #if defined(USE_OPENGL_21)
-            if (!mCachedBackground) {
+            if (!mCachedBackground && mInvalidateCacheTimer == 0) {
                 // Generate a cache texture of the shaded background when opening the menu, which
                 // will remain valid until the menu is closed. This is way faster than having to
                 // render the shaders for every frame.
@@ -839,6 +851,7 @@ void Window::invalidateCachedBackground()
 {
     mCachedBackground = false;
     mInvalidatedCachedBackground = true;
+    mInitiateCacheTimer = true;
 }
 
 bool Window::isProcessing()
