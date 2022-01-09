@@ -68,21 +68,21 @@ The roadmap is under constant review so expect it to change from time to time. S
 #### v1.4
 
 * Bulk metadata editor
-* Localization/multi-language support
+* Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Authoring tools to clean up orphaned gamelist entries, media files etc.
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
 * Scrollbar component for the gamelist view which can be used by the themes
 * Web proxy support for the scraper
 * RetroAchievements.org integration
 * Add "time played" counter per game, similar to how it works in Steam
-* Improve multi-threading
 
 #### v1.5
 
 * Reorganize the menus, possibly adding basic/advanced modes
+* Localization/multi-language support
 * Simple file browsing component
+* New texture/cache manager with support for SVG images and Lottie animations
 * Improve the performance of the GLSL shader code
-* Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Support for additional scraper services (if feasible?)
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets
 * Replacements for the abandoned NanoSVG and FreeImage libraries
@@ -93,6 +93,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Dependency on MoltenVK to get Metal support on macOS
 * Decommission of the OpenGL 2.1 and OpenGL ES renderers (or keep as legacy mode/legacy build?)
 * Better and more accurate GPU and memory usage statistics overlay
+* Improve multi-threading
 
 #### v2.1
 

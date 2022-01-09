@@ -764,6 +764,8 @@ cmake -G "NMake Makefiles" .
 nmake
 ```
 
+For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
+
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
 cmake -G "NMake Makefiles" -DASAN=on .
@@ -772,7 +774,7 @@ nmake
 
 ThreadSanitizer and UndefinedBehaviorSanitizer aren't available for the MSVC compiler.
 
-For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
+There are a number of compiler warnings for the bundled rlottie library when building with MSVC. Unfortunately these need to be resolved upstream, but everything should still work fine so the warnings can be ignored for now.
 
 Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this in depth.
 

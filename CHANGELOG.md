@@ -10,25 +10,21 @@
 
 ### Detailed list of changes
 
+* Added support for Lottie animations (vector graphics), fully configurable as a theme extra
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Set the option "Scrape actual folders" as enabled by default and moved it higher up in the scraper options menu
-* On Windows, moved all dependencies in-tree to the "external" directory to greatly simplify the build environment
+* Added a color model conversion shader for converting from BGRA to RGBA
+* Added renderer support for supplying a separate format than internalFormat when creating textures (although not really supported by the OpenGL standard)
+* Added the rlottie library as a Git subtree
+* On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
+* Large refactoring to improve thread safety and improve singleton pattern usage
 * Removed the deprecated VideoVlcComponent
 
 ### Bug fixes
 
+* During some menu operations that reloaded the gamelist view, the cached background would sometimes miss some elements as they were not rendered in time
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
-
-## Version 1.2.1 (in development)
-
-**Release date:** TBD
-
-### Release overview
-
-### Detailed list of changes
-
-### Bug fixes
 
 ## Version 1.2.0
 

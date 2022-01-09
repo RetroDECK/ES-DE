@@ -54,6 +54,9 @@ https://pugixml.org
 RapdidJSON \
 https://rapidjson.org
 
+rlottie \
+https://github.com/Samsung/rlottie
+
 SDL \
 https://www.libsdl.org
 
