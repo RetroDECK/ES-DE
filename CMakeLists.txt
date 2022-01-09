@@ -357,10 +357,10 @@ if(CMAKE_SYSTEM_NAME MATCHES "Linux")
 endif()
 
 if(RPI_32)
-    list(APPEND COMMON_INCLUDE_DIRS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include"
-                                    "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos"
-                                    "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vmcs_host/linux"
-                                    "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos/pthreads")
+    list(APPEND COMMON_INCLUDE_DIRS ${CMAKE_FIND_ROOT_PATH}/opt/vc/include
+                                    ${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos
+                                    ${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vmcs_host/linux
+                                    ${CMAKE_FIND_ROOT_PATH}/opt/vc/include/interface/vcos/pthreads)
 endif()
 
 #---------------------------------------------------------------------------------------------------
@@ -380,39 +380,39 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.dylib)
 elseif(WIN32)
-    if(DEFINED MSVC)
-        set(COMMON_LIBRARIES "${PROJECT_SOURCE_DIR}/avcodec.lib"
-                             "${PROJECT_SOURCE_DIR}/avfilter.lib"
-                             "${PROJECT_SOURCE_DIR}/avformat.lib"
-                             "${PROJECT_SOURCE_DIR}/avutil.lib"
-                             "${PROJECT_SOURCE_DIR}/swresample.lib"
-                             "${PROJECT_SOURCE_DIR}/swscale.lib"
-                             "${PROJECT_SOURCE_DIR}/FreeImage.lib"
-                             "${PROJECT_SOURCE_DIR}/glew32.lib"
-                             "${PROJECT_SOURCE_DIR}/libcurl-x64.lib"
-                             "${PROJECT_SOURCE_DIR}/freetype.lib"
-                             "${PROJECT_SOURCE_DIR}/pugixml.lib"
-                             "${PROJECT_SOURCE_DIR}/rlottie.lib"
-                             "${PROJECT_SOURCE_DIR}/SDL2main.lib"
-                             "${PROJECT_SOURCE_DIR}/SDL2.lib"
-                             "Winmm.dll")
+    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec.lib
+                             ${PROJECT_SOURCE_DIR}/avfilter.lib
+                             ${PROJECT_SOURCE_DIR}/avformat.lib
+                             ${PROJECT_SOURCE_DIR}/avutil.lib
+                             ${PROJECT_SOURCE_DIR}/swresample.lib
+                             ${PROJECT_SOURCE_DIR}/swscale.lib
+                             ${PROJECT_SOURCE_DIR}/FreeImage.lib
+                             ${PROJECT_SOURCE_DIR}/glew32.lib
+                             ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
+                             ${PROJECT_SOURCE_DIR}/freetype.lib
+                             ${PROJECT_SOURCE_DIR}/pugixml.lib
+                             ${PROJECT_SOURCE_DIR}/rlottie.lib
+                             ${PROJECT_SOURCE_DIR}/SDL2main.lib
+                             ${PROJECT_SOURCE_DIR}/SDL2.lib
+                             Winmm.dll)
     else()
-        set(COMMON_LIBRARIES "${PROJECT_SOURCE_DIR}/avcodec-58.dll"
-                             "${PROJECT_SOURCE_DIR}/avfilter-7.dll"
-                             "${PROJECT_SOURCE_DIR}/avformat-58.dll"
-                             "${PROJECT_SOURCE_DIR}/avutil-56.dll"
-                             "${PROJECT_SOURCE_DIR}/swresample-3.dll"
-                             "${PROJECT_SOURCE_DIR}/swscale-5.dll"
-                             "${PROJECT_SOURCE_DIR}/FreeImage.dll"
-                             "${PROJECT_SOURCE_DIR}/glew32.dll"
-                             "${PROJECT_SOURCE_DIR}/libcurl-x64.dll"
-                             "${PROJECT_SOURCE_DIR}/libfreetype.dll"
-                             "${PROJECT_SOURCE_DIR}/libpugixml.dll"
-                             "${PROJECT_SOURCE_DIR}/libSDL2main.a"
-                             "${PROJECT_SOURCE_DIR}/librlottie.dll"
-                             "${PROJECT_SOURCE_DIR}/SDL2.dll"
-                             "mingw32"
-                             "Winmm.dll")
+        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec-58.dll
+                             ${PROJECT_SOURCE_DIR}/avfilter-7.dll
+                             ${PROJECT_SOURCE_DIR}/avformat-58.dll
+                             ${PROJECT_SOURCE_DIR}/avutil-56.dll
+                             ${PROJECT_SOURCE_DIR}/swresample-3.dll
+                             ${PROJECT_SOURCE_DIR}/swscale-5.dll
+                             ${PROJECT_SOURCE_DIR}/FreeImage.dll
+                             ${PROJECT_SOURCE_DIR}/glew32.dll
+                             ${PROJECT_SOURCE_DIR}/libcurl-x64.dll
+                             ${PROJECT_SOURCE_DIR}/libfreetype.dll
+                             ${PROJECT_SOURCE_DIR}/libpugixml.dll
+                             ${PROJECT_SOURCE_DIR}/libSDL2main.a
+                             ${PROJECT_SOURCE_DIR}/librlottie.dll
+                             ${PROJECT_SOURCE_DIR}/SDL2.dll
+                             mingw32
+                             Winmm.dll)
     endif()
 else()
     set(COMMON_LIBRARIES ${CURL_LIBRARIES}
