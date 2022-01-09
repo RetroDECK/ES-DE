@@ -157,7 +157,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
       {"speed", FLOAT},
       {"direction", STRING},
       {"keepAspectRatio", BOOLEAN},
-      {"delay", FLOAT},
       {"visible", BOOLEAN},
       {"zIndex", FLOAT}}},
     {"badges",

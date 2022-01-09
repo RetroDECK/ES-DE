@@ -26,14 +26,17 @@ LottieComponent::LottieComponent(Window* window)
     , mFrameSize{0}
     , mAnimation{nullptr}
     , mSurface{nullptr}
+    , mStartDirection{"normal"}
     , mTotalFrames{0}
     , mFrameNum{0}
     , mFrameRate{0.0}
+    , mSpeedModifier{1.0f}
     , mTargetPacing{0}
     , mTimeAccumulator{0}
+    , mSkippedFrames{0}
     , mHoldFrame{false}
-    , mDroppedFrames{0}
-    , mSpeedModifier{1.0f}
+    , mPause{false}
+    , mAlternate{false}
     , mKeepAspectRatio{true}
 {
     // Get an empty texture for rendering the animation.
@@ -65,8 +68,10 @@ LottieComponent::LottieComponent(Window* window)
 
 LottieComponent::~LottieComponent()
 {
+    // This is required as rlottie could otherwise crash on application shutdown.
     if (mFuture.valid())
         mFuture.get();
+
     mTotalFrameCache -= mCacheSize;
 }
 
@@ -147,16 +152,17 @@ void LottieComponent::setAnimation(const std::string& path)
         return;
     }
 
-    // Render the first frame as a type of preload to decrease the chance of seeing a blank
-    // texture when first entering a view that uses this animation.
-    mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
-
     // Some statistics for the file.
     double duration = mAnimation->duration();
     mTotalFrames = mAnimation->totalFrame();
     mFrameRate = mAnimation->frameRate();
     mFrameSize = width * height * 4;
     mTargetPacing = static_cast<int>((1000.0 / mFrameRate) / static_cast<double>(mSpeedModifier));
+
+    mDirection = mStartDirection;
+
+    if (mDirection == "reverse")
+        mFrameNum = mTotalFrames - 1;
 
     if (DEBUG_ANIMATION) {
         LOG(LogDebug) << "LottieComponent::setAnimation(): Rasterized width: " << mSize.x;
@@ -179,6 +185,15 @@ void LottieComponent::setAnimation(const std::string& path)
                       << mMaxCacheSize << " bytes (" << std::fixed << std::setprecision(1)
                       << static_cast<double>(mMaxCacheSize) / 1024.0 / 1024.0 << " MiB)";
     }
+}
+
+void LottieComponent::resetFileAnimation()
+{
+    mTimeAccumulator = 0;
+    mFrameNum = mStartDirection == "reverse" ? mTotalFrames - 1 : 0;
+
+    if (mAnimation != nullptr)
+        mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
 }
 
 void LottieComponent::onSizeChanged()
@@ -221,6 +236,32 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mKeepAspectRatio = elem->get<bool>("keepAspectRatio");
     }
 
+    if (elem->has("direction")) {
+        std::string direction = elem->get<std::string>("direction");
+        if (direction == "normal") {
+            mStartDirection = "normal";
+            mAlternate = false;
+        }
+        else if (direction == "reverse") {
+            mStartDirection = "reverse";
+            mAlternate = false;
+        }
+        else if (direction == "alternate") {
+            mStartDirection = "normal";
+            mAlternate = true;
+        }
+        else if (direction == "alternateReverse") {
+            mStartDirection = "reverse";
+            mAlternate = true;
+        }
+        else {
+            LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <direction> set to \""
+                            << direction << "\"";
+            mStartDirection = "normal";
+            mAlternate = false;
+        }
+    }
+
     GuiComponent::applyTheme(theme, view, element, properties);
 
     if (elem->has("path")) {
@@ -255,7 +296,7 @@ void LottieComponent::update(int deltaTime)
     if (mTimeAccumulator > deltaTime * 200)
         mTimeAccumulator = 0;
 
-    // Keep animation speed from going too quickly.
+    // Prevent animation from playing too quickly.
     if (mTimeAccumulator + deltaTime < mTargetPacing) {
         mHoldFrame = true;
         mTimeAccumulator += deltaTime;
@@ -272,8 +313,13 @@ void LottieComponent::update(int deltaTime)
                 << "LottieComponent::update(): Skipped frame, mTimeAccumulator / mTargetPacing: "
                 << mTimeAccumulator - deltaTime << " / " << mTargetPacing;
         }
-        ++mFrameNum;
-        ++mDroppedFrames;
+
+        if (mDirection == "reverse")
+            --mFrameNum;
+        else
+            ++mFrameNum;
+
+        ++mSkippedFrames;
         mTimeAccumulator -= mTargetPacing;
     }
 }
@@ -294,24 +340,48 @@ void LottieComponent::render(const glm::mat4& parentTrans)
                                  static_cast<size_t>(mSize.y));
     }
 
-    // Don't render any new frames if paused or if a menu is open.
-    if (!mPause && mWindow->getGuiStackSize() < 2) {
-        if (mFrameNum >= mTotalFrames) {
+    bool doRender = true;
+
+    // Don't render if a menu is open except if the cached background is getting invalidated.
+    if (mWindow->getGuiStackSize() > 1) {
+        if (mWindow->isInvalidatingCachedBackground())
+            doRender = true;
+        else
+            doRender = false;
+    }
+
+    // Don't render any new frames if paused or if a menu is open (unless invalidating background).
+    if (!mPause && doRender) {
+        if ((mDirection == "normal" && mFrameNum >= mTotalFrames) ||
+            (mDirection == "reverse" && mFrameNum > mTotalFrames)) {
             if (DEBUG_ANIMATION) {
-                LOG(LogError) << "Dropped frames: " << mDroppedFrames;
+                LOG(LogDebug) << "LottieComponent::render(): Skipped frames: " << mSkippedFrames;
                 LOG(LogDebug) << "LottieComponent::render(): Actual duration: "
                               << std::chrono::duration_cast<std::chrono::milliseconds>(
                                      std::chrono::system_clock::now() - mAnimationStartTime)
                                      .count()
                               << " ms";
             }
+
+            if (mAlternate) {
+                if (mDirection == "normal")
+                    mDirection = "reverse";
+                else
+                    mDirection = "normal";
+            }
+
             mTimeAccumulator = 0;
-            mFrameNum = 0;
-            mDroppedFrames = 0;
+            mSkippedFrames = 0;
+
+            if (mDirection == "reverse")
+                mFrameNum = mTotalFrames - 1;
+            else
+                mFrameNum = 0;
         }
 
         if (DEBUG_ANIMATION) {
-            if (mFrameNum == 0)
+            if ((mDirection == "normal" && mFrameNum == 0) ||
+                (mDirection == "reverse" && mFrameNum == mTotalFrames - 1))
                 mAnimationStartTime = std::chrono::system_clock::now();
         }
 
@@ -336,7 +406,10 @@ void LottieComponent::render(const glm::mat4& parentTrans)
                 mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
                                          static_cast<size_t>(mSize.y));
 
-                ++mFrameNum;
+                if (mDirection == "reverse")
+                    --mFrameNum;
+                else
+                    ++mFrameNum;
 
                 if (mFrameNum == mTotalFrames)
                     renderNextFrame = false;
@@ -350,7 +423,11 @@ void LottieComponent::render(const glm::mat4& parentTrans)
                     mTexture->initFromPixels(&mFrameCache[mFrameNum][0],
                                              static_cast<size_t>(mSize.x),
                                              static_cast<size_t>(mSize.y));
-                    ++mFrameNum;
+
+                    if (mDirection == "reverse")
+                        --mFrameNum;
+                    else
+                        ++mFrameNum;
                 }
             }
             else {

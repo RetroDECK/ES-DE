@@ -34,12 +34,7 @@ public:
         mMaxCacheSize = static_cast<size_t>(glm::clamp(value, 0, 1024) * 1024 * 1024);
     }
 
-    void resetFileAnimation() override
-    {
-        mTimeAccumulator = 0;
-        mFrameNum = 0;
-    }
-
+    void resetFileAnimation() override;
     void onSizeChanged() override;
 
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -62,24 +57,26 @@ private:
     size_t mCacheSize;
     size_t mFrameSize;
 
+    std::chrono::time_point<std::chrono::system_clock> mAnimationStartTime;
     std::unique_ptr<rlottie::Animation> mAnimation;
     std::unique_ptr<rlottie::Surface> mSurface;
     std::future<rlottie::Surface> mFuture;
     std::string mPath;
+    std::string mStartDirection;
+    std::string mDirection;
     size_t mTotalFrames;
     size_t mFrameNum;
+
     double mFrameRate;
+    float mSpeedModifier;
     int mTargetPacing;
     int mTimeAccumulator;
+    int mSkippedFrames;
+
     bool mHoldFrame;
-    int mDroppedFrames;
-
     bool mPause;
-
-    float mSpeedModifier;
+    bool mAlternate;
     bool mKeepAspectRatio;
-
-    std::chrono::time_point<std::chrono::system_clock> mAnimationStartTime;
 };
 
 #endif // ES_CORE_COMPONENTS_LOTTIE_COMPONENT_H
