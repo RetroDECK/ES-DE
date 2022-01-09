@@ -6,7 +6,7 @@
 //  Component to play Lottie animations using the rlottie library.
 //
 
-#define DEBUG_ANIMATION true
+#define DEBUG_ANIMATION false
 
 #include "components/LottieComponent.h"
 
@@ -411,7 +411,9 @@ void LottieComponent::render(const glm::mat4& parentTrans)
                 else
                     ++mFrameNum;
 
-                if (mFrameNum == mTotalFrames)
+                if (mDirection == "reverse" && mFrameNum == 0)
+                    renderNextFrame = false;
+                else if (mFrameNum == mTotalFrames)
                     renderNextFrame = false;
                 else
                     renderNextFrame = true;
