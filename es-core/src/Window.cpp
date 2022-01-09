@@ -402,10 +402,10 @@ bool Window::isBackgroundDimmed()
 
 void Window::render()
 {
-    // Short 50 ms delay before invalidating the cached background which will give the various
+    // Short 25 ms delay before invalidating the cached background which will give the various
     // components a chance to render so they don't get exclued from the new cached image.
     if (mInitiateCacheTimer) {
-        mInvalidateCacheTimer = 50;
+        mInvalidateCacheTimer = 25;
         mInitiateCacheTimer = false;
     }
 
