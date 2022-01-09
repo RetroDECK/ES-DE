@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
+#include "Window.h"
 #include "resources/TextureResource.h"
 #include "utils/CImgUtil.h"
 
@@ -402,8 +403,14 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just
-            // 'jump' in when it finally loads.
-            fadeIn(mTexture->bind());
+            // 'jump' in when it finally loads. The exception is if the cached background is
+            // getting invalidated, in which case we want to make sure to not get a partially
+            // faded texture rendered onto the new background.
+            if (mWindow->isInvalidatingCachedBackground())
+                mTexture->bind();
+            else
+                fadeIn(mTexture->bind());
+
 #if defined(USE_OPENGL_21)
             if (mSaturation < 1.0) {
                 mVertices[0].shaders = Renderer::SHADER_DESATURATE;
