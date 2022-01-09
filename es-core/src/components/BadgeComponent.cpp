@@ -20,8 +20,6 @@
 #include "ThemeData.h"
 #include "utils/StringUtil.h"
 
-std::vector<GameControllers> BadgeComponent::sGameControllers;
-
 namespace
 {
     // clang-format off

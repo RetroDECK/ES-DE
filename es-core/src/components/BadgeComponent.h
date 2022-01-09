@@ -51,7 +51,7 @@ public:
                             unsigned int properties) override;
 
 private:
-    static std::vector<GameControllers> sGameControllers;
+    inline static std::vector<GameControllers> sGameControllers;
 
     std::vector<FlexboxComponent::FlexboxItem> mFlexboxItems;
     FlexboxComponent mFlexboxComponent;
