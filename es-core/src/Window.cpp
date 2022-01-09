@@ -42,6 +42,7 @@ Window::Window() noexcept
     , mRenderLaunchScreen(false)
     , mGameLaunchedState(false)
     , mAllowTextScrolling(true)
+    , mAllowFileAnimation(true)
     , mCachedBackground(false)
     , mInvalidatedCachedBackground(false)
     , mVideoPlayerCount(0)
@@ -732,6 +733,7 @@ void Window::startScreensaver()
             (*it)->onScreensaverActivate();
 
         setAllowTextScrolling(false);
+        setAllowFileAnimation(false);
         mScreensaver->startScreensaver(true);
         mRenderScreensaver = true;
     }
@@ -743,6 +745,7 @@ bool Window::stopScreensaver()
         mScreensaver->stopScreensaver();
         mRenderScreensaver = false;
         setAllowTextScrolling(true);
+        setAllowFileAnimation(true);
 
         // Tell the GUI components the screensaver has stopped.
         for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it) {
@@ -769,6 +772,8 @@ void Window::startMediaViewer(FileData* game)
     if (mMediaViewer) {
         if (mMediaViewer->startMediaViewer(game)) {
             setAllowTextScrolling(false);
+            setAllowFileAnimation(false);
+
             mRenderMediaViewer = true;
         }
     }
@@ -779,6 +784,7 @@ void Window::stopMediaViewer()
     if (mMediaViewer) {
         mMediaViewer->stopMediaViewer();
         setAllowTextScrolling(true);
+        setAllowFileAnimation(true);
     }
 
     mRenderMediaViewer = false;

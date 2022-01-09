@@ -203,6 +203,8 @@ public:
     virtual void onPauseVideo();
     virtual void onUnpauseVideo();
     virtual bool isVideoPaused() { return false; }
+    // For Lottie animations.
+    virtual void resetFileAnimation(){};
 
     virtual void onScreensaverActivate();
     virtual void onScreensaverDeactivate();

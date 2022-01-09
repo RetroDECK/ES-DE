@@ -288,6 +288,10 @@ void GridGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 void GridGameListView::onShow()
 {
+    // Reset any Lottie animations.
+    for (auto extra : mThemeExtras)
+        extra->resetFileAnimation();
+
     GuiComponent::onShow();
     updateInfoPanel();
 }

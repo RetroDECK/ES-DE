@@ -139,8 +139,12 @@ public:
     void invalidateCachedBackground();
 
     bool getGameLaunchedState() { return mGameLaunchedState; }
-    void setAllowTextScrolling(bool setting) { mAllowTextScrolling = setting; }
+    void setAllowTextScrolling(bool value) { mAllowTextScrolling = value; }
     bool getAllowTextScrolling() { return mAllowTextScrolling; }
+
+    // For Lottie animations.
+    void setAllowFileAnimation(bool value) { mAllowFileAnimation = value; }
+    bool getAllowFileAnimation() { return mAllowFileAnimation; }
 
     void setChangedThemeSet() { mChangedThemeSet = true; }
     bool getChangedThemeSet() { return mChangedThemeSet; }
@@ -191,6 +195,7 @@ private:
     bool mRenderLaunchScreen;
     bool mGameLaunchedState;
     bool mAllowTextScrolling;
+    bool mAllowFileAnimation;
     bool mCachedBackground;
     bool mInvalidatedCachedBackground;
 

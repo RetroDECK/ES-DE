@@ -6,9 +6,12 @@
 //  Component to play Lottie animations using the rlottie library.
 //
 
+#define DEBUG_ANIMATION true
+
 #include "components/LottieComponent.h"
 
 #include "Log.h"
+#include "ThemeData.h"
 #include "Window.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
@@ -29,6 +32,8 @@ LottieComponent::LottieComponent(Window* window)
     , mTargetPacing{0}
     , mTimeAccumulator{0}
     , mHoldFrame{false}
+    , mDroppedFrames{0}
+    , mSpeedModifier{1.0f}
     , mKeepAspectRatio{true}
 {
     // Get an empty texture for rendering the animation.
@@ -54,8 +59,8 @@ LottieComponent::LottieComponent(Window* window)
     setOrigin(0.5f, 0.5f);
     setSize(Renderer::getScreenWidth() * 0.2f, Renderer::getScreenHeight() * 0.2f);
     setPosition(Renderer::getScreenWidth() * 0.3f, Renderer::getScreenHeight() * 0.3f);
-    setDefaultZIndex(30.0f);
-    setZIndex(30.0f);
+    setDefaultZIndex(10.0f);
+    setZIndex(10.0f);
 }
 
 LottieComponent::~LottieComponent()
@@ -100,8 +105,37 @@ void LottieComponent::setAnimation(const std::string& path)
         return;
     }
 
-    size_t width = static_cast<size_t>(mSize.x);
-    size_t height = static_cast<size_t>(mSize.y);
+    if (!mKeepAspectRatio && (mSize.x == 0.0f || mSize.y == 0.0f)) {
+        LOG(LogWarning) << "LottieComponent: Width or height auto sizing is incompatible with "
+                           "disabling of <keepAspectRatio> so ignoring this setting";
+    }
+
+    size_t width{0};
+    size_t height{0};
+
+    if (mSize.x == 0.0f || mSize.y == 0.0f) {
+        size_t viewportWidth{0};
+        size_t viewportHeight{0};
+
+        mAnimation->size(viewportWidth, viewportHeight);
+        double sizeRatio = static_cast<double>(viewportWidth) / static_cast<double>(viewportHeight);
+
+        if (mSize.x == 0) {
+            width = static_cast<size_t>(static_cast<double>(mSize.y) * sizeRatio);
+            height = static_cast<size_t>(mSize.y);
+        }
+        else {
+            width = static_cast<size_t>(mSize.x);
+            height = static_cast<size_t>(static_cast<double>(mSize.x) / sizeRatio);
+        }
+    }
+    else {
+        width = static_cast<size_t>(mSize.x);
+        height = static_cast<size_t>(mSize.y);
+    }
+
+    mSize.x = static_cast<float>(width);
+    mSize.y = static_cast<float>(height);
 
     mPictureRGBA.resize(width * height * 4);
     mSurface = std::make_unique<rlottie::Surface>(reinterpret_cast<uint32_t*>(&mPictureRGBA[0]),
@@ -122,12 +156,29 @@ void LottieComponent::setAnimation(const std::string& path)
     mTotalFrames = mAnimation->totalFrame();
     mFrameRate = mAnimation->frameRate();
     mFrameSize = width * height * 4;
+    mTargetPacing = static_cast<int>((1000.0 / mFrameRate) / static_cast<double>(mSpeedModifier));
 
-    mTargetPacing = static_cast<int>(1000.0 / mFrameRate);
-
-    LOG(LogDebug) << "Total number of frames: " << mTotalFrames;
-    LOG(LogDebug) << "Frame rate: " << mFrameRate;
-    LOG(LogDebug) << "Duration: " << duration;
+    if (DEBUG_ANIMATION) {
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Rasterized width: " << mSize.x;
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Rasterized height: " << mSize.y;
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Total number of frames: "
+                      << mTotalFrames;
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Frame rate: " << mFrameRate;
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Speed modifier: " << mSpeedModifier;
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Target duration: "
+                      << duration / mSpeedModifier * 1000.0 << " ms";
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Frame size: " << mFrameSize << " bytes ("
+                      << std::fixed << std::setprecision(1)
+                      << static_cast<double>(mFrameSize) / 1024.0 / 1024.0 << " MiB)";
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Animation size: "
+                      << mFrameSize * mTotalFrames << " bytes (" << std::fixed
+                      << std::setprecision(1)
+                      << static_cast<double>(mFrameSize * mTotalFrames) / 1024.0 / 1024.0
+                      << " MiB)";
+        LOG(LogDebug) << "LottieComponent::setAnimation(): Per file maximum cache size: "
+                      << mMaxCacheSize << " bytes (" << std::fixed << std::setprecision(1)
+                      << static_cast<double>(mMaxCacheSize) / 1024.0 / 1024.0 << " MiB)";
+    }
 }
 
 void LottieComponent::onSizeChanged()
@@ -142,8 +193,46 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                  const std::string& element,
                                  unsigned int properties)
 {
-    //    using namespace ThemeFlags;
+    using namespace ThemeFlags;
+
+    const ThemeData::ThemeElement* elem{theme->getElement(view, element, "animation")};
+
+    if (elem->has("size")) {
+        glm::vec2 size = elem->get<glm::vec2>("size");
+        if (size.x == 0.0f && size.y == 0.0f) {
+            LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <size> set to \""
+                            << size.x << " " << size.y << "\"";
+            return;
+        }
+    }
+
+    if (elem->has("speed")) {
+        const float speed{elem->get<float>("speed")};
+        if (speed < 0.2f || speed > 3.0f) {
+            LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <speed> set to \""
+                            << std::fixed << std::setprecision(1) << speed << "\"";
+        }
+        else {
+            mSpeedModifier = speed;
+        }
+    }
+
+    if (elem->has("keepAspectRatio")) {
+        mKeepAspectRatio = elem->get<bool>("keepAspectRatio");
+    }
+
     GuiComponent::applyTheme(theme, view, element, properties);
+
+    if (elem->has("path")) {
+        std::string path{elem->get<std::string>("path")};
+        if (path != "") {
+            setAnimation(path);
+        }
+    }
+    else {
+        LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <path> not set";
+        return;
+    }
 }
 
 void LottieComponent::update(int deltaTime)
@@ -151,13 +240,41 @@ void LottieComponent::update(int deltaTime)
     if (mAnimation == nullptr)
         return;
 
-    if (mTimeAccumulator < mTargetPacing) {
+    if (mWindow->getAllowFileAnimation()) {
+        mPause = false;
+    }
+    else {
+        mPause = true;
+        mTimeAccumulator = 0;
+        return;
+    }
+
+    // If the time accumulator value is really high something must have happened such as the
+    // application having been suspended. Reset it to zero in this case as it would otherwise
+    // never recover.
+    if (mTimeAccumulator > deltaTime * 200)
+        mTimeAccumulator = 0;
+
+    // Keep animation speed from going too quickly.
+    if (mTimeAccumulator + deltaTime < mTargetPacing) {
         mHoldFrame = true;
         mTimeAccumulator += deltaTime;
     }
     else {
         mHoldFrame = false;
         mTimeAccumulator = mTimeAccumulator - mTargetPacing + deltaTime;
+    }
+
+    // Rudimentary frame skipping logic, not entirely accurate but probably good enough.
+    while (mTimeAccumulator - deltaTime > mTargetPacing) {
+        if (DEBUG_ANIMATION && 0) {
+            LOG(LogDebug)
+                << "LottieComponent::update(): Skipped frame, mTimeAccumulator / mTargetPacing: "
+                << mTimeAccumulator - deltaTime << " / " << mTargetPacing;
+        }
+        ++mFrameNum;
+        ++mDroppedFrames;
+        mTimeAccumulator -= mTargetPacing;
     }
 }
 
@@ -171,57 +288,79 @@ void LottieComponent::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans{parentTrans * getTransform()};
 
-    if (mFrameNum >= mTotalFrames)
-        mFrameNum = 0;
-
-    if (mFrameNum == 0)
-        mAnimationStartTime = std::chrono::system_clock::now();
-
-    bool renderNextFrame = false;
-
-    if (mFuture.valid()) {
-        if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
-            mFuture.get();
-
-            // Cache frame if caching is enabled and we're not exceeding either the per-file
-            // max cache size or the total cache size. Note that this is completely unrelated
-            // to the texture caching used for images.
-            if (mCacheFrames && mFrameCache.find(mFrameNum) == mFrameCache.end()) {
-                size_t newCacheSize = mCacheSize + mFrameSize;
-                if (newCacheSize < mMaxCacheSize &&
-                    mTotalFrameCache + mFrameSize < mMaxTotalFrameCache) {
-                    mFrameCache[mFrameNum] = mPictureRGBA;
-                    mCacheSize += mFrameSize;
-                    mTotalFrameCache += mFrameSize;
-                }
-            }
-
-            mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
-                                     static_cast<size_t>(mSize.y));
-
-            ++mFrameNum;
-
-            if (mFrameNum == mTotalFrames)
-                renderNextFrame = false;
-            else
-                renderNextFrame = true;
-        }
+    // This is necessary as there may otherwise be no texture to render when paused.
+    if (mPause && mTexture->getSize().x == 0.0f) {
+        mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
+                                 static_cast<size_t>(mSize.y));
     }
-    else {
-        if (mFrameCache.find(mFrameNum) != mFrameCache.end()) {
-            if (!mHoldFrame) {
-                mTexture->initFromPixels(&mFrameCache[mFrameNum][0], static_cast<size_t>(mSize.x),
+
+    // Don't render any new frames if paused or if a menu is open.
+    if (!mPause && mWindow->getGuiStackSize() < 2) {
+        if (mFrameNum >= mTotalFrames) {
+            if (DEBUG_ANIMATION) {
+                LOG(LogError) << "Dropped frames: " << mDroppedFrames;
+                LOG(LogDebug) << "LottieComponent::render(): Actual duration: "
+                              << std::chrono::duration_cast<std::chrono::milliseconds>(
+                                     std::chrono::system_clock::now() - mAnimationStartTime)
+                                     .count()
+                              << " ms";
+            }
+            mTimeAccumulator = 0;
+            mFrameNum = 0;
+            mDroppedFrames = 0;
+        }
+
+        if (DEBUG_ANIMATION) {
+            if (mFrameNum == 0)
+                mAnimationStartTime = std::chrono::system_clock::now();
+        }
+
+        bool renderNextFrame = false;
+
+        if (mFuture.valid()) {
+            if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
+                mFuture.get();
+                // Cache frame if caching is enabled and we're not exceeding either the per-file
+                // max cache size or the total cache size. Note that this is completely unrelated
+                // to the texture caching used for images.
+                if (mCacheFrames && mFrameCache.find(mFrameNum) == mFrameCache.end()) {
+                    size_t newCacheSize = mCacheSize + mFrameSize;
+                    if (newCacheSize < mMaxCacheSize &&
+                        mTotalFrameCache + mFrameSize < mMaxTotalFrameCache) {
+                        mFrameCache[mFrameNum] = mPictureRGBA;
+                        mCacheSize += mFrameSize;
+                        mTotalFrameCache += mFrameSize;
+                    }
+                }
+
+                mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
                                          static_cast<size_t>(mSize.y));
+
                 ++mFrameNum;
+
+                if (mFrameNum == mTotalFrames)
+                    renderNextFrame = false;
+                else
+                    renderNextFrame = true;
             }
         }
         else {
-            renderNextFrame = true;
+            if (mFrameCache.find(mFrameNum) != mFrameCache.end()) {
+                if (!mHoldFrame) {
+                    mTexture->initFromPixels(&mFrameCache[mFrameNum][0],
+                                             static_cast<size_t>(mSize.x),
+                                             static_cast<size_t>(mSize.y));
+                    ++mFrameNum;
+                }
+            }
+            else {
+                renderNextFrame = true;
+            }
         }
-    }
 
-    if (renderNextFrame && !mHoldFrame)
-        mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+        if (renderNextFrame && !mHoldFrame)
+            mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+    }
 
     Renderer::setMatrix(trans);
 
@@ -251,14 +390,5 @@ void LottieComponent::render(const glm::mat4& parentTrans)
 
         // Render it.
         Renderer::drawTriangleStrips(&vertices[0], 4, trans);
-    }
-
-    if (!mHoldFrame && mFrameNum == mTotalFrames - 1) {
-        mAnimationEndTime = std::chrono::system_clock::now();
-        LOG(LogDebug) << "LottieComponent::render(): Animation duration: "
-                      << std::chrono::duration_cast<std::chrono::milliseconds>(mAnimationEndTime -
-                                                                               mAnimationStartTime)
-                             .count()
-                      << " ms";
     }
 }

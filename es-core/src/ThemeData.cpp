@@ -14,6 +14,7 @@
 #include "Platform.h"
 #include "Settings.h"
 #include "components/ImageComponent.h"
+#include "components/LottieComponent.h"
 #include "components/TextComponent.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
@@ -144,6 +145,19 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>> The
       {"color", COLOR},
       {"filledPath", PATH},
       {"unfilledPath", PATH},
+      {"visible", BOOLEAN},
+      {"zIndex", FLOAT}}},
+    {"animation",
+     {{"pos", NORMALIZED_PAIR},
+      {"size", NORMALIZED_PAIR},
+      {"origin", NORMALIZED_PAIR},
+      {"rotation", FLOAT},
+      {"rotationOrigin", NORMALIZED_PAIR},
+      {"path", PATH},
+      {"speed", FLOAT},
+      {"direction", STRING},
+      {"keepAspectRatio", BOOLEAN},
+      {"delay", FLOAT},
       {"visible", BOOLEAN},
       {"zIndex", FLOAT}}},
     {"badges",
@@ -650,6 +664,8 @@ std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData
                 comp = new ImageComponent(window);
             else if (t == "text")
                 comp = new TextComponent(window);
+            else if (t == "animation")
+                comp = new LottieComponent(window);
 
             if (comp) {
                 comp->setDefaultZIndex(10.0f);

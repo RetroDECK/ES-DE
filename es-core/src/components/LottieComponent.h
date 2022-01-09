@@ -34,6 +34,12 @@ public:
         mMaxCacheSize = static_cast<size_t>(glm::clamp(value, 0, 1024) * 1024 * 1024);
     }
 
+    void resetFileAnimation() override
+    {
+        mTimeAccumulator = 0;
+        mFrameNum = 0;
+    }
+
     void onSizeChanged() override;
 
     virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -66,12 +72,14 @@ private:
     int mTargetPacing;
     int mTimeAccumulator;
     bool mHoldFrame;
+    int mDroppedFrames;
 
+    bool mPause;
+
+    float mSpeedModifier;
     bool mKeepAspectRatio;
 
-    // TEMPORARY.
     std::chrono::time_point<std::chrono::system_clock> mAnimationStartTime;
-    std::chrono::time_point<std::chrono::system_clock> mAnimationEndTime;
 };
 
 #endif // ES_CORE_COMPONENTS_LOTTIE_COMPONENT_H

@@ -893,6 +893,7 @@ void FileData::launchGame(Window* window)
         window->queueInfoPopup("ERROR: MISSING EMULATOR CONFIGURATION FOR '" + emulatorEntry + "'",
                                6000);
         window->setAllowTextScrolling(true);
+        window->setAllowFileAnimation(true);
         return;
     }
     else if (binaryPath.empty()) {
@@ -903,6 +904,7 @@ void FileData::launchGame(Window* window)
         window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?",
                                6000);
         window->setAllowTextScrolling(true);
+        window->setAllowFileAnimation(true);
         return;
     }
     else {
@@ -951,6 +953,7 @@ void FileData::launchGame(Window* window)
                         Utils::String::toUpper(Utils::FileSystem::getFileName(coreFile)) + "'",
                     6000);
                 window->setAllowTextScrolling(true);
+                window->setAllowFileAnimation(true);
                 return;
             }
             else {
@@ -970,6 +973,7 @@ void FileData::launchGame(Window* window)
 
             window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
             window->setAllowTextScrolling(true);
+            window->setAllowFileAnimation(true);
             return;
         }
     }
@@ -983,6 +987,7 @@ void FileData::launchGame(Window* window)
 
         window->queueInfoPopup("ERROR: MISSING CORE CONFIGURATION FOR '" + coreEntry + "'", 6000);
         window->setAllowTextScrolling(true);
+        window->setAllowFileAnimation(true);
         return;
     }
 
@@ -1053,6 +1058,7 @@ void FileData::launchGame(Window* window)
 
             window->queueInfoPopup("ERROR: INVALID ENTRY IN SYSTEMS CONFIGURATION FILE", 6000);
             window->setAllowTextScrolling(true);
+            window->setAllowFileAnimation(true);
             return;
         }
     }
@@ -1070,6 +1076,7 @@ void FileData::launchGame(Window* window)
                 Utils::String::toUpper(coreName.substr(0, coreName.size()) + "'"),
             6000);
         window->setAllowTextScrolling(true);
+        window->setAllowFileAnimation(true);
         return;
     }
 
@@ -1114,6 +1121,7 @@ void FileData::launchGame(Window* window)
                                    Utils::String::toUpper(std::to_string(returnValue) + ")"),
                                6000);
         window->setAllowTextScrolling(true);
+        window->setAllowFileAnimation(true);
     }
     else {
         // Stop showing the game launch notification.
@@ -1146,8 +1154,10 @@ void FileData::launchGame(Window* window)
 
     // Unless we're running in the background while the game is launched, re-enable the text
     // scrolling that was disabled in ViewController.
-    if (!runInBackground)
+    if (!runInBackground) {
         window->setAllowTextScrolling(true);
+        window->setAllowFileAnimation(true);
+    }
 
     // Update number of times the game has been launched.
     FileData* gameToUpdate = getSourceFileData();

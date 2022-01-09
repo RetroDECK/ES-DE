@@ -676,8 +676,10 @@ void ViewController::launch(FileData* game)
     if (mCurrentView)
         mCurrentView->onPauseVideo();
 
-    // Disable text scrolling. It will be enabled again in FileData upon returning from the game.
+    // Disable text scrolling and stop any Lottie animations. These will be enabled again in
+    // FileData upon returning from the game.
     mWindow->setAllowTextScrolling(false);
+    mWindow->setAllowFileAnimation(false);
 
     stopAnimation(1); // Make sure the fade in isn't still playing.
     mWindow->stopInfoPopup(); // Make sure we disable any existing info popup.
@@ -839,6 +841,7 @@ bool ViewController::input(InputConfig* config, Input input)
     // screensaver start on schedule.
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
+        mWindow->setAllowFileAnimation(true);
         mWindow->unsetLaunchedGame();
         // Filter out the "a" button so the game is not restarted if there was such a button press
         // queued when leaving the game.

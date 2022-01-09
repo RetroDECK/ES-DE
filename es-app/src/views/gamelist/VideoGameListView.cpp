@@ -551,6 +551,10 @@ void VideoGameListView::update(int deltaTime)
 
 void VideoGameListView::onShow()
 {
+    // Reset any Lottie animations.
+    for (auto extra : mThemeExtras)
+        extra->resetFileAnimation();
+
     mLastUpdated = nullptr;
     GuiComponent::onShow();
     updateInfoPanel();
