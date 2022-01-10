@@ -71,6 +71,7 @@ private:
     float mSpeedModifier;
     int mTargetPacing;
     int mTimeAccumulator;
+    int mLastRenderedFrame;
     int mSkippedFrames;
 
     bool mHoldFrame;

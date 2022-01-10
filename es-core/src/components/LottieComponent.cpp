@@ -33,6 +33,7 @@ LottieComponent::LottieComponent(Window* window)
     , mSpeedModifier{1.0f}
     , mTargetPacing{0}
     , mTimeAccumulator{0}
+    , mLastRenderedFrame{-1}
     , mSkippedFrames{0}
     , mHoldFrame{false}
     , mPause{false}
@@ -84,6 +85,7 @@ void LottieComponent::setAnimation(const std::string& path)
         mAnimation.reset();
         mPictureRGBA.clear();
         mCacheSize = 0;
+        mLastRenderedFrame = -1;
     }
 
     mPath = path;
@@ -192,8 +194,12 @@ void LottieComponent::resetFileAnimation()
     mTimeAccumulator = 0;
     mFrameNum = mStartDirection == "reverse" ? mTotalFrames - 1 : 0;
 
-    if (mAnimation != nullptr)
+    if (mAnimation != nullptr) {
+        if (mFuture.valid())
+            mFuture.get();
         mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+        mLastRenderedFrame = mFrameNum;
+    }
 }
 
 void LottieComponent::onSizeChanged()
@@ -393,13 +399,15 @@ void LottieComponent::render(const glm::mat4& parentTrans)
                 // Cache frame if caching is enabled and we're not exceeding either the per-file
                 // max cache size or the total cache size. Note that this is completely unrelated
                 // to the texture caching used for images.
-                if (mCacheFrames && mFrameCache.find(mFrameNum) == mFrameCache.end()) {
+                if (mCacheFrames && mLastRenderedFrame != -1 &&
+                    mFrameCache.find(mLastRenderedFrame) == mFrameCache.end()) {
                     size_t newCacheSize = mCacheSize + mFrameSize;
                     if (newCacheSize < mMaxCacheSize &&
                         mTotalFrameCache + mFrameSize < mMaxTotalFrameCache) {
-                        mFrameCache[mFrameNum] = mPictureRGBA;
+                        mFrameCache[mLastRenderedFrame] = mPictureRGBA;
                         mCacheSize += mFrameSize;
                         mTotalFrameCache += mFrameSize;
+                        mLastRenderedFrame = -1;
                     }
                 }
 
@@ -437,8 +445,10 @@ void LottieComponent::render(const glm::mat4& parentTrans)
             }
         }
 
-        if (renderNextFrame && !mHoldFrame)
+        if (renderNextFrame && !mHoldFrame) {
             mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+            mLastRenderedFrame = mFrameNum;
+        }
     }
 
     Renderer::setMatrix(trans);
