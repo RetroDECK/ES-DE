@@ -198,7 +198,7 @@ void LottieComponent::resetFileAnimation()
         if (mFuture.valid())
             mFuture.get();
         mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
-        mLastRenderedFrame = mFrameNum;
+        mLastRenderedFrame = static_cast<int>(mFrameNum);
     }
 }
 
@@ -447,7 +447,7 @@ void LottieComponent::render(const glm::mat4& parentTrans)
 
         if (renderNextFrame && !mHoldFrame) {
             mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
-            mLastRenderedFrame = mFrameNum;
+            mLastRenderedFrame = static_cast<int>(mFrameNum);
         }
     }
 

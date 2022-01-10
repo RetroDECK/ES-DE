@@ -12,8 +12,6 @@
 #include <string>
 
 #if defined(_WIN64)
-#include <winsock2.h>
-// This order is required as MinGW complains if windows.h is included before winsock2.h.
 #include <windows.h>
 #endif
 
@@ -44,12 +42,14 @@ namespace Utils
 
         // Clean, normal shutdown.
         int quitES(QuitMode mode = QuitMode::QUIT);
+        void processQuitMode();
 
         // Immediately shut down the application as cleanly as possible.
         void emergencyShutdown();
-        void processQuitMode();
 
-        inline static QuitMode quitMode = QuitMode::QUIT;
+        static QuitMode sQuitMode = QuitMode::QUIT;
+        // This is simply to get rid of a GCC false positive -Wunused-variable compiler warning.
+        static QuitMode sQuitModeDummy = sQuitMode;
 
     } // namespace Platform
 

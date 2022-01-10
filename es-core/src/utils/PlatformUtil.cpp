@@ -10,6 +10,9 @@
 
 #include "Log.h"
 #include "Window.h"
+#if defined(_WIN64)
+#include "utils/StringUtil.h"
+#endif
 
 #include <SDL2/SDL_events.h>
 
@@ -259,7 +262,7 @@ namespace Utils
 
         int quitES(QuitMode mode)
         {
-            quitMode = mode;
+            sQuitMode = mode;
 
             SDL_Event quit;
             quit.type = SDL_QUIT;
@@ -267,19 +270,9 @@ namespace Utils
             return 0;
         }
 
-        void emergencyShutdown()
-        {
-            LOG(LogError) << "Critical - Performing emergency shutdown...";
-
-            Window::getInstance()->deinit();
-            Log::flush();
-
-            exit(EXIT_FAILURE);
-        }
-
         void processQuitMode()
         {
-            switch (quitMode) {
+            switch (sQuitMode) {
                 case QuitMode::REBOOT: {
                     LOG(LogInfo) << "Rebooting system";
                     runRebootCommand();
@@ -294,6 +287,16 @@ namespace Utils
                     break;
                 }
             }
+        }
+
+        void emergencyShutdown()
+        {
+            LOG(LogError) << "Critical - Performing emergency shutdown...";
+
+            Window::getInstance()->deinit();
+            Log::flush();
+
+            exit(EXIT_FAILURE);
         }
 
     } // namespace Platform
