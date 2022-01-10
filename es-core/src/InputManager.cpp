@@ -11,11 +11,11 @@
 #include "InputManager.h"
 
 #include "Log.h"
-#include "Platform.h"
 #include "Scripting.h"
 #include "Window.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
 #include <iostream>

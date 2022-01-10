@@ -20,7 +20,6 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/InputManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MameNames.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platform.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Settings.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Sound.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ThemeData.h
@@ -85,6 +84,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.h
 )
@@ -100,7 +100,6 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/InputManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MameNames.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/Platform.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Scripting.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Settings.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Sound.cpp
@@ -160,6 +159,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/CImgUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/FileSystemUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/MathUtil.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/PlatformUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/StringUtil.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/TimeUtil.cpp
 )

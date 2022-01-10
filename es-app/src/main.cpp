@@ -24,7 +24,6 @@
 #include "Log.h"
 #include "MameNames.h"
 #include "MediaViewer.h"
-#include "Platform.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
@@ -33,6 +32,7 @@
 #include "guis/GuiLaunchScreen.h"
 #include "guis/GuiMsgBox.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 

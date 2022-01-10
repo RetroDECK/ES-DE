@@ -6,13 +6,10 @@
 //  Platform utility functions.
 //
 
-#include "Platform.h"
+#include "utils/PlatformUtil.h"
 
 #include "Log.h"
-#include "MameNames.h"
-#include "Settings.h"
 #include "Window.h"
-#include "utils/StringUtil.h"
 
 #include <SDL2/SDL_events.h>
 

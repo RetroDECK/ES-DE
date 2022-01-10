@@ -6,8 +6,8 @@
 //  Platform utility functions.
 //
 
-#ifndef ES_CORE_PLATFORM_H
-#define ES_CORE_PLATFORM_H
+#ifndef ES_CORE_UTILS_PLATFORM_UTIL_H
+#define ES_CORE_UTILS_PLATFORM_UTIL_H
 
 #include <string>
 
@@ -55,4 +55,4 @@ namespace Utils
 
 } // namespace Utils
 
-#endif // ES_CORE_PLATFORM_H
+#endif // ES_CORE_UTILS_PLATFORM_UTIL_H

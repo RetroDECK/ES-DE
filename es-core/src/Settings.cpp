@@ -10,7 +10,6 @@
 #include "Settings.h"
 
 #include "Log.h"
-#include "Platform.h"
 #include "Scripting.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"

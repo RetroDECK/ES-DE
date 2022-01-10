@@ -10,9 +10,9 @@
 #include "ResourceManager.h"
 
 #include "Log.h"
-#include "Platform.h"
 #include "Scripting.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
 #include <fstream>

@@ -11,7 +11,6 @@
 #include "ThemeData.h"
 
 #include "Log.h"
-#include "Platform.h"
 #include "Settings.h"
 #include "components/ImageComponent.h"
 #include "components/LottieComponent.h"
