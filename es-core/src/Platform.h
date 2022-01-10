@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Platform.h
 //
-//  Platform-specific functions.
+//  Platform utility functions.
 //
 
 #ifndef ES_CORE_PLATFORM_H
@@ -17,29 +17,42 @@
 #include <windows.h>
 #endif
 
-enum QuitMode {
-    QUIT = 0, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-    REBOOT = 1,
-    POWEROFF = 2
-};
+namespace Utils
+{
+    namespace Platform
+    {
+        enum QuitMode {
+            QUIT = 0, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+            REBOOT = 1,
+            POWEROFF = 2
+        };
 
-// Uses UTF-8 for Unix and does a UTF-16/wstring conversion for Windows.
-int runSystemCommand(const std::string& cmd_utf8);
-// Windows specific UTF-16/wstring function. (FOR FUTURE USE)
-int runSystemCommand(const std::wstring& cmd_utf16);
+        int runRebootCommand();
+        int runPoweroffCommand();
 
-int launchGameUnix(const std::string& cmd_utf8, bool runInBackground);
-int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool hideWindow);
+        // Uses UTF-8 for Unix and does a UTF-16/wstring conversion for Windows.
+        int runSystemCommand(const std::string& cmd_utf8);
+        // Windows specific UTF-16/wstring function. (FOR FUTURE USE)
+        int runSystemCommand(const std::wstring& cmd_utf16);
 
-unsigned int getTaskbarState();
-void hideTaskbar();
-void revertTaskbarState(unsigned int& state);
+        int launchGameUnix(const std::string& cmd_utf8, bool runInBackground);
+        int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool hideWindow);
 
-// Clean, normal shutdown.
-int quitES(QuitMode mode = QuitMode::QUIT);
+        unsigned int getTaskbarState();
+        void hideTaskbar();
+        void revertTaskbarState(unsigned int& state);
 
-// Immediately shut down the application as cleanly as possible.
-void emergencyShutdown();
-void processQuitMode();
+        // Clean, normal shutdown.
+        int quitES(QuitMode mode = QuitMode::QUIT);
+
+        // Immediately shut down the application as cleanly as possible.
+        void emergencyShutdown();
+        void processQuitMode();
+
+        inline static QuitMode quitMode = QuitMode::QUIT;
+
+    } // namespace Platform
+
+} // namespace Utils
 
 #endif // ES_CORE_PLATFORM_H

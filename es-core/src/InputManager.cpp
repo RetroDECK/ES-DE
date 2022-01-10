@@ -239,7 +239,7 @@ void InputManager::doOnFinish()
                         LOG(LogInfo) << "	" << tocall;
                         std::cout << "==============================================\n"
                                      "input config finish command:\n";
-                        int exitCode = runSystemCommand(tocall);
+                        int exitCode = Utils::Platform::runSystemCommand(tocall);
                         std::cout << "==============================================\n";
 
                         if (exitCode != 0) {

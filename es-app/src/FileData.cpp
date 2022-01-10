@@ -1107,10 +1107,10 @@ void FileData::launchGame(Window* window)
     // Possibly keep ES-DE running in the background while the game is launched.
 
 #if defined(_WIN64)
-    returnValue =
-        launchGameWindows(Utils::String::stringToWideString(command), runInBackground, hideWindow);
+    returnValue = Utils::Platform::launchGameWindows(Utils::String::stringToWideString(command),
+                                                     runInBackground, hideWindow);
 #else
-    returnValue = launchGameUnix(command, runInBackground);
+    returnValue = Utils::Platform::launchGameUnix(command, runInBackground);
 #endif
     // Notify the user in case of a failed game launch using a popup window.
     if (returnValue != 0) {

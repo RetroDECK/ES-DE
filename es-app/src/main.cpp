@@ -563,8 +563,8 @@ int main(int argc, char* argv[])
 
     if (Settings::getInstance()->getBool("HideTaskbar")) {
         taskbarStateChanged = true;
-        taskbarState = getTaskbarState();
-        hideTaskbar();
+        taskbarState = Utils::Platform::getTaskbarState();
+        Utils::Platform::hideTaskbar();
     }
 #endif
 
@@ -692,10 +692,10 @@ int main(int argc, char* argv[])
 #if defined(_WIN64)
     // If the taskbar state was changed (taskbar was hidden), then revert it.
     if (taskbarStateChanged)
-        revertTaskbarState(taskbarState);
+        Utils::Platform::revertTaskbarState(taskbarState);
 #endif
 
-    processQuitMode();
+    Utils::Platform::processQuitMode();
 
     LOG(LogInfo) << "EmulationStation cleanly shutting down";
 

@@ -77,7 +77,7 @@ namespace Scripting
                     .append(arg4)
                     .append(arg4Quotation);
                 LOG(LogDebug) << "Executing: " << script;
-                runSystemCommand(script);
+                Utils::Platform::runSystemCommand(script);
             }
         }
     }

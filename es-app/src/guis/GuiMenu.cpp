@@ -1135,7 +1135,7 @@ void GuiMenu::openQuitMenu()
             [this] {
                 Scripting::fireEvent("quit");
                 close(true);
-                quitES();
+                Utils::Platform::quitES();
             },
             "NO", nullptr));
     }
@@ -1153,7 +1153,7 @@ void GuiMenu::openQuitMenu()
                 [this] {
                     Scripting::fireEvent("quit");
                     close(true);
-                    quitES();
+                    Utils::Platform::quitES();
                 },
                 "NO", nullptr));
         });
@@ -1170,7 +1170,7 @@ void GuiMenu::openQuitMenu()
                 [] {
                     Scripting::fireEvent("quit", "reboot");
                     Scripting::fireEvent("reboot");
-                    if (quitES(QuitMode::REBOOT) != 0) {
+                    if (Utils::Platform::quitES(Utils::Platform::QuitMode::REBOOT) != 0) {
                         LOG(LogWarning) << "Reboot terminated with non-zero result!";
                     }
                 },
@@ -1189,7 +1189,7 @@ void GuiMenu::openQuitMenu()
                 [] {
                     Scripting::fireEvent("quit", "poweroff");
                     Scripting::fireEvent("poweroff");
-                    if (quitES(QuitMode::POWEROFF) != 0) {
+                    if (Utils::Platform::quitES(Utils::Platform::QuitMode::POWEROFF) != 0) {
                         LOG(LogWarning) << "Power off terminated with non-zero result!";
                     }
                 },
