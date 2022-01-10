@@ -11,7 +11,7 @@
 #include "Log.h"
 #include "MameNames.h"
 #include "Settings.h"
-#include "renderers/Renderer.h"
+#include "Window.h"
 #include "utils/StringUtil.h"
 
 #include <SDL2/SDL_events.h>
@@ -270,8 +270,7 @@ void emergencyShutdown()
 {
     LOG(LogError) << "Critical - Performing emergency shutdown...";
 
-    // Most of the SDL deinitialization is done in Renderer.
-    Renderer::deinit();
+    Window::getInstance()->deinit();
     Log::flush();
 
     exit(EXIT_FAILURE);

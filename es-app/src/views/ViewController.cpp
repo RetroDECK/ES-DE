@@ -227,6 +227,10 @@ void ViewController::invalidAlternativeEmulatorDialog()
 
 void ViewController::goToStart(bool playTransition)
 {
+    // Needed to avoid segfaults during emergency shutdown.
+    if (Renderer::getSDLWindow() == nullptr)
+        return;
+
 #if defined(__APPLE__)
     // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
     // best user experience is to simply disable them on this OS.
@@ -310,6 +314,9 @@ void ViewController::cancelViewTransitions()
 
 void ViewController::stopScrolling()
 {
+    if (Renderer::getSDLWindow() == nullptr)
+        return;
+
     mSystemListView->stopScrolling();
     mCurrentView->stopListScrolling();
 
@@ -1031,6 +1038,9 @@ void ViewController::reloadGameListView(IGameListView* view, bool reloadTheme)
 
 void ViewController::reloadAll()
 {
+    if (Renderer::getSDLWindow() == nullptr)
+        return;
+
     cancelViewTransitions();
 
     // Clear all GameListViews.
