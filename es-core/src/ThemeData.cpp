@@ -702,9 +702,9 @@ std::map<std::string, ThemeSet> ThemeData::getThemeSets()
         if (!Utils::FileSystem::isDirectory(paths[i]))
             continue;
 
-        Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(paths[i]);
+        Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(paths[i]);
 
-        for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
+        for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isDirectory(*it)) {
                 ThemeSet set = {*it};

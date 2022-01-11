@@ -30,7 +30,7 @@ FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType
         return nullptr;
     }
 
-    Utils::FileSystem::stringList pathList = Utils::FileSystem::getPathList(relative);
+    Utils::FileSystem::StringList pathList = Utils::FileSystem::getPathList(relative);
     auto path_it = pathList.begin();
     FileData* treeNode = root;
     bool found = false;

@@ -20,7 +20,7 @@ class SwitchComponent;
 class SystemData;
 
 template <typename T> class OptionListComponent;
-typedef std::function<bool(SystemData*, FileData*)> GameFilterFunc;
+using GameFilterFunc = std::function<bool(SystemData*, FileData*)>;
 
 class GuiScraperMenu : public GuiComponent
 {

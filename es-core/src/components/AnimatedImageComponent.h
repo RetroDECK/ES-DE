@@ -39,7 +39,7 @@ public:
     void onSizeChanged() override;
 
 private:
-    typedef std::pair<std::unique_ptr<ImageComponent>, int> ImageFrame;
+    using ImageFrame = std::pair<std::unique_ptr<ImageComponent>, int>;
 
     std::vector<ImageFrame> mFrames;
 

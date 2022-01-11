@@ -85,7 +85,7 @@ private:
     glm::vec2 mSourceSize;
     bool mForceLoad;
 
-    typedef std::pair<std::string, bool> TextureKeyType;
+    using TextureKeyType = std::pair<std::string, bool>;
     // Map of textures, used to prevent duplicate textures.
     static std::map<TextureKeyType, std::weak_ptr<TextureResource>> sTextureMap;
     // Set of all textures, used for memory management.

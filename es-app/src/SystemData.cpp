@@ -265,13 +265,13 @@ bool SystemData::populateFolder(FileData* folder)
     std::string extension;
     bool isGame;
     bool showHiddenFiles = Settings::getInstance()->getBool("ShowHiddenFiles");
-    Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(folderPath);
+    Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(folderPath);
 
     // If system directory exists but contains no games, return as error.
     if (dirContent.size() == 0)
         return false;
 
-    for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
+    for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
          it != dirContent.cend(); ++it) {
         filePath = *it;
 

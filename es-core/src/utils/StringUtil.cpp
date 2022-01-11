@@ -14,7 +14,6 @@
 #include "utils/StringUtil.h"
 
 #include <algorithm>
-#include <codecvt>
 #include <locale>
 
 namespace Utils
@@ -470,8 +469,7 @@ namespace Utils
                     if (charIndex != nullptr) {
                         wchar_t lowerChar = *(unicodeLowercase + (charIndex - unicodeUppercase));
                         // Convert back to string format.
-                        typedef std::codecvt_utf8<wchar_t> convert_type;
-                        std::wstring_convert<convert_type, wchar_t> byteConverter;
+                        std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> byteConverter;
 
                         stringLower += byteConverter.to_bytes(lowerChar);
                     }
@@ -523,8 +521,7 @@ namespace Utils
                     if (charIndex != nullptr) {
                         wchar_t upperChar = *(unicodeUppercase + (charIndex - unicodeLowercase));
                         // Convert back to string format.
-                        typedef std::codecvt_utf8<wchar_t> convert_type;
-                        std::wstring_convert<convert_type, wchar_t> byteConverter;
+                        std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> byteConverter;
 
                         stringUpper += byteConverter.to_bytes(upperChar);
                     }
@@ -596,17 +593,13 @@ namespace Utils
 
         std::wstring stringToWideString(const std::string& stringArg)
         {
-            typedef std::codecvt_utf8<wchar_t> convert_type;
-            std::wstring_convert<convert_type, wchar_t> stringConverter;
-
+            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> stringConverter;
             return stringConverter.from_bytes(stringArg);
         }
 
         std::string wideStringToString(const std::wstring& stringArg)
         {
-            typedef std::codecvt_utf8<wchar_t> convert_type;
-            std::wstring_convert<convert_type, wchar_t> stringConverter;
-
+            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> stringConverter;
             return stringConverter.to_bytes(stringArg);
         }
 

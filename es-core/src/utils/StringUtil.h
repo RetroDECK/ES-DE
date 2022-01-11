@@ -10,6 +10,7 @@
 #ifndef ES_CORE_UTILS_STRING_UTIL_H
 #define ES_CORE_UTILS_STRING_UTIL_H
 
+#include <codecvt>
 #include <string>
 #include <vector>
 
@@ -44,6 +45,7 @@ namespace Utils
                                             const std::string& delimiter,
                                             bool caseInsensitive = false);
         std::string scramble(const std::string& input, const std::string& key);
+
     } // namespace String
 
 } // namespace Utils

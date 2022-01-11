@@ -1366,9 +1366,9 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromTheme()
     std::string themePath = set->second.path;
 
     if (Utils::FileSystem::exists(themePath)) {
-        Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(themePath);
+        Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(themePath);
 
-        for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
+        for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isDirectory(*it)) {
                 // ... here you have a directory.
@@ -1390,8 +1390,8 @@ std::vector<std::string> CollectionSystemsManager::getCollectionsFromConfigFolde
     std::string configPath = getCollectionsFolder();
 
     if (Utils::FileSystem::exists(configPath)) {
-        Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(configPath);
-        for (Utils::FileSystem::stringList::const_iterator it = dirContent.cbegin();
+        Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(configPath);
+        for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isRegularFile(*it)) {
                 // It's a file.

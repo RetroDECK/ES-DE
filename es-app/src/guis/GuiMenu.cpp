@@ -296,10 +296,9 @@ void GuiMenu::openUIOptions()
     });
 
     // Default gamelist sort order.
-    typedef OptionListComponent<const FileData::SortType*> SortList;
     std::string sortOrder;
-    auto default_sort_order =
-        std::make_shared<SortList>(mWindow, getHelpStyle(), "DEFAULT SORT ORDER", false);
+    auto default_sort_order = std::make_shared<OptionListComponent<const FileData::SortType*>>(
+        mWindow, getHelpStyle(), "DEFAULT SORT ORDER", false);
     // Exclude the System sort options.
     unsigned int numSortTypes = static_cast<unsigned int>(FileSorts::SortTypes.size() - 2);
     for (unsigned int i = 0; i < numSortTypes; ++i) {

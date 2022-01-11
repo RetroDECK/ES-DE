@@ -33,6 +33,7 @@ namespace Utils
                            unsigned int shadowDistance,
                            float transparency,
                            unsigned int iterations);
+
     } // namespace CImg
 
 } // namespace Utils

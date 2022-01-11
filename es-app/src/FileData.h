@@ -108,7 +108,7 @@ public:
     void launchGame(Window* window);
     const std::string findEmulatorPath(std::string& command);
 
-    typedef bool ComparisonFunction(const FileData* a, const FileData* b);
+    using ComparisonFunction = bool(const FileData* a, const FileData* b);
     struct SortType {
         ComparisonFunction* comparisonFunction;
         std::string description;

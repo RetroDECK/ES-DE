@@ -11,6 +11,6 @@
 
 #include <string>
 
-typedef std::pair<std::string, std::string> HelpPrompt;
+using HelpPrompt = std::pair<std::string, std::string>;
 
 #endif // ES_CORE_HELP_PROMPT_H

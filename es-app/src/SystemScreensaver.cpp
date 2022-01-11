@@ -465,7 +465,7 @@ void SystemScreensaver::generateCustomImageList()
 
     if (imageDir != "" && Utils::FileSystem::isDirectory(imageDir)) {
         std::string imageFilter = ".jpg, .JPG, .png, .PNG";
-        Utils::FileSystem::stringList dirContent = Utils::FileSystem::getDirContent(
+        Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(
             imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
 
         for (auto it = dirContent.begin(); it != dirContent.end(); ++it) {

@@ -43,10 +43,10 @@ private:
 
     MenuComponent mMenu;
 
-    typedef OptionListComponent<std::string> LetterList;
+    using LetterList = OptionListComponent<std::string>;
     std::shared_ptr<LetterList> mJumpToLetterList;
 
-    typedef OptionListComponent<const FileData::SortType*> SortList;
+    using SortList = OptionListComponent<const FileData::SortType*>;
     std::shared_ptr<SortList> mListSort;
 
     SystemData* mSystem;

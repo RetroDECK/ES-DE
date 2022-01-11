@@ -63,10 +63,10 @@ namespace Utils
         static std::string homePath = "";
         static std::string exePath = "";
 
-        stringList getDirContent(const std::string& path, const bool recursive)
+        StringList getDirContent(const std::string& path, const bool recursive)
         {
             std::string genericPath = getGenericPath(path);
-            stringList contentList;
+            StringList contentList;
 
             // Only parse the directory, if it's a directory.
             if (isDirectory(genericPath)) {
@@ -121,9 +121,9 @@ namespace Utils
             return contentList;
         }
 
-        stringList getPathList(const std::string& path)
+        StringList getPathList(const std::string& path)
         {
-            stringList pathList;
+            StringList pathList;
             std::string genericPath = getGenericPath(path);
             size_t start = 0;
             size_t end = 0;
@@ -337,12 +337,12 @@ namespace Utils
             // Cleanup path.
             bool scan = true;
             while (scan) {
-                stringList pathList = getPathList(canonicalPath);
+                StringList pathList = getPathList(canonicalPath);
 
                 canonicalPath.clear();
                 scan = false;
 
-                for (stringList::const_iterator it = pathList.cbegin(); it != pathList.cend();
+                for (StringList::const_iterator it = pathList.cbegin(); it != pathList.cend();
                      ++it) {
                     // Ignore empty.
                     if ((*it).empty())

@@ -18,10 +18,10 @@ namespace Utils
 {
     namespace FileSystem
     {
-        typedef std::list<std::string> stringList;
+        using StringList = std::list<std::string>;
 
-        stringList getDirContent(const std::string& path, const bool recursive = false);
-        stringList getPathList(const std::string& path);
+        StringList getDirContent(const std::string& path, const bool recursive = false);
+        StringList getPathList(const std::string& path);
         void setHomePath(const std::string& path);
         std::string getHomePath();
         std::string getCWDPath();
@@ -66,6 +66,7 @@ namespace Utils
         bool isDirectory(const std::string& path);
         bool isSymlink(const std::string& path);
         bool isHidden(const std::string& path);
+
     } // namespace FileSystem
 
 } // namespace Utils

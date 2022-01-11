@@ -71,6 +71,7 @@ namespace Utils
         std::string timeToString(const time_t& time, const std::string& format = "%Y%m%dT%H%M%S");
         int daysInMonth(const int year, const int month);
         int daysInYear(const int year);
+
     } // namespace Time
 
 } // namespace Utils

@@ -151,10 +151,10 @@ std::vector<std::string> getScraperList();
 // Returns true if the scraper configured in the settings is still valid.
 bool isValidConfiguredScraper();
 
-typedef void (*generate_scraper_requests_func)(
-    const ScraperSearchParams& params,
-    std::queue<std::unique_ptr<ScraperRequest>>& requests,
-    std::vector<ScraperSearchResult>& results);
+using generate_scraper_requests_func =
+    void (*)(const ScraperSearchParams& params,
+             std::queue<std::unique_ptr<ScraperRequest>>& requests,
+             std::vector<ScraperSearchResult>& results);
 
 // -------------------------------------------------------------------------
 
@@ -175,7 +175,7 @@ public:
 private:
     ScraperSearchResult mResult;
 
-    typedef std::pair<std::unique_ptr<AsyncHandle>, std::function<void()>> ResolvePair;
+    using ResolvePair = std::pair<std::unique_ptr<AsyncHandle>, std::function<void()>>;
     std::vector<ResolvePair> mFuncs;
 };
 

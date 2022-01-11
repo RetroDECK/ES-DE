@@ -120,8 +120,7 @@ std::vector<std::string> InputConfig::getMappedTo(Input input)
 {
     std::vector<std::string> maps;
 
-    typedef std::map<std::string, Input>::const_iterator it_type;
-    for (it_type it = mNameMap.cbegin(); it != mNameMap.cend(); ++it) {
+    for (auto it = mNameMap.cbegin(); it != mNameMap.cend(); ++it) {
         Input chk = it->second;
 
         if (!chk.configured)
@@ -204,8 +203,7 @@ void InputConfig::writeToXML(pugi::xml_node& parent)
 
     cfg.append_attribute("deviceGUID") = mDeviceGUID.c_str();
 
-    typedef std::map<std::string, Input>::const_iterator it_type;
-    for (it_type it = mNameMap.cbegin(); it != mNameMap.cend(); ++it) {
+    for (auto it = mNameMap.cbegin(); it != mNameMap.cend(); ++it) {
         if (!it->second.configured)
             continue;
 
