@@ -125,7 +125,7 @@ cd ../..
 
 echo "\nSetting up pugixml"
 rm -rf pugixml
-git clone git://github.com/zeux/pugixml.git
+git clone https://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.11.4
 cd ..

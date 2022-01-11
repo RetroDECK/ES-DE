@@ -68,13 +68,13 @@ copy /Y glew-2.1.0\lib\Release\x64\glew32.lib ..
 echo:
 echo Setting up FreeType
 
-if exist freetype2\ (
-  rmdir /S /Q freetype2
+if exist freetype\ (
+  rmdir /S /Q freetype
 )
 
-git clone git://git.savannah.gnu.org/freetype/freetype2.git
-cd freetype2
-git checkout VER-2-10-4
+git clone https://github.com/freetype/freetype.git
+cd freetype
+git checkout VER-2-11-1
 mkdir build
 cd ..
 
@@ -97,7 +97,7 @@ if exist pugixml\ (
   rmdir /S /Q pugixml
 )
 
-git clone git://github.com/zeux/pugixml.git
+git clone https://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.10
 cd ..

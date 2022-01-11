@@ -28,7 +28,7 @@ cd external
 
 echo Building FreeType
 
-cd freetype2\build
+cd freetype\build
 if exist CMakeCache.txt (
   nmake clean
   del CMakeCache.txt

@@ -37,7 +37,7 @@ rm -rf freetype
 
 git clone https://github.com/freetype/freetype.git
 cd freetype
-git checkout VER-2-11-0
+git checkout VER-2-11-1
 mkdir build
 cd ..
 
@@ -51,7 +51,7 @@ cp -p FreeImage/Dist/x64/FreeImage.dll ..
 echo -e "\nSetting up pugixml"
 rm -rf pugixml
 
-git clone git://github.com/zeux/pugixml.git
+git clone https://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.11.4
 cd ..

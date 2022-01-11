@@ -333,8 +333,7 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/glew-2.1.0/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-n4.4-latest-win64-gpl-shared-4.4/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include  # MinGW
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype2/include # MSVC
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.0.18)
 else()
