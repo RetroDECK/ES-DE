@@ -226,6 +226,8 @@ namespace Renderer
                      << std::to_string(displayMode.h) << " (physical resolution "
                      << std::to_string(displayMode.w * scaleFactor) << "x"
                      << std::to_string(displayMode.h * scaleFactor) << ")";
+        LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate)
+                     << " Hz";
         LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x"
                      << std::to_string(windowHeight) << " (physical resolution "
                      << std::to_string(windowWidth * scaleFactor) << "x"
@@ -238,6 +240,8 @@ namespace Renderer
 #else
         LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                      << std::to_string(displayMode.h);
+        LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate)
+                     << " Hz";
         LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(windowWidth) << "x"
                      << std::to_string(windowHeight);
 #endif
