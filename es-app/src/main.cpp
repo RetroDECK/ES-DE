@@ -40,6 +40,10 @@
 #include <SDL2/SDL_main.h>
 #include <SDL2/SDL_timer.h>
 
+#if defined(__EMSCRIPTEN__)
+#include <emscripten.h>
+#endif
+
 #if defined(_WIN64)
 #include <cstring>
 #include <windows.h>
@@ -50,22 +54,32 @@
 #include <iostream>
 #include <time.h>
 
-bool forceInputConfig = false;
-bool settingsNeedSaving = false;
+namespace
+{
+    SDL_Event event{};
+    Window* window{nullptr};
+    int lastTime{0};
 
-enum loadSystemsReturnCode {
-    LOADING_OK, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-    INVALID_FILE,
-    NO_ROMS
-};
+    bool forceInputConfig{false};
+    bool settingsNeedSaving{false};
+
+    enum loadSystemsReturnCode {
+        LOADING_OK, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        INVALID_FILE,
+        NO_ROMS
+    };
 
 #if defined(_WIN64)
-enum win64ConsoleType {
-    NO_CONSOLE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-    PARENT_CONSOLE,
-    ALLOCATED_CONSOLE
-};
+    enum win64ConsoleType {
+        NO_CONSOLE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        PARENT_CONSOLE,
+        ALLOCATED_CONSOLE
+    };
+#endif
 
+} // namespace
+
+#if defined(_WIN64)
 // Console output for Windows. The handling of consoles is a mess on this operating system,
 // and this is the best solution I could find. EmulationStation is built using the WINDOWS
 // subsystem (using the -mwindows compiler flag). The idea is to attach to or allocate a new
@@ -416,6 +430,50 @@ void onExit()
     Log::close();
 }
 
+void applicationLoop()
+{
+#if !defined(__EMSCRIPTEN__)
+    while (true) {
+#endif
+        if (SDL_PollEvent(&event)) {
+            do {
+                InputManager::getInstance().parseEvent(event, window);
+
+                if (event.type == SDL_QUIT)
+#if !defined(__EMSCRIPTEN__)
+                    return;
+#else
+                SDL_Quit();
+#endif
+            } while (SDL_PollEvent(&event));
+        }
+
+        if (window->isSleeping()) {
+            lastTime = SDL_GetTicks();
+            // This doesn't need to be accurate, we're just giving up
+            // our CPU time until something wakes us up.
+            SDL_Delay(1);
+            return;
+        }
+
+        int curTime = SDL_GetTicks();
+        int deltaTime = curTime - lastTime;
+        lastTime = curTime;
+
+        // Cap deltaTime if it ever goes negative.
+        if (deltaTime < 0)
+            deltaTime = 1000;
+
+        window->update(deltaTime);
+        window->render();
+
+        Renderer::swapBuffers();
+        Log::flush();
+#if !defined(__EMSCRIPTEN__)
+    }
+#endif
+}
+
 int main(int argc, char* argv[])
 {
     const auto applicationStartTime = std::chrono::system_clock::now();
@@ -477,6 +535,14 @@ int main(int argc, char* argv[])
     // Always close the log on exit.
     atexit(&onExit);
 
+#if defined(__EMSCRIPTEN__)
+    // TODO: Remove when application window resizing has been implemented.
+    Settings::getInstance()->setBool("Debug", true);
+    Log::setReportingLevel(LogDebug);
+    Settings::getInstance()->setInt("WindowWidth", 1280);
+    Settings::getInstance()->setInt("WindowHeight", 720);
+#endif
+
     // Check if the configuration file exists, and if not, create it.
     // This should only happen on first application startup.
     if (!Utils::FileSystem::exists(Utils::FileSystem::getHomePath() +
@@ -528,7 +594,7 @@ int main(int argc, char* argv[])
         }
     }
 
-    Window* window = Window::getInstance();
+    window = Window::getInstance();
     ViewController::getInstance();
     CollectionSystemsManager::getInstance();
     SystemScreensaver screensaver;
@@ -544,7 +610,6 @@ int main(int argc, char* argv[])
 
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
-    SDL_Event event{};
 
     InputManager::getInstance().parseEvent(event, window);
     if (event.type == SDL_QUIT)
@@ -626,7 +691,7 @@ int main(int argc, char* argv[])
     // Generate controller events since we're done loading.
     SDL_GameControllerEventState(SDL_ENABLE);
 
-    int lastTime = SDL_GetTicks();
+    lastTime = SDL_GetTicks();
 
     LOG(LogInfo) << "Application startup time: "
                  << std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -634,47 +699,19 @@ int main(int argc, char* argv[])
                         .count()
                  << " ms";
 
-    bool running = true;
-
 #if !defined(__APPLE__)
     // Now that we've finished loading, disable the relative mouse mode or otherwise mouse
     // input wouldn't work in any games that are launched.
     SDL_SetRelativeMouseMode(SDL_FALSE);
 #endif
 
-    while (running) {
-        if (SDL_PollEvent(&event)) {
-            do {
-                InputManager::getInstance().parseEvent(event, window);
+    // Main application loop.
 
-                if (event.type == SDL_QUIT)
-                    running = false;
-
-            } while (SDL_PollEvent(&event));
-        }
-
-        if (window->isSleeping()) {
-            lastTime = SDL_GetTicks();
-            // This doesn't need to be accurate, we're just giving up
-            // our CPU time until something wakes us up.
-            continue;
-            SDL_Delay(1);
-        }
-
-        int curTime = SDL_GetTicks();
-        int deltaTime = curTime - lastTime;
-        lastTime = curTime;
-
-        // Cap deltaTime if it ever goes negative.
-        if (deltaTime < 0)
-            deltaTime = 1000;
-
-        window->update(deltaTime);
-        window->render();
-        Renderer::swapBuffers();
-
-        Log::flush();
-    }
+#if defined(__EMSCRIPTEN__)
+    emscripten_set_main_loop(&applicationLoop, 0, 1);
+#else
+    applicationLoop();
+#endif
 
     while (window->peekGui() != ViewController::getInstance())
         delete window->peekGui();
