@@ -44,7 +44,6 @@ namespace Renderer
         // clang-format off
         switch (_type) {
             case Texture::RGBA:  { return GL_RGBA;     } break;
-            case Texture::BGRA:  { return GL_BGRA_EXT; } break;
             case Texture::ALPHA: { return GL_ALPHA;    } break;
             default:             { return GL_ZERO;     }
         }
@@ -122,11 +121,23 @@ namespace Renderer
                                void* data)
     {
         const GLenum textureType = convertTextureType(type);
-        const GLenum textureFormat = convertTextureType(format);
         unsigned int texture;
 
         GL_CHECK_ERROR(glGenTextures(1, &texture));
         GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
+
+        // Not sure why the corresponding variables are missing in the OpenGL ES include files
+        // when specifying the values manually seems to work with all graphics drivers.
+        int _GL_TEXTURE_SWIZZLE_R{0x8E42};
+        int _GL_TEXTURE_SWIZZLE_B{0x8E44};
+        int _GL_RED{0x1903};
+        int _GL_BLUE{0x1905};
+
+        // Convert from BGRA to RGBA.
+        if (format == Texture::Type::BGRA) {
+            glTexParameteri(GL_TEXTURE_2D, _GL_TEXTURE_SWIZZLE_B, _GL_RED);
+            glTexParameteri(GL_TEXTURE_2D, _GL_TEXTURE_SWIZZLE_R, _GL_BLUE);
+        }
 
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
                                        repeat ? GL_REPEAT : GL_CLAMP_TO_EDGE));
@@ -137,11 +148,7 @@ namespace Renderer
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
                                        linearMagnify ? GL_LINEAR : GL_NEAREST));
 
-        // Setting different values for internalFormat and format is not really supported by the
-        // OpenGL standard so hopefully it works with all drivers and on all operating systems.
-        // This is only intended as a last resort anyway, normally the BGRA_TO_RGBA shader should
-        // be used for color model conversion.
-        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureFormat,
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
                                     GL_UNSIGNED_BYTE, data));
 
         return texture;

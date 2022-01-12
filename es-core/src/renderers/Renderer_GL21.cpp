@@ -168,7 +168,7 @@ namespace Renderer
     }
 
     unsigned int createTexture(const Texture::Type type,
-                               const Texture::Type format,
+                               const Texture::Type format, // Not used for desktop OpenGL.
                                const bool linearMinify,
                                const bool linearMagnify,
                                const bool repeat,
@@ -177,7 +177,6 @@ namespace Renderer
                                void* data)
     {
         const GLenum textureType = convertTextureType(type);
-        const GLenum textureFormat = convertTextureType(format);
         unsigned int texture;
 
         GL_CHECK_ERROR(glGenTextures(1, &texture));
@@ -195,11 +194,8 @@ namespace Renderer
         GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
                                        linearMagnify ? static_cast<GLfloat>(GL_LINEAR) :
                                                        static_cast<GLfloat>(GL_NEAREST)));
-        // Setting different values for internalFormat and format is not really supported by the
-        // OpenGL standard so hopefully it works with all drivers and on all operating systems.
-        // This is only intended as a last resort anyway, normally the BGRA_TO_RGBA shader should
-        // be used for color model conversion.
-        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureFormat,
+
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
                                     GL_UNSIGNED_BYTE, data));
 
         return texture;
