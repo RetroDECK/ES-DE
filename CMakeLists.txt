@@ -30,7 +30,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
 
 # Define the options.
 option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
-option(GLES "Set to ON if targeting Embedded OpenGL" ${GLES})
+option(GLES1 "Set to ON if targeting OpenGL ES 1.0" ${GLES1})
+option(GLES "Set to ON if targeting OpenGL ES 2.0" ${GLES})
 option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(BUNDLED_CERTS "Set to ON to use bundled TLS/SSL certificates" ${BUNDLED_CERTS})
 option(CEC "Set to ON to enable CEC" ${CEC})
@@ -62,7 +63,7 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # OpenGL setup.
 
-if(GLES)
+if(GLES1 OR GLES)
     set(GLSYSTEM "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
 else()
     set(GLSYSTEM "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
@@ -73,7 +74,7 @@ set_property(CACHE GLSYSTEM PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 #---------------------------------------------------------------------------------------------------
 # Raspberry Pi setup.
 
-# Raspberry Pi OS 32-bit (armv7l)
+# Raspberry Pi OS 32-bit (armv7l).
 if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
     set(RPI ON)
     set(RPI_32 ON)
@@ -81,12 +82,17 @@ if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
     message("-- Building on a Raspberry Pi (32-bit OS)")
 endif()
 
-# Raspberry Pi OS 64-bit (aarch64)
+# Raspberry Pi OS 64-bit (aarch64).
 if(EXISTS "/usr/include/bcm_host.h")
     set(RPI ON)
     set(RPI_64 ON)
     set(BCMHOST ON)
     message("-- Building on a Raspberry Pi (64-bit OS)")
+endif()
+
+# On the Raspberry Pi, desktop OpenGL 2.1 or OpenGL ES 2.0 should be used.
+if(GLES1 AND RPI)
+    message(FATAL_ERROR "-- The OpenGL ES 1.0 renderer is not supported on Raspberry Pi")
 endif()
 
 #---------------------------------------------------------------------------------------------------
@@ -95,8 +101,10 @@ endif()
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     set(OpenGL_GL_PREFERENCE "GLVND")
     find_package(OpenGL REQUIRED)
-else()
+elseif(GLES1)
     find_package(OpenGLES REQUIRED)
+elseif(GLES)
+    find_package(OpenGLES2 REQUIRED)
 endif()
 
 # On macOS and Windows all dependencies are kept in-tree in the "external" directory.
@@ -258,8 +266,10 @@ endif()
 
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     add_definitions(-DUSE_OPENGL_21)
-else()
+elseif(GLES1)
     add_definitions(-DUSE_OPENGLES_10)
+elseif(GLES)
+    add_definitions(-DUSE_OPENGLES_20)
 endif()
 
 if(RPI)
@@ -456,18 +466,13 @@ if(BCMHOST)
     endif()
 endif()
 
-# Note: Building with GLES support on the Raspberry Pi currently seems to be broken.
-if(GLES AND RPI_32)
-    list(APPEND COMMON_LIBRARIES brcmEGL ${OPENGLES_LIBRARIES})
-elseif(GLES AND RPI_64)
-    list(APPEND COMMON_LIBRARIES ${OPENGLES_LIBRARIES})
-endif()
-
 # OpenGL.
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     list(APPEND COMMON_LIBRARIES ${OPENGL_LIBRARIES})
-else()
+elseif(GLES1)
     list(APPEND COMMON_LIBRARIES EGL ${OPENGLES_LIBRARIES})
+elseif(GLES)
+    list(APPEND COMMON_LIBRARIES ${OPENGLES2_LIBRARIES})
 endif()
 
 #---------------------------------------------------------------------------------------------------
