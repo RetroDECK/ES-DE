@@ -211,7 +211,7 @@ else()
 endif()
 
 if(EMSCRIPTEN)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=2 -pthread")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s INITIAL_MEMORY=33554432 -s ALLOW_MEMORY_GROWTH=1 -s WASM=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=1 -s USE_SDL=2 \
                                 -pthread -s PTHREAD_POOL_SIZE=4 -s DEMANGLE_SUPPORT=1 -s USE_WEBGL2=1 -s FULL_ES2=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s ASYNCIFY \
                                 --preload-file ${PROJECT_SOURCE_DIR}/resources@/home/web_user/.emulationstation/resources/ \
