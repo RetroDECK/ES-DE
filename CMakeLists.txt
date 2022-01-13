@@ -61,6 +61,14 @@ if(CLANG_TIDY)
 endif()
 
 #---------------------------------------------------------------------------------------------------
+# Emscripten WebAssembly build.
+
+if(EMSCRIPTEN)
+    set(GLES ON)
+    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+endif()
+
+#---------------------------------------------------------------------------------------------------
 # OpenGL setup.
 
 if(GLES1 OR GLES)
@@ -103,7 +111,7 @@ if(GLSYSTEM MATCHES "Desktop OpenGL")
     find_package(OpenGL REQUIRED)
 elseif(GLES1)
     find_package(OpenGLES REQUIRED)
-elseif(GLES)
+elseif(GLES AND NOT EMSCRIPTEN)
     find_package(OpenGLES2 REQUIRED)
 endif()
 
@@ -118,7 +126,7 @@ elseif(WIN32)
        NOT EXISTS ${PROJECT_SOURCE_DIR}/external/pugixml/pugixml.dll)       # MSVC
         message(FATAL_ERROR "-- You need to build the dependencies in ./external first")
     endif()
-else()
+elseif(NOT EMSCRIPTEN)
     find_package(CURL REQUIRED)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
@@ -200,6 +208,15 @@ else()
             set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -O2 -s")
         endif()
     endif()
+endif()
+
+if(EMSCRIPTEN)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s INITIAL_MEMORY=33554432 -s ALLOW_MEMORY_GROWTH=1 -s WASM=1 -s ASSERTIONS=1 -s EXIT_RUNTIME=1 -s USE_SDL=2 \
+                                -pthread -s PTHREAD_POOL_SIZE=4 -s DEMANGLE_SUPPORT=1 -s USE_WEBGL2=1 -s FULL_ES2=1 -s ERROR_ON_UNDEFINED_SYMBOLS=1 -s ASYNCIFY \
+                                --preload-file ${PROJECT_SOURCE_DIR}/resources@/home/web_user/.emulationstation/resources/ \
+                                --preload-file ${PROJECT_SOURCE_DIR}/themes/rbsimple-DE@/home/web_user/.emulationstation/themes/rbsimple-DE/ \
+                                --preload-file ${PROJECT_SOURCE_DIR}/ROMs@/home/web_user/ROMs/")
 endif()
 
 # Raspberry Pi model 3 and higher (ARM Cortex-A53 minimum).
@@ -346,6 +363,13 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.0.18)
+elseif(EMSCRIPTEN)
+    set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg.wasm-core
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage-CMake/FreeImage/Source
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src)
 else()
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${FFMPEG_INCLUDE_DIRS}
@@ -423,6 +447,39 @@ elseif(WIN32)
                              mingw32
                              Winmm.dll)
     endif()
+elseif(EMSCRIPTEN)
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
+                         # FFmpeg core libraries.
+                         ${PROJECT_SOURCE_DIR}/libavcodec.a
+                         ${PROJECT_SOURCE_DIR}/libavfilter.a
+                         ${PROJECT_SOURCE_DIR}/libavformat.a
+                         ${PROJECT_SOURCE_DIR}/libavutil.a
+                         ${PROJECT_SOURCE_DIR}/libpostproc.a
+                         ${PROJECT_SOURCE_DIR}/libswresample.a
+                         ${PROJECT_SOURCE_DIR}/libswscale.a
+                         # FFmpeg third party libraries.
+                         ${PROJECT_SOURCE_DIR}/libx264.a
+                         ${PROJECT_SOURCE_DIR}/libx265.a
+                         ${PROJECT_SOURCE_DIR}/libass.a
+                         ${PROJECT_SOURCE_DIR}/libfdk-aac.a
+                         ${PROJECT_SOURCE_DIR}/libfribidi.a
+                         ${PROJECT_SOURCE_DIR}/libharfbuzz.a
+                         ${PROJECT_SOURCE_DIR}/libmp3lame.a
+                         ${PROJECT_SOURCE_DIR}/libogg.a
+                         ${PROJECT_SOURCE_DIR}/libopus.a
+                         ${PROJECT_SOURCE_DIR}/libtheoradec.a
+                         ${PROJECT_SOURCE_DIR}/libtheoraenc.a
+                         ${PROJECT_SOURCE_DIR}/libvorbis.a
+                         ${PROJECT_SOURCE_DIR}/libvorbisenc.a
+                         ${PROJECT_SOURCE_DIR}/libvorbisfile.a
+                         ${PROJECT_SOURCE_DIR}/libvpx.a
+                         ${PROJECT_SOURCE_DIR}/libwavpack.a
+                         ${PROJECT_SOURCE_DIR}/libz.a
+                         # Other dependencies.
+                         ${PROJECT_SOURCE_DIR}/libcurl.a
+                         ${PROJECT_SOURCE_DIR}/libFreeImage.a
+                         ${PROJECT_SOURCE_DIR}/libfreetype.a
+                         ${PROJECT_SOURCE_DIR}/libpugixml.a)
 else()
     set(COMMON_LIBRARIES ${CURL_LIBRARIES}
                          ${FFMPEG_LIBRARIES}

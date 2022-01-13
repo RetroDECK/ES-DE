@@ -22,4 +22,8 @@ option(LOTTIE_MODULE OFF)
 unset(CMAKE_CXX_FLAGS)
 unset(CMAKE_EXE_LINKER_FLAGS)
 
+if(EMSCRIPTEN)
+    set(CMAKE_CXX_FLAGS "-pthread")
+endif()
+
 add_subdirectory("rlottie" EXCLUDE_FROM_ALL)
