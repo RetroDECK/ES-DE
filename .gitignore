@@ -22,6 +22,15 @@ emulationstation
 EmulationStation
 EmulationStation.exe
 
+# Emscripten build
+emulationstation.data
+emulationstation.html
+emulationstation.js
+emulationstation.wasm
+emulationstation.worker.js
+/index.html
+/ROMs
+
 # AppImage
 AppDir
 *.AppImage
