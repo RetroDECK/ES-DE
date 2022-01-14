@@ -230,70 +230,70 @@ void BasicGameListView::removeMedia(FileData* game)
     };
 
     // Remove all game media files on the filesystem.
-    if (Utils::FileSystem::exists(game->getVideoPath())) {
+    while (Utils::FileSystem::exists(game->getVideoPath())) {
         mediaType = "videos";
         path = game->getVideoPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getMiximagePath())) {
+    while (Utils::FileSystem::exists(game->getMiximagePath())) {
         mediaType = "miximages";
         path = game->getMiximagePath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getScreenshotPath())) {
+    while (Utils::FileSystem::exists(game->getScreenshotPath())) {
         mediaType = "screenshots";
         path = game->getScreenshotPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getTitleScreenPath())) {
+    while (Utils::FileSystem::exists(game->getTitleScreenPath())) {
         mediaType = "titlescreens";
         path = game->getTitleScreenPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getCoverPath())) {
+    while (Utils::FileSystem::exists(game->getCoverPath())) {
         mediaType = "covers";
         path = game->getCoverPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getBackCoverPath())) {
+    while (Utils::FileSystem::exists(game->getBackCoverPath())) {
         mediaType = "backcovers";
         path = game->getBackCoverPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getMarqueePath())) {
+    while (Utils::FileSystem::exists(game->getMarqueePath())) {
         mediaType = "marquees";
         path = game->getMarqueePath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->get3DBoxPath())) {
+    while (Utils::FileSystem::exists(game->get3DBoxPath())) {
         mediaType = "3dboxes";
         path = game->get3DBoxPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getPhysicalMediaPath())) {
+    while (Utils::FileSystem::exists(game->getPhysicalMediaPath())) {
         mediaType = "physicalmedia";
         path = game->getPhysicalMediaPath();
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
-    if (Utils::FileSystem::exists(game->getThumbnailPath())) {
+    while (Utils::FileSystem::exists(game->getThumbnailPath())) {
         mediaType = "thumbnails";
         path = game->getThumbnailPath();
         Utils::FileSystem::removeFile(path);
