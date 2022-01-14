@@ -172,10 +172,10 @@ namespace Renderer
         // The borderless mode seems to behave well and it's almost completely seamless, especially
         // with a hidden taskbar.
         if (!userResolution)
-            windowFlags = SDL_WINDOW_BORDERLESS | getWindowFlags();
+            windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_OPENGL;
         else
             // If the resolution has been manually set from the command line, then keep the border.
-            windowFlags = getWindowFlags();
+            windowFlags = SDL_WINDOW_OPENGL;
 #elif defined(__APPLE__)
         // Not sure if this could be a useful setting.
         //        SDL_SetHint(SDL_HINT_VIDEO_MAC_FULLSCREEN_SPACES, "0");
@@ -188,14 +188,14 @@ namespace Renderer
         // configured to run in fullscreen mode or switching to its window will not work, but
         // apart from that this mode works fine.
         if (!userResolution)
-            windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
+            windowFlags = SDL_WINDOW_BORDERLESS | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_OPENGL;
         else
-            windowFlags = SDL_WINDOW_ALLOW_HIGHDPI | getWindowFlags();
+            windowFlags = SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_OPENGL;
 #else
         if (!userResolution)
-            windowFlags = SDL_WINDOW_FULLSCREEN_DESKTOP | getWindowFlags();
+            windowFlags = SDL_WINDOW_FULLSCREEN_DESKTOP | SDL_WINDOW_OPENGL;
         else
-            windowFlags = getWindowFlags();
+            windowFlags = SDL_WINDOW_OPENGL;
 #endif
 
         if ((sdlWindow =

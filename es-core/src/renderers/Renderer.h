@@ -166,8 +166,6 @@ namespace Renderer
                               const Renderer::shaderParameters& parameters = shaderParameters(),
                               unsigned char* textureRGBA = nullptr);
 
-    static inline unsigned int getWindowFlags() { return SDL_WINDOW_OPENGL; }
-
     void setupWindow();
     bool createContext();
     void destroyContext();
