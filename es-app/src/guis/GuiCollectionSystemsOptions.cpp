@@ -353,6 +353,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
             if (CollectionSystemsManager::getInstance()->isEditing())
                 CollectionSystemsManager::getInstance()->exitEditMode();
             setNeedsSaving();
+            setNeedsSorting();
+            setNeedsSortingCollections();
             setNeedsCollectionsUpdate();
             setNeedsReloading();
             setNeedsGoToSystem(SystemData::sSystemVector.front());
