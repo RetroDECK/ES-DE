@@ -30,7 +30,6 @@ public:
                   MetaDataList* md,
                   const std::vector<MetaDataDecl>& mdd,
                   ScraperSearchParams params,
-                  const std::string& header,
                   std::function<void()> savedCallback,
                   std::function<void()> clearGameFunc,
                   std::function<void()> deleteGameFunc);

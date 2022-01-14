@@ -38,7 +38,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              MetaDataList* md,
                              const std::vector<MetaDataDecl>& mdd,
                              ScraperSearchParams scraperParams,
-                             const std::string& /*header*/,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)

@@ -454,7 +454,6 @@ void GuiGamelistOptions::openMetaDataEd()
     if (file->getType() == FOLDER) {
         mWindow->pushGui(new GuiMetaDataEd(
             mWindow, &file->metadata, file->metadata.getMDD(FOLDER_METADATA), p,
-            Utils::FileSystem::getFileName(file->getPath()),
             std::bind(&IGameListView::onFileChanged,
                       ViewController::getInstance()->getGameListView(file->getSystem()).get(), file,
                       true),
@@ -463,7 +462,6 @@ void GuiGamelistOptions::openMetaDataEd()
     else {
         mWindow->pushGui(new GuiMetaDataEd(
             mWindow, &file->metadata, file->metadata.getMDD(GAME_METADATA), p,
-            Utils::FileSystem::getFileName(file->getPath()),
             std::bind(&IGameListView::onFileChanged,
                       ViewController::getInstance()->getGameListView(file->getSystem()).get(), file,
                       true),
