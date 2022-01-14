@@ -419,12 +419,14 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
         // If the game doesn't exist in the current system and it's a custom
         // collection, then skip the sorting.
         else if (sysData.decl.isCustom && children.find(file->getFullPath()) != children.cend()) {
-            // For custom collections, update either the actual system or its parent depending
-            // on whether the collection is grouped or not.
+            // For custom collections, depending on whether the collection is grouped or not,
+            // update either only the actual system or both the actual system and its parent.
             if (rootFolder->getSystem()->isGroupedCustomCollection()) {
                 rootFolder->getParent()->sort(rootFolder->getParent()->getSortTypeFromString(
                                                   rootFolder->getParent()->getSortTypeString()),
                                               mFavoritesSorting);
+                rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
+                                 mFavoritesSorting);
             }
             else {
                 rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
