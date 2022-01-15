@@ -598,6 +598,7 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
     if (config->isMappedTo("a", input) && input.value != 0) {
         if (mBlockAccept || mScraperResults.empty())
             return true;
+        mResultList->setLoopRows(false);
     }
 
     // Check whether we should allow a refine of the game name.
@@ -646,8 +647,6 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
 
 void GuiScraperSearch::returnResult(ScraperSearchResult result)
 {
-    mResultList->setLoopRows(false);
-
     mBlockAccept = true;
     mAcceptedResult = true;
 

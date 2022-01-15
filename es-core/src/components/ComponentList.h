@@ -87,7 +87,11 @@ public:
     float getRowHeight(int row) const { return getRowHeight(mEntries.at(row).data); }
 
     // Horizontal looping for row content that doesn't fit on-screen.
-    void setLoopRows(bool state) { mLoopRows = state; }
+    void setLoopRows(bool state)
+    {
+        stopLooping();
+        mLoopRows = state;
+    }
     void stopLooping()
     {
         mLoopOffset = 0;
