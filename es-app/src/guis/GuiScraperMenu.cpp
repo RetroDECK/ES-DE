@@ -1024,8 +1024,11 @@ void GuiScraperMenu::start()
             contentToScrape = true;
             break;
         }
-        if (scraperService == "screenscraper" &&
-            Settings::getInstance()->getBool("ScrapeBackCovers")) {
+        if (Settings::getInstance()->getBool("ScrapeBackCovers")) {
+            contentToScrape = true;
+            break;
+        }
+        if (Settings::getInstance()->getBool("ScrapeFanArt")) {
             contentToScrape = true;
             break;
         }
