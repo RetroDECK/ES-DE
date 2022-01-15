@@ -638,36 +638,35 @@ void GuiMetaDataEd::save()
         // The offset is needed to make the editor and metadata fields match up if we're
         // skipping the custom collections sortname field (which we do if not editing the
         // game from within a custom collection gamelist).
-        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection) {
+        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
             offset = 1;
-            continue;
-        }
 
         if (mMetaDataDecl.at(i + offset).isStatistic)
             continue;
 
-        if (mMetaDataDecl.at(i + offset).key == "altemulator" && mInvalidEmulatorEntry == true)
+        const std::string& key{mMetaDataDecl.at(i + offset).key};
+
+        if (key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
 
-        if (mMetaDataDecl.at(i + offset).key == "controller" && mEditors.at(i)->getValue() != "") {
+        if (key == "controller" && mEditors.at(i)->getValue() != "") {
             std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
             if (shortName != "unknown")
-                mMetaData->set(mMetaDataDecl.at(i + offset).key, shortName);
+                mMetaData->set(key, shortName);
             continue;
         }
 
-        if (!showHiddenGames && mMetaDataDecl.at(i + offset).key == "hidden" &&
+        if (!showHiddenGames && key == "hidden" &&
             mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
 
         // Check whether the flag to count the entry as a game was set to enabled.
-        if (mMetaDataDecl.at(i + offset).key == "nogamecount" &&
-            mEditors.at(i)->getValue() != mMetaData->get("nogamecount") &&
+        if (key == "nogamecount" && mEditors.at(i)->getValue() != mMetaData->get("nogamecount") &&
             mMetaData->get("nogamecount") == "true") {
             setGameAsCounted = true;
         }
 
-        mMetaData->set(mMetaDataDecl.at(i + offset).key, mEditors.at(i)->getValue());
+        mMetaData->set(key, mEditors.at(i)->getValue());
     }
 
     // If hidden games are not shown and the hide flag was set for the entry, then write the
@@ -757,25 +756,35 @@ void GuiMetaDataEd::fetch()
 void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 {
     // Clone the mMetaData object.
-    MetaDataList* metadata = nullptr;
-    metadata = new MetaDataList(*mMetaData);
+    MetaDataList* metadata{new MetaDataList(*mMetaData)};
 
     mMediaFilesUpdated = result.savedNewMedia;
+    int offset{0};
 
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
     // the values previously saved for the game.
     for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        const std::string& key = mMetaDataDecl.at(i).key;
+        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
+            offset = 1;
+
+        const std::string& key{mMetaDataDecl.at(i + offset).key};
+
         if (metadata->get(key) != mEditors[i]->getValue())
             metadata->set(key, mEditors[i]->getValue());
     }
 
     GuiScraperSearch::saveMetadata(result, *metadata, mScraperParams.game);
 
+    offset = 0;
+
     // Update the list with the scraped metadata values.
     for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        const std::string& key = mMetaDataDecl.at(i).key;
+        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
+            offset = 1;
+
+        const std::string& key{mMetaDataDecl.at(i + offset).key};
+
         if (key == "controller" && metadata->get(key) != "") {
             std::string displayName = BadgeComponent::getDisplayName(metadata->get(key));
             if (displayName != "unknown")
@@ -789,7 +798,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
                 mEditors.at(i)->setColor(TEXTCOLOR_SCRAPERMARKED);
         }
         // Save all the keys that should be scraped.
-        if (mMetaDataDecl.at(i).shouldScrape)
+        if (mMetaDataDecl.at(i + offset).shouldScrape)
             mEditors.at(i)->setValue(metadata->get(key));
     }
 
@@ -803,15 +812,10 @@ void GuiMetaDataEd::close()
     int offset{0};
 
     for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        const std::string& key{mMetaDataDecl.at(i + offset).key};
-        // The offset is needed to make the editor and metadata fields match up if we're
-        // skipping the custom collections sortname field (which we do if not editing the
-        // game from within a custom collection gamelist).
-        if (key == "collectionsortname" && !mIsCustomCollection) {
+        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
             offset = 1;
-            ++i;
-            continue;
-        }
+
+        const std::string& key{mMetaDataDecl.at(i + offset).key};
 
         if (key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
