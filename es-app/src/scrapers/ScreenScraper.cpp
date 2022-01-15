@@ -604,9 +604,9 @@ void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
         (static_cast<std::string>("media[@type='") + mediaType + "']").c_str());
 
     if (results.size()) {
-        // Videos don't have any region attributes, so just take the first entry
+        // Videos and fan art don't have any region attributes, so just take the first entry
         // (which should be the only entry as well).
-        if (mediaType == "video" || mediaType == "video-normalized") {
+        if (mediaType == "video" || mediaType == "video-normalized" || mediaType == "fanart") {
             art = results.first().node();
         }
         else {
