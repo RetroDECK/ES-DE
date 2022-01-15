@@ -4,13 +4,15 @@
 
 Contributions are very much appreciated as there are many things that need to be implemented and improved.
 
-Code commits is only one part of it, as work is also needed on the rbsimple-DE theme set as well as thorough application testing. It's impossible for me to test every game system as ES-DE has support for well over a 100 different platforms.
+There are basically three areas where help is needed:
 
-And a thorough review of [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml) would be great as these templates are not fully populated yet. For some of the game systems there are only placeholder entries, mostly for platforms that RetroArch does not support and where discrete emulators are required.
+* Programming: If you are experienced with developing cross-platform client applications in C++ then ES-DE could be an interesting project! Although the application does not have a huge codebase, it is still fairly complex as it covers many different areas like OpenGL rendering, audio playback, video playback, controller input, network access, XML and JSON parsing etc. To work on the project you need to be able to test your code on Linux, macOS and Windows, but apart from that it should hopefully be fairly straightforward.
 
-As for rbsimple-DE there are quite some missing graphic files and other customizations for a number of game systems. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details on what needs to be added or updated. Note that although rbsimple-DE is based on Recalbox Multi, it's only possible to use assets from this theme set created before its change to a more restrictive license, which happened in 2018. As such it's unfortunately necessary to recreate all the system graphics from scratch that have since been released by the Recalbox community.
+* Graphics: There are a few different areas where help is needed, but primarily it would be to create game systems vector graphics for the default rbsimple-DE theme as it's missing a lot of assets today. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details about this.
 
-Another area where help is really needed is for creation of installation instruction videos and similar. There are some rudimentary videos available at the ES-DE [YouTube channel](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ), but proper videos with voice-over and similar are needed to help especially new ES-DE users. However the videos don't need to be located at this YouTube channel. I have zero interest in creating videos or maintaining a channel of my own, there's simply a need to have video instructions available somewhere. So if you can create good videos and prefer to use your own YouTube channel, I will link to them from this repository and from https://es-de.org.
+* Emulator configuration and testing: As one of the main goals of ES-DE is easy setup, the application needs to ship with all game systems preconfigured. This means that the es_systems.xml files have to be populated with both primary and alternative emulators for all supported operating systems. There could also be a need to add additional platforms that ES-DE does not support today. Please refer to [USERGUIDE-DEV.md](USERGUIDE-DEV.md#supported-game-systems) for the current game systems status. You can also review the es_systems.xml files directly: [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml).
+
+Another specific area where help is needed is to research and potentially develop a usable web version of ES-DE. A proof of concept compilation to WebAssembly (using Emscripten) has been done and the application actually runs somehow correctly in a browser. But it needs to be investigated whether games/emulators can actually be launched when running in this environment and there are many improvements to be completed before the WebAssembly build is usable.
 
 The ES-DE development is tracked using a Kanban board which is publicly visible at the GitLab project site:
 
@@ -58,20 +60,19 @@ The roadmap is under constant review so expect it to change from time to time. S
 * _Add GLM library dependency for matrix and vector operations, decommission the built-in functions_
 * _AppImage and AUR releases on Linux_
 
-#### v1.3
+#### v1.3 (in progress)
 
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
 * Multiple new gamelist components (wheels, wall/grid etc.)
+* Lottie animation (vector graphics) support
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
-* Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
 #### v1.4
 
-* Bulk metadata editor
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
-* Authoring tools to clean up orphaned gamelist entries, media files etc.
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
 * Scrollbar component for the gamelist view which can be used by the themes
+* Support for additional scraper services (if feasible?)
 * Web proxy support for the scraper
 * RetroAchievements.org integration
 * Add "time played" counter per game, similar to how it works in Steam
@@ -82,23 +83,25 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Localization/multi-language support
 * Simple file browsing component
 * New texture/cache manager with support for SVG images and Lottie animations
-* Improve the performance of the GLSL shader code
-* Support for additional scraper services (if feasible?)
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets
-* Replacements for the abandoned NanoSVG and FreeImage libraries
+* Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
-#### v2.0
+#### v1.6
 
 * Vulkan renderer for all supported operating systems
 * Dependency on MoltenVK to get Metal support on macOS
 * Decommission of the OpenGL 2.1 and OpenGL ES renderers (or keep as legacy mode/legacy build?)
 * Better and more accurate GPU and memory usage statistics overlay
+* Improve the performance of the GLSL shader code
+* Bulk metadata editor
 * Improve multi-threading
 
-#### v2.1
+#### v1.7
 
 * Migration tools for importing game metadata and media from other frontend applications
+* Audit tools to clean up orphaned gamelist entries, media files etc.
 * Auto-import tools for Steam, Lutris etc.
+* Replacements for the abandoned NanoSVG and FreeImage libraries
 
 To see which features have been implemented in previous versions, please refer to [CHANGELOG.md](CHANGELOG.md).
 
@@ -123,4 +126,4 @@ But as clang-format won't change the actual code content or fix all code style c
 
 ### Building and configuring
 
-Please refer to [INSTALL.md](INSTALL.md) for details on everything related to building ES-DE.
+Please refer to [INSTALL.md](INSTALL.md) and [INSTALL-DEV.md](INSTALL-DEV.md) for details on everything related to building ES-DE.

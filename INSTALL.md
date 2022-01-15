@@ -133,7 +133,7 @@ In the same manner as for FreeBSD, Clang/LLVM and cURL should already be install
 Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
 ```
-git clone git://github.com/zeux/pugixml.git
+git clone https://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.10
 cmake .
@@ -861,7 +861,7 @@ make
 
 [pugixml](https://pugixml.org)
 ```
-git clone git://github.com/zeux/pugixml.git
+git clone https://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.10
 ```

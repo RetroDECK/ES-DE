@@ -99,7 +99,7 @@ In the same manner as for FreeBSD, Clang/LLVM and cURL should already be install
 Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
 ```
-git clone git://github.com/zeux/pugixml.git
+git clone https://github.com/zeux/pugixml.git
 cd pugixml
 git checkout v1.10
 cmake .
@@ -1607,7 +1607,8 @@ There are two basic categories of metadata, `game` and `folders` and the metdata
 **\<game\>**
 * `path` - string, the path to the game file, either relative to the %ROMPATH% variable or as an absolute path on the filesystem
 * `name` - string, the displayed name for the game
-* `sortname` - string, used in sorting the gamelist in a system, instead of `name`
+* `sortname` - string, used for sorting the system gamelist, instead of using `name`
+* `collectionsortname` - string, used for sorting the gamelist for custom collections, instead of using `name` or `sortname`
 * `desc` - string, a description of the game, longer descriptions will automatically scroll, so don't worry about the size
 * `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1. Fractional values will be rounded to 0.1 increments (half-stars) during processing
 * `releasedate` - datetime, the date the game was released, displayed as date only, time is ignored

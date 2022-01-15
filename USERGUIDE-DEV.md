@@ -875,9 +875,10 @@ Here's an overview of what's supported when using these scrapers:
 | Screenshots                       | Yes           | Yes        |
 | Title screens                     | Yes           | Yes        |
 | Box covers                        | Yes           | Yes        |
-| Box back covers                   | Yes           | No         |
+| Box back covers                   | Yes           | Yes        |
 | Marquees/wheels                   | Yes           | Yes        |
 | 3D boxes                          | Yes           | No         |
+| Fan art                           | Yes           | Yes        |
 | Physical media                    | Yes           | No         |
 
 The category **Other game metadata** includes Description, Release date, Developer, Publisher, Genre and Players.
@@ -947,6 +948,7 @@ The media directories per game system are:
 * 3dboxes
 * backcovers
 * covers
+* fanart
 * marquees
 * miximages
 * physicalmedia
@@ -1056,9 +1058,13 @@ Screenshot images of the title screen.
 
 Cover art, front of box/case.
 
-**Box back cover images** _(ScreenScraper only)_
+**Box back cover images**
 
 Back of box/case.
+
+**Fan art images**
+
+Fan art, i.e. not official media from the game developer.
 
 **Marquee (wheel) images**
 
@@ -1690,7 +1696,11 @@ This is the name that will be shown when browsing the gamelist. If no sortname h
 
 **Sortname** _(files only)_
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. The _sortname_ entry also affects custom collections, although for these it's possible to override the value as described below.
+
+**Custom collections sortname** _(only visible when editing a game from within a custom collection)_
+
+This entry works exactly like _sortname_ but will only affect the sorting for custom collections, meaning the normal system gamelists and the automatic collections (_All games, Favorites_ and _Last played_) will not be affected by this value. If there is both a _sortname_ and a _custom collections sortname_ defined, the latter will take precedence. This also means that the _Jump to..._ quick selector will use the custom collections sortname for its letter index even if there is a different value defined for the regular sortname field. Note that _custom collections sortname_ is completely optional and is only intended for overriding the regular _sortname_ field. Also note that it will affect all custom collections where the game is present; it's not possible to set a different value per collection.
 
 **Description**
 
@@ -1794,7 +1804,7 @@ The game media viewer displays videos and images in fullscreen mode and is launc
 
 If a game video is available, this will be played automatically when launching the viewer. The _left_ and _right_ buttons are used to navigate betweeen the game media files. By default the video will continue to play when browsing the images, but this can be changed with a setting as described earlier in this document.
 
-The media viewer can display the _video, box cover, box back cover, title screen, screenshot_ and _miximage_.
+The media viewer can display the following media: _video, box cover, box back cover, title screen, screenshot_, _fan art_ and _miximage_.
 
 The other settings for the media viewer are similar to what is available for the screensavers; the audio can be enabled or disabled, the video can be stretched to fill the entire screen and scanlines and blur can be rendered on top of it. For screenshots and title screens, scanlines can be rendered. All these options are configurable via the _UI Settings_ menu.
 
@@ -1833,7 +1843,7 @@ These automatic collections can be individually enabled or disabled by going to 
 
 These are collections that you create yourself. Examples could be grouping in genres like _Shoot em up_, _Fighting games_ etc. or perhaps a time period like _1980s_, _1990s_ and so on.
 
-If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE does not provide such themes as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
+If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE and modern-DE do not provide such themes as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
 So if you have enabled the option _Group unthemed custom collections_ (it's enabled by default), any collections you add will show up in the special _Collections_ system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list. You can also quick jump to this random game by pressing the _Y_ button.
 

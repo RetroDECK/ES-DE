@@ -12,17 +12,29 @@
 
 * Added support for Lottie animations (vector graphics), fully configurable as a theme extra
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
+* Added scraping of fan art and updated the media viewer to display these images
+* Added scraping of box back covers when using TheGamesDB
 * Set the option "Scrape actual folders" as enabled by default and moved it higher up in the scraper options menu
+* Added the ability to set a manual sortname specifically for custom collections using the metadata editor
+* Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
+* Added logging of the display refresh rate on startup
 * Added a color model conversion shader for converting from BGRA to RGBA
 * Added renderer support for supplying a separate format than internalFormat when creating textures (although not really supported by the OpenGL standard)
 * Added the rlottie library as a Git subtree
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Large refactoring to improve thread safety and improve singleton pattern usage
+* Moved all Platform functions to the utility namespace instead of using the global namespace
+* Renamed GameList to Gamelist throughout the codebase
+* Renamed Gamelist.cpp and Gamelist.h to GamelistFileParser.cpp and GamelistFileParser.h and moved it to its own namespace instead of the global namespace
+* Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
 * Removed the deprecated VideoVlcComponent
 
 ### Bug fixes
 
-* During some menu operations that reloaded the gamelist view, the cached background would sometimes miss some elements as they were not rendered in time
+* During some menu operations that reloaded the gamelist view, the cached background could miss some elements as they were not rendered in time
+* Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
+* Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
+* Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
 
