@@ -45,16 +45,21 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     , mBackground{window, ":/graphics/frame.svg"}
     , mGrid{window, glm::ivec2{2, 6}}
     , mScraperParams{scraperParams}
+    , mControllerBadges{BadgeComponent::getGameControllers()}
     , mMetaDataDecl{mdd}
     , mMetaData{md}
     , mSavedCallback{saveCallback}
     , mClearGameFunc{clearGameFunc}
     , mDeleteGameFunc{deleteGameFunc}
+    , mIsCustomCollection{false}
     , mMediaFilesUpdated{false}
     , mSavedMediaAndAborted{false}
     , mInvalidEmulatorEntry{false}
 {
-    mControllerBadges = BadgeComponent::getGameControllers();
+    if (ViewController::getInstance()->getState().getSystem()->isCustomCollection() ||
+        ViewController::getInstance()->getState().getSystem()->getThemeFolder() ==
+            "custom-collections")
+        mIsCustomCollection = true;
 
     // Remove the last "unknown" controller entry.
     if (mControllerBadges.size() > 1)
@@ -114,6 +119,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         std::string currentKey = it->key;
         std::string originalValue = mMetaData->get(it->key);
         std::string gamePath;
+
+        // Only display the custom collections sortname entry if we're editing the game
+        // from within a custom collection.
+        if (currentKey == "collectionsortname" && !mIsCustomCollection)
+            continue;
 
         // Don't add statistics.
         if (it->isStatistic)
@@ -619,36 +629,45 @@ void GuiMetaDataEd::save()
 
     // We need this to handle the special situation where the user sets a game to hidden while
     // ShowHiddenGames is set to false, meaning it will immediately disappear from the gamelist.
-    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
-    bool hideGameWhileHidden = false;
-    bool setGameAsCounted = false;
+    bool showHiddenGames{Settings::getInstance()->getBool("ShowHiddenGames")};
+    bool hideGameWhileHidden{false};
+    bool setGameAsCounted{false};
+    int offset{0};
 
     for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        if (mMetaDataDecl.at(i).isStatistic)
-            continue;
-
-        if (mMetaDataDecl.at(i).key == "altemulator" && mInvalidEmulatorEntry == true)
-            continue;
-
-        if (mMetaDataDecl.at(i).key == "controller" && mEditors.at(i)->getValue() != "") {
-            std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
-            if (shortName != "unknown")
-                mMetaData->set(mMetaDataDecl.at(i).key, shortName);
+        // The offset is needed to make the editor and metadata fields match up if we're
+        // skipping the custom collections sortname field (which we do if not editing the
+        // game from within a custom collection gamelist).
+        if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection) {
+            offset = 1;
             continue;
         }
 
-        if (!showHiddenGames && mMetaDataDecl.at(i).key == "hidden" &&
+        if (mMetaDataDecl.at(i + offset).isStatistic)
+            continue;
+
+        if (mMetaDataDecl.at(i + offset).key == "altemulator" && mInvalidEmulatorEntry == true)
+            continue;
+
+        if (mMetaDataDecl.at(i + offset).key == "controller" && mEditors.at(i)->getValue() != "") {
+            std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
+            if (shortName != "unknown")
+                mMetaData->set(mMetaDataDecl.at(i + offset).key, shortName);
+            continue;
+        }
+
+        if (!showHiddenGames && mMetaDataDecl.at(i + offset).key == "hidden" &&
             mEditors.at(i)->getValue() != mMetaData->get("hidden"))
             hideGameWhileHidden = true;
 
         // Check whether the flag to count the entry as a game was set to enabled.
-        if (mMetaDataDecl.at(i).key == "nogamecount" &&
+        if (mMetaDataDecl.at(i + offset).key == "nogamecount" &&
             mEditors.at(i)->getValue() != mMetaData->get("nogamecount") &&
             mMetaData->get("nogamecount") == "true") {
             setGameAsCounted = true;
         }
 
-        mMetaData->set(mMetaDataDecl.at(i).key, mEditors.at(i)->getValue());
+        mMetaData->set(mMetaDataDecl.at(i + offset).key, mEditors.at(i)->getValue());
     }
 
     // If hidden games are not shown and the hide flag was set for the entry, then write the
@@ -780,16 +799,27 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 void GuiMetaDataEd::close()
 {
     // Find out if the user made any changes.
-    bool metadataUpdated = false;
+    bool metadataUpdated{false};
+    int offset{0};
+
     for (unsigned int i = 0; i < mEditors.size(); ++i) {
-        const std::string& key = mMetaDataDecl.at(i).key;
-        std::string mMetaDataValue = mMetaData->get(key);
-        std::string mEditorsValue = mEditors.at(i)->getValue();
+        const std::string& key{mMetaDataDecl.at(i + offset).key};
+        // The offset is needed to make the editor and metadata fields match up if we're
+        // skipping the custom collections sortname field (which we do if not editing the
+        // game from within a custom collection gamelist).
+        if (key == "collectionsortname" && !mIsCustomCollection) {
+            offset = 1;
+            ++i;
+            continue;
+        }
 
         if (key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
 
-        if (mMetaDataDecl.at(i).key == "controller" && mEditors.at(i)->getValue() != "") {
+        std::string mMetaDataValue{mMetaData->get(key)};
+        std::string mEditorsValue{mEditors.at(i)->getValue()};
+
+        if (key == "controller" && mEditors.at(i)->getValue() != "") {
             std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());
             if (shortName == "unknown" || mMetaDataValue == shortName)
                 continue;

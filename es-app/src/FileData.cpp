@@ -90,6 +90,15 @@ const std::string& FileData::getName()
 
 const std::string& FileData::getSortName()
 {
+    if (mSystem->isCustomCollection() && mType == GAME) {
+        if (!metadata.get("collectionsortname").empty())
+            return metadata.get("collectionsortname");
+        else if (!metadata.get("sortname").empty())
+            return metadata.get("sortname");
+        else
+            return metadata.get("name");
+    }
+
     if (metadata.get("sortname").empty())
         return metadata.get("name");
     else
