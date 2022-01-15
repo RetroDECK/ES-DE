@@ -559,6 +559,9 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             // Box cover.
             processMedia(result, media_list, ssConfig.media_cover, result.coverUrl,
                          result.coverFormat, region);
+            // Fan art.
+            processMedia(result, media_list, ssConfig.media_fanart, result.fanartUrl,
+                         result.fanartFormat, region);
             // Marquee (wheel).
             processMedia(result, media_list, ssConfig.media_marquee, result.marqueeUrl,
                          result.marqueeFormat, region);

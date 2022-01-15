@@ -65,6 +65,7 @@ public:
     const std::string get3DBoxPath() const;
     const std::string getBackCoverPath() const;
     const std::string getCoverPath() const;
+    const std::string getFanArtPath() const;
     const std::string getMarqueePath() const;
     const std::string getPhysicalMediaPath() const;
     const std::string getMiximagePath() const;

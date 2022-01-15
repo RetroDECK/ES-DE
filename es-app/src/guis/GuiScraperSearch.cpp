@@ -733,6 +733,7 @@ void GuiScraperSearch::update(int deltaTime)
                         results_scrape[i].box3DUrl = it->box3DUrl;
                         results_scrape[i].backcoverUrl = it->backcoverUrl;
                         results_scrape[i].coverUrl = it->coverUrl;
+                        results_scrape[i].fanartUrl = it->fanartUrl;
                         results_scrape[i].marqueeUrl = it->marqueeUrl;
                         results_scrape[i].screenshotUrl = it->screenshotUrl;
                         results_scrape[i].titlescreenUrl = it->titlescreenUrl;

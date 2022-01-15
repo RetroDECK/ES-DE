@@ -402,6 +402,7 @@ void processMediaURLs(const Value& images,
         result.gameID = it->name.GetString();
         const Value& gameMedia = images[it->name];
         result.coverUrl = "";
+        result.fanartUrl = "";
         result.marqueeUrl = "";
         result.screenshotUrl = "";
         result.titlescreenUrl = "";
@@ -420,6 +421,13 @@ void processMediaURLs(const Value& images,
                 if (mediatype == "boxart" && mediaside == "front")
                     if (gameMedia[i]["filename"].IsString())
                         result.coverUrl = base_url + gameMedia[i]["filename"].GetString();
+                if (mediatype == "boxart" && mediaside == "back")
+                    if (gameMedia[i]["filename"].IsString())
+                        result.backcoverUrl = base_url + gameMedia[i]["filename"].GetString();
+                // Only process the first fanart result.
+                if (mediatype == "fanart" && result.fanartUrl == "")
+                    if (gameMedia[i]["filename"].IsString())
+                        result.fanartUrl = base_url + gameMedia[i]["filename"].GetString();
                 if (mediatype == "clearlogo")
                     if (gameMedia[i]["filename"].IsString())
                         result.marqueeUrl = base_url + gameMedia[i]["filename"].GetString();

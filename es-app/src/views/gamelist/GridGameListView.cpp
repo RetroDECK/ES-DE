@@ -625,6 +625,13 @@ void GridGameListView::removeMedia(FileData* game)
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
+    while (Utils::FileSystem::exists(game->getFanArtPath())) {
+        mediaType = "fanart";
+        path = game->getFanArtPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
     while (Utils::FileSystem::exists(game->getMarqueePath())) {
         mediaType = "marquees";
         path = game->getMarqueePath();

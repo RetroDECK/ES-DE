@@ -212,6 +212,14 @@ MDResolveHandle::MDResolveHandle(const ScraperSearchResult& result,
         mediaFileInfo.resizeFile = true;
         scrapeFiles.push_back(mediaFileInfo);
     }
+    if (Settings::getInstance()->getBool("ScrapeFanArt") && result.fanartUrl != "") {
+        mediaFileInfo.fileURL = result.fanartUrl;
+        mediaFileInfo.fileFormat = result.fanartFormat;
+        mediaFileInfo.subDirectory = "fanart";
+        mediaFileInfo.existingMediaFile = search.game->getFanArtPath();
+        mediaFileInfo.resizeFile = true;
+        scrapeFiles.push_back(mediaFileInfo);
+    }
     if (Settings::getInstance()->getBool("ScrapePhysicalMedia") && result.physicalmediaUrl != "") {
         mediaFileInfo.fileURL = result.physicalmediaUrl;
         mediaFileInfo.fileFormat = result.physicalmediaFormat;

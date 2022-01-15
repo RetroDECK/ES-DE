@@ -183,6 +183,9 @@ void MediaViewer::findMedia()
         mScreenshotIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
+    if ((mediaFile = mGame->getFanArtPath()) != "")
+        mImageFiles.push_back(mediaFile);
+
     if ((mediaFile = mGame->getMiximagePath()) != "")
         mImageFiles.push_back(mediaFile);
 

@@ -69,6 +69,7 @@ struct ScraperSearchResult {
     std::string box3DUrl;
     std::string backcoverUrl;
     std::string coverUrl;
+    std::string fanartUrl;
     std::string marqueeUrl;
     std::string physicalmediaUrl;
     std::string screenshotUrl;
@@ -79,6 +80,7 @@ struct ScraperSearchResult {
     std::string box3DFormat;
     std::string backcoverFormat;
     std::string coverFormat;
+    std::string fanartFormat;
     std::string marqueeFormat;
     std::string physicalmediaFormat;
     std::string screenshotFormat;

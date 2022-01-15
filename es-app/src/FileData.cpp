@@ -278,6 +278,12 @@ const std::string FileData::getCoverPath() const
     return getMediafilePath("covers");
 }
 
+const std::string FileData::getFanArtPath() const
+{
+    // Return path to the fan art image.
+    return getMediafilePath("fanart");
+}
+
 const std::string FileData::getMarqueePath() const
 {
     // Return path to the marquee image.

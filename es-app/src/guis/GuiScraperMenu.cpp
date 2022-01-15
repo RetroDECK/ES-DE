@@ -353,15 +353,16 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // Box back cover images are not supported by TheGamesDB, so gray out the option if this
-    // scraper is selected.
-    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scrapeBackCovers->setEnabled(false);
-        scrapeBackCovers->setOpacity(DISABLED_OPACITY);
-        scrapeBackCovers->getParent()
-            ->getChild(scrapeBackCovers->getChildIndex() - 1)
-            ->setOpacity(DISABLED_OPACITY);
-    }
+    // Scrape fan art images.
+    auto scrapeFanArt = std::make_shared<SwitchComponent>(mWindow);
+    scrapeFanArt->setState(Settings::getInstance()->getBool("ScrapeFanArt"));
+    s->addWithLabel("FAN ART IMAGES", scrapeFanArt);
+    s->addSaveFunc([scrapeFanArt, s] {
+        if (scrapeFanArt->getState() != Settings::getInstance()->getBool("ScrapeFanArt")) {
+            Settings::getInstance()->setBool("ScrapeFanArt", scrapeFanArt->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     // Scrape marquee images.
     auto scrape_marquees = std::make_shared<SwitchComponent>(mWindow);
