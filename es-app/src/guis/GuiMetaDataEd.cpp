@@ -13,7 +13,7 @@
 #include "CollectionSystemsManager.h"
 #include "FileData.h"
 #include "FileFilterIndex.h"
-#include "GamelistFileParse.h"
+#include "GamelistFileParser.h"
 #include "MameNames.h"
 #include "SystemData.h"
 #include "Window.h"
@@ -675,7 +675,7 @@ void GuiMetaDataEd::save()
     // not really good as the gamelist will be written twice, but it's a very special and
     // hopefully rare situation.
     if (hideGameWhileHidden)
-        updateGamelist(mScraperParams.system);
+        GamelistFileParser::updateGamelist(mScraperParams.system);
 
     // Enter game in index.
     mScraperParams.system->getIndex()->addToIndex(mScraperParams.game);

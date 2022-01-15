@@ -14,7 +14,7 @@
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
-#include "GamelistFileParse.h"
+#include "GamelistFileParser.h"
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
@@ -212,7 +212,7 @@ SystemData::SystemData(const std::string& name,
         }
 
         if (!Settings::getInstance()->getBool("IgnoreGamelist"))
-            parseGamelist(this);
+            GamelistFileParser::parseGamelist(this);
 
         setupSystemSortType(mRootFolder);
 
@@ -1255,7 +1255,7 @@ void SystemData::writeMetaData()
         return;
 
     // Save changed game data back to xml.
-    updateGamelist(this);
+    GamelistFileParser::updateGamelist(this);
 }
 
 void SystemData::onMetaDataSavePoint()

@@ -9,7 +9,7 @@
 
 #include "guis/GuiAlternativeEmulators.h"
 
-#include "GamelistFileParse.h"
+#include "GamelistFileParser.h"
 #include "SystemData.h"
 #include "views/ViewController.h"
 
@@ -160,7 +160,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
                     system->setAlternativeEmulator("");
                 else
                     system->setAlternativeEmulator(entry.second);
-                updateGamelist(system, true);
+                GamelistFileParser::updateGamelist(system, true);
 
                 if (entry.second == system->getSystemEnvData()->mLaunchCommands.front().second) {
                     if (system->getSystemEnvData()->mLaunchCommands.front().second == "") {

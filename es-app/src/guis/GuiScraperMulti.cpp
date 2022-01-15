@@ -13,7 +13,7 @@
 
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
-#include "GamelistFileParse.h"
+#include "GamelistFileParser.h"
 #include "MameNames.h"
 #include "SystemData.h"
 #include "Window.h"
@@ -273,7 +273,7 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
     search.system->getIndex()->removeFromIndex(search.game);
 
     GuiScraperSearch::saveMetadata(result, search.game->metadata, search.game);
-    updateGamelist(search.system);
+    GamelistFileParser::updateGamelist(search.system);
 
     search.system->getIndex()->addToIndex(search.game);
 
