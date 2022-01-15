@@ -1,7 +1,7 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  ISimpleGameListView.h
+//  ISimpleGamelistView.h
 //
 //  Interface that defines a simple gamelist view.
 //
@@ -11,18 +11,18 @@
 
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
-#include "views/gamelist/IGameListView.h"
+#include "views/gamelist/IGamelistView.h"
 
 #include <stack>
 
-class ISimpleGameListView : public IGameListView
+class ISimpleGamelistView : public IGamelistView
 {
 public:
-    ISimpleGameListView(Window* window, FileData* root);
-    virtual ~ISimpleGameListView();
+    ISimpleGamelistView(Window* window, FileData* root);
+    virtual ~ISimpleGamelistView();
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
-    virtual void onFileChanged(FileData* file, bool reloadGameList) override;
+    virtual void onFileChanged(FileData* file, bool reloadGamelist) override;
 
     // Called whenever the theme changes.
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;

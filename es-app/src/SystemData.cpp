@@ -23,7 +23,7 @@
 #include "utils/StringUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGameListView.h"
+#include "views/gamelist/IGamelistView.h"
 
 #include <fstream>
 #include <pugixml.hpp>
@@ -1127,7 +1127,7 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
     }
     else {
         gameList = ViewController::getInstance()
-                       ->getGameListView(mRootFolder->getSystem())
+                       ->getGamelistView(mRootFolder->getSystem())
                        .get()
                        ->getCursor()
                        ->getParent()
@@ -1209,10 +1209,10 @@ void SystemData::sortSystem(bool reloadGamelist, bool jumpToFirstRow)
                      favoritesSorting);
 
     if (reloadGamelist)
-        ViewController::getInstance()->reloadGameListView(this, false);
+        ViewController::getInstance()->reloadGamelistView(this, false);
 
     if (jumpToFirstRow) {
-        IGameListView* gameList = ViewController::getInstance()->getGameListView(this).get();
+        IGamelistView* gameList = ViewController::getInstance()->getGamelistView(this).get();
         gameList->setCursor(gameList->getFirstEntry());
     }
 }

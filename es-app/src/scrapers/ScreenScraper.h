@@ -25,7 +25,7 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
 class ScreenScraperRequest : public ScraperHttpRequest
 {
 public:
-    // ctor for a GetGameList request.
+    // Constructor for a GetGamelist request.
     ScreenScraperRequest(std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
                          std::vector<ScraperSearchResult>& resultsWrite,
                          const std::string& url)
@@ -34,7 +34,7 @@ public:
     {
     }
 
-    // ctor for a GetGame request.
+    // Constructor for a GetGame request.
     ScreenScraperRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url)
         : ScraperHttpRequest(resultsWrite, url)
         , mRequestQueue(nullptr)

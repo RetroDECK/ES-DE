@@ -20,7 +20,7 @@
 
 #include <vector>
 
-class IGameListView;
+class IGamelistView;
 class SystemData;
 class SystemView;
 
@@ -36,25 +36,25 @@ public:
     void noGamesDialog();
     void invalidAlternativeEmulatorDialog();
 
-    // Try to completely populate the GameListView map.
+    // Try to completely populate the GamelistView map.
     // Caches things so there's no pauses during transitions.
     void preload();
 
     // If a basic view detected a metadata change, it can request to recreate
     // the current gamelist view (as it may change to be detailed).
-    void reloadGameListView(IGameListView* gamelist, bool reloadTheme = false);
-    void reloadGameListView(SystemData* system, bool reloadTheme = false)
+    void reloadGamelistView(IGamelistView* gamelist, bool reloadTheme = false);
+    void reloadGamelistView(SystemData* system, bool reloadTheme = false)
     {
-        reloadGameListView(getGameListView(system).get(), reloadTheme);
+        reloadGamelistView(getGamelistView(system).get(), reloadTheme);
     }
     // Reload everything with a theme.
     // Used when the "ThemeSet" setting changes.
     void reloadAll();
 
     // Navigation.
-    void goToNextGameList();
-    void goToPrevGameList();
-    void goToGameList(SystemData* system);
+    void goToNextGamelist();
+    void goToPrevGamelist();
+    void goToGamelist(SystemData* system);
     void goToSystemView(SystemData* system, bool playTransition);
     void goToSystem(SystemData* system, bool animate);
     void goToStart(bool playTransition);
@@ -65,7 +65,7 @@ public:
     void cancelViewTransitions();
     void stopScrolling();
 
-    void onFileChanged(FileData* file, bool reloadGameList);
+    void onFileChanged(FileData* file, bool reloadGamelist);
     void triggerGameLaunch(FileData* game)
     {
         mGameToLaunch = game;
@@ -84,7 +84,7 @@ public:
         GAME_LIST
     };
 
-    enum GameListViewStyle {
+    enum GamelistViewStyle {
         AUTOMATIC, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
         BASIC,
         DETAILED,
@@ -94,7 +94,7 @@ public:
 
     struct State {
         ViewMode viewing;
-        GameListViewStyle viewstyle;
+        GamelistViewStyle viewstyle;
 
         SystemData* getSystem() const
         {
@@ -112,9 +112,9 @@ public:
     virtual std::vector<HelpPrompt> getHelpPrompts() override;
     virtual HelpStyle getHelpStyle() override;
 
-    std::shared_ptr<IGameListView> getGameListView(SystemData* system);
+    std::shared_ptr<IGamelistView> getGamelistView(SystemData* system);
     std::shared_ptr<SystemView> getSystemListView();
-    void removeGameListView(SystemData* system);
+    void removeGamelistView(SystemData* system);
 
     // Font Awesome symbols.
     static const std::string CONTROLLER_CHAR;
@@ -144,7 +144,7 @@ private:
     std::shared_ptr<GuiComponent> mCurrentView;
     std::shared_ptr<GuiComponent> mPreviousView;
     std::shared_ptr<GuiComponent> mSkipView;
-    std::map<SystemData*, std::shared_ptr<IGameListView>> mGameListViews;
+    std::map<SystemData*, std::shared_ptr<IGamelistView>> mGamelistViews;
     std::shared_ptr<SystemView> mSystemListView;
 
     FileData* mGameToLaunch;

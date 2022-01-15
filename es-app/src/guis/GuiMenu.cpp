@@ -35,7 +35,7 @@
 #include "utils/PlatformUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGameListView.h"
+#include "views/gamelist/IGamelistView.h"
 
 #include <SDL2/SDL_events.h>
 #include <algorithm>
@@ -129,7 +129,7 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // GameList view style.
+    // Gamelist view style.
     auto gamelist_view_style = std::make_shared<OptionListComponent<std::string>>(
         mWindow, getHelpStyle(), "GAMELIST VIEW STYLE", false);
     std::string selectedViewStyle = Settings::getInstance()->getString("GamelistViewStyle");

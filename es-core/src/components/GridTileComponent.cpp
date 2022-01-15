@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  GridTileComponent.cpp
 //
-//  X*Y tile grid, used indirectly by GridGameListView via ImageGridComponent.
+//  X*Y tile grid, used indirectly by GridGamelistView via ImageGridComponent.
 //
 
 #include "GridTileComponent.h"

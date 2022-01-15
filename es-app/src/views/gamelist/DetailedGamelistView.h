@@ -1,9 +1,9 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  DetailedGameListView.h
+//  DetailedGamelistView.h
 //
-//  Interface that defines a GameListView of the type 'detailed'.
+//  Interface that defines a GamelistView of the type 'detailed'.
 //
 
 #ifndef ES_APP_VIEWS_GAME_LIST_DETAILED_GAME_LIST_VIEW_H
@@ -13,12 +13,12 @@
 #include "components/DateTimeComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
-#include "views/gamelist/BasicGameListView.h"
+#include "views/gamelist/BasicGamelistView.h"
 
-class DetailedGameListView : public BasicGameListView
+class DetailedGamelistView : public BasicGamelistView
 {
 public:
-    DetailedGameListView(Window* window, FileData* root);
+    DetailedGamelistView(Window* window, FileData* root);
 
     virtual void onShow() override;
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;

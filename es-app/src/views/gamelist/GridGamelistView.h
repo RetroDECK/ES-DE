@@ -1,9 +1,9 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  GridGameListView.h
+//  GridGamelistView.h
 //
-//  Interface that defines a GameListView of the type 'grid'.
+//  Interface that defines a GamelistView of the type 'grid'.
 //
 
 #ifndef ES_APP_VIEWS_GAME_LIST_GRID_GAME_LIST_VIEW_H
@@ -15,16 +15,16 @@
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
 #include "components/VideoComponent.h"
-#include "views/gamelist/ISimpleGameListView.h"
+#include "views/gamelist/ISimpleGamelistView.h"
 
-class GridGameListView : public ISimpleGameListView
+class GridGamelistView : public ISimpleGamelistView
 {
 public:
-    GridGameListView(Window* window, FileData* root);
-    virtual ~GridGameListView() {}
+    GridGamelistView(Window* window, FileData* root);
+    virtual ~GridGamelistView() {}
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
-    virtual void onFileChanged(FileData* file, bool reloadGameList) override;
+    virtual void onFileChanged(FileData* file, bool reloadGamelist) override;
 
     virtual void onShow() override;
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;

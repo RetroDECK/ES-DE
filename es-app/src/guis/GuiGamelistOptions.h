@@ -19,7 +19,7 @@
 #include "components/OptionListComponent.h"
 #include "utils/StringUtil.h"
 
-class IGameListView;
+class IGamelistView;
 class SystemData;
 
 class GuiGamelistOptions : public GuiComponent
@@ -50,7 +50,7 @@ private:
     std::shared_ptr<SortList> mListSort;
 
     SystemData* mSystem;
-    IGameListView* getGamelist();
+    IGamelistView* getGamelist();
     bool mFoldersOnTop;
     bool mFavoritesSorting;
     bool mOnlyHasFolders;

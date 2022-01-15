@@ -23,7 +23,7 @@
 #include "scrapers/Scraper.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGameListView.h"
+#include "views/gamelist/IGamelistView.h"
 
 GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
     : GuiComponent(window)
@@ -262,16 +262,16 @@ GuiGamelistOptions::~GuiGamelistOptions()
 
     if (mFiltersChanged) {
         if (!mCustomCollectionSystem) {
-            ViewController::getInstance()->reloadGameListView(mSystem);
+            ViewController::getInstance()->reloadGamelistView(mSystem);
         }
         else {
             if (!mFromPlaceholder) {
-                ViewController::getInstance()->reloadGameListView(mSystem);
+                ViewController::getInstance()->reloadGamelistView(mSystem);
             }
             else if (!mCustomCollectionSystem->getRootFolder()
                           ->getChildrenListToDisplay()
                           .empty()) {
-                ViewController::getInstance()->reloadGameListView(mSystem);
+                ViewController::getInstance()->reloadGamelistView(mSystem);
                 getGamelist()->setCursor(
                     mCustomCollectionSystem->getRootFolder()->getChildrenListToDisplay().front());
             }
@@ -353,8 +353,8 @@ void GuiGamelistOptions::startEditMode()
     // currently being edited. This is done cheaply using onFileChanged() which will trigger
     // populateList().
     for (auto it = SystemData::sSystemVector.begin(); it != SystemData::sSystemVector.end(); ++it) {
-        ViewController::getInstance()->getGameListView((*it))->onFileChanged(
-            ViewController::getInstance()->getGameListView((*it))->getCursor(), false);
+        ViewController::getInstance()->getGamelistView((*it))->onFileChanged(
+            ViewController::getInstance()->getGamelistView((*it))->getCursor(), false);
     }
 
     if (mSystem->getRootFolder()->getChildren().size() == 0)
@@ -396,7 +396,7 @@ void GuiGamelistOptions::openMetaDataEd()
             LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file \""
                          << file->getFullPath() << "\"";
         }
-        ViewController::getInstance()->getGameListView(file->getSystem()).get()->removeMedia(file);
+        ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
 
         // Manually reset all the metadata values, set the name to the actual file/folder name.
         const std::vector<MetaDataDecl>& mdd = file->metadata.getMDD();
@@ -443,10 +443,10 @@ void GuiGamelistOptions::openMetaDataEd()
         LOG(LogInfo) << "Deleting the game file \"" << file->getFullPath()
                      << "\", all its media files and its gamelist.xml entry.";
         CollectionSystemsManager::getInstance()->deleteCollectionFiles(file);
-        ViewController::getInstance()->getGameListView(file->getSystem()).get()->removeMedia(file);
-        ViewController::getInstance()->getGameListView(file->getSystem()).get()->remove(file, true);
+        ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
+        ViewController::getInstance()->getGamelistView(file->getSystem()).get()->remove(file, true);
         mSystem->getRootFolder()->sort(*mListSort->getSelected(), mFavoritesSorting);
-        ViewController::getInstance()->reloadGameListView(mSystem);
+        ViewController::getInstance()->reloadGamelistView(mSystem);
 
         mWindow->invalidateCachedBackground();
     };
@@ -454,16 +454,16 @@ void GuiGamelistOptions::openMetaDataEd()
     if (file->getType() == FOLDER) {
         mWindow->pushGui(new GuiMetaDataEd(
             mWindow, &file->metadata, file->metadata.getMDD(FOLDER_METADATA), p,
-            std::bind(&IGameListView::onFileChanged,
-                      ViewController::getInstance()->getGameListView(file->getSystem()).get(), file,
+            std::bind(&IGamelistView::onFileChanged,
+                      ViewController::getInstance()->getGamelistView(file->getSystem()).get(), file,
                       true),
             clearGameBtnFunc, deleteGameBtnFunc));
     }
     else {
         mWindow->pushGui(new GuiMetaDataEd(
             mWindow, &file->metadata, file->metadata.getMDD(GAME_METADATA), p,
-            std::bind(&IGameListView::onFileChanged,
-                      ViewController::getInstance()->getGameListView(file->getSystem()).get(), file,
+            std::bind(&IGamelistView::onFileChanged,
+                      ViewController::getInstance()->getGamelistView(file->getSystem()).get(), file,
                       true),
             clearGameBtnFunc, deleteGameBtnFunc));
     }
@@ -566,7 +566,7 @@ std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
     return prompts;
 }
 
-IGameListView* GuiGamelistOptions::getGamelist()
+IGamelistView* GuiGamelistOptions::getGamelist()
 {
-    return ViewController::getInstance()->getGameListView(mSystem).get();
+    return ViewController::getInstance()->getGamelistView(mSystem).get();
 }

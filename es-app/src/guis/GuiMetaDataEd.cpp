@@ -715,7 +715,7 @@ void GuiMetaDataEd::save()
                     if (std::find(children.begin(), children.end(), hideGame) != children.end()) {
                         sys->getIndex()->removeFromIndex(hideGame);
                         // Reload the gamelist as well as the view style may need to change.
-                        ViewController::getInstance()->reloadGameListView(sys);
+                        ViewController::getInstance()->reloadGamelistView(sys);
                     }
                 }
             }
@@ -844,7 +844,7 @@ void GuiMetaDataEd::close()
             // until the user scrolls up and down the gamelist.
             TextureResource::manualUnload(mScraperParams.game->getImagePath(), false);
             TextureResource::manualUnload(mScraperParams.game->getMarqueePath(), false);
-            ViewController::getInstance()->reloadGameListView(mScraperParams.system);
+            ViewController::getInstance()->reloadGamelistView(mScraperParams.system);
             // Update all collections where the game is present.
             CollectionSystemsManager::getInstance()->refreshCollectionSystems(mScraperParams.game);
             mWindow->invalidateCachedBackground();

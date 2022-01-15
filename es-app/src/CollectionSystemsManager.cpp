@@ -33,7 +33,7 @@
 #include "utils/TimeUtil.h"
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGameListView.h"
+#include "views/gamelist/IGamelistView.h"
 
 #include <fstream>
 #include <pugixml.hpp>
@@ -265,7 +265,7 @@ void CollectionSystemsManager::updateSystemsList()
     for (auto sysIt = SystemData::sSystemVector.cbegin(); // Line break.
          sysIt != SystemData::sSystemVector.cend(); ++sysIt) {
         if ((*sysIt)->isCollection())
-            ViewController::getInstance()->getGameListView((*sysIt));
+            ViewController::getInstance()->getGamelistView((*sysIt));
     }
 
     // If we were editing a custom collection, and it's no longer enabled, exit edit mode.
@@ -345,13 +345,13 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             // Found it, and we are removing it.
             if (name == "favorites" && file->metadata.get("favorite") == "false") {
                 // Need to check if it is still marked as favorite, if not remove it.
-                ViewController::getInstance()->getGameListView(curSys).get()->remove(
+                ViewController::getInstance()->getGamelistView(curSys).get()->remove(
                     collectionEntry, false);
             }
             else if (name == "recent" && file->metadata.get("lastplayed") == "0") {
                 // If lastplayed is set to 0 it means the entry has been cleared, and the
                 // game should therefore be removed.
-                ViewController::getInstance()->getGameListView(curSys).get()->remove(
+                ViewController::getInstance()->getGamelistView(curSys).get()->remove(
                     collectionEntry, false);
                 ViewController::getInstance()->onFileChanged(rootFolder, true);
             }
@@ -359,7 +359,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 // If the countasgame flag has been set to false, then remove the game.
                 if (curSys->isGroupedCustomCollection()) {
                     ViewController::getInstance()
-                        ->getGameListView(curSys->getRootFolder()->getParent()->getSystem())
+                        ->getGamelistView(curSys->getRootFolder()->getParent()->getSystem())
                         .get()
                         ->remove(collectionEntry, false);
                     FileData* parentRootFolder =
@@ -375,7 +375,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                         4000);
                 }
                 else {
-                    ViewController::getInstance()->getGameListView(curSys).get()->remove(
+                    ViewController::getInstance()->getGamelistView(curSys).get()->remove(
                         collectionEntry, false);
                 }
                 rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
@@ -403,7 +403,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 CollectionFileData* newGame = new CollectionFileData(file, curSys);
                 rootFolder->addChild(newGame);
                 fileIndex->addToIndex(newGame);
-                ViewController::getInstance()->getGameListView(curSys)->onFileChanged(newGame,
+                ViewController::getInstance()->getGamelistView(curSys)->onFileChanged(newGame,
                                                                                       true);
             }
         }
@@ -451,8 +451,8 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             auto nTime = Utils::Time::now();
             if (nTime - Utils::Time::stringToTime(file->metadata.get("lastplayed")) < 2) {
                 // Select the first row of the gamelist (the game just played).
-                IGameListView* gameList = ViewController::getInstance()
-                                              ->getGameListView(getSystemToView(sysData.system))
+                IGamelistView* gameList = ViewController::getInstance()
+                                              ->getGamelistView(getSystemToView(sysData.system))
                                               .get();
                 gameList->setCursor(gameList->getFirstEntry());
             }
@@ -492,7 +492,7 @@ void CollectionSystemsManager::deleteCollectionFiles(FileData* file)
                 FileData* collectionEntry = children.at(key);
                 SystemData* systemViewToUpdate = getSystemToView(sysDataIt->second.system);
                 ViewController::getInstance()
-                    ->getGameListView(systemViewToUpdate)
+                    ->getGamelistView(systemViewToUpdate)
                     .get()
                     ->remove(collectionEntry, false);
                 if (sysDataIt->second.decl.isCustom)
@@ -626,8 +626,8 @@ void CollectionSystemsManager::exitEditMode(bool showPopup)
 
     // Remove all tick marks from the games that are part of the collection.
     for (auto it = SystemData::sSystemVector.begin(); it != SystemData::sSystemVector.end(); ++it) {
-        ViewController::getInstance()->getGameListView((*it))->onFileChanged(
-            ViewController::getInstance()->getGameListView((*it))->getCursor(), false);
+        ViewController::getInstance()->getGamelistView((*it))->onFileChanged(
+            ViewController::getInstance()->getGamelistView((*it))->getCursor(), false);
     }
 
     mEditingCollectionSystemData->system->onMetaDataSavePoint();
@@ -673,13 +673,13 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
                 FileData* collectionEntry = children.at(key);
                 fileIndex->removeFromIndex(collectionEntry);
                 ViewController::getInstance()
-                    ->getGameListView(systemViewToUpdate)
+                    ->getGamelistView(systemViewToUpdate)
                     .get()
                     ->remove(collectionEntry, false);
                 systemViewToUpdate->getRootFolder()->sort(
                     rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                     Settings::getInstance()->getBool("FavFirstCustom"));
-                ViewController::getInstance()->reloadGameListView(systemViewToUpdate);
+                ViewController::getInstance()->reloadGamelistView(systemViewToUpdate);
 
                 updateCollectionFolderMetadata(systemViewToUpdate);
             }
@@ -719,7 +719,7 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
             file->getSourceFileData()->getSystem()->onMetaDataSavePoint();
             refreshCollectionSystems(file->getSourceFileData());
             if (mAutoCollectionSystemsData["favorites"].isEnabled)
-                ViewController::getInstance()->reloadGameListView(
+                ViewController::getInstance()->reloadGamelistView(
                     mAutoCollectionSystemsData["favorites"].system);
         }
         if (adding) {
@@ -917,7 +917,7 @@ void CollectionSystemsManager::deleteCustomCollection(const std::string& collect
         CollectionSystemsManager::getInstance()->loadEnabledListFromSettings();
         CollectionSystemsManager::getInstance()->updateSystemsList();
 
-        ViewController::getInstance()->removeGameListView(collectionEntry->second.system);
+        ViewController::getInstance()->removeGamelistView(collectionEntry->second.system);
         ViewController::getInstance()->reloadAll();
 
         delete collectionEntry->second.system;
@@ -1006,7 +1006,7 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
             // and then point to this, and for collections with games in them we select the first
             // entry.
             auto autoView =
-                ViewController::getInstance()->getGameListView(autoSystem->system).get();
+                ViewController::getInstance()->getGamelistView(autoSystem->system).get();
             if (autoSystem->system->getRootFolder()->getChildren().size() == 0) {
                 autoView->addPlaceholder(autoSystem->system->getRootFolder());
                 autoView->setCursor(autoView->getLastEntry());
@@ -1043,7 +1043,7 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
             populateCustomCollection(customSystem);
 
             auto autoView =
-                ViewController::getInstance()->getGameListView(customSystem->system).get();
+                ViewController::getInstance()->getGamelistView(customSystem->system).get();
             autoView->setCursor(
                 customSystem->system->getRootFolder()->getChildrenRecursive().front());
             autoView->setCursor(autoView->getFirstEntry());
@@ -1163,13 +1163,13 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
         // The following is needed to avoid a crash when repopulating the system as the previous
         // cursor pointer may point to a random memory address.
         auto recentGamelist =
-            ViewController::getInstance()->getGameListView(rootFolder->getSystem()).get();
+            ViewController::getInstance()->getGamelistView(rootFolder->getSystem()).get();
         recentGamelist->setCursor(
             rootFolder->getSystem()->getRootFolder()->getChildrenRecursive().front());
         recentGamelist->setCursor(recentGamelist->getFirstEntry());
         if (rootFolder->getChildren().size() > 0)
             ViewController::getInstance()
-                ->getGameListView(rootFolder->getSystem())
+                ->getGamelistView(rootFolder->getSystem())
                 .get()
                 ->onFileChanged(rootFolder->getChildren().front(), false);
     }
@@ -1257,7 +1257,7 @@ void CollectionSystemsManager::removeCollectionsFromDisplayedSystems()
     // Clear index.
     mCustomCollectionsBundle->getIndex()->resetIndex();
     // Remove view so it's re-created as needed.
-    ViewController::getInstance()->removeGameListView(mCustomCollectionsBundle);
+    ViewController::getInstance()->removeGamelistView(mCustomCollectionsBundle);
 }
 
 void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
@@ -1288,8 +1288,8 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
                         rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
                     // Jump to the first row of the game list, assuming it's not empty.
-                    IGameListView* gameList =
-                        ViewController::getInstance()->getGameListView((it->second.system)).get();
+                    IGamelistView* gameList =
+                        ViewController::getInstance()->getGamelistView((it->second.system)).get();
                     if (!gameList->getCursor()->isPlaceHolder()) {
                         gameList->setCursor(gameList->getFirstEntry());
                     }
@@ -1443,7 +1443,7 @@ void CollectionSystemsManager::trimCollectionCount(FileData* rootFolder, int lim
     while (static_cast<int>(rootFolder->getChildrenListToDisplay().size()) > limit) {
         CollectionFileData* gameToRemove =
             (CollectionFileData*)rootFolder->getChildrenListToDisplay().back();
-        ViewController::getInstance()->getGameListView(curSys).get()->remove(gameToRemove, false);
+        ViewController::getInstance()->getGamelistView(curSys).get()->remove(gameToRemove, false);
     }
 }
 

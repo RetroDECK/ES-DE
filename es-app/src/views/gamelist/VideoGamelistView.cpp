@@ -1,26 +1,29 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  DetailedGameListView.cpp
+//  VideoGamelistView.cpp
 //
-//  Interface that defines a GameListView of the type 'detailed'.
+//  Interface that defines a GamelistView of the type 'video'.
 //
 
-#include "views/gamelist/DetailedGameListView.h"
+#include "views/gamelist/VideoGamelistView.h"
 
 #include "CollectionSystemsManager.h"
 #include "SystemData.h"
 #include "animations/LambdaAnimation.h"
+#include "components/VideoFFmpegComponent.h"
+#include "utils/FileSystemUtil.h"
 #include "views/ViewController.h"
 
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 650
 
-DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
-    : BasicGameListView(window, root)
+VideoGamelistView::VideoGamelistView(Window* window, FileData* root)
+    : BasicGamelistView(window, root)
     , mThumbnail(window)
     , mMarquee(window)
     , mImage(window)
+    , mVideo(nullptr)
     , mLblRating(window)
     , mLblReleaseDate(window)
     , mLblDeveloper(window)
@@ -42,9 +45,13 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     , mDescContainer(window)
     , mDescription(window)
     , mGamelistInfo(window)
+    , mVideoPlaying(false)
     , mLastUpdated(nullptr)
 {
     const float padding = 0.01f;
+
+    // Create the video window.
+    mVideo = new VideoFFmpegComponent(window);
 
     mList.setPosition(mSize.x * (0.50f + padding), mList.getPosition().y);
     mList.setSize(mSize.x * (0.50f - padding), mList.getSize().y);
@@ -56,24 +63,22 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     mThumbnail.setPosition(2.0f, 2.0f);
     mThumbnail.setVisible(false);
     mThumbnail.setMaxSize(mSize.x * (0.25f - 2.0f * padding), mSize.y * 0.10f);
-    mThumbnail.setDefaultZIndex(25.0f);
+    mThumbnail.setDefaultZIndex(35.0f);
     addChild(&mThumbnail);
 
     // Marquee.
     mMarquee.setOrigin(0.5f, 0.5f);
-    // Default to off the screen.
-    mMarquee.setPosition(2.0f, 2.0f);
-    mMarquee.setVisible(false);
+    mMarquee.setPosition(mSize.x * 0.25f, mSize.y * 0.10f);
     mMarquee.setMaxSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.18f);
     mMarquee.setDefaultZIndex(35.0f);
     addChild(&mMarquee);
 
-    // Image.
-    mImage.setOrigin(0.5f, 0.5f);
-    mImage.setPosition(mSize.x * 0.25f, mList.getPosition().y + mSize.y * 0.2125f);
-    mImage.setMaxSize(mSize.x * (0.50f - 2.0f * padding), mSize.y * 0.4f);
-    mImage.setDefaultZIndex(30.0f);
-    addChild(&mImage);
+    // Video.
+    mVideo->setOrigin(0.5f, 0.5f);
+    mVideo->setPosition(mSize.x * 0.25f, mSize.y * 0.4f);
+    mVideo->setSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.4f);
+    mVideo->setDefaultZIndex(30.0f);
+    addChild(mVideo);
 
     // Metadata labels + values.
     mLblRating.setText("Rating: ", false);
@@ -137,9 +142,11 @@ DetailedGameListView::DetailedGameListView(Window* window, FileData* root)
     initMDValues();
 }
 
-void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
+VideoGamelistView::~VideoGamelistView() { delete mVideo; }
+
+void VideoGamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 {
-    BasicGameListView::onThemeChanged(theme);
+    BasicGamelistView::onThemeChanged(theme);
 
     using namespace ThemeFlags;
     mThumbnail.applyTheme(theme, getName(), "md_thumbnail",
@@ -148,6 +155,9 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
                         POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mImage.applyTheme(theme, getName(), "md_image",
                       POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+    mVideo->applyTheme(theme, getName(), "md_video",
+                       POSITION | ThemeFlags::SIZE | ThemeFlags::DELAY | Z_INDEX | ROTATION |
+                           VISIBLE);
     mName.applyTheme(theme, getName(), "md_name", ALL);
     mBadges.applyTheme(theme, getName(), "md_badges", ALL);
 
@@ -188,7 +198,7 @@ void DetailedGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& them
     sortChildren();
 }
 
-void DetailedGameListView::initMDLabels()
+void VideoGamelistView::initMDLabels()
 {
     std::vector<TextComponent*> components = getMDLabels();
 
@@ -218,7 +228,7 @@ void DetailedGameListView::initMDLabels()
     }
 }
 
-void DetailedGameListView::initMDValues()
+void VideoGamelistView::initMDValues()
 {
     std::vector<TextComponent*> labels = getMDLabels();
     std::vector<GuiComponent*> values = getMDValues();
@@ -253,7 +263,7 @@ void DetailedGameListView::initMDValues()
     mDescContainer.setSize(mDescContainer.getSize().x, mSize.y - mDescContainer.getPosition().y);
 }
 
-void DetailedGameListView::updateInfoPanel()
+void VideoGamelistView::updateInfoPanel()
 {
     FileData* file = (mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected();
 
@@ -330,6 +340,7 @@ void DetailedGameListView::updateInfoPanel()
 
     bool fadingOut = false;
     if (file == nullptr) {
+        mVideoPlaying = false;
         fadingOut = true;
     }
     else {
@@ -343,19 +354,36 @@ void DetailedGameListView::updateInfoPanel()
             if (mRandomGame) {
                 mThumbnail.setImage(mRandomGame->getThumbnailPath());
                 mMarquee.setImage(mRandomGame->getMarqueePath(), false, true);
-                mImage.setImage(mRandomGame->getImagePath());
+                mVideo->setImage(mRandomGame->getImagePath());
+                // Always stop the video before setting a new video as it will otherwise continue
+                // to play if it has the same path (i.e. it is the same physical video file) as
+                // the previously set video.
+                // That may happen when entering a folder with the same name as the first game
+                // file inside, or as in this case, when entering a custom collection.
+                mVideo->onHide();
+
+                if (!mVideo->setVideo(mRandomGame->getVideoPath()))
+                    mVideo->setDefaultVideo();
             }
             else {
                 mThumbnail.setImage("");
                 mMarquee.setImage("");
-                mImage.setImage("");
+                mVideo->setImage("");
+                mVideo->setVideo("");
+                mVideo->setDefaultVideo();
             }
         }
         else {
             mThumbnail.setImage(file->getThumbnailPath());
             mMarquee.setImage(file->getMarqueePath(), false, true);
-            mImage.setImage(file->getImagePath());
+            mVideo->setImage(file->getImagePath());
+            mVideo->onHide();
+
+            if (!mVideo->setVideo(file->getVideoPath()))
+                mVideo->setDefaultVideo();
         }
+
+        mVideoPlaying = true;
 
         // Populate the gamelistInfo field which shows an icon if a folder has been entered
         // as well as the game count for the entire system (total and favorites separately).
@@ -394,10 +422,10 @@ void DetailedGameListView::updateInfoPanel()
 
         // Fade in the game image.
         auto func = [this](float t) {
-            mImage.setOpacity(static_cast<unsigned char>(
+            mVideo->setOpacity(static_cast<unsigned char>(
                 glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
         };
-        mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
+        mVideo->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
 
         mDescription.setText(file->metadata.get("desc"));
         mDescContainer.reset();
@@ -453,7 +481,7 @@ void DetailedGameListView::updateInfoPanel()
     std::vector<GuiComponent*> comps = getMDValues();
     comps.push_back(&mThumbnail);
     comps.push_back(&mMarquee);
-    comps.push_back(&mImage);
+    comps.push_back(mVideo);
     comps.push_back(&mDescription);
     comps.push_back(&mName);
     comps.push_back(&mBadges);
@@ -463,23 +491,23 @@ void DetailedGameListView::updateInfoPanel()
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
         GuiComponent* comp = *it;
         // An animation is playing, then animate if reverse != fadingOut.
-        // An animation is not playing, then animate if opacity != our target opacity.
+        // An animation is not playing, then animate if opacity != our target opacity
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
             (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
             auto func = [comp](float t) {
                 comp->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
             };
-            comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
+            comp->setAnimation(new LambdaAnimation(func, 200), 0, nullptr, fadingOut);
         }
     }
 }
 
-void DetailedGameListView::launch(FileData* game)
+void VideoGamelistView::launch(FileData* game)
 {
     ViewController::getInstance()->triggerGameLaunch(game);
 }
 
-std::vector<TextComponent*> DetailedGameListView::getMDLabels()
+std::vector<TextComponent*> VideoGamelistView::getMDLabels()
 {
     std::vector<TextComponent*> ret;
     ret.push_back(&mLblRating);
@@ -493,7 +521,7 @@ std::vector<TextComponent*> DetailedGameListView::getMDLabels()
     return ret;
 }
 
-std::vector<GuiComponent*> DetailedGameListView::getMDValues()
+std::vector<GuiComponent*> VideoGamelistView::getMDValues()
 {
     std::vector<GuiComponent*> ret;
     ret.push_back(&mRating);
@@ -507,16 +535,21 @@ std::vector<GuiComponent*> DetailedGameListView::getMDValues()
     return ret;
 }
 
-void DetailedGameListView::update(int deltaTime)
+void VideoGamelistView::update(int deltaTime)
 {
-    BasicGameListView::update(deltaTime);
-    mImage.update(deltaTime);
+    if (!mVideoPlaying)
+        mVideo->onHide();
+    else if (mVideoPlaying && !mVideo->isVideoPaused() && !mWindow->isScreensaverActive())
+        mVideo->onShow();
 
-    if (ViewController::getInstance()->getGameLaunchTriggered() && mImage.isAnimationPlaying(0))
-        mImage.finishAnimation(0);
+    BasicGamelistView::update(deltaTime);
+    mVideo->update(deltaTime);
+
+    if (ViewController::getInstance()->getGameLaunchTriggered() && mVideo->isAnimationPlaying(0))
+        mVideo->finishAnimation(0);
 }
 
-void DetailedGameListView::onShow()
+void VideoGamelistView::onShow()
 {
     // Reset any Lottie animations.
     for (auto extra : mThemeExtras)

@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  IGameListView.cpp
+//  IGamelistView.cpp
 //
-//  Interface that defines the minimum for a GameListView.
+//  Interface that defines the minimum for a GamelistView.
 //
 
-#include "views/gamelist/IGameListView.h"
+#include "views/gamelist/IGamelistView.h"
 
 #include "Sound.h"
 #include "Window.h"
@@ -14,7 +14,7 @@
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 
-IGameListView::IGameListView(Window* window, FileData* root)
+IGamelistView::IGamelistView(Window* window, FileData* root)
     : GuiComponent(window)
     , mRoot(root)
 {
@@ -22,13 +22,13 @@ IGameListView::IGameListView(Window* window, FileData* root)
             static_cast<float>(Renderer::getScreenHeight()));
 }
 
-void IGameListView::setTheme(const std::shared_ptr<ThemeData>& theme)
+void IGamelistView::setTheme(const std::shared_ptr<ThemeData>& theme)
 {
     mTheme = theme;
     onThemeChanged(theme);
 }
 
-bool IGameListView::input(InputConfig* config, Input input)
+bool IGamelistView::input(InputConfig* config, Input input)
 {
     // Select button opens GuiGamelistOptions.
     if (!UIModeController::getInstance()->isUIModeKid() && // Line break.
@@ -44,22 +44,22 @@ bool IGameListView::input(InputConfig* config, Input input)
              config->getDeviceId() == DEVICE_KEYBOARD &&
              (SDL_GetModState() & (KMOD_LCTRL | KMOD_RCTRL)) && input.id == SDLK_r &&
              input.value != 0) {
-        LOG(LogDebug) << "IGameListView::input(): Reloading view";
-        ViewController::getInstance()->reloadGameListView(this, true);
+        LOG(LogDebug) << "IGamelistView::input(): Reloading view";
+        ViewController::getInstance()->reloadGamelistView(this, true);
         return true;
     }
 
     return GuiComponent::input(config, input);
 }
 
-HelpStyle IGameListView::getHelpStyle()
+HelpStyle IGamelistView::getHelpStyle()
 {
     HelpStyle style;
     style.applyTheme(mTheme, getName());
     return style;
 }
 
-void IGameListView::render(const glm::mat4& parentTrans)
+void IGamelistView::render(const glm::mat4& parentTrans)
 {
     glm::mat4 trans{parentTrans * getTransform()};
 

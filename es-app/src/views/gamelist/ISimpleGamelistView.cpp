@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  ISimpleGameListView.cpp
+//  ISimpleGamelistView.cpp
 //
 //  Interface that defines a simple gamelist view.
 //
 
-#include "views/gamelist/ISimpleGameListView.h"
+#include "views/gamelist/ISimpleGamelistView.h"
 
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
@@ -20,8 +20,8 @@
 
 #include "Log.h"
 
-ISimpleGameListView::ISimpleGameListView(Window* window, FileData* root)
-    : IGameListView(window, root)
+ISimpleGamelistView::ISimpleGamelistView(Window* window, FileData* root)
+    : IGamelistView(window, root)
     , mHeaderText(window)
     , mHeaderImage(window)
     , mBackground(window)
@@ -45,7 +45,7 @@ ISimpleGameListView::ISimpleGameListView(Window* window, FileData* root)
     addChild(&mBackground);
 }
 
-ISimpleGameListView::~ISimpleGameListView()
+ISimpleGamelistView::~ISimpleGamelistView()
 {
     // Remove theme extras.
     for (auto extra : mThemeExtras) {
@@ -55,7 +55,7 @@ ISimpleGameListView::~ISimpleGameListView()
     mThemeExtras.clear();
 }
 
-void ISimpleGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
+void ISimpleGamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 {
     using namespace ThemeFlags;
     mBackground.applyTheme(theme, getName(), "background", ALL);
@@ -84,7 +84,7 @@ void ISimpleGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme
     }
 }
 
-void ISimpleGameListView::onFileChanged(FileData* file, bool reloadGameList)
+void ISimpleGamelistView::onFileChanged(FileData* file, bool reloadGamelist)
 {
     // We could be tricky here to be efficient;
     // but this shouldn't happen very often so we'll just always repopulate.
@@ -99,7 +99,7 @@ void ISimpleGameListView::onFileChanged(FileData* file, bool reloadGameList)
     }
 }
 
-bool ISimpleGameListView::input(InputConfig* config, Input input)
+bool ISimpleGamelistView::input(InputConfig* config, Input input)
 {
     if (input.value != 0) {
         if (config->isMappedTo("a", input)) {
@@ -209,7 +209,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
-                ViewController::getInstance()->goToNextGameList();
+                ViewController::getInstance()->goToNextGamelist();
                 return true;
             }
         }
@@ -219,7 +219,7 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                 onPauseVideo();
                 onFocusLost();
                 stopListScrolling();
-                ViewController::getInstance()->goToPrevGameList();
+                ViewController::getInstance()->goToPrevGamelist();
                 return true;
             }
         }
@@ -428,9 +428,9 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     // sorted yet.
                     if (removedLastFavorite) {
                         ViewController::getInstance()
-                            ->getGameListView(entryToUpdate->getSystem())
+                            ->getGamelistView(entryToUpdate->getSystem())
                             ->setCursor(ViewController::getInstance()
-                                            ->getGameListView(entryToUpdate->getSystem())
+                                            ->getGamelistView(entryToUpdate->getSystem())
                                             ->getFirstEntry());
                     }
                     return true;
@@ -445,15 +445,15 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     // As the toggling of the game destroyed this object, we need to get the view
                     // from ViewController instead of using the reference that existed before the
                     // destruction. Otherwise we get random crashes.
-                    IGameListView* view =
-                        ViewController::getInstance()->getGameListView(system).get();
+                    IGamelistView* view =
+                        ViewController::getInstance()->getGamelistView(system).get();
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                         !entryToUpdate->getSystem()->isCustomCollection()) {
                         ViewController::getInstance()
-                            ->getGameListView(entryToUpdate->getSystem())
+                            ->getGamelistView(entryToUpdate->getSystem())
                             ->setCursor(ViewController::getInstance()
-                                            ->getGameListView(entryToUpdate->getSystem())
+                                            ->getGamelistView(entryToUpdate->getSystem())
                                             ->getFirstGameEntry());
                     }
                     else if (removedLastFavorite &&
@@ -469,8 +469,8 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
                     if (isEditing) {
                         for (auto it = SystemData::sSystemVector.begin();
                              it != SystemData::sSystemVector.end(); ++it) {
-                            ViewController::getInstance()->getGameListView((*it))->onFileChanged(
-                                ViewController::getInstance()->getGameListView((*it))->getCursor(),
+                            ViewController::getInstance()->getGamelistView((*it))->onFileChanged(
+                                ViewController::getInstance()->getGamelistView((*it))->getCursor(),
                                 false);
                         }
                     }
@@ -483,10 +483,10 @@ bool ISimpleGameListView::input(InputConfig* config, Input input)
         }
     }
 
-    return IGameListView::input(config, input);
+    return IGamelistView::input(config, input);
 }
 
-void ISimpleGameListView::generateGamelistInfo(FileData* cursor, FileData* firstEntry)
+void ISimpleGamelistView::generateGamelistInfo(FileData* cursor, FileData* firstEntry)
 {
     // Generate data needed for the gamelistInfo field, which is displayed from the
     // gamelist interfaces (Detailed/Video/Grid).
@@ -525,7 +525,7 @@ void ISimpleGameListView::generateGamelistInfo(FileData* cursor, FileData* first
         mIsFolder = true;
 }
 
-void ISimpleGameListView::generateFirstLetterIndex(const std::vector<FileData*>& files)
+void ISimpleGamelistView::generateFirstLetterIndex(const std::vector<FileData*>& files)
 {
     std::string firstChar;
 

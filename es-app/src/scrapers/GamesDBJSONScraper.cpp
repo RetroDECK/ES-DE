@@ -185,7 +185,7 @@ void thegamesdb_generate_json_scraper_requests(
     }
 
     if (usingGameID) {
-        // If we have the ID already, we don't need the GetGameList request.
+        // If we have the ID already, we don't need the GetGamelist request.
         requests.push(std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(results, path)));
     }
     else {

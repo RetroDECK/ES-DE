@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  ImageGridComponent.cpp
 //
-//  X*Y image grid, used by GridGameListView.
+//  X*Y image grid, used by GridGamelistView.
 //
 
 #ifndef ES_CORE_COMPONENTS_IMAGE_GRID_COMPONENT_H

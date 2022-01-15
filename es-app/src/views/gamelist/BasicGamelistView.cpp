@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  BasicGameListView.cpp
+//  BasicGamelistView.cpp
 //
-//  Interface that defines a GameListView of the type 'Basic'.
+//  Interface that defines a GamelistView of the type 'Basic'.
 //
 
-#include "views/gamelist/BasicGameListView.h"
+#include "views/gamelist/BasicGamelistView.h"
 
 #include "CollectionSystemsManager.h"
 #include "Settings.h"
@@ -15,8 +15,8 @@
 #include "views/UIModeController.h"
 #include "views/ViewController.h"
 
-BasicGameListView::BasicGameListView(Window* window, FileData* root)
-    : ISimpleGameListView(window, root)
+BasicGamelistView::BasicGamelistView(Window* window, FileData* root)
+    : ISimpleGamelistView(window, root)
     , mList(window)
 {
     mList.setSize(mSize.x, mSize.y * 0.8f);
@@ -27,27 +27,27 @@ BasicGameListView::BasicGameListView(Window* window, FileData* root)
     populateList(root->getChildrenListToDisplay(), root);
 }
 
-void BasicGameListView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
+void BasicGamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 {
-    ISimpleGameListView::onThemeChanged(theme);
+    ISimpleGamelistView::onThemeChanged(theme);
     using namespace ThemeFlags;
     mList.applyTheme(theme, getName(), "gamelist", ALL);
 
     sortChildren();
 }
 
-void BasicGameListView::onFileChanged(FileData* file, bool reloadGameList)
+void BasicGamelistView::onFileChanged(FileData* file, bool reloadGamelist)
 {
-    if (reloadGameList) {
+    if (reloadGamelist) {
         // Might switch to a detailed view.
-        ViewController::getInstance()->reloadGameListView(this);
+        ViewController::getInstance()->reloadGamelistView(this);
         return;
     }
 
-    ISimpleGameListView::onFileChanged(file, reloadGameList);
+    ISimpleGamelistView::onFileChanged(file, reloadGamelist);
 }
 
-void BasicGameListView::populateList(const std::vector<FileData*>& files, FileData* firstEntry)
+void BasicGamelistView::populateList(const std::vector<FileData*>& files, FileData* firstEntry)
 {
     mFirstGameEntry = nullptr;
     bool favoriteStar = true;
@@ -119,7 +119,7 @@ void BasicGameListView::populateList(const std::vector<FileData*>& files, FileDa
     generateFirstLetterIndex(files);
 }
 
-void BasicGameListView::setCursor(FileData* cursor)
+void BasicGamelistView::setCursor(FileData* cursor)
 {
     if (!mList.setCursor(cursor) && (!cursor->isPlaceHolder())) {
         populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
@@ -146,7 +146,7 @@ void BasicGameListView::setCursor(FileData* cursor)
     }
 }
 
-void BasicGameListView::addPlaceholder(FileData* firstEntry)
+void BasicGamelistView::addPlaceholder(FileData* firstEntry)
 {
     // Empty list, add a placeholder.
     FileData* placeholder;
@@ -159,13 +159,13 @@ void BasicGameListView::addPlaceholder(FileData* firstEntry)
     mList.add(placeholder->getName(), placeholder, (placeholder->getType() == PLACEHOLDER));
 }
 
-void BasicGameListView::launch(FileData* game)
+void BasicGamelistView::launch(FileData* game)
 {
     // This triggers ViewController to launch the game.
     ViewController::getInstance()->triggerGameLaunch(game);
 }
 
-void BasicGameListView::remove(FileData* game, bool deleteFile)
+void BasicGamelistView::remove(FileData* game, bool deleteFile)
 {
     // Delete the game file on the filesystem.
     if (deleteFile)
@@ -204,7 +204,7 @@ void BasicGameListView::remove(FileData* game, bool deleteFile)
     }
 }
 
-void BasicGameListView::removeMedia(FileData* game)
+void BasicGamelistView::removeMedia(FileData* game)
 {
     std::string systemMediaDir = FileData::getMediaDirectory() + game->getSystem()->getName();
     std::string mediaType;
@@ -308,7 +308,7 @@ void BasicGameListView::removeMedia(FileData* game)
     }
 }
 
-std::vector<HelpPrompt> BasicGameListView::getHelpPrompts()
+std::vector<HelpPrompt> BasicGamelistView::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
 

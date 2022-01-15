@@ -1,24 +1,24 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  BasicGameListView.h
+//  BasicGamelistView.h
 //
-//  Interface that defines a GameListView of the type 'basic'.
+//  Interface that defines a GamelistView of the type 'basic'.
 //
 
 #ifndef ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
 #define ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
 
 #include "components/TextListComponent.h"
-#include "views/gamelist/ISimpleGameListView.h"
+#include "views/gamelist/ISimpleGamelistView.h"
 
-class BasicGameListView : public ISimpleGameListView
+class BasicGamelistView : public ISimpleGamelistView
 {
 public:
-    BasicGameListView(Window* window, FileData* root);
+    BasicGamelistView(Window* window, FileData* root);
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
-    virtual void onFileChanged(FileData* file, bool reloadGameList) override;
+    virtual void onFileChanged(FileData* file, bool reloadGamelist) override;
 
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
     virtual void setCursor(FileData* cursor) override;

@@ -1,9 +1,9 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  IGameListView.h
+//  IGamelistView.h
 //
-//  Interface that defines the minimum for a GameListView.
+//  Interface that defines the minimum for a GamelistView.
 //
 
 #ifndef ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
@@ -16,15 +16,15 @@
 class ThemeData;
 class Window;
 
-// This is an interface that defines the minimum for a GameListView.
-class IGameListView : public GuiComponent
+// This is an interface that defines the minimum for a GamelistView.
+class IGamelistView : public GuiComponent
 {
 public:
-    IGameListView(Window* window, FileData* root);
-    virtual ~IGameListView() {}
+    IGamelistView(Window* window, FileData* root);
+    virtual ~IGamelistView() {}
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
-    virtual void onFileChanged(FileData* file, bool reloadGameList) = 0;
+    virtual void onFileChanged(FileData* file, bool reloadGamelist) = 0;
 
     // Called whenever the theme changes.
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) = 0;

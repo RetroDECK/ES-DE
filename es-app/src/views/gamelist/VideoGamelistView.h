@@ -1,9 +1,9 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  VideoGameListView.h
+//  VideoGamelistView.h
 //
-//  Interface that defines a GameListView of the type 'video'.
+//  Interface that defines a GamelistView of the type 'video'.
 //
 
 #ifndef ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
@@ -13,15 +13,15 @@
 #include "components/DateTimeComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
-#include "views/gamelist/BasicGameListView.h"
+#include "views/gamelist/BasicGamelistView.h"
 
 class VideoComponent;
 
-class VideoGameListView : public BasicGameListView
+class VideoGamelistView : public BasicGamelistView
 {
 public:
-    VideoGameListView(Window* window, FileData* root);
-    virtual ~VideoGameListView();
+    VideoGamelistView(Window* window, FileData* root);
+    virtual ~VideoGamelistView();
 
     virtual void onShow() override;
     virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
