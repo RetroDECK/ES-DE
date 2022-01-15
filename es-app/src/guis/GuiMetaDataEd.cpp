@@ -13,7 +13,7 @@
 #include "CollectionSystemsManager.h"
 #include "FileData.h"
 #include "FileFilterIndex.h"
-#include "Gamelist.h"
+#include "GamelistFileParse.h"
 #include "MameNames.h"
 #include "SystemData.h"
 #include "Window.h"

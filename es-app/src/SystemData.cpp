@@ -14,7 +14,7 @@
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
-#include "Gamelist.h"
+#include "GamelistFileParse.h"
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"

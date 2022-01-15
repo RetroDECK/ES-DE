@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  Gamelist.cpp
+//  GamelistFileParse.cpp
 //
 //  Parses and updates the gamelist.xml files.
 //
 
-#include "Gamelist.h"
+#include "GamelistFileParse.h"
 
 #include "FileData.h"
 #include "Log.h"

@@ -1,13 +1,13 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  Gamelist.h
+//  GamelistFileParse.h
 //
 //  Parses and updates the gamelist.xml files.
 //
 
-#ifndef ES_APP_GAME_LIST_H
-#define ES_APP_GAME_LIST_H
+#ifndef ES_APP_GAMELIST_FILE_PARSE_H
+#define ES_APP_GAMELIST_FILE_PARSE_H
 
 class SystemData;
 
@@ -17,4 +17,4 @@ void parseGamelist(SystemData* system);
 // Writes currently loaded metadata for a SystemData to gamelist.xml.
 void updateGamelist(SystemData* system, bool updateAlternativeEmulator = false);
 
-#endif // ES_APP_GAME_LIST_H
+#endif // ES_APP_GAMELIST_FILE_PARSE_H

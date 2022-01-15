@@ -9,7 +9,7 @@
 
 #include "guis/GuiAlternativeEmulators.h"
 
-#include "Gamelist.h"
+#include "GamelistFileParse.h"
 #include "SystemData.h"
 #include "views/ViewController.h"
 
