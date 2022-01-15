@@ -6,8 +6,8 @@
 //  Interface that defines a GamelistView of the type 'video'.
 //
 
-#ifndef ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
-#define ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
+#ifndef ES_APP_VIEWS_GAMELIST_VIDEO_GAMELIST_VIEW_H
+#define ES_APP_VIEWS_GAMELIST_VIDEO_GAMELIST_VIEW_H
 
 #include "components/BadgeComponent.h"
 #include "components/DateTimeComponent.h"
@@ -75,4 +75,4 @@ private:
     FileData* mLastUpdated;
 };
 
-#endif // ES_APP_VIEWS_GAME_LIST_VIDEO_GAME_LIST_VIEW_H
+#endif // ES_APP_VIEWS_GAMELIST_VIDEO_GAMELIST_VIEW_H

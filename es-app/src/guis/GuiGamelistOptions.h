@@ -10,8 +10,8 @@
 //  metadata edit interface is covered by GuiMetaDataEd.
 //
 
-#ifndef ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
-#define ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
+#ifndef ES_APP_GUIS_GUI_GAMELIST_OPTIONS_H
+#define ES_APP_GUIS_GUI_GAMELIST_OPTIONS_H
 
 #include "FileData.h"
 #include "GuiComponent.h"
@@ -64,4 +64,4 @@ private:
     std::string mCurrentFirstCharacter;
 };
 
-#endif // ES_APP_GUIS_GUI_GAME_LIST_OPTIONS_H
+#endif // ES_APP_GUIS_GUI_GAMELIST_OPTIONS_H

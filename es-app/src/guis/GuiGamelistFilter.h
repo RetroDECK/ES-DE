@@ -8,8 +8,8 @@
 //  Actual filter logic is covered by FileFilterIndex.
 //
 
-#ifndef ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
-#define ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
+#ifndef ES_APP_GUIS_GUI_GAMELIST_FILTER_H
+#define ES_APP_GUIS_GUI_GAMELIST_FILTER_H
 
 #include "FileFilterIndex.h"
 #include "GuiComponent.h"
@@ -50,4 +50,4 @@ private:
     bool mFiltersChanged;
 };
 
-#endif // ES_APP_GUIS_GUI_GAME_LIST_FILTER_H
+#endif // ES_APP_GUIS_GUI_GAMELIST_FILTER_H

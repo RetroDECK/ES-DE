@@ -267,7 +267,7 @@ void ViewController::ReloadAndGoToStart()
 {
     mWindow->renderLoadingScreen("Loading...");
     reloadAll();
-    if (mState.viewing == GAME_LIST) {
+    if (mState.viewing == GAMELIST) {
         goToSystemView(SystemData::sSystemVector.front(), false);
         goToSystem(SystemData::sSystemVector.front(), false);
     }
@@ -418,7 +418,7 @@ void ViewController::goToSystem(SystemData* system, bool animate)
 
 void ViewController::goToNextGamelist()
 {
-    assert(mState.viewing == GAME_LIST);
+    assert(mState.viewing == GAMELIST);
     SystemData* system = getState().getSystem();
     assert(system);
     NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
@@ -428,7 +428,7 @@ void ViewController::goToNextGamelist()
 
 void ViewController::goToPrevGamelist()
 {
-    assert(mState.viewing == GAME_LIST);
+    assert(mState.viewing == GAMELIST);
     SystemData* system = getState().getSystem();
     assert(system);
     NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
@@ -459,7 +459,7 @@ void ViewController::goToGamelist(SystemData* system)
         mPreviousView.reset();
         mPreviousView = nullptr;
     }
-    else if (!mPreviousView && mState.viewing == GAME_LIST) {
+    else if (!mPreviousView && mState.viewing == GAMELIST) {
         // This is needed as otherwise the static image would not get rendered during the
         // first Slide transition when coming from the System view.
         mSkipView = getGamelistView(system);
@@ -476,7 +476,7 @@ void ViewController::goToGamelist(SystemData* system)
     // Find if we're wrapping around the first and last systems, which requires the gamelist
     // to be moved in order to avoid weird camera movements. This is only needed for the
     // slide transition style.
-    if (mState.viewing == GAME_LIST && SystemData::sSystemVector.size() > 1 && slideTransitions) {
+    if (mState.viewing == GAMELIST && SystemData::sSystemVector.size() > 1 && slideTransitions) {
         if (SystemData::sSystemVector.front() == mState.getSystem()) {
             if (SystemData::sSystemVector.back() == system)
                 wrapFirstToLast = true;
@@ -558,7 +558,7 @@ void ViewController::goToGamelist(SystemData* system)
         }
     }
 
-    mState.viewing = GAME_LIST;
+    mState.viewing = GAMELIST;
     mState.system = system;
 
     auto it = mGamelistViews.find(system);
@@ -1063,7 +1063,7 @@ void ViewController::reloadAll()
     getSystemListView();
 
     // Update mCurrentView since the pointers changed.
-    if (mState.viewing == GAME_LIST) {
+    if (mState.viewing == GAMELIST) {
         mCurrentView = getGamelistView(mState.getSystem());
     }
     else if (mState.viewing == SYSTEM_SELECT) {

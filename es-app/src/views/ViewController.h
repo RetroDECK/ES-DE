@@ -81,7 +81,7 @@ public:
         NOTHING, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
         START_SCREEN,
         SYSTEM_SELECT,
-        GAME_LIST
+        GAMELIST
     };
 
     enum GamelistViewStyle {
@@ -98,7 +98,7 @@ public:
 
         SystemData* getSystem() const
         {
-            assert(viewing == GAME_LIST || viewing == SYSTEM_SELECT);
+            assert(viewing == GAMELIST || viewing == SYSTEM_SELECT);
             return system;
         }
 

@@ -6,8 +6,8 @@
 //  Interface that defines the minimum for a GamelistView.
 //
 
-#ifndef ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
-#define ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
+#ifndef ES_APP_VIEWS_GAMELIST_IGAMELIST_VIEW_H
+#define ES_APP_VIEWS_GAMELIST_IGAMELIST_VIEW_H
 
 #include "FileData.h"
 #include "GuiComponent.h"
@@ -63,4 +63,4 @@ protected:
     std::shared_ptr<ThemeData> mTheme;
 };
 
-#endif // ES_APP_VIEWS_GAME_LIST_IGAME_LIST_VIEW_H
+#endif // ES_APP_VIEWS_GAMELIST_IGAMELIST_VIEW_H

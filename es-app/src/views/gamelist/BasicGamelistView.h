@@ -6,8 +6,8 @@
 //  Interface that defines a GamelistView of the type 'basic'.
 //
 
-#ifndef ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
-#define ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
+#ifndef ES_APP_VIEWS_GAMELIST_BASIC_GAMELIST_VIEW_H
+#define ES_APP_VIEWS_GAMELIST_BASIC_GAMELIST_VIEW_H
 
 #include "components/TextListComponent.h"
 #include "views/gamelist/ISimpleGamelistView.h"
@@ -60,4 +60,4 @@ protected:
     std::string FOLDER_CHAR;
 };
 
-#endif // ES_APP_VIEWS_GAME_LIST_BASIC_GAME_LIST_VIEW_H
+#endif // ES_APP_VIEWS_GAMELIST_BASIC_GAMELIST_VIEW_H

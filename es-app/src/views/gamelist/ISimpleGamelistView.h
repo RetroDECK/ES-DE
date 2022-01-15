@@ -6,8 +6,8 @@
 //  Interface that defines a simple gamelist view.
 //
 
-#ifndef ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
-#define ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
+#ifndef ES_APP_VIEWS_GAMELIST_ISIMPLE_GAMELIST_VIEW_H
+#define ES_APP_VIEWS_GAMELIST_ISIMPLE_GAMELIST_VIEW_H
 
 #include "components/ImageComponent.h"
 #include "components/TextComponent.h"
@@ -75,4 +75,4 @@ protected:
     bool mIsFolder;
 };
 
-#endif // ES_APP_VIEWS_GAME_LIST_ISIMPLE_GAME_LIST_VIEW_H
+#endif // ES_APP_VIEWS_GAMELIST_ISIMPLE_GAMELIST_VIEW_H

@@ -317,7 +317,7 @@ std::vector<HelpPrompt> BasicGamelistView::getHelpPrompts()
         prompts.push_back(HelpPrompt("left/right", "system"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
-        ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST)
+        ViewController::getInstance()->getState().viewing == ViewController::GAMELIST)
         prompts.push_back(HelpPrompt("a", "enter"));
     else
         prompts.push_back(HelpPrompt("a", "launch"));
@@ -332,7 +332,7 @@ std::vector<HelpPrompt> BasicGamelistView::getHelpPrompts()
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
         !CollectionSystemsManager::getInstance()->isEditing() && mCursorStack.empty() &&
-        ViewController::getInstance()->getState().viewing == ViewController::GAME_LIST &&
+        ViewController::getInstance()->getState().viewing == ViewController::GAMELIST &&
         ViewController::getInstance()->getState().viewstyle != ViewController::BASIC) {
         prompts.push_back(HelpPrompt("y", "jump to game"));
     }
