@@ -1,28 +1,28 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  GuiGameScraper.h
+//  GuiScraperSingle.h
 //
 //  Single game scraping user interface.
 //  This interface is triggered from GuiMetaDataEd.
 //  GuiScraperSearch is called from here.
 //
 
-#ifndef ES_APP_GUIS_GUI_GAME_SCRAPER_H
-#define ES_APP_GUIS_GUI_GAME_SCRAPER_H
+#ifndef ES_APP_GUIS_GUI_SCRAPER_SINGLE_H
+#define ES_APP_GUIS_GUI_SCRAPER_SINGLE_H
 
 #include "GuiComponent.h"
 #include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "guis/GuiScraperSearch.h"
 
-class GuiGameScraper : public GuiComponent
+class GuiScraperSingle : public GuiComponent
 {
 public:
-    GuiGameScraper(Window* window,
-                   ScraperSearchParams& params,
-                   std::function<void(const ScraperSearchResult&)> doneFunc,
-                   bool& savedMediaAndAborted);
+    GuiScraperSingle(Window* window,
+                     ScraperSearchParams& params,
+                     std::function<void(const ScraperSearchResult&)> doneFunc,
+                     bool& savedMediaAndAborted);
 
     void onSizeChanged() override;
 
@@ -54,4 +54,4 @@ private:
     std::function<void()> mCancelFunc;
 };
 
-#endif // ES_APP_GUIS_GUI_GAME_SCRAPER_H
+#endif // ES_APP_GUIS_GUI_SCRAPER_SINGLE_H

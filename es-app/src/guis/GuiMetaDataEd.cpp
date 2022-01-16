@@ -5,7 +5,7 @@
 //
 //  Game metadata edit user interface.
 //  This interface is triggered from the GuiGamelistOptions menu.
-//  The scraping interface is handled by GuiGameScraper which calls GuiScraperSearch.
+//  The scraping interface is handled by GuiScraperSingle which calls GuiScraperSearch.
 //
 
 #include "guis/GuiMetaDataEd.h"
@@ -24,8 +24,8 @@
 #include "components/RatingComponent.h"
 #include "components/SwitchComponent.h"
 #include "components/TextComponent.h"
-#include "guis/GuiGameScraper.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiScraperSingle.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
@@ -747,7 +747,7 @@ void GuiMetaDataEd::save()
 
 void GuiMetaDataEd::fetch()
 {
-    GuiGameScraper* scr = new GuiGameScraper(
+    GuiScraperSingle* scr = new GuiScraperSingle(
         mWindow, mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1),
         mSavedMediaAndAborted);
     mWindow->pushGui(scr);

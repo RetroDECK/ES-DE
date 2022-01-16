@@ -1,14 +1,14 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  GuiGameScraper.cpp
+//  GuiScraperSingle.cpp
 //
 //  Single game scraping user interface.
 //  This interface is triggered from GuiMetaDataEd.
 //  GuiScraperSearch is called from here.
 //
 
-#include "guis/GuiGameScraper.h"
+#include "guis/GuiScraperSingle.h"
 
 #include "FileData.h"
 #include "MameNames.h"
@@ -18,10 +18,10 @@
 #include "components/TextComponent.h"
 #include "views/ViewController.h"
 
-GuiGameScraper::GuiGameScraper(Window* window,
-                               ScraperSearchParams& params,
-                               std::function<void(const ScraperSearchResult&)> doneFunc,
-                               bool& savedMediaAndAborted)
+GuiScraperSingle::GuiScraperSingle(Window* window,
+                                   ScraperSearchParams& params,
+                                   std::function<void(const ScraperSearchResult&)> doneFunc,
+                                   bool& savedMediaAndAborted)
     : GuiComponent(window)
     , mClose(false)
     , mGrid(window, glm::ivec2{2, 6})
@@ -141,7 +141,7 @@ GuiGameScraper::GuiGameScraper(Window* window,
     mSearch->search(params); // Start the search.
 }
 
-void GuiGameScraper::onSizeChanged()
+void GuiScraperSingle::onSizeChanged()
 {
     mGrid.setRowHeightPerc(
         0, (mGameName->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) /
@@ -164,7 +164,7 @@ void GuiGameScraper::onSizeChanged()
     mGameName->setPosition((mSize.x - newSizeX) / 2.0f, 0.0f);
 }
 
-bool GuiGameScraper::input(InputConfig* config, Input input)
+bool GuiScraperSingle::input(InputConfig* config, Input input)
 {
     if (config->isMappedTo("b", input) && input.value) {
         if (mSearch->getSavedNewMedia()) {
@@ -181,7 +181,7 @@ bool GuiGameScraper::input(InputConfig* config, Input input)
     return GuiComponent::input(config, input);
 }
 
-void GuiGameScraper::update(int deltaTime)
+void GuiScraperSingle::update(int deltaTime)
 {
     GuiComponent::update(deltaTime);
 
@@ -189,7 +189,7 @@ void GuiGameScraper::update(int deltaTime)
         delete this;
 }
 
-std::vector<HelpPrompt> GuiGameScraper::getHelpPrompts()
+std::vector<HelpPrompt> GuiScraperSingle::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
     prompts.push_back(HelpPrompt("b", "back (cancel)"));
@@ -197,14 +197,14 @@ std::vector<HelpPrompt> GuiGameScraper::getHelpPrompts()
     return prompts;
 }
 
-HelpStyle GuiGameScraper::getHelpStyle()
+HelpStyle GuiScraperSingle::getHelpStyle()
 {
     HelpStyle style = HelpStyle();
     style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
     return style;
 }
 
-void GuiGameScraper::close()
+void GuiScraperSingle::close()
 {
     // This will cause update() to close the GUI.
     mClose = true;

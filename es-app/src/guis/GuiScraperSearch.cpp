@@ -9,7 +9,7 @@
 //  to resolve scraping conflicts when run from GuiScraperMenu.
 //  The function to properly save scraped metadata is located here too.
 //
-//  This GUI is called from GuiGameScraper for single-game scraping and
+//  This GUI is called from GuiScraperSingle for single-game scraping and
 //  from GuiScraperMulti for multi-game scraping.
 //
 
