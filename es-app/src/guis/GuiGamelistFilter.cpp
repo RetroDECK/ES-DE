@@ -22,11 +22,11 @@
 GuiGamelistFilter::GuiGamelistFilter(Window* window,
                                      SystemData* system,
                                      std::function<void(bool)> filterChangedCallback)
-    : GuiComponent(window)
-    , mMenu(window, "FILTER GAMELIST")
-    , mSystem(system)
-    , mFiltersChangedCallback(filterChangedCallback)
-    , mFiltersChanged(false)
+    : GuiComponent {window}
+    , mMenu {window, "FILTER GAMELIST"}
+    , mSystem {system}
+    , mFiltersChangedCallback {filterChangedCallback}
+    , mFiltersChanged {false}
 {
     initializeMenu();
 }

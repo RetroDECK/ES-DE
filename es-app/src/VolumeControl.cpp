@@ -21,15 +21,17 @@ std::string VolumeControl::mixerCard = "default";
 #endif
 
 VolumeControl::VolumeControl()
+// clang-format off
 #if defined(__linux__)
-    : mixerIndex(0)
-    , mixerHandle(nullptr)
-    , mixerElem(nullptr)
-    , mixerSelemId(nullptr)
+    : mixerIndex {0}
+    , mixerHandle {nullptr}
+    , mixerElem {nullptr}
+    , mixerSelemId {nullptr}
 #elif defined(_WIN64)
-    : mixerHandle(nullptr)
-    , endpointVolume(nullptr)
+    : mixerHandle {nullptr}
+    , endpointVolume {nullptr}
 #endif
+// clang-format on
 {
     init();
 }

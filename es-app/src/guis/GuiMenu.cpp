@@ -41,9 +41,9 @@
 #include <algorithm>
 
 GuiMenu::GuiMenu(Window* window)
-    : GuiComponent(window)
-    , mMenu(window, "MAIN MENU")
-    , mVersion(window)
+    : GuiComponent {window}
+    , mMenu {window, "MAIN MENU"}
+    , mVersion {window}
 {
     bool isFullUI = UIModeController::getInstance()->isUIModeFull();
 

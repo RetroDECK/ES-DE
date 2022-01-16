@@ -23,7 +23,7 @@ std::shared_ptr<Sound> Sound::get(const std::string& path)
     if (it != sMap.cend())
         return it->second;
 
-    std::shared_ptr<Sound> sound = std::shared_ptr<Sound>(new Sound(path));
+    std::shared_ptr<Sound> sound {std::shared_ptr<Sound>(new Sound(path))};
     AudioManager::getInstance().registerSound(sound);
     sMap[path] = sound;
     return sound;

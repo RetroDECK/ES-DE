@@ -13,7 +13,7 @@
 #include "components/TextComponent.h"
 
 // Animation definition.
-AnimationFrame BUSY_ANIMATION_FRAMES[] = {
+AnimationFrame BUSY_ANIMATION_FRAMES[] {
     {":/graphics/busy_0.svg", 300},
     {":/graphics/busy_1.svg", 300},
     {":/graphics/busy_2.svg", 300},
@@ -23,9 +23,9 @@ AnimationFrame BUSY_ANIMATION_FRAMES[] = {
 const AnimationDef BUSY_ANIMATION_DEF = {BUSY_ANIMATION_FRAMES, 4, true};
 
 BusyComponent::BusyComponent(Window* window)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.png")
-    , mGrid(window, glm::ivec2 {5, 3})
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.png"}
+    , mGrid {window, glm::ivec2 {5, 3}}
 {
     mAnimation = std::make_shared<AnimatedImageComponent>(mWindow);
     mAnimation->load(&BUSY_ANIMATION_DEF);

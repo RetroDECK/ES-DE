@@ -28,8 +28,6 @@ MiximageGenerator::MiximageGenerator(FileData* game, std::string& resultMessage)
 {
 }
 
-MiximageGenerator::~MiximageGenerator() {}
-
 void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
 {
     mMiximagePromise = miximagePromise;

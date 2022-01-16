@@ -25,31 +25,31 @@
 #endif
 
 Window::Window() noexcept
-    : mScreensaver(nullptr)
-    , mMediaViewer(nullptr)
-    , mLaunchScreen(nullptr)
-    , mInfoPopup(nullptr)
-    , mListScrollOpacity(0)
-    , mFrameTimeElapsed(0)
-    , mFrameCountElapsed(0)
-    , mAverageDeltaTime(10)
-    , mTimeSinceLastInput(0)
-    , mNormalizeNextUpdate(false)
-    , mAllowSleep(true)
-    , mSleeping(false)
-    , mRenderScreensaver(false)
-    , mRenderMediaViewer(false)
-    , mRenderLaunchScreen(false)
-    , mGameLaunchedState(false)
-    , mAllowTextScrolling(true)
-    , mAllowFileAnimation(true)
-    , mCachedBackground(false)
-    , mInvalidatedCachedBackground(false)
+    : mScreensaver {nullptr}
+    , mMediaViewer {nullptr}
+    , mLaunchScreen {nullptr}
+    , mInfoPopup {nullptr}
+    , mListScrollOpacity {0}
+    , mFrameTimeElapsed {0}
+    , mFrameCountElapsed {0}
+    , mAverageDeltaTime {10}
+    , mTimeSinceLastInput {0}
+    , mNormalizeNextUpdate {false}
+    , mAllowSleep {true}
+    , mSleeping {false}
+    , mRenderScreensaver {false}
+    , mRenderMediaViewer {false}
+    , mRenderLaunchScreen {false}
+    , mGameLaunchedState {false}
+    , mAllowTextScrolling {true}
+    , mAllowFileAnimation {true}
+    , mCachedBackground {false}
+    , mInvalidatedCachedBackground {false}
     , mInitiateCacheTimer {false}
     , mInvalidateCacheTimer {0}
-    , mVideoPlayerCount(0)
-    , mTopScale(0.5)
-    , mChangedThemeSet(false)
+    , mVideoPlayerCount {0}
+    , mTopScale {0.5f}
+    , mChangedThemeSet {false}
 {
 }
 

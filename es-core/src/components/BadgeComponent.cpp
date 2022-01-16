@@ -24,7 +24,7 @@ namespace
 {
     // clang-format off
     // The "unknown" controller entry has to be placed last.
-    GameControllers sControllerDefinitions [] = {
+    GameControllers sControllerDefinitions [] {
         // shortName                        displayName                                    fileName
         {"gamepad_generic",                 "Gamepad (Generic)",                           ":/graphics/controllers/gamepad_generic.svg"},
         {"gamepad_nintendo_nes",            "Gamepad (Nintendo NES)",                      ":/graphics/controllers/gamepad_nintendo_nes.svg"},

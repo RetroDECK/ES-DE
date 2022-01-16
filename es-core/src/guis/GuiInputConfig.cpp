@@ -31,11 +31,11 @@ GuiInputConfig::GuiInputConfig(Window* window,
                                InputConfig* target,
                                bool reconfigureAll,
                                const std::function<void()>& okCallback)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2 {1, 7})
-    , mTargetConfig(target)
-    , mHoldingInput(false)
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {1, 7}}
+    , mTargetConfig {target}
+    , mHoldingInput {false}
 {
     // Populate the configuration list with the text and icons applicable to the
     // configured controller type.

@@ -14,10 +14,10 @@
 #include "views/ViewController.h"
 
 GuiOfflineGenerator::GuiOfflineGenerator(Window* window, const std::queue<FileData*>& gameQueue)
-    : GuiComponent(window)
-    , mGameQueue(gameQueue)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2 {6, 13})
+    : GuiComponent {window}
+    , mGameQueue {gameQueue}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {6, 13}}
 {
     addChild(&mBackground);
     addChild(&mGrid);

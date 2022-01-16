@@ -14,7 +14,7 @@
 namespace PlatformIds
 {
     // clang-format off
-    std::vector<std::string> platformNames = {
+    std::vector<std::string> platformNames {
         "unknown", // Nothing set.
 
         "3do",                  // 3DO

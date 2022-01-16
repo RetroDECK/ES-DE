@@ -30,22 +30,22 @@
 #define FADE_TIME 300
 
 SystemScreensaver::SystemScreensaver()
-    : mWindow(Window::getInstance())
-    , mState(STATE_INACTIVE)
-    , mImageScreensaver(nullptr)
-    , mVideoScreensaver(nullptr)
-    , mCurrentGame(nullptr)
-    , mPreviousGame(nullptr)
-    , mTimer(0)
-    , mMediaSwapTime(0)
-    , mTriggerNextGame(false)
-    , mHasMediaFiles(false)
-    , mFallbackScreensaver(false)
-    , mOpacity(0.0f)
-    , mDimValue(1.0)
-    , mRectangleFadeIn(50)
-    , mTextFadeIn(0)
-    , mSaturationAmount(1.0)
+    : mWindow {Window::getInstance()}
+    , mState {STATE_INACTIVE}
+    , mImageScreensaver {nullptr}
+    , mVideoScreensaver {nullptr}
+    , mCurrentGame {nullptr}
+    , mPreviousGame {nullptr}
+    , mTimer {0}
+    , mMediaSwapTime {0}
+    , mTriggerNextGame {false}
+    , mHasMediaFiles {false}
+    , mFallbackScreensaver {false}
+    , mOpacity {0.0f}
+    , mDimValue {1.0}
+    , mRectangleFadeIn {50}
+    , mTextFadeIn {0}
+    , mSaturationAmount {1.0}
 {
     mWindow->setScreensaver(this);
 }

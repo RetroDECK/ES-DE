@@ -17,14 +17,14 @@
 namespace Renderer
 {
     Renderer::Shader::Shader()
-        : mProgramID(-1)
-        , shaderMVPMatrix(-1)
-        , shaderTextureSize(-1)
-        , shaderTextureCoord(-1)
-        , shaderColor(-1)
-        , shaderSaturation(-1)
-        , shaderOpacity(-1)
-        , shaderDimValue(-1)
+        : mProgramID {0}
+        , shaderMVPMatrix {0}
+        , shaderTextureSize {0}
+        , shaderTextureCoord {0}
+        , shaderColor {0}
+        , shaderSaturation {0}
+        , shaderOpacity {0}
+        , shaderDimValue {0}
     {
     }
 
@@ -116,20 +116,20 @@ namespace Renderer
 
     void Renderer::Shader::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
     {
-        if (shaderMVPMatrix != -1)
+        if (shaderMVPMatrix != GL_INVALID_VALUE && shaderMVPMatrix != GL_INVALID_OPERATION)
             GL_CHECK_ERROR(glUniformMatrix4fv(shaderMVPMatrix, 1, GL_FALSE,
                                               reinterpret_cast<GLfloat*>(&mvpMatrix)));
     }
 
     void Renderer::Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)
     {
-        if (shaderTextureSize != -1)
+        if (shaderTextureSize != GL_INVALID_VALUE && shaderTextureSize != GL_INVALID_OPERATION)
             GL_CHECK_ERROR(glUniform2f(shaderTextureSize, shaderVec2[0], shaderVec2[1]));
     }
 
     void Renderer::Shader::setTextureCoordinates(std::array<GLfloat, 4> shaderVec4)
     {
-        if (shaderTextureCoord != -1) {
+        if (shaderTextureCoord != GL_INVALID_OPERATION) {
             glVertexAttrib4f(shaderTextureCoord, shaderVec4[0], shaderVec4[1], shaderVec4[2],
                              shaderVec4[3]);
         }
@@ -137,26 +137,26 @@ namespace Renderer
 
     void Renderer::Shader::setColor(std::array<GLfloat, 4> shaderVec4)
     {
-        if (shaderColor != -1)
+        if (shaderColor != GL_INVALID_OPERATION)
             GL_CHECK_ERROR(glUniform4f(shaderColor, shaderVec4[0], shaderVec4[1], shaderVec4[2],
                                        shaderVec4[3]));
     }
 
     void Renderer::Shader::setSaturation(GLfloat saturation)
     {
-        if (shaderSaturation != -1)
+        if (shaderSaturation != GL_INVALID_VALUE && shaderSaturation != GL_INVALID_OPERATION)
             GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
     }
 
     void Renderer::Shader::setOpacity(GLfloat opacity)
     {
-        if (shaderOpacity != -1)
+        if (shaderOpacity != GL_INVALID_VALUE && shaderOpacity != GL_INVALID_OPERATION)
             GL_CHECK_ERROR(glUniform1f(shaderOpacity, opacity));
     }
 
     void Renderer::Shader::setDimValue(GLfloat dimValue)
     {
-        if (shaderDimValue != -1)
+        if (shaderDimValue != GL_INVALID_VALUE && shaderDimValue != GL_INVALID_OPERATION)
             GL_CHECK_ERROR(glUniform1f(shaderDimValue, dimValue));
     }
 

@@ -31,15 +31,15 @@ FileData::FileData(FileType type,
                    const std::string& path,
                    SystemEnvironmentData* envData,
                    SystemData* system)
-    : metadata(type == GAME ? GAME_METADATA : FOLDER_METADATA)
-    , mSourceFileData(nullptr)
-    , mParent(nullptr)
-    , mType(type)
-    , mPath(path)
-    , mEnvData(envData)
-    , mSystem(system)
-    , mOnlyFolders(false)
-    , mDeletionFlag(false)
+    : metadata {type == GAME ? GAME_METADATA : FOLDER_METADATA}
+    , mSourceFileData {nullptr}
+    , mParent {nullptr}
+    , mType {type}
+    , mPath {path}
+    , mEnvData {envData}
+    , mSystem {system}
+    , mOnlyFolders {false}
+    , mDeletionFlag {false}
 {
     // Metadata needs at least a name field (since that's what getName() will return).
     if (metadata.get("name").empty()) {

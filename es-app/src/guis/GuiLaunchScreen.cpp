@@ -15,11 +15,11 @@
 #include "utils/StringUtil.h"
 
 GuiLaunchScreen::GuiLaunchScreen()
-    : GuiComponent(Window::getInstance())
-    , mWindow(Window::getInstance())
-    , mBackground(mWindow, ":/graphics/frame.svg")
-    , mGrid(nullptr)
-    , mMarquee(nullptr)
+    : GuiComponent {Window::getInstance()}
+    , mWindow {Window::getInstance()}
+    , mBackground {mWindow, ":/graphics/frame.svg"}
+    , mGrid {nullptr}
+    , mMarquee {nullptr}
 {
     addChild(&mBackground);
     mWindow->setLaunchScreen(this);

@@ -40,10 +40,10 @@ FindRules::FindRules()
 
 void FindRules::loadFindRules()
 {
-    std::string customSystemsDirectory =
-        Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems";
+    std::string customSystemsDirectory {Utils::FileSystem::getHomePath() +
+                                        "/.emulationstation/custom_systems"};
 
-    std::string path = customSystemsDirectory + "/es_find_rules.xml";
+    std::string path {customSystemsDirectory + "/es_find_rules.xml"};
 
     if (Utils::FileSystem::exists(path)) {
         LOG(LogInfo) << "Found custom find rules configuration file";

@@ -20,10 +20,10 @@
 MenuComponent::MenuComponent(Window* window,
                              std::string title,
                              const std::shared_ptr<Font>& titleFont)
-    : GuiComponent(window)
-    , mBackground(window)
-    , mGrid(window, glm::ivec2 {2, 4})
-    , mNeedsSaving(false)
+    : GuiComponent {window}
+    , mBackground {window}
+    , mGrid {window, glm::ivec2 {2, 4}}
+    , mNeedsSaving {false}
 {
     addChild(&mBackground);
     addChild(&mGrid);

@@ -14,13 +14,13 @@
 #include "resources/TextureResource.h"
 
 RatingComponent::RatingComponent(Window* window, bool colorizeChanges)
-    : GuiComponent(window)
-    , mColorOriginalValue(DEFAULT_COLORSHIFT)
-    , mColorChangedValue(DEFAULT_COLORSHIFT)
-    , mColorShift(DEFAULT_COLORSHIFT)
-    , mColorShiftEnd(DEFAULT_COLORSHIFT)
-    , mUnfilledColor(DEFAULT_COLORSHIFT)
-    , mColorizeChanges(colorizeChanges)
+    : GuiComponent {window}
+    , mColorOriginalValue {DEFAULT_COLORSHIFT}
+    , mColorChangedValue {DEFAULT_COLORSHIFT}
+    , mColorShift {DEFAULT_COLORSHIFT}
+    , mColorShiftEnd {DEFAULT_COLORSHIFT}
+    , mUnfilledColor {DEFAULT_COLORSHIFT}
+    , mColorizeChanges {colorizeChanges}
 {
     mFilledTexture = TextureResource::get(":/graphics/star_filled.svg", true);
     mUnfilledTexture = TextureResource::get(":/graphics/star_unfilled.svg", true);

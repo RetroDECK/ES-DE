@@ -21,20 +21,20 @@
 #define INCLUDE_UNKNOWN false;
 
 FileFilterIndex::FileFilterIndex()
-    : mFilterByText(false)
-    , mTextRemoveSystem(false)
-    , mFilterByRatings(false)
-    , mFilterByDeveloper(false)
-    , mFilterByPublisher(false)
-    , mFilterByGenre(false)
-    , mFilterByPlayers(false)
-    , mFilterByFavorites(false)
-    , mFilterByCompleted(false)
-    , mFilterByKidGame(false)
-    , mFilterByHidden(false)
-    , mFilterByBroken(false)
-    , mFilterByController(false)
-    , mFilterByAltemulator(false)
+    : mFilterByText {false}
+    , mTextRemoveSystem {false}
+    , mFilterByRatings {false}
+    , mFilterByDeveloper {false}
+    , mFilterByPublisher {false}
+    , mFilterByGenre {false}
+    , mFilterByPlayers {false}
+    , mFilterByFavorites {false}
+    , mFilterByCompleted {false}
+    , mFilterByKidGame {false}
+    , mFilterByHidden {false}
+    , mFilterByBroken {false}
+    , mFilterByController {false}
+    , mFilterByAltemulator {false}
 {
     clearAllFilters();
 
@@ -88,9 +88,9 @@ void FileFilterIndex::importIndex(FileFilterIndex* indexToImport)
         {&mAltemulatorIndexAllKeys, &(indexToImport->mAltemulatorIndexAllKeys)},
     };
 
-    std::vector<IndexImportStructure> indexImportDecl = std::vector<IndexImportStructure>(
+    std::vector<IndexImportStructure> indexImportDecl {std::vector<IndexImportStructure>(
         indexStructDecls,
-        indexStructDecls + sizeof(indexStructDecls) / sizeof(indexStructDecls[0]));
+        indexStructDecls + sizeof(indexStructDecls) / sizeof(indexStructDecls[0]))};
 
     for (std::vector<IndexImportStructure>::const_iterator indexesIt = indexImportDecl.cbegin();
          indexesIt != indexImportDecl.cend(); ++indexesIt) {

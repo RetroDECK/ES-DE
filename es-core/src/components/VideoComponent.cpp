@@ -19,27 +19,27 @@
 #define MEDIA_VIEWER_FADE_IN_TIME 600
 
 VideoComponent::VideoComponent(Window* window)
-    : GuiComponent(window)
-    , mWindow(window)
-    , mStaticImage(window)
-    , mVideoWidth(0)
-    , mVideoHeight(0)
-    , mTargetSize(0, 0)
-    , mVideoAreaPos(0, 0)
-    , mVideoAreaSize(0, 0)
-    , mStartDelayed(false)
-    , mIsPlaying(false)
-    , mIsActuallyPlaying(false)
-    , mPause(false)
-    , mShowing(false)
-    , mDisable(false)
-    , mMediaViewerMode(false)
-    , mScreensaverActive(false)
-    , mScreensaverMode(false)
-    , mGameLaunched(false)
-    , mBlockPlayer(false)
-    , mTargetIsMax(false)
-    , mFadeIn(1.0)
+    : GuiComponent {window}
+    , mWindow {window}
+    , mStaticImage {window}
+    , mVideoWidth {0}
+    , mVideoHeight {0}
+    , mTargetSize {0.0f, 0.0f}
+    , mVideoAreaPos {0.0f, 0.0f}
+    , mVideoAreaSize {0.0f, 0.0f}
+    , mStartDelayed {false}
+    , mIsPlaying {false}
+    , mIsActuallyPlaying {false}
+    , mPause {false}
+    , mShowing {false}
+    , mDisable {false}
+    , mMediaViewerMode {false}
+    , mScreensaverActive {false}
+    , mScreensaverMode {false}
+    , mGameLaunched {false}
+    , mBlockPlayer {false}
+    , mTargetIsMax {false}
+    , mFadeIn {1.0f}
 {
     // Setup the default configuration.
     mConfig.showSnapshotDelay = false;

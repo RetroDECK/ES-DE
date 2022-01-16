@@ -21,8 +21,8 @@
 #include "views/ViewController.h"
 
 GuiScraperMenu::GuiScraperMenu(Window* window, std::string title)
-    : GuiComponent(window)
-    , mMenu(window, title)
+    : GuiComponent {window}
+    , mMenu {window, title}
 {
     // Scraper service.
     mScraper = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),

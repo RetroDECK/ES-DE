@@ -20,7 +20,7 @@
 static std::map<std::string, std::string> sIconPathMap {};
 
 HelpComponent::HelpComponent(Window* window)
-    : GuiComponent(window)
+    : GuiComponent {window}
 {
     assignIcons();
 }

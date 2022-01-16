@@ -13,9 +13,9 @@
 #include "views/ViewController.h"
 
 MediaViewer::MediaViewer()
-    : mWindow(Window::getInstance())
-    , mVideo(nullptr)
-    , mImage(nullptr)
+    : mWindow {Window::getInstance()}
+    , mVideo {nullptr}
+    , mImage {nullptr}
 {
     mWindow->setMediaViewer(this);
 }

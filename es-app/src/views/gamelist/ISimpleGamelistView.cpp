@@ -21,11 +21,11 @@
 #include "Log.h"
 
 ISimpleGamelistView::ISimpleGamelistView(Window* window, FileData* root)
-    : IGamelistView(window, root)
-    , mHeaderText(window)
-    , mHeaderImage(window)
-    , mBackground(window)
-    , mRandomGame(nullptr)
+    : IGamelistView {window, root}
+    , mHeaderText {window}
+    , mHeaderImage {window}
+    , mBackground {window}
+    , mRandomGame {nullptr}
 {
     mHeaderText.setText("Logo Text", false);
     mHeaderText.setSize(mSize.x, 0.0f);

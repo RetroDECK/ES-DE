@@ -17,7 +17,7 @@
 
 namespace FileSorts
 {
-    const FileData::SortType typesArr[] = {
+    const FileData::SortType typesArr[] {
         FileData::SortType(&compareName, "filename, ascending"),
         FileData::SortType(&compareNameDescending, "filename, descending"),
 
@@ -48,9 +48,8 @@ namespace FileSorts
         FileData::SortType(&compareSystem, "system, ascending"),
         FileData::SortType(&compareSystemDescending, "system, descending")};
 
-    const std::vector<FileData::SortType> SortTypes(typesArr,
-                                                    typesArr +
-                                                        sizeof(typesArr) / sizeof(typesArr[0]));
+    const std::vector<FileData::SortType> SortTypes {typesArr, typesArr + sizeof(typesArr) /
+                                                                              sizeof(typesArr[0])};
 
     bool compareName(const FileData* file1, const FileData* file2)
     {

@@ -39,7 +39,7 @@
 #include "utils/StringUtil.h"
 
 // clang-format off
-std::vector<std::vector<const char*>> kbBaseUS{
+std::vector<std::vector<const char*>> kbBaseUS {
     {"1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "=", "DEL"},
     {"!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "_", "+", "DEL"},
     {"¡", "²", "³", "¤", "€", "¼", "½", "¾", "‘", "’", "¥", "×", "DEL"},
@@ -60,13 +60,13 @@ std::vector<std::vector<const char*>> kbBaseUS{
     {"",  "æ", "",  "©", "",  "",  "ñ", "µ", "ç", "",  "¿", "ALT", "-colspan-"},
     {"",  "Æ", "",  "¢", "",  "",  "Ñ", "Μ", "Ç", "",  "",  "ALT", "-colspan-"}};
 
-std::vector<std::vector<const char*>> kbLastRowNormal{
+std::vector<std::vector<const char*>> kbLastRowNormal {
     {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
     {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
     {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
     {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"}};
 
-std::vector<std::vector<const char*>> kbLastRowLoad{
+std::vector<std::vector<const char*>> kbLastRowLoad {
     {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
     {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},
     {"SHIFT", "-colspan-", "SPACE", "-colspan-", "-colspan-", "-colspan-", "-colspan-", "LOAD", "-colspan-", "CLEAR", "-colspan-", "CANCEL", "-colspan-"},

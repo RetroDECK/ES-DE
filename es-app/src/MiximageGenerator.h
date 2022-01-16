@@ -23,7 +23,6 @@ class MiximageGenerator
 {
 public:
     MiximageGenerator(FileData* game, std::string& resultMessage);
-    ~MiximageGenerator();
 
     void startThread(std::promise<bool>* miximagePromise);
 

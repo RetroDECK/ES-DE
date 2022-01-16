@@ -134,12 +134,12 @@ void thegamesdb_generate_json_scraper_requests(
     std::vector<ScraperSearchResult>& results)
 {
     resources.prepare();
-    std::string path = "https://api.thegamesdb.net/v1";
-    bool usingGameID = false;
-    const std::string apiKey = std::string("apikey=") + resources.getApiKey();
-    std::string cleanName = params.nameOverride;
+    std::string path {"https://api.thegamesdb.net/v1"};
+    bool usingGameID {false};
+    const std::string apiKey {std::string("apikey=") + resources.getApiKey()};
+    std::string cleanName {params.nameOverride};
     if (!cleanName.empty() && cleanName.substr(0, 3) == "id:") {
-        std::string gameID = cleanName.substr(3);
+        std::string gameID {cleanName.substr(3)};
         path += "/Games/ByGameID?" + apiKey +
                 "&fields=players,publishers,genres,overview,last_updated,rating,"
                 "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&id=" +

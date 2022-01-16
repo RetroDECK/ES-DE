@@ -39,15 +39,13 @@
 #include <pugixml.hpp>
 #include <random>
 
-std::string myCollectionsName = "collections";
-
 #define LAST_PLAYED_MAX 50
 
 CollectionSystemsManager::CollectionSystemsManager() noexcept
-    : mWindow(Window::getInstance())
+    : mWindow {Window::getInstance()}
 {
     // clang-format off
-    CollectionSystemDecl systemDecls[] = {
+    CollectionSystemDecl systemDecls[] {
     //  Type                 Name                Long name       Theme folder           isCustom
         {AUTO_ALL_GAMES,     "all",              "all games",    "auto-allgames",       false},
         {AUTO_LAST_PLAYED,   "recent",           "last played",  "auto-lastplayed",     false},
@@ -57,8 +55,8 @@ CollectionSystemsManager::CollectionSystemsManager() noexcept
     // clang-format on
 
     // Create a map of the collections.
-    std::vector<CollectionSystemDecl> tempSystemDecl = std::vector<CollectionSystemDecl>(
-        systemDecls, systemDecls + sizeof(systemDecls) / sizeof(systemDecls[0]));
+    std::vector<CollectionSystemDecl> tempSystemDecl {std::vector<CollectionSystemDecl>(
+        systemDecls, systemDecls + sizeof(systemDecls) / sizeof(systemDecls[0]))};
 
     for (std::vector<CollectionSystemDecl>::const_iterator it = tempSystemDecl.cbegin();
          it != tempSystemDecl.cend(); ++it)

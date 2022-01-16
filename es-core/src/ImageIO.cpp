@@ -21,7 +21,7 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
     std::vector<unsigned char> rawData;
     width = 0;
     height = 0;
-    FIMEMORY* fiMemory = FreeImage_OpenMemory(const_cast<BYTE*>(data), static_cast<DWORD>(size));
+    FIMEMORY* fiMemory {FreeImage_OpenMemory(const_cast<BYTE*>(data), static_cast<DWORD>(size))};
 
     if (fiMemory != nullptr) {
         // Detect the filetype from data.

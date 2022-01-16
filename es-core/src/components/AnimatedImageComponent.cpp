@@ -13,8 +13,8 @@
 #include "resources/ResourceManager.h"
 
 AnimatedImageComponent::AnimatedImageComponent(Window* window)
-    : GuiComponent(window)
-    , mEnabled(false)
+    : GuiComponent {window}
+    , mEnabled {false}
 {
 }
 

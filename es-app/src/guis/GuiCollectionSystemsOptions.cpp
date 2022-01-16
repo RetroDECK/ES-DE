@@ -20,9 +20,9 @@
 #include "views/ViewController.h"
 
 GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::string title)
-    : GuiSettings(window, title)
-    , mAddedCustomCollection(false)
-    , mDeletedCustomCollection(false)
+    : GuiSettings {window, title}
+    , mAddedCustomCollection {false}
+    , mDeletedCustomCollection {false}
 {
     // Finish editing custom collection.
     if (CollectionSystemsManager::getInstance()->isEditing()) {

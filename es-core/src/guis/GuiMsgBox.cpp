@@ -26,21 +26,21 @@ GuiMsgBox::GuiMsgBox(Window* window,
                      const std::function<void()>& func3,
                      bool disableBackButton,
                      bool deleteOnButtonPress)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2 {1, 2})
-    , mHelpStyle(helpstyle)
-    , mDisableBackButton(disableBackButton)
-    , mDeleteOnButtonPress(deleteOnButtonPress)
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {1, 2}}
+    , mHelpStyle {helpstyle}
+    , mDisableBackButton {disableBackButton}
+    , mDeleteOnButtonPress {deleteOnButtonPress}
 {
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
 
-    float width =
-        floorf(glm::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth());
-    float minWidth =
-        floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * Renderer::getScreenWidth());
+    float width {
+        floorf(glm::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth())};
+    float minWidth {
+        floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * Renderer::getScreenWidth())};
 
     mMsg = std::make_shared<TextComponent>(mWindow, text, Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
                                            ALIGN_CENTER);

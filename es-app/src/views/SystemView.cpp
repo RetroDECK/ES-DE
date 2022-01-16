@@ -27,11 +27,11 @@ const int logoBuffersLeft[] = {-5, -2, -1};
 const int logoBuffersRight[] = {1, 2, 5};
 
 SystemView::SystemView(Window* window)
-    : IList<SystemViewData, SystemData*>(window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP)
-    , mSystemInfo(window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER)
-    , mPreviousScrollVelocity(0)
-    , mUpdatedGameCount(false)
-    , mViewNeedsReload(true)
+    : IList<SystemViewData, SystemData*> {window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP}
+    , mSystemInfo {window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER}
+    , mPreviousScrollVelocity {0}
+    , mUpdatedGameCount {false}
+    , mViewNeedsReload {true}
 {
     mCamOffset = 0;
     mExtrasCamOffset = 0;
@@ -91,9 +91,9 @@ void SystemView::populate()
             // No logo available? Make placeholder.
             if (!e.data.logo) {
 
-                glm::vec2 resolution = glm::vec2 {static_cast<float>(Renderer::getScreenWidth()),
-                                                  static_cast<float>(Renderer::getScreenHeight())};
-                glm::vec3 center = {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
+                glm::vec2 resolution {static_cast<float>(Renderer::getScreenWidth()),
+                                      static_cast<float>(Renderer::getScreenHeight())};
+                glm::vec3 center {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
 
                 // Placeholder Image.
                 logoElem = theme->getElement("system", "logoPlaceholderImage", "image");

@@ -13,8 +13,8 @@
 #include "resources/TextureResource.h"
 
 GridTileComponent::GridTileComponent(Window* window)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.png")
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.png"}
 {
     mDefaultProperties.mSize = getDefaultTileSize();
     mDefaultProperties.mPadding = glm::vec2 {16.0f * Renderer::getScreenWidthModifier(),

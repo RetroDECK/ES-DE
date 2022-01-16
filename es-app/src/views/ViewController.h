@@ -17,6 +17,7 @@
 #include "GuiComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "renderers/Renderer.h"
+#include "utils/StringUtil.h"
 
 #include <vector>
 
@@ -117,15 +118,28 @@ public:
     void removeGamelistView(SystemData* system);
 
     // Font Awesome symbols.
-    static const std::string CONTROLLER_CHAR;
-    static const std::string CROSSEDCIRCLE_CHAR;
-    static const std::string EXCLAMATION_CHAR;
-    static const std::string FAVORITE_CHAR;
-    static const std::string FILTER_CHAR;
-    static const std::string FOLDER_CHAR;
-    static const std::string GEAR_CHAR;
-    static const std::string KEYBOARD_CHAR;
-    static const std::string TICKMARK_CHAR;
+#if defined(_MSC_VER) // MSVC compiler.
+    inline static const std::string CONTROLLER_CHAR {Utils::String::wideStringToString(L"\uf11b")};
+    inline static const std::string CROSSEDCIRCLE_CHAR {
+        Utils::String::wideStringToString(L"\uf05e")};
+    inline static const std::string EXCLAMATION_CHAR {Utils::String::wideStringToString(L"\uf06a")};
+    inline static const std::string FAVORITE_CHAR {Utils::String::wideStringToString(L"\uf005")};
+    inline static const std::string FILTER_CHAR {Utils::String::wideStringToString(L"\uf0b0")};
+    inline static const std::string FOLDER_CHAR {Utils::String::wideStringToString(L"\uf07C")};
+    inline static const std::string GEAR_CHAR {Utils::String::wideStringToString(L"\uf013")};
+    inline static const std::string KEYBOARD_CHAR {Utils::String::wideStringToString(L"\uf11c")};
+    inline static const std::string TICKMARK_CHAR {Utils::String::wideStringToString(L"\uf14A")};
+#else
+    inline static const std::string CONTROLLER_CHAR {"\uf11b"};
+    inline static const std::string CROSSEDCIRCLE_CHAR {"\uf05e"};
+    inline static const std::string EXCLAMATION_CHAR {"\uf06a"};
+    inline static const std::string FAVORITE_CHAR {"\uf005"};
+    inline static const std::string FILTER_CHAR {"\uf0b0"};
+    inline static const std::string FOLDER_CHAR {"\uf07C"};
+    inline static const std::string GEAR_CHAR {"\uf013"};
+    inline static const std::string KEYBOARD_CHAR {"\uf11c"};
+    inline static const std::string TICKMARK_CHAR {"\uf14a"};
+#endif
 
 private:
     ViewController() noexcept;

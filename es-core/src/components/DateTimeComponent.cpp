@@ -15,8 +15,8 @@
 #include "utils/StringUtil.h"
 
 DateTimeComponent::DateTimeComponent(Window* window)
-    : TextComponent(window)
-    , mDisplayRelative(false)
+    : TextComponent {window}
+    , mDisplayRelative {false}
 {
     // ISO 8601 date format.
     setFormat("%Y-%m-%d");
@@ -30,8 +30,8 @@ DateTimeComponent::DateTimeComponent(Window* window,
                                      glm::vec3 pos,
                                      glm::vec2 size,
                                      unsigned int bgcolor)
-    : TextComponent(window, text, font, color, align, pos, size, bgcolor)
-    , mDisplayRelative(false)
+    : TextComponent {window, text, font, color, align, pos, size, bgcolor}
+    , mDisplayRelative {false}
 {
     // ISO 8601 date format.
     setFormat("%Y-%m-%d");

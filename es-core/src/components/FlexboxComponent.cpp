@@ -21,7 +21,7 @@
 
 FlexboxComponent::FlexboxComponent(Window* window, std::vector<FlexboxItem>& items)
     : GuiComponent {window}
-    , mItems(items)
+    , mItems {items}
     , mDirection {DEFAULT_DIRECTION}
     , mAlignment {DEFAULT_ALIGNMENT}
     , mLines {DEFAULT_LINES}

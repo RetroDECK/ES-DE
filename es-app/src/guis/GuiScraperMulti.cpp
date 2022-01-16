@@ -27,11 +27,11 @@
 GuiScraperMulti::GuiScraperMulti(Window* window,
                                  const std::queue<ScraperSearchParams>& searches,
                                  bool approveResults)
-    : GuiComponent(window)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2 {2, 6})
-    , mSearchQueue(searches)
-    , mApproveResults(approveResults)
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {2, 6}}
+    , mSearchQueue {searches}
+    , mApproveResults {approveResults}
 {
     assert(mSearchQueue.size());
 

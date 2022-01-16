@@ -26,7 +26,7 @@
 TextureData::TextureData(bool tile)
     : mTile {tile}
     , mTextureID {0}
-    , mDataRGBA({})
+    , mDataRGBA {}
     , mFormat {Renderer::Texture::RGBA}
     , mWidth {0}
     , mHeight {0}

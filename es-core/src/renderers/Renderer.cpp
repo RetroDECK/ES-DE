@@ -24,50 +24,50 @@
 namespace Renderer
 {
     static std::stack<Rect> clipStack;
-    static SDL_Window* sdlWindow = nullptr;
-    static glm::mat4 mProjectionMatrix;
-    static int windowWidth = 0;
-    static int windowHeight = 0;
-    static int screenWidth = 0;
-    static int screenHeight = 0;
-    static int screenOffsetX = 0;
-    static int screenOffsetY = 0;
-    static int screenRotate = 0;
-    static bool initialCursorState = 1;
+    static SDL_Window* sdlWindow {nullptr};
+    static glm::mat4 mProjectionMatrix {};
+    static int windowWidth {0};
+    static int windowHeight {0};
+    static int screenWidth {0};
+    static int screenHeight {0};
+    static int screenOffsetX {0};
+    static int screenOffsetY {0};
+    static int screenRotate {0};
+    static bool initialCursorState {1};
     // Screen resolution modifiers relative to the 1920x1080 reference.
-    static float screenHeightModifier;
-    static float screenWidthModifier;
-    static float screenAspectRatio;
+    static float screenHeightModifier {0.0f};
+    static float screenWidthModifier {0.0f};
+    static float screenAspectRatio {0.0f};
 
     static void setIcon()
     {
-        size_t width = 0;
-        size_t height = 0;
-        ResourceData resData =
-            ResourceManager::getInstance().getFileData(":/graphics/window_icon_256.png");
-        std::vector<unsigned char> rawData =
-            ImageIO::loadFromMemoryRGBA32(resData.ptr.get(), resData.length, width, height);
+        size_t width {0};
+        size_t height {0};
+        ResourceData resData {
+            ResourceManager::getInstance().getFileData(":/graphics/window_icon_256.png")};
+        std::vector<unsigned char> rawData {
+            ImageIO::loadFromMemoryRGBA32(resData.ptr.get(), resData.length, width, height)};
 
         if (!rawData.empty()) {
             ImageIO::flipPixelsVert(rawData.data(), width, height);
 
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-            unsigned int rmask = 0xFF000000;
-            unsigned int gmask = 0x00FF0000;
-            unsigned int bmask = 0x0000FF00;
-            unsigned int amask = 0x000000FF;
+            unsigned int rmask {0xFF000000};
+            unsigned int gmask {0x00FF0000};
+            unsigned int bmask {0x0000FF00};
+            unsigned int amask {0x000000FF};
 #else
-            unsigned int rmask = 0x000000FF;
-            unsigned int gmask = 0x0000FF00;
-            unsigned int bmask = 0x00FF0000;
-            unsigned int amask = 0xFF000000;
+            unsigned int rmask {0x000000FF};
+            unsigned int gmask {0x0000FF00};
+            unsigned int bmask {0x00FF0000};
+            unsigned int amask {0xFF000000};
 #endif
 
             // Try creating SDL surface from logo data.
-            SDL_Surface* logoSurface =
-                SDL_CreateRGBSurfaceFrom(static_cast<void*>(rawData.data()),
-                                         static_cast<int>(width), static_cast<int>(height), 32,
-                                         static_cast<int>((width * 4)), rmask, gmask, bmask, amask);
+            SDL_Surface* logoSurface {SDL_CreateRGBSurfaceFrom(
+                static_cast<void*>(rawData.data()), static_cast<int>(width),
+                static_cast<int>(height), 32, static_cast<int>((width * 4)), rmask, gmask, bmask,
+                amask)};
 
             if (logoSurface != nullptr) {
                 SDL_SetWindowIcon(sdlWindow, logoSurface);
@@ -87,7 +87,7 @@ namespace Renderer
 
         initialCursorState = (SDL_ShowCursor(0) != 0);
 
-        int displayIndex = Settings::getInstance()->getInt("DisplayIndex");
+        int displayIndex {Settings::getInstance()->getInt("DisplayIndex")};
         // Check that an invalid value has not been manually entered in the es_settings.xml file.
         if (displayIndex != 1 && displayIndex != 2 && displayIndex != 3 && displayIndex != 4) {
             Settings::getInstance()->setInt("DisplayIndex", 1);

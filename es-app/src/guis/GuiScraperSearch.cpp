@@ -38,14 +38,14 @@
 #define FAILED_VERIFICATION_RETRIES 8
 
 GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int scrapeCount)
-    : GuiComponent(window)
-    , mGrid(window, glm::ivec2 {5, 3})
-    , mSearchType(type)
-    , mScrapeCount(scrapeCount)
-    , mRefinedSearch(false)
-    , mFoundGame(false)
-    , mScrapeRatings(false)
-    , mBusyAnim(window)
+    : GuiComponent {window}
+    , mGrid {window, glm::ivec2 {5, 3}}
+    , mSearchType {type}
+    , mScrapeCount {scrapeCount}
+    , mRefinedSearch {false}
+    , mFoundGame {false}
+    , mScrapeRatings {false}
+    , mBusyAnim {window}
 {
     addChild(&mGrid);
 

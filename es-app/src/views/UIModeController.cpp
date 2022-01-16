@@ -17,7 +17,7 @@
 #include "views/ViewController.h"
 
 UIModeController::UIModeController() noexcept
-    : mPassKeyCounter(0)
+    : mPassKeyCounter {0}
 {
     mPassKeySequence = Settings::getInstance()->getString("UIMode_passkey");
     mCurrentUIMode = Settings::getInstance()->getString("UIMode");

@@ -11,12 +11,12 @@
 #include "resources/Font.h"
 
 SwitchComponent::SwitchComponent(Window* window, bool state)
-    : GuiComponent(window)
-    , mImage(window)
-    , mState(state)
-    , mOriginalValue(state)
-    , mColorOriginalValue(DEFAULT_COLORSHIFT)
-    , mColorChangedValue(DEFAULT_COLORSHIFT)
+    : GuiComponent {window}
+    , mImage {window}
+    , mState {state}
+    , mOriginalValue {state}
+    , mColorOriginalValue {DEFAULT_COLORSHIFT}
+    , mColorChangedValue {DEFAULT_COLORSHIFT}
 {
     mImage.setImage(":/graphics/off.svg");
     mImage.setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());

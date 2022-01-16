@@ -13,9 +13,9 @@
 #include <pugixml.hpp>
 
 InputConfig::InputConfig(int deviceId, const std::string& deviceName, const std::string& deviceGUID)
-    : mDeviceId(deviceId)
-    , mDeviceName(deviceName)
-    , mDeviceGUID(deviceGUID)
+    : mDeviceId {deviceId}
+    , mDeviceName {deviceName}
+    , mDeviceGUID {deviceGUID}
 {
 }
 

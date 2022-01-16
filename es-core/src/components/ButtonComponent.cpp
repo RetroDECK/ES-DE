@@ -21,7 +21,7 @@ ButtonComponent::ButtonComponent(Window* window,
     : GuiComponent {window}
     , mBox {window, ":/graphics/button.svg"}
     , mFont {Font::get(FONT_SIZE_MEDIUM)}
-    , mPadding {{}}
+    , mPadding {0.0f, 0.0f, 0.0f, 0.0f}
     , mFocused {false}
     , mEnabled {true}
     , mFlatStyle {flatStyle}

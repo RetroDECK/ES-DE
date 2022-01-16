@@ -33,28 +33,6 @@
 #include "views/gamelist/IGamelistView.h"
 #include "views/gamelist/VideoGamelistView.h"
 
-#if defined(_MSC_VER) // MSVC compiler.
-const std::string ViewController::CONTROLLER_CHAR = Utils::String::wideStringToString(L"\uf11b");
-const std::string ViewController::CROSSEDCIRCLE_CHAR = Utils::String::wideStringToString(L"\uf05e");
-const std::string ViewController::EXCLAMATION_CHAR = Utils::String::wideStringToString(L"\uf06a");
-const std::string ViewController::FAVORITE_CHAR = Utils::String::wideStringToString(L"\uf005");
-const std::string ViewController::FILTER_CHAR = Utils::String::wideStringToString(L"\uf0b0");
-const std::string ViewController::FOLDER_CHAR = Utils::String::wideStringToString(L"\uf07C");
-const std::string ViewController::GEAR_CHAR = Utils::String::wideStringToString(L"\uf013");
-const std::string ViewController::KEYBOARD_CHAR = Utils::String::wideStringToString(L"\uf11c");
-const std::string ViewController::TICKMARK_CHAR = Utils::String::wideStringToString(L"\uf14A");
-#else
-const std::string ViewController::CONTROLLER_CHAR = "\uf11b";
-const std::string ViewController::CROSSEDCIRCLE_CHAR = "\uf05e";
-const std::string ViewController::EXCLAMATION_CHAR = "\uf06a";
-const std::string ViewController::FAVORITE_CHAR = "\uf005";
-const std::string ViewController::FILTER_CHAR = "\uf0b0";
-const std::string ViewController::FOLDER_CHAR = "\uf07C";
-const std::string ViewController::GEAR_CHAR = "\uf013";
-const std::string ViewController::KEYBOARD_CHAR = "\uf11c";
-const std::string ViewController::TICKMARK_CHAR = "\uf14a";
-#endif
-
 ViewController* ViewController::getInstance()
 {
     static ViewController instance;
@@ -62,19 +40,19 @@ ViewController* ViewController::getInstance()
 }
 
 ViewController::ViewController() noexcept
-    : GuiComponent(Window::getInstance())
-    , mNoGamesMessageBox(nullptr)
-    , mCurrentView(nullptr)
-    , mPreviousView(nullptr)
-    , mSkipView(nullptr)
-    , mGameToLaunch(nullptr)
-    , mCamera(Renderer::getIdentity())
-    , mSystemViewTransition(false)
-    , mWrappedViews(false)
-    , mFadeOpacity(0)
-    , mCancelledTransition(false)
-    , mLockInput(false)
-    , mNextSystem(false)
+    : GuiComponent {Window::getInstance()}
+    , mNoGamesMessageBox {nullptr}
+    , mCurrentView {nullptr}
+    , mPreviousView {nullptr}
+    , mSkipView {nullptr}
+    , mGameToLaunch {nullptr}
+    , mCamera {Renderer::getIdentity()}
+    , mSystemViewTransition {false}
+    , mWrappedViews {false}
+    , mFadeOpacity {0}
+    , mCancelledTransition {false}
+    , mLockInput {false}
+    , mNextSystem {false}
 {
     mState.viewing = NOTHING;
     mState.viewstyle = AUTOMATIC;

@@ -28,7 +28,7 @@ void Log::open()
 
 std::ostringstream& Log::get(LogLevel level)
 {
-    time_t t = time(nullptr);
+    time_t t {time(nullptr)};
     struct tm tm;
 #if defined(_WIN64)
     // Of course Windows does not follow standards and puts the parameters the other way

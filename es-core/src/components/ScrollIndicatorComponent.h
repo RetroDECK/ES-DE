@@ -20,7 +20,7 @@ public:
     ScrollIndicatorComponent(std::shared_ptr<ComponentList> componentList,
                              std::shared_ptr<ImageComponent> scrollUp,
                              std::shared_ptr<ImageComponent> scrollDown)
-        : mPreviousScrollState(ComponentList::SCROLL_NONE)
+        : mPreviousScrollState {ComponentList::SCROLL_NONE}
     {
         assert(componentList != nullptr && scrollUp != nullptr && scrollDown != nullptr);
 

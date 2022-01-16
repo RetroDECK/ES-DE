@@ -21,11 +21,11 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
                                  bool firstRun,
                                  bool forcedConfig,
                                  const std::function<void()>& doneCallback)
-    : GuiComponent(window)
-    , mFirstRun(firstRun)
-    , mForcedConfig(forcedConfig)
-    , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2 {1, 5})
+    : GuiComponent {window}
+    , mFirstRun {firstRun}
+    , mForcedConfig {forcedConfig}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {1, 5}}
 {
     mHoldingConfig = nullptr;
     mHoldTime = 0;
@@ -43,7 +43,7 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
 
     // Device info.
     std::stringstream deviceInfo;
-    int numDevices = InputManager::getInstance().getNumJoysticks();
+    int numDevices {InputManager::getInstance().getNumJoysticks()};
 
     if (numDevices > 0)
         deviceInfo << numDevices << " GAMEPAD" << (numDevices > 1 ? "S" : "") << " DETECTED";

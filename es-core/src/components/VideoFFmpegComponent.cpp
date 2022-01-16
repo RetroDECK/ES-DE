@@ -24,34 +24,34 @@ std::vector<std::string> VideoFFmpegComponent::sHWDecodedVideos;
 std::vector<std::string> VideoFFmpegComponent::sSWDecodedVideos;
 
 VideoFFmpegComponent::VideoFFmpegComponent(Window* window)
-    : VideoComponent(window)
-    , mFrameProcessingThread(nullptr)
-    , mFormatContext(nullptr)
-    , mVideoStream(nullptr)
-    , mAudioStream(nullptr)
-    , mVideoCodec(nullptr)
-    , mAudioCodec(nullptr)
-    , mHardwareCodec(nullptr)
-    , mHwContext(nullptr)
-    , mVideoCodecContext(nullptr)
-    , mAudioCodecContext(nullptr)
-    , mVBufferSrcContext(nullptr)
-    , mVBufferSinkContext(nullptr)
-    , mVFilterGraph(nullptr)
-    , mVFilterInputs(nullptr)
-    , mVFilterOutputs(nullptr)
-    , mABufferSrcContext(nullptr)
-    , mABufferSinkContext(nullptr)
-    , mAFilterGraph(nullptr)
-    , mAFilterInputs(nullptr)
-    , mAFilterOutputs(nullptr)
-    , mVideoTargetQueueSize(0)
-    , mAudioTargetQueueSize(0)
-    , mVideoTimeBase(0.0l)
-    , mAccumulatedTime(0)
-    , mStartTimeAccumulation(false)
-    , mDecodedFrame(false)
-    , mEndOfVideo(false)
+    : VideoComponent {window}
+    , mFrameProcessingThread {nullptr}
+    , mFormatContext {nullptr}
+    , mVideoStream {nullptr}
+    , mAudioStream {nullptr}
+    , mVideoCodec {nullptr}
+    , mAudioCodec {nullptr}
+    , mHardwareCodec {nullptr}
+    , mHwContext {nullptr}
+    , mVideoCodecContext {nullptr}
+    , mAudioCodecContext {nullptr}
+    , mVBufferSrcContext {nullptr}
+    , mVBufferSinkContext {nullptr}
+    , mVFilterGraph {nullptr}
+    , mVFilterInputs {nullptr}
+    , mVFilterOutputs {nullptr}
+    , mABufferSrcContext {nullptr}
+    , mABufferSinkContext {nullptr}
+    , mAFilterGraph {nullptr}
+    , mAFilterInputs {nullptr}
+    , mAFilterOutputs {nullptr}
+    , mVideoTargetQueueSize {0}
+    , mAudioTargetQueueSize {0}
+    , mVideoTimeBase {0.0l}
+    , mAccumulatedTime {0.0l}
+    , mStartTimeAccumulation {false}
+    , mDecodedFrame {false}
+    , mEndOfVideo {false}
 {
 }
 

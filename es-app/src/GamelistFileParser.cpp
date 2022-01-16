@@ -22,9 +22,9 @@ namespace GamelistFileParser
     FileData* findOrCreateFile(SystemData* system, const std::string& path, FileType type)
     {
         // First, verify that path is within the system's root folder.
-        FileData* root = system->getRootFolder();
-        bool contains = false;
-        std::string relative = Utils::FileSystem::removeCommonPath(path, root->getPath(), contains);
+        FileData* root {system->getRootFolder()};
+        bool contains {false};
+        std::string relative {Utils::FileSystem::removeCommonPath(path, root->getPath(), contains)};
 
         if (!contains) {
             LOG(LogError) << "Path \"" << path << "\" is outside system path \""

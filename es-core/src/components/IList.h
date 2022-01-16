@@ -86,10 +86,10 @@ public:
     IList(Window* window,
           const ScrollTierList& tierList = LIST_SCROLL_STYLE_QUICK,
           const ListLoopType& loopType = LIST_PAUSE_AT_END)
-        : GuiComponent(window)
-        , mTierList(tierList)
-        , mLoopType(loopType)
-        , mWindow(window)
+        : GuiComponent {window}
+        , mTierList {tierList}
+        , mLoopType {loopType}
+        , mWindow {window}
     {
         mCursor = 0;
         mScrollTier = 0;

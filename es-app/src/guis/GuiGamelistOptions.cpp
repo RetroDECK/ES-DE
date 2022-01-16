@@ -26,18 +26,18 @@
 #include "views/gamelist/IGamelistView.h"
 
 GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
-    : GuiComponent(window)
-    , mMenu(window, "OPTIONS")
-    , mSystem(system)
-    , mFiltersChanged(false)
-    , mCancelled(false)
-    , mIsCustomCollection(false)
-    , mIsCustomCollectionGroup(false)
-    , mCustomCollectionSystem(nullptr)
+    : GuiComponent {window}
+    , mMenu {window, "OPTIONS"}
+    , mSystem {system}
+    , mFiltersChanged {false}
+    , mCancelled {false}
+    , mIsCustomCollection {false}
+    , mIsCustomCollectionGroup {false}
+    , mCustomCollectionSystem {nullptr}
 {
     addChild(&mMenu);
 
-    FileData* file = getGamelist()->getCursor();
+    FileData* file {getGamelist()->getCursor()};
     // Check if it's a placeholder, which would limit the menu entries presented.
     file->isPlaceHolder();
     mFromPlaceholder = file->isPlaceHolder();

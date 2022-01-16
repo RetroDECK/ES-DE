@@ -33,20 +33,20 @@ using namespace rapidjson;
 
 namespace
 {
-    constexpr char GamesDBAPIKey[] =
-        "445fcbc3f32bb2474bc27016b99eb963d318ee3a608212c543b9a79de1041600";
+    constexpr char GamesDBAPIKey[] {
+        "445fcbc3f32bb2474bc27016b99eb963d318ee3a608212c543b9a79de1041600"};
 
-    constexpr int MAX_WAIT_MS = 90000;
-    constexpr int POLL_TIME_MS = 500;
-    constexpr int MAX_WAIT_ITER = MAX_WAIT_MS / POLL_TIME_MS;
+    constexpr int MAX_WAIT_MS {90000};
+    constexpr int POLL_TIME_MS {500};
+    constexpr int MAX_WAIT_ITER {MAX_WAIT_MS / POLL_TIME_MS};
 
-    constexpr char SCRAPER_RESOURCES_DIR[] = "scrapers";
-    constexpr char DEVELOPERS_JSON_FILE[] = "gamesdb_developers.json";
-    constexpr char PUBLISHERS_JSON_FILE[] = "gamesdb_publishers.json";
-    constexpr char GENRES_JSON_FILE[] = "gamesdb_genres.json";
-    constexpr char DEVELOPERS_ENDPOINT[] = "/Developers";
-    constexpr char PUBLISHERS_ENDPOINT[] = "/Publishers";
-    constexpr char GENRES_ENDPOINT[] = "/Genres";
+    constexpr char SCRAPER_RESOURCES_DIR[] {"scrapers"};
+    constexpr char DEVELOPERS_JSON_FILE[] {"gamesdb_developers.json"};
+    constexpr char PUBLISHERS_JSON_FILE[] {"gamesdb_publishers.json"};
+    constexpr char GENRES_JSON_FILE[] {"gamesdb_genres.json"};
+    constexpr char DEVELOPERS_ENDPOINT[] {"/Developers"};
+    constexpr char PUBLISHERS_ENDPOINT[] {"/Publishers"};
+    constexpr char GENRES_ENDPOINT[] {"/Genres"};
 
     std::string genFilePath(const std::string& file_name)
     {

@@ -16,8 +16,8 @@
 #include "views/ViewController.h"
 
 BasicGamelistView::BasicGamelistView(Window* window, FileData* root)
-    : ISimpleGamelistView(window, root)
-    , mList(window)
+    : ISimpleGamelistView {window, root}
+    , mList {window}
 {
     mList.setSize(mSize.x, mSize.y * 0.8f);
     mList.setPosition(0.0f, mSize.y * 0.2f);

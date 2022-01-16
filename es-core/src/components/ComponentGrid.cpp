@@ -13,9 +13,9 @@
 using namespace GridFlags;
 
 ComponentGrid::ComponentGrid(Window* window, const glm::ivec2& gridDimensions)
-    : GuiComponent(window)
-    , mGridSize(gridDimensions)
-    , mCursor(0, 0)
+    : GuiComponent {window}
+    , mGridSize {gridDimensions}
+    , mCursor {0, 0}
 {
     assert(gridDimensions.x > 0 && gridDimensions.y > 0);
 
@@ -44,8 +44,8 @@ float ComponentGrid::getColWidth(int col)
         return mColWidths[col] * mSize.x;
 
     // Calculate automatic width.
-    float freeWidthPerc = 1;
-    int between = 0;
+    float freeWidthPerc {1.0};
+    int between {0};
     for (int x = 0; x < mGridSize.x; ++x) {
         freeWidthPerc -= mColWidths[x]; // If it's 0 it won't do anything.
         if (mColWidths[x] == 0)

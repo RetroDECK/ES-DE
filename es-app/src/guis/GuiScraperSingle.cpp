@@ -22,12 +22,12 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
                                    ScraperSearchParams& params,
                                    std::function<void(const ScraperSearchResult&)> doneFunc,
                                    bool& savedMediaAndAborted)
-    : GuiComponent(window)
-    , mClose(false)
-    , mGrid(window, glm::ivec2 {2, 6})
-    , mBox(window, ":/graphics/frame.svg")
-    , mSearchParams(params)
-    , mSavedMediaAndAborted(savedMediaAndAborted)
+    : GuiComponent {window}
+    , mClose {false}
+    , mGrid {window, glm::ivec2 {2, 6}}
+    , mBox {window, ":/graphics/frame.svg"}
+    , mSearchParams {params}
+    , mSavedMediaAndAborted {savedMediaAndAborted}
 {
     addChild(&mBox);
     addChild(&mGrid);

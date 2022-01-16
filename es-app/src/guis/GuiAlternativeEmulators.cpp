@@ -16,13 +16,13 @@
 GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
     : GuiComponent {window}
     , mMenu {window, "ALTERNATIVE EMULATORS"}
-    , mHasSystems(false)
+    , mHasSystems {false}
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
 
     // Horizontal sizes for the system and label entries.
-    float systemSizeX = mMenu.getSize().x / 3.27f;
+    float systemSizeX {mMenu.getSize().x / 3.27f};
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
@@ -35,14 +35,14 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
         ComponentListRow row;
 
-        std::string name = (*it)->getName();
-        std::shared_ptr<TextComponent> systemText =
-            std::make_shared<TextComponent>(mWindow, name, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        std::string name {(*it)->getName()};
+        std::shared_ptr<TextComponent> systemText {std::make_shared<TextComponent>(
+            mWindow, name, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
 
         systemText->setSize(systemSizeX, systemText->getSize().y);
         row.addElement(systemText, false);
 
-        std::string configuredLabel = (*it)->getAlternativeEmulator();
+        std::string configuredLabel {(*it)->getAlternativeEmulator()};
         std::string label;
 
         if (configuredLabel == "") {
@@ -57,7 +57,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
             }
         }
 
-        bool invalidEntry = false;
+        bool invalidEntry {false};
 
         if (label.empty()) {
             label = ViewController::EXCLAMATION_CHAR + " INVALID ENTRY";

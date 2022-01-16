@@ -18,8 +18,8 @@ std::set<TextureResource*> TextureResource::sAllTextures;
 
 TextureResource::TextureResource(
     const std::string& path, bool tile, bool dynamic, bool linearMagnify, bool forceRasterization)
-    : mTextureData(nullptr)
-    , mForceLoad(false)
+    : mTextureData {nullptr}
+    , mForceLoad {false}
 {
     // Create a texture data object for this texture.
     if (!path.empty()) {

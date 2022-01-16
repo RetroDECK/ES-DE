@@ -13,7 +13,7 @@
 #include "components/SwitchComponent.h"
 
 GuiMediaViewerOptions::GuiMediaViewerOptions(Window* window, const std::string& title)
-    : GuiSettings(window, title)
+    : GuiSettings {window, title}
 {
     // Keep videos running when viewing images.
     auto keep_video_running = std::make_shared<SwitchComponent>(mWindow);

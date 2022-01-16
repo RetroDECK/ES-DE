@@ -15,8 +15,8 @@
 #include "views/ViewController.h"
 
 IGamelistView::IGamelistView(Window* window, FileData* root)
-    : GuiComponent(window)
-    , mRoot(root)
+    : GuiComponent {window}
+    , mRoot {root}
 {
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
