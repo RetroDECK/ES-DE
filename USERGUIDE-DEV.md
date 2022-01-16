@@ -1062,10 +1062,6 @@ Cover art, front of box/case.
 
 Back of box/case.
 
-**Fan art images**
-
-Fan art, i.e. not official media from the game developer.
-
 **Marquee (wheel) images**
 
 Logotype for the game.
@@ -1077,6 +1073,10 @@ These are only used for generating miximages.
 **Physical media images** _(ScreenScraper only)_
 
 Images of cartridges, diskettes, tapes, CD-ROMs etc. that were used to distribute the games. These are only used for generating miximages.
+
+**Fan art images**
+
+Fan art. Disabled by default as not everyone may want these images, and because they slow down the scraping.
 
 #### Miximage settings
 

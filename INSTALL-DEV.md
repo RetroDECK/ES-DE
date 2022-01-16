@@ -867,7 +867,11 @@ To format a file from the command line, simply run:
 
 The -i flag will make an inplace edit of the file.
 
+Alternatively the `tools/reformat_codebase.sh` script can be executed to format the entire codebase in one go.
+
 But the recommended approach is to run clang-format from within the editor. If using VSCode, there is an extension available named Clang-Format. After installing this, simply open a source file, right click and choose `Format Document` or use the applicable keyboard shortcut. The first time you do this, you will have to make a choice to perform the formatting using clang-format. The rest should be completely automatic.
+
+Whatever you do, don't set up your editor to run clang-format on commit because if something goes wrong (which has happened in the past) you will potentially commit a lot of garbage which could take some effort to clean up. Adding to this, string literals can get strange formatting from time to time and there are occasionally clang-format bugs that may cause other problems. So always review the formatted code manually before commit.
 
 In some instances you may want to avoid getting code formatted, and you can accomplish this by simply enclosing the lines with the two comments "clang-format off" and "clang-format on", such as this:
 

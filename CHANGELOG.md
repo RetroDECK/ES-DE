@@ -16,6 +16,7 @@
 * Added scraping of box back covers when using TheGamesDB
 * Set the option "Scrape actual folders" as enabled by default and moved it higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
+* When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
 * Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
 * Added logging of the display refresh rate on startup
 * Added a color model conversion shader for converting from BGRA to RGBA
@@ -26,14 +27,18 @@
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Renamed GameList to Gamelist throughout the codebase
 * Renamed Gamelist.cpp and Gamelist.h to GamelistFileParser.cpp and GamelistFileParser.h and moved it to its own namespace instead of the global namespace
+* Renamed GuiGameScraper.cpp and GuiGameScraper.h to GuiScraperSingle.cpp and GuiScraperSingle.h
+* Set the clang-format option SpaceBeforeCpp11BracedList to true and reformatted the codebase
 * Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
 * Removed the deprecated VideoVlcComponent
+* Lots of general code cleanup and refactoring
 
 ### Bug fixes
 
 * During some menu operations that reloaded the gamelist view, the cached background could miss some elements as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
+* When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded

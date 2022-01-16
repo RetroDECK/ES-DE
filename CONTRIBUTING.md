@@ -118,9 +118,8 @@ But as clang-format won't change the actual code content or fix all code style c
 * As a general rule, use C++ syntax instead of C syntax, for example `static_cast<int>(someFloatVariable)` instead of `(int)someFloatVariable`
 * Always declare one variable per line, never combine multiple declarations of the same type
 * Name member variables starting with an `m` such as `mMyMemberVariable` and name static variables starting with an `s` such as `sMyStaticVariable`
-* Use braced initializations when possible, e.g. `float myFloat{1.5f}` as this is generally the safest way to do it
+* Use braced initializations when possible, e.g. `float myFloat {1.5f}` as this is generally the safest way to do it (except when using the auto keyword)
 * Short function definitions can be placed in either the .h or .cpp file depending on the situation
-* Avoid overoptimizations, especially if it sacrifices readability, makes the code hard to expand on or is error prone
 * Try to be coherent with the existing codebase regarding names, structure etc., it should not be obvious what person wrote which parts
 * For the rest, check the code and have fun :)
 
