@@ -97,10 +97,10 @@ void Settings::setDefaults()
     mBoolMap["ScrapeTitleScreens"] = {true, true};
     mBoolMap["ScrapeCovers"] = {true, true};
     mBoolMap["ScrapeBackCovers"] = {true, true};
-    mBoolMap["ScrapeFanArt"] = {true, true};
     mBoolMap["ScrapeMarquees"] = {true, true};
     mBoolMap["Scrape3DBoxes"] = {true, true};
     mBoolMap["ScrapePhysicalMedia"] = {true, true};
+    mBoolMap["ScrapeFanArt"] = {false, false};
 
     mStringMap["MiximageResolution"] = {"1280x960", "1280x960"};
     mStringMap["MiximageScreenshotScaling"] = {"sharp", "sharp"};

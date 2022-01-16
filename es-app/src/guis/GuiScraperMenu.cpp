@@ -353,17 +353,6 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
-    // Scrape fan art images.
-    auto scrapeFanArt = std::make_shared<SwitchComponent>(mWindow);
-    scrapeFanArt->setState(Settings::getInstance()->getBool("ScrapeFanArt"));
-    s->addWithLabel("FAN ART IMAGES", scrapeFanArt);
-    s->addSaveFunc([scrapeFanArt, s] {
-        if (scrapeFanArt->getState() != Settings::getInstance()->getBool("ScrapeFanArt")) {
-            Settings::getInstance()->setBool("ScrapeFanArt", scrapeFanArt->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // Scrape marquee images.
     auto scrape_marquees = std::make_shared<SwitchComponent>(mWindow);
     scrape_marquees->setState(Settings::getInstance()->getBool("ScrapeMarquees"));
@@ -418,6 +407,17 @@ void GuiScraperMenu::openContentOptions()
             ->getChild(scrapePhysicalMedia->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
     }
+
+    // Scrape fan art images.
+    auto scrapeFanArt = std::make_shared<SwitchComponent>(mWindow);
+    scrapeFanArt->setState(Settings::getInstance()->getBool("ScrapeFanArt"));
+    s->addWithLabel("FAN ART IMAGES", scrapeFanArt);
+    s->addSaveFunc([scrapeFanArt, s] {
+        if (scrapeFanArt->getState() != Settings::getInstance()->getBool("ScrapeFanArt")) {
+            Settings::getInstance()->setBool("ScrapeFanArt", scrapeFanArt->getState());
+            s->setNeedsSaving();
+        }
+    });
 
     mWindow->pushGui(s);
 }
