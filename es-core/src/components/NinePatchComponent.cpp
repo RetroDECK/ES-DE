@@ -17,13 +17,13 @@ NinePatchComponent::NinePatchComponent(Window* window,
                                        const std::string& path,
                                        unsigned int edgeColor,
                                        unsigned int centerColor)
-    : GuiComponent{window}
-    , mVertices{nullptr}
-    , mPath{path}
-    , mCornerSize{16.0f, 16.0f}
-    , mSharpCorners{false}
-    , mEdgeColor{edgeColor}
-    , mCenterColor{centerColor}
+    : GuiComponent {window}
+    , mVertices {nullptr}
+    , mPath {path}
+    , mCornerSize {16.0f, 16.0f}
+    , mSharpCorners {false}
+    , mEdgeColor {edgeColor}
+    , mCenterColor {centerColor}
 {
     if (!mPath.empty())
         buildVertices();
@@ -55,7 +55,7 @@ void NinePatchComponent::buildVertices()
     if (mVertices != nullptr)
         delete[] mVertices;
 
-    glm::vec2 relCornerSize{};
+    glm::vec2 relCornerSize {};
 
     // Don't scale the rasterized version of the frame as it would look bad.
     if (mPath.substr(mPath.size() - 4, std::string::npos) == ".png") {
@@ -74,7 +74,7 @@ void NinePatchComponent::buildVertices()
 
     mTexture->rasterizeAt(texSize.x, texSize.y);
 
-    if (mTexture->getSize() == glm::ivec2{}) {
+    if (mTexture->getSize() == glm::ivec2 {}) {
         mVertices = nullptr;
         LOG(LogWarning) << "NinePatchComponent has no texture";
         return;
@@ -82,10 +82,10 @@ void NinePatchComponent::buildVertices()
 
     mVertices = new Renderer::Vertex[6 * 9];
 
-    const float imgSizeX[3]{relCornerSize.x, mSize.x - relCornerSize.x * 2.0f, relCornerSize.x};
-    const float imgSizeY[3]{relCornerSize.y, mSize.y - relCornerSize.y * 2.0f, relCornerSize.y};
-    const float imgPosX[3]{0, imgSizeX[0], imgSizeX[0] + imgSizeX[1]};
-    const float imgPosY[3]{0, imgSizeY[0], imgSizeY[0] + imgSizeY[1]};
+    const float imgSizeX[3] {relCornerSize.x, mSize.x - relCornerSize.x * 2.0f, relCornerSize.x};
+    const float imgSizeY[3] {relCornerSize.y, mSize.y - relCornerSize.y * 2.0f, relCornerSize.y};
+    const float imgPosX[3] {0, imgSizeX[0], imgSizeX[0] + imgSizeX[1]};
+    const float imgPosY[3] {0, imgSizeY[0], imgSizeY[0] + imgSizeY[1]};
 
     // The "1 +" in posY and "-" in sizeY is to deal with texture coordinates having a bottom
     // left corner origin vs. verticies having a top left origin.
@@ -100,12 +100,12 @@ void NinePatchComponent::buildVertices()
     int v = 0;
 
     for (int slice = 0; slice < 9; ++slice) {
-        const int sliceX{slice % 3};
-        const int sliceY{slice / 3};
-        const glm::vec2 imgPos{imgPosX[sliceX], imgPosY[sliceY]};
-        const glm::vec2 imgSize{imgSizeX[sliceX], imgSizeY[sliceY]};
-        const glm::vec2 texPos{texPosX[sliceX], texPosY[sliceY]};
-        const glm::vec2 texSizeSlice{texSizeX[sliceX], texSizeY[sliceY]};
+        const int sliceX {slice % 3};
+        const int sliceY {slice / 3};
+        const glm::vec2 imgPos {imgPosX[sliceX], imgPosY[sliceY]};
+        const glm::vec2 imgSize {imgSizeX[sliceX], imgSizeY[sliceY]};
+        const glm::vec2 texPos {texPosX[sliceX], texPosY[sliceY]};
+        const glm::vec2 texSizeSlice {texSizeX[sliceX], texSizeY[sliceY]};
 
         // clang-format off
         mVertices[v + 1] = {{imgPos.x            , imgPos.y            }, {texPos.x,                  texPos.y                 }, 0};
@@ -133,7 +133,7 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     if (mTexture && mVertices != nullptr) {
         Renderer::setMatrix(trans);

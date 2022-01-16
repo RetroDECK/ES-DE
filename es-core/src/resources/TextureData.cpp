@@ -24,19 +24,19 @@
 #define DPI 96
 
 TextureData::TextureData(bool tile)
-    : mTile{tile}
-    , mTextureID{0}
+    : mTile {tile}
+    , mTextureID {0}
     , mDataRGBA({})
-    , mFormat{Renderer::Texture::RGBA}
-    , mWidth{0}
-    , mHeight{0}
-    , mSourceWidth{0.0f}
-    , mSourceHeight{0.0f}
-    , mScalable{false}
-    , mHasRGBAData{false}
-    , mPendingRasterization{false}
-    , mLinearMagnify{false}
-    , mForceRasterization{false}
+    , mFormat {Renderer::Texture::RGBA}
+    , mWidth {0}
+    , mHeight {0}
+    , mSourceWidth {0.0f}
+    , mSourceHeight {0.0f}
+    , mScalable {false}
+    , mHasRGBAData {false}
+    , mPendingRasterization {false}
+    , mLinearMagnify {false}
+    , mForceRasterization {false}
 {
 }
 
@@ -56,20 +56,20 @@ void TextureData::initFromPath(const std::string& path)
 
 bool TextureData::initSVGFromMemory(const std::string& fileData)
 {
-    std::unique_lock<std::mutex> lock{mMutex};
+    std::unique_lock<std::mutex> lock {mMutex};
 
     // If already initialized then don't process it again unless it needs to be rasterized.
     if (!mDataRGBA.empty() && !mPendingRasterization)
         return true;
 
-    NSVGimage* svgImage{nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI)};
+    NSVGimage* svgImage {nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI)};
 
     if (!svgImage || svgImage->width == 0 || svgImage->height == 0) {
         LOG(LogError) << "Couldn't parse SVG image";
         return false;
     }
 
-    bool rasterize{true};
+    bool rasterize {true};
 
     // If there is no image size defined yet, then don't rasterize unless mForceRasterization has
     // been set.

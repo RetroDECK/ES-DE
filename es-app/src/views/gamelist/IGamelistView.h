@@ -32,7 +32,7 @@ public:
     void setTheme(const std::shared_ptr<ThemeData>& theme);
     const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
 
-    virtual void preloadGamelist(){};
+    virtual void preloadGamelist() {};
 
     virtual FileData* getCursor() = 0;
     virtual void setCursor(FileData*) = 0;

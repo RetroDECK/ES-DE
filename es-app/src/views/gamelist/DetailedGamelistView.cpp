@@ -180,7 +180,7 @@ void DetailedGamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& them
 
     mGamelistInfo.applyTheme(theme, getName(), "gamelistInfo", ALL ^ ThemeFlags::TEXT);
     // If there is no position defined in the theme for gamelistInfo, then hide it.
-    if (mGamelistInfo.getPosition() == glm::vec3{})
+    if (mGamelistInfo.getPosition() == glm::vec3 {})
         mGamelistInfo.setVisible(false);
     else
         mGamelistInfo.setVisible(true);
@@ -195,21 +195,21 @@ void DetailedGamelistView::initMDLabels()
     const unsigned int colCount = 2;
     const unsigned int rowCount = static_cast<int>(components.size() / 2);
 
-    glm::vec3 start{mSize.x * 0.01f, mSize.y * 0.625f, 0.0f};
+    glm::vec3 start {mSize.x * 0.01f, mSize.y * 0.625f, 0.0f};
 
     const float colSize = (mSize.x * 0.48f) / colCount;
     const float rowPadding = 0.01f * mSize.y;
 
     for (unsigned int i = 0; i < components.size(); ++i) {
         const unsigned int row = i % rowCount;
-        glm::vec3 pos{};
+        glm::vec3 pos {};
         if (row == 0) {
-            pos = start + glm::vec3{colSize * (i / rowCount), 0.0f, 0.0f};
+            pos = start + glm::vec3 {colSize * (i / rowCount), 0.0f, 0.0f};
         }
         else {
             // Work from the last component.
             GuiComponent* lc = components[i - 1];
-            pos = lc->getPosition() + glm::vec3{0.0f, lc->getSize().y + rowPadding, 0.0f};
+            pos = lc->getPosition() + glm::vec3 {0.0f, lc->getSize().y + rowPadding, 0.0f};
         }
 
         components[i]->setFont(Font::get(FONT_SIZE_SMALL));
@@ -239,7 +239,7 @@ void DetailedGamelistView::initMDValues()
     for (unsigned int i = 0; i < labels.size(); ++i) {
         const float heightDiff = (labels[i]->getSize().y - values[i]->getSize().y) / 2.0f;
         values[i]->setPosition(labels[i]->getPosition() +
-                               glm::vec3{labels[i]->getSize().x, heightDiff, 0.0f});
+                               glm::vec3 {labels[i]->getSize().x, heightDiff, 0.0f});
         values[i]->setSize(colSize - labels[i]->getSize().x, values[i]->getSize().y);
         values[i]->setDefaultZIndex(40.0f);
 

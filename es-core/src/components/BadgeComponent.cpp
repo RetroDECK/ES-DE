@@ -62,11 +62,11 @@ namespace
 } // namespace
 
 BadgeComponent::BadgeComponent(Window* window)
-    : GuiComponent{window}
-    , mFlexboxItems{}
-    , mFlexboxComponent{window, mFlexboxItems}
-    , mBadgeTypes{{SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME, SLOT_BROKEN, SLOT_CONTROLLER,
-                   SLOT_ALTEMULATOR}}
+    : GuiComponent {window}
+    , mFlexboxItems {}
+    , mFlexboxComponent {window, mFlexboxItems}
+    , mBadgeTypes {{SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME, SLOT_BROKEN, SLOT_CONTROLLER,
+                    SLOT_ALTEMULATOR}}
 {
     mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
     mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
@@ -190,12 +190,12 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     using namespace ThemeFlags;
 
-    const ThemeData::ThemeElement* elem{theme->getElement(view, element, "badges")};
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "badges")};
     if (!elem)
         return;
 
     if (elem->has("alignment")) {
-        const std::string alignment{elem->get<std::string>("alignment")};
+        const std::string alignment {elem->get<std::string>("alignment")};
         if (alignment != "left" && alignment != "right") {
             LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <alignment> set to \""
                             << alignment << "\"";
@@ -206,7 +206,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("direction")) {
-        const std::string direction{elem->get<std::string>("direction")};
+        const std::string direction {elem->get<std::string>("direction")};
         if (direction != "row" && direction != "column") {
             LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <direction> set to \""
                             << direction << "\"";
@@ -217,7 +217,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("lines")) {
-        const float lines{elem->get<float>("lines")};
+        const float lines {elem->get<float>("lines")};
         if (lines < 1.0f || lines > 10.0f) {
             LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <lines> set to \""
                             << lines << "\"";
@@ -228,7 +228,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("itemsPerLine")) {
-        const float itemsPerLine{elem->get<float>("itemsPerLine")};
+        const float itemsPerLine {elem->get<float>("itemsPerLine")};
         if (itemsPerLine < 1.0f || itemsPerLine > 10.0f) {
             LOG(LogWarning)
                 << "BadgeComponent: Invalid theme configuration, <itemsPerLine> set to \""
@@ -295,10 +295,10 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 FlexboxComponent::FlexboxItem item;
                 item.label = slot;
 
-                ImageComponent badgeImage{mWindow, false, false};
+                ImageComponent badgeImage {mWindow, false, false};
                 badgeImage.setImage(mBadgeIcons[slot]);
                 item.baseImage = badgeImage;
-                item.overlayImage = ImageComponent{mWindow};
+                item.overlayImage = ImageComponent {mWindow};
 
                 mFlexboxItems.emplace_back(std::move(item));
             }

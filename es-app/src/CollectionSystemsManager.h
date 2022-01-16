@@ -50,10 +50,10 @@ struct CollectionSystemDecl {
 
 struct CollectionSystemData {
     CollectionSystemData()
-        : system{nullptr}
-        , decl{}
-        , isEnabled{false}
-        , isPopulated{false}
+        : system {nullptr}
+        , decl {}
+        , isEnabled {false}
+        , isPopulated {false}
     {
     }
     SystemData* system;

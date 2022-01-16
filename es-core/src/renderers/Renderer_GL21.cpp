@@ -379,7 +379,7 @@ namespace Renderer
 
     void setMatrix(const glm::mat4& matrix)
     {
-        glm::mat4 newMatrix{matrix};
+        glm::mat4 newMatrix {matrix};
         newMatrix[3] = glm::round(newMatrix[3]);
 
         GL_CHECK_ERROR(glMatrixMode(GL_MODELVIEW));

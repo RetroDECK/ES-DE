@@ -19,15 +19,15 @@
 #define BLINKTIME 1000
 
 TextEditComponent::TextEditComponent(Window* window)
-    : GuiComponent{window}
-    , mFocused{false}
-    , mEditing{false}
-    , mCursor{0}
-    , mBlinkTime{0}
-    , mCursorRepeatDir{0}
-    , mScrollOffset{0.0f, 0.0f}
-    , mBox{window, ":/graphics/textinput.svg"}
-    , mFont{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
+    : GuiComponent {window}
+    , mFocused {false}
+    , mEditing {false}
+    , mCursor {0}
+    , mBlinkTime {0}
+    , mCursorRepeatDir {0}
+    , mScrollOffset {0.0f, 0.0f}
+    , mBox {window, ":/graphics/textinput.svg"}
+    , mFont {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
 {
     mBox.setSharpCorners(true);
     addChild(&mBox);
@@ -51,8 +51,8 @@ void TextEditComponent::onFocusLost()
 void TextEditComponent::onSizeChanged()
 {
     mBox.fitTo(
-        mSize, glm::vec3{},
-        glm::vec2{-34.0f, -32.0f - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())});
+        mSize, glm::vec3 {},
+        glm::vec2 {-34.0f, -32.0f - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())});
     onTextChanged(); // Wrap point probably changed.
 }
 
@@ -269,7 +269,7 @@ void TextEditComponent::onTextChanged()
 void TextEditComponent::onCursorChanged()
 {
     if (isMultiline()) {
-        glm::vec2 textSize{mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor)};
+        glm::vec2 textSize {mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor)};
 
         // Need to scroll down?
         if (mScrollOffset.y + getTextAreaSize().y < textSize.y + mFont->getHeight())
@@ -279,7 +279,7 @@ void TextEditComponent::onCursorChanged()
             mScrollOffset.y = textSize.y;
     }
     else {
-        glm::vec2 cursorPos{mFont->sizeText(mText.substr(0, mCursor))};
+        glm::vec2 cursorPos {mFont->sizeText(mText.substr(0, mCursor))};
 
         if (mScrollOffset.x + getTextAreaSize().x < cursorPos.x)
             mScrollOffset.x = cursorPos.x - getTextAreaSize().x;
@@ -290,24 +290,24 @@ void TextEditComponent::onCursorChanged()
 
 void TextEditComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{getTransform() * parentTrans};
+    glm::mat4 trans {getTransform() * parentTrans};
     renderChildren(trans);
 
     // Text + cursor rendering.
     // Offset into our "text area" (padding).
-    trans = glm::translate(trans, glm::vec3{getTextAreaPos().x, getTextAreaPos().y, 0.0f});
+    trans = glm::translate(trans, glm::vec3 {getTextAreaPos().x, getTextAreaPos().y, 0.0f});
 
-    glm::ivec2 clipPos{static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)};
+    glm::ivec2 clipPos {static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)};
     // Use "text area" size for clipping.
-    glm::vec3 dimScaled{};
+    glm::vec3 dimScaled {};
     dimScaled.x = std::fabs(trans[3].x + getTextAreaSize().x);
     dimScaled.y = std::fabs(trans[3].y + getTextAreaSize().y);
 
-    glm::ivec2 clipDim{static_cast<int>(dimScaled.x - trans[3].x),
-                       static_cast<int>(dimScaled.y - trans[3].y)};
+    glm::ivec2 clipDim {static_cast<int>(dimScaled.x - trans[3].x),
+                        static_cast<int>(dimScaled.y - trans[3].y)};
     Renderer::pushClipRect(clipPos, clipDim);
 
-    trans = glm::translate(trans, glm::vec3{-mScrollOffset.x, -mScrollOffset.y, 0.0f});
+    trans = glm::translate(trans, glm::vec3 {-mScrollOffset.x, -mScrollOffset.y, 0.0f});
     Renderer::setMatrix(trans);
 
     if (mTextCache)
@@ -343,14 +343,14 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
 
 glm::vec2 TextEditComponent::getTextAreaPos() const
 {
-    return glm::vec2{(TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()) / 2.0f,
-                     (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f};
+    return glm::vec2 {(TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()) / 2.0f,
+                      (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f};
 }
 
 glm::vec2 TextEditComponent::getTextAreaSize() const
 {
-    return glm::vec2{mSize.x - (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()),
-                     mSize.y - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())};
+    return glm::vec2 {mSize.x - (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()),
+                      mSize.y - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())};
 }
 
 std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()

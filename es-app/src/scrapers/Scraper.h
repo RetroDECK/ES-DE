@@ -43,11 +43,11 @@ struct ScraperSearchParams {
 struct ScraperSearchResult {
     ScraperSearchResult()
         : mdl(GAME_METADATA)
-        , scraperRequestAllowance{0}
-        , mediaURLFetch{NOT_STARTED}
-        , thumbnailDownloadStatus{NOT_STARTED}
-        , mediaFilesDownloadStatus{NOT_STARTED}
-        , savedNewMedia{false}
+        , scraperRequestAllowance {0}
+        , mediaURLFetch {NOT_STARTED}
+        , thumbnailDownloadStatus {NOT_STARTED}
+        , mediaFilesDownloadStatus {NOT_STARTED}
+        , savedNewMedia {false}
     {
     }
 

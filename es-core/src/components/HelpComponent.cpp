@@ -17,7 +17,7 @@
 #include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
 
-static std::map<std::string, std::string> sIconPathMap{};
+static std::map<std::string, std::string> sIconPathMap {};
 
 HelpComponent::HelpComponent(Window* window)
     : GuiComponent(window)
@@ -203,7 +203,7 @@ void HelpComponent::updateGrid()
     std::shared_ptr<Font>& font = mStyle.font;
 
     mGrid = std::make_shared<ComponentGrid>(mWindow,
-                                            glm::ivec2{static_cast<int>(mPrompts.size()) * 4, 1});
+                                            glm::ivec2 {static_cast<int>(mPrompts.size()) * 4, 1});
 
     // [icon] [spacer1] [text] [spacer2]
 
@@ -249,8 +249,8 @@ void HelpComponent::updateGrid()
             col + 1, (mStyle.iconTextSpacing * Renderer::getScreenWidthModifier()) / width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
 
-        mGrid->setEntry(icons.at(i), glm::ivec2{col, 0}, false, false);
-        mGrid->setEntry(labels.at(i), glm::ivec2{col + 2, 0}, false, false);
+        mGrid->setEntry(icons.at(i), glm::ivec2 {col, 0}, false, false);
+        mGrid->setEntry(labels.at(i), glm::ivec2 {col + 2, 0}, false, false);
     }
 
     mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
@@ -291,7 +291,7 @@ void HelpComponent::setOpacity(unsigned char opacity)
 
 void HelpComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     if (mGrid)
         mGrid->render(trans);

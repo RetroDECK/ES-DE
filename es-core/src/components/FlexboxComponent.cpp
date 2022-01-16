@@ -20,17 +20,17 @@
 #include "ThemeData.h"
 
 FlexboxComponent::FlexboxComponent(Window* window, std::vector<FlexboxItem>& items)
-    : GuiComponent{window}
+    : GuiComponent {window}
     , mItems(items)
-    , mDirection{DEFAULT_DIRECTION}
-    , mAlignment{DEFAULT_ALIGNMENT}
-    , mLines{DEFAULT_LINES}
-    , mItemsPerLine{DEFAULT_ITEMS_PER_LINE}
-    , mItemPlacement{DEFAULT_ITEM_PLACEMENT}
-    , mItemMargin{glm::vec2{DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y}}
-    , mOverlayPosition{0.5f, 0.5f}
-    , mOverlaySize{0.5f}
-    , mLayoutValid{false}
+    , mDirection {DEFAULT_DIRECTION}
+    , mAlignment {DEFAULT_ALIGNMENT}
+    , mLines {DEFAULT_LINES}
+    , mItemsPerLine {DEFAULT_ITEMS_PER_LINE}
+    , mItemPlacement {DEFAULT_ITEM_PLACEMENT}
+    , mItemMargin {glm::vec2 {DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y}}
+    , mOverlayPosition {0.5f, 0.5f}
+    , mOverlaySize {0.5f}
+    , mLayoutValid {false}
 {
 }
 
@@ -42,7 +42,7 @@ void FlexboxComponent::render(const glm::mat4& parentTrans)
     if (!mLayoutValid)
         computeLayout();
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugImage"))
@@ -105,24 +105,24 @@ void FlexboxComponent::computeLayout()
         mItemsPerLine = static_cast<unsigned int>(mItems.size());
     }
 
-    glm::vec2 grid{};
+    glm::vec2 grid {};
 
     if (mDirection == "row")
         grid = {mItemsPerLine, mLines};
     else
         grid = {mLines, mItemsPerLine};
 
-    glm::vec2 maxItemSize{(mSize + mItemMargin - grid * mItemMargin) / grid};
+    glm::vec2 maxItemSize {(mSize + mItemMargin - grid * mItemMargin) / grid};
 
-    float rowHeight{0.0f};
-    bool firstItem{true};
+    float rowHeight {0.0f};
+    bool firstItem {true};
 
     // Calculate maximum item dimensions.
     for (auto& item : mItems) {
         if (!item.visible)
             continue;
 
-        glm::vec2 sizeDiff{item.baseImage.getSize() / maxItemSize};
+        glm::vec2 sizeDiff {item.baseImage.getSize() / maxItemSize};
 
         // The first item dictates the maximum width for the rest.
         if (firstItem) {
@@ -150,8 +150,8 @@ void FlexboxComponent::computeLayout()
 
     maxItemSize = glm::round(maxItemSize);
 
-    bool alignRight{mAlignment == "right"};
-    float alignRightComp{0.0f};
+    bool alignRight {mAlignment == "right"};
+    float alignRightComp {0.0f};
 
     // If right-aligning, move the overall container contents during grid setup.
     if (alignRight && mDirection == "row")
@@ -165,16 +165,16 @@ void FlexboxComponent::computeLayout()
         for (int y = 0; y < grid.y; ++y) {
             for (int x = 0; x < grid.x; ++x) {
                 itemPositions.emplace_back(
-                    glm::vec2{(x * (maxItemSize.x + mItemMargin.x) + alignRightComp),
-                              y * (rowHeight + mItemMargin.y)});
+                    glm::vec2 {(x * (maxItemSize.x + mItemMargin.x) + alignRightComp),
+                               y * (rowHeight + mItemMargin.y)});
             }
         }
     }
     else if (mDirection == "column" && !alignRight) {
         for (int x = 0; x < grid.x; ++x) {
             for (int y = 0; y < grid.y; ++y) {
-                itemPositions.emplace_back(glm::vec2{(x * (maxItemSize.x + mItemMargin.x)),
-                                                     y * (rowHeight + mItemMargin.y)});
+                itemPositions.emplace_back(glm::vec2 {(x * (maxItemSize.x + mItemMargin.x)),
+                                                      y * (rowHeight + mItemMargin.y)});
             }
         }
     }
@@ -182,15 +182,15 @@ void FlexboxComponent::computeLayout()
         for (int x = 0; x < grid.x; ++x) {
             for (int y = 0; y < grid.y; ++y) {
                 itemPositions.emplace_back(
-                    glm::vec2{(mSize.x - (x * (maxItemSize.x + mItemMargin.x)) - maxItemSize.x),
-                              y * (rowHeight + mItemMargin.y)});
+                    glm::vec2 {(mSize.x - (x * (maxItemSize.x + mItemMargin.x)) - maxItemSize.x),
+                               y * (rowHeight + mItemMargin.y)});
             }
         }
     }
 
-    int pos{0};
-    float lastY{0.0f};
-    float itemsOnLastRow{0};
+    int pos {0};
+    float lastY {0.0f};
+    float itemsOnLastRow {0};
 
     // Position items on the grid.
     for (auto& item : mItems) {
@@ -204,7 +204,7 @@ void FlexboxComponent::computeLayout()
             }
         }
 
-        float verticalOffset{0.0f};
+        float verticalOffset {0.0f};
 
         // For any items that do not fill the maximum height, position these either on
         // top/start (implicit), center or bottom/end.
@@ -242,9 +242,9 @@ void FlexboxComponent::computeLayout()
         for (auto& item : mItems) {
             if (!item.visible)
                 continue;
-            glm::vec3 currPos{item.baseImage.getPosition()};
+            glm::vec3 currPos {item.baseImage.getPosition()};
             if (currPos.y == lastY) {
-                const float offset{(grid.x - itemsOnLastRow) * (maxItemSize.x + mItemMargin.x)};
+                const float offset {(grid.x - itemsOnLastRow) * (maxItemSize.x + mItemMargin.x)};
                 item.baseImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
                 if (item.overlayImage.getTexture() != nullptr) {
                     currPos = item.overlayImage.getPosition();

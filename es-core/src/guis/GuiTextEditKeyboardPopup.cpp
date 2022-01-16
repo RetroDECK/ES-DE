@@ -87,26 +87,26 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     const std::string& loadBtnHelpText,
     const std::string& clearBtnHelpText,
     const std::string& cancelBtnHelpText)
-    : GuiComponent{window}
-    , mBackground{window, ":/graphics/frame.svg"}
-    , mGrid{window, glm::ivec2{1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
-    , mHelpStyle{helpstyle}
-    , mInitValue{initValue}
-    , mAcceptBtnHelpText{acceptBtnHelpText}
-    , mSaveConfirmationText{saveConfirmationText}
-    , mLoadBtnHelpText{loadBtnHelpText}
-    , mClearBtnHelpText{clearBtnHelpText}
-    , mCancelBtnHelpText{cancelBtnHelpText}
-    , mOkCallback{okCallback}
-    , mMultiLine{multiLine}
-    , mComplexMode{(infoString != "" && defaultValue != "")}
-    , mDeleteRepeat{false}
-    , mShift{false}
-    , mAlt{false}
-    , mDeleteRepeatTimer{0}
-    , mNavigationRepeatTimer{0}
-    , mNavigationRepeatDirX{0}
-    , mNavigationRepeatDirY{0}
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
+    , mHelpStyle {helpstyle}
+    , mInitValue {initValue}
+    , mAcceptBtnHelpText {acceptBtnHelpText}
+    , mSaveConfirmationText {saveConfirmationText}
+    , mLoadBtnHelpText {loadBtnHelpText}
+    , mClearBtnHelpText {clearBtnHelpText}
+    , mCancelBtnHelpText {cancelBtnHelpText}
+    , mOkCallback {okCallback}
+    , mMultiLine {multiLine}
+    , mComplexMode {(infoString != "" && defaultValue != "")}
+    , mDeleteRepeat {false}
+    , mShift {false}
+    , mAlt {false}
+    , mDeleteRepeatTimer {0}
+    , mNavigationRepeatTimer {0}
+    , mNavigationRepeatDirX {0}
+    , mNavigationRepeatDirY {0}
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -134,23 +134,23 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     mText->setValue(initValue);
 
     // Header.
-    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
 
     int yPos = 1;
 
     if (mComplexMode) {
         mInfoString = std::make_shared<TextComponent>(
             mWindow, infoString, Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
-        mGrid.setEntry(mInfoString, glm::ivec2{0, yPos}, false, true);
+        mGrid.setEntry(mInfoString, glm::ivec2 {0, yPos}, false, true);
 
         mDefaultValue = std::make_shared<TextComponent>(
             mWindow, defaultValue, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
-        mGrid.setEntry(mDefaultValue, glm::ivec2{0, yPos + 1}, false, true);
+        mGrid.setEntry(mDefaultValue, glm::ivec2 {0, yPos + 1}, false, true);
         yPos += 2;
     }
 
     // Text edit field.
-    mGrid.setEntry(mText, glm::ivec2{0, yPos}, true, false, glm::ivec2{1, 1},
+    mGrid.setEntry(mText, glm::ivec2 {0, yPos}, true, false, glm::ivec2 {1, 1},
                    GridFlags::BORDER_TOP);
 
     std::vector<std::vector<std::shared_ptr<ButtonComponent>>> buttonList;
@@ -230,14 +230,14 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
                     break;
             }
 
-            mKeyboardGrid->setEntry(button, glm::ivec2{j, i}, true, true,
-                                    glm::ivec2{colSpan, rowSpan});
+            mKeyboardGrid->setEntry(button, glm::ivec2 {j, i}, true, true,
+                                    glm::ivec2 {colSpan, rowSpan});
 
             buttonList.push_back(buttons);
         }
     }
 
-    mGrid.setEntry(mKeyboardGrid, glm::ivec2{0, yPos + 1}, true, true, glm::ivec2{1, 4});
+    mGrid.setEntry(mKeyboardGrid, glm::ivec2 {0, yPos + 1}, true, true, glm::ivec2 {1, 4});
 
     float textHeight = mText->getFont()->getHeight();
     // If the multiLine option has been set, then include three lines of text on screen.
@@ -293,7 +293,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
 
 void GuiTextEditKeyboardPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
     mText->setSize(mSize.x - KEYBOARD_PADDINGX - KEYBOARD_PADDINGX, mText->getSize().y);
 
     // Update grid.

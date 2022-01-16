@@ -28,21 +28,21 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
                                    const std::string& loadBtnHelpText,
                                    const std::string& clearBtnHelpText,
                                    const std::string& cancelBtnHelpText)
-    : GuiComponent{window}
-    , mBackground{window, ":/graphics/frame.svg"}
-    , mGrid{window, glm::ivec2{1, (infoString != "" && defaultValue != "" ? 5 : 3)}}
-    , mHelpStyle{helpstyle}
-    , mInitValue{initValue}
-    , mAcceptBtnText{acceptBtnText}
-    , mSaveConfirmationText{saveConfirmationText}
-    , mLoadBtnHelpText{loadBtnHelpText}
-    , mClearBtnHelpText{clearBtnHelpText}
-    , mCancelBtnHelpText{cancelBtnHelpText}
-    , mOkCallback{okCallback}
-    , mMultiLine{multiLine}
-    , mComplexMode{(infoString != "" && defaultValue != "")}
-    , mDeleteRepeat{false}
-    , mDeleteRepeatTimer{0}
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 5 : 3)}}
+    , mHelpStyle {helpstyle}
+    , mInitValue {initValue}
+    , mAcceptBtnText {acceptBtnText}
+    , mSaveConfirmationText {saveConfirmationText}
+    , mLoadBtnHelpText {loadBtnHelpText}
+    , mClearBtnHelpText {clearBtnHelpText}
+    , mCancelBtnHelpText {cancelBtnHelpText}
+    , mOkCallback {okCallback}
+    , mMultiLine {multiLine}
+    , mComplexMode {(infoString != "" && defaultValue != "")}
+    , mDeleteRepeat {false}
+    , mDeleteRepeatTimer {0}
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -83,19 +83,19 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true);
+    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
 
     int yPos = 1;
 
     if (mComplexMode) {
-        mGrid.setEntry(mInfoString, glm::ivec2{0, yPos}, false, true);
-        mGrid.setEntry(mDefaultValue, glm::ivec2{0, yPos + 1}, false, false);
+        mGrid.setEntry(mInfoString, glm::ivec2 {0, yPos}, false, true);
+        mGrid.setEntry(mDefaultValue, glm::ivec2 {0, yPos + 1}, false, false);
         yPos += 2;
     }
 
-    mGrid.setEntry(mText, glm::ivec2{0, yPos}, true, false, glm::ivec2{1, 1},
+    mGrid.setEntry(mText, glm::ivec2 {0, yPos}, true, false, glm::ivec2 {1, 1},
                    GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
-    mGrid.setEntry(mButtonGrid, glm::ivec2{0, yPos + 1}, true, false);
+    mGrid.setEntry(mButtonGrid, glm::ivec2 {0, yPos + 1}, true, false);
 
     float textHeight = mText->getFont()->getHeight();
 
@@ -137,7 +137,7 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
 
 void GuiTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
     mText->setSize(mSize.x - 40.0f * Renderer::getScreenHeightModifier(), mText->getSize().y);
 
     // Update grid.

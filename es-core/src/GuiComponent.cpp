@@ -83,7 +83,7 @@ void GuiComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
     renderChildren(trans);
 }
 
@@ -98,7 +98,7 @@ void GuiComponent::setPosition(float x, float y, float z)
     if (mPosition.x == x && mPosition.y == y && mPosition.z == z)
         return;
 
-    mPosition = glm::vec3{x, y, z};
+    mPosition = glm::vec3 {x, y, z};
     onPositionChanged();
 }
 
@@ -107,7 +107,7 @@ void GuiComponent::setOrigin(float x, float y)
     if (mOrigin.x == x && mOrigin.y == y)
         return;
 
-    mOrigin = glm::vec2{x, y};
+    mOrigin = glm::vec2 {x, y};
     onOriginChanged();
 }
 
@@ -116,14 +116,14 @@ void GuiComponent::setSize(const float w, const float h)
     if (mSize.x == w && mSize.y == h)
         return;
 
-    mSize = glm::vec2{w, h};
+    mSize = glm::vec2 {w, h};
     onSizeChanged();
 }
 
 glm::vec2 GuiComponent::getCenter() const
 {
-    return glm::vec2{mPosition.x - (getSize().x * mOrigin.x) + getSize().x / 2.0f,
-                     mPosition.y - (getSize().y * mOrigin.y) + getSize().y / 2.0f};
+    return glm::vec2 {mPosition.x - (getSize().x * mOrigin.x) + getSize().x / 2.0f,
+                      mPosition.y - (getSize().y * mOrigin.y) + getSize().y / 2.0f};
 }
 
 void GuiComponent::addChild(GuiComponent* cmp)
@@ -189,27 +189,27 @@ const glm::mat4& GuiComponent::getTransform()
     mTransform = glm::translate(mTransform, mPosition);
 
     if (mScale != 1.0f)
-        mTransform = glm::scale(mTransform, glm::vec3{mScale});
+        mTransform = glm::scale(mTransform, glm::vec3 {mScale});
 
     if (mRotation != 0.0f) {
         // Calculate offset as difference between origin and rotation origin.
-        glm::vec2 rotationSize{getRotationSize()};
-        float xOff{(mOrigin.x - mRotationOrigin.x) * rotationSize.x};
-        float yOff{(mOrigin.y - mRotationOrigin.y) * rotationSize.y};
+        glm::vec2 rotationSize {getRotationSize()};
+        float xOff {(mOrigin.x - mRotationOrigin.x) * rotationSize.x};
+        float yOff {(mOrigin.y - mRotationOrigin.y) * rotationSize.y};
 
         // Transform to offset point.
         if (xOff != 0.0f || yOff != 0.0f)
-            mTransform = glm::translate(mTransform, glm::vec3{xOff * -1.0f, yOff * -1.0f, 0.0f});
+            mTransform = glm::translate(mTransform, glm::vec3 {xOff * -1.0f, yOff * -1.0f, 0.0f});
 
         // Apply rotation transform.
-        mTransform = glm::rotate(mTransform, mRotation, glm::vec3{0.0f, 0.0f, 1.0f});
+        mTransform = glm::rotate(mTransform, mRotation, glm::vec3 {0.0f, 0.0f, 1.0f});
 
         // Transform back to original point.
         if (xOff != 0.0f || yOff != 0.0f)
-            mTransform = glm::translate(mTransform, glm::vec3{xOff, yOff, 0.0f});
+            mTransform = glm::translate(mTransform, glm::vec3 {xOff, yOff, 0.0f});
     }
     mTransform = glm::translate(
-        mTransform, glm::vec3{mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f});
+        mTransform, glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f});
 
     return mTransform;
 }
@@ -314,9 +314,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                               const std::string& element,
                               unsigned int properties)
 {
-    glm::vec2 scale{getParent() ? getParent()->getSize() :
-                                  glm::vec2{static_cast<float>(Renderer::getScreenWidth()),
-                                            static_cast<float>(Renderer::getScreenHeight())}};
+    glm::vec2 scale {getParent() ? getParent()->getSize() :
+                                   glm::vec2 {static_cast<float>(Renderer::getScreenWidth()),
+                                              static_cast<float>(Renderer::getScreenHeight())}};
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "");
     if (!elem)
@@ -324,8 +324,8 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     using namespace ThemeFlags;
     if (properties & POSITION && elem->has("pos")) {
-        glm::vec2 denormalized{elem->get<glm::vec2>("pos") * scale};
-        setPosition(glm::vec3{denormalized.x, denormalized.y, 0.0f});
+        glm::vec2 denormalized {elem->get<glm::vec2>("pos") * scale};
+        setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
     }
 
     if (properties & ThemeFlags::SIZE && elem->has("size"))

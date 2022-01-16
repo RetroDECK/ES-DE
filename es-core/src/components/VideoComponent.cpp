@@ -178,7 +178,7 @@ void VideoComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
     GuiComponent::renderChildren(trans);
 
     Renderer::setMatrix(trans);
@@ -225,9 +225,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    glm::vec2 scale{getParent() ? getParent()->getSize() :
-                                  glm::vec2{static_cast<float>(Renderer::getScreenWidth()),
-                                            static_cast<float>(Renderer::getScreenHeight())}};
+    glm::vec2 scale {getParent() ? getParent()->getSize() :
+                                   glm::vec2 {static_cast<float>(Renderer::getScreenWidth()),
+                                              static_cast<float>(Renderer::getScreenHeight())}};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {

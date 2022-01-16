@@ -20,13 +20,13 @@ struct SDL_Window;
 
 namespace Renderer
 {
-    const unsigned int SHADER_DESATURATE{1};
-    const unsigned int SHADER_OPACITY{2};
-    const unsigned int SHADER_DIM{4};
-    const unsigned int SHADER_BLUR_HORIZONTAL{8};
-    const unsigned int SHADER_BLUR_VERTICAL{16};
-    const unsigned int SHADER_SCANLINES{32};
-    const unsigned int SHADER_BGRA_TO_RGBA{64};
+    const unsigned int SHADER_DESATURATE {1};
+    const unsigned int SHADER_OPACITY {2};
+    const unsigned int SHADER_DIM {4};
+    const unsigned int SHADER_BLUR_HORIZONTAL {8};
+    const unsigned int SHADER_BLUR_VERTICAL {16};
+    const unsigned int SHADER_SCANLINES {32};
+    const unsigned int SHADER_BGRA_TO_RGBA {64};
 
     struct shaderParameters {
         std::array<GLfloat, 2> textureSize;
@@ -37,12 +37,12 @@ namespace Renderer
         unsigned int blurPasses;
 
         shaderParameters()
-            : textureSize{0.0f, 0.0f}
-            , textureCoordinates{0.0f, 0.0f, 0.0f, 0.0f}
-            , fragmentSaturation{1.0f}
-            , fragmentDimValue{0.4f}
-            , fragmentOpacity{1.0f}
-            , blurPasses{1}
+            : textureSize {0.0f, 0.0f}
+            , textureCoordinates {0.0f, 0.0f, 0.0f, 0.0f}
+            , fragmentSaturation {1.0f}
+            , fragmentDimValue {0.4f}
+            , fragmentOpacity {1.0f}
+            , blurPasses {1}
         {
         }
     };
@@ -52,7 +52,7 @@ namespace Renderer
     // This is simply to get rid of a GCC false positive -Wunused-variable compiler warning.
     static GLuint shaderFBODummy = shaderFBO;
 
-    static constexpr glm::mat4 getIdentity() { return glm::mat4{1.0f}; }
+    static constexpr glm::mat4 getIdentity() { return glm::mat4 {1.0f}; }
 
 #if !defined(NDEBUG)
 #define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
@@ -125,9 +125,9 @@ namespace Renderer
         glm::vec2 pos;
         glm::vec2 tex;
         unsigned int col;
-        float saturation{1.0};
-        float opacity{1.0};
-        unsigned int shaders{0};
+        float saturation {1.0};
+        float opacity {1.0};
+        unsigned int shaders {0};
     };
 
     bool init();

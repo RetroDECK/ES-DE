@@ -39,7 +39,7 @@
 
 GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int scrapeCount)
     : GuiComponent(window)
-    , mGrid(window, glm::ivec2{5, 3})
+    , mGrid(window, glm::ivec2 {5, 3})
     , mSearchType(type)
     , mScrapeCount(scrapeCount)
     , mRefinedSearch(false)
@@ -55,8 +55,8 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
     mRetryCount = 0;
 
     // Left spacer (empty component, needed for borders).
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 0}, false, false,
-                   glm::ivec2{1, 3}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {0, 0}, false, false,
+                   glm::ivec2 {1, 3}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
     // Selected result name.
     mResultName = std::make_shared<TextComponent>(mWindow, "Result name",
@@ -64,7 +64,7 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
 
     // Selected result thumbnail.
     mResultThumbnail = std::make_shared<ImageComponent>(mWindow);
-    mGrid.setEntry(mResultThumbnail, glm::ivec2{1, 1}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mResultThumbnail, glm::ivec2 {1, 1}, false, false, glm::ivec2 {1, 1});
 
     // Selected result description and container.
     mDescContainer = std::make_shared<ScrollableContainer>(mWindow);
@@ -91,7 +91,7 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
     mMD_Developer = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT);
     mMD_Publisher = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT);
     mMD_Genre =
-        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3{});
+        std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT, glm::vec3 {});
     mMD_Players = std::make_shared<TextComponent>(mWindow, "", font, mdColor, ALIGN_LEFT);
     mMD_Filler = std::make_shared<TextComponent>(mWindow, "", font, mdColor);
 
@@ -121,15 +121,15 @@ GuiScraperSearch::GuiScraperSearch(Window* window, SearchType type, unsigned int
             std::make_shared<TextComponent>(mWindow, "", font, mdLblColor), mMD_Filler));
 
     mMD_Grid = std::make_shared<ComponentGrid>(
-        mWindow, glm::ivec2{2, static_cast<int>(mMD_Pairs.size() * 2 - 1)});
+        mWindow, glm::ivec2 {2, static_cast<int>(mMD_Pairs.size() * 2 - 1)});
     unsigned int i = 0;
     for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
-        mMD_Grid->setEntry(it->first, glm::ivec2{0, i}, false, true);
-        mMD_Grid->setEntry(it->second, glm::ivec2{1, i}, false, it->resize);
+        mMD_Grid->setEntry(it->first, glm::ivec2 {0, i}, false, true);
+        mMD_Grid->setEntry(it->second, glm::ivec2 {1, i}, false, it->resize);
         i += 2;
     }
 
-    mGrid.setEntry(mMD_Grid, glm::ivec2{2, 1}, false, false);
+    mGrid.setEntry(mMD_Grid, glm::ivec2 {2, 1}, false, false);
 
     // Result list.
     mResultList = std::make_shared<ComponentList>(mWindow);
@@ -288,30 +288,30 @@ void GuiScraperSearch::updateViewStyle()
     // Add them back depending on search type.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) {
         // Show name.
-        mGrid.setEntry(mResultName, glm::ivec2{1, 0}, false, false, glm::ivec2{3, 1},
+        mGrid.setEntry(mResultName, glm::ivec2 {1, 0}, false, false, glm::ivec2 {3, 1},
                        GridFlags::BORDER_TOP);
 
         // Need a border on the bottom left.
-        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 2}, false, false,
-                       glm::ivec2{4, 1}, GridFlags::BORDER_BOTTOM);
+        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {0, 2}, false, false,
+                       glm::ivec2 {4, 1}, GridFlags::BORDER_BOTTOM);
 
         // Show description on the right.
-        mGrid.setEntry(mDescContainer, glm::ivec2{4, 0}, false, false, glm::ivec2{1, 3},
+        mGrid.setEntry(mDescContainer, glm::ivec2 {4, 0}, false, false, glm::ivec2 {1, 3},
                        GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM | GridFlags::BORDER_LEFT);
         // Make description text wrap at edge of container.
         mResultDesc->setSize(mDescContainer->getSize().x, 0.0f);
     }
     else {
         // Fake row where name would be.
-        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 0}, false, true,
-                       glm::ivec2{3, 1}, GridFlags::BORDER_TOP);
+        mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 0}, false, true,
+                       glm::ivec2 {3, 1}, GridFlags::BORDER_TOP);
 
         // Show result list on the right.
-        mGrid.setEntry(mResultList, glm::ivec2{4, 0}, true, true, glm::ivec2{1, 3},
+        mGrid.setEntry(mResultList, glm::ivec2 {4, 0}, true, true, glm::ivec2 {1, 3},
                        GridFlags::BORDER_LEFT | GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
         // Show description under image/info.
-        mGrid.setEntry(mDescContainer, glm::ivec2{1, 2}, false, false, glm::ivec2{3, 1},
+        mGrid.setEntry(mDescContainer, glm::ivec2 {1, 2}, false, false, glm::ivec2 {3, 1},
                        GridFlags::BORDER_BOTTOM);
         // Make description text wrap at edge of container.
         mResultDesc->setSize(mDescContainer->getSize().x, 0);
@@ -634,7 +634,7 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
 
 void GuiScraperSearch::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     renderChildren(trans);
     Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00000009, 0x00000009);

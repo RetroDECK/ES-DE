@@ -106,8 +106,8 @@ public:
             void operator=(const glm::vec4& value)
             {
                 r = value;
-                const glm::vec4 initVector{value};
-                v = glm::vec2{initVector.x, initVector.y};
+                const glm::vec4 initVector {value};
+                v = glm::vec2 {initVector.x, initVector.y};
             }
             void operator=(const glm::vec2& value) { v = value; }
             void operator=(const std::string& value) { s = value; }

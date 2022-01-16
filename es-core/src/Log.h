@@ -52,11 +52,11 @@ protected:
     std::ostringstream mOutStringStream;
 
 private:
-    std::map<LogLevel, std::string> mLogLevelMap{// Log level indicators.
-                                                 {LogError, "Error"},
-                                                 {LogWarning, "Warn"},
-                                                 {LogInfo, "Info"},
-                                                 {LogDebug, "Debug"}};
+    std::map<LogLevel, std::string> mLogLevelMap {// Log level indicators.
+                                                  {LogError, "Error"},
+                                                  {LogWarning, "Warn"},
+                                                  {LogInfo, "Info"},
+                                                  {LogDebug, "Debug"}};
     inline static std::ofstream sFile;
     inline static LogLevel sReportingLevel = LogInfo;
     LogLevel mMessageLevel;

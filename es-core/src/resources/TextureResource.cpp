@@ -44,15 +44,15 @@ TextureResource::TextureResource(
             data->load();
         }
 
-        mSize = glm::ivec2{static_cast<int>(data->width()), static_cast<int>(data->height())};
-        mSourceSize = glm::vec2{data->sourceWidth(), data->sourceHeight()};
+        mSize = glm::ivec2 {static_cast<int>(data->width()), static_cast<int>(data->height())};
+        mSourceSize = glm::vec2 {data->sourceWidth(), data->sourceHeight()};
     }
     else {
         // Create a texture managed by this class because it cannot be dynamically
         // loaded and unloaded. This would normally be a video texture, where the player
         // reserves a texture to later be used for the video rendering.
         mTextureData = std::shared_ptr<TextureData>(new TextureData(tile));
-        mSize = glm::ivec2{};
+        mSize = glm::ivec2 {};
     }
     sAllTextures.insert(this);
 }
@@ -73,8 +73,8 @@ void TextureResource::initFromPixels(const unsigned char* dataRGBA, size_t width
     mTextureData->releaseRAM();
     mTextureData->initFromRGBA(dataRGBA, width, height);
     // Cache the image dimensions.
-    mSize = glm::ivec2{static_cast<int>(width), static_cast<int>(height)};
-    mSourceSize = glm::vec2{mTextureData->sourceWidth(), mTextureData->sourceHeight()};
+    mSize = glm::ivec2 {static_cast<int>(width), static_cast<int>(height)};
+    mSourceSize = glm::vec2 {mTextureData->sourceWidth(), mTextureData->sourceHeight()};
 }
 
 void TextureResource::initFromMemory(const char* data, size_t length)
@@ -85,9 +85,9 @@ void TextureResource::initFromMemory(const char* data, size_t length)
     mTextureData->releaseRAM();
     mTextureData->initImageFromMemory(reinterpret_cast<const unsigned char*>(data), length);
     // Get the size from the texture data.
-    mSize = glm::ivec2{static_cast<int>(mTextureData->width()),
-                       static_cast<int>(mTextureData->height())};
-    mSourceSize = glm::vec2{mTextureData->sourceWidth(), mTextureData->sourceHeight()};
+    mSize = glm::ivec2 {static_cast<int>(mTextureData->width()),
+                        static_cast<int>(mTextureData->height())};
+    mSourceSize = glm::vec2 {mTextureData->sourceWidth(), mTextureData->sourceHeight()};
 }
 
 void TextureResource::manualUnload(std::string path, bool tile)
@@ -205,7 +205,7 @@ void TextureResource::rasterizeAt(float width, float height)
         data = mTextureData;
     else
         data = sTextureDataManager.get(this);
-    mSourceSize = glm::vec2{static_cast<float>(width), static_cast<float>(height)};
+    mSourceSize = glm::vec2 {static_cast<float>(width), static_cast<float>(height)};
     data->setSourceSize(static_cast<float>(width), static_cast<float>(height));
     if (mForceLoad || mTextureData != nullptr)
         data->load();
@@ -228,7 +228,7 @@ size_t TextureResource::getTotalMemUsage()
 
 size_t TextureResource::getTotalTextureSize()
 {
-    size_t total{0};
+    size_t total {0};
     // Count up all textures that manage their own texture data.
     for (auto tex : sAllTextures) {
         if (tex->mTextureData != nullptr)

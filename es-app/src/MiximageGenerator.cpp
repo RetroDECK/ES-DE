@@ -17,14 +17,14 @@
 #include <chrono>
 
 MiximageGenerator::MiximageGenerator(FileData* game, std::string& resultMessage)
-    : mGame{game}
-    , mResultMessage{resultMessage}
-    , mWidth{1280}
-    , mHeight{960}
-    , mMarquee{false}
-    , mBox3D{false}
-    , mCover{false}
-    , mPhysicalMedia{false}
+    : mGame {game}
+    , mResultMessage {resultMessage}
+    , mWidth {1280}
+    , mHeight {960}
+    , mMarquee {false}
+    , mBox3D {false}
+    , mCover {false}
+    , mPhysicalMedia {false}
 {
 }
 

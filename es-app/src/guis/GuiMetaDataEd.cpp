@@ -41,20 +41,20 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
-    : GuiComponent{window}
-    , mBackground{window, ":/graphics/frame.svg"}
-    , mGrid{window, glm::ivec2{2, 6}}
-    , mScraperParams{scraperParams}
-    , mControllerBadges{BadgeComponent::getGameControllers()}
-    , mMetaDataDecl{mdd}
-    , mMetaData{md}
-    , mSavedCallback{saveCallback}
-    , mClearGameFunc{clearGameFunc}
-    , mDeleteGameFunc{deleteGameFunc}
-    , mIsCustomCollection{false}
-    , mMediaFilesUpdated{false}
-    , mSavedMediaAndAborted{false}
-    , mInvalidEmulatorEntry{false}
+    : GuiComponent {window}
+    , mBackground {window, ":/graphics/frame.svg"}
+    , mGrid {window, glm::ivec2 {2, 6}}
+    , mScraperParams {scraperParams}
+    , mControllerBadges {BadgeComponent::getGameControllers()}
+    , mMetaDataDecl {mdd}
+    , mMetaData {md}
+    , mSavedCallback {saveCallback}
+    , mClearGameFunc {clearGameFunc}
+    , mDeleteGameFunc {deleteGameFunc}
+    , mIsCustomCollection {false}
+    , mMediaFilesUpdated {false}
+    , mSavedMediaAndAborted {false}
+    , mInvalidEmulatorEntry {false}
 {
     if (ViewController::getInstance()->getState().getSystem()->isCustomCollection() ||
         ViewController::getInstance()->getState().getSystem()->getThemeFolder() ==
@@ -70,7 +70,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
     mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, glm::ivec2{0, 0}, false, true, glm::ivec2{2, 2});
+    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
     // Extract possible subfolders from the path.
     std::string folderPath =
@@ -94,10 +94,10 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
         Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
 
-    mGrid.setEntry(mSubtitle, glm::ivec2{0, 2}, false, true, glm::ivec2{2, 1});
+    mGrid.setEntry(mSubtitle, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 4}, true, true, glm::ivec2{2, 1});
+    mGrid.setEntry(mList, glm::ivec2 {0, 4}, true, true, glm::ivec2 {2, 1});
 
     // Set up scroll indicators.
     mScrollUp = std::make_shared<ImageComponent>(mWindow);
@@ -110,8 +110,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
     mScrollDown->setOrigin(0.0f, 0.35f);
 
-    mGrid.setEntry(mScrollUp, glm::ivec2{1, 0}, false, false, glm::ivec2{1, 1});
-    mGrid.setEntry(mScrollDown, glm::ivec2{1, 1}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollUp, glm::ivec2 {1, 0}, false, false, glm::ivec2 {1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2 {1, 1}, false, false, glm::ivec2 {1, 1});
 
     // Populate list.
     for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
@@ -152,7 +152,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>(window);
                 // Make the switches slightly smaller.
-                glm::vec2 switchSize{ed->getSize() * 0.9f};
+                glm::vec2 switchSize {ed->getSize() * 0.9f};
                 ed->setResize(ceilf(switchSize.x), switchSize.y);
 
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
@@ -202,7 +202,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
                 bracket->setImage(":/graphics/arrow.svg");
-                bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
                 const std::string title = it->displayPrompt;
@@ -265,9 +265,9 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                     float maxWidth =
                         static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
 
-                    s->setMenuSize(glm::vec2{maxWidth, s->getMenuSize().y});
+                    s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
                     s->setMenuPosition(
-                        glm::vec3{(s->getSize().x - maxWidth) / 2.0f, mPosition.y, mPosition.z});
+                        glm::vec3 {(s->getSize().x - maxWidth) / 2.0f, mPosition.y, mPosition.z});
                     mWindow->pushGui(s);
                 });
                 break;
@@ -286,7 +286,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
                 bracket->setImage(":/graphics/arrow.svg");
-                bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
                 const std::string title = it->displayPrompt;
@@ -398,9 +398,9 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                         float maxWidth =
                             static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
 
-                        s->setMenuSize(glm::vec2{maxWidth, s->getMenuSize().y});
-                        s->setMenuPosition(glm::vec3{(s->getSize().x - maxWidth) / 2.0f,
-                                                     mPosition.y, mPosition.z});
+                        s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
+                        s->setMenuPosition(glm::vec3 {(s->getSize().x - maxWidth) / 2.0f,
+                                                      mPosition.y, mPosition.z});
                         mWindow->pushGui(s);
                     });
                 }
@@ -424,7 +424,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
                 auto bracket = std::make_shared<ImageComponent>(mWindow);
                 bracket->setImage(":/graphics/arrow.svg");
-                bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
                 bool multiLine = it->type == MD_MULTILINE_STRING;
@@ -584,7 +584,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     }
 
     mButtons = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtons, glm::ivec2{0, 5}, true, false, glm::ivec2{2, 1});
+    mGrid.setEntry(mButtons, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Resize + center.
     float width =
@@ -611,7 +611,7 @@ void GuiMetaDataEd::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.055f);
 
     mGrid.setSize(mSize);
-    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
 
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
                 (Renderer::getScreenHeight() - mSize.y) / 2.0f);
@@ -629,10 +629,10 @@ void GuiMetaDataEd::save()
 
     // We need this to handle the special situation where the user sets a game to hidden while
     // ShowHiddenGames is set to false, meaning it will immediately disappear from the gamelist.
-    bool showHiddenGames{Settings::getInstance()->getBool("ShowHiddenGames")};
-    bool hideGameWhileHidden{false};
-    bool setGameAsCounted{false};
-    int offset{0};
+    bool showHiddenGames {Settings::getInstance()->getBool("ShowHiddenGames")};
+    bool hideGameWhileHidden {false};
+    bool setGameAsCounted {false};
+    int offset {0};
 
     for (unsigned int i = 0; i < mEditors.size(); ++i) {
         // The offset is needed to make the editor and metadata fields match up if we're
@@ -644,7 +644,7 @@ void GuiMetaDataEd::save()
         if (mMetaDataDecl.at(i + offset).isStatistic)
             continue;
 
-        const std::string& key{mMetaDataDecl.at(i + offset).key};
+        const std::string& key {mMetaDataDecl.at(i + offset).key};
 
         if (key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
@@ -756,10 +756,10 @@ void GuiMetaDataEd::fetch()
 void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 {
     // Clone the mMetaData object.
-    MetaDataList* metadata{new MetaDataList(*mMetaData)};
+    MetaDataList* metadata {new MetaDataList(*mMetaData)};
 
     mMediaFilesUpdated = result.savedNewMedia;
-    int offset{0};
+    int offset {0};
 
     // Check if any values were manually changed before starting the scraping.
     // If so, it's these values we should compare against when scraping, not
@@ -768,7 +768,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
         if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
             offset = 1;
 
-        const std::string& key{mMetaDataDecl.at(i + offset).key};
+        const std::string& key {mMetaDataDecl.at(i + offset).key};
 
         if (metadata->get(key) != mEditors[i]->getValue())
             metadata->set(key, mEditors[i]->getValue());
@@ -783,7 +783,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
         if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
             offset = 1;
 
-        const std::string& key{mMetaDataDecl.at(i + offset).key};
+        const std::string& key {mMetaDataDecl.at(i + offset).key};
 
         if (key == "controller" && metadata->get(key) != "") {
             std::string displayName = BadgeComponent::getDisplayName(metadata->get(key));
@@ -808,20 +808,20 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 void GuiMetaDataEd::close()
 {
     // Find out if the user made any changes.
-    bool metadataUpdated{false};
-    int offset{0};
+    bool metadataUpdated {false};
+    int offset {0};
 
     for (unsigned int i = 0; i < mEditors.size(); ++i) {
         if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
             offset = 1;
 
-        const std::string& key{mMetaDataDecl.at(i + offset).key};
+        const std::string& key {mMetaDataDecl.at(i + offset).key};
 
         if (key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
 
-        std::string mMetaDataValue{mMetaData->get(key)};
-        std::string mEditorsValue{mEditors.at(i)->getValue()};
+        std::string mMetaDataValue {mMetaData->get(key)};
+        std::string mEditorsValue {mEditors.at(i)->getValue()};
 
         if (key == "controller" && mEditors.at(i)->getValue() != "") {
             std::string shortName = BadgeComponent::getShortName(mEditors.at(i)->getValue());

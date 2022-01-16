@@ -33,7 +33,7 @@ GuiInputConfig::GuiInputConfig(Window* window,
                                const std::function<void()>& okCallback)
     : GuiComponent(window)
     , mBackground(window, ":/graphics/frame.svg")
-    , mGrid(window, glm::ivec2{1, 7})
+    , mGrid(window, glm::ivec2 {1, 7})
     , mTargetConfig(target)
     , mHoldingInput(false)
 {
@@ -54,11 +54,11 @@ GuiInputConfig::GuiInputConfig(Window* window,
     addChild(&mGrid);
 
     // 0 is a spacer row.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 0}, false);
+    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {0, 0}, false);
 
     mTitle = std::make_shared<TextComponent>(mWindow, "CONFIGURING", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, glm::ivec2{0, 1}, false, true);
+    mGrid.setEntry(mTitle, glm::ivec2 {0, 1}, false, true);
 
     std::stringstream ss;
     if (target->getDeviceId() == DEVICE_KEYBOARD)
@@ -70,7 +70,7 @@ GuiInputConfig::GuiInputConfig(Window* window,
     mSubtitle1 =
         std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(ss.str()),
                                         Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mSubtitle1, glm::ivec2{0, 2}, false, true);
+    mGrid.setEntry(mSubtitle1, glm::ivec2 {0, 2}, false, true);
 
     mSubtitle2 =
         std::make_shared<TextComponent>(mWindow, "HOLD ANY BUTTON 1 SECOND TO SKIP",
@@ -78,11 +78,11 @@ GuiInputConfig::GuiInputConfig(Window* window,
     // The opacity will be set to visible for any row that is skippable.
     mSubtitle2->setOpacity(0);
 
-    mGrid.setEntry(mSubtitle2, glm::ivec2{0, 3}, false, true);
+    mGrid.setEntry(mSubtitle2, glm::ivec2 {0, 3}, false, true);
 
     // 4 is a spacer row.
     mList = std::make_shared<ComponentList>(mWindow);
-    mGrid.setEntry(mList, glm::ivec2{0, 5}, true, true);
+    mGrid.setEntry(mList, glm::ivec2 {0, 5}, true, true);
 
     for (int i = 0; i < inputCount; ++i) {
         ComponentListRow row;
@@ -184,7 +184,7 @@ GuiInputConfig::GuiInputConfig(Window* window,
         std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [okFunction] { okFunction(); }));
 
     mButtonGrid = makeButtonGrid(mWindow, buttons);
-    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 6}, true, false);
+    mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 6}, true, false);
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
@@ -293,7 +293,7 @@ void GuiInputConfig::update(int deltaTime)
 
 void GuiInputConfig::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
 
     // Update grid.
     mGrid.setSize(mSize);
@@ -313,7 +313,7 @@ void GuiInputConfig::rowDone()
             // At bottom of list, we're done.
             mConfiguringAll = false;
             mConfiguringRow = false;
-            mGrid.moveCursor(glm::ivec2{0, 1});
+            mGrid.moveCursor(glm::ivec2 {0, 1});
         }
         else {
             // On another row.

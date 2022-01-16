@@ -82,7 +82,7 @@ public:
     // (e.g. (0, 0) is top left, (0.5, 0.5) is the center.)
     void setRotationOrigin(float originX, float originY)
     {
-        mRotationOrigin = glm::vec2{originX, originY};
+        mRotationOrigin = glm::vec2 {originX, originY};
     }
     void setRotationOrigin(glm::vec2 origin) { setRotationOrigin(origin.x, origin.y); }
 
@@ -204,7 +204,7 @@ public:
     virtual void onUnpauseVideo();
     virtual bool isVideoPaused() { return false; }
     // For Lottie animations.
-    virtual void resetFileAnimation(){};
+    virtual void resetFileAnimation() {};
 
     virtual void onScreensaverActivate();
     virtual void onScreensaverDeactivate();

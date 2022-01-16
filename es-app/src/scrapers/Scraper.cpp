@@ -28,7 +28,7 @@
 
 namespace
 {
-    const std::map<std::string, generate_scraper_requests_func> scraper_request_funcs{
+    const std::map<std::string, generate_scraper_requests_func> scraper_request_funcs {
         {"thegamesdb", &thegamesdb_generate_json_scraper_requests},
         {"screenscraper", &screenscraper_generate_scraper_requests}};
 }

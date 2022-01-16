@@ -821,7 +821,7 @@ void GuiMenu::openOtherOptions()
     auto bracketMediaDirectory = std::make_shared<ImageComponent>(mWindow);
     bracketMediaDirectory->setImage(":/graphics/arrow.svg");
     bracketMediaDirectory->setResize(
-        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+        glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     rowMediaDir.addElement(media_directory, true);
     rowMediaDir.addElement(bracketMediaDirectory, false);
     std::string titleMediaDir = "ENTER GAME MEDIA DIRECTORY";

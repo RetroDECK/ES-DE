@@ -60,7 +60,7 @@ VideoFFmpegComponent::~VideoFFmpegComponent() { stopVideo(); }
 void VideoFFmpegComponent::setResize(float width, float height)
 {
     // This resize function is used when stretching videos to full screen in the video screensaver.
-    mTargetSize = glm::vec2{width, height};
+    mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = false;
     mStaticImage.setResize(width, height);
     resize();
@@ -70,7 +70,7 @@ void VideoFFmpegComponent::setMaxSize(float width, float height)
 {
     // This resize function is used in most instances, such as non-stretched video screensaver
     // and the gamelist videos.
-    mTargetSize = glm::vec2{width, height};
+    mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = true;
     mStaticImage.setMaxSize(width, height);
     resize();
@@ -81,15 +81,15 @@ void VideoFFmpegComponent::resize()
     if (!mTexture)
         return;
 
-    const glm::vec2 textureSize{static_cast<float>(mVideoWidth), static_cast<float>(mVideoHeight)};
+    const glm::vec2 textureSize {static_cast<float>(mVideoWidth), static_cast<float>(mVideoHeight)};
 
-    if (textureSize == glm::vec2{})
+    if (textureSize == glm::vec2 {})
         return;
 
     if (mTargetIsMax) {
         mSize = textureSize;
 
-        glm::vec2 resizeScale{(mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y)};
+        glm::vec2 resizeScale {(mTargetSize.x / mSize.x), (mTargetSize.y / mSize.y)};
 
         if (resizeScale.x < resizeScale.y) {
             mSize.x *= resizeScale.x;
@@ -106,7 +106,7 @@ void VideoFFmpegComponent::resize()
     else {
         // If both components are set, we just stretch.
         // If no components are set, we don't resize at all.
-        mSize = mTargetSize == glm::vec2{} ? textureSize : mTargetSize;
+        mSize = mTargetSize == glm::vec2 {} ? textureSize : mTargetSize;
 
         // If only one component is set, we resize in a way that maintains aspect ratio.
         if (!mTargetSize.x && mTargetSize.y) {
@@ -125,7 +125,7 @@ void VideoFFmpegComponent::resize()
 void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 {
     VideoComponent::render(parentTrans);
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
     GuiComponent::renderChildren(trans);
 
     if (mIsPlaying && mFormatContext) {
@@ -864,7 +864,7 @@ void VideoFFmpegComponent::calculateBlackRectangle()
     // otherwise it will exactly match the video size. The reason to add a black rectangle
     // behind videos in this second instance is that the scanline rendering will make the
     // video partially transparent so this may avoid some unforseen issues with some themes.
-    if (mVideoAreaPos != glm::vec2{} && mVideoAreaSize != glm::vec2{}) {
+    if (mVideoAreaPos != glm::vec2 {} && mVideoAreaSize != glm::vec2 {}) {
         mVideoRectangleCoords.clear();
 
         if (Settings::getInstance()->getBool("GamelistVideoPillarbox")) {

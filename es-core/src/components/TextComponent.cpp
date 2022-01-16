@@ -13,18 +13,18 @@
 #include "utils/StringUtil.h"
 
 TextComponent::TextComponent(Window* window)
-    : GuiComponent{window}
-    , mFont{Font::get(FONT_SIZE_MEDIUM)}
-    , mColor{0x000000FF}
-    , mBgColor{0}
-    , mRenderBackground{false}
-    , mUppercase{false}
-    , mAutoCalcExtent{1, 1}
-    , mHorizontalAlignment{ALIGN_LEFT}
-    , mVerticalAlignment{ALIGN_CENTER}
-    , mLineSpacing{1.5f}
-    , mNoTopMargin{false}
-    , mSelectable{false}
+    : GuiComponent {window}
+    , mFont {Font::get(FONT_SIZE_MEDIUM)}
+    , mColor {0x000000FF}
+    , mBgColor {0}
+    , mRenderBackground {false}
+    , mUppercase {false}
+    , mAutoCalcExtent {1, 1}
+    , mHorizontalAlignment {ALIGN_LEFT}
+    , mVerticalAlignment {ALIGN_CENTER}
+    , mLineSpacing {1.5f}
+    , mNoTopMargin {false}
+    , mSelectable {false}
 {
 }
 
@@ -36,18 +36,18 @@ TextComponent::TextComponent(Window* window,
                              glm::vec3 pos,
                              glm::vec2 size,
                              unsigned int bgcolor)
-    : GuiComponent{window}
-    , mFont{nullptr}
-    , mColor{0x000000FF}
-    , mBgColor{0}
-    , mRenderBackground{false}
-    , mUppercase{false}
-    , mAutoCalcExtent{1, 1}
-    , mHorizontalAlignment{align}
-    , mVerticalAlignment{ALIGN_CENTER}
-    , mLineSpacing{1.5f}
-    , mNoTopMargin{false}
-    , mSelectable{false}
+    : GuiComponent {window}
+    , mFont {nullptr}
+    , mColor {0x000000FF}
+    , mBgColor {0}
+    , mRenderBackground {false}
+    , mUppercase {false}
+    , mAutoCalcExtent {1, 1}
+    , mHorizontalAlignment {align}
+    , mVerticalAlignment {ALIGN_CENTER}
+    , mLineSpacing {1.5f}
+    , mNoTopMargin {false}
+    , mSelectable {false}
 {
     setFont(font);
     setColor(color);
@@ -59,7 +59,7 @@ TextComponent::TextComponent(Window* window,
 
 void TextComponent::onSizeChanged()
 {
-    mAutoCalcExtent = glm::ivec2{(getSize().x == 0), (getSize().y == 0)};
+    mAutoCalcExtent = glm::ivec2 {(getSize().x == 0), (getSize().y == 0)};
     onTextChanged();
 }
 
@@ -127,7 +127,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     if (mRenderBackground) {
         Renderer::setMatrix(trans);
@@ -135,7 +135,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
     }
 
     if (mTextCache) {
-        const glm::vec2& textSize{mTextCache->metrics.size};
+        const glm::vec2& textSize {mTextCache->metrics.size};
         float yOff = 0.0f;
         switch (mVerticalAlignment) {
             case ALIGN_TOP: {
@@ -154,7 +154,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
                 break;
             }
         }
-        glm::vec3 off{0.0f, yOff, 0.0f};
+        glm::vec3 off {0.0f, yOff, 0.0f};
 
         if (Settings::getInstance()->getBool("DebugText")) {
             // Draw the "textbox" area, what we are aligned within.
@@ -230,11 +230,11 @@ void TextComponent::onTextChanged()
         addAbbrev = newline != std::string::npos;
     }
 
-    glm::vec2 size{f->sizeText(text)};
+    glm::vec2 size {f->sizeText(text)};
     if (!isMultiline && mSize.x > 0.0f && text.size() && (size.x > mSize.x || addAbbrev)) {
         // Abbreviate text.
         const std::string abbrev = "...";
-        glm::vec2 abbrevSize{f->sizeText(abbrev)};
+        glm::vec2 abbrevSize {f->sizeText(abbrev)};
 
         while (text.size() && size.x + abbrevSize.x > mSize.x) {
             size_t newSize = Utils::String::prevCursor(text, text.size());
@@ -247,12 +247,12 @@ void TextComponent::onTextChanged()
         text.append(abbrev);
 
         mTextCache = std::shared_ptr<TextCache>(
-            f->buildTextCache(text, glm::vec2{}, (mColor >> 8 << 8) | mOpacity, mSize.x,
+            f->buildTextCache(text, glm::vec2 {}, (mColor >> 8 << 8) | mOpacity, mSize.x,
                               mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
         mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
-            f->wrapText(text, mSize.x), glm::vec2{}, (mColor >> 8 << 8) | mOpacity, mSize.x,
+            f->wrapText(text, mSize.x), glm::vec2 {}, (mColor >> 8 << 8) | mOpacity, mSize.x,
             mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
 }

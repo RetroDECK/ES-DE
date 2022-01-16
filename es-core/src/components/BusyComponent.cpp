@@ -25,7 +25,7 @@ const AnimationDef BUSY_ANIMATION_DEF = {BUSY_ANIMATION_FRAMES, 4, true};
 BusyComponent::BusyComponent(Window* window)
     : GuiComponent(window)
     , mBackground(window, ":/graphics/frame.png")
-    , mGrid(window, glm::ivec2{5, 3})
+    , mGrid(window, glm::ivec2 {5, 3})
 {
     mAnimation = std::make_shared<AnimatedImageComponent>(mWindow);
     mAnimation->load(&BUSY_ANIMATION_DEF);
@@ -33,8 +33,8 @@ BusyComponent::BusyComponent(Window* window)
                                             0x777777FF);
 
     // Col 0 = animation, col 1 = spacer, col 2 = text.
-    mGrid.setEntry(mAnimation, glm::ivec2{1, 1}, false, true);
-    mGrid.setEntry(mText, glm::ivec2{3, 1}, false, true);
+    mGrid.setEntry(mAnimation, glm::ivec2 {1, 1}, false, true);
+    mGrid.setEntry(mText, glm::ivec2 {3, 1}, false, true);
 
     addChild(&mBackground);
     addChild(&mGrid);
@@ -60,9 +60,9 @@ void BusyComponent::onSizeChanged()
 
     mBackground.setCornerSize(
         {16.0f * Renderer::getScreenWidthModifier(), 16.0f * Renderer::getScreenHeightModifier()});
-    mBackground.fitTo(glm::vec2{mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3),
-                                textHeight + (2.0f * Renderer::getScreenHeightModifier())},
-                      mAnimation->getPosition(), glm::vec2{});
+    mBackground.fitTo(glm::vec2 {mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3),
+                                 textHeight + (2.0f * Renderer::getScreenHeightModifier())},
+                      mAnimation->getPosition(), glm::vec2 {});
 }
 
 void BusyComponent::reset()

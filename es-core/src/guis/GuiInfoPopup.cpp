@@ -54,15 +54,15 @@ GuiInfoPopup::GuiInfoPopup(Window* window, std::string message, int duration)
     setPosition(posX, posY, 0);
 
     mFrame->setImagePath(":/graphics/frame.svg");
-    mFrame->fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mFrame->fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
     addChild(mFrame);
 
     // We only initialize the actual time when we first start to render.
     mStartTime = 0;
 
-    mGrid = new ComponentGrid(window, glm::ivec2{1, 3});
+    mGrid = new ComponentGrid(window, glm::ivec2 {1, 3});
     mGrid->setSize(mSize);
-    mGrid->setEntry(s, glm::ivec2{0, 1}, false, true);
+    mGrid->setEntry(s, glm::ivec2 {0, 1}, false, true);
     addChild(mGrid);
 }
 
@@ -75,7 +75,7 @@ GuiInfoPopup::~GuiInfoPopup()
 void GuiInfoPopup::render(const glm::mat4& /*parentTrans*/)
 {
     // We use getIdentity() as we want to render on a specific window position, not on the view.
-    glm::mat4 trans{getTransform() * Renderer::getIdentity()};
+    glm::mat4 trans {getTransform() * Renderer::getIdentity()};
     if (mRunning && updateState()) {
         // If we're still supposed to be rendering it.
         Renderer::setMatrix(trans);

@@ -37,7 +37,7 @@ namespace
 {
     TheGamesDBJSONRequestResources resources;
 
-    const std::map<PlatformId, std::string> gamesdb_new_platformid_map{
+    const std::map<PlatformId, std::string> gamesdb_new_platformid_map {
         {THREEDO, "25"},
         {COMMODORE_AMIGA, "4911"},
         {COMMODORE_AMIGA_CD32, "4947"},

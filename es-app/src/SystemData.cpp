@@ -1093,7 +1093,7 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
+        std::mt19937 engine {randDev()};
         std::uniform_int_distribution<int> uniform_dist(0, total - 1);
         int target = uniform_dist(engine);
 
@@ -1172,7 +1172,7 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
         // Get a random number in range.
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
+        std::mt19937 engine {randDev()};
         std::uniform_int_distribution<int> uniform_dist(0, total - 1);
         target = uniform_dist(engine);
     } while (currentGame && gameList.at(target) == currentGame);

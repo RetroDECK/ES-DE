@@ -780,7 +780,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
     if (gameCount > 1) {
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
-        std::mt19937 engine{randDev()};
+        std::mt19937 engine {randDev()};
         unsigned int target;
 
         for (unsigned int i = 0; i < 3; ++i) {

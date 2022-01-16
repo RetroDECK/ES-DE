@@ -27,7 +27,7 @@ namespace
 {
     // List of systems and their IDs from:
     // https://www.screenscraper.fr/api/systemesListe.php?devid=xxx&devpassword=yyy&softname=zzz&output=XML
-    const std::map<PlatformId, unsigned short> screenscraper_platformid_map{
+    const std::map<PlatformId, unsigned short> screenscraper_platformid_map {
         {THREEDO, 29},
         {COMMODORE_AMIGA, 64},
         {COMMODORE_AMIGA_CD32, 130},
@@ -611,7 +611,7 @@ void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
         }
         else {
             // Region fallback: WOR(LD), US, CUS(TOM?), JP, EU.
-            for (auto _region : std::vector<std::string>{region, "wor", "us", "cus", "jp", "eu"}) {
+            for (auto _region : std::vector<std::string> {region, "wor", "us", "cus", "jp", "eu"}) {
                 if (art)
                     break;
 

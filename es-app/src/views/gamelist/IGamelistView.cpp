@@ -61,15 +61,15 @@ HelpStyle IGamelistView::getHelpStyle()
 
 void IGamelistView::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     float scaleX = trans[0].x;
     float scaleY = trans[1].y;
 
-    glm::ivec2 pos{static_cast<int>(std::round(trans[3].x)),
-                   static_cast<int>(std::round(trans[3].y))};
-    glm::ivec2 size{static_cast<int>(std::round(mSize.x * scaleX)),
-                    static_cast<int>(std::round(mSize.y * scaleY))};
+    glm::ivec2 pos {static_cast<int>(std::round(trans[3].x)),
+                    static_cast<int>(std::round(trans[3].y))};
+    glm::ivec2 size {static_cast<int>(std::round(mSize.x * scaleX)),
+                     static_cast<int>(std::round(mSize.y * scaleY))};
 
     Renderer::pushClipRect(pos, size);
     renderChildren(trans);

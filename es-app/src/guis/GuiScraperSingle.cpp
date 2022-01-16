@@ -24,7 +24,7 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
                                    bool& savedMediaAndAborted)
     : GuiComponent(window)
     , mClose(false)
-    , mGrid(window, glm::ivec2{2, 6})
+    , mGrid(window, glm::ivec2 {2, 6})
     , mBox(window, ":/graphics/frame.svg")
     , mSearchParams(params)
     , mSavedMediaAndAborted(savedMediaAndAborted)
@@ -53,18 +53,18 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
             ((mSearchParams.game->getType() == FOLDER) ? "  " + ViewController::FOLDER_CHAR : ""),
         Font::get(FONT_SIZE_LARGE), 0x777777FF, ALIGN_CENTER);
     mGameName->setColor(0x555555FF);
-    mGrid.setEntry(mGameName, glm::ivec2{0, 0}, false, true, glm::ivec2{2, 2});
+    mGrid.setEntry(mGameName, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
     mSystemName = std::make_shared<TextComponent>(
         mWindow, Utils::String::toUpper(mSearchParams.system->getFullName()),
         Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
-    mGrid.setEntry(mSystemName, glm::ivec2{0, 2}, false, true, glm::ivec2{2, 1});
+    mGrid.setEntry(mSystemName, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
     // Row 3 is a spacer.
 
     // GuiScraperSearch.
     mSearch = std::make_shared<GuiScraperSearch>(window, GuiScraperSearch::NEVER_AUTO_ACCEPT, 1);
-    mGrid.setEntry(mSearch, glm::ivec2{0, 4}, true, true, glm::ivec2{2, 1});
+    mGrid.setEntry(mSearch, glm::ivec2 {0, 4}, true, true, glm::ivec2 {2, 1});
 
     mResultList = mSearch->getResultList();
 
@@ -80,8 +80,8 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
     mScrollDown->setResize(0.0f, mGameName->getFont()->getLetterHeight() / 2.0f);
     mScrollDown->setOrigin(0.0f, 0.35f);
 
-    mGrid.setEntry(mScrollUp, glm::ivec2{1, 0}, false, false, glm::ivec2{1, 1});
-    mGrid.setEntry(mScrollDown, glm::ivec2{1, 1}, false, false, glm::ivec2{1, 1});
+    mGrid.setEntry(mScrollUp, glm::ivec2 {1, 0}, false, false, glm::ivec2 {1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2 {1, 1}, false, false, glm::ivec2 {1, 1});
 
     // Buttons
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
@@ -109,7 +109,7 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
     }));
     mButtonGrid = makeButtonGrid(mWindow, buttons);
 
-    mGrid.setEntry(mButtonGrid, glm::ivec2{0, 5}, true, false, glm::ivec2{2, 1});
+    mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     mSearch->setAcceptCallback([this, doneFunc](const ScraperSearchResult& result) {
         doneFunc(result);
@@ -156,7 +156,7 @@ void GuiScraperSingle::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.04f);
 
     mGrid.setSize(glm::round(mSize));
-    mBox.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mBox.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
 
     // Add some extra margins to the game name.
     const float newSizeX = mSize.x * 0.96f;

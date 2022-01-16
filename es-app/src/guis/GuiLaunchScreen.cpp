@@ -33,7 +33,7 @@ GuiLaunchScreen::~GuiLaunchScreen()
 
 void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 {
-    mGrid = new ComponentGrid(mWindow, glm::ivec2{3, 8});
+    mGrid = new ComponentGrid(mWindow, glm::ivec2 {3, 8});
     addChild(mGrid);
 
     mImagePath = game->getMarqueePath();
@@ -50,8 +50,8 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     const float gameNameFontSize = 0.073f;
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 0}, false, false,
-                    glm::ivec2{1, 1});
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 0}, false, false,
+                    glm::ivec2 {1, 1});
 
     // Title.
     mTitle = std::make_shared<TextComponent>(
@@ -59,19 +59,19 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
         Font::get(static_cast<int>(
             titleFontSize * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))),
         0x666666FF, ALIGN_CENTER);
-    mGrid->setEntry(mTitle, glm::ivec2{1, 1}, false, true, glm::ivec2{1, 1});
+    mGrid->setEntry(mTitle, glm::ivec2 {1, 1}, false, true, glm::ivec2 {1, 1});
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 2}, false, false,
-                    glm::ivec2{1, 1});
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 2}, false, false,
+                    glm::ivec2 {1, 1});
 
     // Row for the marquee.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 3}, false, false,
-                    glm::ivec2{1, 1});
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 3}, false, false,
+                    glm::ivec2 {1, 1});
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 4}, false, false,
-                    glm::ivec2{1, 1});
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 4}, false, false,
+                    glm::ivec2 {1, 1});
 
     // Game name.
     mGameName = std::make_shared<TextComponent>(
@@ -79,24 +79,24 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
         Font::get(static_cast<int>(
             gameNameFontSize * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))),
         0x444444FF, ALIGN_CENTER);
-    mGrid->setEntry(mGameName, glm::ivec2{1, 5}, false, true, glm::ivec2{1, 1});
+    mGrid->setEntry(mGameName, glm::ivec2 {1, 5}, false, true, glm::ivec2 {1, 1});
 
     // System name.
     mSystemName = std::make_shared<TextComponent>(
         mWindow, "SYSTEM NAME", Font::get(FONT_SIZE_MEDIUM), 0x666666FF, ALIGN_CENTER);
-    mGrid->setEntry(mSystemName, glm::ivec2{1, 6}, false, true, glm::ivec2{1, 1});
+    mGrid->setEntry(mSystemName, glm::ivec2 {1, 6}, false, true, glm::ivec2 {1, 1});
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{1, 7}, false, false,
-                    glm::ivec2{1, 1});
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 7}, false, false,
+                    glm::ivec2 {1, 1});
 
     // Left spacer.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{0, 0}, false, false,
-                    glm::ivec2{1, 8});
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {0, 0}, false, false,
+                    glm::ivec2 {1, 8});
 
     // Right spacer.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2{2, 0}, false, false,
-                    glm::ivec2{1, 8});
+    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {2, 0}, false, false,
+                    glm::ivec2 {1, 8});
 
     // Adjust the width depending on the aspect ratio of the screen, to make the screen look
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
@@ -168,7 +168,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
                                          mGrid->getRowHeight(3));
 
         mMarquee->setOrigin(0.5f, 0.5f);
-        glm::vec3 currentPos{mMarquee->getPosition()};
+        glm::vec3 currentPos {mMarquee->getPosition()};
 
         // Position the image in the middle of row four.
         currentPos.x = mSize.x / 2.0f;
@@ -183,7 +183,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
                 static_cast<float>(Renderer::getScreenHeight()) / 2.25f);
 
-    mBackground.fitTo(mSize, glm::vec3{}, glm::vec2{-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
     mBackground.setEdgeColor(0xEEEEEEFF);
 }
 
@@ -225,7 +225,7 @@ void GuiLaunchScreen::render(const glm::mat4& /*parentTrans*/)
     // Scale up animation.
     setScale(mScaleUp);
 
-    glm::mat4 trans{Renderer::getIdentity() * getTransform()};
+    glm::mat4 trans {Renderer::getIdentity() * getTransform()};
     Renderer::setMatrix(trans);
 
     GuiComponent::renderChildren(trans);

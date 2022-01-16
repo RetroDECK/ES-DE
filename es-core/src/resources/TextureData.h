@@ -57,7 +57,7 @@ public:
     float sourceWidth();
     float sourceHeight();
     void setSourceSize(float width, float height);
-    glm::vec2 getSize() { return glm::vec2{static_cast<int>(mWidth), static_cast<int>(mHeight)}; }
+    glm::vec2 getSize() { return glm::vec2 {static_cast<int>(mWidth), static_cast<int>(mHeight)}; }
 
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool setting) { mLinearMagnify = setting; }

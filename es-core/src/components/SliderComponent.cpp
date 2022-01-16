@@ -16,14 +16,14 @@
 
 SliderComponent::SliderComponent(
     Window* window, float min, float max, float increment, const std::string& suffix)
-    : GuiComponent{window}
-    , mMin{min}
-    , mMax{max}
-    , mSingleIncrement{increment}
-    , mMoveRate{0.0f}
-    , mBarHeight{0.0f}
-    , mKnob{window}
-    , mSuffix{suffix}
+    : GuiComponent {window}
+    , mMin {min}
+    , mMax {max}
+    , mSingleIncrement {increment}
+    , mMoveRate {0.0f}
+    , mBarHeight {0.0f}
+    , mKnob {window}
+    , mSuffix {suffix}
 {
     assert((min - max) != 0.0f);
 
@@ -78,7 +78,7 @@ void SliderComponent::update(int deltaTime)
 
 void SliderComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugText")) {
@@ -89,10 +89,10 @@ void SliderComponent::render(const glm::mat4& parentTrans)
                            mSize.y, 0x00000033, 0x00000033);
     }
 
-    float width{mSize.x - mKnob.getSize().x -
-                (mTextCache ?
-                     mTextCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
-                     0.0f)};
+    float width {mSize.x - mKnob.getSize().x -
+                 (mTextCache ?
+                      mTextCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
+                      0.0f)};
 
     // Render suffix.
     if (mTextCache)

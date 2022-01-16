@@ -18,17 +18,17 @@ ButtonComponent::ButtonComponent(Window* window,
                                  const std::function<void()>& func,
                                  bool upperCase,
                                  bool flatStyle)
-    : GuiComponent{window}
-    , mBox{window, ":/graphics/button.svg"}
-    , mFont{Font::get(FONT_SIZE_MEDIUM)}
-    , mPadding{{}}
-    , mFocused{false}
-    , mEnabled{true}
-    , mFlatStyle{flatStyle}
-    , mTextColorFocused{0xFFFFFFFF}
-    , mTextColorUnfocused{0x777777FF}
-    , mFlatColorFocused{0x878787FF}
-    , mFlatColorUnfocused{0x60606025}
+    : GuiComponent {window}
+    , mBox {window, ":/graphics/button.svg"}
+    , mFont {Font::get(FONT_SIZE_MEDIUM)}
+    , mPadding {{}}
+    , mFocused {false}
+    , mEnabled {true}
+    , mFlatStyle {flatStyle}
+    , mTextColorFocused {0xFFFFFFFF}
+    , mTextColorUnfocused {0x777777FF}
+    , mFlatColorFocused {0x878787FF}
+    , mFlatColorUnfocused {0x60606025}
 
 {
     mBox.setSharpCorners(true);
@@ -46,9 +46,9 @@ void ButtonComponent::onSizeChanged()
 
     auto cornerSize = mBox.getCornerSize();
 
-    mBox.fitTo(glm::vec2{mSize.x - mPadding.x - mPadding.z, mSize.y - mPadding.y - mPadding.w},
-               glm::vec3{mPadding.x, mPadding.y, 0.0f},
-               glm::vec2{-cornerSize.x * 2.0f, -cornerSize.y * 2.0f});
+    mBox.fitTo(glm::vec2 {mSize.x - mPadding.x - mPadding.z, mSize.y - mPadding.y - mPadding.w},
+               glm::vec3 {mPadding.x, mPadding.y, 0.0f},
+               glm::vec2 {-cornerSize.x * 2.0f, -cornerSize.y * 2.0f});
 }
 
 void ButtonComponent::onFocusGained()
@@ -110,7 +110,7 @@ bool ButtonComponent::input(InputConfig* config, Input input)
 
 void ButtonComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     if (mFlatStyle) {
         if (mFocused) {
@@ -131,8 +131,8 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
     }
 
     if (mTextCache) {
-        glm::vec3 centerOffset{(mSize.x - mTextCache->metrics.size.x) / 2.0f,
-                               (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
+        glm::vec3 centerOffset {(mSize.x - mTextCache->metrics.size.x) / 2.0f,
+                                (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
         trans = glm::translate(trans, centerOffset);
 
         if (Settings::getInstance()->getBool("DebugText")) {

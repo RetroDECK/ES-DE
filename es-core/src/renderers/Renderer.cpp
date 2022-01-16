@@ -316,8 +316,8 @@ namespace Renderer
         if (!createWindow())
             return false;
 
-        glm::mat4 projection{getIdentity()};
-        Rect viewport{0, 0, 0, 0};
+        glm::mat4 projection {getIdentity()};
+        Rect viewport {0, 0, 0, 0};
 
         switch (screenRotate) {
             case 1: {

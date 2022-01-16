@@ -169,7 +169,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
         auto bracketThemeCollection = std::make_shared<ImageComponent>(mWindow);
         bracketThemeCollection->setImage(":/graphics/arrow.svg");
         bracketThemeCollection->setResize(
-            glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+            glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
         row.addElement(themeCollection, true);
         row.addElement(bracketThemeCollection, false);
         row.makeAcceptInputHandler([this, unusedFolders] {
@@ -203,7 +203,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     auto bracketNewCollection = std::make_shared<ImageComponent>(mWindow);
     bracketNewCollection->setImage(":/graphics/arrow.svg");
     bracketNewCollection->setResize(
-        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+        glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     row.addElement(newCollection, true);
     row.addElement(bracketNewCollection, false);
     auto createCollectionCall = [this](const std::string& newVal) {
@@ -239,7 +239,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
     auto bracketDeleteCollection = std::make_shared<ImageComponent>(mWindow);
     bracketDeleteCollection->setImage(":/graphics/arrow.svg");
     bracketDeleteCollection->setResize(
-        glm::vec2{0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+        glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     row.addElement(deleteCollection, true);
     row.addElement(bracketDeleteCollection, false);
     row.makeAcceptInputHandler([this, customSystems] {
@@ -303,9 +303,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(Window* window, std::st
             ss->addRow(row);
         }
         // Make the menu slightly wider to fit the scroll indicators.
-        glm::vec2 menuSize{ss->getMenuSize()};
-        glm::vec3 menuPos{ss->getMenuPosition()};
-        ss->setMenuSize(glm::vec2{menuSize.x * 1.08f, menuSize.y});
+        glm::vec2 menuSize {ss->getMenuSize()};
+        glm::vec3 menuPos {ss->getMenuPosition()};
+        ss->setMenuSize(glm::vec2 {menuSize.x * 1.08f, menuSize.y});
         menuPos.x = static_cast<float>((Renderer::getScreenWidth()) - ss->getMenuSize().x) / 2.0f;
         ss->setMenuPosition(menuPos);
         mWindow->pushGui(ss);

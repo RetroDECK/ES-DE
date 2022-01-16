@@ -42,7 +42,7 @@ public:
                   const glm::ivec2& pos,
                   bool canFocus,
                   bool resize = true,
-                  const glm::ivec2& size = glm::ivec2{1, 1},
+                  const glm::ivec2& size = glm::ivec2 {1, 1},
                   unsigned int border = GridFlags::BORDER_NONE,
                   GridFlags::UpdateType updateType = GridFlags::UPDATE_ALWAYS);
 
@@ -100,8 +100,8 @@ private:
         GridFlags::UpdateType updateType;
         unsigned int border;
 
-        GridEntry(const glm::ivec2& p = glm::ivec2{},
-                  const glm::ivec2& d = glm::ivec2{},
+        GridEntry(const glm::ivec2& p = glm::ivec2 {},
+                  const glm::ivec2& d = glm::ivec2 {},
                   const std::shared_ptr<GuiComponent>& cmp = nullptr,
                   bool f = false,
                   bool r = true,

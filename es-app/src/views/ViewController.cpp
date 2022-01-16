@@ -333,7 +333,7 @@ int ViewController::getSystemId(SystemData* system)
 void ViewController::restoreViewPosition()
 {
     if (mPreviousView) {
-        glm::vec3 restorePosition{mPreviousView->getPosition()};
+        glm::vec3 restorePosition {mPreviousView->getPosition()};
         restorePosition.x = mWrapPreviousPositionX;
         mPreviousView->setPosition(restorePosition);
         mWrapPreviousPositionX = 0;
@@ -514,9 +514,9 @@ void ViewController::goToGamelist(SystemData* system)
     // movements will be correct. This is accomplished by simply offsetting the X position
     // with the position of the first or last system plus the screen width.
     if (wrapFirstToLast) {
-        glm::vec3 currentPosition{mCurrentView->getPosition()};
+        glm::vec3 currentPosition {mCurrentView->getPosition()};
         mWrapPreviousPositionX = currentPosition.x;
-        float offsetX{getGamelistView(system)->getPosition().x};
+        float offsetX {getGamelistView(system)->getPosition().x};
         // This is needed to move the camera in the correct direction if there are only two systems.
         if (SystemData::sSystemVector.size() == 2 && mNextSystem)
             offsetX -= Renderer::getScreenWidth();
@@ -528,9 +528,9 @@ void ViewController::goToGamelist(SystemData* system)
         mWrappedViews = true;
     }
     else if (wrapLastToFirst) {
-        glm::vec3 currentPosition{mCurrentView->getPosition()};
+        glm::vec3 currentPosition {mCurrentView->getPosition()};
         mWrapPreviousPositionX = currentPosition.x;
-        float offsetX{getGamelistView(system)->getPosition().x};
+        float offsetX {getGamelistView(system)->getPosition().x};
         if (SystemData::sSystemVector.size() == 2 && !mNextSystem)
             offsetX += Renderer::getScreenWidth();
         else
@@ -584,7 +584,7 @@ void ViewController::playViewTransition(bool instant)
 {
     mCancelledTransition = false;
 
-    glm::vec3 target{};
+    glm::vec3 target {};
     if (mCurrentView)
         target = mCurrentView->getPosition();
 
@@ -593,7 +593,7 @@ void ViewController::playViewTransition(bool instant)
     if (target == static_cast<glm::vec3>(-mCamera[3]) && !isAnimationPlaying(0))
         return;
 
-    std::string transition_style{Settings::getInstance()->getString("TransitionStyle")};
+    std::string transition_style {Settings::getInstance()->getString("TransitionStyle")};
 
     if (instant || transition_style == "instant") {
         setAnimation(new LambdaAnimation(
@@ -906,14 +906,14 @@ void ViewController::update(int deltaTime)
 
 void ViewController::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{mCamera * parentTrans};
-    glm::mat4 transInverse{glm::inverse(trans)};
+    glm::mat4 trans {mCamera * parentTrans};
+    glm::mat4 transInverse {glm::inverse(trans)};
 
     // Camera position, position + size.
-    glm::vec3 viewStart{transInverse[3]};
-    glm::vec3 viewEnd{std::fabs(trans[3].x) + static_cast<float>(Renderer::getScreenWidth()),
-                      std::fabs(trans[3].y) + static_cast<float>(Renderer::getScreenHeight()),
-                      0.0f};
+    glm::vec3 viewStart {transInverse[3]};
+    glm::vec3 viewEnd {std::fabs(trans[3].x) + static_cast<float>(Renderer::getScreenWidth()),
+                       std::fabs(trans[3].y) + static_cast<float>(Renderer::getScreenHeight()),
+                       0.0f};
 
     // Keep track of UI mode changes.
     UIModeController::getInstance()->monitorUIMode();
@@ -928,9 +928,9 @@ void ViewController::render(const glm::mat4& parentTrans)
         // Same thing as for the system view, limit the rendering only to what needs to be drawn.
         if (it->second == mCurrentView || (it->second == mPreviousView && isCameraMoving())) {
             // Clipping.
-            glm::vec3 guiStart{it->second->getPosition()};
-            glm::vec3 guiEnd{it->second->getPosition() +
-                             glm::vec3{it->second->getSize().x, it->second->getSize().y, 0.0f}};
+            glm::vec3 guiStart {it->second->getPosition()};
+            glm::vec3 guiEnd {it->second->getPosition() +
+                              glm::vec3 {it->second->getSize().x, it->second->getSize().y, 0.0f}};
 
             if (guiEnd.x >= viewStart.x && guiEnd.y >= viewStart.y && guiStart.x <= viewEnd.x &&
                 guiStart.y <= viewEnd.y)

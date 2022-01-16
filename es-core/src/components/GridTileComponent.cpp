@@ -17,12 +17,12 @@ GridTileComponent::GridTileComponent(Window* window)
     , mBackground(window, ":/graphics/frame.png")
 {
     mDefaultProperties.mSize = getDefaultTileSize();
-    mDefaultProperties.mPadding = glm::vec2{16.0f * Renderer::getScreenWidthModifier(),
-                                            16.0f * Renderer::getScreenHeightModifier()};
+    mDefaultProperties.mPadding = glm::vec2 {16.0f * Renderer::getScreenWidthModifier(),
+                                             16.0f * Renderer::getScreenHeightModifier()};
     mDefaultProperties.mImageColor = 0xAAAAAABB;
     // Attempting to use frame.svg instead causes quite severe performance problems.
     mDefaultProperties.mBackgroundImage = ":/graphics/frame.png";
-    mDefaultProperties.mBackgroundCornerSize = glm::vec2{16.0f, 16.0f};
+    mDefaultProperties.mBackgroundCornerSize = glm::vec2 {16.0f, 16.0f};
     mDefaultProperties.mBackgroundCenterColor = 0xAAAAEEFF;
     mDefaultProperties.mBackgroundEdgeColor = 0xAAAAEEFF;
 
@@ -52,7 +52,7 @@ GridTileComponent::GridTileComponent(Window* window)
 
 void GridTileComponent::render(const glm::mat4& parentTrans)
 {
-    glm::mat4 trans{getTransform() * parentTrans};
+    glm::mat4 trans {getTransform() * parentTrans};
 
     if (mVisible)
         renderChildren(trans);
@@ -76,8 +76,8 @@ void GridTileComponent::update(int deltaTime)
 
 void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTileProperties* properties)
 {
-    glm::vec2 screen{static_cast<float>(Renderer::getScreenWidth()),
-                     static_cast<float>(Renderer::getScreenHeight())};
+    glm::vec2 screen {static_cast<float>(Renderer::getScreenWidth()),
+                      static_cast<float>(Renderer::getScreenHeight())};
 
     if (elem->has("size"))
         properties->mSize = elem->get<glm::vec2>("size") * screen;
@@ -132,8 +132,8 @@ void GridTileComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 glm::vec2 GridTileComponent::getDefaultTileSize()
 {
-    glm::vec2 screen{glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
-                               static_cast<float>(Renderer::getScreenHeight()))};
+    glm::vec2 screen {glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
+                                static_cast<float>(Renderer::getScreenHeight()))};
 
     return screen * 0.22f;
 }
@@ -186,7 +186,7 @@ void GridTileComponent::setSelected(bool selected,
             resize();
         }
         else {
-            mAnimPosition = glm::vec3{pPosition->x, pPosition->y, pPosition->z};
+            mAnimPosition = glm::vec3 {pPosition->x, pPosition->y, pPosition->z};
 
             auto func = [this](float t) {
                 t -= 1;

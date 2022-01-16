@@ -56,12 +56,12 @@
 
 namespace
 {
-    SDL_Event event{};
-    Window* window{nullptr};
-    int lastTime{0};
+    SDL_Event event {};
+    Window* window {nullptr};
+    int lastTime {0};
 
-    bool forceInputConfig{false};
-    bool settingsNeedSaving{false};
+    bool forceInputConfig {false};
+    bool settingsNeedSaving {false};
 
     enum loadSystemsReturnCode {
         LOADING_OK, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).

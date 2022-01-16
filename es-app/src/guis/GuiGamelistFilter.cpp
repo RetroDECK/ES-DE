@@ -116,7 +116,7 @@ void GuiGamelistFilter::addFiltersToMenu()
 
         auto bracket = std::make_shared<ImageComponent>(mWindow);
         bracket->setImage(":/graphics/arrow.svg");
-        bracket->setResize(glm::vec2{0.0f, lbl->getFont()->getLetterHeight()});
+        bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
         row.addElement(bracket, false);
 
         mTextFilterField->setValue(mFilterIndex->getTextFilter());

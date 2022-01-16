@@ -22,13 +22,13 @@ namespace Utils
     {
         float smoothStep(const float left, const float right, const float value)
         {
-            const float x{glm::clamp((value - left) / (right - left), 0.0f, 1.0f)};
+            const float x {glm::clamp((value - left) / (right - left), 0.0f, 1.0f)};
             return x * x * (3.0f - (2.0f * x));
         }
 
         float smootherStep(const float left, const float right, const float value)
         {
-            const float x{glm::clamp((value - left) / (right - left), 0.0f, 1.0f)};
+            const float x {glm::clamp((value - left) / (right - left), 0.0f, 1.0f)};
             return x * x * x * (x * ((x * 6.0f) - 15.0f) + 10.0f);
         }
 
@@ -43,7 +43,7 @@ namespace Utils
             }
             else if (currentTime < (delayTime + scrollTime)) {
                 // Interpolate from 0 to scrollLength.
-                const float fraction{(currentTime - delayTime) / scrollTime};
+                const float fraction {(currentTime - delayTime) / scrollTime};
                 return glm::mix(0.0f, scrollLength, fraction);
             }
 
@@ -62,7 +62,7 @@ namespace Utils
             }
             else if (currentTime < (delayTime + scrollTime)) {
                 // Interpolate from 0 to scrollLength.
-                const float fraction{(currentTime - delayTime) / scrollTime};
+                const float fraction {(currentTime - delayTime) / scrollTime};
                 return glm::mix(0.0f, scrollLength, smootherStep(0.0f, 1.0f, fraction));
             }
             else if (currentTime < (delayTime + scrollTime + delayTime)) {
@@ -71,8 +71,8 @@ namespace Utils
             }
             else if (currentTime < (delayTime + scrollTime + delayTime + scrollTime)) {
                 // Interpolate back from scrollLength to 0.
-                const float fraction{(currentTime - delayTime - scrollTime - delayTime) /
-                                     scrollTime};
+                const float fraction {(currentTime - delayTime - scrollTime - delayTime) /
+                                      scrollTime};
                 return glm::mix(scrollLength, 0.0f, smootherStep(0.0f, 1.0f, fraction));
             }
             // And back to waiting.
@@ -82,9 +82,9 @@ namespace Utils
         std::string md5Hash(const std::string& data)
         {
             // Data that didn't fit in last 64 byte chunk.
-            unsigned char buffer[64]{};
+            unsigned char buffer[64] {};
             // 64 bit counter for the number of bits (low, high).
-            unsigned int count[2]{};
+            unsigned int count[2] {};
 
             // Digest so far.
             unsigned int state[4];
@@ -98,10 +98,10 @@ namespace Utils
             md5Update(reinterpret_cast<const unsigned char*>(data.c_str()),
                       static_cast<unsigned int>(data.length()), state, count, buffer);
 
-            static unsigned char padding[64]{0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                             0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                             0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                                             0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+            static unsigned char padding[64] {0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                              0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                              0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                                              0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
             // Encodes unsigned int input into unsigned char output. Assumes len is a multiple of 4.
             auto encodeFunc = [](unsigned char output[], const unsigned int input[],
@@ -181,11 +181,11 @@ namespace Utils
 
         void md5Transform(const unsigned char block[64], unsigned int (&state)[4])
         {
-            unsigned int a{state[0]};
-            unsigned int b{state[1]};
-            unsigned int c{state[2]};
-            unsigned int d{state[3]};
-            unsigned int x[16]{};
+            unsigned int a {state[0]};
+            unsigned int b {state[1]};
+            unsigned int c {state[2]};
+            unsigned int d {state[3]};
+            unsigned int x[16] {};
 
             // Encodes unsigned int input into unsigned char output. Assumes len is a multiple of 4.
             for (unsigned int i = 0, j = 0; j < 64; ++i, j += 4)
@@ -194,22 +194,22 @@ namespace Utils
                        ((static_cast<unsigned int>(block[j + 2])) << 16) |
                        ((static_cast<unsigned int>(block[j + 3])) << 24);
 
-            const unsigned int S11{7};
-            const unsigned int S12{12};
-            const unsigned int S13{17};
-            const unsigned int S14{22};
-            const unsigned int S21{5};
-            const unsigned int S22{9};
-            const unsigned int S23{14};
-            const unsigned int S24{20};
-            const unsigned int S31{4};
-            const unsigned int S32{11};
-            const unsigned int S33{16};
-            const unsigned int S34{23};
-            const unsigned int S41{6};
-            const unsigned int S42{10};
-            const unsigned int S43{15};
-            const unsigned int S44{21};
+            const unsigned int S11 {7};
+            const unsigned int S12 {12};
+            const unsigned int S13 {17};
+            const unsigned int S14 {22};
+            const unsigned int S21 {5};
+            const unsigned int S22 {9};
+            const unsigned int S23 {14};
+            const unsigned int S24 {20};
+            const unsigned int S31 {4};
+            const unsigned int S32 {11};
+            const unsigned int S33 {16};
+            const unsigned int S34 {23};
+            const unsigned int S41 {6};
+            const unsigned int S42 {10};
+            const unsigned int S43 {15};
+            const unsigned int S44 {21};
 
             // fFunc, gFunc, hFunc and iFunc are basic MD5 functions.
             auto fFunc = [](unsigned int x, unsigned int y, unsigned int z) {

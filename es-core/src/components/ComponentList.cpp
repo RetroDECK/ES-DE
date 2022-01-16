@@ -13,23 +13,23 @@
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
 ComponentList::ComponentList(Window* window)
-    : IList<ComponentListRow, void*>{window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP}
-    , mFocused{false}
-    , mSetupCompleted{false}
-    , mBottomCameraOffset{false}
-    , mSingleRowScroll{false}
-    , mSelectorBarOffset{0.0f}
-    , mCameraOffset{0.0f}
-    , mLoopRows{false}
-    , mLoopScroll{false}
-    , mLoopOffset{0}
-    , mLoopOffset2{0}
-    , mLoopTime{0}
-    , mScrollIndicatorStatus{SCROLL_NONE}
+    : IList<ComponentListRow, void*> {window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP}
+    , mFocused {false}
+    , mSetupCompleted {false}
+    , mBottomCameraOffset {false}
+    , mSingleRowScroll {false}
+    , mSelectorBarOffset {0.0f}
+    , mCameraOffset {0.0f}
+    , mLoopRows {false}
+    , mLoopScroll {false}
+    , mLoopOffset {0}
+    , mLoopOffset2 {0}
+    , mLoopTime {0}
+    , mScrollIndicatorStatus {SCROLL_NONE}
 {
     // Adjust the padding relative to the aspect ratio and screen resolution to make it look
     // coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue{1.778f / Renderer::getScreenAspectRatio()};
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
     mHorizontalPadding =
         TOTAL_HORIZONTAL_PADDING_PX * aspectValue * Renderer::getScreenWidthModifier();
 }
@@ -165,7 +165,7 @@ void ComponentList::update(int deltaTime)
     listUpdate(deltaTime);
 
     if (size()) {
-        float rowWidth{0.0f};
+        float rowWidth {0.0f};
 
         // Update our currently selected row.
         for (auto it = mEntries.at(mCursor).data.elements.cbegin();
@@ -176,14 +176,14 @@ void ComponentList::update(int deltaTime)
 
         if (mLoopRows && rowWidth + mHorizontalPadding / 2.0f > mSize.x) {
             // Loop the text.
-            const float speed{
+            const float speed {
                 Font::get(FONT_SIZE_MEDIUM)->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
-            const float delay{1500.0f};
-            const float scrollLength{rowWidth};
-            const float returnLength{speed * 1.5f};
-            const float scrollTime{(scrollLength * 1000.0f) / speed};
-            const float returnTime{(returnLength * 1000.0f) / speed};
-            const int maxTime{static_cast<int>(delay + scrollTime + returnTime)};
+            const float delay {1500.0f};
+            const float scrollLength {rowWidth};
+            const float returnLength {speed * 1.5f};
+            const float scrollTime {(scrollLength * 1000.0f) / speed};
+            const float returnTime {(returnLength * 1000.0f) / speed};
+            const int maxTime {static_cast<int>(delay + scrollTime + returnTime)};
 
             mLoopTime += deltaTime;
             while (mLoopTime > maxTime)
@@ -282,25 +282,25 @@ void ComponentList::render(const glm::mat4& parentTrans)
     if (!size())
         return;
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     // Clip everything to be inside our bounds.
-    glm::vec3 dim{mSize.x, mSize.y, 0.0f};
+    glm::vec3 dim {mSize.x, mSize.y, 0.0f};
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
-    const int clipRectPosX{static_cast<int>(std::ceil(trans[3].x))};
-    const int clipRectPosY{static_cast<int>(std::round(trans[3].y))};
-    const int clipRectSizeX{static_cast<int>(std::round(dim.x))};
-    const int clipRectSizeY{static_cast<int>(std::round(dim.y))};
+    const int clipRectPosX {static_cast<int>(std::ceil(trans[3].x))};
+    const int clipRectPosY {static_cast<int>(std::round(trans[3].y))};
+    const int clipRectSizeX {static_cast<int>(std::round(dim.x))};
+    const int clipRectSizeY {static_cast<int>(std::round(dim.y))};
 
-    Renderer::pushClipRect(glm::ivec2{clipRectPosX, clipRectPosY},
-                           glm::ivec2{clipRectSizeX, clipRectSizeY});
+    Renderer::pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
+                           glm::ivec2 {clipRectSizeX, clipRectSizeY});
 
     // Scroll the camera.
-    trans = glm::translate(trans, glm::vec3{0.0f, -mCameraOffset, 0.0f});
+    trans = glm::translate(trans, glm::vec3 {0.0f, -mCameraOffset, 0.0f});
 
-    glm::mat4 loopTrans{trans};
+    glm::mat4 loopTrans {trans};
 
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
@@ -309,7 +309,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
         if (mLoopRows && mFocused && mLoopOffset > 0) {
             loopTrans =
-                glm::translate(trans, glm::vec3{static_cast<float>(-mLoopOffset), 0.0f, 0.0f});
+                glm::translate(trans, glm::vec3 {static_cast<float>(-mLoopOffset), 0.0f, 0.0f});
         }
 
         auto& entry = mEntries.at(i);
@@ -325,7 +325,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
                     if (mLoopOffset2 < 0 || mLoopScroll) {
                         mLoopScroll = true;
                         loopTrans = glm::translate(
-                            trans, glm::vec3{static_cast<float>(-mLoopOffset2), 0.0f, 0.0f});
+                            trans, glm::vec3 {static_cast<float>(-mLoopOffset2), 0.0f, 0.0f});
                         it->component->render(loopTrans);
                     }
                 };

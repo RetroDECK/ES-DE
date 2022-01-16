@@ -14,8 +14,8 @@
 #include "views/ViewController.h"
 
 GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
-    : GuiComponent{window}
-    , mMenu{window, "ALTERNATIVE EMULATORS"}
+    : GuiComponent {window}
+    , mMenu {window, "ALTERNATIVE EMULATORS"}
     , mHasSystems(false)
 {
     addChild(&mMenu);
@@ -216,12 +216,12 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
     else
         width = systemTextWidth;
 
-    s->setMenuSize(glm::vec2{width, s->getMenuSize().y});
+    s->setMenuSize(glm::vec2 {width, s->getMenuSize().y});
 
     auto menuSize = s->getMenuSize();
     auto menuPos = s->getMenuPosition();
 
-    s->setMenuPosition(glm::vec3{(s->getSize().x - menuSize.x) / 2.0f, menuPos.y, menuPos.z});
+    s->setMenuPosition(glm::vec3 {(s->getSize().x - menuSize.x) / 2.0f, menuPos.y, menuPos.z});
 
     mWindow->pushGui(s);
 }

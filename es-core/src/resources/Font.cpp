@@ -145,7 +145,7 @@ Font::FontTexture::FontTexture(const int mSize)
     // This is a hack to add some extra texture size when running at very low resolutions. If not
     // doing this, the use of fallback fonts (such as Japanese characters) could result in the
     // texture not fitting the glyphs which would crash the application.
-    int extraTextureSize{0};
+    int extraTextureSize {0};
     const float screenSizeModifier =
         std::min(Renderer::getScreenWidthModifier(), Renderer::getScreenHeightModifier());
 
@@ -157,8 +157,8 @@ Font::FontTexture::FontTexture(const int mSize)
     // It's not entirely clear if the 18 and 6 constants are correct, but they seem to provide
     // a texture buffer large enough to hold the fonts (otherwise the application would crash).
     // This logic is obviously a hack though and needs to be properly reviewed and improved.
-    textureSize = glm::ivec2{mSize * (18 + extraTextureSize), mSize * (6 + extraTextureSize / 2)};
-    writePos = glm::ivec2{};
+    textureSize = glm::ivec2 {mSize * (18 + extraTextureSize), mSize * (6 + extraTextureSize / 2)};
+    writePos = glm::ivec2 {};
     rowHeight = 0;
 }
 
@@ -177,7 +177,7 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
         writePos.y + rowHeight + size.y + 1 < textureSize.y) {
         // Row full, but it should fit on the next row so move the cursor there.
         // Leave 1px of space between glyphs.
-        writePos = glm::ivec2{0, writePos.y + rowHeight + 1};
+        writePos = glm::ivec2 {0, writePos.y + rowHeight + 1};
         rowHeight = 0;
     }
 
@@ -317,7 +317,7 @@ Font::Glyph* Font::getGlyph(unsigned int id)
         return nullptr;
     }
 
-    glm::ivec2 glyphSize{g->bitmap.width, g->bitmap.rows};
+    glm::ivec2 glyphSize {g->bitmap.width, g->bitmap.rows};
 
     FontTexture* tex = nullptr;
     glm::ivec2 cursor;
@@ -335,15 +335,15 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     Glyph& glyph = mGlyphMap[id];
 
     glyph.texture = tex;
-    glyph.texPos = glm::vec2{cursor.x / static_cast<float>(tex->textureSize.x),
-                             cursor.y / static_cast<float>(tex->textureSize.y)};
-    glyph.texSize = glm::vec2{glyphSize.x / static_cast<float>(tex->textureSize.x),
-                              glyphSize.y / static_cast<float>(tex->textureSize.y)};
+    glyph.texPos = glm::vec2 {cursor.x / static_cast<float>(tex->textureSize.x),
+                              cursor.y / static_cast<float>(tex->textureSize.y)};
+    glyph.texSize = glm::vec2 {glyphSize.x / static_cast<float>(tex->textureSize.x),
+                               glyphSize.y / static_cast<float>(tex->textureSize.y)};
 
-    glyph.advance = glm::vec2{static_cast<float>(g->metrics.horiAdvance) / 64.0f,
-                              static_cast<float>(g->metrics.vertAdvance) / 64.0f};
-    glyph.bearing = glm::vec2{static_cast<float>(g->metrics.horiBearingX) / 64.0f,
-                              static_cast<float>(g->metrics.horiBearingY) / 64.0f};
+    glyph.advance = glm::vec2 {static_cast<float>(g->metrics.horiAdvance) / 64.0f,
+                               static_cast<float>(g->metrics.vertAdvance) / 64.0f};
+    glyph.bearing = glm::vec2 {static_cast<float>(g->metrics.horiBearingX) / 64.0f,
+                               static_cast<float>(g->metrics.horiBearingY) / 64.0f};
 
     // Upload glyph bitmap to texture.
     Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x, cursor.y,
@@ -374,10 +374,10 @@ void Font::rebuildTextures()
         FontTexture* tex = it->second.texture;
 
         // Find the position/size.
-        glm::ivec2 cursor{static_cast<int>(it->second.texPos.x * tex->textureSize.x),
-                          static_cast<int>(it->second.texPos.y * tex->textureSize.y)};
-        glm::ivec2 glyphSize{static_cast<int>(it->second.texSize.x * tex->textureSize.x),
-                             static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
+        glm::ivec2 cursor {static_cast<int>(it->second.texPos.x * tex->textureSize.x),
+                           static_cast<int>(it->second.texPos.y * tex->textureSize.y)};
+        glm::ivec2 glyphSize {static_cast<int>(it->second.texSize.x * tex->textureSize.x),
+                              static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
 
         // Upload to texture.
         Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x, cursor.y,
@@ -432,7 +432,7 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
     if (lineWidth > highestWidth)
         highestWidth = lineWidth;
 
-    return glm::vec2{highestWidth, y};
+    return glm::vec2 {highestWidth, y};
 }
 
 std::string Font::getTextMaxWidth(std::string text, float maxWidth)
@@ -557,7 +557,7 @@ glm::vec2 Font::getWrappedTextCursorOffset(std::string text,
             lineWidth += glyph->advance.x;
     }
 
-    return glm::vec2{lineWidth, y};
+    return glm::vec2 {lineWidth, y};
 }
 
 //
@@ -652,8 +652,8 @@ TextCache* Font::buildTextCache(const std::string& text,
         verts.resize(oldVertSize + 6);
         Renderer::Vertex* vertices = verts.data() + oldVertSize;
 
-        const float glyphStartX{x + glyph->bearing.x};
-        const glm::ivec2& textureSize{glyph->texture->textureSize};
+        const float glyphStartX {x + glyph->bearing.x};
+        const glm::ivec2& textureSize {glyph->texture->textureSize};
         const unsigned int convertedColor = Renderer::convertRGBAToABGR(color);
 
         vertices[1] = {{glyphStartX, y - glyph->bearing.y},
@@ -705,7 +705,7 @@ TextCache* Font::buildTextCache(const std::string& text,
                                 float lineSpacing,
                                 bool noTopMargin)
 {
-    return buildTextCache(text, glm::vec2{offsetX, offsetY}, color, 0.0f, ALIGN_LEFT, lineSpacing,
+    return buildTextCache(text, glm::vec2 {offsetX, offsetY}, color, 0.0f, ALIGN_LEFT, lineSpacing,
                           noTopMargin);
 }
 

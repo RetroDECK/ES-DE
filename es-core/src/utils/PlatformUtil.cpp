@@ -144,7 +144,7 @@ namespace Utils
         int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool hideWindow)
         {
 #if defined(_WIN64)
-            STARTUPINFOW si{};
+            STARTUPINFOW si {};
             PROCESS_INFORMATION pi;
 
             si.cb = sizeof(si);
@@ -172,8 +172,8 @@ namespace Utils
             // clang-format on
 
             if (!runInBackground) {
-                int width{};
-                int height{};
+                int width {};
+                int height {};
 
                 // Hack to make the emulator window render correctly when launching games while
                 // running in full screen mode. If not done, the emulator window will simply be

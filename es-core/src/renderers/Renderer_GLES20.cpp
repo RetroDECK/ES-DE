@@ -18,40 +18,40 @@
 
 namespace Renderer
 {
-    static SDL_GLContext sdlContext{nullptr};
-    static glm::mat4 projectionMatrix{getIdentity()};
-    glm::mat4 worldViewMatrix{getIdentity()};
-    static GLuint shaderProgram{0};
-    static GLint mvpUniform{0};
-    static GLint texAttrib{0};
-    static GLint colAttrib{0};
-    static GLint posAttrib{0};
-    static GLuint vertexBuffer{0};
-    static GLuint whiteTexture{0};
+    static SDL_GLContext sdlContext {nullptr};
+    static glm::mat4 projectionMatrix {getIdentity()};
+    glm::mat4 worldViewMatrix {getIdentity()};
+    static GLuint shaderProgram {0};
+    static GLint mvpUniform {0};
+    static GLint texAttrib {0};
+    static GLint colAttrib {0};
+    static GLint posAttrib {0};
+    static GLuint vertexBuffer {0};
+    static GLuint whiteTexture {0};
 
     static void setupShaders()
     {
         // Vertex shader.
-        const GLchar* vertexSource{"uniform   mat4 u_mvp; \n"
-                                   "attribute vec2 a_pos; \n"
-                                   "attribute vec2 a_tex; \n"
-                                   "attribute vec4 a_col; \n"
-                                   "varying   vec2 v_tex; \n"
-                                   "varying   vec4 v_col; \n"
-                                   "void main(void)                                     \n"
-                                   "{                                                   \n"
-                                   "    gl_Position = u_mvp * vec4(a_pos.xy, 0.0, 1.0); \n"
-                                   "    v_tex       = a_tex;                            \n"
-                                   "    v_col       = a_col;                            \n"
-                                   "}                                                   \n"};
+        const GLchar* vertexSource {"uniform   mat4 u_mvp; \n"
+                                    "attribute vec2 a_pos; \n"
+                                    "attribute vec2 a_tex; \n"
+                                    "attribute vec4 a_col; \n"
+                                    "varying   vec2 v_tex; \n"
+                                    "varying   vec4 v_col; \n"
+                                    "void main(void)                                     \n"
+                                    "{                                                   \n"
+                                    "    gl_Position = u_mvp * vec4(a_pos.xy, 0.0, 1.0); \n"
+                                    "    v_tex       = a_tex;                            \n"
+                                    "    v_col       = a_col;                            \n"
+                                    "}                                                   \n"};
 
-        const GLuint vertexShader{glCreateShader(GL_VERTEX_SHADER)};
+        const GLuint vertexShader {glCreateShader(GL_VERTEX_SHADER)};
         GL_CHECK_ERROR(glShaderSource(vertexShader, 1, &vertexSource, nullptr));
         GL_CHECK_ERROR(glCompileShader(vertexShader));
 
         {
-            GLint isCompiled{GL_FALSE};
-            GLint maxLength{0};
+            GLint isCompiled {GL_FALSE};
+            GLint maxLength {0};
 
             GL_CHECK_ERROR(glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &isCompiled));
             GL_CHECK_ERROR(glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &maxLength));
@@ -76,22 +76,22 @@ namespace Renderer
         }
 
         // Fragment shader.
-        const GLchar* fragmentSource{"precision highp float;     \n"
-                                     "uniform   sampler2D u_tex; \n"
-                                     "varying   vec2      v_tex; \n"
-                                     "varying   vec4      v_col; \n"
-                                     "void main(void)                                     \n"
-                                     "{                                                   \n"
-                                     "    gl_FragColor = texture2D(u_tex, v_tex) * v_col; \n"
-                                     "}                                                   \n"};
+        const GLchar* fragmentSource {"precision highp float;     \n"
+                                      "uniform   sampler2D u_tex; \n"
+                                      "varying   vec2      v_tex; \n"
+                                      "varying   vec4      v_col; \n"
+                                      "void main(void)                                     \n"
+                                      "{                                                   \n"
+                                      "    gl_FragColor = texture2D(u_tex, v_tex) * v_col; \n"
+                                      "}                                                   \n"};
 
-        const GLuint fragmentShader{glCreateShader(GL_FRAGMENT_SHADER)};
+        const GLuint fragmentShader {glCreateShader(GL_FRAGMENT_SHADER)};
         GL_CHECK_ERROR(glShaderSource(fragmentShader, 1, &fragmentSource, nullptr));
         GL_CHECK_ERROR(glCompileShader(fragmentShader));
 
         {
-            GLint isCompiled{GL_FALSE};
-            GLint maxLength{0};
+            GLint isCompiled {GL_FALSE};
+            GLint maxLength {0};
 
             GL_CHECK_ERROR(glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &isCompiled));
             GL_CHECK_ERROR(glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &maxLength));
@@ -123,8 +123,8 @@ namespace Renderer
         GL_CHECK_ERROR(glLinkProgram(shaderProgram));
 
         {
-            GLint isCompiled{GL_FALSE};
-            GLint maxLength{0};
+            GLint isCompiled {GL_FALSE};
+            GLint maxLength {0};
 
             GL_CHECK_ERROR(glGetProgramiv(shaderProgram, GL_LINK_STATUS, &isCompiled));
             GL_CHECK_ERROR(glGetProgramiv(shaderProgram, GL_INFO_LOG_LENGTH, &maxLength));
@@ -270,7 +270,7 @@ namespace Renderer
                                const unsigned int height,
                                void* data)
     {
-        const GLenum textureType{convertTextureType(type)};
+        const GLenum textureType {convertTextureType(type)};
         unsigned int texture;
 
         GL_CHECK_ERROR(glGenTextures(1, &texture));
@@ -278,10 +278,10 @@ namespace Renderer
 
         // Not sure why the corresponding variables are missing in the OpenGL ES include files
         // when specifying the values manually seems to work with all graphics drivers.
-        int _GL_TEXTURE_SWIZZLE_R{0x8E42};
-        int _GL_TEXTURE_SWIZZLE_B{0x8E44};
-        int _GL_RED{0x1903};
-        int _GL_BLUE{0x1905};
+        int _GL_TEXTURE_SWIZZLE_R {0x8E42};
+        int _GL_TEXTURE_SWIZZLE_B {0x8E44};
+        int _GL_RED {0x1903};
+        int _GL_BLUE {0x1905};
 
         // Convert from BGRA to RGBA.
         if (format == Texture::Type::BGRA) {
@@ -300,8 +300,8 @@ namespace Renderer
         // Regular GL_ALPHA textures are black + alpha when used in shaders, so create a
         // GL_LUMINANCE_ALPHA texture instead so it's white + alpha.
         if (textureType == GL_LUMINANCE_ALPHA) {
-            uint8_t* a_data{reinterpret_cast<uint8_t*>(data)};
-            uint8_t* la_data{new uint8_t[width * height * 2]};
+            uint8_t* a_data {reinterpret_cast<uint8_t*>(data)};
+            uint8_t* la_data {new uint8_t[width * height * 2]};
             for (uint32_t i = 0; i < (width * height); ++i) {
                 la_data[(i * 2) + 0] = 255;
                 la_data[(i * 2) + 1] = a_data ? a_data[i] : 255;
@@ -340,8 +340,8 @@ namespace Renderer
         // Regular GL_ALPHA textures are black + alpha when used in shaders, so create a
         // GL_LUMINANCE_ALPHA texture instead so it's white + alpha.
         if (textureType == GL_LUMINANCE_ALPHA) {
-            uint8_t* a_data{reinterpret_cast<uint8_t*>(data)};
-            uint8_t* la_data{new uint8_t[width * height * 2]};
+            uint8_t* a_data {reinterpret_cast<uint8_t*>(data)};
+            uint8_t* la_data {new uint8_t[width * height * 2]};
             for (uint32_t i = 0; i < (width * height); ++i) {
                 la_data[(i * 2) + 0] = 255;
                 la_data[(i * 2) + 1] = a_data ? a_data[i] : 255;
@@ -416,7 +416,7 @@ namespace Renderer
     {
         projectionMatrix = projection;
 
-        glm::mat4 mvpMatrix{projectionMatrix * worldViewMatrix};
+        glm::mat4 mvpMatrix {projectionMatrix * worldViewMatrix};
         GL_CHECK_ERROR(
             glUniformMatrix4fv(mvpUniform, 1, GL_FALSE, reinterpret_cast<float*>(&mvpMatrix)));
     }
@@ -426,7 +426,7 @@ namespace Renderer
         worldViewMatrix = matrix;
         worldViewMatrix[3] = glm::round(worldViewMatrix[3]);
 
-        glm::mat4 mvpMatrix{projectionMatrix * worldViewMatrix};
+        glm::mat4 mvpMatrix {projectionMatrix * worldViewMatrix};
         GL_CHECK_ERROR(
             glUniformMatrix4fv(mvpUniform, 1, GL_FALSE, reinterpret_cast<float*>(&mvpMatrix)));
     }

@@ -45,8 +45,8 @@ Window::Window() noexcept
     , mAllowFileAnimation(true)
     , mCachedBackground(false)
     , mInvalidatedCachedBackground(false)
-    , mInitiateCacheTimer{false}
-    , mInvalidateCacheTimer{0}
+    , mInitiateCacheTimer {false}
+    , mInvalidateCacheTimer {0}
     , mVideoPlayerCount(0)
     , mTopScale(0.5)
     , mChangedThemeSet(false)
@@ -253,7 +253,7 @@ void Window::input(InputConfig* config, Input input)
         // from the submenu.
         mTopScale = 1.0f;
         GuiComponent* menu = mGuiStack.back();
-        glm::vec2 menuCenter{menu->getCenter()};
+        glm::vec2 menuCenter {menu->getCenter()};
         menu->setOrigin(0.5f, 0.5f);
         menu->setPosition(menuCenter.x, menuCenter.y, 0.0f);
         menu->setScale(1.0f);
@@ -409,7 +409,7 @@ void Window::render()
         mInitiateCacheTimer = false;
     }
 
-    glm::mat4 trans{Renderer::getIdentity()};
+    glm::mat4 trans {Renderer::getIdentity()};
 
     mRenderedHelpPrompts = false;
 
@@ -531,7 +531,7 @@ void Window::render()
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 if (mTopScale < 1.0f) {
                     mTopScale = glm::clamp(mTopScale + 0.07f, 0.0f, 1.0f);
-                    glm::vec2 topCenter{top->getCenter()};
+                    glm::vec2 topCenter {top->getCenter()};
                     top->setOrigin(0.5f, 0.5f);
                     top->setPosition(topCenter.x, topCenter.y, 0.0f);
                     top->setScale(mTopScale);
@@ -554,7 +554,7 @@ void Window::render()
                            static_cast<float>(Renderer::getScreenHeight()),
                            0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
 
-        glm::vec2 offset{mListScrollFont->sizeText(mListScrollText)};
+        glm::vec2 offset {mListScrollFont->sizeText(mListScrollText)};
         offset.x = (Renderer::getScreenWidth() - offset.x) * 0.5f;
         offset.y = (Renderer::getScreenHeight() - offset.y) * 0.5f;
 
@@ -613,7 +613,7 @@ void Window::render()
 
 void Window::renderLoadingScreen(std::string text)
 {
-    glm::mat4 trans{Renderer::getIdentity()};
+    glm::mat4 trans {Renderer::getIdentity()};
     Renderer::setMatrix(trans);
     Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                        static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
@@ -630,7 +630,7 @@ void Window::renderLoadingScreen(std::string text)
 
     float x = std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f);
     float y = std::round(Renderer::getScreenHeight() * 0.835f);
-    trans = glm::translate(trans, glm::vec3{x, y, 0.0f});
+    trans = glm::translate(trans, glm::vec3 {x, y, 0.0f});
     Renderer::setMatrix(trans);
     font->renderTextCache(cache);
     delete cache;

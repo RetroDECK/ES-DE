@@ -33,22 +33,22 @@ public:
                         bool multiSelect = false,
                         bool multiExclusiveSelect = false,
                         bool multiShowTotal = false)
-        : GuiComponent{window}
-        , mHelpStyle{helpstyle}
-        , mMultiSelect{multiSelect}
-        , mMultiExclusiveSelect{multiExclusiveSelect}
-        , mMultiShowTotal{multiShowTotal}
-        , mKeyRepeat{false}
-        , mKeyRepeatDir{0}
-        , mKeyRepeatTimer{0}
-        , mKeyRepeatStartDelay{OPTIONLIST_REPEAT_START_DELAY}
-        , mKeyRepeatSpeed{OPTIONLIST_REPEAT_SPEED}
-        , mName{name}
-        , mText{window}
-        , mLeftArrow{window}
-        , mRightArrow{window}
+        : GuiComponent {window}
+        , mHelpStyle {helpstyle}
+        , mMultiSelect {multiSelect}
+        , mMultiExclusiveSelect {multiExclusiveSelect}
+        , mMultiShowTotal {multiShowTotal}
+        , mKeyRepeat {false}
+        , mKeyRepeatDir {0}
+        , mKeyRepeatTimer {0}
+        , mKeyRepeatStartDelay {OPTIONLIST_REPEAT_START_DELAY}
+        , mKeyRepeatSpeed {OPTIONLIST_REPEAT_SPEED}
+        , mName {name}
+        , mText {window}
+        , mLeftArrow {window}
+        , mRightArrow {window}
     {
-        auto font{Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
+        auto font {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
         mText.setFont(font);
         mText.setColor(0x777777FF);
         mText.setHorizontalAlignment(ALIGN_CENTER);

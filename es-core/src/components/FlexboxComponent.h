@@ -20,9 +20,9 @@ public:
         // Optional label, mostly a convenience for the calling class to track items.
         std::string label;
         // Main image that governs grid sizing and placement.
-        ImageComponent baseImage{nullptr};
+        ImageComponent baseImage {nullptr};
         // Optional overlay image that can be sized and positioned relative to the base image.
-        ImageComponent overlayImage{nullptr};
+        ImageComponent overlayImage {nullptr};
         bool visible = false;
     };
 

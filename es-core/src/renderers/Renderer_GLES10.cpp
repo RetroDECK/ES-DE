@@ -128,10 +128,10 @@ namespace Renderer
 
         // Not sure why the corresponding variables are missing in the OpenGL ES include files
         // when specifying the values manually seems to work with all graphics drivers.
-        int _GL_TEXTURE_SWIZZLE_R{0x8E42};
-        int _GL_TEXTURE_SWIZZLE_B{0x8E44};
-        int _GL_RED{0x1903};
-        int _GL_BLUE{0x1905};
+        int _GL_TEXTURE_SWIZZLE_R {0x8E42};
+        int _GL_TEXTURE_SWIZZLE_B {0x8E44};
+        int _GL_RED {0x1903};
+        int _GL_BLUE {0x1905};
 
         // Convert from BGRA to RGBA.
         if (format == Texture::Type::BGRA) {
@@ -223,7 +223,7 @@ namespace Renderer
 
     void setMatrix(const glm::mat4& matrix)
     {
-        glm::mat4 newMatrix{matrix};
+        glm::mat4 newMatrix {matrix};
         newMatrix[3] = glm::round(newMatrix[3]);
 
         GL_CHECK_ERROR(glMatrixMode(GL_MODELVIEW));

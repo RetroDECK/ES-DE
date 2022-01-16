@@ -48,7 +48,7 @@ public:
             componentList.get()->setScrollIndicatorChangedCallback(
                 [this, scrollUp, scrollDown](ComponentList::ScrollIndicator state,
                                              bool singleRowScroll) {
-                    float fadeTime{FADE_IN_TIME};
+                    float fadeTime {FADE_IN_TIME};
 
                     bool upFadeIn = false;
                     bool upFadeOut = false;

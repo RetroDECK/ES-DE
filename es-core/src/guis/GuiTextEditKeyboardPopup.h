@@ -53,11 +53,11 @@ private:
                        const std::string& sk,
                        const std::string& ak,
                        const std::string& ask)
-            : button{b}
-            , key{k}
-            , shiftedKey{sk}
-            , altedKey{ak}
-            , altshiftedKey{ask} {};
+            : button {b}
+            , key {k}
+            , shiftedKey {sk}
+            , altedKey {ak}
+            , altshiftedKey {ask} {};
     };
 
     void updateDeleteRepeat(int deltaTime);

@@ -19,26 +19,26 @@
 #include <chrono>
 
 LottieComponent::LottieComponent(Window* window)
-    : GuiComponent{window}
-    , mCacheFrames{true}
-    , mMaxCacheSize{0}
-    , mCacheSize{0}
-    , mFrameSize{0}
-    , mAnimation{nullptr}
-    , mSurface{nullptr}
-    , mStartDirection{"normal"}
-    , mTotalFrames{0}
-    , mFrameNum{0}
-    , mFrameRate{0.0}
-    , mSpeedModifier{1.0f}
-    , mTargetPacing{0}
-    , mTimeAccumulator{0}
-    , mLastRenderedFrame{-1}
-    , mSkippedFrames{0}
-    , mHoldFrame{false}
-    , mPause{false}
-    , mAlternate{false}
-    , mKeepAspectRatio{true}
+    : GuiComponent {window}
+    , mCacheFrames {true}
+    , mMaxCacheSize {0}
+    , mCacheSize {0}
+    , mFrameSize {0}
+    , mAnimation {nullptr}
+    , mSurface {nullptr}
+    , mStartDirection {"normal"}
+    , mTotalFrames {0}
+    , mFrameNum {0}
+    , mFrameRate {0.0}
+    , mSpeedModifier {1.0f}
+    , mTargetPacing {0}
+    , mTimeAccumulator {0}
+    , mLastRenderedFrame {-1}
+    , mSkippedFrames {0}
+    , mHoldFrame {false}
+    , mPause {false}
+    , mAlternate {false}
+    , mKeepAspectRatio {true}
 {
     // Get an empty texture for rendering the animation.
     mTexture = TextureResource::get("");
@@ -117,12 +117,12 @@ void LottieComponent::setAnimation(const std::string& path)
                            "disabling of <keepAspectRatio> so ignoring this setting";
     }
 
-    size_t width{0};
-    size_t height{0};
+    size_t width {0};
+    size_t height {0};
 
     if (mSize.x == 0.0f || mSize.y == 0.0f) {
-        size_t viewportWidth{0};
-        size_t viewportHeight{0};
+        size_t viewportWidth {0};
+        size_t viewportHeight {0};
 
         mAnimation->size(viewportWidth, viewportHeight);
         double sizeRatio = static_cast<double>(viewportWidth) / static_cast<double>(viewportHeight);
@@ -216,7 +216,7 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 {
     using namespace ThemeFlags;
 
-    const ThemeData::ThemeElement* elem{theme->getElement(view, element, "animation")};
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "animation")};
 
     if (elem->has("size")) {
         glm::vec2 size = elem->get<glm::vec2>("size");
@@ -228,7 +228,7 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("speed")) {
-        const float speed{elem->get<float>("speed")};
+        const float speed {elem->get<float>("speed")};
         if (speed < 0.2f || speed > 3.0f) {
             LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <speed> set to \""
                             << std::fixed << std::setprecision(1) << speed << "\"";
@@ -271,7 +271,7 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::applyTheme(theme, view, element, properties);
 
     if (elem->has("path")) {
-        std::string path{elem->get<std::string>("path")};
+        std::string path {elem->get<std::string>("path")};
         if (path != "") {
             setAnimation(path);
         }
@@ -338,7 +338,7 @@ void LottieComponent::render(const glm::mat4& parentTrans)
     if (mAnimation == nullptr)
         return;
 
-    glm::mat4 trans{parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * getTransform()};
 
     // This is necessary as there may otherwise be no texture to render when paused.
     if (mPause && mTexture->getSize().x == 0.0f) {

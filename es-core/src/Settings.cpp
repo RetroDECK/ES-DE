@@ -24,7 +24,7 @@ namespace
     // the in-program settings menu. Most can be set using command-line arguments,
     // but some are debug flags that are either hardcoded or set by internal debug
     // functions.
-    std::vector<std::string> settingsSkipSaving{
+    std::vector<std::string> settingsSkipSaving {
         // clang-format off
         // These options can be set using command-line arguments:
         "WindowWidth",          // Set via --resolution [width] [height]

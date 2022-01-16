@@ -1217,8 +1217,8 @@ const std::string FileData::findEmulatorPath(std::string& command)
     std::vector<std::string> emulatorSystemPaths;
     std::vector<std::string> emulatorStaticPaths;
     std::string emulatorEntry;
-    size_t startPos{0};
-    size_t endPos{0};
+    size_t startPos {0};
+    size_t endPos {0};
 
     if ((startPos = command.find("%EMULATOR_")) != std::string::npos) {
         endPos = command.find("%", startPos + 1);
@@ -1256,7 +1256,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
         HKEY registryKey;
         LSTATUS keyStatus = -1;
         LSTATUS pathStatus = -1;
-        char registryPath[1024]{};
+        char registryPath[1024] {};
         DWORD pathSize = 1024;
 
         // First look in HKEY_CURRENT_USER.
@@ -1311,7 +1311,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
         HKEY registryKey;
         LSTATUS keyStatus = -1;
         LSTATUS pathStatus = -1;
-        char path[1024]{};
+        char path[1024] {};
         DWORD pathSize = 1024;
 
         // First look in HKEY_CURRENT_USER.
