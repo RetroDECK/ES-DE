@@ -7,8 +7,8 @@
 //  This includes switching the mode when the UI mode passkey is used.
 //
 
-#ifndef ES_APP_VIEWS_UI_MODE_CONTROLLER_H
-#define ES_APP_VIEWS_UI_MODE_CONTROLLER_H
+#ifndef ES_APP_UI_MODE_CONTROLLER_H
+#define ES_APP_UI_MODE_CONTROLLER_H
 
 #include <string>
 #include <vector>
@@ -59,4 +59,4 @@ private:
     const std::vector<std::string> mInputVals = {"up", "down", "left", "right", "a", "b", "x", "y"};
 };
 
-#endif // ES_APP_VIEWS_UI_MODE_CONTROLLER_H
+#endif // ES_APP_UI_MODE_CONTROLLER_H
