@@ -19,9 +19,9 @@
 #include "MameNames.h"
 #include "Sound.h"
 #include "SystemData.h"
+#include "UIModeController.h"
 #include "guis/GuiGamelistFilter.h"
 #include "scrapers/Scraper.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGamelistView.h"
 

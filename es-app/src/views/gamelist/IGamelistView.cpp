@@ -9,9 +9,9 @@
 #include "views/gamelist/IGamelistView.h"
 
 #include "Sound.h"
+#include "UIModeController.h"
 #include "Window.h"
 #include "guis/GuiGamelistOptions.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 
 IGamelistView::IGamelistView(Window* window, FileData* root)

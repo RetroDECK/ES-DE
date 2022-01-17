@@ -17,12 +17,12 @@
 #include "MameNames.h"
 #include "Scripting.h"
 #include "SystemData.h"
+#include "UIModeController.h"
 #include "Window.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 
 #include <assert.h>

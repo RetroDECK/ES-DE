@@ -19,6 +19,7 @@
 #include "FileSorts.h"
 #include "Scripting.h"
 #include "SystemData.h"
+#include "UIModeController.h"
 #include "VolumeControl.h"
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
@@ -33,7 +34,6 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/PlatformUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGamelistView.h"
 

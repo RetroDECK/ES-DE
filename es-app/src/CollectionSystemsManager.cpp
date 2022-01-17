@@ -27,11 +27,11 @@
 #include "Settings.h"
 #include "SystemData.h"
 #include "ThemeData.h"
+#include "UIModeController.h"
 #include "Window.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGamelistView.h"
 

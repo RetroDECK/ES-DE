@@ -12,10 +12,10 @@
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
+#include "UIModeController.h"
 #include "Window.h"
 #include "animations/LambdaAnimation.h"
 #include "guis/GuiMsgBox.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 
 #if defined(_WIN64)

@@ -18,10 +18,10 @@
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
+#include "UIModeController.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 #include "views/gamelist/IGamelistView.h"
 

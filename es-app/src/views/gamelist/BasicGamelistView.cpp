@@ -11,8 +11,8 @@
 #include "CollectionSystemsManager.h"
 #include "Settings.h"
 #include "SystemData.h"
+#include "UIModeController.h"
 #include "utils/FileSystemUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 
 BasicGamelistView::BasicGamelistView(Window* window, FileData* root)

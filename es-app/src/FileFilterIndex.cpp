@@ -11,8 +11,8 @@
 #include "FileData.h"
 #include "Log.h"
 #include "Settings.h"
+#include "UIModeController.h"
 #include "utils/StringUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 
 #include <cmath>

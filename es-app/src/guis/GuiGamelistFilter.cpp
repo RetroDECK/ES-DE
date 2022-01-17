@@ -11,12 +11,12 @@
 #include "guis/GuiGamelistFilter.h"
 
 #include "SystemData.h"
+#include "UIModeController.h"
 #include "components/BadgeComponent.h"
 #include "components/OptionListComponent.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/StringUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 
 GuiGamelistFilter::GuiGamelistFilter(Window* window,

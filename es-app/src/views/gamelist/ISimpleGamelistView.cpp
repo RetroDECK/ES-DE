@@ -13,9 +13,9 @@
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
+#include "UIModeController.h"
 #include "Window.h"
 #include "utils/StringUtil.h"
-#include "views/UIModeController.h"
 #include "views/ViewController.h"
 
 #include "Log.h"

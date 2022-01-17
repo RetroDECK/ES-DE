@@ -22,6 +22,7 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screensaver.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/UIModeController.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.h
 
     # GUIs
@@ -55,7 +56,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h
 )
 
@@ -72,6 +72,7 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screensaver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/UIModeController.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.cpp
 
     # GUIs
@@ -105,7 +106,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGamelistView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGamelistView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/UIModeController.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.cpp
 )
 
