@@ -1,26 +1,27 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  SystemScreensaver.h
+//  Screensaver.h
 //
 //  Screensaver, supporting the following types:
 //  Dim, black, slideshow, video.
 //
 
-#ifndef ES_APP_SYSTEM_SCREEN_SAVER_H
-#define ES_APP_SYSTEM_SCREEN_SAVER_H
+#ifndef ES_APP_SCREENSAVER_H
+#define ES_APP_SCREENSAVER_H
 
 #include "Window.h"
+#include "resources/Font.h"
 
 class ImageComponent;
 class VideoComponent;
 
 // Screensaver implementation.
-class SystemScreensaver : public Window::Screensaver
+class Screensaver : public Window::Screensaver
 {
 public:
-    SystemScreensaver();
-    virtual ~SystemScreensaver();
+    Screensaver();
+    virtual ~Screensaver();
 
     virtual bool allowSleep()
     {
@@ -88,4 +89,4 @@ private:
     std::vector<float> mGameOverlayRectangleCoords;
 };
 
-#endif // ES_APP_SYSTEM_SCREEN_SAVER_H
+#endif // ES_APP_SCREENSAVER_H

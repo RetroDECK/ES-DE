@@ -24,10 +24,10 @@
 #include "Log.h"
 #include "MameNames.h"
 #include "MediaViewer.h"
+#include "Screensaver.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
-#include "SystemScreensaver.h"
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiLaunchScreen.h"
 #include "guis/GuiMsgBox.h"
@@ -597,7 +597,7 @@ int main(int argc, char* argv[])
     window = Window::getInstance();
     ViewController::getInstance();
     CollectionSystemsManager::getInstance();
-    SystemScreensaver screensaver;
+    Screensaver screensaver;
     MediaViewer mediaViewer;
     GuiLaunchScreen guiLaunchScreen;
 

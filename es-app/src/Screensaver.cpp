@@ -1,13 +1,13 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  SystemScreensaver.cpp
+//  Screensaver.cpp
 //
 //  Screensaver, supporting the following types:
 //  Dim, black, slideshow, video.
 //
 
-#include "SystemScreensaver.h"
+#include "Screensaver.h"
 
 #include "FileData.h"
 #include "Log.h"
@@ -29,7 +29,7 @@
 
 #define FADE_TIME 300
 
-SystemScreensaver::SystemScreensaver()
+Screensaver::Screensaver()
     : mWindow {Window::getInstance()}
     , mState {STATE_INACTIVE}
     , mImageScreensaver {nullptr}
@@ -50,14 +50,14 @@ SystemScreensaver::SystemScreensaver()
     mWindow->setScreensaver(this);
 }
 
-SystemScreensaver::~SystemScreensaver()
+Screensaver::~Screensaver()
 {
     mCurrentGame = nullptr;
     delete mVideoScreensaver;
     delete mImageScreensaver;
 }
 
-void SystemScreensaver::startScreensaver(bool generateMediaList)
+void Screensaver::startScreensaver(bool generateMediaList)
 {
     std::string path = "";
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
@@ -181,7 +181,7 @@ void SystemScreensaver::startScreensaver(bool generateMediaList)
     mCurrentGame = nullptr;
 }
 
-void SystemScreensaver::stopScreensaver()
+void Screensaver::stopScreensaver()
 {
     delete mVideoScreensaver;
     mVideoScreensaver = nullptr;
@@ -199,13 +199,13 @@ void SystemScreensaver::stopScreensaver()
         mGameOverlay.reset();
 }
 
-void SystemScreensaver::nextGame()
+void Screensaver::nextGame()
 {
     stopScreensaver();
     startScreensaver(false);
 }
 
-void SystemScreensaver::launchGame()
+void Screensaver::launchGame()
 {
     if (mCurrentGame != nullptr) {
         // Launching game
@@ -218,7 +218,7 @@ void SystemScreensaver::launchGame()
     }
 }
 
-void SystemScreensaver::goToGame()
+void Screensaver::goToGame()
 {
     if (mCurrentGame != nullptr) {
         // Go to the game in the gamelist view, but don't launch it.
@@ -230,7 +230,7 @@ void SystemScreensaver::goToGame()
     }
 }
 
-void SystemScreensaver::renderScreensaver()
+void Screensaver::renderScreensaver()
 {
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
 
@@ -377,7 +377,7 @@ void SystemScreensaver::renderScreensaver()
     }
 }
 
-void SystemScreensaver::update(int deltaTime)
+void Screensaver::update(int deltaTime)
 {
     // Use this to update the fade value for the current fade stage.
     if (mState == STATE_FADE_OUT_WINDOW) {
@@ -419,7 +419,7 @@ void SystemScreensaver::update(int deltaTime)
         mImageScreensaver->update(deltaTime);
 }
 
-void SystemScreensaver::generateImageList()
+void Screensaver::generateImageList()
 {
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
@@ -436,7 +436,7 @@ void SystemScreensaver::generateImageList()
     }
 }
 
-void SystemScreensaver::generateVideoList()
+void Screensaver::generateVideoList()
 {
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
@@ -453,7 +453,7 @@ void SystemScreensaver::generateVideoList()
     }
 }
 
-void SystemScreensaver::generateCustomImageList()
+void Screensaver::generateCustomImageList()
 {
     std::string imageDir = Utils::FileSystem::expandHomePath(
         Settings::getInstance()->getString("ScreensaverSlideshowImageDir"));
@@ -480,7 +480,7 @@ void SystemScreensaver::generateCustomImageList()
     }
 }
 
-void SystemScreensaver::pickRandomImage(std::string& path)
+void Screensaver::pickRandomImage(std::string& path)
 {
     mCurrentGame = nullptr;
 
@@ -514,7 +514,7 @@ void SystemScreensaver::pickRandomImage(std::string& path)
     mCurrentGame = mImageFiles.at(index);
 }
 
-void SystemScreensaver::pickRandomVideo(std::string& path)
+void Screensaver::pickRandomVideo(std::string& path)
 {
     mCurrentGame = nullptr;
 
@@ -548,7 +548,7 @@ void SystemScreensaver::pickRandomVideo(std::string& path)
     mCurrentGame = mVideoFiles.at(index);
 }
 
-void SystemScreensaver::pickRandomCustomImage(std::string& path)
+void Screensaver::pickRandomCustomImage(std::string& path)
 {
     if (mImageCustomFiles.size() == 0)
         return;
@@ -576,7 +576,7 @@ void SystemScreensaver::pickRandomCustomImage(std::string& path)
     mSystemName = "";
 }
 
-void SystemScreensaver::generateOverlayInfo()
+void Screensaver::generateOverlayInfo()
 {
     if (mGameName == "" || mSystemName == "")
         return;
