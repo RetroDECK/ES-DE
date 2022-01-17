@@ -27,22 +27,17 @@ struct TextListData {
 // A scrollable text list supporting multiple row colors.
 template <typename T> class TextListComponent : public IList<TextListData, T>
 {
+    using List = IList<TextListData, T>;
+
 protected:
-    using IList<TextListData, T>::mEntries;
-    using IList<TextListData, T>::listUpdate;
-    using IList<TextListData, T>::listInput;
-    using IList<TextListData, T>::listRenderTitleOverlay;
-    using IList<TextListData, T>::getTransform;
-    using IList<TextListData, T>::mSize;
-    using IList<TextListData, T>::mCursor;
-    using IList<TextListData, T>::mWindow;
-    using IList<TextListData, T>::IList;
+    using List::mCursor;
+    using List::mEntries;
+    using List::mSize;
+    using List::mWindow;
 
 public:
-    using IList<TextListData, T>::size;
-    using IList<TextListData, T>::isScrolling;
-    using IList<TextListData, T>::stopScrolling;
     using GuiComponent::setColor;
+    using List::size;
 
     TextListComponent(Window* window);
 
@@ -164,7 +159,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     if (size() == 0)
         return;
 
-    glm::mat4 trans {parentTrans * getTransform()};
+    glm::mat4 trans {parentTrans * List::getTransform()};
     std::shared_ptr<Font>& font {mFont};
 
     int startEntry {0};
@@ -299,7 +294,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         y += entrySize;
     }
     Renderer::popClipRect();
-    listRenderTitleOverlay(trans);
+    List::listRenderTitleOverlay(trans);
     GuiComponent::renderChildren(trans);
 }
 
@@ -308,21 +303,21 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
     if (size() > 0) {
         if (input.value != 0) {
             if (config->isMappedLike("down", input)) {
-                listInput(1);
+                List::listInput(1);
                 return true;
             }
 
             if (config->isMappedLike("up", input)) {
-                listInput(-1);
+                List::listInput(-1);
                 return true;
             }
             if (config->isMappedLike("rightshoulder", input)) {
-                listInput(10);
+                List::listInput(10);
                 return true;
             }
 
             if (config->isMappedLike("leftshoulder", input)) {
-                listInput(-10);
+                List::listInput(-10);
                 return true;
             }
 
@@ -340,7 +335,7 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
                 config->isMappedLike("leftshoulder", input) ||
                 config->isMappedLike("lefttrigger", input) ||
                 config->isMappedLike("righttrigger", input))
-                stopScrolling();
+                List::stopScrolling();
         }
     }
 
@@ -349,12 +344,12 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
 
 template <typename T> void TextListComponent<T>::update(int deltaTime)
 {
-    listUpdate(deltaTime);
+    List::listUpdate(deltaTime);
 
     if (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling())
-        stopScrolling();
+        List::stopScrolling();
 
-    if (!isScrolling() && size() > 0) {
+    if (!List::isScrolling() && size() > 0) {
         // Always reset the loop offsets.
         mLoopOffset = 0;
         mLoopOffset2 = 0;
