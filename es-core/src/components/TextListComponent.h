@@ -6,8 +6,8 @@
 //  Text list used for displaying and navigating the gamelist views.
 //
 
-#ifndef ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
-#define ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
+#define ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
 
 #include "Log.h"
 #include "Sound.h"
@@ -135,8 +135,8 @@ private:
 
 template <typename T>
 TextListComponent<T>::TextListComponent(Window* window)
-    : IList<TextListData, T>(window)
-    , mSelectorImage(window)
+    : IList<TextListData, T> {window}
+    , mSelectorImage {window}
 {
     mLoopOffset = 0;
     mLoopOffset2 = 0;
@@ -192,7 +192,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             startEntry = size() - screenCount;
     }
 
-    int listCutoff = startEntry + screenCount;
+    int listCutoff {startEntry + screenCount};
     if (listCutoff > size())
         listCutoff = size();
 
@@ -229,7 +229,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
                     static_cast<int>(std::round(dim.y))});
 
     for (int i = startEntry; i < listCutoff; ++i) {
-        typename IList<TextListData, T>::Entry& entry = mEntries.at(static_cast<unsigned int>(i));
+        typename IList<TextListData, T>::Entry& entry {mEntries.at(static_cast<unsigned int>(i))};
 
         unsigned int color;
         if (mCursor == i && mSelectedColor)
@@ -360,21 +360,21 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
         mLoopOffset2 = 0;
 
         // If we're not scrolling and this object's text exceeds our size, then loop it.
-        const float textLength = mFont
-                                     ->sizeText(Utils::String::toUpper(
-                                         mEntries.at(static_cast<unsigned int>(mCursor)).name))
-                                     .x;
-        const float limit = mSize.x - mHorizontalMargin * 2.0f;
+        const float textLength {mFont
+                                    ->sizeText(Utils::String::toUpper(
+                                        mEntries.at(static_cast<unsigned int>(mCursor)).name))
+                                    .x};
+        const float limit {mSize.x - mHorizontalMargin * 2.0f};
 
         if (textLength > limit) {
             // Loop the text.
-            const float speed = mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f;
-            const float delay = 3000.0f;
-            const float scrollLength = textLength;
-            const float returnLength = speed * 1.5f;
-            const float scrollTime = (scrollLength * 1000.0f) / speed;
-            const float returnTime = (returnLength * 1000.0f) / speed;
-            const int maxTime = static_cast<int>(delay + scrollTime + returnTime);
+            const float speed {mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
+            const float delay {3000.0f};
+            const float scrollLength {textLength};
+            const float returnLength {speed * 1.5f};
+            const float scrollTime {(scrollLength * 1000.0f) / speed};
+            const float returnTime {(returnLength * 1000.0f) / speed};
+            const int maxTime {static_cast<int>(delay + scrollTime + returnTime)};
 
             mLoopTime += deltaTime;
             while (mLoopTime > maxTime)
@@ -423,7 +423,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 {
     GuiComponent::applyTheme(theme, view, element, properties);
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "textlist");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "textlist")};
     if (!elem)
         return;
 
@@ -447,8 +447,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     setFont(Font::getFromTheme(elem, properties, mFont));
-    const float selectorHeight =
-        std::max(mFont->getHeight(1.0), static_cast<float>(mFont->getSize())) * mLineSpacing;
+    const float selectorHeight {
+        std::max(mFont->getHeight(1.0), static_cast<float>(mFont->getSize())) * mLineSpacing};
     setSelectorHeight(selectorHeight);
 
     if (properties & ALIGNMENT) {
@@ -501,4 +501,4 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 }
 
-#endif // ES_APP_COMPONENTS_TEXT_LIST_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H

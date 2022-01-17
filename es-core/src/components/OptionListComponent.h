@@ -119,8 +119,8 @@ public:
                     if (!mEnabled)
                         return true;
                     // Move selection to previous.
-                    unsigned int i = getSelectedId();
-                    int next = static_cast<int>(i) - 1;
+                    unsigned int i {getSelectedId()};
+                    int next {static_cast<int>(i) - 1};
                     if (next < 0)
                         next += static_cast<int>(mEntries.size());
 
@@ -143,7 +143,7 @@ public:
                     if (!mEnabled)
                         return true;
                     // Move selection to next.
-                    unsigned int i = getSelectedId();
+                    unsigned int i {getSelectedId()};
                     int next = (i + 1) % mEntries.size();
                     mEntries.at(i).selected = false;
                     mEntries.at(next).selected = true;
@@ -424,7 +424,7 @@ private:
             auto font = Font::get(FONT_SIZE_MEDIUM);
             ComponentListRow row;
 
-            bool hasSelectedRow = false;
+            bool hasSelectedRow {false};
 
             // If the exclusive selection flag has been set, i.e. only a single row can be selected
             // at a time, then make sure to gray out and disable any non-selected rows.
@@ -452,7 +452,7 @@ private:
                     textComponent.get()->setEnabled(false);
                 }
 
-                OptionListData& e = *it;
+                OptionListData& e {*it};
 
                 if (mParent->mMultiSelect) {
                     // Add checkbox.
@@ -468,8 +468,8 @@ private:
                     // Update checkbox state and selected value.
                     row.makeAcceptInputHandler([this, &e, checkbox] {
                         auto list = mMenu.getList();
-                        int cursorId = list->getCursorId();
-                        bool isEnabled = list->getChild(cursorId * 2)->getEnabled();
+                        int cursorId {list->getCursorId()};
+                        bool isEnabled {list->getChild(cursorId * 2)->getEnabled()};
 
                         if (mParent->mMultiExclusiveSelect && !isEnabled)
                             return;
@@ -483,7 +483,7 @@ private:
                         if (mParent->mMultiExclusiveSelect) {
                             for (unsigned int i = 0; i < mParent->mEntries.size(); ++i) {
 
-                                bool isSelected = mParent->mEntries[cursorId].selected;
+                                bool isSelected {mParent->mEntries[cursorId].selected};
 
                                 for (unsigned int i = 0; i < list->getChildCount(); i += 2) {
                                     if (i == static_cast<unsigned int>(cursorId) * 2)

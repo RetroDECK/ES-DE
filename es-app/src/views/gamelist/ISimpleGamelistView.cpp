@@ -308,9 +308,7 @@ bool ISimpleGamelistView::input(InputConfig* config, Input input)
                 else
                     favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
-                if (favoritesSorting &&
-                    static_cast<std::string>(mRoot->getSystem()->getName()) != "recent" &&
-                    !isEditing) {
+                if (favoritesSorting && mRoot->getSystem()->getName() != "recent" && !isEditing) {
                     FileData* entryToSelect;
                     // Add favorite flag.
                     if (!getCursor()->getFavorite()) {
