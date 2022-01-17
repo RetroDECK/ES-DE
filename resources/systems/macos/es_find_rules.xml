@@ -36,4 +36,10 @@
             <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
         </rule>
     </emulator>
+    <emulator name="RPCS3">
+        <!-- Sony PlayStation 3 emulator RPCS3 -->
+        <rule type="staticpath">
+            <entry>/Applications/RPCS3.app/Contents/MacOS/rpcs3</entry>
+        </rule>
+    </emulator>
 </ruleList>
