@@ -136,7 +136,6 @@ void GuiMenu::openUIOptions()
     gamelist_view_style->add("basic", "basic", selectedViewStyle == "basic");
     gamelist_view_style->add("detailed", "detailed", selectedViewStyle == "detailed");
     gamelist_view_style->add("video", "video", selectedViewStyle == "video");
-    gamelist_view_style->add("grid (deprecated)", "grid", selectedViewStyle == "grid");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the view style to Automatic in this case.
     if (gamelist_view_style->getSelectedObjects().size() == 0)

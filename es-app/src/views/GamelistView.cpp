@@ -17,12 +17,14 @@
 
 GamelistView::GamelistView(Window* window, FileData* root)
     : GamelistBase {window, root}
+    , mViewStyle {ViewController::BASIC}
     , mHeaderText {window}
     , mHeaderImage {window}
     , mBackground {window}
     , mThumbnail {window}
     , mMarquee {window}
     , mImage {window}
+    , mVideo(nullptr)
     , mLblRating {window}
     , mLblReleaseDate {window}
     , mLblDeveloper {window}
@@ -45,6 +47,8 @@ GamelistView::GamelistView(Window* window, FileData* root)
     , mDescription {window}
     , mGamelistInfo {window}
 {
+    mViewStyle = ViewController::getInstance()->getState().viewstyle;
+
     mHeaderText.setText("Logo Text", false);
     mHeaderText.setSize(mSize.x, 0.0f);
     mHeaderText.setPosition(0.0f, 0.0f);
@@ -65,6 +69,11 @@ GamelistView::GamelistView(Window* window, FileData* root)
     addChild(&mBackground);
 
     const float padding = 0.01f;
+
+    if (mViewStyle == ViewController::VIDEO) {
+        // Create the video window.
+        mVideo = new VideoFFmpegComponent(window);
+    }
 
     mList.setPosition(mSize.x * (0.50f + padding), mList.getPosition().y);
     mList.setSize(mSize.x * (0.50f - padding), mList.getSize().y);
@@ -94,6 +103,15 @@ GamelistView::GamelistView(Window* window, FileData* root)
     mImage.setMaxSize(mSize.x * (0.50f - 2.0f * padding), mSize.y * 0.4f);
     mImage.setDefaultZIndex(30.0f);
     addChild(&mImage);
+
+    if (mViewStyle == ViewController::VIDEO) {
+        // Video.
+        mVideo->setOrigin(0.5f, 0.5f);
+        mVideo->setPosition(mSize.x * 0.25f, mSize.y * 0.4f);
+        mVideo->setSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.4f);
+        mVideo->setDefaultZIndex(30.0f);
+        addChild(mVideo);
+    }
 
     // Metadata labels + values.
     mLblRating.setText("Rating: ", false);
@@ -165,6 +183,9 @@ GamelistView::~GamelistView()
         delete extra;
     }
     mThemeExtras.clear();
+
+    if (mViewStyle == ViewController::VIDEO && mVideo != nullptr)
+        delete mVideo;
 }
 
 void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
@@ -235,6 +256,12 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                         POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     mImage.applyTheme(theme, getName(), "md_image",
                       POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
+
+    if (mViewStyle == ViewController::VIDEO) {
+        mVideo->applyTheme(theme, getName(), "md_video",
+                           POSITION | ThemeFlags::SIZE | ThemeFlags::DELAY | Z_INDEX | ROTATION |
+                               VISIBLE);
+    }
     mName.applyTheme(theme, getName(), "md_name", ALL);
     mBadges.applyTheme(theme, getName(), "md_badges", ALL);
 
@@ -277,12 +304,23 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 void GamelistView::update(int deltaTime)
 {
-    // TEMPORARY
-    //    BasicGamelistView::update(deltaTime);
     mImage.update(deltaTime);
 
     if (ViewController::getInstance()->getGameLaunchTriggered() && mImage.isAnimationPlaying(0))
         mImage.finishAnimation(0);
+
+    if (mViewStyle == ViewController::VIDEO) {
+        if (!mVideoPlaying)
+            mVideo->onHide();
+        else if (mVideoPlaying && !mVideo->isVideoPaused() && !mWindow->isScreensaverActive())
+            mVideo->onShow();
+
+        mVideo->update(deltaTime);
+
+        if (ViewController::getInstance()->getGameLaunchTriggered() &&
+            mVideo->isAnimationPlaying(0))
+            mVideo->finishAnimation(0);
+    }
 }
 
 void GamelistView::render(const glm::mat4& parentTrans)
@@ -392,7 +430,7 @@ void GamelistView::updateInfoPanel()
              mLastUpdated->getPath() == mLastUpdated->getSystem()->getName()))
             hideMetaDataFields = true;
 
-    if (hideMetaDataFields) {
+    if (hideMetaDataFields || mViewStyle == ViewController::BASIC) {
         mLblRating.setVisible(false);
         mRating.setVisible(false);
         mLblReleaseDate.setVisible(false);
@@ -433,6 +471,7 @@ void GamelistView::updateInfoPanel()
 
     bool fadingOut = false;
     if (file == nullptr) {
+        mVideoPlaying = false;
         fadingOut = true;
     }
     else {
@@ -447,18 +486,44 @@ void GamelistView::updateInfoPanel()
                 mThumbnail.setImage(mRandomGame->getThumbnailPath());
                 mMarquee.setImage(mRandomGame->getMarqueePath(), false, true);
                 mImage.setImage(mRandomGame->getImagePath());
+                if (mViewStyle == ViewController::VIDEO) {
+                    mVideo->setImage(mRandomGame->getImagePath());
+                    // Always stop the video before setting a new video as it will otherwise
+                    // continue to play if it has the same path (i.e. it is the same physical video
+                    // file) as the previously set video. That may happen when entering a folder
+                    // with the same name as the first game file inside, or as in this case, when
+                    // entering a custom collection.
+                    mVideo->onHide();
+
+                    if (!mVideo->setVideo(mRandomGame->getVideoPath()))
+                        mVideo->setDefaultVideo();
+                }
             }
             else {
                 mThumbnail.setImage("");
                 mMarquee.setImage("");
                 mImage.setImage("");
+                if (mViewStyle == ViewController::VIDEO) {
+                    mVideo->setImage("");
+                    mVideo->setVideo("");
+                    mVideo->setDefaultVideo();
+                }
             }
         }
         else {
             mThumbnail.setImage(file->getThumbnailPath());
             mMarquee.setImage(file->getMarqueePath(), false, true);
             mImage.setImage(file->getImagePath());
+            if (mViewStyle == ViewController::VIDEO) {
+                mVideo->setImage(file->getImagePath());
+                mVideo->onHide();
+
+                if (!mVideo->setVideo(file->getVideoPath()))
+                    mVideo->setDefaultVideo();
+            }
         }
+
+        mVideoPlaying = true;
 
         // Populate the gamelistInfo field which shows an icon if a folder has been entered
         // as well as the game count for the entire system (total and favorites separately).
@@ -495,12 +560,22 @@ void GamelistView::updateInfoPanel()
 
         mGamelistInfo.setValue(gamelistInfoString);
 
-        // Fade in the game image.
-        auto func = [this](float t) {
-            mImage.setOpacity(static_cast<unsigned char>(
-                glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
-        };
-        mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
+        if (mViewStyle == ViewController::DETAILED) {
+            // Fade in the game image.
+            auto func = [this](float t) {
+                mImage.setOpacity(static_cast<unsigned char>(
+                    glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+            };
+            mImage.setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
+        }
+        else if (mViewStyle == ViewController::VIDEO) {
+            // Fade in the static image.
+            auto func = [this](float t) {
+                mVideo->setOpacity(static_cast<unsigned char>(
+                    glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+            };
+            mVideo->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
+        }
 
         mDescription.setText(file->metadata.get("desc"));
         mDescContainer.reset();

@@ -19,7 +19,14 @@ GamelistBase::GamelistBase(Window* window, FileData* root)
     , mRoot {root}
     , mList {window}
     , mRandomGame {nullptr}
-    , mLastUpdated(nullptr)
+    , mLastUpdated {nullptr}
+    , mGameCount {0}
+    , mFavoritesGameCount {0}
+    , mFilteredGameCount {0}
+    , mFilteredGameCountAll {0}
+    , mIsFiltered {false}
+    , mIsFolder {false}
+    , mVideoPlaying {false}
 {
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));

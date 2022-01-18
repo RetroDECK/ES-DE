@@ -89,7 +89,6 @@ public:
         AUTOMATIC, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
         BASIC,
         DETAILED,
-        GRID,
         VIDEO
     };
 

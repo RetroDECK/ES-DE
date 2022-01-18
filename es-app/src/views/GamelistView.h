@@ -27,7 +27,20 @@ public:
     void preloadGamelist() { updateInfoPanel(); }
     void launch(FileData* game) override { ViewController::getInstance()->triggerGameLaunch(game); }
 
-    std::string getName() const { return "detailed"; }
+    std::string getName() const
+    {
+        auto selectedViewStyle = ViewController::getInstance()->getState();
+        switch (selectedViewStyle.viewstyle) {
+            case ViewController::VIDEO:
+                return "video";
+            case ViewController::DETAILED:
+                return "detailed";
+            case ViewController::BASIC:
+                return "basic";
+            default:
+                return "basic";
+        }
+    }
 
     const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
     void setTheme(const std::shared_ptr<ThemeData>& theme)
@@ -49,6 +62,8 @@ private:
     void initMDLabels();
     void initMDValues();
 
+    ViewController::GamelistViewStyle mViewStyle;
+
     std::vector<TextComponent*> getMDLabels();
     std::vector<GuiComponent*> getMDValues();
 
@@ -62,6 +77,7 @@ private:
     ImageComponent mThumbnail;
     ImageComponent mMarquee;
     ImageComponent mImage;
+    VideoComponent* mVideo;
 
     TextComponent mLblRating;
     TextComponent mLblReleaseDate;

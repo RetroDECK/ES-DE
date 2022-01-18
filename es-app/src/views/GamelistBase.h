@@ -20,6 +20,7 @@
 #include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
 #include "components/TextListComponent.h"
+#include "components/VideoFFmpegComponent.h"
 
 #include <stack>
 
@@ -96,6 +97,7 @@ protected:
     unsigned int mFilteredGameCountAll;
     bool mIsFiltered;
     bool mIsFolder;
+    bool mVideoPlaying;
 
 private:
 };

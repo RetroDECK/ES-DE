@@ -545,8 +545,6 @@ void ViewController::goToGamelist(SystemData* system)
             mState.viewstyle = DETAILED;
         else if (viewStyle == "video")
             mState.viewstyle = VIDEO;
-        else if (viewStyle == "grid")
-            mState.viewstyle = GRID;
     }
 
     if (mCurrentView)
@@ -736,8 +734,6 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
         selectedViewStyle = BASIC;
     if (viewPreference.compare("detailed") == 0)
         selectedViewStyle = DETAILED;
-    if (viewPreference.compare("grid") == 0)
-        selectedViewStyle = GRID;
     if (viewPreference.compare("video") == 0)
         selectedViewStyle = VIDEO;
 
@@ -756,38 +752,24 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     }
 
     // Create the view.
-    /*
-        switch (selectedViewStyle) {
-            case VIDEO: {
-                view = std::shared_ptr<IGamelistView>(
-                    new VideoGamelistView(mWindow, system->getRootFolder()));
-                mState.viewstyle = VIDEO;
-                break;
-            }
-            case DETAILED: {
-                view = std::shared_ptr<IGamelistView>(
-                    new DetailedGamelistView(mWindow, system->getRootFolder()));
-                mState.viewstyle = DETAILED;
-                break;
-            }
-            case GRID: {
-                view = std::shared_ptr<IGamelistView>(
-                    new GridGamelistView(mWindow, system->getRootFolder()));
-                mState.viewstyle = GRID;
-                break;
-            }
-            case BASIC: {
-            }
-            default: {
-                view = std::shared_ptr<IGamelistView>(
-                    new BasicGamelistView(mWindow, system->getRootFolder()));
-                mState.viewstyle = BASIC;
-                break;
-            }
+    switch (selectedViewStyle) {
+        case VIDEO: {
+            mState.viewstyle = VIDEO;
+            break;
         }
-    */
+        case DETAILED: {
+            mState.viewstyle = DETAILED;
+            break;
+        }
+        case BASIC: {
+        }
+        default: {
+            mState.viewstyle = BASIC;
+            break;
+        }
+    }
+
     view = std::shared_ptr<GamelistView>(new GamelistView(mWindow, system->getRootFolder()));
-    mState.viewstyle = DETAILED;
 
     view->setTheme(system->getTheme());
 
