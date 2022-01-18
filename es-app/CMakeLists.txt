@@ -55,6 +55,8 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGamelistView.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistBase.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h
 )
@@ -105,6 +107,8 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGamelistView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGamelistView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGamelistView.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistBase.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.cpp
 )
