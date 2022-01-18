@@ -16,8 +16,8 @@
 #include "resources/Font.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
+#include "views/GamelistView.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGamelistView.h"
 
 #include <random>
 #include <time.h>
@@ -211,7 +211,7 @@ void Screensaver::launchGame()
         // Launching game
         ViewController::getInstance()->triggerGameLaunch(mCurrentGame);
         ViewController::getInstance()->goToGamelist(mCurrentGame->getSystem());
-        IGamelistView* view =
+        GamelistView* view =
             ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
         ViewController::getInstance()->cancelViewTransitions();
@@ -223,7 +223,7 @@ void Screensaver::goToGame()
     if (mCurrentGame != nullptr) {
         // Go to the game in the gamelist view, but don't launch it.
         ViewController::getInstance()->goToGamelist(mCurrentGame->getSystem());
-        IGamelistView* view =
+        GamelistView* view =
             ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
         ViewController::getInstance()->cancelViewTransitions();

@@ -37,31 +37,6 @@ public:
     FileData* getLastEntry() { return mList.getLast(); }
     FileData* getFirstGameEntry() { return mFirstGameEntry; }
 
-protected:
-    GamelistBase(Window* window, FileData* root);
-    ~GamelistBase();
-
-    // Called when a FileData* is added, has its metadata changed, or is removed.
-    virtual void onFileChanged(FileData* file, bool reloadGamelist) = 0;
-
-    void populateList(const std::vector<FileData*>& files, FileData* firstEntry);
-    void addPlaceholder(FileData*);
-
-    void generateFirstLetterIndex(const std::vector<FileData*>& files);
-    void generateGamelistInfo(FileData* cursor, FileData* firstEntry);
-
-    void remove(FileData* game, bool deleteFile);
-    void removeMedia(FileData* game);
-
-    virtual void launch(FileData* game) = 0;
-
-    bool isListScrolling() override { return mList.isScrolling(); }
-    void stopListScrolling() override { mList.stopScrolling(); }
-
-    const std::vector<std::string>& getFirstLetterIndex() { return mFirstLetterIndex; }
-    std::string getQuickSystemSelectRightButton() { return "right"; }
-    std::string getQuickSystemSelectLeftButton() { return "left"; }
-
     // These functions are used to retain the folder cursor history, for instance
     // during a view reload. The calling function stores the history temporarily.
     void copyCursorHistory(std::vector<FileData*>& cursorHistory)
@@ -72,6 +47,33 @@ protected:
     {
         mCursorStackHistory = cursorHistory;
     }
+
+    void addPlaceholder(FileData*);
+
+    void remove(FileData* game, bool deleteFile);
+    void removeMedia(FileData* game);
+
+    const std::vector<std::string>& getFirstLetterIndex() { return mFirstLetterIndex; }
+
+protected:
+    GamelistBase(Window* window, FileData* root);
+    ~GamelistBase();
+
+    // Called when a FileData* is added, has its metadata changed, or is removed.
+    virtual void onFileChanged(FileData* file, bool reloadGamelist) = 0;
+
+    void populateList(const std::vector<FileData*>& files, FileData* firstEntry);
+
+    void generateFirstLetterIndex(const std::vector<FileData*>& files);
+    void generateGamelistInfo(FileData* cursor, FileData* firstEntry);
+
+    virtual void launch(FileData* game) = 0;
+
+    bool isListScrolling() override { return mList.isScrolling(); }
+    void stopListScrolling() override { mList.stopScrolling(); }
+
+    std::string getQuickSystemSelectRightButton() { return "right"; }
+    std::string getQuickSystemSelectLeftButton() { return "left"; }
 
     FileData* mRoot;
     TextListComponent<FileData*> mList;

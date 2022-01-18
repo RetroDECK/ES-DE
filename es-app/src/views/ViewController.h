@@ -21,7 +21,7 @@
 
 #include <vector>
 
-class IGamelistView;
+class GamelistView;
 class SystemData;
 class SystemView;
 
@@ -43,7 +43,7 @@ public:
 
     // If a basic view detected a metadata change, it can request to recreate
     // the current gamelist view (as it may change to be detailed).
-    void reloadGamelistView(IGamelistView* gamelist, bool reloadTheme = false);
+    void reloadGamelistView(GamelistView* gamelist, bool reloadTheme = false);
     void reloadGamelistView(SystemData* system, bool reloadTheme = false)
     {
         reloadGamelistView(getGamelistView(system).get(), reloadTheme);
@@ -110,10 +110,10 @@ public:
 
     const State& getState() const { return mState; }
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
-    virtual HelpStyle getHelpStyle() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
+    HelpStyle getHelpStyle() override;
 
-    std::shared_ptr<IGamelistView> getGamelistView(SystemData* system);
+    std::shared_ptr<GamelistView> getGamelistView(SystemData* system);
     std::shared_ptr<SystemView> getSystemListView();
     void removeGamelistView(SystemData* system);
 
@@ -158,7 +158,7 @@ private:
     std::shared_ptr<GuiComponent> mCurrentView;
     std::shared_ptr<GuiComponent> mPreviousView;
     std::shared_ptr<GuiComponent> mSkipView;
-    std::map<SystemData*, std::shared_ptr<IGamelistView>> mGamelistViews;
+    std::map<SystemData*, std::shared_ptr<GamelistView>> mGamelistViews;
     std::shared_ptr<SystemView> mSystemListView;
 
     FileData* mGameToLaunch;

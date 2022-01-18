@@ -18,8 +18,8 @@
 #include "components/HelpComponent.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "views/GamelistView.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGamelistView.h"
 
 GuiSettings::GuiSettings(Window* window, std::string title)
     : GuiComponent(window)
@@ -77,7 +77,7 @@ void GuiSettings::save()
                 (*it)->sortSystem(true);
 
             // Jump to the first row of the gamelist.
-            IGamelistView* gameList = ViewController::getInstance()->getGamelistView((*it)).get();
+            GamelistView* gameList = ViewController::getInstance()->getGamelistView((*it)).get();
             gameList->setCursor(gameList->getFirstEntry());
         }
     }

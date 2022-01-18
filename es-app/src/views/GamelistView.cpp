@@ -45,20 +45,41 @@ GamelistView::GamelistView(Window* window, FileData* root)
     , mDescription {window}
     , mGamelistInfo {window}
 {
+    mHeaderText.setText("Logo Text", false);
+    mHeaderText.setSize(mSize.x, 0.0f);
+    mHeaderText.setPosition(0.0f, 0.0f);
+    mHeaderText.setHorizontalAlignment(ALIGN_CENTER);
+    mHeaderText.setDefaultZIndex(50.0f);
+
     mHeaderText.setText(mRoot->getSystem()->getFullName());
+
+    mHeaderImage.setResize(0.0f, mSize.y * 0.185f);
+    mHeaderImage.setOrigin(0.5f, 0.0f);
+    mHeaderImage.setPosition(mSize.x / 2.0f, 0.0f);
+    mHeaderImage.setDefaultZIndex(50.0f);
+
+    mBackground.setResize(mSize.x, mSize.y);
+    mBackground.setDefaultZIndex(0.0f);
+
+    addChild(&mHeaderText);
+    addChild(&mBackground);
 }
 
 GamelistView::~GamelistView()
 {
-    //
+    // Remove theme extras.
+    for (auto extra : mThemeExtras) {
+        removeChild(extra);
+        delete extra;
+    }
+    mThemeExtras.clear();
 }
 
 void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
 {
     if (reloadGamelist) {
         // Might switch to a detailed view.
-        // TEMPORARY.
-        //        ViewController::getInstance()->reloadGamelistView(this);
+        ViewController::getInstance()->reloadGamelistView(this);
         return;
     }
 

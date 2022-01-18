@@ -32,8 +32,8 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
+#include "views/GamelistView.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGamelistView.h"
 
 #include <fstream>
 #include <pugixml.hpp>
@@ -449,9 +449,9 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             auto nTime = Utils::Time::now();
             if (nTime - Utils::Time::stringToTime(file->metadata.get("lastplayed")) < 2) {
                 // Select the first row of the gamelist (the game just played).
-                IGamelistView* gameList = ViewController::getInstance()
-                                              ->getGamelistView(getSystemToView(sysData.system))
-                                              .get();
+                GamelistView* gameList = ViewController::getInstance()
+                                             ->getGamelistView(getSystemToView(sysData.system))
+                                             .get();
                 gameList->setCursor(gameList->getFirstEntry());
             }
         }
@@ -1286,7 +1286,7 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
                         rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
                     // Jump to the first row of the game list, assuming it's not empty.
-                    IGamelistView* gameList =
+                    GamelistView* gameList =
                         ViewController::getInstance()->getGamelistView((it->second.system)).get();
                     if (!gameList->getCursor()->isPlaceHolder()) {
                         gameList->setCursor(gameList->getFirstEntry());

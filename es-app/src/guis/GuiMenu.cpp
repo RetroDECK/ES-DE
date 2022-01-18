@@ -35,7 +35,6 @@
 #include "guis/GuiTextEditPopup.h"
 #include "utils/PlatformUtil.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGamelistView.h"
 
 #include <SDL2/SDL_events.h>
 #include <algorithm>

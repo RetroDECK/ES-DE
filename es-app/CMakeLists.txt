@@ -49,12 +49,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.h
 
     # Views
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/BasicGamelistView.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/DetailedGamelistView.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/GridGamelistView.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGamelistView.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGamelistView.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistBase.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
@@ -101,12 +95,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/scrapers/ScreenScraper.cpp
 
     # Views
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/BasicGamelistView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/DetailedGamelistView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/GridGamelistView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/IGamelistView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/ISimpleGamelistView.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/gamelist/VideoGamelistView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistBase.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.cpp

@@ -23,7 +23,6 @@
 #include "guis/GuiGamelistFilter.h"
 #include "scrapers/Scraper.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGamelistView.h"
 
 GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
     : GuiComponent {window}
@@ -454,7 +453,7 @@ void GuiGamelistOptions::openMetaDataEd()
     if (file->getType() == FOLDER) {
         mWindow->pushGui(new GuiMetaDataEd(
             mWindow, &file->metadata, file->metadata.getMDD(FOLDER_METADATA), p,
-            std::bind(&IGamelistView::onFileChanged,
+            std::bind(&GamelistView::onFileChanged,
                       ViewController::getInstance()->getGamelistView(file->getSystem()).get(), file,
                       true),
             clearGameBtnFunc, deleteGameBtnFunc));
@@ -462,7 +461,7 @@ void GuiGamelistOptions::openMetaDataEd()
     else {
         mWindow->pushGui(new GuiMetaDataEd(
             mWindow, &file->metadata, file->metadata.getMDD(GAME_METADATA), p,
-            std::bind(&IGamelistView::onFileChanged,
+            std::bind(&GamelistView::onFileChanged,
                       ViewController::getInstance()->getGamelistView(file->getSystem()).get(), file,
                       true),
             clearGameBtnFunc, deleteGameBtnFunc));
@@ -566,7 +565,7 @@ std::vector<HelpPrompt> GuiGamelistOptions::getHelpPrompts()
     return prompts;
 }
 
-IGamelistView* GuiGamelistOptions::getGamelist()
+GamelistView* GuiGamelistOptions::getGamelist()
 {
     return ViewController::getInstance()->getGamelistView(mSystem).get();
 }

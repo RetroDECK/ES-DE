@@ -27,11 +27,8 @@
 #include "guis/GuiMenu.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "views/GamelistView.h"
 #include "views/SystemView.h"
-#include "views/gamelist/DetailedGamelistView.h"
-#include "views/gamelist/GridGamelistView.h"
-#include "views/gamelist/IGamelistView.h"
-#include "views/gamelist/VideoGamelistView.h"
 
 ViewController* ViewController::getInstance()
 {
@@ -718,7 +715,7 @@ void ViewController::removeGamelistView(SystemData* system)
     }
 }
 
-std::shared_ptr<IGamelistView> ViewController::getGamelistView(SystemData* system)
+std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system)
 {
     // If we have already created an entry for this system, then return that one.
     auto exists = mGamelistViews.find(system);
@@ -727,14 +724,14 @@ std::shared_ptr<IGamelistView> ViewController::getGamelistView(SystemData* syste
 
     system->getIndex()->setKidModeFilters();
     // If there's no entry, then create it and return it.
-    std::shared_ptr<IGamelistView> view;
+    std::shared_ptr<GamelistView> view;
 
-    bool themeHasVideoView = system->getTheme()->hasView("video");
+    bool themeHasVideoView {system->getTheme()->hasView("video")};
 
     // Decide which view style to use.
     GamelistViewStyle selectedViewStyle = AUTOMATIC;
 
-    std::string viewPreference = Settings::getInstance()->getString("GamelistViewStyle");
+    std::string viewPreference {Settings::getInstance()->getString("GamelistViewStyle")};
     if (viewPreference.compare("basic") == 0)
         selectedViewStyle = BASIC;
     if (viewPreference.compare("detailed") == 0)
@@ -745,7 +742,7 @@ std::shared_ptr<IGamelistView> ViewController::getGamelistView(SystemData* syste
         selectedViewStyle = VIDEO;
 
     if (selectedViewStyle == AUTOMATIC) {
-        std::vector<FileData*> files = system->getRootFolder()->getFilesRecursive(GAME | FOLDER);
+        std::vector<FileData*> files {system->getRootFolder()->getFilesRecursive(GAME | FOLDER)};
         for (auto it = files.cbegin(); it != files.cend(); ++it) {
             if (themeHasVideoView && !(*it)->getVideoPath().empty()) {
                 selectedViewStyle = VIDEO;
@@ -759,39 +756,42 @@ std::shared_ptr<IGamelistView> ViewController::getGamelistView(SystemData* syste
     }
 
     // Create the view.
-    switch (selectedViewStyle) {
-        case VIDEO: {
-            view = std::shared_ptr<IGamelistView>(
-                new VideoGamelistView(mWindow, system->getRootFolder()));
-            mState.viewstyle = VIDEO;
-            break;
+    /*
+        switch (selectedViewStyle) {
+            case VIDEO: {
+                view = std::shared_ptr<IGamelistView>(
+                    new VideoGamelistView(mWindow, system->getRootFolder()));
+                mState.viewstyle = VIDEO;
+                break;
+            }
+            case DETAILED: {
+                view = std::shared_ptr<IGamelistView>(
+                    new DetailedGamelistView(mWindow, system->getRootFolder()));
+                mState.viewstyle = DETAILED;
+                break;
+            }
+            case GRID: {
+                view = std::shared_ptr<IGamelistView>(
+                    new GridGamelistView(mWindow, system->getRootFolder()));
+                mState.viewstyle = GRID;
+                break;
+            }
+            case BASIC: {
+            }
+            default: {
+                view = std::shared_ptr<IGamelistView>(
+                    new BasicGamelistView(mWindow, system->getRootFolder()));
+                mState.viewstyle = BASIC;
+                break;
+            }
         }
-        case DETAILED: {
-            view = std::shared_ptr<IGamelistView>(
-                new DetailedGamelistView(mWindow, system->getRootFolder()));
-            mState.viewstyle = DETAILED;
-            break;
-        }
-        case GRID: {
-            view = std::shared_ptr<IGamelistView>(
-                new GridGamelistView(mWindow, system->getRootFolder()));
-            mState.viewstyle = GRID;
-            break;
-        }
-        case BASIC: {
-        }
-        default: {
-            view = std::shared_ptr<IGamelistView>(
-                new BasicGamelistView(mWindow, system->getRootFolder()));
-            mState.viewstyle = BASIC;
-            break;
-        }
-    }
+    */
+    view = std::shared_ptr<GamelistView>(new GamelistView(mWindow, system->getRootFolder()));
 
     view->setTheme(system->getTheme());
 
     std::vector<SystemData*>& sysVec = SystemData::sSystemVector;
-    int id = static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin());
+    int id {static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin())};
     view->setPosition(id * static_cast<float>(Renderer::getScreenWidth()),
                       static_cast<float>(Renderer::getScreenHeight() * 2));
 
@@ -967,13 +967,13 @@ void ViewController::preload()
         NavigationSounds::getInstance().loadThemeNavigationSounds(nullptr);
 }
 
-void ViewController::reloadGamelistView(IGamelistView* view, bool reloadTheme)
+void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
 {
     for (auto it = mGamelistViews.cbegin(); it != mGamelistViews.cend(); ++it) {
         if (it->second.get() == view) {
-            bool isCurrent = (mCurrentView == it->second);
-            SystemData* system = it->first;
-            FileData* cursor = view->getCursor();
+            bool isCurrent {(mCurrentView == it->second)};
+            SystemData* system {it->first};
+            FileData* cursor {view->getCursor()};
 
             // Retain the cursor history for the view.
             std::vector<FileData*> cursorHistoryTemp;
@@ -987,7 +987,7 @@ void ViewController::reloadGamelistView(IGamelistView* view, bool reloadTheme)
             if (reloadTheme)
                 system->loadTheme();
             system->getIndex()->setKidModeFilters();
-            std::shared_ptr<IGamelistView> newView = getGamelistView(system);
+            std::shared_ptr<GamelistView> newView = getGamelistView(system);
 
             // To counter having come from a placeholder.
             if (!cursor->isPlaceHolder()) {

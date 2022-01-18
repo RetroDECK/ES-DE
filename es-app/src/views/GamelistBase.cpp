@@ -21,6 +21,15 @@ GamelistBase::GamelistBase(Window* window, FileData* root)
     , mRandomGame {nullptr}
     , mLastUpdated(nullptr)
 {
+    setSize(static_cast<float>(Renderer::getScreenWidth()),
+            static_cast<float>(Renderer::getScreenHeight()));
+
+    mList.setSize(mSize.x, mSize.y * 0.8f);
+    mList.setPosition(0.0f, mSize.y * 0.2f);
+    mList.setDefaultZIndex(20.0f);
+    addChild(&mList);
+
+    populateList(root->getChildrenListToDisplay(), root);
 }
 
 GamelistBase::~GamelistBase()
@@ -381,12 +390,11 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     // was unmarked. We couldn't do this earlier as we didn't have the list
                     // sorted yet.
                     if (removedLastFavorite) {
-                        // TEMPORARY
-                        // ViewController::getInstance()
-                        //    ->getGamelistView(entryToUpdate->getSystem())
-                        //    ->setCursor(ViewController::getInstance()
-                        //                    ->getGamelistView(entryToUpdate->getSystem())
-                        //                    ->getFirstEntry());
+                        ViewController::getInstance()
+                            ->getGamelistView(entryToUpdate->getSystem())
+                            ->setCursor(ViewController::getInstance()
+                                            ->getGamelistView(entryToUpdate->getSystem())
+                                            ->getFirstEntry());
                     }
                     return true;
                 }
@@ -400,27 +408,25 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     // As the toggling of the game destroyed this object, we need to get the view
                     // from ViewController instead of using the reference that existed before the
                     // destruction. Otherwise we get random crashes.
-                    // TEMPORARY
-                    // IGamelistView* view =
-                    //    ViewController::getInstance()->getGamelistView(system).get();
+                    GamelistView* view =
+                        ViewController::getInstance()->getGamelistView(system).get();
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                         !entryToUpdate->getSystem()->isCustomCollection()) {
-                        // TEMPORARY
-                        // ViewController::getInstance()
-                        //    ->getGamelistView(entryToUpdate->getSystem())
-                        //    ->setCursor(ViewController::getInstance()
-                        //                    ->getGamelistView(entryToUpdate->getSystem())
-                        //                    ->getFirstGameEntry());
+                        ViewController::getInstance()
+                            ->getGamelistView(entryToUpdate->getSystem())
+                            ->setCursor(ViewController::getInstance()
+                                            ->getGamelistView(entryToUpdate->getSystem())
+                                            ->getFirstGameEntry());
                     }
                     else if (removedLastFavorite &&
                              !entryToUpdate->getSystem()->isCustomCollection()) {
                         setCursor(getFirstEntry());
-                        // view->setCursor(view->getFirstEntry());
+                        view->setCursor(view->getFirstEntry());
                     }
                     else if (selectLastEntry) {
                         setCursor(getLastEntry());
-                        // view->setCursor(view->getLastEntry());
+                        view->setCursor(view->getLastEntry());
                     }
                     // Display the indication icons which show what games are part of the
                     // custom collection currently being edited. This is done cheaply using
@@ -428,10 +434,9 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     if (isEditing) {
                         for (auto it = SystemData::sSystemVector.begin();
                              it != SystemData::sSystemVector.end(); ++it) {
-                            // TEMPORARY
-                            // ViewController::getInstance()->getGamelistView((*it))->onFileChanged(
-                            // ViewController::getInstance()->getGamelistView((*it))->getCursor(),
-                            // false);
+                            ViewController::getInstance()->getGamelistView((*it))->onFileChanged(
+                                ViewController::getInstance()->getGamelistView((*it))->getCursor(),
+                                false);
                         }
                     }
                     return true;
@@ -443,7 +448,6 @@ bool GamelistBase::input(InputConfig* config, Input input)
         }
     }
 
-    //    return IGamelistView::input(config, input);
     // Select button opens GuiGamelistOptions.
     if (!UIModeController::getInstance()->isUIModeKid() && // Line break.
         config->isMappedTo("back", input) && input.value) {
@@ -458,9 +462,8 @@ bool GamelistBase::input(InputConfig* config, Input input)
              config->getDeviceId() == DEVICE_KEYBOARD &&
              (SDL_GetModState() & (KMOD_LCTRL | KMOD_RCTRL)) && input.id == SDLK_r &&
              input.value != 0) {
-        LOG(LogDebug) << "IGamelistView::input(): Reloading view";
-        // TEMPORARY
-        //        ViewController::getInstance()->reloadGamelistView(this, true);
+        LOG(LogDebug) << "GamelistView::input(): Reloading view";
+        ViewController::getInstance()->reloadGamelistView(this->mRoot->getSystem(), true);
         return true;
     }
 

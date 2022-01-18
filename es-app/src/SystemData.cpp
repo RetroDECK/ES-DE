@@ -22,8 +22,8 @@
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
+#include "views/GamelistView.h"
 #include "views/ViewController.h"
-#include "views/gamelist/IGamelistView.h"
 
 #include <fstream>
 #include <pugixml.hpp>
@@ -1212,7 +1212,7 @@ void SystemData::sortSystem(bool reloadGamelist, bool jumpToFirstRow)
         ViewController::getInstance()->reloadGamelistView(this, false);
 
     if (jumpToFirstRow) {
-        IGamelistView* gameList = ViewController::getInstance()->getGamelistView(this).get();
+        GamelistView* gameList {ViewController::getInstance()->getGamelistView(this).get()};
         gameList->setCursor(gameList->getFirstEntry());
     }
 }
