@@ -36,7 +36,7 @@ public:
 
     void onSizeChanged() override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
     void onValueChanged();

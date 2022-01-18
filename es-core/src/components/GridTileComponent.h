@@ -28,10 +28,10 @@ public:
     GridTileComponent(Window* window);
 
     void render(const glm::mat4& parentTrans) override;
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
-                            const std::string& view,
-                            const std::string& element,
-                            unsigned int properties) override;
+    void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                    const std::string& view,
+                    const std::string& element,
+                    unsigned int properties) override;
 
     // Made this a static function because the ImageGridComponent needs to know the default tile
     // max size to calculate the grid dimension before it instantiates the GridTileComponents.
@@ -53,7 +53,7 @@ public:
 
     glm::vec3 getBackgroundPosition();
 
-    virtual void update(int deltaTime) override;
+    void update(int deltaTime) override;
 
     std::shared_ptr<TextureResource> getTexture();
 

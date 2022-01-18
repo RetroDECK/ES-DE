@@ -24,8 +24,8 @@ private:
     void updateMenu(const std::string& systemName, const std::string& label, bool defaultEmulator);
     void selectorWindow(SystemData* system);
 
-    virtual bool input(InputConfig* config, Input input) override;
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    bool input(InputConfig* config, Input input) override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override;
 
     MenuComponent mMenu;

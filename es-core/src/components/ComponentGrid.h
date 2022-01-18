@@ -86,7 +86,7 @@ public:
     void onFocusLost() override;
     void onFocusGained() override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
     class GridEntry

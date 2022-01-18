@@ -57,8 +57,8 @@ public:
     SystemView(Window* window);
     ~SystemView();
 
-    virtual void onShow() override { mShowing = true; }
-    virtual void onHide() override { mShowing = false; }
+    void onShow() override { mShowing = true; }
+    void onHide() override { mShowing = false; }
 
     void goToSystem(SystemData* system, bool animate);
 
@@ -69,13 +69,13 @@ public:
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    virtual HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override;
 
     CarouselType getCarouselType() { return mCarousel.type; }
 
 protected:
     void onCursorChanged(const CursorState& state) override;
-    virtual void onScroll() override
+    void onScroll() override
     {
         NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
     }

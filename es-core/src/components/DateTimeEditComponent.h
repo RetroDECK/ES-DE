@@ -58,7 +58,7 @@ public:
     // Force text to be uppercase when in DISP_RELATIVE_TO_NOW mode.
     void setUppercase(bool uppercase);
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
     std::shared_ptr<Font> getFont() const override;

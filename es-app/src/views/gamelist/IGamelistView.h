@@ -47,14 +47,14 @@ public:
     virtual void copyCursorHistory(std::vector<FileData*>& cursorHistory) = 0;
     virtual void populateCursorHistory(std::vector<FileData*>& cursorHistory) = 0;
 
-    virtual bool input(InputConfig* config, Input input) override;
+    bool input(InputConfig* config, Input input) override;
     virtual void remove(FileData* game, bool deleteFile) = 0;
     virtual void removeMedia(FileData* game) = 0;
 
     virtual std::string getName() const = 0;
     virtual void launch(FileData* game) = 0;
 
-    virtual HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override;
 
     void render(const glm::mat4& parentTrans) override;
 

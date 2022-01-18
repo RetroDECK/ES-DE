@@ -61,12 +61,12 @@ public:
 
     void setSelectable(bool status) { mSelectable = status; }
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
-                            const std::string& view,
-                            const std::string& element,
-                            unsigned int properties) override;
+    void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                    const std::string& view,
+                    const std::string& element,
+                    unsigned int properties) override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
     unsigned int getColor() const override { return mColor; }
     std::shared_ptr<Font> getFont() const override { return mFont; }

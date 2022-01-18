@@ -22,16 +22,16 @@ public:
     virtual ~ISimpleGamelistView();
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
-    virtual void onFileChanged(FileData* file, bool reloadGamelist) override;
+    void onFileChanged(FileData* file, bool reloadGamelist) override;
 
     // Called whenever the theme changes.
-    virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
+    void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
 
     virtual FileData* getCursor() override = 0;
     virtual void setCursor(FileData*) override = 0;
     virtual void addPlaceholder(FileData*) override = 0;
 
-    virtual bool input(InputConfig* config, Input input) override;
+    bool input(InputConfig* config, Input input) override;
     virtual void launch(FileData* game) override = 0;
 
     virtual const std::vector<std::string>& getFirstLetterIndex() override = 0;

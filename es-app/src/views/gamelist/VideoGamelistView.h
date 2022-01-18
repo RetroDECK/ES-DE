@@ -23,15 +23,15 @@ public:
     VideoGamelistView(Window* window, FileData* root);
     virtual ~VideoGamelistView();
 
-    virtual void onShow() override;
-    virtual void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
-    virtual std::string getName() const override { return "video"; }
-    virtual void launch(FileData* game) override;
+    void onShow() override;
+    void onThemeChanged(const std::shared_ptr<ThemeData>& theme) override;
+    std::string getName() const override { return "video"; }
+    void launch(FileData* game) override;
 
-    virtual void preloadGamelist() override { updateInfoPanel(); }
+    void preloadGamelist() override { updateInfoPanel(); }
 
 protected:
-    virtual void update(int deltaTime) override;
+    void update(int deltaTime) override;
 
 private:
     void updateInfoPanel();

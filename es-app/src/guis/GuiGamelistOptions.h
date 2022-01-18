@@ -28,9 +28,9 @@ public:
     GuiGamelistOptions(Window* window, SystemData* system);
     virtual ~GuiGamelistOptions();
 
-    virtual bool input(InputConfig* config, Input input) override;
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
-    virtual HelpStyle getHelpStyle() override;
+    bool input(InputConfig* config, Input input) override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
+    HelpStyle getHelpStyle() override;
 
 private:
     void openGamelistFilter();

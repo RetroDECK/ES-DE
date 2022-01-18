@@ -95,12 +95,12 @@ public:
     void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
 
 protected:
-    virtual void onScroll() override
+    void onScroll() override
     {
         if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
             NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     }
-    virtual void onCursorChanged(const CursorState& state) override;
+    void onCursorChanged(const CursorState& state) override;
 
 private:
     int mLoopOffset;

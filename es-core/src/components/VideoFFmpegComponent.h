@@ -52,7 +52,7 @@ private:
     void resize();
 
     void render(const glm::mat4& parentTrans) override;
-    virtual void updatePlayer() override;
+    void updatePlayer() override;
 
     // This will run the frame processing in a separate thread.
     void frameProcessing();
@@ -75,13 +75,13 @@ private:
     bool decoderInitHW();
 
     // Start the video immediately.
-    virtual void startVideo() override;
+    void startVideo() override;
     // Stop the video.
-    virtual void stopVideo() override;
+    void stopVideo() override;
     // Pause the video when a game has been launched.
-    virtual void pauseVideo() override;
+    void pauseVideo() override;
     // Handle looping the video. Must be called periodically.
-    virtual void handleLooping() override;
+    void handleLooping() override;
 
     static enum AVHWDeviceType sDeviceType;
     static enum AVPixelFormat sPixelFormat;

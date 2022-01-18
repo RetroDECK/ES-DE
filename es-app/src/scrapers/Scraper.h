@@ -109,7 +109,7 @@ class ScraperHttpRequest : public ScraperRequest
 {
 public:
     ScraperHttpRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url);
-    virtual void update() override;
+    void update() override;
 
 protected:
     virtual void process(const std::unique_ptr<HttpReq>& req,

@@ -45,7 +45,7 @@ public:
     bool input(InputConfig* config, Input input) override;
     void render(const glm::mat4& parentTrans) override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
     unsigned int getCurTextColor() const;

@@ -45,17 +45,17 @@ public:
     // Set the opacity for the embedded static image.
     void setOpacity(unsigned char opacity) override { mOpacity = opacity; }
 
-    virtual void onShow() override;
-    virtual void onHide() override;
-    virtual void onStopVideo() override;
-    virtual void onPauseVideo() override;
-    virtual void onUnpauseVideo() override;
-    virtual bool isVideoPaused() override { return mPause; }
-    virtual void onScreensaverActivate() override;
-    virtual void onScreensaverDeactivate() override;
-    virtual void onGameLaunchedActivate() override;
-    virtual void onGameLaunchedDeactivate() override;
-    virtual void topWindow(bool isTop) override;
+    void onShow() override;
+    void onHide() override;
+    void onStopVideo() override;
+    void onPauseVideo() override;
+    void onUnpauseVideo() override;
+    bool isVideoPaused() override { return mPause; }
+    void onScreensaverActivate() override;
+    void onScreensaverDeactivate() override;
+    void onGameLaunchedActivate() override;
+    void onGameLaunchedDeactivate() override;
+    void topWindow(bool isTop) override;
 
     // These functions update the embedded static image.
     void onOriginChanged() override { mStaticImage.setOrigin(mOrigin); }
@@ -65,14 +65,14 @@ public:
     void render(const glm::mat4& parentTrans) override;
     void renderSnapshot(const glm::mat4& parentTrans);
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
-                            const std::string& view,
-                            const std::string& element,
-                            unsigned int properties) override;
+    void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                    const std::string& view,
+                    const std::string& element,
+                    unsigned int properties) override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
-    virtual void update(int deltaTime) override;
+    void update(int deltaTime) override;
 
     // Resize the video to fit this size. If one axis is zero, scale that axis to maintain
     // aspect ratio. If both are non-zero, potentially break the aspect ratio. If both are

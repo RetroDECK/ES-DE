@@ -29,7 +29,7 @@ private:
     void onSizeChanged() override;
     void update(int deltaTime) override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override;
 
     std::queue<FileData*> mGameQueue;

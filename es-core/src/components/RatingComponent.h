@@ -40,12 +40,12 @@ public:
     void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; }
     void setChangedColor(unsigned int color) override { mColorChangedValue = color; }
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
-                            const std::string& view,
-                            const std::string& element,
-                            unsigned int properties) override;
+    void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                    const std::string& view,
+                    const std::string& element,
+                    unsigned int properties) override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
     void updateVertices();

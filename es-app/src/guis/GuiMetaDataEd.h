@@ -37,7 +37,7 @@ public:
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override;
 
 private:

@@ -24,13 +24,13 @@ public:
     GuiLaunchScreen();
     virtual ~GuiLaunchScreen();
 
-    virtual void displayLaunchScreen(FileData* game) override;
-    virtual void closeLaunchScreen() override;
+    void displayLaunchScreen(FileData* game) override;
+    void closeLaunchScreen() override;
 
     void onSizeChanged() override;
 
-    virtual void update(int deltaTime) override;
-    virtual void render(const glm::mat4& parentTrans) override;
+    void update(int deltaTime) override;
+    void render(const glm::mat4& parentTrans) override;
 
 private:
     Window* mWindow;

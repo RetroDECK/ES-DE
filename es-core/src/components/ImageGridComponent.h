@@ -76,7 +76,7 @@ public:
     ImageSource getImageSource() { return mImageSource; }
 
 protected:
-    virtual void onCursorChanged(const CursorState& state) override;
+    void onCursorChanged(const CursorState& state) override;
 
 private:
     // Tiles.

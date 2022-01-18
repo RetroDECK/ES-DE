@@ -75,7 +75,7 @@ public:
         mGrid.setCursorTo(mButtonGrid);
     }
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override { return mGrid.getHelpPrompts(); }
+    std::vector<HelpPrompt> getHelpPrompts() override { return mGrid.getHelpPrompts(); }
 
 private:
     void updateSize();

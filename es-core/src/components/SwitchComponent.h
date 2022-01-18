@@ -39,7 +39,7 @@ public:
 
     unsigned int getColorShift() const override { return mImage.getColorShift(); }
 
-    virtual std::vector<HelpPrompt> getHelpPrompts() override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
     void onStateChanged();
