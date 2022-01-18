@@ -63,6 +63,98 @@ GamelistView::GamelistView(Window* window, FileData* root)
 
     addChild(&mHeaderText);
     addChild(&mBackground);
+
+    const float padding = 0.01f;
+
+    mList.setPosition(mSize.x * (0.50f + padding), mList.getPosition().y);
+    mList.setSize(mSize.x * (0.50f - padding), mList.getSize().y);
+    mList.setAlignment(TextListComponent<FileData*>::ALIGN_LEFT);
+    mList.setCursorChangedCallback([&](const CursorState& /*state*/) { updateInfoPanel(); });
+
+    // Thumbnail.
+    mThumbnail.setOrigin(0.5f, 0.5f);
+    mThumbnail.setPosition(2.0f, 2.0f);
+    mThumbnail.setVisible(false);
+    mThumbnail.setMaxSize(mSize.x * (0.25f - 2.0f * padding), mSize.y * 0.10f);
+    mThumbnail.setDefaultZIndex(25.0f);
+    addChild(&mThumbnail);
+
+    // Marquee.
+    mMarquee.setOrigin(0.5f, 0.5f);
+    // Default to off the screen.
+    mMarquee.setPosition(2.0f, 2.0f);
+    mMarquee.setVisible(false);
+    mMarquee.setMaxSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.18f);
+    mMarquee.setDefaultZIndex(35.0f);
+    addChild(&mMarquee);
+
+    // Image.
+    mImage.setOrigin(0.5f, 0.5f);
+    mImage.setPosition(mSize.x * 0.25f, mList.getPosition().y + mSize.y * 0.2125f);
+    mImage.setMaxSize(mSize.x * (0.50f - 2.0f * padding), mSize.y * 0.4f);
+    mImage.setDefaultZIndex(30.0f);
+    addChild(&mImage);
+
+    // Metadata labels + values.
+    mLblRating.setText("Rating: ", false);
+    addChild(&mLblRating);
+    addChild(&mRating);
+    mLblReleaseDate.setText("Released: ", false);
+    addChild(&mLblReleaseDate);
+    addChild(&mReleaseDate);
+    mLblDeveloper.setText("Developer: ", false);
+    addChild(&mLblDeveloper);
+    addChild(&mDeveloper);
+    mLblPublisher.setText("Publisher: ", false);
+    addChild(&mLblPublisher);
+    addChild(&mPublisher);
+    mLblGenre.setText("Genre: ", false);
+    addChild(&mLblGenre);
+    addChild(&mGenre);
+    mLblPlayers.setText("Players: ", false);
+    addChild(&mLblPlayers);
+    addChild(&mPlayers);
+    mLblLastPlayed.setText("Last played: ", false);
+    addChild(&mLblLastPlayed);
+    mLastPlayed.setDisplayRelative(true);
+    addChild(&mLastPlayed);
+    mLblPlayCount.setText("Times played: ", false);
+    addChild(&mLblPlayCount);
+    addChild(&mPlayCount);
+
+    // Badges.
+    addChild(&mBadges);
+    mBadges.setOrigin(0.5f, 0.5f);
+    mBadges.setPosition(mSize.x * 0.8f, mSize.y * 0.7f);
+    mBadges.setSize(mSize.x * 0.15f, mSize.y * 0.2f);
+    mBadges.setDefaultZIndex(50.0f);
+
+    mName.setPosition(mSize.x, mSize.y);
+    mName.setDefaultZIndex(40.0f);
+    mName.setColor(0xAAAAAAFF);
+    mName.setFont(Font::get(FONT_SIZE_MEDIUM));
+    mName.setHorizontalAlignment(ALIGN_CENTER);
+    addChild(&mName);
+
+    mDescContainer.setPosition(mSize.x * padding, mSize.y * 0.65f);
+    mDescContainer.setSize(mSize.x * (0.50f - 2.0f * padding),
+                           mSize.y - mDescContainer.getPosition().y);
+    mDescContainer.setAutoScroll(true);
+    mDescContainer.setDefaultZIndex(40.0f);
+    addChild(&mDescContainer);
+
+    mDescription.setFont(Font::get(FONT_SIZE_SMALL));
+    mDescription.setSize(mDescContainer.getSize().x, 0.0f);
+    mDescContainer.addChild(&mDescription);
+
+    mGamelistInfo.setOrigin(0.5f, 0.5f);
+    mGamelistInfo.setFont(Font::get(FONT_SIZE_SMALL));
+    mGamelistInfo.setDefaultZIndex(50.0f);
+    mGamelistInfo.setVisible(true);
+    addChild(&mGamelistInfo);
+
+    initMDLabels();
+    initMDValues();
 }
 
 GamelistView::~GamelistView()

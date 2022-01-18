@@ -27,7 +27,7 @@ public:
     void preloadGamelist() { updateInfoPanel(); }
     void launch(FileData* game) override { ViewController::getInstance()->triggerGameLaunch(game); }
 
-    std::string getName() const { return "DEPRECATED FUNCTION"; }
+    std::string getName() const { return "detailed"; }
 
     const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
     void setTheme(const std::shared_ptr<ThemeData>& theme)

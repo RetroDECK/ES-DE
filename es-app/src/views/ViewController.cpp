@@ -787,6 +787,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
         }
     */
     view = std::shared_ptr<GamelistView>(new GamelistView(mWindow, system->getRootFolder()));
+    mState.viewstyle = DETAILED;
 
     view->setTheme(system->getTheme());
 
