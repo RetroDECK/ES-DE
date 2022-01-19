@@ -13,7 +13,7 @@
 #include "animations/LambdaAnimation.h"
 
 #define FADE_IN_START_OPACITY 0.5f
-#define FADE_IN_TIME 650
+#define FADE_IN_TIME 325
 
 GamelistView::GamelistView(FileData* root)
     : GamelistBase {root}
