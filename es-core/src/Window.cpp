@@ -438,6 +438,16 @@ void Window::render()
                  Settings::getInstance()->getString("ScreensaverType") == "slideshow")
             renderBottom = false;
 
+        // Don't render the bottom if the menu is open and the opening animation has finished
+        // playing. If the background is invalidated rendering will be enabled briefly until
+        // a new cached background has been generated.
+        if (mGuiStack.size() > 1 && mCachedBackground) {
+            if ((Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up" &&
+                 mBackgroundOverlayOpacity == 255) ||
+                Settings::getInstance()->getString("MenuOpeningEffect") != "scale-up")
+                renderBottom = false;
+        }
+
         if (renderBottom)
             bottom->render(trans);
 
