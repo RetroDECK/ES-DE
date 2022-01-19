@@ -41,7 +41,7 @@ public:
         NEVER_AUTO_ACCEPT // Manual mode.
     };
 
-    GuiScraperSearch(Window* window, SearchType searchType, unsigned int scrapeCount = 1);
+    GuiScraperSearch(SearchType searchType, unsigned int scrapeCount = 1);
     ~GuiScraperSearch();
 
     void search(const ScraperSearchParams& params);

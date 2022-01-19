@@ -22,14 +22,13 @@ class ButtonComponent;
 class ImageComponent;
 
 std::shared_ptr<ComponentGrid> makeButtonGrid(
-    Window* window, const std::vector<std::shared_ptr<ButtonComponent>>& buttons);
-std::shared_ptr<ImageComponent> makeArrow(Window* window);
+    const std::vector<std::shared_ptr<ButtonComponent>>& buttons);
+std::shared_ptr<ImageComponent> makeArrow();
 
 class MenuComponent : public GuiComponent
 {
 public:
-    MenuComponent(Window* window,
-                  std::string title,
+    MenuComponent(std::string title,
                   const std::shared_ptr<Font>& titleFont = Font::get(FONT_SIZE_LARGE));
     virtual ~MenuComponent();
 
@@ -51,7 +50,7 @@ public:
                       bool invert_when_selected = true)
     {
         ComponentListRow row;
-        row.addElement(std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(label),
+        row.addElement(std::make_shared<TextComponent>(Utils::String::toUpper(label),
                                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                        true);
         row.addElement(comp, false, invert_when_selected);

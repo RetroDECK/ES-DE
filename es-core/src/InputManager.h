@@ -45,7 +45,7 @@ public:
     std::string getDeviceGUIDString(int deviceId);
     InputConfig* getInputConfigByDevice(int deviceId);
 
-    bool parseEvent(const SDL_Event& event, Window* window);
+    bool parseEvent(const SDL_Event& event);
 
     int getNumJoysticks() { return static_cast<int>(mJoysticks.size()); }
 
@@ -62,6 +62,7 @@ private:
     void addControllerByDeviceIndex(Window* window, int deviceIndex);
     void removeControllerByJoystickID(Window* window, SDL_JoystickID joyID);
 
+    Window* mWindow;
     CECInput mCECInput;
 
     static const int DEADZONE_TRIGGERS = 18000;

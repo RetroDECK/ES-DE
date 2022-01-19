@@ -19,8 +19,8 @@ class LambdaAnimation : public Animation
 {
 public:
     LambdaAnimation(const std::function<void(float t)>& func, int duration)
-        : mFunction(func)
-        , mDuration(duration)
+        : mFunction {func}
+        , mDuration {duration}
     {
     }
 

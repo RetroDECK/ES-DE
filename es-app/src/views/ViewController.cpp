@@ -30,15 +30,8 @@
 #include "views/GamelistView.h"
 #include "views/SystemView.h"
 
-ViewController* ViewController::getInstance()
-{
-    static ViewController instance;
-    return &instance;
-}
-
 ViewController::ViewController() noexcept
-    : GuiComponent {Window::getInstance()}
-    , mNoGamesMessageBox {nullptr}
+    : mNoGamesMessageBox {nullptr}
     , mCurrentView {nullptr}
     , mPreviousView {nullptr}
     , mSkipView {nullptr}
@@ -55,6 +48,12 @@ ViewController::ViewController() noexcept
     mState.viewstyle = AUTOMATIC;
 }
 
+ViewController* ViewController::getInstance()
+{
+    static ViewController instance;
+    return &instance;
+}
+
 void ViewController::invalidSystemsFileDialog()
 {
     std::string errorMessage = "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE.\n"
@@ -65,7 +64,7 @@ void ViewController::invalidSystemsFileDialog()
                                "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO.";
 
     mWindow->pushGui(new GuiMsgBox(
-        mWindow, HelpStyle(), errorMessage.c_str(), "QUIT",
+        HelpStyle(), errorMessage.c_str(), "QUIT",
         [] {
             SDL_Event quit;
             quit.type = SDL_QUIT;
@@ -91,7 +90,7 @@ void ViewController::noGamesDialog()
 #endif
 
     mNoGamesMessageBox = new GuiMsgBox(
-        mWindow, HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "CHANGE ROM DIRECTORY",
+        HelpStyle(), mNoGamesErrorMessage + mRomDirectory, "CHANGE ROM DIRECTORY",
         [this] {
             std::string currentROMDirectory;
 #if defined(_WIN64)
@@ -101,7 +100,7 @@ void ViewController::noGamesDialog()
 #endif
             if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
                     [this](const std::string& newROMDirectory) {
                         Settings::getInstance()->setString("ROMDirectory",
                                                            Utils::String::trim(newROMDirectory));
@@ -113,7 +112,7 @@ void ViewController::noGamesDialog()
                         mRomDirectory = FileData::getROMDirectory();
 #endif
                         mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
                                                        "ROM DIRECTORY SETTING SAVED, RESTART\n"
                                                        "THE APPLICATION TO RESCAN THE SYSTEMS",
                                                        "OK", nullptr, "", nullptr, "", nullptr,
@@ -125,7 +124,7 @@ void ViewController::noGamesDialog()
             }
             else {
                 mWindow->pushGui(new GuiTextEditPopup(
-                    mWindow, HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
                     [this](const std::string& newROMDirectory) {
                         Settings::getInstance()->setString("ROMDirectory",
                                                            Utils::String::trim(newROMDirectory));
@@ -137,7 +136,7 @@ void ViewController::noGamesDialog()
                         mRomDirectory = FileData::getROMDirectory();
 #endif
                         mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
                                                        "ROM DIRECTORY SETTING SAVED, RESTART\n"
                                                        "THE APPLICATION TO RESCAN THE SYSTEMS",
                                                        "OK", nullptr, "", nullptr, "", nullptr,
@@ -151,7 +150,7 @@ void ViewController::noGamesDialog()
         "CREATE DIRECTORIES",
         [this] {
             mWindow->pushGui(new GuiMsgBox(
-                mWindow, HelpStyle(),
+                HelpStyle(),
                 "THIS WILL CREATE DIRECTORIES FOR ALL THE\n"
                 "GAME SYSTEMS DEFINED IN es_systems.xml\n\n"
                 "THIS MAY CREATE A LOT OF FOLDERS SO IT'S\n"
@@ -160,7 +159,7 @@ void ViewController::noGamesDialog()
                 "YES",
                 [this] {
                     if (!SystemData::createSystemDirectories()) {
-                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
                                                        "THE SYSTEM DIRECTORIES WERE SUCCESSFULLY\n"
                                                        "GENERATED, EXIT THE APPLICATION AND PLACE\n"
                                                        "YOUR GAMES IN THE NEWLY CREATED FOLDERS",
@@ -168,7 +167,7 @@ void ViewController::noGamesDialog()
                                                        true));
                     }
                     else {
-                        mWindow->pushGui(new GuiMsgBox(mWindow, HelpStyle(),
+                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
                                                        "ERROR CREATING THE SYSTEM DIRECTORIES,\n"
                                                        "PERMISSION PROBLEMS OR DISK FULL?\n\n"
                                                        "SEE THE LOG FILE FOR MORE DETAILS",
@@ -191,13 +190,12 @@ void ViewController::noGamesDialog()
 
 void ViewController::invalidAlternativeEmulatorDialog()
 {
-    mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
-                                   "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
-                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
-                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
-                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
-                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
-                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU"));
+    mWindow->pushGui(new GuiMsgBox(getHelpStyle(), "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
+                                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
+                                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
+                                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
+                                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
+                                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU"));
 }
 
 void ViewController::goToStart(bool playTransition)
@@ -694,7 +692,7 @@ void ViewController::launch(FileData* game)
     // to be displayed briefly, and for the navigation sound playing to be able to complete.
     // During this time period, all user input is blocked.
     setAnimation(new LambdaAnimation([](float t) {}, duration), 0, [this, game] {
-        game->launchGame(mWindow);
+        game->launchGame();
         // If the launch screen is disabled then this will do nothing.
         mWindow->closeLaunchScreen();
         onFileChanged(game, true);
@@ -769,7 +767,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
         }
     }
 
-    view = std::shared_ptr<GamelistView>(new GamelistView(mWindow, system->getRootFolder()));
+    view = std::shared_ptr<GamelistView>(new GamelistView(system->getRootFolder()));
 
     view->setTheme(system->getTheme());
 
@@ -790,7 +788,7 @@ std::shared_ptr<SystemView> ViewController::getSystemListView()
     if (mSystemListView)
         return mSystemListView;
 
-    mSystemListView = std::shared_ptr<SystemView>(new SystemView(mWindow));
+    mSystemListView = std::shared_ptr<SystemView>(new SystemView);
     addChild(mSystemListView.get());
     mSystemListView->setPosition(0, static_cast<float>(Renderer::getScreenHeight()));
     return mSystemListView;
@@ -835,7 +833,7 @@ bool ViewController::input(InputConfig* config, Input input)
         // Finally, if the camera is currently moving, reset its position.
         cancelViewTransitions();
 
-        mWindow->pushGui(new GuiMenu(mWindow));
+        mWindow->pushGui(new GuiMenu);
         return true;
     }
 

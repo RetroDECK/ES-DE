@@ -28,11 +28,12 @@ int SDL_USER_CECBUTTONDOWN = -1;
 int SDL_USER_CECBUTTONUP = -1;
 
 // Save button states for combo-button exit support and predefine exit option-function map.
-static bool sAltDown = false;
-static bool sLguiDown = false;
+static bool sAltDown {false};
+static bool sLguiDown {false};
 
 InputManager::InputManager() noexcept
-    : mKeyboardInputConfig(nullptr)
+    : mWindow {Window::getInstance()}
+    , mKeyboardInputConfig {nullptr}
 {
 }
 
@@ -331,7 +332,7 @@ InputConfig* InputManager::getInputConfigByDevice(int device)
         return mInputConfigs[device].get();
 }
 
-bool InputManager::parseEvent(const SDL_Event& event, Window* window)
+bool InputManager::parseEvent(const SDL_Event& event)
 {
     bool causedEvent = false;
     int32_t axisValue;
@@ -380,7 +381,7 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
                         normValue = -1;
                 }
 
-                window->input(
+                mWindow->input(
                     getInputConfigByDevice(event.caxis.which),
                     Input(event.caxis.which, TYPE_AXIS, event.caxis.axis, normValue, false));
                 causedEvent = true;
@@ -410,9 +411,9 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             mPrevButtonValues[std::make_pair(event.cbutton.which, event.cbutton.button)] =
                 event.cbutton.state;
 
-            window->input(getInputConfigByDevice(event.cbutton.which),
-                          Input(event.cbutton.which, TYPE_BUTTON, event.cbutton.button,
-                                event.cbutton.state == SDL_PRESSED, false));
+            mWindow->input(getInputConfigByDevice(event.cbutton.which),
+                           Input(event.cbutton.which, TYPE_BUTTON, event.cbutton.button,
+                                 event.cbutton.state == SDL_PRESSED, false));
 
             return true;
         }
@@ -425,7 +426,7 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
                 sLguiDown = true;
 
             if (event.key.keysym.sym == SDLK_BACKSPACE && SDL_IsTextInputActive())
-                window->textInput("\b");
+                mWindow->textInput("\b");
 
             if (event.key.repeat)
                 return false;
@@ -448,8 +449,8 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
                 return false;
             }
 
-            window->input(getInputConfigByDevice(DEVICE_KEYBOARD),
-                          Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 1, false));
+            mWindow->input(getInputConfigByDevice(DEVICE_KEYBOARD),
+                           Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 1, false));
             return true;
         }
         case SDL_KEYUP: {
@@ -460,30 +461,30 @@ bool InputManager::parseEvent(const SDL_Event& event, Window* window)
             if (event.key.keysym.sym == SDLK_LGUI)
                 sLguiDown = false;
 
-            window->input(getInputConfigByDevice(DEVICE_KEYBOARD),
-                          Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));
+            mWindow->input(getInputConfigByDevice(DEVICE_KEYBOARD),
+                           Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));
             return true;
         }
         case SDL_TEXTINPUT: {
-            window->textInput(event.text.text);
+            mWindow->textInput(event.text.text);
             break;
         }
         case SDL_CONTROLLERDEVICEADDED: {
-            addControllerByDeviceIndex(window, event.cdevice.which);
+            addControllerByDeviceIndex(mWindow, event.cdevice.which);
             return true;
         }
         case SDL_CONTROLLERDEVICEREMOVED: {
-            removeControllerByJoystickID(window, event.cdevice.which);
+            removeControllerByJoystickID(mWindow, event.cdevice.which);
             return false;
         }
     }
 
     if ((event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN)) ||
         (event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONUP))) {
-        window->input(getInputConfigByDevice(DEVICE_CEC),
-                      Input(DEVICE_CEC, TYPE_CEC_BUTTON, event.user.code,
-                            event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN),
-                            false));
+        mWindow->input(getInputConfigByDevice(DEVICE_CEC),
+                       Input(DEVICE_CEC, TYPE_CEC_BUTTON, event.user.code,
+                             event.type == static_cast<unsigned int>(SDL_USER_CECBUTTONDOWN),
+                             false));
         return true;
     }
 

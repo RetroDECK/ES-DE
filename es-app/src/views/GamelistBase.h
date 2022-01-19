@@ -57,7 +57,7 @@ public:
     const std::vector<std::string>& getFirstLetterIndex() { return mFirstLetterIndex; }
 
 protected:
-    GamelistBase(Window* window, FileData* root);
+    GamelistBase(FileData* root);
     ~GamelistBase();
 
     // Called when a FileData* is added, has its metadata changed, or is removed.

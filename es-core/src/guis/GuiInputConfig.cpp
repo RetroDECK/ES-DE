@@ -10,7 +10,6 @@
 
 #include "InputManager.h"
 #include "Log.h"
-#include "Window.h"
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
 #include "guis/GuiMsgBox.h"
@@ -27,13 +26,11 @@ struct InputConfigStructure {
 static const int inputCount = 24;
 static InputConfigStructure sGuiInputConfigList[inputCount];
 
-GuiInputConfig::GuiInputConfig(Window* window,
-                               InputConfig* target,
+GuiInputConfig::GuiInputConfig(InputConfig* target,
                                bool reconfigureAll,
                                const std::function<void()>& okCallback)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.svg"}
-    , mGrid {window, glm::ivec2 {1, 7}}
+    : mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {1, 7}}
     , mTargetConfig {target}
     , mHoldingInput {false}
 {
@@ -54,10 +51,10 @@ GuiInputConfig::GuiInputConfig(Window* window,
     addChild(&mGrid);
 
     // 0 is a spacer row.
-    mGrid.setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {0, 0}, false);
+    mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 0}, false);
 
-    mTitle = std::make_shared<TextComponent>(mWindow, "CONFIGURING", Font::get(FONT_SIZE_LARGE),
-                                             0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>("CONFIGURING", Font::get(FONT_SIZE_LARGE), 0x555555FF,
+                                             ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 1}, false, true);
 
     std::stringstream ss;
@@ -67,45 +64,42 @@ GuiInputConfig::GuiInputConfig(Window* window,
         ss << "CEC";
     else
         ss << "GAMEPAD " << (target->getDeviceId() + 1) << " (" << target->getDeviceName() << ")";
-    mSubtitle1 =
-        std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(ss.str()),
-                                        Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
+    mSubtitle1 = std::make_shared<TextComponent>(
+        Utils::String::toUpper(ss.str()), Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mSubtitle1, glm::ivec2 {0, 2}, false, true);
 
-    mSubtitle2 =
-        std::make_shared<TextComponent>(mWindow, "HOLD ANY BUTTON 1 SECOND TO SKIP",
-                                        Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+    mSubtitle2 = std::make_shared<TextComponent>(
+        "HOLD ANY BUTTON 1 SECOND TO SKIP", Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
     // The opacity will be set to visible for any row that is skippable.
     mSubtitle2->setOpacity(0);
 
     mGrid.setEntry(mSubtitle2, glm::ivec2 {0, 3}, false, true);
 
     // 4 is a spacer row.
-    mList = std::make_shared<ComponentList>(mWindow);
+    mList = std::make_shared<ComponentList>();
     mGrid.setEntry(mList, glm::ivec2 {0, 5}, true, true);
 
     for (int i = 0; i < inputCount; ++i) {
         ComponentListRow row;
 
         // Icon.
-        auto icon = std::make_shared<ImageComponent>(mWindow);
+        auto icon = std::make_shared<ImageComponent>();
         icon->setImage(sGuiInputConfigList[i].icon);
         icon->setColorShift(0x777777FF);
         icon->setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 1.25f);
         row.addElement(icon, false);
 
         // Spacer between icon and text.
-        auto spacer = std::make_shared<GuiComponent>(mWindow);
+        auto spacer = std::make_shared<GuiComponent>();
         spacer->setSize(16, 0);
         row.addElement(spacer, false);
 
-        auto text = std::make_shared<TextComponent>(mWindow, sGuiInputConfigList[i].dispName,
+        auto text = std::make_shared<TextComponent>(sGuiInputConfigList[i].dispName,
                                                     Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
         row.addElement(text, true);
 
-        auto mapping = std::make_shared<TextComponent>(mWindow, "-NOT DEFINED-",
-                                                       Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT),
-                                                       0x999999FF, ALIGN_RIGHT);
+        auto mapping = std::make_shared<TextComponent>(
+            "-NOT DEFINED-", Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x999999FF, ALIGN_RIGHT);
         setNotDefined(mapping); // Overrides the text and color set above.
         row.addElement(mapping, true);
         mMappings.push_back(mapping);
@@ -181,9 +175,9 @@ GuiInputConfig::GuiInputConfig(Window* window,
     };
 
     buttons.push_back(
-        std::make_shared<ButtonComponent>(mWindow, "OK", "ok", [okFunction] { okFunction(); }));
+        std::make_shared<ButtonComponent>("OK", "ok", [okFunction] { okFunction(); }));
 
-    mButtonGrid = makeButtonGrid(mWindow, buttons);
+    mButtonGrid = makeButtonGrid(buttons);
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 6}, true, false);
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent

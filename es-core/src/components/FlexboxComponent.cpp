@@ -19,9 +19,8 @@
 #include "Settings.h"
 #include "ThemeData.h"
 
-FlexboxComponent::FlexboxComponent(Window* window, std::vector<FlexboxItem>& items)
-    : GuiComponent {window}
-    , mItems {items}
+FlexboxComponent::FlexboxComponent(std::vector<FlexboxItem>& items)
+    : mItems {items}
     , mDirection {DEFAULT_DIRECTION}
     , mAlignment {DEFAULT_ALIGNMENT}
     , mLines {DEFAULT_LINES}

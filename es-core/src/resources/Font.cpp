@@ -14,15 +14,15 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 
-FT_Library Font::sLibrary = nullptr;
+FT_Library Font::sLibrary {nullptr};
 
 std::map<std::pair<std::string, int>, std::weak_ptr<Font>> Font::sFontMap;
 
 Font::FontFace::FontFace(ResourceData&& d, int size)
     : data {d}
 {
-    int err =
-        FT_New_Memory_Face(sLibrary, data.ptr.get(), static_cast<FT_Long>(data.length), 0, &face);
+    int err {
+        FT_New_Memory_Face(sLibrary, data.ptr.get(), static_cast<FT_Long>(data.length), 0, &face)};
     assert(!err);
 
     if (!err)

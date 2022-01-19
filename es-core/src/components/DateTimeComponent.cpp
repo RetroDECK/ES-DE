@@ -14,23 +14,21 @@
 #include "Settings.h"
 #include "utils/StringUtil.h"
 
-DateTimeComponent::DateTimeComponent(Window* window)
-    : TextComponent {window}
-    , mDisplayRelative {false}
+DateTimeComponent::DateTimeComponent()
+    : mDisplayRelative {false}
 {
     // ISO 8601 date format.
     setFormat("%Y-%m-%d");
 }
 
-DateTimeComponent::DateTimeComponent(Window* window,
-                                     const std::string& text,
+DateTimeComponent::DateTimeComponent(const std::string& text,
                                      const std::shared_ptr<Font>& font,
                                      unsigned int color,
                                      Alignment align,
                                      glm::vec3 pos,
                                      glm::vec2 size,
                                      unsigned int bgcolor)
-    : TextComponent {window, text, font, color, align, pos, size, bgcolor}
+    : TextComponent {text, font, color, align, pos, size, bgcolor}
     , mDisplayRelative {false}
 {
     // ISO 8601 date format.

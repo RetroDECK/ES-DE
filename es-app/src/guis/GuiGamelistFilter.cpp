@@ -19,11 +19,9 @@
 #include "utils/StringUtil.h"
 #include "views/ViewController.h"
 
-GuiGamelistFilter::GuiGamelistFilter(Window* window,
-                                     SystemData* system,
+GuiGamelistFilter::GuiGamelistFilter(SystemData* system,
                                      std::function<void(bool)> filterChangedCallback)
-    : GuiComponent {window}
-    , mMenu {window, "FILTER GAMELIST"}
+    : mMenu {"FILTER GAMELIST"}
     , mSystem {system}
     , mFiltersChangedCallback {filterChangedCallback}
     , mFiltersChanged {false}
@@ -51,8 +49,8 @@ void GuiGamelistFilter::initializeMenu()
 
     // Show filtered menu.
     row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>(mWindow, "RESET ALL FILTERS",
-                                                   Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+    row.addElement(std::make_shared<TextComponent>("RESET ALL FILTERS", Font::get(FONT_SIZE_MEDIUM),
+                                                   0x777777FF),
                    true);
     row.makeAcceptInputHandler(std::bind(&GuiGamelistFilter::resetAllFilters, this));
     mMenu.addRow(row);
@@ -99,22 +97,22 @@ void GuiGamelistFilter::addFiltersToMenu()
     ComponentListRow row;
 
     auto lbl = std::make_shared<TextComponent>(
-        mWindow, Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
+        Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
         Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
-    mTextFilterField = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
-                                                       0x777777FF, ALIGN_RIGHT);
+    mTextFilterField =
+        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
 
     // Don't show the free text filter entry unless there are any games in the system.
     if (mSystem->getRootFolder()->getChildren().size() > 0) {
         row.addElement(lbl, true);
         row.addElement(mTextFilterField, true);
 
-        auto spacer = std::make_shared<GuiComponent>(mWindow);
+        auto spacer = std::make_shared<GuiComponent>();
         spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
         row.addElement(spacer, false);
 
-        auto bracket = std::make_shared<ImageComponent>(mWindow);
+        auto bracket = std::make_shared<ImageComponent>();
         bracket->setImage(":/graphics/arrow.svg");
         bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
         row.addElement(bracket, false);
@@ -130,14 +128,14 @@ void GuiGamelistFilter::addFiltersToMenu()
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
         row.makeAcceptInputHandler([this, updateVal] {
-            mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), "GAME NAME",
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), "GAME NAME",
                                                           mTextFilterField->getValue(), updateVal,
                                                           false, "OK", "APPLY CHANGES?"));
         });
     }
     else {
         row.makeAcceptInputHandler([this, updateVal] {
-            mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), "GAME NAME",
+            mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), "GAME NAME",
                                                   mTextFilterField->getValue(), updateVal, false,
                                                   "OK", "APPLY CHANGES?"));
         });
@@ -178,10 +176,10 @@ void GuiGamelistFilter::addFiltersToMenu()
         // For bool values, make the selection exclusive so that both True and False can't be
         // selected at the same time. This should be changed to a SwitchComponent at some point.
         if (exclusiveSelect)
-            optionList = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
+            optionList = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
                                                                             menuLabel, true, true);
         else
-            optionList = std::make_shared<OptionListComponent<std::string>>(mWindow, getHelpStyle(),
+            optionList = std::make_shared<OptionListComponent<std::string>>(getHelpStyle(),
                                                                             menuLabel, true, false);
 
         // Still display fields that can't be filtered in the menu, but notify the user and set

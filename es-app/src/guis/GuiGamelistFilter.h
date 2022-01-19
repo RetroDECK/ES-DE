@@ -21,10 +21,7 @@ class SystemData;
 class GuiGamelistFilter : public GuiComponent
 {
 public:
-    GuiGamelistFilter(Window* window,
-                      SystemData* system,
-                      std::function<void(bool)> filtersChangedCallback);
-
+    GuiGamelistFilter(SystemData* system, std::function<void(bool)> filtersChangedCallback);
     ~GuiGamelistFilter() { mFilterOptions.clear(); }
 
     bool input(InputConfig* config, Input input) override;

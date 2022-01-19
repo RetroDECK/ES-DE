@@ -12,8 +12,8 @@
 
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
-ComponentList::ComponentList(Window* window)
-    : IList<ComponentListRow, void*> {window, LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP}
+ComponentList::ComponentList()
+    : IList<ComponentListRow, void*> {LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP}
     , mFocused {false}
     , mSetupCompleted {false}
     , mBottomCameraOffset {false}

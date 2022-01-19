@@ -116,7 +116,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
                 generateOverlayInfo();
 
             if (!mImageScreensaver)
-                mImageScreensaver = new ImageComponent(mWindow, false, false);
+                mImageScreensaver = new ImageComponent(false, false);
 
             mTimer = 0;
 
@@ -156,7 +156,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
             if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo"))
                 generateOverlayInfo();
 
-            mVideoScreensaver = new VideoFFmpegComponent(mWindow);
+            mVideoScreensaver = new VideoFFmpegComponent;
             mVideoScreensaver->topWindow(true);
             mVideoScreensaver->setOrigin(0.5f, 0.5f);
             mVideoScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,

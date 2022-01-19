@@ -15,7 +15,7 @@
 class GuiMediaViewerOptions : public GuiSettings
 {
 public:
-    GuiMediaViewerOptions(Window* window, const std::string& title);
+    GuiMediaViewerOptions(const std::string& title);
 };
 
 #endif // ES_APP_GUIS_GUI_MEDIA_VIEWER_OPTIONS_H

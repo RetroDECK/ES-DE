@@ -18,8 +18,7 @@
 class GuiTextEditKeyboardPopup : public GuiComponent
 {
 public:
-    GuiTextEditKeyboardPopup(Window* window,
-                             const HelpStyle& helpstyle,
+    GuiTextEditKeyboardPopup(const HelpStyle& helpstyle,
                              const std::string& title,
                              const std::string& initValue,
                              const std::function<void(const std::string&)>& okCallback,

@@ -18,7 +18,7 @@ template <typename T> class OptionListComponent;
 class GuiAlternativeEmulators : public GuiComponent
 {
 public:
-    GuiAlternativeEmulators(Window* window);
+    GuiAlternativeEmulators();
 
 private:
     void updateMenu(const std::string& systemName, const std::string& label, bool defaultEmulator);

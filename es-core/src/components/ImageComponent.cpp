@@ -28,9 +28,8 @@ glm::vec2 ImageComponent::getSize() const
     return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
 }
 
-ImageComponent::ImageComponent(Window* window, bool forceLoad, bool dynamic)
-    : GuiComponent {window}
-    , mTargetSize {0, 0}
+ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
+    : mTargetSize {0, 0}
     , mFlipX {false}
     , mFlipY {false}
     , mTargetIsMax {false}

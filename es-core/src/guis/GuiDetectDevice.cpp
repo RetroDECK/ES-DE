@@ -17,15 +17,13 @@
 
 #define HOLD_TIME 1000
 
-GuiDetectDevice::GuiDetectDevice(Window* window,
-                                 bool firstRun,
+GuiDetectDevice::GuiDetectDevice(bool firstRun,
                                  bool forcedConfig,
                                  const std::function<void()>& doneCallback)
-    : GuiComponent {window}
-    , mFirstRun {firstRun}
+    : mFirstRun {firstRun}
     , mForcedConfig {forcedConfig}
-    , mBackground {window, ":/graphics/frame.svg"}
-    , mGrid {window, glm::ivec2 {1, 5}}
+    , mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {1, 5}}
 {
     mHoldingConfig = nullptr;
     mHoldTime = 0;
@@ -35,9 +33,8 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
     addChild(&mGrid);
 
     // Title.
-    mTitle =
-        std::make_shared<TextComponent>(mWindow, firstRun ? "WELCOME" : "CONFIGURE INPUT DEVICE",
-                                        Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(firstRun ? "WELCOME" : "CONFIGURE INPUT DEVICE",
+                                             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {1, 1},
                    GridFlags::BORDER_BOTTOM);
 
@@ -53,33 +50,33 @@ GuiDetectDevice::GuiDetectDevice(Window* window,
     if (numDevices > 1 && Settings::getInstance()->getBool("InputOnlyFirstController"))
         deviceInfo << " (ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)";
 
-    mDeviceInfo = std::make_shared<TextComponent>(
-        mWindow, deviceInfo.str(), Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+    mDeviceInfo = std::make_shared<TextComponent>(deviceInfo.str(), Font::get(FONT_SIZE_SMALL),
+                                                  0x999999FF, ALIGN_CENTER);
     mGrid.setEntry(mDeviceInfo, glm::ivec2 {0, 1}, false, true);
 
     // Message.
     if (numDevices > 0) {
         mMsg1 = std::make_shared<TextComponent>(
-            mWindow, "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT",
-            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+            "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT", Font::get(FONT_SIZE_SMALL),
+            0x777777FF, ALIGN_CENTER);
     }
     else {
-        mMsg1 = std::make_shared<TextComponent>(
-            mWindow, "HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT", Font::get(FONT_SIZE_SMALL),
-            0x777777FF, ALIGN_CENTER);
+        mMsg1 =
+            std::make_shared<TextComponent>("HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT",
+                                            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
     }
 
     mGrid.setEntry(mMsg1, glm::ivec2 {0, 2}, false, true);
 
     const std::string msg2str =
         firstRun ? "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" : "PRESS ESC TO CANCEL";
-    mMsg2 = std::make_shared<TextComponent>(mWindow, msg2str, Font::get(FONT_SIZE_SMALL),
-                                            0x777777FF, ALIGN_CENTER);
+    mMsg2 = std::make_shared<TextComponent>(msg2str, Font::get(FONT_SIZE_SMALL), 0x777777FF,
+                                            ALIGN_CENTER);
     mGrid.setEntry(mMsg2, glm::ivec2 {0, 3}, false, true);
 
     // Currently held device.
-    mDeviceHeld = std::make_shared<TextComponent>(mWindow, "", Font::get(FONT_SIZE_MEDIUM),
-                                                  0xFFFFFFFF, ALIGN_CENTER);
+    mDeviceHeld =
+        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0xFFFFFFFF, ALIGN_CENTER);
     mGrid.setEntry(mDeviceHeld, glm::ivec2 {0, 4}, false, true);
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
@@ -160,7 +157,7 @@ void GuiDetectDevice::update(int deltaTime)
             mDeviceHeld->setColor((c << 24) | (c << 16) | (c << 8) | 0xFF);
             if (mHoldTime <= 0) {
                 // Picked one!
-                mWindow->pushGui(new GuiInputConfig(mWindow, mHoldingConfig, true, mDoneCallback));
+                mWindow->pushGui(new GuiInputConfig(mHoldingConfig, true, mDoneCallback));
                 delete this;
             }
         }

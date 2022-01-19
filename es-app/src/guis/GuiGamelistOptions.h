@@ -25,7 +25,7 @@ class SystemData;
 class GuiGamelistOptions : public GuiComponent
 {
 public:
-    GuiGamelistOptions(Window* window, SystemData* system);
+    GuiGamelistOptions(SystemData* system);
     virtual ~GuiGamelistOptions();
 
     bool input(InputConfig* config, Input input) override;

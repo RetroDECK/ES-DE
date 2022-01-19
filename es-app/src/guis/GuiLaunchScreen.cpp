@@ -15,9 +15,7 @@
 #include "utils/StringUtil.h"
 
 GuiLaunchScreen::GuiLaunchScreen()
-    : GuiComponent {Window::getInstance()}
-    , mWindow {Window::getInstance()}
-    , mBackground {mWindow, ":/graphics/frame.svg"}
+    : mBackground {":/graphics/frame.svg"}
     , mGrid {nullptr}
     , mMarquee {nullptr}
 {
@@ -33,7 +31,7 @@ GuiLaunchScreen::~GuiLaunchScreen()
 
 void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 {
-    mGrid = new ComponentGrid(mWindow, glm::ivec2 {3, 8});
+    mGrid = new ComponentGrid(glm::ivec2 {3, 8});
     addChild(mGrid);
 
     mImagePath = game->getMarqueePath();
@@ -42,7 +40,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // which would lead to the wrong size when using the image here.
     if (mImagePath != "") {
         TextureResource::manualUnload(mImagePath, false);
-        mMarquee = new ImageComponent(mWindow);
+        mMarquee = new ImageComponent;
     }
 
     mScaleUp = 0.5f;
@@ -50,52 +48,52 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     const float gameNameFontSize = 0.073f;
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 0}, false, false,
+    mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {1, 0}, false, false,
                     glm::ivec2 {1, 1});
 
     // Title.
     mTitle = std::make_shared<TextComponent>(
-        mWindow, "LAUNCHING GAME",
+        "LAUNCHING GAME",
         Font::get(static_cast<int>(
             titleFontSize * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))),
         0x666666FF, ALIGN_CENTER);
     mGrid->setEntry(mTitle, glm::ivec2 {1, 1}, false, true, glm::ivec2 {1, 1});
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 2}, false, false,
+    mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {1, 2}, false, false,
                     glm::ivec2 {1, 1});
 
     // Row for the marquee.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 3}, false, false,
+    mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {1, 3}, false, false,
                     glm::ivec2 {1, 1});
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 4}, false, false,
+    mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {1, 4}, false, false,
                     glm::ivec2 {1, 1});
 
     // Game name.
     mGameName = std::make_shared<TextComponent>(
-        mWindow, "GAME NAME",
+        "GAME NAME",
         Font::get(static_cast<int>(
             gameNameFontSize * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))),
         0x444444FF, ALIGN_CENTER);
     mGrid->setEntry(mGameName, glm::ivec2 {1, 5}, false, true, glm::ivec2 {1, 1});
 
     // System name.
-    mSystemName = std::make_shared<TextComponent>(
-        mWindow, "SYSTEM NAME", Font::get(FONT_SIZE_MEDIUM), 0x666666FF, ALIGN_CENTER);
+    mSystemName = std::make_shared<TextComponent>("SYSTEM NAME", Font::get(FONT_SIZE_MEDIUM),
+                                                  0x666666FF, ALIGN_CENTER);
     mGrid->setEntry(mSystemName, glm::ivec2 {1, 6}, false, true, glm::ivec2 {1, 1});
 
     // Spacer row.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {1, 7}, false, false,
+    mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {1, 7}, false, false,
                     glm::ivec2 {1, 1});
 
     // Left spacer.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {0, 0}, false, false,
+    mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 0}, false, false,
                     glm::ivec2 {1, 8});
 
     // Right spacer.
-    mGrid->setEntry(std::make_shared<GuiComponent>(mWindow), glm::ivec2 {2, 0}, false, false,
+    mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {2, 0}, false, false,
                     glm::ivec2 {1, 8});
 
     // Adjust the width depending on the aspect ratio of the screen, to make the screen look

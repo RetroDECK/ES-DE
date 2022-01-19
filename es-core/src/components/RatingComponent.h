@@ -20,7 +20,7 @@ class TextureResource;
 class RatingComponent : public GuiComponent
 {
 public:
-    RatingComponent(Window* window, bool colorizeChanges = false);
+    RatingComponent(bool colorizeChanges = false);
 
     std::string getValue() const override;
     // Should be a normalized float (in the range [0..1]) - if it's not, it will be clamped.

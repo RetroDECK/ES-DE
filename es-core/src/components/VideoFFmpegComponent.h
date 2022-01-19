@@ -32,7 +32,7 @@ extern "C" {
 class VideoFFmpegComponent : public VideoComponent
 {
 public:
-    VideoFFmpegComponent(Window* window);
+    VideoFFmpegComponent();
     virtual ~VideoFFmpegComponent();
 
     // Resize the video to fit this size. If one axis is zero, scale that axis to maintain

@@ -17,7 +17,7 @@
 class GamelistView : public GamelistBase
 {
 public:
-    GamelistView(Window* window, FileData* root);
+    GamelistView(FileData* root);
     ~GamelistView();
 
     // Called when a FileData* is added, has its metadata changed, or is removed.

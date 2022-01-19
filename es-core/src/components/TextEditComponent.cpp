@@ -18,15 +18,14 @@
 
 #define BLINKTIME 1000
 
-TextEditComponent::TextEditComponent(Window* window)
-    : GuiComponent {window}
-    , mFocused {false}
+TextEditComponent::TextEditComponent()
+    : mFocused {false}
     , mEditing {false}
     , mCursor {0}
     , mBlinkTime {0}
     , mCursorRepeatDir {0}
     , mScrollOffset {0.0f, 0.0f}
-    , mBox {window, ":/graphics/textinput.svg"}
+    , mBox {":/graphics/textinput.svg"}
     , mFont {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
 {
     mBox.setSharpCorners(true);

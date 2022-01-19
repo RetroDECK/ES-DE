@@ -23,9 +23,8 @@ enum AVPixelFormat VideoFFmpegComponent::sPixelFormat = AV_PIX_FMT_NONE;
 std::vector<std::string> VideoFFmpegComponent::sHWDecodedVideos;
 std::vector<std::string> VideoFFmpegComponent::sSWDecodedVideos;
 
-VideoFFmpegComponent::VideoFFmpegComponent(Window* window)
-    : VideoComponent {window}
-    , mFrameProcessingThread {nullptr}
+VideoFFmpegComponent::VideoFFmpegComponent()
+    : mFrameProcessingThread {nullptr}
     , mFormatContext {nullptr}
     , mVideoStream {nullptr}
     , mAudioStream {nullptr}

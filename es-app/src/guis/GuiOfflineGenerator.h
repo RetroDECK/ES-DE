@@ -22,7 +22,7 @@ class TextComponent;
 class GuiOfflineGenerator : public GuiComponent
 {
 public:
-    GuiOfflineGenerator(Window* window, const std::queue<FileData*>& gameQueue);
+    GuiOfflineGenerator(const std::queue<FileData*>& gameQueue);
     ~GuiOfflineGenerator();
 
 private:

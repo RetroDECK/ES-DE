@@ -24,12 +24,10 @@
 #include "guis/GuiScraperSearch.h"
 #include "views/ViewController.h"
 
-GuiScraperMulti::GuiScraperMulti(Window* window,
-                                 const std::queue<ScraperSearchParams>& searches,
+GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches,
                                  bool approveResults)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.svg"}
-    , mGrid {window, glm::ivec2 {2, 6}}
+    : mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {2, 6}}
     , mSearchQueue {searches}
     , mApproveResults {approveResults}
 {
@@ -46,27 +44,27 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     mTotalSkipped = 0;
 
     // Set up grid.
-    mTitle = std::make_shared<TextComponent>(mWindow, "SCRAPING IN PROGRESS",
-                                             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>("SCRAPING IN PROGRESS", Font::get(FONT_SIZE_LARGE),
+                                             0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
-    mSystem = std::make_shared<TextComponent>(mWindow, "SYSTEM", Font::get(FONT_SIZE_MEDIUM),
-                                              0x777777FF, ALIGN_CENTER);
+    mSystem = std::make_shared<TextComponent>("SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
+                                              ALIGN_CENTER);
     mGrid.setEntry(mSystem, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
-    mSubtitle = std::make_shared<TextComponent>(
-        mWindow, "subtitle text", Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
+    mSubtitle = std::make_shared<TextComponent>("subtitle text", Font::get(FONT_SIZE_SMALL),
+                                                0x888888FF, ALIGN_CENTER);
     mGrid.setEntry(mSubtitle, glm::ivec2 {0, 3}, false, true, glm::ivec2 {2, 1});
 
     if (mApproveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
-        mSearchComp = std::make_shared<GuiScraperSearch>(
-            mWindow, GuiScraperSearch::NEVER_AUTO_ACCEPT, mTotalGames);
+        mSearchComp =
+            std::make_shared<GuiScraperSearch>(GuiScraperSearch::NEVER_AUTO_ACCEPT, mTotalGames);
     else if (mApproveResults && Settings::getInstance()->getBool("ScraperSemiautomatic"))
-        mSearchComp = std::make_shared<GuiScraperSearch>(
-            mWindow, GuiScraperSearch::ACCEPT_SINGLE_MATCHES, mTotalGames);
+        mSearchComp = std::make_shared<GuiScraperSearch>(GuiScraperSearch::ACCEPT_SINGLE_MATCHES,
+                                                         mTotalGames);
     else if (!mApproveResults)
         mSearchComp = std::make_shared<GuiScraperSearch>(
-            mWindow, GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, mTotalGames);
+            GuiScraperSearch::ALWAYS_ACCEPT_FIRST_RESULT, mTotalGames);
     mSearchComp->setAcceptCallback(
         std::bind(&GuiScraperMulti::acceptResult, this, std::placeholders::_1));
     mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));
@@ -84,8 +82,8 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     mResultList = mSearchComp->getResultList();
 
     // Set up scroll indicators.
-    mScrollUp = std::make_shared<ImageComponent>(mWindow);
-    mScrollDown = std::make_shared<ImageComponent>(mWindow);
+    mScrollUp = std::make_shared<ImageComponent>();
+    mScrollDown = std::make_shared<ImageComponent>();
     mScrollIndicator =
         std::make_shared<ScrollIndicatorComponent>(mResultList, mScrollUp, mScrollDown);
 
@@ -102,42 +100,38 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
     if (mApproveResults) {
-        buttons.push_back(
-            std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH", "refine search", [&] {
-                // Check whether we should allow a refine of the game name.
-                if (!mSearchComp->getAcceptedResult()) {
-                    bool allowRefine = false;
+        buttons.push_back(std::make_shared<ButtonComponent>("REFINE SEARCH", "refine search", [&] {
+            // Check whether we should allow a refine of the game name.
+            if (!mSearchComp->getAcceptedResult()) {
+                bool allowRefine = false;
 
-                    // Previously refined.
-                    if (mSearchComp->getRefinedSearch())
-                        allowRefine = true;
-                    // Interactive mode and "Auto-accept single game matches" not enabled.
-                    else if (mSearchComp->getSearchType() !=
-                             GuiScraperSearch::ACCEPT_SINGLE_MATCHES)
-                        allowRefine = true;
-                    // Interactive mode with "Auto-accept single game matches" enabled and more
-                    // than one result.
-                    else if (mSearchComp->getSearchType() ==
-                                 GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
-                             mSearchComp->getScraperResultsSize() > 1)
-                        allowRefine = true;
-                    // Dito but there were no games found, or the search has not been completed.
-                    else if (mSearchComp->getSearchType() ==
-                                 GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
-                             !mSearchComp->getFoundGame())
-                        allowRefine = true;
+                // Previously refined.
+                if (mSearchComp->getRefinedSearch())
+                    allowRefine = true;
+                // Interactive mode and "Auto-accept single game matches" not enabled.
+                else if (mSearchComp->getSearchType() != GuiScraperSearch::ACCEPT_SINGLE_MATCHES)
+                    allowRefine = true;
+                // Interactive mode with "Auto-accept single game matches" enabled and more
+                // than one result.
+                else if (mSearchComp->getSearchType() == GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                         mSearchComp->getScraperResultsSize() > 1)
+                    allowRefine = true;
+                // Dito but there were no games found, or the search has not been completed.
+                else if (mSearchComp->getSearchType() == GuiScraperSearch::ACCEPT_SINGLE_MATCHES &&
+                         !mSearchComp->getFoundGame())
+                    allowRefine = true;
 
-                    if (allowRefine) {
-                        // Copy any search refine that may have been previously entered by opening
-                        // the input screen using the "Y" button shortcut.
-                        mSearchQueue.front().nameOverride = mSearchComp->getNameOverride();
-                        mSearchComp->openInputScreen(mSearchQueue.front());
-                        mGrid.resetCursor();
-                    }
+                if (allowRefine) {
+                    // Copy any search refine that may have been previously entered by opening
+                    // the input screen using the "Y" button shortcut.
+                    mSearchQueue.front().nameOverride = mSearchComp->getNameOverride();
+                    mSearchComp->openInputScreen(mSearchQueue.front());
+                    mGrid.resetCursor();
                 }
-            }));
+            }
+        }));
 
-        buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SKIP", "skip game", [&] {
+        buttons.push_back(std::make_shared<ButtonComponent>("SKIP", "skip game", [&] {
             // Skip game, unless the result has already been accepted.
             if (!mSearchComp->getAcceptedResult()) {
                 skip();
@@ -146,10 +140,10 @@ GuiScraperMulti::GuiScraperMulti(Window* window,
         }));
     }
 
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "STOP", "stop",
+    buttons.push_back(std::make_shared<ButtonComponent>("STOP", "stop",
                                                         std::bind(&GuiScraperMulti::finish, this)));
 
-    mButtonGrid = makeButtonGrid(mWindow, buttons);
+    mButtonGrid = makeButtonGrid(buttons);
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
@@ -309,7 +303,7 @@ void GuiScraperMulti::finish()
                << mTotalSkipped << " GAME" << ((mTotalSkipped > 1) ? "S" : "") << " SKIPPED";
     }
 
-    mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(), ss.str(), "OK", [&] {
+    mWindow->pushGui(new GuiMsgBox(getHelpStyle(), ss.str(), "OK", [&] {
         mIsProcessing = false;
         delete this;
     }));

@@ -83,13 +83,11 @@ protected:
     Window* mWindow;
 
 public:
-    IList(Window* window,
-          const ScrollTierList& tierList = LIST_SCROLL_STYLE_QUICK,
+    IList(const ScrollTierList& tierList = LIST_SCROLL_STYLE_QUICK,
           const ListLoopType& loopType = LIST_PAUSE_AT_END)
-        : GuiComponent {window}
-        , mTierList {tierList}
+        : mTierList {tierList}
         , mLoopType {loopType}
-        , mWindow {window}
+        , mWindow {Window::getInstance()}
     {
         mCursor = 0;
         mScrollTier = 0;

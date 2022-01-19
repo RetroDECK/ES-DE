@@ -15,9 +15,8 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 
-DateTimeEditComponent::DateTimeEditComponent(Window* window, bool alignRight, DisplayMode dispMode)
-    : GuiComponent {window}
-    , mEditing {false}
+DateTimeEditComponent::DateTimeEditComponent(bool alignRight, DisplayMode dispMode)
+    : mEditing {false}
     , mEditIndex {0}
     , mDisplayMode {dispMode}
     , mKeyRepeatDir {0}

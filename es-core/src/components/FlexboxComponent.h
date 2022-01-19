@@ -10,7 +10,6 @@
 #define ES_CORE_COMPONENTS_FLEXBOX_COMPONENT_H
 
 #include "GuiComponent.h"
-#include "Window.h"
 #include "components/ImageComponent.h"
 
 class FlexboxComponent : public GuiComponent
@@ -20,13 +19,13 @@ public:
         // Optional label, mostly a convenience for the calling class to track items.
         std::string label;
         // Main image that governs grid sizing and placement.
-        ImageComponent baseImage {nullptr};
+        ImageComponent baseImage;
         // Optional overlay image that can be sized and positioned relative to the base image.
-        ImageComponent overlayImage {nullptr};
+        ImageComponent overlayImage;
         bool visible = false;
     };
 
-    FlexboxComponent(Window* window, std::vector<FlexboxItem>& items);
+    FlexboxComponent(std::vector<FlexboxItem>& items);
 
     // Getters/setters for the layout.
     const std::string& getDirection() const { return mDirection; }

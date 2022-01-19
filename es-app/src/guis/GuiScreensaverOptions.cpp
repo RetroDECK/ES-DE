@@ -10,17 +10,17 @@
 #include "guis/GuiScreensaverOptions.h"
 
 #include "Settings.h"
+#include "Window.h"
 #include "components/OptionListComponent.h"
 #include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
 
-GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& title)
-    : GuiSettings {window, title}
-    , mWindow {window}
+GuiScreensaverOptions::GuiScreensaverOptions(const std::string& title)
+    : GuiSettings {title}
 {
     // Screensaver timer.
-    auto screensaver_timer = std::make_shared<SliderComponent>(mWindow, 0.0f, 30.0f, 1.0f, "m");
+    auto screensaver_timer = std::make_shared<SliderComponent>(0.0f, 30.0f, 1.0f, "m");
     screensaver_timer->setValue(
         static_cast<float>(Settings::getInstance()->getInt("ScreensaverTimer") / (1000 * 60)));
     addWithLabel("START SCREENSAVER AFTER (MINUTES)", screensaver_timer);
@@ -36,7 +36,7 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
 
     // Screensaver type.
     auto screensaver_type = std::make_shared<OptionListComponent<std::string>>(
-        mWindow, getHelpStyle(), "SCREENSAVER TYPE", false);
+        getHelpStyle(), "SCREENSAVER TYPE", false);
     std::vector<std::string> screensavers;
     screensavers.push_back("dim");
     screensavers.push_back("black");
@@ -52,7 +52,7 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
             if (screensaver_type->getSelected() == "video") {
                 // If before it wasn't risky but now there's a risk of problems, show warning.
                 mWindow->pushGui(new GuiMsgBox(
-                    mWindow, getHelpStyle(),
+                    getHelpStyle(),
                     "THE 'VIDEO' SCREENSAVER SHOWS\n"
                     "VIDEOS FROM YOUR GAMELISTS\n\n"
                     "IF YOU DO NOT HAVE ANY VIDEOS, THE\n"
@@ -65,7 +65,7 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
     });
 
     // Whether to enable screensaver controls.
-    auto screensaver_controls = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_controls = std::make_shared<SwitchComponent>();
     screensaver_controls->setState(Settings::getInstance()->getBool("ScreensaverControls"));
     addWithLabel("ENABLE SCREENSAVER CONTROLS", screensaver_controls);
     addSaveFunc([screensaver_controls, this] {
@@ -80,19 +80,19 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
     // Show filtered menu.
     ComponentListRow row;
     row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>(mWindow, "SLIDESHOW SCREENSAVER SETTINGS",
+    row.addElement(std::make_shared<TextComponent>("SLIDESHOW SCREENSAVER SETTINGS",
                                                    Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                    true);
-    row.addElement(makeArrow(mWindow), false);
+    row.addElement(makeArrow(), false);
     row.makeAcceptInputHandler(
         std::bind(&GuiScreensaverOptions::openSlideshowScreensaverOptions, this));
     addRow(row);
 
     row.elements.clear();
-    row.addElement(std::make_shared<TextComponent>(mWindow, "VIDEO SCREENSAVER SETTINGS",
+    row.addElement(std::make_shared<TextComponent>("VIDEO SCREENSAVER SETTINGS",
                                                    Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                    true);
-    row.addElement(makeArrow(mWindow), false);
+    row.addElement(makeArrow(), false);
     row.makeAcceptInputHandler(
         std::bind(&GuiScreensaverOptions::openVideoScreensaverOptions, this));
     addRow(row);
@@ -102,11 +102,11 @@ GuiScreensaverOptions::GuiScreensaverOptions(Window* window, const std::string& 
 
 void GuiScreensaverOptions::openSlideshowScreensaverOptions()
 {
-    auto s = new GuiSettings(mWindow, "SLIDESHOW SCREENSAVER");
+    auto s = new GuiSettings("SLIDESHOW SCREENSAVER");
 
     // Timer for swapping images (in seconds).
     auto screensaver_swap_image_timeout =
-        std::make_shared<SliderComponent>(mWindow, 2.0f, 120.0f, 2.0f, "s");
+        std::make_shared<SliderComponent>(2.0f, 120.0f, 2.0f, "s");
     screensaver_swap_image_timeout->setValue(static_cast<float>(
         Settings::getInstance()->getInt("ScreensaverSwapImageTimeout") / (1000)));
     s->addWithLabel("SWAP IMAGES AFTER (SECONDS)", screensaver_swap_image_timeout);
@@ -122,7 +122,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     });
 
     // Stretch images to screen resolution.
-    auto screensaver_stretch_images = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_stretch_images = std::make_shared<SwitchComponent>();
     screensaver_stretch_images->setState(
         Settings::getInstance()->getBool("ScreensaverStretchImages"));
     s->addWithLabel("STRETCH IMAGES TO SCREEN RESOLUTION", screensaver_stretch_images);
@@ -136,7 +136,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     });
 
     // Show game info overlay for slideshow screensaver.
-    auto screensaver_slideshow_game_info = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_slideshow_game_info = std::make_shared<SwitchComponent>();
     screensaver_slideshow_game_info->setState(
         Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo"));
     s->addWithLabel("DISPLAY GAME INFO OVERLAY", screensaver_slideshow_game_info);
@@ -151,7 +151,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
 
 #if defined(USE_OPENGL_21)
     // Render scanlines using a shader.
-    auto screensaver_slideshow_scanlines = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_slideshow_scanlines = std::make_shared<SwitchComponent>();
     screensaver_slideshow_scanlines->setState(
         Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"));
     s->addWithLabel("RENDER SCANLINES", screensaver_slideshow_scanlines);
@@ -166,7 +166,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
 #endif
 
     // Whether to use custom images.
-    auto screensaver_slideshow_custom_images = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_slideshow_custom_images = std::make_shared<SwitchComponent>();
     screensaver_slideshow_custom_images->setState(
         Settings::getInstance()->getBool("ScreensaverSlideshowCustomImages"));
     s->addWithLabel("USE CUSTOM IMAGES", screensaver_slideshow_custom_images);
@@ -180,7 +180,7 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     });
 
     // Whether to recurse the custom image directory.
-    auto screensaver_slideshow_recurse = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_slideshow_recurse = std::make_shared<SwitchComponent>();
     screensaver_slideshow_recurse->setState(
         Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
     s->addWithLabel("CUSTOM IMAGE DIRECTORY RECURSIVE SEARCH", screensaver_slideshow_recurse);
@@ -194,8 +194,8 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     });
 
     // Custom image directory.
-    auto screensaver_slideshow_image_dir = std::make_shared<TextComponent>(
-        mWindow, "", Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_RIGHT);
+    auto screensaver_slideshow_image_dir =
+        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_RIGHT);
     s->addEditableTextComponent(
         "CUSTOM IMAGE DIRECTORY", screensaver_slideshow_image_dir,
         Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),
@@ -215,11 +215,11 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
 
 void GuiScreensaverOptions::openVideoScreensaverOptions()
 {
-    auto s = new GuiSettings(mWindow, "VIDEO SCREENSAVER");
+    auto s = new GuiSettings("VIDEO SCREENSAVER");
 
     // Timer for swapping videos (in seconds).
     auto screensaver_swap_video_timeout =
-        std::make_shared<SliderComponent>(mWindow, 0.0f, 120.0f, 2.0f, "s");
+        std::make_shared<SliderComponent>(0.0f, 120.0f, 2.0f, "s");
     screensaver_swap_video_timeout->setValue(static_cast<float>(
         Settings::getInstance()->getInt("ScreensaverSwapVideoTimeout") / (1000)));
     s->addWithLabel("SWAP VIDEOS AFTER (SECONDS)", screensaver_swap_video_timeout);
@@ -235,7 +235,7 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
     });
 
     // Stretch videos to screen resolution.
-    auto screensaver_stretch_videos = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_stretch_videos = std::make_shared<SwitchComponent>();
     screensaver_stretch_videos->setState(
         Settings::getInstance()->getBool("ScreensaverStretchVideos"));
     s->addWithLabel("STRETCH VIDEOS TO SCREEN RESOLUTION", screensaver_stretch_videos);
@@ -249,7 +249,7 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
     });
 
     // Show game info overlay for video screensaver.
-    auto screensaver_video_game_info = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_video_game_info = std::make_shared<SwitchComponent>();
     screensaver_video_game_info->setState(
         Settings::getInstance()->getBool("ScreensaverVideoGameInfo"));
     s->addWithLabel("DISPLAY GAME INFO OVERLAY", screensaver_video_game_info);
@@ -264,7 +264,7 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
 
 #if defined(USE_OPENGL_21)
     // Render scanlines using a shader.
-    auto screensaver_video_scanlines = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_video_scanlines = std::make_shared<SwitchComponent>();
     screensaver_video_scanlines->setState(
         Settings::getInstance()->getBool("ScreensaverVideoScanlines"));
     s->addWithLabel("RENDER SCANLINES", screensaver_video_scanlines);
@@ -278,7 +278,7 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
     });
 
     // Render blur using a shader.
-    auto screensaver_video_blur = std::make_shared<SwitchComponent>(mWindow);
+    auto screensaver_video_blur = std::make_shared<SwitchComponent>();
     screensaver_video_blur->setState(Settings::getInstance()->getBool("ScreensaverVideoBlur"));
     s->addWithLabel("RENDER BLUR", screensaver_video_blur);
     s->addSaveFunc([screensaver_video_blur, s] {

@@ -27,7 +27,7 @@ struct AnimationDef {
 class AnimatedImageComponent : public GuiComponent
 {
 public:
-    AnimatedImageComponent(Window* window);
+    AnimatedImageComponent();
 
     void load(const AnimationDef* def); // No reference to def is kept after loading is complete.
 

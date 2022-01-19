@@ -21,21 +21,20 @@
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
 
-GuiSettings::GuiSettings(Window* window, std::string title)
-    : GuiComponent(window)
-    , mMenu(window, title)
-    , mGoToSystem(nullptr)
-    , mNeedsSaving(false)
-    , mNeedsReloadHelpPrompts(false)
-    , mNeedsCollectionsUpdate(false)
-    , mNeedsSorting(false)
-    , mNeedsSortingCollections(false)
-    , mNeedsResetFilters(false)
-    , mNeedsReloading(false)
-    , mNeedsGoToStart(false)
-    , mNeedsGoToSystem(false)
-    , mNeedsGoToGroupedCollections(false)
-    , mInvalidateCachedBackground(false)
+GuiSettings::GuiSettings(std::string title)
+    : mMenu {title}
+    , mGoToSystem {nullptr}
+    , mNeedsSaving {false}
+    , mNeedsReloadHelpPrompts {false}
+    , mNeedsCollectionsUpdate {false}
+    , mNeedsSorting {false}
+    , mNeedsSortingCollections {false}
+    , mNeedsResetFilters {false}
+    , mNeedsReloading {false}
+    , mNeedsGoToStart {false}
+    , mNeedsGoToSystem {false}
+    , mNeedsGoToGroupedCollections {false}
+    , mInvalidateCachedBackground {false}
 {
     addChild(&mMenu);
     mMenu.addButton("BACK", "back", [this] { delete this; });
@@ -159,17 +158,17 @@ void GuiSettings::addEditableTextComponent(const std::string label,
     ComponentListRow row;
     row.elements.clear();
 
-    auto lbl = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(label),
+    auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(label),
                                                Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     row.addElement(lbl, true);
     row.addElement(ed, true);
 
-    auto spacer = std::make_shared<GuiComponent>(mWindow);
+    auto spacer = std::make_shared<GuiComponent>();
     spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
     row.addElement(spacer, false);
 
-    auto bracket = std::make_shared<ImageComponent>(mWindow);
+    auto bracket = std::make_shared<ImageComponent>();
     bracket->setImage(":/graphics/arrow.svg");
     bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
     row.addElement(bracket, false);
@@ -198,23 +197,22 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             // Never display the value if it's a password, instead set it to blank.
             if (isPassword)
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    mWindow, getHelpStyle(), label, "", updateVal, false, "SAVE", "SAVE CHANGES?"));
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), label, "", updateVal,
+                                                              false, "SAVE", "SAVE CHANGES?"));
             else
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(mWindow, getHelpStyle(), label,
-                                                              ed->getValue(), updateVal, false,
-                                                              "SAVE", "SAVE CHANGES?"));
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), label, ed->getValue(),
+                                                              updateVal, false, "SAVE",
+                                                              "SAVE CHANGES?"));
         });
     }
     else {
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             if (isPassword)
-                mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label, "", updateVal,
-                                                      false, "SAVE", "SAVE CHANGES?"));
+                mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, "", updateVal, false,
+                                                      "SAVE", "SAVE CHANGES?"));
             else
-                mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), label,
-                                                      ed->getValue(), updateVal, false, "SAVE",
-                                                      "SAVE CHANGES?"));
+                mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), label, ed->getValue(),
+                                                      updateVal, false, "SAVE", "SAVE CHANGES?"));
         });
     }
 

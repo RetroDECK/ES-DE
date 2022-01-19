@@ -39,7 +39,7 @@ public:
     using GuiComponent::setColor;
     using List::size;
 
-    TextListComponent(Window* window);
+    TextListComponent();
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -128,10 +128,7 @@ private:
     ImageComponent mSelectorImage;
 };
 
-template <typename T>
-TextListComponent<T>::TextListComponent(Window* window)
-    : IList<TextListData, T> {window}
-    , mSelectorImage {window}
+template <typename T> TextListComponent<T>::TextListComponent()
 {
     mLoopOffset = 0;
     mLoopOffset2 = 0;

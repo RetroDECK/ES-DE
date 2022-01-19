@@ -10,7 +10,6 @@
 #define ES_APP_GUIS_GUI_INFO_POPUP_H
 
 #include "GuiComponent.h"
-#include "Window.h"
 
 class ComponentGrid;
 class NinePatchComponent;
@@ -18,7 +17,7 @@ class NinePatchComponent;
 class GuiInfoPopup : public GuiComponent
 {
 public:
-    GuiInfoPopup(Window* window, std::string message, int duration);
+    GuiInfoPopup(std::string message, int duration);
     ~GuiInfoPopup();
 
     void render(const glm::mat4& parentTrans);

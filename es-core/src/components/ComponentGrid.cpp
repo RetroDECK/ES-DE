@@ -12,9 +12,8 @@
 
 using namespace GridFlags;
 
-ComponentGrid::ComponentGrid(Window* window, const glm::ivec2& gridDimensions)
-    : GuiComponent {window}
-    , mGridSize {gridDimensions}
+ComponentGrid::ComponentGrid(const glm::ivec2& gridDimensions)
+    : mGridSize {gridDimensions}
     , mCursor {0, 0}
 {
     assert(gridDimensions.x > 0 && gridDimensions.y > 0);

@@ -22,7 +22,7 @@
 class ScrollableContainer : public GuiComponent
 {
 public:
-    ScrollableContainer(Window* window);
+    ScrollableContainer();
 
     glm::vec2 getScrollPos() const { return mScrollPos; }
     void setScrollPos(const glm::vec2& pos) { mScrollPos = pos; }

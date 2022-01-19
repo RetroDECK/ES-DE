@@ -13,9 +13,8 @@
 #include "SystemData.h"
 #include "views/ViewController.h"
 
-GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
-    : GuiComponent {window}
-    , mMenu {window, "ALTERNATIVE EMULATORS"}
+GuiAlternativeEmulators::GuiAlternativeEmulators()
+    : mMenu {"ALTERNATIVE EMULATORS"}
     , mHasSystems {false}
 {
     addChild(&mMenu);
@@ -36,8 +35,8 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
         ComponentListRow row;
 
         std::string name {(*it)->getName()};
-        std::shared_ptr<TextComponent> systemText {std::make_shared<TextComponent>(
-            mWindow, name, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+        std::shared_ptr<TextComponent> systemText {
+            std::make_shared<TextComponent>(name, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
 
         systemText->setSize(systemSizeX, systemText->getSize().y);
         row.addElement(systemText, false);
@@ -68,13 +67,12 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
 
         if (label == (*it)->getSystemEnvData()->mLaunchCommands.front().second) {
             labelText = std::make_shared<TextComponent>(
-                mWindow, label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x777777FF,
-                ALIGN_RIGHT);
+                label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
         }
         else {
             // Mark any non-default value with bold and add a gear symbol as well.
             labelText = std::make_shared<TextComponent>(
-                mWindow, label + (!invalidEntry ? " " + ViewController::GEAR_CHAR : ""),
+                label + (!invalidEntry ? " " + ViewController::GEAR_CHAR : ""),
                 Font::get(FONT_SIZE_MEDIUM, FONT_PATH_BOLD), 0x777777FF, ALIGN_RIGHT);
         }
 
@@ -103,7 +101,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators(Window* window)
     if (!mHasSystems) {
         ComponentListRow row;
         std::shared_ptr<TextComponent> systemText = std::make_shared<TextComponent>(
-            mWindow, ViewController::EXCLAMATION_CHAR + " NO ALTERNATIVE EMULATORS DEFINED",
+            ViewController::EXCLAMATION_CHAR + " NO ALTERNATIVE EMULATORS DEFINED",
             Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
         row.addElement(systemText, true);
         mMenu.addRow(row);
@@ -133,7 +131,7 @@ void GuiAlternativeEmulators::updateMenu(const std::string& systemName,
 
 void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 {
-    auto s = new GuiSettings(mWindow, system->getFullName());
+    auto s = new GuiSettings(system->getFullName());
 
     std::string selectedLabel = system->getAlternativeEmulator();
     std::string label;
@@ -147,7 +145,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
             label = entry.second;
 
         std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
-            mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_LEFT);
+            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_LEFT);
         labelText->setSelectable(true);
 
         if (system->getSystemEnvData()->mLaunchCommands.front().second == label)

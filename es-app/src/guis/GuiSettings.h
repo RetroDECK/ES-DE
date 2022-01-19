@@ -18,7 +18,7 @@
 class GuiSettings : public GuiComponent
 {
 public:
-    GuiSettings(Window* window, std::string title);
+    GuiSettings(std::string title);
     virtual ~GuiSettings();
 
     void save();

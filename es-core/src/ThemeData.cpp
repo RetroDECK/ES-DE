@@ -644,8 +644,7 @@ const std::shared_ptr<ThemeData> ThemeData::getDefault()
 }
 
 std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData>& theme,
-                                                 const std::string& view,
-                                                 Window* window)
+                                                 const std::string& view)
 {
     std::vector<GuiComponent*> comps;
 
@@ -655,16 +654,16 @@ std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData
 
     for (auto it = viewIt->second.orderedKeys.cbegin(); // Line break.
          it != viewIt->second.orderedKeys.cend(); ++it) {
-        ThemeElement& elem = viewIt->second.elements.at(*it);
+        ThemeElement& elem {viewIt->second.elements.at(*it)};
         if (elem.extra) {
-            GuiComponent* comp = nullptr;
-            const std::string& t = elem.type;
+            GuiComponent* comp {nullptr};
+            const std::string& t {elem.type};
             if (t == "image")
-                comp = new ImageComponent(window);
+                comp = new ImageComponent;
             else if (t == "text")
-                comp = new TextComponent(window);
+                comp = new TextComponent;
             else if (t == "animation")
-                comp = new LottieComponent(window);
+                comp = new LottieComponent;
 
             if (comp) {
                 comp->setDefaultZIndex(10.0f);

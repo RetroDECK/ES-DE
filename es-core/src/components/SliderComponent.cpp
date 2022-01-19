@@ -14,15 +14,12 @@
 #define MOVE_REPEAT_DELAY 500
 #define MOVE_REPEAT_RATE 40
 
-SliderComponent::SliderComponent(
-    Window* window, float min, float max, float increment, const std::string& suffix)
-    : GuiComponent {window}
-    , mMin {min}
+SliderComponent::SliderComponent(float min, float max, float increment, const std::string& suffix)
+    : mMin {min}
     , mMax {max}
     , mSingleIncrement {increment}
     , mMoveRate {0.0f}
     , mBarHeight {0.0f}
-    , mKnob {window}
     , mSuffix {suffix}
 {
     assert((min - max) != 0.0f);
@@ -33,7 +30,8 @@ SliderComponent::SliderComponent(
     mKnob.setOrigin(0.5f, 0.5f);
     mKnob.setImage(":/graphics/slider_knob.svg");
 
-    setSize(window->peekGui()->getSize().x * 0.26f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
+    setSize(mWindow->peekGui()->getSize().x * 0.26f,
+            Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
 }
 
 bool SliderComponent::input(InputConfig* config, Input input)

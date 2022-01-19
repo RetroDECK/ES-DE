@@ -119,8 +119,8 @@ bool Window::init()
 
     ResourceManager::getInstance().reloadAll();
 
-    mHelp = new HelpComponent(this);
-    mBackgroundOverlay = new ImageComponent(this);
+    mHelp = new HelpComponent;
+    mBackgroundOverlay = new ImageComponent;
     mBackgroundOverlayOpacity = 0;
 
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
@@ -367,8 +367,8 @@ void Window::update(int deltaTime)
 
         if (!popupIsRunning) {
             delete mInfoPopup;
-            mInfoPopup = new GuiInfoPopup(this, mInfoPopupQueue.front().first,
-                                          mInfoPopupQueue.front().second);
+            mInfoPopup =
+                new GuiInfoPopup(mInfoPopupQueue.front().first, mInfoPopupQueue.front().second);
             mInfoPopupQueue.pop();
         }
     }
@@ -618,7 +618,7 @@ void Window::renderLoadingScreen(std::string text)
     Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                        static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
 
-    ImageComponent splash(this, true);
+    ImageComponent splash(true);
     splash.setImage(":/graphics/splash.svg");
     splash.setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);
     splash.setPosition((Renderer::getScreenWidth() - splash.getSize().x) / 2.0f,
@@ -723,7 +723,7 @@ void Window::reloadHelpPrompts()
 {
     if (mHelp) {
         delete mHelp;
-        mHelp = new HelpComponent(this);
+        mHelp = new HelpComponent;
     }
 }
 

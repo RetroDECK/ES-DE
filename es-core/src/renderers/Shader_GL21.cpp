@@ -40,7 +40,7 @@ namespace Renderer
         std::string shaderCode;
 
         // This will load the entire GLSL source code into the string variable.
-        const ResourceData& shaderData = ResourceManager::getInstance().getFileData(path);
+        const ResourceData& shaderData {ResourceManager::getInstance().getFileData(path)};
         shaderCode.assign(reinterpret_cast<const char*>(shaderData.ptr.get()), shaderData.length);
 
         // Define the GLSL version (version 120 = OpenGL 2.1).

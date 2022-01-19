@@ -15,8 +15,7 @@
 #include "components/MenuComponent.h"
 #include "guis/GuiMsgBox.h"
 
-GuiTextEditPopup::GuiTextEditPopup(Window* window,
-                                   const HelpStyle& helpstyle,
+GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
                                    const std::string& title,
                                    const std::string& initValue,
                                    const std::function<void(const std::string&)>& okCallback,
@@ -28,9 +27,8 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
                                    const std::string& loadBtnHelpText,
                                    const std::string& clearBtnHelpText,
                                    const std::string& cancelBtnHelpText)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.svg"}
-    , mGrid {window, glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 5 : 3)}}
+    : mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 5 : 3)}}
     , mHelpStyle {helpstyle}
     , mInitValue {initValue}
     , mAcceptBtnText {acceptBtnText}
@@ -47,41 +45,41 @@ GuiTextEditPopup::GuiTextEditPopup(Window* window,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(title),
+    mTitle = std::make_shared<TextComponent>(Utils::String::toUpper(title),
                                              Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
 
     if (mComplexMode) {
-        mInfoString = std::make_shared<TextComponent>(
-            mWindow, infoString, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
-        mDefaultValue = std::make_shared<TextComponent>(
-            mWindow, defaultValue, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
+        mInfoString = std::make_shared<TextComponent>(infoString, Font::get(FONT_SIZE_SMALL),
+                                                      0x555555FF, ALIGN_CENTER);
+        mDefaultValue = std::make_shared<TextComponent>(defaultValue, Font::get(FONT_SIZE_SMALL),
+                                                        0x555555FF, ALIGN_CENTER);
     }
 
-    mText = std::make_shared<TextEditComponent>(mWindow);
+    mText = std::make_shared<TextEditComponent>();
     mText->setValue(initValue);
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, acceptBtnText, acceptBtnText,
-                                                        [this, okCallback] {
-                                                            okCallback(mText->getValue());
-                                                            delete this;
-                                                        }));
+    buttons.push_back(
+        std::make_shared<ButtonComponent>(acceptBtnText, acceptBtnText, [this, okCallback] {
+            okCallback(mText->getValue());
+            delete this;
+        }));
     if (mComplexMode) {
-        buttons.push_back(std::make_shared<ButtonComponent>(
-            mWindow, "load", loadBtnHelpText, [this, defaultValue] {
+        buttons.push_back(
+            std::make_shared<ButtonComponent>("load", loadBtnHelpText, [this, defaultValue] {
                 mText->setValue(defaultValue);
                 mText->setCursor(0);
                 mText->setCursor(defaultValue.size());
             }));
     }
 
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "clear", clearBtnHelpText,
+    buttons.push_back(std::make_shared<ButtonComponent>("clear", clearBtnHelpText,
                                                         [this] { mText->setValue(""); }));
 
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "discard changes",
-                                                        [this] { delete this; }));
+    buttons.push_back(
+        std::make_shared<ButtonComponent>("CANCEL", "discard changes", [this] { delete this; }));
 
-    mButtonGrid = makeButtonGrid(mWindow, buttons);
+    mButtonGrid = makeButtonGrid(buttons);
 
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
 
@@ -179,7 +177,7 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                mWindow, mHelpStyle, mSaveConfirmationText, "YES",
+                mHelpStyle, mSaveConfirmationText, "YES",
                 [this] {
                     this->mOkCallback(mText->getValue());
                     delete this;

@@ -20,9 +20,8 @@ class ThemeData;
 class DateTimeComponent : public TextComponent
 {
 public:
-    DateTimeComponent(Window* window);
-    DateTimeComponent(Window* window,
-                      const std::string& text,
+    DateTimeComponent();
+    DateTimeComponent(const std::string& text,
                       const std::shared_ptr<Font>& font,
                       unsigned int color = 0x000000FF,
                       Alignment align = ALIGN_LEFT,

@@ -25,7 +25,7 @@ struct GridTileProperties {
 class GridTileComponent : public GuiComponent
 {
 public:
-    GridTileComponent(Window* window);
+    GridTileComponent();
 
     void render(const glm::mat4& parentTrans) override;
     void applyTheme(const std::shared_ptr<ThemeData>& theme,

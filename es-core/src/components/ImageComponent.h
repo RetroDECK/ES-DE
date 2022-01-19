@@ -17,7 +17,7 @@ class TextureResource;
 class ImageComponent : public GuiComponent
 {
 public:
-    ImageComponent(Window* window, bool forceLoad = false, bool dynamic = true);
+    ImageComponent(bool forceLoad = false, bool dynamic = true);
     virtual ~ImageComponent() {}
 
     void setDefaultImage(const std::string& path) { mDefaultPath = path; }

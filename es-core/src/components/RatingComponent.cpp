@@ -13,9 +13,8 @@
 #include "ThemeData.h"
 #include "resources/TextureResource.h"
 
-RatingComponent::RatingComponent(Window* window, bool colorizeChanges)
-    : GuiComponent {window}
-    , mColorOriginalValue {DEFAULT_COLORSHIFT}
+RatingComponent::RatingComponent(bool colorizeChanges)
+    : mColorOriginalValue {DEFAULT_COLORSHIFT}
     , mColorChangedValue {DEFAULT_COLORSHIFT}
     , mColorShift {DEFAULT_COLORSHIFT}
     , mColorShiftEnd {DEFAULT_COLORSHIFT}

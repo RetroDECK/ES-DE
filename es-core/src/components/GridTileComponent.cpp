@@ -12,9 +12,8 @@
 #include "animations/LambdaAnimation.h"
 #include "resources/TextureResource.h"
 
-GridTileComponent::GridTileComponent(Window* window)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.png"}
+GridTileComponent::GridTileComponent()
+    : mBackground {":/graphics/frame.png"}
 {
     mDefaultProperties.mSize = getDefaultTileSize();
     mDefaultProperties.mPadding = glm::vec2 {16.0f * Renderer::getScreenWidthModifier(),
@@ -34,7 +33,7 @@ GridTileComponent::GridTileComponent(Window* window)
     mSelectedProperties.mBackgroundCenterColor = 0xFFFFFFFF;
     mSelectedProperties.mBackgroundEdgeColor = 0xFFFFFFFF;
 
-    mImage = std::make_shared<ImageComponent>(mWindow);
+    mImage = std::make_shared<ImageComponent>();
     mImage->setOrigin(0.5f, 0.5f);
 
     mBackground.setOrigin(0.5f, 0.5f);

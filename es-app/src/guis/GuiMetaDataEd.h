@@ -26,8 +26,7 @@ class TextComponent;
 class GuiMetaDataEd : public GuiComponent
 {
 public:
-    GuiMetaDataEd(Window* window,
-                  MetaDataList* md,
+    GuiMetaDataEd(MetaDataList* md,
                   const std::vector<MetaDataDecl>& mdd,
                   ScraperSearchParams params,
                   std::function<void()> savedCallback,

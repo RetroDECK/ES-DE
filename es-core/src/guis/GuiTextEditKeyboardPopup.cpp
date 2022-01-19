@@ -74,7 +74,6 @@ std::vector<std::vector<const char*>> kbLastRowLoad {
 // clang-format on
 
 GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
-    Window* window,
     const HelpStyle& helpstyle,
     const std::string& title,
     const std::string& initValue,
@@ -87,9 +86,8 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     const std::string& loadBtnHelpText,
     const std::string& clearBtnHelpText,
     const std::string& cancelBtnHelpText)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.svg"}
-    , mGrid {window, glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
+    : mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
     , mHelpStyle {helpstyle}
     , mInitValue {initValue}
     , mAcceptBtnHelpText {acceptBtnHelpText}
@@ -111,7 +109,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(title),
+    mTitle = std::make_shared<TextComponent>(Utils::String::toUpper(title),
                                              Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
 
     std::vector<std::vector<const char*>> kbLayout;
@@ -128,9 +126,9 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     mHorizontalKeyCount = static_cast<int>(kbLayout[0].size());
 
     mKeyboardGrid = std::make_shared<ComponentGrid>(
-        mWindow, glm::ivec2(mHorizontalKeyCount, static_cast<int>(kbLayout.size()) / 3));
+        glm::ivec2(mHorizontalKeyCount, static_cast<int>(kbLayout.size()) / 3));
 
-    mText = std::make_shared<TextEditComponent>(mWindow);
+    mText = std::make_shared<TextEditComponent>();
     mText->setValue(initValue);
 
     // Header.
@@ -139,12 +137,12 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     int yPos = 1;
 
     if (mComplexMode) {
-        mInfoString = std::make_shared<TextComponent>(
-            mWindow, infoString, Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
+        mInfoString = std::make_shared<TextComponent>(infoString, Font::get(FONT_SIZE_MEDIUM),
+                                                      0x555555FF, ALIGN_CENTER);
         mGrid.setEntry(mInfoString, glm::ivec2 {0, yPos}, false, true);
 
-        mDefaultValue = std::make_shared<TextComponent>(
-            mWindow, defaultValue, Font::get(FONT_SIZE_SMALL), 0x555555FF, ALIGN_CENTER);
+        mDefaultValue = std::make_shared<TextComponent>(defaultValue, Font::get(FONT_SIZE_SMALL),
+                                                        0x555555FF, ALIGN_CENTER);
         mGrid.setEntry(mDefaultValue, glm::ivec2 {0, yPos + 1}, false, true);
         yPos += 2;
     }
@@ -197,12 +195,12 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
 
             if (lower == "SHIFT") {
                 mShiftButton = std::make_shared<ButtonComponent>(
-                    mWindow, (SHIFT_SYMBOL), ("SHIFT"), [this] { shiftKeys(); }, false, true);
+                    (SHIFT_SYMBOL), ("SHIFT"), [this] { shiftKeys(); }, false, true);
                 button = mShiftButton;
             }
             else if (lower == "ALT") {
-                mAltButton = std::make_shared<ButtonComponent>(
-                    mWindow, (ALT_SYMBOL), ("ALT"), [this] { altKeys(); }, false, true);
+                mAltButton = std::make_shared<ButtonComponent>((ALT_SYMBOL), ("ALT"),
+                                                               [this] { altKeys(); }, false, true);
                 button = mAltButton;
             }
             else {
@@ -354,7 +352,7 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
-                mWindow, mHelpStyle, mSaveConfirmationText, "YES",
+                mHelpStyle, mSaveConfirmationText, "YES",
                 [this] {
                     this->mOkCallback(mText->getValue());
                     delete this;
@@ -645,7 +643,7 @@ std::shared_ptr<ButtonComponent> GuiTextEditKeyboardPopup::makeButton(
     const std::string& altshiftedKey)
 {
     std::shared_ptr<ButtonComponent> button = std::make_shared<ButtonComponent>(
-        mWindow, key, key,
+        key, key,
         [this, key, shiftedKey, altedKey, altshiftedKey] {
             if (key == (OK_SYMBOL) || key.find("OK") != std::string::npos) {
                 mOkCallback(mText->getValue());

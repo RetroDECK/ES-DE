@@ -26,7 +26,7 @@ MameNames& MameNames::getInstance()
 
 MameNames::MameNames()
 {
-    std::string xmlpath = ResourceManager::getInstance().getResourcePath(":/MAME/mamenames.xml");
+    std::string xmlpath {ResourceManager::getInstance().getResourcePath(":/MAME/mamenames.xml")};
 
     if (!Utils::FileSystem::exists(xmlpath))
         return;

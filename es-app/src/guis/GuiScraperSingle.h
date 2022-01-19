@@ -19,8 +19,7 @@
 class GuiScraperSingle : public GuiComponent
 {
 public:
-    GuiScraperSingle(Window* window,
-                     ScraperSearchParams& params,
+    GuiScraperSingle(ScraperSearchParams& params,
                      std::function<void(const ScraperSearchResult&)> doneFunc,
                      bool& savedMediaAndAborted);
 
@@ -37,7 +36,7 @@ private:
     void close();
 
     ComponentGrid mGrid;
-    NinePatchComponent mBox;
+    NinePatchComponent mBackground;
 
     std::shared_ptr<TextComponent> mGameName;
     std::shared_ptr<ImageComponent> mScrollUp;

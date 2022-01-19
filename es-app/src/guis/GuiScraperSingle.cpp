@@ -18,18 +18,16 @@
 #include "components/TextComponent.h"
 #include "views/ViewController.h"
 
-GuiScraperSingle::GuiScraperSingle(Window* window,
-                                   ScraperSearchParams& params,
+GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
                                    std::function<void(const ScraperSearchResult&)> doneFunc,
                                    bool& savedMediaAndAborted)
-    : GuiComponent {window}
-    , mClose {false}
-    , mGrid {window, glm::ivec2 {2, 6}}
-    , mBox {window, ":/graphics/frame.svg"}
+    : mClose {false}
+    , mGrid {glm::ivec2 {2, 6}}
+    , mBackground {":/graphics/frame.svg"}
     , mSearchParams {params}
     , mSavedMediaAndAborted {savedMediaAndAborted}
 {
-    addChild(&mBox);
+    addChild(&mBackground);
     addChild(&mGrid);
 
     std::string scrapeName;
@@ -48,29 +46,28 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
     }
 
     mGameName = std::make_shared<TextComponent>(
-        mWindow,
         scrapeName +
             ((mSearchParams.game->getType() == FOLDER) ? "  " + ViewController::FOLDER_CHAR : ""),
         Font::get(FONT_SIZE_LARGE), 0x777777FF, ALIGN_CENTER);
     mGameName->setColor(0x555555FF);
     mGrid.setEntry(mGameName, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
-    mSystemName = std::make_shared<TextComponent>(
-        mWindow, Utils::String::toUpper(mSearchParams.system->getFullName()),
-        Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
+    mSystemName =
+        std::make_shared<TextComponent>(Utils::String::toUpper(mSearchParams.system->getFullName()),
+                                        Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
     mGrid.setEntry(mSystemName, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
     // Row 3 is a spacer.
 
     // GuiScraperSearch.
-    mSearch = std::make_shared<GuiScraperSearch>(window, GuiScraperSearch::NEVER_AUTO_ACCEPT, 1);
+    mSearch = std::make_shared<GuiScraperSearch>(GuiScraperSearch::NEVER_AUTO_ACCEPT, 1);
     mGrid.setEntry(mSearch, glm::ivec2 {0, 4}, true, true, glm::ivec2 {2, 1});
 
     mResultList = mSearch->getResultList();
 
     // Set up scroll indicators.
-    mScrollUp = std::make_shared<ImageComponent>(mWindow);
-    mScrollDown = std::make_shared<ImageComponent>(mWindow);
+    mScrollUp = std::make_shared<ImageComponent>();
+    mScrollDown = std::make_shared<ImageComponent>();
     mScrollIndicator =
         std::make_shared<ScrollIndicatorComponent>(mResultList, mScrollUp, mScrollDown);
 
@@ -86,18 +83,17 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
     // Buttons
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-    buttons.push_back(
-        std::make_shared<ButtonComponent>(mWindow, "REFINE SEARCH", "refine search", [&] {
-            // Refine the search, unless the result has already been accepted.
-            if (!mSearch->getAcceptedResult()) {
-                // Copy any search refine that may have been previously entered by opening
-                // the input screen using the "Y" button shortcut.
-                mSearchParams.nameOverride = mSearch->getNameOverride();
-                mSearch->openInputScreen(mSearchParams);
-                mGrid.resetCursor();
-            }
-        }));
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel", [&] {
+    buttons.push_back(std::make_shared<ButtonComponent>("REFINE SEARCH", "refine search", [&] {
+        // Refine the search, unless the result has already been accepted.
+        if (!mSearch->getAcceptedResult()) {
+            // Copy any search refine that may have been previously entered by opening
+            // the input screen using the "Y" button shortcut.
+            mSearchParams.nameOverride = mSearch->getNameOverride();
+            mSearch->openInputScreen(mSearchParams);
+            mGrid.resetCursor();
+        }
+    }));
+    buttons.push_back(std::make_shared<ButtonComponent>("CANCEL", "cancel", [&] {
         if (mSearch->getSavedNewMedia()) {
             // If the user aborted the scraping but there was still some media downloaded,
             // then flag to GuiMetaDataEd that the image and marquee textures need to be
@@ -107,7 +103,7 @@ GuiScraperSingle::GuiScraperSingle(Window* window,
         }
         delete this;
     }));
-    mButtonGrid = makeButtonGrid(mWindow, buttons);
+    mButtonGrid = makeButtonGrid(buttons);
 
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
@@ -156,7 +152,7 @@ void GuiScraperSingle::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.04f);
 
     mGrid.setSize(glm::round(mSize));
-    mBox.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
 
     // Add some extra margins to the game name.
     const float newSizeX = mSize.x * 0.96f;

@@ -13,11 +13,10 @@
 #include "views/ViewController.h"
 
 MediaViewer::MediaViewer()
-    : mWindow {Window::getInstance()}
-    , mVideo {nullptr}
+    : mVideo {nullptr}
     , mImage {nullptr}
 {
-    mWindow->setMediaViewer(this);
+    Window::getInstance()->setMediaViewer(this);
 }
 
 MediaViewer::~MediaViewer()
@@ -260,7 +259,7 @@ void MediaViewer::playVideo()
     mDisplayingImage = false;
     ViewController::getInstance()->onStopVideo();
 
-    mVideo = new VideoFFmpegComponent(mWindow);
+    mVideo = new VideoFFmpegComponent;
     mVideo->topWindow(true);
     mVideo->setOrigin(0.5f, 0.5f);
     mVideo->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
@@ -285,7 +284,7 @@ void MediaViewer::showImage(int index)
     mDisplayingImage = true;
 
     if (!mImageFiles.empty() && static_cast<int>(mImageFiles.size()) >= index) {
-        mImage = new ImageComponent(mWindow, false, false);
+        mImage = new ImageComponent(false, false);
         mImage->setImage(mImageFiles[index]);
         mImage->setOrigin(0.5f, 0.5f);
         mImage->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);

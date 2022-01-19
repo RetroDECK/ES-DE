@@ -33,7 +33,6 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
 private:
-    Window* mWindow;
     NinePatchComponent mBackground;
     ComponentGrid* mGrid;
 

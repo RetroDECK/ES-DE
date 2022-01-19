@@ -774,8 +774,10 @@ const FileData::SortType& FileData::getSortTypeFromString(const std::string& des
     return FileSorts::SortTypes.at(0);
 }
 
-void FileData::launchGame(Window* window)
+void FileData::launchGame()
 {
+    Window* window {Window::getInstance()};
+
     LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
 
     SystemData* gameSystem = nullptr;

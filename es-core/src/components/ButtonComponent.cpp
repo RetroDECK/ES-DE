@@ -12,14 +12,12 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 
-ButtonComponent::ButtonComponent(Window* window,
-                                 const std::string& text,
+ButtonComponent::ButtonComponent(const std::string& text,
                                  const std::string& helpText,
                                  const std::function<void()>& func,
                                  bool upperCase,
                                  bool flatStyle)
-    : GuiComponent {window}
-    , mBox {window, ":/graphics/button.svg"}
+    : mBox {":/graphics/button.svg"}
     , mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mPadding {0.0f, 0.0f, 0.0f, 0.0f}
     , mFocused {false}

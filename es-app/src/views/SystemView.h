@@ -17,7 +17,6 @@
 
 #include <memory>
 
-class AnimatedImageComponent;
 class SystemData;
 
 enum CarouselType : unsigned int {
@@ -54,7 +53,7 @@ struct SystemViewCarousel {
 class SystemView : public IList<SystemViewData, SystemData*>
 {
 public:
-    SystemView(Window* window);
+    SystemView();
     ~SystemView();
 
     void onShow() override { mShowing = true; }

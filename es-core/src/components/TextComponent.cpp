@@ -12,9 +12,8 @@
 #include "Settings.h"
 #include "utils/StringUtil.h"
 
-TextComponent::TextComponent(Window* window)
-    : GuiComponent {window}
-    , mFont {Font::get(FONT_SIZE_MEDIUM)}
+TextComponent::TextComponent()
+    : mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mColor {0x000000FF}
     , mBgColor {0}
     , mRenderBackground {false}
@@ -28,16 +27,14 @@ TextComponent::TextComponent(Window* window)
 {
 }
 
-TextComponent::TextComponent(Window* window,
-                             const std::string& text,
+TextComponent::TextComponent(const std::string& text,
                              const std::shared_ptr<Font>& font,
                              unsigned int color,
                              Alignment align,
                              glm::vec3 pos,
                              glm::vec2 size,
                              unsigned int bgcolor)
-    : GuiComponent {window}
-    , mFont {nullptr}
+    : mFont {nullptr}
     , mColor {0x000000FF}
     , mBgColor {0}
     , mRenderBackground {false}

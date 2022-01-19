@@ -18,11 +18,8 @@
 #define SCREENSAVER_FADE_IN_TIME 1100
 #define MEDIA_VIEWER_FADE_IN_TIME 600
 
-VideoComponent::VideoComponent(Window* window)
-    : GuiComponent {window}
-    , mWindow {window}
-    , mStaticImage {window}
-    , mVideoWidth {0}
+VideoComponent::VideoComponent()
+    : mVideoWidth {0}
     , mVideoHeight {0}
     , mTargetSize {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}

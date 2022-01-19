@@ -17,7 +17,9 @@
 #include "components/BadgeComponent.h"
 
 #include "Log.h"
+#include "Settings.h"
 #include "ThemeData.h"
+#include "resources/TextureResource.h"
 #include "utils/StringUtil.h"
 
 namespace
@@ -61,10 +63,9 @@ namespace
     // clang-format on
 } // namespace
 
-BadgeComponent::BadgeComponent(Window* window)
-    : GuiComponent {window}
-    , mFlexboxItems {}
-    , mFlexboxComponent {window, mFlexboxItems}
+BadgeComponent::BadgeComponent()
+    : mFlexboxItems {}
+    , mFlexboxComponent {mFlexboxItems}
     , mBadgeTypes {{SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME, SLOT_BROKEN, SLOT_CONTROLLER,
                     SLOT_ALTEMULATOR}}
 {
@@ -295,10 +296,10 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 FlexboxComponent::FlexboxItem item;
                 item.label = slot;
 
-                ImageComponent badgeImage {mWindow, false, false};
+                ImageComponent badgeImage {false, false};
                 badgeImage.setImage(mBadgeIcons[slot]);
                 item.baseImage = badgeImage;
-                item.overlayImage = ImageComponent {mWindow};
+                item.overlayImage = ImageComponent {};
 
                 mFlexboxItems.emplace_back(std::move(item));
             }

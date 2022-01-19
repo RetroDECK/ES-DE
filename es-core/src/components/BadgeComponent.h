@@ -22,7 +22,7 @@ struct GameControllers {
 class BadgeComponent : public GuiComponent
 {
 public:
-    BadgeComponent(Window* window);
+    BadgeComponent();
 
     struct BadgeInfo {
         std::string badgeType;

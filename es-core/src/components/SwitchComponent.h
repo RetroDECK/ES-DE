@@ -16,7 +16,7 @@
 class SwitchComponent : public GuiComponent
 {
 public:
-    SwitchComponent(Window* window, bool state = false);
+    SwitchComponent(bool state = false);
 
     bool input(InputConfig* config, Input input) override;
     void render(const glm::mat4& parentTrans) override;

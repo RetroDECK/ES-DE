@@ -24,9 +24,8 @@
 #include "scrapers/Scraper.h"
 #include "views/ViewController.h"
 
-GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
-    : GuiComponent {window}
-    , mMenu {window, "OPTIONS"}
+GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
+    : mMenu {"OPTIONS"}
     , mSystem {system}
     , mFiltersChanged {false}
     , mCancelled {false}
@@ -95,8 +94,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
                 mCurrentFirstCharacter = Utils::String::getFirstCharacter(file->getSortName());
         }
 
-        mJumpToLetterList =
-            std::make_shared<LetterList>(mWindow, getHelpStyle(), "JUMP TO...", false);
+        mJumpToLetterList = std::make_shared<LetterList>(getHelpStyle(), "JUMP TO...", false);
 
         // Enable key repeat so that the left or right button can be held to cycle through
         // the letters.
@@ -115,7 +113,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         // Add the sorting entry, unless this is the grouped custom collections list.
         if (!mIsCustomCollectionGroup) {
             // Sort list by selected sort type (persistent throughout the program session).
-            mListSort = std::make_shared<SortList>(mWindow, getHelpStyle(), "SORT GAMES BY", false);
+            mListSort = std::make_shared<SortList>(getHelpStyle(), "SORT GAMES BY", false);
             FileData* root;
             if (mIsCustomCollection)
                 root = getGamelist()->getCursor()->getSystem()->getRootFolder();
@@ -151,10 +149,10 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
     if (!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() > 0) {
         if (system->getName() != "recent" && Settings::getInstance()->getBool("GamelistFilters")) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>(mWindow, "FILTER GAMELIST",
+            row.addElement(std::make_shared<TextComponent>("FILTER GAMELIST",
                                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                            true);
-            row.addElement(makeArrow(mWindow), false);
+            row.addElement(makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openGamelistFilter, this));
             mMenu.addRow(row);
         }
@@ -164,7 +162,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
              mSystem->getRootFolder()->getChildren().size() == 0 && !mIsCustomCollectionGroup &&
              !mIsCustomCollection) {
         row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>(mWindow, "THIS SYSTEM HAS NO GAMES",
+        row.addElement(std::make_shared<TextComponent>("THIS SYSTEM HAS NO GAMES",
                                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                        true);
         mMenu.addRow(row);
@@ -180,8 +178,7 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         (mIsCustomCollection || mIsCustomCollectionGroup)) {
         if (CollectionSystemsManager::getInstance()->getEditingCollection() != customSystem) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>(mWindow,
-                                                           "ADD/REMOVE GAMES TO THIS COLLECTION",
+            row.addElement(std::make_shared<TextComponent>("ADD/REMOVE GAMES TO THIS COLLECTION",
                                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                            true);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::startEditMode, this));
@@ -194,7 +191,6 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         row.elements.clear();
         row.addElement(
             std::make_shared<TextComponent>(
-                mWindow,
                 "FINISH EDITING '" +
                     Utils::String::toUpper(
                         CollectionSystemsManager::getInstance()->getEditingCollection()) +
@@ -209,10 +205,10 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>(mWindow, "EDIT THIS FOLDER'S METADATA",
+            row.addElement(std::make_shared<TextComponent>("EDIT THIS FOLDER'S METADATA",
                                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                            true);
-            row.addElement(makeArrow(mWindow), false);
+            row.addElement(makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
             mMenu.addRow(row);
         }
@@ -221,10 +217,10 @@ GuiGamelistOptions::GuiGamelistOptions(Window* window, SystemData* system)
         if (UIModeController::getInstance()->isUIModeFull() && !mFromPlaceholder &&
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>(mWindow, "EDIT THIS GAME'S METADATA",
+            row.addElement(std::make_shared<TextComponent>("EDIT THIS GAME'S METADATA",
                                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                            true);
-            row.addElement(makeArrow(mWindow), false);
+            row.addElement(makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
             mMenu.addRow(row);
         }
@@ -323,10 +319,9 @@ void GuiGamelistOptions::openGamelistFilter()
     };
 
     if (mIsCustomCollection)
-        ggf = new GuiGamelistFilter(mWindow, getGamelist()->getCursor()->getSystem(),
-                                    filtersChangedFunc);
+        ggf = new GuiGamelistFilter(getGamelist()->getCursor()->getSystem(), filtersChangedFunc);
     else
-        ggf = new GuiGamelistFilter(mWindow, mSystem, filtersChangedFunc);
+        ggf = new GuiGamelistFilter(mSystem, filtersChangedFunc);
 
     mWindow->pushGui(ggf);
 }
@@ -452,7 +447,7 @@ void GuiGamelistOptions::openMetaDataEd()
 
     if (file->getType() == FOLDER) {
         mWindow->pushGui(new GuiMetaDataEd(
-            mWindow, &file->metadata, file->metadata.getMDD(FOLDER_METADATA), p,
+            &file->metadata, file->metadata.getMDD(FOLDER_METADATA), p,
             std::bind(&GamelistView::onFileChanged,
                       ViewController::getInstance()->getGamelistView(file->getSystem()).get(), file,
                       true),
@@ -460,7 +455,7 @@ void GuiGamelistOptions::openMetaDataEd()
     }
     else {
         mWindow->pushGui(new GuiMetaDataEd(
-            mWindow, &file->metadata, file->metadata.getMDD(GAME_METADATA), p,
+            &file->metadata, file->metadata.getMDD(GAME_METADATA), p,
             std::bind(&GamelistView::onFileChanged,
                       ViewController::getInstance()->getGamelistView(file->getSystem()).get(), file,
                       true),
@@ -470,7 +465,7 @@ void GuiGamelistOptions::openMetaDataEd()
 
 void GuiGamelistOptions::jumpToLetter()
 {
-    char letter = mJumpToLetterList->getSelected().front();
+    char letter {mJumpToLetterList->getSelected().front()};
 
     // Get the gamelist.
     const std::vector<FileData*>& files =

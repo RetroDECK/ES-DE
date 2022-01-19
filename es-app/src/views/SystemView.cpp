@@ -22,13 +22,17 @@
 #include <cmath>
 #endif
 
-// Buffer values for scrolling velocity (left, stopped, right).
-const int logoBuffersLeft[] = {-5, -2, -1};
-const int logoBuffersRight[] = {1, 2, 5};
+namespace
+{
+    // Buffer values for scrolling velocity (left, stopped, right).
+    const int logoBuffersLeft[] = {-5, -2, -1};
+    const int logoBuffersRight[] = {1, 2, 5};
 
-SystemView::SystemView(Window* window)
-    : IList<SystemViewData, SystemData*> {window, LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP}
-    , mSystemInfo {window, "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER}
+} // namespace
+
+SystemView::SystemView()
+    : IList<SystemViewData, SystemData*> {LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP}
+    , mSystemInfo {"SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER}
     , mPreviousScrollVelocity {0}
     , mUpdatedGameCount {false}
     , mViewNeedsReload {true}
@@ -80,7 +84,7 @@ void SystemView::populate()
                 if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
                     (!defaultPath.empty() &&
                      ResourceManager::getInstance().fileExists(defaultPath))) {
-                    auto* logo = new ImageComponent(mWindow, false, false);
+                    auto* logo = new ImageComponent(false, false);
                     logo->setMaxSize(glm::round(mCarousel.logoSize * mCarousel.logoScale));
                     logo->applyTheme(theme, "system", "logo", ThemeFlags::PATH | ThemeFlags::COLOR);
                     logo->setRotateByTargetSize(true);
@@ -104,7 +108,7 @@ void SystemView::populate()
                     if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
                         (!defaultPath.empty() &&
                          ResourceManager::getInstance().fileExists(defaultPath))) {
-                        auto* logo = new ImageComponent(mWindow, false, false);
+                        auto* logo = new ImageComponent(false, false);
                         logo->applyTheme(theme, "system", "logoPlaceholderImage", ThemeFlags::ALL);
                         if (!logoElem->has("size"))
                             logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
@@ -119,9 +123,8 @@ void SystemView::populate()
                     theme->getElement("system", "logoPlaceholderText", "text");
                 if (logoPlaceholderText) {
                     // Element 'logoPlaceholderText' found in theme: place text
-                    auto* text =
-                        new TextComponent(mWindow, it->getName(), Font::get(FONT_SIZE_LARGE),
-                                          0x000000FF, ALIGN_CENTER);
+                    auto* text = new TextComponent(it->getName(), Font::get(FONT_SIZE_LARGE),
+                                                   0x000000FF, ALIGN_CENTER);
                     text->setSize(mCarousel.logoSize * mCarousel.logoScale);
                     if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
                         text->setHorizontalAlignment(mCarousel.logoAlignment);
@@ -144,9 +147,8 @@ void SystemView::populate()
                 }
                 else {
                     // Fallback to legacy centered placeholder text.
-                    auto* text =
-                        new TextComponent(mWindow, it->getName(), Font::get(FONT_SIZE_LARGE),
-                                          0x000000FF, ALIGN_CENTER);
+                    auto* text = new TextComponent(it->getName(), Font::get(FONT_SIZE_LARGE),
+                                                   0x000000FF, ALIGN_CENTER);
                     text->setSize(mCarousel.logoSize * mCarousel.logoScale);
                     text->applyTheme(it->getTheme(), "system", "logoText",
                                      ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE |
@@ -189,7 +191,7 @@ void SystemView::populate()
                 e.data.logoPlaceholderText->setPosition(v + offsetLogoPlaceholderText);
 
             // Make background extras.
-            e.data.backgroundExtras = ThemeData::makeExtras(it->getTheme(), "system", mWindow);
+            e.data.backgroundExtras = ThemeData::makeExtras(it->getTheme(), "system");
 
             // Sort the extras by z-index.
             std::stable_sort(
@@ -204,7 +206,7 @@ void SystemView::populate()
         if (!UIModeController::getInstance()->isUIModeFull()) {
             Settings::getInstance()->setString("UIMode", "full");
             mWindow->pushGui(new GuiMsgBox(
-                mWindow, getHelpStyle(),
+                getHelpStyle(),
                 "The selected UI mode has nothing to show,\n returning to UI mode \"Full\"", "OK",
                 nullptr));
         }

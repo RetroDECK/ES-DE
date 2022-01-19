@@ -21,10 +21,10 @@ std::map<CURL*, HttpReq*> HttpReq::s_requests;
 
 std::string HttpReq::urlEncode(const std::string& s)
 {
-    const std::string unreserved =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~";
+    const std::string unreserved {
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~"};
 
-    std::string escaped = "";
+    std::string escaped {""};
     for (size_t i = 0; i < s.length(); ++i) {
         if (unreserved.find_first_of(s[i]) != std::string::npos) {
             escaped.push_back(s[i]);

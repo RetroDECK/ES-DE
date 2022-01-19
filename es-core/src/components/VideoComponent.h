@@ -29,7 +29,7 @@ class VideoComponent : public GuiComponent
     };
 
 public:
-    VideoComponent(Window* window);
+    VideoComponent();
     virtual ~VideoComponent();
 
     // Loads the video at the given filepath.
@@ -108,7 +108,6 @@ private:
     friend MediaViewer;
 
 protected:
-    Window* mWindow;
     ImageComponent mStaticImage;
 
     unsigned mVideoWidth;

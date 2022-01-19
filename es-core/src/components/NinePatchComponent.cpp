@@ -13,12 +13,10 @@
 #include "resources/Font.h"
 #include "resources/TextureResource.h"
 
-NinePatchComponent::NinePatchComponent(Window* window,
-                                       const std::string& path,
+NinePatchComponent::NinePatchComponent(const std::string& path,
                                        unsigned int edgeColor,
                                        unsigned int centerColor)
-    : GuiComponent {window}
-    , mVertices {nullptr}
+    : mVertices {nullptr}
     , mPath {path}
     , mCornerSize {16.0f, 16.0f}
     , mSharpCorners {false}

@@ -12,9 +12,8 @@
 #include "components/ImageComponent.h"
 #include "resources/ResourceManager.h"
 
-AnimatedImageComponent::AnimatedImageComponent(Window* window)
-    : GuiComponent {window}
-    , mEnabled {false}
+AnimatedImageComponent::AnimatedImageComponent()
+    : mEnabled {false}
 {
 }
 
@@ -32,7 +31,7 @@ void AnimatedImageComponent::load(const AnimationDef* def)
             continue;
         }
 
-        auto img = std::unique_ptr<ImageComponent>(new ImageComponent(mWindow));
+        auto img = std::unique_ptr<ImageComponent>(new ImageComponent);
         img->setResize(mSize.x, mSize.y);
         img->setImage(std::string(def->frames[i].path), false);
 

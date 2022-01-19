@@ -14,10 +14,8 @@
 #include "guis/GuiGamelistOptions.h"
 #include "views/ViewController.h"
 
-GamelistBase::GamelistBase(Window* window, FileData* root)
-    : GuiComponent {window}
-    , mRoot {root}
-    , mList {window}
+GamelistBase::GamelistBase(FileData* root)
+    : mRoot {root}
     , mRandomGame {nullptr}
     , mLastUpdated {nullptr}
     , mGameCount {0}
@@ -460,7 +458,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
         config->isMappedTo("back", input) && input.value) {
         ViewController::getInstance()->cancelViewTransitions();
         stopListScrolling();
-        mWindow->pushGui(new GuiGamelistOptions(mWindow, this->mRoot->getSystem()));
+        mWindow->pushGui(new GuiGamelistOptions(this->mRoot->getSystem()));
         return true;
     }
 

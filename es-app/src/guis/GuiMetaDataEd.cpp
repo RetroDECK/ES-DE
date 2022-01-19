@@ -34,16 +34,14 @@
 
 #define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.060f)
 
-GuiMetaDataEd::GuiMetaDataEd(Window* window,
-                             MetaDataList* md,
+GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                              const std::vector<MetaDataDecl>& mdd,
                              ScraperSearchParams scraperParams,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.svg"}
-    , mGrid {window, glm::ivec2 {2, 6}}
+    : mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {2, 6}}
     , mScraperParams {scraperParams}
     , mControllerBadges {BadgeComponent::getGameControllers()}
     , mMetaDataDecl {mdd}
@@ -68,7 +66,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(mWindow, "EDIT METADATA", Font::get(FONT_SIZE_LARGE),
+    mTitle = std::make_shared<TextComponent>("EDIT METADATA", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
@@ -88,7 +86,6 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
     }
 
     mSubtitle = std::make_shared<TextComponent>(
-        mWindow,
         folderPath + Utils::FileSystem::getFileName(scraperParams.game->getPath()) + " [" +
             Utils::String::toUpper(scraperParams.system->getName()) + "]" +
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
@@ -96,12 +93,12 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
     mGrid.setEntry(mSubtitle, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
-    mList = std::make_shared<ComponentList>(mWindow);
+    mList = std::make_shared<ComponentList>();
     mGrid.setEntry(mList, glm::ivec2 {0, 4}, true, true, glm::ivec2 {2, 1});
 
     // Set up scroll indicators.
-    mScrollUp = std::make_shared<ImageComponent>(mWindow);
-    mScrollDown = std::make_shared<ImageComponent>(mWindow);
+    mScrollUp = std::make_shared<ImageComponent>();
+    mScrollDown = std::make_shared<ImageComponent>();
     mScrollIndicator = std::make_shared<ScrollIndicatorComponent>(mList, mScrollUp, mScrollDown);
 
     mScrollUp->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
@@ -132,8 +129,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         // Don't show the alternative emulator entry if the corresponding option has been disabled.
         if (!Settings::getInstance()->getBool("AlternativeEmulatorPerGame") &&
             it->type == MD_ALT_EMULATOR) {
-            ed = std::make_shared<TextComponent>(
-                window, "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+            ed = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                 0x777777FF, ALIGN_RIGHT);
             assert(ed);
             ed->setValue(mMetaData->get(it->key));
             mEditors.push_back(ed);
@@ -144,13 +141,13 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
         // entry instead of for instance the spacer. That is so because ComponentList
         // always looks for the help prompt at the back of the element stack.
         ComponentListRow row;
-        auto lbl = std::make_shared<TextComponent>(mWindow, Utils::String::toUpper(it->displayName),
+        auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(it->displayName),
                                                    Font::get(FONT_SIZE_SMALL), 0x777777FF);
         row.addElement(lbl, true); // Label.
 
         switch (it->type) {
             case MD_BOOL: {
-                ed = std::make_shared<SwitchComponent>(window);
+                ed = std::make_shared<SwitchComponent>();
                 // Make the switches slightly smaller.
                 glm::vec2 switchSize {ed->getSize() * 0.9f};
                 ed->setResize(ceilf(switchSize.x), switchSize.y);
@@ -160,11 +157,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 break;
             }
             case MD_RATING: {
-                auto spacer = std::make_shared<GuiComponent>(mWindow);
+                auto spacer = std::make_shared<GuiComponent>();
                 spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0.0f);
                 row.addElement(spacer, false);
 
-                ed = std::make_shared<RatingComponent>(window, true);
+                ed = std::make_shared<RatingComponent>(true);
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
                 const float height = lbl->getSize().y * 0.71f;
                 ed->setSize(0.0f, height);
@@ -176,11 +173,11 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 break;
             }
             case MD_DATE: {
-                auto spacer = std::make_shared<GuiComponent>(mWindow);
+                auto spacer = std::make_shared<GuiComponent>();
                 spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0.0f);
                 row.addElement(spacer, false);
 
-                ed = std::make_shared<DateTimeEditComponent>(window, true);
+                ed = std::make_shared<DateTimeEditComponent>(true);
                 ed->setOriginalColor(DEFAULT_TEXTCOLOR);
                 ed->setChangedColor(TEXTCOLOR_USERMARKED);
                 row.addElement(ed, false);
@@ -191,16 +188,15 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 break;
             }
             case MD_CONTROLLER: {
-                ed = std::make_shared<TextComponent>(window, "",
-                                                     Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
-                                                     0x777777FF, ALIGN_RIGHT);
+                ed = std::make_shared<TextComponent>(
+                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
-                auto spacer = std::make_shared<GuiComponent>(mWindow);
+                auto spacer = std::make_shared<GuiComponent>();
                 spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
-                auto bracket = std::make_shared<ImageComponent>(mWindow);
+                auto bracket = std::make_shared<ImageComponent>();
                 bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
@@ -217,7 +213,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 };
 
                 row.makeAcceptInputHandler([this, title, ed, updateVal] {
-                    GuiSettings* s = new GuiSettings(mWindow, title);
+                    GuiSettings* s = new GuiSettings(title);
 
                     for (auto controller : mControllerBadges) {
                         std::string selectedLabel = ed->getValue();
@@ -225,7 +221,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                         ComponentListRow row;
 
                         std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
-                            mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
                         labelText->setSelectable(true);
                         labelText->setValue(controller.displayName);
 
@@ -249,7 +245,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                     if (ed->getValue() != "") {
                         ComponentListRow row;
                         std::shared_ptr<TextComponent> clearText = std::make_shared<TextComponent>(
-                            mWindow, ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
+                            ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
                             Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
                         clearText->setSelectable(true);
                         row.addElement(clearText, true);
@@ -275,16 +271,15 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             case MD_ALT_EMULATOR: {
                 mInvalidEmulatorEntry = false;
 
-                ed = std::make_shared<TextComponent>(window, "",
-                                                     Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
-                                                     0x777777FF, ALIGN_RIGHT);
+                ed = std::make_shared<TextComponent>(
+                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
-                auto spacer = std::make_shared<GuiComponent>(mWindow);
+                auto spacer = std::make_shared<GuiComponent>();
                 spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
-                auto bracket = std::make_shared<ImageComponent>(mWindow);
+                auto bracket = std::make_shared<ImageComponent>();
                 bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
@@ -326,9 +321,9 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                             scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1;
 
                         if (mInvalidEmulatorEntry && singleEntry)
-                            s = new GuiSettings(mWindow, "CLEAR INVALID ENTRY");
+                            s = new GuiSettings("CLEAR INVALID ENTRY");
                         else
-                            s = new GuiSettings(mWindow, title);
+                            s = new GuiSettings(title);
 
                         if (!mInvalidEmulatorEntry && ed->getValue() == "" && singleEntry)
                             return;
@@ -359,8 +354,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                 label = entry.second;
 
                             std::shared_ptr<TextComponent> labelText =
-                                std::make_shared<TextComponent>(
-                                    mWindow, label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                                std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM),
+                                                                0x777777FF);
                             labelText->setSelectable(true);
 
                             if (scraperParams.system->getAlternativeEmulator() == "" &&
@@ -413,16 +408,15 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
             case MD_MULTILINE_STRING:
             default: {
                 // MD_STRING.
-                ed = std::make_shared<TextComponent>(window, "",
-                                                     Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
-                                                     0x777777FF, ALIGN_RIGHT);
+                ed = std::make_shared<TextComponent>(
+                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
-                auto spacer = std::make_shared<GuiComponent>(mWindow);
+                auto spacer = std::make_shared<GuiComponent>();
                 spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
-                auto bracket = std::make_shared<ImageComponent>(mWindow);
+                auto bracket = std::make_shared<ImageComponent>();
                 bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
@@ -477,15 +471,15 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                     row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
                         mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                            mWindow, getHelpStyle(), title, ed->getValue(), updateVal, multiLine,
-                            "apply", "APPLY CHANGES?", "", ""));
+                            getHelpStyle(), title, ed->getValue(), updateVal, multiLine, "apply",
+                            "APPLY CHANGES?", "", ""));
                     });
                 }
                 else {
                     row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
-                        mWindow->pushGui(new GuiTextEditPopup(mWindow, getHelpStyle(), title,
-                                                              ed->getValue(), updateVal, multiLine,
-                                                              "APPLY", "APPLY CHANGES?"));
+                        mWindow->pushGui(new GuiTextEditPopup(getHelpStyle(), title, ed->getValue(),
+                                                              updateVal, multiLine, "APPLY",
+                                                              "APPLY CHANGES?"));
                     });
                 }
                 break;
@@ -516,15 +510,15 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
 
     if (!scraperParams.system->hasPlatformId(PlatformIds::PLATFORM_IGNORE))
         buttons.push_back(std::make_shared<ButtonComponent>(
-            mWindow, "SCRAPE", "scrape", std::bind(&GuiMetaDataEd::fetch, this)));
+            "SCRAPE", "scrape", std::bind(&GuiMetaDataEd::fetch, this)));
 
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "SAVE", "save metadata", [&] {
+    buttons.push_back(std::make_shared<ButtonComponent>("SAVE", "save metadata", [&] {
         save();
         ViewController::getInstance()->onPauseVideo();
         delete this;
     }));
-    buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CANCEL", "cancel changes",
-                                                        [&] { delete this; }));
+    buttons.push_back(
+        std::make_shared<ButtonComponent>("CANCEL", "cancel changes", [&] { delete this; }));
     if (scraperParams.game->getType() == FOLDER) {
         if (mClearGameFunc) {
             auto clearSelf = [&] {
@@ -532,7 +526,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 delete this;
             };
             auto clearSelfBtnFunc = [this, clearSelf] {
-                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
                                                "THIS WILL DELETE ANY MEDIA FILES AND\n"
                                                "THE GAMELIST.XML ENTRY FOR THIS FOLDER,\n"
                                                "BUT NEITHER THE FOLDER ITSELF OR ANY\n"
@@ -540,8 +534,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                                "ARE YOU SURE?",
                                                "YES", clearSelf, "NO", nullptr));
             };
-            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear folder",
-                                                                clearSelfBtnFunc));
+            buttons.push_back(
+                std::make_shared<ButtonComponent>("CLEAR", "clear folder", clearSelfBtnFunc));
         }
     }
     else {
@@ -551,7 +545,7 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 delete this;
             };
             auto clearSelfBtnFunc = [this, clearSelf] {
-                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
                                                "THIS WILL DELETE ANY MEDIA FILES\n"
                                                "AND THE GAMELIST.XML ENTRY FOR\n"
                                                "THIS GAME, BUT THE GAME FILE\n"
@@ -559,8 +553,8 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                                                "ARE YOU SURE?",
                                                "YES", clearSelf, "NO", nullptr));
             };
-            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "CLEAR", "clear file",
-                                                                clearSelfBtnFunc));
+            buttons.push_back(
+                std::make_shared<ButtonComponent>("CLEAR", "clear file", clearSelfBtnFunc));
         }
 
         // For the special case where a directory has a supported file extension and is therefore
@@ -571,19 +565,19 @@ GuiMetaDataEd::GuiMetaDataEd(Window* window,
                 delete this;
             };
             auto deleteGameBtnFunc = [this, deleteFilesAndSelf] {
-                mWindow->pushGui(new GuiMsgBox(mWindow, getHelpStyle(),
+                mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
                                                "THIS WILL DELETE THE GAME\n"
                                                "FILE, ANY MEDIA FILES AND\n"
                                                "THE GAMELIST.XML ENTRY\n"
                                                "ARE YOU SURE?",
                                                "YES", deleteFilesAndSelf, "NO", nullptr));
             };
-            buttons.push_back(std::make_shared<ButtonComponent>(mWindow, "DELETE", "delete game",
-                                                                deleteGameBtnFunc));
+            buttons.push_back(
+                std::make_shared<ButtonComponent>("DELETE", "delete game", deleteGameBtnFunc));
         }
     }
 
-    mButtons = makeButtonGrid(mWindow, buttons);
+    mButtons = makeButtonGrid(buttons);
     mGrid.setEntry(mButtons, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Resize + center.
@@ -748,7 +742,7 @@ void GuiMetaDataEd::save()
 void GuiMetaDataEd::fetch()
 {
     GuiScraperSingle* scr = new GuiScraperSingle(
-        mWindow, mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1),
+        mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1),
         mSavedMediaAndAborted);
     mWindow->pushGui(scr);
 }
@@ -856,7 +850,7 @@ void GuiMetaDataEd::close()
     if (metadataUpdated) {
         // Changes were made, ask if the user wants to save them.
         mWindow->pushGui(new GuiMsgBox(
-            mWindow, getHelpStyle(), "SAVE CHANGES?", "YES",
+            getHelpStyle(), "SAVE CHANGES?", "YES",
             [this, closeFunc] {
                 save();
                 closeFunc();

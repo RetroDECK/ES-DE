@@ -19,17 +19,17 @@
 
 static std::map<std::string, std::string> sIconPathMap {};
 
-HelpComponent::HelpComponent(Window* window)
-    : GuiComponent {window}
+HelpComponent::HelpComponent()
 {
+    // Assign icons.
     assignIcons();
 }
 
 void HelpComponent::assignIcons()
 {
-    std::string controllerType = Settings::getInstance()->getString("InputControllerType");
+    std::string controllerType {Settings::getInstance()->getString("InputControllerType")};
 
-    std::map<std::string, std::string> sIconPathMapOld(sIconPathMap);
+    std::map<std::string, std::string> sIconPathMapOld {sIconPathMap};
     sIconPathMap.clear();
 
     // These graphics files are common between all controller types.
@@ -202,8 +202,7 @@ void HelpComponent::updateGrid()
 
     std::shared_ptr<Font>& font = mStyle.font;
 
-    mGrid = std::make_shared<ComponentGrid>(mWindow,
-                                            glm::ivec2 {static_cast<int>(mPrompts.size()) * 4, 1});
+    mGrid = std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(mPrompts.size()) * 4, 1});
 
     // [icon] [spacer1] [text] [spacer2]
 
@@ -217,7 +216,7 @@ void HelpComponent::updateGrid()
     bool isDimmed = mWindow->isBackgroundDimmed();
 
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); ++it) {
-        auto icon = std::make_shared<ImageComponent>(mWindow);
+        auto icon = std::make_shared<ImageComponent>();
         icon->setImage(getIconTexture(it->first.c_str()), false);
         icon->setColorShift(isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor);
         icon->setResize(0, height);
@@ -232,7 +231,7 @@ void HelpComponent::updateGrid()
         else
             lblInput = Utils::String::toUpper(lblInput);
         auto lbl = std::make_shared<TextComponent>(
-            mWindow, lblInput, font, isDimmed ? mStyle.textColorDimmed : mStyle.textColor);
+            lblInput, font, isDimmed ? mStyle.textColorDimmed : mStyle.textColor);
         labels.push_back(lbl);
 
         width +=

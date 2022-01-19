@@ -37,7 +37,7 @@ class Window;
 class GuiComponent
 {
 public:
-    GuiComponent(Window* window);
+    GuiComponent();
     virtual ~GuiComponent();
 
     virtual void textInput(const std::string& text);

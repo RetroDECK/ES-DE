@@ -14,18 +14,17 @@
 
 #include <SDL2/SDL_timer.h>
 
-GuiInfoPopup::GuiInfoPopup(Window* window, std::string message, int duration)
-    : GuiComponent {window}
-    , mMessage {message}
+GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
+    : mMessage {message}
     , mDuration {duration}
     , mRunning {true}
 {
-    mFrame = new NinePatchComponent(window);
+    mFrame = new NinePatchComponent;
     float maxWidth {Renderer::getScreenWidth() * 0.9f};
     float maxHeight {Renderer::getScreenHeight() * 0.2f};
 
-    std::shared_ptr<TextComponent> s {std::make_shared<TextComponent>(
-        mWindow, "", Font::get(FONT_SIZE_MINI), 0x444444FF, ALIGN_CENTER)};
+    std::shared_ptr<TextComponent> s {
+        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI), 0x444444FF, ALIGN_CENTER)};
 
     // We do this to force the text container to resize and return the actual expected popup size.
     s->setSize(0.0f, 0.0f);
@@ -60,7 +59,7 @@ GuiInfoPopup::GuiInfoPopup(Window* window, std::string message, int duration)
     // We only initialize the actual time when we first start to render.
     mStartTime = 0;
 
-    mGrid = new ComponentGrid(window, glm::ivec2 {1, 3});
+    mGrid = new ComponentGrid(glm::ivec2 {1, 3});
     mGrid->setSize(mSize);
     mGrid->setEntry(s, glm::ivec2 {0, 1}, false, true);
     addChild(mGrid);

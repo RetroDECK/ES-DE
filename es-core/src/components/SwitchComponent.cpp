@@ -10,10 +10,8 @@
 
 #include "resources/Font.h"
 
-SwitchComponent::SwitchComponent(Window* window, bool state)
-    : GuiComponent {window}
-    , mImage {window}
-    , mState {state}
+SwitchComponent::SwitchComponent(bool state)
+    : mState {state}
     , mOriginalValue {state}
     , mColorOriginalValue {DEFAULT_COLORSHIFT}
     , mColorChangedValue {DEFAULT_COLORSHIFT}

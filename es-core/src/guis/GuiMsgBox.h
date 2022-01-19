@@ -20,8 +20,7 @@ class TextComponent;
 class GuiMsgBox : public GuiComponent
 {
 public:
-    GuiMsgBox(Window* window,
-              const HelpStyle& helpstyle,
+    GuiMsgBox(const HelpStyle& helpstyle,
               const std::string& text,
               const std::string& name1 = "OK",
               const std::function<void()>& func1 = nullptr,

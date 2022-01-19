@@ -18,9 +18,8 @@
 
 #include <chrono>
 
-LottieComponent::LottieComponent(Window* window)
-    : GuiComponent {window}
-    , mCacheFrames {true}
+LottieComponent::LottieComponent()
+    : mCacheFrames {true}
     , mMaxCacheSize {0}
     , mCacheSize {0}
     , mFrameSize {0}

@@ -15,17 +15,16 @@
 class Font;
 class TextCache;
 
-// Used to display/edit a value between some min and max values.
+// Slider to set value in a predefined range.
 class SliderComponent : public GuiComponent
 {
 public:
     using GuiComponent::getValue;
     using GuiComponent::setValue;
 
-    // Minimum value (far left of the slider), maximum value (far right of the slider),
-    // increment size (how much pressing L/R moves by), unit to display (optional).
-    SliderComponent(
-        Window* window, float min, float max, float increment, const std::string& suffix = "");
+    // Minimum and maximum values, how much to increment each step the knob is moved and
+    // an optional unit.
+    SliderComponent(float min, float max, float increment, const std::string& suffix = "");
 
     void setValue(float value);
     float getValue() { return mValue; }

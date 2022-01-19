@@ -17,8 +17,7 @@ class TextCache;
 class ButtonComponent : public GuiComponent
 {
 public:
-    ButtonComponent(Window* window,
-                    const std::string& text = "",
+    ButtonComponent(const std::string& text = "",
                     const std::string& helpText = "",
                     const std::function<void()>& func = nullptr,
                     bool upperCase = true,

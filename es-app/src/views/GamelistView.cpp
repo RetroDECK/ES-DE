@@ -15,37 +15,10 @@
 #define FADE_IN_START_OPACITY 0.5f
 #define FADE_IN_TIME 650
 
-GamelistView::GamelistView(Window* window, FileData* root)
-    : GamelistBase {window, root}
+GamelistView::GamelistView(FileData* root)
+    : GamelistBase {root}
     , mViewStyle {ViewController::BASIC}
-    , mHeaderText {window}
-    , mHeaderImage {window}
-    , mBackground {window}
-    , mThumbnail {window}
-    , mMarquee {window}
-    , mImage {window}
-    , mVideo(nullptr)
-    , mLblRating {window}
-    , mLblReleaseDate {window}
-    , mLblDeveloper {window}
-    , mLblPublisher {window}
-    , mLblGenre {window}
-    , mLblPlayers {window}
-    , mLblLastPlayed {window}
-    , mLblPlayCount {window}
-    , mRating {window}
-    , mReleaseDate {window}
-    , mDeveloper {window}
-    , mPublisher {window}
-    , mGenre {window}
-    , mPlayers {window}
-    , mLastPlayed {window}
-    , mPlayCount {window}
-    , mName {window}
-    , mBadges {window}
-    , mDescContainer {window}
-    , mDescription {window}
-    , mGamelistInfo {window}
+    , mVideo {nullptr}
 {
     mViewStyle = ViewController::getInstance()->getState().viewstyle;
 
@@ -72,7 +45,7 @@ GamelistView::GamelistView(Window* window, FileData* root)
 
     if (mViewStyle == ViewController::VIDEO) {
         // Create the video window.
-        mVideo = new VideoFFmpegComponent(window);
+        mVideo = new VideoFFmpegComponent;
     }
 
     mList.setPosition(mSize.x * (0.50f + padding), mList.getPosition().y);
@@ -235,7 +208,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mThemeExtras.clear();
 
     // Add new theme extras.
-    mThemeExtras = ThemeData::makeExtras(theme, getName(), mWindow);
+    mThemeExtras = ThemeData::makeExtras(theme, getName());
     for (auto extra : mThemeExtras)
         addChild(extra);
 
@@ -304,8 +277,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
 void GamelistView::update(int deltaTime)
 {
-    mImage.update(deltaTime);
-
     if (ViewController::getInstance()->getGameLaunchTriggered() && mImage.isAnimationPlaying(0))
         mImage.finishAnimation(0);
 
@@ -315,12 +286,12 @@ void GamelistView::update(int deltaTime)
         else if (mVideoPlaying && !mVideo->isVideoPaused() && !mWindow->isScreensaverActive())
             mVideo->onShow();
 
-        mVideo->update(deltaTime);
-
         if (ViewController::getInstance()->getGameLaunchTriggered() &&
             mVideo->isAnimationPlaying(0))
             mVideo->finishAnimation(0);
     }
+
+    updateChildren(deltaTime);
 }
 
 void GamelistView::render(const glm::mat4& parentTrans)

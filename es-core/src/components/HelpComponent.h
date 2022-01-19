@@ -19,7 +19,7 @@ class TextureResource;
 class HelpComponent : public GuiComponent
 {
 public:
-    HelpComponent(Window* window);
+    HelpComponent();
 
     void assignIcons();
 

@@ -22,15 +22,13 @@ AnimationFrame BUSY_ANIMATION_FRAMES[] {
 
 const AnimationDef BUSY_ANIMATION_DEF = {BUSY_ANIMATION_FRAMES, 4, true};
 
-BusyComponent::BusyComponent(Window* window)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.png"}
-    , mGrid {window, glm::ivec2 {5, 3}}
+BusyComponent::BusyComponent()
+    : mBackground {":/graphics/frame.png"}
+    , mGrid {glm::ivec2 {5, 3}}
 {
-    mAnimation = std::make_shared<AnimatedImageComponent>(mWindow);
+    mAnimation = std::make_shared<AnimatedImageComponent>();
     mAnimation->load(&BUSY_ANIMATION_DEF);
-    mText = std::make_shared<TextComponent>(mWindow, "WORKING...", Font::get(FONT_SIZE_MEDIUM),
-                                            0x777777FF);
+    mText = std::make_shared<TextComponent>("WORKING...", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     // Col 0 = animation, col 1 = spacer, col 2 = text.
     mGrid.setEntry(mAnimation, glm::ivec2 {1, 1}, false, true);

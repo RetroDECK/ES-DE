@@ -24,9 +24,7 @@ public:
         DISP_RELATIVE_TO_NOW
     };
 
-    DateTimeEditComponent(Window* window,
-                          bool alignRight = false,
-                          DisplayMode dispMode = DISP_DATE);
+    DateTimeEditComponent(bool alignRight = false, DisplayMode dispMode = DISP_DATE);
 
     void onSizeChanged() override;
 

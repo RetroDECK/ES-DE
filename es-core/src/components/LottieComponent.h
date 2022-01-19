@@ -23,7 +23,7 @@
 class LottieComponent : public GuiComponent
 {
 public:
-    LottieComponent(Window* window);
+    LottieComponent();
     ~LottieComponent();
 
     void setAnimation(const std::string& path);

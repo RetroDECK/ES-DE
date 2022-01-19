@@ -17,7 +17,7 @@ template <typename T> class OptionListComponent;
 class GuiCollectionSystemsOptions : public GuiSettings
 {
 public:
-    GuiCollectionSystemsOptions(Window* window, std::string title);
+    GuiCollectionSystemsOptions(std::string title);
 
 private:
     void createCustomCollection(std::string inName);

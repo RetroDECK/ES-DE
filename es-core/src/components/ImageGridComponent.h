@@ -55,7 +55,7 @@ public:
     using IList<ImageGridData, T>::isScrolling;
     using IList<ImageGridData, T>::stopScrolling;
 
-    ImageGridComponent(Window* window);
+    ImageGridComponent();
 
     void add(const std::string& name, const std::string& imagePath, const T& obj);
 
@@ -122,9 +122,7 @@ private:
     std::function<void(CursorState state)> mCursorChangedCallback;
 };
 
-template <typename T>
-ImageGridComponent<T>::ImageGridComponent(Window* window)
-    : IList<ImageGridData, T>(window)
+template <typename T> ImageGridComponent<T>::ImageGridComponent()
 {
     glm::vec2 screen {static_cast<float>(Renderer::getScreenWidth()),
                       static_cast<float>(Renderer::getScreenHeight())};
@@ -556,7 +554,7 @@ template <typename T> void ImageGridComponent<T>::buildTiles()
     for (int y = 0; y < (vert ? mGridDimension.y : mGridDimension.x); ++y) {
         for (int x = 0; x < (vert ? mGridDimension.x : mGridDimension.y); ++x) {
             // Create tiles.
-            auto tile = std::make_shared<GridTileComponent>(mWindow);
+            auto tile = std::make_shared<GridTileComponent>();
 
             // In Vertical mode, tiles are ordered from left to right, then from top to bottom.
             // In Horizontal mode, tiles are ordered from top to bottom, then from left to right.

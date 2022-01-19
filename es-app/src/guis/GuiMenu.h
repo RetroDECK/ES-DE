@@ -17,7 +17,7 @@
 class GuiMenu : public GuiComponent
 {
 public:
-    GuiMenu(Window* window);
+    GuiMenu();
     ~GuiMenu();
 
     bool input(InputConfig* config, Input input) override;

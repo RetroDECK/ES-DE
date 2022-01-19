@@ -106,7 +106,7 @@ public:
     // As above, but also remove parenthesis.
     std::string getCleanName() const;
 
-    void launchGame(Window* window);
+    void launchGame();
     const std::string findEmulatorPath(std::string& command);
 
     using ComparisonFunction = bool(const FileData* a, const FileData* b);

@@ -437,7 +437,7 @@ void applicationLoop()
 #endif
         if (SDL_PollEvent(&event)) {
             do {
-                InputManager::getInstance().parseEvent(event, window);
+                InputManager::getInstance().parseEvent(event);
 
                 if (event.type == SDL_QUIT)
 #if !defined(__EMSCRIPTEN__)
@@ -611,7 +611,7 @@ int main(int argc, char* argv[])
     bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
     bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
 
-    InputManager::getInstance().parseEvent(event, window);
+    InputManager::getInstance().parseEvent(event);
     if (event.type == SDL_QUIT)
         return 1;
 
@@ -681,7 +681,7 @@ int main(int argc, char* argv[])
     if (!loadSystemsStatus) {
         if (forceInputConfig) {
             window->pushGui(new GuiDetectDevice(
-                window, false, true, [] { ViewController::getInstance()->goToStart(true); }));
+                false, true, [] { ViewController::getInstance()->goToStart(true); }));
         }
         else {
             ViewController::getInstance()->goToStart(true);

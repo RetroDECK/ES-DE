@@ -33,7 +33,7 @@ namespace GridFlags
 class ComponentGrid : public GuiComponent
 {
 public:
-    ComponentGrid(Window* window, const glm::ivec2& gridDimensions);
+    ComponentGrid(const glm::ivec2& gridDimensions);
     virtual ~ComponentGrid();
 
     bool removeEntry(const std::shared_ptr<GuiComponent>& comp);

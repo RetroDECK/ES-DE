@@ -29,8 +29,7 @@ class TextureResource;
 class NinePatchComponent : public GuiComponent
 {
 public:
-    NinePatchComponent(Window* window,
-                       const std::string& path = "",
+    NinePatchComponent(const std::string& path = "",
                        unsigned int edgeColor = 0xFFFFFFFF,
                        unsigned int centerColor = 0xFFFFFFFF);
     virtual ~NinePatchComponent();

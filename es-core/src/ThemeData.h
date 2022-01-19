@@ -196,8 +196,7 @@ public:
                                    const std::string& expectedType) const;
 
     static std::vector<GuiComponent*> makeExtras(const std::shared_ptr<ThemeData>& theme,
-                                                 const std::string& view,
-                                                 Window* window);
+                                                 const std::string& view);
 
     static const std::shared_ptr<ThemeData> getDefault();
 

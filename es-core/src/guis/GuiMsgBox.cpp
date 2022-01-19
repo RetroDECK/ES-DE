@@ -15,8 +15,7 @@
 #define HORIZONTAL_PADDING_PX 20.0f
 #define VERTICAL_PADDING_MODIFIER 1.225f
 
-GuiMsgBox::GuiMsgBox(Window* window,
-                     const HelpStyle& helpstyle,
+GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
                      const std::string& text,
                      const std::string& name1,
                      const std::function<void()>& func1,
@@ -26,9 +25,8 @@ GuiMsgBox::GuiMsgBox(Window* window,
                      const std::function<void()>& func3,
                      bool disableBackButton,
                      bool deleteOnButtonPress)
-    : GuiComponent {window}
-    , mBackground {window, ":/graphics/frame.svg"}
-    , mGrid {window, glm::ivec2 {1, 2}}
+    : mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {1, 2}}
     , mHelpStyle {helpstyle}
     , mDisableBackButton {disableBackButton}
     , mDeleteOnButtonPress {deleteOnButtonPress}
@@ -42,19 +40,19 @@ GuiMsgBox::GuiMsgBox(Window* window,
     float minWidth {
         floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * Renderer::getScreenWidth())};
 
-    mMsg = std::make_shared<TextComponent>(mWindow, text, Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
+    mMsg = std::make_shared<TextComponent>(text, Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
                                            ALIGN_CENTER);
     mGrid.setEntry(mMsg, glm::ivec2 {0, 0}, false, false);
 
     // Create the buttons.
     mButtons.push_back(std::make_shared<ButtonComponent>(
-        mWindow, name1, name1, std::bind(&GuiMsgBox::deleteMeAndCall, this, func1)));
+        name1, name1, std::bind(&GuiMsgBox::deleteMeAndCall, this, func1)));
     if (!name2.empty())
         mButtons.push_back(std::make_shared<ButtonComponent>(
-            mWindow, name2, name2, std::bind(&GuiMsgBox::deleteMeAndCall, this, func2)));
+            name2, name2, std::bind(&GuiMsgBox::deleteMeAndCall, this, func2)));
     if (!name3.empty())
         mButtons.push_back(std::make_shared<ButtonComponent>(
-            mWindow, name3, name3, std::bind(&GuiMsgBox::deleteMeAndCall, this, func3)));
+            name3, name3, std::bind(&GuiMsgBox::deleteMeAndCall, this, func3)));
 
     // Set accelerator automatically (button to press when "B" is pressed).
     if (mButtons.size() == 1) {
@@ -71,7 +69,7 @@ GuiMsgBox::GuiMsgBox(Window* window,
     }
 
     // Put the buttons into a ComponentGrid.
-    mButtonGrid = makeButtonGrid(mWindow, mButtons);
+    mButtonGrid = makeButtonGrid(mButtons);
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 1}, true, false, glm::ivec2 {1, 1},
                    GridFlags::BORDER_TOP);
 

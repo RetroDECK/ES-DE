@@ -16,8 +16,8 @@
 
 #include <algorithm>
 
-GuiComponent::GuiComponent(Window* window)
-    : mWindow {window}
+GuiComponent::GuiComponent()
+    : mWindow {Window::getInstance()}
     , mParent {nullptr}
     , mOpacity {255}
     , mColor {0}

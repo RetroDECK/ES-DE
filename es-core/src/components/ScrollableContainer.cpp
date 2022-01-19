@@ -14,9 +14,8 @@
 #include "renderers/Renderer.h"
 #include "resources/Font.h"
 
-ScrollableContainer::ScrollableContainer(Window* window)
-    : GuiComponent {window}
-    , mScrollPos {0.0f, 0.0f}
+ScrollableContainer::ScrollableContainer()
+    : mScrollPos {0.0f, 0.0f}
     , mScrollDir {0.0f, 0.0f}
     , mClipSpacing {0.0f}
     , mAutoScrollDelay {0}

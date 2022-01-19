@@ -17,12 +17,8 @@
 
 #define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f)
 
-MenuComponent::MenuComponent(Window* window,
-                             std::string title,
-                             const std::shared_ptr<Font>& titleFont)
-    : GuiComponent {window}
-    , mBackground {window}
-    , mGrid {window, glm::ivec2 {2, 4}}
+MenuComponent::MenuComponent(std::string title, const std::shared_ptr<Font>& titleFont)
+    : mGrid {glm::ivec2 {2, 4}}
     , mNeedsSaving {false}
 {
     addChild(&mBackground);
@@ -31,19 +27,19 @@ MenuComponent::MenuComponent(Window* window,
     mBackground.setImagePath(":/graphics/frame.svg");
 
     // Set up title.
-    mTitle = std::make_shared<TextComponent>(mWindow);
+    mTitle = std::make_shared<TextComponent>();
     mTitle->setHorizontalAlignment(ALIGN_CENTER);
     mTitle->setColor(0x555555FF);
     setTitle(title, titleFont);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
     // Set up list which will never change (externally, anyway).
-    mList = std::make_shared<ComponentList>(mWindow);
+    mList = std::make_shared<ComponentList>();
     mGrid.setEntry(mList, glm::ivec2 {0, 2}, true, true, glm::ivec2 {2, 1});
 
     // Set up scroll indicators.
-    mScrollUp = std::make_shared<ImageComponent>(mWindow);
-    mScrollDown = std::make_shared<ImageComponent>(mWindow);
+    mScrollUp = std::make_shared<ImageComponent>();
+    mScrollDown = std::make_shared<ImageComponent>();
     mScrollIndicator = std::make_shared<ScrollIndicatorComponent>(mList, mScrollUp, mScrollDown);
 
     mScrollUp->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
@@ -136,8 +132,8 @@ void MenuComponent::addButton(const std::string& name,
                               const std::string& helpText,
                               const std::function<void()>& callback)
 {
-    mButtons.push_back(std::make_shared<ButtonComponent>(mWindow, Utils::String::toUpper(name),
-                                                         helpText, callback));
+    mButtons.push_back(
+        std::make_shared<ButtonComponent>(Utils::String::toUpper(name), helpText, callback));
     updateGrid();
     updateSize();
 }
@@ -150,16 +146,16 @@ void MenuComponent::updateGrid()
     mButtonGrid.reset();
 
     if (mButtons.size()) {
-        mButtonGrid = makeButtonGrid(mWindow, mButtons);
+        mButtonGrid = makeButtonGrid(mButtons);
         mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 3}, true, false, glm::ivec2 {2, 1});
     }
 }
 
 std::shared_ptr<ComponentGrid> makeButtonGrid(
-    Window* window, const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
+    const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
 {
     std::shared_ptr<ComponentGrid> buttonGrid =
-        std::make_shared<ComponentGrid>(window, glm::ivec2 {static_cast<int>(buttons.size()), 2});
+        std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(buttons.size()), 2});
 
     // Initialize to padding.
     float buttonGridWidth = BUTTON_GRID_HORIZ_PADDING * buttons.size();
@@ -180,9 +176,9 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(
     return buttonGrid;
 }
 
-std::shared_ptr<ImageComponent> makeArrow(Window* window)
+std::shared_ptr<ImageComponent> makeArrow()
 {
-    auto bracket = std::make_shared<ImageComponent>(window);
+    auto bracket = std::make_shared<ImageComponent>();
     bracket->setImage(":/graphics/arrow.svg");
     bracket->setResize(0, std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
     return bracket;

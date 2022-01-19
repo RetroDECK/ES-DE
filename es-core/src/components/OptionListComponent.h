@@ -27,14 +27,12 @@
 template <typename T> class OptionListComponent : public GuiComponent
 {
 public:
-    OptionListComponent(Window* window,
-                        const HelpStyle& helpstyle,
+    OptionListComponent(const HelpStyle& helpstyle,
                         const std::string& name,
                         bool multiSelect = false,
                         bool multiExclusiveSelect = false,
                         bool multiShowTotal = false)
-        : GuiComponent {window}
-        , mHelpStyle {helpstyle}
+        : mHelpStyle {helpstyle}
         , mMultiSelect {multiSelect}
         , mMultiExclusiveSelect {multiExclusiveSelect}
         , mMultiShowTotal {multiShowTotal}
@@ -44,9 +42,6 @@ public:
         , mKeyRepeatStartDelay {OPTIONLIST_REPEAT_START_DELAY}
         , mKeyRepeatSpeed {OPTIONLIST_REPEAT_SPEED}
         , mName {name}
-        , mText {window}
-        , mLeftArrow {window}
-        , mRightArrow {window}
     {
         auto font {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
         mText.setFont(font);
@@ -306,7 +301,7 @@ private:
     void open()
     {
         // Open the list popup.
-        mWindow->pushGui(new OptionListPopup(mWindow, getHelpStyle(), this, mName));
+        mWindow->pushGui(new OptionListPopup(getHelpStyle(), this, mName));
     }
 
     void onSelectedChanged()
@@ -412,12 +407,10 @@ private:
     class OptionListPopup : public GuiComponent
     {
     public:
-        OptionListPopup(Window* window,
-                        const HelpStyle& helpstyle,
+        OptionListPopup(const HelpStyle& helpstyle,
                         OptionListComponent<T>* parent,
                         const std::string& title)
-            : GuiComponent(window)
-            , mMenu(window, title.c_str())
+            : mMenu(title.c_str())
             , mParent(parent)
             , mHelpStyle(helpstyle)
         {
@@ -444,7 +437,7 @@ private:
             for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); ++it) {
                 row.elements.clear();
                 auto textComponent = std::make_shared<TextComponent>(
-                    mWindow, Utils::String::toUpper(it->name), font, 0x777777FF);
+                    Utils::String::toUpper(it->name), font, 0x777777FF);
                 row.addElement(textComponent, true);
 
                 if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected) {
@@ -456,7 +449,7 @@ private:
 
                 if (mParent->mMultiSelect) {
                     // Add checkbox.
-                    auto checkbox = std::make_shared<ImageComponent>(mWindow);
+                    auto checkbox = std::make_shared<ImageComponent>();
                     checkbox->setImage(it->selected ? CHECKED_PATH : UNCHECKED_PATH);
                     checkbox->setResize(0, font->getLetterHeight());
                     row.addElement(checkbox, false);

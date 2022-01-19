@@ -20,7 +20,7 @@ class TextCache;
 class TextEditComponent : public GuiComponent
 {
 public:
-    TextEditComponent(Window* window);
+    TextEditComponent();
 
     void textInput(const std::string& text) override;
     bool input(InputConfig* config, Input input) override;

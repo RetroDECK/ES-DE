@@ -59,7 +59,7 @@ struct ComponentListRow {
 class ComponentList : public IList<ComponentListRow, void*>
 {
 public:
-    ComponentList(Window* window);
+    ComponentList();
 
     enum ScrollIndicator {
         SCROLL_NONE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).

@@ -19,8 +19,7 @@ class TextComponent;
 class GuiInputConfig : public GuiComponent
 {
 public:
-    GuiInputConfig(Window* window,
-                   InputConfig* target,
+    GuiInputConfig(InputConfig* target,
                    bool reconfigureAll,
                    const std::function<void()>& okCallback);
 
