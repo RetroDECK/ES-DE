@@ -219,5 +219,8 @@ void GamelistView::updateInfoPanel()
         }
     }
 
+    if (hideMetaDataFields)
+        ;
+
     // TODO: Implement gamelist logic.
 }
