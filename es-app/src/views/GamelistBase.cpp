@@ -660,7 +660,7 @@ void GamelistBase::generateGamelistInfo(FileData* cursor, FileData* firstEntry)
 
 void GamelistBase::remove(FileData* game, bool deleteFile)
 {
-    // Delete the game file on the filesystem.
+    // Optionally delete the game file on the filesystem.
     if (deleteFile)
         Utils::FileSystem::removeFile(game->getPath());
 

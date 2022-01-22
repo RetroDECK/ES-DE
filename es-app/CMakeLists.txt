@@ -50,6 +50,7 @@ set(ES_HEADERS
 
     # Views
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistBase.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistLegacy.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/GamelistView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/SystemView.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/views/ViewController.h

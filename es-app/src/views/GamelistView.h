@@ -17,7 +17,7 @@
 class GamelistView : public GamelistBase
 {
 public:
-    GamelistView(FileData* root);
+    GamelistView(FileData* root, bool legacyMode = false);
     ~GamelistView();
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
@@ -36,7 +36,6 @@ public:
             case ViewController::DETAILED:
                 return "detailed";
             case ViewController::BASIC:
-                return "basic";
             default:
                 return "basic";
         }
@@ -59,49 +58,61 @@ public:
 private:
     void updateInfoPanel();
 
-    void initMDLabels();
-    void initMDValues();
+    // Legacy (backward compatibility) functions.
+    void legacyPopulateFields();
+    void legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme);
+    void legacyUpdateInfoPanel();
+    void legacyUpdate(int deltaTime);
+    void legacyInitMDLabels();
+    void legacyInitMDValues();
 
+    bool mLegacyMode;
     ViewController::GamelistViewStyle mViewStyle;
-
-    std::vector<TextComponent*> getMDLabels();
-    std::vector<GuiComponent*> getMDValues();
 
     std::shared_ptr<ThemeData> mTheme;
     std::vector<GuiComponent*> mThemeExtras;
 
-    TextComponent mHeaderText;
-    ImageComponent mHeaderImage;
-    ImageComponent mBackground;
+    std::vector<std::unique_ptr<TextComponent>> mTextComponents;
+    std::vector<std::unique_ptr<DateTimeComponent>> mDateTimeComponents;
+    std::vector<std::unique_ptr<ImageComponent>> mImageComponents;
+    std::vector<std::unique_ptr<VideoFFmpegComponent>> mVideoComponents;
+    std::vector<std::unique_ptr<BadgeComponent>> mBadgeComponents;
+    std::vector<std::unique_ptr<RatingComponent>> mRatingComponents;
+    std::vector<std::unique_ptr<ScrollableContainer>> mScrollableContainerComponents;
+    std::vector<std::unique_ptr<TextComponent>> mGamelistInfoComponents;
 
-    ImageComponent mThumbnail;
-    ImageComponent mMarquee;
-    ImageComponent mImage;
-    VideoComponent* mVideo;
+    enum LegacyText {
+        LOGOTEXT = 0,
+        MD_LBL_RATING = 1,
+        MD_LBL_RELEASEDATE = 2,
+        MD_LBL_DEVELOPER = 3,
+        MD_LBL_PUBLISHER = 4,
+        MD_LBL_GENRE = 5,
+        MD_LBL_PLAYERS = 6,
+        MD_LBL_LASTPLAYED = 7,
+        MD_LBL_PLAYCOUNT = 8,
+        MD_DEVELOPER = 9,
+        MD_PUBLISHER = 10,
+        MD_GENRE = 11,
+        MD_PLAYERS = 12,
+        MD_PLAYCOUNT = 13,
+        MD_NAME = 14,
+        MD_DESCRIPTION = 15,
+        END
+    };
 
-    TextComponent mLblRating;
-    TextComponent mLblReleaseDate;
-    TextComponent mLblDeveloper;
-    TextComponent mLblPublisher;
-    TextComponent mLblGenre;
-    TextComponent mLblPlayers;
-    TextComponent mLblLastPlayed;
-    TextComponent mLblPlayCount;
+    enum LegacyDateTime {
+        MD_RELEASEDATE = 0, //
+        MD_LASTPLAYED = 1
+    };
 
-    RatingComponent mRating;
-    DateTimeComponent mReleaseDate;
-    TextComponent mDeveloper;
-    TextComponent mPublisher;
-    TextComponent mGenre;
-    TextComponent mPlayers;
-    DateTimeComponent mLastPlayed;
-    TextComponent mPlayCount;
-    TextComponent mName;
-    BadgeComponent mBadges;
-
-    ScrollableContainer mDescContainer;
-    TextComponent mDescription;
-    TextComponent mGamelistInfo;
+    enum LegacyImage {
+        LOGO = 0, //
+        BACKGROUND = 1,
+        MD_THUMBNAIL = 2,
+        MD_MARQUEE = 3,
+        MD_IMAGE = 4
+    };
 };
 
 #endif // ES_APP_VIEWS_GAMELIST_VIEW_H
