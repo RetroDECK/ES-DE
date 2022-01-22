@@ -155,7 +155,7 @@ _This is the dialog shown if no game files were found. It lets you configure the
 
 ## Disabling game systems
 
-The way ES-DE works is that it will always try to load any system for which there are game files available, so to disable a system it needs to be hidden from ES-DE. This is easily accomplished by renaming the game directory to something that is not recognized, for example changing `~/ROMs/c64` to `~/ROMs/c64_DISABLED`. Another approach is to create a subdirectory named DISABLED (or whatever name you prefer that is not matching a supported system) in the ROMs directory and move the game folder there, such as `~/ROMs/DISABLED/c64`. This makes it easy to disable and re-enable game systems in ES-DE. Note that the gamelist and any game media files are retained while the system is disabled so this is an entirely safe thing to do.
+The way ES-DE works is that it will always try to load any system for which there are game files available, so to disable a system it needs to be hidden from ES-DE. This is easily accomplished by renaming the game directory to something that is not recognized, for example changing `~/ROMs/c64` to `~/ROMs/c64_DISABLED`. Another approach is to create a subdirectory named DISABLED (or whatever name you prefer that is not matching a supported system) in the ROMs directory and move the game folder there, such as `~/ROMs/DISABLED/c64`. This makes it easy to disable and re-enable game systems in ES-DE. Note that the gamelist.xml file and any game media files are retained while the system is disabled so this is an entirely safe thing to do.
 
 
 ## Using the Steam release of RetroArch
@@ -1230,7 +1230,7 @@ Submenu containing all the settings for the media viewer. These are described in
 
 Submenu containing all the settings for the screensaver. These are described in detailed below.
 
-**Blur background when menu is open** _(OpenGL renderer only)_
+**Blur background when menu is open**
 
 This option will blur the background behind the menu slightly. Normally this can be left enabled, but if you have a really slow GPU, disabling this option may make the application feel a bit more responsive.
 
@@ -1238,7 +1238,7 @@ This option will blur the background behind the menu slightly. Normally this can
 
 With this option enabled, there are black pillarboxes (and to a lesser extent letterboxes) displayed around videos with non-standard aspect ratios. This will probably be most commonly used for vertical arcade shooters, or for game systems that has a screen in portrait orientation. For wider than normal videos, letterboxes are added, but this is quite rare compared to videos in portrait orientation. This option looks good with some theme sets such as rbsimple-DE, but on others it may be more visually pleasing to disable it. On less wide displays such as those in 4:3 aspect ratio this option should probably be disabled as it may otherwise add quite excessive letterboxing.
 
-**Render scanlines for gamelist videos** _(OpenGL renderer only)_
+**Render scanlines for gamelist videos**
 
 Whether to use a shader to render scanlines for videos in the gamelist view. The effect is usually pretty subtle as the video is normally renderered in a limited size in the GUI and the scanlines are sized relative to the video window size.
 
@@ -1306,15 +1306,15 @@ With this option enabled, the video will continue to run when viewing the images
 
 This will fill the entire screen surface but will probably break the aspect ratio of the video.
 
-**Render scanlines for videos** _(OpenGL renderer only)_
+**Render scanlines for videos**
 
 Whether to use a shader to render scanlines for the videos. Be aware that this is quite demanding for the GPU.
 
-**Render blur for videos** _(OpenGL renderer only)_
+**Render blur for videos**
 
 Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor. Be aware that this is quite demanding for the GPU.
 
-**Render scanlines for screenshots and titles** _(OpenGL renderer only)_
+**Render scanlines for screenshots and titles**
 
 Whether to use a shader to render scanlines for the screenshot and title screen images.
 
@@ -1350,7 +1350,7 @@ This will fill the entire screen surface but will probably break the aspect rati
 
 This will display an overlay in the upper left corner, showing the game name and the game system name. A star symbol following the game name indicates that it's flagged as a favorite.
 
-**Render scanlines** _(OpenGL renderer only)_
+**Render scanlines**
 
 Whether to use a shader to render scanlines for the images.
 
@@ -1382,11 +1382,11 @@ This will fill the entire screen surface but will probably break the aspect rati
 
 This will display an overlay in the upper left corner, showing the game name and the game system name. A star symbol following the game name indicates that it's flagged as a favorite.
 
-**Render scanlines** _(OpenGL renderer only)_
+**Render scanlines**
 
 Whether to use a shader to render scanlines for the videos. Be aware that this is quite demanding for the GPU.
 
-**Render blur** _(OpenGL renderer only)_
+**Render blur**
 
 Whether to use a shader to render a slight horizontal blur which somewhat simulates a well-used CRT monitor. Be aware that this is quite demanding for the GPU.
 
@@ -2084,7 +2084,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW] | Yes          |                                      |
-| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UW*]      |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3dir extension) |
+| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3dir extension) |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            |                                   |              |                                      |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |

@@ -1048,7 +1048,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
 --no-splash                     Don't show the splash screen during startup
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
+--ignore-gamelist               Ignore the gamelist.xml files (useful for troubleshooting)
 --show-hidden-files             Show hidden files and folders
 --show-hidden-games             Show hidden games
 --force-full                    Force the UI mode to Full

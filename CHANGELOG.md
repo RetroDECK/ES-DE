@@ -17,6 +17,7 @@
 * Set the option "Scrape actual folders" as enabled by default and moved it higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
+* Reduced CPU usage significantly when a menu is open by not rendering the bottom of the stack
 * Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
 * Added logging of the display refresh rate on startup
 * Added a color model conversion shader for converting from BGRA to RGBA
@@ -25,9 +26,14 @@
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Moved all Platform functions to the utility namespace instead of using the global namespace
-* Renamed GameList to Gamelist throughout the codebase
-* Renamed Gamelist.cpp and Gamelist.h to GamelistFileParser.cpp and GamelistFileParser.h and moved it to its own namespace instead of the global namespace
-* Renamed GuiGameScraper.cpp and GuiGameScraper.h to GuiScraperSingle.cpp and GuiScraperSingle.h
+* Changed all occurances of "GameList" to "Gamelist" throughout the codebase
+* Removed a huge amount of unnecessary Window* function parameters throughout the codebase
+* Refactored the six gamelist classes into two new classes; GamelistBase and GamelistView
+* Rewrote the gamelist logic to handle an arbitrary amount of components per type and split the legacy code into a separate file
+* Renamed Gamelist.cpp to GamelistFileParser.cpp and moved it to its own namespace instead of using the global namespace
+* Renamed GuiGameScraper.cpp to GuiScraperSingle.cpp
+* Renamed SystemScreensaver.cpp to Screensaver.cpp
+* Moved UIModeController.cpp from the es-app/views directory to es-app
 * Set the clang-format option SpaceBeforeCpp11BracedList to true and reformatted the codebase
 * Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
 * Removed the deprecated VideoVlcComponent
