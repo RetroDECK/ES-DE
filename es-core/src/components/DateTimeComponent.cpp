@@ -145,6 +145,9 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogError) << "Unknown text alignment string: " << str;
     }
 
+    if (properties & METADATA && elem->has("metadata"))
+        setMetadataField(elem->get<std::string>("metadata"));
+
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 

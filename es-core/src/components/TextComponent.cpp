@@ -323,6 +323,9 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & TEXT && elem->has("text"))
         setText(elem->get<std::string>("text"));
 
+    if (properties & METADATA && elem->has("metadata"))
+        setMetadataField(elem->get<std::string>("metadata"));
+
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 
