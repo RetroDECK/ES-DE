@@ -37,26 +37,30 @@ class Window;
 
 namespace ThemeFlags
 {
+    // clang-format off
+    // These are only the most common flags shared accross multiple components, in addition
+    // to these there are many component-specific options.
     enum PropertyFlags : unsigned int {
-        PATH = 1,
-        POSITION = 2,
-        SIZE = 4,
-        ORIGIN = 8,
-        COLOR = 16,
-        FONT_PATH = 32,
-        FONT_SIZE = 64,
-        SOUND = 128,
-        ALIGNMENT = 256,
-        TEXT = 512,
-        FORCE_UPPERCASE = 1024,
-        LINE_SPACING = 2048,
-        DELAY = 4096,
-        Z_INDEX = 8192,
-        ROTATION = 16384,
-        VISIBLE = 32768,
+        PATH =            0x00000001,
+        POSITION =        0x00000002,
+        SIZE =            0x00000004,
+        ORIGIN =          0x00000008,
+        COLOR =           0x00000010,
+        FONT_PATH =       0x00000020,
+        FONT_SIZE =       0x00000040,
+        ALIGNMENT =       0x00000080,
+        TEXT =            0x00000100,
+        METADATA =        0x00000200,
+        FORCE_UPPERCASE = 0x00000400,
+        LINE_SPACING =    0x00000800,
+        DELAY =           0x00001000,
+        Z_INDEX =         0x00002000,
+        ROTATION =        0x00004000,
+        VISIBLE =         0x00008000,
         ALL = 0xFFFFFFFF
     };
-}
+    // clang-format on
+} // namespace ThemeFlags
 
 class ThemeException : public std::exception
 {
