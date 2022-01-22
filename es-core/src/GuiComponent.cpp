@@ -24,10 +24,17 @@ GuiComponent::GuiComponent()
     , mSaturation {1.0f}
     , mColorShift {0}
     , mColorShiftEnd {0}
+    , mColorOriginalValue {0}
+    , mColorChangedValue {0}
     , mPosition {0.0f, 0.0f, 0.0f}
     , mOrigin {0.0f, 0.0f}
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
+    , mRotation {0.0f}
+    , mScale {1.0f}
+    , mDefaultZIndex {0.0f}
+    , mZIndex {0.0f}
+    , mScrollHide {false}
     , mIsProcessing {false}
     , mVisible {true}
     , mEnabled {true}
@@ -120,7 +127,7 @@ void GuiComponent::setSize(const float w, const float h)
     onSizeChanged();
 }
 
-glm::vec2 GuiComponent::getCenter() const
+const glm::vec2 GuiComponent::getCenter() const
 {
     return glm::vec2 {mPosition.x - (getSize().x * mOrigin.x) + getSize().x / 2.0f,
                       mPosition.y - (getSize().y * mOrigin.y) + getSize().y / 2.0f};
@@ -162,7 +169,7 @@ void GuiComponent::sortChildren()
     });
 }
 
-int GuiComponent::getChildIndex() const
+const int GuiComponent::getChildIndex() const
 {
     std::vector<GuiComponent*>::iterator it =
         std::find(getParent()->mChildren.begin(), getParent()->mChildren.end(), this);
@@ -235,7 +242,7 @@ void GuiComponent::setAnimation(Animation* anim,
         delete oldAnim;
 }
 
-bool GuiComponent::stopAnimation(unsigned char slot)
+const bool GuiComponent::stopAnimation(unsigned char slot)
 {
     assert(slot < MAX_ANIMATIONS);
     if (mAnimationMap[slot]) {
@@ -248,7 +255,7 @@ bool GuiComponent::stopAnimation(unsigned char slot)
     }
 }
 
-bool GuiComponent::cancelAnimation(unsigned char slot)
+const bool GuiComponent::cancelAnimation(unsigned char slot)
 {
     assert(slot < MAX_ANIMATIONS);
     if (mAnimationMap[slot]) {
@@ -262,7 +269,7 @@ bool GuiComponent::cancelAnimation(unsigned char slot)
     }
 }
 
-bool GuiComponent::finishAnimation(unsigned char slot)
+const bool GuiComponent::finishAnimation(unsigned char slot)
 {
     assert(slot < MAX_ANIMATIONS);
     AnimationController* anim = mAnimationMap[slot];
@@ -280,7 +287,7 @@ bool GuiComponent::finishAnimation(unsigned char slot)
     }
 }
 
-bool GuiComponent::advanceAnimation(unsigned char slot, unsigned int time)
+const bool GuiComponent::advanceAnimation(unsigned char slot, unsigned int time)
 {
     assert(slot < MAX_ANIMATIONS);
     AnimationController* anim = mAnimationMap[slot];

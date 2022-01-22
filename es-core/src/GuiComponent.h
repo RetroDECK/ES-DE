@@ -93,27 +93,30 @@ public:
     virtual void onSizeChanged() {}
 
     virtual glm::vec2 getRotationSize() const { return getSize(); }
-    float getRotation() const { return mRotation; }
+    const float getRotation() const { return mRotation; }
     void setRotation(float rotation) { mRotation = rotation; }
     void setRotationDegrees(float rotation)
     {
         setRotation(static_cast<float>(glm::radians(rotation)));
     }
 
-    float getScale() const { return mScale; }
+    const float getScale() const { return mScale; }
     void setScale(float scale) { mScale = scale; }
 
-    float getZIndex() const { return mZIndex; }
+    const float getZIndex() const { return mZIndex; }
     void setZIndex(float zIndex) { mZIndex = zIndex; }
 
-    float getDefaultZIndex() const { return mDefaultZIndex; }
+    const float getDefaultZIndex() const { return mDefaultZIndex; }
     void setDefaultZIndex(float zIndex) { mDefaultZIndex = zIndex; }
 
-    bool isVisible() const { return mVisible; }
+    const bool isVisible() const { return mVisible; }
     void setVisible(bool visible) { mVisible = visible; }
 
+    const bool getScrollHide() { return mScrollHide; }
+    void setScrollHide(bool state) { mScrollHide = state; }
+
     // Returns the center point of the image (takes origin into account).
-    glm::vec2 getCenter() const;
+    const glm::vec2 getCenter() const;
 
     void setParent(GuiComponent* parent) { mParent = parent; }
     GuiComponent* getParent() const { return mParent; }
@@ -122,18 +125,21 @@ public:
     void removeChild(GuiComponent* cmp);
     void clearChildren() { mChildren.clear(); }
     void sortChildren();
-    unsigned int getChildCount() const { return static_cast<int>(mChildren.size()); }
-    int getChildIndex() const;
+    const unsigned int getChildCount() const { return static_cast<int>(mChildren.size()); }
+    const int getChildIndex() const;
     GuiComponent* getChild(unsigned int i) const { return mChildren.at(i); }
 
     // Animation will be automatically deleted when it completes or is stopped.
-    bool isAnimationPlaying(unsigned char slot) const { return mAnimationMap[slot] != nullptr; }
-    bool isAnimationReversed(unsigned char slot) const
+    const bool isAnimationPlaying(unsigned char slot) const
+    {
+        return mAnimationMap[slot] != nullptr;
+    }
+    const bool isAnimationReversed(unsigned char slot) const
     {
         assert(mAnimationMap[slot] != nullptr);
         return mAnimationMap[slot]->isReversed();
     }
-    int getAnimationTime(unsigned char slot) const
+    const int getAnimationTime(unsigned char slot) const
     {
         assert(mAnimationMap[slot] != nullptr);
         return mAnimationMap[slot]->getTime();
@@ -143,15 +149,15 @@ public:
                       std::function<void()> finishedCallback = nullptr,
                       bool reverse = false,
                       unsigned char slot = 0);
-    bool stopAnimation(unsigned char slot);
+    const bool stopAnimation(unsigned char slot);
     // Like stopAnimation, but doesn't call finishedCallback - only removes the animation, leaving
     // things in their current state. Returns true if successful (an animation was in this slot).
-    bool cancelAnimation(unsigned char slot);
+    const bool cancelAnimation(unsigned char slot);
     // Calls update(1.f) and finishedCallback, then deletes the animation - basically skips
     // to the end.  Returns true if successful (an animation was in this slot).
-    bool finishAnimation(unsigned char slot);
+    const bool finishAnimation(unsigned char slot);
     // Returns true if successful (an animation was in this slot).
-    bool advanceAnimation(unsigned char slot, unsigned int time);
+    const bool advanceAnimation(unsigned char slot, unsigned int time);
     void stopAllAnimations();
     void cancelAllAnimations();
 
@@ -180,6 +186,9 @@ public:
     // These functions are used to enable and disable options in menus, i.e. switches and similar.
     virtual bool getEnabled() { return mEnabled; }
     virtual void setEnabled(bool state) { mEnabled = state; }
+
+    std::string getMetadataField() { return mMetadataField; }
+    void setMetadataField(const std::string& text) { mMetadataField = text; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }
 
@@ -228,7 +237,7 @@ public:
     virtual HelpStyle getHelpStyle() { return HelpStyle(); }
 
     // Returns true if the component is busy doing background processing (e.g. HTTP downloads).
-    bool isProcessing() const { return mIsProcessing; }
+    const bool isProcessing() const { return mIsProcessing; }
 
     const static unsigned char MAX_ANIMATIONS = 4;
 
@@ -241,6 +250,8 @@ protected:
 
     GuiComponent* mParent;
     std::vector<GuiComponent*> mChildren;
+
+    std::string mMetadataField;
 
     unsigned char mOpacity;
     unsigned int mColor;
@@ -256,12 +267,12 @@ protected:
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
 
-    float mRotation = 0.0;
-    float mScale = 1.0;
+    float mRotation;
+    float mScale;
+    float mDefaultZIndex;
+    float mZIndex;
 
-    float mDefaultZIndex = 0;
-    float mZIndex = 0;
-
+    bool mScrollHide;
     bool mIsProcessing;
     bool mVisible;
     bool mEnabled;
