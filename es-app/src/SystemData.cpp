@@ -1235,7 +1235,9 @@ void SystemData::loadTheme()
         // No theme available for this platform.
         if (!mIsCustomCollectionSystem) {
             LOG(LogWarning) << "There is no \"" << mThemeFolder
-                            << "\" theme configuration available, system will be unthemed";
+                            << "\" configuration available for the selected theme set \""
+                            << Settings::getInstance()->getString("ThemeSet")
+                            << "\", system will be unthemed";
         }
         return;
     }

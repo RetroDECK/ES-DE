@@ -26,8 +26,6 @@ namespace pugi
     class xml_node;
 }
 
-template <typename T> class TextListComponent;
-
 class GuiComponent;
 class ImageComponent;
 class NinePatchComponent;
@@ -65,35 +63,25 @@ namespace ThemeFlags
 class ThemeException : public std::exception
 {
 public:
-    std::string msg;
+    std::string message;
 
-    const char* what() const throw() { return msg.c_str(); }
+    const char* what() const throw() { return message.c_str(); }
 
-    template <typename T> friend ThemeException& operator<<(ThemeException& e, T msg);
+    template <typename T> friend ThemeException& operator<<(ThemeException& e, T message)
+    {
+        std::stringstream ss;
+        ss << e.message << message;
+        e.message = ss.str();
+        return e;
+    }
 
     void setFiles(const std::deque<std::string>& deque)
     {
+        // Add all paths to the error message, separated by -> so it's easy to read the log
+        // output in case of theme loading errors.
         *this << "\"" << deque.front() << "\"";
         for (auto it = deque.cbegin() + 1; it != deque.cend(); ++it)
             *this << " -> \"" << (*it) << "\"";
-    }
-};
-
-template <typename T> ThemeException& operator<<(ThemeException& e, T appendMsg)
-{
-    std::stringstream ss;
-    ss << e.msg << appendMsg;
-    e.msg = ss.str();
-    return e;
-}
-
-struct ThemeSet {
-    std::string path;
-
-    std::string getName() const { return Utils::FileSystem::getStem(path); }
-    std::string getThemePath(const std::string& system) const
-    {
-        return path + "/" + system + "/theme.xml";
     }
 };
 
@@ -168,19 +156,32 @@ public:
         }
     };
 
-private:
-    class ThemeView
-    {
-    public:
-        std::map<std::string, ThemeElement> elements;
-        std::vector<std::string> orderedKeys;
-    };
-
-public:
     ThemeData();
+
+    struct ThemeSet {
+        std::string path;
+
+        std::string getName() const { return Utils::FileSystem::getStem(path); }
+        std::string getThemePath(const std::string& system) const
+        {
+            return path + "/" + system + "/theme.xml";
+        }
+    };
 
     // Throws ThemeException.
     void loadFile(const std::map<std::string, std::string>& sysDataMap, const std::string& path);
+    bool hasView(const std::string& view);
+
+    static std::vector<GuiComponent*> makeExtras(const std::shared_ptr<ThemeData>& theme,
+                                                 const std::string& view);
+
+    // If expectedType is an empty string, then do no type checking.
+    const ThemeElement* getElement(const std::string& view,
+                                   const std::string& element,
+                                   const std::string& expectedType) const;
+
+    static std::map<std::string, ThemeSet> getThemeSets();
+    static std::string getThemeFromCurrentSet(const std::string& system);
 
     enum ElementPropertyType {
         NORMALIZED_RECT,
@@ -192,22 +193,16 @@ public:
         BOOLEAN
     };
 
-    bool hasView(const std::string& view);
-
-    // If expectedType is an empty string, will do no type checking.
-    const ThemeElement* getElement(const std::string& view,
-                                   const std::string& element,
-                                   const std::string& expectedType) const;
-
-    static std::vector<GuiComponent*> makeExtras(const std::shared_ptr<ThemeData>& theme,
-                                                 const std::string& view);
-
-    static const std::shared_ptr<ThemeData> getDefault();
-
-    static std::map<std::string, ThemeSet> getThemeSets();
-    static std::string getThemeFromCurrentSet(const std::string& system);
+    std::map<std::string, std::string> mVariables;
 
 private:
+    class ThemeView
+    {
+    public:
+        std::map<std::string, ThemeElement> elements;
+        std::vector<std::string> orderedKeys;
+    };
+
     static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
     static std::vector<std::string> sSupportedFeatures;
     static std::vector<std::string> sSupportedViews;
@@ -215,8 +210,12 @@ private:
     std::deque<std::string> mPaths;
     float mVersion;
 
-    void parseFeatures(const pugi::xml_node& themeRoot);
+    static const std::shared_ptr<ThemeData> getDefault();
+    unsigned int getHexColor(const std::string& str);
+    std::string resolvePlaceholders(const std::string& in);
+
     void parseIncludes(const pugi::xml_node& themeRoot);
+    void parseFeatures(const pugi::xml_node& themeRoot);
     void parseVariables(const pugi::xml_node& root);
     void parseViews(const pugi::xml_node& themeRoot);
     void parseView(const pugi::xml_node& viewNode, ThemeView& view);

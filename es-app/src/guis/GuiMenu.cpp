@@ -172,7 +172,7 @@ void GuiMenu::openUIOptions()
     // Theme selection.
     auto themeSets = ThemeData::getThemeSets();
     if (!themeSets.empty()) {
-        std::map<std::string, ThemeSet>::const_iterator selectedSet =
+        std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet =
             themeSets.find(Settings::getInstance()->getString("ThemeSet"));
         if (selectedSet == themeSets.cend())
             selectedSet = themeSets.cbegin();

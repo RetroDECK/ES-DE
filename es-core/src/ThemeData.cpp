@@ -236,54 +236,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"zIndex", FLOAT},
        {"legacyZIndexMode", STRING}}}};
 
-// Helper.
-unsigned int getHexColor(const std::string& str)
-{
-    ThemeException error;
-
-    if (str == "")
-        throw error << "Empty color property";
-
-    size_t len {str.size()};
-    if (len != 6 && len != 8)
-        throw error << "Invalid color property \"" << str
-                    << "\" (must be 6 or 8 characters in length)";
-
-    unsigned int val;
-    std::stringstream ss;
-    ss << str;
-    ss >> std::hex >> val;
-
-    if (len == 6)
-        val = (val << 8) | 0xFF;
-
-    return val;
-}
-
-std::map<std::string, std::string> mVariables;
-
-std::string resolvePlaceholders(const std::string& in)
-{
-    if (in.empty())
-        return in;
-
-    const size_t variableBegin {in.find("${")};
-    const size_t variableEnd {in.find("}", variableBegin)};
-
-    if ((variableBegin == std::string::npos) || (variableEnd == std::string::npos))
-        return in;
-
-    std::string prefix {in.substr(0, variableBegin)};
-    std::string replace {in.substr(variableBegin + 2, variableEnd - (variableBegin + 2))};
-    std::string suffix {resolvePlaceholders(in.substr(variableEnd + 1).c_str())};
-
-    return prefix + mVariables[replace] + suffix;
-}
-
 ThemeData::ThemeData()
+    : mVersion {0} // The version will be loaded from the theme set.
 {
-    // The version will be loaded from the theme file.
-    mVersion = 0;
 }
 
 void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
@@ -331,6 +286,203 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     parseIncludes(root);
     parseViews(root);
     parseFeatures(root);
+}
+
+bool ThemeData::hasView(const std::string& view)
+{
+    auto viewIt = mViews.find(view);
+    return (viewIt != mViews.cend());
+}
+
+std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData>& theme,
+                                                 const std::string& view)
+{
+    std::vector<GuiComponent*> comps;
+
+    auto viewIt = theme->mViews.find(view);
+    if (viewIt == theme->mViews.cend())
+        return comps;
+
+    for (auto it = viewIt->second.orderedKeys.cbegin(); // Line break.
+         it != viewIt->second.orderedKeys.cend(); ++it) {
+        ThemeElement& elem {viewIt->second.elements.at(*it)};
+        if (elem.extra) {
+            GuiComponent* comp {nullptr};
+            const std::string& t {elem.type};
+            if (t == "image")
+                comp = new ImageComponent;
+            else if (t == "text")
+                comp = new TextComponent;
+            else if (t == "animation")
+                comp = new LottieComponent;
+
+            if (comp) {
+                comp->setDefaultZIndex(10.0f);
+                comp->applyTheme(theme, view, *it, ThemeFlags::ALL);
+                comps.push_back(comp);
+            }
+        }
+    }
+
+    return comps;
+}
+
+const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
+                                                     const std::string& element,
+                                                     const std::string& expectedType) const
+{
+    auto viewIt = mViews.find(view);
+    if (viewIt == mViews.cend())
+        return nullptr; // Not found.
+
+    auto elemIt = viewIt->second.elements.find(element);
+    if (elemIt == viewIt->second.elements.cend())
+        return nullptr;
+
+    if (elemIt->second.type != expectedType && !expectedType.empty()) {
+        LOG(LogWarning) << " requested mismatched theme type for [" << view << "." << element
+                        << "] - expected \"" << expectedType << "\", got \"" << elemIt->second.type
+                        << "\"";
+        return nullptr;
+    }
+
+    return &elemIt->second;
+}
+
+std::map<std::string, ThemeData::ThemeSet> ThemeData::getThemeSets()
+{
+    std::map<std::string, ThemeSet> sets;
+
+    // Check for themes first under the home directory, then under the data installation
+    // directory (Unix only) and last under the ES-DE binary directory.
+
+#if defined(__unix__) || defined(__APPLE__)
+    static const size_t pathCount = 3;
+#else
+    static const size_t pathCount = 2;
+#endif
+    std::string paths[pathCount] = {
+        Utils::FileSystem::getExePath() + "/themes",
+#if defined(__APPLE__)
+        Utils::FileSystem::getExePath() + "/../Resources/themes",
+#elif defined(__unix__)
+        Utils::FileSystem::getProgramDataPath() + "/themes",
+#endif
+        Utils::FileSystem::getHomePath() + "/.emulationstation/themes"
+    };
+
+    for (size_t i = 0; i < pathCount; ++i) {
+        if (!Utils::FileSystem::isDirectory(paths[i]))
+            continue;
+
+        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(paths[i])};
+
+        for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
+             it != dirContent.cend(); ++it) {
+            if (Utils::FileSystem::isDirectory(*it)) {
+                ThemeSet set = {*it};
+                sets[set.getName()] = set;
+            }
+        }
+    }
+
+    return sets;
+}
+
+std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
+{
+    std::map<std::string, ThemeSet> themeSets {ThemeData::getThemeSets()};
+    if (themeSets.empty())
+        // No theme sets available.
+        return "";
+
+    std::map<std::string, ThemeSet>::const_iterator set =
+        themeSets.find(Settings::getInstance()->getString("ThemeSet"));
+    if (set == themeSets.cend()) {
+        // Currently configured theme set is missing, attempt to load the default theme set
+        // rbsimple-DE instead, and if that's also missing then pick the first available set.
+        bool defaultSetFound {true};
+
+        set = themeSets.find("rbsimple-DE");
+
+        if (set == themeSets.cend()) {
+            set = themeSets.cbegin();
+            defaultSetFound = false;
+        }
+
+        LOG(LogWarning) << "Configured theme set \""
+                        << Settings::getInstance()->getString("ThemeSet")
+                        << "\" does not exist, loading" << (defaultSetFound ? " default " : " ")
+                        << "theme set \"" << set->first << "\" instead";
+
+        Settings::getInstance()->setString("ThemeSet", set->first);
+    }
+
+    return set->second.getThemePath(system);
+}
+
+const std::shared_ptr<ThemeData> ThemeData::getDefault()
+{
+    static std::shared_ptr<ThemeData> theme = nullptr;
+    if (theme == nullptr) {
+        theme = std::shared_ptr<ThemeData>(new ThemeData());
+
+        const std::string path {Utils::FileSystem::getHomePath() +
+                                "/.emulationstation/es_theme_default.xml"};
+        if (Utils::FileSystem::exists(path)) {
+            try {
+                std::map<std::string, std::string> emptyMap;
+                theme->loadFile(emptyMap, path);
+            }
+            catch (ThemeException& e) {
+                LOG(LogError) << e.what();
+                theme = std::shared_ptr<ThemeData>(new ThemeData()); // Reset to empty.
+            }
+        }
+    }
+
+    return theme;
+}
+
+unsigned int ThemeData::getHexColor(const std::string& str)
+{
+    ThemeException error;
+
+    if (str == "")
+        throw error << "Empty color property";
+
+    size_t len {str.size()};
+    if (len != 6 && len != 8)
+        throw error << "Invalid color property \"" << str
+                    << "\" (must be 6 or 8 characters in length)";
+
+    unsigned int val;
+    std::stringstream ss;
+    ss << str;
+    ss >> std::hex >> val;
+
+    if (len == 6)
+        val = (val << 8) | 0xFF;
+
+    return val;
+}
+
+std::string ThemeData::resolvePlaceholders(const std::string& in)
+{
+    if (in.empty())
+        return in;
+
+    const size_t variableBegin {in.find("${")};
+    const size_t variableEnd {in.find("}", variableBegin)};
+
+    if ((variableBegin == std::string::npos) || (variableEnd == std::string::npos))
+        return in;
+
+    std::string prefix {in.substr(0, variableBegin)};
+    std::string replace {in.substr(variableBegin + 2, variableEnd - (variableBegin + 2))};
+    std::string suffix {resolvePlaceholders(in.substr(variableEnd + 1).c_str())};
+
+    return prefix + mVariables[replace] + suffix;
 }
 
 void ThemeData::parseIncludes(const pugi::xml_node& root)
@@ -539,7 +691,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 std::string path = Utils::FileSystem::resolveRelativePath(str, mPaths.back(), true);
                 if (!ResourceManager::getInstance().fileExists(path)) {
                     std::stringstream ss;
-                    LOG(LogWarning) << error.msg << ":";
+                    LOG(LogWarning) << error.message << ":";
                     LOG(LogWarning)
                         << "Couldn't find file \"" << node.text().get() << "\" "
                         << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
@@ -606,160 +758,4 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             }
         }
     }
-}
-
-bool ThemeData::hasView(const std::string& view)
-{
-    auto viewIt = mViews.find(view);
-    return (viewIt != mViews.cend());
-}
-
-const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
-                                                     const std::string& element,
-                                                     const std::string& expectedType) const
-{
-    auto viewIt = mViews.find(view);
-    if (viewIt == mViews.cend())
-        return nullptr; // Not found.
-
-    auto elemIt = viewIt->second.elements.find(element);
-    if (elemIt == viewIt->second.elements.cend())
-        return nullptr;
-
-    if (elemIt->second.type != expectedType && !expectedType.empty()) {
-        LOG(LogWarning) << " requested mismatched theme type for [" << view << "." << element
-                        << "] - expected \"" << expectedType << "\", got \"" << elemIt->second.type
-                        << "\"";
-        return nullptr;
-    }
-
-    return &elemIt->second;
-}
-
-const std::shared_ptr<ThemeData> ThemeData::getDefault()
-{
-    static std::shared_ptr<ThemeData> theme = nullptr;
-    if (theme == nullptr) {
-        theme = std::shared_ptr<ThemeData>(new ThemeData());
-
-        const std::string path {Utils::FileSystem::getHomePath() +
-                                "/.emulationstation/es_theme_default.xml"};
-        if (Utils::FileSystem::exists(path)) {
-            try {
-                std::map<std::string, std::string> emptyMap;
-                theme->loadFile(emptyMap, path);
-            }
-            catch (ThemeException& e) {
-                LOG(LogError) << e.what();
-                theme = std::shared_ptr<ThemeData>(new ThemeData()); // Reset to empty.
-            }
-        }
-    }
-
-    return theme;
-}
-
-std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData>& theme,
-                                                 const std::string& view)
-{
-    std::vector<GuiComponent*> comps;
-
-    auto viewIt = theme->mViews.find(view);
-    if (viewIt == theme->mViews.cend())
-        return comps;
-
-    for (auto it = viewIt->second.orderedKeys.cbegin(); // Line break.
-         it != viewIt->second.orderedKeys.cend(); ++it) {
-        ThemeElement& elem {viewIt->second.elements.at(*it)};
-        if (elem.extra) {
-            GuiComponent* comp {nullptr};
-            const std::string& t {elem.type};
-            if (t == "image")
-                comp = new ImageComponent;
-            else if (t == "text")
-                comp = new TextComponent;
-            else if (t == "animation")
-                comp = new LottieComponent;
-
-            if (comp) {
-                comp->setDefaultZIndex(10.0f);
-                comp->applyTheme(theme, view, *it, ThemeFlags::ALL);
-                comps.push_back(comp);
-            }
-        }
-    }
-
-    return comps;
-}
-
-std::map<std::string, ThemeSet> ThemeData::getThemeSets()
-{
-    std::map<std::string, ThemeSet> sets;
-
-    // Check for themes first under the home directory, then under the data installation
-    // directory (Unix only) and last under the ES-DE binary directory.
-
-#if defined(__unix__) || defined(__APPLE__)
-    static const size_t pathCount = 3;
-#else
-    static const size_t pathCount = 2;
-#endif
-    std::string paths[pathCount] = {
-        Utils::FileSystem::getExePath() + "/themes",
-#if defined(__APPLE__)
-        Utils::FileSystem::getExePath() + "/../Resources/themes",
-#elif defined(__unix__)
-        Utils::FileSystem::getProgramDataPath() + "/themes",
-#endif
-        Utils::FileSystem::getHomePath() + "/.emulationstation/themes"
-    };
-
-    for (size_t i = 0; i < pathCount; ++i) {
-        if (!Utils::FileSystem::isDirectory(paths[i]))
-            continue;
-
-        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(paths[i])};
-
-        for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
-             it != dirContent.cend(); ++it) {
-            if (Utils::FileSystem::isDirectory(*it)) {
-                ThemeSet set = {*it};
-                sets[set.getName()] = set;
-            }
-        }
-    }
-
-    return sets;
-}
-
-std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
-{
-    std::map<std::string, ThemeSet> themeSets {ThemeData::getThemeSets()};
-    if (themeSets.empty())
-        // No theme sets available.
-        return "";
-
-    std::map<std::string, ThemeSet>::const_iterator set =
-        themeSets.find(Settings::getInstance()->getString("ThemeSet"));
-    if (set == themeSets.cend()) {
-        // Currently configured theme set is missing, attempt to load the default theme set
-        // rbsimple-DE instead, and if that's also missing then pick the first available set.
-        bool defaultSetFound {true};
-
-        set = themeSets.find("rbsimple-DE");
-
-        if (set == themeSets.cend()) {
-            set = themeSets.cbegin();
-            defaultSetFound = false;
-        }
-
-        LOG(LogWarning) << "Configured theme set \""
-                        << Settings::getInstance()->getString("ThemeSet")
-                        << "\" does not exist, loading" << (defaultSetFound ? " default " : " ")
-                        << "theme set \"" << set->first << "\" instead";
-
-        Settings::getInstance()->setString("ThemeSet", set->first);
-    }
-
-    return set->second.getThemePath(system);
 }
