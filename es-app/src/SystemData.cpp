@@ -1231,8 +1231,14 @@ void SystemData::loadTheme()
 
     std::string path = getThemePath();
 
-    if (!Utils::FileSystem::exists(path)) // No theme available for this platform.
+    if (!Utils::FileSystem::exists(path)) {
+        // No theme available for this platform.
+        if (!mIsCustomCollectionSystem) {
+            LOG(LogWarning) << "There is no \"" << mThemeFolder
+                            << "\" theme configuration available, system will be unthemed";
+        }
         return;
+    }
 
     try {
         // Build map with system variables for theme to use.

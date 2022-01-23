@@ -21,6 +21,8 @@
 #include <algorithm>
 #include <pugixml.hpp>
 
+#define MINIMUM_THEME_FORMAT_VERSION 3
+
 std::vector<std::string> ThemeData::sSupportedViews {{"all"},      {"system"}, {"basic"},
                                                      {"detailed"}, {"grid"},   {"video"}};
 std::vector<std::string> ThemeData::sSupportedFeatures {
@@ -234,19 +236,18 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"zIndex", FLOAT},
        {"legacyZIndexMode", STRING}}}};
 
-#define MINIMUM_THEME_FORMAT_VERSION 3
-#define CURRENT_THEME_FORMAT_VERSION 7
-
 // Helper.
 unsigned int getHexColor(const std::string& str)
 {
     ThemeException error;
-    if (str == "")
-        throw error << "Empty color";
 
-    size_t len = str.size();
+    if (str == "")
+        throw error << "Empty color property";
+
+    size_t len {str.size()};
     if (len != 6 && len != 8)
-        throw error << "Invalid color (bad length, \"" << str << "\" - must be 6 or 8)";
+        throw error << "Invalid color property \"" << str
+                    << "\" (must be 6 or 8 characters in length)";
 
     unsigned int val;
     std::stringstream ss;
@@ -266,15 +267,15 @@ std::string resolvePlaceholders(const std::string& in)
     if (in.empty())
         return in;
 
-    const size_t variableBegin = in.find("${");
-    const size_t variableEnd = in.find("}", variableBegin);
+    const size_t variableBegin {in.find("${")};
+    const size_t variableEnd {in.find("}", variableBegin)};
 
     if ((variableBegin == std::string::npos) || (variableEnd == std::string::npos))
         return in;
 
-    std::string prefix = in.substr(0, variableBegin);
-    std::string replace = in.substr(variableBegin + 2, variableEnd - (variableBegin + 2));
-    std::string suffix = resolvePlaceholders(in.substr(variableEnd + 1).c_str());
+    std::string prefix {in.substr(0, variableBegin)};
+    std::string replace {in.substr(variableBegin + 2, variableEnd - (variableBegin + 2))};
+    std::string suffix {resolvePlaceholders(in.substr(variableEnd + 1).c_str())};
 
     return prefix + mVariables[replace] + suffix;
 }
@@ -285,11 +286,13 @@ ThemeData::ThemeData()
     mVersion = 0;
 }
 
-void ThemeData::loadFile(std::map<std::string, std::string> sysDataMap, const std::string& path)
+void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
+                         const std::string& path)
 {
     mPaths.push_back(path);
 
     ThemeException error;
+    error << "ThemeData::loadFile(): ";
     error.setFiles(mPaths);
 
     if (!Utils::FileSystem::exists(path))
@@ -303,27 +306,26 @@ void ThemeData::loadFile(std::map<std::string, std::string> sysDataMap, const st
 
     pugi::xml_document doc;
 #if defined(_WIN64)
-    pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+    pugi::xml_parse_result res {doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-    pugi::xml_parse_result res = doc.load_file(path.c_str());
+    pugi::xml_parse_result res {doc.load_file(path.c_str())};
 #endif
     if (!res)
-        throw error << "XML parsing error: \n    " << res.description();
+        throw error << ": XML parsing error: " << res.description();
 
-    pugi::xml_node root = doc.child("theme");
+    pugi::xml_node root {doc.child("theme")};
     if (!root)
-        throw error << "Missing <theme> tag!";
+        throw error << ": Missing <theme> tag";
 
-    // parse version
+    // Parse version.
     mVersion = root.child("formatVersion").text().as_float(-404);
     if (mVersion == -404)
-        throw error << "<formatVersion> tag missing\n   "
-                       "It's either out of date or you need to add <formatVersion>"
-                    << CURRENT_THEME_FORMAT_VERSION << "</formatVersion> inside your <theme> tag.";
+        throw error << ": <formatVersion> tag missing";
 
     if (mVersion < MINIMUM_THEME_FORMAT_VERSION)
-        throw error << "Theme uses format version " << mVersion << ". Minimum supported version is "
-                    << MINIMUM_THEME_FORMAT_VERSION << ".";
+        throw error << ": Defined format version " << mVersion
+                    << " is less than the minimum supported version "
+                    << MINIMUM_THEME_FORMAT_VERSION;
 
     parseVariables(root);
     parseIncludes(root);
@@ -334,11 +336,12 @@ void ThemeData::loadFile(std::map<std::string, std::string> sysDataMap, const st
 void ThemeData::parseIncludes(const pugi::xml_node& root)
 {
     ThemeException error;
+    error << "ThemeData::parseIncludes(): ";
     error.setFiles(mPaths);
 
     for (pugi::xml_node node = root.child("include"); node; node = node.next_sibling("include")) {
-        std::string relPath = resolvePlaceholders(node.text().as_string());
-        std::string path = Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true);
+        std::string relPath {resolvePlaceholders(node.text().as_string())};
+        std::string path {Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true)};
         if (!ResourceManager::getInstance().fileExists(path))
             throw error << " -> \"" << relPath << "\" not found (resolved to \"" << path << "\")";
         error << " -> \"" << relPath << "\"";
@@ -347,17 +350,17 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
 
         pugi::xml_document includeDoc;
 #if defined(_WIN64)
-        pugi::xml_parse_result result =
-            includeDoc.load_file(Utils::String::stringToWideString(path).c_str());
+        pugi::xml_parse_result result {
+            includeDoc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-        pugi::xml_parse_result result = includeDoc.load_file(path.c_str());
+        pugi::xml_parse_result result {includeDoc.load_file(path.c_str())};
 #endif
         if (!result)
             throw error << ": Error parsing file: " << result.description();
 
-        pugi::xml_node theme = includeDoc.child("theme");
+        pugi::xml_node theme {includeDoc.child("theme")};
         if (!theme)
-            throw error << "Missing <theme> tag ";
+            throw error << ": Missing <theme> tag";
 
         parseVariables(theme);
         parseIncludes(theme);
@@ -371,13 +374,14 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
 void ThemeData::parseFeatures(const pugi::xml_node& root)
 {
     ThemeException error;
+    error << "ThemeData::parseFeatures(): ";
     error.setFiles(mPaths);
 
     for (pugi::xml_node node = root.child("feature"); node; node = node.next_sibling("feature")) {
         if (!node.attribute("supported"))
-            throw error << "Feature missing \"supported\" attribute!";
+            throw error << ": Feature missing \"supported\" attribute";
 
-        const std::string supportedAttr = node.attribute("supported").as_string();
+        const std::string supportedAttr {node.attribute("supported").as_string()};
 
         if (std::find(sSupportedFeatures.cbegin(), sSupportedFeatures.cend(), supportedAttr) !=
             sSupportedFeatures.cend()) {
@@ -391,14 +395,14 @@ void ThemeData::parseVariables(const pugi::xml_node& root)
     ThemeException error;
     error.setFiles(mPaths);
 
-    pugi::xml_node variables = root.child("variables");
+    pugi::xml_node variables {root.child("variables")};
 
     if (!variables)
         return;
 
     for (pugi::xml_node_iterator it = variables.begin(); it != variables.end(); ++it) {
-        std::string key = it->name();
-        std::string val = it->text().as_string();
+        std::string key {it->name()};
+        std::string val {it->text().as_string()};
 
         if (!val.empty())
             mVariables.insert(std::pair<std::string, std::string>(key, val));
@@ -408,17 +412,18 @@ void ThemeData::parseVariables(const pugi::xml_node& root)
 void ThemeData::parseViews(const pugi::xml_node& root)
 {
     ThemeException error;
+    error << "ThemeData::parseViews(): ";
     error.setFiles(mPaths);
 
     // Parse views.
     for (pugi::xml_node node = root.child("view"); node; node = node.next_sibling("view")) {
         if (!node.attribute("name"))
-            throw error << "View missing \"name\" attribute!";
+            throw error << ": View missing \"name\" attribute";
 
-        const std::string delim = " \t\r\n,";
-        const std::string nameAttr = node.attribute("name").as_string();
-        size_t prevOff = nameAttr.find_first_not_of(delim, 0);
-        size_t off = nameAttr.find_first_of(delim, prevOff);
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
         std::string viewKey;
         while (off != std::string::npos || prevOff != std::string::npos) {
             viewKey = nameAttr.substr(prevOff, off - prevOff);
@@ -427,9 +432,9 @@ void ThemeData::parseViews(const pugi::xml_node& root)
 
             if (std::find(sSupportedViews.cbegin(), sSupportedViews.cend(), viewKey) !=
                 sSupportedViews.cend()) {
-                ThemeView& view =
+                ThemeView& view {
                     mViews.insert(std::pair<std::string, ThemeView>(viewKey, ThemeView()))
-                        .first->second;
+                        .first->second};
                 parseView(node, view);
             }
         }
@@ -439,22 +444,23 @@ void ThemeData::parseViews(const pugi::xml_node& root)
 void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
 {
     ThemeException error;
+    error << "ThemeData::parseView(): ";
     error.setFiles(mPaths);
 
     for (pugi::xml_node node = root.first_child(); node; node = node.next_sibling()) {
         if (!node.attribute("name"))
-            throw error << "Element of type \"" << node.name() << "\" missing \"name\" attribute!";
+            throw error << ": Element of type \"" << node.name() << "\" missing \"name\" attribute";
 
         auto elemTypeIt = sElementMap.find(node.name());
         if (elemTypeIt == sElementMap.cend())
-            throw error << "Unknown element of type \"" << node.name() << "\"!";
+            throw error << ": Unknown element type \"" << node.name() << "\"";
 
-        const std::string delim = " \t\r\n,";
-        const std::string nameAttr = node.attribute("name").as_string();
-        size_t prevOff = nameAttr.find_first_not_of(delim, 0);
-        size_t off = nameAttr.find_first_of(delim, prevOff);
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
         while (off != std::string::npos || prevOff != std::string::npos) {
-            std::string elemKey = nameAttr.substr(prevOff, off - prevOff);
+            std::string elemKey {nameAttr.substr(prevOff, off - prevOff)};
             prevOff = nameAttr.find_first_not_of(delim, off);
             off = nameAttr.find_first_of(delim, prevOff);
 
@@ -475,6 +481,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                              ThemeElement& element)
 {
     ThemeException error;
+    error << "ThemeData::parseElement(): ";
     error.setFiles(mPaths);
 
     element.type = root.name();
@@ -483,10 +490,10 @@ void ThemeData::parseElement(const pugi::xml_node& root,
     for (pugi::xml_node node = root.first_child(); node; node = node.next_sibling()) {
         auto typeIt = typeMap.find(node.name());
         if (typeIt == typeMap.cend())
-            throw error << ": Unknown property type \"" << node.name() << "\" (for element of type "
-                        << root.name() << ")";
+            throw error << ": Unknown property type \"" << node.name()
+                        << "\" for element of type \"" << root.name() << "\"";
 
-        std::string str = resolvePlaceholders(node.text().as_string());
+        std::string str {resolvePlaceholders(node.text().as_string())};
 
         switch (typeIt->second) {
             case NORMALIZED_RECT: {
@@ -512,8 +519,8 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             case NORMALIZED_PAIR: {
                 size_t divider = str.find(' ');
                 if (divider == std::string::npos)
-                    throw error << "invalid normalized pair (property \"" << node.name()
-                                << "\", value \"" << str.c_str() << "\")";
+                    throw error << ": Invalid normalized pair value \"" << str.c_str()
+                                << "\" for property \"" << node.name() << "\"";
 
                 std::string first {str.substr(0, divider)};
                 std::string second {str.substr(divider, std::string::npos)};
@@ -532,10 +539,9 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 std::string path = Utils::FileSystem::resolveRelativePath(str, mPaths.back(), true);
                 if (!ResourceManager::getInstance().fileExists(path)) {
                     std::stringstream ss;
-                    // "From theme yadda yadda, included file yadda yadda.
                     LOG(LogWarning) << error.msg << ":";
                     LOG(LogWarning)
-                        << "Could not find file \"" << node.text().get() << "\" "
+                        << "Couldn't find file \"" << node.text().get() << "\" "
                         << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
                                                           "");
                 }
@@ -571,26 +577,31 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 break;
             }
             case COLOR: {
-                element.properties[node.name()] = getHexColor(str);
+                try {
+                    element.properties[node.name()] = getHexColor(str);
+                }
+                catch (ThemeException& e) {
+                    throw error << ": " << e.what();
+                }
                 break;
             }
             case FLOAT: {
-                float floatVal = static_cast<float>(strtod(str.c_str(), 0));
+                float floatVal {static_cast<float>(strtod(str.c_str(), 0))};
                 element.properties[node.name()] = floatVal;
                 break;
             }
             case BOOLEAN: {
-                // Only look at first char.
-                char first = str[0];
+                // Only look at first character.
+                char first {str.front()};
                 // 1*, t* (true), T* (True), y* (yes), Y* (YES)
-                bool boolVal =
-                    (first == '1' || first == 't' || first == 'T' || first == 'y' || first == 'Y');
+                bool boolVal {
+                    (first == '1' || first == 't' || first == 'T' || first == 'y' || first == 'Y')};
 
                 element.properties[node.name()] = boolVal;
                 break;
             }
             default: {
-                throw error << "Unknown ElementPropertyType for \""
+                throw error << ": Unknown ElementPropertyType for \""
                             << root.attribute("name").as_string() << "\", property " << node.name();
             }
         }
@@ -631,8 +642,8 @@ const std::shared_ptr<ThemeData> ThemeData::getDefault()
     if (theme == nullptr) {
         theme = std::shared_ptr<ThemeData>(new ThemeData());
 
-        const std::string path =
-            Utils::FileSystem::getHomePath() + "/.emulationstation/es_theme_default.xml";
+        const std::string path {Utils::FileSystem::getHomePath() +
+                                "/.emulationstation/es_theme_default.xml"};
         if (Utils::FileSystem::exists(path)) {
             try {
                 std::map<std::string, std::string> emptyMap;
@@ -707,7 +718,7 @@ std::map<std::string, ThemeSet> ThemeData::getThemeSets()
         if (!Utils::FileSystem::isDirectory(paths[i]))
             continue;
 
-        Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(paths[i]);
+        Utils::FileSystem::StringList dirContent {Utils::FileSystem::getDirContent(paths[i])};
 
         for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
@@ -723,7 +734,7 @@ std::map<std::string, ThemeSet> ThemeData::getThemeSets()
 
 std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
 {
-    std::map<std::string, ThemeSet> themeSets = ThemeData::getThemeSets();
+    std::map<std::string, ThemeSet> themeSets {ThemeData::getThemeSets()};
     if (themeSets.empty())
         // No theme sets available.
         return "";
@@ -733,7 +744,7 @@ std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
     if (set == themeSets.cend()) {
         // Currently configured theme set is missing, attempt to load the default theme set
         // rbsimple-DE instead, and if that's also missing then pick the first available set.
-        bool defaultSetFound = true;
+        bool defaultSetFound {true};
 
         set = themeSets.find("rbsimple-DE");
 

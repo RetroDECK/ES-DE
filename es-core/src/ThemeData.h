@@ -67,13 +67,13 @@ class ThemeException : public std::exception
 public:
     std::string msg;
 
-    virtual const char* what() const throw() { return msg.c_str(); }
+    const char* what() const throw() { return msg.c_str(); }
 
     template <typename T> friend ThemeException& operator<<(ThemeException& e, T msg);
 
     void setFiles(const std::deque<std::string>& deque)
     {
-        *this << "From theme \"" << deque.front() << "\"";
+        *this << "\"" << deque.front() << "\"";
         for (auto it = deque.cbegin() + 1; it != deque.cend(); ++it)
             *this << " -> \"" << (*it) << "\"";
     }
@@ -180,7 +180,7 @@ public:
     ThemeData();
 
     // Throws ThemeException.
-    void loadFile(std::map<std::string, std::string> sysDataMap, const std::string& path);
+    void loadFile(const std::map<std::string, std::string>& sysDataMap, const std::string& path);
 
     enum ElementPropertyType {
         NORMALIZED_RECT,
