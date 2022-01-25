@@ -384,7 +384,7 @@ void ImageComponent::updateColors()
 
 void ImageComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mTexture == nullptr || mTargetSize == glm::vec2 {0.0f, 0.0f})
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
