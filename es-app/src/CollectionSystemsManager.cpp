@@ -756,9 +756,9 @@ SystemData* CollectionSystemsManager::getSystemToView(SystemData* sys)
 
 FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* sys)
 {
-    FileData* rootFolder = sys->getRootFolder();
-    FileFilterIndex* idx = rootFolder->getSystem()->getIndex();
-    std::string desc = "This collection is empty";
+    FileData* rootFolder {sys->getRootFolder()};
+    FileFilterIndex* idx {rootFolder->getSystem()->getIndex()};
+    std::string desc {"This collection is empty"};
     std::vector<FileData*> gamesList;
     std::vector<FileData*> gamesListRandom;
 
@@ -772,7 +772,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         gamesList = rootFolder->getChildrenListToDisplay();
     }
 
-    unsigned int gameCount = static_cast<unsigned int>(gamesList.size());
+    unsigned int gameCount {static_cast<unsigned int>(gamesList.size())};
 
     // If there is more than 1 game in the collection, then randomize the example game names.
     if (gameCount > 1) {
@@ -785,7 +785,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
             std::uniform_int_distribution<int> uniform_dist(0, gameCount - 1 - i);
             target = uniform_dist(engine);
             gamesListRandom.push_back(gamesList[target]);
-            std::vector<FileData*>::iterator it = (gamesList.begin() + target);
+            std::vector<FileData*>::iterator it {(gamesList.begin() + target)};
             gamesList.erase(it);
             if (gamesList.size() == 0)
                 break;

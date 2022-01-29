@@ -134,7 +134,7 @@ public:
     const bool isEditing() const { return mIsEditingCustom; }
     const std::string& getEditingCollection() const { return mEditingCollection; }
 
-    inline static std::string myCollectionsName = "collections";
+    static inline std::string myCollectionsName = "collections";
 
 private:
     CollectionSystemsManager() noexcept;

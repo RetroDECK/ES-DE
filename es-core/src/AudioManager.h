@@ -41,8 +41,8 @@ public:
 
     bool getHasAudioDevice() { return sHasAudioDevice; }
 
-    inline static SDL_AudioDeviceID sAudioDevice = 0;
-    inline static SDL_AudioSpec sAudioFormat;
+    static inline SDL_AudioDeviceID sAudioDevice {0};
+    static inline SDL_AudioSpec sAudioFormat;
 
 private:
     AudioManager() noexcept;
@@ -50,10 +50,10 @@ private:
     static void mixAudio(void* unused, Uint8* stream, int len);
     static void mixAudio2(void* unused, Uint8* stream, int len);
 
-    inline static SDL_AudioStream* sConversionStream;
-    inline static std::vector<std::shared_ptr<Sound>> sSoundVector;
-    inline static std::atomic<bool> sMuteStream = false;
-    inline static bool sHasAudioDevice = true;
+    static inline SDL_AudioStream* sConversionStream;
+    static inline std::vector<std::shared_ptr<Sound>> sSoundVector;
+    static inline std::atomic<bool> sMuteStream = false;
+    static inline bool sHasAudioDevice = true;
 };
 
 #endif // ES_CORE_AUDIO_MANAGER_H

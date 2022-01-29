@@ -57,8 +57,8 @@ private:
                                                   {LogWarning, "Warn"},
                                                   {LogInfo, "Info"},
                                                   {LogDebug, "Debug"}};
-    inline static std::ofstream sFile;
-    inline static LogLevel sReportingLevel = LogInfo;
+    static inline std::ofstream sFile;
+    static inline LogLevel sReportingLevel = LogInfo;
     LogLevel mMessageLevel;
 };
 

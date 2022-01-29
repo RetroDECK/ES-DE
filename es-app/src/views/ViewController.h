@@ -118,26 +118,26 @@ public:
 
     // Font Awesome symbols.
 #if defined(_MSC_VER) // MSVC compiler.
-    inline static const std::string CONTROLLER_CHAR {Utils::String::wideStringToString(L"\uf11b")};
-    inline static const std::string CROSSEDCIRCLE_CHAR {
+    static inline const std::string CONTROLLER_CHAR {Utils::String::wideStringToString(L"\uf11b")};
+    static inline const std::string CROSSEDCIRCLE_CHAR {
         Utils::String::wideStringToString(L"\uf05e")};
-    inline static const std::string EXCLAMATION_CHAR {Utils::String::wideStringToString(L"\uf06a")};
-    inline static const std::string FAVORITE_CHAR {Utils::String::wideStringToString(L"\uf005")};
-    inline static const std::string FILTER_CHAR {Utils::String::wideStringToString(L"\uf0b0")};
-    inline static const std::string FOLDER_CHAR {Utils::String::wideStringToString(L"\uf07C")};
-    inline static const std::string GEAR_CHAR {Utils::String::wideStringToString(L"\uf013")};
-    inline static const std::string KEYBOARD_CHAR {Utils::String::wideStringToString(L"\uf11c")};
-    inline static const std::string TICKMARK_CHAR {Utils::String::wideStringToString(L"\uf14A")};
+    static inline const std::string EXCLAMATION_CHAR {Utils::String::wideStringToString(L"\uf06a")};
+    static inline const std::string FAVORITE_CHAR {Utils::String::wideStringToString(L"\uf005")};
+    static inline const std::string FILTER_CHAR {Utils::String::wideStringToString(L"\uf0b0")};
+    static inline const std::string FOLDER_CHAR {Utils::String::wideStringToString(L"\uf07C")};
+    static inline const std::string GEAR_CHAR {Utils::String::wideStringToString(L"\uf013")};
+    static inline const std::string KEYBOARD_CHAR {Utils::String::wideStringToString(L"\uf11c")};
+    static inline const std::string TICKMARK_CHAR {Utils::String::wideStringToString(L"\uf14A")};
 #else
-    inline static const std::string CONTROLLER_CHAR {"\uf11b"};
-    inline static const std::string CROSSEDCIRCLE_CHAR {"\uf05e"};
-    inline static const std::string EXCLAMATION_CHAR {"\uf06a"};
-    inline static const std::string FAVORITE_CHAR {"\uf005"};
-    inline static const std::string FILTER_CHAR {"\uf0b0"};
-    inline static const std::string FOLDER_CHAR {"\uf07C"};
-    inline static const std::string GEAR_CHAR {"\uf013"};
-    inline static const std::string KEYBOARD_CHAR {"\uf11c"};
-    inline static const std::string TICKMARK_CHAR {"\uf14a"};
+    static inline const std::string CONTROLLER_CHAR {"\uf11b"};
+    static inline const std::string CROSSEDCIRCLE_CHAR {"\uf05e"};
+    static inline const std::string EXCLAMATION_CHAR {"\uf06a"};
+    static inline const std::string FAVORITE_CHAR {"\uf005"};
+    static inline const std::string FILTER_CHAR {"\uf0b0"};
+    static inline const std::string FOLDER_CHAR {"\uf07C"};
+    static inline const std::string GEAR_CHAR {"\uf013"};
+    static inline const std::string KEYBOARD_CHAR {"\uf11c"};
+    static inline const std::string TICKMARK_CHAR {"\uf14a"};
 #endif
 
 private:
