@@ -71,12 +71,17 @@ void ScrollableContainer::reset()
         if (mChildren.front()->getSize().y > mSize.y) {
             float numLines {mSize.y / combinedHeight};
             mSize.y = floorf(numLines) * combinedHeight;
+            if (mSize.y == 0.0f)
+                mSize.y = combinedHeight;
         }
     }
 }
 
 void ScrollableContainer::update(int deltaTime)
 {
+    if (mSize == glm::vec2 {0.0f, 0.0f})
+        return;
+
     // Don't scroll if the media viewer or screensaver is active or if text scrolling is disabled;
     if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
         !mWindow->getAllowTextScrolling()) {
