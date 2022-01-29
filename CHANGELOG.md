@@ -10,7 +10,14 @@
 
 ### Detailed list of changes
 
-* Added support for Lottie animations (vector graphics), fully configurable as a theme extra
+* Made fundamental changes to the application logic by removing most view styles and replacing them with a new theme variants concept
+* Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
+* Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
+* Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
+* Added support for defining what type of image metadata to use for all image elements (and also for the video component static image)
+* Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
+* Added theme support for Lottie animations (vector graphics)
+* Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
@@ -20,12 +27,15 @@
 * Reduced CPU usage significantly when a menu is open by not rendering the bottom of the stack
 * Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
 * Added logging of the display refresh rate on startup
+* Improved the theme loading error logging to make it consistent and easier to understand
+* Added a log warning for unthemed systems during theme set loading
 * Added a color model conversion shader for converting from BGRA to RGBA
 * Added renderer support for supplying a separate format than internalFormat when creating textures (although not really supported by the OpenGL standard)
 * Added the rlottie library as a Git subtree
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Moved all Platform functions to the utility namespace instead of using the global namespace
+* Implemented proper XML attribute support in ThemeData that eliminated the risk of name collisions
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
 * Refactored the six gamelist classes into two new classes; GamelistBase and GamelistView
@@ -38,6 +48,7 @@
 * Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
 * Removed the deprecated VideoVlcComponent
 * Lots of general code cleanup and refactoring
+* Updated and improved the theming documentation
 
 ### Bug fixes
 
