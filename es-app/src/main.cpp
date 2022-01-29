@@ -642,6 +642,7 @@ int main(int argc, char* argv[])
 
     AudioManager::getInstance();
     MameNames::getInstance();
+    ThemeData::getThemeSets();
     loadSystemsReturnCode loadSystemsStatus = loadSystemConfigFile();
 
     if (loadSystemsStatus) {

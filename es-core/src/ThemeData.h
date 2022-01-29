@@ -3,9 +3,9 @@
 //  EmulationStation Desktop Edition
 //  ThemeData.h
 //
-//  Finds available themes on the file system and loads these,
-//  including the parsing of individual theme components
-//  (includes, features, variables, views, elements).
+//  Finds available themes on the file system and loads and parses these.
+//  Basic error checking for valid elements and data types is done here,
+//  with additional validation handled by the individual components.
 //
 
 #ifndef ES_CORE_THEME_DATA_H
@@ -158,8 +158,31 @@ public:
 
     ThemeData();
 
+    class ThemeView
+    {
+    public:
+        std::map<std::string, ThemeElement> elements;
+        std::vector<std::string> legacyOrderedKeys;
+    };
+
+    struct ThemeVariant {
+        std::string name;
+        std::string label;
+        bool selectable;
+        bool override;
+        std::string overrideTrigger;
+        std::string overrideVariant;
+    };
+
+    struct ThemeCapability {
+        std::vector<ThemeVariant> variants;
+        std::vector<std::string> aspectRatios;
+        bool legacyTheme;
+    };
+
     struct ThemeSet {
         std::string path;
+        ThemeCapability capabilities;
 
         std::string getName() const { return Utils::FileSystem::getStem(path); }
         std::string getThemePath(const std::string& system) const
@@ -168,20 +191,21 @@ public:
         }
     };
 
-    // Throws ThemeException.
     void loadFile(const std::map<std::string, std::string>& sysDataMap, const std::string& path);
     bool hasView(const std::string& view);
+    ThemeView& getViewElements(std::string view) { return mViews[view]; }
 
     static std::vector<GuiComponent*> makeExtras(const std::shared_ptr<ThemeData>& theme,
                                                  const std::string& view);
 
-    // If expectedType is an empty string, then do no type checking.
     const ThemeElement* getElement(const std::string& view,
                                    const std::string& element,
                                    const std::string& expectedType) const;
 
-    static std::map<std::string, ThemeSet> getThemeSets();
+    static std::map<std::string, ThemeSet>& getThemeSets();
     static std::string getThemeFromCurrentSet(const std::string& system);
+
+    const bool isLegacyTheme() { return mLegacyTheme; }
 
     enum ElementPropertyType {
         NORMALIZED_RECT,
@@ -196,26 +220,16 @@ public:
     std::map<std::string, std::string> mVariables;
 
 private:
-    class ThemeView
-    {
-    public:
-        std::map<std::string, ThemeElement> elements;
-        std::vector<std::string> orderedKeys;
-    };
-
-    static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
-    static std::vector<std::string> sSupportedFeatures;
-    static std::vector<std::string> sSupportedViews;
-
-    std::deque<std::string> mPaths;
-    float mVersion;
-
     static const std::shared_ptr<ThemeData> getDefault();
     unsigned int getHexColor(const std::string& str);
     std::string resolvePlaceholders(const std::string& in);
 
+    static ThemeCapability parseThemeCapabilities(const std::string& path);
+
     void parseIncludes(const pugi::xml_node& themeRoot);
     void parseFeatures(const pugi::xml_node& themeRoot);
+    void parseVariants(const pugi::xml_node& themeRoot);
+    void parseAspectRatios(const pugi::xml_node& themeRoot);
     void parseVariables(const pugi::xml_node& root);
     void parseViews(const pugi::xml_node& themeRoot);
     void parseView(const pugi::xml_node& viewNode, ThemeView& view);
@@ -223,7 +237,24 @@ private:
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element);
 
+    static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
+    static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
+
+    static std::vector<std::string> sLegacySupportedFeatures;
+    static std::vector<std::string> sLegacySupportedViews;
+    static std::vector<std::string> sSupportedViews;
+    static std::vector<std::string> sSupportedAspectRatios;
+
+    static inline std::map<std::string, ThemeSet> mThemeSets;
+    std::map<std::string, ThemeData::ThemeSet>::iterator mCurrentThemeSet;
+
     std::map<std::string, ThemeView> mViews;
+    std::deque<std::string> mPaths;
+    std::vector<std::string> mVariants;
+    std::vector<std::string> mAspectRatios;
+    std::string mSelectedVariant;
+    std::string mSelectedAspectRatio;
+    bool mLegacyTheme;
 };
 
 #endif // ES_CORE_THEME_DATA_H

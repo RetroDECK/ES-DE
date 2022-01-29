@@ -26,6 +26,7 @@ class VideoComponent : public GuiComponent
         bool showSnapshotNoVideo;
         bool showSnapshotDelay;
         std::string defaultVideoPath;
+        std::string staticVideoPath;
     };
 
 public:
@@ -36,14 +37,18 @@ public:
     bool setVideo(std::string path);
     // Configures the component to show the default video.
     void setDefaultVideo() { setVideo(mConfig.defaultVideoPath); }
+    // Configures the component to show the static video.
+    void setStaticVideo() { setVideo(mConfig.staticVideoPath); }
     // Loads a static image that is displayed if the video cannot be played.
-    void setImage(std::string path);
+    void setImage(const std::string& path, bool tile = false, bool linearMagnify = false);
     // Sets whether we're in media viewer mode.
     void setMediaViewerMode(bool isMediaViewer) { mMediaViewerMode = isMediaViewer; }
     // Sets whether we're in screensaver mode.
     void setScreensaverMode(bool isScreensaver) { mScreensaverMode = isScreensaver; }
     // Set the opacity for the embedded static image.
     void setOpacity(unsigned char opacity) override { mOpacity = opacity; }
+
+    bool hasStaticVideo() { return !mConfig.staticVideoPath.empty(); }
 
     void onShow() override;
     void onHide() override;

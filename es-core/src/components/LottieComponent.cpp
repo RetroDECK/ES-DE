@@ -214,7 +214,6 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                  unsigned int properties)
 {
     using namespace ThemeFlags;
-
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "animation")};
 
     if (elem->has("size")) {

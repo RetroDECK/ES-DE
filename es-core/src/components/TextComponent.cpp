@@ -291,11 +291,15 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                const std::string& element,
                                unsigned int properties)
 {
+    using namespace ThemeFlags;
     GuiComponent::applyTheme(theme, view, element, properties);
 
-    using namespace ThemeFlags;
+    std::string elementType {"text"};
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "text");
+    if (element.substr(0, 13) == "gamelistinfo_")
+        elementType = "gamelistinfo";
+
+    const ThemeData::ThemeElement* elem = theme->getElement(view, element, elementType);
     if (!elem)
         return;
 

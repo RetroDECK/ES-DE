@@ -290,8 +290,10 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         for (auto slot : slots) {
             if (std::find(mBadgeTypes.cbegin(), mBadgeTypes.cend(), slot) != mBadgeTypes.end()) {
-                if (properties & PATH && elem->has(slot))
-                    mBadgeIcons[slot] = elem->get<std::string>(slot);
+                // The "badge_" string is required as ThemeData adds this as a prefix to avoid
+                // name collisions when using XML attributes.
+                if (properties & PATH && elem->has("badge_" + slot))
+                    mBadgeIcons[slot] = elem->get<std::string>("badge_" + slot);
 
                 FlexboxComponent::FlexboxItem item;
                 item.label = slot;
@@ -309,8 +311,9 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         for (auto& gameController : sGameControllers) {
-            if (properties & PATH && elem->has(gameController.shortName))
-                gameController.fileName = elem->get<std::string>(gameController.shortName);
+            if (properties & PATH && elem->has("controller_" + gameController.shortName))
+                gameController.fileName =
+                    elem->get<std::string>("controller_" + gameController.shortName);
         }
 
         GuiComponent::applyTheme(theme, view, element, properties);

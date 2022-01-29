@@ -475,7 +475,6 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 unsigned int properties)
 {
     using namespace ThemeFlags;
-
     GuiComponent::applyTheme(theme, view, element,
                              (properties ^ ThemeFlags::SIZE) |
                                  ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
@@ -504,6 +503,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         bool tile = (elem->has("tile") && elem->get<bool>("tile"));
         setImage(elem->get<std::string>("path"), tile);
     }
+
+    if (properties & METADATA && elem->has("metadata"))
+        setMetadataField(elem->get<std::string>("metadata"));
 
     if (properties & COLOR) {
         if (elem->has("color"))

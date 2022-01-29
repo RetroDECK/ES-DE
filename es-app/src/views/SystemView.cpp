@@ -76,7 +76,8 @@ void SystemView::populate()
             glm::vec3 offsetLogoPlaceholderText = {0.0f, 0.0f, 0.0f};
 
             // Make logo.
-            const ThemeData::ThemeElement* logoElem = theme->getElement("system", "logo", "image");
+            const ThemeData::ThemeElement* logoElem =
+                theme->getElement("system", "image_logo", "image");
             if (logoElem) {
                 auto path = logoElem->get<std::string>("path");
                 std::string defaultPath =
@@ -86,7 +87,8 @@ void SystemView::populate()
                      ResourceManager::getInstance().fileExists(defaultPath))) {
                     auto* logo = new ImageComponent(false, false);
                     logo->setMaxSize(glm::round(mCarousel.logoSize * mCarousel.logoScale));
-                    logo->applyTheme(theme, "system", "logo", ThemeFlags::PATH | ThemeFlags::COLOR);
+                    logo->applyTheme(theme, "system", "image_logo",
+                                     ThemeFlags::PATH | ThemeFlags::COLOR);
                     logo->setRotateByTargetSize(true);
                     e.data.logo = std::shared_ptr<GuiComponent>(logo);
                 }
@@ -100,7 +102,7 @@ void SystemView::populate()
                 glm::vec3 center {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
 
                 // Placeholder Image.
-                logoElem = theme->getElement("system", "logoPlaceholderImage", "image");
+                logoElem = theme->getElement("system", "image_logoPlaceholderImage", "image");
                 if (logoElem) {
                     auto path = logoElem->get<std::string>("path");
                     std::string defaultPath =
@@ -109,7 +111,8 @@ void SystemView::populate()
                         (!defaultPath.empty() &&
                          ResourceManager::getInstance().fileExists(defaultPath))) {
                         auto* logo = new ImageComponent(false, false);
-                        logo->applyTheme(theme, "system", "logoPlaceholderImage", ThemeFlags::ALL);
+                        logo->applyTheme(theme, "system", "image_logoPlaceholderImage",
+                                         ThemeFlags::ALL);
                         if (!logoElem->has("size"))
                             logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
                         offsetLogo = logo->getPosition() - center;
@@ -120,7 +123,7 @@ void SystemView::populate()
 
                 // Placeholder Text.
                 const ThemeData::ThemeElement* logoPlaceholderText =
-                    theme->getElement("system", "logoPlaceholderText", "text");
+                    theme->getElement("system", "text_logoPlaceholderText", "text");
                 if (logoPlaceholderText) {
                     // Element 'logoPlaceholderText' found in theme: place text
                     auto* text = new TextComponent(it->getName(), Font::get(FONT_SIZE_LARGE),
@@ -134,7 +137,7 @@ void SystemView::populate()
                         text->setHorizontalAlignment(ALIGN_CENTER);
                         text->setVerticalAlignment(mCarousel.logoAlignment);
                     }
-                    text->applyTheme(it->getTheme(), "system", "logoPlaceholderText",
+                    text->applyTheme(it->getTheme(), "system", "text_logoPlaceholderText",
                                      ThemeFlags::ALL);
                     if (!e.data.logo) {
                         e.data.logo = std::shared_ptr<GuiComponent>(text);
@@ -541,15 +544,16 @@ void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
         return;
 
     const ThemeData::ThemeElement* carouselElem =
-        theme->getElement("system", "systemcarousel", "carousel");
+        theme->getElement("system", "carousel_systemcarousel", "carousel");
 
     if (carouselElem)
         getCarouselFromTheme(carouselElem);
 
-    const ThemeData::ThemeElement* sysInfoElem = theme->getElement("system", "systemInfo", "text");
+    const ThemeData::ThemeElement* sysInfoElem =
+        theme->getElement("system", "text_systemInfo", "text");
 
     if (sysInfoElem)
-        mSystemInfo.applyTheme(theme, "system", "systemInfo", ThemeFlags::ALL);
+        mSystemInfo.applyTheme(theme, "system", "text_systemInfo", ThemeFlags::ALL);
 
     mViewNeedsReload = false;
 }

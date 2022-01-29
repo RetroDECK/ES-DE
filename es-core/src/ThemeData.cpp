@@ -3,9 +3,9 @@
 //  EmulationStation Desktop Edition
 //  ThemeData.cpp
 //
-//  Finds available themes on the file system and loads these,
-//  including the parsing of individual theme components
-//  (includes, features, variables, views, elements).
+//  Finds available themes on the file system and loads and parses these.
+//  Basic error checking for valid elements and data types is done here,
+//  with additional validation handled by the individual components.
 //
 
 #include "ThemeData.h"
@@ -21,16 +21,57 @@
 #include <algorithm>
 #include <pugixml.hpp>
 
-#define MINIMUM_THEME_FORMAT_VERSION 3
+#define MINIMUM_LEGACY_THEME_FORMAT_VERSION 3
 
-std::vector<std::string> ThemeData::sSupportedViews {{"all"},      {"system"}, {"basic"},
-                                                     {"detailed"}, {"grid"},   {"video"}};
-std::vector<std::string> ThemeData::sSupportedFeatures {
-    {"navigationsounds"}, {"video"}, {"carousel"}, {"z-index"}, {"visible"}};
+// clang-format off
+std::vector<std::string> ThemeData::sSupportedViews {
+    {"all"},
+    {"system"},
+    {"gamelist"}};
+
+std::vector<std::string> ThemeData::sLegacySupportedViews {
+    {"all"},
+    {"system"},
+    {"basic"},
+    {"detailed"},
+    {"grid"},
+    {"video"}};
+
+std::vector<std::string> ThemeData::sLegacySupportedFeatures {
+    {"navigationsounds"},
+    {"video"},
+    {"carousel"},
+    {"z-index"},
+    {"visible"}};
+
+std::vector<std::string> ThemeData::sSupportedAspectRatios {
+    {"16:9"},
+    {"16:9_vertical"},
+    {"16:10"},
+    {"16:10_vertical"},
+    {"3:2"},
+    {"3:2_vertical"},
+    {"4:3"},
+    {"4:3_vertical"},
+    {"5:4"},
+    {"5:4_vertical"},
+    {"12:5"},
+    {"43:18"},
+    {"64:27"}};
+
+std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
+    // The data type is defined by the parent property.
+    {
+     {"badges",
+      {{"customBadgeIcon", "badge"},
+       {"customControllerIcon", "controller"}}},
+     {"helpsystem",
+      {{"customButtonIcon", "button"}}},
+    };
 
 std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
-    ThemeData::sElementMap // Line break.
-    {{"image",
+    ThemeData::sElementMap {
+     {"image",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
@@ -40,120 +81,27 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"path", PATH},
        {"default", PATH},
        {"tile", BOOLEAN},
+       {"metadata", STRING},
        {"color", COLOR},
        {"colorEnd", COLOR},
        {"gradientType", STRING},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
-     {"imagegrid",
+     {"video",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
-       {"margin", NORMALIZED_PAIR},
-       {"padding", NORMALIZED_RECT},
-       {"autoLayout", NORMALIZED_PAIR},
-       {"autoLayoutSelectedZoom", FLOAT},
-       {"gameImage", PATH},
-       {"folderImage", PATH},
-       {"imageSource", STRING},
-       {"scrollDirection", STRING},
-       {"centerSelection", BOOLEAN},
-       {"scrollLoop", BOOLEAN},
-       {"animate", BOOLEAN},
-       {"zIndex", FLOAT}}},
-     {"gridtile",
-      {{"size", NORMALIZED_PAIR},
-       {"padding", NORMALIZED_PAIR},
-       {"imageColor", COLOR},
-       {"backgroundImage", PATH},
-       {"backgroundCornerSize", NORMALIZED_PAIR},
-       {"backgroundColor", COLOR},
-       {"backgroundCenterColor", COLOR},
-       {"backgroundEdgeColor", COLOR}}},
-     {"text",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
+       {"maxSize", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
-       {"text", STRING},
-       {"metadata", STRING},
-       {"backgroundColor", COLOR},
-       {"fontPath", PATH},
-       {"fontSize", FLOAT},
-       {"color", COLOR},
-       {"alignment", STRING},
-       {"forceUppercase", BOOLEAN},
-       {"lineSpacing", FLOAT},
-       {"value", STRING},
-       {"visible", BOOLEAN},
-       {"zIndex", FLOAT}}},
-     {"textlist",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR},
-       {"selectorHeight", FLOAT},
-       {"selectorOffsetY", FLOAT},
-       {"selectorColor", COLOR},
-       {"selectorColorEnd", COLOR},
-       {"selectorGradientType", STRING},
-       {"selectorImagePath", PATH},
-       {"selectorImageTile", BOOLEAN},
-       {"selectedColor", COLOR},
-       {"primaryColor", COLOR},
-       {"secondaryColor", COLOR},
-       {"fontPath", PATH},
-       {"fontSize", FLOAT},
-       {"scrollHide", BOOLEAN},
-       {"scrollSound", PATH}, // For backward compatibility with old themes.
-       {"alignment", STRING},
-       {"horizontalMargin", FLOAT},
-       {"forceUppercase", BOOLEAN},
-       {"lineSpacing", FLOAT},
-       {"zIndex", FLOAT}}},
-     {"container",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR},
-       {"text", STRING},
-       {"metadata", STRING},
-       {"visible", BOOLEAN},
-       {"zIndex", FLOAT}}},
-     {"ninepatch",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
        {"path", PATH},
+       {"default", PATH},
+       {"imageMetadata", STRING},
+       {"delay", FLOAT},
        {"visible", BOOLEAN},
-       {"zIndex", FLOAT}}},
-     {"datetime",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR},
-       {"rotation", FLOAT},
-       {"rotationOrigin", NORMALIZED_PAIR},
-       {"metadata", STRING},
-       {"backgroundColor", COLOR},
-       {"fontPath", PATH},
-       {"fontSize", FLOAT},
-       {"color", COLOR},
-       {"alignment", STRING},
-       {"forceUppercase", BOOLEAN},
-       {"lineSpacing", FLOAT},
-       {"value", STRING},
-       {"format", STRING},
-       {"displayRelative", BOOLEAN},
-       {"visible", BOOLEAN},
-       {"zIndex", FLOAT}}},
-     {"rating",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR},
-       {"rotation", FLOAT},
-       {"rotationOrigin", NORMALIZED_PAIR},
-       {"color", COLOR},
-       {"filledPath", PATH},
-       {"unfilledPath", PATH},
-       {"visible", BOOLEAN},
-       {"zIndex", FLOAT}}},
+       {"zIndex", FLOAT},
+       {"showSnapshotNoVideo", BOOLEAN}, // For backward compatibility with legacy themes.
+       {"showSnapshotDelay", BOOLEAN}}}, // For backward compatibility with legacy themes.
      {"animation",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
@@ -184,41 +132,65 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"customControllerIcon", PATH},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
-     {"sound", {{"path", PATH}}},
-     {"helpsystem",
-      {{"pos", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR},
-       {"textColor", COLOR},
-       {"textColorDimmed", COLOR},
-       {"iconColor", COLOR},
-       {"iconColorDimmed", COLOR},
-       {"fontPath", PATH},
-       {"fontSize", FLOAT},
-       {"entrySpacing", FLOAT},
-       {"iconTextSpacing", FLOAT},
-       {"textStyle", STRING},
-       {"customButtonIcon", PATH}}},
-     {"navigationsounds",
-      {{"systembrowseSound", PATH},
-       {"quicksysselectSound", PATH},
-       {"selectSound", PATH},
-       {"backSound", PATH},
-       {"scrollSound", PATH},
-       {"favoriteSound", PATH},
-       {"launchSound", PATH}}},
-     {"video",
+     {"text",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
-       {"maxSize", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
-       {"default", PATH},
-       {"delay", FLOAT},
+       {"text", STRING},
+       {"metadata", STRING},
+       {"container", BOOLEAN},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"alignment", STRING},
+       {"color", COLOR},
+       {"backgroundColor", COLOR},
+       {"forceUppercase", BOOLEAN},
+       {"lineSpacing", FLOAT},
        {"visible", BOOLEAN},
-       {"zIndex", FLOAT},
-       {"showSnapshotNoVideo", BOOLEAN},
-       {"showSnapshotDelay", BOOLEAN}}},
+       {"zIndex", FLOAT}}},
+     {"datetime",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"rotation", FLOAT},
+       {"rotationOrigin", NORMALIZED_PAIR},
+       {"metadata", STRING},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"alignment", STRING},
+       {"color", COLOR},
+       {"backgroundColor", COLOR},
+       {"forceUppercase", BOOLEAN},
+       {"lineSpacing", FLOAT},
+       {"format", STRING},
+       {"displayRelative", BOOLEAN},
+       {"visible", BOOLEAN},
+       {"zIndex", FLOAT}}},
+     {"gamelistinfo",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"rotation", FLOAT},
+       {"rotationOrigin", NORMALIZED_PAIR},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"color", COLOR},
+       {"backgroundColor", COLOR},
+       {"alignment", STRING},
+       {"visible", BOOLEAN},
+       {"zIndex", FLOAT}}},
+     {"rating",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"rotation", FLOAT},
+       {"rotationOrigin", NORMALIZED_PAIR},
+       {"color", COLOR},
+       {"filledPath", PATH},
+       {"unfilledPath", PATH},
+       {"zIndex", FLOAT}}},
      {"carousel",
       {{"type", STRING},
        {"size", NORMALIZED_PAIR},
@@ -234,10 +206,89 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"logoAlignment", STRING},
        {"maxLogoCount", FLOAT},
        {"zIndex", FLOAT},
-       {"legacyZIndexMode", STRING}}}};
+       {"legacyZIndexMode", STRING}}},
+     {"textlist",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"selectorHeight", FLOAT},
+       {"selectorOffsetY", FLOAT},
+       {"selectorColor", COLOR},
+       {"selectorColorEnd", COLOR},
+       {"selectorGradientType", STRING},
+       {"selectorImagePath", PATH},
+       {"selectorImageTile", BOOLEAN},
+       {"selectedColor", COLOR},
+       {"primaryColor", COLOR},
+       {"secondaryColor", COLOR},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"scrollHide", BOOLEAN},
+       {"scrollSound", PATH}, // For backward compatibility with legacy themes.
+       {"alignment", STRING},
+       {"horizontalMargin", FLOAT},
+       {"forceUppercase", BOOLEAN},
+       {"lineSpacing", FLOAT},
+       {"zIndex", FLOAT}}},
+     {"helpsystem",
+      {{"pos", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"textColor", COLOR},
+       {"textColorDimmed", COLOR},
+       {"iconColor", COLOR},
+       {"iconColorDimmed", COLOR},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"entrySpacing", FLOAT},
+       {"iconTextSpacing", FLOAT},
+       {"textStyle", STRING},
+       {"customButtonIcon", PATH}}},
+     {"sound",
+      {{"path", PATH}}},
+     {"navigationsounds",
+      {{"systembrowseSound", PATH},
+       {"quicksysselectSound", PATH},
+       {"selectSound", PATH},
+       {"backSound", PATH},
+       {"scrollSound", PATH},
+       {"favoriteSound", PATH},
+       {"launchSound", PATH}}},
+     // Legacy components below, not in use any longer but needed for backward compatibility.
+     {"imagegrid",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"margin", NORMALIZED_PAIR},
+       {"padding", NORMALIZED_RECT},
+       {"autoLayout", NORMALIZED_PAIR},
+       {"autoLayoutSelectedZoom", FLOAT},
+       {"gameImage", PATH},
+       {"folderImage", PATH},
+       {"imageSource", STRING},
+       {"scrollDirection", STRING},
+       {"centerSelection", BOOLEAN},
+       {"scrollLoop", BOOLEAN},
+       {"animate", BOOLEAN},
+       {"zIndex", FLOAT}}},
+     {"gridtile",
+      {{"size", NORMALIZED_PAIR},
+       {"padding", NORMALIZED_PAIR},
+       {"imageColor", COLOR},
+       {"backgroundImage", PATH},
+       {"backgroundCornerSize", NORMALIZED_PAIR},
+       {"backgroundColor", COLOR},
+       {"backgroundCenterColor", COLOR},
+       {"backgroundEdgeColor", COLOR}}},
+     {"ninepatch",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"path", PATH},
+       {"visible", BOOLEAN},
+       {"zIndex", FLOAT}}}};
+// clang-format on
 
 ThemeData::ThemeData()
-    : mVersion {0} // The version will be loaded from the theme set.
+    : mCurrentThemeSet {}
+    , mLegacyTheme {false}
 {
 }
 
@@ -253,7 +304,6 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     if (!Utils::FileSystem::exists(path))
         throw error << "File does not exist";
 
-    mVersion = 0;
     mViews.clear();
     mVariables.clear();
 
@@ -272,20 +322,67 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     if (!root)
         throw error << ": Missing <theme> tag";
 
-    // Parse version.
-    mVersion = root.child("formatVersion").text().as_float(-404);
-    if (mVersion == -404)
-        throw error << ": <formatVersion> tag missing";
+    mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
+    if (mCurrentThemeSet != mThemeSets.cend())
+        mLegacyTheme = mCurrentThemeSet->second.capabilities.legacyTheme;
 
-    if (mVersion < MINIMUM_THEME_FORMAT_VERSION)
-        throw error << ": Defined format version " << mVersion
-                    << " is less than the minimum supported version "
-                    << MINIMUM_THEME_FORMAT_VERSION;
+    // Check for legacy theme version.
+    int legacyVersion {root.child("formatVersion").text().as_int(-1)};
+
+    if (mLegacyTheme) {
+        if (legacyVersion == -1)
+            throw error << ": <formatVersion> tag missing for legacy theme set";
+
+        if (legacyVersion < MINIMUM_LEGACY_THEME_FORMAT_VERSION)
+            throw error << ": Defined legacy format version " << legacyVersion
+                        << " is less than the minimum supported version "
+                        << MINIMUM_LEGACY_THEME_FORMAT_VERSION;
+    }
+    else if (legacyVersion != -1) {
+        throw error << ": Legacy <formatVersion> tag found for non-legacy theme set";
+    }
+
+    if (!mLegacyTheme) {
+        if (mCurrentThemeSet->second.capabilities.variants.size() > 0) {
+            for (auto& variant : mCurrentThemeSet->second.capabilities.variants)
+                mVariants.emplace_back(variant.name);
+
+            if (std::find(mVariants.cbegin(), mVariants.cend(),
+                          Settings::getInstance()->getString("ThemeVariant")) != mVariants.cend())
+                mSelectedVariant = Settings::getInstance()->getString("ThemeVariant");
+            else
+                mSelectedVariant = mVariants.front();
+        }
+
+        if (mCurrentThemeSet->second.capabilities.aspectRatios.size() > 0) {
+            for (auto& aspectRatio : sSupportedAspectRatios) {
+                if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
+                              mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
+                              aspectRatio) !=
+                    mCurrentThemeSet->second.capabilities.aspectRatios.cend())
+                    mAspectRatios.emplace_back(aspectRatio);
+            }
+
+            if (std::find(mAspectRatios.cbegin(), mAspectRatios.cend(),
+                          Settings::getInstance()->getString("ThemeAspectRatio")) !=
+                mAspectRatios.cend())
+                mSelectedAspectRatio = Settings::getInstance()->getString("ThemeAspectRatio");
+            else
+                mSelectedAspectRatio = mAspectRatios.front();
+        }
+    }
 
     parseVariables(root);
     parseIncludes(root);
     parseViews(root);
+    // For non-legacy themes this will simply check for the presence of a feature tag and throw
+    // an error if it's found.
     parseFeatures(root);
+
+    if (!mLegacyTheme) {
+        parseVariants(root);
+        parseAspectRatios(root);
+    }
 }
 
 bool ThemeData::hasView(const std::string& view)
@@ -303,8 +400,8 @@ std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData
     if (viewIt == theme->mViews.cend())
         return comps;
 
-    for (auto it = viewIt->second.orderedKeys.cbegin(); // Line break.
-         it != viewIt->second.orderedKeys.cend(); ++it) {
+    for (auto it = viewIt->second.legacyOrderedKeys.cbegin(); // Line break.
+         it != viewIt->second.legacyOrderedKeys.cend(); ++it) {
         ThemeElement& elem {viewIt->second.elements.at(*it)};
         if (elem.extra) {
             GuiComponent* comp {nullptr};
@@ -339,6 +436,7 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
     if (elemIt == viewIt->second.elements.cend())
         return nullptr;
 
+    // If expectedType is an empty string, then skip type checking.
     if (elemIt->second.type != expectedType && !expectedType.empty()) {
         LOG(LogWarning) << " requested mismatched theme type for [" << view << "." << element
                         << "] - expected \"" << expectedType << "\", got \"" << elemIt->second.type
@@ -349,9 +447,12 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
     return &elemIt->second;
 }
 
-std::map<std::string, ThemeData::ThemeSet> ThemeData::getThemeSets()
+std::map<std::string, ThemeData::ThemeSet>& ThemeData::getThemeSets()
 {
-    std::map<std::string, ThemeSet> sets;
+    if (!mThemeSets.empty())
+        return mThemeSets;
+
+    LOG(LogInfo) << "Checking for available theme sets...";
 
     // Check for themes first under the home directory, then under the data installation
     // directory (Unix only) and last under the ES-DE binary directory.
@@ -380,33 +481,47 @@ std::map<std::string, ThemeData::ThemeSet> ThemeData::getThemeSets()
         for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isDirectory(*it)) {
-                ThemeSet set = {*it};
-                sets[set.getName()] = set;
+                LOG(LogDebug) << "Loading theme set capabilities for \"" << *it << "\"...";
+                ThemeCapability capabilities {parseThemeCapabilities(*it)};
+
+                LOG(LogInfo) << "Added" << (capabilities.legacyTheme ? " legacy" : "")
+                             << " theme set \"" << *it << "\"";
+                if (!capabilities.legacyTheme) {
+                    LOG(LogDebug) << "Theme set includes support for "
+                                  << capabilities.variants.size() << " variant"
+                                  << (capabilities.variants.size() != 1 ? "s" : "") << " and "
+                                  << capabilities.aspectRatios.size() << " aspect ratio"
+                                  << (capabilities.aspectRatios.size() != 1 ? "s" : "");
+                }
+                ThemeSet set {*it, capabilities};
+                mThemeSets[set.getName()] = set;
             }
         }
     }
 
-    return sets;
+    return mThemeSets;
 }
 
 std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
 {
-    std::map<std::string, ThemeSet> themeSets {ThemeData::getThemeSets()};
-    if (themeSets.empty())
+    if (mThemeSets.empty())
+        getThemeSets();
+
+    if (mThemeSets.empty())
         // No theme sets available.
         return "";
 
-    std::map<std::string, ThemeSet>::const_iterator set =
-        themeSets.find(Settings::getInstance()->getString("ThemeSet"));
-    if (set == themeSets.cend()) {
+    std::map<std::string, ThemeSet>::const_iterator set {
+        mThemeSets.find(Settings::getInstance()->getString("ThemeSet"))};
+    if (set == mThemeSets.cend()) {
         // Currently configured theme set is missing, attempt to load the default theme set
         // rbsimple-DE instead, and if that's also missing then pick the first available set.
         bool defaultSetFound {true};
 
-        set = themeSets.find("rbsimple-DE");
+        set = mThemeSets.find("rbsimple-DE");
 
-        if (set == themeSets.cend()) {
-            set = themeSets.cbegin();
+        if (set == mThemeSets.cend()) {
+            set = mThemeSets.cbegin();
             defaultSetFound = false;
         }
 
@@ -485,11 +600,174 @@ std::string ThemeData::resolvePlaceholders(const std::string& in)
     return prefix + mVariables[replace] + suffix;
 }
 
+ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& path)
+{
+    ThemeCapability capabilities;
+
+    std::string capFile {path + "/capabilities.xml"};
+
+    if (Utils::FileSystem::isRegularFile(capFile) || Utils::FileSystem::isSymlink(capFile)) {
+        capabilities.legacyTheme = false;
+
+        pugi::xml_document doc;
+#if defined(_WIN64)
+        pugi::xml_parse_result res =
+            doc.load_file(Utils::String::stringToWideString(capFile).c_str());
+#else
+        pugi::xml_parse_result res = doc.load_file(capFile.c_str());
+#endif
+        if (res.status == pugi::status_no_document_element) {
+            LOG(LogDebug) << "Found a capabilities.xml file with no configuration";
+        }
+        else if (!res) {
+            LOG(LogError) << "Couldn't parse capabilities.xml: " << res.description();
+            return capabilities;
+        }
+        pugi::xml_node themeCapabilities {doc.child("themeCapabilities")};
+        if (!themeCapabilities) {
+            LOG(LogError) << "Missing <themeCapabilities> tag in capabilities.xml";
+            return capabilities;
+        }
+
+        for (pugi::xml_node aspectRatio = themeCapabilities.child("aspectRatio"); aspectRatio;
+             aspectRatio = aspectRatio.next_sibling("aspectRatio")) {
+            std::string value = aspectRatio.text().get();
+            if (std::find(sSupportedAspectRatios.cbegin(), sSupportedAspectRatios.cend(), value) ==
+                sSupportedAspectRatios.cend()) {
+                LOG(LogWarning) << "Declared aspect ratio \"" << value
+                                << "\" is not supported, ignoring entry in \"" << capFile << "\"";
+            }
+            else {
+                if (std::find(capabilities.aspectRatios.cbegin(), capabilities.aspectRatios.cend(),
+                              value) != capabilities.aspectRatios.cend()) {
+                    LOG(LogWarning)
+                        << "Aspect ratio \"" << value
+                        << "\" is declared multiple times, ignoring entry in \"" << capFile << "\"";
+                }
+                else {
+                    capabilities.aspectRatios.emplace_back(value);
+                }
+            }
+        }
+        for (pugi::xml_node variant = themeCapabilities.child("variant"); variant;
+             variant = variant.next_sibling("variant")) {
+            ThemeVariant readVariant;
+            std::string name {variant.attribute("name").as_string()};
+            if (name.empty()) {
+                LOG(LogWarning)
+                    << "Found <variant> tag without name attribute, skipping entry in \"" << capFile
+                    << "\"";
+            }
+            else {
+                readVariant.name = name;
+            }
+
+            pugi::xml_node labelTag {variant.child("label")};
+            if (labelTag == nullptr) {
+                LOG(LogDebug)
+                    << "No variant <label> tag found, setting label value to the variant name \""
+                    << name << "\" for \"" << capFile << "\"";
+                readVariant.label = name;
+            }
+            else {
+                std::string labelValue {labelTag.text().as_string()};
+                if (labelValue == "") {
+                    LOG(LogWarning) << "No variant <label> value defined, setting value to "
+                                       "the variant name \""
+                                    << name << "\" for \"" << capFile << "\"";
+                    readVariant.label = name;
+                }
+                else {
+                    readVariant.label = labelValue;
+                }
+            }
+
+            pugi::xml_node selectableTag {variant.child("selectable")};
+            if (selectableTag != nullptr) {
+                std::string value {selectableTag.text().as_string()};
+                if (value.front() == '0' || value.front() == 'f' || value.front() == 'F' ||
+                    value.front() == 'n' || value.front() == 'N')
+                    readVariant.selectable = false;
+                else
+                    readVariant.selectable = true;
+            }
+
+            pugi::xml_node overrideTag {variant.child("override")};
+            if (overrideTag != nullptr) {
+                pugi::xml_node triggerTag {overrideTag.child("trigger")};
+                if (triggerTag != nullptr) {
+                    std::string triggerValue {triggerTag.text().as_string()};
+                    if (triggerValue == "") {
+                        LOG(LogWarning)
+                            << "No <trigger> tag value defined for variant \"" << readVariant.name
+                            << "\", skipping entry in \"" << capFile << "\"";
+                    }
+                    else {
+                        pugi::xml_node useVariantTag {overrideTag.child("useVariant")};
+                        if (useVariantTag != nullptr) {
+                            std::string useVariantValue {useVariantTag.text().as_string()};
+                            if (useVariantValue == "") {
+                                LOG(LogWarning)
+                                    << "No <useVariant> tag value defined for variant \""
+                                    << readVariant.name << "\", skipping entry in \"" << capFile
+                                    << "\"";
+                            }
+                            else {
+                                readVariant.override = true;
+                                readVariant.overrideTrigger = triggerValue;
+                                readVariant.overrideVariant = useVariantValue;
+                            }
+                        }
+                        else {
+                            LOG(LogWarning) << "Found an <override> tag without a corresponding "
+                                               "<useVariant> tag, "
+                                            << "skipping entry for variant \"" << readVariant.name
+                                            << "\" in \"" << capFile << "\"";
+                        }
+                    }
+                }
+                else {
+                    LOG(LogWarning)
+                        << "Found an <override> tag without a corresponding <trigger> tag, "
+                        << "skipping entry for variant \"" << readVariant.name << "\" in \""
+                        << capFile << "\"";
+                }
+            }
+
+            if (readVariant.name != "") {
+                bool duplicate {false};
+                for (auto& variant : capabilities.variants) {
+                    if (variant.name == readVariant.name) {
+                        LOG(LogWarning) << "Variant \"" << readVariant.name
+                                        << "\" is declared multiple times, ignoring entry in \""
+                                        << capFile << "\"";
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if (!duplicate)
+                    capabilities.variants.emplace_back(readVariant);
+            }
+        }
+    }
+    else {
+        LOG(LogDebug) << "No capabilities.xml file found, flagging as legacy theme set";
+        capabilities.legacyTheme = true;
+    }
+
+    return capabilities;
+}
+
 void ThemeData::parseIncludes(const pugi::xml_node& root)
 {
     ThemeException error;
     error << "ThemeData::parseIncludes(): ";
     error.setFiles(mPaths);
+
+    if (!mLegacyTheme) {
+        if (root.child("formatVersion").text().as_int(-1) != -1)
+            throw error << ": Legacy <formatVersion> tag found for non-legacy theme set";
+    }
 
     for (pugi::xml_node node = root.child("include"); node; node = node.next_sibling("include")) {
         std::string relPath {resolvePlaceholders(node.text().as_string())};
@@ -517,7 +795,14 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseVariables(theme);
         parseIncludes(theme);
         parseViews(theme);
+        // For non-legacy themes this will simply check for the presence of a feature tag and throw
+        // an error if it's found.
         parseFeatures(theme);
+
+        if (!mLegacyTheme) {
+            parseVariants(theme);
+            parseAspectRatios(theme);
+        }
 
         mPaths.pop_back();
     }
@@ -529,15 +814,98 @@ void ThemeData::parseFeatures(const pugi::xml_node& root)
     error << "ThemeData::parseFeatures(): ";
     error.setFiles(mPaths);
 
+    if (!mLegacyTheme && root.child("feature") != nullptr)
+        throw error << ": Legacy <feature> tag found for non-legacy theme set";
+
     for (pugi::xml_node node = root.child("feature"); node; node = node.next_sibling("feature")) {
         if (!node.attribute("supported"))
             throw error << ": Feature missing \"supported\" attribute";
 
         const std::string supportedAttr {node.attribute("supported").as_string()};
 
-        if (std::find(sSupportedFeatures.cbegin(), sSupportedFeatures.cend(), supportedAttr) !=
-            sSupportedFeatures.cend()) {
+        if (std::find(sLegacySupportedFeatures.cbegin(), sLegacySupportedFeatures.cend(),
+                      supportedAttr) != sLegacySupportedFeatures.cend()) {
             parseViews(node);
+        }
+    }
+}
+
+void ThemeData::parseVariants(const pugi::xml_node& root)
+{
+    if (mCurrentThemeSet == mThemeSets.end())
+        return;
+
+    if (mSelectedVariant == "")
+        return;
+
+    ThemeException error;
+    error << "ThemeData::parseVariants(): ";
+    error.setFiles(mPaths);
+
+    for (pugi::xml_node node = root.child("variant"); node; node = node.next_sibling("variant")) {
+        if (!node.attribute("name"))
+            throw error << ": <variant> tag missing \"name\" attribute";
+
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
+        std::string viewKey;
+        while (off != std::string::npos || prevOff != std::string::npos) {
+            viewKey = nameAttr.substr(prevOff, off - prevOff);
+            prevOff = nameAttr.find_first_not_of(delim, off);
+            off = nameAttr.find_first_of(delim, prevOff);
+
+            if (std::find(mVariants.cbegin(), mVariants.cend(), viewKey) == mVariants.cend()) {
+                throw error << ": <variant> value \"" << viewKey
+                            << "\" is not defined in capabilities.xml";
+            }
+
+            if (mSelectedVariant == viewKey) {
+                parseIncludes(node);
+                parseViews(node);
+            }
+        }
+    }
+}
+
+void ThemeData::parseAspectRatios(const pugi::xml_node& root)
+{
+    if (mCurrentThemeSet == mThemeSets.end())
+        return;
+
+    if (mSelectedAspectRatio == "")
+        return;
+
+    ThemeException error;
+    error << "ThemeData::parseAspectRatios(): ";
+    error.setFiles(mPaths);
+
+    for (pugi::xml_node node = root.child("aspectRatio"); node;
+         node = node.next_sibling("aspectRatio")) {
+        if (!node.attribute("name"))
+            throw error << ": <aspectRatio> tag missing \"name\" attribute";
+
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
+        std::string viewKey;
+        while (off != std::string::npos || prevOff != std::string::npos) {
+            viewKey = nameAttr.substr(prevOff, off - prevOff);
+            prevOff = nameAttr.find_first_not_of(delim, off);
+            off = nameAttr.find_first_of(delim, prevOff);
+
+            if (std::find(mAspectRatios.cbegin(), mAspectRatios.cend(), viewKey) ==
+                mAspectRatios.cend()) {
+                throw error << ": aspectRatio value \"" << viewKey
+                            << "\" is not defined in capabilities.xml";
+            }
+
+            if (mSelectedAspectRatio == viewKey) {
+                parseIncludes(node);
+                parseViews(node);
+            }
         }
     }
 }
@@ -582,12 +950,29 @@ void ThemeData::parseViews(const pugi::xml_node& root)
             prevOff = nameAttr.find_first_not_of(delim, off);
             off = nameAttr.find_first_of(delim, prevOff);
 
-            if (std::find(sSupportedViews.cbegin(), sSupportedViews.cend(), viewKey) !=
-                sSupportedViews.cend()) {
-                ThemeView& view {
-                    mViews.insert(std::pair<std::string, ThemeView>(viewKey, ThemeView()))
-                        .first->second};
-                parseView(node, view);
+            if (mLegacyTheme) {
+                if (std::find(sLegacySupportedViews.cbegin(), sLegacySupportedViews.cend(),
+                              viewKey) != sLegacySupportedViews.cend()) {
+                    ThemeView& view {
+                        mViews.insert(std::pair<std::string, ThemeView>(viewKey, ThemeView()))
+                            .first->second};
+                    parseView(node, view);
+                }
+                else {
+                    throw error << ": Unsupported \"" << viewKey << "\" view style defined";
+                }
+            }
+            else {
+                if (std::find(sSupportedViews.cbegin(), sSupportedViews.cend(), viewKey) !=
+                    sSupportedViews.cend()) {
+                    ThemeView& view {
+                        mViews.insert(std::pair<std::string, ThemeView>(viewKey, ThemeView()))
+                            .first->second};
+                    parseView(node, view);
+                }
+                else {
+                    throw error << ": Unsupported \"" << viewKey << "\" view style defined";
+                }
             }
         }
     }
@@ -616,14 +1001,21 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
             prevOff = nameAttr.find_first_not_of(delim, off);
             off = nameAttr.find_first_of(delim, prevOff);
 
+            // Add the element type as a prefix to avoid name collisions between different
+            // component types.
+            const std::string elementType {node.name()};
+            elemKey = std::string(node.name()) + "_" + elemKey;
+
             parseElement(
                 node, elemTypeIt->second,
                 view.elements.insert(std::pair<std::string, ThemeElement>(elemKey, ThemeElement()))
                     .first->second);
 
-            if (std::find(view.orderedKeys.cbegin(), view.orderedKeys.cend(), elemKey) ==
-                view.orderedKeys.cend())
-                view.orderedKeys.push_back(elemKey);
+            // TEMPORARY
+            // if (mLegacyTheme && std::find(view.orderedKeys.cbegin(), view.orderedKeys.cend(),
+            if (std::find(view.legacyOrderedKeys.cbegin(), view.legacyOrderedKeys.cend(),
+                          elemKey) == view.legacyOrderedKeys.cend())
+                view.legacyOrderedKeys.push_back(elemKey);
         }
     }
 }
@@ -637,7 +1029,13 @@ void ThemeData::parseElement(const pugi::xml_node& root,
     error.setFiles(mPaths);
 
     element.type = root.name();
+
+    // TEMPORARY
     element.extra = root.attribute("extra").as_bool(false);
+    // if (mLegacyTheme)
+    //    element.extra = root.attribute("extra").as_bool(false);
+    // else if (!mLegacyTheme && std::string(root.attribute("extra").as_string("")) != "")
+    //    throw error << ": Legacy \"extra\" attribute found for non-legacy theme set";
 
     for (pugi::xml_node node = root.first_child(); node; node = node.next_sibling()) {
         auto typeIt = typeMap.find(node.name());
@@ -646,6 +1044,38 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                         << "\" for element of type \"" << root.name() << "\"";
 
         std::string str {resolvePlaceholders(node.text().as_string())};
+
+        // Skip this check for legacy themes to not break backward compatibility with some
+        // themes sets that include empty property values.
+        if (!mLegacyTheme && str == "")
+            throw error << ": Property \"" << typeIt->first << "\" for element \"" << element.type
+                        << "\" has no value defined";
+
+        std::string nodeName = node.name();
+
+        if (!mLegacyTheme && element.type == "video") {
+            if (nodeName == "showSnapshotNoVideo" || nodeName == "showSnapshotDelay")
+                throw error << ": Legacy <" << nodeName
+                            << "> property found for non-legacy theme set";
+        }
+
+        // If an attribute exists, then replace nodeName with its name.
+        auto attributeEntry = sPropertyAttributeMap.find(element.type);
+        if (attributeEntry != sPropertyAttributeMap.end()) {
+            auto attribute = attributeEntry->second.find(typeIt->first);
+            if (attribute != attributeEntry->second.end()) {
+                if (node.attribute(attribute->second.c_str()) == nullptr) {
+                    throw error << ": Unknown attribute \"" << node.first_attribute().name()
+                                << "\" for property \"" << typeIt->first << "\" (element \""
+                                << attributeEntry->first << "\")";
+                }
+                else {
+                    // Add the attribute name as a prefix to avoid potential name collisions.
+                    nodeName = attribute->second + "_" +
+                               node.attribute(attribute->second.c_str()).as_string("");
+                }
+            }
+        }
 
         switch (typeIt->second) {
             case NORMALIZED_RECT: {
@@ -688,44 +1118,21 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 break;
             }
             case PATH: {
-                std::string path = Utils::FileSystem::resolveRelativePath(str, mPaths.back(), true);
+                std::string path;
+
+                if (!str.empty() && str.front() == ':')
+                    path = ResourceManager::getInstance().getResourcePath(str);
+                else
+                    path = Utils::FileSystem::resolveRelativePath(str, mPaths.back(), true);
+
                 if (!ResourceManager::getInstance().fileExists(path)) {
                     std::stringstream ss;
-                    LOG(LogWarning) << error.message << ":";
                     LOG(LogWarning)
-                        << "Couldn't find file \"" << node.text().get() << "\" "
+                        << error.message << ": Couldn't find file \"" << node.text().get() << "\" "
                         << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
                                                           "");
                 }
-
-                // Special parsing instruction for recurring options.
-                // Store as its attribute to prevent nodes overwriting each other.
-                if (strcmp(node.name(), "customButtonIcon") == 0) {
-                    const auto button = node.attribute("button").as_string("");
-                    if (strcmp(button, "") == 0)
-                        LOG(LogError)
-                            << "<customButtonIcon> element requires the `button` property.";
-                    else
-                        element.properties[button] = path;
-                }
-                else if (strcmp(node.name(), "customBadgeIcon") == 0) {
-                    const auto badge = node.attribute("badge").as_string("");
-                    if (strcmp(badge, "") == 0)
-                        LOG(LogError) << "<customBadgeIcon> element requires the `badge` property.";
-                    else
-                        element.properties[badge] = path;
-                }
-                else if (strcmp(node.name(), "customControllerIcon") == 0) {
-                    const auto controller = node.attribute("controller").as_string("");
-                    if (strcmp(controller, "") == 0)
-                        LOG(LogError)
-                            << "<customControllerIcon> element requires the `controller` property.";
-                    else
-                        element.properties[controller] = path;
-                }
-                else
-                    element.properties[node.name()] = path;
-
+                element.properties[nodeName] = path;
                 break;
             }
             case COLOR: {
@@ -743,11 +1150,11 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 break;
             }
             case BOOLEAN: {
-                // Only look at first character.
-                char first {str.front()};
-                // 1*, t* (true), T* (True), y* (yes), Y* (YES)
-                bool boolVal {
-                    (first == '1' || first == 't' || first == 'T' || first == 'y' || first == 'Y')};
+                bool boolVal = false;
+                // Only look at the first character.
+                if (str.front() == '1' || str.front() == 't' || str.front() == 'T' ||
+                    str.front() == 'y' || str.front() == 'Y')
+                    boolVal = true;
 
                 element.properties[node.name()] = boolVal;
                 break;

@@ -215,7 +215,8 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         Renderer::drawTriangleStrips(&vertices[0], 4, trans);
     }
     else {
-        VideoComponent::renderSnapshot(parentTrans);
+        if (mVisible)
+            VideoComponent::renderSnapshot(parentTrans);
     }
 }
 

@@ -111,7 +111,6 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    unsigned int properties)
 {
     GuiComponent::applyTheme(theme, view, element, properties);
-
     using namespace ThemeFlags;
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "datetime");

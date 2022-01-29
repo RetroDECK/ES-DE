@@ -17,7 +17,7 @@
 class GamelistView : public GamelistBase
 {
 public:
-    GamelistView(FileData* root, bool legacyMode = false);
+    GamelistView(FileData* root);
     ~GamelistView();
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
@@ -76,9 +76,11 @@ private:
     std::vector<std::unique_ptr<DateTimeComponent>> mDateTimeComponents;
     std::vector<std::unique_ptr<ImageComponent>> mImageComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> mVideoComponents;
+    std::vector<std::unique_ptr<LottieComponent>> mLottieAnimComponents;
     std::vector<std::unique_ptr<BadgeComponent>> mBadgeComponents;
     std::vector<std::unique_ptr<RatingComponent>> mRatingComponents;
-    std::vector<std::unique_ptr<ScrollableContainer>> mScrollableContainerComponents;
+    std::vector<std::unique_ptr<ScrollableContainer>> mContainerComponents;
+    std::vector<std::unique_ptr<TextComponent>> mContainerTextComponents;
     std::vector<std::unique_ptr<TextComponent>> mGamelistInfoComponents;
 
     enum LegacyText {

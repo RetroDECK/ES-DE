@@ -211,7 +211,6 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                  unsigned int properties)
 {
     using namespace ThemeFlags;
-
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "rating");
     if (!elem)
         return;

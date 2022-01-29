@@ -16,6 +16,7 @@
 #include "Window.h"
 #include "components/BadgeComponent.h"
 #include "components/DateTimeComponent.h"
+#include "components/LottieComponent.h"
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"

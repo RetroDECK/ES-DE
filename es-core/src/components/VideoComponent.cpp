@@ -75,13 +75,13 @@ bool VideoComponent::setVideo(std::string path)
     return false;
 }
 
-void VideoComponent::setImage(std::string path)
+void VideoComponent::setImage(const std::string& path, bool tile, bool linearMagnify)
 {
     // Check that the image has changed.
     if (path == mStaticImagePath)
         return;
 
-    mStaticImage.setImage(path);
+    mStaticImage.setImage(path, tile, linearMagnify);
     mStaticImagePath = path;
 }
 
@@ -212,7 +212,6 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 unsigned int properties)
 {
     using namespace ThemeFlags;
-
     GuiComponent::applyTheme(theme, view, element,
                              (properties ^ ThemeFlags::SIZE) |
                                  ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
@@ -245,14 +244,24 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("default"))
         mConfig.defaultVideoPath = elem->get<std::string>("default");
 
+    if (elem->has("path"))
+        mConfig.staticVideoPath = elem->get<std::string>("path");
+
     if ((properties & ThemeFlags::DELAY) && elem->has("delay"))
         mConfig.startDelay = static_cast<unsigned>((elem->get<float>("delay") * 1000.0f));
 
-    if (elem->has("showSnapshotNoVideo"))
+    if (!theme->isLegacyTheme())
+        mConfig.showSnapshotNoVideo = true;
+    else if (elem->has("showSnapshotNoVideo"))
         mConfig.showSnapshotNoVideo = elem->get<bool>("showSnapshotNoVideo");
 
-    if (elem->has("showSnapshotDelay"))
+    if (!theme->isLegacyTheme() && mConfig.startDelay != 0)
+        mConfig.showSnapshotDelay = true;
+    else if (elem->has("showSnapshotDelay"))
         mConfig.showSnapshotDelay = elem->get<bool>("showSnapshotDelay");
+
+    if (properties & METADATA && elem->has("imageMetadata"))
+        setMetadataField(elem->get<std::string>("imageMetadata"));
 }
 
 std::vector<HelpPrompt> VideoComponent::getHelpPrompts()

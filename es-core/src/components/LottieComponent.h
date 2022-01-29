@@ -50,8 +50,8 @@ private:
     std::vector<uint8_t> mPictureRGBA;
     std::unordered_map<size_t, std::vector<uint8_t>> mFrameCache;
     // Set a 1024 MiB total Lottie animation cache as default.
-    inline static size_t mMaxTotalFrameCache = 1024 * 1024 * 1024;
-    inline static size_t mTotalFrameCache;
+    static inline size_t mMaxTotalFrameCache = 1024 * 1024 * 1024;
+    static inline size_t mTotalFrameCache;
     bool mCacheFrames;
     size_t mMaxCacheSize;
     size_t mCacheSize;
