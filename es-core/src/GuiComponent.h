@@ -127,7 +127,11 @@ public:
     void sortChildren();
     const unsigned int getChildCount() const { return static_cast<int>(mChildren.size()); }
     const int getChildIndex() const;
-    GuiComponent* getChild(unsigned int i) const { return mChildren.at(i); }
+    GuiComponent* getChild(unsigned int i) const
+    {
+        assert(mChildren.size() >= i);
+        return mChildren.at(i);
+    }
 
     // Animation will be automatically deleted when it completes or is stopped.
     const bool isAnimationPlaying(unsigned char slot) const
