@@ -129,25 +129,22 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             }
             else if (element.second.type == "text") {
                 if (element.second.has("container") && element.second.get<bool>("container")) {
-                    mContainerTextComponents.push_back(std::make_unique<TextComponent>());
-                    mContainerTextComponents.back()->setDefaultZIndex(40.0f);
                     mContainerComponents.push_back(std::make_unique<ScrollableContainer>());
                     mContainerComponents.back()->setAutoScroll(true);
+                    mContainerComponents.back()->setDefaultZIndex(40.0f);
+                    addChild(mContainerComponents.back().get());
+                    mContainerTextComponents.push_back(std::make_unique<TextComponent>());
+                    mContainerTextComponents.back()->setDefaultZIndex(40.0f);
                     mContainerComponents.back()->addChild(mContainerTextComponents.back().get());
                     mContainerComponents.back()->applyTheme(theme, "gamelist", element.first,
                                                             POSITION | ThemeFlags::SIZE | Z_INDEX |
                                                                 VISIBLE);
-                    mContainerTextComponents.back()->applyTheme(theme, "gamelist", element.first,
-                                                                ALL ^ POSITION ^ Z_INDEX ^
-                                                                    ThemeFlags::SIZE ^ VISIBLE);
                     mContainerTextComponents.back()->setSize(
                         mContainerComponents.back()->getSize().x, 0.0f);
-                    mContainerComponents.back()->setDefaultZIndex(
-                        mContainerTextComponents.back()->getDefaultZIndex());
-                    mContainerComponents.back()->setZIndex(
-                        mContainerTextComponents.back()->getZIndex());
+                    mContainerTextComponents.back()->applyTheme(
+                        theme, "gamelist", element.first,
+                        (ALL ^ POSITION ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION) | COLOR);
                     mContainerComponents.back()->setScrollHide(true);
-                    addChild(mContainerComponents.back().get());
                 }
                 else {
                     mTextComponents.push_back(std::make_unique<TextComponent>());
@@ -551,7 +548,7 @@ void GamelistView::updateInfoPanel()
 
         // Fade in the game image.
         for (auto& image : mImageComponents) {
-            if (image->getMetadataField() == "md_image") {
+            if (image->getScrollFadeIn()) {
                 auto func = [&image](float t) {
                     image->setOpacity(static_cast<unsigned char>(
                         glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
@@ -562,7 +559,7 @@ void GamelistView::updateInfoPanel()
 
         // Fade in the static image.
         for (auto& video : mVideoComponents) {
-            if (video->getMetadataField() == "md_video") {
+            if (video->getScrollFadeIn()) {
                 auto func = [&video](float t) {
                     video->setOpacity(static_cast<unsigned char>(
                         glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));

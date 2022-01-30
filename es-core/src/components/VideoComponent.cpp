@@ -244,6 +244,11 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("default"))
         mConfig.defaultVideoPath = elem->get<std::string>("default");
 
+    if (elem->has("defaultImage")) {
+        mStaticImage.setDefaultImage(elem->get<std::string>("defaultImage"));
+        mStaticImage.setImage(mStaticImagePath);
+    }
+
     if (elem->has("path"))
         mConfig.staticVideoPath = elem->get<std::string>("path");
 
@@ -262,6 +267,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & METADATA && elem->has("imageMetadata"))
         setMetadataField(elem->get<std::string>("imageMetadata"));
+
+    if (elem->has("scrollFadeIn") && elem->get<bool>("scrollFadeIn"))
+        mComponentThemeFlags |= ComponentThemeFlags::SCROLL_FADE_IN;
 }
 
 std::vector<HelpPrompt> VideoComponent::getHelpPrompts()

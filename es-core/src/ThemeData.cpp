@@ -85,6 +85,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"color", COLOR},
        {"colorEnd", COLOR},
        {"gradientType", STRING},
+       {"scrollFadeIn", BOOLEAN},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"video",
@@ -96,8 +97,10 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotationOrigin", NORMALIZED_PAIR},
        {"path", PATH},
        {"default", PATH},
+       {"defaultImage", PATH},
        {"imageMetadata", STRING},
        {"delay", FLOAT},
+       {"scrollFadeIn", BOOLEAN},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT},
        {"showSnapshotNoVideo", BOOLEAN}, // For backward compatibility with legacy themes.

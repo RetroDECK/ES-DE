@@ -516,6 +516,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setColorGradientHorizontal(
                 !(elem->get<std::string>("gradientType").compare("horizontal")));
     }
+
+    if (elem->has("scrollFadeIn") && elem->get<bool>("scrollFadeIn"))
+        mComponentThemeFlags |= ComponentThemeFlags::SCROLL_FADE_IN;
 }
 
 std::vector<HelpPrompt> ImageComponent::getHelpPrompts()

@@ -112,8 +112,32 @@ public:
     const bool isVisible() const { return mVisible; }
     void setVisible(bool visible) { mVisible = visible; }
 
-    const bool getScrollHide() { return mScrollHide; }
-    void setScrollHide(bool state) { mScrollHide = state; }
+    // clang-format off
+        enum ComponentThemeFlags : unsigned int {
+            SCROLL_HIDE    = 0x00000001,
+            SCROLL_FADE_IN = 0x00000002
+        };
+    // clang-format on
+
+    const bool getScrollHide() { return mComponentThemeFlags & ComponentThemeFlags::SCROLL_HIDE; }
+    void setScrollHide(bool state)
+    {
+        if (state)
+            mComponentThemeFlags |= ComponentThemeFlags::SCROLL_HIDE;
+        else
+            mComponentThemeFlags ^= ComponentThemeFlags::SCROLL_HIDE;
+    }
+    const bool getScrollFadeIn()
+    {
+        return mComponentThemeFlags & ComponentThemeFlags::SCROLL_FADE_IN;
+    }
+    void setScrollFadeIn(bool state)
+    {
+        if (state)
+            mComponentThemeFlags |= ComponentThemeFlags::SCROLL_FADE_IN;
+        else
+            mComponentThemeFlags ^= ComponentThemeFlags::SCROLL_FADE_IN;
+    }
 
     // Returns the center point of the image (takes origin into account).
     const glm::vec2 getCenter() const;
@@ -265,6 +289,7 @@ protected:
     unsigned int mColorShiftEnd;
     unsigned int mColorOriginalValue;
     unsigned int mColorChangedValue;
+    unsigned int mComponentThemeFlags;
 
     glm::vec3 mPosition;
     glm::vec2 mOrigin;
@@ -276,7 +301,6 @@ protected:
     float mDefaultZIndex;
     float mZIndex;
 
-    bool mScrollHide;
     bool mIsProcessing;
     bool mVisible;
     bool mEnabled;

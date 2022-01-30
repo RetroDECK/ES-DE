@@ -26,6 +26,7 @@ GuiComponent::GuiComponent()
     , mColorShiftEnd {0}
     , mColorOriginalValue {0}
     , mColorChangedValue {0}
+    , mComponentThemeFlags {0}
     , mPosition {0.0f, 0.0f, 0.0f}
     , mOrigin {0.0f, 0.0f}
     , mRotationOrigin {0.5f, 0.5f}
@@ -34,7 +35,6 @@ GuiComponent::GuiComponent()
     , mScale {1.0f}
     , mDefaultZIndex {0.0f}
     , mZIndex {0.0f}
-    , mScrollHide {false}
     , mIsProcessing {false}
     , mVisible {true}
     , mEnabled {true}
