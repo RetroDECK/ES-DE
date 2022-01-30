@@ -981,15 +981,6 @@ bool SystemData::createSystemDirectories()
     return false;
 }
 
-const bool SystemData::isVisible() const
-{
-    // This function doesn't make much sense at the moment; if a system does not have any
-    // games available, it will not be processed during startup and will as such not exist.
-    // In the future this function may be used for an option to hide specific systems, but
-    // for the time being all systems will always be visible.
-    return true;
-}
-
 SystemData* SystemData::getSystemByName(const std::string& systemName)
 {
     for (auto it : sSystemVector) {
@@ -1002,30 +993,22 @@ SystemData* SystemData::getSystemByName(const std::string& systemName)
 
 SystemData* SystemData::getNext() const
 {
-    std::vector<SystemData*>::const_iterator it = getIterator();
+    auto it = std::find(sSystemVector.cbegin(), sSystemVector.cend(), this);
 
-    // As we are starting in a valid gamelistview, this will
-    // always succeed, even if we have to come full circle.
-    do {
-        ++it;
-        if (it == sSystemVector.cend())
-            it = sSystemVector.cbegin();
-    } while (!(*it)->isVisible());
+    ++it;
+    if (it == sSystemVector.cend())
+        it = sSystemVector.cbegin();
 
     return *it;
 }
 
 SystemData* SystemData::getPrev() const
 {
-    std::vector<SystemData*>::const_reverse_iterator it = getRevIterator();
+    auto it = std::find(sSystemVector.crbegin(), sSystemVector.crend(), this);
 
-    // As we are starting in a valid gamelistview, this will
-    // always succeed, even if we have to come full circle.
-    do {
-        ++it;
-        if (it == sSystemVector.crend())
-            it = sSystemVector.crbegin();
-    } while (!(*it)->isVisible());
+    ++it;
+    if (it == sSystemVector.crend())
+        it = sSystemVector.crbegin();
 
     return *it;
 }

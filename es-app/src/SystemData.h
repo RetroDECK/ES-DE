@@ -115,14 +115,6 @@ public:
     static std::vector<SystemData*> sSystemVector;
     static std::unique_ptr<FindRules> sFindRules;
 
-    std::vector<SystemData*>::const_iterator getIterator() const
-    {
-        return std::find(sSystemVector.cbegin(), sSystemVector.cend(), this);
-    }
-    std::vector<SystemData*>::const_reverse_iterator getRevIterator() const
-    {
-        return std::find(sSystemVector.crbegin(), sSystemVector.crend(), this);
-    }
     const bool isCollection() const { return mIsCollectionSystem; }
     const bool isCustomCollection() const { return mIsCustomCollectionSystem; }
     const bool isGroupedCustomCollection() const { return mIsGroupedCustomCollectionSystem; }
@@ -131,8 +123,6 @@ public:
         mIsGroupedCustomCollectionSystem = isGroupedCustom;
     };
     const bool isGameSystem() const { return mIsGameSystem; }
-
-    const bool isVisible() const;
 
     static SystemData* getSystemByName(const std::string& systemName);
     SystemData* getNext() const;
