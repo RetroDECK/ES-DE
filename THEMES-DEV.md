@@ -206,7 +206,7 @@ In addition to this, if the name is used for the same element type but for diffe
 </theme>
 ```
 
-## Debugging during theme creation
+## Debugging during theme development
 
 If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so, you can read error messages directly in the terminal window without having to open the es_log.txt file.  You can also reload the current gamelist or system view with `Ctrl+r` if the `--debug` flag has been set. There is also support for highlighting the size and position of each image and animation element by using the `Ctrl+i` key combination and likewise to highlight each text element by using the `Ctrl+t` keys. Again, both of these require that ES-DE has been launched with the `--debug` command line option, for example:
 ```
@@ -748,7 +748,7 @@ The order in which you define properties does not matter and you only need to de
 * `path` - type: PATH
     - Path to the image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `default` - type: PATH
-    - Path to default image file. The default image will be displayed when selected game does not have an image.
+    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `metadata` property. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
 * `metadata` - type: STRING
@@ -765,6 +765,15 @@ The order in which you define properties does not matter and you only need to de
     - `md_fanart` - This will look for a fan art image.
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
+* `colorEnd` - type: COLOR
+    - Works exactly in the same way as `color` but can be set as the end color to apply a color shift gradient to the image.
+* `gradientType` - type: STRING
+    - The direction to apply the color shift gradient if both `color` and `colorEnd` have been defined.
+    - Possible values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `scrollFadeIn` - type: BOOLEAN
+    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This usually looks best if used for the main game image.
+    - Default is `false`
 * `visible` - type: BOOLEAN
     - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
     - Default is `true`
@@ -793,9 +802,10 @@ The order in which you define properties does not matter and you only need to de
     - Default is `0`
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not. If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
-
 * `default` - type: PATH
-    - Path to default video file. The default video will be played (unless the `path` property has been set) when the selected game does not have a video.
+    - Path to a default video file. The default video will be played (unless the `path` property has been set) when the selected game does not have a video. If an image type has been defined using `imageMetadata` that image will be searched for first and only if no such image could be found this `default` video will be shown. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+* `defaultImage` - type: PATH
+    - This works exactly as the `default` property but it allows displaying an image instead of playing a video.
 * `imageMetadata` - type: STRING
     - This displays a game image of a certain media type. This occurs if there is no video found for the game and the `path` and `default` properties have not been set, or if a video start delay has been defined via the `delay` attribute.
     - Possible values:
@@ -808,6 +818,9 @@ The order in which you define properties does not matter and you only need to de
     - `md_backcover` - This will look for a box back cover image.
     - `md_3dbox` - This will look for a 3D box image.
     - `md_fanart` - This will look for a fan art image.
+* `scrollFadeIn` - type: BOOLEAN
+    - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
+    - Default is `false`
 * `visible` - type: BOOLEAN
     - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
     - Default is `true`
@@ -923,7 +936,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
     - Default is `0 0`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Rotation is not possible if the `container` property has been set to true.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the text will be rotated.

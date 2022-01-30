@@ -48,11 +48,14 @@ The latest version is 1.2.0 (released 2021-12-28)
 | Debian DEB package   | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.2.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023934/download)|
 | Fedora RPM package   | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023958/download)|
 | Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
-| Linux AppImage       | Most modern Linux distributions                         | x64 (x86)    | [emulationstation-de-1.2.0-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023919/download)|
+| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [emulationstation-de-1.2.0-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023919/download)|
+| Linux AppImage       | Current Linux distributions with libc 2.34 or later     | x64 (x86)    | [emulationstation-de-1.2.0-x64_current.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/27573655/download)|
 | Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.0-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023905/download)|
 | Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.0-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023885/download)|
 
 All previous releases can be downloaded from [here](https://gitlab.com/leonstyhre/emulationstation-de/-/packages).
+
+The _current_ version of the Linux AppImage ships with newer libraries and better controller support but requires distributions with libc 2.34 or later to work.
 
 Flatpak will not be supported on Linux as this packaging system is too restrictive with its sandbox approach, making ES-DE virtually useless as it can't freely locate and launch emulators on the system.
 

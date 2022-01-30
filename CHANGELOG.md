@@ -18,6 +18,7 @@
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
 * Added theme support for Lottie animations (vector graphics)
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
+* Made it possible to use almost all game metadata field when theming text elements
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
