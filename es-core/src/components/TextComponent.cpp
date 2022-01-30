@@ -15,7 +15,9 @@
 TextComponent::TextComponent()
     : mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mColor {0x000000FF}
-    , mBgColor {0}
+    , mBgColor {0x00000000}
+    , mColorOpacity {0x00000000}
+    , mBgColorOpacity {0x00000000}
     , mRenderBackground {false}
     , mUppercase {false}
     , mAutoCalcExtent {1, 1}
@@ -36,7 +38,9 @@ TextComponent::TextComponent(const std::string& text,
                              unsigned int bgcolor)
     : mFont {nullptr}
     , mColor {0x000000FF}
-    , mBgColor {0}
+    , mBgColor {0x00000000}
+    , mColorOpacity {0x00000000}
+    , mBgColorOpacity {0x00000000}
     , mRenderBackground {false}
     , mUppercase {false}
     , mAutoCalcExtent {1, 1}
