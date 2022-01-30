@@ -658,7 +658,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             std::string name {variant.attribute("name").as_string()};
             if (name.empty()) {
                 LOG(LogWarning)
-                    << "Found <variant> tag without name attribute, skipping entry in \"" << capFile
+                    << "Found <variant> tag without name attribute, ignoring entry in \"" << capFile
                     << "\"";
             }
             else {
@@ -703,7 +703,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                     if (triggerValue == "") {
                         LOG(LogWarning)
                             << "No <trigger> tag value defined for variant \"" << readVariant.name
-                            << "\", skipping entry in \"" << capFile << "\"";
+                            << "\", ignoring entry in \"" << capFile << "\"";
                     }
                     else {
                         pugi::xml_node useVariantTag {overrideTag.child("useVariant")};
@@ -712,7 +712,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                             if (useVariantValue == "") {
                                 LOG(LogWarning)
                                     << "No <useVariant> tag value defined for variant \""
-                                    << readVariant.name << "\", skipping entry in \"" << capFile
+                                    << readVariant.name << "\", ignoring entry in \"" << capFile
                                     << "\"";
                             }
                             else {
@@ -724,7 +724,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                         else {
                             LOG(LogWarning) << "Found an <override> tag without a corresponding "
                                                "<useVariant> tag, "
-                                            << "skipping entry for variant \"" << readVariant.name
+                                            << "ignoring entry for variant \"" << readVariant.name
                                             << "\" in \"" << capFile << "\"";
                         }
                     }
@@ -732,7 +732,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 else {
                     LOG(LogWarning)
                         << "Found an <override> tag without a corresponding <trigger> tag, "
-                        << "skipping entry for variant \"" << readVariant.name << "\" in \""
+                        << "ignoring entry for variant \"" << readVariant.name << "\" in \""
                         << capFile << "\"";
                 }
             }
