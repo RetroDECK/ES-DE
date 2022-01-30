@@ -1,8 +1,6 @@
 <theme>
-    <formatVersion>7</formatVersion>
-
     <view name="system">
-        <text name="info1" extra="true">
+        <text name="info1">
             <text>Find the 50 latest games you played in this list.</text>
         </text>
     </view>

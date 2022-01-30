@@ -1,20 +1,19 @@
 <theme>
-    <formatVersion>7</formatVersion>
     <include>./../theme.xml</include>
     <include>./colors.xml</include>
     <include>./systeminfo.xml</include>
 
     <view name="system">
-        <image name="controller" extra="true">
+        <image name="controller">
             <path>./images/controller.svg</path>
         </image>
     </view>
 
-    <view name="system, basic, detailed, video, grid">
+    <view name="system, gamelist">
         <image name="logo">
             <path>./images/logo.svg</path>
         </image>
-        <image name="consolegame" extra="true">
+        <image name="consolegame">
             <path>./images/consolegame.svg</path>
         </image>
     </view>

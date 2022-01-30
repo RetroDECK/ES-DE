@@ -1,21 +1,14 @@
 <theme>
-    <formatVersion>7</formatVersion>
-
-    <feature supported="carousel">
-        <view name="system">
-            <text name="systemInfo">
-                <color>202020</color>
-                <backgroundColor>DDDDDDD8</backgroundColor>
-            </text>
-        </view>
-    </feature>
-
     <view name="system">
+        <text name="systemInfo">
+            <color>202020</color>
+            <backgroundColor>DDDDDDD8</backgroundColor>
+        </text>
         <text name="info1, info2, info3, info4, info5, info6, info7,
-                    info8, info9, info10, info11, info12" extra="true">
+                    info8, info9, info10, info11, info12">
             <color>262626</color>
         </text>
-        <image name="background" extra="true">
+        <image name="background">
             <color>707070</color>
         </image>
         <text name="logoText">
@@ -29,44 +22,39 @@
         </helpsystem>
     </view>
 
-    <view name="basic, detailed, video, grid">
+    <view name="gamelist">
         <helpsystem name="help">
             <textColor>262626</textColor>
             <iconColor>262626</iconColor>
         </helpsystem>
-        <image name="background" extra="true">
+        <image name="background">
             <color>707070</color>
         </image>
-        <!-- This block is only here to force the drawing of color bands before frames. -->
-        <image name="band1" extra="true"></image>
-        <image name="band2" extra="true"></image>
-        <image name="band3" extra="true"></image>
-        <image name="band4" extra="true"></image>
         <textlist name="gamelist">
             <selectorColor>262626</selectorColor>
             <selectedColor>9F9F9F</selectedColor>
             <primaryColor>262626</primaryColor>
             <secondaryColor>4D4D4D</secondaryColor>
         </textlist>
-        <text name="gamelistInfo">
+        <gamelistinfo name="gamelistInfo">
             <color>505050</color>
-        </text>
+        </gamelistinfo>
     </view>
 
-    <view name="basic">
-        <image name="backframe1" extra="true">
-            <color>9F9F9F</color>
-        </image>
-    </view>
+    <variant name="noMedia">
+        <view name="gamelist">
+            <image name="backframe1">
+                <color>9F9F9F</color>
+            </image>
+        </view>
+    </variant>
 
-    <view name="detailed, video, grid">
-        <image name="backframe2" extra="true">
+    <!-- All except basic -->
+    <view name="gamelist">
+        <image name="backframe2">
             <color>9F9F9F</color>
         </image>
-        <image name="backframe3" extra="true">
-            <color>9F9F9F</color>
-        </image>
-        <image name="backframe4" extra="true">
+        <image name="backframe3">
             <color>9F9F9F</color>
         </image>
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
@@ -79,41 +67,5 @@
         <datetime name="md_releasedate, md_lastplayed">
             <color>262626</color>
         </datetime>
-    </view>
-
-    <view name="grid">
-        <image name="backframe5" extra="true">
-            <color>9F9F9F</color>
-        </image>
-        <image name="backframe6" extra="true">
-            <color>9F9F9F</color>
-        </image>
-        <image name="releasedFrame" extra="true">
-            <color>8F8F8F</color>
-        </image>
-        <image name="developerFrame" extra="true">
-            <color>8F8F8F</color>
-        </image>
-        <image name="publisherFrame" extra="true">
-            <color>8F8F8F</color>
-        </image>
-        <image name="genreFrame" extra="true">
-            <color>8F8F8F</color>
-        </image>
-        <image name="playersFrame" extra="true">
-            <color>8F8F8F</color>
-        </image>
-        <image name="lastplayedFrame" extra="true">
-            <color>8F8F8F</color>
-        </image>
-        <text name="md_name">
-            <color>363636</color>
-        </text>
-        <gridtile name="default">
-            <backgroundColor>42424244</backgroundColor>
-        </gridtile>
-        <gridtile name="selected">
-            <backgroundColor>28424244</backgroundColor>
-        </gridtile>
     </view>
 </theme>

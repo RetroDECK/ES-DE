@@ -1,17 +1,15 @@
 <theme>
-    <formatVersion>7</formatVersion>
-
-    <view name="system, basic, detailed, grid, video">
-        <image name="band1" extra="true">
+    <view name="system, gamelist">
+        <image name="band1">
             <color>E1D095</color>
         </image>
-        <image name="band2" extra="true">
+        <image name="band2">
             <color>ADC7EF</color>
         </image>
-        <image name="band3" extra="true">
+        <image name="band3">
             <color>8F8F91</color>
         </image>
-        <image name="band4" extra="true">
+        <image name="band4">
             <color>B9A9CE</color>
         </image>
     </view>
