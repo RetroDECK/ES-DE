@@ -387,7 +387,6 @@ void GamelistView::legacyUpdateInfoPanel()
                     mRandomGame->getThumbnailPath());
                 mImageComponents[LegacyImage::MD_MARQUEE]->setImage(mRandomGame->getMarqueePath(),
                                                                     false, true);
-                mImageComponents[LegacyImage::MD_IMAGE]->setImage(mRandomGame->getImagePath());
                 if (mViewStyle == ViewController::VIDEO) {
                     mVideoComponents.front()->setImage(mRandomGame->getImagePath());
                     // Always stop the video before setting a new video as it will otherwise
@@ -399,6 +398,9 @@ void GamelistView::legacyUpdateInfoPanel()
 
                     if (!mVideoComponents.front()->setVideo(mRandomGame->getVideoPath()))
                         mVideoComponents.front()->setDefaultVideo();
+                }
+                else {
+                    mImageComponents[LegacyImage::MD_IMAGE]->setImage(mRandomGame->getImagePath());
                 }
             }
             else {
