@@ -1014,9 +1014,8 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
                 view.elements.insert(std::pair<std::string, ThemeElement>(elemKey, ThemeElement()))
                     .first->second);
 
-            // TEMPORARY
-            // if (mLegacyTheme && std::find(view.orderedKeys.cbegin(), view.orderedKeys.cend(),
-            if (std::find(view.legacyOrderedKeys.cbegin(), view.legacyOrderedKeys.cend(),
+            if (mLegacyTheme &&
+                std::find(view.legacyOrderedKeys.cbegin(), view.legacyOrderedKeys.cend(),
                           elemKey) == view.legacyOrderedKeys.cend())
                 view.legacyOrderedKeys.push_back(elemKey);
         }
@@ -1033,12 +1032,11 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
     element.type = root.name();
 
-    // TEMPORARY
     element.extra = root.attribute("extra").as_bool(false);
-    // if (mLegacyTheme)
-    //    element.extra = root.attribute("extra").as_bool(false);
-    // else if (!mLegacyTheme && std::string(root.attribute("extra").as_string("")) != "")
-    //    throw error << ": Legacy \"extra\" attribute found for non-legacy theme set";
+    if (mLegacyTheme)
+        element.extra = root.attribute("extra").as_bool(false);
+    else if (!mLegacyTheme && std::string(root.attribute("extra").as_string("")) != "")
+        throw error << ": Legacy \"extra\" attribute found for non-legacy theme set";
 
     for (pugi::xml_node node = root.first_child(); node; node = node.next_sibling()) {
         auto typeIt = typeMap.find(node.name());
