@@ -11,8 +11,15 @@
 
 #include "GuiComponent.h"
 #include "Sound.h"
+#include "components/BadgeComponent.h"
+#include "components/DateTimeComponent.h"
 #include "components/IList.h"
+#include "components/LottieComponent.h"
+#include "components/RatingComponent.h"
+#include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
+#include "components/TextListComponent.h"
+#include "components/VideoFFmpegComponent.h"
 #include "resources/Font.h"
 
 #include <memory>
@@ -30,6 +37,17 @@ struct SystemViewData {
     std::shared_ptr<GuiComponent> logo;
     std::shared_ptr<GuiComponent> logoPlaceholderText;
     std::vector<GuiComponent*> backgroundExtras;
+
+    std::vector<std::shared_ptr<TextComponent>> textComponents;
+    std::vector<std::shared_ptr<DateTimeComponent>> dateTimeComponents;
+    std::vector<std::shared_ptr<ImageComponent>> imageComponents;
+    std::vector<std::shared_ptr<VideoFFmpegComponent>> videoComponents;
+    std::vector<std::shared_ptr<LottieComponent>> lottieAnimComponents;
+    std::vector<std::shared_ptr<BadgeComponent>> badgeComponents;
+    std::vector<std::shared_ptr<RatingComponent>> ratingComponents;
+    std::vector<std::shared_ptr<ScrollableContainer>> containerComponents;
+    std::vector<std::shared_ptr<TextComponent>> containerTextComponents;
+    std::vector<std::shared_ptr<TextComponent>> gamelistInfoComponents;
 };
 
 struct SystemViewCarousel {
@@ -106,6 +124,8 @@ private:
     bool mUpdatedGameCount;
     bool mViewNeedsReload;
     bool mShowing;
+
+    bool mLegacyMode;
 };
 
 #endif // ES_APP_VIEWS_SYSTEM_VIEW_H

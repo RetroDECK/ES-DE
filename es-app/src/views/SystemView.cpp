@@ -36,6 +36,7 @@ SystemView::SystemView()
     , mPreviousScrollVelocity {0}
     , mUpdatedGameCount {false}
     , mViewNeedsReload {true}
+    , mLegacyMode {false}
 {
     mCamOffset = 0;
     mExtrasCamOffset = 0;
@@ -48,12 +49,15 @@ SystemView::SystemView()
 
 SystemView::~SystemView()
 {
+    // TEMPORARY
+    //    if (mLegacyMode) {
     // Delete any existing extras.
     for (auto entry : mEntries) {
         for (auto extra : entry.data.backgroundExtras)
             delete extra;
         entry.data.backgroundExtras.clear();
     }
+    //    }
 }
 
 void SystemView::populate()
@@ -63,21 +67,48 @@ void SystemView::populate()
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme = it->getTheme();
 
+        mLegacyMode = theme->isLegacyTheme();
+
         if (mViewNeedsReload)
             getViewElements(theme);
 
-        if (it->isVisible()) {
-            Entry e;
-            e.name = it->getName();
-            e.object = it;
+        Entry e;
+        e.name = it->getName();
+        e.object = it;
 
-            // Component offset. Used for positioning placeholders.
-            glm::vec3 offsetLogo = {0.0f, 0.0f, 0.0f};
-            glm::vec3 offsetLogoPlaceholderText = {0.0f, 0.0f, 0.0f};
+        // Component offset. Used for positioning placeholders.
+        glm::vec3 offsetLogo {0.0f, 0.0f, 0.0f};
+        glm::vec3 offsetLogoPlaceholderText {0.0f, 0.0f, 0.0f};
 
-            // Make logo.
-            const ThemeData::ThemeElement* logoElem =
-                theme->getElement("system", "image_logo", "image");
+        // Make logo.
+        const ThemeData::ThemeElement* logoElem {
+            theme->getElement("system", "image_logo", "image")};
+        if (logoElem) {
+            std::string path;
+            if (logoElem->has("path"))
+                path = logoElem->get<std::string>("path");
+            std::string defaultPath {
+                logoElem->has("default") ? logoElem->get<std::string>("default") : ""};
+            if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
+                (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
+                auto* logo = new ImageComponent(false, false);
+                logo->setMaxSize(glm::round(mCarousel.logoSize * mCarousel.logoScale));
+                logo->applyTheme(theme, "system", "image_logo",
+                                 ThemeFlags::PATH | ThemeFlags::COLOR);
+                logo->setRotateByTargetSize(true);
+                e.data.logo = std::shared_ptr<GuiComponent>(logo);
+            }
+        }
+
+        // No logo available? Make placeholder.
+        if (!e.data.logo) {
+
+            glm::vec2 resolution {static_cast<float>(Renderer::getScreenWidth()),
+                                  static_cast<float>(Renderer::getScreenHeight())};
+            glm::vec3 center {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
+
+            // Placeholder Image.
+            logoElem = theme->getElement("system", "image_logoPlaceholderImage", "image");
             if (logoElem) {
                 auto path = logoElem->get<std::string>("path");
                 std::string defaultPath =
@@ -86,113 +117,90 @@ void SystemView::populate()
                     (!defaultPath.empty() &&
                      ResourceManager::getInstance().fileExists(defaultPath))) {
                     auto* logo = new ImageComponent(false, false);
-                    logo->setMaxSize(glm::round(mCarousel.logoSize * mCarousel.logoScale));
-                    logo->applyTheme(theme, "system", "image_logo",
-                                     ThemeFlags::PATH | ThemeFlags::COLOR);
+                    logo->applyTheme(theme, "system", "image_logoPlaceholderImage",
+                                     ThemeFlags::ALL);
+                    if (!logoElem->has("size"))
+                        logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
+                    offsetLogo = logo->getPosition() - center;
                     logo->setRotateByTargetSize(true);
                     e.data.logo = std::shared_ptr<GuiComponent>(logo);
                 }
             }
 
-            // No logo available? Make placeholder.
-            if (!e.data.logo) {
-
-                glm::vec2 resolution {static_cast<float>(Renderer::getScreenWidth()),
-                                      static_cast<float>(Renderer::getScreenHeight())};
-                glm::vec3 center {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
-
-                // Placeholder Image.
-                logoElem = theme->getElement("system", "image_logoPlaceholderImage", "image");
-                if (logoElem) {
-                    auto path = logoElem->get<std::string>("path");
-                    std::string defaultPath =
-                        logoElem->has("default") ? logoElem->get<std::string>("default") : "";
-                    if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
-                        (!defaultPath.empty() &&
-                         ResourceManager::getInstance().fileExists(defaultPath))) {
-                        auto* logo = new ImageComponent(false, false);
-                        logo->applyTheme(theme, "system", "image_logoPlaceholderImage",
-                                         ThemeFlags::ALL);
-                        if (!logoElem->has("size"))
-                            logo->setMaxSize(mCarousel.logoSize * mCarousel.logoScale);
-                        offsetLogo = logo->getPosition() - center;
-                        logo->setRotateByTargetSize(true);
-                        e.data.logo = std::shared_ptr<GuiComponent>(logo);
-                    }
-                }
-
-                // Placeholder Text.
-                const ThemeData::ThemeElement* logoPlaceholderText =
-                    theme->getElement("system", "text_logoPlaceholderText", "text");
-                if (logoPlaceholderText) {
-                    // Element 'logoPlaceholderText' found in theme: place text
-                    auto* text = new TextComponent(it->getName(), Font::get(FONT_SIZE_LARGE),
-                                                   0x000000FF, ALIGN_CENTER);
-                    text->setSize(mCarousel.logoSize * mCarousel.logoScale);
-                    if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
-                        text->setHorizontalAlignment(mCarousel.logoAlignment);
-                        text->setVerticalAlignment(ALIGN_CENTER);
-                    }
-                    else {
-                        text->setHorizontalAlignment(ALIGN_CENTER);
-                        text->setVerticalAlignment(mCarousel.logoAlignment);
-                    }
-                    text->applyTheme(it->getTheme(), "system", "text_logoPlaceholderText",
-                                     ThemeFlags::ALL);
-                    if (!e.data.logo) {
-                        e.data.logo = std::shared_ptr<GuiComponent>(text);
-                        offsetLogo = text->getPosition() - center;
-                    }
-                    else {
-                        e.data.logoPlaceholderText = std::shared_ptr<GuiComponent>(text);
-                        offsetLogoPlaceholderText = text->getPosition() - center;
-                    }
+            // Placeholder Text.
+            const ThemeData::ThemeElement* logoPlaceholderText =
+                theme->getElement("system", "text_logoPlaceholderText", "text");
+            if (logoPlaceholderText) {
+                // Element 'logoPlaceholderText' found in theme: place text
+                auto* text = new TextComponent(it->getName(), Font::get(FONT_SIZE_LARGE),
+                                               0x000000FF, ALIGN_CENTER);
+                text->setSize(mCarousel.logoSize * mCarousel.logoScale);
+                if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
+                    text->setHorizontalAlignment(mCarousel.logoAlignment);
+                    text->setVerticalAlignment(ALIGN_CENTER);
                 }
                 else {
-                    // Fallback to legacy centered placeholder text.
-                    auto* text = new TextComponent(it->getName(), Font::get(FONT_SIZE_LARGE),
-                                                   0x000000FF, ALIGN_CENTER);
-                    text->setSize(mCarousel.logoSize * mCarousel.logoScale);
-                    text->applyTheme(it->getTheme(), "system", "logoText",
-                                     ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE |
-                                         ThemeFlags::COLOR | ThemeFlags::FORCE_UPPERCASE |
-                                         ThemeFlags::LINE_SPACING | ThemeFlags::TEXT);
+                    text->setHorizontalAlignment(ALIGN_CENTER);
+                    text->setVerticalAlignment(mCarousel.logoAlignment);
+                }
+                text->applyTheme(it->getTheme(), "system", "text_logoPlaceholderText",
+                                 ThemeFlags::ALL);
+                if (!e.data.logo) {
                     e.data.logo = std::shared_ptr<GuiComponent>(text);
-
-                    if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
-                        text->setHorizontalAlignment(mCarousel.logoAlignment);
-                        text->setVerticalAlignment(ALIGN_CENTER);
-                    }
-                    else {
-                        text->setHorizontalAlignment(ALIGN_CENTER);
-                        text->setVerticalAlignment(mCarousel.logoAlignment);
-                    }
+                    offsetLogo = text->getPosition() - center;
+                    //                    text->setVisible(true);
+                }
+                else {
+                    e.data.logoPlaceholderText = std::shared_ptr<GuiComponent>(text);
+                    offsetLogoPlaceholderText = text->getPosition() - center;
                 }
             }
-
-            if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
-                if (mCarousel.logoAlignment == ALIGN_LEFT)
-                    e.data.logo->setOrigin(0, 0.5);
-                else if (mCarousel.logoAlignment == ALIGN_RIGHT)
-                    e.data.logo->setOrigin(1.0, 0.5);
-                else
-                    e.data.logo->setOrigin(0.5, 0.5);
-            }
             else {
-                if (mCarousel.logoAlignment == ALIGN_TOP)
-                    e.data.logo->setOrigin(0.5, 0);
-                else if (mCarousel.logoAlignment == ALIGN_BOTTOM)
-                    e.data.logo->setOrigin(0.5, 1);
-                else
-                    e.data.logo->setOrigin(0.5, 0.5);
+                // Fallback to legacy centered placeholder text.
+                auto* text = new TextComponent(it->getName(), Font::get(FONT_SIZE_LARGE),
+                                               0x000000FF, ALIGN_CENTER);
+                text->setSize(mCarousel.logoSize * mCarousel.logoScale);
+                text->applyTheme(it->getTheme(), "system", "logoText",
+                                 ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
+                                     ThemeFlags::FORCE_UPPERCASE | ThemeFlags::LINE_SPACING |
+                                     ThemeFlags::TEXT);
+                e.data.logo = std::shared_ptr<GuiComponent>(text);
+
+                if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
+                    text->setHorizontalAlignment(mCarousel.logoAlignment);
+                    text->setVerticalAlignment(ALIGN_CENTER);
+                }
+                else {
+                    text->setHorizontalAlignment(ALIGN_CENTER);
+                    text->setVerticalAlignment(mCarousel.logoAlignment);
+                }
             }
+        }
 
-            glm::vec2 denormalized {mCarousel.logoSize * e.data.logo->getOrigin()};
-            glm::vec3 v = {denormalized.x, denormalized.y, 0.0f};
-            e.data.logo->setPosition(v + offsetLogo);
-            if (e.data.logoPlaceholderText)
-                e.data.logoPlaceholderText->setPosition(v + offsetLogoPlaceholderText);
+        if (mCarousel.type == VERTICAL || mCarousel.type == VERTICAL_WHEEL) {
+            if (mCarousel.logoAlignment == ALIGN_LEFT)
+                e.data.logo->setOrigin(0, 0.5);
+            else if (mCarousel.logoAlignment == ALIGN_RIGHT)
+                e.data.logo->setOrigin(1.0, 0.5);
+            else
+                e.data.logo->setOrigin(0.5, 0.5);
+        }
+        else {
+            if (mCarousel.logoAlignment == ALIGN_TOP)
+                e.data.logo->setOrigin(0.5, 0);
+            else if (mCarousel.logoAlignment == ALIGN_BOTTOM)
+                e.data.logo->setOrigin(0.5, 1);
+            else
+                e.data.logo->setOrigin(0.5, 0.5);
+        }
 
+        glm::vec2 denormalized {mCarousel.logoSize * e.data.logo->getOrigin()};
+        glm::vec3 v = {denormalized.x, denormalized.y, 0.0f};
+        e.data.logo->setPosition(v + offsetLogo);
+        if (e.data.logoPlaceholderText)
+            e.data.logoPlaceholderText->setPosition(v + offsetLogoPlaceholderText);
+
+        if (mLegacyMode) {
             // Make background extras.
             e.data.backgroundExtras = ThemeData::makeExtras(it->getTheme(), "system");
 
@@ -200,9 +208,32 @@ void SystemView::populate()
             std::stable_sort(
                 e.data.backgroundExtras.begin(), e.data.backgroundExtras.end(),
                 [](GuiComponent* a, GuiComponent* b) { return b->getZIndex() > a->getZIndex(); });
-
-            this->add(e);
         }
+
+        else {
+            if (theme->hasView("system")) {
+                for (auto& element : theme->getViewElements("system").elements) {
+                    if (element.second.type == "image") {
+                        e.data.imageComponents.push_back(std::make_shared<ImageComponent>());
+                        e.data.imageComponents.back()->setDefaultZIndex(30.0f);
+                        e.data.imageComponents.back()->applyTheme(theme, "system", element.first,
+                                                                  ThemeFlags::ALL);
+                        if (e.data.imageComponents.back()->getMetadataField() != "")
+                            e.data.imageComponents.back()->setScrollHide(true);
+                    }
+                    else if (element.second.type == "text") {
+                        e.data.textComponents.push_back(std::make_unique<TextComponent>());
+                        e.data.textComponents.back()->setDefaultZIndex(40.0f);
+                        e.data.textComponents.back()->applyTheme(theme, "system", element.first,
+                                                                 ThemeFlags::ALL);
+                        if (e.data.textComponents.back()->getMetadataField() != "")
+                            e.data.textComponents.back()->setScrollHide(true);
+                    }
+                }
+            }
+        }
+
+        this->add(e);
     }
     if (mEntries.empty()) {
         // Something is wrong, there is not a single system to show, check if UI mode is not full.
@@ -736,6 +767,15 @@ void SystemView::renderExtras(const glm::mat4& trans, float lower, float upper)
                 glm::ivec2 {static_cast<int>(extrasTrans[3].x), static_cast<int>(extrasTrans[3].y)},
                 glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
             SystemViewData data = mEntries.at(index).data;
+
+            // Quick hack to get the new theme engine to work without using extras.
+            for (auto& image : data.imageComponents) {
+                image->render(extrasTrans);
+            }
+            for (auto& text : data.textComponents) {
+                text->render(extrasTrans);
+            }
+
             for (unsigned int j = 0; j < data.backgroundExtras.size(); ++j) {
                 GuiComponent* extra = data.backgroundExtras[j];
                 if (extra->getZIndex() >= lower && extra->getZIndex() < upper)
