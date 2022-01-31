@@ -168,7 +168,6 @@ void GuiMenu::openUIOptions()
                 Settings::getInstance()->setString("ThemeVariant", themeVariant->getSelected());
                 s->setNeedsSaving();
                 s->setNeedsReloading();
-                s->setNeedsGoToStart();
                 s->setInvalidateCachedBackground();
             }
         });
@@ -203,7 +202,6 @@ void GuiMenu::openUIOptions()
                                                    themeAspectRatio->getSelected());
                 s->setNeedsSaving();
                 s->setNeedsReloading();
-                s->setNeedsGoToStart();
                 s->setInvalidateCachedBackground();
             }
         });
