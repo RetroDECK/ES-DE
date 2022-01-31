@@ -196,11 +196,7 @@ public:
     virtual unsigned int getColor() const { return mColor; }
     virtual unsigned int getColorShift() const { return mColorShift; }
     virtual float getLineSpacing() { return 0.0f; }
-    virtual void setColor(unsigned int color)
-    {
-        mColor = color;
-        mColorOpacity = mColor & 0x000000FF;
-    }
+    virtual void setColor(unsigned int color) { mColor = color; }
     virtual float getSaturation() const { return static_cast<float>(mColor); }
     virtual void setSaturation(float saturation) { mSaturation = saturation; }
     virtual void setColorShift(unsigned int color)
@@ -284,7 +280,6 @@ protected:
     unsigned char mOpacity;
     unsigned int mColor;
     float mSaturation;
-    unsigned char mColorOpacity;
     unsigned int mColorShift;
     unsigned int mColorShiftEnd;
     unsigned int mColorOriginalValue;
