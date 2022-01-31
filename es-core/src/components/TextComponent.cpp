@@ -256,6 +256,9 @@ void TextComponent::onTextChanged()
             f->wrapText(text, mSize.x), glm::vec2 {}, (mColor >> 8 << 8) | mOpacity, mSize.x,
             mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
+
+    // This is required to set the color transparency.
+    onColorChanged();
 }
 
 void TextComponent::onColorChanged()
