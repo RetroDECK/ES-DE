@@ -14,6 +14,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/MathUtil.h"
 
+#include <algorithm>
 #include <any>
 #include <deque>
 #include <map>
@@ -202,8 +203,9 @@ public:
                                    const std::string& element,
                                    const std::string& expectedType) const;
 
-    static std::map<std::string, ThemeSet>& getThemeSets();
-    static std::string getThemeFromCurrentSet(const std::string& system);
+    const static std::map<std::string, ThemeSet>& getThemeSets();
+    const static std::string getThemeFromCurrentSet(const std::string& system);
+    const static std::string getAspectRatioLabel(const std::string& aspectRatio);
 
     const bool isLegacyTheme() { return mLegacyTheme; }
 
@@ -243,7 +245,7 @@ private:
     static std::vector<std::string> sLegacySupportedFeatures;
     static std::vector<std::string> sLegacySupportedViews;
     static std::vector<std::string> sSupportedViews;
-    static std::vector<std::string> sSupportedAspectRatios;
+    static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
 
     static inline std::map<std::string, ThemeSet> mThemeSets;
     std::map<std::string, ThemeData::ThemeSet>::iterator mCurrentThemeSet;
@@ -251,7 +253,6 @@ private:
     std::map<std::string, ThemeView> mViews;
     std::deque<std::string> mPaths;
     std::vector<std::string> mVariants;
-    std::vector<std::string> mAspectRatios;
     std::string mSelectedVariant;
     std::string mSelectedAspectRatio;
     bool mLegacyTheme;

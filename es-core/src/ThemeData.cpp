@@ -44,20 +44,21 @@ std::vector<std::string> ThemeData::sLegacySupportedFeatures {
     {"z-index"},
     {"visible"}};
 
-std::vector<std::string> ThemeData::sSupportedAspectRatios {
-    {"16:9"},
-    {"16:9_vertical"},
-    {"16:10"},
-    {"16:10_vertical"},
-    {"3:2"},
-    {"3:2_vertical"},
-    {"4:3"},
-    {"4:3_vertical"},
-    {"5:4"},
-    {"5:4_vertical"},
-    {"12:5"},
-    {"43:18"},
-    {"64:27"}};
+std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
+    {"16:9", "16:9"},
+    {"16:9_vertical", "16:9 vertical"},
+    {"16:10", "16:10"},
+    {"16:10_vertical", "16:10 vertical"},
+    {"3:2", "3:2"},
+    {"3:2_vertical", "3:2 vertical"},
+    {"4:3", "4:3"},
+    {"4:3_vertical", "4:3 vertical"},
+    {"5:4", "5:4"},
+    {"5:4_vertical", "5:4 vertical"},
+    {"21:9", "21:9"},
+    {"21:9_vertical", "21:9 vertical"},
+    {"32:9", "32:0"},
+    {"32:9_vertical", "32:9 vertical"}};
 
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.
@@ -358,20 +359,13 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
         }
 
         if (mCurrentThemeSet->second.capabilities.aspectRatios.size() > 0) {
-            for (auto& aspectRatio : sSupportedAspectRatios) {
-                if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
-                              mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
-                              aspectRatio) !=
-                    mCurrentThemeSet->second.capabilities.aspectRatios.cend())
-                    mAspectRatios.emplace_back(aspectRatio);
-            }
-
-            if (std::find(mAspectRatios.cbegin(), mAspectRatios.cend(),
+            if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
+                          mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
                           Settings::getInstance()->getString("ThemeAspectRatio")) !=
-                mAspectRatios.cend())
+                mCurrentThemeSet->second.capabilities.aspectRatios.cend())
                 mSelectedAspectRatio = Settings::getInstance()->getString("ThemeAspectRatio");
             else
-                mSelectedAspectRatio = mAspectRatios.front();
+                mSelectedAspectRatio = mCurrentThemeSet->second.capabilities.aspectRatios.front();
         }
     }
 
@@ -450,7 +444,7 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
     return &elemIt->second;
 }
 
-std::map<std::string, ThemeData::ThemeSet>& ThemeData::getThemeSets()
+const std::map<std::string, ThemeData::ThemeSet>& ThemeData::getThemeSets()
 {
     if (!mThemeSets.empty())
         return mThemeSets;
@@ -505,7 +499,7 @@ std::map<std::string, ThemeData::ThemeSet>& ThemeData::getThemeSets()
     return mThemeSets;
 }
 
-std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
+const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
 {
     if (mThemeSets.empty())
         getThemeSets();
@@ -537,6 +531,18 @@ std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
     }
 
     return set->second.getThemePath(system);
+}
+
+const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
+{
+    auto it = std::find_if(sSupportedAspectRatios.cbegin(), sSupportedAspectRatios.cend(),
+                           [&aspectRatio](const std::pair<std::string, std::string>& entry) {
+                               return entry.first == aspectRatio;
+                           });
+    if (it != sSupportedAspectRatios.cend())
+        return it->second;
+    else
+        return "invalid ratio";
 }
 
 const std::shared_ptr<ThemeData> ThemeData::getDefault()
@@ -606,6 +612,7 @@ std::string ThemeData::resolvePlaceholders(const std::string& in)
 ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& path)
 {
     ThemeCapability capabilities;
+    std::vector<std::string> aspectRatiosTemp;
 
     std::string capFile {path + "/capabilities.xml"};
 
@@ -635,23 +642,26 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
         for (pugi::xml_node aspectRatio = themeCapabilities.child("aspectRatio"); aspectRatio;
              aspectRatio = aspectRatio.next_sibling("aspectRatio")) {
             std::string value = aspectRatio.text().get();
-            if (std::find(sSupportedAspectRatios.cbegin(), sSupportedAspectRatios.cend(), value) ==
-                sSupportedAspectRatios.cend()) {
+            if (std::find_if(sSupportedAspectRatios.cbegin(), sSupportedAspectRatios.cend(),
+                             [&value](const std::pair<std::string, std::string>& entry) {
+                                 return entry.first == value;
+                             }) == sSupportedAspectRatios.cend()) {
                 LOG(LogWarning) << "Declared aspect ratio \"" << value
                                 << "\" is not supported, ignoring entry in \"" << capFile << "\"";
             }
             else {
-                if (std::find(capabilities.aspectRatios.cbegin(), capabilities.aspectRatios.cend(),
-                              value) != capabilities.aspectRatios.cend()) {
+                if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), value) !=
+                    aspectRatiosTemp.cend()) {
                     LOG(LogWarning)
                         << "Aspect ratio \"" << value
                         << "\" is declared multiple times, ignoring entry in \"" << capFile << "\"";
                 }
                 else {
-                    capabilities.aspectRatios.emplace_back(value);
+                    aspectRatiosTemp.emplace_back(value);
                 }
             }
         }
+
         for (pugi::xml_node variant = themeCapabilities.child("variant"); variant;
              variant = variant.next_sibling("variant")) {
             ThemeVariant readVariant;
@@ -756,6 +766,17 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     else {
         LOG(LogDebug) << "No capabilities.xml file found, flagging as legacy theme set";
         capabilities.legacyTheme = true;
+    }
+
+    // Add the aspect ratios in the order they are defined in sSupportedAspectRatios so they
+    // always show up in the same order in the UI Settings menu.
+    if (!aspectRatiosTemp.empty()) {
+        for (auto& aspectRatio : sSupportedAspectRatios) {
+            if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), aspectRatio.first) !=
+                aspectRatiosTemp.cend()) {
+                capabilities.aspectRatios.emplace_back(aspectRatio.first);
+            }
+        }
     }
 
     return capabilities;
@@ -899,8 +920,9 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
             prevOff = nameAttr.find_first_not_of(delim, off);
             off = nameAttr.find_first_of(delim, prevOff);
 
-            if (std::find(mAspectRatios.cbegin(), mAspectRatios.cend(), viewKey) ==
-                mAspectRatios.cend()) {
+            if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
+                          mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
+                          viewKey) == mCurrentThemeSet->second.capabilities.aspectRatios.cend()) {
                 throw error << ": aspectRatio value \"" << viewKey
                             << "\" is not defined in capabilities.xml";
             }
