@@ -99,83 +99,25 @@ void GuiMenu::openUIOptions()
 {
     auto s = new GuiSettings("UI SETTINGS");
 
-    // Optionally start in selected system/gamelist.
-    auto startupSystem = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "GAMELIST ON STARTUP", false);
-    startupSystem->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
-    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); ++it) {
-        if ((*it)->getName() != "retropie") {
-            // If required, abbreviate the system name so it doesn't overlap the setting name.
-            float maxNameLength = mSize.x * 0.48f;
-            startupSystem->add((*it)->getFullName(), (*it)->getName(),
-                               Settings::getInstance()->getString("StartupSystem") ==
-                                   (*it)->getName(),
-                               maxNameLength);
-        }
-    }
-    // This can probably not happen but as an extra precaution select the "NONE" entry if no
-    // entry is selected.
-    if (startupSystem->getSelectedObjects().size() == 0)
-        startupSystem->selectEntry(0);
-    s->addWithLabel("GAMELIST ON STARTUP", startupSystem);
-    s->addSaveFunc([startupSystem, s] {
-        if (startupSystem->getSelected() != Settings::getInstance()->getString("StartupSystem")) {
-            Settings::getInstance()->setString("StartupSystem", startupSystem->getSelected());
-            s->setNeedsSaving();
-        }
-    });
+    // Theme options section.
 
-    // Gamelist view style.
-    auto gamelist_view_style = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "GAMELIST VIEW STYLE", false);
-    std::string selectedViewStyle = Settings::getInstance()->getString("GamelistViewStyle");
-    gamelist_view_style->add("automatic", "automatic", selectedViewStyle == "automatic");
-    gamelist_view_style->add("basic", "basic", selectedViewStyle == "basic");
-    gamelist_view_style->add("detailed", "detailed", selectedViewStyle == "detailed");
-    gamelist_view_style->add("video", "video", selectedViewStyle == "video");
-    // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the view style to Automatic in this case.
-    if (gamelist_view_style->getSelectedObjects().size() == 0)
-        gamelist_view_style->selectEntry(0);
-    s->addWithLabel("GAMELIST VIEW STYLE", gamelist_view_style);
-    s->addSaveFunc([gamelist_view_style, s] {
-        if (gamelist_view_style->getSelected() !=
-            Settings::getInstance()->getString("GamelistViewStyle")) {
-            Settings::getInstance()->setString("GamelistViewStyle",
-                                               gamelist_view_style->getSelected());
-            s->setNeedsSaving();
-            s->setNeedsReloading();
-            s->setInvalidateCachedBackground();
-        }
-    });
-
-    // Transition style.
-    auto transition_style = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "TRANSITION STYLE", false);
-    std::vector<std::string> transitions;
-    transitions.push_back("slide");
-    transitions.push_back("fade");
-    transitions.push_back("instant");
-    for (auto it = transitions.cbegin(); it != transitions.cend(); ++it)
-        transition_style->add(*it, *it,
-                              Settings::getInstance()->getString("TransitionStyle") == *it);
-    s->addWithLabel("TRANSITION STYLE", transition_style);
-    s->addSaveFunc([transition_style, s] {
-        if (transition_style->getSelected() !=
-            Settings::getInstance()->getString("TransitionStyle")) {
-            Settings::getInstance()->setString("TransitionStyle", transition_style->getSelected());
-            s->setNeedsSaving();
-        }
-    });
+    std::map<std::string, ThemeData::ThemeSet> themeSets {ThemeData::getThemeSets()};
+    std::vector<ThemeData::ThemeVariant> themeVariantsVector;
+    std::vector<std::string> themeAspectRatiosVector;
+    std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet;
 
     // Theme selection.
-    auto themeSets = ThemeData::getThemeSets();
     if (!themeSets.empty()) {
-        std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet =
-            themeSets.find(Settings::getInstance()->getString("ThemeSet"));
+        selectedSet = themeSets.find(Settings::getInstance()->getString("ThemeSet"));
         if (selectedSet == themeSets.cend())
             selectedSet = themeSets.cbegin();
+
+        for (auto& variant : selectedSet->second.capabilities.variants)
+            themeVariantsVector.emplace_back(variant);
+
+        for (auto& aspectRatio : selectedSet->second.capabilities.aspectRatios)
+            themeAspectRatiosVector.emplace_back(aspectRatio);
+
         auto theme_set =
             std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
         for (auto it = themeSets.cbegin(); it != themeSets.cend(); ++it) {
@@ -204,6 +146,245 @@ void GuiMenu::openUIOptions()
             }
         });
     }
+
+    // Theme variants.
+    auto themeVariant =
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME VARIANT", false);
+    if (!themeVariantsVector.empty()) {
+        std::string selectedVariant {Settings::getInstance()->getString("ThemeVariant")};
+        for (auto& variant : themeVariantsVector) {
+            if (variant.selectable) {
+                // If required, abbreviate the variant name so it doesn't overlap the setting name.
+                float maxNameLength {mSize.x * 0.62f};
+                themeVariant->add(variant.label, variant.name, variant.name == selectedVariant,
+                                  maxNameLength);
+            }
+        }
+        if (themeVariant->getSelectedObjects().size() == 0)
+            themeVariant->selectEntry(0);
+        s->addWithLabel("THEME VARIANT", themeVariant);
+        s->addSaveFunc([themeVariant, selectedVariant, s] {
+            if (themeVariant->getSelected() != selectedVariant) {
+                Settings::getInstance()->setString("ThemeVariant", themeVariant->getSelected());
+                s->setNeedsSaving();
+                s->setNeedsReloading();
+                s->setNeedsGoToStart();
+                s->setInvalidateCachedBackground();
+            }
+        });
+    }
+    else {
+        if (selectedSet->second.capabilities.legacyTheme)
+            themeVariant->add("Legacy theme set", "none", true);
+        else
+            themeVariant->add("None defined", "none", true);
+        s->addWithLabel("THEME VARIANT", themeVariant);
+        themeVariant->setEnabled(false);
+        themeVariant->setOpacity(DISABLED_OPACITY);
+        themeVariant->getParent()
+            ->getChild(themeVariant->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
+    // Theme aspect ratios.
+    auto themeAspectRatio = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "THEME ASPECT RATIO", false);
+    if (!themeAspectRatiosVector.empty()) {
+        std::string selectedAspectRatio {Settings::getInstance()->getString("ThemeAspectRatio")};
+        for (auto& aspectRatio : themeAspectRatiosVector)
+            themeAspectRatio->add(ThemeData::getAspectRatioLabel(aspectRatio), aspectRatio,
+                                  aspectRatio == selectedAspectRatio);
+        if (themeAspectRatio->getSelectedObjects().size() == 0)
+            themeAspectRatio->selectEntry(0);
+        s->addWithLabel("THEME ASPECT RATIO", themeAspectRatio);
+        s->addSaveFunc([themeAspectRatio, selectedAspectRatio, s] {
+            if (themeAspectRatio->getSelected() != selectedAspectRatio) {
+                Settings::getInstance()->setString("ThemeAspectRatio",
+                                                   themeAspectRatio->getSelected());
+                s->setNeedsSaving();
+                s->setNeedsReloading();
+                s->setNeedsGoToStart();
+                s->setInvalidateCachedBackground();
+            }
+        });
+    }
+    else {
+        if (selectedSet->second.capabilities.legacyTheme)
+            themeAspectRatio->add("Legacy theme set", "none", true);
+        else
+            themeAspectRatio->add("None defined", "none", true);
+        s->addWithLabel("THEME ASPECT RATIO", themeAspectRatio);
+        themeAspectRatio->setEnabled(false);
+        themeAspectRatio->setOpacity(DISABLED_OPACITY);
+        themeAspectRatio->getParent()
+            ->getChild(themeAspectRatio->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
+    // Legacy gamelist view style.
+    auto gamelist_view_style = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "LEGACY GAMELIST VIEW STYLE", false);
+    std::string selectedViewStyle = Settings::getInstance()->getString("GamelistViewStyle");
+    gamelist_view_style->add("automatic", "automatic", selectedViewStyle == "automatic");
+    gamelist_view_style->add("basic", "basic", selectedViewStyle == "basic");
+    gamelist_view_style->add("detailed", "detailed", selectedViewStyle == "detailed");
+    gamelist_view_style->add("video", "video", selectedViewStyle == "video");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the view style to Automatic in this case.
+    if (gamelist_view_style->getSelectedObjects().size() == 0)
+        gamelist_view_style->selectEntry(0);
+    s->addWithLabel("LEGACY GAMELIST VIEW STYLE", gamelist_view_style);
+    s->addSaveFunc([gamelist_view_style, s] {
+        if (gamelist_view_style->getSelected() !=
+            Settings::getInstance()->getString("GamelistViewStyle")) {
+            Settings::getInstance()->setString("GamelistViewStyle",
+                                               gamelist_view_style->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    if (!selectedSet->second.capabilities.legacyTheme) {
+        gamelist_view_style->setEnabled(false);
+        gamelist_view_style->setOpacity(DISABLED_OPACITY);
+        gamelist_view_style->getParent()
+            ->getChild(gamelist_view_style->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
+    // Legacy ransition style.
+    auto transition_style = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "LEGACY TRANSITION STYLE", false);
+    std::vector<std::string> transitions;
+    transitions.push_back("slide");
+    transitions.push_back("fade");
+    transitions.push_back("instant");
+    for (auto it = transitions.cbegin(); it != transitions.cend(); ++it)
+        transition_style->add(*it, *it,
+                              Settings::getInstance()->getString("TransitionStyle") == *it);
+    s->addWithLabel("LEGACY TRANSITION STYLE", transition_style);
+    s->addSaveFunc([transition_style, s] {
+        if (transition_style->getSelected() !=
+            Settings::getInstance()->getString("TransitionStyle")) {
+            Settings::getInstance()->setString("TransitionStyle", transition_style->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // TEMPORARY
+    // if (!selectedSet->second.capabilities.legacyTheme) {
+    //    transition_style->setEnabled(false);
+    //    transition_style->setOpacity(DISABLED_OPACITY);
+    //    transition_style->getParent()
+    //        ->getChild(transition_style->getChildIndex() - 1)
+    //        ->setOpacity(DISABLED_OPACITY);
+    // }
+
+    // Optionally start in selected system/gamelist.
+    auto startupSystem = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "GAMELIST ON STARTUP", false);
+    startupSystem->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
+    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+         it != SystemData::sSystemVector.cend(); ++it) {
+        if ((*it)->getName() != "retropie") {
+            // If required, abbreviate the system name so it doesn't overlap the setting name.
+            float maxNameLength = mSize.x * 0.48f;
+            startupSystem->add((*it)->getFullName(), (*it)->getName(),
+                               Settings::getInstance()->getString("StartupSystem") ==
+                                   (*it)->getName(),
+                               maxNameLength);
+        }
+    }
+    // This can probably not happen but as an extra precaution select the "NONE" entry if no
+    // entry is selected.
+    if (startupSystem->getSelectedObjects().size() == 0)
+        startupSystem->selectEntry(0);
+    s->addWithLabel("GAMELIST ON STARTUP", startupSystem);
+    s->addSaveFunc([startupSystem, s] {
+        if (startupSystem->getSelected() != Settings::getInstance()->getString("StartupSystem")) {
+            Settings::getInstance()->setString("StartupSystem", startupSystem->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Default gamelist sort order.
+    std::string sortOrder;
+    auto default_sort_order = std::make_shared<OptionListComponent<const FileData::SortType*>>(
+        getHelpStyle(), "DEFAULT SORT ORDER", false);
+    // Exclude the System sort options.
+    unsigned int numSortTypes = static_cast<unsigned int>(FileSorts::SortTypes.size() - 2);
+    for (unsigned int i = 0; i < numSortTypes; ++i) {
+        if (FileSorts::SortTypes[i].description ==
+            Settings::getInstance()->getString("DefaultSortOrder")) {
+            sortOrder = FileSorts::SortTypes[i].description;
+            break;
+        }
+    }
+    // If an invalid sort order was defined in es_settings.xml, then apply the default
+    // sort order 'filename, ascending'.
+    if (sortOrder == "")
+        sortOrder = Settings::getInstance()->getDefaultString("DefaultSortOrder");
+    for (unsigned int i = 0; i < numSortTypes; ++i) {
+        const FileData::SortType& sort = FileSorts::SortTypes[i];
+        if (sort.description == sortOrder)
+            default_sort_order->add(sort.description, &sort, true);
+        else
+            default_sort_order->add(sort.description, &sort, false);
+    }
+    s->addWithLabel("DEFAULT SORT ORDER", default_sort_order);
+    s->addSaveFunc([default_sort_order, sortOrder, s] {
+        std::string selectedSortOrder = default_sort_order.get()->getSelected()->description;
+        if (selectedSortOrder != sortOrder) {
+            Settings::getInstance()->setString("DefaultSortOrder", selectedSortOrder);
+            s->setNeedsSaving();
+            s->setNeedsSorting();
+            s->setNeedsSortingCollections();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    // Open menu effect.
+    auto menu_opening_effect = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "MENU OPENING EFFECT", false);
+    std::string selectedMenuEffect = Settings::getInstance()->getString("MenuOpeningEffect");
+    menu_opening_effect->add("SCALE-UP", "scale-up", selectedMenuEffect == "scale-up");
+    menu_opening_effect->add("NONE", "none", selectedMenuEffect == "none");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the opening effect to "scale-up" in this case.
+    if (menu_opening_effect->getSelectedObjects().size() == 0)
+        menu_opening_effect->selectEntry(0);
+    s->addWithLabel("MENU OPENING EFFECT", menu_opening_effect);
+    s->addSaveFunc([menu_opening_effect, s] {
+        if (menu_opening_effect->getSelected() !=
+            Settings::getInstance()->getString("MenuOpeningEffect")) {
+            Settings::getInstance()->setString("MenuOpeningEffect",
+                                               menu_opening_effect->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Launch screen duration.
+    auto launch_screen_duration = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "LAUNCH SCREEN DURATION", false);
+    std::string selectedDuration = Settings::getInstance()->getString("LaunchScreenDuration");
+    launch_screen_duration->add("NORMAL", "normal", selectedDuration == "normal");
+    launch_screen_duration->add("BRIEF", "brief", selectedDuration == "brief");
+    launch_screen_duration->add("LONG", "long", selectedDuration == "long");
+    launch_screen_duration->add("DISABLED", "disabled", selectedDuration == "disabled");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the duration to "normal" in this case.
+    if (launch_screen_duration->getSelectedObjects().size() == 0)
+        launch_screen_duration->selectEntry(0);
+    s->addWithLabel("LAUNCH SCREEN DURATION", launch_screen_duration);
+    s->addSaveFunc([launch_screen_duration, s] {
+        if (launch_screen_duration->getSelected() !=
+            Settings::getInstance()->getString("LaunchScreenDuration")) {
+            Settings::getInstance()->setString("LaunchScreenDuration",
+                                               launch_screen_duration->getSelected());
+            s->setNeedsSaving();
+        }
+    });
 
     // UI mode.
     auto ui_mode =
@@ -288,84 +469,6 @@ void GuiMenu::openUIOptions()
             s->setNeedsReloading();
             s->setNeedsGoToSystem(SystemData::sSystemVector.front());
             s->setInvalidateCachedBackground();
-        }
-    });
-
-    // Default gamelist sort order.
-    std::string sortOrder;
-    auto default_sort_order = std::make_shared<OptionListComponent<const FileData::SortType*>>(
-        getHelpStyle(), "DEFAULT SORT ORDER", false);
-    // Exclude the System sort options.
-    unsigned int numSortTypes = static_cast<unsigned int>(FileSorts::SortTypes.size() - 2);
-    for (unsigned int i = 0; i < numSortTypes; ++i) {
-        if (FileSorts::SortTypes[i].description ==
-            Settings::getInstance()->getString("DefaultSortOrder")) {
-            sortOrder = FileSorts::SortTypes[i].description;
-            break;
-        }
-    }
-    // If an invalid sort order was defined in es_settings.xml, then apply the default
-    // sort order 'filename, ascending'.
-    if (sortOrder == "")
-        sortOrder = Settings::getInstance()->getDefaultString("DefaultSortOrder");
-    for (unsigned int i = 0; i < numSortTypes; ++i) {
-        const FileData::SortType& sort = FileSorts::SortTypes[i];
-        if (sort.description == sortOrder)
-            default_sort_order->add(sort.description, &sort, true);
-        else
-            default_sort_order->add(sort.description, &sort, false);
-    }
-    s->addWithLabel("DEFAULT SORT ORDER", default_sort_order);
-    s->addSaveFunc([default_sort_order, sortOrder, s] {
-        std::string selectedSortOrder = default_sort_order.get()->getSelected()->description;
-        if (selectedSortOrder != sortOrder) {
-            Settings::getInstance()->setString("DefaultSortOrder", selectedSortOrder);
-            s->setNeedsSaving();
-            s->setNeedsSorting();
-            s->setNeedsSortingCollections();
-            s->setInvalidateCachedBackground();
-        }
-    });
-
-    // Open menu effect.
-    auto menu_opening_effect = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "MENU OPENING EFFECT", false);
-    std::string selectedMenuEffect = Settings::getInstance()->getString("MenuOpeningEffect");
-    menu_opening_effect->add("SCALE-UP", "scale-up", selectedMenuEffect == "scale-up");
-    menu_opening_effect->add("NONE", "none", selectedMenuEffect == "none");
-    // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the opening effect to "scale-up" in this case.
-    if (menu_opening_effect->getSelectedObjects().size() == 0)
-        menu_opening_effect->selectEntry(0);
-    s->addWithLabel("MENU OPENING EFFECT", menu_opening_effect);
-    s->addSaveFunc([menu_opening_effect, s] {
-        if (menu_opening_effect->getSelected() !=
-            Settings::getInstance()->getString("MenuOpeningEffect")) {
-            Settings::getInstance()->setString("MenuOpeningEffect",
-                                               menu_opening_effect->getSelected());
-            s->setNeedsSaving();
-        }
-    });
-
-    // Launch screen duration.
-    auto launch_screen_duration = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "LAUNCH SCREEN DURATION", false);
-    std::string selectedDuration = Settings::getInstance()->getString("LaunchScreenDuration");
-    launch_screen_duration->add("NORMAL", "normal", selectedDuration == "normal");
-    launch_screen_duration->add("BRIEF", "brief", selectedDuration == "brief");
-    launch_screen_duration->add("LONG", "long", selectedDuration == "long");
-    launch_screen_duration->add("DISABLED", "disabled", selectedDuration == "disabled");
-    // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the duration to "normal" in this case.
-    if (launch_screen_duration->getSelectedObjects().size() == 0)
-        launch_screen_duration->selectEntry(0);
-    s->addWithLabel("LAUNCH SCREEN DURATION", launch_screen_duration);
-    s->addSaveFunc([launch_screen_duration, s] {
-        if (launch_screen_duration->getSelected() !=
-            Settings::getInstance()->getString("LaunchScreenDuration")) {
-            Settings::getInstance()->setString("LaunchScreenDuration",
-                                               launch_screen_duration->getSelected());
-            s->setNeedsSaving();
         }
     });
 
