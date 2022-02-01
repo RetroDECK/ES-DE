@@ -200,7 +200,7 @@ void Settings::setDefaults()
     mIntMap["SoundVolumeVideos"] = {80, 80};
     mBoolMap["GamelistVideoAudio"] = {true, true};
     mBoolMap["MediaViewerVideoAudio"] = {true, true};
-    mBoolMap["ScreensaverVideoAudio"] = {false, false};
+    mBoolMap["ScreensaverVideoAudio"] = {true, true};
     mBoolMap["NavigationSounds"] = {true, true};
 
     // Input device settings.
