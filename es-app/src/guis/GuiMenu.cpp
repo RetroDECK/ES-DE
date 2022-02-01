@@ -102,9 +102,10 @@ void GuiMenu::openUIOptions()
     // Theme options section.
 
     std::map<std::string, ThemeData::ThemeSet> themeSets {ThemeData::getThemeSets()};
-    std::vector<ThemeData::ThemeVariant> themeVariantsVector;
-    std::vector<std::string> themeAspectRatiosVector;
     std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet;
+
+    auto theme_set =
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
 
     // Theme selection.
     if (!themeSets.empty()) {
@@ -112,14 +113,6 @@ void GuiMenu::openUIOptions()
         if (selectedSet == themeSets.cend())
             selectedSet = themeSets.cbegin();
 
-        for (auto& variant : selectedSet->second.capabilities.variants)
-            themeVariantsVector.emplace_back(variant);
-
-        for (auto& aspectRatio : selectedSet->second.capabilities.aspectRatios)
-            themeAspectRatiosVector.emplace_back(aspectRatio);
-
-        auto theme_set =
-            std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
         for (auto it = themeSets.cbegin(); it != themeSets.cend(); ++it) {
             // If required, abbreviate the theme set name so it doesn't overlap the setting name.
             float maxNameLength = mSize.x * 0.62f;
@@ -150,74 +143,102 @@ void GuiMenu::openUIOptions()
     // Theme variants.
     auto themeVariant =
         std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME VARIANT", false);
-    if (!themeVariantsVector.empty()) {
-        std::string selectedVariant {Settings::getInstance()->getString("ThemeVariant")};
-        for (auto& variant : themeVariantsVector) {
-            if (variant.selectable) {
-                // If required, abbreviate the variant name so it doesn't overlap the setting name.
-                float maxNameLength {mSize.x * 0.62f};
-                themeVariant->add(variant.label, variant.name, variant.name == selectedVariant,
-                                  maxNameLength);
-            }
+    s->addWithLabel("THEME VARIANT", themeVariant);
+    s->addSaveFunc([themeVariant, s] {
+        if (themeVariant->getSelected() != Settings::getInstance()->getString("ThemeVariant")) {
+            Settings::getInstance()->setString("ThemeVariant", themeVariant->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
         }
-        if (themeVariant->getSelectedObjects().size() == 0)
-            themeVariant->selectEntry(0);
-        s->addWithLabel("THEME VARIANT", themeVariant);
-        s->addSaveFunc([themeVariant, selectedVariant, s] {
-            if (themeVariant->getSelected() != selectedVariant) {
-                Settings::getInstance()->setString("ThemeVariant", themeVariant->getSelected());
-                s->setNeedsSaving();
-                s->setNeedsReloading();
-                s->setInvalidateCachedBackground();
+    });
+
+    auto themeVariantsFunc = [=](const std::string& selectedTheme,
+                                 const std::string& selectedVariant) {
+        std::map<std::string, ThemeData::ThemeSet>::const_iterator currentSet {
+            themeSets.find(selectedTheme)};
+        if (currentSet == themeSets.cend())
+            return;
+        // We need to recreate the OptionListComponent entries.
+        themeVariant->clearEntries();
+        int selectableVariants {0};
+        for (auto& variant : currentSet->second.capabilities.variants) {
+            if (variant.selectable)
+                ++selectableVariants;
+        }
+        if (selectableVariants > 0) {
+            for (auto& variant : currentSet->second.capabilities.variants) {
+                if (variant.selectable) {
+                    // If required, abbreviate the variant name so it doesn't overlap the
+                    // setting name.
+                    float maxNameLength {mSize.x * 0.62f};
+                    themeVariant->add(variant.label, variant.name, variant.name == selectedVariant,
+                                      maxNameLength);
+                }
             }
-        });
-    }
-    else {
-        if (selectedSet->second.capabilities.legacyTheme)
-            themeVariant->add("Legacy theme set", "none", true);
-        else
-            themeVariant->add("None defined", "none", true);
-        s->addWithLabel("THEME VARIANT", themeVariant);
-        themeVariant->setEnabled(false);
-        themeVariant->setOpacity(DISABLED_OPACITY);
-        themeVariant->getParent()
-            ->getChild(themeVariant->getChildIndex() - 1)
-            ->setOpacity(DISABLED_OPACITY);
-    }
+            if (themeVariant->getSelectedObjects().size() == 0)
+                themeVariant->selectEntry(0);
+        }
+        else {
+            if (currentSet->second.capabilities.legacyTheme)
+                themeVariant->add("Legacy theme set", "none", true);
+            else
+                themeVariant->add("None defined", "none", true);
+            themeVariant->setEnabled(false);
+            themeVariant->setOpacity(DISABLED_OPACITY);
+            themeVariant->getParent()
+                ->getChild(themeVariant->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    };
+
+    themeVariantsFunc(Settings::getInstance()->getString("ThemeSet"),
+                      Settings::getInstance()->getString("ThemeVariant"));
 
     // Theme aspect ratios.
     auto themeAspectRatio = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "THEME ASPECT RATIO", false);
-    if (!themeAspectRatiosVector.empty()) {
-        std::string selectedAspectRatio {Settings::getInstance()->getString("ThemeAspectRatio")};
-        for (auto& aspectRatio : themeAspectRatiosVector)
-            themeAspectRatio->add(ThemeData::getAspectRatioLabel(aspectRatio), aspectRatio,
-                                  aspectRatio == selectedAspectRatio);
-        if (themeAspectRatio->getSelectedObjects().size() == 0)
-            themeAspectRatio->selectEntry(0);
-        s->addWithLabel("THEME ASPECT RATIO", themeAspectRatio);
-        s->addSaveFunc([themeAspectRatio, selectedAspectRatio, s] {
-            if (themeAspectRatio->getSelected() != selectedAspectRatio) {
-                Settings::getInstance()->setString("ThemeAspectRatio",
-                                                   themeAspectRatio->getSelected());
-                s->setNeedsSaving();
-                s->setNeedsReloading();
-                s->setInvalidateCachedBackground();
-            }
-        });
-    }
-    else {
-        if (selectedSet->second.capabilities.legacyTheme)
-            themeAspectRatio->add("Legacy theme set", "none", true);
-        else
-            themeAspectRatio->add("None defined", "none", true);
-        s->addWithLabel("THEME ASPECT RATIO", themeAspectRatio);
-        themeAspectRatio->setEnabled(false);
-        themeAspectRatio->setOpacity(DISABLED_OPACITY);
-        themeAspectRatio->getParent()
-            ->getChild(themeAspectRatio->getChildIndex() - 1)
-            ->setOpacity(DISABLED_OPACITY);
-    }
+    s->addWithLabel("THEME ASPECT RATIO", themeAspectRatio);
+    s->addSaveFunc([themeAspectRatio, s] {
+        if (themeAspectRatio->getSelected() !=
+            Settings::getInstance()->getString("ThemeAspectRatio")) {
+            Settings::getInstance()->setString("ThemeAspectRatio", themeAspectRatio->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    auto themeAspectRatiosFunc = [=](const std::string& selectedTheme,
+                                     const std::string& selectedAspectRatio) {
+        std::map<std::string, ThemeData::ThemeSet>::const_iterator currentSet {
+            themeSets.find(selectedTheme)};
+        if (currentSet == themeSets.cend())
+            return;
+        // We need to recreate the OptionListComponent entries.
+        themeAspectRatio->clearEntries();
+        if (currentSet->second.capabilities.aspectRatios.size() > 0) {
+            for (auto& aspectRatio : currentSet->second.capabilities.aspectRatios)
+                themeAspectRatio->add(ThemeData::getAspectRatioLabel(aspectRatio), aspectRatio,
+                                      aspectRatio == selectedAspectRatio);
+            if (themeAspectRatio->getSelectedObjects().size() == 0)
+                themeAspectRatio->selectEntry(0);
+        }
+        else {
+            if (currentSet->second.capabilities.legacyTheme)
+                themeAspectRatio->add("Legacy theme set", "none", true);
+            else
+                themeAspectRatio->add("None defined", "none", true);
+            themeAspectRatio->setEnabled(false);
+            themeAspectRatio->setOpacity(DISABLED_OPACITY);
+            themeAspectRatio->getParent()
+                ->getChild(themeAspectRatio->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    };
+
+    themeAspectRatiosFunc(Settings::getInstance()->getString("ThemeSet"),
+                          Settings::getInstance()->getString("ThemeAspectRatio"));
 
     // Legacy gamelist view style.
     auto gamelist_view_style = std::make_shared<OptionListComponent<std::string>>(
@@ -243,14 +264,6 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    if (!selectedSet->second.capabilities.legacyTheme) {
-        gamelist_view_style->setEnabled(false);
-        gamelist_view_style->setOpacity(DISABLED_OPACITY);
-        gamelist_view_style->getParent()
-            ->getChild(gamelist_view_style->getChildIndex() - 1)
-            ->setOpacity(DISABLED_OPACITY);
-    }
-
     // Legacy ransition style.
     auto transition_style = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "LEGACY TRANSITION STYLE", false);
@@ -270,14 +283,78 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // TEMPORARY
-    // if (!selectedSet->second.capabilities.legacyTheme) {
-    //    transition_style->setEnabled(false);
-    //    transition_style->setOpacity(DISABLED_OPACITY);
-    //    transition_style->getParent()
-    //        ->getChild(transition_style->getChildIndex() - 1)
-    //        ->setOpacity(DISABLED_OPACITY);
-    // }
+    // When the theme set entries are scrolled or selected, update the relevant rows.
+    auto scrollThemeSetFunc = [=](const std::string& themeName, bool firstRun = false) {
+        auto selectedSet = themeSets.find(themeName);
+        if (selectedSet == themeSets.cend())
+            return;
+        if (!firstRun) {
+            themeVariantsFunc(themeName, themeVariant->getSelected());
+            themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
+        }
+        int selectableVariants {0};
+        for (auto& variant : selectedSet->second.capabilities.variants) {
+            if (variant.selectable)
+                ++selectableVariants;
+        }
+        if (!selectedSet->second.capabilities.legacyTheme && selectableVariants > 0) {
+            themeVariant->setEnabled(true);
+            themeVariant->setOpacity(255);
+            themeVariant->getParent()->getChild(themeVariant->getChildIndex() - 1)->setOpacity(255);
+        }
+        else {
+            themeVariant->setEnabled(false);
+            themeVariant->setOpacity(DISABLED_OPACITY);
+            themeVariant->getParent()
+                ->getChild(themeVariant->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+
+        if (!selectedSet->second.capabilities.legacyTheme &&
+            selectedSet->second.capabilities.aspectRatios.size() > 0) {
+            themeAspectRatio->setEnabled(true);
+            themeAspectRatio->setOpacity(255);
+            themeAspectRatio->getParent()
+                ->getChild(themeAspectRatio->getChildIndex() - 1)
+                ->setOpacity(255);
+        }
+        else {
+            themeAspectRatio->setEnabled(false);
+            themeAspectRatio->setOpacity(DISABLED_OPACITY);
+            themeAspectRatio->getParent()
+                ->getChild(themeAspectRatio->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        if (!selectedSet->second.capabilities.legacyTheme) {
+            gamelist_view_style->setEnabled(false);
+            gamelist_view_style->setOpacity(DISABLED_OPACITY);
+            gamelist_view_style->getParent()
+                ->getChild(gamelist_view_style->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+            // TEMPORARY
+            // transition_style->setEnabled(false);
+            transition_style->setOpacity(DISABLED_OPACITY);
+            transition_style->getParent()
+                ->getChild(transition_style->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            gamelist_view_style->setEnabled(true);
+            gamelist_view_style->setOpacity(255);
+            gamelist_view_style->getParent()
+                ->getChild(gamelist_view_style->getChildIndex() - 1)
+                ->setOpacity(255);
+
+            transition_style->setEnabled(true);
+            transition_style->setOpacity(255);
+            transition_style->getParent()
+                ->getChild(transition_style->getChildIndex() - 1)
+                ->setOpacity(255);
+        }
+    };
+
+    scrollThemeSetFunc(selectedSet->first, true);
+    theme_set->setCallback(scrollThemeSetFunc);
 
     // Optionally start in selected system/gamelist.
     auto startupSystem = std::make_shared<OptionListComponent<std::string>>(

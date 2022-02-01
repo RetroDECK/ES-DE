@@ -246,6 +246,11 @@ public:
     }
 
     void setOverrideMultiText(const std::string& text) { mOverrideMultiText = text; }
+    void clearEntries() { mEntries.clear(); }
+    void setCallback(const std::function<void(const std::string&)>& callbackFunc)
+    {
+        mSelectedChangedCallback = callbackFunc;
+    }
 
     void setKeyRepeat(bool state,
                       int delay = OPTIONLIST_REPEAT_START_DELAY,
@@ -297,6 +302,7 @@ private:
     };
 
     HelpStyle mHelpStyle;
+    std::function<void(const std::string&)> mSelectedChangedCallback;
 
     void open()
     {
@@ -337,11 +343,11 @@ private:
                         // this value, so abbreviate the string inside the arrows.
                         auto font = Font::get(FONT_SIZE_MEDIUM);
                         // Calculate with an extra dot to give some leeway.
-                        float dotsSize = font->sizeText("....").x;
-                        std::string abbreviatedString = font->getTextMaxWidth(
-                            Utils::String::toUpper(it->name), it->maxNameLength);
-                        float sizeDifference = font->sizeText(Utils::String::toUpper(it->name)).x -
-                                               font->sizeText(abbreviatedString).x;
+                        float dotsSize {font->sizeText("....").x};
+                        std::string abbreviatedString {font->getTextMaxWidth(
+                            Utils::String::toUpper(it->name), it->maxNameLength)};
+                        float sizeDifference {font->sizeText(Utils::String::toUpper(it->name)).x -
+                                              font->sizeText(abbreviatedString).x};
                         if (sizeDifference > 0.0f) {
                             // It doesn't make sense to abbreviate if the number of pixels removed
                             // by the abbreviation is less or equal to the size of the three dots
@@ -367,6 +373,10 @@ private:
                             mText.getSize().y);
                     if (mParent) // Hack since there's no "on child size changed" callback.
                         mParent->onSizeChanged();
+
+                    if (mSelectedChangedCallback)
+                        mSelectedChangedCallback(it->name);
+
                     break;
                 }
             }

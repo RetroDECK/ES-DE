@@ -129,16 +129,16 @@ void Settings::setDefaults()
     mBoolMap["ScraperRetryPeerVerification"] = {false, false};
 
     // UI settings.
-    mStringMap["StartupSystem"] = {"", ""};
-    mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
-    mStringMap["TransitionStyle"] = {"slide", "slide"};
     mStringMap["ThemeSet"] = {"rbsimple-DE", "rbsimple-DE"};
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
-    mStringMap["UIMode"] = {"full", "full"};
+    mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
+    mStringMap["TransitionStyle"] = {"slide", "slide"};
+    mStringMap["StartupSystem"] = {"", ""};
     mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};
     mStringMap["MenuOpeningEffect"] = {"scale-up", "scale-up"};
     mStringMap["LaunchScreenDuration"] = {"normal", "normal"};
+    mStringMap["UIMode"] = {"full", "full"};
 
     // UI settings -> media viewer settings.
     mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
