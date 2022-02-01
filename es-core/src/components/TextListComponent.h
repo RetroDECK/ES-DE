@@ -485,6 +485,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         bool tile = elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile");
         mSelectorImage.setImage(path, tile);
         mSelectorImage.setSize(mSize.x, mSelectorHeight);
+        mSelectorImage.setResize(mSize.x, mSelectorHeight);
         mSelectorImage.setColorShift(mSelectorColor);
         mSelectorImage.setColorShiftEnd(mSelectorColorEnd);
     }
