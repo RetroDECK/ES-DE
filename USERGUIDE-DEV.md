@@ -1190,25 +1190,29 @@ ScreenScraper sometimes has issues with its TLS certificates which causes search
 
 Various settings that affect the user interface.
 
+**Theme set**
+
+The theme set to use. Defaults to rbsimple-DE which is shipped with the application. There are two types of theme sets; the new type which was introduced with ES-DE v1.3 and legacy themes that are supported for backward compatibility with RetroPie EmulationStation. The use of legacy themes is however discouraged as their functionality is very limited. As well the backward compabitility will likely be removed at some point in the future.
+
+**Theme variant**
+
+Non-legacy theme sets optionally support variants which are a type of theme profiles defined by the theme author. This could be things like light and dark color schemes or modes with or without the video player enabled for instance.
+
+**Theme aspect ratio**
+
+Non-legacy theme sets could optionally be optimized for different screen aspect ratios. ES-DE supports 16:9, 16:10, 3:2, 4:3, 5:4, 21:9 and 32:9 in both horizontal and vertical orientation but it's completely up to the theme author which of these are supported by the theme set.
+
+**Legacy gamelist view style**
+
+Sets the view style to _Automatic, Basic, Detailed or Video_ for legacy themes. See the description [above](USERGUIDE-DEV.md#gamelist-view) in this document for more information regarding view styles. _Variants_ have replaced gamelist view styles for non-legacy themes so this option will be grayed out if a modern theme set has been selected.
+
+**Legacy transition style**
+
+Transition animation when navigating between gamelists, or between systems on the System view carousel. Can be set to _Slide, Fade_ or _Instant_. Only applicable for legacy themes as the newer type of theme sets lets the theme author define the transition animations in a more fine-grained manner. Therefore this option will be grayed out if a modern theme set has been selected.
+
 **Gamelist on startup**
 
 If set to _None_, the system view will be displayed. Any other value will jump to that game system automatically on startup.
-
-**Gamelist view style**
-
-Sets the view style to _Automatic, Basic, Detailed, Video_ or _Grid_. See the description [above](USERGUIDE-DEV.md#gamelist-view) in this document for more information regarding view styles.
-
-**Transition style**
-
-Transition animation when navigating between gamelists, or between systems on the System view carousel. Can be set to _Slide, Fade_ or _Instant_.
-
-**Theme set**
-
-The theme set to use. Defaults to rbsimple-DE which is shipped with the application.
-
-**UI mode**
-
-Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [above](USERGUIDE-DEV.md#ui-modes) in this document for additional information.
 
 **Default sort order**
 
@@ -1221,6 +1225,10 @@ Animation to play when opening the main menu or the game options menu. Also sets
 **Launch screen duration**
 
 This configures for how long to display the game launch screen when starting a game. The options are _Normal_, _Brief_, _Long_ and _Disabled_. If set to _Disabled_, a simple notification popup will be displayed instead.
+
+**UI mode**
+
+Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [above](USERGUIDE-DEV.md#ui-modes) in this document for additional information.
 
 **Media viewer settings**
 

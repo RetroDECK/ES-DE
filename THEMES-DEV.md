@@ -398,9 +398,10 @@ Unlike the variants, the aspectRatio entries can not be set to arbitrary values,
 | 3:2              | 3:2_vertical   | 2160x1440                                      |
 | 4:3              | 4:3_vertical   | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
 | 5:4              | 5:4_vertical   | 1280x1024                                      |
-| 12:5             |                | 3840x1600                                      |
-| 43:18            |                | 3440x1440                                      |
-| 64:27            |                | 2560x1080                                      |
+| 21:9             | 21:9_vertical  | 2560x1080, 2560x1440, 3840x1600, 5120x1440     |
+| 32:9             | 32:9_vertical  | 3840x1080, 5120x1440                           |
+
+The 21:9 and 32:9 aspect ratios are approximate as monitors of slightly different ratios are collectively marketed using these numbers.
 
 It's normally not necessary to define all or even most of these for a theme set, instead only a few are likely to be needed. The element placement will always adapt to the screen resolution as relative positions are utilized, so in most cases similar aspect ratios like 4:3 and 5:4 could be used interchangeably. The same is true for instance for 16:9 and 16:10. But if precise element placement is required, a separate configuration can still be made for each aspect ratio.
 

@@ -14,6 +14,7 @@
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
+* Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
 * Added support for defining what type of image metadata to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
 * Added theme support for Lottie animations (vector graphics)
@@ -60,6 +61,9 @@
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
+* Text opacity did not work correctly in some places, such as for the help prompts
+* ScrollableContainer faded semi-transparent text to fully opaque when resetting
+* ScrollableContainer faded in the background text color in addition to the text color when resetting
 
 ## Version 1.2.0
 
