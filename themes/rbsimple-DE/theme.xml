@@ -7,8 +7,15 @@ based on: 'recalbox-multi' by the Recalbox community
 -->
 
 <theme>
-    <include>./colors.xml</include>
     <include>./navigationsounds.xml</include>
+
+    <variant name="lightMode, lightModeNoVideos">
+        <include>./colors_light.xml</include>
+    </variant>
+
+    <variant name="darkMode, darkModeNoVideos">
+        <include>./colors_dark.xml</include>
+    </variant>
 
     <view name="system">
         <carousel name="systemcarousel">
@@ -120,6 +127,20 @@ based on: 'recalbox-multi' by the Recalbox community
         </image>
     </view>
 
+    <aspectRatio name="4:3">
+        <view name="gamelist">
+            <text name="4:3_temporary">
+                <forceUppercase>true</forceUppercase>
+                <text>4:3 not implemented</text>
+                <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
+                <fontSize>0.03</fontSize>
+                <size>0.2 0.04</size>
+                <pos>0.84 0.01</pos>
+                <color>FFFFFF</color>
+            </text>
+        </view>
+    </aspectRatio>
+
     <view name="gamelist">
         <image name="consolegame">
             <pos>0.02 0.17</pos>
@@ -137,26 +158,25 @@ based on: 'recalbox-multi' by the Recalbox community
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
                     md_lbl_publisher, md_lbl_genre, md_lbl_players,
                     md_lbl_lastplayed">
-            <forceUppercase>1</forceUppercase>
+            <forceUppercase>true</forceUppercase>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
         </text>
         <text name="md_developer, md_publisher, md_genre, md_players">
-            <forceUppercase>1</forceUppercase>
+            <forceUppercase>true</forceUppercase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
-            <size>0.144 0.02</size>
         </text>
         <text name="md_description">
             <container>true</container>
-            <forceUppercase>1</forceUppercase>
+            <forceUppercase>true</forceUppercase>
             <metadata>md_description</metadata>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.024</fontSize>
         </text>
         <datetime name="md_releasedate, md_lastplayed">
-            <forceUppercase>1</forceUppercase>
+            <forceUppercase>true</forceUppercase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
@@ -164,7 +184,7 @@ based on: 'recalbox-multi' by the Recalbox community
         <textlist name="gamelist">
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
-            <forceUppercase>1</forceUppercase>
+            <forceUppercase>true</forceUppercase>
         </textlist>
     </view>
 
@@ -299,7 +319,7 @@ based on: 'recalbox-multi' by the Recalbox community
         </view>
     </variant>
 
-    <variant name="lightModeNoVideo darkModeNoVideo">
+    <variant name="lightModeNoVideos, darkModeNoVideos">
         <view name="gamelist">
             <image name="md_image">
                 <origin>0.5 0.5</origin>
