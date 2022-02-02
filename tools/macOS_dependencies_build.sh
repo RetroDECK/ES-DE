@@ -31,10 +31,16 @@ fi
 
 echo "Building all dependencies in the ./external directory...\n"
 
+export PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig
+
 echo "Building libpng"
 cd libpng
 rm -f CMakeCache.txt
-cmake -DPNG_SHARED=off .
+if [ $(uname -m) == "arm64" ]; then
+  cmake -DPNG_SHARED=off -DPNG_ARM_NEON=off -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
+else
+  cmake -DPNG_SHARED=off -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
+fi
 make clean
 make -j${JOBS}
 make install
@@ -43,7 +49,7 @@ cd ..
 echo "\nBuilding FreeType"
 cd freetype/build
 rm -f CMakeCache.txt
-cmake -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=on -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -S .. -B .
+cmake -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=on -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../../local_install -S .. -B .
 make clean
 make -j${JOBS}
 cp libfreetype.6.18.0.dylib ../../../libfreetype.6.dylib
@@ -77,7 +83,7 @@ cd ../..
 echo "\nBuilding FDK AAC"
 cd fdk-aac
 rm -f CMakeCache.txt
-cmake .
+cmake -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 make clean
 make -j${JOBS}
 make install
@@ -86,7 +92,7 @@ cd ..
 
 echo "\nBuilding libvpx"
 cd libvpx
-./configure --disable-examples --disable-docs --enable-pic --enable-vp9-highbitdepth
+./configure --disable-examples --disable-docs --enable-pic --enable-vp9-highbitdepth --prefix=$(pwd)/../local_install
 make clean
 make -j${JOBS}
 make install
@@ -95,7 +101,7 @@ cd ..
 echo "\nBuilding Ogg"
 cd ogg
 rm -f CMakeCache.txt
-cmake .
+cmake -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 make clean
 make -j${JOBS}
 make install
@@ -104,18 +110,18 @@ cd ..
 echo "\nBuilding Vorbis"
 cd vorbis
 rm -f CMakeCache.txt
-cmake -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on .
+cmake -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 make clean
 make -j${JOBS}
 make install
-cp /usr/local/lib/libvorbisenc.2.0.12.dylib ../..
-cp /usr/local/lib/libvorbis.0.4.9.dylib ../..
+cp lib/libvorbisenc.2.0.12.dylib ../..
+cp lib/libvorbis.0.4.9.dylib ../..
 cd ..
 
 echo "\nBuilding Opus"
 cd opus
 rm -f CMakeCache.txt
-cmake .
+cmake -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 make clean
 make -j${JOBS}
 make install
@@ -123,7 +129,7 @@ cd ..
 
 echo "\nBuilding FFmpeg"
 cd FFmpeg
-./configure --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --enable-gpl --enable-nonfree --enable-shared --enable-libvorbis --enable-libopus --enable-libfdk-aac --enable-libvpx --enable-postproc
+PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --enable-gpl --enable-nonfree --enable-shared --enable-libvorbis --enable-libopus --enable-libfdk-aac --enable-libvpx --enable-postproc
 make clean
 make -j${JOBS}
 install_name_tool -rpath /usr/local/lib @executable_path libavcodec/libavcodec.58.dylib
@@ -140,3 +146,5 @@ install_name_tool -rpath /usr/local/lib @executable_path libswresample/libswresa
 cp libswresample/libswresample.3.dylib ../..
 install_name_tool -rpath /usr/local/lib @executable_path libswscale/libswscale.5.dylib
 cp libswscale/libswscale.5.dylib ../..
+
+unset PKG_CONFIG_PATH

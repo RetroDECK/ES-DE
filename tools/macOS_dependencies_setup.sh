@@ -18,6 +18,8 @@ fi
 echo "Setting up dependencies in the ./external directory...\n"
 
 cd external
+rm -rf local_install
+mkdir local_install
 
 echo "Setting up libpng"
 rm -rf libpng
@@ -108,9 +110,29 @@ cat << EOF | patch Source/LibJXR/image/decode/segdec.c
  }
 EOF
 
+if [ $(uname -m) == "arm64" ]; then
+cat << EOF | patch Makefile.osx -
+--- Makefile.osx        2022-02-02 11:09:46.000000000 +0100
++++ Makefile.osx_ARM64  2022-02-02 11:08:42.000000000 +0100
+@@ -15,9 +15,9 @@
+ CPP_I386 = \$(shell xcrun -find clang++)
+ CPP_X86_64 = \$(shell xcrun -find clang++)
+ MACOSX_DEPLOY = -mmacosx-version-min=\$(MACOSX_DEPLOYMENT_TARGET)
+-COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__
++COMPILERFLAGS = -Os -fexceptions -fvisibility=hidden -DNO_LCMS -D__ANSI__ -DHAVE_UNISTD_H -DDISABLE_PERF_MEASUREMENT -DPNG_ARM_NEON_OPT=0
+ COMPILERFLAGS_I386 = -arch i386
+-COMPILERFLAGS_X86_64 = -arch x86_64
++COMPILERFLAGS_X86_64 = -arch arm64
+ COMPILERPPFLAGS = -Wno-ctor-dtor-privacy -D__ANSI__ -std=c++11 -stdlib=libc++ -Wc++11-narrowing
+ INCLUDE +=
+ INCLUDE_I386 = -isysroot \$(MACOSX_SYSROOT)
+EOF
+cat Makefile.osx | sed s/"arch_only x86_64"/"arch_only arm64"/g > Makefile.osx_TEMP
+mv Makefile.osx_TEMP Makefile.osx
+else
 cat << EOF | patch Makefile.osx -
 --- Makefile.osx        2021-11-30 15:06:53.000000000 +0100
-+++ Makefile.osx_macOS  2021-11-30 15:07:23.000000000 +0100
++++ Makefile.osx_X86  2021-11-30 15:07:23.000000000 +0100
 @@ -15,7 +15,7 @@
  CPP_I386 = \$(shell xcrun -find clang++)
  CPP_X86_64 = \$(shell xcrun -find clang++)
@@ -121,6 +143,7 @@ cat << EOF | patch Makefile.osx -
  COMPILERFLAGS_X86_64 = -arch x86_64
  COMPILERPPFLAGS = -Wno-ctor-dtor-privacy -D__ANSI__ -std=c++11 -stdlib=libc++ -Wc++11-narrowing
 EOF
+fi
 cd ../..
 
 echo "\nSetting up pugixml"
