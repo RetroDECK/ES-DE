@@ -24,6 +24,7 @@
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
 * Set the option "Scrape actual folders" as enabled by default and moved it higher up in the scraper options menu
+* Set the option "Play audio for screensaver videos" as enabled by default
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
 * Reduced CPU usage significantly when a menu is open by not rendering the bottom of the stack
@@ -35,6 +36,8 @@
 * Added renderer support for supplying a separate format than internalFormat when creating textures (although not really supported by the OpenGL standard)
 * Added the rlottie library as a Git subtree
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
+* Updated the build scripts to support native M1/ARM builds on macOS
+* Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminated the risk of name collisions

@@ -472,9 +472,13 @@ Install the Command Line Tools which include Clang/LLVM, Git, make etc. Simply o
 
 Following this, install the Homebrew package manager which will simplify the installation of some additional required packages. Run the following in a terminal window:
 ```
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-Be aware that Homebrew can be really slow, especially when it compiles packages from source code.
+
+If running on an M1 Mac, you also need to add the following to your `~/.zshrc` shell profile file:
+```
+export PATH=/opt/homebrew/bin:$PATH
+```
 
 **Package installation with Homebrew**
 
@@ -490,20 +494,12 @@ If building with the optional VLC video player, then run this as well:
 brew install --cask vlc
 ```
 
-**Some additional/optional steps**
+**Developer mode**
 
 Enable developer mode to avoid annoying password requests when attaching the debugger to a process:
 ```
 sudo /usr/sbin/DevToolsSecurity --enable
 ```
-It makes me wonder who designed this functionality and what was their thinking, quite strange.
-
-If required, define SDKROOT. This is only needed if during compilation you get error messages regarding missing include files. Running the following will properly setup the development environment paths:
-```
-export SDKROOT=$(xcrun --sdk macosx --show-sdk-path)
-```
-
-I suppose you should add this to your shell profile file or similar, but I didn't have to do this step so I'm not sure.
 
 **Cloning and compiling**
 

@@ -21,7 +21,7 @@ The following operating systems have been tested (all for the x86 architecture u
 
 * Windows 10
 * Windows 8.1
-* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
+* macOS 10.14 "Mojave" to 12 "Monterey" (M1/arm64 and Intel/x86)
 * macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
 * Linux Mint 20.2
@@ -33,9 +33,6 @@ The following operating systems have been tested (all for the x86 architecture u
 * NetBSD 9.1
 * OpenBSD 6.8
 
-If using a Mac with an M1 processor you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS M1 build of ES-DE is released.
-
-
 ### Download
 
 The latest version is 1.2.0 (released 2021-12-28)
@@ -44,6 +41,7 @@ The latest version is 1.2.0 (released 2021-12-28)
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
 | Windows installer    | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023950/download)|
 | macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023939/download)|
+| macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.0-arm64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/27932188/download)|
 | macOS DMG installer  | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023954/download)|
 | Debian DEB package   | Ubuntu 20.04 to 21.10, Linux Mint 20.2, possibly others | x64 (x86)    | [emulationstation-de-1.2.0-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023934/download)|
 | Fedora RPM package   | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.0-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023958/download)|
@@ -63,11 +61,9 @@ If using FreeBSD, NetBSD or OpenBSD you will need to build ES-DE from source cod
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about the releases, including known issues.
 
-
 ### Contributing
 
 If you would like to contribute to the development of ES-DE, then that's great! Please read how to participate [here](CONTRIBUTING.md) where you can also read about planned future releases and features.
-
 
 # Additional information
 

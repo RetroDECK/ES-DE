@@ -33,7 +33,7 @@ The following operating systems have been tested (all for the x86 architecture u
 
 * Windows 10
 * Windows 8.1
-* macOS 10.14 "Mojave" to 12 "Monterey" (the M1 processor is supported via Rosetta 2)
+* macOS 10.14 "Mojave" to 12 "Monterey" (M1/arm64 and Intel/x86)
 * macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
 * Linux Mint 20.2
@@ -44,8 +44,6 @@ The following operating systems have been tested (all for the x86 architecture u
 * FreeBSD 13.0
 * NetBSD 9.1
 * OpenBSD 6.8
-
-If using a Mac with an M1 processor you need to install the x86 version of RetroArch and any other emulators, or you won't be able to launch any games. This will be fixed whenever a native macOS ARM build of ES-DE is released.
 
 Additional known issues are detailed in [CHANGELOG.md](CHANGELOG.md#known-issues).
 
@@ -192,20 +190,17 @@ Another possibility is that OpenGL drivers are actually installed but the GPU do
 
 An issue on Windows is that some emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with the installation path). This is the case for instance for RPCS3, xemu and xenia. Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These type of emulators are simply shipped as a ZIP file that can be unpacked anywhere on the filesystem. So in order for ES-DE to find them, the directories need to be manually added to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game.
 
-
 ## Specific notes for macOS
 
-The main issue with macOS is lack of emulator support and missing (or buggy) controller drivers.
+As macOS does not support Vulkan some emulators are not available, and some that do exist have not been updated for this operating system in recent years. As well many emulators available for download are not codesigned and notarized which requires you to override the operating system's security settings to be able to use them. If you see an error popup stating the application couldn't be checked for malicious software or that the developer couldn't be verified, go to _System Preferences_, then _Security & Privacy_ and click the _Open Anyway_ button under the _General_ tab. Just note that doing so comes with some potential risks of virus infections and similar. Additionally some emulators are available via the Homebrew package manager, and these do not have the security issues just mentioned so they should be fine to use. Most RetroArch cores are also available on macOS so overall this operating system is still fine for retrogaming albeit with some restrictions.
 
-As macOS does not support Vulkan some emulators are simply not available, and other emulators exist but have not been updated for this operating system in recent years. As well many emulators are available for download but are not codesigned or notarized which require you to override the operating system's security settings to be able to use them. If you see an error popup stating the application couldn't be checked for malicious software or that the developer couldn't be verified, go to _System Preferences_, then _Security & Privacy_ and click the _Open Anyway_ button under the _General_ tab. Just note that doing so comes with some potential risks of virus infections and similar. Additionally some emulators are available via the Homebrew package manager, and these do not have the security issues just mentioned so they should be fine to use. Most RetroArch cores are also available on macOS so overall this operating system is still fine for retrogaming albeit with some restrictions.
+Lack of controller support is a problem though, and in some instances controller drivers are available but quite buggy. In general it seems as if Sony PlayStation controllers are better supported than Microsoft Xbox controllers. For third party controllers you need to investgate the macOS support as it seems to differ quite a lot.
 
-Lack of controller support is another problem, and in some instances controller drivers are available but quite buggy. In general it seems as if Sony PlayStation controllers are better supported than Microsoft Xbox controllers. For third party controllers you need to investgate the macOS support as it seems to differ quite a lot.
+ES-DE is available both as an Intel/x86 build and as a native M1 build. If running on an M1 Mac it's possible to launch either M1 or Intel emulators from ES-DE and in some instances it's recommended to go for the Intel versions. The reason is that some emulators are not yet working properly on the M1 architecture, and for RetroArch some cores are only available for the x86 platform. So investigate what makes most sense for your setup. Over time this situation should improve as M1 support matures.
 
-ES-DE currently ships only as an x86/Intel binary so if you run it on an M1 Mac, you need to also install x86 versions of all emulators including RetroArch. That's also the case for any emulators installed via Homebrew. The reason this is needed is that the Rosetta 2 translation environment does not support mixing of ARM and x86 architectures.
+A macOS-specific requirement is that the RetroArch setting "Start in Fullscreen mode" is set as enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's unclear if only RetroArch is affected by this issue, at least it has not been observed for any other emulators so far. The standalone PlayStation 2 emulator PCSX2 has a similar issue but that seems to be GPU driver related and is problematic also on other operating systems. If using this emulator you need to manually switch to the PCSX2 window using Command + Tab after launching a game.
 
-Another macOS-specific requirement is that the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's currently unclear if other emulators than RetroArch are affected by this issue, at least until now none of the other emulators tested have displayed this behavior. The standalone PlayStation 2 emulator PCSX2 has a similar issue but that seems to be GPU driver related and is problematic also on other operating systems. If using this emulator you need to manually switch to the PCSX2 window using Command + Tab after launching the game from ES-DE.
-
-The first time you launch a game from within ES-DE, the operating system will present you with a security option with the following description:
+The first time you launch a RetroArch-emulated game from within ES-DE the operating system will present you with a security option with the following description:
 
 `"EmulationStation Desktop Edition" would like to access files in your Documents folder.`
 
