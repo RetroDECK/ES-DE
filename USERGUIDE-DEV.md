@@ -35,7 +35,7 @@ The following operating systems have been tested (all for the x86 architecture u
 
 * Windows 10
 * Windows 8.1
-* macOS 10.14 "Mojave" to 12 "Monterey" (M1/arm64 and Intel/x86)
+* macOS 10.14 "Mojave" to 12 "Monterey" (M1 and Intel)
 * macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
 * Linux Mint 20.2
