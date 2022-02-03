@@ -19,8 +19,7 @@ Two comprehensive theme sets, **rbsimple-DE** and **modern-DE** are bundled with
 
 The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
-* Windows 10
-* Windows 8.1
+* Windows 11, 10 and 8.1
 * macOS 10.14 "Mojave" to 12 "Monterey" (M1 and Intel)
 * macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
@@ -39,7 +38,7 @@ The latest version is 1.2.0 (released 2021-12-28)
 
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| Windows installer    | Windows 10 and 8.1 (probably Windows 11 as well)        | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023950/download)|
+| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023950/download)|
 | macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.0-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023939/download)|
 | macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.0-arm64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/27932188/download)|
 | macOS DMG installer  | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023954/download)|
