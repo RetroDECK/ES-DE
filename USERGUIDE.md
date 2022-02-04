@@ -408,7 +408,7 @@ Quits the application. This key combination can be changed using the _Exit butto
 
 ## RetroArch setup
 
-ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) document which goes into detail on the structure of this file and more advanced configuration topics in general.
+ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL.md](INSTALL.md#es_systemsxml) document which goes into detail on the structure of this file and more advanced configuration topics in general.
 
 Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
 
@@ -421,7 +421,7 @@ If using the Snap distribution you need to run the following command if you inte
 sudo snap connect retroarch:removable-media
 ```
 
-The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImage as there is no standardized directory for storing these files. Read more [here](USERGUIDE.md#using-emulators-in-appimage-format-on-linux) on how to get the AppImage release of RetroArch to work.
+The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImage packages as there is no standardized directory for storing these files. Read more [here](USERGUIDE.md#using-emulators-in-appimage-format-on-linux) on how to get the AppImage release of RetroArch to work.
 
 If ES-DE is unable to find an emulator when a game is launched, a notification popup will be shown. Likewise a notification will be shown if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 
@@ -441,7 +441,7 @@ Unfortunately on Linux it's at the moment not possible to run the Steam release 
 
 ## Using emulators in AppImage format on Linux
 
-AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory where to place these files, meaning ES-DE could have issues locating them.
+AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory for storing these files, meaning ES-DE could have issues locating them.
 
 As such all bundled emulator configuration entries that support AppImages will look for these files in the following directories:
 

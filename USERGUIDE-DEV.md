@@ -423,7 +423,7 @@ If using the Snap distribution you need to run the following command if you inte
 sudo snap connect retroarch:removable-media
 ```
 
-The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImage as there is no standardized directory for storing these files. Read more [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) on how to get the AppImage release of RetroArch to work.
+The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImage packages as there is no standardized directory for storing these files. Read more [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) on how to get the AppImage release of RetroArch to work.
 
 If ES-DE is unable to find an emulator when a game is launched, a notification popup will be shown. Likewise a notification will be shown if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 
@@ -443,7 +443,7 @@ Unfortunately on Linux it's at the moment not possible to run the Steam release 
 
 ## Using emulators in AppImage format on Linux
 
-AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory where to place these files, meaning ES-DE could have issues locating them.
+AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory for storing these files, meaning ES-DE could have issues locating them.
 
 As such all bundled emulator configuration entries that support AppImages will look for these files in the following directories:
 
@@ -629,7 +629,7 @@ The Nintendo Switch emulator Yuzu is distributed as a Snap package, Flatpak pack
 
 If installed as a Snap or Flatpak package or if built from source code on Linux, ES-DE should be able to easily locate the emulator binary.
 
-But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
+But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
 
 For Windows, ES-DE will look for _yuzu.exe_ in the system Path as well as in the default installation directory `~\AppData\Local\yuzu\yuzu-windows-msvc\`
 
@@ -645,7 +645,7 @@ The macOS release ships as a regular DMG file that is installed as usual.
 
 On Linux RPCS3 is shipped as a Snap package, Flatpak package or AppImage. If installed as a Snap or Flatpak or if built from source code, ES-DE should be able to easily locate the emulator binary.
 
-But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
+But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
 
 As for the game installation on both Windows and Linux as well as on macOS, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3dir extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
 
@@ -1449,7 +1449,7 @@ If enabling this option, only the first controller detected during startup will 
 
 **Configure keyboard and controllers**
 
-This tool provides configuration of button mappings for the keyboard and controllers, as explained [here](USERGUIDE.md#input-device-configuration). Normally this is not required as ES-DE automatically configures all input devices, but button customizations may be useful in some special situations. You may also need to run this tool if you have an unusual controller which could not be automatically configured. Be aware that custom button mappings will not change the help icons or help text.
+This tool provides configuration of button mappings for the keyboard and controllers, as explained [here](USERGUIDE-DEV.md#input-device-configuration). Normally this is not required as ES-DE automatically configures all input devices, but button customizations may be useful in some special situations. You may also need to run this tool if you have an unusual controller which could not be automatically configured. Be aware that custom button mappings will not change the help icons or help text.
 
 ### Game collection settings
 
