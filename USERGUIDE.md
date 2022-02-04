@@ -24,7 +24,6 @@ For additional details, read on below.
 There are also installation videos available at the ES-DE YouTube channel:\
 [https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
 
-
 ## Installation and first startup
 
 To install ES-DE, just download the package or installer from [https://es-de.org](https://es-de.org) and follow the brief instructions below.
@@ -149,26 +148,9 @@ There will be a lot of directories created if using the es_systems.xml file bund
 ![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
 
-
 ## Disabling game systems
 
 The way ES-DE works is that it will always try to load any system for which there are game files available, so to disable a system it needs to be hidden from ES-DE. This is easily accomplished by renaming the game directory to something that is not recognized, for example changing `~/ROMs/c64` to `~/ROMs/c64_DISABLED`. Another approach is to create a subdirectory named DISABLED (or whatever name you prefer that is not matching a supported system) in the ROMs directory and move the game folder there, such as `~/ROMs/DISABLED/c64`. This makes it easy to disable and re-enable game systems in ES-DE. Note that the gamelist and any game media files are retained while the system is disabled so this is an entirely safe thing to do.
-
-
-## Using the Steam release of RetroArch
-
-On Windows it's no problem to use the Steam release of RetroArch although you may have to add the installation location manually to your Path environment variable. By default the following locations will be searched:
-```
-C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
-D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
-C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
-D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
-```
-
-If you have installed RetroArch at another location, simply start the Settings application, search for _path_ in the _Find a setting_ field and choose _Edit environment variables for your account_. Edit the _Path_ variable and add the directory where RetroArch is installed. This is required as there is no apparent way for ES-DE to find where RetroArch has been installed by the Steam application.
-
-Unfortunately on Linux it's at the moment not possible to run the Steam release of RetroArch due to technical reasons. This RetroArch release runs as a type of container which can't be executed from ES-DE while correctly passing the necessary core and game options. Similarly it's not possible to launch RetroArch via the Steam application either as there seems to be a bug in Steam or RetroArch that prevents blankspaces from being present in game ROM files when passed as arguments (this works fine on Windows so it's definitely a Linux-specific issue and as well the same problem occurs if attempting to manually enter the launch command from a terminal window).
-
 
 ## Specific notes for Windows
 
@@ -212,7 +194,6 @@ If you accidentally refused ES-DE the folder access, you can fix this by opening
 A minor annoyance is that macOS creates metadata files starting with ._ in the filename when placing game/ROM files on some filesystem types such as exFAT. This means that you will see double entries inside ES-DE for all such games. To hide these extra files, the option _Show hidden files and folders (requires restart)_ in the _Other settings_ menu can be set to disabled.
 
 Another problem on macOS 11 Big Sur (and possibly older OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers. The issue appears to be resolved in macOS Monterey.
-
 
 ## Specific notes for Raspberry Pi
 
@@ -259,7 +240,6 @@ On Raspberry Pi OS 10 Sony DualShock 4 controllers have problems with some butto
 
 On Raspberry Pi OS 11 there are various graphics issues and sometimes the application or emulator completely freezes which requires a power cycle of the machine. This is seemingly due to GPU driver bugs and we can only wait for OS updates to address these problems. These issues have not been encountered on Raspberry Pi OS 10 so for now this older OS version is recommended.
 
-
 ## Game system customizations
 
 The game systems configuration file `es_systems.xml` is located in the ES-DE resources directory which is part of the application installation. As such this file is not intended to be modified directly. If system customizations are required, a separate es_systems.xml file should instead be placed in the `custom_systems` folder in the ES-DE home directory, i.e. `~/.emulationstation/custom_systems/es_systems.xml`.
@@ -269,7 +249,6 @@ Although it's possible to make a copy of the bundled configuration file, to modi
 For example you may want to replace the emulator launch command, modify the full name or change the supported file extensions for a single system. In this case it wouldn't make sense to copy the complete bundled file and just apply these minor modifications, instead an es_systems.xml file only containing the configuration for that single system should be placed in the custom_systems directory.
 
 The instructions for how to customize the es_systems.xml file can be found in [INSTALL.md](INSTALL.md#es_systemsxml). There you can also find some examples of custom files that you can copy into ~/.emulationstation/custom_systems/ and modify as required.
-
 
 ## Migrating from other EmulationStation forks
 
@@ -288,7 +267,6 @@ It's also strongly adviced to not rename an old es_settings.cfg file to es_setti
 
 If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
 
-
 ## Running on high resolution displays
 
 ES-DE fully supports high resolution displays such as 1440p, 4K, 6K, 8K, ultrawide monitors etc. But many emulators (e.g. RetroArch) will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution.
@@ -296,7 +274,6 @@ ES-DE fully supports high resolution displays such as 1440p, 4K, 6K, 8K, ultrawi
 A solution to this is to use the custom event scripts functionality to set a temporary resolution upon launching a game that will be reverted when returning to ES-DE. Such a setup is detailed in [INSTALL.md](INSTALL.md#custom-event-scripts) for Unix, but should hopefully be possible to implement similarly on Windows. When going for this setup it's important that the setting _Run in background (while game is launched)_ is disabled or ES-DE may not be able to correctly switch to the emulator window when launching games.
 
 On macOS it's problematic to change screen resolutions on the fly or on a per-application basis as Apple has seemingly disabled most of this functionality in recent operating system releases. The only real option here is to lower the display resolution prior to launching ES-DE.
-
 
 ## Input device configuration
 
@@ -310,7 +287,6 @@ Any custom configuration is applied per unique device ID (GUID). So if two ident
 
 If you have issues with your input configuration, as a last resort you can reset all the mappings by deleting or renaming the file ~/.emulationstation/es_input.xml.
 
-
 ## System view (main screen)
 
 When starting ES-DE with the default settings, you will see the System view first. From here you can navigate your game systems and enter their respective gamelists.
@@ -321,7 +297,6 @@ The game systems are sorted by their full names by default, as defined in the es
 
 ![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view** is the default starting point for the application, it's here that you browse through your game systems._
-
 
 ## Gamelist view
 
@@ -345,7 +320,6 @@ _The **Gamelist view** is where you browse the games for a specific system._
 ![alt text](images/es-de_basic_view_style.png "ES-DE Basic View Style")
 _Here's an example of what the Basic view style looks like. Needless to say, ES-DE is not intended to be used like this. After scraping some game media for the system, the view style will automatically change to Detailed or Video (assuming the Automatic view style option has been selected)._
 
-
 ## UI modes
 
 ES-DE supports three separate modes, **Full**, **Kiosk** and **Kid**.
@@ -360,14 +334,12 @@ There is an unlock code available to revert to the Full mode from the Kiosk or K
 
 The application can also be forced into any of the three modes via the command line options `--force-full`, `--force-kiosk` and `--force-kid`. This is only temporary until the restart of the application, unless the settings menu is entered and the setting is saved to the configuration file (this assumes that the main menu is available in the selected UI mode of course).
 
-
 ## Help system
 
 There is a help system available throughout the application that provides an overview of the possible actions and buttons that can be used. But some general actions are never shown, such as the ability to quick jump in gamelists, menus and text input fields using the shoulder and trigger buttons. It's also possible to disable the help system using a menu option for a somewhat cleaner look.
 
 ![alt text](images/es-de_folder_support.png "ES-DE Help System")
 _The help system is displayed at the bottom of the screen, indicating the various actions currently available._
-
 
 ## General navigation
 
@@ -433,6 +405,93 @@ Marks games as favorites in the gamelist view (if the _Enable toggle favorites b
 **F4 (keyboard only)** _Could alternatively be Alt + F4, Alt + Q or Command + Q_
 
 Quits the application. This key combination can be changed using the _Exit button combo_ menu option described later in this document.
+
+## RetroArch setup
+
+ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) document which goes into detail on the structure of this file and more advanced configuration topics in general.
+
+Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
+
+Keep in mind that ES-DE will not install any RetroArch cores, you need to do this manually from within the RetroArch user interface.
+
+A general recommendation regarding installation on Linux is to try to avoid the RetroArch releases included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap, Flatpak or AppImage distributions or build from source.
+
+If using the Snap distribution you need to run the following command if you intend to place your ROMs on a removable device such as a USB-connected hard drive:
+```
+sudo snap connect retroarch:removable-media
+```
+
+The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImage as there is no standardized directory for storing these files. Read more [here](USERGUIDE.md#using-emulators-in-appimage-format-on-linux) on how to get the AppImage release of RetroArch to work.
+
+If ES-DE is unable to find an emulator when a game is launched, a notification popup will be shown. Likewise a notification will be shown if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
+
+## Using the Steam release of RetroArch
+
+On Windows it's no problem to use the Steam release of RetroArch although you may have to add the installation location manually to your Path environment variable. By default the following locations will be searched:
+```
+C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
+D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
+C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
+D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
+```
+
+If you have installed RetroArch at another location, simply start the Settings application, search for _path_ in the _Find a setting_ field and choose _Edit environment variables for your account_. Edit the _Path_ variable and add the directory where RetroArch is installed. This is required as there is no apparent way for ES-DE to find where RetroArch has been installed by the Steam application.
+
+Unfortunately on Linux it's at the moment not possible to run the Steam release of RetroArch due to technical reasons. This RetroArch release runs as a type of container which can't be executed from ES-DE while correctly passing the necessary core and game options. Similarly it's not possible to launch RetroArch via the Steam application either as there seems to be a bug in Steam or RetroArch that prevents blankspaces from being present in game ROM files when passed as arguments (this works fine on Windows so it's definitely a Linux-specific issue and as well the same problem occurs if attempting to manually enter the launch command from a terminal window).
+
+## Using emulators in AppImage format on Linux
+
+AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory where to place these files, meaning ES-DE could have issues locating them.
+
+As such all bundled emulator configuration entries that support AppImages will look for these files in the following directories:
+
+```
+~/Applications/
+~/.local/bin/
+~/bin/
+```
+
+But even if the directory is known, another issue is that many AppImages contain version information in the filename, such as:
+```
+rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
+```
+
+ES-DE needs to have a specific filename to be able to find the emulator, so the easiest solution is to create a symlink to the AppImage file, such as the following:
+```
+cd ~/Applications
+ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage rpcs3.AppImage
+```
+
+This approach also works when using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which is recommended as it properly integrates AppImages into the application menu and such. When first launching an AppImage with AppImageLauncher installed a question will be asked whether to integrate the application. If accepting this, the AppImage will be moved to the `~/Applications` directory and a hash will be added to the filename, like in this example:
+```
+rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
+```
+
+After taking this step, a symlink can be created:
+```
+cd ~/Applications
+ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage rpcs3.AppImage
+```
+
+As the hashed filename created by AppImageLauncher will be retained also after upgrading AppImages to newer versions, ES-DE will still be able to find the emulator.
+
+At the moment the following emulators are supported in AppImage format:
+
+| System name  | Emulator  | Required filename or symlink name |
+| :----------- | :-------- | :-------------------------------- |
+| _Multiple_   | RetroArch | RetroArch-Linux-x86_64.AppImage   |
+| ps3          | RPCS3     | rpcs3.AppImage                    |
+| switch       | Yuzu      | yuzu.AppImage                     |
+
+Symlinking RetroArch is only required if using AppImageLauncher as the filename is otherwise not containing any version information, instead simply being named `RetroArch-Linux-x86_64.AppImage`.
+
+Note that the names are case sensitive, so for instance _rpcs3.appimage_ will not be found by ES-DE.
+
+Also make sure to set the AppImage as executable or ES-DE will not be able to launch it. You do this on the actual file, not on the symlink. For example:
+```
+cd ~/Applications
+chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
+```
 
 ## Getting your games into ES-DE
 
@@ -550,60 +609,6 @@ The only exception is that the _Delete_ button in the metadata editor will be di
 
 When setting up a directory like this, make sure to not name any files or folders inside the base directory using the same extension as that will force the base directory to be processed normally, breaking the functionality.
 
-### Emulators in AppImage format on Linux
-
-AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory where to place these files, meaning ES-DE could have issues locating them.
-
-As such all bundled emulator configuration entries that support AppImages will look for these files in the following directories:
-
-```
-~/Applications/
-~/.local/bin/
-~/bin/
-```
-
-But even if the directory is known, another issue is that many AppImages contain version information in the filename, such as:
-```
-rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
-```
-
-ES-DE needs to have a specific filename to be able to find the emulator, so the easiest solution is to create a symlink to the AppImage file, such as the following:
-```
-cd ~/Applications
-ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage rpcs3.AppImage
-```
-
-This approach also works when using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which is recommended as it properly integrates AppImages into the application menu and such. When first launching an AppImage with AppImageLauncher installed a question will be asked whether to integrate the application. If accepting this, the AppImage will be moved to the `~/Applications` directory and a hash will be added to the filename, like in this example:
-```
-rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
-```
-
-After taking this step, a symlink can be created:
-```
-cd ~/Applications
-ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage rpcs3.AppImage
-```
-
-As the hashed filename created by AppImageLauncher will be retained also after upgrading AppImages to newer versions, ES-DE will still be able to find the emulator.
-
-At the moment the following emulators are supported in AppImage format:
-
-| System name  | Emulator  | Required filename or symlink name |
-| :----------- | :-------- | :-------------------------------- |
-| _Multiple_   | RetroArch | RetroArch-Linux-x86_64.AppImage   |
-| ps3          | RPCS3     | rpcs3.AppImage                    |
-| switch       | Yuzu      | yuzu.AppImage                     |
-
-Symlinking RetroArch is only required if using AppImageLauncher as the filename is otherwise not containing any version information, instead simply being named `RetroArch-Linux-x86_64.AppImage`.
-
-Note that the names are case sensitive, so for instance _rpcs3.appimage_ will not be found by ES-DE.
-
-Also make sure to set the AppImage as executable or ES-DE will not be able to launch it. You do this on the actual file, not on the symlink. For example:
-```
-cd ~/Applications
-chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
-```
-
 ### Special game installation considerations
 
 Not all systems are as simple as described above, or there may be multiple ways to do the configuration. Specifics for such systems will be covered here. Consider this a work in progress as there are many platforms supported by ES-DE.
@@ -622,7 +627,7 @@ The Nintendo Switch emulator Yuzu is distributed as a Snap package, Flatpak pack
 
 If installed as a Snap or Flatpak package or if built from source code on Linux, ES-DE should be able to easily locate the emulator binary.
 
-But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#emulators-in-appimage-format-on-linux) for more information on how to get it to work.
+But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
 
 For Windows, ES-DE will look for _yuzu.exe_ in the system Path as well as in the default installation directory `~\AppData\Local\yuzu\yuzu-windows-msvc\`
 
@@ -636,7 +641,7 @@ On Windows RPCS3 does not ship with an installer but rather as a zip file that c
 
 On Linux RPCS3 is shipped as a Snap package, Flatpak package or AppImage. If installed as a Snap or Flatpak or if built from source code, ES-DE should be able to easily locate the emulator binary.
 
-But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#emulators-in-appimage-format-on-linux) for more information on how to get it to work.
+But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
 
 As for the game installation on both Windows and Linux, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3dir extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
 
@@ -852,33 +857,6 @@ This of course assumes that you have menu entries setup for your Steam games.
 
 To greatly simplify this setup, automatic Steam library import is planned for a future ES-DE release.
 
-
-## RetroArch setup
-
-ES-DE is a game browsing frontend and does not provide any emulation by itself. It does however come preconfigured for use with emulators as setup in the `es_systems.xml` file. By default it's primarily setup for use with [RetroArch](https://www.retroarch.com) but this can be modified if needed. If you're interested in customizing your es_systems.xml file, please refer to the [INSTALL.md](INSTALL.md#es_systemsxml) document which goes into detail on the structure of this file and more advanced configuration topics in general.
-
-Installation and configuration of RetroArch and other emulators is beyond the scope of this guide, but many good resources can be found online on how to do this.
-
-Keep in mind that ES-DE will not install any RetroArch cores, you need to do this manually from within the RetroArch user interface.
-
-A general recommendation regarding installation on Linux is to try to avoid the RetroArch releases included in the OS repositories as they're usually quite limited with regards to the number of available cores, and they're usually older versions. Instead go for either the Snap, Flatpak or AppImage distributions or build from source.
-
-If using the Snap distribution you need to run the following command if you intend to place your ROMs on a removable device such as a USB-connected hard drive:
-```
-sudo snap connect retroarch:removable-media
-```
-
-The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImages as there is no standardized directory for storing these images. ES-DE will look for the RetroArch AppImage in the following locations in addition to searching the PATH variable:
-
-```
-~/Applications/RetroArch-Linux-x86_64.AppImage
-~/.local/bin/RetroArch-Linux-x86_64.AppImage
-~/bin/RetroArch-Linux-x86_64.AppImage
-```
-
-In any instance, an error notification will be displayed if attempting to launch a game where the emulator binary is not found. Likewise a notification will be shown if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
-
-
 ## Scraping
 
 Scraping means downloading metadata and game media files (images and videos) for the games in your collection.
@@ -996,7 +974,6 @@ For images .jpg and .png file extensions are supported and for videos .avi, .mkv
 Remember that on Unix filenames are case sensitive, and as well the file extensions must be in lower case, such as .png instead of .PNG or .Png or the file won't be found.
 
 It's possible to change the game media directory location from within ES-DE, for this see the option _Game media directory_.
-
 
 ## Main menu
 
@@ -1439,7 +1416,6 @@ With this turned off, audio won't play for videos when using the video screensav
 
 Enables or disables navigation sounds throughout the application. Sounds are played when browsing systems and lists, starting games, adding and removing games as favorites etc. The sounds can be customized per theme, but if the theme does not support navigation sounds, ES-DE will fall back to its built-in samples.
 
-
 ### Input device settings
 
 Settings related to the input devices, i.e. the keyboard and controllers.
@@ -1455,7 +1431,6 @@ If enabling this option, only the first controller detected during startup will 
 **Configure keyboard and controllers**
 
 This tool provides configuration of button mappings for the keyboard and controllers, as explained [here](USERGUIDE.md#input-device-configuration). Normally this is not required as ES-DE automatically configures all input devices, but button customizations may be useful in some special situations. You may also need to run this tool if you have an unusual controller which could not be automatically configured. Be aware that custom button mappings will not change the help icons or help text.
-
 
 ### Game collection settings
 
@@ -1584,7 +1559,6 @@ Enabling or disabling the menu when the UI mode is set to Kid. Mostly intended f
 
 With this setting enabled, there is a Quit menu shown as the last entry on the main menu which provides options to quit ES-DE, to reboot the computer or to power off the computer. With this setting disabled, there will simply be an entry to quit the application instead of the complete quit menu.
 
-
 ### Quit / Quit EmulationStation
 The _Quit_ menu or _Quit EmulationStation_ entry as described by the _Show quit menu (reboot and power off entries)_ option above.
 
@@ -1601,7 +1575,6 @@ Self explanatory.
 **Power off system** _(Unix and Windows only)_
 
 Self explanatory.
-
 
 ## Game options menu
 
@@ -1693,7 +1666,6 @@ This entry is only visible if the system is a custom collection and it's current
 ### Edit this game's metadata / Edit this folder's metadata
 
 This opens the metadata editor for the currently selected game file or folder.
-
 
 ## Metadata editor
 
@@ -1904,7 +1876,6 @@ If you copy or migrate a collection from a previous version of EmulationStation 
 
 If you're migrating from a previous version of EmulationStation that has absolute paths in the collection files, these will be rewritten with the %ROMPATH% variable the first time you make a change to the collection.
 
-
 ## Themes
 
 ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use any RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
@@ -1941,23 +1912,19 @@ https://wiki.batocera.org/themes
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default rbsimple-DE theme)._
 
-
 ## Custom event scripts
 
 There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. By default it's deactivated so be sure to enable it to use this feature.
 
 The setup for event scripts is a bit technical, so refer to the [INSTALL.md](INSTALL.md#custom-event-scripts) document to see how it's configured.
 
-
 ## Portable installation (Windows only)
 
 On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retrogaming solution. The setup is somewhat technical, refer to [INSTALL.md](INSTALL.md#portable-installation-on-windows) to see how it's done.
 
-
 ## Command line options
 
 See the [INSTALL.md](INSTALL.md#command-line-options) document for a list of the command line options per operating system.
-
 
 ## Supported game systems
 
