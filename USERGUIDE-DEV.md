@@ -37,8 +37,8 @@ The following operating systems have been tested (all for the x86 architecture u
 * macOS 10.14 "Mojave" to 12 "Monterey" (M1 and Intel)
 * macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
-* Linux Mint 20.2
-* Manjaro 21.1
+* Linux Mint 20
+* Manjaro 21
 * Fedora 35 Workstation
 * elementary OS 6
 * Raspberry Pi OS 10 and 11 (armv7l and aarch64)
@@ -85,7 +85,9 @@ In addition to the .deb and .rpm packages covered above, ES-DE is also available
 chmod +x emulationstation-de-1.2.0-x64.AppImage
 ```
 
- Following this you can launch ES-DE by double-clicking on the file using your file manager. It's also possible to run it from a terminal window. All command line options work as if installed as an ordinary package.
+ Following this you can launch ES-DE by double-clicking on the AppImage using your file manager. It's also possible to run it from a terminal window, in which case all command line options work the same way as if installed as an ordinary package.
+
+For a better desktop integration it's recommended to install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which will add an ES-DE entry to the application menu and move the AppImage file to the `~/Applications` directory (which is the recommended location for all AppImages).
 
 **Installing on macOS and Windows**
 
@@ -551,6 +553,60 @@ The only exception is that the _Delete_ button in the metadata editor will be di
 
 When setting up a directory like this, make sure to not name any files or folders inside the base directory using the same extension as that will force the base directory to be processed normally, breaking the functionality.
 
+### Emulators in AppImage format on Linux
+
+AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory where to place these files, meaning ES-DE could have issues locating them.
+
+As such all bundled emulator configuration entries that support AppImages will look for these files in the following directories:
+
+```
+~/Applications/
+~/.local/bin/
+~/bin/
+```
+
+But even if the directory is known, another issue is that many AppImages contain version information in the filename, such as:
+```
+rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
+```
+
+ES-DE needs to have a specific filename to be able to find the emulator, so the easiest solution is to create a symlink to the AppImage file, such as the following:
+```
+cd ~/Applications
+ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage rpcs3.AppImage
+```
+
+This approach also works when using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which is recommended as it properly integrates AppImages into the application menu and such. When first launching an AppImage with AppImageLauncher installed a question will be asked whether to integrate the application. If accepting this, the AppImage will be moved to the `~/Applications` directory and a hash will be added to the filename, like in this example:
+```
+rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
+```
+
+After taking this step, a symlink can be created:
+```
+cd ~/Applications
+ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage rpcs3.AppImage
+```
+
+As the hashed filename created by AppImageLauncher will be retained also after upgrading AppImages to newer versions, ES-DE will still be able to find the emulator.
+
+At the moment the following emulators are supported in AppImage format:
+
+| System name  | Emulator  | Required filename or symlink name |
+| :----------- | :-------- | :-------------------------------- |
+| _Multiple_   | RetroArch | RetroArch-Linux-x86_64.AppImage   |
+| ps3          | RPCS3     | rpcs3.AppImage                    |
+| switch       | Yuzu      | yuzu.AppImage                     |
+
+Symlinking RetroArch is only required if using AppImageLauncher as the filename is otherwise not containing any version information, instead simply being named `RetroArch-Linux-x86_64.AppImage`.
+
+Note that the names are case sensitive, so for instance _rpcs3.appimage_ will not be found by ES-DE.
+
+Also make sure to set the AppImage as executable or ES-DE will not be able to launch it. You do this on the actual file, not on the symlink. For example:
+```
+cd ~/Applications
+chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
+```
+
 ### Special game installation considerations
 
 Not all systems are as simple as described above, or there may be multiple ways to do the configuration. Specifics for such systems will be covered here. Consider this a work in progress as there are many platforms supported by ES-DE.
@@ -565,23 +621,11 @@ This is required by the TheGamesDB scraper where the expanded filenames are used
 
 #### Nintendo Switch
 
-The emulator for Nintendo Switch is Yuzu, which is distributed as a Snap package, Flatpak package or AppImage on Linux and as a regular installer on Windows. At the moment there is unfortunately no macOS release of this emulator and it's unclear if it can run on BSD Unix.
+The Nintendo Switch emulator Yuzu is distributed as a Snap package, Flatpak package or AppImage on Linux and as a regular installer on Windows. At the moment there is unfortunately no macOS release of this emulator and it's unclear if it can run on BSD Unix.
 
-If installed as a Snap or Flatpak package or if built from source code, ES-DE should be able to easily locate the emulator binary.
+If installed as a Snap or Flatpak package or if built from source code on Linux, ES-DE should be able to easily locate the emulator binary.
 
-But if using the AppImage it's a bit more complicated as there is no real standardized directory for storing these images.
-
-What ES-DE will do is to look for _yuzu.AppImage_ in the system PATH as well as in the following locations:
-
-```
-~/Applications/yuzu.AppImage
-~/.local/bin/yuzu.AppImage
-~/bin/yuzu.AppImage
-```
-
-When downloading the AppImage from [https://yuzu-emu.org](https://yuzu-emu.org) it will be named something like `yuzu-20210621-45d9504ea.AppImage`, just rename this to yuzu.AppImage and everything should work correctly. Another approach is to make a symlink named yuzu.AppImage, either way will work fine.
-
-Note that the name is case sensitive, so _yuzu.appimage_ will not be found by ES-DE.
+But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#emulators-in-appimage-format-on-linux) for more information on how to get it to work.
 
 For Windows, ES-DE will look for _yuzu.exe_ in the system Path as well as in the default installation directory `~\AppData\Local\yuzu\yuzu-windows-msvc\`
 
@@ -589,27 +633,17 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 #### Sony PlayStation 3
 
-The RPCS3 emulator is only available on Linux and Windows and requires a bit of special setup.
+The RPCS3 emulator requires a bit of special setup.
 
-On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all the application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe.
+On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe.
+
+The macOS release ships as a regular DMG file that is installed as usual.
 
 On Linux RPCS3 is shipped as a Snap package, Flatpak package or AppImage. If installed as a Snap or Flatpak or if built from source code, ES-DE should be able to easily locate the emulator binary.
 
-But if using the AppImage it's a bit problematic as there are no standard directories where these files are located.
+But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE.md#emulators-in-appimage-format-on-linux) for more information on how to get it to work.
 
-What ES-DE will do is to look for _rpcs3.AppImage_ in the system PATH as well as in the following locations:
-
-```
-~/Applications/rpcs3.AppImage
-~/.local/bin/rpcs3.AppImage
-~/bin/rpcs3.AppImage
-```
-
-When downloading the AppImage from [https://rpcs3.net](https://rpcs3.net) it will be named something like `rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage`, just rename this to rpcs3.AppImage and everything should work correctly. Another approach is to make a symlink named rpcs3.AppImage, either way will work fine.
-
-Note that the name is case sensitive, so _rpcs3.appimage_ will not be found by ES-DE.
-
-As for the game installation on both Windows and Linux, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3dir extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
+As for the game installation on both Windows and Linux as well as on macOS, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3dir extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
 
 Here's an example of what a Blu-ray disc directory could look like:
 ```
@@ -618,7 +652,7 @@ Here's an example of what a Blu-ray disc directory could look like:
 
 It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3dir extension.
 
-Here's how to do it on Linux:
+Here's how to do it on Linux and macOS:
 ```
 cd ~/ROMs
 ln -s ~/games/PS3/Gran\ Turismo\ 5 Gran\ Turismo\ 5.ps3dir

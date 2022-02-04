@@ -23,8 +23,8 @@ The following operating systems have been tested (all for the x86 architecture u
 * macOS 10.14 "Mojave" to 12 "Monterey" (M1 and Intel)
 * macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 21.10
-* Linux Mint 20.2
-* Manjaro 21.1
+* Linux Mint 20
+* Manjaro 21
 * Fedora 35 Workstation
 * elementary OS 6
 * Raspberry Pi OS 10 and 11 (armv7l and aarch64)
