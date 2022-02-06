@@ -1,6 +1,6 @@
 <theme>
     <view name="system">
-        <text name="systemInfo">
+        <text name="game_counter">
             <color>202020</color>
             <backgroundColor>DDDDDDD8</backgroundColor>
         </text>

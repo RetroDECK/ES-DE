@@ -1,9 +1,9 @@
 <theme>
     <view name="system">
-        <carousel name="systemcarousel">
+        <carousel name="system_carousel">
             <color>747474D8</color>
         </carousel>
-        <text name="systemInfo">
+        <text name="game_counter">
             <color>C6C6C6</color>
             <backgroundColor>555555D8</backgroundColor>
         </text>
