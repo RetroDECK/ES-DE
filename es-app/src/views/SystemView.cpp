@@ -36,25 +36,22 @@ SystemView::SystemView()
     , mViewNeedsReload {true}
     , mLegacyMode {false}
 {
-    mCarousel = std::make_unique<CarouselComponent>();
-    mSystemInfo = std::make_unique<TextComponent>("SYSTEM INFO", Font::get(FONT_SIZE_SMALL),
-                                                  0x33333300, ALIGN_CENTER);
-
     setSize(static_cast<float>(Renderer::getScreenWidth()),
             static_cast<float>(Renderer::getScreenHeight()));
 
-    populate();
-
+    mCarousel = std::make_unique<CarouselComponent>();
     mCarousel->setCursorChangedCallback([&](const CursorState& state) { onCursorChanged(state); });
     mCarousel->setCancelTransitionsCallback(
         [&] { ViewController::getInstance()->cancelViewTransitions(); });
+
+    populate();
 }
 
 SystemView::~SystemView()
 {
     if (mLegacyMode) {
         // Delete any existing extras.
-        for (auto& entry : mElements) {
+        for (auto& entry : mSystemElements) {
             for (auto extra : entry.legacyExtras)
                 delete extra;
             entry.legacyExtras.clear();
@@ -153,12 +150,12 @@ void SystemView::render(const glm::mat4& parentTrans)
                             static_cast<int>(elementTrans[3].y)},
                 glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
 
-            if (mLegacyMode && mElements.size() > static_cast<size_t>(index)) {
-                for (auto element : mElements[index].legacyExtras)
+            if (mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
+                for (auto element : mSystemElements[index].legacyExtras)
                     element->render(elementTrans);
             }
-            else if (mElements.size() > static_cast<size_t>(index)) {
-                for (auto child : mElements[index].children) {
+            else if (mSystemElements.size() > static_cast<size_t>(index)) {
+                for (auto child : mSystemElements[index].children) {
                     if (child == mCarousel.get()) {
                         // Render black above anything lower than the zIndex of the carousel
                         // if fade transitions are in use and we're transitioning.
@@ -173,7 +170,7 @@ void SystemView::render(const glm::mat4& parentTrans)
             }
 
             if (mLegacyMode)
-                mSystemInfo->render(elementTrans);
+                mLegacySystemInfo->render(elementTrans);
 
             Renderer::popClipRect();
         }
@@ -340,6 +337,11 @@ void SystemView::populate()
     assert(selectedSet != themeSets.cend());
     mLegacyMode = selectedSet->second.capabilities.legacyTheme;
 
+    if (mLegacyMode) {
+        mLegacySystemInfo = std::make_unique<TextComponent>(
+            "SYSTEM INFO", Font::get(FONT_SIZE_SMALL), 0x33333300, ALIGN_CENTER);
+    }
+
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};
 
@@ -356,13 +358,14 @@ void SystemView::populate()
                 elements.legacyExtras.begin(), elements.legacyExtras.end(),
                 [](GuiComponent* a, GuiComponent* b) { return b->getZIndex() > a->getZIndex(); });
 
-            mElements.emplace_back(std::move(elements));
+            mSystemElements.emplace_back(std::move(elements));
         }
 
         if (!mLegacyMode) {
             SystemViewElements elements;
             if (theme->hasView("system")) {
                 elements.name = it->getName();
+                elements.fullName = it->getFullName();
                 for (auto& element : theme->getViewElements("system").elements) {
                     if (element.second.type == "image") {
                         elements.imageComponents.emplace_back(std::make_unique<ImageComponent>());
@@ -374,19 +377,31 @@ void SystemView::populate()
                         elements.children.emplace_back(elements.imageComponents.back().get());
                     }
                     else if (element.second.type == "text") {
-                        elements.textComponents.push_back(std::make_unique<TextComponent>());
-                        elements.textComponents.back()->setDefaultZIndex(40.0f);
-                        elements.textComponents.back()->applyTheme(theme, "system", element.first,
-                                                                   ThemeFlags::ALL);
-                        if (elements.textComponents.back()->getMetadataField() != "")
-                            elements.textComponents.back()->setScrollHide(true);
-                        elements.children.emplace_back(elements.textComponents.back().get());
+                        if (element.second.has("metadata") &&
+                            element.second.get<std::string>("metadata").substr(0, 12) ==
+                                "sy_gamecount") {
+                            if (element.second.has("metadata")) {
+                                elements.gameCountComponents.emplace_back(
+                                    std::make_unique<TextComponent>());
+                                elements.gameCountComponents.back()->setDefaultZIndex(40.0f);
+                                elements.gameCountComponents.back()->applyTheme(
+                                    theme, "system", element.first, ThemeFlags::ALL);
+                                elements.children.emplace_back(
+                                    elements.gameCountComponents.back().get());
+                            }
+                        }
+                        else {
+                            elements.textComponents.emplace_back(std::make_unique<TextComponent>());
+                            elements.textComponents.back()->setDefaultZIndex(40.0f);
+                            elements.textComponents.back()->applyTheme(
+                                theme, "system", element.first, ThemeFlags::ALL);
+                            elements.children.emplace_back(elements.textComponents.back().get());
+                        }
                     }
                 }
             }
 
             elements.children.emplace_back(mCarousel.get());
-            elements.children.emplace_back(mSystemInfo.get());
 
             std::stable_sort(
                 elements.children.begin(), elements.children.end(),
@@ -402,7 +417,7 @@ void SystemView::populate()
                                 const std::unique_ptr<TextComponent>& b) {
                                  return b->getZIndex() > a->getZIndex();
                              });
-            mElements.emplace_back(std::move(elements));
+            mSystemElements.emplace_back(std::move(elements));
         }
 
         CarouselComponent::Entry entry;
@@ -410,6 +425,19 @@ void SystemView::populate()
         entry.object = it;
 
         mCarousel->addEntry(theme, entry);
+    }
+
+    for (auto& elements : mSystemElements) {
+        for (auto& text : elements.textComponents) {
+            if (text->getMetadataField() != "") {
+                if (text->getMetadataField() == "sy_name")
+                    text->setValue(elements.name);
+                else if (text->getMetadataField() == "sy_fullname")
+                    text->setValue(elements.fullName);
+                else
+                    text->setValue(text->getMetadataField());
+            }
+        }
     }
 
     if (mCarousel->getNumEntries() == 0) {
@@ -429,23 +457,56 @@ void SystemView::updateGameCount()
     std::pair<unsigned int, unsigned int> gameCount =
         mCarousel->getSelected()->getDisplayedGameCount();
     std::stringstream ss;
+    std::stringstream ssGames;
+    std::stringstream ssFavorites;
+    bool games {false};
+    bool favorites {false};
 
-    if (!mCarousel->getSelected()->isGameSystem())
-        ss << "CONFIGURATION";
+    if (!mCarousel->getSelected()->isGameSystem()) {
+        ss << "Configuration";
+    }
     else if (mCarousel->getSelected()->isCollection() &&
-             (mCarousel->getSelected()->getName() == "favorites"))
-        ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S");
-    // The "recent" gamelist has probably been trimmed after sorting, so we'll cap it at
-    // its maximum limit of 50 games.
+             (mCarousel->getSelected()->getName() == "favorites")) {
+        ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s");
+    }
     else if (mCarousel->getSelected()->isCollection() &&
-             (mCarousel->getSelected()->getName() == "recent"))
-        ss << (gameCount.first > 50 ? 50 : gameCount.first) << " GAME"
-           << (gameCount.first == 1 ? " " : "S");
-    else
-        ss << gameCount.first << " GAME" << (gameCount.first == 1 ? " " : "S ") << "("
-           << gameCount.second << " FAVORITE" << (gameCount.second == 1 ? ")" : "S)");
+             (mCarousel->getSelected()->getName() == "recent")) {
+        // The "recent" gamelist has probably been trimmed after sorting, so we'll cap it at
+        // its maximum limit of 50 games.
+        ss << (gameCount.first > 50 ? 50 : gameCount.first) << " Game"
+           << (gameCount.first == 1 ? " " : "s");
+    }
+    else {
+        ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ") << "("
+           << gameCount.second << " Favorite" << (gameCount.second == 1 ? ")" : "s)");
+        ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ");
+        ssFavorites << gameCount.second << " Favorite" << (gameCount.second == 1 ? "" : "s");
+        games = true;
+        favorites = true;
+    }
 
-    mSystemInfo->setText(ss.str());
+    if (mLegacyMode) {
+        mLegacySystemInfo->setText(ss.str());
+    }
+    else {
+        for (auto& gameCount : mSystemElements[mCarousel->getCursor()].gameCountComponents) {
+            if (gameCount->getMetadataField() == "sy_gamecount") {
+                gameCount->setValue(ss.str());
+            }
+            else if (gameCount->getMetadataField() == "sy_gamecount_games") {
+                if (games)
+                    gameCount->setValue(ssGames.str());
+                else
+                    gameCount->setValue(ss.str());
+            }
+            else if (gameCount->getMetadataField() == "sy_gamecount_favorites") {
+                gameCount->setValue(ssFavorites.str());
+            }
+            else {
+                gameCount->setValue(gameCount->getMetadataField());
+            }
+        }
+    }
 }
 
 void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
@@ -459,21 +520,25 @@ void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
 
     mCarousel->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
 
-    // System info bar.
-    mSystemInfo->setSize(mSize.x, mSystemInfo->getFont()->getLetterHeight() * 2.2f);
-    mSystemInfo->setPosition(0.0f, mCarousel->getPosition().y + mCarousel->getSize().y);
-    mSystemInfo->setBackgroundColor(0xDDDDDDD8);
-    mSystemInfo->setRenderBackground(true);
-    mSystemInfo->setFont(Font::get(static_cast<int>(0.035f * mSize.y), Font::getDefaultPath()));
-    mSystemInfo->setColor(0x000000FF);
-    mSystemInfo->setZIndex(49.0f);
-    mSystemInfo->setDefaultZIndex(49.0f);
+    if (mLegacyMode) {
+        // System info bar.
+        mLegacySystemInfo->setSize(mSize.x, mLegacySystemInfo->getFont()->getLetterHeight() * 2.2f);
+        mLegacySystemInfo->setPosition(0.0f, mCarousel->getPosition().y + mCarousel->getSize().y);
+        mLegacySystemInfo->setBackgroundColor(0xDDDDDDD8);
+        mLegacySystemInfo->setRenderBackground(true);
+        mLegacySystemInfo->setFont(
+            Font::get(static_cast<int>(0.035f * mSize.y), Font::getDefaultPath()));
+        mLegacySystemInfo->setColor(0x000000FF);
+        mLegacySystemInfo->setUppercase(true);
+        mLegacySystemInfo->setZIndex(49.0f);
+        mLegacySystemInfo->setDefaultZIndex(49.0f);
 
-    const ThemeData::ThemeElement* sysInfoElem {
-        theme->getElement("system", "text_systemInfo", "text")};
+        const ThemeData::ThemeElement* sysInfoElem {
+            theme->getElement("system", "text_systemInfo", "text")};
 
-    if (sysInfoElem)
-        mSystemInfo->applyTheme(theme, "system", "text_systemInfo", ThemeFlags::ALL);
+        if (sysInfoElem)
+            mLegacySystemInfo->applyTheme(theme, "system", "text_systemInfo", ThemeFlags::ALL);
+    }
 }
 
 void SystemView::renderFade(const glm::mat4& trans)

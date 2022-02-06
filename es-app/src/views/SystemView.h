@@ -27,9 +27,11 @@ class SystemData;
 
 struct SystemViewElements {
     std::string name;
+    std::string fullName;
     std::vector<GuiComponent*> legacyExtras;
     std::vector<GuiComponent*> children;
 
+    std::vector<std::unique_ptr<TextComponent>> gameCountComponents;
     std::vector<std::unique_ptr<TextComponent>> textComponents;
     std::vector<std::unique_ptr<ImageComponent>> imageComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
@@ -82,9 +84,9 @@ private:
     void renderFade(const glm::mat4& trans);
 
     std::unique_ptr<CarouselComponent> mCarousel;
-    std::unique_ptr<TextComponent> mSystemInfo;
+    std::unique_ptr<TextComponent> mLegacySystemInfo;
 
-    std::vector<SystemViewElements> mElements;
+    std::vector<SystemViewElements> mSystemElements;
 
     float mCamOffset;
     float mFadeOpacity;
