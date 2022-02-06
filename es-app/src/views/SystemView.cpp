@@ -62,6 +62,275 @@ SystemView::~SystemView()
     }
 }
 
+void SystemView::goToSystem(SystemData* system, bool animate)
+{
+    mCarousel->setCursor(system);
+    updateGameCount();
+
+    if (!animate)
+        finishSystemAnimation(0);
+}
+
+bool SystemView::input(InputConfig* config, Input input)
+{
+    if (input.value != 0) {
+        if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
+            SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
+            LOG(LogDebug) << "SystemView::input(): Reloading all";
+            ViewController::getInstance()->reloadAll();
+            return true;
+        }
+
+        if (config->isMappedTo("a", input)) {
+            mCarousel->stopScrolling();
+            ViewController::getInstance()->goToGamelist(mCarousel->getSelected());
+            NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
+            return true;
+        }
+        if (Settings::getInstance()->getBool("RandomAddButton") &&
+            (config->isMappedTo("leftthumbstickclick", input) ||
+             config->isMappedTo("rightthumbstickclick", input))) {
+            // Get a random system and jump to it.
+            NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
+            mCarousel->setCursor(SystemData::getRandomSystem(mCarousel->getSelected()));
+            return true;
+        }
+
+        if (!UIModeController::getInstance()->isUIModeKid() && config->isMappedTo("back", input) &&
+            Settings::getInstance()->getBool("ScreensaverControls")) {
+            if (!mWindow->isScreensaverActive()) {
+                ViewController::getInstance()->stopScrolling();
+                ViewController::getInstance()->cancelViewTransitions();
+                mWindow->startScreensaver();
+                mWindow->renderScreensaver();
+            }
+            return true;
+        }
+    }
+
+    return mCarousel->input(config, input);
+}
+
+void SystemView::update(int deltaTime)
+{
+    mCarousel->update(deltaTime);
+    GuiComponent::update(deltaTime);
+}
+
+void SystemView::render(const glm::mat4& parentTrans)
+{
+    if (mCarousel->getNumEntries() == 0)
+        return; // Nothing to render.
+
+    glm::mat4 trans {getTransform() * parentTrans};
+
+    // Adding texture loading buffers depending on scrolling speed and status.
+    int bufferIndex {mCarousel->getScrollingVelocity() + 1};
+
+    Renderer::pushClipRect(glm::ivec2 {},
+                           glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
+
+    for (int i = static_cast<int>(mCamOffset) + logoBuffersLeft[bufferIndex];
+         i <= static_cast<int>(mCamOffset) + logoBuffersRight[bufferIndex]; ++i) {
+        int index {i};
+        while (index < 0)
+            index += static_cast<int>(mCarousel->getNumEntries());
+        while (index >= static_cast<int>(mCarousel->getNumEntries()))
+            index -= static_cast<int>(mCarousel->getNumEntries());
+
+        if (mCarousel->isAnimationPlaying(0) || index == mCarousel->getCursor()) {
+            glm::mat4 elementTrans {trans};
+            if (mCarousel->getType() == CarouselComponent::HORIZONTAL ||
+                mCarousel->getType() == CarouselComponent::HORIZONTAL_WHEEL)
+                elementTrans = glm::translate(elementTrans,
+                                              glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f});
+            else
+                elementTrans = glm::translate(elementTrans,
+                                              glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
+
+            Renderer::pushClipRect(
+                glm::ivec2 {static_cast<int>(elementTrans[3].x),
+                            static_cast<int>(elementTrans[3].y)},
+                glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
+
+            if (mLegacyMode && mElements.size() > static_cast<size_t>(index)) {
+                for (auto element : mElements[index].legacyExtras)
+                    element->render(elementTrans);
+            }
+            else if (mElements.size() > static_cast<size_t>(index)) {
+                for (auto child : mElements[index].children) {
+                    if (child == mCarousel.get()) {
+                        // Render black above anything lower than the zIndex of the carousel
+                        // if fade transitions are in use and we're transitioning.
+                        if (mFadeOpacity)
+                            renderFade(trans);
+                        child->render(trans);
+                    }
+                    else {
+                        child->render(elementTrans);
+                    }
+                }
+            }
+
+            if (mLegacyMode)
+                mSystemInfo->render(elementTrans);
+
+            Renderer::popClipRect();
+        }
+    }
+
+    if (mLegacyMode) {
+        if (mFadeOpacity)
+            renderFade(trans);
+        mCarousel->render(trans);
+    }
+
+    Renderer::popClipRect();
+}
+
+void SystemView::onThemeChanged(const std::shared_ptr<ThemeData>& /*theme*/)
+{
+    LOG(LogDebug) << "SystemView::onThemeChanged()";
+    mViewNeedsReload = true;
+    populate();
+}
+
+std::vector<HelpPrompt> SystemView::getHelpPrompts()
+{
+    std::vector<HelpPrompt> prompts;
+    if (mCarousel->getType() == CarouselComponent::VERTICAL ||
+        mCarousel->getType() == CarouselComponent::VERTICAL_WHEEL)
+        prompts.push_back(HelpPrompt("up/down", "choose"));
+    else
+        prompts.push_back(HelpPrompt("left/right", "choose"));
+
+    prompts.push_back(HelpPrompt("a", "select"));
+
+    if (Settings::getInstance()->getBool("RandomAddButton"))
+        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
+
+    if (!UIModeController::getInstance()->isUIModeKid() &&
+        Settings::getInstance()->getBool("ScreensaverControls"))
+        prompts.push_back(HelpPrompt("back", "screensaver"));
+
+    return prompts;
+}
+
+HelpStyle SystemView::getHelpStyle()
+{
+    HelpStyle style;
+    style.applyTheme(mCarousel->getEntry(mCarousel->getCursor()).object->getTheme(), "system");
+    return style;
+}
+
+void SystemView::onCursorChanged(const CursorState& /*state*/)
+{
+    // Update help style.
+    updateHelpPrompts();
+
+    int scrollVelocity {mCarousel->getScrollingVelocity()};
+
+    float startPos {mCamOffset};
+    float posMax {static_cast<float>(mCarousel->getNumEntries())};
+    float target {static_cast<float>(mCarousel->getCursor())};
+
+    // Find the shortest path to the target.
+    float endPos {target}; // Directly.
+    float dist {fabs(endPos - startPos)};
+
+    if (fabs(target + posMax - startPos - scrollVelocity) < dist)
+        endPos = target + posMax; // Loop around the end (0 -> max).
+    if (fabs(target - posMax - startPos - scrollVelocity) < dist)
+        endPos = target - posMax; // Loop around the start (max - 1 -> -1).
+
+    std::string transition_style {Settings::getInstance()->getString("TransitionStyle")};
+
+    Animation* anim;
+
+    if (transition_style == "fade") {
+        float startFade {mFadeOpacity};
+        anim = new LambdaAnimation(
+            [this, startFade, startPos, endPos, posMax](float t) {
+                t -= 1;
+                float f = glm::mix(startPos, endPos, t * t * t + 1);
+                if (f < 0)
+                    f += posMax;
+                if (f >= posMax)
+                    f -= posMax;
+
+                t += 1;
+                if (t < 0.3f)
+                    this->mFadeOpacity =
+                        glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
+                else if (t < 0.7f)
+                    this->mFadeOpacity = 1.0f;
+                else
+                    this->mFadeOpacity =
+                        glm::mix(1.0f, 0.0f, glm::clamp((t - 0.6f) / 0.3f, 0.0f, 1.0f));
+
+                if (t > 0.5f)
+                    this->mCamOffset = endPos;
+
+                // Update the game count when the entire animation has been completed.
+                if (mFadeOpacity == 1.0f)
+                    updateGameCount();
+            },
+            500);
+    }
+    else if (transition_style == "slide") {
+        mUpdatedGameCount = false;
+        anim = new LambdaAnimation(
+            [this, startPos, endPos, posMax](float t) {
+                t -= 1;
+                float f = glm::mix(startPos, endPos, t * t * t + 1);
+                if (f < 0)
+                    f += posMax;
+                if (f >= posMax)
+                    f -= posMax;
+
+                this->mCamOffset = f;
+
+                // Hack to make the game count being updated in the middle of the animation.
+                bool update {false};
+                if (endPos == -1.0f && fabs(fabs(posMax) - fabs(mCamOffset)) > 0.5f &&
+                    !mUpdatedGameCount) {
+                    update = true;
+                }
+                else if (endPos > posMax && fabs(endPos - posMax - fabs(mCamOffset)) < 0.5f &&
+                         !mUpdatedGameCount) {
+                    update = true;
+                }
+                else if (fabs(fabs(endPos) - fabs(mCamOffset)) < 0.5f && !mUpdatedGameCount) {
+                    update = true;
+                }
+
+                if (update) {
+                    mUpdatedGameCount = true;
+                    updateGameCount();
+                }
+            },
+            500);
+    }
+    else {
+        // Instant.
+        updateGameCount();
+        anim = new LambdaAnimation(
+            [this, startPos, endPos, posMax](float t) {
+                t -= 1;
+                float f = glm::mix(startPos, endPos, t * t * t + 1);
+                if (f < 0)
+                    f += posMax;
+                if (f >= posMax)
+                    f -= posMax;
+
+                this->mCamOffset = endPos;
+            },
+            500);
+    }
+
+    setAnimation(anim, 0, nullptr, false, 0);
+}
+
 void SystemView::populate()
 {
     auto themeSets = ThemeData::getThemeSets();
@@ -177,275 +446,6 @@ void SystemView::updateGameCount()
            << gameCount.second << " FAVORITE" << (gameCount.second == 1 ? ")" : "S)");
 
     mSystemInfo->setText(ss.str());
-}
-
-void SystemView::goToSystem(SystemData* system, bool animate)
-{
-    mCarousel->setCursor(system);
-    updateGameCount();
-
-    if (!animate)
-        finishSystemAnimation(0);
-}
-
-bool SystemView::input(InputConfig* config, Input input)
-{
-    if (input.value != 0) {
-        if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
-            SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
-            LOG(LogDebug) << "SystemView::input(): Reloading all";
-            ViewController::getInstance()->reloadAll();
-            return true;
-        }
-
-        if (config->isMappedTo("a", input)) {
-            mCarousel->stopScrolling();
-            ViewController::getInstance()->goToGamelist(mCarousel->getSelected());
-            NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
-            return true;
-        }
-        if (Settings::getInstance()->getBool("RandomAddButton") &&
-            (config->isMappedTo("leftthumbstickclick", input) ||
-             config->isMappedTo("rightthumbstickclick", input))) {
-            // Get a random system and jump to it.
-            NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
-            mCarousel->setCursor(SystemData::getRandomSystem(mCarousel->getSelected()));
-            return true;
-        }
-
-        if (!UIModeController::getInstance()->isUIModeKid() && config->isMappedTo("back", input) &&
-            Settings::getInstance()->getBool("ScreensaverControls")) {
-            if (!mWindow->isScreensaverActive()) {
-                ViewController::getInstance()->stopScrolling();
-                ViewController::getInstance()->cancelViewTransitions();
-                mWindow->startScreensaver();
-                mWindow->renderScreensaver();
-            }
-            return true;
-        }
-    }
-
-    return mCarousel->input(config, input);
-}
-
-void SystemView::update(int deltaTime)
-{
-    mCarousel->update(deltaTime);
-    GuiComponent::update(deltaTime);
-}
-
-void SystemView::onCursorChanged(const CursorState& /*state*/)
-{
-    // Update help style.
-    updateHelpPrompts();
-
-    int scrollVelocity {mCarousel->getScrollingVelocity()};
-
-    float startPos {mCamOffset};
-    float posMax {static_cast<float>(mCarousel->getNumEntries())};
-    float target {static_cast<float>(mCarousel->getCursor())};
-
-    // Find the shortest path to the target.
-    float endPos {target}; // Directly.
-    float dist {fabs(endPos - startPos)};
-
-    if (fabs(target + posMax - startPos - scrollVelocity) < dist)
-        endPos = target + posMax; // Loop around the end (0 -> max).
-    if (fabs(target - posMax - startPos - scrollVelocity) < dist)
-        endPos = target - posMax; // Loop around the start (max - 1 -> -1).
-
-    std::string transition_style {Settings::getInstance()->getString("TransitionStyle")};
-
-    Animation* anim;
-
-    if (transition_style == "fade") {
-        float startFade {mFadeOpacity};
-        anim = new LambdaAnimation(
-            [this, startFade, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f = glm::mix(startPos, endPos, t * t * t + 1);
-                if (f < 0)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
-
-                t += 1;
-                if (t < 0.3f)
-                    this->mFadeOpacity =
-                        glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
-                else if (t < 0.7f)
-                    this->mFadeOpacity = 1.0f;
-                else
-                    this->mFadeOpacity =
-                        glm::mix(1.0f, 0.0f, glm::clamp((t - 0.6f) / 0.3f, 0.0f, 1.0f));
-
-                if (t > 0.5f)
-                    this->mCamOffset = endPos;
-
-                // Update the game count when the entire animation has been completed.
-                if (mFadeOpacity == 1.0f)
-                    updateGameCount();
-            },
-            500);
-    }
-    else if (transition_style == "slide") {
-        mUpdatedGameCount = false;
-        anim = new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f = glm::mix(startPos, endPos, t * t * t + 1);
-                if (f < 0)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
-
-                this->mCamOffset = f;
-
-                // Hack to make the game count being updated in the middle of the animation.
-                bool update {false};
-                if (endPos == -1.0f && fabs(fabs(posMax) - fabs(mCamOffset)) > 0.5f &&
-                    !mUpdatedGameCount) {
-                    update = true;
-                }
-                else if (endPos > posMax && fabs(endPos - posMax - fabs(mCamOffset)) < 0.5f &&
-                         !mUpdatedGameCount) {
-                    update = true;
-                }
-                else if (fabs(fabs(endPos) - fabs(mCamOffset)) < 0.5f && !mUpdatedGameCount) {
-                    update = true;
-                }
-
-                if (update) {
-                    mUpdatedGameCount = true;
-                    updateGameCount();
-                }
-            },
-            500);
-    }
-    else {
-        // Instant.
-        updateGameCount();
-        anim = new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f = glm::mix(startPos, endPos, t * t * t + 1);
-                if (f < 0)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
-
-                this->mCamOffset = endPos;
-            },
-            500);
-    }
-
-    setAnimation(anim, 0, nullptr, false, 0);
-}
-
-void SystemView::render(const glm::mat4& parentTrans)
-{
-    if (mCarousel->getNumEntries() == 0)
-        return; // Nothing to render.
-
-    glm::mat4 trans {getTransform() * parentTrans};
-
-    // Adding texture loading buffers depending on scrolling speed and status.
-    int bufferIndex {mCarousel->getScrollingVelocity() + 1};
-
-    Renderer::pushClipRect(glm::ivec2 {},
-                           glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
-
-    for (int i = static_cast<int>(mCamOffset) + logoBuffersLeft[bufferIndex];
-         i <= static_cast<int>(mCamOffset) + logoBuffersRight[bufferIndex]; ++i) {
-        int index {i};
-        while (index < 0)
-            index += static_cast<int>(mCarousel->getNumEntries());
-        while (index >= static_cast<int>(mCarousel->getNumEntries()))
-            index -= static_cast<int>(mCarousel->getNumEntries());
-
-        if (mCarousel->isAnimationPlaying(0) || index == mCarousel->getCursor()) {
-            glm::mat4 elementTrans {trans};
-            if (mCarousel->getType() == CarouselComponent::HORIZONTAL ||
-                mCarousel->getType() == CarouselComponent::HORIZONTAL_WHEEL)
-                elementTrans = glm::translate(elementTrans,
-                                              glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f});
-            else
-                elementTrans = glm::translate(elementTrans,
-                                              glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
-
-            Renderer::pushClipRect(
-                glm::ivec2 {static_cast<int>(elementTrans[3].x),
-                            static_cast<int>(elementTrans[3].y)},
-                glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
-
-            if (mLegacyMode && mElements.size() > static_cast<size_t>(index)) {
-                for (auto element : mElements[index].legacyExtras)
-                    element->render(elementTrans);
-            }
-            else if (mElements.size() > static_cast<size_t>(index)) {
-                for (auto child : mElements[index].children) {
-                    if (child == mCarousel.get()) {
-                        // Render black above anything lower than the zIndex of the carousel
-                        // if fade transitions are in use and we're transitioning.
-                        if (mFadeOpacity)
-                            renderFade(trans);
-                        child->render(trans);
-                    }
-                    else {
-                        child->render(elementTrans);
-                    }
-                }
-            }
-
-            if (mLegacyMode)
-                mSystemInfo->render(elementTrans);
-
-            Renderer::popClipRect();
-        }
-    }
-
-    if (mLegacyMode) {
-        if (mFadeOpacity)
-            renderFade(trans);
-        mCarousel->render(trans);
-    }
-
-    Renderer::popClipRect();
-}
-
-std::vector<HelpPrompt> SystemView::getHelpPrompts()
-{
-    std::vector<HelpPrompt> prompts;
-    if (mCarousel->getType() == CarouselComponent::VERTICAL ||
-        mCarousel->getType() == CarouselComponent::VERTICAL_WHEEL)
-        prompts.push_back(HelpPrompt("up/down", "choose"));
-    else
-        prompts.push_back(HelpPrompt("left/right", "choose"));
-
-    prompts.push_back(HelpPrompt("a", "select"));
-
-    if (Settings::getInstance()->getBool("RandomAddButton"))
-        prompts.push_back(HelpPrompt("thumbstickclick", "random"));
-
-    if (!UIModeController::getInstance()->isUIModeKid() &&
-        Settings::getInstance()->getBool("ScreensaverControls"))
-        prompts.push_back(HelpPrompt("back", "screensaver"));
-
-    return prompts;
-}
-
-HelpStyle SystemView::getHelpStyle()
-{
-    HelpStyle style;
-    style.applyTheme(mCarousel->getEntry(mCarousel->getCursor()).object->getTheme(), "system");
-    return style;
-}
-
-void SystemView::onThemeChanged(const std::shared_ptr<ThemeData>& /*theme*/)
-{
-    LOG(LogDebug) << "SystemView::onThemeChanged()";
-    mViewNeedsReload = true;
-    populate();
 }
 
 void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
