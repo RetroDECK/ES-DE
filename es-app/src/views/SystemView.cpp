@@ -367,7 +367,10 @@ void SystemView::populate()
                 elements.name = it->getName();
                 elements.fullName = it->getFullName();
                 for (auto& element : theme->getViewElements("system").elements) {
-                    if (element.second.type == "image") {
+                    if (element.second.type == "carousel") {
+                        mCarousel->applyTheme(theme, "system", element.first, ThemeFlags::ALL);
+                    }
+                    else if (element.second.type == "image") {
                         elements.imageComponents.emplace_back(std::make_unique<ImageComponent>());
                         elements.imageComponents.back()->setDefaultZIndex(30.0f);
                         elements.imageComponents.back()->applyTheme(theme, "system", element.first,
@@ -518,10 +521,9 @@ void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
     else
         mViewNeedsReload = true;
 
-    mCarousel->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
-
     if (mLegacyMode) {
-        // System info bar.
+        mCarousel->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
+
         mLegacySystemInfo->setSize(mSize.x, mLegacySystemInfo->getFont()->getLetterHeight() * 2.2f);
         mLegacySystemInfo->setPosition(0.0f, mCarousel->getPosition().y + mCarousel->getSize().y);
         mLegacySystemInfo->setBackgroundColor(0xDDDDDDD8);
