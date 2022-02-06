@@ -233,7 +233,7 @@ void ViewController::goToStart(bool playTransition)
         Settings::getInstance()->setString("StartupSystem", "");
     }
     // Get the first system entry.
-    goToSystemView(getSystemListView()->getFirst(), false);
+    goToSystemView(getSystemListView()->getFirstSystem(), false);
 }
 
 void ViewController::ReloadAndGoToStart()
@@ -293,8 +293,8 @@ void ViewController::stopScrolling()
     mSystemListView->stopScrolling();
     mCurrentView->stopListScrolling();
 
-    if (mSystemListView->isAnimationPlaying(0))
-        mSystemListView->finishAnimation(0);
+    if (mSystemListView->isSystemAnimationPlaying(0))
+        mSystemListView->finishSystemAnimation(0);
 }
 
 int ViewController::getSystemId(SystemData* system)
@@ -351,16 +351,16 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     if (applicationStartup) {
         mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
-            if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
-                getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
+            if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
+                getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
                 mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
             else
                 mCamera[3].x -= static_cast<float>(Renderer::getScreenWidth());
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
-            if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
-                getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
+            if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
+                getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
                 mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
             else
                 mCamera[3].x += static_cast<float>(Renderer::getScreenWidth());
@@ -463,8 +463,8 @@ void ViewController::goToGamelist(SystemData* system)
     // Stop any scrolling, animations and camera movements.
     if (mState.viewing == SYSTEM_SELECT) {
         mSystemListView->stopScrolling();
-        if (mSystemListView->isAnimationPlaying(0))
-            mSystemListView->finishAnimation(0);
+        if (mSystemListView->isSystemAnimationPlaying(0))
+            mSystemListView->finishSystemAnimation(0);
     }
 
     if (slideTransitions)
@@ -825,8 +825,8 @@ bool ViewController::input(InputConfig* config, Input input)
             mSystemListView->stopScrolling();
         // Finish the animation too, so that it doesn't continue
         // to play when we've closed the menu.
-        if (mSystemListView->isAnimationPlaying(0))
-            mSystemListView->finishAnimation(0);
+        if (mSystemListView->isSystemAnimationPlaying(0))
+            mSystemListView->finishSystemAnimation(0);
         // Stop the gamelist scrolling as well as it would otherwise
         // also continue to run after closing the menu.
         mCurrentView->stopListScrolling();

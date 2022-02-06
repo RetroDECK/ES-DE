@@ -11,11 +11,10 @@
 
 #include "GuiComponent.h"
 #include "Sound.h"
-#include "components/BadgeComponent.h"
+#include "SystemData.h"
+#include "components/CarouselComponent.h"
 #include "components/DateTimeComponent.h"
-#include "components/IList.h"
 #include "components/LottieComponent.h"
-#include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
 #include "components/TextListComponent.h"
@@ -26,56 +25,24 @@
 
 class SystemData;
 
-enum CarouselType : unsigned int {
-    HORIZONTAL = 0,
-    VERTICAL = 1,
-    VERTICAL_WHEEL = 2,
-    HORIZONTAL_WHEEL = 3
+struct SystemViewElements {
+    std::string name;
+    std::vector<GuiComponent*> legacyExtras;
+    std::vector<GuiComponent*> children;
+
+    std::vector<std::unique_ptr<TextComponent>> textComponents;
+    std::vector<std::unique_ptr<ImageComponent>> imageComponents;
+    std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
+    std::vector<std::unique_ptr<LottieComponent>> lottieAnimComponents;
+    std::vector<std::unique_ptr<ScrollableContainer>> containerComponents;
+    std::vector<std::unique_ptr<TextComponent>> containerTextComponents;
 };
 
-struct SystemViewData {
-    std::shared_ptr<GuiComponent> logo;
-    std::shared_ptr<GuiComponent> logoPlaceholderText;
-    std::vector<GuiComponent*> backgroundExtras;
-
-    std::vector<std::shared_ptr<TextComponent>> textComponents;
-    std::vector<std::shared_ptr<DateTimeComponent>> dateTimeComponents;
-    std::vector<std::shared_ptr<ImageComponent>> imageComponents;
-    std::vector<std::shared_ptr<VideoFFmpegComponent>> videoComponents;
-    std::vector<std::shared_ptr<LottieComponent>> lottieAnimComponents;
-    std::vector<std::shared_ptr<BadgeComponent>> badgeComponents;
-    std::vector<std::shared_ptr<RatingComponent>> ratingComponents;
-    std::vector<std::shared_ptr<ScrollableContainer>> containerComponents;
-    std::vector<std::shared_ptr<TextComponent>> containerTextComponents;
-    std::vector<std::shared_ptr<TextComponent>> gamelistInfoComponents;
-};
-
-struct SystemViewCarousel {
-    CarouselType type;
-    glm::vec2 pos;
-    glm::vec2 size;
-    glm::vec2 origin;
-    float logoScale;
-    float logoRotation;
-    glm::vec2 logoRotationOrigin;
-    Alignment logoAlignment;
-    unsigned int color;
-    unsigned int colorEnd;
-    bool colorGradientHorizontal;
-    int maxLogoCount; // Number of logos shown on the carousel.
-    glm::vec2 logoSize;
-    float zIndex;
-    bool legacyZIndexMode;
-};
-
-class SystemView : public IList<SystemViewData, SystemData*>
+class SystemView : public GuiComponent
 {
 public:
     SystemView();
     ~SystemView();
-
-    void onShow() override { mShowing = true; }
-    void onHide() override { mShowing = false; }
 
     void goToSystem(SystemData* system, bool animate);
 
@@ -83,48 +50,47 @@ public:
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 
+    bool isScrolling() { return mCarousel->isScrolling(); }
+    void stopScrolling() { mCarousel->stopScrolling(); }
+    bool isSystemAnimationPlaying(unsigned char slot)
+    {
+        return mCarousel->isAnimationPlaying(slot);
+    }
+    void finishSystemAnimation(unsigned char slot)
+    {
+        finishAnimation(slot);
+        mCarousel->finishAnimation(slot);
+    }
+
+    CarouselComponent::CarouselType getCarouselType() { return mCarousel->getType(); }
+    SystemData* getFirstSystem() { return mCarousel->getFirst(); }
+
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
     std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override;
 
-    CarouselType getCarouselType() { return mCarousel.type; }
-
 protected:
-    void onCursorChanged(const CursorState& state) override;
-    void onScroll() override
-    {
-        NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
-    }
+    void onCursorChanged(const CursorState& state);
 
 private:
     void populate();
     void updateGameCount();
     //  Get the ThemeElements that make up the SystemView.
     void getViewElements(const std::shared_ptr<ThemeData>& theme);
-    // Populate the system carousel with the legacy values.
-    void getDefaultElements(void);
-    void getCarouselFromTheme(const ThemeData::ThemeElement* elem);
 
-    //  Render system carousel.
-    void renderCarousel(const glm::mat4& parentTrans);
-    // Draw background extras.
-    void renderExtras(const glm::mat4& parentTrans, float lower, float upper);
     void renderFade(const glm::mat4& trans);
 
-    SystemViewCarousel mCarousel;
-    TextComponent mSystemInfo;
+    std::unique_ptr<CarouselComponent> mCarousel;
+    std::unique_ptr<TextComponent> mSystemInfo;
 
-    // Unit is list index.
+    std::vector<SystemViewElements> mElements;
+
     float mCamOffset;
-    float mExtrasCamOffset;
-    float mExtrasFadeOpacity;
+    float mFadeOpacity;
 
-    int mPreviousScrollVelocity;
     bool mUpdatedGameCount;
     bool mViewNeedsReload;
-    bool mShowing;
-
     bool mLegacyMode;
 };
 
