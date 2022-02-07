@@ -24,122 +24,113 @@ CarouselComponent::CarouselComponent()
     , mCamOffset {0.0f}
     , mPreviousScrollVelocity {0}
     , mType {HORIZONTAL}
+    , mFont {Font::get(FONT_SIZE_LARGE)}
+    , mTextColor {0x000000FF}
+    , mTextBackgroundColor {0xFFFFFF00}
+    , mLineSpacing {1.5f}
     , mLogoAlignment {ALIGN_CENTER}
     , mMaxLogoCount {3}
     , mLogoSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
     , mLogoScale {1.2f}
     , mLogoRotation {7.5f}
-    , mLogoRotationOrigin {-5.0f, 0.5f}
+    , mLogoRotationOrigin {-3.0f, 0.5f}
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
 {
 }
 
-void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme, Entry& entry)
+void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
+                                 Entry& entry,
+                                 bool legacyMode)
 {
     // Make logo.
-    const ThemeData::ThemeElement* logoElem {theme->getElement("system", "image_logo", "image")};
+    if (legacyMode) {
+        const ThemeData::ThemeElement* logoElem {
+            theme->getElement("system", "image_logo", "image")};
 
-    if (logoElem) {
-        std::string path;
-        if (logoElem->has("path"))
-            path = logoElem->get<std::string>("path");
-        std::string defaultPath {logoElem->has("default") ? logoElem->get<std::string>("default") :
-                                                            ""};
-        if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
-            (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
-            auto logo = std::make_shared<ImageComponent>(false, false);
-            logo->setMaxSize(glm::round(mLogoSize * mLogoScale));
-            logo->applyTheme(theme, "system", "image_logo", ThemeFlags::PATH | ThemeFlags::COLOR);
-            logo->setRotateByTargetSize(true);
-            entry.data.logo = logo;
-        }
-    }
-
-    if (!entry.data.logo) {
-        glm::vec2 resolution {static_cast<float>(Renderer::getScreenWidth()),
-                              static_cast<float>(Renderer::getScreenHeight())};
-        glm::vec3 center {resolution.x / 2.0f, resolution.y / 2.0f, 1.0f};
-
-        // Placeholder Image.
-        logoElem = theme->getElement("system", "image_logoPlaceholderImage", "image");
         if (logoElem) {
-            auto path = logoElem->get<std::string>("path");
+            std::string path;
+            if (logoElem->has("path"))
+                path = logoElem->get<std::string>("path");
             std::string defaultPath {
                 logoElem->has("default") ? logoElem->get<std::string>("default") : ""};
             if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
                 (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
                 auto logo = std::make_shared<ImageComponent>(false, false);
-                logo->applyTheme(theme, "system", "image_logoPlaceholderImage", ThemeFlags::ALL);
-                if (!logoElem->has("size"))
-                    logo->setMaxSize(mLogoSize * mLogoScale);
+                logo->setMaxSize(glm::round(mLogoSize * mLogoScale));
+                logo->applyTheme(theme, "system", "image_logo",
+                                 ThemeFlags::PATH | ThemeFlags::COLOR);
                 logo->setRotateByTargetSize(true);
                 entry.data.logo = logo;
             }
         }
-
-        // Placeholder Text.
-        const ThemeData::ThemeElement* logoPlaceholderText =
-            theme->getElement("system", "text_logoPlaceholderText", "text");
-        if (logoPlaceholderText) {
-            // Element 'logoPlaceholderText' found in theme configuration.
-            auto text = std::make_shared<TextComponent>(entry.name, Font::get(FONT_SIZE_LARGE),
-                                                        0x000000FF, ALIGN_CENTER);
-            text->setSize(mLogoSize * mLogoScale);
-            if (mType == VERTICAL || mType == VERTICAL_WHEEL) {
-                text->setHorizontalAlignment(mLogoAlignment);
-                text->setVerticalAlignment(ALIGN_CENTER);
-            }
-            else {
-                text->setHorizontalAlignment(ALIGN_CENTER);
-                text->setVerticalAlignment(mLogoAlignment);
-            }
-            text->applyTheme(theme, "system", "text_logoPlaceholderText",
-                             ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
-                                 ThemeFlags::FORCE_UPPERCASE | ThemeFlags::LINE_SPACING |
-                                 ThemeFlags::TEXT);
-            if (!entry.data.logo)
-                entry.data.logo = text;
+    }
+    else {
+        if (entry.data.logoPath != "" &&
+            ResourceManager::getInstance().fileExists(entry.data.logoPath)) {
+            auto logo = std::make_shared<ImageComponent>(false, false);
+            logo->setImage(entry.data.logoPath, false, false);
+            logo->setMaxSize(glm::round(mLogoSize * mLogoScale));
+            logo->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            logo->setRotateByTargetSize(true);
+            entry.data.logo = logo;
         }
-        else {
-            // Fallback to legacy centered placeholder text.
-            auto text = std::make_shared<TextComponent>(entry.name, Font::get(FONT_SIZE_LARGE),
-                                                        0x000000FF, ALIGN_CENTER);
-            text->setSize(mLogoSize * mLogoScale);
+        else if (entry.data.defaultLogoPath != "" &&
+                 ResourceManager::getInstance().fileExists(entry.data.defaultLogoPath)) {
+            auto defaultLogo = std::make_shared<ImageComponent>(false, false);
+            defaultLogo->setImage(entry.data.defaultLogoPath, false, false);
+            defaultLogo->setMaxSize(glm::round(mLogoSize * mLogoScale));
+            defaultLogo->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            defaultLogo->setRotateByTargetSize(true);
+            entry.data.logo = defaultLogo;
+        }
+    }
+
+    if (!entry.data.logo) {
+        // If no logo image is present, add logo text as fallback.
+        auto text = std::make_shared<TextComponent>(entry.name, mFont, 0x000000FF, ALIGN_CENTER);
+        text->setSize(mLogoSize * mLogoScale);
+        if (legacyMode) {
             text->applyTheme(theme, "system", "text_logoText",
                              ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
                                  ThemeFlags::FORCE_UPPERCASE | ThemeFlags::LINE_SPACING |
                                  ThemeFlags::TEXT);
-            entry.data.logo = text;
+        }
+        if (!legacyMode) {
+            text->setLineSpacing(mLineSpacing);
+            if (mText != "")
+                text->setValue(mText);
+            text->setColor(mTextColor);
+            text->setBackgroundColor(mTextBackgroundColor);
+            text->setRenderBackground(true);
+        }
+        entry.data.logo = text;
 
-            if (mType == VERTICAL || mType == VERTICAL_WHEEL) {
-                text->setHorizontalAlignment(mLogoAlignment);
-                text->setVerticalAlignment(ALIGN_CENTER);
-            }
-            else {
-                text->setHorizontalAlignment(ALIGN_CENTER);
-                text->setVerticalAlignment(mLogoAlignment);
-            }
+        if (mLogoAlignment == ALIGN_LEFT || mLogoAlignment == ALIGN_RIGHT) {
+            text->setHorizontalAlignment(mLogoAlignment);
+            text->setVerticalAlignment(ALIGN_CENTER);
+        }
+        else if (mLogoAlignment == ALIGN_TOP || mLogoAlignment == ALIGN_BOTTOM) {
+            text->setVerticalAlignment(mLogoAlignment);
+            text->setHorizontalAlignment(ALIGN_CENTER);
+        }
+        else {
+            text->setHorizontalAlignment(ALIGN_CENTER);
+            text->setVerticalAlignment(ALIGN_CENTER);
         }
     }
 
-    if (mType == VERTICAL || mType == VERTICAL_WHEEL) {
-        if (mLogoAlignment == ALIGN_LEFT)
-            entry.data.logo->setOrigin(0, 0.5);
-        else if (mLogoAlignment == ALIGN_RIGHT)
-            entry.data.logo->setOrigin(1.0, 0.5);
-        else
-            entry.data.logo->setOrigin(0.5, 0.5);
-    }
-    else {
-        if (mLogoAlignment == ALIGN_TOP)
-            entry.data.logo->setOrigin(0.5, 0);
-        else if (mLogoAlignment == ALIGN_BOTTOM)
-            entry.data.logo->setOrigin(0.5, 1);
-        else
-            entry.data.logo->setOrigin(0.5, 0.5);
-    }
+    if (mLogoAlignment == ALIGN_LEFT)
+        entry.data.logo->setOrigin(0, 0.5);
+    else if (mLogoAlignment == ALIGN_RIGHT)
+        entry.data.logo->setOrigin(1.0, 0.5);
+    else if (mLogoAlignment == ALIGN_TOP)
+        entry.data.logo->setOrigin(0.5, 0);
+    else if (mLogoAlignment == ALIGN_BOTTOM)
+        entry.data.logo->setOrigin(0.5, 1);
+    else
+        entry.data.logo->setOrigin(0.5, 0.5);
 
     glm::vec2 denormalized {mLogoSize * entry.data.logo->getOrigin()};
     entry.data.logo->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
@@ -225,17 +216,12 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
     float yOff {0.0f};
 
     switch (mType) {
-        case VERTICAL_WHEEL: {
-            yOff = (mSize.y - mLogoSize.y) / 2.0f - (mCamOffset * logoSpacing.y);
-            if (mLogoAlignment == ALIGN_LEFT)
-                xOff = mLogoSize.x / 10.0f;
-            else if (mLogoAlignment == ALIGN_RIGHT)
-                xOff = mSize.x - (mLogoSize.x * 1.1f);
-            else
-                xOff = (mSize.x - mLogoSize.x) / 2.0f;
+        case HORIZONTAL_WHEEL:
+        case VERTICAL_WHEEL:
+            xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mCamOffset * logoSpacing.y));
+            yOff = (mSize.y - mLogoSize.y) / 2.0f;
             break;
-        }
-        case VERTICAL: {
+        case VERTICAL:
             logoSpacing.y =
                 ((mSize.y - (mLogoSize.y * mMaxLogoCount)) / (mMaxLogoCount)) + mLogoSize.y;
             yOff = (mSize.y - mLogoSize.y) / 2.0f - (mCamOffset * logoSpacing.y);
@@ -246,20 +232,8 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             else
                 xOff = (mSize.x - mLogoSize.x) / 2.0f;
             break;
-        }
-        case HORIZONTAL_WHEEL: {
-            xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mCamOffset * logoSpacing.y));
-            if (mLogoAlignment == ALIGN_TOP)
-                yOff = mLogoSize.y / 10.0f;
-            else if (mLogoAlignment == ALIGN_BOTTOM)
-                yOff = mSize.y - (mLogoSize.y * 1.1f);
-            else
-                yOff = (mSize.y - mLogoSize.y) / 2.0f;
-            break;
-        }
-        case HORIZONTAL: {
-        }
-        default: {
+        case HORIZONTAL:
+        default:
             logoSpacing.x =
                 ((mSize.x - (mLogoSize.x * mMaxLogoCount)) / (mMaxLogoCount)) + mLogoSize.x;
             xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mCamOffset * logoSpacing.x));
@@ -270,7 +244,6 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             else
                 yOff = (mSize.y - mLogoSize.y) / 2.0f;
             break;
-        }
     }
 
     int center {static_cast<int>(mCamOffset)};
@@ -374,28 +347,74 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mColorGradientHorizontal = !(elem->get<std::string>("gradientType").compare("horizontal"));
 
     if (elem->has("logoScale"))
-        mLogoScale = elem->get<float>("logoScale");
-    if (elem->has("logoSize"))
-        mLogoSize = elem->get<glm::vec2>("logoSize") *
-                    glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        mLogoScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
+    if (elem->has("logoSize")) {
+        // Keep size within a 0.05 and 1.0 multiple of the screen size.
+        glm::vec2 logoSize {elem->get<glm::vec2>("logoSize")};
+        if (std::max(logoSize.x, logoSize.y) > 1.0f) {
+            logoSize /= std::max(logoSize.x, logoSize.y);
+        }
+        else if (std::min(logoSize.x, logoSize.y) < 0.005f) {
+            float ratio {std::min(logoSize.x, logoSize.y) / 0.005f};
+            logoSize /= ratio;
+            // Just an extra precaution if a crazy ratio was used.
+            logoSize.x = glm::clamp(logoSize.x, 0.005f, 1.0f);
+            logoSize.y = glm::clamp(logoSize.y, 0.005f, 1.0f);
+        }
+        mLogoSize = logoSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+    }
     if (elem->has("maxLogoCount"))
-        mMaxLogoCount = static_cast<int>(std::round(elem->get<float>("maxLogoCount")));
+        mMaxLogoCount =
+            glm::clamp(static_cast<int>(std::round(elem->get<float>("maxLogoCount"))), 2, 30);
 
     if (elem->has("logoRotation"))
         mLogoRotation = elem->get<float>("logoRotation");
     if (elem->has("logoRotationOrigin"))
         mLogoRotationOrigin = elem->get<glm::vec2>("logoRotationOrigin");
     if (elem->has("logoAlignment")) {
-        if (!(elem->get<std::string>("logoAlignment").compare("left")))
+        if (!(elem->get<std::string>("logoAlignment").compare("left")) && mType != HORIZONTAL) {
             mLogoAlignment = ALIGN_LEFT;
-        else if (!(elem->get<std::string>("logoAlignment").compare("right")))
+        }
+        else if (!(elem->get<std::string>("logoAlignment").compare("right")) &&
+                 mType != HORIZONTAL) {
             mLogoAlignment = ALIGN_RIGHT;
-        else if (!(elem->get<std::string>("logoAlignment").compare("top")))
+        }
+        else if (!(elem->get<std::string>("logoAlignment").compare("top")) && mType != VERTICAL) {
             mLogoAlignment = ALIGN_TOP;
-        else if (!(elem->get<std::string>("logoAlignment").compare("bottom")))
+        }
+        else if (!(elem->get<std::string>("logoAlignment").compare("bottom")) &&
+                 mType != VERTICAL) {
             mLogoAlignment = ALIGN_BOTTOM;
-        else
+        }
+        else {
             mLogoAlignment = ALIGN_CENTER;
+        }
+    }
+
+    mFont = Font::getFromTheme(elem, properties, mFont);
+
+    if (elem->has("textColor"))
+        mTextColor = elem->get<unsigned int>("textColor");
+    if (elem->has("textBackgroundColor"))
+        mTextBackgroundColor = elem->get<unsigned int>("textBackgroundColor");
+
+    if (elem->has("lineSpacing"))
+        mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
+
+    std::string textStyle;
+
+    if (elem->has("textStyle"))
+        textStyle = elem->get<std::string>("textStyle");
+
+    if (elem->has("text")) {
+        if (textStyle == "uppercase")
+            mText = Utils::String::toUpper(elem->get<std::string>("text"));
+        else if (textStyle == "lowercase")
+            mText = Utils::String::toLower(elem->get<std::string>("text"));
+        else if (textStyle == "camelcase")
+            mText = Utils::String::toCamelCase(elem->get<std::string>("text"));
+        else
+            mText = elem->get<std::string>("text");
     }
 
     GuiComponent::applyTheme(theme, view, element, ALL);

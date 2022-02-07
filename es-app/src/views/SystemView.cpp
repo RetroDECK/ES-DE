@@ -331,8 +331,8 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 void SystemView::populate()
 {
     auto themeSets = ThemeData::getThemeSets();
-    std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet =
-        themeSets.find(Settings::getInstance()->getString("ThemeSet"));
+    std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet {
+        themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
 
     assert(selectedSet != themeSets.cend());
     mLegacyMode = selectedSet->second.capabilities.legacyTheme;
@@ -344,6 +344,8 @@ void SystemView::populate()
 
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};
+        std::string logoPath;
+        std::string defaultLogoPath;
 
         if (mViewNeedsReload)
             getViewElements(theme);
@@ -369,6 +371,10 @@ void SystemView::populate()
                 for (auto& element : theme->getViewElements("system").elements) {
                     if (element.second.type == "carousel") {
                         mCarousel->applyTheme(theme, "system", element.first, ThemeFlags::ALL);
+                        if (element.second.has("logo"))
+                            logoPath = element.second.get<std::string>("logo");
+                        if (element.second.has("defaultLogo"))
+                            defaultLogoPath = element.second.get<std::string>("defaultLogo");
                     }
                     else if (element.second.type == "image") {
                         elements.imageComponents.emplace_back(std::make_unique<ImageComponent>());
@@ -426,8 +432,10 @@ void SystemView::populate()
         CarouselComponent::Entry entry;
         entry.name = it->getName();
         entry.object = it;
+        entry.data.logoPath = logoPath;
+        entry.data.defaultLogoPath = defaultLogoPath;
 
-        mCarousel->addEntry(theme, entry);
+        mCarousel->addEntry(theme, entry, mLegacyMode);
     }
 
     for (auto& elements : mSystemElements) {

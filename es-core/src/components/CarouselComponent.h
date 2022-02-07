@@ -20,25 +20,15 @@ class SystemData;
 
 struct CarouselElement {
     std::shared_ptr<GuiComponent> logo;
+    std::string logoPath;
+    std::string defaultLogoPath;
 };
 
 class CarouselComponent : public IList<CarouselElement, SystemData*>
 {
 public:
     CarouselComponent();
-
-    void addElement(const std::shared_ptr<GuiComponent>& component,
-                    const std::string& name,
-                    SystemData* object)
-    {
-        Entry listEntry;
-        listEntry.name = name;
-        listEntry.object = object;
-        listEntry.data.logo = component;
-        add(listEntry);
-    }
-
-    void addEntry(const std::shared_ptr<ThemeData>& theme, Entry& entry);
+    void addEntry(const std::shared_ptr<ThemeData>& theme, Entry& entry, bool legacyMode);
     Entry& getEntry(int index) { return mEntries.at(index); }
 
     enum CarouselType {
@@ -85,6 +75,11 @@ private:
     int mPreviousScrollVelocity;
 
     CarouselType mType;
+    std::shared_ptr<Font> mFont;
+    unsigned int mTextColor;
+    unsigned int mTextBackgroundColor;
+    std::string mText;
+    float mLineSpacing;
     Alignment mLogoAlignment;
     int mMaxLogoCount;
     glm::vec2 mLogoSize;

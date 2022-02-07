@@ -203,12 +203,21 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"color", COLOR},
        {"colorEnd", COLOR},
        {"gradientType", STRING},
+       {"logo", PATH},
+       {"defaultLogo", PATH},
+       {"logoSize", NORMALIZED_PAIR},
        {"logoScale", FLOAT},
        {"logoRotation", FLOAT},
        {"logoRotationOrigin", NORMALIZED_PAIR},
-       {"logoSize", NORMALIZED_PAIR},
        {"logoAlignment", STRING},
        {"maxLogoCount", FLOAT},
+       {"text", STRING},
+       {"textColor", COLOR},
+       {"textBackgroundColor", COLOR},
+       {"textStyle", STRING},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"lineSpacing", FLOAT},
        {"zIndex", FLOAT},
        {"legacyZIndexMode", STRING}}},
      {"textlist",
@@ -543,29 +552,6 @@ const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
         return it->second;
     else
         return "invalid ratio";
-}
-
-const std::shared_ptr<ThemeData> ThemeData::getDefault()
-{
-    static std::shared_ptr<ThemeData> theme = nullptr;
-    if (theme == nullptr) {
-        theme = std::shared_ptr<ThemeData>(new ThemeData());
-
-        const std::string path {Utils::FileSystem::getHomePath() +
-                                "/.emulationstation/es_theme_default.xml"};
-        if (Utils::FileSystem::exists(path)) {
-            try {
-                std::map<std::string, std::string> emptyMap;
-                theme->loadFile(emptyMap, path);
-            }
-            catch (ThemeException& e) {
-                LOG(LogError) << e.what();
-                theme = std::shared_ptr<ThemeData>(new ThemeData()); // Reset to empty.
-            }
-        }
-    }
-
-    return theme;
 }
 
 unsigned int ThemeData::getHexColor(const std::string& str)

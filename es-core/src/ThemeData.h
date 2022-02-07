@@ -222,7 +222,6 @@ public:
     std::map<std::string, std::string> mVariables;
 
 private:
-    static const std::shared_ptr<ThemeData> getDefault();
     unsigned int getHexColor(const std::string& str);
     std::string resolvePlaceholders(const std::string& in);
 
