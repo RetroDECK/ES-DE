@@ -364,8 +364,6 @@ Below are the default zIndex values per element type:
 * System Logo/Text - 50
     * `image name="logo"`
     * `text name="logoText"`
-    * `image name="logoPlaceholderImage"`
-    * `text name="logoPlaceholderText"`
 * Gamelist information - 50
     * `text name="gamelistInfo"`
 * Badges - 50
@@ -418,15 +416,8 @@ or to specify only a portion of the value of a theme property:
     - The system logo carousel
 * `image name="logo"` - PATH | COLOR
     - A logo image, to be displayed in the system logo carousel.
-* `image name="logoPlaceholderImage"` - ALL
-    - A logo image, to be displayed system name in the system logo carousel when no logo is available. Set the position
-      to `0.5 0.5` to center the image.
-* `text name="logoPlaceholderText"` - ALL
-    - Logo text, to be displayed system name in the system logo carousel when no logo is available. The logo text is
-      displayed on top of `logoPlaceholderImage`. Set the position to `0.5 0.5` to center the text.
 * `text name="logoText"` - FONT_PATH | COLOR | FORCE_UPPERCASE | LINE_SPACING | TEXT
-    - **Deprecated:** A logo text, to be displayed system name in the system logo carousel when no logo is available.
-      Ignored when `logoPlaceholderImage` or `logoPlaceholderText` are set.
+    - A logo text, to be displayed system name in the system logo carousel when no logo is available.
 * `text name="systemInfo"` - ALL
     - Displays details of the system currently selected in the carousel.
 * You can use extra elements (elements with `extra="true"`) to add your own backgrounds, etc. They will be displayed
@@ -1023,9 +1014,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Sets the number of logos to display in the carousel.
     - Default is 3
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
-* `legacyZIndexMode` - type: BOOLEAN
-    - If true, the carousel will ignore zIndex and always render on top of other components. Default is `true`.
+    - z-index value for component. Components will be rendered in order of z-index value from low to high with the carousel above all other components.
 
 The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
 

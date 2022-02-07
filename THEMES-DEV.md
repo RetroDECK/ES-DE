@@ -946,7 +946,13 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - A string literal to display.
 * `metadata` - type: STRING
     - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal.
-    - Possible values:
+    - Possible values for the system view:
+    - `sy_name` - Short system name as defined in es_systems.xml.
+    - `sy_fullname` - Full system name as defined in es_systems.xml.
+    - `sy_gamecount` - Number of games available for the system. Number of favorites are printed inside brackets if applicable.
+    - `sy_gamecount_games` - Number of games available for the system. Does not print the favorites count.
+    - `sy_gamecount_favorites` - Number of favorite games for the system, may be blank if favorites are not applicable.
+    - Possible values for the gamelist view:
     - `md_name` - Game name.
     - `md_description` - Game description. Should be combined with the `container` property in most cases.
     - `md_rating` - The numerical representation of the game rating, for example `3` or `4.5`.
@@ -962,9 +968,9 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - `md_controller` - The controller for the game. Will be blank if none has been selected.
     - `md_altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
 * `container` - type: BOOLEAN
-    - Whether the text should be placed inside a scrollable container.
+    - Whether the text should be placed inside a scrollable container. Only available for the gamelist view.
 * `fontPath` - type: PATH
-    - Path to a truetype font (.ttf).
+    - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `alignment` - type: STRING
@@ -1005,7 +1011,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - `md_releasedate` - The release date of the game.
     - `md_lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time.
 * `fontPath` - type: PATH
-    - Path to a truetype font (.ttf).
+    - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `alignment` - type: STRING
@@ -1054,7 +1060,7 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Default is `0.5 0.5`
 * `backgroundColor` - type: COLOR
 * `fontPath` - type: PATH
-    - Path to a truetype font (.ttf).
+    - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `color` - type: COLOR
@@ -1095,7 +1101,7 @@ Displays the game count (all games as well as favorites), any applied filters, a
 
 * `type` - type: STRING
     - Sets the scoll direction of the carousel.
-    - Accepted values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
+    - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
     - Default is `horizontal`
 * `size` - type: NORMALIZED_PAIR
     - Default is `1 0.2325`
@@ -1104,12 +1110,25 @@ Displays the game count (all games as well as favorites), any applied filters, a
 * `origin` - type: NORMALIZED_PAIR
     - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
 * `color` - type: COLOR
-    - Controls the color of the carousel background.
+    - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.
     - Default is `FFFFFFD8`
+* `colorEnd` - type: COLOR
+    - Setting this to something other than what is defined for `color` creates a color gradient on the background panel.
+    - Default is `0xFFFFFFD8`
+* `gradientType` - type: STRING
+    - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
+    - Possible values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `logo` - type: PATH
+    - Path to the logo image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+* `defaultLogo` - type: PATH
+    - Path to the default logo file which will be displayed if the image defined via the `logo` property is not found.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `logoSize` - type: NORMALIZED_PAIR
+    - Minimum value is `0.05` and maximum value is `1`
     - Default is `0.25 0.155`
 * `logoScale` - type: FLOAT.
     - Selected logo is increased in size by this scale
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.2`
 * `logoRotation` - type: FLOAT
     - Angle in degrees that the logos should be rotated.  Value should be positive.
@@ -1118,21 +1137,39 @@ Displays the game count (all games as well as favorites), any applied filters, a
 * `logoRotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the logos will be rotated.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
-    - Default is `-5 0.5`
+    - Default is `-3 0.5`
 * `logoAlignment` - type: STRING
-    - Sets the alignment of the logos relative to the carousel.
-    - Accepted values are `top`, `bottom` or `center` when `type` is "horizontal" or "horizontal_wheel".
-    - Accepted values are `left`, `right` or `center` when `type` is "vertical" or "vertical_wheel".
+    - Sets `logo` and `text` alignment relative to the carousel.
+    - Valid values are `top`, `bottom` or `center` when `type` is "horizontal"
+    - Valid values are `left`, `right` or `center` when `type` is "vertical"
+    - All values are valid when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `center`
 * `maxLogoCount` - type: FLOAT
     - Sets the number of logos to display in the carousel.
+    - Minimum value is `2` and maximum value is `30`
     - Default is `3`
+* `text` - type: STRING
+    - A string literal to display if there is no `logo` or `defaultLogo` properties defined and if no images were found.
+* `textColor` - type: COLOR
+    - Default is `000000FF`
+* `textBackgroundColor` - type: COLOR
+    - Default is `FFFFFF00`
+* `textStyle` - type: STRING
+    - The style of the text.
+    - Valid values are `original`, `uppercase`, `lowercase` or `camelcase`
+    - Default is `original` (original formatting is retained)
+* `fontPath` - type: PATH
+    - Path to a TrueType font (.ttf) used as fallback if there is no `logo` image defined or found, and if `defaultLogo` has not been defined.
+* `fontSize` - type: FLOAT
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Default is `0.085`
+* `lineSpacing` - type: FLOAT
+    - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
+    - Default is `1.5`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
-* `legacyZIndexMode` - type: BOOLEAN
-    - If true, the carousel will ignore zIndex and always render on top of other elements.
-    - Default is `true`
 
 #### textlist
 
@@ -1177,24 +1214,36 @@ This is a list containing rows of text which can be navigated using the keyboard
 
 The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
 
-* `pos` - type: NORMALIZED_PAIR. Default is "0.012 0.9515"
-* `origin` - type: NORMALIZED_PAIR.
+* `pos` - type: NORMALIZED_PAIR
+    - Default is `0.012 0.9515`
+* `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
       the element exactly in the middle of the screen.
-* `textColor` - type: COLOR. Default is 777777FF.
-* `textColorDimmed` - type: COLOR. Default is the same value as textColor. Must be placed under the 'system' view.
-* `iconColor` - type: COLOR. Default is 777777FF.
-* `iconColorDimmed` - type: COLOR. Default is the same value as iconColor. Must be placed under the 'system' view.
-* `fontPath` - type: PATH.
-* `fontSize` - type: FLOAT.
-* `entrySpacing` - type: FLOAT. Default is 16.0.
+* `textColor` - type: COLOR
+    - Default is `777777FF`
+* `textColorDimmed` - type: COLOR
+    - Must be placed under the 'system' view.
+    - Default is the same value as textColor.
+* `iconColor` - type: COLOR
+    - Default is `777777FF`
+* `iconColorDimmed` - type: COLOR
+    - Must be placed under the 'system' view.
+    - Default is the same value as iconColor.
+* `fontPath` - type: PATH
+* `fontSize` - type: FLOAT
+* `entrySpacing` - type: FLOAT
     - Spacing in pixels between the help system elements.
-* `iconTextSpacing` - type: FLOAT. Default is 8.0.
-    - Spacing in pixels within a help system element between it's icon and text.
-* `textStyle` - type: STRING. Default is `uppercase`.
-    - The style of the text. Options: `uppercase`, `lowercase`, `camelcase`.
-* `customButtonIcon` - type: PATH.
-    - A button icon override. Specify the button type in the attribute `button`. The available buttons are:
+    - Default is `16.0`
+* `iconTextSpacing` - type: FLOAT
+    - Spacing in pixels within a help system element between its icon and text.
+    - Default is `8.0`
+* `textStyle` - type: STRING
+    - The style of the text.
+    - Valid values are `uppercase`, `lowercase` or `camelcase`
+    - Default is `uppercase`
+* `customButtonIcon` - type: PATH
+    - A button icon override. Specify the button type in the attribute `button`.
+    - The available buttons are: \
       `dpad_updown`,
       `dpad_leftright`,
       `dpad_all`,
@@ -1225,7 +1274,7 @@ The help system is a special element that displays a context-sensitive list of a
       `button_back_XBOX`,
       `button_start_XBOX`,
       `button_back_XBOX360`,
-      `button_start_XBOX360`.
+      `button_start_XBOX360`
 
 #### imagegrid
 

@@ -28,6 +28,7 @@
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
 * Reduced CPU usage significantly when a menu is open by not rendering the bottom of the stack
+* Reduced CPU usage by only rendering the currently visible system in SystemView
 * Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
 * Added logging of the display refresh rate on startup
 * Improved the theme loading error logging to make it consistent and easier to understand
@@ -41,6 +42,7 @@
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminated the risk of name collisions
+* Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
 * Refactored the six gamelist classes into two new classes; GamelistBase and GamelistView
