@@ -19,8 +19,15 @@ based on: 'recalbox-multi' by the Recalbox community
 
     <view name="system">
         <carousel name="system_carousel">
+            <logo>./${system.theme}/images/logo.svg</logo>
             <logoScale>1.23</logoScale>
             <logoSize>0.25 0.125</logoSize>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.070</fontSize>
+            <textStyle>uppercase</textStyle>
+            <lineSpacing>1.2</lineSpacing>
+            <text>${system.fullName}</text>
+            <maxLogoCount>3</maxLogoCount>
         </carousel>
         <text name="game_counter">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
@@ -29,18 +36,9 @@ based on: 'recalbox-multi' by the Recalbox community
             <size>1 0.056</size>
             <origin>0.5 0.5</origin>
             <forceUppercase>true</forceUppercase>
-            <metadata>sy_gamecount</metadata>
             <alignment>center</alignment>
+            <metadata>sy_gamecount</metadata>
             <zIndex>50</zIndex>
-        </text>
-        <text name="logoPlaceholderText">
-            <pos>0.5 0.5</pos>
-            <origin>0.5 0.5</origin>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.065</fontSize>
-            <color>000000FF</color>
-            <text>${system.fullName}</text>
-            <visible>false</visible>
         </text>
     </view>
 

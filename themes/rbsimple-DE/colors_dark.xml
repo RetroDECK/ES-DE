@@ -2,6 +2,7 @@
     <view name="system">
         <carousel name="system_carousel">
             <color>747474D8</color>
+            <textColor>F0F0F0</textColor>
         </carousel>
         <text name="game_counter">
             <color>C6C6C6</color>
@@ -27,6 +28,23 @@
             <iconColorDimmed>969696</iconColorDimmed>
         </helpsystem>
     </view>
+
+    <!-- Default band colors (used if a system is unthemed). -->
+    <view name="system, gamelist">
+        <image name="band1">
+            <color>F6DD08</color>
+        </image>
+        <image name="band2">
+            <color>800000</color>
+        </image>
+        <image name="band3">
+            <color>FF0000</color>
+        </image>
+        <image name="band4">
+            <color>303030</color>
+        </image>
+    </view>
+
 
     <view name="gamelist">
         <image name="background">
