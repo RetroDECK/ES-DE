@@ -435,23 +435,19 @@ void CarouselComponent::onCursorChanged(const CursorState& state)
     if (fabs(target - posMax - startPos - mScrollVelocity) < dist)
         endPos = target - posMax; // Loop around the start (max - 1 -> -1).
 
-    // This logic is only needed when there are two game systems, to prevent ugly jumps back
-    // an forth when selecting the same direction rapidly several times in a row.
-    if (posMax == 2) {
-        if (mPreviousScrollVelocity == 0)
-            mPreviousScrollVelocity = mScrollVelocity;
-        else if (mScrollVelocity < 0 && startPos < endPos)
-            mPreviousScrollVelocity = -1;
-        else if (mScrollVelocity > 0 && startPos > endPos)
-            mPreviousScrollVelocity = 1;
-    }
-    if (mPreviousScrollVelocity != 0 && posMax == 2 && mScrollVelocity == mPreviousScrollVelocity) {
-        if (fabs(endPos - startPos) < 0.5 || fabs(endPos - startPos) > 1.5) {
-            (mScrollVelocity < 0) ? endPos -= 1 : endPos += 1;
-            (mCursor == 0) ? mCursor = 1 : mCursor = 0;
-            return;
-        }
-    }
+    // Make sure there are no reverse jumps between logos.
+    bool changedDirection {false};
+    if (mPreviousScrollVelocity != 0 && mPreviousScrollVelocity != mScrollVelocity)
+        changedDirection = true;
+
+    if (!changedDirection && mScrollVelocity > 0 && endPos < startPos)
+        endPos = endPos + posMax;
+
+    if (!changedDirection && mScrollVelocity < 0 && endPos > startPos)
+        endPos = endPos - posMax;
+
+    if (mScrollVelocity != 0)
+        mPreviousScrollVelocity = mScrollVelocity;
 
     // No need to animate transition, we're not going anywhere (probably mEntries.size() == 1).
     if (endPos == mCamOffset)

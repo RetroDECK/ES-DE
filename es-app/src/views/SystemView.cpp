@@ -32,6 +32,7 @@ namespace
 SystemView::SystemView()
     : mCamOffset {0.0f}
     , mFadeOpacity {0.0f}
+    , mPreviousScrollVelocity {0}
     , mUpdatedGameCount {false}
     , mViewNeedsReload {true}
     , mLegacyMode {false}
@@ -239,6 +240,20 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         endPos = target + posMax; // Loop around the end (0 -> max).
     if (fabs(target - posMax - startPos - scrollVelocity) < dist)
         endPos = target - posMax; // Loop around the start (max - 1 -> -1).
+
+    // Make sure transitions do not animate in reverse.
+    bool changedDirection {false};
+    if (mPreviousScrollVelocity != 0 && mPreviousScrollVelocity != scrollVelocity)
+        changedDirection = true;
+
+    if (!changedDirection && scrollVelocity > 0 && endPos < startPos)
+        endPos = endPos + posMax;
+
+    if (!changedDirection && scrollVelocity < 0 && endPos > startPos)
+        endPos = endPos - posMax;
+
+    if (scrollVelocity != 0)
+        mPreviousScrollVelocity = scrollVelocity;
 
     std::string transition_style {Settings::getInstance()->getString("TransitionStyle")};
 
