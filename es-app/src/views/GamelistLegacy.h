@@ -267,15 +267,9 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
         theme, getName(), mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->getMetadataField(),
         ALL);
 
-    if (mLegacyMode) {
-        for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::MD_NAME; ++i)
-            mTextComponents[i]->applyTheme(theme, getName(), mTextComponents[i]->getMetadataField(),
-                                           ALL ^ ThemeFlags::TEXT);
-    }
-    else {
-        for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::MD_NAME; ++i)
-            mTextComponents[i]->applyTheme(theme, getName(), mTextComponents[i]->getMetadataField(),
-                                           ALL);
+    for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::MD_NAME; ++i) {
+        mTextComponents[i]->applyTheme(theme, getName(), mTextComponents[i]->getMetadataField(),
+                                       ALL ^ ThemeFlags::TEXT);
     }
 
     for (auto& container : mContainerComponents) {
@@ -550,41 +544,16 @@ void GamelistView::legacyUpdateInfoPanel()
 
     std::vector<GuiComponent*> comps;
 
-    if (!mLegacyMode) {
-        for (auto& text : mTextComponents) {
-            if (text->getScrollHide())
-                comps.emplace_back(text.get());
-        }
-        for (auto& date : mDateTimeComponents) {
-            if (date->getScrollHide())
-                comps.emplace_back(date.get());
-        }
-        for (auto& image : mImageComponents) {
-            if (image->getScrollHide())
-                comps.emplace_back(image.get());
-        }
-        for (auto& badge : mBadgeComponents) {
-            if (badge->getScrollHide())
-                comps.emplace_back(badge.get());
-        }
-        for (auto& rating : mRatingComponents) {
-            if (rating->getScrollHide())
-                comps.emplace_back(rating.get());
-        }
-    }
-
-    if (mLegacyMode) {
-        for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::END; ++i)
-            comps.emplace_back(mTextComponents[i].get());
-        comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE].get());
-        comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED].get());
-        comps.emplace_back(mTextComponents[LegacyText::MD_NAME].get());
-        comps.emplace_back(mImageComponents[LegacyImage::MD_THUMBNAIL].get());
-        comps.emplace_back(mImageComponents[LegacyImage::MD_MARQUEE].get());
-        comps.emplace_back(mImageComponents[LegacyImage::MD_IMAGE].get());
-        comps.push_back(mBadgeComponents.front().get());
-        comps.push_back(mRatingComponents.front().get());
-    }
+    for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::END; ++i)
+        comps.emplace_back(mTextComponents[i].get());
+    comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE].get());
+    comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED].get());
+    comps.emplace_back(mTextComponents[LegacyText::MD_NAME].get());
+    comps.emplace_back(mImageComponents[LegacyImage::MD_THUMBNAIL].get());
+    comps.emplace_back(mImageComponents[LegacyImage::MD_MARQUEE].get());
+    comps.emplace_back(mImageComponents[LegacyImage::MD_IMAGE].get());
+    comps.push_back(mBadgeComponents.front().get());
+    comps.push_back(mRatingComponents.front().get());
 
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
         GuiComponent* comp = *it;
