@@ -1231,6 +1231,18 @@ void SystemData::loadTheme()
         sysData.insert(std::pair<std::string, std::string>("system.name", getName()));
         sysData.insert(std::pair<std::string, std::string>("system.theme", getThemeFolder()));
         sysData.insert(std::pair<std::string, std::string>("system.fullName", getFullName()));
+        if (isCollection()) {
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.collections", getFullName()));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.theme.collections", getThemeFolder()));
+        }
+        else {
+            sysData.insert(std::pair<std::string, std::string>("system.fullName.noCollections",
+                                                               getFullName()));
+            sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections",
+                                                               getThemeFolder()));
+        }
 
         mTheme->loadFile(sysData, path);
     }
