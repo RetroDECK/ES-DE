@@ -24,7 +24,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <logoSize>0.25 0.125</logoSize>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.070</fontSize>
-            <textStyle>uppercase</textStyle>
+            <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
             <text>${system.fullName}</text>
             <maxLogoCount>3</maxLogoCount>
@@ -35,7 +35,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.5 0.6437</pos>
             <size>1 0.056</size>
             <origin>0.5 0.5</origin>
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
             <alignment>center</alignment>
             <metadata>sy_gamecount</metadata>
             <zIndex>50</zIndex>
@@ -134,7 +134,7 @@ based on: 'recalbox-multi' by the Recalbox community
     <aspectRatio name="4:3">
         <view name="gamelist">
             <text name="4:3_temporary">
-                <forceUppercase>true</forceUppercase>
+                <letterCase>uppercase</letterCase>
                 <text>4:3 not implemented</text>
                 <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
                 <fontSize>0.03</fontSize>
@@ -162,25 +162,25 @@ based on: 'recalbox-multi' by the Recalbox community
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
                     md_lbl_publisher, md_lbl_genre, md_lbl_players,
                     md_lbl_lastplayed">
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
         </text>
         <text name="md_developer, md_publisher, md_genre, md_players">
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
         </text>
         <text name="md_description">
             <container>true</container>
-            <forceUppercase>true</forceUppercase>
             <metadata>md_description</metadata>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.024</fontSize>
         </text>
         <datetime name="md_releasedate, md_lastplayed">
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
@@ -188,7 +188,7 @@ based on: 'recalbox-multi' by the Recalbox community
         <textlist name="gamelist">
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
         </textlist>
     </view>
 
