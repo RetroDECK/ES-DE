@@ -36,7 +36,7 @@ public:
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);
     void setLowercase(bool lowercase);
-    void setCapitalized(bool capitalize);
+    void setCapitalize(bool capitalize);
     void onSizeChanged() override;
     void setText(const std::string& text, bool update = true);
     void setHiddenText(const std::string& text) { mHiddenText = text; }
@@ -93,7 +93,7 @@ private:
 
     bool mUppercase;
     bool mLowercase;
-    bool mCapitalized;
+    bool mCapitalize;
     glm::ivec2 mAutoCalcExtent;
     std::shared_ptr<TextCache> mTextCache;
     Alignment mHorizontalAlignment;

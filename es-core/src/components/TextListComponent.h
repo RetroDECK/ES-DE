@@ -78,6 +78,38 @@ public:
     void setUppercase(bool uppercase)
     {
         mUppercase = uppercase;
+
+        if (uppercase) {
+            mLowercase = false;
+            mCapitalize = false;
+        }
+
+        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
+            it->data.textCache.reset();
+    }
+
+    void setLowercase(bool lowercase)
+    {
+        mLowercase = lowercase;
+
+        if (lowercase) {
+            mUppercase = false;
+            mCapitalize = false;
+        }
+
+        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
+            it->data.textCache.reset();
+    }
+
+    void setCapitalize(bool capitalize)
+    {
+        mCapitalize = capitalize;
+
+        if (capitalize) {
+            mUppercase = false;
+            mLowercase = false;
+        }
+
         for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
             it->data.textCache.reset();
     }
@@ -115,6 +147,8 @@ private:
 
     std::shared_ptr<Font> mFont;
     bool mUppercase;
+    bool mLowercase;
+    bool mCapitalize;
     float mLineSpacing;
     float mSelectorHeight;
     float mSelectorOffsetY;
@@ -140,6 +174,8 @@ template <typename T> TextListComponent<T>::TextListComponent()
 
     mFont = Font::get(FONT_SIZE_MEDIUM);
     mUppercase = false;
+    mLowercase = false;
+    mCapitalize = false;
     mLineSpacing = 1.5f;
     mSelectorHeight = mFont->getSize() * 1.5f;
     mSelectorOffsetY = 0;
@@ -229,9 +265,20 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         else
             color = mColors[entry.data.colorId];
 
-        if (!entry.data.textCache)
-            entry.data.textCache = std::unique_ptr<TextCache>(font->buildTextCache(
-                mUppercase ? Utils::String::toUpper(entry.name) : entry.name, 0, 0, 0x000000FF));
+        if (!entry.data.textCache) {
+            if (mUppercase)
+                entry.data.textCache = std::unique_ptr<TextCache>(
+                    font->buildTextCache(Utils::String::toUpper(entry.name), 0, 0, 0x000000FF));
+            else if (mLowercase)
+                entry.data.textCache = std::unique_ptr<TextCache>(
+                    font->buildTextCache(Utils::String::toLower(entry.name), 0, 0, 0x000000FF));
+            else if (mCapitalize)
+                entry.data.textCache = std::unique_ptr<TextCache>(font->buildTextCache(
+                    Utils::String::toCapitalized(entry.name), 0, 0, 0x000000FF));
+            else
+                entry.data.textCache =
+                    std::unique_ptr<TextCache>(font->buildTextCache(entry.name, 0, 0, 0x000000FF));
+        }
 
         // If a game is marked as hidden, lower the text opacity a lot.
         // If a game is marked to not be counted, lower the opacity a moderate amount.
@@ -462,6 +509,25 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (properties & LETTER_CASE && elem->has("letterCase")) {
+        std::string letterCase {elem->get<std::string>("letterCase")};
+        if (letterCase == "uppercase") {
+            setUppercase(true);
+        }
+        else if (letterCase == "lowercase") {
+            setLowercase(true);
+        }
+        else if (letterCase == "capitalize") {
+            setCapitalize(true);
+        }
+        else if (letterCase != "none") {
+            LOG(LogWarning)
+                << "TextListComponent: Invalid theme configuration, property <letterCase> set to \""
+                << letterCase << "\"";
+        }
+    }
+
+    // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 

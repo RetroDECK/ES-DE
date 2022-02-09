@@ -21,7 +21,7 @@ TextComponent::TextComponent()
     , mRenderBackground {false}
     , mUppercase {false}
     , mLowercase {false}
-    , mCapitalized {false}
+    , mCapitalize {false}
     , mAutoCalcExtent {1, 1}
     , mHorizontalAlignment {ALIGN_LEFT}
     , mVerticalAlignment {ALIGN_CENTER}
@@ -46,7 +46,7 @@ TextComponent::TextComponent(const std::string& text,
     , mRenderBackground {false}
     , mUppercase {false}
     , mLowercase {false}
-    , mCapitalized {false}
+    , mCapitalize {false}
     , mAutoCalcExtent {1, 1}
     , mHorizontalAlignment {align}
     , mVerticalAlignment {ALIGN_CENTER}
@@ -126,7 +126,7 @@ void TextComponent::setUppercase(bool uppercase)
     mUppercase = uppercase;
     if (uppercase) {
         mLowercase = false;
-        mCapitalized = false;
+        mCapitalize = false;
     }
     onTextChanged();
 }
@@ -136,15 +136,15 @@ void TextComponent::setLowercase(bool lowercase)
     mLowercase = lowercase;
     if (lowercase) {
         mUppercase = false;
-        mCapitalized = false;
+        mCapitalize = false;
     }
     onTextChanged();
 }
 
-void TextComponent::setCapitalized(bool capitalized)
+void TextComponent::setCapitalize(bool capitalize)
 {
-    mCapitalized = capitalized;
-    if (capitalized) {
+    mCapitalize = capitalize;
+    if (capitalize) {
         mUppercase = false;
         mLowercase = false;
     }
@@ -230,7 +230,7 @@ void TextComponent::calculateExtent()
             mSize = mFont->sizeText(Utils::String::toUpper(mText), mLineSpacing);
         else if (mLowercase)
             mSize = mFont->sizeText(Utils::String::toLower(mText), mLineSpacing);
-        else if (mCapitalized)
+        else if (mCapitalize)
             mSize = mFont->sizeText(Utils::String::toCapitalized(mText), mLineSpacing);
         else
             mSize = mFont->sizeText(mText, mLineSpacing); // Original case.
@@ -247,7 +247,7 @@ void TextComponent::calculateExtent()
                     mFont->sizeWrappedText(Utils::String::toLower(mText), getSize().x, mLineSpacing)
                         .y;
             }
-            else if (mCapitalized) {
+            else if (mCapitalize) {
                 mSize.y = mFont
                               ->sizeWrappedText(Utils::String::toCapitalized(mText), getSize().x,
                                                 mLineSpacing)
@@ -275,7 +275,7 @@ void TextComponent::onTextChanged()
         text = Utils::String::toUpper(mText);
     else if (mLowercase)
         text = Utils::String::toLower(mText);
-    else if (mCapitalized)
+    else if (mCapitalize)
         text = Utils::String::toCapitalized(mText);
     else
         text = mText; // Original case.
@@ -397,6 +397,25 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & METADATA && elem->has("metadata"))
         setMetadataField(elem->get<std::string>("metadata"));
 
+    if (properties & LETTER_CASE && elem->has("letterCase")) {
+        std::string letterCase {elem->get<std::string>("letterCase")};
+        if (letterCase == "uppercase") {
+            setUppercase(true);
+        }
+        else if (letterCase == "lowercase") {
+            setLowercase(true);
+        }
+        else if (letterCase == "capitalize") {
+            setCapitalize(true);
+        }
+        else if (letterCase != "none") {
+            LOG(LogWarning)
+                << "TextComponent: Invalid theme configuration, property <letterCase> set to \""
+                << letterCase << "\"";
+        }
+    }
+
+    // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 

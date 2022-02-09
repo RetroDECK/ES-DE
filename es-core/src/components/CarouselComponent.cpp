@@ -94,8 +94,8 @@ void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
         if (legacyMode) {
             text->applyTheme(theme, "system", "text_logoText",
                              ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
-                                 ThemeFlags::FORCE_UPPERCASE | ThemeFlags::LINE_SPACING |
-                                 ThemeFlags::TEXT);
+                                 ThemeFlags::LETTER_CASE | ThemeFlags::FORCE_UPPERCASE |
+                                 ThemeFlags::LINE_SPACING | ThemeFlags::TEXT);
         }
         if (!legacyMode) {
             text->setLineSpacing(mLineSpacing);
@@ -401,14 +401,24 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         letterCase = elem->get<std::string>("letterCase");
 
     if (elem->has("text")) {
-        if (letterCase == "uppercase")
+        if (letterCase == "uppercase") {
             mText = Utils::String::toUpper(elem->get<std::string>("text"));
-        else if (letterCase == "lowercase")
+        }
+        else if (letterCase == "lowercase") {
             mText = Utils::String::toLower(elem->get<std::string>("text"));
-        else if (letterCase == "capitalize")
+        }
+        else if (letterCase == "capitalize") {
             mText = Utils::String::toCapitalized(elem->get<std::string>("text"));
-        else
+        }
+        else if (letterCase == "none") {
             mText = elem->get<std::string>("text");
+        }
+        else {
+            LOG(LogWarning)
+                << "CarouselComponent: Invalid theme configuration, property <letterCase> set to \""
+                << letterCase << "\"";
+            mText = elem->get<std::string>("text");
+        }
     }
 
     GuiComponent::applyTheme(theme, view, element, ALL);

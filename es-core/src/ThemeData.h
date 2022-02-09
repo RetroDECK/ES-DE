@@ -50,12 +50,13 @@ namespace ThemeFlags
         ALIGNMENT =       0x00000080,
         TEXT =            0x00000100,
         METADATA =        0x00000200,
-        FORCE_UPPERCASE = 0x00000400,
-        LINE_SPACING =    0x00000800,
-        DELAY =           0x00001000,
-        Z_INDEX =         0x00002000,
-        ROTATION =        0x00004000,
-        VISIBLE =         0x00008000,
+        LETTER_CASE =     0x00000400,
+        FORCE_UPPERCASE = 0x00000800, // For backward compatibility with legacy themes.
+        LINE_SPACING =    0x00001000,
+        DELAY =           0x00002000,
+        Z_INDEX =         0x00004000,
+        ROTATION =        0x00008000,
+        VISIBLE =         0x00010000,
         ALL = 0xFFFFFFFF
     };
     // clang-format on

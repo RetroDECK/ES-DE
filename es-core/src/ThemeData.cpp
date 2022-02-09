@@ -1066,10 +1066,15 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         std::string nodeName = node.name();
 
-        if (!mLegacyTheme && element.type == "video") {
-            if (nodeName == "showSnapshotNoVideo" || nodeName == "showSnapshotDelay")
+        if (!mLegacyTheme) {
+            if (nodeName == "showSnapshotNoVideo" || nodeName == "showSnapshotDelay") {
                 throw error << ": Legacy <" << nodeName
                             << "> property found for non-legacy theme set";
+            }
+            else if (nodeName == "forceUppercase") {
+                throw error << ": Legacy <" << nodeName
+                            << "> property found for non-legacy theme set";
+            }
         }
 
         // If an attribute exists, then replace nodeName with its name.

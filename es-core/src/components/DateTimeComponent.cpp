@@ -147,6 +147,25 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & METADATA && elem->has("metadata"))
         setMetadataField(elem->get<std::string>("metadata"));
 
+    if (properties & LETTER_CASE && elem->has("letterCase")) {
+        std::string letterCase {elem->get<std::string>("letterCase")};
+        if (letterCase == "uppercase") {
+            setUppercase(true);
+        }
+        else if (letterCase == "lowercase") {
+            setLowercase(true);
+        }
+        else if (letterCase == "capitalize") {
+            setCapitalize(true);
+        }
+        else if (letterCase != "none") {
+            LOG(LogWarning)
+                << "DateTimeComponent: Invalid theme configuration, property <letterCase> set to \""
+                << letterCase << "\"";
+        }
+    }
+
+    // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 
