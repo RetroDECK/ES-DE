@@ -686,10 +686,16 @@ Theme variables can be used to simplify theme construction.  There are 2 types o
 
 #### System variables
 
-System variables are system specific and are derived from the values in es_systems.xml.
+System variables are system specific and are derived from the values in es_systems.xml (except for collections).
 * `system.name`
+* `system.name.collections`
+* `system.name.noCollections`
 * `system.fullName`
+* `system.fullName.collections`
+* `system.fullName.noCollections`
 * `system.theme`
+* `system.theme.collections`
+* `system.theme.noCollections`
 
 #### Theme defined variables
 Variables can also be defined in the theme.

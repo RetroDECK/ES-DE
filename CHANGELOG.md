@@ -35,6 +35,7 @@
 * Improved the theme loading error logging to make it consistent and easier to understand
 * Added a log warning for unthemed systems during theme set loading
 * Changed the warning log level for missing theme files to debug level if the paths are set using variables
+* Added new theme system variables for differentiating between collections and non-collection systems
 * Added a color model conversion shader for converting from BGRA to RGBA
 * Added renderer support for supplying a separate format than internalFormat when creating textures (although not really supported by the OpenGL standard)
 * Added the rlottie library as a Git subtree
