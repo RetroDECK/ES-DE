@@ -49,6 +49,7 @@ public:
     void setOpacity(unsigned char opacity) override { mOpacity = opacity; }
 
     bool hasStaticVideo() { return !mConfig.staticVideoPath.empty(); }
+    bool hasStaticImage() { return mStaticImage.getTextureSize() != glm::ivec2 {0, 0}; }
 
     void onShow() override;
     void onHide() override;

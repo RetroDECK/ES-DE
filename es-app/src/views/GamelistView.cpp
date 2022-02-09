@@ -205,10 +205,17 @@ void GamelistView::update(int deltaTime)
     }
 
     for (auto& video : mVideoComponents) {
-        if (!mVideoPlaying)
-            video->onHide();
-        else if (mVideoPlaying && !video->isVideoPaused() && !mWindow->isScreensaverActive())
+        if (!mVideoPlaying) {
+            if (!video->getScrollHide())
+                video->onHide();
+            else if (!video->hasStaticImage())
+                video->onHide();
+            else if (video->getOpacity() == 0)
+                video->onHide();
+        }
+        else if (mVideoPlaying && !video->isVideoPaused() && !mWindow->isScreensaverActive()) {
             video->onShow();
+        }
 
         if (ViewController::getInstance()->getGameLaunchTriggered() && video->isAnimationPlaying(0))
             video->finishAnimation(0);
@@ -732,6 +739,10 @@ void GamelistView::updateInfoPanel()
     for (auto& image : mImageComponents) {
         if (image->getScrollHide())
             comps.emplace_back(image.get());
+    }
+    for (auto& video : mVideoComponents) {
+        if (video->getScrollHide())
+            comps.emplace_back(video.get());
     }
     for (auto& badge : mBadgeComponents) {
         if (badge->getScrollHide())
