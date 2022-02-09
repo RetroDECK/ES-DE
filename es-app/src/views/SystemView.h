@@ -78,14 +78,11 @@ protected:
 private:
     void populate();
     void updateGameCount();
-    //  Get the ThemeElements that make up the SystemView.
-    void getViewElements(const std::shared_ptr<ThemeData>& theme);
-
-    void renderFade(const glm::mat4& trans);
+    void legacyApplyTheme(const std::shared_ptr<ThemeData>& theme);
+    void renderElements(const glm::mat4& parentTrans, bool abovePrimary);
 
     std::unique_ptr<CarouselComponent> mCarousel;
     std::unique_ptr<TextComponent> mLegacySystemInfo;
-
     std::vector<SystemViewElements> mSystemElements;
 
     float mCamOffset;

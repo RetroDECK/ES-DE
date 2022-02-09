@@ -14,8 +14,8 @@
 namespace
 {
     // Buffer values for scrolling velocity (left, stopped, right).
-    const int logoBuffersLeft[] = {-5, -2, -1};
-    const int logoBuffersRight[] = {1, 2, 5};
+    const int logoBuffersLeft[] {-5, -2, -1};
+    const int logoBuffersRight[] {1, 2, 5};
 
 } // namespace
 
@@ -138,12 +138,6 @@ void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
     add(entry);
 }
 
-void CarouselComponent::update(int deltaTime)
-{
-    listUpdate(deltaTime);
-    GuiComponent::update(deltaTime);
-}
-
 bool CarouselComponent::input(InputConfig* config, Input input)
 {
     if (input.value != 0) {
@@ -191,21 +185,23 @@ bool CarouselComponent::input(InputConfig* config, Input input)
     return GuiComponent::input(config, input);
 }
 
+void CarouselComponent::update(int deltaTime)
+{
+    listUpdate(deltaTime);
+    GuiComponent::update(deltaTime);
+}
+
 void CarouselComponent::render(const glm::mat4& parentTrans)
 {
-    // Background box behind logos.
     glm::mat4 carouselTrans {parentTrans};
     carouselTrans = glm::translate(carouselTrans, glm::vec3 {mPosition.x, mPosition.y, 0.0f});
     carouselTrans = glm::translate(
         carouselTrans, glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f});
 
     glm::vec2 clipPos {carouselTrans[3].x, carouselTrans[3].y};
-    Renderer::pushClipRect(
-        glm::ivec2 {static_cast<int>(std::round(clipPos.x)),
-                    static_cast<int>(std::round(clipPos.y))},
-        glm::ivec2 {static_cast<int>(std::round(mSize.x)), static_cast<int>(std::round(mSize.y))});
-
     Renderer::setMatrix(carouselTrans);
+
+    // Background box behind logos.
     Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, mCarouselColor, mCarouselColorEnd,
                        mColorGradientHorizontal);
 
@@ -303,8 +299,6 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
         comp->setOpacity(static_cast<unsigned char>(opacity));
         comp->render(logoTrans);
     }
-
-    Renderer::popClipRect();
 }
 
 void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -456,13 +450,13 @@ void CarouselComponent::onCursorChanged(const CursorState& state)
     Animation* anim = new LambdaAnimation(
         [this, startPos, endPos, posMax](float t) {
             t -= 1;
-            float f = glm::mix(startPos, endPos, t * t * t + 1);
+            float f {glm::mix(startPos, endPos, t * t * t + 1)};
             if (f < 0)
                 f += posMax;
             if (f >= posMax)
                 f -= posMax;
 
-            this->mCamOffset = f;
+            mCamOffset = f;
         },
         500);
 

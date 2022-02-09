@@ -24,8 +24,8 @@
 namespace
 {
     // Buffer values for scrolling velocity (left, stopped, right).
-    const int logoBuffersLeft[] = {-5, -2, -1};
-    const int logoBuffersRight[] = {1, 2, 5};
+    const int logoBuffersLeft[] {-5, -2, -1};
+    const int logoBuffersRight[] {1, 2, 5};
 
 } // namespace
 
@@ -120,70 +120,21 @@ void SystemView::render(const glm::mat4& parentTrans)
     if (mCarousel->getNumEntries() == 0)
         return; // Nothing to render.
 
+    renderElements(parentTrans, false);
     glm::mat4 trans {getTransform() * parentTrans};
 
-    // Adding texture loading buffers depending on scrolling speed and status.
-    int bufferIndex {mCarousel->getScrollingVelocity() + 1};
-
-    Renderer::pushClipRect(glm::ivec2 {},
-                           glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
-
-    for (int i = static_cast<int>(mCamOffset) + logoBuffersLeft[bufferIndex];
-         i <= static_cast<int>(mCamOffset) + logoBuffersRight[bufferIndex]; ++i) {
-        int index {i};
-        while (index < 0)
-            index += static_cast<int>(mCarousel->getNumEntries());
-        while (index >= static_cast<int>(mCarousel->getNumEntries()))
-            index -= static_cast<int>(mCarousel->getNumEntries());
-
-        if (mCarousel->isAnimationPlaying(0) || index == mCarousel->getCursor()) {
-            glm::mat4 elementTrans {trans};
-            if (mCarousel->getType() == CarouselComponent::HORIZONTAL ||
-                mCarousel->getType() == CarouselComponent::HORIZONTAL_WHEEL)
-                elementTrans = glm::translate(elementTrans,
-                                              glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f});
-            else
-                elementTrans = glm::translate(elementTrans,
-                                              glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
-
-            Renderer::pushClipRect(
-                glm::ivec2 {static_cast<int>(elementTrans[3].x),
-                            static_cast<int>(elementTrans[3].y)},
-                glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
-
-            if (mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
-                for (auto element : mSystemElements[index].legacyExtras)
-                    element->render(elementTrans);
-            }
-            else if (mSystemElements.size() > static_cast<size_t>(index)) {
-                for (auto child : mSystemElements[index].children) {
-                    if (child == mCarousel.get()) {
-                        // Render black above anything lower than the zIndex of the carousel
-                        // if fade transitions are in use and we're transitioning.
-                        if (mFadeOpacity)
-                            renderFade(trans);
-                        child->render(trans);
-                    }
-                    else {
-                        child->render(elementTrans);
-                    }
-                }
-            }
-
-            if (mLegacyMode)
-                mLegacySystemInfo->render(elementTrans);
-
-            Renderer::popClipRect();
-        }
+    // During fade transitions draw a black rectangle above all elements placed below the carousel.
+    if (mFadeOpacity != 0.0f) {
+        unsigned int fadeColor {0x00000000 | static_cast<unsigned int>(mFadeOpacity * 255.0f)};
+        Renderer::setMatrix(trans);
+        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, fadeColor, fadeColor);
     }
 
-    if (mLegacyMode) {
-        if (mFadeOpacity)
-            renderFade(trans);
-        mCarousel->render(trans);
-    }
+    mCarousel->render(trans);
 
-    Renderer::popClipRect();
+    // For legacy themes the carousel is always rendered on top of all other elements.
+    if (!mLegacyMode)
+        renderElements(parentTrans, true);
 }
 
 void SystemView::onThemeChanged(const std::shared_ptr<ThemeData>& /*theme*/)
@@ -264,24 +215,24 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         anim = new LambdaAnimation(
             [this, startFade, startPos, endPos, posMax](float t) {
                 t -= 1;
-                float f = glm::mix(startPos, endPos, t * t * t + 1);
-                if (f < 0)
+                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
+                if (f < 0.0f)
                     f += posMax;
                 if (f >= posMax)
                     f -= posMax;
 
                 t += 1;
+
                 if (t < 0.3f)
-                    this->mFadeOpacity =
+                    mFadeOpacity =
                         glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
                 else if (t < 0.7f)
-                    this->mFadeOpacity = 1.0f;
+                    mFadeOpacity = 1.0f;
                 else
-                    this->mFadeOpacity =
-                        glm::mix(1.0f, 0.0f, glm::clamp((t - 0.6f) / 0.3f, 0.0f, 1.0f));
+                    mFadeOpacity = glm::mix(1.0f, 0.0f, glm::clamp((t - 0.6f) / 0.3f, 0.0f, 1.0f));
 
                 if (t > 0.5f)
-                    this->mCamOffset = endPos;
+                    mCamOffset = endPos;
 
                 // Update the game count when the entire animation has been completed.
                 if (mFadeOpacity == 1.0f)
@@ -294,13 +245,13 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
                 t -= 1;
-                float f = glm::mix(startPos, endPos, t * t * t + 1);
-                if (f < 0)
+                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
+                if (f < 0.0f)
                     f += posMax;
                 if (f >= posMax)
                     f -= posMax;
 
-                this->mCamOffset = f;
+                mCamOffset = f;
 
                 // Hack to make the game count being updated in the middle of the animation.
                 bool update {false};
@@ -329,13 +280,13 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
                 t -= 1;
-                float f = glm::mix(startPos, endPos, t * t * t + 1);
-                if (f < 0)
+                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
+                if (f < 0.0f)
                     f += posMax;
                 if (f >= posMax)
                     f -= posMax;
 
-                this->mCamOffset = endPos;
+                mCamOffset = endPos;
             },
             500);
     }
@@ -345,6 +296,8 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 
 void SystemView::populate()
 {
+    LOG(LogDebug) << "SystemView::populate(): Populating carousel";
+
     auto themeSets = ThemeData::getThemeSets();
     std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet {
         themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
@@ -362,8 +315,8 @@ void SystemView::populate()
         std::string logoPath;
         std::string defaultLogoPath;
 
-        if (mViewNeedsReload)
-            getViewElements(theme);
+        if (mLegacyMode && mViewNeedsReload)
+            legacyApplyTheme(theme);
 
         if (mLegacyMode) {
             SystemViewElements elements;
@@ -424,8 +377,10 @@ void SystemView::populate()
                     }
                 }
             }
-
-            elements.children.emplace_back(mCarousel.get());
+            else {
+                // Apply default carousel configuration.
+                mCarousel->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            }
 
             std::stable_sort(
                 elements.children.begin(), elements.children.end(),
@@ -535,40 +490,82 @@ void SystemView::updateGameCount()
     }
 }
 
-void SystemView::getViewElements(const std::shared_ptr<ThemeData>& theme)
+void SystemView::legacyApplyTheme(const std::shared_ptr<ThemeData>& theme)
 {
-    LOG(LogDebug) << "SystemView::getViewElements()";
-
     if (theme->hasView("system"))
         mViewNeedsReload = false;
     else
         mViewNeedsReload = true;
 
-    if (mLegacyMode) {
-        mCarousel->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
+    mCarousel->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
 
-        mLegacySystemInfo->setSize(mSize.x, mLegacySystemInfo->getFont()->getLetterHeight() * 2.2f);
-        mLegacySystemInfo->setPosition(0.0f, mCarousel->getPosition().y + mCarousel->getSize().y);
-        mLegacySystemInfo->setBackgroundColor(0xDDDDDDD8);
-        mLegacySystemInfo->setRenderBackground(true);
-        mLegacySystemInfo->setFont(
-            Font::get(static_cast<int>(0.035f * mSize.y), Font::getDefaultPath()));
-        mLegacySystemInfo->setColor(0x000000FF);
-        mLegacySystemInfo->setUppercase(true);
-        mLegacySystemInfo->setZIndex(49.0f);
-        mLegacySystemInfo->setDefaultZIndex(49.0f);
+    mLegacySystemInfo->setSize(mSize.x, mLegacySystemInfo->getFont()->getLetterHeight() * 2.2f);
+    mLegacySystemInfo->setPosition(0.0f, mCarousel->getPosition().y + mCarousel->getSize().y);
+    mLegacySystemInfo->setBackgroundColor(0xDDDDDDD8);
+    mLegacySystemInfo->setRenderBackground(true);
+    mLegacySystemInfo->setFont(
+        Font::get(static_cast<int>(0.035f * mSize.y), Font::getDefaultPath()));
+    mLegacySystemInfo->setColor(0x000000FF);
+    mLegacySystemInfo->setUppercase(true);
+    mLegacySystemInfo->setZIndex(49.0f);
+    mLegacySystemInfo->setDefaultZIndex(49.0f);
 
-        const ThemeData::ThemeElement* sysInfoElem {
-            theme->getElement("system", "text_systemInfo", "text")};
+    const ThemeData::ThemeElement* sysInfoElem {
+        theme->getElement("system", "text_systemInfo", "text")};
 
-        if (sysInfoElem)
-            mLegacySystemInfo->applyTheme(theme, "system", "text_systemInfo", ThemeFlags::ALL);
-    }
+    if (sysInfoElem)
+        mLegacySystemInfo->applyTheme(theme, "system", "text_systemInfo", ThemeFlags::ALL);
 }
 
-void SystemView::renderFade(const glm::mat4& trans)
+void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
 {
-    unsigned int fadeColor {0x00000000 | static_cast<unsigned int>(mFadeOpacity * 255.0f)};
-    Renderer::setMatrix(trans);
-    Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, fadeColor, fadeColor);
+    glm::mat4 trans {getTransform() * parentTrans};
+
+    // Adding texture loading buffers depending on scrolling speed and status.
+    int bufferIndex {mCarousel->getScrollingVelocity() + 1};
+
+    const float primaryZIndex {mCarousel->getZIndex()};
+
+    for (int i = static_cast<int>(mCamOffset) + logoBuffersLeft[bufferIndex];
+         i <= static_cast<int>(mCamOffset) + logoBuffersRight[bufferIndex]; ++i) {
+        int index {i};
+        while (index < 0)
+            index += static_cast<int>(mCarousel->getNumEntries());
+        while (index >= static_cast<int>(mCarousel->getNumEntries()))
+            index -= static_cast<int>(mCarousel->getNumEntries());
+
+        if (mCarousel->isAnimationPlaying(0) || index == mCarousel->getCursor()) {
+            glm::mat4 elementTrans {trans};
+            if (mCarousel->getType() == CarouselComponent::HORIZONTAL ||
+                mCarousel->getType() == CarouselComponent::HORIZONTAL_WHEEL)
+                elementTrans = glm::translate(elementTrans,
+                                              glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f});
+            else
+                elementTrans = glm::translate(elementTrans,
+                                              glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
+
+            Renderer::pushClipRect(
+                glm::ivec2 {static_cast<int>(glm::round(elementTrans[3].x)),
+                            static_cast<int>(glm::round(elementTrans[3].y))},
+                glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
+
+            if (mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
+                for (auto element : mSystemElements[index].legacyExtras)
+                    element->render(elementTrans);
+            }
+            else if (!mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
+                for (auto child : mSystemElements[index].children) {
+                    if (abovePrimary && child->getZIndex() > primaryZIndex && mFadeOpacity == 0.0f)
+                        child->render(elementTrans);
+                    else if (!abovePrimary && child->getZIndex() <= primaryZIndex)
+                        child->render(elementTrans);
+                }
+            }
+
+            if (mLegacyMode)
+                mLegacySystemInfo->render(elementTrans);
+
+            Renderer::popClipRect();
+        }
+    }
 }
