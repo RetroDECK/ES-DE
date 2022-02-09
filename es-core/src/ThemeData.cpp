@@ -1136,10 +1136,22 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
                 if (!ResourceManager::getInstance().fileExists(path)) {
                     std::stringstream ss;
-                    LOG(LogWarning)
-                        << error.message << ": Couldn't find file \"" << node.text().get() << "\" "
-                        << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
-                                                          "");
+                    // For explicits paths, print a warning if the file couldn't be found, but
+                    // only print a debug message if it was set using a variable.
+                    if (str == node.text().as_string()) {
+                        LOG(LogWarning)
+                            << error.message << ": Couldn't find file \"" << node.text().get()
+                            << "\" "
+                            << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
+                                                              "");
+                    }
+                    else {
+                        LOG(LogDebug)
+                            << error.message << ": Couldn't find file \"" << node.text().get()
+                            << "\" "
+                            << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
+                                                              "");
+                    }
                 }
                 element.properties[nodeName] = path;
                 break;
