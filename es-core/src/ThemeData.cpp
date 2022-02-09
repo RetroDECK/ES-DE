@@ -1182,9 +1182,11 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             case BOOLEAN: {
                 bool boolVal = false;
                 // Only look at the first character.
-                if (str.front() == '1' || str.front() == 't' || str.front() == 'T' ||
-                    str.front() == 'y' || str.front() == 'Y')
-                    boolVal = true;
+                if (str.size() > 0) {
+                    if (str.front() == '1' || str.front() == 't' || str.front() == 'T' ||
+                        str.front() == 'y' || str.front() == 'Y')
+                        boolVal = true;
+                }
 
                 element.properties[node.name()] = boolVal;
                 break;
