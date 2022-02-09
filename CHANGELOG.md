@@ -18,6 +18,7 @@
 * Added support for defining what type of image metadata to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
 * Added theme support for Lottie animations (vector graphics)
+* Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Made it possible to use almost all game metadata field when theming text elements
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
@@ -28,11 +29,12 @@
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
 * Reduced CPU usage significantly when a menu is open by not rendering the bottom of the stack
-* Reduced CPU usage by only rendering the currently visible system in SystemView
+* Reduced CPU usage significantly by only rendering the necessary systems in SystemView
 * Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
 * Added logging of the display refresh rate on startup
 * Improved the theme loading error logging to make it consistent and easier to understand
 * Added a log warning for unthemed systems during theme set loading
+* Changed the warning log level for missing theme files to debug level if the paths are set using variables
 * Added a color model conversion shader for converting from BGRA to RGBA
 * Added renderer support for supplying a separate format than internalFormat when creating textures (although not really supported by the OpenGL standard)
 * Added the rlottie library as a Git subtree
@@ -63,6 +65,7 @@
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
 * When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
+* The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling (only fixed for non-legacy themes)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded

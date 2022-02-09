@@ -78,7 +78,9 @@ The following are the most important changes compared to the legacy theme struct
 * The concept of _features_ is gone
 * The `<formatVersion>` tag is gone as tracking theme versions doesn't make much sense after all
 * The `video` element properties `showSnapshotNoVideo` and `showSnapshotDelay` have been removed
+* The `forceUppercase` property has been replaced with the more versatile `letterCase` property
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
+* Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
 
 Attempting to use any of the legacy logic in the new theme structure will make the theme loading fail, for example adding the _extra="true"_ attribute to any element.
 
@@ -977,8 +979,9 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
-* `forceUppercase` - type: BOOLEAN
-    - Draw text in uppercase.
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
     - Default is `1.5`
@@ -1018,8 +1021,9 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
-* `forceUppercase` - type: BOOLEAN
-    - Draw text in uppercase.
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
     - Default is `1.5`
@@ -1100,7 +1104,7 @@ Displays the game count (all games as well as favorites), any applied filters, a
 #### carousel
 
 * `type` - type: STRING
-    - Sets the scoll direction of the carousel.
+    - Sets the carousel type and scroll direction.
     - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
     - Default is `horizontal`
 * `size` - type: NORMALIZED_PAIR
@@ -1154,10 +1158,9 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
     - Default is `FFFFFF00`
-* `textStyle` - type: STRING
-    - The style of the text.
-    - Valid values are `original`, `uppercase`, `lowercase` or `camelcase`
-    - Default is `original` (original formatting is retained)
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `logo` image defined or found, and if `defaultLogo` has not been defined.
 * `fontSize` - type: FLOAT
@@ -1201,8 +1204,9 @@ This is a list containing rows of text which can be navigated using the keyboard
     - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis.
 * `horizontalMargin` - type: FLOAT
     - Horizontal offset for text from the alignment point.  If `alignment` is "left", offsets the text to the right.  If `alignment` is "right", offsets text to the left.  No effect if `alignment` is "center".  Given as a percentage of the element's parent's width (same unit as `size`'s X value).
-* `forceUppercase` - type: BOOLEAN
-    - Draw text in uppercase.
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
     - Default is `1.5`
@@ -1237,9 +1241,8 @@ The help system is a special element that displays a context-sensitive list of a
 * `iconTextSpacing` - type: FLOAT
     - Spacing in pixels within a help system element between its icon and text.
     - Default is `8.0`
-* `textStyle` - type: STRING
-    - The style of the text.
-    - Valid values are `uppercase`, `lowercase` or `camelcase`
+* `letterCase` - type: STRING
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
 * `customButtonIcon` - type: PATH
     - A button icon override. Specify the button type in the attribute `button`.

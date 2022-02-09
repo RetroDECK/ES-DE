@@ -900,8 +900,6 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
     - Spacing in pixels between the help system components.
 * `iconTextSpacing` - type: FLOAT. Default is 8.0.
     - Spacing in pixels within a help system component between it's icon and text.
-* `textStyle` - type: STRING. Default is `uppercase`.
-    - The style of the text. Options: `uppercase`, `lowercase`, `camelcase`.
 * `customButtonIcon` - type: PATH.
     - A button icon override. Specify the button type in the attribute `button`. The available buttons are:
       `dpad_updown`,
