@@ -20,6 +20,8 @@ TextComponent::TextComponent()
     , mBgColorOpacity {0x00000000}
     , mRenderBackground {false}
     , mUppercase {false}
+    , mLowercase {false}
+    , mCapitalized {false}
     , mAutoCalcExtent {1, 1}
     , mHorizontalAlignment {ALIGN_LEFT}
     , mVerticalAlignment {ALIGN_CENTER}
@@ -43,6 +45,8 @@ TextComponent::TextComponent(const std::string& text,
     , mBgColorOpacity {0x00000000}
     , mRenderBackground {false}
     , mUppercase {false}
+    , mLowercase {false}
+    , mCapitalized {false}
     , mAutoCalcExtent {1, 1}
     , mHorizontalAlignment {align}
     , mVerticalAlignment {ALIGN_CENTER}
@@ -120,6 +124,30 @@ void TextComponent::setText(const std::string& text, bool update)
 void TextComponent::setUppercase(bool uppercase)
 {
     mUppercase = uppercase;
+    if (uppercase) {
+        mLowercase = false;
+        mCapitalized = false;
+    }
+    onTextChanged();
+}
+
+void TextComponent::setLowercase(bool lowercase)
+{
+    mLowercase = lowercase;
+    if (lowercase) {
+        mUppercase = false;
+        mCapitalized = false;
+    }
+    onTextChanged();
+}
+
+void TextComponent::setCapitalized(bool capitalized)
+{
+    mCapitalized = capitalized;
+    if (capitalized) {
+        mUppercase = false;
+        mLowercase = false;
+    }
     onTextChanged();
 }
 
@@ -198,14 +226,37 @@ void TextComponent::render(const glm::mat4& parentTrans)
 void TextComponent::calculateExtent()
 {
     if (mAutoCalcExtent.x) {
-        mSize = mFont->sizeText(mUppercase ? Utils::String::toUpper(mText) : mText, mLineSpacing);
+        if (mUppercase)
+            mSize = mFont->sizeText(Utils::String::toUpper(mText), mLineSpacing);
+        else if (mLowercase)
+            mSize = mFont->sizeText(Utils::String::toLower(mText), mLineSpacing);
+        else if (mCapitalized)
+            mSize = mFont->sizeText(Utils::String::toCapitalized(mText), mLineSpacing);
+        else
+            mSize = mFont->sizeText(mText, mLineSpacing); // Original case.
     }
     else {
-        if (mAutoCalcExtent.y)
-            mSize.y = mFont
-                          ->sizeWrappedText(mUppercase ? Utils::String::toUpper(mText) : mText,
-                                            getSize().x, mLineSpacing)
-                          .y;
+        if (mAutoCalcExtent.y) {
+            if (mUppercase) {
+                mSize.y =
+                    mFont->sizeWrappedText(Utils::String::toUpper(mText), getSize().x, mLineSpacing)
+                        .y;
+            }
+            else if (mLowercase) {
+                mSize.y =
+                    mFont->sizeWrappedText(Utils::String::toLower(mText), getSize().x, mLineSpacing)
+                        .y;
+            }
+            else if (mCapitalized) {
+                mSize.y = mFont
+                              ->sizeWrappedText(Utils::String::toCapitalized(mText), getSize().x,
+                                                mLineSpacing)
+                              .y;
+            }
+            else {
+                mSize.y = mFont->sizeWrappedText(mText, getSize().x, mLineSpacing).y;
+            }
+        }
     }
 }
 
@@ -218,7 +269,16 @@ void TextComponent::onTextChanged()
         return;
     }
 
-    std::string text = mUppercase ? Utils::String::toUpper(mText) : mText;
+    std::string text;
+
+    if (mUppercase)
+        text = Utils::String::toUpper(mText);
+    else if (mLowercase)
+        text = Utils::String::toLower(mText);
+    else if (mCapitalized)
+        text = Utils::String::toCapitalized(mText);
+    else
+        text = mText; // Original case.
 
     std::shared_ptr<Font> f = mFont;
     const bool isMultiline = (mSize.y == 0.0f || mSize.y > f->getHeight() * 1.2f);

@@ -24,7 +24,7 @@ HelpStyle::HelpStyle()
     iconColorDimmed = 0x777777FF;
     entrySpacing = 16.0f;
     iconTextSpacing = 8.0f;
-    textStyle = "uppercase";
+    letterCase = "uppercase";
 
     if (FONT_SIZE_SMALL != 0)
         font = Font::get(FONT_SIZE_SMALL);
@@ -71,8 +71,8 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
     if (elem->has("iconTextSpacing"))
         iconTextSpacing = elem->get<float>("iconTextSpacing");
 
-    if (elem->has("textStyle"))
-        textStyle = elem->get<std::string>("textStyle");
+    if (elem->has("letterCase"))
+        letterCase = elem->get<std::string>("letterCase");
 
     // Load custom button icons.
     // The names may look a bit strange when combined with the PREFIX string "button_" but it's

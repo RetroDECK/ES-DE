@@ -395,18 +395,18 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("lineSpacing"))
         mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
 
-    std::string textStyle;
+    std::string letterCase;
 
-    if (elem->has("textStyle"))
-        textStyle = elem->get<std::string>("textStyle");
+    if (elem->has("letterCase"))
+        letterCase = elem->get<std::string>("letterCase");
 
     if (elem->has("text")) {
-        if (textStyle == "uppercase")
+        if (letterCase == "uppercase")
             mText = Utils::String::toUpper(elem->get<std::string>("text"));
-        else if (textStyle == "lowercase")
+        else if (letterCase == "lowercase")
             mText = Utils::String::toLower(elem->get<std::string>("text"));
-        else if (textStyle == "camelcase")
-            mText = Utils::String::toCamelCase(elem->get<std::string>("text"));
+        else if (letterCase == "capitalize")
+            mText = Utils::String::toCapitalized(elem->get<std::string>("text"));
         else
             mText = elem->get<std::string>("text");
     }

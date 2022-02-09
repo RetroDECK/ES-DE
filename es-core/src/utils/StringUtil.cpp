@@ -538,10 +538,13 @@ namespace Utils
             return stringUpper;
         }
 
-        std::string toCamelCase(const std::string& stringArg)
+        std::string toCapitalized(const std::string& stringArg)
         {
-            std::string line = stringArg;
-            bool active = true;
+            if (stringArg == "")
+                return stringArg;
+
+            std::string line {stringArg};
+            bool active {true};
 
             for (int i = 0; line[i] != '\0'; ++i) {
                 if (std::isalpha(line[i])) {
@@ -552,7 +555,7 @@ namespace Utils
                     else
                         line[i] = Utils::String::toLower(std::string(1, line[i]))[0];
                 }
-                else if (line[i] == ' ')
+                else if (line[i] == ' ' || line[i] == '\n' || line[i] == '\r' || line[i] == '\t')
                     active = true;
             }
 

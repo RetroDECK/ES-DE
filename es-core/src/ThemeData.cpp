@@ -150,7 +150,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"alignment", STRING},
        {"color", COLOR},
        {"backgroundColor", COLOR},
-       {"forceUppercase", BOOLEAN},
+       {"letterCase", STRING},
+       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
@@ -166,7 +167,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"alignment", STRING},
        {"color", COLOR},
        {"backgroundColor", COLOR},
-       {"forceUppercase", BOOLEAN},
+       {"letterCase", STRING},
+       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"format", STRING},
        {"displayRelative", BOOLEAN},
@@ -214,7 +216,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"text", STRING},
        {"textColor", COLOR},
        {"textBackgroundColor", COLOR},
-       {"textStyle", STRING},
+       {"letterCase", STRING},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"lineSpacing", FLOAT},
@@ -240,7 +242,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"scrollSound", PATH}, // For backward compatibility with legacy themes.
        {"alignment", STRING},
        {"horizontalMargin", FLOAT},
-       {"forceUppercase", BOOLEAN},
+       {"letterCase", STRING},
+       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"zIndex", FLOAT}}},
      {"helpsystem",
@@ -254,7 +257,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"entrySpacing", FLOAT},
        {"iconTextSpacing", FLOAT},
-       {"textStyle", STRING},
+       {"letterCase", STRING},
+       {"textStyle", STRING}, // For backward compatibility with legacy themes.
        {"customButtonIcon", PATH}}},
      {"sound",
       {{"path", PATH}}},
