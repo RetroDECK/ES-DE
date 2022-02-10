@@ -36,7 +36,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <size>1 0.056</size>
             <origin>0.5 0.5</origin>
             <letterCase>uppercase</letterCase>
-            <alignment>center</alignment>
+            <horizontalAlignment>center</horizontalAlignment>
             <metadata>sy_gamecount</metadata>
             <zIndex>50</zIndex>
         </text>
@@ -45,7 +45,7 @@ based on: 'recalbox-multi' by the Recalbox community
     <view name="system">
         <text name="info1, info2, info3, info4, info5, info6, info7,
                     info8, info9, info10, info11, info12">
-            <alignment>left</alignment>
+            <horizontalAlignment>left</horizontalAlignment>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.021</fontSize>
             <size>0.4 0.03</size>
@@ -174,6 +174,9 @@ based on: 'recalbox-multi' by the Recalbox community
         </text>
         <text name="md_description">
             <container>true</container>
+            <containerScrollSpeed>1</containerScrollSpeed>
+            <containerStartDelay>4.5</containerStartDelay>
+            <containerResetDelay>7</containerResetDelay>
             <metadata>md_description</metadata>
             <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
@@ -281,7 +284,7 @@ based on: 'recalbox-multi' by the Recalbox community
         <textlist name="gamelist">
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
-            <alignment>left</alignment>
+            <horizontalAlignment>left</horizontalAlignment>
             <horizontalMargin>0.01</horizontalMargin>
         </textlist>
         <gamelistinfo name="gamelistInfo">
@@ -289,13 +292,13 @@ based on: 'recalbox-multi' by the Recalbox community
             <fontSize>0.025</fontSize>
             <size>0.2 0.1</size>
             <pos>0.773 0.162</pos>
-            <alignment>right</alignment>
+            <horizontalAlignment>right</horizontalAlignment>
         </gamelistinfo>
         <badges name="md_badges">
             <pos>0.880 0.757</pos>
             <size>0.13 0.1635</size>
             <origin>0.5 0.5</origin>
-            <alignment>left</alignment>
+            <horizontalAlignment>left</horizontalAlignment>
             <direction>row</direction>
             <lines>2</lines>
             <itemsPerLine>3</itemsPerLine>
@@ -317,7 +320,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <textlist name="gamelist">
                 <pos>0.04 0.201</pos>
                 <size>0.92 0.71</size>
-                <alignment>center</alignment>
+                <horizontalAlignment>center</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
             </textlist>
         </view>
