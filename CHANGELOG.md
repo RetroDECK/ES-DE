@@ -20,6 +20,8 @@
 * Added theme support for Lottie animations (vector graphics)
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
+* Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
+* Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images

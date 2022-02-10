@@ -78,6 +78,7 @@ The following are the most important changes compared to the legacy theme struct
 * The concept of _features_ is gone
 * The `<formatVersion>` tag is gone as tracking theme versions doesn't make much sense after all
 * The `video` element properties `showSnapshotNoVideo` and `showSnapshotDelay` have been removed
+* The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` component)
 * The `forceUppercase` property has been replaced with the more versatile `letterCase` property
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
 * Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
@@ -220,10 +221,12 @@ Enforcement of a correct theme configuration is quite strict, and most errors wi
 Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml": Property "origin" for element "image" has no value defined
 ```
 
-Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in most instances is that a log warning entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its alignment property set to _leftr_ instead of _left_:
+Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in many instances is that a log warning entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its horizontalAlignment property set to _leftr_ instead of _left_:
 ```
-Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, <alignment> set to "leftr"
+Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, <horizontalAlignment> set to "leftr"
 ```
+
+Note however that warnings are not printed for all invalid properties as that would lead to an excessive amount of logging code. This is especially true for numeric values which are commonly just clamped to the allowable range without notifying the theme author. So make sure to check the [Reference](THEMES-DEV.md#reference) section of this document for valid values for each property.
 
 ### Variants
 
@@ -891,6 +894,8 @@ It's strongly recommended to use the same image dimensions for all badges as var
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the image will be rotated.
     - Default is `0.5 0.5`.
+* `horizontalAlignment` - type: STRING.
+    - Valid values are `left` or `right`
 * `direction` - type: STRING
     - Valid values are "row" or "column". Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction.
     - Default is `row`
@@ -977,12 +982,30 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - `md_altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container. Only available for the gamelist view.
+* `containerScrollSpeed` - type: FLOAT
+    - A base speed is automatically calculated based on container and font sizes, so this property applies relative to the auto-calculated value.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+* `containerStartDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts. Note that the text fade-in animation that plays when resetting from the end position will cause a slight delay even if this property is set to zero.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `4.5`
+* `containerResetDelay` - type: FLOAT
+    - Delay in seconds before resetting to the start position after reaching the scrolling end position.
+    - Minimum value is `0` and maximum value is `20`
+    - Default is `7`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
+* `verticalAlignment` - type: STRING
+    - Controls alignment on the Y axis.
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
 * `letterCase` - type: STRING
@@ -1023,8 +1046,14 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
+* `verticalAlignment` - type: STRING
+    - Controls alignment on the Y axis.
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
 * `letterCase` - type: STRING
@@ -1074,8 +1103,14 @@ Displays the game count (all games as well as favorites), any applied filters, a
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `color` - type: COLOR
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
+* `verticalAlignment` - type: STRING
+    - Controls alignment on the Y axis.
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
 * `visible` - type: BOOLEAN
     - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
     - Default is `true`
@@ -1134,7 +1169,7 @@ Displays the game count (all games as well as favorites), any applied filters, a
 * `defaultLogo` - type: PATH
     - Path to the default logo file which will be displayed if the image defined via the `logo` property is not found.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `logoSize` - type: NORMALIZED_PAIR
-    - Minimum value is `0.05` and maximum value is `1`
+    - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
 * `logoScale` - type: FLOAT.
     - Selected logo is increased in size by this scale
@@ -1148,11 +1183,13 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Point around which the logos will be rotated.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `-3 0.5`
-* `logoAlignment` - type: STRING
-    - Sets `logo` and `text` alignment relative to the carousel.
-    - Valid values are `top`, `bottom` or `center` when `type` is "horizontal"
-    - Valid values are `left`, `right` or `center` when `type` is "vertical"
-    - All values are valid when `type` is "horizontal_wheel" or "vertical_wheel".
+* `logoHorizontalAlignment` - type: STRING
+    - Sets `logo` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
+    - Valid values are `left`, `center` or `right`
+    - Default is `center`
+* `logoVerticalAlignment` - type: STRING
+    - Sets `logo` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
+    - Valid values are `top`, `center` or `bottom`
     - Default is `center`
 * `maxLogoCount` - type: FLOAT
     - Sets the number of logos to display in the carousel.
@@ -1206,10 +1243,12 @@ This is a list containing rows of text which can be navigated using the keyboard
     - Secondary color; what this means depends on the text list.  For example, for game lists, it is the color of a folder.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis.
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
 * `horizontalMargin` - type: FLOAT
-    - Horizontal offset for text from the alignment point.  If `alignment` is "left", offsets the text to the right.  If `alignment` is "right", offsets text to the left.  No effect if `alignment` is "center".  Given as a percentage of the element's parent's width (same unit as `size`'s X value).
+    - Horizontal offset for text from the alignment point. If `horizontalAlignment` is "left", offsets the text to the right.  If `horizontalAlignment` is "right", offsets text to the left. No effect if `horizontalAlignment` is "center". Given as a percentage of the element's parent's width (same unit as `size`'s X value).
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)

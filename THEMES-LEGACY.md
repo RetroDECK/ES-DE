@@ -948,6 +948,8 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Default is `0`.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the image will be rotated. Default is `0.5 0.5`.
+* `alignment` - type: STRING.
+    - Valid values are `left` or `right`
 * `direction` - type: STRING.
     - Valid values are "row" or "column". Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction. Default is `row`.
 * `lines` - type: FLOAT.
