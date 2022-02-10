@@ -239,13 +239,14 @@ private:
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element);
 
-    static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
-    static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
-
-    static std::vector<std::string> sLegacySupportedFeatures;
-    static std::vector<std::string> sLegacySupportedViews;
     static std::vector<std::string> sSupportedViews;
+    static std::vector<std::string> sLegacySupportedViews;
+    static std::vector<std::string> sLegacySupportedFeatures;
+    static std::vector<std::string> sLegacyElements;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
+
+    static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
+    static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
 
     static inline std::map<std::string, ThemeSet> mThemeSets;
     std::map<std::string, ThemeData::ThemeSet>::iterator mCurrentThemeSet;

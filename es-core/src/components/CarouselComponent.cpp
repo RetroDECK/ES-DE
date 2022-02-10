@@ -28,7 +28,8 @@ CarouselComponent::CarouselComponent()
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
     , mLineSpacing {1.5f}
-    , mLogoAlignment {ALIGN_CENTER}
+    , mLogoHorizontalAlignment {ALIGN_CENTER}
+    , mLogoVerticalAlignment {ALIGN_CENTER}
     , mMaxLogoCount {3}
     , mLogoSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
     , mLogoScale {1.2f}
@@ -107,30 +108,24 @@ void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
         }
         entry.data.logo = text;
 
-        if (mLogoAlignment == ALIGN_LEFT || mLogoAlignment == ALIGN_RIGHT) {
-            text->setHorizontalAlignment(mLogoAlignment);
-            text->setVerticalAlignment(ALIGN_CENTER);
-        }
-        else if (mLogoAlignment == ALIGN_TOP || mLogoAlignment == ALIGN_BOTTOM) {
-            text->setVerticalAlignment(mLogoAlignment);
-            text->setHorizontalAlignment(ALIGN_CENTER);
-        }
-        else {
-            text->setHorizontalAlignment(ALIGN_CENTER);
-            text->setVerticalAlignment(ALIGN_CENTER);
-        }
+        text->setHorizontalAlignment(mLogoHorizontalAlignment);
+        text->setVerticalAlignment(mLogoVerticalAlignment);
     }
 
-    if (mLogoAlignment == ALIGN_LEFT)
+    // Set origin for the logos based on their alignment so they line up properly.
+    if (mLogoHorizontalAlignment == ALIGN_LEFT)
         entry.data.logo->setOrigin(0, 0.5);
-    else if (mLogoAlignment == ALIGN_RIGHT)
+    else if (mLogoHorizontalAlignment == ALIGN_RIGHT)
         entry.data.logo->setOrigin(1.0, 0.5);
-    else if (mLogoAlignment == ALIGN_TOP)
-        entry.data.logo->setOrigin(0.5, 0);
-    else if (mLogoAlignment == ALIGN_BOTTOM)
-        entry.data.logo->setOrigin(0.5, 1);
     else
         entry.data.logo->setOrigin(0.5, 0.5);
+
+    if (mLogoVerticalAlignment == ALIGN_TOP)
+        entry.data.logo->setOrigin(entry.data.logo->getOrigin().x, 0);
+    else if (mLogoVerticalAlignment == ALIGN_BOTTOM)
+        entry.data.logo->setOrigin(entry.data.logo->getOrigin().x, 1);
+    else
+        entry.data.logo->setOrigin(entry.data.logo->getOrigin().x, 0.5);
 
     glm::vec2 denormalized {mLogoSize * entry.data.logo->getOrigin()};
     entry.data.logo->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
@@ -221,9 +216,9 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             logoSpacing.y =
                 ((mSize.y - (mLogoSize.y * mMaxLogoCount)) / (mMaxLogoCount)) + mLogoSize.y;
             yOff = (mSize.y - mLogoSize.y) / 2.0f - (mCamOffset * logoSpacing.y);
-            if (mLogoAlignment == ALIGN_LEFT)
+            if (mLogoHorizontalAlignment == ALIGN_LEFT)
                 xOff = mLogoSize.x / 10.0f;
-            else if (mLogoAlignment == ALIGN_RIGHT)
+            else if (mLogoHorizontalAlignment == ALIGN_RIGHT)
                 xOff = mSize.x - (mLogoSize.x * 1.1f);
             else
                 xOff = (mSize.x - mLogoSize.x) / 2.0f;
@@ -233,9 +228,9 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             logoSpacing.x =
                 ((mSize.x - (mLogoSize.x * mMaxLogoCount)) / (mMaxLogoCount)) + mLogoSize.x;
             xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mCamOffset * logoSpacing.x));
-            if (mLogoAlignment == ALIGN_TOP)
+            if (mLogoVerticalAlignment == ALIGN_TOP)
                 yOff = mLogoSize.y / 10.0f;
-            else if (mLogoAlignment == ALIGN_BOTTOM)
+            else if (mLogoVerticalAlignment == ALIGN_BOTTOM)
                 yOff = mSize.y - (mLogoSize.y * 1.1f);
             else
                 yOff = (mSize.y - mLogoSize.y) / 2.0f;
@@ -321,14 +316,25 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         return;
 
     if (elem->has("type")) {
-        if (!(elem->get<std::string>("type").compare("vertical")))
-            mType = VERTICAL;
-        else if (!(elem->get<std::string>("type").compare("vertical_wheel")))
-            mType = VERTICAL_WHEEL;
-        else if (!(elem->get<std::string>("type").compare("horizontal_wheel")))
-            mType = HORIZONTAL_WHEEL;
-        else
+        const std::string type {elem->get<std::string>("type")};
+        if (type == "horizontal") {
             mType = HORIZONTAL;
+        }
+        else if (type == "horizontal_wheel") {
+            mType = HORIZONTAL_WHEEL;
+        }
+        else if (type == "vertical") {
+            mType = VERTICAL;
+        }
+        else if (type == "vertical_wheel") {
+            mType = VERTICAL_WHEEL;
+        }
+        else {
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "<type> set to \""
+                            << type << "\"";
+            mType = HORIZONTAL;
+        }
     }
 
     if (elem->has("color")) {
@@ -338,7 +344,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("colorEnd"))
         mCarouselColorEnd = elem->get<unsigned int>("colorEnd");
     if (elem->has("gradientType"))
-        mColorGradientHorizontal = !(elem->get<std::string>("gradientType").compare("horizontal"));
+        mColorGradientHorizontal = (elem->get<std::string>("gradientType") == "horizontal");
 
     if (elem->has("logoScale"))
         mLogoScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
@@ -365,23 +371,74 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mLogoRotation = elem->get<float>("logoRotation");
     if (elem->has("logoRotationOrigin"))
         mLogoRotationOrigin = elem->get<glm::vec2>("logoRotationOrigin");
-    if (elem->has("logoAlignment")) {
-        if (!(elem->get<std::string>("logoAlignment").compare("left")) && mType != HORIZONTAL) {
-            mLogoAlignment = ALIGN_LEFT;
+
+    if (elem->has("logoHorizontalAlignment")) {
+        const std::string alignment {elem->get<std::string>("logoHorizontalAlignment")};
+        if (alignment == "left" && mType != HORIZONTAL) {
+            mLogoHorizontalAlignment = ALIGN_LEFT;
         }
-        else if (!(elem->get<std::string>("logoAlignment").compare("right")) &&
-                 mType != HORIZONTAL) {
-            mLogoAlignment = ALIGN_RIGHT;
+        else if (alignment == "right" && mType != HORIZONTAL) {
+            mLogoHorizontalAlignment = ALIGN_RIGHT;
         }
-        else if (!(elem->get<std::string>("logoAlignment").compare("top")) && mType != VERTICAL) {
-            mLogoAlignment = ALIGN_TOP;
-        }
-        else if (!(elem->get<std::string>("logoAlignment").compare("bottom")) &&
-                 mType != VERTICAL) {
-            mLogoAlignment = ALIGN_BOTTOM;
+        else if (alignment == "center") {
+            mLogoHorizontalAlignment = ALIGN_CENTER;
         }
         else {
-            mLogoAlignment = ALIGN_CENTER;
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "<logoHorizontalAlignment> set to \""
+                            << alignment << "\"";
+            mLogoHorizontalAlignment = ALIGN_CENTER;
+        }
+    }
+
+    if (elem->has("logoVerticalAlignment")) {
+        const std::string alignment {elem->get<std::string>("logoVerticalAlignment")};
+        if (alignment == "top" && mType != VERTICAL) {
+            mLogoVerticalAlignment = ALIGN_TOP;
+        }
+        else if (alignment == "bottom" && mType != VERTICAL) {
+            mLogoVerticalAlignment = ALIGN_BOTTOM;
+        }
+        else if (alignment == "center") {
+            mLogoVerticalAlignment = ALIGN_CENTER;
+        }
+        else {
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "<logoVerticalAlignment> set to \""
+                            << alignment << "\"";
+            mLogoVerticalAlignment = ALIGN_CENTER;
+        }
+    }
+
+    // Legacy themes only.
+    if (elem->has("logoAlignment")) {
+        const std::string alignment {elem->get<std::string>("logoAlignment")};
+        if (alignment == "left" && mType != HORIZONTAL) {
+            mLogoHorizontalAlignment = ALIGN_LEFT;
+            mLogoVerticalAlignment = ALIGN_CENTER;
+        }
+        else if (alignment == "right" && mType != HORIZONTAL) {
+            mLogoHorizontalAlignment = ALIGN_RIGHT;
+            mLogoVerticalAlignment = ALIGN_CENTER;
+        }
+        else if (alignment == "top" && mType != VERTICAL) {
+            mLogoVerticalAlignment = ALIGN_TOP;
+            mLogoHorizontalAlignment = ALIGN_CENTER;
+        }
+        else if (alignment == "bottom" && mType != VERTICAL) {
+            mLogoVerticalAlignment = ALIGN_BOTTOM;
+            mLogoHorizontalAlignment = ALIGN_CENTER;
+        }
+        else if (alignment == "center") {
+            mLogoHorizontalAlignment = ALIGN_CENTER;
+            mLogoVerticalAlignment = ALIGN_CENTER;
+        }
+        else {
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "<logoAlignment> set to \""
+                            << alignment << "\"";
+            mLogoHorizontalAlignment = ALIGN_CENTER;
+            mLogoVerticalAlignment = ALIGN_CENTER;
         }
     }
 

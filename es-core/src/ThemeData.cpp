@@ -44,6 +44,13 @@ std::vector<std::string> ThemeData::sLegacySupportedFeatures {
     {"z-index"},
     {"visible"}};
 
+std::vector<std::string> ThemeData::sLegacyElements {
+    {"showSnapshotNoVideo"},
+    {"showSnapshotDelay"},
+    {"forceUppercase"},
+    {"alignment"},
+    {"logoAlignment"}};
+
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"16:9", "16:9"},
     {"16:9_vertical", "16:9 vertical"},
@@ -124,7 +131,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"direction", STRING},
        {"lines", FLOAT},
        {"itemsPerLine", FLOAT},
@@ -150,7 +158,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"containerResetDelay", FLOAT},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"verticalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"color", COLOR},
        {"backgroundColor", COLOR},
        {"letterCase", STRING},
@@ -167,7 +177,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"metadata", STRING},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"verticalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"color", COLOR},
        {"backgroundColor", COLOR},
        {"letterCase", STRING},
@@ -187,7 +199,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"color", COLOR},
        {"backgroundColor", COLOR},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"verticalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"rating",
@@ -214,7 +228,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"logoScale", FLOAT},
        {"logoRotation", FLOAT},
        {"logoRotationOrigin", NORMALIZED_PAIR},
-       {"logoAlignment", STRING},
+       {"logoHorizontalAlignment", STRING},
+       {"logoVerticalAlignment", STRING},
+       {"logoAlignment", STRING}, // For backward compatibility with legacy themes.
        {"maxLogoCount", FLOAT},
        {"text", STRING},
        {"textColor", COLOR},
@@ -243,7 +259,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"scrollHide", BOOLEAN},
        {"scrollSound", PATH}, // For backward compatibility with legacy themes.
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"horizontalMargin", FLOAT},
        {"letterCase", STRING},
        {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
@@ -1069,14 +1086,14 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         std::string nodeName = node.name();
 
+        // Strictly enforce removal of legacy elements for non-legacy theme sets by creating
+        // an unthemed system if they're present in the configuration.
         if (!mLegacyTheme) {
-            if (nodeName == "showSnapshotNoVideo" || nodeName == "showSnapshotDelay") {
-                throw error << ": Legacy <" << nodeName
-                            << "> property found for non-legacy theme set";
-            }
-            else if (nodeName == "forceUppercase") {
-                throw error << ": Legacy <" << nodeName
-                            << "> property found for non-legacy theme set";
+            for (auto& legacyElement : sLegacyElements) {
+                if (nodeName == legacyElement) {
+                    throw error << ": Legacy <" << nodeName
+                                << "> property found for non-legacy theme set";
+                }
             }
         }
 

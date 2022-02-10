@@ -195,7 +195,19 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    if (elem->has("alignment")) {
+    if (elem->has("horizontalAlignment")) {
+        const std::string horizontalAlignment {elem->get<std::string>("horizontalAlignment")};
+        if (horizontalAlignment != "left" && horizontalAlignment != "right") {
+            LOG(LogWarning)
+                << "BadgeComponent: Invalid theme configuration, <horizontalAlignment> set to \""
+                << horizontalAlignment << "\"";
+        }
+        else {
+            mFlexboxComponent.setAlignment(horizontalAlignment);
+        }
+    }
+    // Legacy themes only.
+    else if (elem->has("alignment")) {
         const std::string alignment {elem->get<std::string>("alignment")};
         if (alignment != "left" && alignment != "right") {
             LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <alignment> set to \""

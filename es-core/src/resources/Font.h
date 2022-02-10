@@ -37,7 +37,7 @@ class TextCache;
 
 enum Alignment {
     ALIGN_LEFT,
-    ALIGN_CENTER, // Centers both horizontally and vertically.
+    ALIGN_CENTER, // Used for both horizontal and vertical alignments.
     ALIGN_RIGHT,
     ALIGN_TOP,
     ALIGN_BOTTOM

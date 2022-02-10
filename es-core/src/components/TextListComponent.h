@@ -491,8 +491,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     setSelectorHeight(selectorHeight);
 
     if (properties & ALIGNMENT) {
-        if (elem->has("alignment")) {
-            const std::string& str = elem->get<std::string>("alignment");
+        if (elem->has("horizontalAlignment")) {
+            const std::string& str {elem->get<std::string>("horizontalAlignment")};
             if (str == "left")
                 setAlignment(ALIGN_LEFT);
             else if (str == "center")
@@ -500,7 +500,23 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             else if (str == "right")
                 setAlignment(ALIGN_RIGHT);
             else
-                LOG(LogError) << "Unknown TextListComponent alignment \"" << str << "\"!";
+                LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                                   "<horizontalAlignment> set to \""
+                                << str << "\"";
+        }
+        // Legacy themes only.
+        else if (elem->has("alignment")) {
+            const std::string& str {elem->get<std::string>("alignment")};
+            if (str == "left")
+                setAlignment(ALIGN_LEFT);
+            else if (str == "center")
+                setAlignment(ALIGN_CENTER);
+            else if (str == "right")
+                setAlignment(ALIGN_RIGHT);
+            else
+                LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                                   "<alignment> set to \""
+                                << str << "\"";
         }
         if (elem->has("horizontalMargin")) {
             mHorizontalMargin = elem->get<float>("horizontalMargin") *

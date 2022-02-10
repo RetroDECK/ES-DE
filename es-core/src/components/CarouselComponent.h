@@ -80,7 +80,8 @@ private:
     unsigned int mTextBackgroundColor;
     std::string mText;
     float mLineSpacing;
-    Alignment mLogoAlignment;
+    Alignment mLogoHorizontalAlignment;
+    Alignment mLogoVerticalAlignment;
     int mMaxLogoCount;
     glm::vec2 mLogoSize;
     float mLogoScale;

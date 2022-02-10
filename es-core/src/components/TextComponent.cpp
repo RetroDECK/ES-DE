@@ -362,9 +362,12 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::applyTheme(theme, view, element, properties);
 
     std::string elementType {"text"};
+    std::string componentName {"TextComponent"};
 
-    if (element.substr(0, 13) == "gamelistinfo_")
+    if (element.substr(0, 13) == "gamelistinfo_") {
         elementType = "gamelistinfo";
+        componentName = "gamelistInfoComponent";
+    }
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, elementType);
     if (!elem)
@@ -379,8 +382,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setRenderBackground(true);
     }
 
-    if (properties & ALIGNMENT && elem->has("alignment")) {
-        std::string str = elem->get<std::string>("alignment");
+    if (properties & ALIGNMENT && elem->has("horizontalAlignment")) {
+        std::string str {elem->get<std::string>("horizontalAlignment")};
         if (str == "left")
             setHorizontalAlignment(ALIGN_LEFT);
         else if (str == "center")
@@ -388,7 +391,41 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else if (str == "right")
             setHorizontalAlignment(ALIGN_RIGHT);
         else
-            LOG(LogError) << "Unknown text alignment string: " << str;
+            LOG(LogWarning) << componentName
+                            << ": Invalid theme configuration, property "
+                               "<horizontalAlignment> set to \""
+                            << str << "\"";
+    }
+
+    if (properties & ALIGNMENT && elem->has("verticalAlignment")) {
+        std::string str {elem->get<std::string>("verticalAlignment")};
+        if (str == "top")
+            setVerticalAlignment(ALIGN_TOP);
+        else if (str == "center")
+            setVerticalAlignment(ALIGN_CENTER);
+        else if (str == "bottom")
+            setVerticalAlignment(ALIGN_BOTTOM);
+        else
+            LOG(LogWarning) << componentName
+                            << ": Invalid theme configuration, property "
+                               "<verticalAlignment> set to \""
+                            << str << "\"";
+    }
+
+    // Legacy themes only.
+    if (properties & ALIGNMENT && elem->has("alignment")) {
+        std::string str {elem->get<std::string>("alignment")};
+        if (str == "left")
+            setHorizontalAlignment(ALIGN_LEFT);
+        else if (str == "center")
+            setHorizontalAlignment(ALIGN_CENTER);
+        else if (str == "right")
+            setHorizontalAlignment(ALIGN_RIGHT);
+        else
+            LOG(LogWarning) << componentName
+                            << ": Invalid theme configuration, property "
+                               "<alignment> set to \""
+                            << str << "\"";
     }
 
     if (properties & TEXT && elem->has("text"))
