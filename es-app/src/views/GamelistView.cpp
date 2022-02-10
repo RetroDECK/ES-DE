@@ -135,7 +135,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             else if (element.second.type == "text") {
                 if (element.second.has("container") && element.second.get<bool>("container")) {
                     mContainerComponents.push_back(std::make_unique<ScrollableContainer>());
-                    mContainerComponents.back()->setAutoScroll(true);
                     mContainerComponents.back()->setDefaultZIndex(40.0f);
                     addChild(mContainerComponents.back().get());
                     mContainerTextComponents.push_back(std::make_unique<TextComponent>());
@@ -144,11 +143,12 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mContainerComponents.back()->applyTheme(theme, "gamelist", element.first,
                                                             POSITION | ThemeFlags::SIZE | Z_INDEX |
                                                                 VISIBLE);
+                    mContainerComponents.back()->setAutoScroll(true);
                     mContainerTextComponents.back()->setSize(
                         mContainerComponents.back()->getSize().x, 0.0f);
                     mContainerTextComponents.back()->applyTheme(
                         theme, "gamelist", element.first,
-                        (ALL ^ POSITION ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION) | COLOR);
+                        ALL ^ POSITION ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION);
                     mContainerComponents.back()->setScrollHide(true);
                 }
                 else {

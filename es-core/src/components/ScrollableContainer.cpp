@@ -77,6 +77,34 @@ void ScrollableContainer::reset()
     }
 }
 
+void ScrollableContainer::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                                     const std::string& view,
+                                     const std::string& element,
+                                     unsigned int properties)
+{
+    using namespace ThemeFlags;
+    GuiComponent::applyTheme(theme, view, element, properties);
+
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "text")};
+    if (!elem || !elem->has("container"))
+        return;
+
+    if (elem->has("containerScrollSpeed")) {
+        mAutoScrollSpeedConstant =
+            AUTO_SCROLL_SPEED / glm::clamp(elem->get<float>("containerScrollSpeed"), 0.1f, 10.0f);
+    }
+
+    if (elem->has("containerStartDelay")) {
+        mAutoScrollDelayConstant =
+            glm::clamp(elem->get<float>("containerStartDelay"), 0.0f, 10.0f) * 1000.0f;
+    }
+
+    if (elem->has("containerResetDelay")) {
+        mAutoScrollResetDelayConstant =
+            glm::clamp(elem->get<float>("containerResetDelay"), 0.0f, 20.0f) * 1000.0f;
+    }
+}
+
 void ScrollableContainer::update(int deltaTime)
 {
     if (mSize == glm::vec2 {0.0f, 0.0f})
