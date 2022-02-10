@@ -546,17 +546,19 @@ namespace Utils
             std::string line {stringArg};
             bool active {true};
 
-            for (int i = 0; line[i] != '\0'; ++i) {
-                if (std::isalpha(line[i])) {
+            for (auto& chr : line) {
+                if (std::isalnum(chr)) {
                     if (active) {
-                        line[i] = Utils::String::toUpper(std::string(1, line[i]))[0];
+                        chr = std::toupper(chr);
                         active = false;
                     }
-                    else
-                        line[i] = Utils::String::toLower(std::string(1, line[i]))[0];
+                    else {
+                        chr = std::tolower(chr);
+                    }
                 }
-                else if (line[i] == ' ' || line[i] == '\n' || line[i] == '\r' || line[i] == '\t')
+                else if (chr == ' ' || chr == '-' || chr == '\n' || chr == '\r' || chr == '\t') {
                     active = true;
+                }
             }
 
             return line;
