@@ -466,8 +466,8 @@ void GamelistView::legacyUpdateInfoPanel()
         if (mViewStyle == ViewController::DETAILED) {
             // Fade in the game image.
             auto func = [this](float t) {
-                mImageComponents[LegacyImage::MD_IMAGE]->setOpacity(static_cast<unsigned char>(
-                    glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+                mImageComponents[LegacyImage::MD_IMAGE]->setOpacity(
+                    glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
             };
             mImageComponents[LegacyImage::MD_IMAGE]->setAnimation(
                 new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
@@ -475,8 +475,7 @@ void GamelistView::legacyUpdateInfoPanel()
         else if (mViewStyle == ViewController::VIDEO) {
             // Fade in the static image.
             auto func = [this](float t) {
-                mVideoComponents.front()->setOpacity(static_cast<unsigned char>(
-                    glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+                mVideoComponents.front()->setOpacity(glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
             };
             mVideoComponents.front()->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0,
                                                    nullptr, false);
@@ -560,10 +559,8 @@ void GamelistView::legacyUpdateInfoPanel()
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
-            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
-            auto func = [comp](float t) {
-                comp->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
-            };
+            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0.0f : 1.0f))) {
+            auto func = [comp](float t) { comp->setOpacity(glm::mix(0.0f, 1.0f, t)); };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
     }

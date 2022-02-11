@@ -19,7 +19,6 @@
 GuiComponent::GuiComponent()
     : mWindow {Window::getInstance()}
     , mParent {nullptr}
-    , mOpacity {255}
     , mColor {0}
     , mSaturation {1.0f}
     , mColorShift {0}
@@ -31,6 +30,7 @@ GuiComponent::GuiComponent()
     , mOrigin {0.0f, 0.0f}
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
+    , mOpacity {1.0f}
     , mRotation {0.0f}
     , mScale {1.0f}
     , mDefaultZIndex {0.0f}
@@ -180,7 +180,7 @@ const int GuiComponent::getChildIndex() const
         return -1;
 }
 
-void GuiComponent::setOpacity(unsigned char opacity)
+void GuiComponent::setOpacity(float opacity)
 {
     if (mOpacity == opacity)
         return;

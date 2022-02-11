@@ -37,7 +37,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mColorShift {0xFFFFFFFF}
     , mColorShiftEnd {0xFFFFFFFF}
     , mColorGradientHorizontal {true}
-    , mFadeOpacity {0}
+    , mFadeOpacity {0.0f}
     , mFading {false}
     , mForceLoad {forceLoad}
     , mDynamic {dynamic}
@@ -319,7 +319,7 @@ void ImageComponent::setColorGradientHorizontal(bool horizontal)
     updateColors();
 }
 
-void ImageComponent::setOpacity(unsigned char opacity)
+void ImageComponent::setOpacity(float opacity)
 {
     mOpacity = opacity;
     updateColors();
@@ -369,7 +369,7 @@ void ImageComponent::updateVertices()
 
 void ImageComponent::updateColors()
 {
-    const float opacity = (mOpacity * (mFading ? mFadeOpacity / 255.0f : 1.0f)) / 255.0f;
+    const float opacity = (mOpacity * (mFading ? mFadeOpacity : 1.0f));
     const unsigned int color = Renderer::convertRGBAToABGR(
         (mColorShift & 0xFFFFFF00) | static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
     const unsigned int colorEnd =
@@ -391,7 +391,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
-    if (mTexture && mOpacity > 0) {
+    if (mTexture && mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
             glm::vec2 targetSizePos {(mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f}};
             Renderer::drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
@@ -447,7 +447,7 @@ void ImageComponent::fadeIn(bool textureLoaded)
             // Start the fade if this is the first time we've encountered the unloaded texture.
             if (!mFading) {
                 // Start with a zero opacity and flag it as fading.
-                mFadeOpacity = 0;
+                mFadeOpacity = 0.0f;
                 mFading = true;
                 updateColors();
             }
@@ -456,14 +456,14 @@ void ImageComponent::fadeIn(bool textureLoaded)
             // The texture is loaded and we need to fade it in. The fade is based on the frame
             // rate and is 1/4 second if running at 60 frames per second although the actual
             // value is not that important.
-            int opacity = mFadeOpacity + 255 / 15;
+            float opacity {mFadeOpacity + 1.0f / 15.0f};
             // See if we've finished fading.
-            if (opacity >= 255) {
-                mFadeOpacity = 255;
+            if (opacity >= 1.0f) {
+                mFadeOpacity = 1.0f;
                 mFading = false;
             }
             else {
-                mFadeOpacity = static_cast<unsigned char>(opacity);
+                mFadeOpacity = opacity;
             }
             updateColors();
         }

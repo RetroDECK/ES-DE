@@ -123,7 +123,7 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
         if (input.value && mHoldingConfig == nullptr) {
             // Started holding.
             mHoldingConfig = config;
-            mHoldTime = HOLD_TIME;
+            mHoldTime = static_cast<int>(HOLD_TIME);
             mDeviceHeld->setText(Utils::String::toUpper(config->getDeviceName()));
         }
         else if (!input.value && mHoldingConfig == config) {

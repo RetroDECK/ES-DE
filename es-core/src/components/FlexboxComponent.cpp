@@ -50,7 +50,7 @@ void FlexboxComponent::render(const glm::mat4& parentTrans)
     for (auto& item : mItems) {
         if (!item.visible)
             continue;
-        if (mOpacity == 255) {
+        if (mOpacity == 1.0f) {
             item.baseImage.render(trans);
             if (item.overlayImage.getTexture() != nullptr)
                 item.overlayImage.render(trans);
@@ -58,11 +58,11 @@ void FlexboxComponent::render(const glm::mat4& parentTrans)
         else {
             item.baseImage.setOpacity(mOpacity);
             item.baseImage.render(trans);
-            item.baseImage.setOpacity(255);
+            item.baseImage.setOpacity(1.0f);
             if (item.overlayImage.getTexture() != nullptr) {
                 item.overlayImage.setOpacity(mOpacity);
                 item.overlayImage.render(trans);
-                item.overlayImage.setOpacity(255);
+                item.overlayImage.setOpacity(1.0f);
             }
         }
     }

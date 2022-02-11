@@ -71,7 +71,7 @@ public:
 
     unsigned int getColorShift() const override { return mColorShift; }
 
-    void setOpacity(unsigned char opacity) override;
+    void setOpacity(float opacity) override;
     void setSaturation(float saturation) override;
 
     void setFlipX(bool flip); // Mirror on the X axis.
@@ -124,7 +124,7 @@ private:
     std::string mDefaultPath;
 
     std::shared_ptr<TextureResource> mTexture;
-    unsigned char mFadeOpacity;
+    float mFadeOpacity;
     bool mFading;
     bool mForceLoad;
     bool mDynamic;

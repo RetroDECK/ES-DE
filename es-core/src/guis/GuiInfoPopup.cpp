@@ -17,6 +17,7 @@
 GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
     : mMessage {message}
     , mDuration {duration}
+    , mAlpha {1.0f}
     , mRunning {true}
 {
     mFrame = new NinePatchComponent;
@@ -102,18 +103,18 @@ bool GuiInfoPopup::updateState()
         return false;
     }
     else if (curTime - mStartTime <= 500) {
-        mAlpha = ((curTime - mStartTime) * 255 / 500);
+        mAlpha = static_cast<float>((curTime - mStartTime) / 500.0f);
     }
     else if (curTime - mStartTime < mDuration - 500) {
-        mAlpha = 255;
+        mAlpha = 1.0f;
     }
     else {
-        mAlpha = ((-(curTime - mStartTime - mDuration) * 255) / 500);
+        mAlpha = static_cast<float>((-(curTime - mStartTime - mDuration)) / 500.0f);
     }
-    mGrid->setOpacity(static_cast<unsigned char>(mAlpha));
+    mGrid->setOpacity(mAlpha);
 
     // Apply fade-in effect to popup frame.
-    mFrame->setEdgeColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha));
-    mFrame->setCenterColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha));
+    mFrame->setEdgeColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha * 255.0f));
+    mFrame->setCenterColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha * 255.0f));
     return true;
 }

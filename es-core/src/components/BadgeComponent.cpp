@@ -104,7 +104,6 @@ void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
             [badge](FlexboxComponent::FlexboxItem item) { return item.label == badge.badgeType; });
 
         if (it != mFlexboxItems.end()) {
-
             // Don't show the alternative emulator badge if the corresponding setting has been
             // disabled.
             if (badge.badgeType == "altemulator" &&
@@ -172,13 +171,13 @@ void BadgeComponent::render(const glm::mat4& parentTrans)
     if (!isVisible())
         return;
 
-    if (mOpacity == 255) {
+    if (mOpacity == 1.0f) {
         mFlexboxComponent.render(parentTrans);
     }
     else {
         mFlexboxComponent.setOpacity(mOpacity);
         mFlexboxComponent.render(parentTrans);
-        mFlexboxComponent.setOpacity(255);
+        mFlexboxComponent.setOpacity(1.0f);
     }
 }
 

@@ -299,8 +299,10 @@ void GuiMenu::openUIOptions()
         }
         if (!selectedSet->second.capabilities.legacyTheme && selectableVariants > 0) {
             themeVariant->setEnabled(true);
-            themeVariant->setOpacity(255);
-            themeVariant->getParent()->getChild(themeVariant->getChildIndex() - 1)->setOpacity(255);
+            themeVariant->setOpacity(1.0f);
+            themeVariant->getParent()
+                ->getChild(themeVariant->getChildIndex() - 1)
+                ->setOpacity(1.0f);
         }
         else {
             themeVariant->setEnabled(false);
@@ -313,10 +315,10 @@ void GuiMenu::openUIOptions()
         if (!selectedSet->second.capabilities.legacyTheme &&
             selectedSet->second.capabilities.aspectRatios.size() > 0) {
             themeAspectRatio->setEnabled(true);
-            themeAspectRatio->setOpacity(255);
+            themeAspectRatio->setOpacity(1.0f);
             themeAspectRatio->getParent()
                 ->getChild(themeAspectRatio->getChildIndex() - 1)
-                ->setOpacity(255);
+                ->setOpacity(1.0f);
         }
         else {
             themeAspectRatio->setEnabled(false);
@@ -340,16 +342,16 @@ void GuiMenu::openUIOptions()
         }
         else {
             gamelist_view_style->setEnabled(true);
-            gamelist_view_style->setOpacity(255);
+            gamelist_view_style->setOpacity(1.0f);
             gamelist_view_style->getParent()
                 ->getChild(gamelist_view_style->getChildIndex() - 1)
-                ->setOpacity(255);
+                ->setOpacity(1.0f);
 
             transition_style->setEnabled(true);
-            transition_style->setOpacity(255);
+            transition_style->setOpacity(1.0f);
             transition_style->getParent()
                 ->getChild(transition_style->getChildIndex() - 1)
-                ->setOpacity(255);
+                ->setOpacity(1.0f);
         }
     };
 

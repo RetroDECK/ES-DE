@@ -197,9 +197,8 @@ void ScrollableContainer::update(int deltaTime)
                               255.0f};
             auto func = [this, maxOpacity](float t) {
                 unsigned int color {mChildren.front()->getColor()};
-                unsigned int opacity {
-                    static_cast<unsigned int>(glm::mix(0.0f, maxOpacity, t) * 255)};
-                color = (color & 0xFFFFFF00) + opacity;
+                float opacity {glm::mix(0.0f, maxOpacity, t)};
+                color = (color & 0xFFFFFF00) + static_cast<unsigned char>(opacity * 255.0f);
                 this->mChildren.front()->setColor(color);
                 mScrollPos = glm::vec2 {};
                 mAutoScrollResetAccumulator = 0;

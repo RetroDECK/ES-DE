@@ -291,7 +291,7 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             scale = glm::clamp(scale, 1.0f / mLogoScale + 0.01f, 1.0f);
 
         comp->setScale(scale);
-        comp->setOpacity(static_cast<unsigned char>(opacity));
+        comp->setOpacity(static_cast<float>(opacity) / 255.0f);
         comp->render(logoTrans);
     }
 }

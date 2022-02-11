@@ -70,8 +70,8 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
     mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));
     mSearchComp->setCancelCallback(std::bind(&GuiScraperMulti::finish, this));
     mSearchComp->setRefineCallback([&] {
-        mScrollUp->setOpacity(0);
-        mScrollDown->setOpacity(0);
+        mScrollUp->setOpacity(0.0f);
+        mScrollDown->setOpacity(0.0f);
         mResultList->resetScrollIndicatorStatus();
     });
 
@@ -230,8 +230,8 @@ void GuiScraperMulti::doNextSearch()
             scrapeName = Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath());
     }
 
-    mScrollUp->setOpacity(0);
-    mScrollDown->setOpacity(0);
+    mScrollUp->setOpacity(0.0f);
+    mScrollDown->setOpacity(0.0f);
     mResultList->resetScrollIndicatorStatus();
 
     // Extract possible subfolders from the path.

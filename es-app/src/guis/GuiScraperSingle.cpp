@@ -113,8 +113,8 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
     });
     mSearch->setCancelCallback([&] { delete this; });
     mSearch->setRefineCallback([&] {
-        mScrollUp->setOpacity(0);
-        mScrollDown->setOpacity(0);
+        mScrollUp->setOpacity(0.0f);
+        mScrollDown->setOpacity(0.0f);
         mResultList->resetScrollIndicatorStatus();
     });
 

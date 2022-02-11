@@ -915,10 +915,10 @@ void GuiScraperMenu::openOtherOptions()
         }
         else {
             scraper_semiautomatic->setEnabled(true);
-            scraper_semiautomatic->setOpacity(255);
+            scraper_semiautomatic->setOpacity(1.0f);
             scraper_semiautomatic->getParent()
                 ->getChild(scraper_semiautomatic->getChildIndex() - 1)
-                ->setOpacity(255);
+                ->setOpacity(1.0f);
         }
     };
 
@@ -932,10 +932,10 @@ void GuiScraperMenu::openOtherOptions()
         }
         else {
             scraper_exclude_recursively->setEnabled(true);
-            scraper_exclude_recursively->setOpacity(255);
+            scraper_exclude_recursively->setOpacity(1.0f);
             scraper_exclude_recursively->getParent()
                 ->getChild(scraper_exclude_recursively->getChildIndex() - 1)
-                ->setOpacity(255);
+                ->setOpacity(1.0f);
         }
     };
 

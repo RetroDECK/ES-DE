@@ -27,8 +27,8 @@ public:
         scrollUp->setImage(":/graphics/scroll_up.svg");
         scrollDown->setImage(":/graphics/scroll_down.svg");
 
-        scrollUp->setOpacity(0);
-        scrollDown->setOpacity(0);
+        scrollUp->setOpacity(0.0f);
+        scrollDown->setOpacity(0.0f);
 
         if (!Settings::getInstance()->getBool("ScrollIndicators")) {
             // If the scroll indicators setting is disabled, then show a permanent down arrow
@@ -38,7 +38,7 @@ public:
                     if (state == ComponentList::SCROLL_UP ||
                         state == ComponentList::SCROLL_UP_DOWN ||
                         state == ComponentList::SCROLL_DOWN) {
-                        scrollDown->setOpacity(255);
+                        scrollDown->setOpacity(1.0f);
                     }
                 });
         }
@@ -60,7 +60,7 @@ public:
 
                     if (state == ComponentList::SCROLL_UP &&
                         mPreviousScrollState == ComponentList::SCROLL_NONE) {
-                        scrollUp->setOpacity(255);
+                        scrollUp->setOpacity(1.0f);
                     }
                     else if (state == ComponentList::SCROLL_UP &&
                              mPreviousScrollState == ComponentList::SCROLL_UP_DOWN) {
@@ -70,12 +70,12 @@ public:
                              mPreviousScrollState == ComponentList::SCROLL_DOWN) {
                         upFadeIn = true;
                         fadeTime *= 2.0f;
-                        scrollDown->setOpacity(0);
+                        scrollDown->setOpacity(0.0f);
                     }
                     else if (state == ComponentList::SCROLL_UP_DOWN &&
                              mPreviousScrollState == ComponentList::SCROLL_NONE) {
-                        scrollUp->setOpacity(255);
-                        scrollDown->setOpacity(255);
+                        scrollUp->setOpacity(1.0f);
+                        scrollDown->setOpacity(1.0f);
                     }
                     else if (state == ComponentList::SCROLL_UP_DOWN &&
                              mPreviousScrollState == ComponentList::SCROLL_DOWN) {
@@ -87,7 +87,7 @@ public:
                     }
                     else if (state == ComponentList::SCROLL_DOWN &&
                              mPreviousScrollState == ComponentList::SCROLL_NONE) {
-                        scrollDown->setOpacity(255);
+                        scrollDown->setOpacity(1.0f);
                     }
                     else if (state == ComponentList::SCROLL_DOWN &&
                              mPreviousScrollState == ComponentList::SCROLL_UP_DOWN) {
@@ -97,7 +97,7 @@ public:
                              mPreviousScrollState == ComponentList::SCROLL_UP) {
                         downFadeIn = true;
                         fadeTime *= 2.0f;
-                        scrollUp->setOpacity(0);
+                        scrollUp->setOpacity(0.0f);
                     }
 
                     // If jumping more than one row using the shoulder or trigger buttons, then
@@ -107,8 +107,7 @@ public:
 
                     if (upFadeIn) {
                         auto upFadeInFunc = [scrollUp](float t) {
-                            scrollUp->setOpacity(
-                                static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
+                            scrollUp->setOpacity(glm::mix(0.0f, 1.0f, t));
                         };
                         scrollUp->setAnimation(
                             new LambdaAnimation(upFadeInFunc, static_cast<int>(fadeTime)), 0,
@@ -117,8 +116,7 @@ public:
 
                     if (upFadeOut) {
                         auto upFadeOutFunc = [scrollUp](float t) {
-                            scrollUp->setOpacity(
-                                static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
+                            scrollUp->setOpacity(glm::mix(0.0f, 1.0f, t));
                         };
                         scrollUp->setAnimation(
                             new LambdaAnimation(upFadeOutFunc, static_cast<int>(fadeTime)), 0,
@@ -127,8 +125,7 @@ public:
 
                     if (downFadeIn) {
                         auto downFadeInFunc = [scrollDown](float t) {
-                            scrollDown->setOpacity(
-                                static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
+                            scrollDown->setOpacity(glm::mix(0.0f, 1.0f, t));
                         };
                         scrollDown->setAnimation(
                             new LambdaAnimation(downFadeInFunc, static_cast<int>(fadeTime)), 0,
@@ -137,8 +134,7 @@ public:
 
                     if (downFadeOut) {
                         auto downFadeOutFunc = [scrollDown](float t) {
-                            scrollDown->setOpacity(
-                                static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
+                            scrollDown->setOpacity(glm::mix(0.0f, 1.0f, t));
                         };
                         scrollDown->setAnimation(
                             new LambdaAnimation(downFadeOutFunc, static_cast<int>(fadeTime)), 0,

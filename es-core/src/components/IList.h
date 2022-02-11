@@ -73,7 +73,7 @@ protected:
     int mScrollTierAccumulator;
     int mScrollCursorAccumulator;
 
-    unsigned char mTitleOverlayOpacity;
+    float mTitleOverlayOpacity;
     unsigned int mTitleOverlayColor;
 
     const ScrollTierList& mTierList;
@@ -95,7 +95,7 @@ public:
         mScrollTierAccumulator = 0;
         mScrollCursorAccumulator = 0;
 
-        mTitleOverlayOpacity = 0x00;
+        mTitleOverlayOpacity = 0.0f;
         mTitleOverlayColor = 0xFFFFFF00;
     }
 
@@ -105,7 +105,7 @@ public:
 
     void stopScrolling()
     {
-        mTitleOverlayOpacity = 0;
+        mTitleOverlayOpacity = 0.0f;
 
         listInput(0);
         if (mScrollVelocity == 0)
@@ -243,15 +243,10 @@ protected:
     {
         // Update the title overlay opacity.
         // Fade in if scroll tier is >= 1, otherwise fade out.
-        const int dir = (mScrollTier >= mTierList.count - 1) ? 1 : -1;
+        const float dir {(mScrollTier >= mTierList.count - 1) ? 1.0f : -1.0f};
         // We simply translate the time directly to opacity, i.e. no scaling is performed.
-        int op = mTitleOverlayOpacity + deltaTime * dir;
-        if (op >= 255)
-            mTitleOverlayOpacity = 255;
-        else if (op <= 0)
-            mTitleOverlayOpacity = 0;
-        else
-            mTitleOverlayOpacity = static_cast<unsigned char>(op);
+        mTitleOverlayOpacity = glm::clamp(
+            mTitleOverlayOpacity + (static_cast<float>(deltaTime) / 255.0f) * dir, 0.0f, 1.0f);
 
         if (mScrollVelocity == 0 || size() < 2)
             return;
@@ -285,8 +280,8 @@ protected:
         if (!Settings::getInstance()->getBool("ListScrollOverlay"))
             return;
 
-        if (size() == 0 || mTitleOverlayOpacity == 0) {
-            mWindow->renderListScrollOverlay(0, "");
+        if (size() == 0 || mTitleOverlayOpacity == 0.0f) {
+            mWindow->renderListScrollOverlay(0.0f, "");
             return;
         }
 

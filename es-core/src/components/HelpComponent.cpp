@@ -280,7 +280,7 @@ std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
     return tex;
 }
 
-void HelpComponent::setOpacity(unsigned char opacity)
+void HelpComponent::setOpacity(float opacity)
 {
     GuiComponent::setOpacity(opacity);
 

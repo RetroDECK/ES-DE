@@ -25,7 +25,7 @@
 #define ICONCOLOR_USERMARKED 0x7777FFFF
 #define TEXTCOLOR_SCRAPERMARKED 0x992222FF
 #define TEXTCOLOR_USERMARKED 0x222299FF
-#define DISABLED_OPACITY 80
+#define DISABLED_OPACITY 0.314f
 
 class Animation;
 class AnimationController;
@@ -191,8 +191,8 @@ public:
 
     virtual bool isListScrolling() { return false; }
     virtual void stopListScrolling() {}
-    virtual unsigned char getOpacity() const { return mOpacity; }
-    virtual void setOpacity(unsigned char opacity);
+    virtual float getOpacity() const { return mOpacity; }
+    virtual void setOpacity(float opacity);
     virtual unsigned int getColor() const { return mColor; }
     virtual unsigned int getColorShift() const { return mColorShift; }
     virtual float getLineSpacing() { return 0.0f; }
@@ -277,7 +277,6 @@ protected:
 
     std::string mMetadataField;
 
-    unsigned char mOpacity;
     unsigned int mColor;
     float mSaturation;
     unsigned int mColorShift;
@@ -291,6 +290,7 @@ protected:
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
 
+    float mOpacity;
     float mRotation;
     float mScale;
     float mDefaultZIndex;

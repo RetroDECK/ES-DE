@@ -57,8 +57,8 @@ public:
     std::string getHiddenValue() const override { return mHiddenText; }
     void setHiddenValue(const std::string& value) override { setHiddenText(value); }
 
-    unsigned char getOpacity() const override { return mColor & 0x000000FF; }
-    void setOpacity(unsigned char opacity) override;
+    float getOpacity() const override { return static_cast<float>((mColor & 0x000000FF) / 255.0f); }
+    void setOpacity(float opacity) override;
 
     void setSelectable(bool status) { mSelectable = status; }
 
@@ -87,8 +87,8 @@ private:
 
     unsigned int mColor;
     unsigned int mBgColor;
-    unsigned char mColorOpacity;
-    unsigned char mBgColorOpacity;
+    float mColorOpacity;
+    float mBgColorOpacity;
     bool mRenderBackground;
 
     bool mUppercase;

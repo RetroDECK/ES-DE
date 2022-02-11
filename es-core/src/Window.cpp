@@ -29,7 +29,7 @@ Window::Window() noexcept
     , mMediaViewer {nullptr}
     , mLaunchScreen {nullptr}
     , mInfoPopup {nullptr}
-    , mListScrollOpacity {0}
+    , mListScrollOpacity {0.0f}
     , mFrameTimeElapsed {0}
     , mFrameCountElapsed {0}
     , mAverageDeltaTime {10}
@@ -121,7 +121,7 @@ bool Window::init()
 
     mHelp = new HelpComponent;
     mBackgroundOverlay = new ImageComponent;
-    mBackgroundOverlayOpacity = 0;
+    mBackgroundOverlayOpacity = 0.0f;
 
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
     if (mDefaultFonts.empty()) {
@@ -443,7 +443,7 @@ void Window::render()
         // a new cached background has been generated.
         if (mGuiStack.size() > 1 && mCachedBackground) {
             if ((Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up" &&
-                 mBackgroundOverlayOpacity == 255) ||
+                 mBackgroundOverlayOpacity == 1.0f) ||
                 Settings::getInstance()->getString("MenuOpeningEffect") != "scale-up")
                 renderBottom = false;
         }
@@ -509,11 +509,11 @@ void Window::render()
                 // The following is done to avoid fading in if the cached image was
                 // invalidated (rather than the menu being opened).
                 if (mInvalidatedCachedBackground) {
-                    mBackgroundOverlayOpacity = 255;
+                    mBackgroundOverlayOpacity = 1.0f;
                     mInvalidatedCachedBackground = false;
                 }
                 else {
-                    mBackgroundOverlayOpacity = 25;
+                    mBackgroundOverlayOpacity = 0.1f;
                 }
 
                 delete[] processedTexture;
@@ -530,8 +530,9 @@ void Window::render()
             // Fade in the cached background if the menu opening effect has been set to scale-up.
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 mBackgroundOverlay->setOpacity(mBackgroundOverlayOpacity);
-                if (mBackgroundOverlayOpacity < 255)
-                    mBackgroundOverlayOpacity = glm::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
+                if (mBackgroundOverlayOpacity < 1.0f)
+                    mBackgroundOverlayOpacity =
+                        glm::clamp(mBackgroundOverlayOpacity + 0.118f, 0.0f, 1.0f);
             }
 #endif // USE_OPENGL_21
 
@@ -558,18 +559,20 @@ void Window::render()
     }
 
     // Render the quick list scrolling overlay, which is triggered in IList.
-    if (mListScrollOpacity != 0) {
+    if (mListScrollOpacity != 0.0f) {
         Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
                            static_cast<float>(Renderer::getScreenHeight()),
-                           0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
+                           0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f),
+                           0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f));
 
         glm::vec2 offset {mListScrollFont->sizeText(mListScrollText)};
         offset.x = (Renderer::getScreenWidth() - offset.x) * 0.5f;
         offset.y = (Renderer::getScreenHeight() - offset.y) * 0.5f;
 
-        TextCache* cache = mListScrollFont->buildTextCache(mListScrollText, offset.x, offset.y,
-                                                           0xFFFFFF00 | mListScrollOpacity);
+        TextCache* cache {mListScrollFont->buildTextCache(
+            mListScrollText, offset.x, offset.y,
+            0xFFFFFF00 | static_cast<unsigned char>(mListScrollOpacity * 255.0f))};
         mListScrollFont->renderTextCache(cache);
         delete cache;
     }
@@ -648,9 +651,9 @@ void Window::renderLoadingScreen(std::string text)
     Renderer::swapBuffers();
 }
 
-void Window::renderListScrollOverlay(unsigned char opacity, const std::string& text)
+void Window::renderListScrollOverlay(const float opacity, const std::string& text)
 {
-    mListScrollOpacity = static_cast<unsigned char>(opacity * 0.6f);
+    mListScrollOpacity = opacity * 0.6f;
     mListScrollText = text;
 }
 

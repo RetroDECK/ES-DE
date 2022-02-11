@@ -27,7 +27,7 @@
 #include <cstring>
 #endif
 
-#define FADE_TIME 300
+#define FADE_TIME 300.0f
 
 Screensaver::Screensaver()
     : mWindow {Window::getInstance()}
@@ -255,7 +255,7 @@ void Screensaver::renderScreensaver()
         // Only render the image if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
             if (mImageScreensaver->hasImage()) {
-                mImageScreensaver->setOpacity(255 - static_cast<unsigned char>(mOpacity * 255));
+                mImageScreensaver->setOpacity(1.0f - mOpacity);
                 glm::mat4 trans {Renderer::getIdentity()};
                 mImageScreensaver->render(trans);
             }

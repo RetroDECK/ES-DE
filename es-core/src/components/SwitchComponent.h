@@ -32,8 +32,8 @@ public:
     void setChangedColor(unsigned int color) override { mColorChangedValue = color; }
     void setCallback(const std::function<void()>& callbackFunc) { mToggleCallback = callbackFunc; }
 
-    unsigned char getOpacity() const override { return mImage.getOpacity(); }
-    void setOpacity(unsigned char opacity) override { mImage.setOpacity(opacity); }
+    float getOpacity() const override { return mImage.getOpacity(); }
+    void setOpacity(float opacity) override { mImage.setOpacity(opacity); }
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override { mImage.setColorShift(color); }
 

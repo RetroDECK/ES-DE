@@ -193,7 +193,7 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
                                0x00000033, 0x00000033);
         }
 
-        mTextCache->setColor((mColor & 0xFFFFFF00) | getOpacity());
+        mTextCache->setColor((mColor & 0xFFFFFF00) | static_cast<int>(getOpacity() * 255.0f));
         font->renderTextCache(mTextCache.get());
 
         if (mEditing && mTime != 0) {

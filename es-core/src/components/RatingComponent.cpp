@@ -82,10 +82,10 @@ std::string RatingComponent::getRatingValue() const
     return ss.str();
 }
 
-void RatingComponent::setOpacity(unsigned char opacity)
+void RatingComponent::setOpacity(float opacity)
 {
     mOpacity = opacity;
-    mColorShift = (mColorShift >> 8 << 8) | mOpacity;
+    mColorShift = (mColorShift >> 8 << 8) | static_cast<unsigned char>(mOpacity * 255.0f);
     updateColors();
 }
 
@@ -96,7 +96,7 @@ void RatingComponent::setColorShift(unsigned int color)
 
     // Grab the opacity from the color shift because we may need
     // to apply it if fading in textures.
-    mOpacity = color & 0xff;
+    mOpacity = static_cast<float>(color & 0xff) / 255.0f;
     updateColors();
 }
 
@@ -155,7 +155,7 @@ void RatingComponent::render(const glm::mat4& parentTrans)
 
     Renderer::setMatrix(trans);
 
-    if (mOpacity > 0) {
+    if (mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
             Renderer::drawRect(0.0f, 0.0f, mSize.y * NUM_RATING_STARS, mSize.y, 0xFF000033,
                                0xFF000033);

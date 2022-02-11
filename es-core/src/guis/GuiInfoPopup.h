@@ -32,7 +32,7 @@ private:
 
     std::string mMessage;
     int mDuration;
-    int mAlpha;
+    float mAlpha;
     int mStartTime;
     bool mRunning;
 };

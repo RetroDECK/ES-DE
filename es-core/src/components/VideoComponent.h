@@ -46,7 +46,7 @@ public:
     // Sets whether we're in screensaver mode.
     void setScreensaverMode(bool isScreensaver) { mScreensaverMode = isScreensaver; }
     // Set the opacity for the embedded static image.
-    void setOpacity(unsigned char opacity) override { mOpacity = opacity; }
+    void setOpacity(float opacity) override { mOpacity = opacity; }
 
     bool hasStaticVideo() { return !mConfig.staticVideoPath.empty(); }
     bool hasStaticImage() { return mStaticImage.getTextureSize() != glm::ivec2 {0, 0}; }

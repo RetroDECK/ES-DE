@@ -16,8 +16,8 @@ TextComponent::TextComponent()
     : mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
-    , mColorOpacity {0x000000FF}
-    , mBgColorOpacity {0x00000000}
+    , mColorOpacity {1.0f}
+    , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
     , mUppercase {false}
     , mLowercase {false}
@@ -41,8 +41,8 @@ TextComponent::TextComponent(const std::string& text,
     : mFont {nullptr}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
-    , mColorOpacity {0x000000FF}
-    , mBgColorOpacity {0x00000000}
+    , mColorOpacity {1.0f}
+    , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
     , mUppercase {false}
     , mLowercase {false}
@@ -81,7 +81,7 @@ void TextComponent::setFont(const std::shared_ptr<Font>& font)
 void TextComponent::setColor(unsigned int color)
 {
     mColor = color;
-    mColorOpacity = mColor & 0x000000FF;
+    mColorOpacity = static_cast<float>(mColor & 0x000000FF) / 255.0f;
     onColorChanged();
 }
 
@@ -89,22 +89,18 @@ void TextComponent::setColor(unsigned int color)
 void TextComponent::setBackgroundColor(unsigned int color)
 {
     mBgColor = color;
-    mBgColorOpacity = mBgColor & 0x000000FF;
+    mBgColorOpacity = static_cast<float>(mBgColor & 0x000000FF) / 255.0f;
 }
 
 //  Scale the opacity.
-void TextComponent::setOpacity(unsigned char opacity)
+void TextComponent::setOpacity(float opacity)
 {
     // This function is mostly called to do fade in and fade out of the text component element.
-    // Therefore we assume here that opacity is a fractional value (expressed as an unsigned
-    // char 0 - 255) of the opacity originally set with setColor() or setBackgroundColor().
-    unsigned char o = static_cast<unsigned char>(static_cast<float>(opacity) / 255.0f *
-                                                 static_cast<float>(mColorOpacity));
-    mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(o);
+    float o {opacity * mColorOpacity};
+    mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(o * 255.0f);
 
-    unsigned char bgo = static_cast<unsigned char>(static_cast<float>(opacity) / 255.0f *
-                                                   static_cast<float>(mBgColorOpacity));
-    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(bgo);
+    float bgo {opacity * mBgColorOpacity};
+    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(bgo * 255.0f);
 
     onColorChanged();
     GuiComponent::setOpacity(opacity);
@@ -307,14 +303,15 @@ void TextComponent::onTextChanged()
 
         text.append(abbrev);
 
-        mTextCache = std::shared_ptr<TextCache>(
-            f->buildTextCache(text, glm::vec2 {}, (mColor >> 8 << 8) | mOpacity, mSize.x,
-                              mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
+            text, glm::vec2 {}, (mColor >> 8 << 8) | static_cast<unsigned char>(mOpacity * 255.0f),
+            mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
-        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
-            f->wrapText(text, mSize.x), glm::vec2 {}, (mColor >> 8 << 8) | mOpacity, mSize.x,
-            mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(
+            f->buildTextCache(f->wrapText(text, mSize.x), glm::vec2 {},
+                              (mColor >> 8 << 8) | static_cast<unsigned char>(mOpacity * 255.0f),
+                              mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
 
     // This is required to set the color transparency.

@@ -500,8 +500,8 @@ private:
                                     else {
                                         mEnabled = true;
                                         list->getChild(i)->setEnabled(true);
-                                        list->getChild(i)->setOpacity(255);
-                                        list->getChild(i + 1)->setOpacity(255);
+                                        list->getChild(i)->setOpacity(1.0f);
+                                        list->getChild(i + 1)->setOpacity(1.0f);
                                     }
                                 }
                             }
@@ -545,8 +545,8 @@ private:
                         mParent->mEntries.at(i).selected = false;
                         checkBoxes.at(i)->setImage(UNCHECKED_PATH);
                         if (mParent->mMultiExclusiveSelect) {
-                            checkBoxes.at(i)->setOpacity(255);
-                            textEntries.at(i)->setOpacity(255);
+                            checkBoxes.at(i)->setOpacity(1.0f);
+                            textEntries.at(i)->setOpacity(1.0f);
                             textEntries.at(i)->setEnabled(true);
                         }
                     }
