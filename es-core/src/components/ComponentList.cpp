@@ -289,7 +289,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
-    const int clipRectPosX {static_cast<int>(std::ceil(trans[3].x))};
+    const int clipRectPosX {static_cast<int>(std::round(trans[3].x))};
     const int clipRectPosY {static_cast<int>(std::round(trans[3].y))};
     const int clipRectSizeX {static_cast<int>(std::round(dim.x))};
     const int clipRectSizeY {static_cast<int>(std::round(dim.y))};
