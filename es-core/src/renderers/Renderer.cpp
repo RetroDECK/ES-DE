@@ -477,8 +477,8 @@ namespace Renderer
 
         // clang-format off
         vertices[0] = {{x,      y     }, {0.0f, 0.0f}, rColor};
-        vertices[1] = {{x,      y + hL}, {0.0f, 0.0f}, horizontalGradient ? rColorEnd : rColor};
-        vertices[2] = {{x + wL, y     }, {0.0f, 0.0f}, horizontalGradient ? rColor : rColorEnd};
+        vertices[1] = {{x,      y + hL}, {0.0f, 0.0f}, horizontalGradient ? rColor : rColorEnd};
+        vertices[2] = {{x + wL, y     }, {0.0f, 0.0f}, horizontalGradient ? rColorEnd : rColor};
         vertices[3] = {{x + wL, y + hL}, {0.0f, 0.0f}, rColorEnd};
         // clang-format on
 

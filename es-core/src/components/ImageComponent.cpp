@@ -377,8 +377,8 @@ void ImageComponent::updateColors()
                                     static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity));
 
     mVertices[0].col = color;
-    mVertices[1].col = mColorGradientHorizontal ? colorEnd : color;
-    mVertices[2].col = mColorGradientHorizontal ? color : colorEnd;
+    mVertices[1].col = mColorGradientHorizontal ? color : colorEnd;
+    mVertices[2].col = mColorGradientHorizontal ? colorEnd : color;
     mVertices[3].col = colorEnd;
 }
 
@@ -513,9 +513,21 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setColorShift(elem->get<unsigned int>("color"));
         if (elem->has("colorEnd"))
             setColorShiftEnd(elem->get<unsigned int>("colorEnd"));
-        if (elem->has("gradientType"))
-            setColorGradientHorizontal(
-                !(elem->get<std::string>("gradientType").compare("horizontal")));
+        if (elem->has("gradientType")) {
+            const std::string gradientType {elem->get<std::string>("gradientType")};
+            if (gradientType == "horizontal") {
+                setColorGradientHorizontal(true);
+            }
+            else if (gradientType == "vertical") {
+                setColorGradientHorizontal(false);
+            }
+            else {
+                setColorGradientHorizontal(true);
+                LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                                   "<gradientType> set to \""
+                                << gradientType << "\"";
+            }
+        }
     }
 
     if (elem->has("scrollFadeIn") && elem->get<bool>("scrollFadeIn"))

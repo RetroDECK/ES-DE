@@ -474,9 +474,21 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         if (elem->has("selectorColorEnd"))
             setSelectorColorEnd(elem->get<unsigned int>("selectorColorEnd"));
-        if (elem->has("selectorGradientType"))
-            setSelectorColorGradientHorizontal(
-                !(elem->get<std::string>("selectorGradientType").compare("horizontal")));
+        if (elem->has("selectorGradientType")) {
+            const std::string gradientType {elem->get<std::string>("selectorGradientType")};
+            if (gradientType == "horizontal") {
+                setSelectorColorGradientHorizontal(true);
+            }
+            else if (gradientType == "vertical") {
+                setSelectorColorGradientHorizontal(false);
+            }
+            else {
+                setSelectorColorGradientHorizontal(true);
+                LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                                   "<selectorGradientType> set to \""
+                                << gradientType << "\"";
+            }
+        }
         if (elem->has("selectedColor"))
             setSelectedColor(elem->get<unsigned int>("selectedColor"));
         if (elem->has("primaryColor"))

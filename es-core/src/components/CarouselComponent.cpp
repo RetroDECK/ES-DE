@@ -343,8 +343,22 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
     if (elem->has("colorEnd"))
         mCarouselColorEnd = elem->get<unsigned int>("colorEnd");
-    if (elem->has("gradientType"))
-        mColorGradientHorizontal = (elem->get<std::string>("gradientType") == "horizontal");
+
+    if (elem->has("gradientType")) {
+        const std::string gradientType {elem->get<std::string>("gradientType")};
+        if (gradientType == "horizontal") {
+            mColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            mColorGradientHorizontal = false;
+        }
+        else {
+            mColorGradientHorizontal = true;
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "<gradientType> set to \""
+                            << gradientType << "\"";
+        }
+    }
 
     if (elem->has("logoScale"))
         mLogoScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
