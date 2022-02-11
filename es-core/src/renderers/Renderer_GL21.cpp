@@ -453,10 +453,10 @@ namespace Renderer
     {
         Vertex vertices[4];
         std::vector<unsigned int> shaderList;
-        GLuint width = getScreenWidth();
-        GLuint height = getScreenHeight();
-        float widthf = static_cast<float>(width);
-        float heightf = static_cast<float>(height);
+        GLuint width {static_cast<GLuint>(getScreenWidth())};
+        GLuint height {static_cast<GLuint>(getScreenHeight())};
+        float widthf {static_cast<float>(width)};
+        float heightf {static_cast<float>(height)};
 
         // Set vertex positions and texture coordinates to full screen as all
         // postprocessing is applied to the complete screen area.

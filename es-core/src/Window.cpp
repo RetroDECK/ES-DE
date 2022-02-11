@@ -459,9 +459,9 @@ void Window::render()
 #if (CLOCK_BACKGROUND_CREATION)
                 const auto backgroundStartTime = std::chrono::system_clock::now();
 #endif
-                unsigned char* processedTexture =
-                    new unsigned char[Renderer::getScreenWidth() * Renderer::getScreenHeight() *
-                                      4.0f];
+                unsigned char* processedTexture {
+                    new unsigned char[static_cast<size_t>(Renderer::getScreenWidth()) *
+                                      static_cast<size_t>(Renderer::getScreenHeight()) * 4]};
 
                 // De-focus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
