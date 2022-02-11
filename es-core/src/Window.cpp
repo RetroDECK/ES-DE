@@ -380,7 +380,7 @@ void Window::update(int deltaTime)
     // will be moved. This is required as theme set changes always makes a transition to
     // the system view. If we wouldn't make this update, the camera movement would take
     // place once the menu has been closed.
-    if (mChangedThemeSet && mGuiStack.size() > 1) {
+    if (mChangedThemeSet) {
         mGuiStack.front()->update(deltaTime);
         mChangedThemeSet = false;
     }
