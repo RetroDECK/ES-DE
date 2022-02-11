@@ -503,17 +503,17 @@ void GamelistView::legacyUpdateInfoPanel()
                 BadgeComponent::BadgeInfo badgeInfo;
                 badgeInfo.badgeType = badge;
                 if (badge == "controller") {
-                    if (file->metadata.get("controller").compare("") != 0) {
+                    if (file->metadata.get("controller") != "") {
                         badgeInfo.gameController = file->metadata.get("controller");
                         badgeSlots.push_back(badgeInfo);
                     }
                 }
                 else if (badge == "altemulator") {
-                    if (file->metadata.get(badge).compare("") != 0)
+                    if (file->metadata.get(badge) != "")
                         badgeSlots.push_back(badgeInfo);
                 }
                 else {
-                    if (file->metadata.get(badge).compare("true") == 0)
+                    if (file->metadata.get(badge) == "true")
                         badgeSlots.push_back(badgeInfo);
                 }
             }

@@ -257,7 +257,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"secondaryColor", COLOR},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"scrollHide", BOOLEAN},
        {"scrollSound", PATH}, // For backward compatibility with legacy themes.
        {"horizontalAlignment", STRING},
        {"alignment", STRING}, // For backward compatibility with legacy themes.

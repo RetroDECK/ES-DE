@@ -728,11 +728,11 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     GamelistViewStyle selectedViewStyle = AUTOMATIC;
 
     std::string viewPreference {Settings::getInstance()->getString("GamelistViewStyle")};
-    if (viewPreference.compare("basic") == 0)
+    if (viewPreference == "basic")
         selectedViewStyle = BASIC;
-    if (viewPreference.compare("detailed") == 0)
+    else if (viewPreference == "detailed")
         selectedViewStyle = DETAILED;
-    if (viewPreference.compare("video") == 0)
+    else if (viewPreference == "video")
         selectedViewStyle = VIDEO;
 
     if (selectedViewStyle == AUTOMATIC) {
