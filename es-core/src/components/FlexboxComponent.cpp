@@ -91,10 +91,8 @@ void FlexboxComponent::computeLayout()
     mItemMargin.y = glm::clamp(mItemMargin.y, 0.0f, mSize.y / 2.0f);
 
     // Also keep the size within reason.
-    mSize.x = glm::clamp(mSize.x, static_cast<float>(Renderer::getScreenWidth()) * 0.03f,
-                         static_cast<float>(Renderer::getScreenWidth()));
-    mSize.y = glm::clamp(mSize.y, static_cast<float>(Renderer::getScreenHeight()) * 0.03f,
-                         static_cast<float>(Renderer::getScreenHeight()));
+    mSize.x = glm::clamp(mSize.x, Renderer::getScreenWidth() * 0.03f, Renderer::getScreenWidth());
+    mSize.y = glm::clamp(mSize.y, Renderer::getScreenHeight() * 0.03f, Renderer::getScreenHeight());
 
     if (mItemsPerLine * mLines < mItems.size()) {
         LOG(LogWarning)

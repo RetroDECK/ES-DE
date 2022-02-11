@@ -321,9 +321,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                               const std::string& element,
                               unsigned int properties)
 {
-    glm::vec2 scale {getParent() ? getParent()->getSize() :
-                                   glm::vec2 {static_cast<float>(Renderer::getScreenWidth()),
-                                              static_cast<float>(Renderer::getScreenHeight())}};
+    glm::vec2 scale {getParent() ?
+                         getParent()->getSize() :
+                         glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()}};
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "");
     if (!elem)

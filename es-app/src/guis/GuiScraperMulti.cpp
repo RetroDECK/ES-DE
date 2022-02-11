@@ -151,8 +151,7 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
     float width = glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth();
 
-    float height = (mTitle->getFont()->getLetterHeight() +
-                    static_cast<float>(Renderer::getScreenHeight()) * 0.0637f) +
+    float height = (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) +
                    mSystem->getFont()->getLetterHeight() +
                    mSubtitle->getFont()->getHeight() * 1.75f + mButtonGrid->getSize().y +
                    Font::get(FONT_SIZE_MEDIUM)->getHeight() * 7.0f;

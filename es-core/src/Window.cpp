@@ -131,8 +131,7 @@ bool Window::init()
     }
 
     mBackgroundOverlay->setImage(":/graphics/screen_gradient.png");
-    mBackgroundOverlay->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                                  static_cast<float>(Renderer::getScreenHeight()));
+    mBackgroundOverlay->setResize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
 #if defined(USE_OPENGL_21)
     mPostprocessedBackground = TextureResource::get("");
@@ -461,7 +460,8 @@ void Window::render()
                 const auto backgroundStartTime = std::chrono::system_clock::now();
 #endif
                 unsigned char* processedTexture =
-                    new unsigned char[Renderer::getScreenWidth() * Renderer::getScreenHeight() * 4];
+                    new unsigned char[Renderer::getScreenWidth() * Renderer::getScreenHeight() *
+                                      4.0f];
 
                 // De-focus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
@@ -502,7 +502,8 @@ void Window::render()
                 }
 
                 mPostprocessedBackground->initFromPixels(
-                    processedTexture, Renderer::getScreenWidth(), Renderer::getScreenHeight());
+                    processedTexture, static_cast<size_t>(Renderer::getScreenWidth()),
+                    static_cast<size_t>(Renderer::getScreenHeight()));
 
                 mBackgroundOverlay->setImage(mPostprocessedBackground);
 
@@ -561,8 +562,7 @@ void Window::render()
     // Render the quick list scrolling overlay, which is triggered in IList.
     if (mListScrollOpacity != 0.0f) {
         Renderer::setMatrix(Renderer::getIdentity());
-        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()),
+        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                            0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f),
                            0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f));
 
@@ -628,8 +628,8 @@ void Window::renderLoadingScreen(std::string text)
 {
     glm::mat4 trans {Renderer::getIdentity()};
     Renderer::setMatrix(trans);
-    Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                       static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+    Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                       0x000000FF, 0x000000FF);
 
     ImageComponent splash(true);
     splash.setImage(":/graphics/splash.svg");
@@ -641,8 +641,8 @@ void Window::renderLoadingScreen(std::string text)
     auto& font = mDefaultFonts.at(1);
     TextCache* cache = font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF);
 
-    float x = std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f);
-    float y = std::round(Renderer::getScreenHeight() * 0.835f);
+    float x {std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f)};
+    float y {std::round(Renderer::getScreenHeight() * 0.835f)};
     trans = glm::translate(trans, glm::vec3 {x, y, 0.0f});
     Renderer::setMatrix(trans);
     font->renderTextCache(cache);

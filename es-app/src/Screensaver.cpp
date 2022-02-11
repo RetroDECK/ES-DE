@@ -126,11 +126,11 @@ void Screensaver::startScreensaver(bool generateMediaList)
                                            Renderer::getScreenHeight() / 2.0f);
 
             if (Settings::getInstance()->getBool("ScreensaverStretchImages"))
-                mImageScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                                             static_cast<float>(Renderer::getScreenHeight()));
+                mImageScreensaver->setResize(Renderer::getScreenWidth(),
+                                             Renderer::getScreenHeight());
             else
-                mImageScreensaver->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                                              static_cast<float>(Renderer::getScreenHeight()));
+                mImageScreensaver->setMaxSize(Renderer::getScreenWidth(),
+                                              Renderer::getScreenHeight());
         }
         mTimer = 0;
         return;
@@ -163,11 +163,11 @@ void Screensaver::startScreensaver(bool generateMediaList)
                                            Renderer::getScreenHeight() / 2.0f);
 
             if (Settings::getInstance()->getBool("ScreensaverStretchVideos"))
-                mVideoScreensaver->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                                             static_cast<float>(Renderer::getScreenHeight()));
+                mVideoScreensaver->setResize(Renderer::getScreenWidth(),
+                                             Renderer::getScreenHeight());
             else
-                mVideoScreensaver->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                                              static_cast<float>(Renderer::getScreenHeight()));
+                mVideoScreensaver->setMaxSize(Renderer::getScreenWidth(),
+                                              Renderer::getScreenHeight());
 
             mVideoScreensaver->setVideo(path);
             mVideoScreensaver->setScreensaverMode(true);
@@ -237,8 +237,8 @@ void Screensaver::renderScreensaver()
     if (mVideoScreensaver && screensaverType == "video") {
         // Render a black background below the video.
         Renderer::setMatrix(Renderer::getIdentity());
-        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                           0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
@@ -249,8 +249,8 @@ void Screensaver::renderScreensaver()
     else if (mImageScreensaver && screensaverType == "slideshow") {
         // Render a black background below the image.
         Renderer::setMatrix(Renderer::getIdentity());
-        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                           0x000000FF, 0x000000FF);
 
         // Only render the image if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
@@ -581,8 +581,8 @@ void Screensaver::generateOverlayInfo()
     if (mGameName == "" || mSystemName == "")
         return;
 
-    float posX = static_cast<float>(Renderer::getWindowWidth()) * 0.023f;
-    float posY = static_cast<float>(Renderer::getWindowHeight()) * 0.02f;
+    float posX {Renderer::getWindowWidth() * 0.023f};
+    float posY {Renderer::getWindowHeight() * 0.02f};
 
     std::string favoriteChar;
     if (mCurrentGame && mCurrentGame->getFavorite())
@@ -609,7 +609,7 @@ void Screensaver::generateOverlayInfo()
     else
         textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x;
 
-    float marginX = Renderer::getWindowWidth() * 0.01f;
+    float marginX {Renderer::getWindowWidth() * 0.01f};
 
     mGameOverlayRectangleCoords.clear();
     mGameOverlayRectangleCoords.push_back(posX - marginX);

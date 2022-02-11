@@ -484,9 +484,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    glm::vec2 scale {getParent() ? getParent()->getSize() :
-                                   glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
-                                             static_cast<float>(Renderer::getScreenHeight()))};
+    glm::vec2 scale {getParent() ?
+                         getParent()->getSize() :
+                         glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size"))

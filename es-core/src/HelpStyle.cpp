@@ -40,8 +40,7 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
 
     if (elem->has("pos"))
         position = elem->get<glm::vec2>("pos") *
-                   glm::vec2 {static_cast<float>(Renderer::getScreenWidth()),
-                              static_cast<float>(Renderer::getScreenHeight())};
+                   glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
 
     if (elem->has("origin"))
         origin = elem->get<glm::vec2>("origin");

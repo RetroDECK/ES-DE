@@ -340,7 +340,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     mSystemViewTransition = true;
 
     auto systemList = getSystemListView();
-    systemList->setPosition(getSystemId(system) * static_cast<float>(Renderer::getScreenWidth()),
+    systemList->setPosition(getSystemId(system) * Renderer::getScreenWidth(),
                             systemList->getPosition().y);
 
     systemList->goToSystem(system, false);
@@ -353,17 +353,17 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
             if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
                 getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
-                mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
+                mCamera[3].y += Renderer::getScreenHeight();
             else
-                mCamera[3].x -= static_cast<float>(Renderer::getScreenWidth());
+                mCamera[3].x -= Renderer::getScreenWidth();
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
             if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
                 getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
-                mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
+                mCamera[3].y += Renderer::getScreenHeight();
             else
-                mCamera[3].x += static_cast<float>(Renderer::getScreenWidth());
+                mCamera[3].x += Renderer::getScreenWidth();
         }
         else {
             updateHelpPrompts();
@@ -476,8 +476,7 @@ void ViewController::goToGamelist(SystemData* system)
         float offsetX = sysList->getPosition().x;
         int sysId = getSystemId(system);
 
-        sysList->setPosition(sysId * static_cast<float>(Renderer::getScreenWidth()),
-                             sysList->getPosition().y);
+        sysList->setPosition(sysId * Renderer::getScreenWidth(), sysList->getPosition().y);
         offsetX = sysList->getPosition().x - offsetX;
         mCamera[3].x -= offsetX;
     }
@@ -520,11 +519,11 @@ void ViewController::goToGamelist(SystemData* system)
     if (mState.viewing == NOTHING) {
         mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
-            mCamera[3].y -= static_cast<float>(Renderer::getScreenHeight());
+            mCamera[3].y -= Renderer::getScreenHeight();
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
-            mCamera[3].y += static_cast<float>(Renderer::getScreenHeight() * 2);
+            mCamera[3].y += Renderer::getScreenHeight() * 2.0f;
         }
         else {
             updateHelpPrompts();
@@ -773,8 +772,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
 
     std::vector<SystemData*>& sysVec = SystemData::sSystemVector;
     int id {static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin())};
-    view->setPosition(id * static_cast<float>(Renderer::getScreenWidth()),
-                      static_cast<float>(Renderer::getScreenHeight() * 2));
+    view->setPosition(id * Renderer::getScreenWidth(), Renderer::getScreenHeight() * 2.0f);
 
     addChild(view.get());
 
@@ -790,7 +788,7 @@ std::shared_ptr<SystemView> ViewController::getSystemListView()
 
     mSystemListView = std::shared_ptr<SystemView>(new SystemView);
     addChild(mSystemListView.get());
-    mSystemListView->setPosition(0, static_cast<float>(Renderer::getScreenHeight()));
+    mSystemListView->setPosition(0, Renderer::getScreenHeight());
     return mSystemListView;
 }
 
@@ -870,9 +868,8 @@ void ViewController::render(const glm::mat4& parentTrans)
 
     // Camera position, position + size.
     glm::vec3 viewStart {transInverse[3]};
-    glm::vec3 viewEnd {std::fabs(trans[3].x) + static_cast<float>(Renderer::getScreenWidth()),
-                       std::fabs(trans[3].y) + static_cast<float>(Renderer::getScreenHeight()),
-                       0.0f};
+    glm::vec3 viewEnd {std::fabs(trans[3].x) + Renderer::getScreenWidth(),
+                       std::fabs(trans[3].y) + Renderer::getScreenHeight(), 0.0f};
 
     // Keep track of UI mode changes.
     UIModeController::getInstance()->monitorUIMode();
@@ -904,8 +901,8 @@ void ViewController::render(const glm::mat4& parentTrans)
     if (mFadeOpacity) {
         unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255);
         Renderer::setMatrix(parentTrans);
-        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()), fadeColor, fadeColor);
+        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                           fadeColor, fadeColor);
     }
 }
 

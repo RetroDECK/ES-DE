@@ -535,12 +535,12 @@ namespace Renderer
 
     const glm::mat4& getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
-    const int getWindowWidth() { return windowWidth; }
-    const int getWindowHeight() { return windowHeight; }
-    const int getScreenWidth() { return screenWidth; }
-    const int getScreenHeight() { return screenHeight; }
-    const int getScreenOffsetX() { return screenOffsetX; }
-    const int getScreenOffsetY() { return screenOffsetY; }
+    const float getWindowWidth() { return static_cast<float>(windowWidth); }
+    const float getWindowHeight() { return static_cast<float>(windowHeight); }
+    const float getScreenWidth() { return static_cast<float>(screenWidth); }
+    const float getScreenHeight() { return static_cast<float>(screenHeight); }
+    const float getScreenOffsetX() { return static_cast<float>(screenOffsetX); }
+    const float getScreenOffsetY() { return static_cast<float>(screenOffsetY); }
     const int getScreenRotate() { return screenRotate; }
     const float getScreenWidthModifier() { return screenWidthModifier; }
     const float getScreenHeightModifier() { return screenHeightModifier; }

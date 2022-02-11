@@ -124,8 +124,7 @@ private:
 
 template <typename T> ImageGridComponent<T>::ImageGridComponent()
 {
-    glm::vec2 screen {static_cast<float>(Renderer::getScreenWidth()),
-                      static_cast<float>(Renderer::getScreenHeight())};
+    glm::vec2 screen {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
 
     mCamera = 0.0f;
     mCameraDirection = 1.0f;

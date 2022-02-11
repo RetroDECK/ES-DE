@@ -37,8 +37,7 @@ SystemView::SystemView()
     , mViewNeedsReload {true}
     , mLegacyMode {false}
 {
-    setSize(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+    setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
     mCarousel = std::make_unique<CarouselComponent>();
     mCarousel->setCursorChangedCallback([&](const CursorState& state) { onCursorChanged(state); });

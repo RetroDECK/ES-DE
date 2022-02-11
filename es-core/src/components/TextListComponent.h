@@ -531,9 +531,9 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 << str << "\"";
         }
         if (elem->has("horizontalMargin")) {
-            mHorizontalMargin = elem->get<float>("horizontalMargin") *
-                                (this->mParent ? this->mParent->getSize().x :
-                                                 static_cast<float>(Renderer::getScreenWidth()));
+            mHorizontalMargin =
+                elem->get<float>("horizontalMargin") *
+                (this->mParent ? this->mParent->getSize().x : Renderer::getScreenWidth());
         }
     }
 

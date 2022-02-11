@@ -120,14 +120,13 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth();
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth()};
 
-    float height = (mGameName->getFont()->getLetterHeight() +
-                    static_cast<float>(Renderer::getScreenHeight()) * 0.0637f) +
-                   mSystemName->getFont()->getLetterHeight() +
-                   static_cast<float>(Renderer::getScreenHeight()) * 0.04f +
-                   mButtonGrid->getSize().y + Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f;
+    float height {
+        (mGameName->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) +
+        mSystemName->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.04f +
+        mButtonGrid->getSize().y + Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f};
 
     setSize(width, height);
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,

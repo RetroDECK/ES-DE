@@ -75,8 +75,7 @@ void GridTileComponent::update(int deltaTime)
 
 void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTileProperties* properties)
 {
-    glm::vec2 screen {static_cast<float>(Renderer::getScreenWidth()),
-                      static_cast<float>(Renderer::getScreenHeight())};
+    glm::vec2 screen {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
 
     if (elem->has("size"))
         properties->mSize = elem->get<glm::vec2>("size") * screen;

@@ -26,8 +26,7 @@ GamelistBase::GamelistBase(FileData* root)
     , mIsFolder {false}
     , mVideoPlaying {false}
 {
-    setSize(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+    setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
     mList.setSize(mSize.x, mSize.y * 0.8f);
     mList.setPosition(0.0f, mSize.y * 0.2f);
