@@ -283,81 +283,6 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // When the theme set entries are scrolled or selected, update the relevant rows.
-    auto scrollThemeSetFunc = [=](const std::string& themeName, bool firstRun = false) {
-        auto selectedSet = themeSets.find(themeName);
-        if (selectedSet == themeSets.cend())
-            return;
-        if (!firstRun) {
-            themeVariantsFunc(themeName, themeVariant->getSelected());
-            themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
-        }
-        int selectableVariants {0};
-        for (auto& variant : selectedSet->second.capabilities.variants) {
-            if (variant.selectable)
-                ++selectableVariants;
-        }
-        if (!selectedSet->second.capabilities.legacyTheme && selectableVariants > 0) {
-            themeVariant->setEnabled(true);
-            themeVariant->setOpacity(1.0f);
-            themeVariant->getParent()
-                ->getChild(themeVariant->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-        }
-        else {
-            themeVariant->setEnabled(false);
-            themeVariant->setOpacity(DISABLED_OPACITY);
-            themeVariant->getParent()
-                ->getChild(themeVariant->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-        }
-
-        if (!selectedSet->second.capabilities.legacyTheme &&
-            selectedSet->second.capabilities.aspectRatios.size() > 0) {
-            themeAspectRatio->setEnabled(true);
-            themeAspectRatio->setOpacity(1.0f);
-            themeAspectRatio->getParent()
-                ->getChild(themeAspectRatio->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-        }
-        else {
-            themeAspectRatio->setEnabled(false);
-            themeAspectRatio->setOpacity(DISABLED_OPACITY);
-            themeAspectRatio->getParent()
-                ->getChild(themeAspectRatio->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-        }
-        if (!selectedSet->second.capabilities.legacyTheme) {
-            gamelist_view_style->setEnabled(false);
-            gamelist_view_style->setOpacity(DISABLED_OPACITY);
-            gamelist_view_style->getParent()
-                ->getChild(gamelist_view_style->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-            // TEMPORARY
-            // transition_style->setEnabled(false);
-            transition_style->setOpacity(DISABLED_OPACITY);
-            transition_style->getParent()
-                ->getChild(transition_style->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-        }
-        else {
-            gamelist_view_style->setEnabled(true);
-            gamelist_view_style->setOpacity(1.0f);
-            gamelist_view_style->getParent()
-                ->getChild(gamelist_view_style->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-
-            transition_style->setEnabled(true);
-            transition_style->setOpacity(1.0f);
-            transition_style->getParent()
-                ->getChild(transition_style->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-        }
-    };
-
-    scrollThemeSetFunc(selectedSet->first, true);
-    theme_set->setCallback(scrollThemeSetFunc);
-
     // Optionally start in selected system/gamelist.
     auto startupSystem = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "GAMELIST ON STARTUP", false);
@@ -587,28 +512,28 @@ void GuiMenu::openUIOptions()
 #endif
 
     // Display pillarboxes (and letterboxes) for videos in the gamelists.
-    auto gamelist_video_pillarbox = std::make_shared<SwitchComponent>();
-    gamelist_video_pillarbox->setState(Settings::getInstance()->getBool("GamelistVideoPillarbox"));
-    s->addWithLabel("DISPLAY PILLARBOXES FOR GAMELIST VIDEOS", gamelist_video_pillarbox);
-    s->addSaveFunc([gamelist_video_pillarbox, s] {
-        if (gamelist_video_pillarbox->getState() !=
+    auto gamelistVideoPillarbox = std::make_shared<SwitchComponent>();
+    gamelistVideoPillarbox->setState(Settings::getInstance()->getBool("GamelistVideoPillarbox"));
+    s->addWithLabel("DISPLAY PILLARBOXES FOR GAMELIST VIDEOS", gamelistVideoPillarbox);
+    s->addSaveFunc([gamelistVideoPillarbox, s] {
+        if (gamelistVideoPillarbox->getState() !=
             Settings::getInstance()->getBool("GamelistVideoPillarbox")) {
             Settings::getInstance()->setBool("GamelistVideoPillarbox",
-                                             gamelist_video_pillarbox->getState());
+                                             gamelistVideoPillarbox->getState());
             s->setNeedsSaving();
         }
     });
 
 #if defined(USE_OPENGL_21)
     // Render scanlines for videos in the gamelists.
-    auto gamelist_video_scanlines = std::make_shared<SwitchComponent>();
-    gamelist_video_scanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));
-    s->addWithLabel("RENDER SCANLINES FOR GAMELIST VIDEOS", gamelist_video_scanlines);
-    s->addSaveFunc([gamelist_video_scanlines, s] {
-        if (gamelist_video_scanlines->getState() !=
+    auto gamelistVideoScanlines = std::make_shared<SwitchComponent>();
+    gamelistVideoScanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));
+    s->addWithLabel("RENDER SCANLINES FOR GAMELIST VIDEOS", gamelistVideoScanlines);
+    s->addSaveFunc([gamelistVideoScanlines, s] {
+        if (gamelistVideoScanlines->getState() !=
             Settings::getInstance()->getBool("GamelistVideoScanlines")) {
             Settings::getInstance()->setBool("GamelistVideoScanlines",
-                                             gamelist_video_scanlines->getState());
+                                             gamelistVideoScanlines->getState());
             s->setNeedsSaving();
         }
     });
@@ -775,6 +700,111 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
         }
     });
+
+    // When the theme set entries are scrolled or selected, update the relevant rows.
+    auto scrollThemeSetFunc = [=](const std::string& themeName, bool firstRun = false) {
+        auto selectedSet = themeSets.find(themeName);
+        if (selectedSet == themeSets.cend())
+            return;
+        if (!firstRun) {
+            themeVariantsFunc(themeName, themeVariant->getSelected());
+            themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
+        }
+        int selectableVariants {0};
+        for (auto& variant : selectedSet->second.capabilities.variants) {
+            if (variant.selectable)
+                ++selectableVariants;
+        }
+        if (!selectedSet->second.capabilities.legacyTheme && selectableVariants > 0) {
+            themeVariant->setEnabled(true);
+            themeVariant->setOpacity(1.0f);
+            themeVariant->getParent()
+                ->getChild(themeVariant->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+        else {
+            themeVariant->setEnabled(false);
+            themeVariant->setOpacity(DISABLED_OPACITY);
+            themeVariant->getParent()
+                ->getChild(themeVariant->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+
+        if (!selectedSet->second.capabilities.legacyTheme &&
+            selectedSet->second.capabilities.aspectRatios.size() > 0) {
+            themeAspectRatio->setEnabled(true);
+            themeAspectRatio->setOpacity(1.0f);
+            themeAspectRatio->getParent()
+                ->getChild(themeAspectRatio->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+        else {
+            themeAspectRatio->setEnabled(false);
+            themeAspectRatio->setOpacity(DISABLED_OPACITY);
+            themeAspectRatio->getParent()
+                ->getChild(themeAspectRatio->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        if (!selectedSet->second.capabilities.legacyTheme) {
+            gamelist_view_style->setEnabled(false);
+            gamelist_view_style->setOpacity(DISABLED_OPACITY);
+            gamelist_view_style->getParent()
+                ->getChild(gamelist_view_style->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+            // TEMPORARY
+            // transition_style->setEnabled(false);
+            transition_style->setOpacity(DISABLED_OPACITY);
+            transition_style->getParent()
+                ->getChild(transition_style->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
+            // Pillarboxes are theme-controlled for newer themes.
+            gamelistVideoPillarbox->setEnabled(false);
+            gamelistVideoPillarbox->setOpacity(DISABLED_OPACITY);
+            gamelistVideoPillarbox->getParent()
+                ->getChild(gamelistVideoPillarbox->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
+            // Scanlines are theme-controlled for newer themes.
+#if defined(USE_OPENGL_21)
+            gamelistVideoScanlines->setEnabled(false);
+            gamelistVideoScanlines->setOpacity(DISABLED_OPACITY);
+            gamelistVideoScanlines->getParent()
+                ->getChild(gamelistVideoScanlines->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+#endif
+        }
+        else {
+            gamelist_view_style->setEnabled(true);
+            gamelist_view_style->setOpacity(1.0f);
+            gamelist_view_style->getParent()
+                ->getChild(gamelist_view_style->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+            transition_style->setEnabled(true);
+            transition_style->setOpacity(1.0f);
+            transition_style->getParent()
+                ->getChild(transition_style->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+            gamelistVideoPillarbox->setEnabled(true);
+            gamelistVideoPillarbox->setOpacity(1.0f);
+            gamelistVideoPillarbox->getParent()
+                ->getChild(gamelistVideoPillarbox->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+#if defined(USE_OPENGL_21)
+            gamelistVideoScanlines->setEnabled(true);
+            gamelistVideoScanlines->setOpacity(1.0f);
+            gamelistVideoScanlines->getParent()
+                ->getChild(gamelistVideoScanlines->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+#endif
+        }
+    };
+
+    scrollThemeSetFunc(selectedSet->first, true);
+    theme_set->setCallback(scrollThemeSetFunc);
 
     s->setSize(mSize);
     mWindow->pushGui(s);
