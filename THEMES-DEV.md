@@ -743,6 +743,16 @@ The order in which you define properties does not matter and you only need to de
 
 #### image
 
+Displays a raster image or a scalable vector graphics (SVG) image.
+
+Supported views:
+* `system `
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the image's aspect ratio.
@@ -786,8 +796,12 @@ The order in which you define properties does not matter and you only need to de
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This usually looks best if used for the main game image.
     - Default is `false`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -795,6 +809,15 @@ The order in which you define properties does not matter and you only need to de
 
 #### video
 
+Plays a video and provides support for displaying a static image for a defined time period before starting the video player. Although an unlimited number of videos could in theory be defined per view it's strongly recommended to keep it at a single instance. Playing multiple videos simultaneously takes a lot of CPU resources and ES-DE currently has no audio mixing capabilities so the audio would not play correctly.
+
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited` (recommended to keep at a single instance)
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the video's aspect ratio.
@@ -809,9 +832,6 @@ The order in which you define properties does not matter and you only need to de
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the text will be rotated.
     - Default is `0.5 0.5`
-* `delay` - type: FLOAT
-    - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageMetadata` property will be displayed. If that property is not set, then the `delay` property will be ignored.
-    - Default is `0`
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not. If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
 * `default` - type: PATH
@@ -830,11 +850,24 @@ The order in which you define properties does not matter and you only need to de
     - `md_backcover` - This will look for a box back cover image.
     - `md_3dbox` - This will look for a 3D box image.
     - `md_fanart` - This will look for a fan art image.
+* `pillarboxes` - type: BOOLEAN
+    - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
+    - Default is `true`
+* `scanlines` - type: BOOLEAN
+    - Whether to use a shader to render scanlines. This property is not compatible with `opacity` so enabling it will set the opacity to `1` (unless it was set to `0` in which case the entire video element is hidden).
+    - Default is `false`
+* `delay` - type: FLOAT
+    - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageMetadata` property will be displayed. If that property is not set, then the `delay` property will be ignored.
+    - Default is `0`
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
     - Default is `false`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -842,8 +875,15 @@ The order in which you define properties does not matter and you only need to de
 
 #### animation
 
-Lottie (vector graphics) animation.
+Lottie (vector graphics) animation. Note that these animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of them to the same view and to not make them too large.
 
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the animation's aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information.
@@ -860,16 +900,20 @@ Lottie (vector graphics) animation.
     - Path to the animation file.  Only the .json extension is supported.
 * `speed` - type: FLOAT.
     - The relative speed at which to play the animation.
-    - Minimum value is `0.2` and maximum value is `3.0`
-    - Default is `1.0`
+    - Minimum value is `0.2` and maximum value is `3`
+    - Default is `1`
 * `direction` - type: STRING
     - The direction that the animation should be played. Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
     - Default is `normal`
 * `keepAspectRatio` - type: BOOLEAN.
     - If true, aspect ratio will be preserved. If false, animation will stretch to the defined size. Note that setting to `false` is incompatible with only defining one of the axes for the `size` element.
     - Default is `true`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -877,8 +921,15 @@ Lottie (vector graphics) animation.
 
 #### badges
 
-It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course).
+Displays graphical symbols representing a number of metadata fields for the currently selected game. It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course).
 
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
@@ -925,14 +976,18 @@ It's strongly recommended to use the same image dimensions for all badges as var
 * `controllerSize` - type: FLOAT
     - The size of the controller icon relative to the parent `controller` badge.
     - Setting the value to `1.0` sizes the controller icon to the same width as the parent badge. The image aspect ratio is always maintained.
-    - Minimum value is `0.1` and maximum value is `2.0`
+    - Minimum value is `0.1` and maximum value is `2`
 * `customBadgeIcon` - type: PATH
     - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
 * `customControllerIcon` - type: PATH
     - A controller icon override. Specify the controller type in the attribute `controller`. These are the available types:
     - `gamepad_generic`, `gamepad_nintendo_nes`, `gamepad_nintendo_snes`, `gamepad_nintendo_64`, `gamepad_playstation`, `gamepad_sega_md_3_buttons`, `gamepad_sega_md_6_buttons`, `gamepad_xbox`, `joystick_generic`, `joystick_arcade_no_buttons`, `joystick_arcade_1_button`, `joystick_arcade_2_buttons`, `joystick_arcade_3_buttons`, `joystick_arcade_4_buttons`, `joystick_arcade_5_buttons`, `joystick_arcade_6_buttons`, `keyboard_generic`, `keyboard_and_mouse_generic`, `mouse_generic`, `mouse_amiga`, `lightgun_generic`, `lightgun_nintendo`, `steering_wheel_generic`, `flight_stick_generic`, `spinner_generic`, `trackball_generic`, `wii_remote_nintendo`, `wii_remote_and_nunchuk_nintendo`, `joycon_left_or_right_nintendo`, `joycon_pair_nintendo`, `unknown`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -940,6 +995,16 @@ It's strongly recommended to use the same image dimensions for all badges as var
 
 #### text
 
+Displays text. This can be literal strings or values based on game metadata or system variables, as described below. For the `gamelist` view it's also possible to place the text inside a scrollable container which is for example useful for longer texts like the game descriptions.
+
+Supported views:
+* `system` (no container support for this view)
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
@@ -983,7 +1048,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container. Only available for the gamelist view.
 * `containerScrollSpeed` - type: FLOAT
-    - A base speed is automatically calculated based on container and font sizes, so this property applies relative to the auto-calculated value.
+    - A base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value.
     - Minimum value is `0.1` and maximum value is `10`
     - Default is `1`
 * `containerStartDelay` - type: FLOAT
@@ -1014,14 +1079,28 @@ It's strongly recommended to use the same image dimensions for all badges as var
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
     - Default is `1.5`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view. This property will be ignored for elements defined for the `gamelist` view where a `metadata` property has been set. That is so because the "Hide metadata fields" functionality will hide and unhide metadata text fields as needed.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `40`
 
 #### datetime
+
+Displays a date and time as a text string. The format is ISO 8601 (YYYY-MM-DD) by default, but this can be changed using the `format` property. The text _unknown_ will be shown by default if there is no time stamp available. If the property `displayRelative` has been set, the text will be shown as _never_ in case of no time stamp.
+
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
@@ -1041,7 +1120,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed.
     - Possible values:
     - `md_releasedate` - The release date of the game.
-    - `md_lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time.
+    - `md_lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -1062,7 +1141,8 @@ It's strongly recommended to use the same image dimensions for all badges as var
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
     - Default is `1.5`
-* `format` - type: STRING. Specifies format for rendering datetime.
+* `format` - type: STRING
+    - Specifies the date and time format. Has no effect if `displayRelative` has been set to true.
     - %Y: The year, including the century (1900)
     - %m: The month number [01,12]
     - %d: The day of the month [01,31]
@@ -1070,9 +1150,13 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - %M: The minute [00,59]
     - %S: The second [00,59]
 * `displayRelative` - type: BOOLEAN.
-    - Renders the datetime as a a relative string (ex: 'x days ago').
+    - Renders the datetime as a relative string (e.g. 'x days ago').
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view. This property will be ignored for elements defined for the `gamelist` view. That is so because the "Hide metadata fields" functionality will hide and unhide metadata text fields as needed.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -1082,6 +1166,13 @@ It's strongly recommended to use the same image dimensions for all badges as var
 
 Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned or center aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left.
 
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
@@ -1097,12 +1188,12 @@ Displays the game count (all games as well as favorites), any applied filters, a
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the element will be rotated.
     - Default is `0.5 0.5`
-* `backgroundColor` - type: COLOR
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `color` - type: COLOR
+* `backgroundColor` - type: COLOR
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1111,8 +1202,12 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Controls alignment on the Y axis.
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -1120,6 +1215,15 @@ Displays the game count (all games as well as favorites), any applied filters, a
 
 #### rating
 
+Displays a graphical representation of the game rating, from 0 to 5.
+
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Only one value is actually used. The other value should be zero.  (e.g. specify width OR height, but not both.  This is done to maintain the aspect ratio.)
@@ -1138,12 +1242,28 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Path to the "filled" rating image.  Image must be square (width equals height).
 * `unfilledPath` - type: PATH
     - Path to the "unfilled" rating image.  Image must be square (width equals height).
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
+* `visible` - type: BOOLEAN
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
+    - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `45`
 
 #### carousel
 
+Displays a carousel for selecting game systems.
+
+Supported views:
+* `system`
+
+Instances per view:
+* `single`
+
+Properties:
 * `type` - type: STRING
     - Sets the carousel type and scroll direction.
     - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
@@ -1159,7 +1279,7 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Default is `FFFFFFD8`
 * `colorEnd` - type: COLOR
     - Setting this to something other than what is defined for `color` creates a color gradient on the background panel.
-    - Default is `0xFFFFFFD8`
+    - Default is `FFFFFFD8`
 * `gradientType` - type: STRING
     - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
     - Possible values are `horizontal` or `vertical`
@@ -1219,22 +1339,37 @@ Displays the game count (all games as well as favorites), any applied filters, a
 
 #### textlist
 
-This is a list containing rows of text which can be navigated using the keyboard or a controller.
+A text list for navigating and selecting games.
 
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `single`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
-* `selectorColor` - type: COLOR
-    - Color of the "selector bar."
-* `selectorImagePath` - type: PATH
-    - Path to image to render in place of "selector bar."
-* `selectorImageTile` - type: BOOLEAN
-    - If true, the selector image will be tiled instead of stretched to fit its size.
 * `selectorHeight` - type: FLOAT
     - Height of the "selector bar".
 * `selectorOffsetY` - type: FLOAT
     - Allows moving of the "selector bar" up or down from its computed position.  Useful for fine tuning the position of the "selector bar" relative to the text.
+* `selectorColor` - type: COLOR
+    - Color of the selector bar.
+    - Default is `000000FF`
+* `selectorColorEnd` - type: COLOR
+    - Setting this to something other than what is defined for `selectorColor` creates a color gradient.
+    - Default is `000000FF`
+* `selectorGradientType` - type: STRING
+    - The direction to apply the color gradient if both `selectorColor` and `selectorColorEnd` have been defined.
+    - Possible values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `selectorImagePath` - type: PATH
+    - Path to image to render in place of "selector bar."
+* `selectorImageTile` - type: BOOLEAN
+    - If true, the selector image will be tiled instead of stretched to fit its size.
 * `selectedColor` - type: COLOR
     - Color of the highlighted entry text.
 * `primaryColor` - type: COLOR
@@ -1261,8 +1396,16 @@ This is a list containing rows of text which can be navigated using the keyboard
 
 #### helpsystem
 
-The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
+The help system is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
 
+Supported views:
+* `system`
+* `gamelist`
+
+Instances per view:
+* `single`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0.012 0.9515`
 * `origin` - type: NORMALIZED_PAIR
@@ -1326,6 +1469,8 @@ The help system is a special element that displays a context-sensitive list of a
 
 #### imagegrid
 
+Deprecated.
+
 * `pos` - type: NORMALIZED_PAIR.
 * `size` - type: NORMALIZED_PAIR.
     - The size of the grid. Take care the selected tile can go out of the grid size, so don't position the grid too close to another element or the screen border.
@@ -1354,6 +1499,8 @@ The help system is a special element that displays a context-sensitive list of a
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
 
 #### gridtile
+
+Deprecated.
 
 * `size` - type: NORMALIZED_PAIR.
     - The size of the default gridtile is used to calculate how many tiles can fit in the imagegrid. If not explicitly set, the size of the selected gridtile is equal the size of the default gridtile * 1.2

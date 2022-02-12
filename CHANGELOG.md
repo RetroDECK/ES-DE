@@ -21,6 +21,9 @@
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
+* Added theme support for defining the opacity for most element types
+* Added theme support for enabling and disabling video pillarboxes and scanline rendering
+* Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
@@ -50,6 +53,7 @@
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
+* Changed the opacity data type and functions from unsigned char to float throughout the codebase
 * Refactored the six gamelist classes into two new classes; GamelistBase and GamelistView
 * Rewrote the gamelist logic to handle an arbitrary amount of components per type and split the legacy code into a separate file
 * Renamed Gamelist.cpp to GamelistFileParser.cpp and moved it to its own namespace instead of using the global namespace
@@ -68,13 +72,18 @@
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
 * When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
+* Slide and fade transitions would sometimes stop working after changing theme sets
+* Horizontal and vertical gradients were mixed up (showing the opposite gradient type if set in a theme)
 * The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling (only fixed for non-legacy themes)
+* Rating icon outlines would not fade out correctly when fast-scrolling in a gamelist
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
+* The device text flickered in GuiDetectDevice when configuring a controller
+* The selector bar was not aligned correctly during menu scale-up animations
 
 ## Version 1.2.0
 
