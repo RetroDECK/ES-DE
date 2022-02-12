@@ -369,7 +369,7 @@ void ImageComponent::updateVertices()
 
 void ImageComponent::updateColors()
 {
-    const float opacity = (mOpacity * (mFading ? mFadeOpacity : 1.0f));
+    const float opacity = (mOpacity * mThemeOpacity * (mFading ? mFadeOpacity : 1.0f));
     const unsigned int color = Renderer::convertRGBAToABGR(
         (mColorShift & 0xFFFFFF00) | static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
     const unsigned int colorEnd =
@@ -384,8 +384,8 @@ void ImageComponent::updateColors()
 
 void ImageComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mTexture == nullptr || mTargetSize == glm::vec2 {0.0f, 0.0f} ||
-        mSize == glm::vec2 {0.0f, 0.0f})
+    if (!isVisible() || mThemeOpacity == 0.0f || mTexture == nullptr ||
+        mTargetSize == glm::vec2 {0.0f, 0.0f} || mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};

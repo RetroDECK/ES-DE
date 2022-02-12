@@ -95,12 +95,11 @@ void TextComponent::setBackgroundColor(unsigned int color)
 //  Scale the opacity.
 void TextComponent::setOpacity(float opacity)
 {
-    // This function is mostly called to do fade in and fade out of the text component element.
-    float o {opacity * mColorOpacity};
-    mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(o * 255.0f);
+    float textOpacity {opacity * mColorOpacity * mThemeOpacity};
+    mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(textOpacity * 255.0f);
 
-    float bgo {opacity * mBgColorOpacity};
-    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(bgo * 255.0f);
+    float textBackgroundOpacity {opacity * mBgColorOpacity * mThemeOpacity};
+    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(textBackgroundOpacity * 255.0f);
 
     onColorChanged();
     GuiComponent::setOpacity(opacity);
@@ -149,7 +148,7 @@ void TextComponent::setCapitalize(bool capitalize)
 
 void TextComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mThemeOpacity == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
@@ -302,17 +301,17 @@ void TextComponent::onTextChanged()
         }
 
         text.append(abbrev);
-
         mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
-            text, glm::vec2 {}, (mColor >> 8 << 8) | static_cast<unsigned char>(mOpacity * 255.0f),
-            mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+            text, glm::vec2 {}, mColor, mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
         mTextCache = std::shared_ptr<TextCache>(
-            f->buildTextCache(f->wrapText(text, mSize.x), glm::vec2 {},
-                              (mColor >> 8 << 8) | static_cast<unsigned char>(mOpacity * 255.0f),
-                              mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+            f->buildTextCache(f->wrapText(text, mSize.x), glm::vec2 {}, mColor, mSize.x,
+                              mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
+
+    if (mOpacity != 1.0f || mThemeOpacity != 1.0f)
+        setOpacity(mOpacity);
 
     // This is required to set the color transparency.
     onColorChanged();

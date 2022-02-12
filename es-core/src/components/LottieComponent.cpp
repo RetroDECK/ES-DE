@@ -330,10 +330,7 @@ void LottieComponent::update(int deltaTime)
 
 void LottieComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
-        return;
-
-    if (mAnimation == nullptr)
+    if (!isVisible() || mThemeOpacity == 0.0f || mAnimation == nullptr)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
@@ -472,6 +469,7 @@ void LottieComponent::render(const glm::mat4& parentTrans)
 
 #if defined(USE_OPENGL_21)
         // Perform color space conversion from BGRA to RGBA.
+        vertices[0].opacity = mThemeOpacity;
         vertices[0].shaders = Renderer::SHADER_BGRA_TO_RGBA;
 #endif
 

@@ -191,7 +191,7 @@ public:
 
     virtual bool isListScrolling() { return false; }
     virtual void stopListScrolling() {}
-    virtual float getOpacity() const { return mOpacity; }
+    virtual const float getOpacity() const { return mOpacity; }
     virtual void setOpacity(float opacity);
     virtual unsigned int getColor() const { return mColor; }
     virtual unsigned int getColorShift() const { return mColorShift; }
@@ -291,6 +291,7 @@ protected:
     glm::vec2 mSize;
 
     float mOpacity;
+    float mThemeOpacity;
     float mRotation;
     float mScale;
     float mDefaultZIndex;

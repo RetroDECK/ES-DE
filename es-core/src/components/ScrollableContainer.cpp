@@ -214,7 +214,7 @@ void ScrollableContainer::update(int deltaTime)
 
 void ScrollableContainer::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mThemeOpacity == 0.0f || mChildren.front()->getValue() == "")
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};

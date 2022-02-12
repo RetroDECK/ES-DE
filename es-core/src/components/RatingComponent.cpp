@@ -85,7 +85,8 @@ std::string RatingComponent::getRatingValue() const
 void RatingComponent::setOpacity(float opacity)
 {
     mOpacity = opacity;
-    mColorShift = (mColorShift >> 8 << 8) | static_cast<unsigned char>(mOpacity * 255.0f);
+    mColorShift =
+        (mColorShift >> 8 << 8) | static_cast<unsigned char>(mOpacity * mThemeOpacity * 255.0f);
     updateColors();
 }
 
@@ -148,7 +149,8 @@ void RatingComponent::updateColors()
 
 void RatingComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr)
+    if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr ||
+        mThemeOpacity == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};

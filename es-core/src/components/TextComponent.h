@@ -57,7 +57,10 @@ public:
     std::string getHiddenValue() const override { return mHiddenText; }
     void setHiddenValue(const std::string& value) override { setHiddenText(value); }
 
-    float getOpacity() const override { return static_cast<float>((mColor & 0x000000FF) / 255.0f); }
+    float const getOpacity() const override
+    {
+        return static_cast<float>((mColor & 0x000000FF) / 255.0f);
+    }
     void setOpacity(float opacity) override;
 
     void setSelectable(bool status) { mSelectable = status; }

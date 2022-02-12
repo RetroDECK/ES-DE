@@ -168,14 +168,14 @@ const std::string BadgeComponent::getDisplayName(const std::string& shortName)
 
 void BadgeComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mThemeOpacity == 0.0f)
         return;
 
-    if (mOpacity == 1.0f) {
+    if (mOpacity * mThemeOpacity == 1.0f) {
         mFlexboxComponent.render(parentTrans);
     }
     else {
-        mFlexboxComponent.setOpacity(mOpacity);
+        mFlexboxComponent.setOpacity(mOpacity * mThemeOpacity);
         mFlexboxComponent.render(parentTrans);
         mFlexboxComponent.setOpacity(1.0f);
     }

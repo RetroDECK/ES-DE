@@ -31,6 +31,7 @@ GuiComponent::GuiComponent()
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
     , mOpacity {1.0f}
+    , mThemeOpacity {1.0f}
     , mRotation {0.0f}
     , mScale {1.0f}
     , mDefaultZIndex {0.0f}
@@ -356,10 +357,11 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else
         setZIndex(getDefaultZIndex());
 
-    if (properties & ThemeFlags::VISIBLE && elem->has("visible"))
-        setVisible(elem->get<bool>("visible"));
-    else
-        setVisible(true);
+    if (properties & ThemeFlags::OPACITY && elem->has("opacity"))
+        mThemeOpacity = glm::clamp(elem->get<float>("opacity"), 0.0f, 1.0f);
+
+    if (properties & ThemeFlags::VISIBLE && elem->has("visible") && !elem->get<bool>("visible"))
+        mThemeOpacity = 0.0f;
 }
 
 void GuiComponent::updateHelpPrompts()
