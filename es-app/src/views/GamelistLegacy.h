@@ -555,7 +555,11 @@ void GamelistView::legacyUpdateInfoPanel()
     comps.push_back(mRatingComponents.front().get());
 
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
-        GuiComponent* comp = *it;
+        GuiComponent* comp {*it};
+        if (!fadingOut && !comp->isAnimationPlaying(0)) {
+            comp->setOpacity(1.0f);
+            continue;
+        }
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
@@ -635,9 +639,7 @@ void GamelistView::legacyInitMDValues()
     }
 
     mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->setFont(defaultFont);
-    //        mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->setColor(0xFFFFFFFF);
     mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->setFont(defaultFont);
-    //        mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->setColor(0xFFFFFFFF);
 
     values.emplace_back(mRatingComponents.front().get());
     values.emplace_back(mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE].get());

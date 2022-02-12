@@ -714,14 +714,11 @@ void GamelistView::updateInfoPanel()
             }
             else if (metadata == "md_lastplayed") {
                 date->setValue(file->metadata.get("lastplayed"));
-                date->setDisplayRelative(true);
             }
             else {
                 date->setValue("19700101T000000");
             }
         }
-
-        fadingOut = false;
     }
 
     std::vector<GuiComponent*> comps;
@@ -756,7 +753,11 @@ void GamelistView::updateInfoPanel()
     }
 
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
-        GuiComponent* comp = *it;
+        GuiComponent* comp {*it};
+        if (!fadingOut && !comp->isAnimationPlaying(0)) {
+            comp->setOpacity(1.0f);
+            continue;
+        }
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
