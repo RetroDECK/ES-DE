@@ -47,6 +47,8 @@ public:
     void setScreensaverMode(bool isScreensaver) { mScreensaverMode = isScreensaver; }
     // Set the opacity for the embedded static image.
     void setOpacity(float opacity) override { mOpacity = opacity; }
+    // Set whether to draw black pillarboxes/letterboxes behind videos.
+    void setDrawPillarboxes(bool state) { mDrawPillarboxes = state; }
 
     bool hasStaticVideo() { return !mConfig.staticVideoPath.empty(); }
     bool hasStaticImage() { return mStaticImage.getTextureSize() != glm::ivec2 {0, 0}; }
@@ -139,6 +141,9 @@ protected:
     bool mGameLaunched;
     bool mBlockPlayer;
     bool mTargetIsMax;
+    bool mDrawPillarboxes;
+    bool mRenderScanlines;
+    bool mLegacyTheme;
     float mFadeIn; // Used for fading in the video screensaver.
 
     Configuration mConfig;

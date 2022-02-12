@@ -123,6 +123,9 @@ void VideoFFmpegComponent::resize()
 
 void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 {
+    if (!isVisible() || mThemeOpacity == 0.0f)
+        return;
+
     VideoComponent::render(parentTrans);
     glm::mat4 trans {parentTrans * getTransform()};
     GuiComponent::renderChildren(trans);
@@ -141,11 +144,18 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         Renderer::Vertex vertices[4];
         Renderer::setMatrix(parentTrans);
 
+        unsigned int rectColor {0x000000FF};
+
+        if (mThemeOpacity != 1.0f) {
+            color = (static_cast<int>(mThemeOpacity * 255.0f) << 24) + 0x00FFFFFF;
+            rectColor = static_cast<int>(mThemeOpacity * 255.0f);
+        }
+
         // Render the black rectangle behind the video.
         if (mVideoRectangleCoords.size() == 4) {
             Renderer::drawRect(mVideoRectangleCoords[0], mVideoRectangleCoords[1],
                                mVideoRectangleCoords[2], mVideoRectangleCoords[3], // Line break.
-                               0x000000FF, 0x000000FF);
+                               rectColor, rectColor);
         }
 
         // clang-format off
@@ -205,9 +215,11 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         // Render scanlines if this option is enabled. However, if this is the media viewer
         // or the video screensaver, then skip this as the scanline rendering is then handled
         // in those modules as a postprocessing step.
-        if ((!mScreensaverMode && !mMediaViewerMode) &&
-            Settings::getInstance()->getBool("GamelistVideoScanlines"))
-            vertices[0].shaders = Renderer::SHADER_SCANLINES;
+        if (!mScreensaverMode && !mMediaViewerMode) {
+            if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoScanlines")) ||
+                (!mLegacyTheme && mRenderScanlines))
+                vertices[0].shaders = Renderer::SHADER_SCANLINES;
+        }
 #endif
 
         // Render it.
@@ -867,7 +879,8 @@ void VideoFFmpegComponent::calculateBlackRectangle()
     if (mVideoAreaPos != glm::vec2 {} && mVideoAreaSize != glm::vec2 {}) {
         mVideoRectangleCoords.clear();
 
-        if (Settings::getInstance()->getBool("GamelistVideoPillarbox")) {
+        if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoPillarbox")) ||
+            (!mLegacyTheme && mDrawPillarboxes)) {
             float rectHeight;
             float rectWidth;
             // Video is in landscape orientation.

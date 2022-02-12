@@ -36,6 +36,9 @@ VideoComponent::VideoComponent()
     , mGameLaunched {false}
     , mBlockPlayer {false}
     , mTargetIsMax {false}
+    , mDrawPillarboxes {true}
+    , mRenderScanlines {false}
+    , mLegacyTheme {false}
     , mFadeIn {1.0f}
 {
     // Setup the default configuration.
@@ -201,7 +204,7 @@ void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
     // simply looks better than leaving an empty space where the video would have been located.
     if (mWindow->getGuiStackSize() > 1 || (mConfig.showSnapshotNoVideo && mVideoPath.empty()) ||
         (mStartDelayed && mConfig.showSnapshotDelay)) {
-        mStaticImage.setOpacity(mOpacity);
+        mStaticImage.setOpacity(mOpacity * mThemeOpacity);
         mStaticImage.render(parentTrans);
     }
 }
@@ -217,6 +220,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                  ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "video");
+
+    mLegacyTheme = theme->isLegacyTheme();
 
     if (!elem)
         return;
@@ -267,6 +272,16 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & METADATA && elem->has("imageMetadata"))
         setMetadataField(elem->get<std::string>("imageMetadata"));
+
+    if (elem->has("pillarboxes"))
+        mDrawPillarboxes = elem->get<bool>("pillarboxes");
+
+    // Scanlines are not compatible with video transparency.
+    if (elem->has("scanlines")) {
+        mRenderScanlines = elem->get<bool>("scanlines");
+        if (mRenderScanlines && mThemeOpacity != 0.0f)
+            mThemeOpacity = 1.0f;
+    }
 
     if (elem->has("scrollFadeIn") && elem->get<bool>("scrollFadeIn"))
         mComponentThemeFlags |= ComponentThemeFlags::SCROLL_FADE_IN;
