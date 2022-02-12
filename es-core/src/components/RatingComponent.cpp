@@ -119,11 +119,11 @@ void RatingComponent::onSizeChanged()
 
 void RatingComponent::updateVertices()
 {
-    const float numStars = NUM_RATING_STARS;
-    const float h = getSize().y; // Ss the same as a single star's width.
-    const float w = getSize().y * mValue * numStars;
-    const float fw = getSize().y * numStars;
-    const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
+    const float numStars {NUM_RATING_STARS};
+    const float h {getSize().y}; // Ss the same as a single star's width.
+    const float w {getSize().y * mValue * numStars};
+    const float fw {getSize().y * numStars};
+    const unsigned int color {Renderer::convertRGBAToABGR(mColorShift)};
 
     // clang-format off
     mVertices[0] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
@@ -140,7 +140,7 @@ void RatingComponent::updateVertices()
 
 void RatingComponent::updateColors()
 {
-    const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
+    const unsigned int color {Renderer::convertRGBAToABGR(mColorShift)};
 
     for (int i = 0; i < 8; ++i)
         mVertices[i].col = color;
@@ -165,7 +165,7 @@ void RatingComponent::render(const glm::mat4& parentTrans)
             if (mUnfilledColor != mColorShift) {
                 const unsigned int color = Renderer::convertRGBAToABGR(mUnfilledColor);
                 for (int i = 0; i < 8; ++i)
-                    mVertices[i].col = color;
+                    mVertices[i].col = (color & 0x00FFFFFF) + (mVertices[i].col & 0xFF000000);
             }
 
             Renderer::drawTriangleStrips(&mVertices[4], 4);
