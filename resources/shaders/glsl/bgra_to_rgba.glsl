@@ -21,13 +21,14 @@ void main(void)
 #elif defined(FRAGMENT)
 // Fragment section of code:
 
+uniform float opacity = 1.0;
 uniform sampler2D myTexture;
 varying vec2 vTexCoord;
 
 void main()
 {
     vec4 color = texture2D(myTexture, vTexCoord);
-    gl_FragColor = vec4(color.bgra);
+    gl_FragColor = vec4(color.bgr, color.a * opacity);
 }
 
 #endif

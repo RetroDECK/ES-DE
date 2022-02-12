@@ -363,6 +363,8 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
+                    if (vertices->opacity < 1.0f)
+                        runShader->setOpacity(vertices->opacity);
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
