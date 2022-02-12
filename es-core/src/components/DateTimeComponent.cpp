@@ -117,9 +117,6 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    if (elem->has("displayRelative"))
-        setDisplayRelative(elem->get<bool>("displayRelative"));
-
     if (elem->has("format"))
         setFormat(elem->get<std::string>("format"));
 
@@ -177,6 +174,12 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & METADATA && elem->has("metadata"))
         setMetadataField(elem->get<std::string>("metadata"));
+
+    if (mMetadataField == "md_lastplayed")
+        setDisplayRelative(true);
+
+    if (elem->has("displayRelative"))
+        setDisplayRelative(elem->get<bool>("displayRelative"));
 
     if (properties & LETTER_CASE && elem->has("letterCase")) {
         std::string letterCase {elem->get<std::string>("letterCase")};
