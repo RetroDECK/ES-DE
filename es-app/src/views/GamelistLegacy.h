@@ -27,6 +27,7 @@ void GamelistView::legacyPopulateFields()
     mTextComponents.back()->setHorizontalAlignment(ALIGN_CENTER);
     mTextComponents.back()->setColor(0xFFFFFFFF);
     mTextComponents.back()->setDefaultZIndex(50.0f);
+    mTextComponents.back()->setVisible(false);
     addChild(mTextComponents.back().get());
 
     // Logo.
