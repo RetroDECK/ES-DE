@@ -37,7 +37,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <origin>0.5 0.5</origin>
             <letterCase>uppercase</letterCase>
             <horizontalAlignment>center</horizontalAlignment>
-            <metadata>sy_gamecount</metadata>
+            <systemdata>gamecount</systemdata>
             <zIndex>50</zIndex>
         </text>
     </view>
@@ -177,7 +177,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <containerScrollSpeed>1</containerScrollSpeed>
             <containerStartDelay>4.5</containerStartDelay>
             <containerResetDelay>7</containerResetDelay>
-            <metadata>md_description</metadata>
+            <metadata>description</metadata>
             <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.024</fontSize>
@@ -219,7 +219,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.2755</pos>
         </text>
         <datetime name="md_releasedate">
-            <metadata>md_releasedate</metadata>
+            <metadata>releasedate</metadata>
             <pos>0.83 0.3005</pos>
         </datetime>
         <text name="md_lbl_rating">
@@ -230,7 +230,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.3355</pos>
         </text>
         <text name="md_developer">
-            <metadata>md_developer</metadata>
+            <metadata>developer</metadata>
             <pos>0.83 0.3605</pos>
         </text>
         <text name="md_lbl_publisher">
@@ -238,7 +238,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.3955</pos>
         </text>
         <text name="md_publisher">
-            <metadata>md_publisher</metadata>
+            <metadata>publisher</metadata>
             <pos>0.83 0.4205</pos>
         </text>
         <text name="md_lbl_genre">
@@ -246,7 +246,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.4555</pos>
         </text>
         <text name="md_genre">
-            <metadata>md_genre</metadata>
+            <metadata>genre</metadata>
             <pos>0.83 0.4805</pos>
         </text>
         <text name="md_lbl_players">
@@ -254,7 +254,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.5155</pos>
         </text>
         <text name="md_players">
-            <metadata>md_players</metadata>
+            <metadata>players</metadata>
             <pos>0.83 0.5405</pos>
         </text>
         <text name="md_lbl_lastplayed">
@@ -262,7 +262,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.5755</pos>
         </text>
         <datetime name="md_lastplayed">
-            <metadata>md_lastplayed</metadata>
+            <metadata>lastplayed</metadata>
             <pos>0.83 0.6005</pos>
         </datetime>
         <text name="md_lbl_rating">
@@ -332,7 +332,8 @@ based on: 'recalbox-multi' by the Recalbox community
                 <origin>0.5 0.5</origin>
                 <pos>0.63 0.45</pos>
                 <maxSize>0.360 0.424</maxSize>
-                <metadata>md_image</metadata>
+                <imageType>image</imageType>
+                <interpolation>nearest</interpolation>
                 <scrollFadeIn>true</scrollFadeIn>
             </image>
         </view>
@@ -343,7 +344,8 @@ based on: 'recalbox-multi' by the Recalbox community
             <video name="md_video">
                 <origin>0.5 0.5</origin>
                 <pos>0.63 0.45</pos>
-                <imageMetadata>md_image</imageMetadata>
+                <imageType>image</imageType>
+                <interpolation>nearest</interpolation>
                 <maxSize>0.356 0.424</maxSize>
                 <delay>1.7</delay>
                 <scrollFadeIn>true</scrollFadeIn>
