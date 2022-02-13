@@ -42,6 +42,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeEditComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/FlexboxComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GameSelectorComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/IList.h

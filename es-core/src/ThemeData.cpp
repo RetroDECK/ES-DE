@@ -279,6 +279,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"zIndex", FLOAT}}},
+     {"gameselector",
+      {{"selection", STRING},
+       {"count", UNSIGNED_INTEGER}}},
      {"helpsystem",
       {{"pos", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},

@@ -39,6 +39,8 @@ FileData::FileData(FileType type,
     , mEnvData {envData}
     , mSystem {system}
     , mOnlyFolders {false}
+    , mUpdateChildrenLastPlayed {false}
+    , mUpdateChildrenMostPlayed {false}
     , mDeletionFlag {false}
 {
     // Metadata needs at least a name field (since that's what getName() will return).
@@ -736,15 +738,15 @@ void FileData::sort(const SortType& type, bool mFavoritesOnTop)
         sortFavoritesOnTop(*type.comparisonFunction, mGameCount);
     else
         sort(*type.comparisonFunction, mGameCount);
+
+    updateLastPlayedList();
+    updateMostPlayedList();
 }
 
 void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
 {
     bool isKidMode = (Settings::getInstance()->getString("UIMode") == "kid" ||
                       Settings::getInstance()->getBool("ForceKid"));
-
-    (Settings::getInstance()->getString("UIMode") == "kid" ||
-     Settings::getInstance()->getBool("ForceKid"));
 
     for (unsigned int i = 0; i < mChildren.size(); ++i) {
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
@@ -759,6 +761,36 @@ void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
             mChildren[i]->countGames(gameCount);
     }
     mGameCount = gameCount;
+}
+
+void FileData::updateLastPlayedList()
+{
+    if (!mUpdateChildrenLastPlayed)
+        return;
+
+    mChildrenLastPlayed.clear();
+    mChildrenLastPlayed = getChildrenRecursive();
+
+    std::stable_sort(mChildrenLastPlayed.begin(), mChildrenLastPlayed.end());
+    std::sort(std::begin(mChildrenLastPlayed), std::end(mChildrenLastPlayed),
+              [](FileData* a, FileData* b) {
+                  return a->metadata.get("lastplayed") > b->metadata.get("lastplayed");
+              });
+}
+
+void FileData::updateMostPlayedList()
+{
+    if (!mUpdateChildrenMostPlayed)
+        return;
+
+    mChildrenMostPlayed.clear();
+    mChildrenMostPlayed = getChildrenRecursive();
+
+    std::stable_sort(mChildrenMostPlayed.begin(), mChildrenMostPlayed.end());
+    std::sort(std::begin(mChildrenMostPlayed), std::end(mChildrenMostPlayed),
+              [](FileData* a, FileData* b) {
+                  return a->metadata.getInt("playcount") > b->metadata.getInt("playcount");
+              });
 }
 
 const FileData::SortType& FileData::getSortTypeFromString(const std::string& desc) const
