@@ -2,8 +2,6 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
-If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
-
 Table of contents:
 
 [[_TOC_]]
@@ -122,7 +120,7 @@ Views are defined like this:
 </view>
 ```
 
-An element is a particular visual component such as an image, an animation or a piece of text. It has a mandatory _name_ attribute which is used by ES-DE to track each element entry. By using this name attribute it's possible to split up the definition of an element to different locations. For example you may want to define the color properties separately from where the size and position are configured (see the example below).
+An element is a particular visual component such as an image, an animation or a piece of text. It has a mandatory _name_ attribute which is used by ES-DE to track each element entry. By using this name attribute it's possible to split up the definition of an element to different locations. For example you may want to define the color properties separately from where the size and position are configured (see the example below). The name attribute can be set to any string value.
 
 This is the element structure:
 
@@ -267,20 +265,21 @@ Here are some example uses of the `<variant>` functionality:
 <theme>
     <variant name="lightModeNoVideo, darkModeNoVideo">
         <view name="gamelist">
-            <image name="md_image">
-                <metadata>md_image</metadata>
-                <zIndex>40</zIndex>
+            <image name="game_image">
+                <imageType>titlescreen</imageType>
+                <scrollFadeIn>true</scrollFadeIn>
+                <zIndex>42</zIndex>
             </image>
         </view>
     </variant>
 
     <variant name="lightMode, darkMode">
         <view name="gamelist">
-            <video name="md_video">
-                <metadata>md_video</metadata>
+            <video name="game_video">
+                <imageType>cover</imageType>
                 <delay>1.7</delay>
-                <showSnapshotNoVideo>true</showSnapshotNoVideo>
-                <showSnapshotDelay>true</showSnapshotDelay>
+                <scrollFadeIn>true</scrollFadeIn>
+                <zIndex>42</zIndex>
             </video>
         </view>
     </variant>
@@ -290,9 +289,10 @@ Here are some example uses of the `<variant>` functionality:
 <theme>
     <view name="gamelist">
         <variant name="lightModeNoVideo">
-            <image name="md_image">
-                <metadata>md_image</metadata>
-                <zIndex>40</zIndex>
+            <image name="game_image">
+                <imageType>titlescreen</imageType>
+                <scrollFadeIn>true</scrollFadeIn>
+                <zIndex>42</zIndex>
             </image>
         </variant>
     </view>
@@ -334,7 +334,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 <theme>
     <aspectRatio name="4:3, 5:4">
         <view name="gamelist">
-            <image name="md_image">
+            <image name="image_logo">
                 <pos>0.3 0.56</pos>
             </image>
         </view>
@@ -342,7 +342,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 
     <aspectRatio name="16:9, 16:10, 21:9">
         <view name="gamelist">
-            <image name="md_image">
+            <image name="image_logo">
                 <pos>0.42 0.31</pos>
             </image>
         </view>
@@ -353,7 +353,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 <theme>
     <view name="gamelist">
         <aspectRatio name="4:3, 5:4">
-            <image name="md_image">
+            <image name="image_logo">
                 <pos>0.3 0.56</pos>
             </image>
         </aspectRatio>
@@ -770,21 +770,25 @@ Properties:
 * `path` - type: PATH
     - Path to the image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `default` - type: PATH
-    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `metadata` property. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
-* `metadata` - type: STRING
-    - This displays a game image of a certain media type. If no image of the requested type is found, the space will be left blank unless the `default` property has been set. If the metadata type is set to an invalid value, no image will be displayed regardless of whether the `default` property has been defined or not.
+* `imageType` - type: STRING
+    - This displays a game image of a certain media type. If no image of the requested type is found, the space will be left blank unless the `default` property has been set. If the imageType property is set to an invalid value, no image will be displayed even if a `default` property has been defined.
     - Possible values:
-    - `md_image` - This will look for a miximage, but if that is not found screenshot is tried next, then title screen and finally box front cover.
-    - `md_miximage` - This will look for a miximage.
-    - `md_marquee` - This will look for a marquee image.
-    - `md_screenshot` - This will look for a screenshot image.
-    - `md_titlescreen` - This will look for a title screen image.
-    - `md_cover` - This will look for a box front cover image.
-    - `md_backcover` - This will look for a box back cover image.
-    - `md_3dbox` - This will look for a 3D box image.
-    - `md_fanart` - This will look for a fan art image.
+    - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`
+    - `miximage` - This will look for a miximage.
+    - `marquee` - This will look for a marquee (wheel) image.
+    - `screenshot` - This will look for a screenshot image.
+    - `titlescreen` - This will look for a title screen image.
+    - `cover` - This will look for a box front cover image.
+    - `backcover` - This will look for a box back cover image.
+    - `3dbox` - This will look for a 3D box image.
+    - `fanart` - This will look for a fan art image.
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on scalable vector graphics (SVG) images.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest`
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `colorEnd` - type: COLOR
@@ -811,13 +815,13 @@ Properties:
 
 Plays a video and provides support for displaying a static image for a defined time period before starting the video player. Although an unlimited number of videos could in theory be defined per view it's strongly recommended to keep it at a single instance. Playing multiple videos simultaneously takes a lot of CPU resources and ES-DE currently has no audio mixing capabilities so the audio would not play correctly.
 
-Supported views:
+**Supported views:**
 * `gamelist`
 
-Instances per view:
-* `unlimited` (recommended to keep at a single instance)
+**Instances per view:**
+* `unlimited` (but recommended to keep at a single instance)
 
-Properties:
+**Properties:**
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the video's aspect ratio.
@@ -835,21 +839,25 @@ Properties:
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not. If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
 * `default` - type: PATH
-    - Path to a default video file. The default video will be played (unless the `path` property has been set) when the selected game does not have a video. If an image type has been defined using `imageMetadata` that image will be searched for first and only if no such image could be found this `default` video will be shown. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default video file. The default video will be played (unless the `path` property has been set) when the selected game does not have a video. If an image type has been defined using `imageType` that image will be searched for first and only if no such image could be found this `default` video will be shown. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `defaultImage` - type: PATH
     - This works exactly as the `default` property but it allows displaying an image instead of playing a video.
-* `imageMetadata` - type: STRING
-    - This displays a game image of a certain media type. This occurs if there is no video found for the game and the `path` and `default` properties have not been set, or if a video start delay has been defined via the `delay` attribute.
+* `imageType` - type: STRING
+    - This displays a game image of a certain media type. This occurs if there is no video found for the game and the `path` property has not been set, or if a video start delay has been defined via the `delay` attribute.
     - Possible values:
-    - `md_image` - This will look for a miximage, but if that is not found screenshot is tried next, then title screen and finally box front cover.
-    - `md_miximage` - This will look for a miximage.
-    - `md_marquee` - This will look for a marquee image.
-    - `md_screenshot` - This will look for a screenshot image.
-    - `md_titlescreen` - This will look for a title screen image.
-    - `md_cover` - This will look for a box front cover image.
-    - `md_backcover` - This will look for a box back cover image.
-    - `md_3dbox` - This will look for a 3D box image.
-    - `md_fanart` - This will look for a fan art image.
+    - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`
+    - `miximage` - This will look for a miximage.
+    - `marquee` - This will look for a marquee (wheel) image.
+    - `screenshot` - This will look for a screenshot image.
+    - `titlescreen` - This will look for a title screen image.
+    - `cover` - This will look for a box front cover image.
+    - `backcover` - This will look for a box back cover image.
+    - `3dbox` - This will look for a 3D box image.
+    - `fanart` - This will look for a fan art image.
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest`
 * `pillarboxes` - type: BOOLEAN
     - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
     - Default is `true`
@@ -857,8 +865,9 @@ Properties:
     - Whether to use a shader to render scanlines. This property is not compatible with `opacity` so enabling it will set the opacity to `1` (unless it was set to `0` in which case the entire video element is hidden).
     - Default is `false`
 * `delay` - type: FLOAT
-    - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageMetadata` property will be displayed. If that property is not set, then the `delay` property will be ignored.
-    - Default is `0`
+    - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageType` property will be displayed. If that property is not set, then the `delay` property will be ignored.
+    - Minimum value is `0` and maximum value is `15`
+    - Default is `1.5`
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
     - Default is `false`
@@ -934,7 +943,7 @@ Properties:
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
     - `w h` - Dimensions of the badges container. The badges will be scaled to fit within these dimensions.
-    - Minimum value per axis is `0.03` and maximum value per axis is `1.0`
+    - Minimum value per axis is `0.03` and maximum value per axis is `1`
     - Default is `0.15 0.20`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
@@ -971,17 +980,48 @@ Properties:
     - `altemulator` - Will be shown when an alternative emulator is setup for the game.
 * `controllerPos` - type: NORMALIZED_PAIR
     - The position of the controller icon relative to the parent `controller` badge.
-    - Minimum value per axis is `-1.0` and maximum value per axis is `2.0`
+    - Minimum value per axis is `-1` and maximum value per axis is `2`
     - Default is `0.5 0.5` which centers the controller icon on the badge.
 * `controllerSize` - type: FLOAT
     - The size of the controller icon relative to the parent `controller` badge.
-    - Setting the value to `1.0` sizes the controller icon to the same width as the parent badge. The image aspect ratio is always maintained.
+    - Setting the value to `1` sizes the controller icon to the same width as the parent badge. The image aspect ratio is always maintained.
     - Minimum value is `0.1` and maximum value is `2`
 * `customBadgeIcon` - type: PATH
     - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
 * `customControllerIcon` - type: PATH
-    - A controller icon override. Specify the controller type in the attribute `controller`. These are the available types:
-    - `gamepad_generic`, `gamepad_nintendo_nes`, `gamepad_nintendo_snes`, `gamepad_nintendo_64`, `gamepad_playstation`, `gamepad_sega_md_3_buttons`, `gamepad_sega_md_6_buttons`, `gamepad_xbox`, `joystick_generic`, `joystick_arcade_no_buttons`, `joystick_arcade_1_button`, `joystick_arcade_2_buttons`, `joystick_arcade_3_buttons`, `joystick_arcade_4_buttons`, `joystick_arcade_5_buttons`, `joystick_arcade_6_buttons`, `keyboard_generic`, `keyboard_and_mouse_generic`, `mouse_generic`, `mouse_amiga`, `lightgun_generic`, `lightgun_nintendo`, `steering_wheel_generic`, `flight_stick_generic`, `spinner_generic`, `trackball_generic`, `wii_remote_nintendo`, `wii_remote_and_nunchuk_nintendo`, `joycon_left_or_right_nintendo`, `joycon_pair_nintendo`, `unknown`
+    - A controller icon override. Specify the controller type in the attribute `controller`.
+    - These are the available types:
+    - `gamepad_generic`,
+    `gamepad_nintendo_nes`,
+    `gamepad_nintendo_snes`,
+    `gamepad_nintendo_64`,
+    `gamepad_playstation`,
+    `gamepad_sega_md_3_buttons`,
+    `gamepad_sega_md_6_buttons`,
+    `gamepad_xbox`,
+    `joystick_generic`,
+    `joystick_arcade_no_buttons`,
+    `joystick_arcade_1_button`,
+    `joystick_arcade_2_buttons`,
+    `joystick_arcade_3_buttons`,
+    `joystick_arcade_4_buttons`,
+    `joystick_arcade_5_buttons`,
+    `joystick_arcade_6_buttons`,
+    `keyboard_generic`,
+    `keyboard_and_mouse_generic`,
+    `mouse_generic`,
+    `mouse_amiga`,
+    `lightgun_generic`,
+    `lightgun_nintendo`,
+    `steering_wheel_generic`,
+    `flight_stick_generic`,
+    `spinner_generic`,
+    `trackball_generic`,
+    `wii_remote_nintendo`,
+    `wii_remote_and_nunchuk_nintendo`,
+    `joycon_left_or_right_nintendo`,
+    `joycon_pair_nintendo`,
+    `unknown`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -998,7 +1038,7 @@ Properties:
 Displays text. This can be literal strings or values based on game metadata or system variables, as described below. For the `gamelist` view it's also possible to place the text inside a scrollable container which is for example useful for longer texts like the game descriptions.
 
 Supported views:
-* `system` (no container support for this view)
+* `system`
 * `gamelist`
 
 Instances per view:
@@ -1022,31 +1062,33 @@ Properties:
     - Default is `0.5 0.5`
 * `text` - type: STRING
     - A string literal to display.
+* `systemdata` - type: STRING
+    - This translates to some system data including values defined in es_systems.xml as well as some statistics. If an invalid systemdata field is defined, it will be printed as a string literal. This property can only be used in the `system` view.
+    - Valid values:
+    - `name` - Short system name as defined in es_systems.xml.
+    - `fullname` - Full system name as defined in es_systems.xml.
+    - `gamecount` - Number of games available for the system. Number of favorites are printed inside brackets if applicable.
+    - `gamecount_games` - Number of games available for the system. Does not print the favorites count.
+    - `gamecount_favorites` - Number of favorite games for the system, may be blank if favorites are not applicable.
 * `metadata` - type: STRING
-    - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal.
-    - Possible values for the system view:
-    - `sy_name` - Short system name as defined in es_systems.xml.
-    - `sy_fullname` - Full system name as defined in es_systems.xml.
-    - `sy_gamecount` - Number of games available for the system. Number of favorites are printed inside brackets if applicable.
-    - `sy_gamecount_games` - Number of games available for the system. Does not print the favorites count.
-    - `sy_gamecount_favorites` - Number of favorite games for the system, may be blank if favorites are not applicable.
-    - Possible values for the gamelist view:
-    - `md_name` - Game name.
-    - `md_description` - Game description. Should be combined with the `container` property in most cases.
-    - `md_rating` - The numerical representation of the game rating, for example `3` or `4.5`.
-    - `md_developer` - Developer.
-    - `md_publisher` - Publisher.
-    - `md_genre` - Genre.
-    - `md_players` - The number of players.
-    - `md_favorite` - Whether the game is a favorite. Will be printed as either `Yes` or `No`.
-    - `md_completed` - Whether the game has been completed. Will be printed as either `Yes` or `No`.
-    - `md_kidgame` - Whether the game is suitable for children. Will be printed as either `Yes` or `No`.
-    - `md_broken` - Whether the game is broken/not working. Will be printed as either `Yes` or `No`.
-    - `md_playcount` - How many times the game has been played.
-    - `md_controller` - The controller for the game. Will be blank if none has been selected.
-    - `md_altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
+    - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal. This property can only be used in the `gamelist` view.
+     - Valid values:
+    - `name` - Game name.
+    - `description` - Game description. Should be combined with the `container` property in most cases.
+    - `rating` - The numerical representation of the game rating, for example `3` or `4.5`.
+    - `developer` - Developer.
+    - `publisher` - Publisher.
+    - `genre` - Genre.
+    - `players` - The number of players.
+    - `favorite` - Whether the game is a favorite. Will be printed as either `yes` or `no`.
+    - `completed` - Whether the game has been completed. Will be printed as either `yes` or `no`.
+    - `kidgame` - Whether the game is suitable for children. Will be printed as either `yes` or `no`.
+    - `broken` - Whether the game is broken/not working. Will be printed as either `yes` or `no`.
+    - `playcount` - How many times the game has been played.
+    - `controller` - The controller for the game. Will be blank if none has been selected.
+    - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
 * `container` - type: BOOLEAN
-    - Whether the text should be placed inside a scrollable container. Only available for the gamelist view.
+    - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
 * `containerScrollSpeed` - type: FLOAT
     - A base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value.
     - Minimum value is `0.1` and maximum value is `10`
@@ -1078,6 +1120,7 @@ Properties:
     - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
@@ -1119,8 +1162,8 @@ Properties:
 * `metadata` - type: STRING
     - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed.
     - Possible values:
-    - `md_releasedate` - The release date of the game.
-    - `md_lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
+    - `releasedate` - The release date of the game.
+    - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -1140,6 +1183,7 @@ Properties:
     - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `format` - type: STRING
     - Specifies the date and time format. Has no effect if `displayRelative` has been set to true.
@@ -1389,6 +1433,7 @@ Properties:
     - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -1432,6 +1477,10 @@ Properties:
 * `letterCase` - type: STRING
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
 * `customButtonIcon` - type: PATH
     - A button icon override. Specify the button type in the attribute `button`.
     - The available buttons are: \

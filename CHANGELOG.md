@@ -26,6 +26,7 @@
 * Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
+* Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
