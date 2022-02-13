@@ -34,7 +34,9 @@ public:
 
         if (mGameSelection == GameSelection::RANDOM) {
             for (int i = 0; i < mGameCount; ++i) {
-                FileData* randomGame {mSystem->getRandomGame()};
+                if (mSystem->getRootFolder()->getGameCount().first == 0)
+                    break;
+                FileData* randomGame {mSystem->getRandomGame(nullptr, true)};
                 if (randomGame != nullptr)
                     mGames.emplace_back(randomGame);
             }

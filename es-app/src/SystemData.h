@@ -128,7 +128,7 @@ public:
     SystemData* getNext() const;
     SystemData* getPrev() const;
     static SystemData* getRandomSystem(const SystemData* currentSystem);
-    FileData* getRandomGame(const FileData* currentGame = nullptr);
+    FileData* getRandomGame(const FileData* currentGame = nullptr, bool gameSelectorMode = false);
     FileData* getPlaceholder() { return mPlaceholder; }
 
     void sortSystem(bool reloadGamelist = true, bool jumpToFirstRow = false);

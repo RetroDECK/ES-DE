@@ -1096,7 +1096,7 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
     return randomSystem;
 }
 
-FileData* SystemData::getRandomGame(const FileData* currentGame)
+FileData* SystemData::getRandomGame(const FileData* currentGame, bool gameSelectorMode)
 {
     std::vector<FileData*> gameList;
     bool onlyFolders = false;
@@ -1109,12 +1109,17 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
         gameList = mRootFolder->getParent()->getChildrenListToDisplay();
     }
     else {
-        gameList = ViewController::getInstance()
-                       ->getGamelistView(mRootFolder->getSystem())
-                       .get()
-                       ->getCursor()
-                       ->getParent()
-                       ->getChildrenListToDisplay();
+        if (gameSelectorMode) {
+            gameList = mRootFolder->getFilesRecursive(GAME, false, false);
+        }
+        else {
+            gameList = ViewController::getInstance()
+                           ->getGamelistView(mRootFolder->getSystem())
+                           .get()
+                           ->getCursor()
+                           ->getParent()
+                           ->getChildrenListToDisplay();
+        }
     }
 
     if (gameList.size() > 0 && gameList.front()->getParent()->getOnlyFoldersFlag())
