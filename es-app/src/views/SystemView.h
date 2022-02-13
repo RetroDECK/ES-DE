@@ -9,13 +9,13 @@
 #ifndef ES_APP_VIEWS_SYSTEM_VIEW_H
 #define ES_APP_VIEWS_SYSTEM_VIEW_H
 
+#include "FileData.h"
 #include "GuiComponent.h"
 #include "Sound.h"
 #include "SystemData.h"
 #include "components/CarouselComponent.h"
-#include "components/DateTimeComponent.h"
+#include "components/GameSelectorComponent.h"
 #include "components/LottieComponent.h"
-#include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
 #include "components/TextListComponent.h"
 #include "components/VideoFFmpegComponent.h"
@@ -28,6 +28,7 @@ class SystemData;
 struct SystemViewElements {
     std::string name;
     std::string fullName;
+    std::unique_ptr<GameSelectorComponent> gameSelector;
     std::vector<GuiComponent*> legacyExtras;
     std::vector<GuiComponent*> children;
 
@@ -36,8 +37,6 @@ struct SystemViewElements {
     std::vector<std::unique_ptr<ImageComponent>> imageComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
     std::vector<std::unique_ptr<LottieComponent>> lottieAnimComponents;
-    std::vector<std::unique_ptr<ScrollableContainer>> containerComponents;
-    std::vector<std::unique_ptr<TextComponent>> containerTextComponents;
 };
 
 class SystemView : public GuiComponent
@@ -78,6 +77,7 @@ protected:
 private:
     void populate();
     void updateGameCount();
+    void updateGameSelector();
     void legacyApplyTheme(const std::shared_ptr<ThemeData>& theme);
     void renderElements(const glm::mat4& parentTrans, bool abovePrimary);
 

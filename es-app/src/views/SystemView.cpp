@@ -63,6 +63,7 @@ void SystemView::goToSystem(SystemData* system, bool animate)
 {
     mCarousel->setCursor(system);
     updateGameCount();
+    updateGameSelector();
 
     if (!animate)
         finishSystemAnimation(0);
@@ -173,11 +174,10 @@ HelpStyle SystemView::getHelpStyle()
 
 void SystemView::onCursorChanged(const CursorState& /*state*/)
 {
-    // Update help style.
     updateHelpPrompts();
+    updateGameSelector();
 
     int scrollVelocity {mCarousel->getScrollingVelocity()};
-
     float startPos {mCamOffset};
     float posMax {static_cast<float>(mCarousel->getNumEntries())};
     float target {static_cast<float>(mCarousel->getCursor())};
@@ -336,6 +336,12 @@ void SystemView::populate()
                 elements.name = it->getName();
                 elements.fullName = it->getFullName();
                 for (auto& element : theme->getViewElements("system").elements) {
+                    if (element.second.type == "gameselector") {
+                        elements.gameSelector = std::make_unique<GameSelectorComponent>(it);
+                        elements.gameSelector->applyTheme(theme, "system", element.first,
+                                                          ThemeFlags::ALL);
+                        elements.gameSelector->refreshGames();
+                    }
                     if (element.second.type == "carousel") {
                         mCarousel->applyTheme(theme, "system", element.first, ThemeFlags::ALL);
                         if (element.second.has("logo"))
@@ -420,6 +426,8 @@ void SystemView::populate()
         }
     }
 
+    updateGameSelector();
+
     if (mCarousel->getNumEntries() == 0) {
         // Something is wrong, there is not a single system to show, check if UI mode is not full.
         if (!UIModeController::getInstance()->isUIModeFull()) {
@@ -484,6 +492,43 @@ void SystemView::updateGameCount()
             }
             else {
                 gameCount->setValue(gameCount->getThemeSystemdata());
+            }
+        }
+    }
+}
+
+void SystemView::updateGameSelector()
+{
+    int cursor {mCarousel->getCursor()};
+
+    if (mSystemElements[cursor].gameSelector != nullptr) {
+        mSystemElements[mCarousel->getCursor()].gameSelector->refreshGames();
+        std::vector<FileData*> games {mSystemElements[cursor].gameSelector->getGames()};
+        if (!games.empty()) {
+            if (!mLegacyMode) {
+                for (auto& image : mSystemElements[cursor].imageComponents) {
+                    const std::string imageType {image->getThemeImageType()};
+                    if (imageType == "image")
+                        image->setImage(games.front()->getImagePath());
+                    else if (image->getThemeImageType() == "miximage")
+                        image->setImage(games.front()->getMiximagePath());
+                    else if (image->getThemeImageType() == "marquee")
+                        image->setImage(games.front()->getMarqueePath());
+                    else if (image->getThemeImageType() == "screenshot")
+                        image->setImage(games.front()->getScreenshotPath());
+                    else if (image->getThemeImageType() == "titlescreen")
+                        image->setImage(games.front()->getTitleScreenPath());
+                    else if (image->getThemeImageType() == "cover")
+                        image->setImage(games.front()->getCoverPath());
+                    else if (image->getThemeImageType() == "backcover")
+                        image->setImage(games.front()->getBackCoverPath());
+                    else if (image->getThemeImageType() == "3dbox")
+                        image->setImage(games.front()->get3DBoxPath());
+                    else if (image->getThemeImageType() == "fanart")
+                        image->setImage(games.front()->getFanArtPath());
+                    else if (image->getThemeImageType() == "thumbnail")
+                        image->setImage(games.front()->getThumbnailPath());
+                }
             }
         }
     }
