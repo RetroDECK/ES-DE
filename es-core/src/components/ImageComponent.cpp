@@ -42,6 +42,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mForceLoad {forceLoad}
     , mDynamic {dynamic}
     , mRotateByTargetSize {false}
+    , mLinearInterpolation {false}
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
 {
@@ -132,7 +133,7 @@ void ImageComponent::resize()
     onSizeChanged();
 }
 
-void ImageComponent::setImage(const std::string& path, bool tile, bool linearMagnify)
+void ImageComponent::setImage(const std::string& path, bool tile)
 {
     // Always load bundled graphic resources statically, unless mForceLoad has been set.
     // This eliminates annoying texture pop-in problems that would otherwise occur.
@@ -144,11 +145,11 @@ void ImageComponent::setImage(const std::string& path, bool tile, bool linearMag
         if (mDefaultPath.empty() || !ResourceManager::getInstance().fileExists(mDefaultPath))
             mTexture.reset();
         else
-            mTexture =
-                TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic, linearMagnify);
+            mTexture = TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic,
+                                            mLinearInterpolation);
     }
     else {
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, linearMagnify);
+        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation);
     }
 
     resize();
@@ -497,6 +498,22 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setMinSize(elem->get<glm::vec2>("minSize") * scale);
     }
 
+    if (elem->has("interpolation")) {
+        const std::string interpolation {elem->get<std::string>("interpolation")};
+        if (interpolation == "linear") {
+            mLinearInterpolation = true;
+        }
+        else if (interpolation == "nearest") {
+            mLinearInterpolation = false;
+        }
+        else {
+            mLinearInterpolation = false;
+            LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                               "<interpolation> set to \""
+                            << interpolation << "\"";
+        }
+    }
+
     if (elem->has("default"))
         setDefaultImage(elem->get<std::string>("default"));
 
@@ -505,8 +522,8 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setImage(elem->get<std::string>("path"), tile);
     }
 
-    if (properties & METADATA && elem->has("metadata"))
-        setMetadataField(elem->get<std::string>("metadata"));
+    if (properties & METADATA && elem->has("imageType"))
+        mThemeImageType = elem->get<std::string>("imageType");
 
     if (properties & COLOR) {
         if (elem->has("color"))

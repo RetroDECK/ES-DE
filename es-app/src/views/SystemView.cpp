@@ -348,15 +348,15 @@ void SystemView::populate()
                         elements.imageComponents.back()->setDefaultZIndex(30.0f);
                         elements.imageComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);
-                        if (elements.imageComponents.back()->getMetadataField() != "")
+                        if (elements.imageComponents.back()->getThemeImageType() != "")
                             elements.imageComponents.back()->setScrollHide(true);
                         elements.children.emplace_back(elements.imageComponents.back().get());
                     }
                     else if (element.second.type == "text") {
-                        if (element.second.has("metadata") &&
-                            element.second.get<std::string>("metadata").substr(0, 12) ==
-                                "sy_gamecount") {
-                            if (element.second.has("metadata")) {
+                        if (element.second.has("systemdata") &&
+                            element.second.get<std::string>("systemdata").substr(0, 9) ==
+                                "gamecount") {
+                            if (element.second.has("systemdata")) {
                                 elements.gameCountComponents.emplace_back(
                                     std::make_unique<TextComponent>());
                                 elements.gameCountComponents.back()->setDefaultZIndex(40.0f);
@@ -409,13 +409,13 @@ void SystemView::populate()
 
     for (auto& elements : mSystemElements) {
         for (auto& text : elements.textComponents) {
-            if (text->getMetadataField() != "") {
-                if (text->getMetadataField() == "sy_name")
+            if (text->getThemeSystemdata() != "") {
+                if (text->getThemeSystemdata() == "name")
                     text->setValue(elements.name);
-                else if (text->getMetadataField() == "sy_fullname")
+                else if (text->getThemeSystemdata() == "fullname")
                     text->setValue(elements.fullName);
                 else
-                    text->setValue(text->getMetadataField());
+                    text->setValue(text->getThemeSystemdata());
             }
         }
     }
@@ -470,20 +470,20 @@ void SystemView::updateGameCount()
     }
     else {
         for (auto& gameCount : mSystemElements[mCarousel->getCursor()].gameCountComponents) {
-            if (gameCount->getMetadataField() == "sy_gamecount") {
+            if (gameCount->getThemeSystemdata() == "gamecount") {
                 gameCount->setValue(ss.str());
             }
-            else if (gameCount->getMetadataField() == "sy_gamecount_games") {
+            else if (gameCount->getThemeSystemdata() == "gamecount_games") {
                 if (games)
                     gameCount->setValue(ssGames.str());
                 else
                     gameCount->setValue(ss.str());
             }
-            else if (gameCount->getMetadataField() == "sy_gamecount_favorites") {
+            else if (gameCount->getThemeSystemdata() == "gamecount_favorites") {
                 gameCount->setValue(ssFavorites.str());
             }
             else {
-                gameCount->setValue(gameCount->getMetadataField());
+                gameCount->setValue(gameCount->getThemeSystemdata());
             }
         }
     }

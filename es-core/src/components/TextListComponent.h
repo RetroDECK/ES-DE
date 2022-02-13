@@ -561,7 +561,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & LINE_SPACING) {
         if (elem->has("lineSpacing"))
-            setLineSpacing(elem->get<float>("lineSpacing"));
+            setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
         if (elem->has("selectorHeight"))
             setSelectorHeight(elem->get<float>("selectorHeight") * Renderer::getScreenHeight());
         if (elem->has("selectorOffsetY")) {

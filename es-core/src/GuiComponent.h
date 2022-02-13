@@ -211,8 +211,12 @@ public:
     virtual bool getEnabled() { return mEnabled; }
     virtual void setEnabled(bool state) { mEnabled = state; }
 
-    std::string getMetadataField() { return mMetadataField; }
-    void setMetadataField(const std::string& text) { mMetadataField = text; }
+    const std::string getThemeSystemdata() { return mThemeSystemdata; }
+    void setThemeSystemdata(const std::string& text) { mThemeSystemdata = text; }
+    const std::string getThemeMetadata() { return mThemeMetadata; }
+    void setThemeMetadata(const std::string& text) { mThemeMetadata = text; }
+    const std::string getThemeImageType() { return mThemeImageType; }
+    void setThemeImageType(const std::string& text) { mThemeImageType = text; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }
 
@@ -275,7 +279,9 @@ protected:
     GuiComponent* mParent;
     std::vector<GuiComponent*> mChildren;
 
-    std::string mMetadataField;
+    std::string mThemeSystemdata;
+    std::string mThemeMetadata;
+    std::string mThemeImageType;
 
     unsigned int mColor;
     float mSaturation;

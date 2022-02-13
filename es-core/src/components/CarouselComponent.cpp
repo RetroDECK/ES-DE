@@ -71,7 +71,7 @@ void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
         if (entry.data.logoPath != "" &&
             ResourceManager::getInstance().fileExists(entry.data.logoPath)) {
             auto logo = std::make_shared<ImageComponent>(false, false);
-            logo->setImage(entry.data.logoPath, false, false);
+            logo->setImage(entry.data.logoPath);
             logo->setMaxSize(glm::round(mLogoSize * mLogoScale));
             logo->applyTheme(theme, "system", "", ThemeFlags::ALL);
             logo->setRotateByTargetSize(true);
@@ -80,7 +80,7 @@ void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
         else if (entry.data.defaultLogoPath != "" &&
                  ResourceManager::getInstance().fileExists(entry.data.defaultLogoPath)) {
             auto defaultLogo = std::make_shared<ImageComponent>(false, false);
-            defaultLogo->setImage(entry.data.defaultLogoPath, false, false);
+            defaultLogo->setImage(entry.data.defaultLogoPath);
             defaultLogo->setMaxSize(glm::round(mLogoSize * mLogoScale));
             defaultLogo->applyTheme(theme, "system", "", ThemeFlags::ALL);
             defaultLogo->setRotateByTargetSize(true);

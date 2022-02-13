@@ -44,7 +44,7 @@ VideoComponent::VideoComponent()
     // Setup the default configuration.
     mConfig.showSnapshotDelay = false;
     mConfig.showSnapshotNoVideo = false;
-    mConfig.startDelay = 0;
+    mConfig.startDelay = 1500;
 
     if (mWindow->getGuiStackSize() > 1)
         topWindow(false);
@@ -78,13 +78,13 @@ bool VideoComponent::setVideo(std::string path)
     return false;
 }
 
-void VideoComponent::setImage(const std::string& path, bool tile, bool linearMagnify)
+void VideoComponent::setImage(const std::string& path, bool tile)
 {
     // Check that the image has changed.
     if (path == mStaticImagePath)
         return;
 
-    mStaticImage.setImage(path, tile, linearMagnify);
+    mStaticImage.setImage(path, tile);
     mStaticImagePath = path;
 }
 
@@ -246,6 +246,22 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mVideoAreaPos = elem->get<glm::vec2>("pos") * scale;
     }
 
+    if (elem->has("interpolation")) {
+        const std::string interpolation {elem->get<std::string>("interpolation")};
+        if (interpolation == "linear") {
+            mStaticImage.setLinearInterpolation(true);
+        }
+        else if (interpolation == "nearest") {
+            mStaticImage.setLinearInterpolation(false);
+        }
+        else {
+            mStaticImage.setLinearInterpolation(false);
+            LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                               "<interpolation> set to \""
+                            << interpolation << "\"";
+        }
+    }
+
     if (elem->has("default"))
         mConfig.defaultVideoPath = elem->get<std::string>("default");
 
@@ -258,7 +274,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mConfig.staticVideoPath = elem->get<std::string>("path");
 
     if ((properties & ThemeFlags::DELAY) && elem->has("delay"))
-        mConfig.startDelay = static_cast<unsigned>((elem->get<float>("delay") * 1000.0f));
+        mConfig.startDelay =
+            static_cast<unsigned int>(glm::clamp(elem->get<float>("delay"), 0.0f, 15.0f) * 1000.0f);
 
     if (!theme->isLegacyTheme())
         mConfig.showSnapshotNoVideo = true;
@@ -270,8 +287,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else if (elem->has("showSnapshotDelay"))
         mConfig.showSnapshotDelay = elem->get<bool>("showSnapshotDelay");
 
-    if (properties & METADATA && elem->has("imageMetadata"))
-        setMetadataField(elem->get<std::string>("imageMetadata"));
+    if (properties & METADATA && elem->has("imageType"))
+        mThemeImageType = elem->get<std::string>("imageType");
 
     if (elem->has("pillarboxes"))
         mDrawPillarboxes = elem->get<bool>("pillarboxes");

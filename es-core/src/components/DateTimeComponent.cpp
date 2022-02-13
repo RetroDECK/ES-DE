@@ -173,9 +173,9 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (properties & METADATA && elem->has("metadata"))
-        setMetadataField(elem->get<std::string>("metadata"));
+        mThemeMetadata = elem->get<std::string>("metadata");
 
-    if (mMetadataField == "md_lastplayed")
+    if (mThemeMetadata == "lastplayed")
         setDisplayRelative(true);
 
     if (elem->has("displayRelative"))
@@ -204,7 +204,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setUppercase(elem->get<bool>("forceUppercase"));
 
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
-        setLineSpacing(elem->get<float>("lineSpacing"));
+        setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
     setFont(Font::getFromTheme(elem, properties, mFont));
 }

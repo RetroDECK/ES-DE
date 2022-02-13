@@ -107,7 +107,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mImageComponents.push_back(std::make_unique<ImageComponent>());
                 mImageComponents.back()->setDefaultZIndex(30.0f);
                 mImageComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mImageComponents.back()->getMetadataField() != "")
+                if (mImageComponents.back()->getThemeImageType() != "")
                     mImageComponents.back()->setScrollHide(true);
                 addChild(mImageComponents.back().get());
             }
@@ -116,7 +116,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mVideoComponents.back()->setDefaultZIndex(30.0f);
                 addChild(mVideoComponents.back().get());
                 mVideoComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mVideoComponents.back()->getMetadataField() != "")
+                if (mVideoComponents.back()->getThemeImageType() != "")
                     mVideoComponents.back()->setScrollHide(true);
             }
             else if (element.second.type == "animation") {
@@ -155,7 +155,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mTextComponents.push_back(std::make_unique<TextComponent>());
                     mTextComponents.back()->setDefaultZIndex(40.0f);
                     mTextComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                    if (mTextComponents.back()->getMetadataField() != "")
+                    if (mTextComponents.back()->getThemeMetadata() != "")
                         mTextComponents.back()->setScrollHide(true);
                     addChild(mTextComponents.back().get());
                 }
@@ -164,7 +164,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mDateTimeComponents.push_back(std::make_unique<DateTimeComponent>());
                 mDateTimeComponents.back()->setDefaultZIndex(40.0f);
                 mDateTimeComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mDateTimeComponents.back()->getMetadataField() != "")
+                if (mDateTimeComponents.back()->getThemeMetadata() != "")
                     mDateTimeComponents.back()->setScrollHide(true);
                 addChild(mDateTimeComponents.back().get());
             }
@@ -342,7 +342,7 @@ void GamelistView::updateInfoPanel()
 
     if (hideMetaDataFields) {
         for (auto& text : mTextComponents) {
-            if (text->getMetadataField() != "")
+            if (text->getThemeMetadata() != "")
                 text->setVisible(false);
         }
         for (auto& date : mDateTimeComponents)
@@ -352,13 +352,13 @@ void GamelistView::updateInfoPanel()
         for (auto& rating : mRatingComponents)
             rating->setVisible(false);
         for (auto& cText : mContainerTextComponents) {
-            if (cText->getMetadataField() != "md_description")
+            if (cText->getThemeMetadata() != "description")
                 cText->setVisible(false);
         }
     }
     else {
         for (auto& text : mTextComponents) {
-            if (text->getMetadataField() != "")
+            if (text->getThemeMetadata() != "")
                 text->setVisible(true);
         }
         for (auto& date : mDateTimeComponents)
@@ -368,7 +368,7 @@ void GamelistView::updateInfoPanel()
         for (auto& rating : mRatingComponents)
             rating->setVisible(true);
         for (auto& cText : mContainerTextComponents) {
-            if (cText->getMetadataField() != "md_description")
+            if (cText->getThemeMetadata() != "description")
                 cText->setVisible(true);
         }
     }
@@ -388,48 +388,48 @@ void GamelistView::updateInfoPanel()
                 file->getSystem());
             if (mRandomGame) {
                 for (auto& image : mImageComponents) {
-                    if (image->getMetadataField() == "md_image")
+                    if (image->getThemeImageType() == "image")
                         image->setImage(mRandomGame->getImagePath());
-                    else if (image->getMetadataField() == "md_miximage")
+                    else if (image->getThemeImageType() == "miximage")
                         image->setImage(mRandomGame->getMiximagePath());
-                    else if (image->getMetadataField() == "md_marquee")
-                        image->setImage(mRandomGame->getMarqueePath(), false, true);
-                    else if (image->getMetadataField() == "md_screenshot")
+                    else if (image->getThemeImageType() == "marquee")
+                        image->setImage(mRandomGame->getMarqueePath());
+                    else if (image->getThemeImageType() == "screenshot")
                         image->setImage(mRandomGame->getScreenshotPath());
-                    else if (image->getMetadataField() == "md_titlescreen")
+                    else if (image->getThemeImageType() == "titlescreen")
                         image->setImage(mRandomGame->getTitleScreenPath());
-                    else if (image->getMetadataField() == "md_cover")
+                    else if (image->getThemeImageType() == "cover")
                         image->setImage(mRandomGame->getCoverPath());
-                    else if (image->getMetadataField() == "md_backcover")
+                    else if (image->getThemeImageType() == "backcover")
                         image->setImage(mRandomGame->getBackCoverPath());
-                    else if (image->getMetadataField() == "md_3dbox")
+                    else if (image->getThemeImageType() == "3dbox")
                         image->setImage(mRandomGame->get3DBoxPath());
-                    else if (image->getMetadataField() == "md_fanart")
+                    else if (image->getThemeImageType() == "fanart")
                         image->setImage(mRandomGame->getFanArtPath());
-                    else if (image->getMetadataField() == "md_thumbnail")
+                    else if (image->getThemeImageType() == "thumbnail")
                         image->setImage(mRandomGame->getThumbnailPath());
                 }
 
                 for (auto& video : mVideoComponents) {
-                    if (video->getMetadataField() == "md_image")
+                    if (video->getThemeImageType() == "image")
                         video->setImage(mRandomGame->getImagePath());
-                    else if (video->getMetadataField() == "md_miximage")
+                    else if (video->getThemeImageType() == "miximage")
                         video->setImage(mRandomGame->getMiximagePath());
-                    else if (video->getMetadataField() == "md_marquee")
-                        video->setImage(mRandomGame->getMarqueePath(), false, true);
-                    else if (video->getMetadataField() == "md_screenshot")
+                    else if (video->getThemeImageType() == "marquee")
+                        video->setImage(mRandomGame->getMarqueePath());
+                    else if (video->getThemeImageType() == "screenshot")
                         video->setImage(mRandomGame->getScreenshotPath());
-                    else if (video->getMetadataField() == "md_titlescreen")
+                    else if (video->getThemeImageType() == "titlescreen")
                         video->setImage(mRandomGame->getTitleScreenPath());
-                    else if (video->getMetadataField() == "md_cover")
+                    else if (video->getThemeImageType() == "cover")
                         video->setImage(mRandomGame->getCoverPath());
-                    else if (video->getMetadataField() == "md_backcover")
+                    else if (video->getThemeImageType() == "backcover")
                         video->setImage(mRandomGame->getBackCoverPath());
-                    else if (video->getMetadataField() == "md_3dbox")
+                    else if (video->getThemeImageType() == "3dbox")
                         video->setImage(mRandomGame->get3DBoxPath());
-                    else if (video->getMetadataField() == "md_fanart")
+                    else if (video->getThemeImageType() == "fanart")
                         video->setImage(mRandomGame->getFanArtPath());
-                    else if (video->getMetadataField() == "md_thumbnail")
+                    else if (video->getThemeImageType() == "thumbnail")
                         video->setImage(mRandomGame->getThumbnailPath());
 
                     // Always stop the video before setting a new video as it will otherwise
@@ -447,7 +447,7 @@ void GamelistView::updateInfoPanel()
             }
             else {
                 for (auto& image : mImageComponents) {
-                    if (image->getMetadataField() != "")
+                    if (image->getThemeImageType() != "")
                         image->setImage("");
                 }
 
@@ -466,48 +466,48 @@ void GamelistView::updateInfoPanel()
         }
         else {
             for (auto& image : mImageComponents) {
-                if (image->getMetadataField() == "md_image")
+                if (image->getThemeImageType() == "image")
                     image->setImage(file->getImagePath());
-                else if (image->getMetadataField() == "md_miximage")
+                else if (image->getThemeImageType() == "miximage")
                     image->setImage(file->getMiximagePath());
-                else if (image->getMetadataField() == "md_marquee")
-                    image->setImage(file->getMarqueePath(), false, true);
-                else if (image->getMetadataField() == "md_screenshot")
+                else if (image->getThemeImageType() == "marquee")
+                    image->setImage(file->getMarqueePath());
+                else if (image->getThemeImageType() == "screenshot")
                     image->setImage(file->getScreenshotPath());
-                else if (image->getMetadataField() == "md_titlescreen")
+                else if (image->getThemeImageType() == "titlescreen")
                     image->setImage(file->getTitleScreenPath());
-                else if (image->getMetadataField() == "md_cover")
+                else if (image->getThemeImageType() == "cover")
                     image->setImage(file->getCoverPath());
-                else if (image->getMetadataField() == "md_backcover")
+                else if (image->getThemeImageType() == "backcover")
                     image->setImage(file->getBackCoverPath());
-                else if (image->getMetadataField() == "md_3dbox")
+                else if (image->getThemeImageType() == "3dbox")
                     image->setImage(file->get3DBoxPath());
-                else if (image->getMetadataField() == "md_fanart")
+                else if (image->getThemeImageType() == "fanart")
                     image->setImage(file->getFanArtPath());
-                else if (image->getMetadataField() == "md_thumbnail")
+                else if (image->getThemeImageType() == "thumbnail")
                     image->setImage(file->getThumbnailPath());
             }
 
             for (auto& video : mVideoComponents) {
-                if (video->getMetadataField() == "md_image")
+                if (video->getThemeImageType() == "image")
                     video->setImage(file->getImagePath());
-                else if (video->getMetadataField() == "md_miximage")
+                else if (video->getThemeImageType() == "miximage")
                     video->setImage(file->getMiximagePath());
-                else if (video->getMetadataField() == "md_marquee")
-                    video->setImage(file->getMarqueePath(), false, true);
-                else if (video->getMetadataField() == "md_screenshot")
+                else if (video->getThemeImageType() == "marquee")
+                    video->setImage(file->getMarqueePath());
+                else if (video->getThemeImageType() == "screenshot")
                     video->setImage(file->getScreenshotPath());
-                else if (video->getMetadataField() == "md_titlescreen")
+                else if (video->getThemeImageType() == "titlescreen")
                     video->setImage(file->getTitleScreenPath());
-                else if (video->getMetadataField() == "md_cover")
+                else if (video->getThemeImageType() == "cover")
                     video->setImage(file->getCoverPath());
-                else if (video->getMetadataField() == "md_backcover")
+                else if (video->getThemeImageType() == "backcover")
                     video->setImage(file->getBackCoverPath());
-                else if (video->getMetadataField() == "md_3dbox")
+                else if (video->getThemeImageType() == "3dbox")
                     video->setImage(file->get3DBoxPath());
-                else if (video->getMetadataField() == "md_fanart")
+                else if (video->getThemeImageType() == "fanart")
                     video->setImage(file->getFanArtPath());
-                else if (video->getMetadataField() == "md_thumbnail")
+                else if (video->getThemeImageType() == "thumbnail")
                     video->setImage(file->getThumbnailPath());
 
                 video->onHide();
@@ -609,23 +609,23 @@ void GamelistView::updateInfoPanel()
         }
 
         for (auto& text : mTextComponents) {
-            if (text->getMetadataField() == "md_name")
+            if (text->getThemeMetadata() == "name")
                 text->setText(file->metadata.get("name"));
         }
 
         if (file->getType() == GAME) {
             if (!hideMetaDataFields) {
                 for (auto& date : mDateTimeComponents) {
-                    if (date->getMetadataField() == "md_lastplayed")
+                    if (date->getThemeMetadata() == "lastplayed")
                         date->setValue(file->metadata.get("lastplayed"));
-                    else if (date->getMetadataField() == "md_playcount")
+                    else if (date->getThemeMetadata() == "playcount")
                         date->setValue(file->metadata.get("playcount"));
                 }
             }
             else if (file->getType() == FOLDER) {
                 if (!hideMetaDataFields) {
                     for (auto& date : mDateTimeComponents) {
-                        if (date->getMetadataField() == "md_lastplayed") {
+                        if (date->getThemeMetadata() == "lastplayed") {
                             date->setValue(file->metadata.get("lastplayed"));
                             date->setVisible(false);
                             date->setVisible(false);
@@ -638,46 +638,46 @@ void GamelistView::updateInfoPanel()
         std::string metadata;
 
         auto getMetadataValue = [&file, &metadata]() -> std::string {
-            if (metadata == "md_name")
+            if (metadata == "name")
                 return file->metadata.get("name");
-            else if (metadata == "md_description")
+            else if (metadata == "description")
                 return file->metadata.get("desc");
-            else if (metadata == "md_developer")
+            else if (metadata == "developer")
                 return file->metadata.get("developer");
-            else if (metadata == "md_publisher")
+            else if (metadata == "publisher")
                 return file->metadata.get("publisher");
-            else if (metadata == "md_genre")
+            else if (metadata == "genre")
                 return file->metadata.get("genre");
-            else if (metadata == "md_players")
+            else if (metadata == "players")
                 return file->metadata.get("players");
-            else if (metadata == "md_favorite")
-                return file->metadata.get("favorite") == "true" ? "Yes" : "No";
-            else if (metadata == "md_completed")
-                return file->metadata.get("completed") == "true" ? "Yes" : "No";
-            else if (metadata == "md_kidgame")
-                return file->metadata.get("kidgame") == "true" ? "Yes" : "No";
-            else if (metadata == "md_broken")
-                return file->metadata.get("broken") == "true" ? "Yes" : "No";
-            else if (metadata == "md_playcount")
+            else if (metadata == "favorite")
+                return file->metadata.get("favorite") == "true" ? "yes" : "no";
+            else if (metadata == "completed")
+                return file->metadata.get("completed") == "true" ? "yes" : "no";
+            else if (metadata == "kidgame")
+                return file->metadata.get("kidgame") == "true" ? "yes" : "no";
+            else if (metadata == "broken")
+                return file->metadata.get("broken") == "true" ? "yes" : "no";
+            else if (metadata == "playcount")
                 return file->metadata.get("playcount");
-            else if (metadata == "md_altemulator")
+            else if (metadata == "altemulator")
                 return file->metadata.get("altemulator");
             else
                 return metadata;
         };
 
         for (auto& text : mContainerTextComponents) {
-            metadata = text->getMetadataField();
+            metadata = text->getThemeMetadata();
             if (metadata == "")
                 continue;
 
-            if (metadata == "md_rating") {
+            if (metadata == "rating") {
                 text->setValue(mRatingComponents.front()->getRatingValue());
                 continue;
             }
-            else if (metadata == "md_controller") {
-                std::string controller =
-                    BadgeComponent::getDisplayName(file->metadata.get("controller"));
+            else if (metadata == "controller") {
+                std::string controller {
+                    BadgeComponent::getDisplayName(file->metadata.get("controller"))};
                 text->setValue(controller == "unknown" ? "" : controller);
                 continue;
             }
@@ -686,15 +686,15 @@ void GamelistView::updateInfoPanel()
         }
 
         for (auto& text : mTextComponents) {
-            metadata = text->getMetadataField();
+            metadata = text->getThemeMetadata();
             if (metadata == "")
                 continue;
 
-            if (metadata == "md_rating") {
+            if (metadata == "rating") {
                 text->setValue(mRatingComponents.front()->getRatingValue());
                 continue;
             }
-            else if (metadata == "md_controller") {
+            else if (metadata == "controller") {
                 std::string controller =
                     BadgeComponent::getDisplayName(file->metadata.get("controller"));
                 text->setValue(controller == "unknown" ? "" : controller);
@@ -705,14 +705,14 @@ void GamelistView::updateInfoPanel()
         }
 
         for (auto& date : mDateTimeComponents) {
-            std::string metadata = date->getMetadataField();
+            std::string metadata = date->getThemeMetadata();
             if (metadata == "")
                 continue;
 
-            if (metadata == "md_releasedate") {
+            if (metadata == "releasedate") {
                 date->setValue(file->metadata.get("releasedate"));
             }
-            else if (metadata == "md_lastplayed") {
+            else if (metadata == "lastplayed") {
                 date->setValue(file->metadata.get("lastplayed"));
             }
             else {

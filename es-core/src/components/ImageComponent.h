@@ -24,7 +24,7 @@ public:
 
     // Loads the image at the given filepath. Will tile if tile is true (retrieves texture
     // as tiling, creates vertices accordingly).
-    void setImage(const std::string& path, bool tile = false, bool linearMagnify = false);
+    void setImage(const std::string& path, bool tile = false);
     // Loads an image from memory.
     void setImage(const char* data, size_t length, bool tile = false);
     // Use an already existing texture.
@@ -79,6 +79,8 @@ public:
 
     // Flag indicating if rotation should be based on target size vs. actual size.
     void setRotateByTargetSize(bool rotate) { mRotateByTargetSize = rotate; }
+    // Whether to use smooth texture magnification by utilizing linear interpolation.
+    void setLinearInterpolation(bool state) { mLinearInterpolation = state; }
 
     // Returns the size of the current texture, or (0, 0) if none is loaded.
     // May be different than drawn size (use getSize() for that).
@@ -129,6 +131,7 @@ private:
     bool mForceLoad;
     bool mDynamic;
     bool mRotateByTargetSize;
+    bool mLinearInterpolation;
 
     glm::vec2 mTopLeftCrop;
     glm::vec2 mBottomRightCrop;
