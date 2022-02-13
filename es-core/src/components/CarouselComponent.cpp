@@ -379,7 +379,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
     if (elem->has("maxLogoCount"))
         mMaxLogoCount =
-            glm::clamp(static_cast<int>(std::round(elem->get<float>("maxLogoCount"))), 2, 30);
+            glm::clamp(static_cast<int>(elem->get<unsigned int>("maxLogoCount")), 2, 30);
 
     if (elem->has("logoRotation"))
         mLogoRotation = elem->get<float>("logoRotation");

@@ -217,6 +217,7 @@ public:
         PATH,
         STRING,
         COLOR,
+        UNSIGNED_INTEGER,
         FLOAT,
         BOOLEAN
     };

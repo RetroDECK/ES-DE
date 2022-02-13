@@ -88,8 +88,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotationOrigin", NORMALIZED_PAIR},
        {"path", PATH},
        {"default", PATH},
-       {"tile", BOOLEAN},
        {"imageType", STRING},
+       {"tile", BOOLEAN},
        {"interpolation", STRING},
        {"color", COLOR},
        {"colorEnd", COLOR},
@@ -141,8 +141,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"horizontalAlignment", STRING},
        {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"direction", STRING},
-       {"lines", FLOAT},
-       {"itemsPerLine", FLOAT},
+       {"lines", UNSIGNED_INTEGER},
+       {"itemsPerLine", UNSIGNED_INTEGER},
        {"itemMargin", NORMALIZED_PAIR},
        {"slots", STRING},
        {"controllerPos", NORMALIZED_PAIR},
@@ -245,7 +245,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"logoHorizontalAlignment", STRING},
        {"logoVerticalAlignment", STRING},
        {"logoAlignment", STRING}, // For backward compatibility with legacy themes.
-       {"maxLogoCount", FLOAT},
+       {"maxLogoCount", UNSIGNED_INTEGER},
        {"text", STRING},
        {"textColor", COLOR},
        {"textBackgroundColor", COLOR},
@@ -1206,6 +1206,11 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 catch (ThemeException& e) {
                     throw error << ": " << e.what();
                 }
+                break;
+            }
+            case UNSIGNED_INTEGER: {
+                unsigned int integerVal {static_cast<unsigned int>(strtoul(str.c_str(), 0, 0))};
+                element.properties[node.name()] = integerVal;
                 break;
             }
             case FLOAT: {

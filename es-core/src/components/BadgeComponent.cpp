@@ -229,25 +229,25 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("lines")) {
-        const float lines {elem->get<float>("lines")};
-        if (lines < 1.0f || lines > 10.0f) {
+        const unsigned int lines {elem->get<unsigned int>("lines")};
+        if (lines < 1 || lines > 10) {
             LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <lines> set to \""
                             << lines << "\"";
         }
         else {
-            mFlexboxComponent.setLines(static_cast<unsigned int>(lines));
+            mFlexboxComponent.setLines(lines);
         }
     }
 
     if (elem->has("itemsPerLine")) {
-        const float itemsPerLine {elem->get<float>("itemsPerLine")};
-        if (itemsPerLine < 1.0f || itemsPerLine > 10.0f) {
+        const unsigned int itemsPerLine {elem->get<unsigned int>("itemsPerLine")};
+        if (itemsPerLine < 1 || itemsPerLine > 10) {
             LOG(LogWarning)
                 << "BadgeComponent: Invalid theme configuration, <itemsPerLine> set to \""
                 << itemsPerLine << "\"";
         }
         else {
-            mFlexboxComponent.setItemsPerLine(static_cast<unsigned int>(itemsPerLine));
+            mFlexboxComponent.setItemsPerLine(itemsPerLine);
         }
     }
 
