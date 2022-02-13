@@ -428,7 +428,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                         setCursor(getFirstEntry());
                         view->setCursor(view->getFirstEntry());
                     }
-                    else if (selectLastEntry) {
+                    else if (selectLastEntry && mList.size() > 0) {
                         setCursor(getLastEntry());
                         view->setCursor(view->getLastEntry());
                     }
