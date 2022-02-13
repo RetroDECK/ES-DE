@@ -362,6 +362,8 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & ThemeFlags::VISIBLE && elem->has("visible") && !elem->get<bool>("visible"))
         mThemeOpacity = 0.0f;
+    else
+        setVisible(true);
 }
 
 void GuiComponent::updateHelpPrompts()
