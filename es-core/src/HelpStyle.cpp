@@ -25,6 +25,7 @@ HelpStyle::HelpStyle()
     entrySpacing = 16.0f;
     iconTextSpacing = 8.0f;
     letterCase = "uppercase";
+    opacity = 1.0f;
 
     if (FONT_SIZE_SMALL != 0)
         font = Font::get(FONT_SIZE_SMALL);
@@ -72,6 +73,9 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
 
     if (elem->has("letterCase"))
         letterCase = elem->get<std::string>("letterCase");
+
+    if (elem->has("opacity"))
+        opacity = glm::clamp(elem->get<float>("opacity"), 0.2f, 1.0f);
 
     // Load custom button icons.
     // The names may look a bit strange when combined with the PREFIX string "button_" but it's

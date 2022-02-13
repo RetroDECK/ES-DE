@@ -292,6 +292,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"iconTextSpacing", FLOAT},
        {"letterCase", STRING},
        {"textStyle", STRING}, // For backward compatibility with legacy themes.
+       {"opacity", FLOAT},
        {"customButtonIcon", PATH}}},
      {"sound",
       {{"path", PATH}}},
