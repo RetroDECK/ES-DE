@@ -92,6 +92,11 @@ based on: 'recalbox-multi' by the Recalbox community
         </text>
     </view>
 
+    <variant name="themeEngineTest">
+        <include>./colors_dark.xml</include>
+        <include>./theme_engine_test.xml</include>
+    </variant>
+
     <view name="system, gamelist">
         <image name="background">
             <tile>true</tile>

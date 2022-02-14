@@ -42,6 +42,11 @@ Theme capabilities for rbsimple-DE.
         </override>
     </variant>
 
+    <variant name="themeEngineTest">
+        <label>Theme engine test</label>
+        <selectable>true</selectable>
+    </variant>
+
     <variant name="noMedia">
         <label>No game media</label>
         <selectable>false</selectable>
