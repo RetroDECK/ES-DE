@@ -148,7 +148,7 @@ bool GridTileComponent::isSelected() const
     return mSelected;
 }
 
-void GridTileComponent::setImage(const std::string& path)
+void GridTileComponent::setImageOLD(const std::string& path)
 {
     mImage->setImage(path);
 
@@ -156,7 +156,7 @@ void GridTileComponent::setImage(const std::string& path)
     resize();
 }
 
-void GridTileComponent::setImage(const std::shared_ptr<TextureResource>& texture)
+void GridTileComponent::setImageOLD(const std::shared_ptr<TextureResource>& texture)
 {
     mImage->setImage(texture);
 

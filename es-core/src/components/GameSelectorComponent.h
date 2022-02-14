@@ -19,15 +19,30 @@ public:
     GameSelectorComponent(SystemData* system)
         : mSystem {system}
         , mGameSelection {GameSelection::RANDOM}
+        , mNeedsRefresh {false}
         , mGameCount {1}
     {
+        mSystem->getRootFolder()->setUpdateListCallback([&]() { mNeedsRefresh = true; });
     }
 
+    enum class GameSelection {
+        RANDOM, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        LAST_PLAYED,
+        MOST_PLAYED
+    };
+
     const std::vector<FileData*>& getGames() const { return mGames; }
+    void setNeedsRefresh() { mNeedsRefresh = true; }
+    const bool getNeedsRefresh() { return mNeedsRefresh; }
+    const GameSelection getGameSelection() const { return mGameSelection; }
+    const std::string& getSelectorName() const { return mSelectorName; }
 
     void refreshGames()
     {
+        if (!mNeedsRefresh)
+            return;
         mGames.clear();
+        mNeedsRefresh = false;
 
         bool isKidMode {(Settings::getInstance()->getString("UIMode") == "kid" ||
                          Settings::getInstance()->getBool("ForceKid"))};
@@ -82,6 +97,10 @@ public:
         if (!elem)
             return;
 
+        // Remove the leading "gameselector_" part of the element string in order to directly
+        // match with the optional "gameselector" property used in other elements.
+        mSelectorName = element.substr(13, std::string::npos);
+
         if (elem->has("selection")) {
             const std::string selection {elem->get<std::string>("selection")};
             if (selection == "random") {
@@ -105,21 +124,17 @@ public:
             }
         }
 
-        if (elem->has("count"))
-            mGameCount = glm::clamp(static_cast<int>(elem->get<unsigned int>("count")), 1, 30);
+        if (elem->has("gameCount"))
+            mGameCount = glm::clamp(static_cast<int>(elem->get<unsigned int>("gameCount")), 1, 30);
     }
 
 private:
-    enum class GameSelection {
-        RANDOM, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-        LAST_PLAYED,
-        MOST_PLAYED
-    };
-
     SystemData* mSystem;
     std::vector<FileData*> mGames;
 
+    std::string mSelectorName;
     GameSelection mGameSelection;
+    bool mNeedsRefresh;
     int mGameCount;
 };
 

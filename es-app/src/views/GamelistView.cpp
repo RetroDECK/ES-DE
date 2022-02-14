@@ -107,7 +107,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mImageComponents.push_back(std::make_unique<ImageComponent>());
                 mImageComponents.back()->setDefaultZIndex(30.0f);
                 mImageComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mImageComponents.back()->getThemeImageType() != "")
+                if (mImageComponents.back()->getThemeImageTypes().size() != 0)
                     mImageComponents.back()->setScrollHide(true);
                 addChild(mImageComponents.back().get());
             }
@@ -116,7 +116,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mVideoComponents.back()->setDefaultZIndex(30.0f);
                 addChild(mVideoComponents.back().get());
                 mVideoComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mVideoComponents.back()->getThemeImageType() != "")
+                if (mVideoComponents.back()->getThemeImageTypes().size() != 0)
                     mVideoComponents.back()->setScrollHide(true);
             }
             else if (element.second.type == "animation") {
@@ -387,50 +387,11 @@ void GamelistView::updateInfoPanel()
             mRandomGame = CollectionSystemsManager::getInstance()->updateCollectionFolderMetadata(
                 file->getSystem());
             if (mRandomGame) {
-                for (auto& image : mImageComponents) {
-                    if (image->getThemeImageType() == "image")
-                        image->setImage(mRandomGame->getImagePath());
-                    else if (image->getThemeImageType() == "miximage")
-                        image->setImage(mRandomGame->getMiximagePath());
-                    else if (image->getThemeImageType() == "marquee")
-                        image->setImage(mRandomGame->getMarqueePath());
-                    else if (image->getThemeImageType() == "screenshot")
-                        image->setImage(mRandomGame->getScreenshotPath());
-                    else if (image->getThemeImageType() == "titlescreen")
-                        image->setImage(mRandomGame->getTitleScreenPath());
-                    else if (image->getThemeImageType() == "cover")
-                        image->setImage(mRandomGame->getCoverPath());
-                    else if (image->getThemeImageType() == "backcover")
-                        image->setImage(mRandomGame->getBackCoverPath());
-                    else if (image->getThemeImageType() == "3dbox")
-                        image->setImage(mRandomGame->get3DBoxPath());
-                    else if (image->getThemeImageType() == "fanart")
-                        image->setImage(mRandomGame->getFanArtPath());
-                    else if (image->getThemeImageType() == "thumbnail")
-                        image->setImage(mRandomGame->getThumbnailPath());
-                }
+                for (auto& image : mImageComponents)
+                    setGameImage(mRandomGame, image.get());
 
                 for (auto& video : mVideoComponents) {
-                    if (video->getThemeImageType() == "image")
-                        video->setImage(mRandomGame->getImagePath());
-                    else if (video->getThemeImageType() == "miximage")
-                        video->setImage(mRandomGame->getMiximagePath());
-                    else if (video->getThemeImageType() == "marquee")
-                        video->setImage(mRandomGame->getMarqueePath());
-                    else if (video->getThemeImageType() == "screenshot")
-                        video->setImage(mRandomGame->getScreenshotPath());
-                    else if (video->getThemeImageType() == "titlescreen")
-                        video->setImage(mRandomGame->getTitleScreenPath());
-                    else if (video->getThemeImageType() == "cover")
-                        video->setImage(mRandomGame->getCoverPath());
-                    else if (video->getThemeImageType() == "backcover")
-                        video->setImage(mRandomGame->getBackCoverPath());
-                    else if (video->getThemeImageType() == "3dbox")
-                        video->setImage(mRandomGame->get3DBoxPath());
-                    else if (video->getThemeImageType() == "fanart")
-                        video->setImage(mRandomGame->getFanArtPath());
-                    else if (video->getThemeImageType() == "thumbnail")
-                        video->setImage(mRandomGame->getThumbnailPath());
+                    setGameImage(mRandomGame, video.get());
 
                     // Always stop the video before setting a new video as it will otherwise
                     // continue to play if it has the same path (i.e. it is the same physical
@@ -447,7 +408,7 @@ void GamelistView::updateInfoPanel()
             }
             else {
                 for (auto& image : mImageComponents) {
-                    if (image->getThemeImageType() != "")
+                    if (image->getThemeImageTypes().size() != 0)
                         image->setImage("");
                 }
 
@@ -465,51 +426,11 @@ void GamelistView::updateInfoPanel()
             }
         }
         else {
-            for (auto& image : mImageComponents) {
-                if (image->getThemeImageType() == "image")
-                    image->setImage(file->getImagePath());
-                else if (image->getThemeImageType() == "miximage")
-                    image->setImage(file->getMiximagePath());
-                else if (image->getThemeImageType() == "marquee")
-                    image->setImage(file->getMarqueePath());
-                else if (image->getThemeImageType() == "screenshot")
-                    image->setImage(file->getScreenshotPath());
-                else if (image->getThemeImageType() == "titlescreen")
-                    image->setImage(file->getTitleScreenPath());
-                else if (image->getThemeImageType() == "cover")
-                    image->setImage(file->getCoverPath());
-                else if (image->getThemeImageType() == "backcover")
-                    image->setImage(file->getBackCoverPath());
-                else if (image->getThemeImageType() == "3dbox")
-                    image->setImage(file->get3DBoxPath());
-                else if (image->getThemeImageType() == "fanart")
-                    image->setImage(file->getFanArtPath());
-                else if (image->getThemeImageType() == "thumbnail")
-                    image->setImage(file->getThumbnailPath());
-            }
+            for (auto& image : mImageComponents)
+                setGameImage(file, image.get());
 
             for (auto& video : mVideoComponents) {
-                if (video->getThemeImageType() == "image")
-                    video->setImage(file->getImagePath());
-                else if (video->getThemeImageType() == "miximage")
-                    video->setImage(file->getMiximagePath());
-                else if (video->getThemeImageType() == "marquee")
-                    video->setImage(file->getMarqueePath());
-                else if (video->getThemeImageType() == "screenshot")
-                    video->setImage(file->getScreenshotPath());
-                else if (video->getThemeImageType() == "titlescreen")
-                    video->setImage(file->getTitleScreenPath());
-                else if (video->getThemeImageType() == "cover")
-                    video->setImage(file->getCoverPath());
-                else if (video->getThemeImageType() == "backcover")
-                    video->setImage(file->getBackCoverPath());
-                else if (video->getThemeImageType() == "3dbox")
-                    video->setImage(file->get3DBoxPath());
-                else if (video->getThemeImageType() == "fanart")
-                    video->setImage(file->getFanArtPath());
-                else if (video->getThemeImageType() == "thumbnail")
-                    video->setImage(file->getThumbnailPath());
-
+                setGameImage(file, video.get());
                 video->onHide();
 
                 if (video->hasStaticVideo())
@@ -766,4 +687,84 @@ void GamelistView::updateInfoPanel()
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
     }
+}
+
+void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
+{
+    std::string path;
+    for (auto& imageType : comp->getThemeImageTypes()) {
+        if (imageType == "image") {
+            path = file->getImagePath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "miximage") {
+            path = file->getMiximagePath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "marquee") {
+            path = file->getMarqueePath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "screenshot") {
+            path = file->getScreenshotPath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "titlescreen") {
+            path = file->getTitleScreenPath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "cover") {
+            path = file->getCoverPath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "backcover") {
+            path = file->getBackCoverPath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "3dbox") {
+            path = file->get3DBoxPath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "fanart") {
+            path = file->getFanArtPath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+        else if (imageType == "thumbnail") {
+            path = file->getThumbnailPath();
+            if (path != "") {
+                comp->setImage(path);
+                break;
+            }
+        }
+    }
+    // This is needed so the default image is set if no game media was found.
+    if (path == "" && comp->getThemeImageTypes().size() > 0)
+        comp->setImage("");
 }

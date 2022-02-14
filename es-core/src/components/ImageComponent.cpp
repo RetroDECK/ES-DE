@@ -14,6 +14,7 @@
 #include "Window.h"
 #include "resources/TextureResource.h"
 #include "utils/CImgUtil.h"
+#include "utils/StringUtil.h"
 
 glm::ivec2 ImageComponent::getTextureSize() const
 {
@@ -522,8 +523,15 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setImage(elem->get<std::string>("path"), tile);
     }
 
-    if (properties & METADATA && elem->has("imageType"))
-        mThemeImageType = elem->get<std::string>("imageType");
+    if (properties && elem->has("imageType")) {
+        std::string imageTypes {elem->get<std::string>("imageType")};
+        for (auto& character : imageTypes) {
+            if (std::isspace(character))
+                character = ',';
+        }
+        imageTypes = Utils::String::replace(imageTypes, ",,", ",");
+        mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
+    }
 
     if (properties & COLOR) {
         if (elem->has("color"))

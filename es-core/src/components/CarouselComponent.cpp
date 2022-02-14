@@ -311,6 +311,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mCarouselColor = 0xFFFFFFD8;
     mCarouselColorEnd = 0xFFFFFFD8;
     mDefaultZIndex = 50.0f;
+    mText = "";
 
     if (!elem)
         return;

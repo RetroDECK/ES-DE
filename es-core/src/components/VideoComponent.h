@@ -40,7 +40,7 @@ public:
     // Configures the component to show the static video.
     void setStaticVideo() { setVideo(mConfig.staticVideoPath); }
     // Loads a static image that is displayed if the video cannot be played.
-    void setImage(const std::string& path, bool tile = false);
+    void setImage(const std::string& path, bool tile = false) override;
     // Sets whether we're in media viewer mode.
     void setMediaViewerMode(bool isMediaViewer) { mMediaViewerMode = isMediaViewer; }
     // Sets whether we're in screensaver mode.
@@ -125,6 +125,7 @@ protected:
     glm::vec2 mVideoAreaSize;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
+    std::string mDefaultImagePath;
 
     std::string mVideoPath;
     std::string mPlayingVideoPath;

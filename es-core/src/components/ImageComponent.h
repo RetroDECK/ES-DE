@@ -24,7 +24,7 @@ public:
 
     // Loads the image at the given filepath. Will tile if tile is true (retrieves texture
     // as tiling, creates vertices accordingly).
-    void setImage(const std::string& path, bool tile = false);
+    void setImage(const std::string& path, bool tile = false) override;
     // Loads an image from memory.
     void setImage(const char* data, size_t length, bool tile = false);
     // Use an already existing texture.

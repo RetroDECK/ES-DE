@@ -57,6 +57,7 @@ public:
 
 private:
     void updateInfoPanel();
+    void setGameImage(FileData* file, GuiComponent* comp);
 
     // Legacy (backward compatibility) functions.
     void legacyPopulateFields();

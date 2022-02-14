@@ -28,7 +28,7 @@ class SystemData;
 struct SystemViewElements {
     std::string name;
     std::string fullName;
-    std::unique_ptr<GameSelectorComponent> gameSelector;
+    std::vector<std::unique_ptr<GameSelectorComponent>> gameSelectors;
     std::vector<GuiComponent*> legacyExtras;
     std::vector<GuiComponent*> children;
 
@@ -77,7 +77,7 @@ protected:
 private:
     void populate();
     void updateGameCount();
-    void updateGameSelector();
+    void updateGameSelectors();
     void legacyApplyTheme(const std::shared_ptr<ThemeData>& theme);
     void renderElements(const glm::mat4& parentTrans, bool abovePrimary);
 

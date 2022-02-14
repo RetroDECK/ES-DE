@@ -14,6 +14,7 @@
 #include "MetaData.h"
 #include "utils/FileSystemUtil.h"
 
+#include <functional>
 #include <unordered_map>
 
 class SystemData;
@@ -62,6 +63,7 @@ public:
     const std::vector<FileData*>& getChildrenMostPlayed() const { return mChildrenMostPlayed; }
     void setUpdateChildrenLastPlayed(bool state) { mUpdateChildrenLastPlayed = state; }
     void setUpdateChildrenMostPlayed(bool state) { mUpdateChildrenMostPlayed = state; }
+    void setUpdateListCallback(const std::function<void()>& func) { mUpdateListCallback = func; }
 
     const bool getOnlyFoldersFlag() const { return mOnlyFolders; }
     const bool getHasFoldersFlag() const { return mHasFolders; }
@@ -156,6 +158,7 @@ private:
     std::vector<FileData*> mFilteredChildren;
     std::vector<FileData*> mChildrenLastPlayed;
     std::vector<FileData*> mChildrenMostPlayed;
+    std::function<void()> mUpdateListCallback;
     // The pair includes all games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;

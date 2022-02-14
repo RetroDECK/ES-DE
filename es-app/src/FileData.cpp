@@ -765,6 +765,9 @@ void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
 
 void FileData::updateLastPlayedList()
 {
+    if (mUpdateListCallback)
+        mUpdateListCallback();
+
     if (!mUpdateChildrenLastPlayed)
         return;
 
@@ -780,6 +783,9 @@ void FileData::updateLastPlayedList()
 
 void FileData::updateMostPlayedList()
 {
+    if (mUpdateListCallback)
+        mUpdateListCallback();
+
     if (!mUpdateChildrenMostPlayed)
         return;
 

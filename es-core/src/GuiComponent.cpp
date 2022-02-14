@@ -364,6 +364,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mThemeOpacity = 0.0f;
     else
         setVisible(true);
+
+    if (properties && elem->has("gameselector"))
+        mThemeGameSelector = elem->get<std::string>("gameselector");
 }
 
 void GuiComponent::updateHelpPrompts()

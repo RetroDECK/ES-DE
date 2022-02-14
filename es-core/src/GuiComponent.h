@@ -207,16 +207,18 @@ public:
     virtual void setOriginalColor(unsigned int color) { mColorOriginalValue = color; }
     virtual void setChangedColor(unsigned int color) { mColorChangedValue = color; }
 
+    virtual void setImage(const std::string& path, bool tile = false) {}
+
     // These functions are used to enable and disable options in menus, i.e. switches and similar.
     virtual bool getEnabled() { return mEnabled; }
     virtual void setEnabled(bool state) { mEnabled = state; }
 
-    const std::string getThemeSystemdata() { return mThemeSystemdata; }
+    const std::string& getThemeSystemdata() { return mThemeSystemdata; }
     void setThemeSystemdata(const std::string& text) { mThemeSystemdata = text; }
-    const std::string getThemeMetadata() { return mThemeMetadata; }
+    const std::string& getThemeMetadata() { return mThemeMetadata; }
     void setThemeMetadata(const std::string& text) { mThemeMetadata = text; }
-    const std::string getThemeImageType() { return mThemeImageType; }
-    void setThemeImageType(const std::string& text) { mThemeImageType = text; }
+    const std::vector<std::string>& getThemeImageTypes() { return mThemeImageTypes; }
+    const std::string& getThemeGameSelector() { return mThemeGameSelector; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }
 
@@ -279,9 +281,10 @@ protected:
     GuiComponent* mParent;
     std::vector<GuiComponent*> mChildren;
 
+    std::vector<std::string> mThemeImageTypes;
     std::string mThemeSystemdata;
     std::string mThemeMetadata;
-    std::string mThemeImageType;
+    std::string mThemeGameSelector;
 
     unsigned int mColor;
     float mSaturation;

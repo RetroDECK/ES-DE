@@ -12,6 +12,7 @@
 #include "Window.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 #include <SDL2/SDL_timer.h>
 
@@ -80,12 +81,17 @@ bool VideoComponent::setVideo(std::string path)
 
 void VideoComponent::setImage(const std::string& path, bool tile)
 {
+    std::string imagePath {path};
+
+    if (imagePath == "")
+        imagePath = mDefaultImagePath;
+
     // Check that the image has changed.
-    if (path == mStaticImagePath)
+    if (imagePath == mStaticImagePath)
         return;
 
-    mStaticImage.setImage(path, tile);
-    mStaticImagePath = path;
+    mStaticImage.setImage(imagePath, tile);
+    mStaticImagePath = imagePath;
 }
 
 void VideoComponent::onShow()
@@ -268,6 +274,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("defaultImage")) {
         mStaticImage.setDefaultImage(elem->get<std::string>("defaultImage"));
         mStaticImage.setImage(mStaticImagePath);
+        mDefaultImagePath = elem->get<std::string>("defaultImage");
     }
 
     if (elem->has("path"))
@@ -287,8 +294,15 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else if (elem->has("showSnapshotDelay"))
         mConfig.showSnapshotDelay = elem->get<bool>("showSnapshotDelay");
 
-    if (properties & METADATA && elem->has("imageType"))
-        mThemeImageType = elem->get<std::string>("imageType");
+    if (properties && elem->has("imageType")) {
+        std::string imageTypes {elem->get<std::string>("imageType")};
+        for (auto& character : imageTypes) {
+            if (std::isspace(character))
+                character = ',';
+        }
+        imageTypes = Utils::String::replace(imageTypes, ",,", ",");
+        mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
+    }
 
     if (elem->has("pillarboxes"))
         mDrawPillarboxes = elem->get<bool>("pillarboxes");
