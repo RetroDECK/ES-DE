@@ -732,6 +732,7 @@ This section describes each element and their properties in detail and also cont
 * PATH - a path.  If the first character is a `~`, it will be expanded into the environment variable for the home path (`$HOME` for Unix and macOS or `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a `.`, it will be expanded to the theme file's directory, allowing you to specify resources relative to the theme file, like so: `./../core/fonts/myfont.ttf`.
 * BOOLEAN - `true`/`1` or `false`/`0`.
 * COLOR - a hexidecimal RGB or RGBA color (6 or 8 digits).  If 6 digits, will assume the alpha channel is `FF` (completely opaque).
+* UNSIGNED_INTEGER - an unsigned integer.
 * FLOAT - a decimal.
 * STRING - a string of text.
 
@@ -768,14 +769,12 @@ Properties:
     - Point around which the image will be rotated.
     - Default is `0.5 0.5`
 * `path` - type: PATH
-    - Path to the image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+    - Explicit path to an image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
 * `default` - type: PATH
-    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
-* `tile` - type: BOOLEAN
-    - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
+    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a valid `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING
-    - This displays a game image of a certain media type. If no image of the requested type is found, the space will be left blank unless the `default` property has been set. If the imageType property is set to an invalid value, no image will be displayed even if a `default` property has been defined.
-    - Possible values:
+    - This displays a game image of a certain media type. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, the space will be left blank unless the `default` property has been set. To use this property from the `system` view, you will first need to add a `gameselector` element.
+    - Valid values:
     - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`
     - `miximage` - This will look for a miximage.
     - `marquee` - This will look for a marquee (wheel) image.
@@ -785,6 +784,10 @@ Properties:
     - `backcover` - This will look for a box back cover image.
     - `3dbox` - This will look for a 3D box image.
     - `fanart` - This will look for a fan art image.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
+* `tile` - type: BOOLEAN
+    - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
@@ -795,7 +798,7 @@ Properties:
     - Works exactly in the same way as `color` but can be set as the end color to apply a color shift gradient to the image.
 * `gradientType` - type: STRING
     - The direction to apply the color shift gradient if both `color` and `colorEnd` have been defined.
-    - Possible values are `horizontal` or `vertical`
+    - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This usually looks best if used for the main game image.
@@ -815,13 +818,13 @@ Properties:
 
 Plays a video and provides support for displaying a static image for a defined time period before starting the video player. Although an unlimited number of videos could in theory be defined per view it's strongly recommended to keep it at a single instance. Playing multiple videos simultaneously takes a lot of CPU resources and ES-DE currently has no audio mixing capabilities so the audio would not play correctly.
 
-**Supported views:**
+Supported views:
 * `gamelist`
 
-**Instances per view:**
+Instances per view:
 * `unlimited` (but recommended to keep at a single instance)
 
-**Properties:**
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the video's aspect ratio.
@@ -839,12 +842,12 @@ Plays a video and provides support for displaying a static image for a defined t
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not. If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
 * `default` - type: PATH
-    - Path to a default video file. The default video will be played (unless the `path` property has been set) when the selected game does not have a video. If an image type has been defined using `imageType` that image will be searched for first and only if no such image could be found this `default` video will be shown. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `defaultImage` - type: PATH
-    - This works exactly as the `default` property but it allows displaying an image instead of playing a video.
+    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING
-    - This displays a game image of a certain media type. This occurs if there is no video found for the game and the `path` property has not been set, or if a video start delay has been defined via the `delay` attribute.
-    - Possible values:
+    - This displays a game image of a certain media type. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, the space will be left blank unless the `default` property has been set. To use this property from the `system` view, you will first need to add a `gameselector` element. If `delay` is set to zero, then this property is ignored.
+    - Valid values:
     - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`
     - `miximage` - This will look for a miximage.
     - `marquee` - This will look for a marquee (wheel) image.
@@ -959,10 +962,10 @@ Properties:
 * `direction` - type: STRING
     - Valid values are "row" or "column". Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction.
     - Default is `row`
-* `lines` - type: FLOAT
+* `lines` - type: UNSIGNED_INTEGER
     - The number of lines available.
     - Default is `2`
-* `itemsPerLine` - type: FLOAT
+* `itemsPerLine` - type: UNSIGNED_INTEGER
     - Number of badges that fit on a line. When more badges are available a new line will be started.
     - Default is `4`
 * `itemMargin` - type: NORMALIZED_PAIR
@@ -1071,7 +1074,7 @@ Properties:
     - `gamecount_games` - Number of games available for the system. Does not print the favorites count.
     - `gamecount_favorites` - Number of favorite games for the system, may be blank if favorites are not applicable.
 * `metadata` - type: STRING
-    - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal. This property can only be used in the `gamelist` view.
+    - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal. To use this property from the `system` view, you will first need to add a `gameselector` element.
      - Valid values:
     - `name` - Game name.
     - `description` - Game description. Should be combined with the `container` property in most cases.
@@ -1087,6 +1090,8 @@ Properties:
     - `playcount` - How many times the game has been played.
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
 * `containerScrollSpeed` - type: FLOAT
@@ -1161,7 +1166,7 @@ Properties:
     - Default is `0.5 0.5`.
 * `metadata` - type: STRING
     - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed.
-    - Possible values:
+    - Valid values:
     - `releasedate` - The release date of the game.
     - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
 * `fontPath` - type: PATH
@@ -1326,7 +1331,7 @@ Properties:
     - Default is `FFFFFFD8`
 * `gradientType` - type: STRING
     - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
-    - Possible values are `horizontal` or `vertical`
+    - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `logo` - type: PATH
     - Path to the logo image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
@@ -1355,7 +1360,7 @@ Properties:
     - Sets `logo` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
-* `maxLogoCount` - type: FLOAT
+* `maxLogoCount` - type: UNSIGNED_INTEGER
     - Sets the number of logos to display in the carousel.
     - Minimum value is `2` and maximum value is `30`
     - Default is `3`
@@ -1408,7 +1413,7 @@ Properties:
     - Default is `000000FF`
 * `selectorGradientType` - type: STRING
     - The direction to apply the color gradient if both `selectorColor` and `selectorColorEnd` have been defined.
-    - Possible values are `horizontal` or `vertical`
+    - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `selectorImagePath` - type: PATH
     - Path to image to render in place of "selector bar."
@@ -1438,6 +1443,26 @@ Properties:
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
+
+#### gameselector
+
+Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image` and `text` elements.
+
+Supported views:
+* `system`
+
+Instances per view:
+* `unlimited`
+
+Properties:
+* `selection` - type: STRING
+    - This defines the game selection criteria. If set to `random`, the games are refreshed every time the view is navigated. For the other two values the refresh takes place on gamelist reload, i.e. when launching a game, adding a game as favorite, making changes via the metadata editor and so on.
+    - Valid values are `random`, `lastplayed` or `mostplayed`
+    - Default is `random`
+* `gameCount` - type: UNSIGNED_INTEGER
+    - How many games to select. This property is only intended for future use.
+    - Minimum value is `1` and maximum value is `30`
+    - Default is `1`
 
 #### helpsystem
 

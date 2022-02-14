@@ -15,9 +15,10 @@
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
-* Added support for defining what type of image metadata to use for all image elements (and also for the video component static image)
+* Added support for defining which types of game media to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
 * Added theme support for Lottie animations (vector graphics)
+* Added a GameSelectorComponent for displaying game media and metadata in the system view
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
@@ -27,6 +28,7 @@
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
 * Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
+* Added support for using unsigned integers for theme properties
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
