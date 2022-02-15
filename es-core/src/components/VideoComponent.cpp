@@ -41,6 +41,7 @@ VideoComponent::VideoComponent()
     , mRenderScanlines {false}
     , mLegacyTheme {false}
     , mFadeIn {1.0f}
+    , mFadeInTime {1000.0f}
 {
     // Setup the default configuration.
     mConfig.showSnapshotDelay = false;
@@ -294,6 +295,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else if (elem->has("showSnapshotDelay"))
         mConfig.showSnapshotDelay = elem->get<bool>("showSnapshotDelay");
 
+    if (properties && elem->has("fadeInTime"))
+        mFadeInTime = glm::clamp(elem->get<float>("fadeInTime"), 0.0f, 8.0f) * 1000.0f;
+
     if (properties && elem->has("imageType")) {
         std::string imageTypes {elem->get<std::string>("imageType")};
         for (auto& character : imageTypes) {
@@ -334,8 +338,9 @@ void VideoComponent::update(int deltaTime)
 
     manageState();
 
-    // Fade in videos, the time period is a bit different between the screensaver,
-    // media viewer and gamelist view.
+    // Fade in videos, the time period is a bit different between the screensaver and media viewer.
+    // For the theme controlled videos in the gamelist and system views, the fade-in time is set
+    // via the theme configuration.
     if (mScreensaverMode && mFadeIn < 1.0f) {
         mFadeIn = glm::clamp(mFadeIn + (deltaTime / static_cast<float>(SCREENSAVER_FADE_IN_TIME)),
                              0.0f, 1.0f);
@@ -345,7 +350,7 @@ void VideoComponent::update(int deltaTime)
                              0.0f, 1.0f);
     }
     else if (mFadeIn < 1.0f) {
-        mFadeIn = glm::clamp(mFadeIn + 0.01f, 0.0f, 1.0f);
+        mFadeIn = glm::clamp(mFadeIn + (deltaTime / static_cast<float>(mFadeInTime)), 0.0f, 1.0f);
     }
 
     GuiComponent::update(deltaTime);

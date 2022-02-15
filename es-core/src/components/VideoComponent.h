@@ -145,7 +145,8 @@ protected:
     bool mDrawPillarboxes;
     bool mRenderScanlines;
     bool mLegacyTheme;
-    float mFadeIn; // Used for fading in the video screensaver.
+    float mFadeIn;
+    float mFadeInTime;
 
     Configuration mConfig;
 };

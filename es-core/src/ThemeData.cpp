@@ -114,6 +114,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"pillarboxes", BOOLEAN},
        {"scanlines", BOOLEAN},
        {"delay", FLOAT},
+       {"fadeInTime", FLOAT},
        {"scrollFadeIn", BOOLEAN},
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
