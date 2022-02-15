@@ -88,10 +88,10 @@ COMPAT_VARYING vec4 TEX0;
 
 void main()
 {
-    vec2 texcoord  = vTexCoord;
+    vec2 texcoord = vTexCoord;
     vec2 PIXEL_SIZE = vec2(SourceSize.z, SourceSize.w);
 
-    #if __VERSION__ < 130
+#if __VERSION__ < 130
     float sampleOffsets1 = 0.0;
     float sampleOffsets2 = 1.4347826;
     float sampleOffsets3 = 3.3478260;
@@ -108,28 +108,40 @@ void main()
     vec4 color = COMPAT_TEXTURE(Source, texcoord);
     color = vec4(color.rgb, 1.0) * sampleWeights1;
 
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets2 * VW * PIXEL_SIZE.y)) * sampleWeights2;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets2 * VW * PIXEL_SIZE.y)) * sampleWeights2;
+    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets2 * VW * PIXEL_SIZE.y)) *
+             sampleWeights2;
+    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets2 * VW * PIXEL_SIZE.y)) *
+             sampleWeights2;
 
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets3 * VW * PIXEL_SIZE.y)) * sampleWeights3;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets3 * VW * PIXEL_SIZE.y)) * sampleWeights3;
+    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets3 * VW * PIXEL_SIZE.y)) *
+             sampleWeights3;
+    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets3 * VW * PIXEL_SIZE.y)) *
+             sampleWeights3;
 
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets4 * VW * PIXEL_SIZE.y)) * sampleWeights4;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets4 * VW * PIXEL_SIZE.y)) * sampleWeights4;
+    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets4 * VW * PIXEL_SIZE.y)) *
+             sampleWeights4;
+    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets4 * VW * PIXEL_SIZE.y)) *
+             sampleWeights4;
 
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets5 * VW * PIXEL_SIZE.y)) * sampleWeights5;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets5 * VW * PIXEL_SIZE.y)) * sampleWeights5;
-    #else
+    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets5 * VW * PIXEL_SIZE.y)) *
+             sampleWeights5;
+    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets5 * VW * PIXEL_SIZE.y)) *
+             sampleWeights5;
+#else
 
-    float sampleOffsets[5] = { 0.0, 1.4347826, 3.3478260, 5.2608695, 7.1739130 };
-    float sampleWeights[5] = { 0.16818994, 0.27276957, 0.11690125, 0.024067905, 0.0021112196 };
+    float sampleOffsets[5] = {0.0, 1.4347826, 3.3478260, 5.2608695, 7.1739130};
+    float sampleWeights[5] = {0.16818994, 0.27276957, 0.11690125, 0.024067905, 0.0021112196};
 
     vec4 color = COMPAT_TEXTURE(Source, texcoord) * sampleWeights[0];
     for (int i = 1; i < 5; i++) {
-        color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) * sampleWeights[i];
-        color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) * sampleWeights[i];
+        color +=
+            COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
+            sampleWeights[i];
+        color +=
+            COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
+            sampleWeights[i];
     }
-    #endif
+#endif
 
     FragColor = vec4(color);
 }
