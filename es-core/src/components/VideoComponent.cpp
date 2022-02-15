@@ -311,12 +311,8 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("pillarboxes"))
         mDrawPillarboxes = elem->get<bool>("pillarboxes");
 
-    // Scanlines are not compatible with video transparency.
-    if (elem->has("scanlines")) {
+    if (elem->has("scanlines"))
         mRenderScanlines = elem->get<bool>("scanlines");
-        if (mRenderScanlines && mThemeOpacity != 0.0f)
-            mThemeOpacity = 1.0f;
-    }
 
     if (elem->has("scrollFadeIn") && elem->get<bool>("scrollFadeIn"))
         mComponentThemeFlags |= ComponentThemeFlags::SCROLL_FADE_IN;

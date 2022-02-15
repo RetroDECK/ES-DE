@@ -216,9 +216,14 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         // or the video screensaver, then skip this as the scanline rendering is then handled
         // in those modules as a postprocessing step.
         if (!mScreensaverMode && !mMediaViewerMode) {
+            vertices[0].opacity = mFadeIn * mThemeOpacity;
             if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoScanlines")) ||
-                (!mLegacyTheme && mRenderScanlines))
+                (!mLegacyTheme && mRenderScanlines)) {
                 vertices[0].shaders = Renderer::SHADER_SCANLINES;
+            }
+            else {
+                vertices[0].shaders = Renderer::SHADER_OPACITY;
+            }
         }
 #endif
 
