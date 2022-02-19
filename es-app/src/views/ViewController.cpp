@@ -330,6 +330,9 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         mPreviousView = nullptr;
     }
 
+    if (mCurrentView != nullptr)
+        mCurrentView->onTransition();
+
     mPreviousView = mCurrentView;
 
     if (system->isGroupedCustomCollection())
@@ -414,6 +417,9 @@ void ViewController::goToGamelist(SystemData* system)
     bool wrapFirstToLast = false;
     bool wrapLastToFirst = false;
     bool slideTransitions = false;
+
+    if (mCurrentView != nullptr)
+        mCurrentView->onTransition();
 
     if (Settings::getInstance()->getString("TransitionStyle") == "slide")
         slideTransitions = true;

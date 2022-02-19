@@ -33,6 +33,7 @@ public:
     {
         mMaxCacheSize = static_cast<size_t>(glm::clamp(value, 0, 1024) * 1024 * 1024);
     }
+    void setPauseAnimation(bool state) { mExternalPause = state; }
 
     void resetFileAnimation() override;
     void onSizeChanged() override;
@@ -42,8 +43,9 @@ public:
                             const std::string& element,
                             unsigned int properties) override;
 
-private:
     void update(int deltaTime) override;
+
+private:
     void render(const glm::mat4& parentTrans) override;
 
     std::shared_ptr<TextureResource> mTexture;
@@ -76,6 +78,7 @@ private:
 
     bool mHoldFrame;
     bool mPause;
+    bool mExternalPause;
     bool mAlternate;
     bool mKeepAspectRatio;
 };

@@ -36,6 +36,7 @@ LottieComponent::LottieComponent()
     , mSkippedFrames {0}
     , mHoldFrame {false}
     , mPause {false}
+    , mExternalPause {false}
     , mAlternate {false}
     , mKeepAspectRatio {true}
 {
@@ -190,6 +191,7 @@ void LottieComponent::setAnimation(const std::string& path)
 
 void LottieComponent::resetFileAnimation()
 {
+    mExternalPause = false;
     mTimeAccumulator = 0;
     mFrameNum = mStartDirection == "reverse" ? mTotalFrames - 1 : 0;
 
@@ -336,7 +338,7 @@ void LottieComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     // This is necessary as there may otherwise be no texture to render when paused.
-    if (mPause && mTexture->getSize().x == 0.0f) {
+    if ((mExternalPause || mPause) && mTexture->getSize().x == 0.0f) {
         mTexture->initFromPixels(&mPictureRGBA.at(0), static_cast<size_t>(mSize.x),
                                  static_cast<size_t>(mSize.y));
     }
@@ -352,7 +354,7 @@ void LottieComponent::render(const glm::mat4& parentTrans)
     }
 
     // Don't render any new frames if paused or if a menu is open (unless invalidating background).
-    if (!mPause && doRender) {
+    if ((!mPause && !mExternalPause) && doRender) {
         if ((mDirection == "normal" && mFrameNum >= mTotalFrames) ||
             (mDirection == "reverse" && mFrameNum > mTotalFrames)) {
             if (DEBUG_ANIMATION) {

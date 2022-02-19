@@ -23,6 +23,7 @@ public:
     // Called when a FileData* is added, has its metadata changed, or is removed.
     void onFileChanged(FileData* file, bool reloadGamelist) override;
     void onShow() override;
+    void onTransition() override;
 
     void preloadGamelist() { updateInfoPanel(); }
     void launch(FileData* game) override { ViewController::getInstance()->triggerGameLaunch(game); }

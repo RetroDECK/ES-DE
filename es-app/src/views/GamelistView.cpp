@@ -85,6 +85,12 @@ void GamelistView::onShow()
         updateInfoPanel();
 }
 
+void GamelistView::onTransition()
+{
+    for (auto& animation : mLottieAnimComponents)
+        animation->setPauseAnimation(true);
+}
+
 void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 {
     auto themeSets = ThemeData::getThemeSets();

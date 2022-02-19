@@ -238,6 +238,7 @@ public:
 
     virtual void onShow();
     virtual void onHide();
+    virtual void onTransition() {}
 
     // System view and gamelist view video controls.
     virtual void startViewVideos() {}
