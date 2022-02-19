@@ -45,6 +45,7 @@ public:
     SystemView();
     ~SystemView();
 
+    void onTransition() override;
     void goToSystem(SystemData* system, bool animate);
 
     bool input(InputConfig* config, Input input) override;

@@ -46,6 +46,8 @@ SystemView::SystemView()
     mCarousel->setCancelTransitionsCallback([&] {
         ViewController::getInstance()->cancelViewTransitions();
         mNavigated = true;
+        for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+            anim->setPauseAnimation(true);
     });
 
     populate();
@@ -63,6 +65,12 @@ SystemView::~SystemView()
     }
 }
 
+void SystemView::onTransition()
+{
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+        anim->setPauseAnimation(true);
+}
+
 void SystemView::goToSystem(SystemData* system, bool animate)
 {
     mCarousel->setCursor(system);
@@ -74,6 +82,9 @@ void SystemView::goToSystem(SystemData* system, bool animate)
 
     for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
         video->setStaticVideo();
+
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+        anim->resetFileAnimation();
 
     updateGameSelectors();
     updateGameCount();
@@ -137,6 +148,9 @@ void SystemView::update(int deltaTime)
 
     for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
         video->update(deltaTime);
+
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+        anim->update(deltaTime);
 
     GuiComponent::update(deltaTime);
 }
@@ -216,6 +230,9 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
 
     for (auto& video : mSystemElements[cursor].videoComponents)
         video->setStaticVideo();
+
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+        anim->resetFileAnimation();
 
     updateGameSelectors();
     startViewVideos();
@@ -409,6 +426,14 @@ void SystemView::populate()
                         elements.videoComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);
                         elements.children.emplace_back(elements.videoComponents.back().get());
+                    }
+                    else if (element.second.type == "animation") {
+                        elements.lottieAnimComponents.emplace_back(
+                            std::make_unique<LottieComponent>());
+                        elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
+                        elements.lottieAnimComponents.back()->applyTheme(
+                            theme, "system", element.first, ThemeFlags::ALL);
+                        elements.children.emplace_back(elements.lottieAnimComponents.back().get());
                     }
                     else if (element.second.type == "text") {
                         if (element.second.has("systemdata") &&
