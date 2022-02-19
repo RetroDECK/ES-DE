@@ -43,9 +43,6 @@ bool MediaViewer::startMediaViewer(FileData* game)
 
     initiateViewer();
 
-    if (mHasVideo)
-        ViewController::getInstance()->onPauseVideo();
-
     if (mHasVideo || mHasImages)
         return true;
     else
@@ -55,7 +52,7 @@ bool MediaViewer::startMediaViewer(FileData* game)
 void MediaViewer::stopMediaViewer()
 {
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-    ViewController::getInstance()->onStopVideo();
+    ViewController::getInstance()->stopViewVideos();
 
     if (mVideo) {
         delete mVideo;
@@ -257,10 +254,9 @@ void MediaViewer::playVideo()
         return;
 
     mDisplayingImage = false;
-    ViewController::getInstance()->onStopVideo();
+    ViewController::getInstance()->pauseViewVideos();
 
     mVideo = new VideoFFmpegComponent;
-    mVideo->topWindow(true);
     mVideo->setOrigin(0.5f, 0.5f);
     mVideo->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
 
@@ -271,7 +267,7 @@ void MediaViewer::playVideo()
 
     mVideo->setVideo(mVideoFile);
     mVideo->setMediaViewerMode(true);
-    mVideo->onShow();
+    mVideo->startVideoPlayer();
 }
 
 void MediaViewer::showImage(int index)

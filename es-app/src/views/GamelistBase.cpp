@@ -74,7 +74,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
         if (config->isMappedTo("a", input)) {
             FileData* cursor = getCursor();
             if (cursor->getType() == GAME) {
-                onPauseVideo();
+                pauseViewVideos();
                 ViewController::getInstance()->cancelViewTransitions();
                 stopListScrolling();
                 launch(cursor);
@@ -131,7 +131,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
             else {
                 NavigationSounds::getInstance().playThemeNavigationSound(BACKSOUND);
-                onPauseVideo();
+                muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
                 SystemData* systemToView = getCursor()->getSystem();
@@ -175,7 +175,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect") &&
                 SystemData::sSystemVector.size() > 1) {
-                onPauseVideo();
+                muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
                 ViewController::getInstance()->goToNextGamelist();
@@ -185,7 +185,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
             if (Settings::getInstance()->getBool("QuickSystemSelect") &&
                 SystemData::sSystemVector.size() > 1) {
-                onPauseVideo();
+                muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
                 ViewController::getInstance()->goToPrevGamelist();
@@ -457,6 +457,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
         config->isMappedTo("back", input) && input.value) {
         ViewController::getInstance()->cancelViewTransitions();
         stopListScrolling();
+        pauseViewVideos();
         mWindow->pushGui(new GuiGamelistOptions(this->mRoot->getSystem()));
         return true;
     }
@@ -621,7 +622,7 @@ void GamelistBase::generateFirstLetterIndex(const std::vector<FileData*>& files)
 void GamelistBase::generateGamelistInfo(FileData* cursor, FileData* firstEntry)
 {
     // Generate data needed for the gamelistInfo field, which is displayed from the
-    // gamelist interfaces (Detailed/Video/Grid).
+    // gamelist interfaces.
     mIsFiltered = false;
     mIsFolder = false;
     FileData* rootFolder {firstEntry->getSystem()->getRootFolder()};
@@ -704,7 +705,7 @@ void GamelistBase::removeMedia(FileData* game)
     std::string path;
 
     // Stop the video player, especially important on Windows as the file would otherwise be locked.
-    onStopVideo();
+    stopViewVideos();
 
     // If there are no media files left in the directory after the deletion, then remove
     // the directory too. Remove any empty parent directories as well.

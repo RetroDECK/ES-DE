@@ -75,10 +75,6 @@ Window* Window::getInstance()
 
 void Window::pushGui(GuiComponent* gui)
 {
-    if (mGuiStack.size() > 0) {
-        auto& top = mGuiStack.back();
-        top->topWindow(false);
-    }
     mGuiStack.push_back(gui);
     gui->updateHelpPrompts();
 }
@@ -90,10 +86,8 @@ void Window::removeGui(GuiComponent* gui)
             it = mGuiStack.erase(it);
 
             // We just popped the stack and the stack is not empty.
-            if (it == mGuiStack.cend() && mGuiStack.size()) {
+            if (it == mGuiStack.cend() && mGuiStack.size())
                 mGuiStack.back()->updateHelpPrompts();
-                mGuiStack.back()->topWindow(true);
-            }
 
             return;
         }
@@ -752,10 +746,6 @@ void Window::stopInfoPopup()
 void Window::startScreensaver()
 {
     if (mScreensaver && !mRenderScreensaver) {
-        // Tell the GUI components the screensaver is starting.
-        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
-            (*it)->onScreensaverActivate();
-
         setAllowTextScrolling(false);
         setAllowFileAnimation(false);
         mScreensaver->startScreensaver(true);
@@ -770,14 +760,6 @@ bool Window::stopScreensaver()
         mRenderScreensaver = false;
         setAllowTextScrolling(true);
         setAllowFileAnimation(true);
-
-        // Tell the GUI components the screensaver has stopped.
-        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it) {
-            (*it)->onScreensaverDeactivate();
-            // If the menu is open, pause the video so it won't start playing beneath the menu.
-            if (mGuiStack.front() != mGuiStack.back())
-                (*it)->onPauseVideo();
-        }
 
         return true;
     }
@@ -830,33 +812,11 @@ void Window::closeLaunchScreen()
     mRenderLaunchScreen = false;
 }
 
-void Window::increaseVideoPlayerCount() { ++mVideoPlayerCount; }
-
-void Window::decreaseVideoPlayerCount() { --mVideoPlayerCount; }
-
 int Window::getVideoPlayerCount()
 {
     int videoPlayerCount;
     videoPlayerCount = mVideoPlayerCount;
     return videoPlayerCount;
-}
-
-void Window::setLaunchedGame()
-{
-    // Tell the GUI components that a game has been launched.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
-        (*it)->onGameLaunchedActivate();
-
-    mGameLaunchedState = true;
-}
-
-void Window::unsetLaunchedGame()
-{
-    // Tell the GUI components that the user is back in ES-DE again.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
-        (*it)->onGameLaunchedDeactivate();
-
-    mGameLaunchedState = false;
 }
 
 void Window::invalidateCachedBackground()

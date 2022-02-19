@@ -366,6 +366,12 @@ void GamelistView::legacyUpdateInfoPanel()
 
     bool fadingOut = false;
     if (file == nullptr) {
+        if (mViewStyle == ViewController::VIDEO) {
+            mVideoComponents.front()->stopVideoPlayer();
+            mVideoComponents.front()->setVideo("");
+            if (!mVideoComponents.front()->hasStartDelay())
+                mVideoComponents.front()->setImage("");
+        }
         mVideoPlaying = false;
         fadingOut = true;
     }
@@ -383,15 +389,12 @@ void GamelistView::legacyUpdateInfoPanel()
                 mImageComponents[LegacyImage::MD_MARQUEE]->setImage(mRandomGame->getMarqueePath());
                 if (mViewStyle == ViewController::VIDEO) {
                     mVideoComponents.front()->setImage(mRandomGame->getImagePath());
-                    // Always stop the video before setting a new video as it will otherwise
-                    // continue to play if it has the same path (i.e. it is the same physical
-                    // video file) as the previously set video. That may happen when entering a
-                    // folder with the same name as the first game file inside, or as in this
-                    // case, when entering a custom collection.
-                    mVideoComponents.front()->onHide();
+                    mVideoComponents.front()->stopVideoPlayer();
 
                     if (!mVideoComponents.front()->setVideo(mRandomGame->getVideoPath()))
                         mVideoComponents.front()->setDefaultVideo();
+
+                    mVideoComponents.front()->startVideoPlayer();
                 }
                 else {
                     mImageComponents[LegacyImage::MD_IMAGE]->setImage(mRandomGame->getImagePath());
@@ -413,10 +416,12 @@ void GamelistView::legacyUpdateInfoPanel()
             mImageComponents[LegacyImage::MD_MARQUEE]->setImage(file->getMarqueePath());
             if (mViewStyle == ViewController::VIDEO) {
                 mVideoComponents.front()->setImage(file->getImagePath());
-                mVideoComponents.front()->onHide();
+                mVideoComponents.front()->stopVideoPlayer();
 
                 if (!mVideoComponents.front()->setVideo(file->getVideoPath()))
                     mVideoComponents.front()->setDefaultVideo();
+
+                mVideoComponents.front()->startVideoPlayer();
             }
             else {
                 mImageComponents[LegacyImage::MD_IMAGE]->setImage(file->getImagePath());
@@ -550,6 +555,8 @@ void GamelistView::legacyUpdateInfoPanel()
     comps.emplace_back(mImageComponents[LegacyImage::MD_THUMBNAIL].get());
     comps.emplace_back(mImageComponents[LegacyImage::MD_MARQUEE].get());
     comps.emplace_back(mImageComponents[LegacyImage::MD_IMAGE].get());
+    if (mVideoComponents.size() > 0)
+        comps.emplace_back(mVideoComponents.front().get());
     comps.push_back(mBadgeComponents.front().get());
     comps.push_back(mRatingComponents.front().get());
 
@@ -576,12 +583,6 @@ void GamelistView::legacyUpdate(int deltaTime)
         mImageComponents[LegacyImage::MD_IMAGE]->finishAnimation(0);
 
     if (mViewStyle == ViewController::VIDEO) {
-        if (!mVideoPlaying)
-            mVideoComponents.front()->onHide();
-        else if (mVideoPlaying && !mVideoComponents.front()->isVideoPaused() &&
-                 !mWindow->isScreensaverActive())
-            mVideoComponents.front()->onShow();
-
         if (ViewController::getInstance()->getGameLaunchTriggered() &&
             mVideoComponents.front()->isAnimationPlaying(0))
             mVideoComponents.front()->finishAnimation(0);

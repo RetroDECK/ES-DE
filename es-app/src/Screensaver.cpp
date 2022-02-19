@@ -59,6 +59,8 @@ Screensaver::~Screensaver()
 
 void Screensaver::startScreensaver(bool generateMediaList)
 {
+    ViewController::getInstance()->pauseViewVideos();
+
     std::string path = "";
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
     mHasMediaFiles = false;
@@ -157,7 +159,6 @@ void Screensaver::startScreensaver(bool generateMediaList)
                 generateOverlayInfo();
 
             mVideoScreensaver = new VideoFFmpegComponent;
-            mVideoScreensaver->topWindow(true);
             mVideoScreensaver->setOrigin(0.5f, 0.5f);
             mVideoScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
                                            Renderer::getScreenHeight() / 2.0f);
@@ -171,7 +172,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
 
             mVideoScreensaver->setVideo(path);
             mVideoScreensaver->setScreensaverMode(true);
-            mVideoScreensaver->onShow();
+            mVideoScreensaver->startVideoPlayer();
             mTimer = 0;
             return;
         }
@@ -197,6 +198,8 @@ void Screensaver::stopScreensaver()
 
     if (mGameOverlay)
         mGameOverlay.reset();
+
+    ViewController::getInstance()->startViewVideos();
 }
 
 void Screensaver::nextGame()
@@ -215,6 +218,7 @@ void Screensaver::launchGame()
             ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get();
         view->setCursor(mCurrentGame);
         ViewController::getInstance()->cancelViewTransitions();
+        ViewController::getInstance()->pauseViewVideos();
     }
 }
 

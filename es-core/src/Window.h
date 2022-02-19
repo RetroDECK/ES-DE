@@ -130,12 +130,11 @@ public:
     void setLaunchScreen(GuiLaunchScreen* launchScreen) { mLaunchScreen = launchScreen; }
     bool isLaunchScreenDisplayed() { return mRenderLaunchScreen; }
 
-    void increaseVideoPlayerCount();
-    void decreaseVideoPlayerCount();
+    void increaseVideoPlayerCount() { ++mVideoPlayerCount; }
+    void decreaseVideoPlayerCount() { --mVideoPlayerCount; }
     int getVideoPlayerCount();
 
-    void setLaunchedGame();
-    void unsetLaunchedGame();
+    void setLaunchedGame(bool state) { mGameLaunchedState = state; }
     void invalidateCachedBackground();
     bool isInvalidatingCachedBackground() { return mInvalidateCacheTimer > 0; }
 

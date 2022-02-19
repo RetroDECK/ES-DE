@@ -1196,7 +1196,7 @@ void FileData::launchGame()
         // This blocks the video player, stops the scrolling of game names and descriptions and
         // keeps the screensaver from getting activated.
         if (runInBackground)
-            window->setLaunchedGame();
+            window->setLaunchedGame(true);
         // Normalize deltaTime so that the screensaver does not start immediately
         // when returning from the game.
         window->normalizeNextUpdate();

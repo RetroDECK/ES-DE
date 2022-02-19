@@ -33,7 +33,7 @@ class VideoFFmpegComponent : public VideoComponent
 {
 public:
     VideoFFmpegComponent();
-    virtual ~VideoFFmpegComponent();
+    virtual ~VideoFFmpegComponent() { stopVideoPlayer(); }
 
     // Resize the video to fit this size. If one axis is zero, scale that axis to maintain
     // aspect ratio. If both are non-zero, potentially break the aspect ratio. If both are
@@ -45,8 +45,17 @@ public:
     // This can be set before or after a video is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(float width, float height) override;
+    // Basic video controls.
+    void stopVideoPlayer() override;
+    void pauseVideoPlayer() override;
+    // Handle looping of the video. Must be called periodically.
+    void handleLooping() override;
+    // Used to immediately mute audio even if there are samples to play in the buffer.
+    void muteVideoPlayer() override;
 
 private:
+    void startVideoStream() override;
+
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
     // Used internally whenever the resizing parameters or texture change.
     void resize();
@@ -73,15 +82,6 @@ private:
     // Detect and initialize the hardware decoder.
     static void detectHWDecoder();
     bool decoderInitHW();
-
-    // Start the video immediately.
-    void startVideo() override;
-    // Stop the video.
-    void stopVideo() override;
-    // Pause the video when a game has been launched.
-    void pauseVideo() override;
-    // Handle looping the video. Must be called periodically.
-    void handleLooping() override;
 
     static enum AVHWDeviceType sDeviceType;
     static enum AVPixelFormat sPixelFormat;

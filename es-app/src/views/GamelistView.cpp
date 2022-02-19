@@ -204,23 +204,6 @@ void GamelistView::update(int deltaTime)
         }
     }
 
-    for (auto& video : mVideoComponents) {
-        if (!mVideoPlaying) {
-            if (!video->getScrollHide())
-                video->onHide();
-            else if (!video->hasStaticImage())
-                video->onHide();
-            else if (video->getOpacity() == 0.0f)
-                video->onHide();
-        }
-        else if (mVideoPlaying && !video->isVideoPaused() && !mWindow->isScreensaverActive()) {
-            video->onShow();
-        }
-
-        if (ViewController::getInstance()->getGameLaunchTriggered() && video->isAnimationPlaying(0))
-            video->finishAnimation(0);
-    }
-
     updateChildren(deltaTime);
 }
 
@@ -375,6 +358,14 @@ void GamelistView::updateInfoPanel()
 
     bool fadingOut = false;
     if (file == nullptr) {
+        if (mVideoPlaying) {
+            for (auto& video : mVideoComponents) {
+                video->stopVideoPlayer();
+                video->setVideo("");
+                if (!video->hasStartDelay())
+                    video->setImage("");
+            }
+        }
         mVideoPlaying = false;
         fadingOut = true;
     }
@@ -393,17 +384,14 @@ void GamelistView::updateInfoPanel()
                 for (auto& video : mVideoComponents) {
                     setGameImage(mRandomGame, video.get());
 
-                    // Always stop the video before setting a new video as it will otherwise
-                    // continue to play if it has the same path (i.e. it is the same physical
-                    // video file) as the previously set video. That may happen when entering a
-                    // folder with the same name as the first game file inside, or as in this
-                    // case, when entering a custom collection.
-                    video->onHide();
+                    video->stopVideoPlayer();
 
                     if (video->hasStaticVideo())
                         video->setStaticVideo();
                     else if (!video->setVideo(mRandomGame->getVideoPath()))
                         video->setDefaultVideo();
+
+                    video->startVideoPlayer();
                 }
             }
             else {
@@ -413,10 +401,10 @@ void GamelistView::updateInfoPanel()
                 }
 
                 for (auto& video : mVideoComponents) {
+                    video->stopVideoPlayer();
                     video->setImage("");
                     video->setVideo("");
                     if (video->hasStaticVideo()) {
-                        video->onStopVideo();
                         video->setStaticVideo();
                     }
                     else {
@@ -426,17 +414,20 @@ void GamelistView::updateInfoPanel()
             }
         }
         else {
-            for (auto& image : mImageComponents)
+            for (auto& image : mImageComponents) {
                 setGameImage(file, image.get());
+            }
 
             for (auto& video : mVideoComponents) {
                 setGameImage(file, video.get());
-                video->onHide();
+                video->stopVideoPlayer();
 
                 if (video->hasStaticVideo())
                     video->setStaticVideo();
                 else if (!video->setVideo(file->getVideoPath()))
                     video->setDefaultVideo();
+
+                video->startVideoPlayer();
             }
         }
 

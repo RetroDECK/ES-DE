@@ -87,6 +87,8 @@ GuiMenu::~GuiMenu()
     // was openened. Without this, the scrolling would run until manually stopped after
     // the menu has been closed.
     ViewController::getInstance()->stopScrolling();
+
+    ViewController::getInstance()->startViewVideos();
 }
 
 void GuiMenu::openScraperOptions()

@@ -175,7 +175,6 @@ GuiScraperMulti::~GuiScraperMulti()
             (*it)->sortSystem();
         }
     }
-    ViewController::getInstance()->onPauseVideo();
 }
 
 void GuiScraperMulti::onSizeChanged()

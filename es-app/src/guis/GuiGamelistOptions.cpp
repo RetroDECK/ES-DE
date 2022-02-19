@@ -254,6 +254,8 @@ GuiGamelistOptions::~GuiGamelistOptions()
     // the menu has been closed.
     ViewController::getInstance()->stopScrolling();
 
+    ViewController::getInstance()->startViewVideos();
+
     if (mFiltersChanged) {
         if (!mCustomCollectionSystem) {
             ViewController::getInstance()->reloadGamelistView(mSystem);

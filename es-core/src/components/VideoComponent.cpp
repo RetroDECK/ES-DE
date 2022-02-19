@@ -25,43 +25,36 @@ VideoComponent::VideoComponent()
     , mTargetSize {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}
     , mVideoAreaSize {0.0f, 0.0f}
-    , mStartDelayed {false}
+    , mStartTime {0}
     , mIsPlaying {false}
     , mIsActuallyPlaying {false}
-    , mPause {false}
-    , mShowing {false}
-    , mDisable {false}
+    , mPaused {false}
     , mMediaViewerMode {false}
-    , mScreensaverActive {false}
     , mScreensaverMode {false}
-    , mGameLaunched {false}
-    , mBlockPlayer {false}
     , mTargetIsMax {false}
     , mDrawPillarboxes {true}
     , mRenderScanlines {false}
     , mLegacyTheme {false}
+    , mHasVideo {false}
     , mFadeIn {1.0f}
     , mFadeInTime {1000.0f}
 {
-    // Setup the default configuration.
+    // Setup default configuration.
     mConfig.showSnapshotDelay = false;
     mConfig.showSnapshotNoVideo = false;
     mConfig.startDelay = 1500;
-
-    if (mWindow->getGuiStackSize() > 1)
-        topWindow(false);
 }
 
 VideoComponent::~VideoComponent()
 {
     // Stop any currently running video.
-    stopVideo();
+    stopVideoPlayer();
 }
 
 bool VideoComponent::setVideo(std::string path)
 {
     // Convert the path into a generic format.
-    std::string fullPath = Utils::FileSystem::getCanonicalPath(path);
+    std::string fullPath {Utils::FileSystem::getCanonicalPath(path)};
 
     // Check that it's changed.
     if (fullPath == mVideoPath)
@@ -72,9 +65,16 @@ bool VideoComponent::setVideo(std::string path)
 
     // If the file exists then set the new video.
     if (!fullPath.empty() && ResourceManager::getInstance().fileExists(fullPath)) {
+        mHasVideo = true;
         // Return true to show that we are going to attempt to play a video.
         return true;
     }
+
+    if (!mVideoPath.empty() || !mConfig.defaultVideoPath.empty() ||
+        !mConfig.staticVideoPath.empty())
+        mHasVideo = true;
+    else
+        mHasVideo = false;
 
     // Return false to show that no video will be displayed.
     return false;
@@ -87,133 +87,12 @@ void VideoComponent::setImage(const std::string& path, bool tile)
     if (imagePath == "")
         imagePath = mDefaultImagePath;
 
-    // Check that the image has changed.
+    // Check if the image has changed.
     if (imagePath == mStaticImagePath)
         return;
 
     mStaticImage.setImage(imagePath, tile);
     mStaticImagePath = imagePath;
-}
-
-void VideoComponent::onShow()
-{
-    mBlockPlayer = false;
-    mPause = false;
-    mShowing = true;
-    manageState();
-}
-
-void VideoComponent::onHide()
-{
-    mShowing = false;
-    manageState();
-}
-
-void VideoComponent::onStopVideo()
-{
-    stopVideo();
-    manageState();
-}
-
-void VideoComponent::onPauseVideo()
-{
-    mBlockPlayer = true;
-    mPause = true;
-    manageState();
-}
-
-void VideoComponent::onUnpauseVideo()
-{
-    mBlockPlayer = false;
-    mPause = false;
-    manageState();
-}
-
-void VideoComponent::onScreensaverActivate()
-{
-    mBlockPlayer = true;
-    mPause = true;
-
-    if (Settings::getInstance()->getString("ScreensaverType") == "dim")
-        stopVideo();
-    else
-        pauseVideo();
-    manageState();
-}
-
-void VideoComponent::onScreensaverDeactivate()
-{
-    mBlockPlayer = false;
-    // Stop video when deactivating the screensaver to force a reload of the
-    // static image (if the theme is configured as such).
-    stopVideo();
-    manageState();
-}
-
-void VideoComponent::onGameLaunchedActivate()
-{
-    mGameLaunched = true;
-    manageState();
-}
-
-void VideoComponent::onGameLaunchedDeactivate()
-{
-    mGameLaunched = false;
-    stopVideo();
-    manageState();
-}
-
-void VideoComponent::topWindow(bool isTop)
-{
-    if (isTop) {
-        mBlockPlayer = false;
-        mPause = false;
-
-        // Stop video when closing the menu to force a reload of the
-        // static image (if the theme is configured as such).
-        stopVideo();
-    }
-    else {
-        mBlockPlayer = true;
-        mPause = true;
-    }
-    manageState();
-}
-
-void VideoComponent::render(const glm::mat4& parentTrans)
-{
-    if (!isVisible())
-        return;
-
-    glm::mat4 trans {parentTrans * getTransform()};
-    GuiComponent::renderChildren(trans);
-
-    Renderer::setMatrix(trans);
-
-    // Handle the case where the video is delayed.
-    handleStartDelay();
-
-    // Handle looping of the video.
-    handleLooping();
-
-    // Pause video in case a game has been launched.
-    pauseVideo();
-}
-
-void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
-{
-    // This function is called when the video is not currently being played. We need to
-    // work out if we should display a static image. If the menu is open, then always render
-    // the static image as the metadata may have been changed. In that case the gamelist
-    // was reloaded and there would just be a blank space unless we render the image here.
-    // The side effect of this is that a static image is displayed even for themes that are
-    // set to start playing the video immediately. Although this may seem a bit inconsistent it
-    // simply looks better than leaving an empty space where the video would have been located.
-    if (mWindow->getGuiStackSize() > 1 || (mConfig.showSnapshotNoVideo && mVideoPath.empty()) ||
-        (mStartDelayed && mConfig.showSnapshotDelay)) {
-        mStaticImage.setOpacity(mOpacity * mThemeOpacity);
-        mStaticImage.render(parentTrans);
-    }
 }
 
 void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -327,12 +206,29 @@ std::vector<HelpPrompt> VideoComponent::getHelpPrompts()
 
 void VideoComponent::update(int deltaTime)
 {
-    if (mBlockPlayer) {
-        setImage(mStaticImagePath);
+    if (!mHasVideo) {
+        // We need this update so the static image gets updated (e.g. used for fade animations).
+        GuiComponent::update(deltaTime);
         return;
     }
 
-    manageState();
+    // Hack to prevent the video from starting to play if the static image was shown when paused.
+    if (mPaused)
+        mStartTime = SDL_GetTicks() + mConfig.startDelay;
+
+    if (mWindow->getGameLaunchedState())
+        return;
+
+    bool playVideo {false};
+
+    if (!mIsPlaying && mConfig.startDelay == 0) {
+        startVideoStream();
+    }
+    else if (mStartTime == 0 || SDL_GetTicks() > mStartTime) {
+        mStartTime = 0;
+        playVideo = true;
+        startVideoStream();
+    }
 
     // Fade in videos, the time period is a bit different between the screensaver and media viewer.
     // For the theme controlled videos in the gamelist and system views, the fade-in time is set
@@ -349,90 +245,37 @@ void VideoComponent::update(int deltaTime)
         mFadeIn = glm::clamp(mFadeIn + (deltaTime / static_cast<float>(mFadeInTime)), 0.0f, 1.0f);
     }
 
+    if (mIsPlaying)
+        updatePlayer();
+
+    handleLooping();
+
     GuiComponent::update(deltaTime);
 }
 
-void VideoComponent::startVideoWithDelay()
+void VideoComponent::startVideoPlayer()
 {
-    mPause = false;
+    if (mIsPlaying)
+        stopVideoPlayer();
 
-    // If not playing then either start the video or initiate the delay.
-    if (!mIsPlaying) {
-        // Set the video that we are going to be playing so we don't attempt to restart it.
-        mPlayingVideoPath = mVideoPath;
-
-        if (mConfig.startDelay == 0) {
-            // No delay. Just start the video.
-            mStartDelayed = false;
-            startVideo();
-        }
-        else {
-            // Configure the start delay.
-            mStartDelayed = true;
-            mStartTime = SDL_GetTicks() + mConfig.startDelay;
-        }
-        mIsPlaying = true;
+    if (mConfig.startDelay != 0 && mStaticImagePath != "") {
+        mStartTime = SDL_GetTicks() + mConfig.startDelay;
+        setImage(mStaticImagePath);
     }
+
+    mPaused = false;
 }
 
-void VideoComponent::handleStartDelay()
+void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
 {
-    if (mBlockPlayer || mGameLaunched)
+    if (mLegacyTheme && !mHasVideo && !mConfig.showSnapshotNoVideo)
         return;
 
-    // Only play if any delay has timed out.
-    if (mStartDelayed) {
-        // If the setting to override the theme-supplied video delay setting has been enabled,
-        // then play the video immediately.
-        if (!Settings::getInstance()->getBool("PlayVideosImmediately")) {
-            // If there is a video file available but no static image, then start playing the
-            // video immediately regardless of theme configuration or settings.
-            if (mStaticImagePath != "") {
-                if (mStartTime > SDL_GetTicks()) {
-                    // Timeout not yet completed.
-                    return;
-                }
-            }
-        }
-        // Completed.
-        mStartDelayed = false;
-        // Clear the playing flag so startVideo works.
-        mIsPlaying = false;
-        startVideo();
-    }
-}
+    if (mHasVideo && (!mConfig.showSnapshotDelay || mConfig.startDelay == 0))
+        return;
 
-void VideoComponent::manageState()
-{
-    // We will only show the video if the component is on display and the screensaver
-    // is not active.
-    bool show = mShowing && !mScreensaverActive && !mDisable;
-
-    // See if we're already playing.
-    if (mIsPlaying) {
-        // If we are not on display then stop the video from playing.
-        if (!show) {
-            stopVideo();
-        }
-        else {
-            if (mVideoPath != mPlayingVideoPath) {
-                // Path changed. Stop the video. We will start it again below because
-                // mIsPlaying will be modified by stopVideo to be false.
-                stopVideo();
-            }
-        }
-        updatePlayer();
+    if (mStaticImagePath != "") {
+        mStaticImage.setOpacity(mOpacity * mThemeOpacity);
+        mStaticImage.render(parentTrans);
     }
-    // Need to recheck variable rather than 'else' because it may be modified above.
-    if (!mIsPlaying) {
-        // If we are on display then see if we should start the video.
-        if (show && !mVideoPath.empty())
-            startVideoWithDelay();
-    }
-
-    // If a game has just been launched and a video is actually shown, then request a
-    // pause of the video so it doesn't continue to play in the background while the
-    // game is running.
-    if (mGameLaunched && show && !mPause)
-        mPause = true;
 }

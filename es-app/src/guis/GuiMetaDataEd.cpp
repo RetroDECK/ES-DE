@@ -514,7 +514,6 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
     buttons.push_back(std::make_shared<ButtonComponent>("SAVE", "save metadata", [&] {
         save();
-        ViewController::getInstance()->onPauseVideo();
         delete this;
     }));
     buttons.push_back(
@@ -841,7 +840,6 @@ void GuiMetaDataEd::close()
             CollectionSystemsManager::getInstance()->refreshCollectionSystems(mScraperParams.game);
             mWindow->invalidateCachedBackground();
         }
-        ViewController::getInstance()->onPauseVideo();
         delete this;
     };
 

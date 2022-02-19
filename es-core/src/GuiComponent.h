@@ -238,18 +238,15 @@ public:
 
     virtual void onShow();
     virtual void onHide();
-    virtual void onStopVideo();
-    virtual void onPauseVideo();
-    virtual void onUnpauseVideo();
-    virtual bool isVideoPaused() { return false; }
+
+    // System view and gamelist view video controls.
+    virtual void startViewVideos() {}
+    virtual void stopViewVideos() {}
+    virtual void pauseViewVideos() {}
+    virtual void muteViewVideos() {}
+
     // For Lottie animations.
     virtual void resetFileAnimation() {};
-
-    virtual void onScreensaverActivate();
-    virtual void onScreensaverDeactivate();
-    virtual void onGameLaunchedActivate();
-    virtual void onGameLaunchedDeactivate();
-    virtual void topWindow(bool isTop);
 
     // Default implementation just handles <pos> and <size> tags as normalized float pairs.
     // You probably want to keep this behavior for any derived classes as well as add your own.

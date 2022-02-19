@@ -41,6 +41,28 @@ public:
         }
     }
 
+    void startViewVideos() override
+    {
+        for (auto& video : mVideoComponents)
+            video->startVideoPlayer();
+    }
+    void stopViewVideos() override
+    {
+        for (auto& video : mVideoComponents)
+            video->stopVideoPlayer();
+    }
+    void pauseViewVideos() override
+    {
+        for (auto& video : mVideoComponents) {
+            video->pauseVideoPlayer();
+        }
+    }
+    void muteViewVideos() override
+    {
+        for (auto& video : mVideoComponents)
+            video->muteVideoPlayer();
+    }
+
     const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
     void setTheme(const std::shared_ptr<ThemeData>& theme)
     {

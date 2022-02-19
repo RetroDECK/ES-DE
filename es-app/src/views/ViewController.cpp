@@ -648,11 +648,6 @@ void ViewController::launch(FileData* game)
         return;
     }
 
-    // If the video view style is used, pause the video currently playing or block the
-    // video from starting to play if the static image is still shown.
-    if (mCurrentView)
-        mCurrentView->onPauseVideo();
-
     // Disable text scrolling and stop any Lottie animations. These will be enabled again in
     // FileData upon returning from the game.
     mWindow->setAllowTextScrolling(false);
@@ -806,7 +801,7 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
         mWindow->setAllowFileAnimation(true);
-        mWindow->unsetLaunchedGame();
+        mWindow->setLaunchedGame(false);
         // Filter out the "a" button so the game is not restarted if there was such a button press
         // queued when leaving the game.
         if (config->isMappedTo("a", input) && input.value != 0)
@@ -825,9 +820,12 @@ bool ViewController::input(InputConfig* config, Input input)
         // to play when we've closed the menu.
         if (mSystemListView->isSystemAnimationPlaying(0))
             mSystemListView->finishSystemAnimation(0);
-        // Stop the gamelist scrolling as well as it would otherwise
-        // also continue to run after closing the menu.
+        // Stop the gamelist scrolling as well as it would otherwise continue to run after
+        // closing the menu.
         mCurrentView->stopListScrolling();
+        // Pause all videos as they would otherwise continue to play beneath the menu.
+        mCurrentView->pauseViewVideos();
+
         // Finally, if the camera is currently moving, reset its position.
         cancelViewTransitions();
 
@@ -985,7 +983,7 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
     // video player, prevent scrolling of game names and game descriptions and prevent the
     // screensaver from starting on schedule.
     if (mWindow->getGameLaunchedState())
-        mWindow->setLaunchedGame();
+        mWindow->setLaunchedGame(true);
 
     // Redisplay the current view.
     if (mCurrentView)
