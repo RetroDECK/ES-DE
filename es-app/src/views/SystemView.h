@@ -66,6 +66,28 @@ public:
     CarouselComponent::CarouselType getCarouselType() { return mCarousel->getType(); }
     SystemData* getFirstSystem() { return mCarousel->getFirst(); }
 
+    void startViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+            video->startVideoPlayer();
+    }
+    void stopViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+            video->stopVideoPlayer();
+    }
+    void pauseViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents) {
+            video->pauseVideoPlayer();
+        }
+    }
+    void muteViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+            video->muteVideoPlayer();
+    }
+
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
     std::vector<HelpPrompt> getHelpPrompts() override;
@@ -92,6 +114,8 @@ private:
     bool mUpdatedGameCount;
     bool mViewNeedsReload;
     bool mLegacyMode;
+    bool mHoldingKey;
+    bool mNavigated;
 };
 
 #endif // ES_APP_VIEWS_SYSTEM_VIEW_H

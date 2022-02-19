@@ -36,13 +36,17 @@ SystemView::SystemView()
     , mUpdatedGameCount {false}
     , mViewNeedsReload {true}
     , mLegacyMode {false}
+    , mHoldingKey {false}
+    , mNavigated {false}
 {
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
     mCarousel = std::make_unique<CarouselComponent>();
     mCarousel->setCursorChangedCallback([&](const CursorState& state) { onCursorChanged(state); });
-    mCarousel->setCancelTransitionsCallback(
-        [&] { ViewController::getInstance()->cancelViewTransitions(); });
+    mCarousel->setCancelTransitionsCallback([&] {
+        ViewController::getInstance()->cancelViewTransitions();
+        mNavigated = true;
+    });
 
     populate();
 }
@@ -68,8 +72,12 @@ void SystemView::goToSystem(SystemData* system, bool animate)
             selector->setNeedsRefresh();
     }
 
+    for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+        video->setStaticVideo();
+
     updateGameSelectors();
     updateGameCount();
+    startViewVideos();
 
     if (!animate)
         finishSystemAnimation(0);
@@ -77,7 +85,11 @@ void SystemView::goToSystem(SystemData* system, bool animate)
 
 bool SystemView::input(InputConfig* config, Input input)
 {
+    mNavigated = false;
+
     if (input.value != 0) {
+        mHoldingKey = true;
+
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
             LOG(LogDebug) << "SystemView::input(): Reloading all";
@@ -87,6 +99,7 @@ bool SystemView::input(InputConfig* config, Input input)
 
         if (config->isMappedTo("a", input)) {
             mCarousel->stopScrolling();
+            pauseViewVideos();
             ViewController::getInstance()->goToGamelist(mCarousel->getSelected());
             NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
             return true;
@@ -111,6 +124,9 @@ bool SystemView::input(InputConfig* config, Input input)
             return true;
         }
     }
+    else {
+        mHoldingKey = false;
+    }
 
     return mCarousel->input(config, input);
 }
@@ -118,6 +134,10 @@ bool SystemView::input(InputConfig* config, Input input)
 void SystemView::update(int deltaTime)
 {
     mCarousel->update(deltaTime);
+
+    for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+        video->update(deltaTime);
+
     GuiComponent::update(deltaTime);
 }
 
@@ -126,7 +146,14 @@ void SystemView::render(const glm::mat4& parentTrans)
     if (mCarousel->getNumEntries() == 0)
         return; // Nothing to render.
 
-    renderElements(parentTrans, false);
+    bool fade {false};
+
+    if (mNavigated && mCarousel->isAnimationPlaying(0) &&
+        Settings::getInstance()->getString("TransitionStyle") == "fade")
+        fade = true;
+
+    if (!fade)
+        renderElements(parentTrans, false);
     glm::mat4 trans {getTransform() * parentTrans};
 
     // During fade transitions draw a black rectangle above all elements placed below the carousel.
@@ -187,7 +214,11 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
             selector->setNeedsRefresh();
     }
 
+    for (auto& video : mSystemElements[cursor].videoComponents)
+        video->setStaticVideo();
+
     updateGameSelectors();
+    startViewVideos();
     updateHelpPrompts();
 
     int scrollVelocity {mCarousel->getScrollingVelocity()};
@@ -368,9 +399,16 @@ void SystemView::populate()
                         elements.imageComponents.back()->setDefaultZIndex(30.0f);
                         elements.imageComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);
-                        if (elements.imageComponents.back()->getThemeImageTypes().size() != 0)
-                            elements.imageComponents.back()->setScrollHide(true);
                         elements.children.emplace_back(elements.imageComponents.back().get());
+                    }
+                    else if (element.second.type == "video") {
+                        elements.videoComponents.emplace_back(
+                            std::make_unique<VideoFFmpegComponent>());
+                        elements.videoComponents.back()->setDefaultZIndex(30.0f);
+                        elements.videoComponents.back()->setStaticVideo();
+                        elements.videoComponents.back()->applyTheme(theme, "system", element.first,
+                                                                    ThemeFlags::ALL);
+                        elements.children.emplace_back(elements.videoComponents.back().get());
                     }
                     else if (element.second.type == "text") {
                         if (element.second.has("systemdata") &&
@@ -439,8 +477,6 @@ void SystemView::populate()
             }
         }
     }
-
-    updateGameSelectors();
 
     if (mCarousel->getNumEntries() == 0) {
         // Something is wrong, there is not a single system to show, check if UI mode is not full.
@@ -533,15 +569,19 @@ void SystemView::updateGameSelectors()
                 gameSelector = mSystemElements[cursor].gameSelectors.front().get();
                 LOG(LogWarning) << "SystemView::updateGameSelectors(): Multiple gameselector "
                                    "elements defined but image element does not state which one to "
-                                   "use, so selecting first entry";
+                                   "use, selecting first entry";
             }
             else {
                 for (auto& selector : mSystemElements[cursor].gameSelectors) {
                     if (selector->getSelectorName() == imageSelector)
                         gameSelector = selector.get();
                 }
-                if (gameSelector == nullptr)
+                if (gameSelector == nullptr) {
+                    LOG(LogWarning)
+                        << "SystemView::updateGameSelectors(): Invalid gameselector \""
+                        << imageSelector << "\" defined for image element, selecting first entry";
                     gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                }
             }
         }
         else {
@@ -629,6 +669,156 @@ void SystemView::updateGameSelectors()
         }
         else {
             image->setImage("");
+        }
+    }
+
+    for (auto& video : mSystemElements[cursor].videoComponents) {
+        // If a static video has been set, then don't attempt to find a gameselector entry.
+        if (video->hasStaticVideo())
+            continue;
+        GameSelectorComponent* gameSelector {nullptr};
+        if (multipleSelectors) {
+            const std::string& videoSelector {video->getThemeGameSelector()};
+            if (videoSelector == "") {
+                gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                LOG(LogWarning) << "SystemView::updateGameSelectors(): Multiple gameselector "
+                                   "elements defined but video element does not state which one to "
+                                   "use, selecting first entry";
+            }
+            else {
+                for (auto& selector : mSystemElements[cursor].gameSelectors) {
+                    if (selector->getSelectorName() == videoSelector)
+                        gameSelector = selector.get();
+                }
+                if (gameSelector == nullptr) {
+                    LOG(LogWarning)
+                        << "SystemView::updateGameSelectors(): Invalid gameselector \""
+                        << videoSelector << "\" defined for video element, selecting first entry";
+                    gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                }
+            }
+        }
+        else {
+            gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+        }
+        gameSelector->refreshGames();
+        std::vector<FileData*> games {gameSelector->getGames()};
+        if (!games.empty()) {
+            if (!video->setVideo(games.front()->getVideoPath()))
+                video->setDefaultVideo();
+        }
+    }
+
+    for (auto& video : mSystemElements[cursor].videoComponents) {
+        if (video->getThemeImageTypes().size() == 0)
+            continue;
+        GameSelectorComponent* gameSelector {nullptr};
+        if (multipleSelectors) {
+            const std::string& imageSelector {video->getThemeGameSelector()};
+            if (imageSelector == "") {
+                gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                LOG(LogWarning) << "SystemView::updateGameSelectors(): Multiple gameselector "
+                                   "elements defined but video element does not state which one to "
+                                   "use, selecting first entry";
+            }
+            else {
+                for (auto& selector : mSystemElements[cursor].gameSelectors) {
+                    if (selector->getSelectorName() == imageSelector)
+                        gameSelector = selector.get();
+                }
+                if (gameSelector == nullptr) {
+                    LOG(LogWarning)
+                        << "SystemView::updateGameSelectors(): Invalid gameselector \""
+                        << imageSelector << "\" defined for video element, selecting first entry";
+                    gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                }
+            }
+        }
+        else {
+            gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+        }
+        gameSelector->refreshGames();
+        std::vector<FileData*> games {gameSelector->getGames()};
+        if (!games.empty()) {
+            std::string path;
+            for (auto& imageType : video->getThemeImageTypes()) {
+                if (imageType == "image") {
+                    path = games.front()->getImagePath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "miximage") {
+                    path = games.front()->getMiximagePath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "marquee") {
+                    path = games.front()->getMarqueePath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "screenshot") {
+                    path = games.front()->getScreenshotPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "titlescreen") {
+                    path = games.front()->getTitleScreenPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "cover") {
+                    path = games.front()->getCoverPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "backcover") {
+                    path = games.front()->getBackCoverPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "3dbox") {
+                    path = games.front()->get3DBoxPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "fanart") {
+                    path = games.front()->getFanArtPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "thumbnail") {
+                    path = games.front()->getThumbnailPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+            }
+            // This is needed so the default image is set if no game media was found.
+            if (path == "" && video->getThemeImageTypes().size() > 0)
+                video->setImage("");
+        }
+        else {
+            video->setImage("");
         }
     }
 
