@@ -1351,47 +1351,50 @@ void VideoFFmpegComponent::startVideoStream()
         }
 
         // Audio stream setup, optional as some videos do not have any audio tracks.
+        // Audio can also be disabled per video via the theme configuration.
 
-        mAudioStreamIndex =
-            av_find_best_stream(mFormatContext, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
+        if (mPlayAudio) {
+            mAudioStreamIndex =
+                av_find_best_stream(mFormatContext, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
 
-        if (mAudioStreamIndex < 0) {
-            LOG(LogDebug) << "VideoFFmpegComponent::startVideoStream(): "
-                             "File does not seem to contain any audio streams";
-        }
-
-        if (mAudioStreamIndex >= 0) {
-            mAudioStream = mFormatContext->streams[mAudioStreamIndex];
-            mAudioCodec =
-                const_cast<AVCodec*>(avcodec_find_decoder(mAudioStream->codecpar->codec_id));
-
-            if (!mAudioCodec) {
-                LOG(LogError) << "Couldn't find a suitable audio codec for file \"" << mVideoPath
-                              << "\"";
-                return;
+            if (mAudioStreamIndex < 0) {
+                LOG(LogDebug) << "VideoFFmpegComponent::startVideoStream(): "
+                                 "File does not seem to contain any audio streams";
             }
 
-            mAudioCodecContext = avcodec_alloc_context3(mAudioCodec);
+            if (mAudioStreamIndex >= 0) {
+                mAudioStream = mFormatContext->streams[mAudioStreamIndex];
+                mAudioCodec =
+                    const_cast<AVCodec*>(avcodec_find_decoder(mAudioStream->codecpar->codec_id));
 
-            if (mAudioCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
-                mAudioCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
+                if (!mAudioCodec) {
+                    LOG(LogError) << "Couldn't find a suitable audio codec for file \""
+                                  << mVideoPath << "\"";
+                    return;
+                }
 
-            // Some formats want separate stream headers.
-            if (mAudioCodecContext->flags & AVFMT_GLOBALHEADER)
-                mAudioCodecContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+                mAudioCodecContext = avcodec_alloc_context3(mAudioCodec);
 
-            if (avcodec_parameters_to_context(mAudioCodecContext, mAudioStream->codecpar)) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
-                                 "Couldn't fill the audio codec context parameters for file \""
-                              << mVideoPath << "\"";
-                return;
-            }
+                if (mAudioCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
+                    mAudioCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
 
-            if (avcodec_open2(mAudioCodecContext, mAudioCodec, nullptr)) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
-                                 "Couldn't initialize the audio codec context for file \""
-                              << mVideoPath << "\"";
-                return;
+                // Some formats want separate stream headers.
+                if (mAudioCodecContext->flags & AVFMT_GLOBALHEADER)
+                    mAudioCodecContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+                if (avcodec_parameters_to_context(mAudioCodecContext, mAudioStream->codecpar)) {
+                    LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
+                                     "Couldn't fill the audio codec context parameters for file \""
+                                  << mVideoPath << "\"";
+                    return;
+                }
+
+                if (avcodec_open2(mAudioCodecContext, mAudioCodec, nullptr)) {
+                    LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
+                                     "Couldn't initialize the audio codec context for file \""
+                                  << mVideoPath << "\"";
+                    return;
+                }
             }
         }
 

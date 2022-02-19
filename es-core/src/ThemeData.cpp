@@ -111,6 +111,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"defaultImage", PATH},
        {"imageType", STRING},
        {"gameselector", STRING},
+       {"audio", BOOLEAN},
        {"interpolation", STRING},
        {"pillarboxes", BOOLEAN},
        {"scanlines", BOOLEAN},

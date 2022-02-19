@@ -121,6 +121,7 @@ protected:
     bool mMediaViewerMode;
     bool mScreensaverMode;
     bool mTargetIsMax;
+    bool mPlayAudio;
     bool mDrawPillarboxes;
     bool mRenderScanlines;
     bool mLegacyTheme;

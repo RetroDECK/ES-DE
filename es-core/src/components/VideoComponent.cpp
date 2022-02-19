@@ -32,6 +32,7 @@ VideoComponent::VideoComponent()
     , mMediaViewerMode {false}
     , mScreensaverMode {false}
     , mTargetIsMax {false}
+    , mPlayAudio {true}
     , mDrawPillarboxes {true}
     , mRenderScanlines {false}
     , mLegacyTheme {false}
@@ -131,6 +132,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("pos"))
             mVideoAreaPos = elem->get<glm::vec2>("pos") * scale;
     }
+
+    if (elem->has("audio"))
+        mPlayAudio = elem->get<bool>("audio");
 
     if (elem->has("interpolation")) {
         const std::string interpolation {elem->get<std::string>("interpolation")};
