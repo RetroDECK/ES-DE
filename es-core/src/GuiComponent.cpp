@@ -342,7 +342,7 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Position + size also implies origin.
     if ((properties & ORIGIN || (properties & POSITION && properties & ThemeFlags::SIZE)) &&
         elem->has("origin")) {
-        setOrigin(elem->get<glm::vec2>("origin"));
+        setOrigin(glm::clamp(elem->get<glm::vec2>("origin"), 0.0f, 1.0f));
     }
 
     if (properties & ThemeFlags::ROTATION) {
