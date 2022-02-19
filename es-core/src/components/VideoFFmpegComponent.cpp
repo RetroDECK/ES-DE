@@ -24,7 +24,8 @@ std::vector<std::string> VideoFFmpegComponent::sHWDecodedVideos;
 std::vector<std::string> VideoFFmpegComponent::sSWDecodedVideos;
 
 VideoFFmpegComponent::VideoFFmpegComponent()
-    : mFrameProcessingThread {nullptr}
+    : mRectangleOffset {0.0f, 0.0f}
+    , mFrameProcessingThread {nullptr}
     , mFormatContext {nullptr}
     , mVideoStream {nullptr}
     , mAudioStream {nullptr}
@@ -159,10 +160,10 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         }
 
         // clang-format off
-        vertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, color};
-        vertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, color};
-        vertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, color};
-        vertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, color};
+        vertices[0] = {{0.0f + mRectangleOffset.x,    0.0f + mRectangleOffset.y     }, {0.0f, 0.0f}, color};
+        vertices[1] = {{0.0f + mRectangleOffset.x,    mSize.y + mRectangleOffset.y  }, {0.0f, 1.0f}, color};
+        vertices[2] = {{mSize.x + mRectangleOffset.x, 0.0f + + mRectangleOffset.y   }, {1.0f, 0.0f}, color};
+        vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {1.0f, 1.0f}, color};
         // clang-format on
 
         // Round vertices.
@@ -882,8 +883,9 @@ void VideoFFmpegComponent::calculateBlackRectangle()
     // otherwise it will exactly match the video size. The reason to add a black rectangle
     // behind videos in this second instance is that the scanline rendering will make the
     // video partially transparent so this may avoid some unforseen issues with some themes.
-    if (mVideoAreaPos != glm::vec2 {} && mVideoAreaSize != glm::vec2 {}) {
+    if (mVideoAreaPos != glm::vec2 {0.0f, 0.0f} && mVideoAreaSize != glm::vec2 {0.0f, 0.0f}) {
         mVideoRectangleCoords.clear();
+        mRectangleOffset = {0.0f, 0.0f};
 
         if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoPillarbox")) ||
             (!mLegacyTheme && mDrawPillarboxes)) {
@@ -919,6 +921,15 @@ void VideoFFmpegComponent::calculateBlackRectangle()
                 std::round(mVideoAreaPos.y - rectHeight * mOrigin.y));
             mVideoRectangleCoords.emplace_back(std::round(rectWidth));
             mVideoRectangleCoords.emplace_back(std::round(rectHeight));
+
+            // If an origin value other than 0.5 is used, then create an offset for centering
+            // the video inside the rectangle.
+            if (mOrigin != glm::vec2 {0.5f, 0.5f}) {
+                if (rectWidth > mSize.x)
+                    mRectangleOffset.x -= (rectWidth - mSize.x) * (mOrigin.x - 0.5f);
+                else if (rectHeight > mSize.y)
+                    mRectangleOffset.y -= (rectHeight - mSize.y) * (mOrigin.y - 0.5f);
+            }
         }
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.

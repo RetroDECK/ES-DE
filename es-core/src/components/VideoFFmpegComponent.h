@@ -90,6 +90,7 @@ private:
 
     std::shared_ptr<TextureResource> mTexture;
     std::vector<float> mVideoRectangleCoords;
+    glm::vec2 mRectangleOffset;
 
     std::unique_ptr<std::thread> mFrameProcessingThread;
     std::mutex mPictureMutex;
