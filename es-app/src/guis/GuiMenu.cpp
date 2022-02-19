@@ -690,19 +690,6 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // Play videos immediately (overrides theme setting).
-    auto play_videos_immediately = std::make_shared<SwitchComponent>();
-    play_videos_immediately->setState(Settings::getInstance()->getBool("PlayVideosImmediately"));
-    s->addWithLabel("PLAY VIDEOS IMMEDIATELY (OVERRIDE THEME)", play_videos_immediately);
-    s->addSaveFunc([play_videos_immediately, s] {
-        if (Settings::getInstance()->getBool("PlayVideosImmediately") !=
-            play_videos_immediately->getState()) {
-            Settings::getInstance()->setBool("PlayVideosImmediately",
-                                             play_videos_immediately->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // When the theme set entries are scrolled or selected, update the relevant rows.
     auto scrollThemeSetFunc = [=](const std::string& themeName, bool firstRun = false) {
         auto selectedSet = themeSets.find(themeName);
