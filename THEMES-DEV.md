@@ -78,6 +78,7 @@ The following are the most important changes compared to the legacy theme struct
 * The `video` element properties `showSnapshotNoVideo` and `showSnapshotDelay` have been removed
 * The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` component)
 * The `forceUppercase` property has been replaced with the more versatile `letterCase` property
+* The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
 * Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
 
@@ -761,6 +762,7 @@ Properties:
     - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
     - Angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -816,9 +818,10 @@ Properties:
 
 #### video
 
-Plays a video and provides support for displaying a static image for a defined time period before starting the video player. Although an unlimited number of videos could in theory be defined per view it's strongly recommended to keep it at a single instance. Playing multiple videos simultaneously takes a lot of CPU resources and ES-DE currently has no audio mixing capabilities so the audio would not play correctly.
+Plays a video and provides support for displaying a static image for a defined time period before starting the video player. Although an unlimited number of videos could in theory be defined per view it's recommended to keep it at a single instance as playing videos takes a lot of CPU resources. But if still going for multiple videos, make sure to use the `audio` property to disable audio on all but one video as ES-DE currently has no audio mixing capabilities so the sound would not play correctly. To use videos in the `system` view, you either need to set a static video using the `path` property, or you need to create a `gameselector` element so game videos can be used.
 
 Supported views:
+* `system `
 * `gamelist`
 
 Instances per view:
@@ -832,15 +835,10 @@ Properties:
     - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
-    - Default is `0.5 0.5`
-* `rotation` - type: FLOAT
-    - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
-    - Default is `0`
-* `rotationOrigin` - type: NORMALIZED_PAIR
-    - Point around which the text will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `path` - type: PATH
-    - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not. If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
+    - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not (this also applies to the `system` view if you have a `gameselector` element defined). If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
 * `default` - type: PATH
     - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `defaultImage` - type: PATH
@@ -857,6 +855,11 @@ Properties:
     - `backcover` - This will look for a box back cover image.
     - `3dbox` - This will look for a 3D box image.
     - `fanart` - This will look for a fan art image.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
+* `audio` - type: BOOLEAN
+    - Whether to enable or disable audio playback for the video.
+    - Default is `true`
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
@@ -865,12 +868,16 @@ Properties:
     - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
     - Default is `true`
 * `scanlines` - type: BOOLEAN
-    - Whether to use a shader to render scanlines. This property is not compatible with `opacity` so enabling it will set the opacity to `1` (unless it was set to `0` in which case the entire video element is hidden).
+    - Whether to use a shader to render scanlines.
     - Default is `false`
 * `delay` - type: FLOAT
     - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageType` property will be displayed. If that property is not set, then the `delay` property will be ignored.
     - Minimum value is `0` and maximum value is `15`
     - Default is `1.5`
+* `fadeInTime` - type: FLOAT
+    - Time in seconds to fade in the video from pure black. This is completely unrelated to the `scrollFadeIn` property. Note that if this is set to zero it may seem as if the property doesn't work correctly as many ScreenScraper videos have a fade-in baked into the actual video stream. Setting this property to lower than 0.3 seconds or so is generally a bad idea for videos that don't have a fade-in baked in as transitions from the static image will then look like a bad jump cut.
+    - Minimum value is `0` and maximum value is `8`
+    - Default is `1`
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
     - Default is `false`
@@ -890,6 +897,7 @@ Properties:
 Lottie (vector graphics) animation. Note that these animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of them to the same view and to not make them too large.
 
 Supported views:
+* `system `
 * `gamelist`
 
 Instances per view:
@@ -901,6 +909,7 @@ Properties:
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the animation's aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information.
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
     - Angle in degrees that the animation should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -950,6 +959,7 @@ Properties:
     - Default is `0.15 0.20`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
     - Angle in degrees that the badges should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -1056,6 +1066,7 @@ Properties:
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Rotation is not possible if the `container` property has been set to true.
@@ -1143,6 +1154,7 @@ Properties:
 Displays a date and time as a text string. The format is ISO 8601 (YYYY-MM-DD) by default, but this can be changed using the `format` property. The text _unknown_ will be shown by default if there is no time stamp available. If the property `displayRelative` has been set, the text will be shown as _never_ in case of no time stamp.
 
 Supported views:
+* `system`
 * `gamelist`
 
 Instances per view:
@@ -1157,6 +1169,7 @@ Properties:
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -1165,10 +1178,12 @@ Properties:
     - Point around which the text will be rotated.
     - Default is `0.5 0.5`.
 * `metadata` - type: STRING
-    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed.
+    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element.
     - Valid values:
     - `releasedate` - The release date of the game.
     - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -1230,6 +1245,7 @@ Properties:
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -1278,6 +1294,7 @@ Properties:
     - Only one value is actually used. The other value should be zero.  (e.g. specify width OR height, but not both.  This is done to maintain the aspect ratio.)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the rating should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -1323,6 +1340,7 @@ Properties:
     - Default is `0 0.38375`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
 * `color` - type: COLOR
     - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.
     - Default is `FFFFFFD8`
@@ -1401,6 +1419,7 @@ Properties:
 * `size` - type: NORMALIZED_PAIR
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
 * `selectorHeight` - type: FLOAT
     - Height of the "selector bar".
 * `selectorOffsetY` - type: FLOAT
@@ -1446,7 +1465,7 @@ Properties:
 
 #### gameselector
 
-Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image` and `text` elements.
+Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image`, `video`, `text` and `datetime` elements.
 
 Supported views:
 * `system`
@@ -1481,6 +1500,7 @@ Properties:
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
       the element exactly in the middle of the screen.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
 * `textColor` - type: COLOR
     - Default is `777777FF`
 * `textColorDimmed` - type: COLOR
