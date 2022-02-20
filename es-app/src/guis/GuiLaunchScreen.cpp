@@ -99,29 +99,29 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // Adjust the width depending on the aspect ratio of the screen, to make the screen look
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
     // reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
 
-    float maxWidthModifier = glm::clamp(0.78f * aspectValue, 0.78f, 0.90f);
-    float minWidthModifier = glm::clamp(0.50f * aspectValue, 0.50f, 0.65f);
+    float maxWidthModifier {glm::clamp(0.78f * aspectValue, 0.78f, 0.90f)};
+    float minWidthModifier {glm::clamp(0.50f * aspectValue, 0.50f, 0.65f)};
 
-    float maxWidth = static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
-    float minWidth = static_cast<float>(Renderer::getScreenWidth()) * minWidthModifier;
+    float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
+    float minWidth {Renderer::getScreenWidth() * minWidthModifier};
 
-    float fontWidth =
+    float fontWidth {
         Font::get(static_cast<int>(gameNameFontSize * std::min(Renderer::getScreenHeight(),
                                                                Renderer::getScreenWidth())))
             ->sizeText(Utils::String::toUpper(game->getName()))
-            .x;
+            .x};
 
     // Add a bit of width to compensate for the left and right spacers.
-    fontWidth += static_cast<float>(Renderer::getScreenWidth()) * 0.05f;
+    fontWidth += Renderer::getScreenWidth() * 0.05f;
 
-    float width = glm::clamp(fontWidth, minWidth, maxWidth);
+    float width {glm::clamp(fontWidth, minWidth, maxWidth)};
 
     if (mImagePath != "")
-        setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.60f);
+        setSize(width, Renderer::getScreenHeight() * 0.60f);
     else
-        setSize(width, static_cast<float>(Renderer::getScreenHeight()) * 0.38f);
+        setSize(width, Renderer::getScreenHeight() * 0.38f);
 
     // Set row heights.
     if (mImagePath != "")
@@ -160,8 +160,9 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // width so that the sizes look somewhat consistent regardless of the aspect ratio
     // of the images.
     if (mImagePath != "") {
-        mMarquee->setImage(game->getMarqueePath(), false, true);
-        mMarquee->cropTransparentPadding(static_cast<float>(Renderer::getScreenWidth()) *
+        mMarquee->setLinearInterpolation(true);
+        mMarquee->setImage(game->getMarqueePath(), false);
+        mMarquee->cropTransparentPadding(Renderer::getScreenWidth() *
                                              (0.25f * (1.778f / Renderer::getScreenAspectRatio())),
                                          mGrid->getRowHeight(3));
 
@@ -178,8 +179,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     setOrigin({0.5f, 0.5f});
 
     // Center on the X axis and keep slightly off-center on the Y axis.
-    setPosition(static_cast<float>(Renderer::getScreenWidth()) / 2.0f,
-                static_cast<float>(Renderer::getScreenHeight()) / 2.25f);
+    setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.25f);
 
     mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
     mBackground.setEdgeColor(0xEEEEEEFF);

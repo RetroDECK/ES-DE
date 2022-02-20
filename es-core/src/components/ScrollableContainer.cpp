@@ -77,6 +77,34 @@ void ScrollableContainer::reset()
     }
 }
 
+void ScrollableContainer::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                                     const std::string& view,
+                                     const std::string& element,
+                                     unsigned int properties)
+{
+    using namespace ThemeFlags;
+    GuiComponent::applyTheme(theme, view, element, properties);
+
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "text")};
+    if (!elem || !elem->has("container"))
+        return;
+
+    if (elem->has("containerScrollSpeed")) {
+        mAutoScrollSpeedConstant =
+            AUTO_SCROLL_SPEED / glm::clamp(elem->get<float>("containerScrollSpeed"), 0.1f, 10.0f);
+    }
+
+    if (elem->has("containerStartDelay")) {
+        mAutoScrollDelayConstant =
+            glm::clamp(elem->get<float>("containerStartDelay"), 0.0f, 10.0f) * 1000.0f;
+    }
+
+    if (elem->has("containerResetDelay")) {
+        mAutoScrollResetDelayConstant =
+            glm::clamp(elem->get<float>("containerResetDelay"), 0.0f, 20.0f) * 1000.0f;
+    }
+}
+
 void ScrollableContainer::update(int deltaTime)
 {
     if (mSize == glm::vec2 {0.0f, 0.0f})
@@ -169,9 +197,8 @@ void ScrollableContainer::update(int deltaTime)
                               255.0f};
             auto func = [this, maxOpacity](float t) {
                 unsigned int color {mChildren.front()->getColor()};
-                unsigned int opacity {
-                    static_cast<unsigned int>(glm::mix(0.0f, maxOpacity, t) * 255)};
-                color = (color & 0xFFFFFF00) + opacity;
+                float opacity {glm::mix(0.0f, maxOpacity, t)};
+                color = (color & 0xFFFFFF00) + static_cast<unsigned char>(opacity * 255.0f);
                 this->mChildren.front()->setColor(color);
                 mScrollPos = glm::vec2 {};
                 mAutoScrollResetAccumulator = 0;
@@ -187,7 +214,7 @@ void ScrollableContainer::update(int deltaTime)
 
 void ScrollableContainer::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mThemeOpacity == 0.0f || mChildren.front()->getValue() == "")
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};

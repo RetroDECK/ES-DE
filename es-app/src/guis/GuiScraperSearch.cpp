@@ -557,7 +557,7 @@ void GuiScraperSearch::updateInfoPane()
         // Metadata.
         if (mScrapeRatings) {
             mMD_Rating->setValue(Utils::String::toUpper(res.mdl.get("rating")));
-            mMD_Rating->setOpacity(255);
+            mMD_Rating->setOpacity(1.0f);
         }
         mMD_ReleaseDate->setValue(Utils::String::toUpper(res.mdl.get("releasedate")));
         mMD_Developer->setText(Utils::String::toUpper(res.mdl.get("developer")));
@@ -574,7 +574,7 @@ void GuiScraperSearch::updateInfoPane()
         // Metadata.
         if (mScrapeRatings) {
             mMD_Rating->setValue("");
-            mMD_Rating->setOpacity(0);
+            mMD_Rating->setOpacity(0.0f);
         }
         // Set the release date to this value to force DateTimeEditComponent to put a
         // blank instead of the text 'unknown' prior to the scrape result being returned.

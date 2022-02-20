@@ -66,6 +66,12 @@ public:
     void cancelViewTransitions();
     void stopScrolling();
 
+    // Basic video controls.
+    void startViewVideos() override { mCurrentView->startViewVideos(); }
+    void stopViewVideos() override { mCurrentView->stopViewVideos(); }
+    void pauseViewVideos() override { mCurrentView->pauseViewVideos(); }
+    void muteViewVideos() override { mCurrentView->muteViewVideos(); }
+
     void onFileChanged(FileData* file, bool reloadGamelist);
     void triggerGameLaunch(FileData* game)
     {

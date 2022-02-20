@@ -84,7 +84,7 @@ Font::Font(int size, const std::string& path)
         LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
     }
     else if (mSize > Renderer::getScreenHeight()) {
-        mSize = Renderer::getScreenHeight();
+        mSize = static_cast<int>(Renderer::getScreenHeight());
         LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
     }
 

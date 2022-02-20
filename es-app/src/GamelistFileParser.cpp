@@ -105,7 +105,7 @@ namespace GamelistFileParser
         std::string xmlpath = system->getGamelistPath(false);
 
         if (!Utils::FileSystem::exists(xmlpath)) {
-            LOG(LogDebug) << "Gamelist::parseGamelist(): System \"" << system->getName()
+            LOG(LogDebug) << "GamelistFileParser::parseGamelist(): System \"" << system->getName()
                           << "\" does not have a gamelist.xml file";
             return;
         }
@@ -143,7 +143,8 @@ namespace GamelistFileParser
                 }
                 if (validLabel) {
                     system->setAlternativeEmulator(label);
-                    LOG(LogDebug) << "Gamelist::parseGamelist(): System \"" << system->getName()
+                    LOG(LogDebug) << "GamelistFileParser::parseGamelist(): System \""
+                                  << system->getName()
                                   << "\" has a valid alternativeEmulator entry: \"" << label
                                   << "\"";
                 }
@@ -181,8 +182,8 @@ namespace GamelistFileParser
                 if (!showHiddenFiles &&
                     (Utils::FileSystem::isHidden(path) ||
                      Utils::FileSystem::isHidden(Utils::FileSystem::getParent(path)))) {
-                    LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping hidden file \"" << path
-                                  << "\"";
+                    LOG(LogDebug) << "GamelistFileParser::parseGamelist(): Skipping hidden file \""
+                                  << path << "\"";
                     continue;
                 }
 
@@ -205,7 +206,7 @@ namespace GamelistFileParser
                 else {
                     // Skip arcade asset entries as these will not be used in any way inside
                     // the application.
-                    LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping arcade asset \""
+                    LOG(LogDebug) << "GamelistFileParser::parseGamelist(): Skipping arcade asset \""
                                   << file->getName() << "\"";
                     delete file;
                     continue;
@@ -216,7 +217,7 @@ namespace GamelistFileParser
                 // application restart.
                 if (!Settings::getInstance()->getBool("ShowHiddenGames")) {
                     if (file->getHidden()) {
-                        LOG(LogDebug) << "Gamelist::parseGamelist(): Skipping hidden "
+                        LOG(LogDebug) << "GamelistFileParser::parseGamelist(): Skipping hidden "
                                       << (type == GAME ? "file" : "folder") << " entry \""
                                       << file->getName() << "\""
                                       << " (\"" << file->getPath() << "\")";
@@ -397,21 +398,22 @@ namespace GamelistFileParser
 
                 if (updateAlternativeEmulator) {
                     if (hasAlternativeEmulatorTag && system->getAlternativeEmulator() == "") {
-                        LOG(LogDebug) << "Gamelist::updateGamelist(): Removed the "
+                        LOG(LogDebug) << "GamelistFileParser::updateGamelist(): Removed the "
                                          "alternativeEmulator tag for system \""
                                       << system->getName() << "\" as the default emulator \""
                                       << system->getSystemEnvData()->mLaunchCommands.front().second
                                       << "\" was selected";
                     }
                     else if (system->getAlternativeEmulator() != "") {
-                        LOG(LogDebug) << "Gamelist::updateGamelist(): "
+                        LOG(LogDebug) << "GamelistFileParser::updateGamelist(): "
                                          "Added/updated the alternativeEmulator tag for system \""
                                       << system->getName() << "\" to \""
                                       << system->getAlternativeEmulator() << "\"";
                     }
                 }
                 if (numUpdated > 0) {
-                    LOG(LogDebug) << "Gamelist::updateGamelist(): Added/updated " << numUpdated
+                    LOG(LogDebug) << "GamelistFileParser::updateGamelist(): Added/updated "
+                                  << numUpdated
                                   << (numUpdated == 1 ? " entity in \"" : " entities in \"")
                                   << xmlWritePath << "\"";
                 }

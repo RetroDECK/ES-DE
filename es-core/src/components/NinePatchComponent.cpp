@@ -135,9 +135,9 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
 
     if (mTexture && mVertices != nullptr) {
         Renderer::setMatrix(trans);
-        if (mOpacity < 255) {
+        if (mOpacity < 1.0f) {
             mVertices[0].shaders = Renderer::SHADER_OPACITY;
-            mVertices[0].opacity = mOpacity / 255.0f;
+            mVertices[0].opacity = mOpacity;
         }
         else if (mVertices[0].shaders & Renderer::SHADER_OPACITY) {
             // We have reached full opacity, so disable the opacity shader and set

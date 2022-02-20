@@ -272,8 +272,8 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     if (mMultiLine) {
         setSize(width, KEYBOARD_HEIGHT + textHeight - mText->getFont()->getHeight());
 
-        setPosition((static_cast<float>(Renderer::getScreenWidth()) - mSize.x) / 2.0f,
-                    (static_cast<float>(Renderer::getScreenHeight()) - mSize.y) / 2.0f);
+        setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                    (Renderer::getScreenHeight() - mSize.y) / 2.0f);
     }
     else {
         if (mComplexMode)
@@ -281,8 +281,8 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
         else
             setSize(width, KEYBOARD_HEIGHT);
 
-        setPosition((static_cast<float>(Renderer::getScreenWidth()) - mSize.x) / 2.0f,
-                    (static_cast<float>(Renderer::getScreenHeight()) - mSize.y) / 2.0f);
+        setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                    (Renderer::getScreenHeight() - mSize.y) / 2.0f);
     }
 
     if (!multiLine)

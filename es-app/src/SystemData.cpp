@@ -483,6 +483,9 @@ bool SystemData::loadConfig()
 #endif
             path = Utils::String::replace(path, "//", "/");
 
+            // In case ~ is used, expand it to the home directory path.
+            path = Utils::FileSystem::expandHomePath(path);
+
             // Check that the ROM directory for the system is valid or otherwise abort the
             // processing.
             if (!Utils::FileSystem::exists(path)) {
@@ -1096,7 +1099,7 @@ SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
     return randomSystem;
 }
 
-FileData* SystemData::getRandomGame(const FileData* currentGame)
+FileData* SystemData::getRandomGame(const FileData* currentGame, bool gameSelectorMode)
 {
     std::vector<FileData*> gameList;
     bool onlyFolders = false;
@@ -1109,12 +1112,17 @@ FileData* SystemData::getRandomGame(const FileData* currentGame)
         gameList = mRootFolder->getParent()->getChildrenListToDisplay();
     }
     else {
-        gameList = ViewController::getInstance()
-                       ->getGamelistView(mRootFolder->getSystem())
-                       .get()
-                       ->getCursor()
-                       ->getParent()
-                       ->getChildrenListToDisplay();
+        if (gameSelectorMode) {
+            gameList = mRootFolder->getFilesRecursive(GAME, false, false);
+        }
+        else {
+            gameList = ViewController::getInstance()
+                           ->getGamelistView(mRootFolder->getSystem())
+                           .get()
+                           ->getCursor()
+                           ->getParent()
+                           ->getChildrenListToDisplay();
+        }
     }
 
     if (gameList.size() > 0 && gameList.front()->getParent()->getOnlyFoldersFlag())
@@ -1231,6 +1239,22 @@ void SystemData::loadTheme()
         sysData.insert(std::pair<std::string, std::string>("system.name", getName()));
         sysData.insert(std::pair<std::string, std::string>("system.theme", getThemeFolder()));
         sysData.insert(std::pair<std::string, std::string>("system.fullName", getFullName()));
+        if (isCollection()) {
+            sysData.insert(
+                std::pair<std::string, std::string>("system.name.collections", getName()));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.collections", getFullName()));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.theme.collections", getThemeFolder()));
+        }
+        else {
+            sysData.insert(
+                std::pair<std::string, std::string>("system.name.noCollections", getName()));
+            sysData.insert(std::pair<std::string, std::string>("system.fullName.noCollections",
+                                                               getFullName()));
+            sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections",
+                                                               getThemeFolder()));
+        }
 
         mTheme->loadFile(sysData, path);
     }

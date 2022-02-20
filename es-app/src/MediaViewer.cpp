@@ -43,9 +43,6 @@ bool MediaViewer::startMediaViewer(FileData* game)
 
     initiateViewer();
 
-    if (mHasVideo)
-        ViewController::getInstance()->onPauseVideo();
-
     if (mHasVideo || mHasImages)
         return true;
     else
@@ -55,7 +52,7 @@ bool MediaViewer::startMediaViewer(FileData* game)
 void MediaViewer::stopMediaViewer()
 {
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-    ViewController::getInstance()->onStopVideo();
+    ViewController::getInstance()->stopViewVideos();
 
     if (mVideo) {
         delete mVideo;
@@ -83,8 +80,8 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
     Renderer::setMatrix(trans);
 
     // Render a black background below the game media.
-    Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                       static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+    Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                       0x000000FF, 0x000000FF);
 
     if (mVideo && !mDisplayingImage) {
         mVideo->render(trans);
@@ -96,7 +93,7 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
             shaders = Renderer::SHADER_SCANLINES;
         if (Settings::getInstance()->getBool("MediaViewerVideoBlur")) {
             shaders |= Renderer::SHADER_BLUR_HORIZONTAL;
-            float heightModifier = Renderer::getScreenHeightModifier();
+            float heightModifier {Renderer::getScreenHeightModifier()};
             // clang-format off
             if (heightModifier < 1)
                 videoParameters.blurPasses = 2;        // Below 1080
@@ -257,23 +254,20 @@ void MediaViewer::playVideo()
         return;
 
     mDisplayingImage = false;
-    ViewController::getInstance()->onStopVideo();
+    ViewController::getInstance()->pauseViewVideos();
 
     mVideo = new VideoFFmpegComponent;
-    mVideo->topWindow(true);
     mVideo->setOrigin(0.5f, 0.5f);
     mVideo->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
 
     if (Settings::getInstance()->getBool("MediaViewerStretchVideos"))
-        mVideo->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                          static_cast<float>(Renderer::getScreenHeight()));
+        mVideo->setResize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     else
-        mVideo->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()));
+        mVideo->setMaxSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
     mVideo->setVideo(mVideoFile);
     mVideo->setMediaViewerMode(true);
-    mVideo->onShow();
+    mVideo->startVideoPlayer();
 }
 
 void MediaViewer::showImage(int index)
@@ -288,7 +282,6 @@ void MediaViewer::showImage(int index)
         mImage->setImage(mImageFiles[index]);
         mImage->setOrigin(0.5f, 0.5f);
         mImage->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
-        mImage->setMaxSize(static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()));
+        mImage->setMaxSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     }
 }

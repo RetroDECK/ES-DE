@@ -233,7 +233,8 @@ namespace Renderer
     void setViewport(const Rect& viewport)
     {
         // glViewport starts at the bottom left of the window.
-        GL_CHECK_ERROR(glViewport(viewport.x, getWindowHeight() - viewport.y - viewport.h,
+        GL_CHECK_ERROR(glViewport(viewport.x,
+                                  static_cast<GLint>(getWindowHeight()) - viewport.y - viewport.h,
                                   viewport.w, viewport.h));
     }
 
@@ -244,7 +245,8 @@ namespace Renderer
         }
         else {
             // glScissor starts at the bottom left of the window.
-            GL_CHECK_ERROR(glScissor(scissor.x, getWindowHeight() - scissor.y - scissor.h,
+            GL_CHECK_ERROR(glScissor(scissor.x,
+                                     static_cast<GLint>(getWindowHeight()) - scissor.y - scissor.h,
                                      scissor.w, scissor.h));
             GL_CHECK_ERROR(glEnable(GL_SCISSOR_TEST));
         }

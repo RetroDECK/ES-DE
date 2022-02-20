@@ -352,6 +352,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
+                    runShader->setOpacity(vertices->opacity);
                     runShader->setTextureSize({shaderWidth, shaderHeight});
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
@@ -363,6 +364,7 @@ namespace Renderer
                 if (runShader) {
                     runShader->activateShaders();
                     runShader->setModelViewProjectionMatrix(getProjectionMatrix() * trans);
+                    runShader->setOpacity(vertices->opacity);
                     GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                     runShader->deactivateShaders();
                 }
@@ -389,7 +391,8 @@ namespace Renderer
     void setViewport(const Rect& viewport)
     {
         // glViewport starts at the bottom left of the window.
-        GL_CHECK_ERROR(glViewport(viewport.x, getWindowHeight() - viewport.y - viewport.h,
+        GL_CHECK_ERROR(glViewport(viewport.x,
+                                  static_cast<GLint>(getWindowHeight()) - viewport.y - viewport.h,
                                   viewport.w, viewport.h));
     }
 
@@ -400,7 +403,8 @@ namespace Renderer
         }
         else {
             // glScissor starts at the bottom left of the window.
-            GL_CHECK_ERROR(glScissor(scissor.x, getWindowHeight() - scissor.y - scissor.h,
+            GL_CHECK_ERROR(glScissor(scissor.x,
+                                     static_cast<GLint>(getWindowHeight()) - scissor.y - scissor.h,
                                      scissor.w, scissor.h));
             GL_CHECK_ERROR(glEnable(GL_SCISSOR_TEST));
         }
@@ -451,10 +455,10 @@ namespace Renderer
     {
         Vertex vertices[4];
         std::vector<unsigned int> shaderList;
-        GLuint width = getScreenWidth();
-        GLuint height = getScreenHeight();
-        float widthf = static_cast<float>(width);
-        float heightf = static_cast<float>(height);
+        GLuint width {static_cast<GLuint>(getScreenWidth())};
+        GLuint height {static_cast<GLuint>(getScreenHeight())};
+        float widthf {static_cast<float>(width)};
+        float heightf {static_cast<float>(height)};
 
         // Set vertex positions and texture coordinates to full screen as all
         // postprocessing is applied to the complete screen area.

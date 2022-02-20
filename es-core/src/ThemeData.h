@@ -50,12 +50,14 @@ namespace ThemeFlags
         ALIGNMENT =       0x00000080,
         TEXT =            0x00000100,
         METADATA =        0x00000200,
-        FORCE_UPPERCASE = 0x00000400,
-        LINE_SPACING =    0x00000800,
-        DELAY =           0x00001000,
-        Z_INDEX =         0x00002000,
-        ROTATION =        0x00004000,
-        VISIBLE =         0x00008000,
+        LETTER_CASE =     0x00000400,
+        FORCE_UPPERCASE = 0x00000800, // For backward compatibility with legacy themes.
+        LINE_SPACING =    0x00001000,
+        DELAY =           0x00002000,
+        Z_INDEX =         0x00004000,
+        ROTATION =        0x00008000,
+        OPACITY =         0x00010000,
+        VISIBLE =         0x00020000,
         ALL = 0xFFFFFFFF
     };
     // clang-format on
@@ -215,6 +217,7 @@ public:
         PATH,
         STRING,
         COLOR,
+        UNSIGNED_INTEGER,
         FLOAT,
         BOOLEAN
     };
@@ -222,7 +225,6 @@ public:
     std::map<std::string, std::string> mVariables;
 
 private:
-    static const std::shared_ptr<ThemeData> getDefault();
     unsigned int getHexColor(const std::string& str);
     std::string resolvePlaceholders(const std::string& in);
 
@@ -239,13 +241,14 @@ private:
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element);
 
-    static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
-    static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
-
-    static std::vector<std::string> sLegacySupportedFeatures;
-    static std::vector<std::string> sLegacySupportedViews;
     static std::vector<std::string> sSupportedViews;
+    static std::vector<std::string> sLegacySupportedViews;
+    static std::vector<std::string> sLegacySupportedFeatures;
+    static std::vector<std::string> sLegacyElements;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
+
+    static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
+    static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
 
     static inline std::map<std::string, ThemeSet> mThemeSets;
     std::map<std::string, ThemeData::ThemeSet>::iterator mCurrentThemeSet;

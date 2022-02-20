@@ -100,7 +100,7 @@ void Settings::setDefaults()
     mBoolMap["ScrapeMarquees"] = {true, true};
     mBoolMap["Scrape3DBoxes"] = {true, true};
     mBoolMap["ScrapePhysicalMedia"] = {true, true};
-    mBoolMap["ScrapeFanArt"] = {false, false};
+    mBoolMap["ScrapeFanArt"] = {true, true};
 
     mStringMap["MiximageResolution"] = {"1280x960", "1280x960"};
     mStringMap["MiximageScreenshotScaling"] = {"sharp", "sharp"};
@@ -192,13 +192,11 @@ void Settings::setDefaults()
     mBoolMap["GamelistFilters"] = {true, true};
     mBoolMap["QuickSystemSelect"] = {true, true};
     mBoolMap["ShowHelpPrompts"] = {true, true};
-    mBoolMap["PlayVideosImmediately"] = {false, false};
-    mBoolMap["EnableMenuKidMode"] = {false, false};
 
     // Sound settings.
     mIntMap["SoundVolumeNavigation"] = {70, 70};
     mIntMap["SoundVolumeVideos"] = {80, 80};
-    mBoolMap["GamelistVideoAudio"] = {true, true};
+    mBoolMap["ViewsVideoAudio"] = {true, true};
     mBoolMap["MediaViewerVideoAudio"] = {true, true};
     mBoolMap["ScreensaverVideoAudio"] = {true, true};
     mBoolMap["NavigationSounds"] = {true, true};
@@ -243,6 +241,7 @@ void Settings::setDefaults()
     mBoolMap["DisableComposition"] = {true, true};
 #endif
     mBoolMap["DisplayGPUStatistics"] = {false, false};
+    mBoolMap["EnableMenuKidMode"] = {false, false};
 // macOS requires root privileges to reboot and power off so it doesn't make much
 // sense to enable this setting and menu entry for that operating system.
 #if !defined(__APPLE__)

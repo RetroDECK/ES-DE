@@ -19,7 +19,6 @@
 GuiComponent::GuiComponent()
     : mWindow {Window::getInstance()}
     , mParent {nullptr}
-    , mOpacity {255}
     , mColor {0}
     , mSaturation {1.0f}
     , mColorShift {0}
@@ -31,6 +30,8 @@ GuiComponent::GuiComponent()
     , mOrigin {0.0f, 0.0f}
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
+    , mOpacity {1.0f}
+    , mThemeOpacity {1.0f}
     , mRotation {0.0f}
     , mScale {1.0f}
     , mDefaultZIndex {0.0f}
@@ -180,7 +181,7 @@ const int GuiComponent::getChildIndex() const
         return -1;
 }
 
-void GuiComponent::setOpacity(unsigned char opacity)
+void GuiComponent::setOpacity(float opacity)
 {
     if (mOpacity == opacity)
         return;
@@ -321,9 +322,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                               const std::string& element,
                               unsigned int properties)
 {
-    glm::vec2 scale {getParent() ? getParent()->getSize() :
-                                   glm::vec2 {static_cast<float>(Renderer::getScreenWidth()),
-                                              static_cast<float>(Renderer::getScreenHeight())}};
+    glm::vec2 scale {getParent() ?
+                         getParent()->getSize() :
+                         glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()}};
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, "");
     if (!elem)
@@ -341,7 +342,7 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Position + size also implies origin.
     if ((properties & ORIGIN || (properties & POSITION && properties & ThemeFlags::SIZE)) &&
         elem->has("origin")) {
-        setOrigin(elem->get<glm::vec2>("origin"));
+        setOrigin(glm::clamp(elem->get<glm::vec2>("origin"), 0.0f, 1.0f));
     }
 
     if (properties & ThemeFlags::ROTATION) {
@@ -356,10 +357,16 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else
         setZIndex(getDefaultZIndex());
 
-    if (properties & ThemeFlags::VISIBLE && elem->has("visible"))
-        setVisible(elem->get<bool>("visible"));
+    if (properties & ThemeFlags::OPACITY && elem->has("opacity"))
+        mThemeOpacity = glm::clamp(elem->get<float>("opacity"), 0.0f, 1.0f);
+
+    if (properties & ThemeFlags::VISIBLE && elem->has("visible") && !elem->get<bool>("visible"))
+        mThemeOpacity = 0.0f;
     else
         setVisible(true);
+
+    if (properties && elem->has("gameselector"))
+        mThemeGameSelector = elem->get<std::string>("gameselector");
 }
 
 void GuiComponent::updateHelpPrompts()
@@ -385,52 +392,4 @@ void GuiComponent::onHide()
 {
     for (unsigned int i = 0; i < getChildCount(); ++i)
         getChild(i)->onHide();
-}
-
-void GuiComponent::onStopVideo()
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onStopVideo();
-}
-
-void GuiComponent::onPauseVideo()
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onPauseVideo();
-}
-
-void GuiComponent::onUnpauseVideo()
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onUnpauseVideo();
-}
-
-void GuiComponent::onScreensaverActivate()
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onScreensaverActivate();
-}
-
-void GuiComponent::onScreensaverDeactivate()
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onScreensaverDeactivate();
-}
-
-void GuiComponent::onGameLaunchedActivate()
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onGameLaunchedActivate();
-}
-
-void GuiComponent::onGameLaunchedDeactivate()
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onGameLaunchedDeactivate();
-}
-
-void GuiComponent::topWindow(bool isTop)
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->topWindow(isTop);
 }

@@ -104,7 +104,6 @@ void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
             [badge](FlexboxComponent::FlexboxItem item) { return item.label == badge.badgeType; });
 
         if (it != mFlexboxItems.end()) {
-
             // Don't show the alternative emulator badge if the corresponding setting has been
             // disabled.
             if (badge.badgeType == "altemulator" &&
@@ -169,16 +168,16 @@ const std::string BadgeComponent::getDisplayName(const std::string& shortName)
 
 void BadgeComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mThemeOpacity == 0.0f)
         return;
 
-    if (mOpacity == 255) {
+    if (mOpacity * mThemeOpacity == 1.0f) {
         mFlexboxComponent.render(parentTrans);
     }
     else {
-        mFlexboxComponent.setOpacity(mOpacity);
+        mFlexboxComponent.setOpacity(mOpacity * mThemeOpacity);
         mFlexboxComponent.render(parentTrans);
-        mFlexboxComponent.setOpacity(255);
+        mFlexboxComponent.setOpacity(1.0f);
     }
 }
 
@@ -195,7 +194,19 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    if (elem->has("alignment")) {
+    if (elem->has("horizontalAlignment")) {
+        const std::string horizontalAlignment {elem->get<std::string>("horizontalAlignment")};
+        if (horizontalAlignment != "left" && horizontalAlignment != "right") {
+            LOG(LogWarning)
+                << "BadgeComponent: Invalid theme configuration, <horizontalAlignment> set to \""
+                << horizontalAlignment << "\"";
+        }
+        else {
+            mFlexboxComponent.setAlignment(horizontalAlignment);
+        }
+    }
+    // Legacy themes only.
+    else if (elem->has("alignment")) {
         const std::string alignment {elem->get<std::string>("alignment")};
         if (alignment != "left" && alignment != "right") {
             LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <alignment> set to \""
@@ -218,25 +229,25 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("lines")) {
-        const float lines {elem->get<float>("lines")};
-        if (lines < 1.0f || lines > 10.0f) {
+        const unsigned int lines {elem->get<unsigned int>("lines")};
+        if (lines < 1 || lines > 10) {
             LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <lines> set to \""
                             << lines << "\"";
         }
         else {
-            mFlexboxComponent.setLines(static_cast<unsigned int>(lines));
+            mFlexboxComponent.setLines(lines);
         }
     }
 
     if (elem->has("itemsPerLine")) {
-        const float itemsPerLine {elem->get<float>("itemsPerLine")};
-        if (itemsPerLine < 1.0f || itemsPerLine > 10.0f) {
+        const unsigned int itemsPerLine {elem->get<unsigned int>("itemsPerLine")};
+        if (itemsPerLine < 1 || itemsPerLine > 10) {
             LOG(LogWarning)
                 << "BadgeComponent: Invalid theme configuration, <itemsPerLine> set to \""
                 << itemsPerLine << "\"";
         }
         else {
-            mFlexboxComponent.setItemsPerLine(static_cast<unsigned int>(itemsPerLine));
+            mFlexboxComponent.setItemsPerLine(itemsPerLine);
         }
     }
 

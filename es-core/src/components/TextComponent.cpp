@@ -16,10 +16,12 @@ TextComponent::TextComponent()
     : mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
-    , mColorOpacity {0x000000FF}
-    , mBgColorOpacity {0x00000000}
+    , mColorOpacity {1.0f}
+    , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
     , mUppercase {false}
+    , mLowercase {false}
+    , mCapitalize {false}
     , mAutoCalcExtent {1, 1}
     , mHorizontalAlignment {ALIGN_LEFT}
     , mVerticalAlignment {ALIGN_CENTER}
@@ -39,10 +41,12 @@ TextComponent::TextComponent(const std::string& text,
     : mFont {nullptr}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
-    , mColorOpacity {0x000000FF}
-    , mBgColorOpacity {0x00000000}
+    , mColorOpacity {1.0f}
+    , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
     , mUppercase {false}
+    , mLowercase {false}
+    , mCapitalize {false}
     , mAutoCalcExtent {1, 1}
     , mHorizontalAlignment {align}
     , mVerticalAlignment {ALIGN_CENTER}
@@ -77,7 +81,7 @@ void TextComponent::setFont(const std::shared_ptr<Font>& font)
 void TextComponent::setColor(unsigned int color)
 {
     mColor = color;
-    mColorOpacity = mColor & 0x000000FF;
+    mColorOpacity = static_cast<float>(mColor & 0x000000FF) / 255.0f;
     onColorChanged();
 }
 
@@ -85,22 +89,17 @@ void TextComponent::setColor(unsigned int color)
 void TextComponent::setBackgroundColor(unsigned int color)
 {
     mBgColor = color;
-    mBgColorOpacity = mBgColor & 0x000000FF;
+    mBgColorOpacity = static_cast<float>(mBgColor & 0x000000FF) / 255.0f;
 }
 
 //  Scale the opacity.
-void TextComponent::setOpacity(unsigned char opacity)
+void TextComponent::setOpacity(float opacity)
 {
-    // This function is mostly called to do fade in and fade out of the text component element.
-    // Therefore we assume here that opacity is a fractional value (expressed as an unsigned
-    // char 0 - 255) of the opacity originally set with setColor() or setBackgroundColor().
-    unsigned char o = static_cast<unsigned char>(static_cast<float>(opacity) / 255.0f *
-                                                 static_cast<float>(mColorOpacity));
-    mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(o);
+    float textOpacity {opacity * mColorOpacity * mThemeOpacity};
+    mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(textOpacity * 255.0f);
 
-    unsigned char bgo = static_cast<unsigned char>(static_cast<float>(opacity) / 255.0f *
-                                                   static_cast<float>(mBgColorOpacity));
-    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(bgo);
+    float textBackgroundOpacity {opacity * mBgColorOpacity * mThemeOpacity};
+    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(textBackgroundOpacity * 255.0f);
 
     onColorChanged();
     GuiComponent::setOpacity(opacity);
@@ -120,12 +119,36 @@ void TextComponent::setText(const std::string& text, bool update)
 void TextComponent::setUppercase(bool uppercase)
 {
     mUppercase = uppercase;
+    if (uppercase) {
+        mLowercase = false;
+        mCapitalize = false;
+    }
+    onTextChanged();
+}
+
+void TextComponent::setLowercase(bool lowercase)
+{
+    mLowercase = lowercase;
+    if (lowercase) {
+        mUppercase = false;
+        mCapitalize = false;
+    }
+    onTextChanged();
+}
+
+void TextComponent::setCapitalize(bool capitalize)
+{
+    mCapitalize = capitalize;
+    if (capitalize) {
+        mUppercase = false;
+        mLowercase = false;
+    }
     onTextChanged();
 }
 
 void TextComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mThemeOpacity == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
@@ -198,14 +221,37 @@ void TextComponent::render(const glm::mat4& parentTrans)
 void TextComponent::calculateExtent()
 {
     if (mAutoCalcExtent.x) {
-        mSize = mFont->sizeText(mUppercase ? Utils::String::toUpper(mText) : mText, mLineSpacing);
+        if (mUppercase)
+            mSize = mFont->sizeText(Utils::String::toUpper(mText), mLineSpacing);
+        else if (mLowercase)
+            mSize = mFont->sizeText(Utils::String::toLower(mText), mLineSpacing);
+        else if (mCapitalize)
+            mSize = mFont->sizeText(Utils::String::toCapitalized(mText), mLineSpacing);
+        else
+            mSize = mFont->sizeText(mText, mLineSpacing); // Original case.
     }
     else {
-        if (mAutoCalcExtent.y)
-            mSize.y = mFont
-                          ->sizeWrappedText(mUppercase ? Utils::String::toUpper(mText) : mText,
-                                            getSize().x, mLineSpacing)
-                          .y;
+        if (mAutoCalcExtent.y) {
+            if (mUppercase) {
+                mSize.y =
+                    mFont->sizeWrappedText(Utils::String::toUpper(mText), getSize().x, mLineSpacing)
+                        .y;
+            }
+            else if (mLowercase) {
+                mSize.y =
+                    mFont->sizeWrappedText(Utils::String::toLower(mText), getSize().x, mLineSpacing)
+                        .y;
+            }
+            else if (mCapitalize) {
+                mSize.y = mFont
+                              ->sizeWrappedText(Utils::String::toCapitalized(mText), getSize().x,
+                                                mLineSpacing)
+                              .y;
+            }
+            else {
+                mSize.y = mFont->sizeWrappedText(mText, getSize().x, mLineSpacing).y;
+            }
+        }
     }
 }
 
@@ -218,7 +264,16 @@ void TextComponent::onTextChanged()
         return;
     }
 
-    std::string text = mUppercase ? Utils::String::toUpper(mText) : mText;
+    std::string text;
+
+    if (mUppercase)
+        text = Utils::String::toUpper(mText);
+    else if (mLowercase)
+        text = Utils::String::toLower(mText);
+    else if (mCapitalize)
+        text = Utils::String::toCapitalized(mText);
+    else
+        text = mText; // Original case.
 
     std::shared_ptr<Font> f = mFont;
     const bool isMultiline = (mSize.y == 0.0f || mSize.y > f->getHeight() * 1.2f);
@@ -246,16 +301,17 @@ void TextComponent::onTextChanged()
         }
 
         text.append(abbrev);
-
-        mTextCache = std::shared_ptr<TextCache>(
-            f->buildTextCache(text, glm::vec2 {}, (mColor >> 8 << 8) | mOpacity, mSize.x,
-                              mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
+            text, glm::vec2 {}, mColor, mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
-        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
-            f->wrapText(text, mSize.x), glm::vec2 {}, (mColor >> 8 << 8) | mOpacity, mSize.x,
-            mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(
+            f->buildTextCache(f->wrapText(text, mSize.x), glm::vec2 {}, mColor, mSize.x,
+                              mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
+
+    if (mOpacity != 1.0f || mThemeOpacity != 1.0f)
+        setOpacity(mOpacity);
 
     // This is required to set the color transparency.
     onColorChanged();
@@ -302,9 +358,12 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::applyTheme(theme, view, element, properties);
 
     std::string elementType {"text"};
+    std::string componentName {"TextComponent"};
 
-    if (element.substr(0, 13) == "gamelistinfo_")
+    if (element.substr(0, 13) == "gamelistinfo_") {
         elementType = "gamelistinfo";
+        componentName = "gamelistInfoComponent";
+    }
 
     const ThemeData::ThemeElement* elem = theme->getElement(view, element, elementType);
     if (!elem)
@@ -319,8 +378,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setRenderBackground(true);
     }
 
-    if (properties & ALIGNMENT && elem->has("alignment")) {
-        std::string str = elem->get<std::string>("alignment");
+    if (properties & ALIGNMENT && elem->has("horizontalAlignment")) {
+        std::string str {elem->get<std::string>("horizontalAlignment")};
         if (str == "left")
             setHorizontalAlignment(ALIGN_LEFT);
         else if (str == "center")
@@ -328,20 +387,76 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else if (str == "right")
             setHorizontalAlignment(ALIGN_RIGHT);
         else
-            LOG(LogError) << "Unknown text alignment string: " << str;
+            LOG(LogWarning) << componentName
+                            << ": Invalid theme configuration, property "
+                               "<horizontalAlignment> set to \""
+                            << str << "\"";
+    }
+
+    if (properties & ALIGNMENT && elem->has("verticalAlignment")) {
+        std::string str {elem->get<std::string>("verticalAlignment")};
+        if (str == "top")
+            setVerticalAlignment(ALIGN_TOP);
+        else if (str == "center")
+            setVerticalAlignment(ALIGN_CENTER);
+        else if (str == "bottom")
+            setVerticalAlignment(ALIGN_BOTTOM);
+        else
+            LOG(LogWarning) << componentName
+                            << ": Invalid theme configuration, property "
+                               "<verticalAlignment> set to \""
+                            << str << "\"";
+    }
+
+    // Legacy themes only.
+    if (properties & ALIGNMENT && elem->has("alignment")) {
+        std::string str {elem->get<std::string>("alignment")};
+        if (str == "left")
+            setHorizontalAlignment(ALIGN_LEFT);
+        else if (str == "center")
+            setHorizontalAlignment(ALIGN_CENTER);
+        else if (str == "right")
+            setHorizontalAlignment(ALIGN_RIGHT);
+        else
+            LOG(LogWarning) << componentName
+                            << ": Invalid theme configuration, property "
+                               "<alignment> set to \""
+                            << str << "\"";
     }
 
     if (properties & TEXT && elem->has("text"))
         setText(elem->get<std::string>("text"));
 
-    if (properties & METADATA && elem->has("metadata"))
-        setMetadataField(elem->get<std::string>("metadata"));
+    if (properties & METADATA && elem->has("systemdata"))
+        mThemeSystemdata = elem->get<std::string>("systemdata");
 
+    if (properties & METADATA && elem->has("metadata"))
+        mThemeMetadata = elem->get<std::string>("metadata");
+
+    if (properties & LETTER_CASE && elem->has("letterCase")) {
+        std::string letterCase {elem->get<std::string>("letterCase")};
+        if (letterCase == "uppercase") {
+            setUppercase(true);
+        }
+        else if (letterCase == "lowercase") {
+            setLowercase(true);
+        }
+        else if (letterCase == "capitalize") {
+            setCapitalize(true);
+        }
+        else if (letterCase != "none") {
+            LOG(LogWarning)
+                << "TextComponent: Invalid theme configuration, property <letterCase> set to \""
+                << letterCase << "\"";
+        }
+    }
+
+    // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
-        setLineSpacing(elem->get<float>("lineSpacing"));
+        setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
     setFont(Font::getFromTheme(elem, properties, mFont));
 }

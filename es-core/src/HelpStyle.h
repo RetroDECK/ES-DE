@@ -28,7 +28,8 @@ struct HelpStyle {
     std::shared_ptr<Font> font;
     float entrySpacing;
     float iconTextSpacing;
-    std::string textStyle;
+    float opacity;
+    std::string letterCase;
 
     struct CustomButtonIcons {
 

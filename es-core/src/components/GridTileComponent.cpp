@@ -75,8 +75,7 @@ void GridTileComponent::update(int deltaTime)
 
 void applyThemeToProperties(const ThemeData::ThemeElement* elem, GridTileProperties* properties)
 {
-    glm::vec2 screen {static_cast<float>(Renderer::getScreenWidth()),
-                      static_cast<float>(Renderer::getScreenHeight())};
+    glm::vec2 screen {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
 
     if (elem->has("size"))
         properties->mSize = elem->get<glm::vec2>("size") * screen;
@@ -149,7 +148,7 @@ bool GridTileComponent::isSelected() const
     return mSelected;
 }
 
-void GridTileComponent::setImage(const std::string& path)
+void GridTileComponent::setImageOLD(const std::string& path)
 {
     mImage->setImage(path);
 
@@ -157,7 +156,7 @@ void GridTileComponent::setImage(const std::string& path)
     resize();
 }
 
-void GridTileComponent::setImage(const std::shared_ptr<TextureResource>& texture)
+void GridTileComponent::setImageOLD(const std::shared_ptr<TextureResource>& texture)
 {
     mImage->setImage(texture);
 

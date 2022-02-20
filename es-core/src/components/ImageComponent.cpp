@@ -14,6 +14,7 @@
 #include "Window.h"
 #include "resources/TextureResource.h"
 #include "utils/CImgUtil.h"
+#include "utils/StringUtil.h"
 
 glm::ivec2 ImageComponent::getTextureSize() const
 {
@@ -37,11 +38,12 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mColorShift {0xFFFFFFFF}
     , mColorShiftEnd {0xFFFFFFFF}
     , mColorGradientHorizontal {true}
-    , mFadeOpacity {0}
+    , mFadeOpacity {0.0f}
     , mFading {false}
     , mForceLoad {forceLoad}
     , mDynamic {dynamic}
     , mRotateByTargetSize {false}
+    , mLinearInterpolation {false}
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
 {
@@ -132,7 +134,7 @@ void ImageComponent::resize()
     onSizeChanged();
 }
 
-void ImageComponent::setImage(const std::string& path, bool tile, bool linearMagnify)
+void ImageComponent::setImage(const std::string& path, bool tile)
 {
     // Always load bundled graphic resources statically, unless mForceLoad has been set.
     // This eliminates annoying texture pop-in problems that would otherwise occur.
@@ -144,11 +146,11 @@ void ImageComponent::setImage(const std::string& path, bool tile, bool linearMag
         if (mDefaultPath.empty() || !ResourceManager::getInstance().fileExists(mDefaultPath))
             mTexture.reset();
         else
-            mTexture =
-                TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic, linearMagnify);
+            mTexture = TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic,
+                                            mLinearInterpolation);
     }
     else {
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, linearMagnify);
+        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation);
     }
 
     resize();
@@ -319,7 +321,7 @@ void ImageComponent::setColorGradientHorizontal(bool horizontal)
     updateColors();
 }
 
-void ImageComponent::setOpacity(unsigned char opacity)
+void ImageComponent::setOpacity(float opacity)
 {
     mOpacity = opacity;
     updateColors();
@@ -369,7 +371,7 @@ void ImageComponent::updateVertices()
 
 void ImageComponent::updateColors()
 {
-    const float opacity = (mOpacity * (mFading ? mFadeOpacity / 255.0f : 1.0f)) / 255.0f;
+    const float opacity = (mOpacity * mThemeOpacity * (mFading ? mFadeOpacity : 1.0f));
     const unsigned int color = Renderer::convertRGBAToABGR(
         (mColorShift & 0xFFFFFF00) | static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
     const unsigned int colorEnd =
@@ -377,21 +379,21 @@ void ImageComponent::updateColors()
                                     static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity));
 
     mVertices[0].col = color;
-    mVertices[1].col = mColorGradientHorizontal ? colorEnd : color;
-    mVertices[2].col = mColorGradientHorizontal ? color : colorEnd;
+    mVertices[1].col = mColorGradientHorizontal ? color : colorEnd;
+    mVertices[2].col = mColorGradientHorizontal ? colorEnd : color;
     mVertices[3].col = colorEnd;
 }
 
 void ImageComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mTexture == nullptr || mTargetSize == glm::vec2 {0.0f, 0.0f} ||
-        mSize == glm::vec2 {0.0f, 0.0f})
+    if (!isVisible() || mThemeOpacity == 0.0f || mTexture == nullptr ||
+        mTargetSize == glm::vec2 {0.0f, 0.0f} || mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
     Renderer::setMatrix(trans);
 
-    if (mTexture && mOpacity > 0) {
+    if (mTexture && mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
             glm::vec2 targetSizePos {(mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f}};
             Renderer::drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
@@ -447,7 +449,7 @@ void ImageComponent::fadeIn(bool textureLoaded)
             // Start the fade if this is the first time we've encountered the unloaded texture.
             if (!mFading) {
                 // Start with a zero opacity and flag it as fading.
-                mFadeOpacity = 0;
+                mFadeOpacity = 0.0f;
                 mFading = true;
                 updateColors();
             }
@@ -456,14 +458,14 @@ void ImageComponent::fadeIn(bool textureLoaded)
             // The texture is loaded and we need to fade it in. The fade is based on the frame
             // rate and is 1/4 second if running at 60 frames per second although the actual
             // value is not that important.
-            int opacity = mFadeOpacity + 255 / 15;
+            float opacity {mFadeOpacity + 1.0f / 15.0f};
             // See if we've finished fading.
-            if (opacity >= 255) {
-                mFadeOpacity = 255;
+            if (opacity >= 1.0f) {
+                mFadeOpacity = 1.0f;
                 mFading = false;
             }
             else {
-                mFadeOpacity = static_cast<unsigned char>(opacity);
+                mFadeOpacity = opacity;
             }
             updateColors();
         }
@@ -484,9 +486,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    glm::vec2 scale {getParent() ? getParent()->getSize() :
-                                   glm::vec2(static_cast<float>(Renderer::getScreenWidth()),
-                                             static_cast<float>(Renderer::getScreenHeight()))};
+    glm::vec2 scale {getParent() ?
+                         getParent()->getSize() :
+                         glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size"))
@@ -497,6 +499,22 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setMinSize(elem->get<glm::vec2>("minSize") * scale);
     }
 
+    if (elem->has("interpolation")) {
+        const std::string interpolation {elem->get<std::string>("interpolation")};
+        if (interpolation == "linear") {
+            mLinearInterpolation = true;
+        }
+        else if (interpolation == "nearest") {
+            mLinearInterpolation = false;
+        }
+        else {
+            mLinearInterpolation = false;
+            LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                               "<interpolation> set to \""
+                            << interpolation << "\"";
+        }
+    }
+
     if (elem->has("default"))
         setDefaultImage(elem->get<std::string>("default"));
 
@@ -505,17 +523,36 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setImage(elem->get<std::string>("path"), tile);
     }
 
-    if (properties & METADATA && elem->has("metadata"))
-        setMetadataField(elem->get<std::string>("metadata"));
+    if (properties && elem->has("imageType")) {
+        std::string imageTypes {elem->get<std::string>("imageType")};
+        for (auto& character : imageTypes) {
+            if (std::isspace(character))
+                character = ',';
+        }
+        imageTypes = Utils::String::replace(imageTypes, ",,", ",");
+        mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
+    }
 
     if (properties & COLOR) {
         if (elem->has("color"))
             setColorShift(elem->get<unsigned int>("color"));
         if (elem->has("colorEnd"))
             setColorShiftEnd(elem->get<unsigned int>("colorEnd"));
-        if (elem->has("gradientType"))
-            setColorGradientHorizontal(
-                !(elem->get<std::string>("gradientType").compare("horizontal")));
+        if (elem->has("gradientType")) {
+            const std::string gradientType {elem->get<std::string>("gradientType")};
+            if (gradientType == "horizontal") {
+                setColorGradientHorizontal(true);
+            }
+            else if (gradientType == "vertical") {
+                setColorGradientHorizontal(false);
+            }
+            else {
+                setColorGradientHorizontal(true);
+                LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                                   "<gradientType> set to \""
+                                << gradientType << "\"";
+            }
+        }
     }
 
     if (elem->has("scrollFadeIn") && elem->get<bool>("scrollFadeIn"))

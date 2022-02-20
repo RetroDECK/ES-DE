@@ -117,9 +117,6 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    if (elem->has("displayRelative"))
-        setDisplayRelative(elem->get<bool>("displayRelative"));
-
     if (elem->has("format"))
         setFormat(elem->get<std::string>("format"));
 
@@ -132,8 +129,8 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setRenderBackground(true);
     }
 
-    if (properties & ALIGNMENT && elem->has("alignment")) {
-        std::string str = elem->get<std::string>("alignment");
+    if (properties & ALIGNMENT && elem->has("horizontalAlignment")) {
+        std::string str {elem->get<std::string>("horizontalAlignment")};
         if (str == "left")
             setHorizontalAlignment(ALIGN_LEFT);
         else if (str == "center")
@@ -141,17 +138,73 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else if (str == "right")
             setHorizontalAlignment(ALIGN_RIGHT);
         else
-            LOG(LogError) << "Unknown text alignment string: " << str;
+            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
+                               "<horizontalAlignment> set to \""
+                            << str << "\"";
+    }
+
+    if (properties & ALIGNMENT && elem->has("verticalAlignment")) {
+        std::string str {elem->get<std::string>("verticalAlignment")};
+        if (str == "top")
+            setVerticalAlignment(ALIGN_TOP);
+        else if (str == "center")
+            setVerticalAlignment(ALIGN_CENTER);
+        else if (str == "bottom")
+            setVerticalAlignment(ALIGN_BOTTOM);
+        else
+            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
+                               "<verticalAlignment> set to \""
+                            << str << "\"";
+    }
+
+    // Legacy themes only.
+    if (properties & ALIGNMENT && elem->has("alignment")) {
+        std::string str {elem->get<std::string>("alignment")};
+        if (str == "left")
+            setHorizontalAlignment(ALIGN_LEFT);
+        else if (str == "center")
+            setHorizontalAlignment(ALIGN_CENTER);
+        else if (str == "right")
+            setHorizontalAlignment(ALIGN_RIGHT);
+        else
+            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
+                               "<alignment> set to \""
+                            << str << "\"";
     }
 
     if (properties & METADATA && elem->has("metadata"))
-        setMetadataField(elem->get<std::string>("metadata"));
+        mThemeMetadata = elem->get<std::string>("metadata");
 
+    if (mThemeMetadata == "lastplayed")
+        setDisplayRelative(true);
+
+    if (elem->has("displayRelative"))
+        setDisplayRelative(elem->get<bool>("displayRelative"));
+
+    if (properties & LETTER_CASE && elem->has("letterCase")) {
+        std::string letterCase {elem->get<std::string>("letterCase")};
+        if (letterCase == "uppercase") {
+            setUppercase(true);
+        }
+        else if (letterCase == "lowercase") {
+            setLowercase(true);
+        }
+        else if (letterCase == "capitalize") {
+            setCapitalize(true);
+        }
+        else if (letterCase != "none") {
+            LOG(LogWarning)
+                << "DateTimeComponent: Invalid theme configuration, property <letterCase> set to \""
+                << letterCase << "\"";
+        }
+    }
+
+    // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
-        setLineSpacing(elem->get<float>("lineSpacing"));
+        setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
     setFont(Font::getFromTheme(elem, properties, mFont));
 }

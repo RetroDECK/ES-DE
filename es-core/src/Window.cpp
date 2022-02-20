@@ -29,7 +29,7 @@ Window::Window() noexcept
     , mMediaViewer {nullptr}
     , mLaunchScreen {nullptr}
     , mInfoPopup {nullptr}
-    , mListScrollOpacity {0}
+    , mListScrollOpacity {0.0f}
     , mFrameTimeElapsed {0}
     , mFrameCountElapsed {0}
     , mAverageDeltaTime {10}
@@ -75,10 +75,6 @@ Window* Window::getInstance()
 
 void Window::pushGui(GuiComponent* gui)
 {
-    if (mGuiStack.size() > 0) {
-        auto& top = mGuiStack.back();
-        top->topWindow(false);
-    }
     mGuiStack.push_back(gui);
     gui->updateHelpPrompts();
 }
@@ -90,10 +86,8 @@ void Window::removeGui(GuiComponent* gui)
             it = mGuiStack.erase(it);
 
             // We just popped the stack and the stack is not empty.
-            if (it == mGuiStack.cend() && mGuiStack.size()) {
+            if (it == mGuiStack.cend() && mGuiStack.size())
                 mGuiStack.back()->updateHelpPrompts();
-                mGuiStack.back()->topWindow(true);
-            }
 
             return;
         }
@@ -121,7 +115,7 @@ bool Window::init()
 
     mHelp = new HelpComponent;
     mBackgroundOverlay = new ImageComponent;
-    mBackgroundOverlayOpacity = 0;
+    mBackgroundOverlayOpacity = 0.0f;
 
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
     if (mDefaultFonts.empty()) {
@@ -131,8 +125,7 @@ bool Window::init()
     }
 
     mBackgroundOverlay->setImage(":/graphics/screen_gradient.png");
-    mBackgroundOverlay->setResize(static_cast<float>(Renderer::getScreenWidth()),
-                                  static_cast<float>(Renderer::getScreenHeight()));
+    mBackgroundOverlay->setResize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
 #if defined(USE_OPENGL_21)
     mPostprocessedBackground = TextureResource::get("");
@@ -380,7 +373,7 @@ void Window::update(int deltaTime)
     // will be moved. This is required as theme set changes always makes a transition to
     // the system view. If we wouldn't make this update, the camera movement would take
     // place once the menu has been closed.
-    if (mChangedThemeSet && mGuiStack.size() > 1) {
+    if (mChangedThemeSet) {
         mGuiStack.front()->update(deltaTime);
         mChangedThemeSet = false;
     }
@@ -443,7 +436,7 @@ void Window::render()
         // a new cached background has been generated.
         if (mGuiStack.size() > 1 && mCachedBackground) {
             if ((Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up" &&
-                 mBackgroundOverlayOpacity == 255) ||
+                 mBackgroundOverlayOpacity == 1.0f) ||
                 Settings::getInstance()->getString("MenuOpeningEffect") != "scale-up")
                 renderBottom = false;
         }
@@ -460,8 +453,9 @@ void Window::render()
 #if (CLOCK_BACKGROUND_CREATION)
                 const auto backgroundStartTime = std::chrono::system_clock::now();
 #endif
-                unsigned char* processedTexture =
-                    new unsigned char[Renderer::getScreenWidth() * Renderer::getScreenHeight() * 4];
+                unsigned char* processedTexture {
+                    new unsigned char[static_cast<size_t>(Renderer::getScreenWidth()) *
+                                      static_cast<size_t>(Renderer::getScreenHeight()) * 4]};
 
                 // De-focus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
@@ -502,18 +496,19 @@ void Window::render()
                 }
 
                 mPostprocessedBackground->initFromPixels(
-                    processedTexture, Renderer::getScreenWidth(), Renderer::getScreenHeight());
+                    processedTexture, static_cast<size_t>(Renderer::getScreenWidth()),
+                    static_cast<size_t>(Renderer::getScreenHeight()));
 
                 mBackgroundOverlay->setImage(mPostprocessedBackground);
 
                 // The following is done to avoid fading in if the cached image was
                 // invalidated (rather than the menu being opened).
                 if (mInvalidatedCachedBackground) {
-                    mBackgroundOverlayOpacity = 255;
+                    mBackgroundOverlayOpacity = 1.0f;
                     mInvalidatedCachedBackground = false;
                 }
                 else {
-                    mBackgroundOverlayOpacity = 25;
+                    mBackgroundOverlayOpacity = 0.1f;
                 }
 
                 delete[] processedTexture;
@@ -530,8 +525,9 @@ void Window::render()
             // Fade in the cached background if the menu opening effect has been set to scale-up.
             if (Settings::getInstance()->getString("MenuOpeningEffect") == "scale-up") {
                 mBackgroundOverlay->setOpacity(mBackgroundOverlayOpacity);
-                if (mBackgroundOverlayOpacity < 255)
-                    mBackgroundOverlayOpacity = glm::clamp(mBackgroundOverlayOpacity + 30, 0, 255);
+                if (mBackgroundOverlayOpacity < 1.0f)
+                    mBackgroundOverlayOpacity =
+                        glm::clamp(mBackgroundOverlayOpacity + 0.118f, 0.0f, 1.0f);
             }
 #endif // USE_OPENGL_21
 
@@ -558,18 +554,19 @@ void Window::render()
     }
 
     // Render the quick list scrolling overlay, which is triggered in IList.
-    if (mListScrollOpacity != 0) {
+    if (mListScrollOpacity != 0.0f) {
         Renderer::setMatrix(Renderer::getIdentity());
-        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()),
-                           0x00000000 | mListScrollOpacity, 0x00000000 | mListScrollOpacity);
+        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                           0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f),
+                           0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f));
 
         glm::vec2 offset {mListScrollFont->sizeText(mListScrollText)};
         offset.x = (Renderer::getScreenWidth() - offset.x) * 0.5f;
         offset.y = (Renderer::getScreenHeight() - offset.y) * 0.5f;
 
-        TextCache* cache = mListScrollFont->buildTextCache(mListScrollText, offset.x, offset.y,
-                                                           0xFFFFFF00 | mListScrollOpacity);
+        TextCache* cache {mListScrollFont->buildTextCache(
+            mListScrollText, offset.x, offset.y,
+            0xFFFFFF00 | static_cast<unsigned char>(mListScrollOpacity * 255.0f))};
         mListScrollFont->renderTextCache(cache);
         delete cache;
     }
@@ -625,8 +622,8 @@ void Window::renderLoadingScreen(std::string text)
 {
     glm::mat4 trans {Renderer::getIdentity()};
     Renderer::setMatrix(trans);
-    Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                       static_cast<float>(Renderer::getScreenHeight()), 0x000000FF, 0x000000FF);
+    Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                       0x000000FF, 0x000000FF);
 
     ImageComponent splash(true);
     splash.setImage(":/graphics/splash.svg");
@@ -638,8 +635,8 @@ void Window::renderLoadingScreen(std::string text)
     auto& font = mDefaultFonts.at(1);
     TextCache* cache = font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF);
 
-    float x = std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f);
-    float y = std::round(Renderer::getScreenHeight() * 0.835f);
+    float x {std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f)};
+    float y {std::round(Renderer::getScreenHeight() * 0.835f)};
     trans = glm::translate(trans, glm::vec3 {x, y, 0.0f});
     Renderer::setMatrix(trans);
     font->renderTextCache(cache);
@@ -648,9 +645,9 @@ void Window::renderLoadingScreen(std::string text)
     Renderer::swapBuffers();
 }
 
-void Window::renderListScrollOverlay(unsigned char opacity, const std::string& text)
+void Window::renderListScrollOverlay(const float opacity, const std::string& text)
 {
-    mListScrollOpacity = static_cast<unsigned char>(opacity * 0.6f);
+    mListScrollOpacity = opacity * 0.6f;
     mListScrollText = text;
 }
 
@@ -749,10 +746,6 @@ void Window::stopInfoPopup()
 void Window::startScreensaver()
 {
     if (mScreensaver && !mRenderScreensaver) {
-        // Tell the GUI components the screensaver is starting.
-        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
-            (*it)->onScreensaverActivate();
-
         setAllowTextScrolling(false);
         setAllowFileAnimation(false);
         mScreensaver->startScreensaver(true);
@@ -767,14 +760,6 @@ bool Window::stopScreensaver()
         mRenderScreensaver = false;
         setAllowTextScrolling(true);
         setAllowFileAnimation(true);
-
-        // Tell the GUI components the screensaver has stopped.
-        for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it) {
-            (*it)->onScreensaverDeactivate();
-            // If the menu is open, pause the video so it won't start playing beneath the menu.
-            if (mGuiStack.front() != mGuiStack.back())
-                (*it)->onPauseVideo();
-        }
 
         return true;
     }
@@ -827,33 +812,11 @@ void Window::closeLaunchScreen()
     mRenderLaunchScreen = false;
 }
 
-void Window::increaseVideoPlayerCount() { ++mVideoPlayerCount; }
-
-void Window::decreaseVideoPlayerCount() { --mVideoPlayerCount; }
-
 int Window::getVideoPlayerCount()
 {
     int videoPlayerCount;
     videoPlayerCount = mVideoPlayerCount;
     return videoPlayerCount;
-}
-
-void Window::setLaunchedGame()
-{
-    // Tell the GUI components that a game has been launched.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
-        (*it)->onGameLaunchedActivate();
-
-    mGameLaunchedState = true;
-}
-
-void Window::unsetLaunchedGame()
-{
-    // Tell the GUI components that the user is back in ES-DE again.
-    for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
-        (*it)->onGameLaunchedDeactivate();
-
-    mGameLaunchedState = false;
 }
 
 void Window::invalidateCachedBackground()

@@ -27,6 +27,7 @@ void GamelistView::legacyPopulateFields()
     mTextComponents.back()->setHorizontalAlignment(ALIGN_CENTER);
     mTextComponents.back()->setColor(0xFFFFFFFF);
     mTextComponents.back()->setDefaultZIndex(50.0f);
+    mTextComponents.back()->setVisible(false);
     addChild(mTextComponents.back().get());
 
     // Logo.
@@ -45,16 +46,16 @@ void GamelistView::legacyPopulateFields()
 
     // Thumbnails.
     mImageComponents.push_back(std::make_unique<ImageComponent>());
-    mImageComponents.back()->setMetadataField("image_md_thumbnail");
+    mImageComponents.back()->setThemeMetadata("image_md_thumbnail");
     mImageComponents.back()->setOrigin(0.5f, 0.5f);
-    mImageComponents.back()->setVisible(false);
     mImageComponents.back()->setMaxSize(mSize.x * (0.25f - 2.0f * padding), mSize.y * 0.10f);
     mImageComponents.back()->setDefaultZIndex(25.0f);
     addChild(mImageComponents.back().get());
 
     // Marquee.
     mImageComponents.push_back(std::make_unique<ImageComponent>());
-    mImageComponents.back()->setMetadataField("image_md_marquee");
+    mImageComponents.back()->setThemeMetadata("image_md_marquee");
+    mImageComponents.back()->setLinearInterpolation(true);
     mImageComponents.back()->setOrigin(0.5f, 0.5f);
     mImageComponents.back()->setVisible(false);
     mImageComponents.back()->setMaxSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.18f);
@@ -63,7 +64,7 @@ void GamelistView::legacyPopulateFields()
 
     // Image.
     mImageComponents.push_back(std::make_unique<ImageComponent>());
-    mImageComponents.back()->setMetadataField("image_md_image");
+    mImageComponents.back()->setThemeMetadata("image_md_image");
     mImageComponents.back()->setOrigin(0.5f, 0.5f);
     mImageComponents.back()->setPosition(mSize.x * 0.25f,
                                          mList.getPosition().y + mSize.y * 0.2125f);
@@ -74,7 +75,7 @@ void GamelistView::legacyPopulateFields()
     if (mViewStyle == ViewController::VIDEO) {
         // Video.
         mVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
-        mVideoComponents.back()->setMetadataField("video_md_video");
+        mVideoComponents.back()->setThemeMetadata("video_md_video");
         mVideoComponents.back()->setOrigin(0.5f, 0.5f);
         mVideoComponents.back()->setPosition(mSize.x * 0.25f,
                                              mList.getPosition().y + mSize.y * 0.2125f);
@@ -91,80 +92,80 @@ void GamelistView::legacyPopulateFields()
     // Metadata labels + values.
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Rating: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_rating");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_rating");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Released: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_releasedate");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_releasedate");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Developer: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_developer");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_developer");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Publisher: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_publisher");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_publisher");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Genre: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_genre");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_genre");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Players: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_players");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_players");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Last played: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_lastplayed");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_lastplayed");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setText("Times played: ", false);
-    mTextComponents.back()->setMetadataField("text_md_lbl_playcount");
+    mTextComponents.back()->setThemeMetadata("text_md_lbl_playcount");
     addChild(mTextComponents.back().get());
 
     mRatingComponents.push_back(std::make_unique<RatingComponent>());
-    mRatingComponents.back()->setMetadataField("rating_md_rating");
+    mRatingComponents.back()->setThemeMetadata("rating_md_rating");
     mRatingComponents.back()->setDefaultZIndex(40.0f);
     addChild(mRatingComponents.back().get());
 
     mDateTimeComponents.push_back(std::make_unique<DateTimeComponent>());
-    mDateTimeComponents.back()->setMetadataField("datetime_md_releasedate");
+    mDateTimeComponents.back()->setThemeMetadata("datetime_md_releasedate");
     addChild(mDateTimeComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
-    mTextComponents.back()->setMetadataField("text_md_developer");
+    mTextComponents.back()->setThemeMetadata("text_md_developer");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
-    mTextComponents.back()->setMetadataField("text_md_publisher");
+    mTextComponents.back()->setThemeMetadata("text_md_publisher");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
-    mTextComponents.back()->setMetadataField("text_md_genre");
+    mTextComponents.back()->setThemeMetadata("text_md_genre");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
-    mTextComponents.back()->setMetadataField("text_md_players");
+    mTextComponents.back()->setThemeMetadata("text_md_players");
     addChild(mTextComponents.back().get());
 
     mDateTimeComponents.push_back(std::make_unique<DateTimeComponent>());
-    mDateTimeComponents.back()->setMetadataField("datetime_md_lastplayed");
+    mDateTimeComponents.back()->setThemeMetadata("datetime_md_lastplayed");
     mDateTimeComponents.back()->setDisplayRelative(true);
     addChild(mDateTimeComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
-    mTextComponents.back()->setMetadataField("text_md_playcount");
+    mTextComponents.back()->setThemeMetadata("text_md_playcount");
     addChild(mTextComponents.back().get());
 
     mTextComponents.push_back(std::make_unique<TextComponent>());
-    mTextComponents.back()->setMetadataField("text_md_name");
+    mTextComponents.back()->setThemeMetadata("text_md_name");
     mTextComponents.back()->setPosition(mSize.x, mSize.y);
     mTextComponents.back()->setFont(Font::get(FONT_SIZE_MEDIUM));
     mTextComponents.back()->setHorizontalAlignment(ALIGN_CENTER);
@@ -174,7 +175,7 @@ void GamelistView::legacyPopulateFields()
 
     // Badges.
     mBadgeComponents.push_back(std::make_unique<BadgeComponent>());
-    mBadgeComponents.back()->setMetadataField("badges_md_badges");
+    mBadgeComponents.back()->setThemeMetadata("badges_md_badges");
     mBadgeComponents.back()->setOrigin(0.5f, 0.5f);
     mBadgeComponents.back()->setPosition(mSize.x * 0.8f, mSize.y * 0.7f);
     mBadgeComponents.back()->setSize(mSize.x * 0.15f, mSize.y * 0.2f);
@@ -183,7 +184,7 @@ void GamelistView::legacyPopulateFields()
 
     // Scrollable container (game description).
     mContainerComponents.push_back(std::make_unique<ScrollableContainer>());
-    mContainerComponents.back()->setMetadataField("text_md_description");
+    mContainerComponents.back()->setThemeMetadata("text_md_description");
     mContainerComponents.back()->setSize(mSize.x * (0.50f - 2.0f * padding),
                                          mSize.y - mContainerComponents.back()->getPosition().y);
     mContainerComponents.back()->setAutoScroll(true);
@@ -196,7 +197,7 @@ void GamelistView::legacyPopulateFields()
     mContainerComponents.back()->addChild(mTextComponents.back().get());
 
     mGamelistInfoComponents.push_back(std::make_unique<TextComponent>());
-    mGamelistInfoComponents.back()->setMetadataField("text_gamelistInfo");
+    mGamelistInfoComponents.back()->setThemeMetadata("text_gamelistInfo");
     mGamelistInfoComponents.back()->setOrigin(0.5f, 0.5f);
     mGamelistInfoComponents.back()->setFont(Font::get(FONT_SIZE_SMALL));
     mGamelistInfoComponents.back()->setDefaultZIndex(50.0f);
@@ -229,19 +230,19 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mList.applyTheme(theme, getName(), "textlist_gamelist", ALL);
 
     mImageComponents[LegacyImage::MD_THUMBNAIL]->applyTheme(
-        theme, getName(), mImageComponents[LegacyImage::MD_THUMBNAIL]->getMetadataField(), ALL);
+        theme, getName(), mImageComponents[LegacyImage::MD_THUMBNAIL]->getThemeMetadata(), ALL);
     mImageComponents[LegacyImage::MD_MARQUEE]->applyTheme(theme, getName(), "image_md_marquee",
                                                           POSITION | ThemeFlags::SIZE | Z_INDEX |
                                                               ROTATION | VISIBLE);
 
     if (mViewStyle == ViewController::DETAILED) {
         mImageComponents[LegacyImage::MD_IMAGE]->applyTheme(
-            theme, getName(), mImageComponents[LegacyImage::MD_IMAGE]->getMetadataField(),
+            theme, getName(), mImageComponents[LegacyImage::MD_IMAGE]->getThemeMetadata(),
             POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     }
     else if (mViewStyle == ViewController::VIDEO) {
         mVideoComponents.front()->applyTheme(
-            theme, getName(), mVideoComponents.front()->getMetadataField(),
+            theme, getName(), mVideoComponents.front()->getThemeMetadata(),
             POSITION | ThemeFlags::SIZE | ThemeFlags::DELAY | Z_INDEX | ROTATION | VISIBLE);
     }
 
@@ -249,37 +250,31 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     legacyInitMDValues();
 
     mTextComponents[LegacyText::MD_NAME]->applyTheme(
-        theme, getName(), mTextComponents[LegacyText::MD_NAME]->getMetadataField(), ALL);
+        theme, getName(), mTextComponents[LegacyText::MD_NAME]->getThemeMetadata(), ALL);
 
     for (size_t i = 0; i < mBadgeComponents.size(); ++i)
-        mBadgeComponents[i]->applyTheme(theme, getName(), mBadgeComponents[i]->getMetadataField(),
+        mBadgeComponents[i]->applyTheme(theme, getName(), mBadgeComponents[i]->getThemeMetadata(),
                                         ALL);
 
     for (size_t i = 0; i < mRatingComponents.size(); ++i)
-        mRatingComponents[i]->applyTheme(theme, getName(), mRatingComponents[i]->getMetadataField(),
+        mRatingComponents[i]->applyTheme(theme, getName(), mRatingComponents[i]->getThemeMetadata(),
                                          ALL);
 
     mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->applyTheme(
-        theme, getName(), mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->getMetadataField(),
+        theme, getName(), mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->getThemeMetadata(),
         ALL);
 
     mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->applyTheme(
-        theme, getName(), mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->getMetadataField(),
+        theme, getName(), mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->getThemeMetadata(),
         ALL);
 
-    if (mLegacyMode) {
-        for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::MD_NAME; ++i)
-            mTextComponents[i]->applyTheme(theme, getName(), mTextComponents[i]->getMetadataField(),
-                                           ALL ^ ThemeFlags::TEXT);
-    }
-    else {
-        for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::MD_NAME; ++i)
-            mTextComponents[i]->applyTheme(theme, getName(), mTextComponents[i]->getMetadataField(),
-                                           ALL);
+    for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::MD_NAME; ++i) {
+        mTextComponents[i]->applyTheme(theme, getName(), mTextComponents[i]->getThemeMetadata(),
+                                       ALL ^ ThemeFlags::TEXT);
     }
 
     for (auto& container : mContainerComponents) {
-        container->applyTheme(theme, getName(), container->getMetadataField(),
+        container->applyTheme(theme, getName(), container->getThemeMetadata(),
                               POSITION | ThemeFlags::SIZE | Z_INDEX | VISIBLE);
     }
 
@@ -290,7 +285,7 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
         ALL ^ (POSITION | ThemeFlags::SIZE | ThemeFlags::ORIGIN | TEXT | ROTATION));
 
     for (auto& gamelistInfo : mGamelistInfoComponents)
-        gamelistInfo->applyTheme(theme, getName(), gamelistInfo->getMetadataField(),
+        gamelistInfo->applyTheme(theme, getName(), gamelistInfo->getThemeMetadata(),
                                  ALL ^ ThemeFlags::TEXT);
 
     // If there is no position defined in the theme for gamelistInfo, then hide it.
@@ -371,6 +366,12 @@ void GamelistView::legacyUpdateInfoPanel()
 
     bool fadingOut = false;
     if (file == nullptr) {
+        if (mViewStyle == ViewController::VIDEO) {
+            mVideoComponents.front()->stopVideoPlayer();
+            mVideoComponents.front()->setVideo("");
+            if (!mVideoComponents.front()->hasStartDelay())
+                mVideoComponents.front()->setImage("");
+        }
         mVideoPlaying = false;
         fadingOut = true;
     }
@@ -385,19 +386,15 @@ void GamelistView::legacyUpdateInfoPanel()
             if (mRandomGame) {
                 mImageComponents[LegacyImage::MD_THUMBNAIL]->setImage(
                     mRandomGame->getThumbnailPath());
-                mImageComponents[LegacyImage::MD_MARQUEE]->setImage(mRandomGame->getMarqueePath(),
-                                                                    false, true);
+                mImageComponents[LegacyImage::MD_MARQUEE]->setImage(mRandomGame->getMarqueePath());
                 if (mViewStyle == ViewController::VIDEO) {
                     mVideoComponents.front()->setImage(mRandomGame->getImagePath());
-                    // Always stop the video before setting a new video as it will otherwise
-                    // continue to play if it has the same path (i.e. it is the same physical
-                    // video file) as the previously set video. That may happen when entering a
-                    // folder with the same name as the first game file inside, or as in this
-                    // case, when entering a custom collection.
-                    mVideoComponents.front()->onHide();
+                    mVideoComponents.front()->stopVideoPlayer();
 
                     if (!mVideoComponents.front()->setVideo(mRandomGame->getVideoPath()))
                         mVideoComponents.front()->setDefaultVideo();
+
+                    mVideoComponents.front()->startVideoPlayer();
                 }
                 else {
                     mImageComponents[LegacyImage::MD_IMAGE]->setImage(mRandomGame->getImagePath());
@@ -416,14 +413,15 @@ void GamelistView::legacyUpdateInfoPanel()
         }
         else {
             mImageComponents[LegacyImage::MD_THUMBNAIL]->setImage(file->getThumbnailPath());
-            mImageComponents[LegacyImage::MD_MARQUEE]->setImage(file->getMarqueePath(), false,
-                                                                true);
+            mImageComponents[LegacyImage::MD_MARQUEE]->setImage(file->getMarqueePath());
             if (mViewStyle == ViewController::VIDEO) {
                 mVideoComponents.front()->setImage(file->getImagePath());
-                mVideoComponents.front()->onHide();
+                mVideoComponents.front()->stopVideoPlayer();
 
                 if (!mVideoComponents.front()->setVideo(file->getVideoPath()))
                     mVideoComponents.front()->setDefaultVideo();
+
+                mVideoComponents.front()->startVideoPlayer();
             }
             else {
                 mImageComponents[LegacyImage::MD_IMAGE]->setImage(file->getImagePath());
@@ -472,8 +470,8 @@ void GamelistView::legacyUpdateInfoPanel()
         if (mViewStyle == ViewController::DETAILED) {
             // Fade in the game image.
             auto func = [this](float t) {
-                mImageComponents[LegacyImage::MD_IMAGE]->setOpacity(static_cast<unsigned char>(
-                    glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+                mImageComponents[LegacyImage::MD_IMAGE]->setOpacity(
+                    glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
             };
             mImageComponents[LegacyImage::MD_IMAGE]->setAnimation(
                 new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
@@ -481,8 +479,7 @@ void GamelistView::legacyUpdateInfoPanel()
         else if (mViewStyle == ViewController::VIDEO) {
             // Fade in the static image.
             auto func = [this](float t) {
-                mVideoComponents.front()->setOpacity(static_cast<unsigned char>(
-                    glm::mix(static_cast<float>(FADE_IN_START_OPACITY), 1.0f, t) * 255));
+                mVideoComponents.front()->setOpacity(glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
             };
             mVideoComponents.front()->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0,
                                                    nullptr, false);
@@ -509,17 +506,17 @@ void GamelistView::legacyUpdateInfoPanel()
                 BadgeComponent::BadgeInfo badgeInfo;
                 badgeInfo.badgeType = badge;
                 if (badge == "controller") {
-                    if (file->metadata.get("controller").compare("") != 0) {
+                    if (file->metadata.get("controller") != "") {
                         badgeInfo.gameController = file->metadata.get("controller");
                         badgeSlots.push_back(badgeInfo);
                     }
                 }
                 else if (badge == "altemulator") {
-                    if (file->metadata.get(badge).compare("") != 0)
+                    if (file->metadata.get(badge) != "")
                         badgeSlots.push_back(badgeInfo);
                 }
                 else {
-                    if (file->metadata.get(badge).compare("true") == 0)
+                    if (file->metadata.get(badge) == "true")
                         badgeSlots.push_back(badgeInfo);
                 }
             }
@@ -550,51 +547,30 @@ void GamelistView::legacyUpdateInfoPanel()
 
     std::vector<GuiComponent*> comps;
 
-    if (!mLegacyMode) {
-        for (auto& text : mTextComponents) {
-            if (text->getScrollHide())
-                comps.emplace_back(text.get());
-        }
-        for (auto& date : mDateTimeComponents) {
-            if (date->getScrollHide())
-                comps.emplace_back(date.get());
-        }
-        for (auto& image : mImageComponents) {
-            if (image->getScrollHide())
-                comps.emplace_back(image.get());
-        }
-        for (auto& badge : mBadgeComponents) {
-            if (badge->getScrollHide())
-                comps.emplace_back(badge.get());
-        }
-        for (auto& rating : mRatingComponents) {
-            if (rating->getScrollHide())
-                comps.emplace_back(rating.get());
-        }
-    }
-
-    if (mLegacyMode) {
-        for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::END; ++i)
-            comps.emplace_back(mTextComponents[i].get());
-        comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE].get());
-        comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED].get());
-        comps.emplace_back(mTextComponents[LegacyText::MD_NAME].get());
-        comps.emplace_back(mImageComponents[LegacyImage::MD_THUMBNAIL].get());
-        comps.emplace_back(mImageComponents[LegacyImage::MD_MARQUEE].get());
-        comps.emplace_back(mImageComponents[LegacyImage::MD_IMAGE].get());
-        comps.push_back(mBadgeComponents.front().get());
-        comps.push_back(mRatingComponents.front().get());
-    }
+    for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::END; ++i)
+        comps.emplace_back(mTextComponents[i].get());
+    comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE].get());
+    comps.emplace_back(mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED].get());
+    comps.emplace_back(mTextComponents[LegacyText::MD_NAME].get());
+    comps.emplace_back(mImageComponents[LegacyImage::MD_THUMBNAIL].get());
+    comps.emplace_back(mImageComponents[LegacyImage::MD_MARQUEE].get());
+    comps.emplace_back(mImageComponents[LegacyImage::MD_IMAGE].get());
+    if (mVideoComponents.size() > 0)
+        comps.emplace_back(mVideoComponents.front().get());
+    comps.push_back(mBadgeComponents.front().get());
+    comps.push_back(mRatingComponents.front().get());
 
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
-        GuiComponent* comp = *it;
+        GuiComponent* comp {*it};
+        if (!fadingOut && !comp->isAnimationPlaying(0)) {
+            comp->setOpacity(1.0f);
+            continue;
+        }
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
-            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0 : 255))) {
-            auto func = [comp](float t) {
-                comp->setOpacity(static_cast<unsigned char>(glm::mix(0.0f, 1.0f, t) * 255));
-            };
+            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0.0f : 1.0f))) {
+            auto func = [comp](float t) { comp->setOpacity(glm::mix(0.0f, 1.0f, t)); };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
     }
@@ -607,12 +583,6 @@ void GamelistView::legacyUpdate(int deltaTime)
         mImageComponents[LegacyImage::MD_IMAGE]->finishAnimation(0);
 
     if (mViewStyle == ViewController::VIDEO) {
-        if (!mVideoPlaying)
-            mVideoComponents.front()->onHide();
-        else if (mVideoPlaying && !mVideoComponents.front()->isVideoPaused() &&
-                 !mWindow->isScreensaverActive())
-            mVideoComponents.front()->onShow();
-
         if (ViewController::getInstance()->getGameLaunchTriggered() &&
             mVideoComponents.front()->isAnimationPlaying(0))
             mVideoComponents.front()->finishAnimation(0);
@@ -669,9 +639,7 @@ void GamelistView::legacyInitMDValues()
     }
 
     mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->setFont(defaultFont);
-    //        mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->setColor(0xFFFFFFFF);
     mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->setFont(defaultFont);
-    //        mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->setColor(0xFFFFFFFF);
 
     values.emplace_back(mRatingComponents.front().get());
     values.emplace_back(mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE].get());

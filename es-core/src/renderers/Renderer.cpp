@@ -477,8 +477,8 @@ namespace Renderer
 
         // clang-format off
         vertices[0] = {{x,      y     }, {0.0f, 0.0f}, rColor};
-        vertices[1] = {{x,      y + hL}, {0.0f, 0.0f}, horizontalGradient ? rColorEnd : rColor};
-        vertices[2] = {{x + wL, y     }, {0.0f, 0.0f}, horizontalGradient ? rColor : rColorEnd};
+        vertices[1] = {{x,      y + hL}, {0.0f, 0.0f}, horizontalGradient ? rColor : rColorEnd};
+        vertices[2] = {{x + wL, y     }, {0.0f, 0.0f}, horizontalGradient ? rColorEnd : rColor};
         vertices[3] = {{x + wL, y + hL}, {0.0f, 0.0f}, rColorEnd};
         // clang-format on
 
@@ -535,12 +535,12 @@ namespace Renderer
 
     const glm::mat4& getProjectionMatrix() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
-    const int getWindowWidth() { return windowWidth; }
-    const int getWindowHeight() { return windowHeight; }
-    const int getScreenWidth() { return screenWidth; }
-    const int getScreenHeight() { return screenHeight; }
-    const int getScreenOffsetX() { return screenOffsetX; }
-    const int getScreenOffsetY() { return screenOffsetY; }
+    const float getWindowWidth() { return static_cast<float>(windowWidth); }
+    const float getWindowHeight() { return static_cast<float>(windowHeight); }
+    const float getScreenWidth() { return static_cast<float>(screenWidth); }
+    const float getScreenHeight() { return static_cast<float>(screenHeight); }
+    const float getScreenOffsetX() { return static_cast<float>(screenOffsetX); }
+    const float getScreenOffsetY() { return static_cast<float>(screenOffsetY); }
     const int getScreenRotate() { return screenRotate; }
     const float getScreenWidthModifier() { return screenWidthModifier; }
     const float getScreenHeightModifier() { return screenHeightModifier; }

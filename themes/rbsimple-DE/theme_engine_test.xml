@@ -1,0 +1,292 @@
+<theme>
+    <view name="system">
+        <carousel name="system_carousel">
+            <color>00000099</color>
+            <textColor>F0F0F0</textColor>
+        </carousel>
+        <text name="game_counter">
+            <color>D6D6D6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <text name="game_counter2">
+            <color>D6D6D6</color>
+            <backgroundColor>555555D8</backgroundColor>
+        </text>
+        <text name="info1, info2, info3, info4, info5, info6, info7,
+                info8, info9, info10, info11, info12">
+            <color>B6B6B6</color>
+        </text>
+        <text name="system_name">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <text name="game_name">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <datetime name="game_release_date">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </datetime>
+        <text name="recently_played_text">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <text name="info1, info2, info3, info4, info5, info6, info7,
+                info8, info9, info10, info11, info12">
+            <color>D6D6D6</color>
+        </text>
+
+        <image name="background">
+            <color>000000</color>
+        </image>
+        <text name="logoText">
+            <color>B6B6B6</color>
+        </text>
+    </view>
+
+    <view name="system, gamelist">
+        <helpsystem name="help">
+            <textColor>D6D6D6</textColor>
+            <iconColor>D6D6D6</iconColor>
+            <textColorDimmed>969696</textColorDimmed>
+            <iconColorDimmed>969696</iconColorDimmed>
+        </helpsystem>
+    </view>
+
+    <!-- Default band colors (used if a system is unthemed). -->
+    <view name="system, gamelist">
+        <image name="band1">
+            <visible>false</visible>
+        </image>
+        <image name="band2">
+            <visible>false</visible>
+        </image>
+        <image name="band3">
+            <visible>false</visible>
+        </image>
+        <image name="band4">
+            <visible>false</visible>
+        </image>
+    </view>
+
+    <view name="system">
+        <carousel name="system_carousel">
+            <type>vertical_wheel</type>
+            <size>0.25 1.0</size>
+            <pos>0. 0</pos>
+            <logo>./${system.theme}/images/logo.svg</logo>
+            <logoScale>1.23</logoScale>
+            <logoSize>0.15 0.125</logoSize>
+            <logoRotation>6.5</logoRotation>
+            <logoRotationOrigin>-5 0.4</logoRotationOrigin>
+            <logoHorizontalAlignment>left</logoHorizontalAlignment>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.070</fontSize>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.2</lineSpacing>
+            <text>${system.fullName}</text>
+            <maxLogoCount>10</maxLogoCount>
+        </carousel>
+        <text name="game_counter">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.048</fontSize>
+            <pos>0.26 0.09</pos>
+            <size>0.35 0.1</size>
+            <origin>0 0</origin>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <systemdata>gamecount</systemdata>
+            <zIndex>50</zIndex>
+        </text>
+
+        <text name="game_counter2">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <pos>0.42 0.5437</pos>
+            <size>0.25 0.056</size>
+            <origin>0.5 0.5</origin>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>center</horizontalAlignment>
+            <systemdata>gamecount_favorites</systemdata>
+            <zIndex>50</zIndex>
+            <visible>false</visible>
+        </text>
+
+        <text name="system_name">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.085</fontSize>
+            <pos>0.26 0.01</pos>
+            <size>0.5 0.1</size>
+            <origin>0 0</origin>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <systemdata>fullname</systemdata>
+            <zIndex>50</zIndex>
+        </text>
+
+        <text name="game_name">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.045</fontSize>
+            <pos>0.775 0.59</pos>
+            <size>0.2 0.05</size>
+            <origin>0 0</origin>
+            <letterCase>none</letterCase>
+            <gameselector>selector_recent</gameselector>
+            <horizontalAlignment>right</horizontalAlignment>
+            <metadata>name</metadata>
+            <zIndex>50</zIndex>
+        </text>
+
+        <datetime name="game_release_date">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.045</fontSize>
+            <pos>0.775 0.64</pos>
+            <size>0.2 0.05</size>
+            <origin>0 0</origin>
+            <letterCase>capitalize</letterCase>
+            <gameselector>selector_recent</gameselector>
+            <displayRelative>true</displayRelative>
+            <horizontalAlignment>right</horizontalAlignment>
+            <metadata>lastplayed</metadata>
+            <zIndex>50</zIndex>
+        </datetime>
+
+        <text name="recently_played_text">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <pos>0.775 0.03</pos>
+            <size>0.2 0</size>
+            <origin>0 0</origin>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>right</horizontalAlignment>
+            <text>Last played</text>
+            <zIndex>50</zIndex>
+        </text>
+
+        <gameselector name="selector_recent">
+            <selection>lastplayed</selection>
+            <gameCount>3</gameCount>
+        </gameselector>
+
+        <gameselector name="selector_random">
+            <selection>random</selection>
+            <gameCount>1</gameCount>
+        </gameselector>
+
+        <image name="random_background_image">
+            <origin>0 0</origin>
+            <pos>0 0</pos>
+            <size>1 1</size>
+            <gameselector>selector_random</gameselector>
+            <imageType>fanart, titlescreen</imageType>
+            <interpolation>nearest</interpolation>
+            <scrollFadeIn>true</scrollFadeIn>
+            <zIndex>3</zIndex>
+            <opacity>0.5</opacity>
+        </image>
+
+        <image name="recent_game_image">
+            <origin>0 0</origin>
+            <pos>0.775 0.08</pos>
+            <size>0.2 0</size>
+            <gameselector>selector_recent</gameselector>
+            <imageType>cover</imageType>
+            <interpolation>nearest</interpolation>
+            <scrollFadeIn>true</scrollFadeIn>
+            <zIndex>3</zIndex>
+            <opacity>1</opacity>
+        </image>
+
+        <video name="random_game_video">
+            <origin>0 0</origin>
+            <pos>0.26 0.19</pos>
+            <interpolation>linear</interpolation>
+            <maxSize>0.3 0.424</maxSize>
+            <imageType>marquee, titlescreen</imageType>
+            <gameselector>selector_random</gameselector>
+            <pillarboxes>false</pillarboxes>
+            <scanlines>false</scanlines>
+            <fadeInTime>1.2</fadeInTime>
+            <opacity>1</opacity>
+            <audio>true</audio>
+            <delay>1.7</delay>
+        </video>
+
+        <helpsystem name="help">
+            <pos>0.528 0.954</pos>
+        </helpsystem>
+
+        <image name="consolegame">
+            <visible>false</visible>
+        </image>
+        <image name="controller">
+            <visible>false</visible>
+        </image>
+
+        <text name="info1">
+            <pos>0.58 0.695</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info2">
+            <pos>0.58 0.716</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info3">
+            <pos>0.58 0.737</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info4">
+            <pos>0.58 0.758</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info5">
+            <pos>0.58 0.799</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info6">
+            <pos>0.58 0.820</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info7">
+            <pos>0.58 0.841</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info8">
+            <pos>0.58 0.862</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info9">
+            <pos>0.58 0.883</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+        <text name="info10">
+            <pos>0.58 0.904</pos>
+            <horizontalAlignment>right</horizontalAlignment>
+        </text>
+    </view>
+    <!--
+    <view name="gamelist">
+        <image name="md_image">
+            <origin>0.5 0.5</origin>
+            <pos>0.63 0.45</pos>
+            <maxSize>0.360 0.424</maxSize>
+            <imageType>image</imageType>
+            <interpolation>nearest</interpolation>
+            <scrollFadeIn>true</scrollFadeIn>
+        </image>
+    </view>
+-->
+    <view name="gamelist">
+        <video name="md_video">
+            <origin>0.5 0.5</origin>
+            <pos>0.63 0.45</pos>
+            <imageType>image</imageType>
+            <interpolation>nearest</interpolation>
+            <maxSize>0.356 0.424</maxSize>
+            <delay>1.7</delay>
+            <scrollFadeIn>true</scrollFadeIn>
+        </video>
+    </view>
+
+</theme>

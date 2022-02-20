@@ -304,7 +304,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
         glm::vec2 menuSize {ss->getMenuSize()};
         glm::vec3 menuPos {ss->getMenuPosition()};
         ss->setMenuSize(glm::vec2 {menuSize.x * 1.08f, menuSize.y});
-        menuPos.x = static_cast<float>((Renderer::getScreenWidth()) - ss->getMenuSize().x) / 2.0f;
+        menuPos.x = (Renderer::getScreenWidth() - ss->getMenuSize().x) / 2.0f;
         ss->setMenuPosition(menuPos);
         mWindow->pushGui(ss);
     });

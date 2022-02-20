@@ -18,30 +18,34 @@ based on: 'recalbox-multi' by the Recalbox community
     </variant>
 
     <view name="system">
-        <carousel name="systemcarousel">
+        <carousel name="system_carousel">
+            <logo>./${system.theme}/images/logo.svg</logo>
             <logoScale>1.23</logoScale>
             <logoSize>0.25 0.125</logoSize>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.070</fontSize>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.2</lineSpacing>
+            <text>${system.fullName}</text>
+            <maxLogoCount>3</maxLogoCount>
         </carousel>
-        <text name="systemInfo">
+        <text name="game_counter">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
-        </text>
-
-        <text name="logoPlaceholderText">
-            <pos>0.5 0.5</pos>
+            <pos>0.5 0.6437</pos>
+            <size>1 0.056</size>
             <origin>0.5 0.5</origin>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.065</fontSize>
-            <color>000000FF</color>
-            <text>${system.fullName}</text>
-            <visible>false</visible>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>center</horizontalAlignment>
+            <systemdata>gamecount</systemdata>
+            <zIndex>50</zIndex>
         </text>
     </view>
 
     <view name="system">
         <text name="info1, info2, info3, info4, info5, info6, info7,
                     info8, info9, info10, info11, info12">
-            <alignment>left</alignment>
+            <horizontalAlignment>left</horizontalAlignment>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.021</fontSize>
             <size>0.4 0.03</size>
@@ -88,6 +92,11 @@ based on: 'recalbox-multi' by the Recalbox community
         </text>
     </view>
 
+    <variant name="themeEngineTest">
+        <include>./colors_dark.xml</include>
+        <include>./theme_engine_test.xml</include>
+    </variant>
+
     <view name="system, gamelist">
         <image name="background">
             <tile>true</tile>
@@ -130,7 +139,7 @@ based on: 'recalbox-multi' by the Recalbox community
     <aspectRatio name="4:3">
         <view name="gamelist">
             <text name="4:3_temporary">
-                <forceUppercase>true</forceUppercase>
+                <letterCase>uppercase</letterCase>
                 <text>4:3 not implemented</text>
                 <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
                 <fontSize>0.03</fontSize>
@@ -158,25 +167,28 @@ based on: 'recalbox-multi' by the Recalbox community
         <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
                     md_lbl_publisher, md_lbl_genre, md_lbl_players,
                     md_lbl_lastplayed">
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
         </text>
         <text name="md_developer, md_publisher, md_genre, md_players">
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
         </text>
         <text name="md_description">
             <container>true</container>
-            <forceUppercase>true</forceUppercase>
-            <metadata>md_description</metadata>
+            <containerScrollSpeed>1</containerScrollSpeed>
+            <containerStartDelay>4.5</containerStartDelay>
+            <containerResetDelay>7</containerResetDelay>
+            <metadata>description</metadata>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.024</fontSize>
         </text>
         <datetime name="md_releasedate, md_lastplayed">
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
@@ -184,7 +196,7 @@ based on: 'recalbox-multi' by the Recalbox community
         <textlist name="gamelist">
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
-            <forceUppercase>true</forceUppercase>
+            <letterCase>uppercase</letterCase>
         </textlist>
     </view>
 
@@ -212,7 +224,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.2755</pos>
         </text>
         <datetime name="md_releasedate">
-            <metadata>md_releasedate</metadata>
+            <metadata>releasedate</metadata>
             <pos>0.83 0.3005</pos>
         </datetime>
         <text name="md_lbl_rating">
@@ -223,7 +235,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.3355</pos>
         </text>
         <text name="md_developer">
-            <metadata>md_developer</metadata>
+            <metadata>developer</metadata>
             <pos>0.83 0.3605</pos>
         </text>
         <text name="md_lbl_publisher">
@@ -231,7 +243,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.3955</pos>
         </text>
         <text name="md_publisher">
-            <metadata>md_publisher</metadata>
+            <metadata>publisher</metadata>
             <pos>0.83 0.4205</pos>
         </text>
         <text name="md_lbl_genre">
@@ -239,7 +251,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.4555</pos>
         </text>
         <text name="md_genre">
-            <metadata>md_genre</metadata>
+            <metadata>genre</metadata>
             <pos>0.83 0.4805</pos>
         </text>
         <text name="md_lbl_players">
@@ -247,7 +259,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.5155</pos>
         </text>
         <text name="md_players">
-            <metadata>md_players</metadata>
+            <metadata>players</metadata>
             <pos>0.83 0.5405</pos>
         </text>
         <text name="md_lbl_lastplayed">
@@ -255,7 +267,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.815 0.5755</pos>
         </text>
         <datetime name="md_lastplayed">
-            <metadata>md_lastplayed</metadata>
+            <metadata>lastplayed</metadata>
             <pos>0.83 0.6005</pos>
         </datetime>
         <text name="md_lbl_rating">
@@ -277,7 +289,7 @@ based on: 'recalbox-multi' by the Recalbox community
         <textlist name="gamelist">
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
-            <alignment>left</alignment>
+            <horizontalAlignment>left</horizontalAlignment>
             <horizontalMargin>0.01</horizontalMargin>
         </textlist>
         <gamelistinfo name="gamelistInfo">
@@ -285,13 +297,13 @@ based on: 'recalbox-multi' by the Recalbox community
             <fontSize>0.025</fontSize>
             <size>0.2 0.1</size>
             <pos>0.773 0.162</pos>
-            <alignment>right</alignment>
+            <horizontalAlignment>right</horizontalAlignment>
         </gamelistinfo>
         <badges name="md_badges">
             <pos>0.880 0.757</pos>
             <size>0.13 0.1635</size>
             <origin>0.5 0.5</origin>
-            <alignment>left</alignment>
+            <horizontalAlignment>left</horizontalAlignment>
             <direction>row</direction>
             <lines>2</lines>
             <itemsPerLine>3</itemsPerLine>
@@ -313,7 +325,7 @@ based on: 'recalbox-multi' by the Recalbox community
             <textlist name="gamelist">
                 <pos>0.04 0.201</pos>
                 <size>0.92 0.71</size>
-                <alignment>center</alignment>
+                <horizontalAlignment>center</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
             </textlist>
         </view>
@@ -325,7 +337,8 @@ based on: 'recalbox-multi' by the Recalbox community
                 <origin>0.5 0.5</origin>
                 <pos>0.63 0.45</pos>
                 <maxSize>0.360 0.424</maxSize>
-                <metadata>md_image</metadata>
+                <imageType>image</imageType>
+                <interpolation>nearest</interpolation>
                 <scrollFadeIn>true</scrollFadeIn>
             </image>
         </view>
@@ -336,7 +349,8 @@ based on: 'recalbox-multi' by the Recalbox community
             <video name="md_video">
                 <origin>0.5 0.5</origin>
                 <pos>0.63 0.45</pos>
-                <imageMetadata>md_image</imageMetadata>
+                <imageType>image</imageType>
+                <interpolation>nearest</interpolation>
                 <maxSize>0.356 0.424</maxSize>
                 <delay>1.7</delay>
                 <scrollFadeIn>true</scrollFadeIn>

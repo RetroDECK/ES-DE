@@ -14,6 +14,7 @@
 #include "MetaData.h"
 #include "utils/FileSystemUtil.h"
 
+#include <functional>
 #include <unordered_map>
 
 class SystemData;
@@ -56,6 +57,14 @@ public:
     const std::vector<FileData*>& getChildren() const { return mChildren; }
     SystemData* getSystem() const { return mSystem; }
     SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
+
+    // These functions are used by GameSelectorComponent.
+    const std::vector<FileData*>& getChildrenLastPlayed() const { return mChildrenLastPlayed; }
+    const std::vector<FileData*>& getChildrenMostPlayed() const { return mChildrenMostPlayed; }
+    void setUpdateChildrenLastPlayed(bool state) { mUpdateChildrenLastPlayed = state; }
+    void setUpdateChildrenMostPlayed(bool state) { mUpdateChildrenMostPlayed = state; }
+    void setUpdateListCallback(const std::function<void()>& func) { mUpdateListCallback = func; }
+
     const bool getOnlyFoldersFlag() const { return mOnlyFolders; }
     const bool getHasFoldersFlag() const { return mHasFolders; }
     static const std::string getROMDirectory();
@@ -127,7 +136,8 @@ public:
     MetaDataList metadata;
     // Only count the games, a cheaper alternative to a full sort when that is not required.
     void countGames(std::pair<unsigned int, unsigned int>& gameCount);
-
+    void updateLastPlayedList();
+    void updateMostPlayedList();
     void setSortTypeString(std::string typestring) { mSortTypeString = typestring; }
     const std::string& getSortTypeString() const { return mSortTypeString; }
     const FileData::SortType& getSortTypeFromString(const std::string& desc) const;
@@ -146,10 +156,15 @@ private:
     std::unordered_map<std::string, FileData*> mChildrenByFilename;
     std::vector<FileData*> mChildren;
     std::vector<FileData*> mFilteredChildren;
+    std::vector<FileData*> mChildrenLastPlayed;
+    std::vector<FileData*> mChildrenMostPlayed;
+    std::function<void()> mUpdateListCallback;
     // The pair includes all games, and favorite games.
     std::pair<unsigned int, unsigned int> mGameCount;
     bool mOnlyFolders;
     bool mHasFolders;
+    bool mUpdateChildrenLastPlayed;
+    bool mUpdateChildrenMostPlayed;
     // Used for flagging a game for deletion from its gamelist.xml file.
     bool mDeletionFlag;
 };

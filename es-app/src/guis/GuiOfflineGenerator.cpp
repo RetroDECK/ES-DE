@@ -176,8 +176,8 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
 
     // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 95% of the screen
     // width rather than the 85% allowed for wider displays.
-    float width =
-        Renderer::getScreenWidth() * ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f);
+    float width {Renderer::getScreenWidth() *
+                 ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f)};
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,

@@ -40,35 +40,30 @@ public:
     // Configures the component to show the static video.
     void setStaticVideo() { setVideo(mConfig.staticVideoPath); }
     // Loads a static image that is displayed if the video cannot be played.
-    void setImage(const std::string& path, bool tile = false, bool linearMagnify = false);
+    void setImage(const std::string& path, bool tile = false) override;
     // Sets whether we're in media viewer mode.
     void setMediaViewerMode(bool isMediaViewer) { mMediaViewerMode = isMediaViewer; }
     // Sets whether we're in screensaver mode.
     void setScreensaverMode(bool isScreensaver) { mScreensaverMode = isScreensaver; }
     // Set the opacity for the embedded static image.
-    void setOpacity(unsigned char opacity) override { mOpacity = opacity; }
+    void setOpacity(float opacity) override { mOpacity = opacity; }
+    // Set whether to draw black pillarboxes/letterboxes behind videos.
+    void setDrawPillarboxes(bool state) { mDrawPillarboxes = state; }
 
     bool hasStaticVideo() { return !mConfig.staticVideoPath.empty(); }
-
-    void onShow() override;
-    void onHide() override;
-    void onStopVideo() override;
-    void onPauseVideo() override;
-    void onUnpauseVideo() override;
-    bool isVideoPaused() override { return mPause; }
-    void onScreensaverActivate() override;
-    void onScreensaverDeactivate() override;
-    void onGameLaunchedActivate() override;
-    void onGameLaunchedDeactivate() override;
-    void topWindow(bool isTop) override;
+    bool hasStaticImage() { return mStaticImage.getTextureSize() != glm::ivec2 {0, 0}; }
+    bool hasStartDelay()
+    {
+        if (mLegacyTheme)
+            return mConfig.showSnapshotDelay && mConfig.startDelay > 0;
+        else
+            return mConfig.startDelay > 0;
+    }
 
     // These functions update the embedded static image.
     void onOriginChanged() override { mStaticImage.setOrigin(mOrigin); }
     void onPositionChanged() override { mStaticImage.setPosition(mPosition); }
     void onSizeChanged() override { mStaticImage.onSizeChanged(); }
-
-    void render(const glm::mat4& parentTrans) override;
-    void renderSnapshot(const glm::mat4& parentTrans);
 
     void applyTheme(const std::shared_ptr<ThemeData>& theme,
                     const std::string& view,
@@ -92,27 +87,21 @@ public:
     virtual void setMaxSize(float width, float height) = 0;
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
 
-private:
-    // Start the video immediately.
-    virtual void startVideo() {}
-    // Stop the video.
-    virtual void stopVideo() {}
-    // Pause the video when a game has been launched.
-    virtual void pauseVideo() {}
+    // Basic video controls.
+    void startVideoPlayer();
+    virtual void stopVideoPlayer() {}
+    virtual void pauseVideoPlayer() {}
+
     // Handle looping of the video. Must be called periodically.
     virtual void handleLooping() {}
+    // Used to immediately mute audio even if there are still samples to play in the buffer.
+    virtual void muteVideoPlayer() {}
     virtual void updatePlayer() {}
 
-    // Start the video after any configured delay.
-    void startVideoWithDelay();
-    // Handle any delay to the start of playing the video clip. Must be called periodically.
-    void handleStartDelay();
-    // Manage the playing state of the component.
-    void manageState();
-
-    friend MediaViewer;
-
 protected:
+    virtual void startVideoStream() {}
+    void renderSnapshot(const glm::mat4& parentTrans);
+
     ImageComponent mStaticImage;
 
     unsigned mVideoWidth;
@@ -122,23 +111,23 @@ protected:
     glm::vec2 mVideoAreaSize;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
+    std::string mDefaultImagePath;
 
     std::string mVideoPath;
-    std::string mPlayingVideoPath;
     unsigned mStartTime;
-    bool mStartDelayed;
     std::atomic<bool> mIsPlaying;
     std::atomic<bool> mIsActuallyPlaying;
-    std::atomic<bool> mPause;
-    bool mShowing;
-    bool mDisable;
+    std::atomic<bool> mPaused;
     bool mMediaViewerMode;
-    bool mScreensaverActive;
     bool mScreensaverMode;
-    bool mGameLaunched;
-    bool mBlockPlayer;
     bool mTargetIsMax;
-    float mFadeIn; // Used for fading in the video screensaver.
+    bool mPlayAudio;
+    bool mDrawPillarboxes;
+    bool mRenderScanlines;
+    bool mLegacyTheme;
+    bool mHasVideo;
+    float mFadeIn;
+    float mFadeInTime;
 
     Configuration mConfig;
 };

@@ -39,10 +39,10 @@ public:
     glm::vec2 getSelectedTileSize() const;
     bool isSelected() const;
 
-    void reset() { setImage(""); }
+    void reset() { setImageOLD(""); }
 
-    void setImage(const std::string& path);
-    void setImage(const std::shared_ptr<TextureResource>& texture);
+    void setImageOLD(const std::string& path);
+    void setImageOLD(const std::shared_ptr<TextureResource>& texture);
     void setSelected(bool selected,
                      bool allowAnimation = true,
                      glm::vec3* pPosition = nullptr,

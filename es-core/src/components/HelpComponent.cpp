@@ -209,29 +209,31 @@ void HelpComponent::updateGrid()
     std::vector<std::shared_ptr<ImageComponent>> icons;
     std::vector<std::shared_ptr<TextComponent>> labels;
 
-    float width = 0;
-    const float height = std::round(font->getLetterHeight() * 1.25f);
+    float width {0.0f};
+    const float height {std::round(font->getLetterHeight() * 1.25f)};
 
     // State variable indicating whether gui is dimmed.
-    bool isDimmed = mWindow->isBackgroundDimmed();
+    bool isDimmed {mWindow->isBackgroundDimmed()};
 
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); ++it) {
         auto icon = std::make_shared<ImageComponent>();
         icon->setImage(getIconTexture(it->first.c_str()), false);
         icon->setColorShift(isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor);
         icon->setResize(0, height);
+        icon->setOpacity(mStyle.opacity);
         icons.push_back(icon);
 
         // Apply text style and color from the theme to the label and add it to the label list.
-        std::string lblInput = it->second;
-        if (mStyle.textStyle == "lowercase")
+        std::string lblInput {it->second};
+        if (mStyle.letterCase == "lowercase")
             lblInput = Utils::String::toLower(lblInput);
-        else if (mStyle.textStyle == "camelcase")
-            lblInput = Utils::String::toCamelCase(lblInput);
+        else if (mStyle.letterCase == "capitalize")
+            lblInput = Utils::String::toCapitalized(lblInput);
         else
             lblInput = Utils::String::toUpper(lblInput);
         auto lbl = std::make_shared<TextComponent>(
             lblInput, font, isDimmed ? mStyle.textColorDimmed : mStyle.textColor);
+        lbl->setOpacity(mStyle.opacity);
         labels.push_back(lbl);
 
         width +=
@@ -274,18 +276,18 @@ std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
         return nullptr;
     }
 
-    std::shared_ptr<TextureResource> tex =
-        TextureResource::get(pathLookup->second, false, false, false);
+    std::shared_ptr<TextureResource> tex {
+        TextureResource::get(pathLookup->second, false, false, false)};
     mIconCache[std::string(name)] = tex;
     return tex;
 }
 
-void HelpComponent::setOpacity(unsigned char opacity)
+void HelpComponent::setOpacity(float opacity)
 {
-    GuiComponent::setOpacity(opacity);
+    GuiComponent::setOpacity(opacity * mStyle.opacity);
 
     for (unsigned int i = 0; i < mGrid->getChildCount(); ++i)
-        mGrid->getChild(i)->setOpacity(opacity);
+        mGrid->getChild(i)->setOpacity(opacity * mStyle.opacity);
 }
 
 void HelpComponent::render(const glm::mat4& parentTrans)

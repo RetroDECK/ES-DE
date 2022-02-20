@@ -24,7 +24,8 @@ std::vector<std::string> VideoFFmpegComponent::sHWDecodedVideos;
 std::vector<std::string> VideoFFmpegComponent::sSWDecodedVideos;
 
 VideoFFmpegComponent::VideoFFmpegComponent()
-    : mFrameProcessingThread {nullptr}
+    : mRectangleOffset {0.0f, 0.0f}
+    , mFrameProcessingThread {nullptr}
     , mFormatContext {nullptr}
     , mVideoStream {nullptr}
     , mAudioStream {nullptr}
@@ -53,8 +54,6 @@ VideoFFmpegComponent::VideoFFmpegComponent()
     , mEndOfVideo {false}
 {
 }
-
-VideoFFmpegComponent::~VideoFFmpegComponent() { stopVideo(); }
 
 void VideoFFmpegComponent::setResize(float width, float height)
 {
@@ -123,7 +122,12 @@ void VideoFFmpegComponent::resize()
 
 void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 {
-    VideoComponent::render(parentTrans);
+    if (!isVisible() || mThemeOpacity == 0.0f)
+        return;
+
+    if (!mHasVideo && mStaticImagePath == "")
+        return;
+
     glm::mat4 trans {parentTrans * getTransform()};
     GuiComponent::renderChildren(trans);
 
@@ -141,18 +145,25 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         Renderer::Vertex vertices[4];
         Renderer::setMatrix(parentTrans);
 
+        unsigned int rectColor {0x000000FF};
+
+        if (mThemeOpacity != 1.0f) {
+            color = (static_cast<int>(mThemeOpacity * mFadeIn * 255.0f) << 24) + 0x00FFFFFF;
+            rectColor = static_cast<int>(mThemeOpacity * mFadeIn * 255.0f);
+        }
+
         // Render the black rectangle behind the video.
         if (mVideoRectangleCoords.size() == 4) {
             Renderer::drawRect(mVideoRectangleCoords[0], mVideoRectangleCoords[1],
                                mVideoRectangleCoords[2], mVideoRectangleCoords[3], // Line break.
-                               0x000000FF, 0x000000FF);
+                               rectColor, rectColor);
         }
 
         // clang-format off
-        vertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, color};
-        vertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, color};
-        vertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, color};
-        vertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, color};
+        vertices[0] = {{0.0f + mRectangleOffset.x,    0.0f + mRectangleOffset.y     }, {0.0f, 0.0f}, color};
+        vertices[1] = {{0.0f + mRectangleOffset.x,    mSize.y + mRectangleOffset.y  }, {0.0f, 1.0f}, color};
+        vertices[2] = {{mSize.x + mRectangleOffset.x, 0.0f + + mRectangleOffset.y   }, {1.0f, 0.0f}, color};
+        vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {1.0f, 1.0f}, color};
         // clang-format on
 
         // Round vertices.
@@ -199,15 +210,23 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             pictureLock.unlock();
         }
 
-        mTexture->bind();
+        if (mTexture != nullptr)
+            mTexture->bind();
 
 #if defined(USE_OPENGL_21)
         // Render scanlines if this option is enabled. However, if this is the media viewer
         // or the video screensaver, then skip this as the scanline rendering is then handled
         // in those modules as a postprocessing step.
-        if ((!mScreensaverMode && !mMediaViewerMode) &&
-            Settings::getInstance()->getBool("GamelistVideoScanlines"))
-            vertices[0].shaders = Renderer::SHADER_SCANLINES;
+        if (!mScreensaverMode && !mMediaViewerMode) {
+            vertices[0].opacity = mFadeIn * mThemeOpacity;
+            if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoScanlines")) ||
+                (!mLegacyTheme && mRenderScanlines)) {
+                vertices[0].shaders = Renderer::SHADER_SCANLINES;
+            }
+            else {
+                vertices[0].shaders = Renderer::SHADER_OPACITY;
+            }
+        }
 #endif
 
         // Render it.
@@ -222,7 +241,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
 void VideoFFmpegComponent::updatePlayer()
 {
-    if (mPause || !mFormatContext)
+    if (mPaused || !mFormatContext)
         return;
 
     // Output any audio that has been added by the processing thread.
@@ -265,7 +284,7 @@ void VideoFFmpegComponent::frameProcessing()
     if (mAudioCodecContext)
         audioFilter = setupAudioFilters();
 
-    while (mIsPlaying && !mPause && videoFilter && (!mAudioCodecContext || audioFilter)) {
+    while (mIsPlaying && !mPaused && videoFilter && (!mAudioCodecContext || audioFilter)) {
         readFrames();
         if (!mIsPlaying)
             break;
@@ -767,7 +786,7 @@ void VideoFFmpegComponent::outputFrames()
             bool outputSound = false;
 
             if ((!mScreensaverMode && !mMediaViewerMode) &&
-                Settings::getInstance()->getBool("GamelistVideoAudio"))
+                Settings::getInstance()->getBool("ViewsVideoAudio"))
                 outputSound = true;
             else if (mScreensaverMode && Settings::getInstance()->getBool("ScreensaverVideoAudio"))
                 outputSound = true;
@@ -864,10 +883,12 @@ void VideoFFmpegComponent::calculateBlackRectangle()
     // otherwise it will exactly match the video size. The reason to add a black rectangle
     // behind videos in this second instance is that the scanline rendering will make the
     // video partially transparent so this may avoid some unforseen issues with some themes.
-    if (mVideoAreaPos != glm::vec2 {} && mVideoAreaSize != glm::vec2 {}) {
+    if (mVideoAreaPos != glm::vec2 {0.0f, 0.0f} && mVideoAreaSize != glm::vec2 {0.0f, 0.0f}) {
         mVideoRectangleCoords.clear();
+        mRectangleOffset = {0.0f, 0.0f};
 
-        if (Settings::getInstance()->getBool("GamelistVideoPillarbox")) {
+        if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoPillarbox")) ||
+            (!mLegacyTheme && mDrawPillarboxes)) {
             float rectHeight;
             float rectWidth;
             // Video is in landscape orientation.
@@ -900,6 +921,15 @@ void VideoFFmpegComponent::calculateBlackRectangle()
                 std::round(mVideoAreaPos.y - rectHeight * mOrigin.y));
             mVideoRectangleCoords.emplace_back(std::round(rectWidth));
             mVideoRectangleCoords.emplace_back(std::round(rectHeight));
+
+            // If an origin value other than 0.5 is used, then create an offset for centering
+            // the video inside the rectangle.
+            if (mOrigin != glm::vec2 {0.5f, 0.5f}) {
+                if (rectWidth > mSize.x)
+                    mRectangleOffset.x -= (rectWidth - mSize.x) * (mOrigin.x - 0.5f);
+                else if (rectHeight > mSize.y)
+                    mRectangleOffset.y -= (rectHeight - mSize.y) * (mOrigin.y - 0.5f);
+            }
         }
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.
@@ -1055,7 +1085,7 @@ bool VideoFFmpegComponent::decoderInitHW()
         AVCodecContext* checkCodecContext = avcodec_alloc_context3(mHardwareCodec);
 
         if (avcodec_parameters_to_context(checkCodecContext, mVideoStream->codecpar)) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+            LOG(LogError) << "VideoFFmpegComponent::decoderInitHW(): "
                              "Couldn't fill the video codec context parameters for file \""
                           << mVideoPath << "\"";
             avcodec_free_context(&checkCodecContext);
@@ -1068,7 +1098,7 @@ bool VideoFFmpegComponent::decoderInitHW()
             checkCodecContext->hw_device_ctx = av_buffer_ref(mHwContext);
 
             if (avcodec_open2(checkCodecContext, mHardwareCodec, nullptr)) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                LOG(LogError) << "VideoFFmpegComponent::decoderInitHW(): "
                                  "Couldn't initialize the video codec context for file \""
                               << mVideoPath << "\"";
             }
@@ -1156,7 +1186,7 @@ bool VideoFFmpegComponent::decoderInitHW()
     mVideoCodecContext = avcodec_alloc_context3(mHardwareCodec);
 
     if (!mVideoCodecContext) {
-        LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+        LOG(LogError) << "VideoFFmpegComponent::decoderInitHW(): "
                          "Couldn't allocate video codec context for file \""
                       << mVideoPath << "\"";
         avcodec_free_context(&mVideoCodecContext);
@@ -1164,7 +1194,7 @@ bool VideoFFmpegComponent::decoderInitHW()
     }
 
     if (avcodec_parameters_to_context(mVideoCodecContext, mVideoStream->codecpar)) {
-        LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+        LOG(LogError) << "VideoFFmpegComponent::decoderInitHW(): "
                          "Couldn't fill the video codec context parameters for file \""
                       << mVideoPath << "\"";
         avcodec_free_context(&mVideoCodecContext);
@@ -1175,7 +1205,7 @@ bool VideoFFmpegComponent::decoderInitHW()
     mVideoCodecContext->hw_device_ctx = av_buffer_ref(mHwContext);
 
     if (avcodec_open2(mVideoCodecContext, mHardwareCodec, nullptr)) {
-        LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+        LOG(LogError) << "VideoFFmpegComponent::decoderInitHW(): "
                          "Couldn't initialize the video codec context for file \""
                       << mVideoPath << "\"";
         avcodec_free_context(&mVideoCodecContext);
@@ -1185,8 +1215,13 @@ bool VideoFFmpegComponent::decoderInitHW()
     return false;
 }
 
-void VideoFFmpegComponent::startVideo()
+void VideoFFmpegComponent::startVideoStream()
 {
+    if (mThemeOpacity == 0.0f)
+        return;
+
+    mIsPlaying = true;
+
     if (!mFormatContext) {
         mHardwareCodec = nullptr;
         mHwContext = nullptr;
@@ -1222,14 +1257,14 @@ void VideoFFmpegComponent::startVideo()
         // File operations and basic setup.
 
         if (avformat_open_input(&mFormatContext, filePath.c_str(), nullptr, nullptr)) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+            LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
                              "Couldn't open video file \""
                           << mVideoPath << "\"";
             return;
         }
 
         if (avformat_find_stream_info(mFormatContext, nullptr)) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+            LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
                              "Couldn't read stream information from video file \""
                           << mVideoPath << "\"";
             return;
@@ -1250,7 +1285,7 @@ void VideoFFmpegComponent::startVideo()
             av_find_best_stream(mFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, &mHardwareCodec, 0);
 
         if (mVideoStreamIndex < 0) {
-            LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+            LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
                              "Couldn't retrieve video stream for file \""
                           << mVideoPath << "\"";
             avformat_close_input(&mFormatContext);
@@ -1262,7 +1297,7 @@ void VideoFFmpegComponent::startVideo()
         mVideoWidth = mFormatContext->streams[mVideoStreamIndex]->codecpar->width;
         mVideoHeight = mFormatContext->streams[mVideoStreamIndex]->codecpar->height;
 
-        LOG(LogDebug) << "VideoFFmpegComponent::startVideo(): "
+        LOG(LogDebug) << "VideoFFmpegComponent::startVideoStream(): "
                       << "Playing video \"" << mVideoPath << "\" (codec: "
                       << avcodec_get_name(
                              mFormatContext->streams[mVideoStreamIndex]->codecpar->codec_id)
@@ -1276,15 +1311,16 @@ void VideoFFmpegComponent::startVideo()
         if (mSWDecoder) {
             // The hardware decoder initialization failed, which can happen for a number of reasons.
             if (hwDecoding) {
-                LOG(LogDebug) << "VideoFFmpegComponent::startVideo(): Hardware decoding failed, "
-                                 "falling back to software decoder";
+                LOG(LogDebug)
+                    << "VideoFFmpegComponent::startVideoStream(): Hardware decoding failed, "
+                       "falling back to software decoder";
             }
 
             mVideoCodec =
                 const_cast<AVCodec*>(avcodec_find_decoder(mVideoStream->codecpar->codec_id));
 
             if (!mVideoCodec) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
                                  "Couldn't find a suitable video codec for file \""
                               << mVideoPath << "\"";
                 return;
@@ -1293,7 +1329,7 @@ void VideoFFmpegComponent::startVideo()
             mVideoCodecContext = avcodec_alloc_context3(mVideoCodec);
 
             if (!mVideoCodecContext) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
                                  "Couldn't allocate video codec context for file \""
                               << mVideoPath << "\"";
                 return;
@@ -1303,14 +1339,14 @@ void VideoFFmpegComponent::startVideo()
                 mVideoCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
 
             if (avcodec_parameters_to_context(mVideoCodecContext, mVideoStream->codecpar)) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
                                  "Couldn't fill the video codec context parameters for file \""
                               << mVideoPath << "\"";
                 return;
             }
 
             if (avcodec_open2(mVideoCodecContext, mVideoCodec, nullptr)) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
+                LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
                                  "Couldn't initialize the video codec context for file \""
                               << mVideoPath << "\"";
                 return;
@@ -1318,47 +1354,50 @@ void VideoFFmpegComponent::startVideo()
         }
 
         // Audio stream setup, optional as some videos do not have any audio tracks.
+        // Audio can also be disabled per video via the theme configuration.
 
-        mAudioStreamIndex =
-            av_find_best_stream(mFormatContext, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
+        if (mPlayAudio) {
+            mAudioStreamIndex =
+                av_find_best_stream(mFormatContext, AVMEDIA_TYPE_AUDIO, -1, -1, nullptr, 0);
 
-        if (mAudioStreamIndex < 0) {
-            LOG(LogDebug) << "VideoFFmpegComponent::startVideo(): "
-                             "File does not seem to contain any audio streams";
-        }
-
-        if (mAudioStreamIndex >= 0) {
-            mAudioStream = mFormatContext->streams[mAudioStreamIndex];
-            mAudioCodec =
-                const_cast<AVCodec*>(avcodec_find_decoder(mAudioStream->codecpar->codec_id));
-
-            if (!mAudioCodec) {
-                LOG(LogError) << "Couldn't find a suitable audio codec for file \"" << mVideoPath
-                              << "\"";
-                return;
+            if (mAudioStreamIndex < 0) {
+                LOG(LogDebug) << "VideoFFmpegComponent::startVideoStream(): "
+                                 "File does not seem to contain any audio streams";
             }
 
-            mAudioCodecContext = avcodec_alloc_context3(mAudioCodec);
+            if (mAudioStreamIndex >= 0) {
+                mAudioStream = mFormatContext->streams[mAudioStreamIndex];
+                mAudioCodec =
+                    const_cast<AVCodec*>(avcodec_find_decoder(mAudioStream->codecpar->codec_id));
 
-            if (mAudioCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
-                mAudioCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
+                if (!mAudioCodec) {
+                    LOG(LogError) << "Couldn't find a suitable audio codec for file \""
+                                  << mVideoPath << "\"";
+                    return;
+                }
 
-            // Some formats want separate stream headers.
-            if (mAudioCodecContext->flags & AVFMT_GLOBALHEADER)
-                mAudioCodecContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+                mAudioCodecContext = avcodec_alloc_context3(mAudioCodec);
 
-            if (avcodec_parameters_to_context(mAudioCodecContext, mAudioStream->codecpar)) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
-                                 "Couldn't fill the audio codec context parameters for file \""
-                              << mVideoPath << "\"";
-                return;
-            }
+                if (mAudioCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
+                    mAudioCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
 
-            if (avcodec_open2(mAudioCodecContext, mAudioCodec, nullptr)) {
-                LOG(LogError) << "VideoFFmpegComponent::startVideo(): "
-                                 "Couldn't initialize the audio codec context for file \""
-                              << mVideoPath << "\"";
-                return;
+                // Some formats want separate stream headers.
+                if (mAudioCodecContext->flags & AVFMT_GLOBALHEADER)
+                    mAudioCodecContext->flags |= AV_CODEC_FLAG_GLOBAL_HEADER;
+
+                if (avcodec_parameters_to_context(mAudioCodecContext, mAudioStream->codecpar)) {
+                    LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
+                                     "Couldn't fill the audio codec context parameters for file \""
+                                  << mVideoPath << "\"";
+                    return;
+                }
+
+                if (avcodec_open2(mAudioCodecContext, mAudioCodec, nullptr)) {
+                    LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
+                                     "Couldn't initialize the audio codec context for file \""
+                                  << mVideoPath << "\"";
+                    return;
+                }
             }
         }
 
@@ -1384,17 +1423,17 @@ void VideoFFmpegComponent::startVideo()
         // Calculate pillarbox/letterbox sizes.
         calculateBlackRectangle();
 
-        mIsPlaying = true;
         mFadeIn = 0.0f;
     }
 }
 
-void VideoFFmpegComponent::stopVideo()
+void VideoFFmpegComponent::stopVideoPlayer()
 {
+    muteVideoPlayer();
+
     mIsPlaying = false;
     mIsActuallyPlaying = false;
-    mStartDelayed = false;
-    mPause = false;
+    mPaused = false;
     mEndOfVideo = false;
     mTexture.reset();
 
@@ -1433,10 +1472,10 @@ void VideoFFmpegComponent::stopVideo()
     }
 }
 
-void VideoFFmpegComponent::pauseVideo()
+void VideoFFmpegComponent::pauseVideoPlayer()
 {
-    if (mPause && mWindow->getVideoPlayerCount() == 0)
-        AudioManager::getInstance().muteStream();
+    muteVideoPlayer();
+    mPaused = true;
 }
 
 void VideoFFmpegComponent::handleLooping()
@@ -1449,8 +1488,16 @@ void VideoFFmpegComponent::handleLooping()
             mWindow->screensaverTriggerNextGame();
         }
         else {
-            stopVideo();
-            startVideo();
+            stopVideoPlayer();
+            startVideoStream();
         }
+    }
+}
+
+void VideoFFmpegComponent::muteVideoPlayer()
+{
+    if (AudioManager::sAudioDevice != 0) {
+        AudioManager::getInstance().clearStream();
+        AudioManager::getInstance().muteStream();
     }
 }

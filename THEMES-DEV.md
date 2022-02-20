@@ -2,8 +2,6 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
-If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
-
 Table of contents:
 
 [[_TOC_]]
@@ -78,7 +76,11 @@ The following are the most important changes compared to the legacy theme struct
 * The concept of _features_ is gone
 * The `<formatVersion>` tag is gone as tracking theme versions doesn't make much sense after all
 * The `video` element properties `showSnapshotNoVideo` and `showSnapshotDelay` have been removed
+* The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` component)
+* The `forceUppercase` property has been replaced with the more versatile `letterCase` property
+* The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
+* Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
 
 Attempting to use any of the legacy logic in the new theme structure will make the theme loading fail, for example adding the _extra="true"_ attribute to any element.
 
@@ -119,7 +121,7 @@ Views are defined like this:
 </view>
 ```
 
-An element is a particular visual component such as an image, an animation or a piece of text. It has a mandatory _name_ attribute which is used by ES-DE to track each element entry. By using this name attribute it's possible to split up the definition of an element to different locations. For example you may want to define the color properties separately from where the size and position are configured (see the example below).
+An element is a particular visual component such as an image, an animation or a piece of text. It has a mandatory _name_ attribute which is used by ES-DE to track each element entry. By using this name attribute it's possible to split up the definition of an element to different locations. For example you may want to define the color properties separately from where the size and position are configured (see the example below). The name attribute can be set to any string value.
 
 This is the element structure:
 
@@ -218,10 +220,12 @@ Enforcement of a correct theme configuration is quite strict, and most errors wi
 Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml": Property "origin" for element "image" has no value defined
 ```
 
-Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in most instances is that a log warning entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its alignment property set to _leftr_ instead of _left_:
+Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in many instances is that a log warning entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its horizontalAlignment property set to _leftr_ instead of _left_:
 ```
-Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, <alignment> set to "leftr"
+Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, <horizontalAlignment> set to "leftr"
 ```
+
+Note however that warnings are not printed for all invalid properties as that would lead to an excessive amount of logging code. This is especially true for numeric values which are commonly just clamped to the allowable range without notifying the theme author. So make sure to check the [Reference](THEMES-DEV.md#reference) section of this document for valid values for each property.
 
 ### Variants
 
@@ -262,20 +266,21 @@ Here are some example uses of the `<variant>` functionality:
 <theme>
     <variant name="lightModeNoVideo, darkModeNoVideo">
         <view name="gamelist">
-            <image name="md_image">
-                <metadata>md_image</metadata>
-                <zIndex>40</zIndex>
+            <image name="game_image">
+                <imageType>titlescreen</imageType>
+                <scrollFadeIn>true</scrollFadeIn>
+                <zIndex>42</zIndex>
             </image>
         </view>
     </variant>
 
     <variant name="lightMode, darkMode">
         <view name="gamelist">
-            <video name="md_video">
-                <metadata>md_video</metadata>
+            <video name="game_video">
+                <imageType>cover</imageType>
                 <delay>1.7</delay>
-                <showSnapshotNoVideo>true</showSnapshotNoVideo>
-                <showSnapshotDelay>true</showSnapshotDelay>
+                <scrollFadeIn>true</scrollFadeIn>
+                <zIndex>42</zIndex>
             </video>
         </view>
     </variant>
@@ -285,9 +290,10 @@ Here are some example uses of the `<variant>` functionality:
 <theme>
     <view name="gamelist">
         <variant name="lightModeNoVideo">
-            <image name="md_image">
-                <metadata>md_image</metadata>
-                <zIndex>40</zIndex>
+            <image name="game_image">
+                <imageType>titlescreen</imageType>
+                <scrollFadeIn>true</scrollFadeIn>
+                <zIndex>42</zIndex>
             </image>
         </variant>
     </view>
@@ -329,7 +335,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 <theme>
     <aspectRatio name="4:3, 5:4">
         <view name="gamelist">
-            <image name="md_image">
+            <image name="image_logo">
                 <pos>0.3 0.56</pos>
             </image>
         </view>
@@ -337,7 +343,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 
     <aspectRatio name="16:9, 16:10, 21:9">
         <view name="gamelist">
-            <image name="md_image">
+            <image name="image_logo">
                 <pos>0.42 0.31</pos>
             </image>
         </view>
@@ -348,7 +354,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 <theme>
     <view name="gamelist">
         <aspectRatio name="4:3, 5:4">
-            <image name="md_image">
+            <image name="image_logo">
                 <pos>0.3 0.56</pos>
             </image>
         </aspectRatio>
@@ -684,10 +690,16 @@ Theme variables can be used to simplify theme construction.  There are 2 types o
 
 #### System variables
 
-System variables are system specific and are derived from the values in es_systems.xml.
+System variables are system specific and are derived from the values in es_systems.xml (except for collections).
 * `system.name`
+* `system.name.collections`
+* `system.name.noCollections`
 * `system.fullName`
+* `system.fullName.collections`
+* `system.fullName.noCollections`
 * `system.theme`
+* `system.theme.collections`
+* `system.theme.noCollections`
 
 #### Theme defined variables
 Variables can also be defined in the theme.
@@ -721,6 +733,7 @@ This section describes each element and their properties in detail and also cont
 * PATH - a path.  If the first character is a `~`, it will be expanded into the environment variable for the home path (`$HOME` for Unix and macOS or `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a `.`, it will be expanded to the theme file's directory, allowing you to specify resources relative to the theme file, like so: `./../core/fonts/myfont.ttf`.
 * BOOLEAN - `true`/`1` or `false`/`0`.
 * COLOR - a hexidecimal RGB or RGBA color (6 or 8 digits).  If 6 digits, will assume the alpha channel is `FF` (completely opaque).
+* UNSIGNED_INTEGER - an unsigned integer.
 * FLOAT - a decimal.
 * STRING - a string of text.
 
@@ -732,6 +745,16 @@ The order in which you define properties does not matter and you only need to de
 
 #### image
 
+Displays a raster image or a scalable vector graphics (SVG) image.
+
+Supported views:
+* `system `
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the image's aspect ratio.
@@ -739,6 +762,7 @@ The order in which you define properties does not matter and you only need to de
     - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
     - Angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -747,36 +771,46 @@ The order in which you define properties does not matter and you only need to de
     - Point around which the image will be rotated.
     - Default is `0.5 0.5`
 * `path` - type: PATH
-    - Path to the image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+    - Explicit path to an image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
 * `default` - type: PATH
-    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `metadata` property. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a valid `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+* `imageType` - type: STRING
+    - This displays a game image of a certain media type. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, the space will be left blank unless the `default` property has been set. To use this property from the `system` view, you will first need to add a `gameselector` element.
+    - Valid values:
+    - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`
+    - `miximage` - This will look for a miximage.
+    - `marquee` - This will look for a marquee (wheel) image.
+    - `screenshot` - This will look for a screenshot image.
+    - `titlescreen` - This will look for a title screen image.
+    - `cover` - This will look for a box front cover image.
+    - `backcover` - This will look for a box back cover image.
+    - `3dbox` - This will look for a 3D box image.
+    - `fanart` - This will look for a fan art image.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
-* `metadata` - type: STRING
-    - This displays a game image of a certain media type. If no image of the requested type is found, the space will be left blank unless the `default` property has been set. If the metadata type is set to an invalid value, no image will be displayed regardless of whether the `default` property has been defined or not.
-    - Possible values:
-    - `md_image` - This will look for a miximage, but if that is not found screenshot is tried next, then title screen and finally box front cover.
-    - `md_miximage` - This will look for a miximage.
-    - `md_marquee` - This will look for a marquee image.
-    - `md_screenshot` - This will look for a screenshot image.
-    - `md_titlescreen` - This will look for a title screen image.
-    - `md_cover` - This will look for a box front cover image.
-    - `md_backcover` - This will look for a box back cover image.
-    - `md_3dbox` - This will look for a 3D box image.
-    - `md_fanart` - This will look for a fan art image.
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on scalable vector graphics (SVG) images.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest`
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `colorEnd` - type: COLOR
     - Works exactly in the same way as `color` but can be set as the end color to apply a color shift gradient to the image.
 * `gradientType` - type: STRING
     - The direction to apply the color shift gradient if both `color` and `colorEnd` have been defined.
-    - Possible values are `horizontal` or `vertical`
+    - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This usually looks best if used for the main game image.
     - Default is `false`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -784,6 +818,16 @@ The order in which you define properties does not matter and you only need to de
 
 #### video
 
+Plays a video and provides support for displaying a static image for a defined time period before starting the video player. Although an unlimited number of videos could in theory be defined per view it's recommended to keep it at a single instance as playing videos takes a lot of CPU resources. But if still going for multiple videos, make sure to use the `audio` property to disable audio on all but one video as ES-DE currently has no audio mixing capabilities so the sound would not play correctly. To use videos in the `system` view, you either need to set a static video using the `path` property, or you need to create a `gameselector` element so game videos can be used.
+
+Supported views:
+* `system `
+* `gamelist`
+
+Instances per view:
+* `unlimited` (but recommended to keep at a single instance)
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the video's aspect ratio.
@@ -791,39 +835,58 @@ The order in which you define properties does not matter and you only need to de
     - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
-* `rotation` - type: FLOAT
-    - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
-    - Default is `0`
-* `rotationOrigin` - type: NORMALIZED_PAIR
-    - Point around which the text will be rotated.
-    - Default is `0.5 0.5`
-* `delay` - type: FLOAT
-    - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageMetadata` property will be displayed. If that property is not set, then the `delay` property will be ignored.
-    - Default is `0`
 * `path` - type: PATH
-    - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not. If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
+    - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not (this also applies to the `system` view if you have a `gameselector` element defined). If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
 * `default` - type: PATH
-    - Path to a default video file. The default video will be played (unless the `path` property has been set) when the selected game does not have a video. If an image type has been defined using `imageMetadata` that image will be searched for first and only if no such image could be found this `default` video will be shown. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `defaultImage` - type: PATH
-    - This works exactly as the `default` property but it allows displaying an image instead of playing a video.
-* `imageMetadata` - type: STRING
-    - This displays a game image of a certain media type. This occurs if there is no video found for the game and the `path` and `default` properties have not been set, or if a video start delay has been defined via the `delay` attribute.
-    - Possible values:
-    - `md_image` - This will look for a miximage, but if that is not found screenshot is tried next, then title screen and finally box front cover.
-    - `md_miximage` - This will look for a miximage.
-    - `md_marquee` - This will look for a marquee image.
-    - `md_screenshot` - This will look for a screenshot image.
-    - `md_titlescreen` - This will look for a title screen image.
-    - `md_cover` - This will look for a box front cover image.
-    - `md_backcover` - This will look for a box back cover image.
-    - `md_3dbox` - This will look for a 3D box image.
-    - `md_fanart` - This will look for a fan art image.
+    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+* `imageType` - type: STRING
+    - This displays a game image of a certain media type. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, the space will be left blank unless the `default` property has been set. To use this property from the `system` view, you will first need to add a `gameselector` element. If `delay` is set to zero, then this property is ignored.
+    - Valid values:
+    - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`
+    - `miximage` - This will look for a miximage.
+    - `marquee` - This will look for a marquee (wheel) image.
+    - `screenshot` - This will look for a screenshot image.
+    - `titlescreen` - This will look for a title screen image.
+    - `cover` - This will look for a box front cover image.
+    - `backcover` - This will look for a box back cover image.
+    - `3dbox` - This will look for a 3D box image.
+    - `fanart` - This will look for a fan art image.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
+* `audio` - type: BOOLEAN
+    - Whether to enable or disable audio playback for the video.
+    - Default is `true`
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest`
+* `pillarboxes` - type: BOOLEAN
+    - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
+    - Default is `true`
+* `scanlines` - type: BOOLEAN
+    - Whether to use a shader to render scanlines.
+    - Default is `false`
+* `delay` - type: FLOAT
+    - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageType` property will be displayed. If that property is not set, then the `delay` property will be ignored.
+    - Minimum value is `0` and maximum value is `15`
+    - Default is `1.5`
+* `fadeInTime` - type: FLOAT
+    - Time in seconds to fade in the video from pure black. This is completely unrelated to the `scrollFadeIn` property. Note that if this is set to zero it may seem as if the property doesn't work correctly as many ScreenScraper videos have a fade-in baked into the actual video stream. Setting this property to lower than 0.3 seconds or so is generally a bad idea for videos that don't have a fade-in baked in as transitions from the static image will then look like a bad jump cut.
+    - Minimum value is `0` and maximum value is `8`
+    - Default is `1`
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
     - Default is `false`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -831,13 +894,22 @@ The order in which you define properties does not matter and you only need to de
 
 #### animation
 
-Lottie (vector graphics) animation.
+Lottie (vector graphics) animation. Note that these animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of them to the same view and to not make them too large.
 
+Supported views:
+* `system `
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the animation's aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information.
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
     - Angle in degrees that the animation should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -849,16 +921,20 @@ Lottie (vector graphics) animation.
     - Path to the animation file.  Only the .json extension is supported.
 * `speed` - type: FLOAT.
     - The relative speed at which to play the animation.
-    - Minimum value is `0.2` and maximum value is `3.0`
-    - Default is `1.0`
+    - Minimum value is `0.2` and maximum value is `3`
+    - Default is `1`
 * `direction` - type: STRING
     - The direction that the animation should be played. Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
     - Default is `normal`
 * `keepAspectRatio` - type: BOOLEAN.
     - If true, aspect ratio will be preserved. If false, animation will stretch to the defined size. Note that setting to `false` is incompatible with only defining one of the axes for the `size` element.
     - Default is `true`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -866,16 +942,24 @@ Lottie (vector graphics) animation.
 
 #### badges
 
-It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course).
+Displays graphical symbols representing a number of metadata fields for the currently selected game. It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course).
 
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
     - `w h` - Dimensions of the badges container. The badges will be scaled to fit within these dimensions.
-    - Minimum value per axis is `0.03` and maximum value per axis is `1.0`
+    - Minimum value per axis is `0.03` and maximum value per axis is `1`
     - Default is `0.15 0.20`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
     - Angle in degrees that the badges should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -883,13 +967,15 @@ It's strongly recommended to use the same image dimensions for all badges as var
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the image will be rotated.
     - Default is `0.5 0.5`.
+* `horizontalAlignment` - type: STRING.
+    - Valid values are `left` or `right`
 * `direction` - type: STRING
     - Valid values are "row" or "column". Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction.
     - Default is `row`
-* `lines` - type: FLOAT
+* `lines` - type: UNSIGNED_INTEGER
     - The number of lines available.
     - Default is `2`
-* `itemsPerLine` - type: FLOAT
+* `itemsPerLine` - type: UNSIGNED_INTEGER
     - Number of badges that fit on a line. When more badges are available a new line will be started.
     - Default is `4`
 * `itemMargin` - type: NORMALIZED_PAIR
@@ -907,19 +993,54 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - `altemulator` - Will be shown when an alternative emulator is setup for the game.
 * `controllerPos` - type: NORMALIZED_PAIR
     - The position of the controller icon relative to the parent `controller` badge.
-    - Minimum value per axis is `-1.0` and maximum value per axis is `2.0`
+    - Minimum value per axis is `-1` and maximum value per axis is `2`
     - Default is `0.5 0.5` which centers the controller icon on the badge.
 * `controllerSize` - type: FLOAT
     - The size of the controller icon relative to the parent `controller` badge.
-    - Setting the value to `1.0` sizes the controller icon to the same width as the parent badge. The image aspect ratio is always maintained.
-    - Minimum value is `0.1` and maximum value is `2.0`
+    - Setting the value to `1` sizes the controller icon to the same width as the parent badge. The image aspect ratio is always maintained.
+    - Minimum value is `0.1` and maximum value is `2`
 * `customBadgeIcon` - type: PATH
     - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
 * `customControllerIcon` - type: PATH
-    - A controller icon override. Specify the controller type in the attribute `controller`. These are the available types:
-    - `gamepad_generic`, `gamepad_nintendo_nes`, `gamepad_nintendo_snes`, `gamepad_nintendo_64`, `gamepad_playstation`, `gamepad_sega_md_3_buttons`, `gamepad_sega_md_6_buttons`, `gamepad_xbox`, `joystick_generic`, `joystick_arcade_no_buttons`, `joystick_arcade_1_button`, `joystick_arcade_2_buttons`, `joystick_arcade_3_buttons`, `joystick_arcade_4_buttons`, `joystick_arcade_5_buttons`, `joystick_arcade_6_buttons`, `keyboard_generic`, `keyboard_and_mouse_generic`, `mouse_generic`, `mouse_amiga`, `lightgun_generic`, `lightgun_nintendo`, `steering_wheel_generic`, `flight_stick_generic`, `spinner_generic`, `trackball_generic`, `wii_remote_nintendo`, `wii_remote_and_nunchuk_nintendo`, `joycon_left_or_right_nintendo`, `joycon_pair_nintendo`, `unknown`
+    - A controller icon override. Specify the controller type in the attribute `controller`.
+    - These are the available types:
+    - `gamepad_generic`,
+    `gamepad_nintendo_nes`,
+    `gamepad_nintendo_snes`,
+    `gamepad_nintendo_64`,
+    `gamepad_playstation`,
+    `gamepad_sega_md_3_buttons`,
+    `gamepad_sega_md_6_buttons`,
+    `gamepad_xbox`,
+    `joystick_generic`,
+    `joystick_arcade_no_buttons`,
+    `joystick_arcade_1_button`,
+    `joystick_arcade_2_buttons`,
+    `joystick_arcade_3_buttons`,
+    `joystick_arcade_4_buttons`,
+    `joystick_arcade_5_buttons`,
+    `joystick_arcade_6_buttons`,
+    `keyboard_generic`,
+    `keyboard_and_mouse_generic`,
+    `mouse_generic`,
+    `mouse_amiga`,
+    `lightgun_generic`,
+    `lightgun_nintendo`,
+    `steering_wheel_generic`,
+    `flight_stick_generic`,
+    `spinner_generic`,
+    `trackball_generic`,
+    `wii_remote_nintendo`,
+    `wii_remote_and_nunchuk_nintendo`,
+    `joycon_left_or_right_nintendo`,
+    `joycon_pair_nintendo`,
+    `unknown`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -927,6 +1048,16 @@ It's strongly recommended to use the same image dimensions for all badges as var
 
 #### text
 
+Displays text. This can be literal strings or values based on game metadata or system variables, as described below. For the `gamelist` view it's also possible to place the text inside a scrollable container which is for example useful for longer texts like the game descriptions.
+
+Supported views:
+* `system`
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
@@ -935,6 +1066,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Rotation is not possible if the `container` property has been set to true.
@@ -944,46 +1076,91 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Default is `0.5 0.5`
 * `text` - type: STRING
     - A string literal to display.
+* `systemdata` - type: STRING
+    - This translates to some system data including values defined in es_systems.xml as well as some statistics. If an invalid systemdata field is defined, it will be printed as a string literal. This property can only be used in the `system` view.
+    - Valid values:
+    - `name` - Short system name as defined in es_systems.xml.
+    - `fullname` - Full system name as defined in es_systems.xml.
+    - `gamecount` - Number of games available for the system. Number of favorites are printed inside brackets if applicable.
+    - `gamecount_games` - Number of games available for the system. Does not print the favorites count.
+    - `gamecount_favorites` - Number of favorite games for the system, may be blank if favorites are not applicable.
 * `metadata` - type: STRING
-    - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal.
-    - Possible values:
-    - `md_name` - Game name.
-    - `md_description` - Game description. Should be combined with the `container` property in most cases.
-    - `md_rating` - The numerical representation of the game rating, for example `3` or `4.5`.
-    - `md_developer` - Developer.
-    - `md_publisher` - Publisher.
-    - `md_genre` - Genre.
-    - `md_players` - The number of players.
-    - `md_favorite` - Whether the game is a favorite. Will be printed as either `Yes` or `No`.
-    - `md_completed` - Whether the game has been completed. Will be printed as either `Yes` or `No`.
-    - `md_kidgame` - Whether the game is suitable for children. Will be printed as either `Yes` or `No`.
-    - `md_broken` - Whether the game is broken/not working. Will be printed as either `Yes` or `No`.
-    - `md_playcount` - How many times the game has been played.
-    - `md_controller` - The controller for the game. Will be blank if none has been selected.
-    - `md_altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
+    - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal. To use this property from the `system` view, you will first need to add a `gameselector` element.
+     - Valid values:
+    - `name` - Game name.
+    - `description` - Game description. Should be combined with the `container` property in most cases.
+    - `rating` - The numerical representation of the game rating, for example `3` or `4.5`.
+    - `developer` - Developer.
+    - `publisher` - Publisher.
+    - `genre` - Genre.
+    - `players` - The number of players.
+    - `favorite` - Whether the game is a favorite. Will be printed as either `yes` or `no`.
+    - `completed` - Whether the game has been completed. Will be printed as either `yes` or `no`.
+    - `kidgame` - Whether the game is suitable for children. Will be printed as either `yes` or `no`.
+    - `broken` - Whether the game is broken/not working. Will be printed as either `yes` or `no`.
+    - `playcount` - How many times the game has been played.
+    - `controller` - The controller for the game. Will be blank if none has been selected.
+    - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `container` - type: BOOLEAN
-    - Whether the text should be placed inside a scrollable container.
+    - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
+* `containerScrollSpeed` - type: FLOAT
+    - A base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value.
+    - Minimum value is `0.1` and maximum value is `10`
+    - Default is `1`
+* `containerStartDelay` - type: FLOAT
+    - Delay in seconds before scrolling starts. Note that the text fade-in animation that plays when resetting from the end position will cause a slight delay even if this property is set to zero.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `4.5`
+* `containerResetDelay` - type: FLOAT
+    - Delay in seconds before resetting to the start position after reaching the scrolling end position.
+    - Minimum value is `0` and maximum value is `20`
+    - Default is `7`
 * `fontPath` - type: PATH
-    - Path to a truetype font (.ttf).
+    - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
+* `verticalAlignment` - type: STRING
+    - Controls alignment on the Y axis.
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
-* `forceUppercase` - type: BOOLEAN
-    - Draw text in uppercase.
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view. This property will be ignored for elements defined for the `gamelist` view where a `metadata` property has been set. That is so because the "Hide metadata fields" functionality will hide and unhide metadata text fields as needed.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `40`
 
 #### datetime
+
+Displays a date and time as a text string. The format is ISO 8601 (YYYY-MM-DD) by default, but this can be changed using the `format` property. The text _unknown_ will be shown by default if there is no time stamp available. If the property `displayRelative` has been set, the text will be shown as _never_ in case of no time stamp.
+
+Supported views:
+* `system`
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
@@ -992,6 +1169,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -1000,24 +1178,35 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Point around which the text will be rotated.
     - Default is `0.5 0.5`.
 * `metadata` - type: STRING
-    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed.
-    - Possible values:
-    - `md_releasedate` - The release date of the game.
-    - `md_lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time.
+    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element.
+    - Valid values:
+    - `releasedate` - The release date of the game.
+    - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
+* `gameselector` - type: STRING
+    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `fontPath` - type: PATH
-    - Path to a truetype font (.ttf).
+    - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
+* `verticalAlignment` - type: STRING
+    - Controls alignment on the Y axis.
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
-* `forceUppercase` - type: BOOLEAN
-    - Draw text in uppercase.
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
-* `format` - type: STRING. Specifies format for rendering datetime.
+* `format` - type: STRING
+    - Specifies the date and time format. Has no effect if `displayRelative` has been set to true.
     - %Y: The year, including the century (1900)
     - %m: The month number [01,12]
     - %d: The day of the month [01,31]
@@ -1025,9 +1214,13 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - %M: The minute [00,59]
     - %S: The second [00,59]
 * `displayRelative` - type: BOOLEAN.
-    - Renders the datetime as a a relative string (ex: 'x days ago').
+    - Renders the datetime as a relative string (e.g. 'x days ago').
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view. This property will be ignored for elements defined for the `gamelist` view. That is so because the "Hide metadata fields" functionality will hide and unhide metadata text fields as needed.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -1037,6 +1230,13 @@ It's strongly recommended to use the same image dimensions for all badges as var
 
 Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned or center aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left.
 
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Possible combinations:
@@ -1045,6 +1245,7 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -1052,16 +1253,26 @@ Displays the game count (all games as well as favorites), any applied filters, a
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the element will be rotated.
     - Default is `0.5 0.5`
-* `backgroundColor` - type: COLOR
 * `fontPath` - type: PATH
-    - Path to a truetype font (.ttf).
+    - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `color` - type: COLOR
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis and `center` will also align vertically.
+* `backgroundColor` - type: COLOR
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
+* `verticalAlignment` - type: STRING
+    - Controls alignment on the Y axis.
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
 * `visible` - type: BOOLEAN
-    - If true, element will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
@@ -1069,11 +1280,21 @@ Displays the game count (all games as well as favorites), any applied filters, a
 
 #### rating
 
+Displays a graphical representation of the game rating, from 0 to 5.
+
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `unlimited`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
     - Only one value is actually used. The other value should be zero.  (e.g. specify width OR height, but not both.  This is done to maintain the aspect ratio.)
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the rating should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
@@ -1087,15 +1308,31 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Path to the "filled" rating image.  Image must be square (width equals height).
 * `unfilledPath` - type: PATH
     - Path to the "unfilled" rating image.  Image must be square (width equals height).
+* `opacity` - type: FLOAT
+    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
+* `visible` - type: BOOLEAN
+    - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
+    - Default is `true`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `45`
 
 #### carousel
 
+Displays a carousel for selecting game systems.
+
+Supported views:
+* `system`
+
+Instances per view:
+* `single`
+
+Properties:
 * `type` - type: STRING
-    - Sets the scoll direction of the carousel.
-    - Accepted values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
+    - Sets the carousel type and scroll direction.
+    - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
     - Default is `horizontal`
 * `size` - type: NORMALIZED_PAIR
     - Default is `1 0.2325`
@@ -1103,13 +1340,27 @@ Displays the game count (all games as well as favorites), any applied filters, a
     - Default is `0 0.38375`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
 * `color` - type: COLOR
-    - Controls the color of the carousel background.
+    - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.
     - Default is `FFFFFFD8`
+* `colorEnd` - type: COLOR
+    - Setting this to something other than what is defined for `color` creates a color gradient on the background panel.
+    - Default is `FFFFFFD8`
+* `gradientType` - type: STRING
+    - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `logo` - type: PATH
+    - Path to the logo image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+* `defaultLogo` - type: PATH
+    - Path to the default logo file which will be displayed if the image defined via the `logo` property is not found.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `logoSize` - type: NORMALIZED_PAIR
+    - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
 * `logoScale` - type: FLOAT.
     - Selected logo is increased in size by this scale
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.2`
 * `logoRotation` - type: FLOAT
     - Angle in degrees that the logos should be rotated.  Value should be positive.
@@ -1118,40 +1369,75 @@ Displays the game count (all games as well as favorites), any applied filters, a
 * `logoRotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the logos will be rotated.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
-    - Default is `-5 0.5`
-* `logoAlignment` - type: STRING
-    - Sets the alignment of the logos relative to the carousel.
-    - Accepted values are `top`, `bottom` or `center` when `type` is "horizontal" or "horizontal_wheel".
-    - Accepted values are `left`, `right` or `center` when `type` is "vertical" or "vertical_wheel".
+    - Default is `-3 0.5`
+* `logoHorizontalAlignment` - type: STRING
+    - Sets `logo` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
+    - Valid values are `left`, `center` or `right`
     - Default is `center`
-* `maxLogoCount` - type: FLOAT
+* `logoVerticalAlignment` - type: STRING
+    - Sets `logo` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
+    - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
+* `maxLogoCount` - type: UNSIGNED_INTEGER
     - Sets the number of logos to display in the carousel.
+    - Minimum value is `2` and maximum value is `30`
     - Default is `3`
+* `text` - type: STRING
+    - A string literal to display if there is no `logo` or `defaultLogo` properties defined and if no images were found.
+* `textColor` - type: COLOR
+    - Default is `000000FF`
+* `textBackgroundColor` - type: COLOR
+    - Default is `FFFFFF00`
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
+* `fontPath` - type: PATH
+    - Path to a TrueType font (.ttf) used as fallback if there is no `logo` image defined or found, and if `defaultLogo` has not been defined.
+* `fontSize` - type: FLOAT
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Default is `0.085`
+* `lineSpacing` - type: FLOAT
+    - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
+    - Default is `1.5`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
-* `legacyZIndexMode` - type: BOOLEAN
-    - If true, the carousel will ignore zIndex and always render on top of other elements.
-    - Default is `true`
 
 #### textlist
 
-This is a list containing rows of text which can be navigated using the keyboard or a controller.
+A text list for navigating and selecting games.
 
+Supported views:
+* `gamelist`
+
+Instances per view:
+* `single`
+
+Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
-* `selectorColor` - type: COLOR
-    - Color of the "selector bar."
-* `selectorImagePath` - type: PATH
-    - Path to image to render in place of "selector bar."
-* `selectorImageTile` - type: BOOLEAN
-    - If true, the selector image will be tiled instead of stretched to fit its size.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
 * `selectorHeight` - type: FLOAT
     - Height of the "selector bar".
 * `selectorOffsetY` - type: FLOAT
     - Allows moving of the "selector bar" up or down from its computed position.  Useful for fine tuning the position of the "selector bar" relative to the text.
+* `selectorColor` - type: COLOR
+    - Color of the selector bar.
+    - Default is `000000FF`
+* `selectorColorEnd` - type: COLOR
+    - Setting this to something other than what is defined for `selectorColor` creates a color gradient.
+    - Default is `000000FF`
+* `selectorGradientType` - type: STRING
+    - The direction to apply the color gradient if both `selectorColor` and `selectorColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `selectorImagePath` - type: PATH
+    - Path to image to render in place of "selector bar."
+* `selectorImageTile` - type: BOOLEAN
+    - If true, the selector image will be tiled instead of stretched to fit its size.
 * `selectedColor` - type: COLOR
     - Color of the highlighted entry text.
 * `primaryColor` - type: COLOR
@@ -1160,41 +1446,89 @@ This is a list containing rows of text which can be navigated using the keyboard
     - Secondary color; what this means depends on the text list.  For example, for game lists, it is the color of a folder.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
-* `alignment` - type: STRING
-    - Valid values are `left`, `center`, or `right`.  Controls alignment on the X axis.
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
 * `horizontalMargin` - type: FLOAT
-    - Horizontal offset for text from the alignment point.  If `alignment` is "left", offsets the text to the right.  If `alignment` is "right", offsets text to the left.  No effect if `alignment` is "center".  Given as a percentage of the element's parent's width (same unit as `size`'s X value).
-* `forceUppercase` - type: BOOLEAN
-    - Draw text in uppercase.
+    - Horizontal offset for text from the alignment point. If `horizontalAlignment` is "left", offsets the text to the right.  If `horizontalAlignment` is "right", offsets text to the left. No effect if `horizontalAlignment` is "center". Given as a percentage of the element's parent's width (same unit as `size`'s X value).
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
+    - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `zIndex` - type: FLOAT
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
 
+#### gameselector
+
+Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image`, `video`, `text` and `datetime` elements.
+
+Supported views:
+* `system`
+
+Instances per view:
+* `unlimited`
+
+Properties:
+* `selection` - type: STRING
+    - This defines the game selection criteria. If set to `random`, the games are refreshed every time the view is navigated. For the other two values the refresh takes place on gamelist reload, i.e. when launching a game, adding a game as favorite, making changes via the metadata editor and so on.
+    - Valid values are `random`, `lastplayed` or `mostplayed`
+    - Default is `random`
+* `gameCount` - type: UNSIGNED_INTEGER
+    - How many games to select. This property is only intended for future use.
+    - Minimum value is `1` and maximum value is `30`
+    - Default is `1`
+
 #### helpsystem
 
-The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
+The help system is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
 
-* `pos` - type: NORMALIZED_PAIR. Default is "0.012 0.9515"
-* `origin` - type: NORMALIZED_PAIR.
+Supported views:
+* `system`
+* `gamelist`
+
+Instances per view:
+* `single`
+
+Properties:
+* `pos` - type: NORMALIZED_PAIR
+    - Default is `0.012 0.9515`
+* `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
       the element exactly in the middle of the screen.
-* `textColor` - type: COLOR. Default is 777777FF.
-* `textColorDimmed` - type: COLOR. Default is the same value as textColor. Must be placed under the 'system' view.
-* `iconColor` - type: COLOR. Default is 777777FF.
-* `iconColorDimmed` - type: COLOR. Default is the same value as iconColor. Must be placed under the 'system' view.
-* `fontPath` - type: PATH.
-* `fontSize` - type: FLOAT.
-* `entrySpacing` - type: FLOAT. Default is 16.0.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+* `textColor` - type: COLOR
+    - Default is `777777FF`
+* `textColorDimmed` - type: COLOR
+    - Must be placed under the 'system' view.
+    - Default is the same value as textColor.
+* `iconColor` - type: COLOR
+    - Default is `777777FF`
+* `iconColorDimmed` - type: COLOR
+    - Must be placed under the 'system' view.
+    - Default is the same value as iconColor.
+* `fontPath` - type: PATH
+* `fontSize` - type: FLOAT
+* `entrySpacing` - type: FLOAT
     - Spacing in pixels between the help system elements.
-* `iconTextSpacing` - type: FLOAT. Default is 8.0.
-    - Spacing in pixels within a help system element between it's icon and text.
-* `textStyle` - type: STRING. Default is `uppercase`.
-    - The style of the text. Options: `uppercase`, `lowercase`, `camelcase`.
-* `customButtonIcon` - type: PATH.
-    - A button icon override. Specify the button type in the attribute `button`. The available buttons are:
+    - Default is `16.0`
+* `iconTextSpacing` - type: FLOAT
+    - Spacing in pixels within a help system element between its icon and text.
+    - Default is `8.0`
+* `letterCase` - type: STRING
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `uppercase`
+* `opacity` - type: FLOAT
+    - Controls the level of transparency.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
+* `customButtonIcon` - type: PATH
+    - A button icon override. Specify the button type in the attribute `button`.
+    - The available buttons are: \
       `dpad_updown`,
       `dpad_leftright`,
       `dpad_all`,
@@ -1225,9 +1559,11 @@ The help system is a special element that displays a context-sensitive list of a
       `button_back_XBOX`,
       `button_start_XBOX`,
       `button_back_XBOX360`,
-      `button_start_XBOX360`.
+      `button_start_XBOX360`
 
 #### imagegrid
+
+Deprecated.
 
 * `pos` - type: NORMALIZED_PAIR.
 * `size` - type: NORMALIZED_PAIR.
@@ -1257,6 +1593,8 @@ The help system is a special element that displays a context-sensitive list of a
     - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
 
 #### gridtile
+
+Deprecated.
 
 * `size` - type: NORMALIZED_PAIR.
     - The size of the default gridtile is used to calculate how many tiles can fit in the imagegrid. If not explicitly set, the size of the selected gridtile is equal the size of the default gridtile * 1.2

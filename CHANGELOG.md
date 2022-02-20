@@ -15,11 +15,25 @@
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
-* Added support for defining what type of image metadata to use for all image elements (and also for the video component static image)
+* Removed the "Play videos immediately (override theme)" setting
+* Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
+* Added support for defining which types of game media to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
 * Added theme support for Lottie animations (vector graphics)
+* Added a GameSelectorComponent for displaying game media and metadata in the system view
+* Added support for displaying videos, Lottie animations and date/time elements to the system view
+* Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
+* Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
+* Added theme support for defining the opacity for most element types
+* Added theme support for defining the video fade-in time
+* Added theme support for enabling and disabling video pillarboxes and scanline rendering
+* Added theme support for enabling or disabling audio playback for videos
+* Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
+* Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
+* Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
+* Added support for using unsigned integers for theme properties
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
@@ -27,13 +41,17 @@
 * Set the option "Play audio for screensaver videos" as enabled by default
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
+* Added support for using the tilde (~) symbol in the es_systems.xml path entries to expand to the user home directory
 * Reduced CPU usage significantly when a menu is open by not rendering the bottom of the stack
+* Reduced CPU usage significantly by only rendering the necessary systems in SystemView
 * Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
 * Added logging of the display refresh rate on startup
 * Improved the theme loading error logging to make it consistent and easier to understand
 * Added a log warning for unthemed systems during theme set loading
+* Changed the warning log level for missing theme files to debug level if the paths are set using variables
+* Added new theme system variables for differentiating between collections and non-collection systems
 * Added a color model conversion shader for converting from BGRA to RGBA
-* Added renderer support for supplying a separate format than internalFormat when creating textures (although not really supported by the OpenGL standard)
+* Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Updated the build scripts to support native M1/ARM builds on macOS
@@ -41,8 +59,10 @@
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminated the risk of name collisions
+* Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
+* Changed the opacity data type and functions from unsigned char to float throughout the codebase
 * Refactored the six gamelist classes into two new classes; GamelistBase and GamelistView
 * Rewrote the gamelist logic to handle an arbitrary amount of components per type and split the legacy code into a separate file
 * Renamed Gamelist.cpp to GamelistFileParser.cpp and moved it to its own namespace instead of using the global namespace
@@ -51,6 +71,7 @@
 * Moved UIModeController.cpp from the es-app/views directory to es-app
 * Set the clang-format option SpaceBeforeCpp11BracedList to true and reformatted the codebase
 * Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
+* Greatly simplified the video controls code (play/stop/pause etc.)
 * Removed the deprecated VideoVlcComponent
 * Lots of general code cleanup and refactoring
 * Updated and improved the theming documentation
@@ -61,12 +82,20 @@
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
 * When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
+* Slide and fade transitions would sometimes stop working after changing theme sets
+* Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
+* Horizontal and vertical gradients were mixed up (showing the opposite gradient type if set in a theme)
+* The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling
+* Rating icon outlines would not fade out correctly when fast-scrolling in a gamelist
+* If setting an origin other than 0.5 for a video with pillarboxes enabled, the video would not get centered on the black rectangle
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
+* The device text flickered in GuiDetectDevice when configuring a controller
+* The selector bar was not aligned correctly during menu scale-up animations
 
 ## Version 1.2.0
 

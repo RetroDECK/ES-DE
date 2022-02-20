@@ -146,12 +146,12 @@ namespace Renderer
                   const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
                   const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     SDL_Window* getSDLWindow();
-    const int getWindowWidth();
-    const int getWindowHeight();
-    const int getScreenWidth();
-    const int getScreenHeight();
-    const int getScreenOffsetX();
-    const int getScreenOffsetY();
+    const float getWindowWidth();
+    const float getWindowHeight();
+    const float getScreenWidth();
+    const float getScreenHeight();
+    const float getScreenOffsetX();
+    const float getScreenOffsetY();
     const int getScreenRotate();
     const float getScreenWidthModifier();
     const float getScreenHeightModifier();

@@ -193,19 +193,19 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
     // Set a maximum width depending on the aspect ratio of the screen, to make the screen look
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
     // reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float maxWidthModifier = glm::clamp(0.72f * aspectValue, 0.50f, 0.92f);
-    float maxWidth = static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    float maxWidthModifier {glm::clamp(0.72f * aspectValue, 0.50f, 0.92f)};
+    float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
 
     // Set the width of the selector window to the menu width, unless the system full name is
     // too large to fit. If so, allow the size to be exceeded up to the maximum size calculated
     // above.
-    float systemTextWidth =
+    float systemTextWidth {
         Font::get(FONT_SIZE_LARGE)->sizeText(Utils::String::toUpper(system->getFullName())).x *
-        1.05f;
+        1.05f};
 
-    float width = 0.0f;
-    float menuWidth = mMenu.getSize().x;
+    float width {0.0f};
+    float menuWidth {mMenu.getSize().x};
 
     if (systemTextWidth <= menuWidth)
         width = menuWidth;

@@ -71,7 +71,7 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
     mSubtitle2 = std::make_shared<TextComponent>(
         "HOLD ANY BUTTON 1 SECOND TO SKIP", Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
     // The opacity will be set to visible for any row that is skippable.
-    mSubtitle2->setOpacity(0);
+    mSubtitle2->setOpacity(0.0f);
 
     mGrid.setEntry(mSubtitle2, glm::ivec2 {0, 3}, false, true);
 
@@ -157,8 +157,10 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
 
     // Only show "HOLD TO SKIP" if this input is skippable.
     mList->setCursorChangedCallback([this](CursorState) {
-        bool skippable = sGuiInputConfigList[mList->getCursorId()].skippable;
-        mSubtitle2->setOpacity(skippable * 255);
+        if (sGuiInputConfigList[mList->getCursorId()].skippable)
+            mSubtitle2->setOpacity(1.0f);
+        else
+            mSubtitle2->setOpacity(0.0f);
     });
 
     // Make the first one say "PRESS ANYTHING" if we're re-configuring everything.

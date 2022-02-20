@@ -70,8 +70,8 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
     mSearchComp->setSkipCallback(std::bind(&GuiScraperMulti::skip, this));
     mSearchComp->setCancelCallback(std::bind(&GuiScraperMulti::finish, this));
     mSearchComp->setRefineCallback([&] {
-        mScrollUp->setOpacity(0);
-        mScrollDown->setOpacity(0);
+        mScrollUp->setOpacity(0.0f);
+        mScrollDown->setOpacity(0.0f);
         mResultList->resetScrollIndicatorStatus();
     });
 
@@ -151,8 +151,7 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
     float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
     float width = glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth();
 
-    float height = (mTitle->getFont()->getLetterHeight() +
-                    static_cast<float>(Renderer::getScreenHeight()) * 0.0637f) +
+    float height = (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) +
                    mSystem->getFont()->getLetterHeight() +
                    mSubtitle->getFont()->getHeight() * 1.75f + mButtonGrid->getSize().y +
                    Font::get(FONT_SIZE_MEDIUM)->getHeight() * 7.0f;
@@ -176,7 +175,6 @@ GuiScraperMulti::~GuiScraperMulti()
             (*it)->sortSystem();
         }
     }
-    ViewController::getInstance()->onPauseVideo();
 }
 
 void GuiScraperMulti::onSizeChanged()
@@ -230,8 +228,8 @@ void GuiScraperMulti::doNextSearch()
             scrapeName = Utils::FileSystem::getFileName(mSearchQueue.front().game->getPath());
     }
 
-    mScrollUp->setOpacity(0);
-    mScrollDown->setOpacity(0);
+    mScrollUp->setOpacity(0.0f);
+    mScrollDown->setOpacity(0.0f);
     mResultList->resetScrollIndicatorStatus();
 
     // Extract possible subfolders from the path.

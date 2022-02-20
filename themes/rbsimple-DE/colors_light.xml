@@ -1,6 +1,9 @@
 <theme>
     <view name="system">
-        <text name="systemInfo">
+        <carousel name="system_carousel">
+            <textColor>262626</textColor>
+        </carousel>
+        <text name="game_counter">
             <color>202020</color>
             <backgroundColor>DDDDDDD8</backgroundColor>
         </text>
@@ -20,6 +23,22 @@
             <textColorDimmed>B6B6B6</textColorDimmed>
             <iconColorDimmed>B6B6B6</iconColorDimmed>
         </helpsystem>
+    </view>
+
+    <!-- Default band colors (used if a system is unthemed). -->
+    <view name="system, gamelist">
+        <image name="band1">
+            <color>F6DD08</color>
+        </image>
+        <image name="band2">
+            <color>800000</color>
+        </image>
+        <image name="band3">
+            <color>FF0000</color>
+        </image>
+        <image name="band4">
+            <color>303030</color>
+        </image>
     </view>
 
     <view name="gamelist">

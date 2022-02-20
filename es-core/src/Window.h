@@ -100,7 +100,7 @@ public:
 
     void renderLoadingScreen(std::string text);
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
-    void renderListScrollOverlay(unsigned char opacity, const std::string& text);
+    void renderListScrollOverlay(const float opacity, const std::string& text);
 
     void renderHelpPromptsEarly(); // Used to render HelpPrompts before a fade.
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
@@ -130,12 +130,11 @@ public:
     void setLaunchScreen(GuiLaunchScreen* launchScreen) { mLaunchScreen = launchScreen; }
     bool isLaunchScreenDisplayed() { return mRenderLaunchScreen; }
 
-    void increaseVideoPlayerCount();
-    void decreaseVideoPlayerCount();
+    void increaseVideoPlayerCount() { ++mVideoPlayerCount; }
+    void decreaseVideoPlayerCount() { --mVideoPlayerCount; }
     int getVideoPlayerCount();
 
-    void setLaunchedGame();
-    void unsetLaunchedGame();
+    void setLaunchedGame(bool state) { mGameLaunchedState = state; }
     void invalidateCachedBackground();
     bool isInvalidatingCachedBackground() { return mInvalidateCacheTimer > 0; }
 
@@ -162,7 +161,7 @@ private:
 
     HelpComponent* mHelp;
     ImageComponent* mBackgroundOverlay;
-    unsigned char mBackgroundOverlayOpacity;
+    float mBackgroundOverlayOpacity;
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;
     std::unique_ptr<TextCache> mFrameDataText;
@@ -180,7 +179,7 @@ private:
 
     std::string mListScrollText;
     std::shared_ptr<Font> mListScrollFont;
-    unsigned char mListScrollOpacity;
+    float mListScrollOpacity;
 
     int mFrameTimeElapsed;
     int mFrameCountElapsed;

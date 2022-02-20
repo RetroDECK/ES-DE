@@ -44,6 +44,13 @@ std::vector<std::string> ThemeData::sLegacySupportedFeatures {
     {"z-index"},
     {"visible"}};
 
+std::vector<std::string> ThemeData::sLegacyElements {
+    {"showSnapshotNoVideo"},
+    {"showSnapshotDelay"},
+    {"forceUppercase"},
+    {"alignment"},
+    {"logoAlignment"}};
+
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"16:9", "16:9"},
     {"16:9_vertical", "16:9 vertical"},
@@ -81,12 +88,15 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotationOrigin", NORMALIZED_PAIR},
        {"path", PATH},
        {"default", PATH},
+       {"imageType", STRING},
+       {"gameselector", STRING},
        {"tile", BOOLEAN},
-       {"metadata", STRING},
+       {"interpolation", STRING},
        {"color", COLOR},
        {"colorEnd", COLOR},
        {"gradientType", STRING},
        {"scrollFadeIn", BOOLEAN},
+       {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"video",
@@ -94,14 +104,19 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"size", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
-       {"rotation", FLOAT},
-       {"rotationOrigin", NORMALIZED_PAIR},
        {"path", PATH},
        {"default", PATH},
        {"defaultImage", PATH},
-       {"imageMetadata", STRING},
+       {"imageType", STRING},
+       {"gameselector", STRING},
+       {"audio", BOOLEAN},
+       {"interpolation", STRING},
+       {"pillarboxes", BOOLEAN},
+       {"scanlines", BOOLEAN},
        {"delay", FLOAT},
+       {"fadeInTime", FLOAT},
        {"scrollFadeIn", BOOLEAN},
+       {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT},
        {"showSnapshotNoVideo", BOOLEAN}, // For backward compatibility with legacy themes.
@@ -116,6 +131,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"speed", FLOAT},
        {"direction", STRING},
        {"keepAspectRatio", BOOLEAN},
+       {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"badges",
@@ -124,16 +140,18 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"direction", STRING},
-       {"lines", FLOAT},
-       {"itemsPerLine", FLOAT},
+       {"lines", UNSIGNED_INTEGER},
+       {"itemsPerLine", UNSIGNED_INTEGER},
        {"itemMargin", NORMALIZED_PAIR},
        {"slots", STRING},
        {"controllerPos", NORMALIZED_PAIR},
        {"controllerSize", FLOAT},
        {"customBadgeIcon", PATH},
        {"customControllerIcon", PATH},
+       {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"text",
@@ -143,15 +161,24 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"text", STRING},
+       {"systemdata", STRING},
        {"metadata", STRING},
+       {"gameselector", STRING},
        {"container", BOOLEAN},
+       {"containerScrollSpeed", FLOAT},
+       {"containerStartDelay", FLOAT},
+       {"containerResetDelay", FLOAT},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"verticalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"color", COLOR},
        {"backgroundColor", COLOR},
-       {"forceUppercase", BOOLEAN},
+       {"letterCase", STRING},
+       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
+       {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"datetime",
@@ -161,15 +188,20 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"metadata", STRING},
+       {"gameselector", STRING},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"verticalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"color", COLOR},
        {"backgroundColor", COLOR},
-       {"forceUppercase", BOOLEAN},
+       {"letterCase", STRING},
+       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"format", STRING},
        {"displayRelative", BOOLEAN},
+       {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"gamelistinfo",
@@ -182,7 +214,10 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"color", COLOR},
        {"backgroundColor", COLOR},
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"verticalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
+       {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"rating",
@@ -194,6 +229,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"color", COLOR},
        {"filledPath", PATH},
        {"unfilledPath", PATH},
+       {"opacity", FLOAT},
+       {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"carousel",
       {{"type", STRING},
@@ -203,14 +240,25 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"color", COLOR},
        {"colorEnd", COLOR},
        {"gradientType", STRING},
+       {"logo", PATH},
+       {"defaultLogo", PATH},
+       {"logoSize", NORMALIZED_PAIR},
        {"logoScale", FLOAT},
        {"logoRotation", FLOAT},
        {"logoRotationOrigin", NORMALIZED_PAIR},
-       {"logoSize", NORMALIZED_PAIR},
-       {"logoAlignment", STRING},
-       {"maxLogoCount", FLOAT},
+       {"logoHorizontalAlignment", STRING},
+       {"logoVerticalAlignment", STRING},
+       {"logoAlignment", STRING}, // For backward compatibility with legacy themes.
+       {"maxLogoCount", UNSIGNED_INTEGER},
+       {"text", STRING},
+       {"textColor", COLOR},
+       {"textBackgroundColor", COLOR},
+       {"letterCase", STRING},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"lineSpacing", FLOAT},
        {"zIndex", FLOAT},
-       {"legacyZIndexMode", STRING}}},
+       {"legacyZIndexMode", STRING}}}, // For backward compatibility with legacy themes.
      {"textlist",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
@@ -227,13 +275,17 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"secondaryColor", COLOR},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"scrollHide", BOOLEAN},
        {"scrollSound", PATH}, // For backward compatibility with legacy themes.
-       {"alignment", STRING},
+       {"horizontalAlignment", STRING},
+       {"alignment", STRING}, // For backward compatibility with legacy themes.
        {"horizontalMargin", FLOAT},
-       {"forceUppercase", BOOLEAN},
+       {"letterCase", STRING},
+       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"zIndex", FLOAT}}},
+     {"gameselector",
+      {{"selection", STRING},
+       {"gameCount", UNSIGNED_INTEGER}}},
      {"helpsystem",
       {{"pos", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
@@ -245,7 +297,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"entrySpacing", FLOAT},
        {"iconTextSpacing", FLOAT},
-       {"textStyle", STRING},
+       {"letterCase", STRING},
+       {"textStyle", STRING}, // For backward compatibility with legacy themes.
+       {"opacity", FLOAT},
        {"customButtonIcon", PATH}}},
      {"sound",
       {{"path", PATH}}},
@@ -543,29 +597,6 @@ const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
         return it->second;
     else
         return "invalid ratio";
-}
-
-const std::shared_ptr<ThemeData> ThemeData::getDefault()
-{
-    static std::shared_ptr<ThemeData> theme = nullptr;
-    if (theme == nullptr) {
-        theme = std::shared_ptr<ThemeData>(new ThemeData());
-
-        const std::string path {Utils::FileSystem::getHomePath() +
-                                "/.emulationstation/es_theme_default.xml"};
-        if (Utils::FileSystem::exists(path)) {
-            try {
-                std::map<std::string, std::string> emptyMap;
-                theme->loadFile(emptyMap, path);
-            }
-            catch (ThemeException& e) {
-                LOG(LogError) << e.what();
-                theme = std::shared_ptr<ThemeData>(new ThemeData()); // Reset to empty.
-            }
-        }
-    }
-
-    return theme;
 }
 
 unsigned int ThemeData::getHexColor(const std::string& str)
@@ -1076,10 +1107,15 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         std::string nodeName = node.name();
 
-        if (!mLegacyTheme && element.type == "video") {
-            if (nodeName == "showSnapshotNoVideo" || nodeName == "showSnapshotDelay")
-                throw error << ": Legacy <" << nodeName
-                            << "> property found for non-legacy theme set";
+        // Strictly enforce removal of legacy elements for non-legacy theme sets by creating
+        // an unthemed system if they're present in the configuration.
+        if (!mLegacyTheme) {
+            for (auto& legacyElement : sLegacyElements) {
+                if (nodeName == legacyElement) {
+                    throw error << ": Legacy <" << nodeName
+                                << "> property found for non-legacy theme set";
+                }
+            }
         }
 
         // If an attribute exists, then replace nodeName with its name.
@@ -1150,10 +1186,22 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
                 if (!ResourceManager::getInstance().fileExists(path)) {
                     std::stringstream ss;
-                    LOG(LogWarning)
-                        << error.message << ": Couldn't find file \"" << node.text().get() << "\" "
-                        << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
-                                                          "");
+                    // For explicits paths, print a warning if the file couldn't be found, but
+                    // only print a debug message if it was set using a variable.
+                    if (str == node.text().as_string()) {
+                        LOG(LogWarning)
+                            << error.message << ": Couldn't find file \"" << node.text().get()
+                            << "\" "
+                            << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
+                                                              "");
+                    }
+                    else {
+                        LOG(LogDebug)
+                            << error.message << ": Couldn't find file \"" << node.text().get()
+                            << "\" "
+                            << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
+                                                              "");
+                    }
                 }
                 element.properties[nodeName] = path;
                 break;
@@ -1167,6 +1215,11 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 }
                 break;
             }
+            case UNSIGNED_INTEGER: {
+                unsigned int integerVal {static_cast<unsigned int>(strtoul(str.c_str(), 0, 0))};
+                element.properties[node.name()] = integerVal;
+                break;
+            }
             case FLOAT: {
                 float floatVal {static_cast<float>(strtod(str.c_str(), 0))};
                 element.properties[node.name()] = floatVal;
@@ -1175,9 +1228,11 @@ void ThemeData::parseElement(const pugi::xml_node& root,
             case BOOLEAN: {
                 bool boolVal = false;
                 // Only look at the first character.
-                if (str.front() == '1' || str.front() == 't' || str.front() == 'T' ||
-                    str.front() == 'y' || str.front() == 'Y')
-                    boolVal = true;
+                if (str.size() > 0) {
+                    if (str.front() == '1' || str.front() == 't' || str.front() == 'T' ||
+                        str.front() == 'y' || str.front() == 'Y')
+                        boolVal = true;
+                }
 
                 element.properties[node.name()] = boolVal;
                 break;

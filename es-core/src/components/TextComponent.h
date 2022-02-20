@@ -35,6 +35,8 @@ public:
 
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);
+    void setLowercase(bool lowercase);
+    void setCapitalize(bool capitalize);
     void onSizeChanged() override;
     void setText(const std::string& text, bool update = true);
     void setHiddenText(const std::string& text) { mHiddenText = text; }
@@ -55,8 +57,11 @@ public:
     std::string getHiddenValue() const override { return mHiddenText; }
     void setHiddenValue(const std::string& value) override { setHiddenText(value); }
 
-    unsigned char getOpacity() const override { return mColor & 0x000000FF; }
-    void setOpacity(unsigned char opacity) override;
+    float const getOpacity() const override
+    {
+        return static_cast<float>((mColor & 0x000000FF) / 255.0f);
+    }
+    void setOpacity(float opacity) override;
 
     void setSelectable(bool status) { mSelectable = status; }
 
@@ -85,11 +90,13 @@ private:
 
     unsigned int mColor;
     unsigned int mBgColor;
-    unsigned char mColorOpacity;
-    unsigned char mBgColorOpacity;
+    float mColorOpacity;
+    float mBgColorOpacity;
     bool mRenderBackground;
 
     bool mUppercase;
+    bool mLowercase;
+    bool mCapitalize;
     glm::ivec2 mAutoCalcExtent;
     std::shared_ptr<TextCache> mTextCache;
     Alignment mHorizontalAlignment;

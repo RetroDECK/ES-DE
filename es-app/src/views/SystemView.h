@@ -9,14 +9,14 @@
 #ifndef ES_APP_VIEWS_SYSTEM_VIEW_H
 #define ES_APP_VIEWS_SYSTEM_VIEW_H
 
+#include "FileData.h"
 #include "GuiComponent.h"
 #include "Sound.h"
-#include "components/BadgeComponent.h"
+#include "SystemData.h"
+#include "components/CarouselComponent.h"
 #include "components/DateTimeComponent.h"
-#include "components/IList.h"
+#include "components/GameSelectorComponent.h"
 #include "components/LottieComponent.h"
-#include "components/RatingComponent.h"
-#include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
 #include "components/TextListComponent.h"
 #include "components/VideoFFmpegComponent.h"
@@ -26,106 +26,99 @@
 
 class SystemData;
 
-enum CarouselType : unsigned int {
-    HORIZONTAL = 0,
-    VERTICAL = 1,
-    VERTICAL_WHEEL = 2,
-    HORIZONTAL_WHEEL = 3
+struct SystemViewElements {
+    std::string name;
+    std::string fullName;
+    std::vector<std::unique_ptr<GameSelectorComponent>> gameSelectors;
+    std::vector<GuiComponent*> legacyExtras;
+    std::vector<GuiComponent*> children;
+
+    std::vector<std::unique_ptr<TextComponent>> gameCountComponents;
+    std::vector<std::unique_ptr<TextComponent>> textComponents;
+    std::vector<std::unique_ptr<DateTimeComponent>> dateTimeComponents;
+    std::vector<std::unique_ptr<ImageComponent>> imageComponents;
+    std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
+    std::vector<std::unique_ptr<LottieComponent>> lottieAnimComponents;
 };
 
-struct SystemViewData {
-    std::shared_ptr<GuiComponent> logo;
-    std::shared_ptr<GuiComponent> logoPlaceholderText;
-    std::vector<GuiComponent*> backgroundExtras;
-
-    std::vector<std::shared_ptr<TextComponent>> textComponents;
-    std::vector<std::shared_ptr<DateTimeComponent>> dateTimeComponents;
-    std::vector<std::shared_ptr<ImageComponent>> imageComponents;
-    std::vector<std::shared_ptr<VideoFFmpegComponent>> videoComponents;
-    std::vector<std::shared_ptr<LottieComponent>> lottieAnimComponents;
-    std::vector<std::shared_ptr<BadgeComponent>> badgeComponents;
-    std::vector<std::shared_ptr<RatingComponent>> ratingComponents;
-    std::vector<std::shared_ptr<ScrollableContainer>> containerComponents;
-    std::vector<std::shared_ptr<TextComponent>> containerTextComponents;
-    std::vector<std::shared_ptr<TextComponent>> gamelistInfoComponents;
-};
-
-struct SystemViewCarousel {
-    CarouselType type;
-    glm::vec2 pos;
-    glm::vec2 size;
-    glm::vec2 origin;
-    float logoScale;
-    float logoRotation;
-    glm::vec2 logoRotationOrigin;
-    Alignment logoAlignment;
-    unsigned int color;
-    unsigned int colorEnd;
-    bool colorGradientHorizontal;
-    int maxLogoCount; // Number of logos shown on the carousel.
-    glm::vec2 logoSize;
-    float zIndex;
-    bool legacyZIndexMode;
-};
-
-class SystemView : public IList<SystemViewData, SystemData*>
+class SystemView : public GuiComponent
 {
 public:
     SystemView();
     ~SystemView();
 
-    void onShow() override { mShowing = true; }
-    void onHide() override { mShowing = false; }
-
+    void onTransition() override;
     void goToSystem(SystemData* system, bool animate);
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 
+    bool isScrolling() { return mCarousel->isScrolling(); }
+    void stopScrolling() { mCarousel->stopScrolling(); }
+    bool isSystemAnimationPlaying(unsigned char slot)
+    {
+        return mCarousel->isAnimationPlaying(slot);
+    }
+    void finishSystemAnimation(unsigned char slot)
+    {
+        finishAnimation(slot);
+        mCarousel->finishAnimation(slot);
+    }
+
+    CarouselComponent::CarouselType getCarouselType() { return mCarousel->getType(); }
+    SystemData* getFirstSystem() { return mCarousel->getFirst(); }
+
+    void startViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+            video->startVideoPlayer();
+    }
+    void stopViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+            video->stopVideoPlayer();
+    }
+    void pauseViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents) {
+            video->pauseVideoPlayer();
+        }
+    }
+    void muteViewVideos() override
+    {
+        for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+            video->muteVideoPlayer();
+    }
+
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
     std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override;
 
-    CarouselType getCarouselType() { return mCarousel.type; }
-
 protected:
-    void onCursorChanged(const CursorState& state) override;
-    void onScroll() override
-    {
-        NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
-    }
+    void onCursorChanged(const CursorState& state);
 
 private:
     void populate();
     void updateGameCount();
-    //  Get the ThemeElements that make up the SystemView.
-    void getViewElements(const std::shared_ptr<ThemeData>& theme);
-    // Populate the system carousel with the legacy values.
-    void getDefaultElements(void);
-    void getCarouselFromTheme(const ThemeData::ThemeElement* elem);
+    void updateGameSelectors();
+    void legacyApplyTheme(const std::shared_ptr<ThemeData>& theme);
+    void renderElements(const glm::mat4& parentTrans, bool abovePrimary);
 
-    //  Render system carousel.
-    void renderCarousel(const glm::mat4& parentTrans);
-    // Draw background extras.
-    void renderExtras(const glm::mat4& parentTrans, float lower, float upper);
-    void renderFade(const glm::mat4& trans);
+    std::unique_ptr<CarouselComponent> mCarousel;
+    std::unique_ptr<TextComponent> mLegacySystemInfo;
+    std::vector<SystemViewElements> mSystemElements;
 
-    SystemViewCarousel mCarousel;
-    TextComponent mSystemInfo;
-
-    // Unit is list index.
     float mCamOffset;
-    float mExtrasCamOffset;
-    float mExtrasFadeOpacity;
-
+    float mFadeOpacity;
     int mPreviousScrollVelocity;
+
     bool mUpdatedGameCount;
     bool mViewNeedsReload;
-    bool mShowing;
-
     bool mLegacyMode;
+    bool mHoldingKey;
+    bool mNavigated;
 };
 
 #endif // ES_APP_VIEWS_SYSTEM_VIEW_H

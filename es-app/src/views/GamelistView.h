@@ -23,6 +23,7 @@ public:
     // Called when a FileData* is added, has its metadata changed, or is removed.
     void onFileChanged(FileData* file, bool reloadGamelist) override;
     void onShow() override;
+    void onTransition() override;
 
     void preloadGamelist() { updateInfoPanel(); }
     void launch(FileData* game) override { ViewController::getInstance()->triggerGameLaunch(game); }
@@ -41,6 +42,28 @@ public:
         }
     }
 
+    void startViewVideos() override
+    {
+        for (auto& video : mVideoComponents)
+            video->startVideoPlayer();
+    }
+    void stopViewVideos() override
+    {
+        for (auto& video : mVideoComponents)
+            video->stopVideoPlayer();
+    }
+    void pauseViewVideos() override
+    {
+        for (auto& video : mVideoComponents) {
+            video->pauseVideoPlayer();
+        }
+    }
+    void muteViewVideos() override
+    {
+        for (auto& video : mVideoComponents)
+            video->muteVideoPlayer();
+    }
+
     const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
     void setTheme(const std::shared_ptr<ThemeData>& theme)
     {
@@ -57,6 +80,7 @@ public:
 
 private:
     void updateInfoPanel();
+    void setGameImage(FileData* file, GuiComponent* comp);
 
     // Legacy (backward compatibility) functions.
     void legacyPopulateFields();

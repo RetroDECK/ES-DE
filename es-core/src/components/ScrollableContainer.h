@@ -33,6 +33,11 @@ public:
                              float autoScrollSpeedConstant) override;
     void reset();
 
+    void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                    const std::string& view,
+                    const std::string& element,
+                    unsigned int properties) override;
+
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 

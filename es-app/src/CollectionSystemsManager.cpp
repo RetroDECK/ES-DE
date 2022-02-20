@@ -1443,6 +1443,10 @@ void CollectionSystemsManager::trimCollectionCount(FileData* rootFolder, int lim
             (CollectionFileData*)rootFolder->getChildrenListToDisplay().back();
         ViewController::getInstance()->getGamelistView(curSys).get()->remove(gameToRemove, false);
     }
+    // Also update the lists of last played and most played games as these could otherwise
+    // contain dangling pointers.
+    rootFolder->updateLastPlayedList();
+    rootFolder->updateMostPlayedList();
 }
 
 const bool CollectionSystemsManager::themeFolderExists(const std::string& folder)

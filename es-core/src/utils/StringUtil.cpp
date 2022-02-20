@@ -538,22 +538,27 @@ namespace Utils
             return stringUpper;
         }
 
-        std::string toCamelCase(const std::string& stringArg)
+        std::string toCapitalized(const std::string& stringArg)
         {
-            std::string line = stringArg;
-            bool active = true;
+            if (stringArg == "")
+                return stringArg;
 
-            for (int i = 0; line[i] != '\0'; ++i) {
-                if (std::isalpha(line[i])) {
+            std::string line {stringArg};
+            bool active {true};
+
+            for (auto& chr : line) {
+                if (std::isalnum(chr)) {
                     if (active) {
-                        line[i] = Utils::String::toUpper(std::string(1, line[i]))[0];
+                        chr = std::toupper(chr);
                         active = false;
                     }
-                    else
-                        line[i] = Utils::String::toLower(std::string(1, line[i]))[0];
+                    else {
+                        chr = std::tolower(chr);
+                    }
                 }
-                else if (line[i] == ' ')
+                else if (chr == ' ' || chr == '-' || chr == '\n' || chr == '\r' || chr == '\t') {
                     active = true;
+                }
             }
 
             return line;

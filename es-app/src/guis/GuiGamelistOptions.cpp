@@ -243,8 +243,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     }
 
     // Center the menu.
-    setSize(static_cast<float>(Renderer::getScreenWidth()),
-            static_cast<float>(Renderer::getScreenHeight()));
+    setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     mMenu.setPosition((mSize.x - mMenu.getSize().x) / 2.0f, (mSize.y - mMenu.getSize().y) / 2.0f);
 }
 
@@ -254,6 +253,8 @@ GuiGamelistOptions::~GuiGamelistOptions()
     // was openened. Without this, the scrolling would run until manually stopped after
     // the menu has been closed.
     ViewController::getInstance()->stopScrolling();
+
+    ViewController::getInstance()->startViewVideos();
 
     if (mFiltersChanged) {
         if (!mCustomCollectionSystem) {

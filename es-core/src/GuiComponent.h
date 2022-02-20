@@ -25,7 +25,7 @@
 #define ICONCOLOR_USERMARKED 0x7777FFFF
 #define TEXTCOLOR_SCRAPERMARKED 0x992222FF
 #define TEXTCOLOR_USERMARKED 0x222299FF
-#define DISABLED_OPACITY 80
+#define DISABLED_OPACITY 0.314f
 
 class Animation;
 class AnimationController;
@@ -191,8 +191,8 @@ public:
 
     virtual bool isListScrolling() { return false; }
     virtual void stopListScrolling() {}
-    virtual unsigned char getOpacity() const { return mOpacity; }
-    virtual void setOpacity(unsigned char opacity);
+    virtual const float getOpacity() const { return mOpacity; }
+    virtual void setOpacity(float opacity);
     virtual unsigned int getColor() const { return mColor; }
     virtual unsigned int getColorShift() const { return mColorShift; }
     virtual float getLineSpacing() { return 0.0f; }
@@ -207,12 +207,18 @@ public:
     virtual void setOriginalColor(unsigned int color) { mColorOriginalValue = color; }
     virtual void setChangedColor(unsigned int color) { mColorChangedValue = color; }
 
+    virtual void setImage(const std::string& path, bool tile = false) {}
+
     // These functions are used to enable and disable options in menus, i.e. switches and similar.
     virtual bool getEnabled() { return mEnabled; }
     virtual void setEnabled(bool state) { mEnabled = state; }
 
-    std::string getMetadataField() { return mMetadataField; }
-    void setMetadataField(const std::string& text) { mMetadataField = text; }
+    const std::string& getThemeSystemdata() { return mThemeSystemdata; }
+    void setThemeSystemdata(const std::string& text) { mThemeSystemdata = text; }
+    const std::string& getThemeMetadata() { return mThemeMetadata; }
+    void setThemeMetadata(const std::string& text) { mThemeMetadata = text; }
+    const std::vector<std::string>& getThemeImageTypes() { return mThemeImageTypes; }
+    const std::string& getThemeGameSelector() { return mThemeGameSelector; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }
 
@@ -232,18 +238,16 @@ public:
 
     virtual void onShow();
     virtual void onHide();
-    virtual void onStopVideo();
-    virtual void onPauseVideo();
-    virtual void onUnpauseVideo();
-    virtual bool isVideoPaused() { return false; }
+    virtual void onTransition() {}
+
+    // System view and gamelist view video controls.
+    virtual void startViewVideos() {}
+    virtual void stopViewVideos() {}
+    virtual void pauseViewVideos() {}
+    virtual void muteViewVideos() {}
+
     // For Lottie animations.
     virtual void resetFileAnimation() {};
-
-    virtual void onScreensaverActivate();
-    virtual void onScreensaverDeactivate();
-    virtual void onGameLaunchedActivate();
-    virtual void onGameLaunchedDeactivate();
-    virtual void topWindow(bool isTop);
 
     // Default implementation just handles <pos> and <size> tags as normalized float pairs.
     // You probably want to keep this behavior for any derived classes as well as add your own.
@@ -275,9 +279,11 @@ protected:
     GuiComponent* mParent;
     std::vector<GuiComponent*> mChildren;
 
-    std::string mMetadataField;
+    std::vector<std::string> mThemeImageTypes;
+    std::string mThemeSystemdata;
+    std::string mThemeMetadata;
+    std::string mThemeGameSelector;
 
-    unsigned char mOpacity;
     unsigned int mColor;
     float mSaturation;
     unsigned int mColorShift;
@@ -291,6 +297,8 @@ protected:
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
 
+    float mOpacity;
+    float mThemeOpacity;
     float mRotation;
     float mScale;
     float mDefaultZIndex;

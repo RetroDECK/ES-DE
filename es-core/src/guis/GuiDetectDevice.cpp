@@ -15,7 +15,7 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 
-#define HOLD_TIME 1000
+#define HOLD_TIME 1000.0f
 
 GuiDetectDevice::GuiDetectDevice(bool firstRun,
                                  bool forcedConfig,
@@ -68,8 +68,8 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
 
     mGrid.setEntry(mMsg1, glm::ivec2 {0, 2}, false, true);
 
-    const std::string msg2str =
-        firstRun ? "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" : "PRESS ESC TO CANCEL";
+    const std::string msg2str {firstRun ? "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" :
+                                          "PRESS ESC TO CANCEL"};
     mMsg2 = std::make_shared<TextComponent>(msg2str, Font::get(FONT_SIZE_SMALL), 0x777777FF,
                                             ALIGN_CENTER);
     mGrid.setEntry(mMsg2, glm::ivec2 {0, 3}, false, true);
@@ -81,8 +81,8 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = glm::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    float width {glm::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth()};
 
     setSize(width, Renderer::getScreenHeight() * 0.5f);
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
@@ -96,10 +96,8 @@ void GuiDetectDevice::onSizeChanged()
     // Grid.
     mGrid.setSize(mSize);
     mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y);
-    // mGrid.setRowHeightPerc(1, mDeviceInfo->getFont()->getHeight() / mSize.y());
     mGrid.setRowHeightPerc(2, mMsg1->getFont()->getHeight() / mSize.y);
     mGrid.setRowHeightPerc(3, mMsg2->getFont()->getHeight() / mSize.y);
-    // mGrid.setRowHeightPerc(4, mDeviceHeld->getFont()->getHeight() / mSize.y());
 }
 
 bool GuiDetectDevice::input(InputConfig* config, Input input)
@@ -125,7 +123,7 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
         if (input.value && mHoldingConfig == nullptr) {
             // Started holding.
             mHoldingConfig = config;
-            mHoldTime = HOLD_TIME;
+            mHoldTime = static_cast<int>(HOLD_TIME);
             mDeviceHeld->setText(Utils::String::toUpper(config->getDeviceName()));
         }
         else if (!input.value && mHoldingConfig == config) {
@@ -140,9 +138,9 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
 void GuiDetectDevice::update(int deltaTime)
 {
     if (mHoldingConfig) {
-        // If ES starts and if a known device is connected after startup skip controller
-        // configuration unless the flag to force the configuration was passed on the
-        // command line.
+        // If ES-DE starts and if a known device is connected after startup, then skip
+        // controller configuration unless the flag to force the configuration was passed
+        // on the command line.
         if (!mForcedConfig && mFirstRun &&
             Utils::FileSystem::exists(InputManager::getConfigPath()) &&
             InputManager::getInstance().getNumConfiguredDevices() > 0) {
@@ -152,11 +150,11 @@ void GuiDetectDevice::update(int deltaTime)
         }
         else {
             mHoldTime -= deltaTime;
-            const float t = static_cast<float>(mHoldTime) / HOLD_TIME;
-            unsigned int c = static_cast<unsigned char>(t * 255);
-            mDeviceHeld->setColor((c << 24) | (c << 16) | (c << 8) | 0xFF);
+            // Fade in device name.
+            const float t {std::fabs((static_cast<float>(mHoldTime) / HOLD_TIME) - 1.0f)};
+            mDeviceHeld->setColor(0x44444400 | static_cast<unsigned char>(t * 255.0f));
             if (mHoldTime <= 0) {
-                // Picked one!
+                // A device was selected.
                 mWindow->pushGui(new GuiInputConfig(mHoldingConfig, true, mDoneCallback));
                 delete this;
             }

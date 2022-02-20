@@ -82,10 +82,11 @@ std::string RatingComponent::getRatingValue() const
     return ss.str();
 }
 
-void RatingComponent::setOpacity(unsigned char opacity)
+void RatingComponent::setOpacity(float opacity)
 {
     mOpacity = opacity;
-    mColorShift = (mColorShift >> 8 << 8) | mOpacity;
+    mColorShift =
+        (mColorShift >> 8 << 8) | static_cast<unsigned char>(mOpacity * mThemeOpacity * 255.0f);
     updateColors();
 }
 
@@ -96,7 +97,7 @@ void RatingComponent::setColorShift(unsigned int color)
 
     // Grab the opacity from the color shift because we may need
     // to apply it if fading in textures.
-    mOpacity = color & 0xff;
+    mOpacity = static_cast<float>(color & 0xff) / 255.0f;
     updateColors();
 }
 
@@ -119,11 +120,11 @@ void RatingComponent::onSizeChanged()
 
 void RatingComponent::updateVertices()
 {
-    const float numStars = NUM_RATING_STARS;
-    const float h = getSize().y; // Ss the same as a single star's width.
-    const float w = getSize().y * mValue * numStars;
-    const float fw = getSize().y * numStars;
-    const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
+    const float numStars {NUM_RATING_STARS};
+    const float h {getSize().y}; // Ss the same as a single star's width.
+    const float w {getSize().y * mValue * numStars};
+    const float fw {getSize().y * numStars};
+    const unsigned int color {Renderer::convertRGBAToABGR(mColorShift)};
 
     // clang-format off
     mVertices[0] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
@@ -140,7 +141,7 @@ void RatingComponent::updateVertices()
 
 void RatingComponent::updateColors()
 {
-    const unsigned int color = Renderer::convertRGBAToABGR(mColorShift);
+    const unsigned int color {Renderer::convertRGBAToABGR(mColorShift)};
 
     for (int i = 0; i < 8; ++i)
         mVertices[i].col = color;
@@ -148,14 +149,15 @@ void RatingComponent::updateColors()
 
 void RatingComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr)
+    if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr ||
+        mThemeOpacity == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
 
     Renderer::setMatrix(trans);
 
-    if (mOpacity > 0) {
+    if (mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
             Renderer::drawRect(0.0f, 0.0f, mSize.y * NUM_RATING_STARS, mSize.y, 0xFF000033,
                                0xFF000033);
@@ -165,7 +167,7 @@ void RatingComponent::render(const glm::mat4& parentTrans)
             if (mUnfilledColor != mColorShift) {
                 const unsigned int color = Renderer::convertRGBAToABGR(mUnfilledColor);
                 for (int i = 0; i < 8; ++i)
-                    mVertices[i].col = color;
+                    mVertices[i].col = (color & 0x00FFFFFF) + (mVertices[i].col & 0xFF000000);
             }
 
             Renderer::drawTriangleStrips(&mVertices[4], 4);

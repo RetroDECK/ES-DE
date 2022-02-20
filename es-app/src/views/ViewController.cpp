@@ -233,7 +233,7 @@ void ViewController::goToStart(bool playTransition)
         Settings::getInstance()->setString("StartupSystem", "");
     }
     // Get the first system entry.
-    goToSystemView(getSystemListView()->getFirst(), false);
+    goToSystemView(getSystemListView()->getFirstSystem(), false);
 }
 
 void ViewController::ReloadAndGoToStart()
@@ -293,8 +293,8 @@ void ViewController::stopScrolling()
     mSystemListView->stopScrolling();
     mCurrentView->stopListScrolling();
 
-    if (mSystemListView->isAnimationPlaying(0))
-        mSystemListView->finishAnimation(0);
+    if (mSystemListView->isSystemAnimationPlaying(0))
+        mSystemListView->finishSystemAnimation(0);
 }
 
 int ViewController::getSystemId(SystemData* system)
@@ -330,6 +330,9 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         mPreviousView = nullptr;
     }
 
+    if (mCurrentView != nullptr)
+        mCurrentView->onTransition();
+
     mPreviousView = mCurrentView;
 
     if (system->isGroupedCustomCollection())
@@ -340,7 +343,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     mSystemViewTransition = true;
 
     auto systemList = getSystemListView();
-    systemList->setPosition(getSystemId(system) * static_cast<float>(Renderer::getScreenWidth()),
+    systemList->setPosition(getSystemId(system) * Renderer::getScreenWidth(),
                             systemList->getPosition().y);
 
     systemList->goToSystem(system, false);
@@ -351,19 +354,19 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     if (applicationStartup) {
         mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
-            if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
-                getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
-                mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
+            if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
+                getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
+                mCamera[3].y += Renderer::getScreenHeight();
             else
-                mCamera[3].x -= static_cast<float>(Renderer::getScreenWidth());
+                mCamera[3].x -= Renderer::getScreenWidth();
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
-            if (getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL ||
-                getSystemListView()->getCarouselType() == CarouselType::HORIZONTAL_WHEEL)
-                mCamera[3].y += static_cast<float>(Renderer::getScreenHeight());
+            if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
+                getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
+                mCamera[3].y += Renderer::getScreenHeight();
             else
-                mCamera[3].x += static_cast<float>(Renderer::getScreenWidth());
+                mCamera[3].x += Renderer::getScreenWidth();
         }
         else {
             updateHelpPrompts();
@@ -415,6 +418,9 @@ void ViewController::goToGamelist(SystemData* system)
     bool wrapLastToFirst = false;
     bool slideTransitions = false;
 
+    if (mCurrentView != nullptr)
+        mCurrentView->onTransition();
+
     if (Settings::getInstance()->getString("TransitionStyle") == "slide")
         slideTransitions = true;
 
@@ -463,8 +469,8 @@ void ViewController::goToGamelist(SystemData* system)
     // Stop any scrolling, animations and camera movements.
     if (mState.viewing == SYSTEM_SELECT) {
         mSystemListView->stopScrolling();
-        if (mSystemListView->isAnimationPlaying(0))
-            mSystemListView->finishAnimation(0);
+        if (mSystemListView->isSystemAnimationPlaying(0))
+            mSystemListView->finishSystemAnimation(0);
     }
 
     if (slideTransitions)
@@ -476,8 +482,7 @@ void ViewController::goToGamelist(SystemData* system)
         float offsetX = sysList->getPosition().x;
         int sysId = getSystemId(system);
 
-        sysList->setPosition(sysId * static_cast<float>(Renderer::getScreenWidth()),
-                             sysList->getPosition().y);
+        sysList->setPosition(sysId * Renderer::getScreenWidth(), sysList->getPosition().y);
         offsetX = sysList->getPosition().x - offsetX;
         mCamera[3].x -= offsetX;
     }
@@ -520,11 +525,11 @@ void ViewController::goToGamelist(SystemData* system)
     if (mState.viewing == NOTHING) {
         mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
-            mCamera[3].y -= static_cast<float>(Renderer::getScreenHeight());
+            mCamera[3].y -= Renderer::getScreenHeight();
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
-            mCamera[3].y += static_cast<float>(Renderer::getScreenHeight() * 2);
+            mCamera[3].y += Renderer::getScreenHeight() * 2.0f;
         }
         else {
             updateHelpPrompts();
@@ -649,11 +654,6 @@ void ViewController::launch(FileData* game)
         return;
     }
 
-    // If the video view style is used, pause the video currently playing or block the
-    // video from starting to play if the static image is still shown.
-    if (mCurrentView)
-        mCurrentView->onPauseVideo();
-
     // Disable text scrolling and stop any Lottie animations. These will be enabled again in
     // FileData upon returning from the game.
     mWindow->setAllowTextScrolling(false);
@@ -728,11 +728,11 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     GamelistViewStyle selectedViewStyle = AUTOMATIC;
 
     std::string viewPreference {Settings::getInstance()->getString("GamelistViewStyle")};
-    if (viewPreference.compare("basic") == 0)
+    if (viewPreference == "basic")
         selectedViewStyle = BASIC;
-    if (viewPreference.compare("detailed") == 0)
+    else if (viewPreference == "detailed")
         selectedViewStyle = DETAILED;
-    if (viewPreference.compare("video") == 0)
+    else if (viewPreference == "video")
         selectedViewStyle = VIDEO;
 
     if (selectedViewStyle == AUTOMATIC) {
@@ -773,8 +773,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
 
     std::vector<SystemData*>& sysVec = SystemData::sSystemVector;
     int id {static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin())};
-    view->setPosition(id * static_cast<float>(Renderer::getScreenWidth()),
-                      static_cast<float>(Renderer::getScreenHeight() * 2));
+    view->setPosition(id * Renderer::getScreenWidth(), Renderer::getScreenHeight() * 2.0f);
 
     addChild(view.get());
 
@@ -790,7 +789,7 @@ std::shared_ptr<SystemView> ViewController::getSystemListView()
 
     mSystemListView = std::shared_ptr<SystemView>(new SystemView);
     addChild(mSystemListView.get());
-    mSystemListView->setPosition(0, static_cast<float>(Renderer::getScreenHeight()));
+    mSystemListView->setPosition(0, Renderer::getScreenHeight());
     return mSystemListView;
 }
 
@@ -808,7 +807,7 @@ bool ViewController::input(InputConfig* config, Input input)
     if (mWindow->getGameLaunchedState()) {
         mWindow->setAllowTextScrolling(true);
         mWindow->setAllowFileAnimation(true);
-        mWindow->unsetLaunchedGame();
+        mWindow->setLaunchedGame(false);
         // Filter out the "a" button so the game is not restarted if there was such a button press
         // queued when leaving the game.
         if (config->isMappedTo("a", input) && input.value != 0)
@@ -825,11 +824,14 @@ bool ViewController::input(InputConfig* config, Input input)
             mSystemListView->stopScrolling();
         // Finish the animation too, so that it doesn't continue
         // to play when we've closed the menu.
-        if (mSystemListView->isAnimationPlaying(0))
-            mSystemListView->finishAnimation(0);
-        // Stop the gamelist scrolling as well as it would otherwise
-        // also continue to run after closing the menu.
+        if (mSystemListView->isSystemAnimationPlaying(0))
+            mSystemListView->finishSystemAnimation(0);
+        // Stop the gamelist scrolling as well as it would otherwise continue to run after
+        // closing the menu.
         mCurrentView->stopListScrolling();
+        // Pause all videos as they would otherwise continue to play beneath the menu.
+        mCurrentView->pauseViewVideos();
+
         // Finally, if the camera is currently moving, reset its position.
         cancelViewTransitions();
 
@@ -870,9 +872,8 @@ void ViewController::render(const glm::mat4& parentTrans)
 
     // Camera position, position + size.
     glm::vec3 viewStart {transInverse[3]};
-    glm::vec3 viewEnd {std::fabs(trans[3].x) + static_cast<float>(Renderer::getScreenWidth()),
-                       std::fabs(trans[3].y) + static_cast<float>(Renderer::getScreenHeight()),
-                       0.0f};
+    glm::vec3 viewEnd {std::fabs(trans[3].x) + Renderer::getScreenWidth(),
+                       std::fabs(trans[3].y) + Renderer::getScreenHeight(), 0.0f};
 
     // Keep track of UI mode changes.
     UIModeController::getInstance()->monitorUIMode();
@@ -904,8 +905,8 @@ void ViewController::render(const glm::mat4& parentTrans)
     if (mFadeOpacity) {
         unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255);
         Renderer::setMatrix(parentTrans);
-        Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
-                           static_cast<float>(Renderer::getScreenHeight()), fadeColor, fadeColor);
+        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                           fadeColor, fadeColor);
     }
 }
 
@@ -988,7 +989,7 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
     // video player, prevent scrolling of game names and game descriptions and prevent the
     // screensaver from starting on schedule.
     if (mWindow->getGameLaunchedState())
-        mWindow->setLaunchedGame();
+        mWindow->setLaunchedGame(true);
 
     // Redisplay the current view.
     if (mCurrentView)

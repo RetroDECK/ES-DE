@@ -78,6 +78,38 @@ public:
     void setUppercase(bool uppercase)
     {
         mUppercase = uppercase;
+
+        if (uppercase) {
+            mLowercase = false;
+            mCapitalize = false;
+        }
+
+        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
+            it->data.textCache.reset();
+    }
+
+    void setLowercase(bool lowercase)
+    {
+        mLowercase = lowercase;
+
+        if (lowercase) {
+            mUppercase = false;
+            mCapitalize = false;
+        }
+
+        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
+            it->data.textCache.reset();
+    }
+
+    void setCapitalize(bool capitalize)
+    {
+        mCapitalize = capitalize;
+
+        if (capitalize) {
+            mUppercase = false;
+            mLowercase = false;
+        }
+
         for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
             it->data.textCache.reset();
     }
@@ -115,6 +147,8 @@ private:
 
     std::shared_ptr<Font> mFont;
     bool mUppercase;
+    bool mLowercase;
+    bool mCapitalize;
     float mLineSpacing;
     float mSelectorHeight;
     float mSelectorOffsetY;
@@ -140,6 +174,8 @@ template <typename T> TextListComponent<T>::TextListComponent()
 
     mFont = Font::get(FONT_SIZE_MEDIUM);
     mUppercase = false;
+    mLowercase = false;
+    mCapitalize = false;
     mLineSpacing = 1.5f;
     mSelectorHeight = mFont->getSize() * 1.5f;
     mSelectorOffsetY = 0;
@@ -229,9 +265,20 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         else
             color = mColors[entry.data.colorId];
 
-        if (!entry.data.textCache)
-            entry.data.textCache = std::unique_ptr<TextCache>(font->buildTextCache(
-                mUppercase ? Utils::String::toUpper(entry.name) : entry.name, 0, 0, 0x000000FF));
+        if (!entry.data.textCache) {
+            if (mUppercase)
+                entry.data.textCache = std::unique_ptr<TextCache>(
+                    font->buildTextCache(Utils::String::toUpper(entry.name), 0, 0, 0x000000FF));
+            else if (mLowercase)
+                entry.data.textCache = std::unique_ptr<TextCache>(
+                    font->buildTextCache(Utils::String::toLower(entry.name), 0, 0, 0x000000FF));
+            else if (mCapitalize)
+                entry.data.textCache = std::unique_ptr<TextCache>(font->buildTextCache(
+                    Utils::String::toCapitalized(entry.name), 0, 0, 0x000000FF));
+            else
+                entry.data.textCache =
+                    std::unique_ptr<TextCache>(font->buildTextCache(entry.name, 0, 0, 0x000000FF));
+        }
 
         // If a game is marked as hidden, lower the text opacity a lot.
         // If a game is marked to not be counted, lower the opacity a moderate amount.
@@ -427,9 +474,21 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         if (elem->has("selectorColorEnd"))
             setSelectorColorEnd(elem->get<unsigned int>("selectorColorEnd"));
-        if (elem->has("selectorGradientType"))
-            setSelectorColorGradientHorizontal(
-                !(elem->get<std::string>("selectorGradientType").compare("horizontal")));
+        if (elem->has("selectorGradientType")) {
+            const std::string gradientType {elem->get<std::string>("selectorGradientType")};
+            if (gradientType == "horizontal") {
+                setSelectorColorGradientHorizontal(true);
+            }
+            else if (gradientType == "vertical") {
+                setSelectorColorGradientHorizontal(false);
+            }
+            else {
+                setSelectorColorGradientHorizontal(true);
+                LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                                   "<selectorGradientType> set to \""
+                                << gradientType << "\"";
+            }
+        }
         if (elem->has("selectedColor"))
             setSelectedColor(elem->get<unsigned int>("selectedColor"));
         if (elem->has("primaryColor"))
@@ -444,8 +503,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     setSelectorHeight(selectorHeight);
 
     if (properties & ALIGNMENT) {
-        if (elem->has("alignment")) {
-            const std::string& str = elem->get<std::string>("alignment");
+        if (elem->has("horizontalAlignment")) {
+            const std::string& str {elem->get<std::string>("horizontalAlignment")};
             if (str == "left")
                 setAlignment(ALIGN_LEFT);
             else if (str == "center")
@@ -453,21 +512,56 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             else if (str == "right")
                 setAlignment(ALIGN_RIGHT);
             else
-                LOG(LogError) << "Unknown TextListComponent alignment \"" << str << "\"!";
+                LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                                   "<horizontalAlignment> set to \""
+                                << str << "\"";
+        }
+        // Legacy themes only.
+        else if (elem->has("alignment")) {
+            const std::string& str {elem->get<std::string>("alignment")};
+            if (str == "left")
+                setAlignment(ALIGN_LEFT);
+            else if (str == "center")
+                setAlignment(ALIGN_CENTER);
+            else if (str == "right")
+                setAlignment(ALIGN_RIGHT);
+            else
+                LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                                   "<alignment> set to \""
+                                << str << "\"";
         }
         if (elem->has("horizontalMargin")) {
-            mHorizontalMargin = elem->get<float>("horizontalMargin") *
-                                (this->mParent ? this->mParent->getSize().x :
-                                                 static_cast<float>(Renderer::getScreenWidth()));
+            mHorizontalMargin =
+                elem->get<float>("horizontalMargin") *
+                (this->mParent ? this->mParent->getSize().x : Renderer::getScreenWidth());
         }
     }
 
+    if (properties & LETTER_CASE && elem->has("letterCase")) {
+        std::string letterCase {elem->get<std::string>("letterCase")};
+        if (letterCase == "uppercase") {
+            setUppercase(true);
+        }
+        else if (letterCase == "lowercase") {
+            setLowercase(true);
+        }
+        else if (letterCase == "capitalize") {
+            setCapitalize(true);
+        }
+        else if (letterCase != "none") {
+            LOG(LogWarning)
+                << "TextListComponent: Invalid theme configuration, property <letterCase> set to \""
+                << letterCase << "\"";
+        }
+    }
+
+    // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
 
     if (properties & LINE_SPACING) {
         if (elem->has("lineSpacing"))
-            setLineSpacing(elem->get<float>("lineSpacing"));
+            setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
         if (elem->has("selectorHeight"))
             setSelectorHeight(elem->get<float>("selectorHeight") * Renderer::getScreenHeight());
         if (elem->has("selectorOffsetY")) {

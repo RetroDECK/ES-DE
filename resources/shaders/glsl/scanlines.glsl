@@ -93,6 +93,7 @@ uniform COMPAT_PRECISION int FrameCount;
 uniform COMPAT_PRECISION vec2 OutputSize;
 uniform COMPAT_PRECISION vec2 TextureSize;
 uniform COMPAT_PRECISION vec2 InputSize;
+uniform COMPAT_PRECISION float opacity = 1.0;
 uniform sampler2D Texture;
 COMPAT_VARYING vec4 TEX0;
 COMPAT_VARYING vec2 onex;
@@ -126,10 +127,11 @@ uniform COMPAT_PRECISION float OutputGamma;
 #define TEX2D(coords) GAMMA_IN(COMPAT_TEXTURE(Source, coords))
 
 // Macro for weights computing.
-#define WEIGHT(w) \
-if (w > 1.0) w = 1.0; \
-w = 1.0 - w * w; \
-w = w * w;
+#define WEIGHT(w)                                                                                  \
+    if (w > 1.0)                                                                                   \
+        w = 1.0;                                                                                   \
+    w = 1.0 - w * w;                                                                               \
+    w = w * w;
 
 void main()
 {
@@ -143,7 +145,7 @@ void main()
     float h_weight_00 = dx / SPOT_WIDTH;
     WEIGHT(h_weight_00);
 
-    color *= vec4( h_weight_00, h_weight_00, h_weight_00, h_weight_00  );
+    color *= vec4(h_weight_00, h_weight_00, h_weight_00, h_weight_00);
 
     // Get closest horizontal neighbour to blend.
     vec2 coords01;
@@ -184,12 +186,13 @@ void main()
     WEIGHT(v_weight_10);
 
     color = color + colorNB * vec4(v_weight_10 * h_weight_00, v_weight_10 * h_weight_00,
-            v_weight_10 * h_weight_00, v_weight_10 * h_weight_00);
+                                   v_weight_10 * h_weight_00, v_weight_10 * h_weight_00);
     colorNB = TEX2D(texture_coords + coords01 + coords10);
     color = color + colorNB * vec4(v_weight_10 * h_weight_01, v_weight_10 * h_weight_01,
-            v_weight_10 * h_weight_01, v_weight_10 * h_weight_01);
+                                   v_weight_10 * h_weight_01, v_weight_10 * h_weight_01);
     color *= vec4(COLOR_BOOST);
 
-    FragColor = clamp(GAMMA_OUT(color), 0.0, 1.0);
+    vec4 colorTemp = clamp(GAMMA_OUT(color), 0.0, 1.0);
+    FragColor = vec4(colorTemp.rgb, colorTemp.a * opacity);
 }
 #endif

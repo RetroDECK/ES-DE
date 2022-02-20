@@ -256,10 +256,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         s->addRow(row, false);
                     }
 
-                    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-                    float maxWidthModifier = glm::clamp(0.64f * aspectValue, 0.42f, 0.92f);
-                    float maxWidth =
-                        static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
+                    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+                    float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                    float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
 
                     s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
                     s->setMenuPosition(
@@ -388,10 +387,11 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                                 s->addRow(row, false);
                         }
 
-                        float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-                        float maxWidthModifier = glm::clamp(0.64f * aspectValue, 0.42f, 0.92f);
-                        float maxWidth =
-                            static_cast<float>(Renderer::getScreenWidth()) * maxWidthModifier;
+                        const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+                        const float maxWidthModifier {
+                            glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                        const float maxWidth {static_cast<float>(Renderer::getScreenWidth()) *
+                                              maxWidthModifier};
 
                         s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
                         s->setMenuPosition(glm::vec3 {(s->getSize().x - maxWidth) / 2.0f,
@@ -514,7 +514,6 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
     buttons.push_back(std::make_shared<ButtonComponent>("SAVE", "save metadata", [&] {
         save();
-        ViewController::getInstance()->onPauseVideo();
         delete this;
     }));
     buttons.push_back(
@@ -581,9 +580,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     mGrid.setEntry(mButtons, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Resize + center.
-    float width =
-        static_cast<float>(std::min(static_cast<int>(Renderer::getScreenHeight() * 1.05f),
-                                    static_cast<int>(Renderer::getScreenWidth() * 0.90f)));
+    float width = std::min(Renderer::getScreenHeight() * 1.05f, Renderer::getScreenWidth() * 0.90f);
 
     // Set height explicitly to ten rows for the component list.
     float height = mList->getRowHeight(0) * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
@@ -843,7 +840,6 @@ void GuiMetaDataEd::close()
             CollectionSystemsManager::getInstance()->refreshCollectionSystems(mScraperParams.game);
             mWindow->invalidateCachedBackground();
         }
-        ViewController::getInstance()->onPauseVideo();
         delete this;
     };
 

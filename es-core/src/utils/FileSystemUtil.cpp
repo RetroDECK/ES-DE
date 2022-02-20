@@ -464,10 +464,7 @@ namespace Utils
         std::string expandHomePath(const std::string& path)
         {
             // Expand home path if ~ is used.
-            std::string expandedPath = path;
-
-            expandedPath = Utils::String::replace(path, "~", Utils::FileSystem::getHomePath());
-            return expandedPath;
+            return Utils::String::replace(path, "~", Utils::FileSystem::getHomePath());
         }
 
         std::string resolveRelativePath(const std::string& path,
