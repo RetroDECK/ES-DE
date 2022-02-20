@@ -25,6 +25,13 @@ public:
         mSystem->getRootFolder()->setUpdateListCallback([&]() { mNeedsRefresh = true; });
     }
 
+    ~GameSelectorComponent()
+    {
+        if (std::find(SystemData::sSystemVector.cbegin(), SystemData::sSystemVector.cend(),
+                      mSystem) != SystemData::sSystemVector.cend())
+            mSystem->getRootFolder()->setUpdateListCallback(nullptr);
+    }
+
     enum class GameSelection {
         RANDOM, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
         LAST_PLAYED,
