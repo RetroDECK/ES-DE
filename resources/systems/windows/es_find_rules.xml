@@ -36,7 +36,7 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
-    <emulator name="DOSBOX_STAGING">
+    <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
         <rule type="systempath">
             <entry>dosbox.exe</entry>
