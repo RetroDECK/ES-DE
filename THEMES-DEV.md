@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v1.3 (development version) - Themes
+# EmulationStation Desktop Edition (ES-DE) v2.0 (development version) - Themes
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
@@ -58,7 +58,7 @@ If a theme set with the same name exists in both locations, the one in the home 
 
 If you are not familiar with theming for RetroPie or similar forks of EmulationStation you can skip this section as it only describes the key differences between the updated ES-DE themes and these _legacy_ theme sets. The term _legacy_ is used throughout this document to refer to this older style of themes which ES-DE still fully supports for backward compatibility reasons. The old theme format is described in [THEMES-LEGACY.md](THEMES-LEGACY.md) although this document is basically a historical artifact by now.
 
-With ES-DE v1.3 a new theme engine was introduced that fundamentally changed some aspects of how theming works. The previous design used specific view styles (basic, detailed, video and grid) and this was dropped completely and replaced with _variants_ that can accomplish the same thing while being much more powerful and flexible.
+With ES-DE v2.0 a new theme engine was introduced that fundamentally changed some aspects of how theming works. The previous design used specific view styles (basic, detailed, video and grid) and this was dropped completely and replaced with _variants_ that can accomplish the same thing while being much more powerful and flexible.
 
 In the past EmulationStation basically had hardcoded view styles with certain elements always being present and only a limited ability to manipulate these via positioning, resizing, coloring etc. As well so-called _extras_ were provided to expand theming support somehow but even this was quite limited.
 
@@ -369,7 +369,7 @@ Variant and aspect ratio values need to be declared before they can be used insi
 ~/.emulationstation/themes/mythemeset-DE/capabilities.xml
 ```
 
-This file type was introduced with the new ES-DE theme engine in v1.3 and is an indicator that the theme set is of the new generation instead of being of the legacy type (i.e. a theme set backward compatible with RetroPie EmulationStation). In other words, if the capabilities.xml file is absent, the theme will get loaded as a legacy set.
+This file type was introduced with the new ES-DE theme engine in v2.0 and is an indicator that the theme set is of the new generation instead of being of the legacy type (i.e. a theme set backward compatible with RetroPie EmulationStation). In other words, if the capabilities.xml file is absent, the theme will get loaded as a legacy set.
 
 The structure of the file is simple, it just contains the declarations for the variants and aspect ratios, such as in this example:
 

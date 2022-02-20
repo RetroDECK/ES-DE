@@ -2,7 +2,7 @@
 
 [[_TOC_]]
 
-## Version 1.3.0 (in development)
+## Version 2.0.0 (in development)
 
 **Release date:** TBD
 

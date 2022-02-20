@@ -60,14 +60,13 @@ The roadmap is under constant review so expect it to change from time to time. S
 * _Add GLM library dependency for matrix and vector operations, decommission the built-in functions_
 * _AppImage and AUR releases on Linux_
 
-#### v1.3 (in progress)
+#### v2.0 (in progress)
 
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
 * Multiple new gamelist components (wheels, wall/grid etc.)
-* Lottie animation (vector graphics) support
-* Checksum support for the scraper for exact searches and for determining when to overwrite files
+* Lottie animation (vector graphics) and GIF animation support
 
-#### v1.4
+#### v2.1
 
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
@@ -77,16 +76,17 @@ The roadmap is under constant review so expect it to change from time to time. S
 * RetroAchievements.org integration
 * Add "time played" counter per game, similar to how it works in Steam
 
-#### v1.5
+#### v2.2
 
 * Reorganize the menus, possibly adding basic/advanced modes
 * Localization/multi-language support
 * Simple file browsing component
+* Checksum support for the scraper for exact searches and for determining when to overwrite files
 * New texture/cache manager with support for SVG images and Lottie animations
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets
 * Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
-#### v1.6
+#### v2.3
 
 * Vulkan renderer for all supported operating systems
 * Dependency on MoltenVK to get Metal support on macOS
@@ -96,7 +96,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Bulk metadata editor
 * Improve multi-threading
 
-#### v1.7
+#### v2.4
 
 * Migration tools for importing game metadata and media from other frontend applications
 * Audit tools to clean up orphaned gamelist entries, media files etc.

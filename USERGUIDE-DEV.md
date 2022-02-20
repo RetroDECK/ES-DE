@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v1.3 (development version) - User guide
+# EmulationStation Desktop Edition (ES-DE) v2.0 (development version) - User guide
 
 This document is intended as a quick start guide and as a reference for the application settings and general functionality. For details on how to build ES-DE from source code and to perform more advanced configuration, please refer to [INSTALL-DEV.md](INSTALL-DEV.md).
 
@@ -1220,7 +1220,7 @@ Various settings that affect the user interface.
 
 **Theme set**
 
-The theme set to use. Defaults to rbsimple-DE which is shipped with the application. There are two types of theme sets; the new type which was introduced with ES-DE v1.3 and legacy themes that are supported for backward compatibility with RetroPie EmulationStation. The use of legacy themes is however discouraged as their functionality is very limited. As well the backward compabitility will likely be removed at some point in the future.
+The theme set to use. Defaults to rbsimple-DE which is shipped with the application. There are two types of theme sets; the new type which was introduced with ES-DE v2.0 and legacy themes that are supported for backward compatibility with RetroPie EmulationStation. The use of legacy themes is however discouraged as their functionality is very limited. As well the backward compabitility will likely be removed at some point in the future.
 
 **Theme variant**
 

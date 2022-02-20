@@ -1,6 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE) - Legacy Themes
 
-**This document covers the creation of legacy themes only, which is a theme structure that is backward compatible with RetroPie EmulationStation. As ES-DE v1.3 and later has a new theme engine with much improved theming capabilities, this document is mostly intended for historical reference. For creating or porting themes to ES-DE the documentation in [THEMES.md](THEMES.md) should be used instead.**
+**This document covers the creation of legacy themes only, which is a theme structure that is backward compatible with RetroPie EmulationStation. As ES-DE v2.0 and later has a new theme engine with much improved theming capabilities, this document is mostly intended for historical reference. For creating or porting themes to ES-DE the documentation in [THEMES.md](THEMES.md) should be used instead.**
 
 If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
 
