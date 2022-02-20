@@ -104,8 +104,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"size", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
-       {"rotation", FLOAT},
-       {"rotationOrigin", NORMALIZED_PAIR},
        {"path", PATH},
        {"default", PATH},
        {"defaultImage", PATH},
