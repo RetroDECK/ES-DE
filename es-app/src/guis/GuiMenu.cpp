@@ -856,14 +856,13 @@ void GuiMenu::openSoundOptions()
 
     if (UIModeController::getInstance()->isUIModeFull()) {
         // Play audio for gamelist videos.
-        auto gamelist_video_audio = std::make_shared<SwitchComponent>();
-        gamelist_video_audio->setState(Settings::getInstance()->getBool("GamelistVideoAudio"));
-        s->addWithLabel("PLAY AUDIO FOR VIDEOS IN THE GAMELIST VIEW", gamelist_video_audio);
-        s->addSaveFunc([gamelist_video_audio, s] {
-            if (gamelist_video_audio->getState() !=
-                Settings::getInstance()->getBool("GamelistVideoAudio")) {
-                Settings::getInstance()->setBool("GamelistVideoAudio",
-                                                 gamelist_video_audio->getState());
+        auto viewsVideoAudio = std::make_shared<SwitchComponent>();
+        viewsVideoAudio->setState(Settings::getInstance()->getBool("ViewsVideoAudio"));
+        s->addWithLabel("PLAY AUDIO FOR GAMELIST AND SYSTEM VIEW VIDEOS", viewsVideoAudio);
+        s->addSaveFunc([viewsVideoAudio, s] {
+            if (viewsVideoAudio->getState() !=
+                Settings::getInstance()->getBool("ViewsVideoAudio")) {
+                Settings::getInstance()->setBool("ViewsVideoAudio", viewsVideoAudio->getState());
                 s->setNeedsSaving();
             }
         });

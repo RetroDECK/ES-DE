@@ -196,7 +196,7 @@ void Settings::setDefaults()
     // Sound settings.
     mIntMap["SoundVolumeNavigation"] = {70, 70};
     mIntMap["SoundVolumeVideos"] = {80, 80};
-    mBoolMap["GamelistVideoAudio"] = {true, true};
+    mBoolMap["ViewsVideoAudio"] = {true, true};
     mBoolMap["MediaViewerVideoAudio"] = {true, true};
     mBoolMap["ScreensaverVideoAudio"] = {true, true};
     mBoolMap["NavigationSounds"] = {true, true};

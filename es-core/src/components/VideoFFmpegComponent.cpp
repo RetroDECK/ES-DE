@@ -786,7 +786,7 @@ void VideoFFmpegComponent::outputFrames()
             bool outputSound = false;
 
             if ((!mScreensaverMode && !mMediaViewerMode) &&
-                Settings::getInstance()->getBool("GamelistVideoAudio"))
+                Settings::getInstance()->getBool("ViewsVideoAudio"))
                 outputSound = true;
             else if (mScreensaverMode && Settings::getInstance()->getBool("ScreensaverVideoAudio"))
                 outputSound = true;
