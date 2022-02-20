@@ -188,6 +188,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"metadata", STRING},
+       {"gameselector", STRING},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"horizontalAlignment", STRING},

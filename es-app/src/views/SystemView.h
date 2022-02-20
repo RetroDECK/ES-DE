@@ -14,6 +14,7 @@
 #include "Sound.h"
 #include "SystemData.h"
 #include "components/CarouselComponent.h"
+#include "components/DateTimeComponent.h"
 #include "components/GameSelectorComponent.h"
 #include "components/LottieComponent.h"
 #include "components/TextComponent.h"
@@ -34,6 +35,7 @@ struct SystemViewElements {
 
     std::vector<std::unique_ptr<TextComponent>> gameCountComponents;
     std::vector<std::unique_ptr<TextComponent>> textComponents;
+    std::vector<std::unique_ptr<DateTimeComponent>> dateTimeComponents;
     std::vector<std::unique_ptr<ImageComponent>> imageComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
     std::vector<std::unique_ptr<LottieComponent>> lottieAnimComponents;

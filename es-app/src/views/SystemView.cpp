@@ -457,6 +457,14 @@ void SystemView::populate()
                             elements.children.emplace_back(elements.textComponents.back().get());
                         }
                     }
+                    else if (element.second.type == "datetime") {
+                        elements.dateTimeComponents.emplace_back(
+                            std::make_unique<DateTimeComponent>());
+                        elements.dateTimeComponents.back()->setDefaultZIndex(40.0f);
+                        elements.dateTimeComponents.back()->applyTheme(
+                            theme, "system", element.first, ThemeFlags::ALL);
+                        elements.children.emplace_back(elements.dateTimeComponents.back().get());
+                    }
                 }
             }
             else {
@@ -857,15 +865,19 @@ void SystemView::updateGameSelectors()
                 gameSelector = mSystemElements[cursor].gameSelectors.front().get();
                 LOG(LogWarning) << "SystemView::updateGameSelectors(): Multiple gameselector "
                                    "elements defined but text element does not state which one to "
-                                   "use, so selecting first entry";
+                                   "use, selecting first entry";
             }
             else {
                 for (auto& selector : mSystemElements[cursor].gameSelectors) {
                     if (selector->getSelectorName() == textSelector)
                         gameSelector = selector.get();
                 }
-                if (gameSelector == nullptr)
+                if (gameSelector == nullptr) {
+                    LOG(LogWarning)
+                        << "SystemView::updateGameSelectors(): Invalid gameselector \""
+                        << textSelector << "\" defined for text element, selecting first entry";
                     gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                }
             }
         }
         else {
@@ -902,6 +914,48 @@ void SystemView::updateGameSelectors()
         }
         else {
             text->setValue("");
+        }
+    }
+
+    for (auto& dateTime : mSystemElements[cursor].dateTimeComponents) {
+        if (dateTime->getThemeMetadata() == "")
+            continue;
+        GameSelectorComponent* gameSelector {nullptr};
+        if (multipleSelectors) {
+            const std::string& dateTimeSelector {dateTime->getThemeGameSelector()};
+            if (dateTimeSelector == "") {
+                gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                LOG(LogWarning) << "SystemView::updateGameSelectors(): Multiple gameselector "
+                                   "elements defined but datetime element does not state which one "
+                                   "to use, selecting first entry";
+            }
+            else {
+                for (auto& selector : mSystemElements[cursor].gameSelectors) {
+                    if (selector->getSelectorName() == dateTimeSelector)
+                        gameSelector = selector.get();
+                }
+                if (gameSelector == nullptr) {
+                    LOG(LogWarning) << "SystemView::updateGameSelectors(): Invalid gameselector \""
+                                    << dateTimeSelector
+                                    << "\" defined for datetime element, selecting first entry";
+                    gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                }
+            }
+        }
+        else {
+            gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+        }
+        gameSelector->refreshGames();
+        std::vector<FileData*> games {gameSelector->getGames()};
+        if (!games.empty()) {
+            const std::string metadata {dateTime->getThemeMetadata()};
+            if (metadata == "releasedate")
+                dateTime->setValue(games.front()->metadata.get("releasedate"));
+            if (metadata == "lastplayed")
+                dateTime->setValue(games.front()->metadata.get("lastplayed"));
+        }
+        else {
+            dateTime->setValue("19700101T000000");
         }
     }
 }
