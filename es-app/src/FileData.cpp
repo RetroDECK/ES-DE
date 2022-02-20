@@ -945,8 +945,8 @@ void FileData::launchGame()
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
-        window->queueInfoPopup("ERROR: MISSING EMULATOR CONFIGURATION FOR '" + emulatorEntry + "'",
-                               6000);
+        window->queueInfoPopup(
+            "ERROR: MISSING EMULATOR FIND RULES CONFIGURATION FOR '" + emulatorEntry + "'", 6000);
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
         return;
@@ -956,8 +956,24 @@ void FileData::launchGame()
         LOG(LogError) << "Raw emulator launch command:";
         LOG(LogError) << commandRaw;
 
-        window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?",
-                               6000);
+        std::string emulatorName;
+        size_t startPos {0};
+        size_t endPos {0};
+
+        if ((startPos = command.find("%EMULATOR_")) != std::string::npos) {
+            endPos = command.find("%", startPos + 1);
+            if (endPos != std::string::npos)
+                emulatorName = command.substr(startPos + 10, endPos - startPos - 10);
+        }
+
+        if (emulatorName == "")
+            window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR, HAS IT BEEN PROPERLY INSTALLED?",
+                                   6000);
+        else
+            window->queueInfoPopup("ERROR: COULDN'T FIND EMULATOR '" + emulatorName +
+                                       "', HAS IT BEEN PROPERLY INSTALLED?",
+                                   6000);
+
         window->setAllowTextScrolling(true);
         window->setAllowFileAnimation(true);
         return;
