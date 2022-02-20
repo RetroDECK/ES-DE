@@ -1217,6 +1217,9 @@ bool VideoFFmpegComponent::decoderInitHW()
 
 void VideoFFmpegComponent::startVideoStream()
 {
+    if (mThemeOpacity == 0.0f)
+        return;
+
     mIsPlaying = true;
 
     if (!mFormatContext) {
