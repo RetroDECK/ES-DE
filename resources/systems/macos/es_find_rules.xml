@@ -54,4 +54,10 @@
             <entry>/Applications/RPCS3.app/Contents/MacOS/rpcs3</entry>
         </rule>
     </emulator>
+    <emulator name="XEMU">
+        <!-- Microsoft Xbox emulator xemu -->
+        <rule type="staticpath">
+            <entry>/Applications/xemu.app/Contents/MacOS/xemu</entry>
+        </rule>
+    </emulator>
 </ruleList>
