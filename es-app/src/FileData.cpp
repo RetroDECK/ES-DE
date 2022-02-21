@@ -1453,6 +1453,13 @@ const std::string FileData::findEmulatorPath(std::string& command)
         // Likewise for the %ROMPATH% variable which expands to the configured ROM directory.
         path = Utils::String::replace(path, "%ROMPATH%", getROMDirectory());
 
+        // Find the first matching file if a wildcard was used for the emulator entry.
+        if (path.find('*') != std::string::npos) {
+            Utils::FileSystem::StringList files {Utils::FileSystem::getMatchingFiles(path)};
+            if (files.size() > 0)
+                path = files.front();
+        }
+
         if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
             command.replace(startPos, endPos - startPos + 1, path);
             return path;
@@ -1472,6 +1479,14 @@ const std::string FileData::findEmulatorPath(std::string& command)
     }
     else {
         emuExecutable = command.substr(0, command.find(' '));
+    }
+
+    if (emuExecutable.find('*') != std::string::npos) {
+        Utils::FileSystem::StringList files {Utils::FileSystem::getMatchingFiles(emuExecutable)};
+        if (files.size() > 0) {
+            command = Utils::String::replace(command, emuExecutable, files.front());
+            emuExecutable = files.front();
+        }
     }
 
 #if defined(_WIN64)

@@ -23,6 +23,7 @@
 #include "utils/StringUtil.h"
 
 #include <fstream>
+#include <regex>
 #include <string>
 #include <sys/stat.h>
 
@@ -120,6 +121,44 @@ namespace Utils
             }
             contentList.sort();
             return contentList;
+        }
+
+        StringList getMatchingFiles(const std::string& pattern)
+        {
+            StringList files;
+            size_t entry {pattern.find('*')};
+
+            if (entry == std::string::npos)
+                return files;
+
+            std::string parent {getParent(pattern)};
+
+            // Don't allow wildcard matching for the parent directory.
+            if (entry <= parent.size())
+                return files;
+
+            StringList dirContent {getDirContent(parent)};
+
+            if (dirContent.size() == 0)
+                return files;
+
+            std::regex expression;
+
+            try {
+                expression = Utils::String::replace(pattern, "*", ".*");
+            }
+            catch (...) {
+                LOG(LogError) << "FileSystemUtil::getMatchingFiles(): Invalid regular expression "
+                              << "\"" << pattern << "\"";
+                return files;
+            }
+
+            for (auto& dir : dirContent) {
+                if (std::regex_match(dir, expression))
+                    files.emplace_back(dir);
+            }
+
+            return files;
         }
 
         StringList getPathList(const std::string& path)

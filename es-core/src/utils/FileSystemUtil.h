@@ -21,6 +21,7 @@ namespace Utils
         using StringList = std::list<std::string>;
 
         StringList getDirContent(const std::string& path, const bool recursive = false);
+        StringList getMatchingFiles(const std::string& pattern);
         StringList getPathList(const std::string& path);
         void setHomePath(const std::string& path);
         std::string getHomePath();
