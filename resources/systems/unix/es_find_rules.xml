@@ -44,6 +44,12 @@
             <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="MAME">
+        <!-- Arcade emulator MAME -->
+        <rule type="systempath">
+            <entry>mame</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">

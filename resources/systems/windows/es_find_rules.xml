@@ -47,6 +47,12 @@
             <entry>%ESPATH%\..\dosbox-staging\dosbox.exe</entry>
         </rule>
     </emulator>
+    <emulator name="MAME">
+        <!-- Arcade emulator MAME -->
+        <rule type="systempath">
+            <entry>mame.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="winregistryvalue">
