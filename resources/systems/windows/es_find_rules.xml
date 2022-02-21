@@ -36,6 +36,12 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="DOLPHIN">
+        <!-- Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="systempath">
+            <entry>dolphin.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
         <rule type="systempath">

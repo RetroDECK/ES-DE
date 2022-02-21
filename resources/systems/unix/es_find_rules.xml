@@ -34,6 +34,16 @@
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="DOLPHIN">
+        <!-- Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="systempath">
+            <entry>dolphin-emu</entry>
+            <entry>org.DolphinEmu.dolphin-emu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
+        </rule>
+    </emulator>
     <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
         <rule type="systempath">
