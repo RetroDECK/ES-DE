@@ -14,6 +14,8 @@
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
+* Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
+* The actual names for emulators with   find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
 * Removed the "Play videos immediately (override theme)" setting
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
@@ -69,6 +71,7 @@
 * Renamed GuiGameScraper.cpp to GuiScraperSingle.cpp
 * Renamed SystemScreensaver.cpp to Screensaver.cpp
 * Moved UIModeController.cpp from the es-app/views directory to es-app
+* Updated the StringUtil::replace function as the old function was dangerous and could run into an endless loop
 * Set the clang-format option SpaceBeforeCpp11BracedList to true and reformatted the codebase
 * Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
 * Greatly simplified the video controls code (play/stop/pause etc.)

@@ -81,7 +81,7 @@ Of course the filename will differ slightly depending on the architecture, the e
 
 In addition to the .deb and .rpm packages covered above, ES-DE is also available as an AppImage which should be usable on most modern x86 64-bit Linux distributions. After download you have to set the file as executable, such as this:
 ```
-chmod +x emulationstation-de-1.2.0-x64.AppImage
+chmod +x emulationstation-de-2.0.0-x64.AppImage
 ```
 
  Following this you can launch ES-DE by double-clicking on the AppImage using your file manager. It's also possible to run it from a terminal window, in which case all command line options work the same way as if installed as an ordinary package.
@@ -446,7 +446,7 @@ If using the Snap distribution you need to run the following command if you inte
 sudo snap connect retroarch:removable-media
 ```
 
-The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is problematic which is AppImage packages as there is no standardized directory for storing these files. Read more [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) on how to get the AppImage release of RetroArch to work.
+The default es_systems.xml file is paired with a file named es_find_rules.xml which tries to find the emulators and cores using some predefined rules. For Windows this should normally just work, and for macOS too as long as RetroArch is installed at the default location /Applications/RetroArch.app. For Unix/Linux there is one exception that is slightly problematic which is AppImage packages as there is no standardized directory for storing these files. Read more [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) on how to get the AppImage release of RetroArch to work.
 
 If ES-DE is unable to find an emulator when a game is launched, a notification popup will be shown. Likewise a notification will be shown if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 
@@ -466,9 +466,9 @@ Unfortunately on Linux it's at the moment not possible to run the Steam release 
 
 ## Using emulators in AppImage format on Linux
 
-AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one problem though in that there is no standardized directory for storing these files, meaning ES-DE could have issues locating them.
+AppImages are a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one small problem though in that there is no standardized directory for storing these files, meaning ES-DE could have issues locating them.
 
-As such all bundled emulator configuration entries that support AppImages will look for these files in the following directories:
+Therefore all bundled emulator configuration entries that support AppImages will look for these files in the following directories:
 
 ```
 ~/Applications/
@@ -476,47 +476,31 @@ As such all bundled emulator configuration entries that support AppImages will l
 ~/bin/
 ```
 
-But even if the directory is known, another issue is that many AppImages contain version information in the filename, such as:
-```
-rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
-```
+As AppImages often embed version information into the actual filename, the bundled configuration uses wildcards to locate the files, such as `rpcs3*.AppImage` which would match the filename `rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage` for instance. Note that if multiple files match the wildcard pattern, the first file returned by the operating system will be selected.
 
-ES-DE needs to have a specific filename to be able to find the emulator, so the easiest solution is to create a symlink to the AppImage file, such as the following:
-```
-cd ~/Applications
-ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage rpcs3.AppImage
-```
+
 
 This approach also works when using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which is recommended as it properly integrates AppImages into the application menu and such. When first launching an AppImage with AppImageLauncher installed a question will be asked whether to integrate the application. If accepting this, the AppImage will be moved to the `~/Applications` directory and a hash will be added to the filename, like in this example:
 ```
 rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
 ```
+Again, the wildcard matching means this filename should be found by ES-DE when launching a game so no additional setup should be required.
 
-After taking this step, a symlink can be created:
+If not using AppImageLauncher, then make sure to set the AppImages as executable or ES-DE will not be able to launch them. For example:
 ```
 cd ~/Applications
-ln -s rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage rpcs3.AppImage
+chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 ```
 
-As the hashed filename created by AppImageLauncher will be retained also after upgrading AppImages to newer versions, ES-DE will still be able to find the emulator.
+At the moment the following emulators are supported in AppImage format when using the bundled configuration:
 
-At the moment the following emulators are supported in AppImage format:
+| System name  | Emulator  | Filename configuration          |
+| :----------- | :-------- | :------------------------------ |
+| _Multiple_   | RetroArch | RetroArch-Linux-x86_64.AppImage |
+| ps3          | RPCS3     | rpcs3*.AppImage                 |
+| switch       | Yuzu      | yuzu*.AppImage                  |
 
-| System name  | Emulator  | Required filename or symlink name |
-| :----------- | :-------- | :-------------------------------- |
-| _Multiple_   | RetroArch | RetroArch-Linux-x86_64.AppImage   |
-| ps3          | RPCS3     | rpcs3.AppImage                    |
-| switch       | Yuzu      | yuzu.AppImage                     |
-
-Symlinking RetroArch is only required if using AppImageLauncher as the filename is otherwise not containing any version information, instead simply being named `RetroArch-Linux-x86_64.AppImage`.
-
-Note that the names are case sensitive, so for instance _rpcs3.appimage_ will not be found by ES-DE.
-
-Also make sure to set the AppImage as executable or ES-DE will not be able to launch it. You do this on the actual file, not on the symlink. For example:
-```
-cd ~/Applications
-chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
-```
+RetroArch does not embed any version information into the filename so no wildcard is required.
 
 ## Getting your games into ES-DE
 

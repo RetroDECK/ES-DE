@@ -1084,6 +1084,16 @@ The bundled es_systems.xml file is located in the resources directory that is pa
 
 It doesn't matter in which order you define the systems as they will be sorted by the `<fullname>` tag or by the optional `<systemsortname>` tag when displayed inside the application. But it's still a good idea to add the systems in alphabetical order to make the configuration file easier to maintain.
 
+Wildcards are supported for emulator binaries, but not for directories:
+```xml
+<!-- This is supported, first matching file will be selected -->
+<command>~/Applications/yuzu*.AppImage %ROM%</command>
+<!-- This is also supported -->
+<command>~/Applications/yuzu*.App* %ROM%</command>
+<!-- This is NOT supported -->
+<command>~/App*/yuzu*.AppImage %ROM%</command>
+```
+
 Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
 
 Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic described later in this document removes the need for most of the legacy options, but they are still supported for special configurations and for backward compatibility with old configuration files.
@@ -1141,6 +1151,10 @@ Below is an overview of the file layout with various examples. For the command t
         <!-- This example for Unix combines the two rules above to search for RetroArch in the PATH environment variable but uses
         the find rules for the emulator cores. -->
         <command>retroarch -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
+
+        <!-- This example for Unix uses a wildcard to find the first matching RPCS3 AppImage in the ~/Applications directory.
+        This is useful as AppImages often have version information embedded in the filename that may change when upgrading the package. -->
+        <command label="RPCS3 (Standalone)">~/Applications/rpcs3*.AppImage --no-gui %ROM%</command>
 
         <!-- This is an example for macOS, which is very similar to the Unix example above except using an absolute path to the emulator. -->
         <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
@@ -1382,9 +1396,9 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/Applications/yuzu.AppImage</entry>
-            <entry>~/.local/bin/yuzu.AppImage</entry>
-            <entry>~/bin/yuzu.AppImage</entry>
+            <entry>~/Applications/yuzu*.AppImage</entry>
+            <entry>~/.local/bin/yuzu*.AppImage</entry>
+            <entry>~/bin/yuzu*.AppImage</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1408,7 +1422,18 @@ The `winregistrypath` rule searches the Windows Registry "App Paths" keys for th
 
 The `winregistryvalue` rule will search for the specific registry value, and if it exists, it will use that value as the path to the emulator binary. HKEY_CURRENT_USER will be tried first, followed by HKEY_LOCAL_MACHINE. In the same manner as `winregistrypath`, ES-DE will check that the binary defined in the registry value actually exists. If not, it will proceed with the next rule. For example, if setting the `<entry>` tag for this rule to `SOFTWARE\Valve\Steam\SteamExe`, the emulator binary would be set to `c:\program files (x86)\steam\steam.exe`, assuming that's where Steam has been installed. As this rule can be used to query any value in the Registry, it's a quite powerful tool to locate various emulators and applications. In addition to this it's posssible to append an arbitrary string to the key value if it's found and use that as the emulator binary path. This is accomplished by using the pipe sign, so for example the entry `SOFTWARE\PCSX2\Install_Dir|\pcsx2.exe` will look for the key `SOFTWARE\PCSX2\Install_Dir` and if it's found it will take the value of that key and append the string `\pcsx2.exe` to it. This could for example result in `C:\Program Files (x86)\PCSX2\pcsx2.exe`. Also for this setup, ES-DE will check that the emulator binary actually exists, or it will proceed to the next rule.
 
-The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag.
+The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag. Wildcards (*) are supported for the emulator binary, but not for directories. Wildcards are very useful for AppImages which often embed version information into the filenames. Note that if multiple files match a wildcard pattern, the first file returned by the operating system will be selected.
+
+```xml
+<rule type="staticpath">
+    <!-- This is supported, first matching file will be selected -->
+    <entry>~/Applications/yuzu*.AppImage</entry>
+    <!-- This is also supported -->
+    <entry>~/Applications/yuzu*.App*</entry>
+    <!-- This is NOT supported -->
+    <entry>~/App*/yuzu*.AppImage</entry>
+</rule>
+```
 
 The winregistrypath rules are always processed first, followed by winregistryvalue, then systempath and finally staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
 
