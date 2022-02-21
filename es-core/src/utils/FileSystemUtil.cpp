@@ -142,10 +142,17 @@ namespace Utils
             if (dirContent.size() == 0)
                 return files;
 
+            // Some characters need to be escaped in order for the regular expression to work.
+            std::string escPattern {Utils::String::replace(pattern, "*", ".*")};
+            escPattern = Utils::String::replace(escPattern, ")", "\\)");
+            escPattern = Utils::String::replace(escPattern, "(", "\\(");
+            escPattern = Utils::String::replace(escPattern, "]", "\\]");
+            escPattern = Utils::String::replace(escPattern, "[", "\\[");
+
             std::regex expression;
 
             try {
-                expression = Utils::String::replace(pattern, "*", ".*");
+                expression = escPattern;
             }
             catch (...) {
                 LOG(LogError) << "FileSystemUtil::getMatchingFiles(): Invalid regular expression "
@@ -153,9 +160,9 @@ namespace Utils
                 return files;
             }
 
-            for (auto& dir : dirContent) {
-                if (std::regex_match(dir, expression))
-                    files.emplace_back(dir);
+            for (auto& entry : dirContent) {
+                if (std::regex_match(entry, expression))
+                    files.emplace_back(entry);
             }
 
             return files;
