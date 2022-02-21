@@ -47,6 +47,12 @@
             <entry>%ESPATH%\..\dosbox-staging\dosbox.exe</entry>
         </rule>
     </emulator>
+    <emulator name="FS-UAE">
+        <!-- Commodore Amiga emulator FS-UAE -->
+        <rule type="systempath">
+            <entry>fs-uae.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">

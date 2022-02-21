@@ -22,6 +22,12 @@
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="FS-UAE">
+        <!-- Commodore Amiga emulator FS-UAE -->
+        <rule type="staticpath">
+            <entry>/Applications/FS-UAE.app/Contents/MacOS/fs-uae</entry>
+        </rule>
+    </emulator>
     <emulator name="MUPEN64PLUS">
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="staticpath">

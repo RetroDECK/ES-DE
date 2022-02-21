@@ -44,6 +44,17 @@
             <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="FS-UAE">
+        <!-- Commodore Amiga emulator FS-UAE -->
+        <rule type="systempath">
+            <entry>fs-uae</entry>
+            <entry>fsuae.fs-uae</entry>
+            <entry>net.fsuae.FS-UAE</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.fsuae.FS-UAE</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">

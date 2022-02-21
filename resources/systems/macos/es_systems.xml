@@ -34,7 +34,7 @@
         <fullname>Commodore Amiga</fullname>
         <path>%ROMPATH%/amiga</path>
         <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga</theme>
     </system>
@@ -43,7 +43,7 @@
         <fullname>Commodore Amiga 600</fullname>
         <path>%ROMPATH%/amiga600</path>
         <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga600</theme>
     </system>
@@ -52,7 +52,7 @@
         <fullname>Commodore Amiga 1200</fullname>
         <path>%ROMPATH%/amiga1200</path>
         <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga1200</theme>
     </system>
@@ -61,7 +61,7 @@
         <fullname>Commodore Amiga CD32</fullname>
         <path>%ROMPATH%/amigacd32</path>
         <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.dylib %ROM%</command>
         <platform>amigacd32</platform>
         <theme>amigacd32</theme>
     </system>
