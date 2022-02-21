@@ -1455,9 +1455,16 @@ const std::string FileData::findEmulatorPath(std::string& command)
 
         // Find the first matching file if a wildcard was used for the emulator entry.
         if (path.find('*') != std::string::npos) {
+#if defined(_WIN64)
+            Utils::FileSystem::StringList files {
+                Utils::FileSystem::getMatchingFiles(Utils::String::replace(path, "\\", "/"))};
+            if (files.size() > 0)
+                path = Utils::String::replace(files.front(), "/", "\\");
+#else
             Utils::FileSystem::StringList files {Utils::FileSystem::getMatchingFiles(path)};
             if (files.size() > 0)
                 path = files.front();
+#endif
         }
 
         if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
