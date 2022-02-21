@@ -48,7 +48,6 @@ private:
     AudioManager() noexcept;
 
     static void mixAudio(void* unused, Uint8* stream, int len);
-    static void mixAudio2(void* unused, Uint8* stream, int len);
 
     static inline SDL_AudioStream* sConversionStream;
     static inline std::vector<std::shared_ptr<Sound>> sSoundVector;
