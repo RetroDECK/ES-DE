@@ -65,9 +65,9 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3</entry>
-            <entry>~/Applications/rpcs3.AppImage</entry>
-            <entry>~/.local/bin/rpcs3.AppImage</entry>
-            <entry>~/bin/rpcs3.AppImage</entry>
+            <entry>~/Applications/rpcs3*.AppImage</entry>
+            <entry>~/.local/bin/rpcs3*.AppImage</entry>
+            <entry>~/bin/rpcs3*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="XEMU">
@@ -89,9 +89,9 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/Applications/yuzu.AppImage</entry>
-            <entry>~/.local/bin/yuzu.AppImage</entry>
-            <entry>~/bin/yuzu.AppImage</entry>
+            <entry>~/Applications/yuzu*.AppImage</entry>
+            <entry>~/.local/bin/yuzu*.AppImage</entry>
+            <entry>~/bin/yuzu*.AppImage</entry>
         </rule>
     </emulator>
 </ruleList>
