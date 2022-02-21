@@ -583,17 +583,20 @@ namespace Utils
         }
 
         std::string replace(const std::string& stringArg,
-                            const std::string& replace,
-                            const std::string& with)
+                            const std::string& from,
+                            const std::string& to)
         {
-            std::string stringReplace = stringArg;
-            size_t pos;
+            std::string replaced;
+            size_t lastPos {0};
+            size_t findPos {0};
 
-            while ((pos = stringReplace.find(replace)) != std::string::npos)
-                stringReplace =
-                    stringReplace.replace(pos, replace.length(), with.c_str(), with.length());
+            while ((findPos = stringArg.find(from, lastPos)) != std::string::npos) {
+                replaced.append(stringArg, lastPos, findPos - lastPos).append(to);
+                lastPos = findPos + from.length();
+            }
 
-            return stringReplace;
+            replaced.append(stringArg.substr(lastPos));
+            return replaced;
         }
 
         std::wstring stringToWideString(const std::string& stringArg)
