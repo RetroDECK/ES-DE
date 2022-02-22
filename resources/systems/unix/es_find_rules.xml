@@ -52,6 +52,9 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
+            <entry>~/Applications/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/.local/bin/Dolphin_Emulator*.AppImage</entry>
+            <entry>~/bin/Dolphin_Emulator*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
@@ -115,6 +118,9 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/app.xemu.xemu</entry>
+            <entry>~/Applications/Xemu*.AppImage</entry>
+            <entry>~/.local/bin/Xemu*.AppImage</entry>
+            <entry>~/bin/Xemu*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="YUZU">
