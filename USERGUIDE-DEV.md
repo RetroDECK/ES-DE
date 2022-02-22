@@ -497,8 +497,11 @@ At the moment the following emulators are supported in AppImage format when usin
 | System name  | Emulator  | Filename configuration          |
 | :----------- | :-------- | :------------------------------ |
 | _Multiple_   | RetroArch | RetroArch-Linux-x86_64.AppImage |
+| gc           | Dolphin   | Dolphin_Emulator*.AppImage      |
 | ps3          | RPCS3     | rpcs3*.AppImage                 |
+| xbox         | xemu      | Xemu*.AppImage                  |
 | switch       | Yuzu      | yuzu*.AppImage                  |
+| wii          | Dolphin   | Dolphin_Emulator*.AppImage      |
 
 RetroArch does not embed any version information into the filename so no wildcard is required.
 
@@ -2004,7 +2007,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2000,<br>MAME 2003-Plus,<br>MAME 2010,<br>FinalBurn Neo,<br>FB Alpha 2012 | Depends      | Single archive file following MAME name standard in root folder |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2000,<br>MAME 2003-Plus,<br>MAME 2010,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>MAME **(Standalone)** [UW*] | Depends      | Single archive file following MAME name standard in root folder |
 | astrocade             | Bally Astrocade                                | _Placeholder_                     |                                   |              |                                      |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014                       | No           | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     | Atari800                          |                                   |              |                                      |
@@ -2041,7 +2044,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | gb                    | Nintendo Game Boy                              | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes |              |                                      |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | VBA-M,<br>VBA Next,<br>gpSP       |              |                                      |
 | gbc                   | Nintendo Game Boy Color                        | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes |              |                                      |
-| gc                    | Nintendo GameCube                              | Dolphin                           |                                   |              |                                      |
+| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*]   | No           | Single ISO file in root folder       |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 | _Placeholder_                     |                                   |              |                                      |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
@@ -2050,7 +2053,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | Shell script in root folder          |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | _Placeholder_                     |                                   |              |                                      |
-| mame                  | Multiple Arcade Machine Emulator               | MAME 2003-Plus                    | MAME 2000,<br>MAME 2010,<br>MAME - Current,<br>FinalBurn Neo,<br>FB Alpha 2012 | Depends      | Single archive file following MAME name standard in root folder |
+| mame                  | Multiple Arcade Machine Emulator               | MAME 2003-Plus                    | MAME 2000,<br>MAME 2010,<br>MAME - Current,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>MAME **(Standalone)** [UW*] | Depends      | Single archive file following MAME name standard in root folder |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      | Single archive file following MAME name standard in root folder |
 | mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      | Single archive file following MAME name standard in root folder |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive | No           | Single archive or ROM file in root folder |
@@ -2067,7 +2070,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
 | naomi                 | Sega NAOMI                                     | Flycast                           |                                   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           |                                   |              |                                      |
-| n3ds                  | Nintendo 3DS                                   | Citra [UW]                        | Citra 2018 [UW]                   |              |                                      |
+| n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>melonDS          |              |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
@@ -2126,13 +2129,13 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   |              | Single disk, tape or cartridge image in root folder |
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   |              |                                      |
-| wii                   | Nintendo Wii                                   | Dolphin                           |                                   |              |                                      |
+| wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)** [UMW*]   |              |                                      |
 | wiiu                  | Nintendo Wii U                                 | _Placeholder_                     |                                   |              |                                      |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      |                                   |              |                                      |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      |                                   |              |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file in root folder |
 | x68000                | Sharp X68000                                   | PX68k                             |                                   |              |                                      |
-| xbox                  | Microsoft Xbox                                 | xemu **(Standalone)** [UW*]       |                                   | Yes          | Single ISO file in root folder       |
+| xbox                  | Microsoft Xbox                                 | xemu **(Standalone)** [UMW*]      |                                   | Yes          | Single ISO file in root folder       |
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W*]       |                                   | No           |                                      |
 | zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
