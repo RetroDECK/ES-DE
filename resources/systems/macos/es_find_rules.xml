@@ -14,6 +14,14 @@
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
+    <emulator name="CITRA">
+        <!-- Nintendo 3DS emulator Citra -->
+        <rule type="staticpath">
+            <entry>/Applications/citra-qt.app/Contents/MacOS/citra-qt</entry>
+            <entry>/Applications/Citra/nightly/citra-qt.app/Contents/MacOS/citra-qt</entry>
+            <entry>/Applications/Citra/canary/citra-qt.app/Contents/MacOS/citra-qt</entry>
+        </rule>
+    </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="staticpath">

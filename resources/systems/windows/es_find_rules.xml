@@ -36,10 +36,30 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="CITRA">
+        <!-- Nintendo 3DS emulator Citra -->
+        <rule type="systempath">
+            <entry>citra.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~\AppData\Local\Citra\nightly-mingw\citra.exe</entry>
+            <entry>~\AppData\Local\Citra\canary-mingw\citra.exe</entry>
+            <!-- Portable installation -->
+            <entry>%ESPATH%\Citra\nightly-mingw\citra.exe</entry>
+            <entry>%ESPATH%\..\Citra\nightly-mingw\citra.exe</entry>
+            <entry>%ESPATH%\Citra\canary-mingw\citra.exe</entry>
+            <entry>%ESPATH%\..\Citra\canary-mingw\citra.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
             <entry>dolphin.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Portable installation -->
+            <entry>%ESPATH%\Dolphin-x64\Dolphin.exe</entry>
+            <entry>%ESPATH%\..\Dolphin-x64\Dolphin.exe</entry>
         </rule>
     </emulator>
     <emulator name="DOSBOX-STAGING">
@@ -58,11 +78,21 @@
         <rule type="systempath">
             <entry>fs-uae.exe</entry>
         </rule>
+        <rule type="staticpath">
+            <!-- Portable installation -->
+            <entry>%ESPATH%\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
+            <entry>%ESPATH%\..\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
+        </rule>
     </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
             <entry>mame.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <!-- Portable installation -->
+            <entry>%ESPATH%\mame\mame.exe</entry>
+            <entry>%ESPATH%\..\mame\mame.exe</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2">
