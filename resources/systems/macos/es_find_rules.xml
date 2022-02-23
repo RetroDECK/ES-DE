@@ -33,6 +33,7 @@
         <rule type="staticpath">
             <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
             <!-- Homebrew version -->
+            <entry>/opt/homebrew/bin/dosbox-staging</entry>
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
@@ -40,6 +41,9 @@
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="staticpath">
             <entry>/Applications/FS-UAE.app/Contents/MacOS/fs-uae</entry>
+            <!-- Homebrew version -->
+            <entry>/opt/homebrew/bin/fs-uae</entry>
+            <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">
@@ -60,6 +64,15 @@
         <!-- Sony PlayStation 3 emulator RPCS3 -->
         <rule type="staticpath">
             <entry>/Applications/RPCS3.app/Contents/MacOS/rpcs3</entry>
+        </rule>
+    </emulator>
+    <emulator name="PPSSPP">
+        <!-- Sony PlayStation Portable emulator PPSSPP -->
+        <rule type="staticpath">
+            <entry>/Applications/PPSSPPSDL.app/Contents/MacOS/PPSSPPSDL</entry>
+            <!-- Homebrew version -->
+            <entry>/opt/homebrew/bin/ppsspp</entry>
+            <entry>/usr/local/bin/ppsspp</entry>
         </rule>
     </emulator>
     <emulator name="XEMU">
