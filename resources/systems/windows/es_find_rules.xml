@@ -44,7 +44,6 @@
         <rule type="staticpath">
             <entry>~\AppData\Local\Citra\nightly-mingw\citra.exe</entry>
             <entry>~\AppData\Local\Citra\canary-mingw\citra.exe</entry>
-            <!-- Portable installation -->
             <entry>%ESPATH%\Citra\nightly-mingw\citra.exe</entry>
             <entry>%ESPATH%\..\Citra\nightly-mingw\citra.exe</entry>
             <entry>%ESPATH%\Citra\canary-mingw\citra.exe</entry>
@@ -57,7 +56,6 @@
             <entry>dolphin.exe</entry>
         </rule>
         <rule type="staticpath">
-            <!-- Portable installation -->
             <entry>%ESPATH%\Dolphin-x64\Dolphin.exe</entry>
             <entry>%ESPATH%\..\Dolphin-x64\Dolphin.exe</entry>
         </rule>
@@ -68,7 +66,6 @@
             <entry>dosbox.exe</entry>
         </rule>
         <rule type="staticpath">
-            <!-- Portable installation -->
             <entry>%ESPATH%\dosbox-staging\dosbox.exe</entry>
             <entry>%ESPATH%\..\dosbox-staging\dosbox.exe</entry>
         </rule>
@@ -79,7 +76,6 @@
             <entry>fs-uae.exe</entry>
         </rule>
         <rule type="staticpath">
-            <!-- Portable installation -->
             <entry>%ESPATH%\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
             <entry>%ESPATH%\..\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
         </rule>
@@ -90,7 +86,6 @@
             <entry>mame.exe</entry>
         </rule>
         <rule type="staticpath">
-            <!-- Portable installation -->
             <entry>%ESPATH%\mame\mame.exe</entry>
             <entry>%ESPATH%\..\mame\mame.exe</entry>
         </rule>
@@ -99,6 +94,8 @@
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="systempath">
             <entry>mupen64plus-ui-console.exe</entry>
+            <entry>%ESPATH%\mupen64plus\mupen64plus-ui-console.exe</entry>
+            <entry>%ESPATH%\..\mupen64plus\mupen64plus-ui-console.exe</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2">
@@ -112,7 +109,6 @@
         <rule type="staticpath">
             <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
-            <!-- Portable installation -->
             <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
@@ -127,7 +123,6 @@
         </rule>
         <rule type="staticpath">
             <entry>C:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
-            <!-- Portable installation -->
             <entry>%ESPATH%\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\..\PPSSPP\PPSSPPWindows64.exe</entry>
         </rule>
@@ -138,7 +133,6 @@
             <entry>rpcs3.exe</entry>
         </rule>
         <rule type="staticpath">
-            <!-- Portable installation -->
             <entry>%ESPATH%\RPCS3\rpcs3.exe</entry>
             <entry>%ESPATH%\..\RPCS3\rpcs3.exe</entry>
         </rule>
@@ -149,7 +143,6 @@
             <entry>xemu.exe</entry>
         </rule>
         <rule type="staticpath">
-            <!-- Portable installation -->
             <entry>%ESPATH%\xemu\xemu.exe</entry>
             <entry>%ESPATH%\..\xemu\xemu.exe</entry>
         </rule>
@@ -160,7 +153,6 @@
             <entry>xenia.exe</entry>
         </rule>
         <rule type="staticpath">
-            <!-- Portable installation -->
             <entry>%ESPATH%\xenia\xenia.exe</entry>
             <entry>%ESPATH%\..\xenia\xenia.exe</entry>
         </rule>
@@ -172,7 +164,6 @@
         </rule>
         <rule type="staticpath">
             <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <!-- Portable installation -->
             <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
