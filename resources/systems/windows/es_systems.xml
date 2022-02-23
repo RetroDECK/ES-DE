@@ -16,6 +16,7 @@
         <path>%ROMPATH%\64dd</path>
         <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
         <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mupen64plus_next_libretro.dll %ROM%</command>
+        <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% --fullscreen %ROM%</command>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\parallel_n64_libretro.dll %ROM%</command>
         <platform>n64</platform>
         <theme>64dd</theme>
@@ -730,6 +731,7 @@
         <path>%ROMPATH%\n64</path>
         <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
         <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mupen64plus_next_libretro.dll %ROM%</command>
+        <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% --fullscreen %ROM%</command>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\parallel_n64_libretro.dll %ROM%</command>
         <platform>n64</platform>
         <theme>n64</theme>
