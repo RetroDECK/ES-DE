@@ -43,6 +43,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeEditComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/FlexboxComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GameSelectorComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GIFAnimComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/IList.h
@@ -122,6 +123,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/DateTimeEditComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/FlexboxComponent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GIFAnimComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.cpp
