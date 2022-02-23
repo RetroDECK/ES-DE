@@ -13,7 +13,7 @@
 #include "Log.h"
 #include "Settings.h"
 #include "components/ImageComponent.h"
-#include "components/LottieComponent.h"
+#include "components/LottieAnimComponent.h"
 #include "components/TextComponent.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
@@ -462,7 +462,7 @@ std::vector<GuiComponent*> ThemeData::makeExtras(const std::shared_ptr<ThemeData
             else if (t == "text")
                 comp = new TextComponent;
             else if (t == "animation")
-                comp = new LottieComponent;
+                comp = new LottieAnimComponent;
 
             if (comp) {
                 comp->setDefaultZIndex(10.0f);

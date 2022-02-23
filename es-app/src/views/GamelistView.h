@@ -100,7 +100,7 @@ private:
     std::vector<std::unique_ptr<DateTimeComponent>> mDateTimeComponents;
     std::vector<std::unique_ptr<ImageComponent>> mImageComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> mVideoComponents;
-    std::vector<std::unique_ptr<LottieComponent>> mLottieAnimComponents;
+    std::vector<std::unique_ptr<LottieAnimComponent>> mLottieAnimComponents;
     std::vector<std::unique_ptr<BadgeComponent>> mBadgeComponents;
     std::vector<std::unique_ptr<RatingComponent>> mRatingComponents;
     std::vector<std::unique_ptr<ScrollableContainer>> mContainerComponents;

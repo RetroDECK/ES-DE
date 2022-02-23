@@ -1,14 +1,14 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  LottieComponent.cpp
+//  LottieAnimComponent.cpp
 //
 //  Component to play Lottie animations using the rlottie library.
 //
 
 #define DEBUG_ANIMATION false
 
-#include "components/LottieComponent.h"
+#include "components/LottieAnimComponent.h"
 
 #include "Log.h"
 #include "ThemeData.h"
@@ -18,7 +18,7 @@
 
 #include <chrono>
 
-LottieComponent::LottieComponent()
+LottieAnimComponent::LottieAnimComponent()
     : mCacheFrames {true}
     , mMaxCacheSize {0}
     , mCacheSize {0}
@@ -67,7 +67,7 @@ LottieComponent::LottieComponent()
     setZIndex(10.0f);
 }
 
-LottieComponent::~LottieComponent()
+LottieAnimComponent::~LottieAnimComponent()
 {
     // This is required as rlottie could otherwise crash on application shutdown.
     if (mFuture.valid())
@@ -76,7 +76,7 @@ LottieComponent::~LottieComponent()
     mTotalFrameCache -= mCacheSize;
 }
 
-void LottieComponent::setAnimation(const std::string& path)
+void LottieAnimComponent::setAnimation(const std::string& path)
 {
     if (mAnimation != nullptr) {
         if (mFuture.valid())
@@ -113,7 +113,7 @@ void LottieComponent::setAnimation(const std::string& path)
     }
 
     if (!mKeepAspectRatio && (mSize.x == 0.0f || mSize.y == 0.0f)) {
-        LOG(LogWarning) << "LottieComponent: Width or height auto sizing is incompatible with "
+        LOG(LogWarning) << "LottieAnimComponent: Width or height auto sizing is incompatible with "
                            "disabling of <keepAspectRatio> so ignoring this setting";
     }
 
@@ -167,29 +167,29 @@ void LottieComponent::setAnimation(const std::string& path)
         mFrameNum = mTotalFrames - 1;
 
     if (DEBUG_ANIMATION) {
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Rasterized width: " << mSize.x;
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Rasterized height: " << mSize.y;
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Total number of frames: "
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Rasterized width: " << mSize.x;
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Rasterized height: " << mSize.y;
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Total number of frames: "
                       << mTotalFrames;
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Frame rate: " << mFrameRate;
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Speed modifier: " << mSpeedModifier;
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Target duration: "
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Frame rate: " << mFrameRate;
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Speed modifier: " << mSpeedModifier;
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Target duration: "
                       << duration / mSpeedModifier * 1000.0 << " ms";
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Frame size: " << mFrameSize << " bytes ("
-                      << std::fixed << std::setprecision(1)
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Frame size: " << mFrameSize
+                      << " bytes (" << std::fixed << std::setprecision(1)
                       << static_cast<double>(mFrameSize) / 1024.0 / 1024.0 << " MiB)";
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Animation size: "
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Animation size: "
                       << mFrameSize * mTotalFrames << " bytes (" << std::fixed
                       << std::setprecision(1)
                       << static_cast<double>(mFrameSize * mTotalFrames) / 1024.0 / 1024.0
                       << " MiB)";
-        LOG(LogDebug) << "LottieComponent::setAnimation(): Per file maximum cache size: "
+        LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Per file maximum cache size: "
                       << mMaxCacheSize << " bytes (" << std::fixed << std::setprecision(1)
                       << static_cast<double>(mMaxCacheSize) / 1024.0 / 1024.0 << " MiB)";
     }
 }
 
-void LottieComponent::resetFileAnimation()
+void LottieAnimComponent::resetFileAnimation()
 {
     mExternalPause = false;
     mTimeAccumulator = 0;
@@ -203,17 +203,17 @@ void LottieComponent::resetFileAnimation()
     }
 }
 
-void LottieComponent::onSizeChanged()
+void LottieAnimComponent::onSizeChanged()
 {
     // Setting the animation again will completely reinitialize it.
     if (mPath != "")
         setAnimation(mPath);
 }
 
-void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-                                 const std::string& view,
-                                 const std::string& element,
-                                 unsigned int properties)
+void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                                     const std::string& view,
+                                     const std::string& element,
+                                     unsigned int properties)
 {
     using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "animation")};
@@ -221,7 +221,7 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("size")) {
         glm::vec2 size = elem->get<glm::vec2>("size");
         if (size.x == 0.0f && size.y == 0.0f) {
-            LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <size> set to \""
+            LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, <size> set to \""
                             << size.x << " " << size.y << "\"";
             return;
         }
@@ -230,7 +230,7 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("speed")) {
         const float speed {elem->get<float>("speed")};
         if (speed < 0.2f || speed > 3.0f) {
-            LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <speed> set to \""
+            LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, <speed> set to \""
                             << std::fixed << std::setprecision(1) << speed << "\"";
         }
         else {
@@ -261,8 +261,9 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mAlternate = true;
         }
         else {
-            LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <direction> set to \""
-                            << direction << "\"";
+            LOG(LogWarning)
+                << "LottieAnimComponent: Invalid theme configuration, <direction> set to \""
+                << direction << "\"";
             mStartDirection = "normal";
             mAlternate = false;
         }
@@ -277,12 +278,12 @@ void LottieComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
     else {
-        LOG(LogWarning) << "LottieComponent: Invalid theme configuration, <path> not set";
+        LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, <path> not set";
         return;
     }
 }
 
-void LottieComponent::update(int deltaTime)
+void LottieAnimComponent::update(int deltaTime)
 {
     if (mAnimation == nullptr)
         return;
@@ -315,9 +316,9 @@ void LottieComponent::update(int deltaTime)
     // Rudimentary frame skipping logic, not entirely accurate but probably good enough.
     while (mTimeAccumulator - deltaTime > mTargetPacing) {
         if (DEBUG_ANIMATION && 0) {
-            LOG(LogDebug)
-                << "LottieComponent::update(): Skipped frame, mTimeAccumulator / mTargetPacing: "
-                << mTimeAccumulator - deltaTime << " / " << mTargetPacing;
+            LOG(LogDebug) << "LottieAnimComponent::update(): Skipped frame, mTimeAccumulator / "
+                             "mTargetPacing: "
+                          << mTimeAccumulator - deltaTime << " / " << mTargetPacing;
         }
 
         if (mDirection == "reverse")
@@ -330,7 +331,7 @@ void LottieComponent::update(int deltaTime)
     }
 }
 
-void LottieComponent::render(const glm::mat4& parentTrans)
+void LottieAnimComponent::render(const glm::mat4& parentTrans)
 {
     if (!isVisible() || mThemeOpacity == 0.0f || mAnimation == nullptr)
         return;
@@ -358,8 +359,9 @@ void LottieComponent::render(const glm::mat4& parentTrans)
         if ((mDirection == "normal" && mFrameNum >= mTotalFrames) ||
             (mDirection == "reverse" && mFrameNum > mTotalFrames)) {
             if (DEBUG_ANIMATION) {
-                LOG(LogDebug) << "LottieComponent::render(): Skipped frames: " << mSkippedFrames;
-                LOG(LogDebug) << "LottieComponent::render(): Actual duration: "
+                LOG(LogDebug) << "LottieAnimComponent::render(): Skipped frames: "
+                              << mSkippedFrames;
+                LOG(LogDebug) << "LottieAnimComponent::render(): Actual duration: "
                               << std::chrono::duration_cast<std::chrono::milliseconds>(
                                      std::chrono::system_clock::now() - mAnimationStartTime)
                                      .count()

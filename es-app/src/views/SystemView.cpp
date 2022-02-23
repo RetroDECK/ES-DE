@@ -429,7 +429,7 @@ void SystemView::populate()
                     }
                     else if (element.second.type == "animation") {
                         elements.lottieAnimComponents.emplace_back(
-                            std::make_unique<LottieComponent>());
+                            std::make_unique<LottieAnimComponent>());
                         elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
                         elements.lottieAnimComponents.back()->applyTheme(
                             theme, "system", element.first, ThemeFlags::ALL);

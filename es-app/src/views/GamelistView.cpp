@@ -126,7 +126,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mVideoComponents.back()->setScrollHide(true);
             }
             else if (element.second.type == "animation") {
-                mLottieAnimComponents.push_back(std::make_unique<LottieComponent>());
+                mLottieAnimComponents.push_back(std::make_unique<LottieAnimComponent>());
                 mLottieAnimComponents.back()->setDefaultZIndex(35.0f);
                 mLottieAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
                 addChild(mLottieAnimComponents.back().get());

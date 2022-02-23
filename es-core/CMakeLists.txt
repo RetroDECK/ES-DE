@@ -48,7 +48,7 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/IList.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageGridComponent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/LottieComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/LottieAnimComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/MenuComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/NinePatchComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/OptionListComponent.h
@@ -125,7 +125,7 @@ set(CORE_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/GridTileComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/HelpComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/ImageComponent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/LottieComponent.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/LottieAnimComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/MenuComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/NinePatchComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/RatingComponent.cpp

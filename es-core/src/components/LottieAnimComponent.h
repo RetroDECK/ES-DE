@@ -1,13 +1,13 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  LottieComponent.h
+//  LottieAnimComponent.h
 //
 //  Component to play Lottie animations using the rlottie library.
 //
 
-#ifndef ES_CORE_COMPONENTS_LOTTIE_COMPONENT_H
-#define ES_CORE_COMPONENTS_LOTTIE_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_LOTTIE_ANIM_COMPONENT_H
+#define ES_CORE_COMPONENTS_LOTTIE_ANIM_COMPONENT_H
 
 #include "GuiComponent.h"
 #include "renderers/Renderer.h"
@@ -20,11 +20,11 @@
 #include <future>
 #include <unordered_map>
 
-class LottieComponent : public GuiComponent
+class LottieAnimComponent : public GuiComponent
 {
 public:
-    LottieComponent();
-    ~LottieComponent();
+    LottieAnimComponent();
+    ~LottieAnimComponent();
 
     void setAnimation(const std::string& path);
     void setKeepAspectRatio(bool value) { mKeepAspectRatio = value; }
@@ -83,4 +83,4 @@ private:
     bool mKeepAspectRatio;
 };
 
-#endif // ES_CORE_COMPONENTS_LOTTIE_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_LOTTIE_ANIM_COMPONENT_H
