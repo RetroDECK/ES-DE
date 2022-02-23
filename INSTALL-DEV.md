@@ -1466,11 +1466,11 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
-    <emulator name="DOSBOX_STAGING">
+    <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
         <rule type="staticpath">
             <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
-            <!-- Homebrew version -->
+            <entry>/opt/homebrew/bin/dosbox-staging</entry>
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
@@ -1478,7 +1478,6 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="staticpath">
             <entry>/Applications/mupen64plus.app/Contents/MacOS/mupen64plus</entry>
-            <!-- Homebrew version -->
             <entry>/usr/local/bin/mupen64plus</entry>
         </rule>
     </emulator>
@@ -1541,7 +1540,6 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         <rule type="staticpath">
             <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
-            <!-- Portable installation -->
             <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
@@ -1553,7 +1551,6 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         </rule>
         <rule type="staticpath">
             <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <!-- Portable installation -->
             <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
@@ -1754,8 +1751,12 @@ Citra\nightly-mingw\citra.exe
 Dolphin-x64\Dolphin.exe
 dosbox-staging\dosbox.exe
 mame\mame.exe
+mGBA\mGBA.exe
+mupen64plus\mupen64plus-ui-console.exe
 PCSX2\pcsx2.exe
+PPSSPP\PPSSPPWindows64.exe
 RPCS3\rpcs3.exe
+VBA-M\visualboyadvance-m.exe
 xemu\xemu.exe
 xenia\xenia.exe
 yuzu\yuzu-windows-msvc\yuzu.exe
@@ -1766,8 +1767,12 @@ yuzu\yuzu-windows-msvc\yuzu.exe
 ..\Dolphin-x64\Dolphin.exe
 ..\dosbox-staging\dosbox.exe
 ..\mame\mame.exe
+..\mGBA\mGBA.exe
+..\mupen64plus\mupen64plus-ui-console.exe
 ..\PCSX2\pcsx2.exe
+..\PPSSPP\PPSSPPWindows64.exe
 ..\RPCS3\rpcs3.exe
+..\VBA-M\visualboyadvance-m.exe
 ..\xemu\xemu.exe
 ..\xenia\xenia.exe
 ..\yuzu\yuzu-windows-msvc\yuzu.exe
