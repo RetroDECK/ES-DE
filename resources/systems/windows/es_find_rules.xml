@@ -153,6 +153,16 @@
             <entry>%ESPATH%\..\RPCS3\rpcs3.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VBA-M">
+        <!-- Nintendo Game Boy Advance emulator VBA-M -->
+        <rule type="systempath">
+            <entry>visualboyadvance-m.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\VBA-M\visualboyadvance-m.exe</entry>
+            <entry>%ESPATH%\..\VBA-M\visualboyadvance-m.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">

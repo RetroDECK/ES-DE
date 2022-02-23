@@ -143,6 +143,12 @@
             <entry>~/bin/rpcs3*.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="VBA-M">
+        <!-- Nintendo Game Boy Advance emulator VBA-M -->
+        <rule type="systempath">
+            <entry>visualboyadvance-m</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
