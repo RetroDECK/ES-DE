@@ -90,6 +90,21 @@
             <entry>%ESPATH%\..\mame\mame.exe</entry>
         </rule>
     </emulator>
+    <emulator name="MGBA">
+        <!-- Nintendo Game Boy Advance emulator mGBA -->
+        <rule type="winregistryvalue">
+            <entry>SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\mGBA_is1\InstallLocation|mGBA.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <entry>mGBA.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>C:\Program Files\mGBA\mGBA.exe</entry>
+            <entry>D:\Program Files\mGBA\mGBA.exe</entry>
+            <entry>%ESPATH%\mGBA\mGBA.exe</entry>
+            <entry>%ESPATH%\..\mGBA\mGBA.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="MUPEN64PLUS">
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="systempath">
@@ -123,6 +138,7 @@
         </rule>
         <rule type="staticpath">
             <entry>C:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
+            <entry>D:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\..\PPSSPP\PPSSPPWindows64.exe</entry>
         </rule>

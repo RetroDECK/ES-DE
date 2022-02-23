@@ -84,6 +84,19 @@
             <entry>mame</entry>
         </rule>
     </emulator>
+    <emulator name="MGBA">
+        <!-- Nintendo Game Boy Advance emulator mGBA -->
+        <rule type="systempath">
+            <entry>mgba</entry>
+            <entry>io.mgba.mGBA</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.mgba.mGBA</entry>
+            <entry>~/Applications/mGBA*.AppImage</entry>
+            <entry>~/.local/bin/mGBA*.AppImage</entry>
+            <entry>~/bin/mGBA*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="MUPEN64PLUS">
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="systempath">
