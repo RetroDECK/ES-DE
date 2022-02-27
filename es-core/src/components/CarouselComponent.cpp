@@ -264,12 +264,12 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
 
         float distance = i - mCamOffset;
 
-        float scale {1.0f + ((mLogoScale - 1.0f) * (1.0f - fabs(distance)))};
+        float scale {1.0f + ((mLogoScale - 1.0f) * (1.0f - fabsf(distance)))};
         scale = std::min(mLogoScale, std::max(1.0f, scale));
         scale /= mLogoScale;
 
         int opacity {
-            static_cast<int>(std::round(0x80 + ((0xFF - 0x80) * (1.0f - fabs(distance)))))};
+            static_cast<int>(std::round(0x80 + ((0xFF - 0x80) * (1.0f - fabsf(distance)))))};
         opacity = std::max(static_cast<int>(0x80), opacity);
 
         const std::shared_ptr<GuiComponent>& comp = mEntries.at(index).data.logo;
@@ -504,11 +504,11 @@ void CarouselComponent::onCursorChanged(const CursorState& state)
 
     // Find the shortest path to the target.
     float endPos {target}; // Directly.
-    float dist {fabs(endPos - startPos)};
+    float dist {fabsf(endPos - startPos)};
 
-    if (fabs(target + posMax - startPos - mScrollVelocity) < dist)
+    if (fabsf(target + posMax - startPos - mScrollVelocity) < dist)
         endPos = target + posMax; // Loop around the end (0 -> max).
-    if (fabs(target - posMax - startPos - mScrollVelocity) < dist)
+    if (fabsf(target - posMax - startPos - mScrollVelocity) < dist)
         endPos = target - posMax; // Loop around the start (max - 1 -> -1).
 
     // Make sure there are no reverse jumps between logos.
