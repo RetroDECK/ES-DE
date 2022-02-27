@@ -175,9 +175,43 @@ mklink /D snes "C:\My Games\Super Nintendo\"
 
 The way ES-DE works is that it will always try to load any system for which there are game files available, so to disable a system it needs to be hidden from ES-DE. This is easily accomplished by renaming the game directory to something that is not recognized, for example changing `~/ROMs/c64` to `~/ROMs/c64_DISABLED`. Another approach is to create a subdirectory named DISABLED (or whatever name you prefer that is not matching a supported system) in the ROMs directory and move the game folder there, such as `~/ROMs/DISABLED/c64`. This makes it easy to disable and re-enable game systems in ES-DE. Note that the gamelist and any game media files are retained while the system is disabled so this is an entirely safe thing to do.
 
+## Placing games and other resources on network shares
+
+Although ES-DE does support placing game ROMs, the `.emulationstation` home directory and the `downloaded_media` directory on network shares, this can lead to serious performance problems in some instances. Especially problematic is the Microsoft SMB protocol as it offers abysmal performance for some disk operations on which ES-DE relies heavily. For small game libraries this can still be acceptable, but for libraries with hundreds or thousands of games the application startup time and overall usage will be very painful or even unusable.
+
+A general recommendation is to place all game files and other data on drives connected directly to the machine where ES-DE is running. Even using low speed technology like USB thumb drives, SD cards etc. is generally fine and leads to acceptable performance in most instances.
+
+If you insist on placing games and other resources on network drives such as a NAS, the NFS protocol has to be used instead of SMB as testing has shown between 10 and 30 times better performance with this protocol. Starting ES-DE with a certain game collection size could easily take minutes using SMB while it takes just seconds when using the NFS protocol. This is not a network throughput issue and using something like a 2.5 Gigabit or even 10 Gigabit wired interface will not help you as the SMB protocol has exceedingly bad protocol latency regardless of physical adapter speed.
+
+Unix-based operating systems like Linux and macOS ship with an NFS client built-in.
+
+Here's how to mount an NFS drive from a NAS called _MyNAS_ on macOS:
+
+```
+sudo mkdir /private/ROMs
+sudo mount -t nfs -o resvport MyNAS:/ROMs /private/ROMs
+```
+
+On Linux it's quite similar:
+```
+sudo mkdir /mnt/ROMs
+sudo mount MyNAS:/ROMs /mnt/ROMs
+```
+
+On Windows 10 and 11 the NFS client first needs to be installed as it's not enabled by default. Open the _Control Panel_, then _Programs and Features_, then select _Turn Windows features on or off_ at the left side of the window and tick the box _Services for NFS_. It's unclear if both child items _Administrative Tools_ and _Client for NFS_ need to be selected, but it's probably safest to enable both of them.
+
+Following this you can mount the NFS share in a terminal window as on a Unix system:
+```
+mount MyNAS:/ROMs g:
+```
+
+Note that the above are only examples to illustrate the general approach, you may need to take additional steps to make the configuration persistent across reboot and you may need to make other preparations. The NAS/file server also needs to be configured of course, but that's beyond the scope of this document.
+
 ## Specific notes for Windows
 
 In general it should be straightforward to run ES-DE on Windows. Almost all emulators are available on this operating system and driver quality and controller support is normally very good.
+
+Just make sure to not place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
 
 But in order for ES-DE to run at all, graphics drivers with OpenGL support have to be installed. If not, the application won't start. It's still possible to run via software rendering by using [Mesa3D for Windows](https://fdossena.com/?p=mesa/index.frag) but the performance is terrible when doing this so it should only be used as a last resort. If ES-DE doesn't start, take a look in the es_log.txt file. If you see the following text, it means OpenGL drivers are missing:
 
