@@ -531,7 +531,6 @@ void SystemView::updateGameCount()
     std::stringstream ssGames;
     std::stringstream ssFavorites;
     bool games {false};
-    bool favorites {false};
 
     if (!mCarousel->getSelected()->isGameSystem()) {
         ss << "Configuration";
@@ -553,7 +552,6 @@ void SystemView::updateGameCount()
         ssGames << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s ");
         ssFavorites << gameCount.second << " Favorite" << (gameCount.second == 1 ? "" : "s");
         games = true;
-        favorites = true;
     }
 
     if (mLegacyMode) {

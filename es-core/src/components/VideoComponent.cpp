@@ -223,14 +223,11 @@ void VideoComponent::update(int deltaTime)
     if (mWindow->getGameLaunchedState())
         return;
 
-    bool playVideo {false};
-
     if (!mIsPlaying && mConfig.startDelay == 0) {
         startVideoStream();
     }
     else if (mStartTime == 0 || SDL_GetTicks() > mStartTime) {
         mStartTime = 0;
-        playVideo = true;
         startVideoStream();
     }
 

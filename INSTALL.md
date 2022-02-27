@@ -2065,6 +2065,7 @@ You now have a fully functional portable retrogaming installation!
 
 The portable installation works exactly as a normal installation, i.e. you can use the built-in scraper, edit metadata, launch games etc.
 
+Just make sure to not place the portable installation on a network share that uses the Microsoft SMB protocol and run it from there as this will lead to unacceptably poor application performance.
 
 ## Custom event scripts
 
