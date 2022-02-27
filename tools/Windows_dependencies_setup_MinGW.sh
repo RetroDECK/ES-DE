@@ -45,7 +45,7 @@ echo -e "\nSetting up FreeImage"
 rm -rf FreeImage
 
 curl -LO https://downloads.sourceforge.net/project/freeimage/Binary%20Distribution/3.18.0/FreeImage3180Win32Win64.zip
-7z x FreeImage3180Win32Win64.zip
+unzip FreeImage3180Win32Win64.zip
 cp -p FreeImage/Dist/x64/FreeImage.dll ..
 
 echo -e "\nSetting up pugixml"
@@ -61,6 +61,8 @@ rm -rf SDL2-*
 
 curl -O https://www.libsdl.org/release/SDL2-devel-2.0.18-mingw.tar.gz
 tar xvzf SDL2-devel-2.0.18-mingw.tar.gz
+# Needed due to some kind of file system race condition that sometimes occurs on Windows.
+sleep 1
 mv SDL2-2.0.18/x86_64-w64-mingw32/include/SDL2 SDL2-2.0.18/
 cp -p SDL2-2.0.18/x86_64-w64-mingw32/lib/libSDL2main.a ..
 cp -p SDL2-2.0.18/x86_64-w64-mingw32/bin/SDL2.dll ..
