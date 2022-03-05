@@ -14,9 +14,6 @@
 #include "ThemeData.h"
 #include "Window.h"
 #include "resources/ResourceManager.h"
-#include "utils/FileSystemUtil.h"
-
-#include <chrono>
 
 LottieAnimComponent::LottieAnimComponent()
     : mCacheFrames {true}
@@ -173,6 +170,8 @@ void LottieAnimComponent::setAnimation(const std::string& path)
                       << mTotalFrames;
         LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Frame rate: " << mFrameRate;
         LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Speed modifier: " << mSpeedModifier;
+        // This figure does not double if direction has been set to alternate or alternateReverse,
+        // it only tells the duration of a single playthrough of all frames.
         LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Target duration: "
                       << duration / mSpeedModifier * 1000.0 << " ms";
         LOG(LogDebug) << "LottieAnimComponent::setAnimation(): Frame size: " << mFrameSize
@@ -187,6 +186,8 @@ void LottieAnimComponent::setAnimation(const std::string& path)
                       << mMaxCacheSize << " bytes (" << std::fixed << std::setprecision(1)
                       << static_cast<double>(mMaxCacheSize) / 1024.0 / 1024.0 << " MiB)";
     }
+
+    mAnimationStartTime = std::chrono::system_clock::now();
 }
 
 void LottieAnimComponent::resetFileAnimation()
@@ -238,9 +239,8 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (elem->has("keepAspectRatio")) {
+    if (elem->has("keepAspectRatio"))
         mKeepAspectRatio = elem->get<bool>("keepAspectRatio");
-    }
 
     if (elem->has("direction")) {
         std::string direction = elem->get<std::string>("direction");
@@ -344,15 +344,11 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
                                  static_cast<size_t>(mSize.y));
     }
 
-    bool doRender = true;
+    bool doRender {true};
 
     // Don't render if a menu is open except if the cached background is getting invalidated.
-    if (mWindow->getGuiStackSize() > 1) {
-        if (mWindow->isInvalidatingCachedBackground())
-            doRender = true;
-        else
-            doRender = false;
-    }
+    if (mWindow->getGuiStackSize() > 1 && !mWindow->isInvalidatingCachedBackground())
+        doRender = false;
 
     // Don't render any new frames if paused or if a menu is open (unless invalidating background).
     if ((!mPause && !mExternalPause) && doRender) {
@@ -378,15 +374,16 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
             mTimeAccumulator = 0;
             mSkippedFrames = 0;
 
-            if (mDirection == "reverse")
+            if (mDirection == "reverse" && mAlternate)
+                mFrameNum = mTotalFrames - 2;
+            else if (mDirection == "reverse" && !mAlternate)
                 mFrameNum = mTotalFrames - 1;
+            else if (mDirection == "normal" && mAlternate)
+                mFrameNum = 1;
             else
                 mFrameNum = 0;
-        }
 
-        if (DEBUG_ANIMATION) {
-            if ((mDirection == "normal" && mFrameNum == 0) ||
-                (mDirection == "reverse" && mFrameNum == mTotalFrames - 1))
+            if (DEBUG_ANIMATION)
                 mAnimationStartTime = std::chrono::system_clock::now();
         }
 
