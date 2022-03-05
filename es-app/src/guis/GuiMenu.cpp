@@ -9,10 +9,6 @@
 
 #include "guis/GuiMenu.h"
 
-#if defined(_WIN64)
-#include <winsock2.h>
-#endif
-
 #include "CollectionSystemsManager.h"
 #include "EmulationStation.h"
 #include "FileFilterIndex.h"

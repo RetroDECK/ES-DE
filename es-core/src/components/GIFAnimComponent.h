@@ -10,6 +10,7 @@
 #define ES_CORE_COMPONENTS_GIF_ANIM_COMPONENT_H
 
 #include "GuiComponent.h"
+#include "ThemeData.h"
 #include "renderers/Renderer.h"
 #include "resources/TextureResource.h"
 #include "utils/MathUtil.h"

@@ -11,7 +11,6 @@
 #include "components/GIFAnimComponent.h"
 
 #include "Log.h"
-#include "ThemeData.h"
 #include "Window.h"
 #include "resources/ResourceManager.h"
 #include "utils/StringUtil.h"
