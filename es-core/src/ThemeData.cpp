@@ -131,6 +131,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"speed", FLOAT},
        {"direction", STRING},
        {"keepAspectRatio", BOOLEAN},
+       {"interpolation", STRING},
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
