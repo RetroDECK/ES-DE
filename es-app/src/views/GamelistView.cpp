@@ -67,18 +67,16 @@ void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
 
 void GamelistView::onShow()
 {
-    // Reset any Lottie animations.
+    // Reset any GIF and Lottie animations.
     for (auto& animation : mLottieAnimComponents)
         animation->resetFileAnimation();
 
-    // Reset any Lottie animations.
-    if (mLegacyMode) {
-        for (auto extra : mThemeExtras)
-            extra->resetFileAnimation();
-    }
+    for (auto& animation : mGIFAnimComponents)
+        animation->resetFileAnimation();
 
     mLastUpdated = nullptr;
     GuiComponent::onShow();
+
     if (mLegacyMode)
         legacyUpdateInfoPanel();
     else
@@ -88,6 +86,9 @@ void GamelistView::onShow()
 void GamelistView::onTransition()
 {
     for (auto& animation : mLottieAnimComponents)
+        animation->setPauseAnimation(true);
+
+    for (auto& animation : mGIFAnimComponents)
         animation->setPauseAnimation(true);
 }
 
@@ -125,11 +126,32 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 if (mVideoComponents.back()->getThemeImageTypes().size() != 0)
                     mVideoComponents.back()->setScrollHide(true);
             }
-            else if (element.second.type == "animation") {
-                mLottieAnimComponents.push_back(std::make_unique<LottieAnimComponent>());
-                mLottieAnimComponents.back()->setDefaultZIndex(35.0f);
-                mLottieAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                addChild(mLottieAnimComponents.back().get());
+            else if (element.second.type == "animation" && element.second.has("path")) {
+                const std::string extension {
+                    Utils::FileSystem::getExtension(element.second.get<std::string>("path"))};
+                if (extension == ".json") {
+                    mLottieAnimComponents.push_back(std::make_unique<LottieAnimComponent>());
+                    mLottieAnimComponents.back()->setDefaultZIndex(35.0f);
+                    mLottieAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+                    addChild(mLottieAnimComponents.back().get());
+                }
+                else if (extension == ".gif") {
+                    mGIFAnimComponents.push_back(std::make_unique<GIFAnimComponent>());
+                    mGIFAnimComponents.back()->setDefaultZIndex(35.0f);
+                    mGIFAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+                    addChild(mGIFAnimComponents.back().get());
+                }
+                else if (extension == ".") {
+                    LOG(LogWarning)
+                        << "GamelistView::onThemeChanged(): Invalid theme configuration, "
+                           "animation file extension is missing";
+                }
+                else {
+                    LOG(LogWarning)
+                        << "GamelistView::onThemeChanged(): Invalid theme configuration, "
+                           "animation file extension defined as \""
+                        << extension << "\"";
+                }
             }
             else if (element.second.type == "badges") {
                 mBadgeComponents.push_back(std::make_unique<BadgeComponent>());
