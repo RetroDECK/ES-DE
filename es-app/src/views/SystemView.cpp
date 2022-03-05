@@ -21,14 +21,6 @@
 #include <cmath>
 #endif
 
-namespace
-{
-    // Buffer values for scrolling velocity (left, stopped, right).
-    const int logoBuffersLeft[] {-5, -2, -1};
-    const int logoBuffersRight[] {1, 2, 5};
-
-} // namespace
-
 SystemView::SystemView()
     : mCamOffset {0.0f}
     , mFadeOpacity {0.0f}
@@ -46,8 +38,12 @@ SystemView::SystemView()
     mCarousel->setCancelTransitionsCallback([&] {
         ViewController::getInstance()->cancelViewTransitions();
         mNavigated = true;
-        for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
-            anim->setPauseAnimation(true);
+        if (mSystemElements.size() > 1) {
+            for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+                anim->setPauseAnimation(true);
+            for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
+                anim->setPauseAnimation(true);
+        }
     });
 
     populate();
@@ -69,6 +65,9 @@ void SystemView::onTransition()
 {
     for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
         anim->setPauseAnimation(true);
+
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
+        anim->setPauseAnimation(true);
 }
 
 void SystemView::goToSystem(SystemData* system, bool animate)
@@ -84,6 +83,9 @@ void SystemView::goToSystem(SystemData* system, bool animate)
         video->setStaticVideo();
 
     for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+        anim->resetFileAnimation();
+
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
         anim->resetFileAnimation();
 
     updateGameSelectors();
@@ -150,6 +152,9 @@ void SystemView::update(int deltaTime)
         video->update(deltaTime);
 
     for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+        anim->update(deltaTime);
+
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
         anim->update(deltaTime);
 
     GuiComponent::update(deltaTime);
@@ -232,6 +237,9 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
         video->setStaticVideo();
 
     for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+        anim->resetFileAnimation();
+
+    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
         anim->resetFileAnimation();
 
     updateGameSelectors();
@@ -428,12 +436,36 @@ void SystemView::populate()
                         elements.children.emplace_back(elements.videoComponents.back().get());
                     }
                     else if (element.second.type == "animation") {
-                        elements.lottieAnimComponents.emplace_back(
-                            std::make_unique<LottieAnimComponent>());
-                        elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
-                        elements.lottieAnimComponents.back()->applyTheme(
-                            theme, "system", element.first, ThemeFlags::ALL);
-                        elements.children.emplace_back(elements.lottieAnimComponents.back().get());
+                        const std::string extension {Utils::FileSystem::getExtension(
+                            element.second.get<std::string>("path"))};
+                        if (extension == ".json") {
+                            elements.lottieAnimComponents.emplace_back(
+                                std::make_unique<LottieAnimComponent>());
+                            elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
+                            elements.lottieAnimComponents.back()->applyTheme(
+                                theme, "system", element.first, ThemeFlags::ALL);
+                            elements.children.emplace_back(
+                                elements.lottieAnimComponents.back().get());
+                        }
+                        else if (extension == ".gif") {
+                            elements.GIFAnimComponents.emplace_back(
+                                std::make_unique<GIFAnimComponent>());
+                            elements.GIFAnimComponents.back()->setDefaultZIndex(35.0f);
+                            elements.GIFAnimComponents.back()->applyTheme(
+                                theme, "system", element.first, ThemeFlags::ALL);
+                            elements.children.emplace_back(elements.GIFAnimComponents.back().get());
+                        }
+                        else if (extension == ".") {
+                            LOG(LogWarning)
+                                << "SystemView::populate(): Invalid theme configuration, "
+                                   "animation file extension is missing";
+                        }
+                        else {
+                            LOG(LogWarning)
+                                << "SystemView::populate(): Invalid theme configuration, "
+                                   "animation file extension defined as \""
+                                << extension << "\"";
+                        }
                     }
                     else if (element.second.type == "text") {
                         if (element.second.has("systemdata") &&
@@ -989,13 +1021,18 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
 {
     glm::mat4 trans {getTransform() * parentTrans};
 
-    // Adding texture loading buffers depending on scrolling speed and status.
-    int bufferIndex {mCarousel->getScrollingVelocity() + 1};
-
     const float primaryZIndex {mCarousel->getZIndex()};
 
-    for (int i = static_cast<int>(mCamOffset) + logoBuffersLeft[bufferIndex];
-         i <= static_cast<int>(mCamOffset) + logoBuffersRight[bufferIndex]; ++i) {
+    int renderLeft {static_cast<int>(mCamOffset)};
+    int renderRight {static_cast<int>(mCamOffset)};
+
+    // If we're transitioning then also render the previous and next systems.
+    if (mCarousel->isAnimationPlaying(0)) {
+        renderLeft -= 1;
+        renderRight += 1;
+    }
+
+    for (int i = renderLeft; i <= renderRight; ++i) {
         int index {i};
         while (index < 0)
             index += static_cast<int>(mCarousel->getNumEntries());

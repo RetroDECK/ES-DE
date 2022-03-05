@@ -15,6 +15,7 @@
 #include "SystemData.h"
 #include "components/CarouselComponent.h"
 #include "components/DateTimeComponent.h"
+#include "components/GIFAnimComponent.h"
 #include "components/GameSelectorComponent.h"
 #include "components/LottieAnimComponent.h"
 #include "components/TextComponent.h"
@@ -39,6 +40,7 @@ struct SystemViewElements {
     std::vector<std::unique_ptr<ImageComponent>> imageComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
     std::vector<std::unique_ptr<LottieAnimComponent>> lottieAnimComponents;
+    std::vector<std::unique_ptr<GIFAnimComponent>> GIFAnimComponents;
 };
 
 class SystemView : public GuiComponent
