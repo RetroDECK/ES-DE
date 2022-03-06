@@ -22,6 +22,7 @@ class GIFAnimComponent : public GuiComponent
 {
 public:
     GIFAnimComponent();
+    ~GIFAnimComponent();
 
     void setAnimation(const std::string& path);
     void setKeepAspectRatio(bool value) { mKeepAspectRatio = value; }
@@ -40,11 +41,41 @@ public:
 private:
     void render(const glm::mat4& parentTrans) override;
 
+    static inline unsigned int readProc(void* buffer,
+                                        unsigned int size,
+                                        unsigned int count,
+                                        fi_handle handle)
+    {
+        return static_cast<unsigned int>(
+            fread(buffer, size, count, reinterpret_cast<FILE*>(handle)));
+    }
+
+    static inline unsigned int writeProc(void* buffer,
+                                         unsigned int size,
+                                         unsigned int count,
+                                         fi_handle handle)
+    {
+        return static_cast<unsigned int>(
+            fwrite(buffer, size, count, reinterpret_cast<FILE*>(handle)));
+    }
+
+    static inline int seekProc(fi_handle handle, long offset, int origin)
+    {
+        return fseek(reinterpret_cast<FILE*>(handle), offset, origin);
+    }
+
+    static inline long int tellProc(fi_handle handle)
+    {
+        return ftell(reinterpret_cast<FILE*>(handle));
+    }
+
     std::shared_ptr<TextureResource> mTexture;
     std::vector<uint8_t> mPictureRGBA;
     size_t mFrameSize;
 
     std::chrono::time_point<std::chrono::system_clock> mAnimationStartTime;
+    FILE* mAnimFile;
+    FreeImageIO mAnimIO;
     FIMULTIBITMAP* mAnimation;
     FIBITMAP* mFrame;
     std::string mPath;

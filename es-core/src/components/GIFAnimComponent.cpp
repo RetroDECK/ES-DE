@@ -8,6 +8,10 @@
 
 #define DEBUG_ANIMATION false
 
+#if defined(_MSC_VER) // MSVC compiler.
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include "components/GIFAnimComponent.h"
 
 #include "Log.h"
@@ -17,6 +21,7 @@
 
 GIFAnimComponent::GIFAnimComponent()
     : mFrameSize {0}
+    , mAnimFile {nullptr}
     , mAnimation {nullptr}
     , mFrame {nullptr}
     , mStartDirection {"normal"}
@@ -45,6 +50,11 @@ GIFAnimComponent::GIFAnimComponent()
     mTexture->setFormat(Renderer::Texture::BGRA);
 #endif
 
+    mAnimIO.read_proc = readProc;
+    mAnimIO.write_proc = writeProc;
+    mAnimIO.seek_proc = seekProc;
+    mAnimIO.tell_proc = tellProc;
+
     // Set component defaults.
     setOrigin(0.5f, 0.5f);
     setSize(Renderer::getScreenWidth() * 0.2f, Renderer::getScreenHeight() * 0.2f);
@@ -52,6 +62,14 @@ GIFAnimComponent::GIFAnimComponent()
     setDefaultZIndex(10.0f);
     setZIndex(10.0f);
     mTexture->setLinearMagnify(false);
+}
+
+GIFAnimComponent::~GIFAnimComponent()
+{
+    if (mAnimFile != nullptr) {
+        fclose(mAnimFile);
+        mAnimFile = nullptr;
+    }
 }
 
 void GIFAnimComponent::setAnimation(const std::string& path)
@@ -106,8 +124,15 @@ void GIFAnimComponent::setAnimation(const std::string& path)
 
     // Make sure that we can actually read this format.
     if (FreeImage_FIFSupportsReading(fileFormat)) {
-        mAnimation =
-            FreeImage_OpenMultiBitmap(fileFormat, mPath.c_str(), false, true, false, GIF_PLAYBACK);
+
+#if defined(_WIN64)
+        mAnimFile = _wfopen(Utils::String::stringToWideString(mPath).c_str(), L"r+b");
+#else
+        mAnimFile = fopen(mPath.c_str(), "r+b");
+#endif
+        if (mAnimFile != nullptr)
+            mAnimation = FreeImage_OpenMultiBitmapFromHandle(
+                fileFormat, &mAnimIO, static_cast<fi_handle>(mAnimFile), GIF_PLAYBACK);
 
         mFrame = FreeImage_LockPage(mAnimation, 0);
         FITAG* tagFrameTime {nullptr};
@@ -423,8 +448,8 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         }
 
         if (!mHoldFrame) {
-            mAnimation =
-                FreeImage_OpenMultiBitmap(FIF_GIF, mPath.c_str(), false, true, false, GIF_PLAYBACK);
+            mAnimation = FreeImage_OpenMultiBitmapFromHandle(
+                FIF_GIF, &mAnimIO, static_cast<fi_handle>(mAnimFile), GIF_PLAYBACK);
 
             mFrame = FreeImage_LockPage(mAnimation, mFrameNum);
             mPictureRGBA.clear();
