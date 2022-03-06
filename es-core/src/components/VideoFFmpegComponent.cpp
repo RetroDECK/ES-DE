@@ -1281,8 +1281,13 @@ void VideoFFmpegComponent::startVideoStream()
         bool hwDecoding = false;
 #endif
 
+#if LIBAVUTIL_VERSION_MAJOR > 56
+        mVideoStreamIndex = av_find_best_stream(mFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1,
+                                                const_cast<const AVCodec**>(&mHardwareCodec), 0);
+#else
         mVideoStreamIndex =
             av_find_best_stream(mFormatContext, AVMEDIA_TYPE_VIDEO, -1, -1, &mHardwareCodec, 0);
+#endif
 
         if (mVideoStreamIndex < 0) {
             LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
