@@ -102,7 +102,11 @@ void LottieAnimComponent::setAnimation(const std::string& path)
         return;
     }
 
-    mAnimation = rlottie::Animation::loadFromFile(mPath);
+    ResourceData animData {ResourceManager::getInstance().getFileData(mPath)};
+    std::string cache;
+
+    mAnimation = rlottie::Animation::loadFromData(
+        std::string(reinterpret_cast<char*>(animData.ptr.get()), animData.length), cache);
 
     if (mAnimation == nullptr) {
         LOG(LogError) << "Couldn't parse Lottie animation file \"" << mPath << "\"";
