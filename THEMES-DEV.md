@@ -894,7 +894,7 @@ Properties:
 
 #### animation
 
-Lottie (vector graphics) animation. Note that these animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of them to the same view and to not make them too large.
+GIF and Lottie (vector graphics) animations. The type of animation is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of them to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or high-resolution.
 
 Supported views:
 * `system `
@@ -929,6 +929,10 @@ Properties:
 * `keepAspectRatio` - type: BOOLEAN.
     - If true, aspect ratio will be preserved. If false, animation will stretch to the defined size. Note that setting to `false` is incompatible with only defining one of the axes for the `size` element.
     - Default is `true`
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling GIF animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on Lottie animations.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`

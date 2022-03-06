@@ -22,6 +22,7 @@
 * Added support for defining which types of game media to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
 * Added theme support for Lottie animations (vector graphics)
+* Added theme support for GIF animations
 * Added a GameSelectorComponent for displaying game media and metadata in the system view
 * Added support for displaying videos, Lottie animations and date/time elements to the system view
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)

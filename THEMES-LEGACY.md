@@ -649,32 +649,6 @@ Can be created as an extra.
 * `zIndex` - type: FLOAT.
     - z-index value for component.  Components will be rendered in order of z-index value from low to high.
 
-#### animation
-
-Lottie animation (vector graphics). Can be created as an extra.
-
-* `pos` - type: NORMALIZED_PAIR.
-* `size` - type: NORMALIZED_PAIR.
-    - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the animation's aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information.
-* `origin` - type: NORMALIZED_PAIR.
-    - Where on the animation `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the animation exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied. Default is `0.5 0.5`.
-* `rotation` - type: FLOAT.
-    - angle in degrees that the animation should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Default is `0`.
-* `rotationOrigin` - type: NORMALIZED_PAIR.
-    - Point around which the animation will be rotated. Default is `0.5 0.5`.
-* `path` - type: PATH.
-    - Path to the animation file.  Only the .json extension is supported.
-* `speed` - type: FLOAT.
-    - The relative speed at which to play the animation. Minimum value is `0.2`, maximum value is `3.0`. Default is `1.0`.
-* `direction` - type: STRING.
-    - The direction that the animation should be played. Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards). Default is `normal`.
-* `keepAspectRatio` - type: BOOLEAN.
-    - If true, aspect ratio will be preserved. If false, animation will stretch to the defined size. Note that setting to `false` is incompatible with only defining one of the axes for the `size` element. Default is `true`.
-* `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view. Default is `true`.
-* `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high. Default is `10`.
-
 #### imagegrid
 
 * `pos` - type: NORMALIZED_PAIR.
