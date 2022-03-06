@@ -81,6 +81,7 @@ void GamelistView::legacyPopulateFields()
                                              mList.getPosition().y + mSize.y * 0.2125f);
         mVideoComponents.back()->setSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.4f);
         mVideoComponents.back()->setDefaultZIndex(30.0f);
+        mVideoComponents.back()->setVisible(false);
         addChild(mVideoComponents.back().get());
     }
 

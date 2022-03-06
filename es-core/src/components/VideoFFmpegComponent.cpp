@@ -122,7 +122,7 @@ void VideoFFmpegComponent::resize()
 
 void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mThemeOpacity == 0.0f)
+    if (!mVisible || mThemeOpacity == 0.0f)
         return;
 
     if (!mHasVideo && mStaticImagePath == "")
@@ -1217,7 +1217,7 @@ bool VideoFFmpegComponent::decoderInitHW()
 
 void VideoFFmpegComponent::startVideoStream()
 {
-    if (mThemeOpacity == 0.0f)
+    if (!mVisible || mThemeOpacity == 0.0f)
         return;
 
     mIsPlaying = true;
