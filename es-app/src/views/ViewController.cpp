@@ -831,6 +831,7 @@ bool ViewController::input(InputConfig* config, Input input)
         mCurrentView->stopListScrolling();
         // Pause all videos as they would otherwise continue to play beneath the menu.
         mCurrentView->pauseViewVideos();
+        mCurrentView->stopScrollFadeIn();
 
         // Finally, if the camera is currently moving, reset its position.
         cancelViewTransitions();

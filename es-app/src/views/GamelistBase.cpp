@@ -458,6 +458,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
         ViewController::getInstance()->cancelViewTransitions();
         stopListScrolling();
         pauseViewVideos();
+        stopScrollFadeIn();
         mWindow->pushGui(new GuiGamelistOptions(this->mRoot->getSystem()));
         return true;
     }

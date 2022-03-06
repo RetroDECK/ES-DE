@@ -64,6 +64,18 @@ public:
             video->muteVideoPlayer();
     }
 
+    void stopScrollFadeIn() override
+    {
+        for (auto& image : mImageComponents) {
+            if (image->getScrollFadeIn())
+                image->finishAnimation(0);
+        }
+        for (auto& video : mVideoComponents) {
+            if (video->getScrollFadeIn())
+                video->finishAnimation(0);
+        }
+    }
+
     const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
     void setTheme(const std::shared_ptr<ThemeData>& theme)
     {

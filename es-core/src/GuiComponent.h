@@ -189,6 +189,7 @@ public:
     void stopAllAnimations();
     void cancelAllAnimations();
 
+    virtual void stopScrollFadeIn() {}
     virtual bool isListScrolling() { return false; }
     virtual void stopListScrolling() {}
     virtual const float getOpacity() const { return mOpacity; }

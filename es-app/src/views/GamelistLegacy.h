@@ -70,6 +70,7 @@ void GamelistView::legacyPopulateFields()
                                          mList.getPosition().y + mSize.y * 0.2125f);
     mImageComponents.back()->setMaxSize(mSize.x * (0.50f - 2.0f * padding), mSize.y * 0.4f);
     mImageComponents.back()->setDefaultZIndex(30.0f);
+    mImageComponents.back()->setScrollFadeIn(true);
     addChild(mImageComponents.back().get());
 
     if (mViewStyle == ViewController::VIDEO) {
@@ -81,6 +82,7 @@ void GamelistView::legacyPopulateFields()
                                              mList.getPosition().y + mSize.y * 0.2125f);
         mVideoComponents.back()->setSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.4f);
         mVideoComponents.back()->setDefaultZIndex(30.0f);
+        mVideoComponents.back()->setScrollFadeIn(true);
         mVideoComponents.back()->setVisible(false);
         addChild(mVideoComponents.back().get());
     }
