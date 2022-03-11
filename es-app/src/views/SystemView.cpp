@@ -28,8 +28,9 @@ SystemView::SystemView()
     , mUpdatedGameCount {false}
     , mViewNeedsReload {true}
     , mLegacyMode {false}
-    , mHoldingKey {false}
     , mNavigated {false}
+    , mMaxFade {false}
+    , mFadeTransitions {false}
 {
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
@@ -101,8 +102,6 @@ bool SystemView::input(InputConfig* config, Input input)
     mNavigated = false;
 
     if (input.value != 0) {
-        mHoldingKey = true;
-
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
             LOG(LogDebug) << "SystemView::input(): Reloading all";
@@ -137,15 +136,15 @@ bool SystemView::input(InputConfig* config, Input input)
             return true;
         }
     }
-    else {
-        mHoldingKey = false;
-    }
 
     return mCarousel->input(config, input);
 }
 
 void SystemView::update(int deltaTime)
 {
+    if (!mCarousel->isAnimationPlaying(0))
+        mMaxFade = false;
+
     mCarousel->update(deltaTime);
 
     for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
@@ -167,25 +166,17 @@ void SystemView::render(const glm::mat4& parentTrans)
 
     bool fade {false};
 
-    if (mNavigated && mCarousel->isAnimationPlaying(0) &&
-        Settings::getInstance()->getString("TransitionStyle") == "fade")
+    if (mNavigated && mMaxFade)
         fade = true;
 
     if (!fade)
         renderElements(parentTrans, false);
     glm::mat4 trans {getTransform() * parentTrans};
 
-    // During fade transitions draw a black rectangle above all elements placed below the carousel.
-    if (mFadeOpacity != 0.0f) {
-        unsigned int fadeColor {0x00000000 | static_cast<unsigned int>(mFadeOpacity * 255.0f)};
-        Renderer::setMatrix(trans);
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, fadeColor, fadeColor);
-    }
-
     mCarousel->render(trans);
 
     // For legacy themes the carousel is always rendered on top of all other elements.
-    if (!mLegacyMode)
+    if (!mLegacyMode && !fade)
         renderElements(parentTrans, true);
 }
 
@@ -274,11 +265,12 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     if (scrollVelocity != 0)
         mPreviousScrollVelocity = scrollVelocity;
 
-    std::string transition_style {Settings::getInstance()->getString("TransitionStyle")};
+    std::string transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
+    mFadeTransitions = transitionStyle == "fade";
 
     Animation* anim;
 
-    if (transition_style == "fade") {
+    if (transitionStyle == "fade") {
         float startFade {mFadeOpacity};
         anim = new LambdaAnimation(
             [this, startFade, startPos, endPos, posMax](float t) {
@@ -302,13 +294,18 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
                 if (t > 0.5f)
                     mCamOffset = endPos;
 
+                if (t >= 0.7f && t != 1.0f)
+                    mMaxFade = true;
+
                 // Update the game count when the entire animation has been completed.
-                if (mFadeOpacity == 1.0f)
+                if (mFadeOpacity == 1.0f) {
+                    mMaxFade = false;
                     updateGameCount();
+                }
             },
             500);
     }
-    else if (transition_style == "slide") {
+    else if (transitionStyle == "slide") {
         mUpdatedGameCount = false;
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
@@ -435,7 +432,7 @@ void SystemView::populate()
                                                                     ThemeFlags::ALL);
                         elements.children.emplace_back(elements.videoComponents.back().get());
                     }
-                    else if (element.second.type == "animation") {
+                    else if (element.second.type == "animation" && element.second.has("path")) {
                         const std::string extension {Utils::FileSystem::getExtension(
                             element.second.get<std::string>("path"))};
                         if (extension == ".json") {
@@ -553,6 +550,8 @@ void SystemView::populate()
                 nullptr));
         }
     }
+
+    mFadeTransitions = Settings::getInstance()->getString("TransitionStyle") == "fade";
 }
 
 void SystemView::updateGameCount()
@@ -1055,20 +1054,32 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                 glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
 
             if (mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
-                for (auto element : mSystemElements[index].legacyExtras)
+                for (auto element : mSystemElements[index].legacyExtras) {
+                    if (mFadeTransitions)
+                        element->setDim(1.0f - mFadeOpacity);
                     element->render(elementTrans);
+                }
             }
             else if (!mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
                 for (auto child : mSystemElements[index].children) {
-                    if (abovePrimary && child->getZIndex() > primaryZIndex && mFadeOpacity == 0.0f)
+                    if (abovePrimary && child->getZIndex() > primaryZIndex) {
+                        if (mFadeTransitions || child->getOpacity() != 1.0f)
+                            child->setOpacity(1.0f - mFadeOpacity);
                         child->render(elementTrans);
-                    else if (!abovePrimary && child->getZIndex() <= primaryZIndex)
+                    }
+                    else if (!abovePrimary && child->getZIndex() <= primaryZIndex) {
+                        if (mFadeTransitions || child->getDim() != 1.0f)
+                            child->setDim(1.0f - mFadeOpacity);
                         child->render(elementTrans);
+                    }
                 }
             }
 
-            if (mLegacyMode)
+            if (mLegacyMode) {
+                if (mFadeTransitions)
+                    mLegacySystemInfo->setDim(1.0f - mFadeOpacity);
                 mLegacySystemInfo->render(elementTrans);
+            }
 
             Renderer::popClipRect();
         }

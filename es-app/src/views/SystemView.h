@@ -119,8 +119,9 @@ private:
     bool mUpdatedGameCount;
     bool mViewNeedsReload;
     bool mLegacyMode;
-    bool mHoldingKey;
     bool mNavigated;
+    bool mMaxFade;
+    bool mFadeTransitions;
 };
 
 #endif // ES_APP_VIEWS_SYSTEM_VIEW_H
