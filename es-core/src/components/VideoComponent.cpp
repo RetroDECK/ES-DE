@@ -277,7 +277,7 @@ void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
 
     if (mStaticImagePath != "") {
         mStaticImage.setOpacity(mOpacity * mThemeOpacity);
-        mStaticImage.setDim(mDim);
+        mStaticImage.setDimming(mDimming);
         mStaticImage.render(parentTrans);
     }
 }

@@ -42,7 +42,7 @@ COMPAT_VARYING vec4 color;
 COMPAT_VARYING vec2 texCoord;
 uniform float opacity = 1.0f;
 uniform float saturation = 1.0f;
-uniform float dim = 1.0f;
+uniform float dimming = 1.0f;
 uniform int BGRAToRGBA = 0;
 uniform sampler2D myTexture;
 
@@ -62,7 +62,7 @@ void main()
     }
 
     // Dimming
-    vec4 dimColor = vec4(dim, dim, dim, 1.0f);
+    vec4 dimColor = vec4(dimming, dimming, dimming, 1.0f);
     color = vec4(color.rgba) * dimColor;
 
     // BGRA to RGBA conversion.

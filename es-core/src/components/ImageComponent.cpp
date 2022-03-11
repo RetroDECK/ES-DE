@@ -333,10 +333,10 @@ void ImageComponent::setSaturation(float saturation)
     updateColors();
 }
 
-void ImageComponent::setDim(float dim)
+void ImageComponent::setDimming(float dimming)
 {
-    // Set dim value.
-    mDim = dim;
+    // Set dimming value.
+    mDimming = dimming;
 }
 
 void ImageComponent::updateVertices()
@@ -362,16 +362,16 @@ void ImageComponent::updateVertices()
 
     // Round vertices.
     for (int i = 0; i < 4; ++i)
-        mVertices[i].pos = glm::round(mVertices[i].pos);
+        mVertices[i].position = glm::round(mVertices[i].position);
 
     if (mFlipX) {
         for (int i = 0; i < 4; ++i)
-            mVertices[i].tex[0] = px - mVertices[i].tex[0];
+            mVertices[i].texture[0] = px - mVertices[i].texture[0];
     }
 
     if (mFlipY) {
         for (int i = 0; i < 4; ++i)
-            mVertices[i].tex[1] = py - mVertices[i].tex[1];
+            mVertices[i].texture[1] = py - mVertices[i].texture[1];
     }
 }
 
@@ -383,10 +383,10 @@ void ImageComponent::updateColors()
     const unsigned int colorEnd {(mColorShiftEnd & 0xFFFFFF00) |
                                  static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity)};
 
-    mVertices[0].col = color;
-    mVertices[1].col = mColorGradientHorizontal ? color : colorEnd;
-    mVertices[2].col = mColorGradientHorizontal ? colorEnd : color;
-    mVertices[3].col = colorEnd;
+    mVertices[0].color = color;
+    mVertices[1].color = mColorGradientHorizontal ? color : colorEnd;
+    mVertices[2].color = mColorGradientHorizontal ? colorEnd : color;
+    mVertices[3].color = colorEnd;
 }
 
 void ImageComponent::render(const glm::mat4& parentTrans)
@@ -420,7 +420,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
 
             mVertices->saturation = mSaturation;
             mVertices->opacity = mThemeOpacity;
-            mVertices->dim = mDim;
+            mVertices->dimming = mDimming;
 
             Renderer::drawTriangleStrips(&mVertices[0], 4);
         }

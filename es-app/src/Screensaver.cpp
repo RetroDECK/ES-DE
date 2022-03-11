@@ -347,7 +347,7 @@ void Screensaver::renderScreensaver()
             Settings::getInstance()->getString("ScreensaverType") == "dim") {
 #if defined(USE_OPENGL_21)
             Renderer::postProcessingParams dimParameters;
-            dimParameters.dim = mDimValue;
+            dimParameters.dimming = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
             if (mDimValue > 0.63)
                 mDimValue = glm::clamp(mDimValue - 0.015f, 0.68f, 1.0f);
@@ -363,7 +363,7 @@ void Screensaver::renderScreensaver()
         else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
 #if defined(USE_OPENGL_21)
             Renderer::postProcessingParams blackParameters;
-            blackParameters.dim = mDimValue;
+            blackParameters.dimming = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_CORE, blackParameters);
             if (mDimValue > 0.0)
                 mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);

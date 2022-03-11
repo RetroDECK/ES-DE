@@ -207,7 +207,7 @@ public:
 
     void setColor(unsigned int color);
     void setOpacity(float opacity);
-    void setDim(float dim);
+    void setDimming(float dimming);
 
     friend Font;
 };

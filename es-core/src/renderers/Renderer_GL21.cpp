@@ -284,9 +284,9 @@ namespace Renderer
                    const Blend::Factor srcBlendFactor,
                    const Blend::Factor dstBlendFactor)
     {
-        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].pos));
-        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].tex));
-        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].col));
+        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].position));
+        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].texture));
+        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].color));
 
         GL_CHECK_ERROR(
             glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
@@ -299,12 +299,12 @@ namespace Renderer
                             const Blend::Factor srcBlendFactor,
                             const Blend::Factor dstBlendFactor)
     {
-        const float width {vertices[3].pos[0]};
-        const float height {vertices[3].pos[1]};
+        const float width {vertices[3].position[0]};
+        const float height {vertices[3].position[1]};
 
-        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].pos));
-        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].tex));
-        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].col));
+        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].position));
+        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].texture));
+        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].color));
 
         GL_CHECK_ERROR(
             glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
@@ -316,7 +316,7 @@ namespace Renderer
                 runShader->setModelViewProjectionMatrix(mTrans);
                 runShader->setOpacity(vertices->opacity);
                 runShader->setSaturation(vertices->saturation);
-                runShader->setDim(vertices->dim);
+                runShader->setDimming(vertices->dimming);
                 runShader->setBGRAToRGBA(vertices->convertBGRAToRGBA);
                 GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                 runShader->deactivateShaders();
@@ -458,7 +458,7 @@ namespace Renderer
 
         vertices->opacity = parameters.opacity;
         vertices->saturation = parameters.saturation;
-        vertices->dim = parameters.dim;
+        vertices->dimming = parameters.dimming;
 
         shaderList.emplace_back(Renderer::SHADER_CORE);
 

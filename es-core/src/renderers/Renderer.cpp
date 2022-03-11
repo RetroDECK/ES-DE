@@ -405,7 +405,7 @@ namespace Renderer
                   const unsigned int colorEnd,
                   bool horizontalGradient,
                   const float opacity,
-                  const float dim,
+                  const float dimming,
                   const Blend::Factor srcBlendFactor,
                   const Blend::Factor dstBlendFactor)
     {
@@ -430,10 +430,10 @@ namespace Renderer
 
         // Round vertices.
         for (int i = 0; i < 4; ++i)
-            vertices[i].pos = glm::round(vertices[i].pos);
+            vertices[i].position = glm::round(vertices[i].position);
 
         vertices->opacity = opacity;
-        vertices->dim = dim;
+        vertices->dimming = dimming;
 
         bindTexture(0);
         drawTriangleStrips(vertices, 4, srcBlendFactor, dstBlendFactor);

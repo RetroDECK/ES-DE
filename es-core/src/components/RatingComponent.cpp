@@ -141,7 +141,7 @@ void RatingComponent::updateVertices()
 void RatingComponent::updateColors()
 {
     for (int i = 0; i < 8; ++i)
-        mVertices[i].col = mColorShift;
+        mVertices[i].color = mColorShift;
 }
 
 void RatingComponent::render(const glm::mat4& parentTrans)
@@ -163,8 +163,8 @@ void RatingComponent::render(const glm::mat4& parentTrans)
         if (mUnfilledTexture->bind()) {
             if (mUnfilledColor != mColorShift) {
                 for (int i = 0; i < 8; ++i)
-                    mVertices[i].col =
-                        (mUnfilledColor & 0xFFFFFF00) + (mVertices[i].col & 0x000000FF);
+                    mVertices[i].color =
+                        (mUnfilledColor & 0xFFFFFF00) + (mVertices[i].color & 0x000000FF);
             }
 
             Renderer::drawTriangleStrips(&mVertices[4], 4);

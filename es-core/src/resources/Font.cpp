@@ -670,7 +670,7 @@ TextCache* Font::buildTextCache(const std::string& text,
 
         // Round vertices.
         for (int i = 1; i < 5; ++i)
-            vertices[i].pos = glm::round(vertices[i].pos);
+            vertices[i].position = glm::round(vertices[i].position);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
         vertices[0] = vertices[1];
@@ -711,7 +711,7 @@ void TextCache::setColor(unsigned int color)
 {
     for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it)
         for (auto it2 = it->verts.begin(); it2 != it->verts.end(); ++it2)
-            it2->col = color;
+            it2->color = color;
 }
 
 void TextCache::setOpacity(float opacity)
@@ -722,11 +722,11 @@ void TextCache::setOpacity(float opacity)
     }
 }
 
-void TextCache::setDim(float dim)
+void TextCache::setDimming(float dimming)
 {
     for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it) {
         for (auto it2 = it->verts.begin(); it2 != it->verts.end(); ++it2)
-            it2->dim = dim;
+            it2->dimming = dimming;
     }
 }
 

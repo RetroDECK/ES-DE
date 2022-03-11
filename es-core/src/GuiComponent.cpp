@@ -31,7 +31,7 @@ GuiComponent::GuiComponent()
     , mSize {0.0f, 0.0f}
     , mOpacity {1.0f}
     , mSaturation {1.0f}
-    , mDim {1.0f}
+    , mDimming {1.0f}
     , mThemeOpacity {1.0f}
     , mRotation {0.0f}
     , mScale {1.0f}
@@ -192,14 +192,14 @@ void GuiComponent::setOpacity(float opacity)
         (*it)->setOpacity(opacity);
 }
 
-void GuiComponent::setDim(float dim)
+void GuiComponent::setDimming(float dimming)
 {
-    if (mDim == dim)
+    if (mDimming == dimming)
         return;
 
-    mDim = dim;
+    mDimming = dimming;
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
-        (*it)->setDim(dim);
+        (*it)->setDimming(dimming);
 }
 
 const glm::mat4& GuiComponent::getTransform()

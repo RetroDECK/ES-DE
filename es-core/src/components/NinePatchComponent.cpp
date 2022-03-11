@@ -36,10 +36,10 @@ NinePatchComponent::~NinePatchComponent()
 void NinePatchComponent::updateColors()
 {
     for (int i = 0; i < 6 * 9; ++i)
-        mVertices[i].col = mEdgeColor;
+        mVertices[i].color = mEdgeColor;
 
     for (int i = 6 * 4; i < 6; ++i)
-        mVertices[(6 * 4) + i].col = mCenterColor;
+        mVertices[(6 * 4) + i].color = mCenterColor;
 }
 
 void NinePatchComponent::buildVertices()
@@ -111,7 +111,7 @@ void NinePatchComponent::buildVertices()
 
         // Round vertices.
         for (int i = 1; i < 5; ++i)
-            mVertices[v + i].pos = glm::round(mVertices[v + i].pos);
+            mVertices[v + i].position = glm::round(mVertices[v + i].position);
 
         // Make duplicates of first and last vertex so this can be rendered as a triangle strip.
         mVertices[v + 0] = mVertices[v + 1];

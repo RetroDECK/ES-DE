@@ -196,8 +196,8 @@ public:
     virtual void setOpacity(float opacity);
     virtual float getSaturation() const { return static_cast<float>(mColor); }
     virtual void setSaturation(float saturation) { mSaturation = saturation; }
-    virtual const float getDim() const { return mDim; }
-    virtual void setDim(float dim);
+    virtual const float getDimming() const { return mDimming; }
+    virtual void setDimming(float dimming);
     virtual unsigned int getColor() const { return mColor; }
     virtual unsigned int getColorShift() const { return mColorShift; }
     virtual float getLineSpacing() { return 0.0f; }
@@ -301,7 +301,7 @@ protected:
 
     float mOpacity;
     float mSaturation;
-    float mDim;
+    float mDimming;
     float mThemeOpacity;
     float mRotation;
     float mScale;

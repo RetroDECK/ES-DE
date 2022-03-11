@@ -30,7 +30,7 @@ namespace Renderer
     struct postProcessingParams {
         float opacity;
         float saturation;
-        float dim;
+        float dimming;
         bool convertBGRAToRGBA;
         unsigned int blurPasses;
         unsigned int shaders;
@@ -38,7 +38,7 @@ namespace Renderer
         postProcessingParams()
             : opacity {1.0f}
             , saturation {1.0f}
-            , dim {1.0f}
+            , dimming {1.0f}
             , convertBGRAToRGBA {false}
             , blurPasses {1}
             , shaders {0}
@@ -68,7 +68,7 @@ namespace Renderer
             LOG(LogError) << "OpenGL error: " << _funcName << " failed with error code: 0x"
                           << std::hex << errorCode;
 #else
-            LOG(LogError) << "OpenGLES error: " << _funcName << " failed with error code: 0x"
+            LOG(LogError) << "OpenGL ES error: " << _funcName << " failed with error code: 0x"
                           << std::hex << errorCode;
 #endif
         }
@@ -117,30 +117,30 @@ namespace Renderer
     };
 
     struct Vertex {
-        glm::vec2 pos;
-        glm::vec2 tex;
-        unsigned int col;
+        glm::vec2 position;
+        glm::vec2 texture;
+        unsigned int color;
         float opacity;
         float saturation;
-        float dim;
+        float dimming;
         bool convertBGRAToRGBA;
         unsigned int shaders;
 
         Vertex()
             : opacity {1.0f}
             , saturation {1.0f}
-            , dim {1.0f}
+            , dimming {1.0f}
             , convertBGRAToRGBA {false}
             , shaders {0}
         {
         }
         Vertex(const glm::vec2& position, const glm::vec2& textureCoord, const unsigned int color)
-            : pos(position)
-            , tex(textureCoord)
-            , col(color)
+            : position(position)
+            , texture(textureCoord)
+            , color(color)
             , opacity {1.0f}
             , saturation {1.0f}
-            , dim {1.0f}
+            , dimming {1.0f}
             , convertBGRAToRGBA {false}
             , shaders {0}
         {
@@ -159,7 +159,7 @@ namespace Renderer
                   const unsigned int colorEnd,
                   bool horizontalGradient = false,
                   const float opacity = 1.0,
-                  const float dim = 1.0,
+                  const float dimming = 1.0,
                   const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
                   const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     SDL_Window* getSDLWindow();

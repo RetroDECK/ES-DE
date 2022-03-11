@@ -485,11 +485,11 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
 
         // Round vertices.
         for (int i = 0; i < 4; ++i)
-            vertices[i].pos = glm::round(vertices[i].pos);
+            vertices[i].position = glm::round(vertices[i].position);
 
         vertices->saturation = mSaturation;
         vertices->opacity = mOpacity * mThemeOpacity;
-        vertices->dim = mDim;
+        vertices->dimming = mDimming;
         vertices->convertBGRAToRGBA = true;
 
         // Render it.

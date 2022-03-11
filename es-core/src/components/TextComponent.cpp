@@ -107,11 +107,11 @@ void TextComponent::setOpacity(float opacity)
         mTextCache->setOpacity(mThemeOpacity);
 }
 
-void TextComponent::setDim(float dim)
+void TextComponent::setDimming(float dimming)
 {
-    mDim = dim;
+    mDimming = dimming;
     if (mTextCache)
-        mTextCache->setDim(dim);
+        mTextCache->setDimming(dimming);
 }
 
 void TextComponent::setText(const std::string& text, bool update)
@@ -165,7 +165,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
     if (mRenderBackground)
         Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
-                           mOpacity * mThemeOpacity, mDim);
+                           mOpacity * mThemeOpacity, mDimming);
 
     if (mTextCache) {
         const glm::vec2& textSize {mTextCache->metrics.size};

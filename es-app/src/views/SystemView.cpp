@@ -1055,8 +1055,8 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
 
             if (mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
                 for (auto element : mSystemElements[index].legacyExtras) {
-                    if (mFadeTransitions)
-                        element->setDim(1.0f - mFadeOpacity);
+                    if (mFadeTransitions || element->getDimming() != 1.0f)
+                        element->setDimming(1.0f - mFadeOpacity);
                     element->render(elementTrans);
                 }
             }
@@ -1068,8 +1068,8 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         child->render(elementTrans);
                     }
                     else if (!abovePrimary && child->getZIndex() <= primaryZIndex) {
-                        if (mFadeTransitions || child->getDim() != 1.0f)
-                            child->setDim(1.0f - mFadeOpacity);
+                        if (mFadeTransitions || child->getDimming() != 1.0f)
+                            child->setDimming(1.0f - mFadeOpacity);
                         child->render(elementTrans);
                     }
                 }
@@ -1077,7 +1077,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
 
             if (mLegacyMode) {
                 if (mFadeTransitions)
-                    mLegacySystemInfo->setDim(1.0f - mFadeOpacity);
+                    mLegacySystemInfo->setDimming(1.0f - mFadeOpacity);
                 mLegacySystemInfo->render(elementTrans);
             }
 

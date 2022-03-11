@@ -62,7 +62,7 @@ public:
         return static_cast<float>((mColor & 0x000000FF) / 255.0f);
     }
     void setOpacity(float opacity) override;
-    void setDim(float dim) override;
+    void setDimming(float dimming) override;
 
     void setSelectable(bool status) { mSelectable = status; }
 

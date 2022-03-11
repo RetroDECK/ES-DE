@@ -23,7 +23,7 @@ namespace Renderer
         , shaderTextureCoord {0}
         , shaderOpacity {0}
         , shaderSaturation {0}
-        , shaderDim {0}
+        , shaderDimming {0}
     {
     }
 
@@ -109,7 +109,7 @@ namespace Renderer
         shaderTextureCoord = glGetAttribLocation(mProgramID, "TexCoord");
         shaderOpacity = glGetUniformLocation(mProgramID, "opacity");
         shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
-        shaderDim = glGetUniformLocation(mProgramID, "dim");
+        shaderDimming = glGetUniformLocation(mProgramID, "dimming");
         shaderBGRAToRGBA = glGetUniformLocation(mProgramID, "BGRAToRGBA");
     }
 
@@ -146,10 +146,10 @@ namespace Renderer
             GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
     }
 
-    void Renderer::Shader::setDim(GLfloat dim)
+    void Renderer::Shader::setDimming(GLfloat dimming)
     {
-        if (shaderDim != GL_INVALID_VALUE && shaderDim != GL_INVALID_OPERATION)
-            GL_CHECK_ERROR(glUniform1f(shaderDim, dim));
+        if (shaderDimming != GL_INVALID_VALUE && shaderDimming != GL_INVALID_OPERATION)
+            GL_CHECK_ERROR(glUniform1f(shaderDimming, dimming));
     }
 
     void Renderer::Shader::setBGRAToRGBA(GLboolean BGRAToRGBA)

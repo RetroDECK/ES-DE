@@ -481,7 +481,7 @@ void Window::render()
                     // clang-format on
 
                     // Also dim the background slightly.
-                    backgroundParameters.dim = 0.60f;
+                    backgroundParameters.dimming = 0.60f;
 
                     Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
                                                        Renderer::SHADER_BLUR_VERTICAL,
@@ -489,7 +489,7 @@ void Window::render()
                 }
                 else {
                     // Dim the background slightly.
-                    backgroundParameters.dim = 0.60f;
+                    backgroundParameters.dimming = 0.60f;
                     Renderer::shaderPostprocessing(Renderer::SHADER_CORE, backgroundParameters,
                                                    &processedTexture[0]);
                 }
