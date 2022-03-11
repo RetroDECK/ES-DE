@@ -280,11 +280,17 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--screenrotate") == 0) {
             if (i >= argc - 1) {
+                std::cerr << "Error: No screenrotate value supplied.\n";
+                return false;
+            }
+            std::string rotateValue {argv[i + 1]};
+            if (rotateValue != "on" && rotateValue != "off" && rotateValue != "1" &&
+                rotateValue != "0") {
                 std::cerr << "Error: Invalid screenrotate value supplied.\n";
                 return false;
             }
-            int rotate = atoi(argv[i + 1]);
-            Settings::getInstance()->setInt("ScreenRotate", rotate);
+            bool screenRotate {(rotateValue == "on" || rotateValue == "1") ? true : false};
+            Settings::getInstance()->setBool("ScreenRotate", screenRotate);
             ++i;
         }
         else if (strcmp(argv[i], "--vsync") == 0) {
@@ -358,6 +364,7 @@ bool parseArgs(int argc, char* argv[])
 "Options:\n"
 "  --display [index 1-4]           Display/monitor to use\n"
 "  --resolution [width] [height]   Application resolution\n"
+"  --screenrotate [1/on or 0/off]  Rotate application screen 180 degrees\n"
 "  --vsync [1/on or 0/off]         Turn VSync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
 "  --no-splash                     Don't show the splash screen during startup\n"

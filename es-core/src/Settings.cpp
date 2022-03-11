@@ -33,6 +33,7 @@ namespace
         "IgnoreGamelist",       // --ignore-gamelist
         "SplashScreen",         // --no-splash
         "Debug",                // --debug
+        "ScreenRotate",         // --screenrotate [1/on or 0/off]
         "VSync",                // --vsync [1/on or 0/off]
         "ForceFull",            // --force-full
         "ForceKiosk",           // --force-kiosk
@@ -44,7 +45,6 @@ namespace
         "ScreenHeight",         // set via --screensize [width] [height]
         "ScreenOffsetX",        // Set via --screenoffset [X] [Y]
         "ScreenOffsetY",        // Set via --screenoffset [X] [Y]
-        "ScreenRotate",         // --screenrotate [0-3]
 
         // These options are not configurable from the command-line:
         "DebugGrid",
@@ -259,6 +259,7 @@ void Settings::setDefaults()
     mBoolMap["ForceKiosk"] = {false, false};
     mBoolMap["IgnoreGamelist"] = {false, false};
     mBoolMap["SplashScreen"] = {true, true};
+    mBoolMap["ScreenRotate"] = {false, false};
     mBoolMap["VSync"] = {true, true};
     mIntMap["WindowWidth"] = {0, 0};
     mIntMap["WindowHeight"] = {0, 0};
@@ -268,7 +269,6 @@ void Settings::setDefaults()
     mIntMap["ScreenHeight"] = {0, 0};
     mIntMap["ScreenOffsetX"] = {0, 0};
     mIntMap["ScreenOffsetY"] = {0, 0};
-    mIntMap["ScreenRotate"] = {0, 0};
 
     //
     // Settings that can be changed in es_settings.xml

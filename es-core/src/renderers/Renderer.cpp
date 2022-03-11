@@ -142,7 +142,7 @@ namespace Renderer
         screenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ?
                             Settings::getInstance()->getInt("ScreenOffsetY") :
                             0;
-        screenRotated = Settings::getInstance()->getInt("ScreenRotate") == 2;
+        screenRotated = Settings::getInstance()->getBool("ScreenRotate");
 
         // Prevent the application window from minimizing when switching windows (when launching
         // games or when manually switching windows using the task switcher).

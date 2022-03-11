@@ -550,6 +550,9 @@ namespace Renderer
             GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
         }
 
+        if (getScreenRotated())
+            setMatrix(getIdentity());
+
         GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
     }
 
