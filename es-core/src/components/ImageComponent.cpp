@@ -333,6 +333,12 @@ void ImageComponent::setSaturation(float saturation)
     updateColors();
 }
 
+void ImageComponent::setDim(float dim)
+{
+    // Set dim value.
+    mDim = dim;
+}
+
 void ImageComponent::updateVertices()
 {
     if (!mTexture)
@@ -371,12 +377,11 @@ void ImageComponent::updateVertices()
 
 void ImageComponent::updateColors()
 {
-    const float opacity = (mOpacity * mThemeOpacity * (mFading ? mFadeOpacity : 1.0f));
-    const unsigned int color = Renderer::convertRGBAToABGR(
-        (mColorShift & 0xFFFFFF00) | static_cast<unsigned char>((mColorShift & 0xFF) * opacity));
-    const unsigned int colorEnd =
-        Renderer::convertRGBAToABGR((mColorShiftEnd & 0xFFFFFF00) |
-                                    static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity));
+    const float opacity = (mOpacity * (mFading ? mFadeOpacity : 1.0f));
+    const unsigned int color {(mColorShift & 0xFFFFFF00) |
+                              static_cast<unsigned char>((mColorShift & 0xFF) * opacity)};
+    const unsigned int colorEnd {(mColorShiftEnd & 0xFFFFFF00) |
+                                 static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity)};
 
     mVertices[0].col = color;
     mVertices[1].col = mColorGradientHorizontal ? color : colorEnd;
@@ -413,13 +418,11 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             else
                 fadeIn(mTexture->bind());
 
-#if defined(USE_OPENGL_21)
-            if (mSaturation < 1.0) {
-                mVertices[0].shaders = Renderer::SHADER_DESATURATE;
-                mVertices[0].saturation = mSaturation;
-            }
-#endif
-            Renderer::drawTriangleStrips(&mVertices[0], 4, trans);
+            mVertices->saturation = mSaturation;
+            mVertices->opacity = mThemeOpacity;
+            mVertices->dim = mDim;
+
+            Renderer::drawTriangleStrips(&mVertices[0], 4);
         }
         else {
             if (!mTexture) {

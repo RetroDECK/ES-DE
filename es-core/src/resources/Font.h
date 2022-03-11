@@ -206,6 +206,8 @@ public:
     } metrics;
 
     void setColor(unsigned int color);
+    void setOpacity(float opacity);
+    void setDim(float dim);
 
     friend Font;
 };

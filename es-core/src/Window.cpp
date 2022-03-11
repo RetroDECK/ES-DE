@@ -453,13 +453,13 @@ void Window::render()
 #if (CLOCK_BACKGROUND_CREATION)
                 const auto backgroundStartTime = std::chrono::system_clock::now();
 #endif
-                unsigned char* processedTexture {
-                    new unsigned char[static_cast<size_t>(Renderer::getScreenWidth()) *
-                                      static_cast<size_t>(Renderer::getScreenHeight()) * 4]};
+                std::vector<unsigned char> processedTexture(
+                    static_cast<size_t>(Renderer::getScreenWidth()) *
+                    static_cast<size_t>(Renderer::getScreenHeight()) * 4);
 
                 // De-focus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
-                Renderer::shaderParameters backgroundParameters;
+                Renderer::postProcessingParams backgroundParameters;
 
                 if (Settings::getInstance()->getBool("MenuBlurBackground")) {
                     float heightModifier = Renderer::getScreenHeightModifier();
@@ -481,22 +481,21 @@ void Window::render()
                     // clang-format on
 
                     // Also dim the background slightly.
-                    backgroundParameters.fragmentDimValue = 0.60f;
+                    backgroundParameters.dim = 0.60f;
 
                     Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
-                                                       Renderer::SHADER_BLUR_VERTICAL |
-                                                       Renderer::SHADER_DIM,
-                                                   backgroundParameters, processedTexture);
+                                                       Renderer::SHADER_BLUR_VERTICAL,
+                                                   backgroundParameters, &processedTexture[0]);
                 }
                 else {
                     // Dim the background slightly.
-                    backgroundParameters.fragmentDimValue = 0.60f;
-                    Renderer::shaderPostprocessing(Renderer::SHADER_DIM, backgroundParameters,
-                                                   processedTexture);
+                    backgroundParameters.dim = 0.60f;
+                    Renderer::shaderPostprocessing(Renderer::SHADER_CORE, backgroundParameters,
+                                                   &processedTexture[0]);
                 }
 
                 mPostprocessedBackground->initFromPixels(
-                    processedTexture, static_cast<size_t>(Renderer::getScreenWidth()),
+                    &processedTexture[0], static_cast<size_t>(Renderer::getScreenWidth()),
                     static_cast<size_t>(Renderer::getScreenHeight()));
 
                 mBackgroundOverlay->setImage(mPostprocessedBackground);
@@ -511,7 +510,6 @@ void Window::render()
                     mBackgroundOverlayOpacity = 0.1f;
                 }
 
-                delete[] processedTexture;
                 mCachedBackground = true;
 
 #if (CLOCK_BACKGROUND_CREATION)

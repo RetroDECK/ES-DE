@@ -382,11 +382,11 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
         if (mOpacity == 1.0f) {
             Renderer::drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
-                               0xFFFFFFFF, 0xFFFFFFFF, false, mOpacity, trans,
+                               0xFFFFFFFF, 0xFFFFFFFF, false, mOpacity, mDim,
                                Renderer::Blend::ONE_MINUS_DST_COLOR, Renderer::Blend::ZERO);
 
             Renderer::drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
-                               0x777777FF, 0x777777FF, false, mOpacity, trans, Renderer::Blend::ONE,
+                               0x777777FF, 0x777777FF, false, mOpacity, mDim, Renderer::Blend::ONE,
                                Renderer::Blend::ONE);
         }
 
@@ -402,12 +402,12 @@ void ComponentList::render(const glm::mat4& parentTrans)
     float y = 0;
     for (unsigned int i = 0; i < mEntries.size(); ++i) {
         Renderer::drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
-                           0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, trans);
+                           0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDim);
         y += getRowHeight(mEntries.at(i).data);
     }
 
     Renderer::drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
-                       0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, trans);
+                       0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDim);
     Renderer::popClipRect();
 }
 

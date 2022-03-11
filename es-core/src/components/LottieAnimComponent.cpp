@@ -472,13 +472,12 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         for (int i = 0; i < 4; ++i)
             vertices[i].pos = glm::round(vertices[i].pos);
 
-#if defined(USE_OPENGL_21)
-        // Perform color space conversion from BGRA to RGBA.
-        vertices[0].opacity = mThemeOpacity;
-        vertices[0].shaders = Renderer::SHADER_BGRA_TO_RGBA;
-#endif
+        vertices->saturation = mSaturation;
+        vertices->opacity = mOpacity * mThemeOpacity;
+        vertices->dim = mDim;
+        vertices->convertBGRAToRGBA = true;
 
         // Render it.
-        Renderer::drawTriangleStrips(&vertices[0], 4, trans);
+        Renderer::drawTriangleStrips(&vertices[0], 4);
     }
 }

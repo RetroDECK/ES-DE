@@ -21,10 +21,9 @@ namespace Renderer
         , shaderMVPMatrix {0}
         , shaderTextureSize {0}
         , shaderTextureCoord {0}
-        , shaderColor {0}
-        , shaderSaturation {0}
         , shaderOpacity {0}
-        , shaderDimValue {0}
+        , shaderSaturation {0}
+        , shaderDim {0}
     {
     }
 
@@ -108,10 +107,10 @@ namespace Renderer
         shaderMVPMatrix = glGetUniformLocation(mProgramID, "MVPMatrix");
         shaderTextureSize = glGetUniformLocation(mProgramID, "TextureSize");
         shaderTextureCoord = glGetAttribLocation(mProgramID, "TexCoord");
-        shaderColor = glGetAttribLocation(mProgramID, "COLOR");
-        shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
         shaderOpacity = glGetUniformLocation(mProgramID, "opacity");
-        shaderDimValue = glGetUniformLocation(mProgramID, "dimValue");
+        shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
+        shaderDim = glGetUniformLocation(mProgramID, "dim");
+        shaderBGRAToRGBA = glGetUniformLocation(mProgramID, "BGRAToRGBA");
     }
 
     void Renderer::Shader::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
@@ -135,11 +134,10 @@ namespace Renderer
         }
     }
 
-    void Renderer::Shader::setColor(std::array<GLfloat, 4> shaderVec4)
+    void Renderer::Shader::setOpacity(GLfloat opacity)
     {
-        if (shaderColor != GL_INVALID_OPERATION)
-            GL_CHECK_ERROR(glUniform4f(shaderColor, shaderVec4[0], shaderVec4[1], shaderVec4[2],
-                                       shaderVec4[3]));
+        if (shaderOpacity != GL_INVALID_VALUE && shaderOpacity != GL_INVALID_OPERATION)
+            GL_CHECK_ERROR(glUniform1f(shaderOpacity, opacity));
     }
 
     void Renderer::Shader::setSaturation(GLfloat saturation)
@@ -148,16 +146,16 @@ namespace Renderer
             GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
     }
 
-    void Renderer::Shader::setOpacity(GLfloat opacity)
+    void Renderer::Shader::setDim(GLfloat dim)
     {
-        if (shaderOpacity != GL_INVALID_VALUE && shaderOpacity != GL_INVALID_OPERATION)
-            GL_CHECK_ERROR(glUniform1f(shaderOpacity, opacity));
+        if (shaderDim != GL_INVALID_VALUE && shaderDim != GL_INVALID_OPERATION)
+            GL_CHECK_ERROR(glUniform1f(shaderDim, dim));
     }
 
-    void Renderer::Shader::setDimValue(GLfloat dimValue)
+    void Renderer::Shader::setBGRAToRGBA(GLboolean BGRAToRGBA)
     {
-        if (shaderDimValue != GL_INVALID_VALUE && shaderDimValue != GL_INVALID_OPERATION)
-            GL_CHECK_ERROR(glUniform1f(shaderDimValue, dimValue));
+        if (shaderBGRAToRGBA != GL_INVALID_VALUE && shaderBGRAToRGBA != GL_INVALID_OPERATION)
+            GL_CHECK_ERROR(glUniform1i(shaderBGRAToRGBA, BGRAToRGBA ? 1 : 0));
     }
 
     void Renderer::Shader::activateShaders()
@@ -205,7 +203,7 @@ namespace Renderer
             glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Renderer_GL21::printShaderInfoLog(): Error in "
+                LOG(LogDebug) << "Shader_GL21::printShaderInfoLog(): Error in "
                               << (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
                                                                    "FRAGMENT section:\n")
                               << std::string(infoLog.begin(), infoLog.end());

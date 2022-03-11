@@ -194,12 +194,14 @@ public:
     virtual void stopListScrolling() {}
     virtual const float getOpacity() const { return mOpacity; }
     virtual void setOpacity(float opacity);
+    virtual float getSaturation() const { return static_cast<float>(mColor); }
+    virtual void setSaturation(float saturation) { mSaturation = saturation; }
+    virtual const float getDim() const { return mDim; }
+    virtual void setDim(float dim);
     virtual unsigned int getColor() const { return mColor; }
     virtual unsigned int getColorShift() const { return mColorShift; }
     virtual float getLineSpacing() { return 0.0f; }
     virtual void setColor(unsigned int color) { mColor = color; }
-    virtual float getSaturation() const { return static_cast<float>(mColor); }
-    virtual void setSaturation(float saturation) { mSaturation = saturation; }
     virtual void setColorShift(unsigned int color)
     {
         mColorShift = color;
@@ -286,7 +288,6 @@ protected:
     std::string mThemeGameSelector;
 
     unsigned int mColor;
-    float mSaturation;
     unsigned int mColorShift;
     unsigned int mColorShiftEnd;
     unsigned int mColorOriginalValue;
@@ -299,6 +300,8 @@ protected:
     glm::vec2 mSize;
 
     float mOpacity;
+    float mSaturation;
+    float mDim;
     float mThemeOpacity;
     float mRotation;
     float mScale;

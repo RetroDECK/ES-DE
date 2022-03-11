@@ -73,6 +73,7 @@ public:
 
     void setOpacity(float opacity) override;
     void setSaturation(float saturation) override;
+    void setDim(float dim) override;
 
     void setFlipX(bool flip); // Mirror on the X axis.
     void setFlipY(bool flip); // Mirror on the Y axis.

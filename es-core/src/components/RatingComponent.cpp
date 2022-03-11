@@ -124,27 +124,24 @@ void RatingComponent::updateVertices()
     const float h {getSize().y}; // Ss the same as a single star's width.
     const float w {getSize().y * mValue * numStars};
     const float fw {getSize().y * numStars};
-    const unsigned int color {Renderer::convertRGBAToABGR(mColorShift)};
 
     // clang-format off
-    mVertices[0] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
-    mVertices[1] = {{0.0f, h   }, {0.0f,              0.0f}, color};
-    mVertices[2] = {{w,    0.0f}, {mValue * numStars, 1.0f}, color};
-    mVertices[3] = {{w,    h   }, {mValue * numStars, 0.0f}, color};
+    mVertices[0] = {{0.0f, 0.0f}, {0.0f,              1.0f}, mColorShift};
+    mVertices[1] = {{0.0f, h   }, {0.0f,              0.0f}, mColorShift};
+    mVertices[2] = {{w,    0.0f}, {mValue * numStars, 1.0f}, mColorShift};
+    mVertices[3] = {{w,    h   }, {mValue * numStars, 0.0f}, mColorShift};
 
-    mVertices[4] = {{0.0f, 0.0f}, {0.0f,              1.0f}, color};
-    mVertices[5] = {{0.0f, h   }, {0.0f,              0.0f}, color};
-    mVertices[6] = {{fw,   0.0f}, {numStars,          1.0f}, color};
-    mVertices[7] = {{fw,   h   }, {numStars,          0.0f}, color};
+    mVertices[4] = {{0.0f, 0.0f}, {0.0f,              1.0f}, mColorShift};
+    mVertices[5] = {{0.0f, h   }, {0.0f,              0.0f}, mColorShift};
+    mVertices[6] = {{fw,   0.0f}, {numStars,          1.0f}, mColorShift};
+    mVertices[7] = {{fw,   h   }, {numStars,          0.0f}, mColorShift};
     // clang-format on
 }
 
 void RatingComponent::updateColors()
 {
-    const unsigned int color {Renderer::convertRGBAToABGR(mColorShift)};
-
     for (int i = 0; i < 8; ++i)
-        mVertices[i].col = color;
+        mVertices[i].col = mColorShift;
 }
 
 void RatingComponent::render(const glm::mat4& parentTrans)
@@ -165,9 +162,9 @@ void RatingComponent::render(const glm::mat4& parentTrans)
 
         if (mUnfilledTexture->bind()) {
             if (mUnfilledColor != mColorShift) {
-                const unsigned int color = Renderer::convertRGBAToABGR(mUnfilledColor);
                 for (int i = 0; i < 8; ++i)
-                    mVertices[i].col = (color & 0x00FFFFFF) + (mVertices[i].col & 0xFF000000);
+                    mVertices[i].col =
+                        (mUnfilledColor & 0xFFFFFF00) + (mVertices[i].col & 0x000000FF);
             }
 
             Renderer::drawTriangleStrips(&mVertices[4], 4);

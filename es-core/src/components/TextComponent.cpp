@@ -92,17 +92,26 @@ void TextComponent::setBackgroundColor(unsigned int color)
     mBgColorOpacity = static_cast<float>(mBgColor & 0x000000FF) / 255.0f;
 }
 
-//  Scale the opacity.
 void TextComponent::setOpacity(float opacity)
 {
-    float textOpacity {opacity * mColorOpacity * mThemeOpacity};
+    float textOpacity {opacity * mColorOpacity};
     mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(textOpacity * 255.0f);
 
-    float textBackgroundOpacity {opacity * mBgColorOpacity * mThemeOpacity};
+    float textBackgroundOpacity {opacity * mBgColorOpacity};
     mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(textBackgroundOpacity * 255.0f);
 
     onColorChanged();
     GuiComponent::setOpacity(opacity);
+
+    if (mTextCache)
+        mTextCache->setOpacity(mThemeOpacity);
+}
+
+void TextComponent::setDim(float dim)
+{
+    mDim = dim;
+    if (mTextCache)
+        mTextCache->setDim(dim);
 }
 
 void TextComponent::setText(const std::string& text, bool update)
@@ -152,11 +161,11 @@ void TextComponent::render(const glm::mat4& parentTrans)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
+    Renderer::setMatrix(trans);
 
-    if (mRenderBackground) {
-        Renderer::setMatrix(trans);
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor);
-    }
+    if (mRenderBackground)
+        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
+                           mOpacity * mThemeOpacity, mDim);
 
     if (mTextCache) {
         const glm::vec2& textSize {mTextCache->metrics.size};
@@ -180,11 +189,9 @@ void TextComponent::render(const glm::mat4& parentTrans)
         }
         glm::vec3 off {0.0f, yOff, 0.0f};
 
-        if (Settings::getInstance()->getBool("DebugText")) {
-            // Draw the "textbox" area, what we are aligned within.
-            Renderer::setMatrix(trans);
+        // Draw the "textbox" area, what we are aligned within.
+        if (Settings::getInstance()->getBool("DebugText"))
             Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
-        }
 
         trans = glm::translate(trans, off);
         Renderer::setMatrix(trans);

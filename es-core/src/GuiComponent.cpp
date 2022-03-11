@@ -20,7 +20,6 @@ GuiComponent::GuiComponent()
     : mWindow {Window::getInstance()}
     , mParent {nullptr}
     , mColor {0}
-    , mSaturation {1.0f}
     , mColorShift {0}
     , mColorShiftEnd {0}
     , mColorOriginalValue {0}
@@ -31,6 +30,8 @@ GuiComponent::GuiComponent()
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
     , mOpacity {1.0f}
+    , mSaturation {1.0f}
+    , mDim {1.0f}
     , mThemeOpacity {1.0f}
     , mRotation {0.0f}
     , mScale {1.0f}
@@ -189,6 +190,16 @@ void GuiComponent::setOpacity(float opacity)
     mOpacity = opacity;
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
         (*it)->setOpacity(opacity);
+}
+
+void GuiComponent::setDim(float dim)
+{
+    if (mDim == dim)
+        return;
+
+    mDim = dim;
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
+        (*it)->setDim(dim);
 }
 
 const glm::mat4& GuiComponent::getTransform()

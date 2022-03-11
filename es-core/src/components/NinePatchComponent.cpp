@@ -35,14 +35,11 @@ NinePatchComponent::~NinePatchComponent()
 
 void NinePatchComponent::updateColors()
 {
-    const unsigned int edgeColor {Renderer::convertRGBAToABGR(mEdgeColor)};
-    const unsigned int centerColor {Renderer::convertRGBAToABGR(mCenterColor)};
-
     for (int i = 0; i < 6 * 9; ++i)
-        mVertices[i].col = edgeColor;
+        mVertices[i].col = mEdgeColor;
 
     for (int i = 6 * 4; i < 6; ++i)
-        mVertices[(6 * 4) + i].col = centerColor;
+        mVertices[(6 * 4) + i].col = mCenterColor;
 }
 
 void NinePatchComponent::buildVertices()
@@ -135,18 +132,9 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
 
     if (mTexture && mVertices != nullptr) {
         Renderer::setMatrix(trans);
-        if (mOpacity < 1.0f) {
-            mVertices[0].shaders = Renderer::SHADER_OPACITY;
-            mVertices[0].opacity = mOpacity;
-        }
-        else if (mVertices[0].shaders & Renderer::SHADER_OPACITY) {
-            // We have reached full opacity, so disable the opacity shader and set
-            // the vertex opacity to 1.0.
-            mVertices[0].shaders ^= Renderer::SHADER_OPACITY;
-            mVertices[0].opacity = 1.0f;
-        }
+        mVertices->opacity = mOpacity;
         mTexture->bind();
-        Renderer::drawTriangleStrips(&mVertices[0], 6 * 9, trans);
+        Renderer::drawTriangleStrips(&mVertices[0], 6 * 9);
     }
 
     renderChildren(trans);

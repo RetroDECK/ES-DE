@@ -237,22 +237,20 @@ void Screensaver::goToGame()
 void Screensaver::renderScreensaver()
 {
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
+    glm::mat4 trans {Renderer::getIdentity()};
+    Renderer::setMatrix(trans);
 
     if (mVideoScreensaver && screensaverType == "video") {
         // Render a black background below the video.
-        Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                            0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
-        if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
-            glm::mat4 trans {Renderer::getIdentity()};
+        if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO)
             mVideoScreensaver->render(trans);
-        }
     }
     else if (mImageScreensaver && screensaverType == "slideshow") {
         // Render a black background below the image.
-        Renderer::setMatrix(Renderer::getIdentity());
         Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                            0x000000FF, 0x000000FF);
 
@@ -267,7 +265,6 @@ void Screensaver::renderScreensaver()
     }
 
     if (isScreensaverActive()) {
-        Renderer::setMatrix(Renderer::getIdentity());
         if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
             if (mHasMediaFiles) {
 #if defined(USE_OPENGL_21)
@@ -299,8 +296,8 @@ void Screensaver::renderScreensaver()
         else if (Settings::getInstance()->getString("ScreensaverType") == "video") {
             if (mHasMediaFiles) {
 #if defined(USE_OPENGL_21)
-                Renderer::shaderParameters videoParameters;
-                unsigned int shaders = 0;
+                Renderer::postProcessingParams videoParameters;
+                unsigned int shaders {0};
                 if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
                     shaders = Renderer::SHADER_SCANLINES;
                 if (Settings::getInstance()->getBool("ScreensaverVideoBlur")) {
@@ -327,9 +324,6 @@ void Screensaver::renderScreensaver()
 #endif
                 if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
-#if defined(USE_OPENGL_21)
-                        Renderer::shaderPostprocessing(Renderer::SHADER_OPACITY);
-#endif
                         Renderer::drawRect(
                             mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
                             mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
@@ -352,13 +346,13 @@ void Screensaver::renderScreensaver()
         if (mFallbackScreensaver ||
             Settings::getInstance()->getString("ScreensaverType") == "dim") {
 #if defined(USE_OPENGL_21)
-            Renderer::shaderParameters dimParameters;
-            dimParameters.fragmentDimValue = mDimValue;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, dimParameters);
-            if (mDimValue > 0.4)
-                mDimValue = glm::clamp(mDimValue - 0.021f, 0.4f, 1.0f);
-            dimParameters.fragmentSaturation = mSaturationAmount;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DESATURATE, dimParameters);
+            Renderer::postProcessingParams dimParameters;
+            dimParameters.dim = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
+            if (mDimValue > 0.63)
+                mDimValue = glm::clamp(mDimValue - 0.015f, 0.68f, 1.0f);
+            dimParameters.saturation = mSaturationAmount;
+            Renderer::shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
             if (mSaturationAmount > 0.0)
                 mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
 #else
@@ -368,9 +362,9 @@ void Screensaver::renderScreensaver()
         }
         else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
 #if defined(USE_OPENGL_21)
-            Renderer::shaderParameters blackParameters;
-            blackParameters.fragmentDimValue = mDimValue;
-            Renderer::shaderPostprocessing(Renderer::SHADER_DIM, blackParameters);
+            Renderer::postProcessingParams blackParameters;
+            blackParameters.dim = mDimValue;
+            Renderer::shaderPostprocessing(Renderer::SHADER_CORE, blackParameters);
             if (mDimValue > 0.0)
                 mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
 #else

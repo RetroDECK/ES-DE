@@ -654,21 +654,19 @@ TextCache* Font::buildTextCache(const std::string& text,
 
         const float glyphStartX {x + glyph->bearing.x};
         const glm::ivec2& textureSize {glyph->texture->textureSize};
-        const unsigned int convertedColor = Renderer::convertRGBAToABGR(color);
 
-        vertices[1] = {{glyphStartX, y - glyph->bearing.y},
-                       {glyph->texPos.x, glyph->texPos.y},
-                       convertedColor};
+        vertices[1] = {
+            {glyphStartX, y - glyph->bearing.y}, {glyph->texPos.x, glyph->texPos.y}, color};
         vertices[2] = {{glyphStartX, y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
                        {glyph->texPos.x, glyph->texPos.y + glyph->texSize.y},
-                       convertedColor};
+                       color};
         vertices[3] = {{glyphStartX + glyph->texSize.x * textureSize.x, y - glyph->bearing.y},
                        {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y},
-                       convertedColor};
+                       color};
         vertices[4] = {{glyphStartX + glyph->texSize.x * textureSize.x,
                         y - glyph->bearing.y + (glyph->texSize.y * textureSize.y)},
                        {glyph->texPos.x + glyph->texSize.x, glyph->texPos.y + glyph->texSize.y},
-                       convertedColor};
+                       color};
 
         // Round vertices.
         for (int i = 1; i < 5; ++i)
@@ -711,11 +709,25 @@ TextCache* Font::buildTextCache(const std::string& text,
 
 void TextCache::setColor(unsigned int color)
 {
-    const unsigned int convertedColor = Renderer::convertRGBAToABGR(color);
-
     for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it)
         for (auto it2 = it->verts.begin(); it2 != it->verts.end(); ++it2)
-            it2->col = convertedColor;
+            it2->col = color;
+}
+
+void TextCache::setOpacity(float opacity)
+{
+    for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it) {
+        for (auto it2 = it->verts.begin(); it2 != it->verts.end(); ++it2)
+            it2->opacity = opacity;
+    }
+}
+
+void TextCache::setDim(float dim)
+{
+    for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it) {
+        for (auto it2 = it->verts.begin(); it2 != it->verts.end(); ++it2)
+            it2->dim = dim;
+    }
 }
 
 std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,

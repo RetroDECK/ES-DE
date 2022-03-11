@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  LambdaAnimation.h
 //
-//  Basic animation controls, to be used in lambda expressions.
+//  Custom animations, expressed as lambdas.
 //
 
 #ifndef ES_CORE_ANIMATIONS_LAMBDA_ANIMATION_H
@@ -13,8 +13,6 @@
 
 #include <functional>
 
-// Useful for simple one-off animations, you can supply the animation's apply(t)
-// function directly in the constructor as a lambda.
 class LambdaAnimation : public Animation
 {
 public:

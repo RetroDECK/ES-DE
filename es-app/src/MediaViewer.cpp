@@ -87,7 +87,7 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
         mVideo->render(trans);
 
 #if defined(USE_OPENGL_21)
-        Renderer::shaderParameters videoParameters;
+        Renderer::postProcessingParams videoParameters;
         unsigned int shaders {0};
         if (Settings::getInstance()->getBool("MediaViewerVideoScanlines"))
             shaders = Renderer::SHADER_SCANLINES;

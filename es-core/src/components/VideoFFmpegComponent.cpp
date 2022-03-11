@@ -132,25 +132,13 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
     GuiComponent::renderChildren(trans);
 
     if (mIsPlaying && mFormatContext) {
-        unsigned int color;
-
-        if (mDecodedFrame && mFadeIn < 1) {
-            const unsigned int fadeIn = static_cast<int>(mFadeIn * 255.0f);
-            color =
-                Renderer::convertRGBAToABGR((fadeIn << 24) | (fadeIn << 16) | (fadeIn << 8) | 255);
-        }
-        else {
-            color = 0xFFFFFFFF;
-        }
         Renderer::Vertex vertices[4];
         Renderer::setMatrix(parentTrans);
 
         unsigned int rectColor {0x000000FF};
 
-        if (mThemeOpacity != 1.0f) {
-            color = (static_cast<int>(mThemeOpacity * mFadeIn * 255.0f) << 24) + 0x00FFFFFF;
+        if (mThemeOpacity != 1.0f)
             rectColor = static_cast<int>(mThemeOpacity * mFadeIn * 255.0f);
-        }
 
         // Render the black rectangle behind the video.
         if (mVideoRectangleCoords.size() == 4) {
@@ -159,20 +147,26 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
                                rectColor, rectColor);
         }
 
+        // This is needed to avoid a slight gap before the video starts playing.
+        if (!mDecodedFrame)
+            return;
+
         // clang-format off
-        vertices[0] = {{0.0f + mRectangleOffset.x,    0.0f + mRectangleOffset.y     }, {0.0f, 0.0f}, color};
-        vertices[1] = {{0.0f + mRectangleOffset.x,    mSize.y + mRectangleOffset.y  }, {0.0f, 1.0f}, color};
-        vertices[2] = {{mSize.x + mRectangleOffset.x, 0.0f + + mRectangleOffset.y   }, {1.0f, 0.0f}, color};
-        vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {1.0f, 1.0f}, color};
+        vertices[0] = {{0.0f + mRectangleOffset.x,    0.0f + mRectangleOffset.y     }, {0.0f, 0.0f}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f + mRectangleOffset.x,    mSize.y + mRectangleOffset.y  }, {0.0f, 1.0f}, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x + mRectangleOffset.x, 0.0f + + mRectangleOffset.y   }, {1.0f, 0.0f}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
         // clang-format on
 
         // Round vertices.
         for (int i = 0; i < 4; ++i)
             vertices[i].pos = glm::round(vertices[i].pos);
 
-        // This is needed to avoid a slight gap before the video starts playing.
-        if (!mDecodedFrame)
-            return;
+        if (mDecodedFrame && (mFadeIn < 1.0f || mThemeOpacity < 1.0f))
+            vertices->opacity = mFadeIn * mThemeOpacity;
+
+        vertices->saturation = mSaturation;
+        vertices->dim = mDim;
 
         std::unique_lock<std::mutex> pictureLock(mPictureMutex);
 
@@ -213,25 +207,21 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         if (mTexture != nullptr)
             mTexture->bind();
 
-#if defined(USE_OPENGL_21)
         // Render scanlines if this option is enabled. However, if this is the media viewer
         // or the video screensaver, then skip this as the scanline rendering is then handled
         // in those modules as a postprocessing step.
+
         if (!mScreensaverMode && !mMediaViewerMode) {
             vertices[0].opacity = mFadeIn * mThemeOpacity;
             if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoScanlines")) ||
                 (!mLegacyTheme && mRenderScanlines)) {
                 vertices[0].shaders = Renderer::SHADER_SCANLINES;
             }
-            else {
-                vertices[0].shaders = Renderer::SHADER_OPACITY;
-            }
         }
-#endif
 
         // Render it.
         Renderer::setMatrix(trans);
-        Renderer::drawTriangleStrips(&vertices[0], 4, trans);
+        Renderer::drawTriangleStrips(&vertices[0], 4);
     }
     else {
         if (mVisible)

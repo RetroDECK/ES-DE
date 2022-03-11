@@ -26,13 +26,14 @@ namespace Renderer
     static std::stack<Rect> clipStack;
     static SDL_Window* sdlWindow {nullptr};
     static glm::mat4 mProjectionMatrix {};
+    static glm::mat4 mProjectionMatrixRotated {};
     static int windowWidth {0};
     static int windowHeight {0};
     static int screenWidth {0};
     static int screenHeight {0};
     static int screenOffsetX {0};
     static int screenOffsetY {0};
-    static int screenRotate {0};
+    static bool screenRotated {0};
     static bool initialCursorState {1};
     // Screen resolution modifiers relative to the 1920x1080 reference.
     static float screenHeightModifier {0.0f};
@@ -141,9 +142,7 @@ namespace Renderer
         screenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ?
                             Settings::getInstance()->getInt("ScreenOffsetY") :
                             0;
-        screenRotate = Settings::getInstance()->getInt("ScreenRotate") ?
-                           Settings::getInstance()->getInt("ScreenRotate") :
-                           0;
+        screenRotated = Settings::getInstance()->getInt("ScreenRotate") == 2;
 
         // Prevent the application window from minimizing when switching windows (when launching
         // games or when manually switching windows using the task switcher).
@@ -265,17 +264,13 @@ namespace Renderer
         swapBuffers();
 #endif
 
-#if defined(USE_OPENGL_21)
         LOG(LogInfo) << "Loading shaders...";
 
         std::vector<std::string> shaderFiles;
-        shaderFiles.push_back(":/shaders/glsl/desaturate.glsl");
-        shaderFiles.push_back(":/shaders/glsl/opacity.glsl");
-        shaderFiles.push_back(":/shaders/glsl/dim.glsl");
+        shaderFiles.push_back(":/shaders/glsl/core.glsl");
         shaderFiles.push_back(":/shaders/glsl/blur_horizontal.glsl");
         shaderFiles.push_back(":/shaders/glsl/blur_vertical.glsl");
         shaderFiles.push_back(":/shaders/glsl/scanlines.glsl");
-        shaderFiles.push_back(":/shaders/glsl/bgra_to_rgba.glsl");
 
         for (auto it = shaderFiles.cbegin(); it != shaderFiles.cend(); ++it) {
             Shader* loadShader = new Shader();
@@ -290,17 +285,14 @@ namespace Renderer
 
             sShaderProgramVector.push_back(loadShader);
         }
-#endif
 
         return true;
     }
 
     static void destroyWindow()
     {
-#if defined(USE_OPENGL_21)
         for (auto it = sShaderProgramVector.cbegin(); it != sShaderProgramVector.cend(); ++it)
             delete *it;
-#endif
 
         destroyContext();
         SDL_DestroyWindow(sdlWindow);
@@ -319,56 +311,22 @@ namespace Renderer
         glm::mat4 projection {getIdentity()};
         Rect viewport {0, 0, 0, 0};
 
-        switch (screenRotate) {
-            case 1: {
-                viewport.x = windowWidth - screenOffsetY - screenHeight;
-                viewport.y = screenOffsetX;
-                viewport.w = screenHeight;
-                viewport.h = screenWidth;
-                projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
-                                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection = glm::rotate(projection, glm::radians(90.0f), {0.0f, 0.0f, 1.0f});
-                projection = glm::translate(projection, {0.0f, screenHeight * -1.0f, 0.0f});
-                break;
-            }
-            case 2: {
-                viewport.x = windowWidth - screenOffsetX - screenWidth;
-                viewport.y = windowHeight - screenOffsetY - screenHeight;
-                viewport.w = screenWidth;
-                viewport.h = screenHeight;
-                projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
-                                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                projection = glm::rotate(projection, glm::radians(180.0f), {0.0f, 0.0f, 1.0f});
-                projection =
-                    glm::translate(projection, {screenWidth * -1.0f, screenHeight * -1.0f, 0.0f});
-                break;
-            }
-            case 3: {
-                viewport.x = screenOffsetY;
-                viewport.y = windowHeight - screenOffsetX - screenWidth;
-                viewport.w = screenHeight;
-                viewport.h = screenWidth;
-                projection = glm::ortho(0.0f, static_cast<float>(screenHeight),
-                                        static_cast<float>(screenWidth), 0.0f, -1.0f, 1.0f);
-                projection = glm::rotate(projection, glm::radians(270.0f), {0.0f, 0.0f, 1.0f});
-                projection = glm::translate(projection, {screenWidth * -1.0f, 0.0f, 0.0f});
-                break;
-            }
-            default: {
-                viewport.x = screenOffsetX;
-                viewport.y = screenOffsetY;
-                viewport.w = screenWidth;
-                viewport.h = screenHeight;
-                projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
-                                        static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
-                break;
-            }
-        }
+        viewport.x = windowWidth - screenOffsetX - screenWidth;
+        viewport.y = windowHeight - screenOffsetY - screenHeight;
+        viewport.w = screenWidth;
+        viewport.h = screenHeight;
+        projection = glm::ortho(0.0f, static_cast<float>(screenWidth),
+                                static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
+        projection = glm::rotate(projection, glm::radians(180.0f), {0.0f, 0.0f, 1.0f});
+        mProjectionMatrixRotated =
+            glm::translate(projection, {screenWidth * -1.0f, screenHeight * -1.0f, 0.0f});
 
-        mProjectionMatrix = projection;
-
-        setViewport(viewport);
-        setProjection(projection);
+        viewport.x = screenOffsetX;
+        viewport.y = screenOffsetY;
+        viewport.w = screenWidth;
+        viewport.h = screenHeight;
+        mProjectionMatrix = glm::ortho(0.0f, static_cast<float>(screenWidth),
+                                       static_cast<float>(screenHeight), 0.0f, -1.0f, 1.0f);
 
         // This is required to avoid a brief white screen flash during startup on some systems.
         Renderer::drawRect(0.0f, 0.0f, static_cast<float>(Renderer::getScreenWidth()),
@@ -393,22 +351,12 @@ namespace Renderer
         if (box.h == 0)
             box.h = screenHeight - box.y;
 
-        switch (screenRotate) {
-            case 0:
-                box = Rect(screenOffsetX + box.x, screenOffsetY + box.y, box.w, box.h);
-                break;
-            case 1:
-                box = Rect(windowWidth - screenOffsetY - box.y - box.h, screenOffsetX + box.x,
-                           box.h, box.w);
-                break;
-            case 2:
-                box = Rect(windowWidth - screenOffsetX - box.x - box.w,
-                           windowHeight - screenOffsetY - box.y - box.h, box.w, box.h);
-                break;
-            case 3:
-                box = Rect(screenOffsetY + box.y, windowHeight - screenOffsetX - box.x - box.w,
-                           box.h, box.w);
-                break;
+        if (screenRotated) {
+            box = Rect(windowWidth - screenOffsetX - box.x - box.w,
+                       windowHeight - screenOffsetY - box.y - box.h, box.w, box.h);
+        }
+        else {
+            box = Rect(screenOffsetX + box.x, screenOffsetY + box.y, box.w, box.h);
         }
 
         // Make sure the box fits within clipStack.top(), and clip further accordingly.
@@ -453,20 +401,18 @@ namespace Renderer
                   const float y,
                   const float w,
                   const float h,
-                  const unsigned int _color,
-                  const unsigned int _colorEnd,
+                  const unsigned int color,
+                  const unsigned int colorEnd,
                   bool horizontalGradient,
                   const float opacity,
-                  const glm::mat4& trans,
+                  const float dim,
                   const Blend::Factor srcBlendFactor,
                   const Blend::Factor dstBlendFactor)
     {
-        const unsigned int rColor = convertRGBAToABGR(_color);
-        const unsigned int rColorEnd = convertRGBAToABGR(_colorEnd);
         Vertex vertices[4];
 
-        float wL = w;
-        float hL = h;
+        float wL {w};
+        float hL {h};
 
         // If the width or height was scaled down to less than 1 pixel, then set it to
         // 1 pixel so that it will still render on lower resolutions.
@@ -476,44 +422,21 @@ namespace Renderer
             hL = 1.0f;
 
         // clang-format off
-        vertices[0] = {{x,      y     }, {0.0f, 0.0f}, rColor};
-        vertices[1] = {{x,      y + hL}, {0.0f, 0.0f}, horizontalGradient ? rColor : rColorEnd};
-        vertices[2] = {{x + wL, y     }, {0.0f, 0.0f}, horizontalGradient ? rColorEnd : rColor};
-        vertices[3] = {{x + wL, y + hL}, {0.0f, 0.0f}, rColorEnd};
+        vertices[0] = {{x,      y     }, {0.0f, 0.0f}, color};
+        vertices[1] = {{x,      y + hL}, {0.0f, 0.0f}, horizontalGradient ? color : colorEnd};
+        vertices[2] = {{x + wL, y     }, {0.0f, 0.0f}, horizontalGradient ? colorEnd : color};
+        vertices[3] = {{x + wL, y + hL}, {0.0f, 0.0f}, colorEnd};
         // clang-format on
 
         // Round vertices.
         for (int i = 0; i < 4; ++i)
             vertices[i].pos = glm::round(vertices[i].pos);
 
-        if (opacity < 1.0) {
-            vertices[0].shaders = SHADER_OPACITY;
-            vertices[0].opacity = opacity;
-        }
-        else {
-            bindTexture(0);
-        }
-        drawTriangleStrips(vertices, 4, trans, srcBlendFactor, dstBlendFactor);
-    }
+        vertices->opacity = opacity;
+        vertices->dim = dim;
 
-    const unsigned int convertRGBAToABGR(const unsigned int _color)
-    {
-        unsigned char red = ((_color & 0xff000000) >> 24) & 255;
-        unsigned char green = ((_color & 0x00ff0000) >> 16) & 255;
-        unsigned char blue = ((_color & 0x0000ff00) >> 8) & 255;
-        unsigned char alpha = ((_color & 0x000000ff)) & 255;
-
-        return alpha << 24 | blue << 16 | green << 8 | red;
-    }
-
-    const unsigned int convertABGRToRGBA(const unsigned int _color)
-    {
-        unsigned char alpha = ((_color & 0xff000000) >> 24) & 255;
-        unsigned char blue = ((_color & 0x00ff0000) >> 16) & 255;
-        unsigned char green = ((_color & 0x0000ff00) >> 8) & 255;
-        unsigned char red = ((_color & 0x000000ff)) & 255;
-
-        return red << 24 | green << 16 | blue << 8 | alpha;
+        bindTexture(0);
+        drawTriangleStrips(vertices, 4, srcBlendFactor, dstBlendFactor);
     }
 
     Shader* getShaderProgram(unsigned int shaderID)
@@ -533,7 +456,14 @@ namespace Renderer
             return nullptr;
     }
 
-    const glm::mat4& getProjectionMatrix() { return mProjectionMatrix; }
+    const glm::mat4& getProjectionMatrix()
+    {
+        if (screenRotated)
+            return mProjectionMatrixRotated;
+        else
+            return mProjectionMatrix;
+    }
+    const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrix; }
     SDL_Window* getSDLWindow() { return sdlWindow; }
     const float getWindowWidth() { return static_cast<float>(windowWidth); }
     const float getWindowHeight() { return static_cast<float>(windowHeight); }
@@ -541,7 +471,7 @@ namespace Renderer
     const float getScreenHeight() { return static_cast<float>(screenHeight); }
     const float getScreenOffsetX() { return static_cast<float>(screenOffsetX); }
     const float getScreenOffsetY() { return static_cast<float>(screenOffsetY); }
-    const int getScreenRotate() { return screenRotate; }
+    const bool getScreenRotated() { return screenRotated; }
     const float getScreenWidthModifier() { return screenWidthModifier; }
     const float getScreenHeightModifier() { return screenHeightModifier; }
     const float getScreenAspectRatio() { return screenAspectRatio; }

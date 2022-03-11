@@ -49,10 +49,10 @@ namespace Renderer
 
         void setTextureSize(std::array<GLfloat, 2> shaderVec2);
         void setTextureCoordinates(std::array<GLfloat, 4> shaderVec4);
-        void setColor(std::array<GLfloat, 4> shaderVec4);
-        void setSaturation(GLfloat saturation);
         void setOpacity(GLfloat opacity);
-        void setDimValue(GLfloat dimValue);
+        void setSaturation(GLfloat saturation);
+        void setDim(GLfloat dim);
+        void setBGRAToRGBA(GLboolean BGRAToRGBA);
         // Sets the shader program to use the loaded shaders.
         void activateShaders();
         // Sets the shader program to 0 which reverts to the fixed function pipeline.
@@ -71,10 +71,10 @@ namespace Renderer
         GLint shaderMVPMatrix;
         GLint shaderTextureSize;
         GLint shaderTextureCoord;
-        GLint shaderColor;
-        GLint shaderSaturation;
         GLint shaderOpacity;
-        GLint shaderDimValue;
+        GLint shaderSaturation;
+        GLint shaderDim;
+        GLint shaderBGRAToRGBA;
     };
 
 } // namespace Renderer
