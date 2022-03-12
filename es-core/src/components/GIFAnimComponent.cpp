@@ -471,6 +471,11 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         }
     }
 
+    Renderer::setMatrix(trans);
+
+    if (Settings::getInstance()->getBool("DebugImage"))
+        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+
     if (mTexture->getSize().x != 0.0f) {
         mTexture->bind();
 
@@ -493,7 +498,6 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         vertices->convertBGRAToRGBA = true;
 
         // Render it.
-        Renderer::setMatrix(trans);
         Renderer::drawTriangleStrips(&vertices[0], 4);
     }
 }
