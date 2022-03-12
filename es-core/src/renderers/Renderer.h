@@ -96,8 +96,7 @@ namespace Renderer
     namespace Texture
     {
         enum Type {
-            RGB, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-            RGBA,
+            RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
             BGRA,
             ALPHA
         };
@@ -125,6 +124,7 @@ namespace Renderer
         float saturation;
         float dimming;
         bool convertBGRAToRGBA;
+        bool postProcessing;
         unsigned int shaders;
 
         Vertex()
@@ -132,6 +132,7 @@ namespace Renderer
             , saturation {1.0f}
             , dimming {1.0f}
             , convertBGRAToRGBA {false}
+            , postProcessing {false}
             , shaders {0}
         {
         }
@@ -143,6 +144,7 @@ namespace Renderer
             , saturation {1.0f}
             , dimming {1.0f}
             , convertBGRAToRGBA {false}
+            , postProcessing {false}
             , shaders {0}
         {
         }
@@ -202,10 +204,6 @@ namespace Renderer
                        const unsigned int height,
                        void* data);
     void bindTexture(const unsigned int texture);
-    void drawLines(const Vertex* vertices,
-                   const unsigned int numVertices,
-                   const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
-                   const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
     void drawTriangleStrips(const Vertex* vertices,
                             const unsigned int numVertices,
                             const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,

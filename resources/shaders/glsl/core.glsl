@@ -44,11 +44,17 @@ uniform float opacity = 1.0f;
 uniform float saturation = 1.0f;
 uniform float dimming = 1.0f;
 uniform int BGRAToRGBA = 0;
+uniform int postProcessing = 0;
 uniform sampler2D myTexture;
 
 void main()
 {
     vec4 color = COMPAT_TEXTURE(myTexture, texCoord) * color;
+
+    // When post-processing we drop the alpha channel to avoid strange issues
+    // with some graphics drivers.
+    if (postProcessing == 1)
+        color.a = 1.0f;
 
     // Opacity.
     if (opacity != 1.0f)

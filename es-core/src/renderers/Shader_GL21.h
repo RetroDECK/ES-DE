@@ -53,6 +53,7 @@ namespace Renderer
         void setSaturation(GLfloat saturation);
         void setDimming(GLfloat dimming);
         void setBGRAToRGBA(GLboolean BGRAToRGBA);
+        void setPostProcessing(GLboolean postProcessing);
         // Sets the shader program to use the loaded shaders.
         void activateShaders();
         // Sets the shader program to 0 which reverts to the fixed function pipeline.
@@ -75,6 +76,7 @@ namespace Renderer
         GLint shaderSaturation;
         GLint shaderDimming;
         GLint shaderBGRAToRGBA;
+        GLint shaderPostProcessing;
     };
 
 } // namespace Renderer

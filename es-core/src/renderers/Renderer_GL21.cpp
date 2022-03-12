@@ -23,10 +23,10 @@ namespace Renderer
     static GLuint postProcTexture1 {0};
     static GLuint postProcTexture2 {0};
 
-    inline GLenum convertBlendFactor(const Blend::Factor _blendFactor)
+    inline GLenum convertBlendFactor(const Blend::Factor blendFactor)
     {
         // clang-format off
-        switch (_blendFactor) {
+        switch (blendFactor) {
             case Blend::ZERO:                { return GL_ZERO;                } break;
             case Blend::ONE:                 { return GL_ONE;                 } break;
             case Blend::SRC_COLOR:           { return GL_SRC_COLOR;           } break;
@@ -42,11 +42,10 @@ namespace Renderer
         // clang-format on
     }
 
-    inline GLenum convertTextureType(const Texture::Type _type)
+    inline GLenum convertTextureType(const Texture::Type type)
     {
         // clang-format off
-        switch (_type) {
-            case Texture::RGB:   { return GL_RGB;             } break;
+        switch (type) {
             case Texture::RGBA:  { return GL_RGBA;            } break;
             case Texture::BGRA:  { return GL_BGRA;            } break;
             case Texture::ALPHA: { return GL_LUMINANCE_ALPHA; } break;
@@ -145,13 +144,11 @@ namespace Renderer
             return false;
         }
 
-        // For the post-processing textures we want to discard the alpha channel to avoid
-        // weird problems with some graphics drivers.
-        postProcTexture1 = createTexture(Texture::RGB, false, false, false,
+        postProcTexture1 = createTexture(Texture::RGBA, false, false, false,
                                          static_cast<unsigned int>(getScreenWidth()),
                                          static_cast<unsigned int>(getScreenHeight()), nullptr);
 
-        postProcTexture2 = createTexture(Texture::RGB, false, false, false,
+        postProcTexture2 = createTexture(Texture::RGBA, false, false, false,
                                          static_cast<unsigned int>(getScreenWidth()),
                                          static_cast<unsigned int>(getScreenHeight()), nullptr);
 
@@ -281,21 +278,6 @@ namespace Renderer
             GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
     }
 
-    void drawLines(const Vertex* vertices,
-                   const unsigned int numVertices,
-                   const Blend::Factor srcBlendFactor,
-                   const Blend::Factor dstBlendFactor)
-    {
-        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].position));
-        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].texture));
-        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].color));
-
-        GL_CHECK_ERROR(
-            glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
-
-        GL_CHECK_ERROR(glDrawArrays(GL_LINES, 0, numVertices));
-    }
-
     void drawTriangleStrips(const Vertex* vertices,
                             const unsigned int numVertices,
                             const Blend::Factor srcBlendFactor,
@@ -320,6 +302,7 @@ namespace Renderer
                 runShader->setSaturation(vertices->saturation);
                 runShader->setDimming(vertices->dimming);
                 runShader->setBGRAToRGBA(vertices->convertBGRAToRGBA);
+                runShader->setPostProcessing(vertices->postProcessing);
                 GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
                 runShader->deactivateShaders();
             }
@@ -461,6 +444,7 @@ namespace Renderer
         vertices->opacity = parameters.opacity;
         vertices->saturation = parameters.saturation;
         vertices->dimming = parameters.dimming;
+        vertices->postProcessing = true;
 
         shaderList.emplace_back(Renderer::SHADER_CORE);
 

@@ -111,6 +111,7 @@ namespace Renderer
         shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
         shaderDimming = glGetUniformLocation(mProgramID, "dimming");
         shaderBGRAToRGBA = glGetUniformLocation(mProgramID, "BGRAToRGBA");
+        shaderPostProcessing = glGetUniformLocation(mProgramID, "postProcessing");
     }
 
     void Renderer::Shader::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
@@ -156,6 +157,13 @@ namespace Renderer
     {
         if (shaderBGRAToRGBA != GL_INVALID_VALUE && shaderBGRAToRGBA != GL_INVALID_OPERATION)
             GL_CHECK_ERROR(glUniform1i(shaderBGRAToRGBA, BGRAToRGBA ? 1 : 0));
+    }
+
+    void Renderer::Shader::setPostProcessing(GLboolean postProcessing)
+    {
+        if (shaderPostProcessing != GL_INVALID_VALUE &&
+            shaderPostProcessing != GL_INVALID_OPERATION)
+            GL_CHECK_ERROR(glUniform1i(shaderPostProcessing, postProcessing ? 1 : 0));
     }
 
     void Renderer::Shader::activateShaders()
