@@ -105,8 +105,17 @@ void LottieAnimComponent::setAnimation(const std::string& path)
     ResourceData animData {ResourceManager::getInstance().getFileData(mPath)};
     std::string cache;
 
-    mAnimation = rlottie::Animation::loadFromData(
-        std::string(reinterpret_cast<char*>(animData.ptr.get()), animData.length), cache);
+    // If in debug mode, then disable the rlottie caching so that animations can be replaced on
+    // the fly using Ctrl+r reloads.
+    if (Settings::getInstance()->getBool("Debug")) {
+        mAnimation = rlottie::Animation::loadFromData(
+            std::string(reinterpret_cast<char*>(animData.ptr.get()), animData.length), cache, "",
+            false);
+    }
+    else {
+        mAnimation = rlottie::Animation::loadFromData(
+            std::string(reinterpret_cast<char*>(animData.ptr.get()), animData.length), cache);
+    }
 
     if (mAnimation == nullptr) {
         LOG(LogError) << "Couldn't parse Lottie animation file \"" << mPath << "\"";
