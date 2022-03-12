@@ -46,6 +46,7 @@ namespace Renderer
     {
         // clang-format off
         switch (_type) {
+            case Texture::RGB:   { return GL_RGB;             } break;
             case Texture::RGBA:  { return GL_RGBA;            } break;
             case Texture::BGRA:  { return GL_BGRA;            } break;
             case Texture::ALPHA: { return GL_LUMINANCE_ALPHA; } break;
@@ -144,16 +145,18 @@ namespace Renderer
             return false;
         }
 
-        postProcTexture1 = createTexture(Texture::RGBA, Texture::RGBA, false, false, false,
+        // For the post-processing textures we want to discard the alpha channel to avoid
+        // weird problems with some graphics drivers.
+        postProcTexture1 = createTexture(Texture::RGB, false, false, false,
                                          static_cast<unsigned int>(getScreenWidth()),
                                          static_cast<unsigned int>(getScreenHeight()), nullptr);
 
-        postProcTexture2 = createTexture(Texture::RGBA, Texture::RGBA, false, false, false,
+        postProcTexture2 = createTexture(Texture::RGB, false, false, false,
                                          static_cast<unsigned int>(getScreenWidth()),
                                          static_cast<unsigned int>(getScreenHeight()), nullptr);
 
         uint8_t data[4] = {255, 255, 255, 255};
-        whiteTexture = createTexture(Texture::RGBA, Texture::RGBA, false, false, true, 1, 1, data);
+        whiteTexture = createTexture(Texture::RGBA, false, false, true, 1, 1, data);
 
         GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
         GL_CHECK_ERROR(glEnable(GL_TEXTURE_2D));
@@ -183,7 +186,6 @@ namespace Renderer
     }
 
     unsigned int createTexture(const Texture::Type type,
-                               const Texture::Type /*format*/,
                                const bool linearMinify,
                                const bool linearMagnify,
                                const bool repeat,
@@ -448,7 +450,7 @@ namespace Renderer
         GLuint height {static_cast<GLuint>(heightf)};
 
         // Set vertex positions and texture coordinates to full screen as all
-        // postprocessing is applied to the complete screen area.
+        // post-processing is applied to the complete screen area.
         // clang-format off
         vertices[0] = {{0.0f,   0.0f   }, {0.0f, 1.0f}, 0xFFFFFFFF};
         vertices[1] = {{0.0f,   heightf}, {0.0f, 0.0f}, 0xFFFFFFFF};
@@ -524,12 +526,14 @@ namespace Renderer
                     bindTexture(postProcTexture2);
                     GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, shaderFBO2));
                     GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO1));
+                    GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT));
                     firstFBO = false;
                 }
                 else {
                     bindTexture(postProcTexture1);
                     GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, shaderFBO1));
                     GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO2));
+                    GL_CHECK_ERROR(glClear(GL_COLOR_BUFFER_BIT));
                     firstFBO = true;
                 }
             }

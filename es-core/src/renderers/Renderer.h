@@ -96,7 +96,8 @@ namespace Renderer
     namespace Texture
     {
         enum Type {
-            RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+            RGB, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+            RGBA,
             BGRA,
             ALPHA
         };
@@ -186,7 +187,6 @@ namespace Renderer
     bool createContext();
     void destroyContext();
     unsigned int createTexture(const Texture::Type type,
-                               const Texture::Type format,
                                const bool linearMinify,
                                const bool linearMagnify,
                                const bool repeat,

@@ -348,11 +348,10 @@ void Screensaver::renderScreensaver()
 #if defined(USE_OPENGL_21)
             Renderer::postProcessingParams dimParameters;
             dimParameters.dimming = mDimValue;
+            dimParameters.saturation = mSaturationAmount;
             Renderer::shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
             if (mDimValue > 0.63)
                 mDimValue = glm::clamp(mDimValue - 0.015f, 0.68f, 1.0f);
-            dimParameters.saturation = mSaturationAmount;
-            Renderer::shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
             if (mSaturationAmount > 0.0)
                 mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
 #else

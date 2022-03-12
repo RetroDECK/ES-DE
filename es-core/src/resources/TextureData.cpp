@@ -27,7 +27,6 @@ TextureData::TextureData(bool tile)
     : mTile {tile}
     , mTextureID {0}
     , mDataRGBA {}
-    , mFormat {Renderer::Texture::RGBA}
     , mWidth {0}
     , mHeight {0}
     , mSourceWidth {0.0f}
@@ -219,7 +218,7 @@ bool TextureData::uploadAndBind()
 
         // Upload texture.
         mTextureID =
-            Renderer::createTexture(Renderer::Texture::RGBA, mFormat, true, mLinearMagnify, mTile,
+            Renderer::createTexture(Renderer::Texture::RGBA, true, mLinearMagnify, mTile,
                                     static_cast<const unsigned int>(mWidth),
                                     static_cast<const unsigned int>(mHeight), mDataRGBA.data());
     }

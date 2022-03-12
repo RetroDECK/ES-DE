@@ -45,7 +45,6 @@ public:
         return (mTextureData != nullptr ? mTextureData->getPendingRasterization() : false);
     }
 
-    void setFormat(Renderer::Texture::Type format) { mTextureData->setFormat(format); }
     void setLinearMagnify(bool setting) { mTextureData->setLinearMagnify(setting); }
 
     std::string getTextureFilePath();

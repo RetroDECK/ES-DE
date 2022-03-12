@@ -56,14 +56,16 @@ void main()
 
     // Saturation.
     if (saturation != 1.0f) {
-        vec3 grayscale = vec3(dot(color.rgb, vec3(0.3f, 0.59f, 0.11f)));
+        vec3 grayscale = vec3(dot(color.rgb, vec3(0.34f, 0.55f, 0.11f)));
         vec3 blendedColor = mix(grayscale, color.rgb, saturation);
         color = vec4(blendedColor, color.a);
     }
 
     // Dimming
-    vec4 dimColor = vec4(dimming, dimming, dimming, 1.0f);
-    color = vec4(color.rgba) * dimColor;
+    if (dimming != 1.0f) {
+        vec4 dimColor = vec4(dimming, dimming, dimming, 1.0f);
+        color *= dimColor;
+    }
 
     // BGRA to RGBA conversion.
     if (BGRAToRGBA == 1)
