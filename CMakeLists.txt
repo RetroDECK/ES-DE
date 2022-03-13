@@ -29,9 +29,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
                               ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages)
 
 # Define the options.
-option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
-option(GLES1 "Set to ON if targeting OpenGL ES 1.0" ${GLES1})
-option(GLES "Set to ON if targeting OpenGL ES 2.0" ${GLES})
+option(GL "Set to ON if targeting Desktop OpenGL 3.3" ${GL})
+option(GLES "Set to ON if targeting OpenGL ES 3.0" ${GLES})
 option(RPI "Set to ON to enable Raspberry Pi specific build" ${RPI})
 option(BUNDLED_CERTS "Set to ON to use bundled TLS/SSL certificates" ${BUNDLED_CERTS})
 option(CEC "Set to ON to enable CEC" ${CEC})
@@ -61,6 +60,27 @@ if(CLANG_TIDY)
 endif()
 
 #---------------------------------------------------------------------------------------------------
+# Raspberry Pi setup.
+
+# Raspberry Pi OS 32-bit (armv7l).
+if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
+    set(RPI ON)
+    set(RPI_32 ON)
+    set(GLES ON)
+    set(BCMHOST ON)
+    message("-- Building on a Raspberry Pi (32-bit OS)")
+endif()
+
+# Raspberry Pi OS 64-bit (aarch64).
+if(EXISTS "/usr/include/bcm_host.h")
+    set(RPI ON)
+    set(RPI_64 ON)
+    set(GLES ON)
+    set(BCMHOST ON)
+    message("-- Building on a Raspberry Pi (64-bit OS)")
+endif()
+
+#---------------------------------------------------------------------------------------------------
 # Emscripten WebAssembly build.
 
 if(EMSCRIPTEN)
@@ -71,7 +91,7 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # OpenGL setup.
 
-if(GLES1 OR GLES)
+if(GLES)
     set(GLSYSTEM "Embedded OpenGL" CACHE STRING "The OpenGL system to be used")
 else()
     set(GLSYSTEM "Desktop OpenGL" CACHE STRING "The OpenGL system to be used")
@@ -80,37 +100,11 @@ endif()
 set_property(CACHE GLSYSTEM PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 
 #---------------------------------------------------------------------------------------------------
-# Raspberry Pi setup.
-
-# Raspberry Pi OS 32-bit (armv7l).
-if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
-    set(RPI ON)
-    set(RPI_32 ON)
-    set(BCMHOST ON)
-    message("-- Building on a Raspberry Pi (32-bit OS)")
-endif()
-
-# Raspberry Pi OS 64-bit (aarch64).
-if(EXISTS "/usr/include/bcm_host.h")
-    set(RPI ON)
-    set(RPI_64 ON)
-    set(BCMHOST ON)
-    message("-- Building on a Raspberry Pi (64-bit OS)")
-endif()
-
-# On the Raspberry Pi, desktop OpenGL 2.1 or OpenGL ES 2.0 should be used.
-if(GLES1 AND RPI)
-    message(FATAL_ERROR "-- The OpenGL ES 1.0 renderer is not supported on Raspberry Pi")
-endif()
-
-#---------------------------------------------------------------------------------------------------
 # Package dependencies.
 
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     set(OpenGL_GL_PREFERENCE "GLVND")
     find_package(OpenGL REQUIRED)
-elseif(GLES1)
-    find_package(OpenGLES REQUIRED)
 elseif(GLES AND NOT EMSCRIPTEN)
     find_package(OpenGLES2 REQUIRED)
 endif()
@@ -281,12 +275,8 @@ endif()
 #---------------------------------------------------------------------------------------------------
 # Preprocessor directives.
 
-if(GLSYSTEM MATCHES "Desktop OpenGL")
-    add_definitions(-DUSE_OPENGL_21)
-elseif(GLES1)
-    add_definitions(-DUSE_OPENGLES_10)
-elseif(GLES)
-    add_definitions(-DUSE_OPENGLES_20)
+if(GLES)
+    add_definitions(-DUSE_OPENGLES)
 endif()
 
 if(RPI)
@@ -526,8 +516,6 @@ endif()
 # OpenGL.
 if(GLSYSTEM MATCHES "Desktop OpenGL")
     list(APPEND COMMON_LIBRARIES ${OPENGL_LIBRARIES})
-elseif(GLES1)
-    list(APPEND COMMON_LIBRARIES EGL ${OPENGLES_LIBRARIES})
 elseif(GLES)
     list(APPEND COMMON_LIBRARIES ${OPENGLES2_LIBRARIES})
 endif()
