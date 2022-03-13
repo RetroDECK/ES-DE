@@ -6,8 +6,6 @@
 //  OpenGL 2.1 GLSL shader functions.
 //
 
-#if defined(USE_OPENGL_21)
-
 #include "Shader_GL21.h"
 
 #include "Log.h"
@@ -19,11 +17,16 @@ namespace Renderer
     Renderer::Shader::Shader()
         : mProgramID {0}
         , shaderMVPMatrix {0}
-        , shaderTextureSize {0}
+        , shaderPosition {0}
         , shaderTextureCoord {0}
+        , shaderColor {0}
+        , shaderTextureSize {0}
         , shaderOpacity {0}
         , shaderSaturation {0}
         , shaderDimming {0}
+        , shaderBGRAToRGBA {0}
+        , shaderFont {0}
+        , shaderPostProcessing {0}
     {
     }
 
@@ -42,9 +45,12 @@ namespace Renderer
         const ResourceData& shaderData {ResourceManager::getInstance().getFileData(path)};
         shaderCode.assign(reinterpret_cast<const char*>(shaderData.ptr.get()), shaderData.length);
 
-        // Define the GLSL version (version 120 = OpenGL 2.1).
-        preprocessorDefines = "#version 120\n";
-
+        // Define the GLSL version.
+#if defined(USE_OPENGLES)
+        preprocessorDefines = "#version 300 es\n";
+#else
+        preprocessorDefines = "#version 330\n";
+#endif
         // Define the preprocessor constants that will let the shader compiler know whether
         // the VERTEX or FRAGMENT portion of the code should be used.
         if (shaderType == GL_VERTEX_SHADER)
@@ -76,8 +82,11 @@ namespace Renderer
             if (shaderCompiled != GL_TRUE) {
                 LOG(LogError) << "OpenGL error: Unable to compile shader " << currentShader << " ("
                               << std::get<0>(*it) << ").";
-                printShaderInfoLog(currentShader, std::get<2>(*it));
+                printShaderInfoLog(currentShader, std::get<2>(*it), true);
                 return false;
+            }
+            else {
+                printShaderInfoLog(currentShader, std::get<2>(*it), false);
             }
 
             GL_CHECK_ERROR(glAttachShader(mProgramID, currentShader));
@@ -93,6 +102,16 @@ namespace Renderer
         }
 
         getVariableLocations(mProgramID);
+
+        if (shaderPosition != -1)
+            GL_CHECK_ERROR(glEnableVertexAttribArray(shaderPosition));
+
+        if (shaderTextureCoord != -1)
+            GL_CHECK_ERROR(glEnableVertexAttribArray(shaderTextureCoord));
+
+        if (shaderColor != -1)
+            GL_CHECK_ERROR(glEnableVertexAttribArray(shaderColor));
+
         return true;
     }
 
@@ -105,12 +124,15 @@ namespace Renderer
     {
         // Some of the variable names are chosen to be compatible with the RetroArch GLSL shaders.
         shaderMVPMatrix = glGetUniformLocation(mProgramID, "MVPMatrix");
-        shaderTextureSize = glGetUniformLocation(mProgramID, "TextureSize");
+        shaderPosition = glGetAttribLocation(mProgramID, "positionAttrib");
         shaderTextureCoord = glGetAttribLocation(mProgramID, "TexCoord");
+        shaderColor = glGetAttribLocation(mProgramID, "colorAttrib");
+        shaderTextureSize = glGetUniformLocation(mProgramID, "TextureSize");
         shaderOpacity = glGetUniformLocation(mProgramID, "opacity");
         shaderSaturation = glGetUniformLocation(mProgramID, "saturation");
         shaderDimming = glGetUniformLocation(mProgramID, "dimming");
         shaderBGRAToRGBA = glGetUniformLocation(mProgramID, "BGRAToRGBA");
+        shaderFont = glGetUniformLocation(mProgramID, "font");
         shaderPostProcessing = glGetUniformLocation(mProgramID, "postProcessing");
     }
 
@@ -121,48 +143,62 @@ namespace Renderer
                                               reinterpret_cast<GLfloat*>(&mvpMatrix)));
     }
 
-    void Renderer::Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)
+    void Renderer::Shader::setAttribPointers()
     {
-        if (shaderTextureSize != GL_INVALID_VALUE && shaderTextureSize != GL_INVALID_OPERATION)
-            GL_CHECK_ERROR(glUniform2f(shaderTextureSize, shaderVec2[0], shaderVec2[1]));
+        if (shaderPosition != -1)
+            GL_CHECK_ERROR(
+                glVertexAttribPointer(shaderPosition, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                                      reinterpret_cast<const void*>(offsetof(Vertex, position))));
+        if (shaderTextureCoord != -1)
+            GL_CHECK_ERROR(
+                glVertexAttribPointer(shaderTextureCoord, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex),
+                                      reinterpret_cast<const void*>(offsetof(Vertex, texture))));
+
+        if (shaderColor != -1)
+            GL_CHECK_ERROR(
+                glVertexAttribPointer(shaderColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex),
+                                      reinterpret_cast<const void*>(offsetof(Vertex, color))));
     }
 
-    void Renderer::Shader::setTextureCoordinates(std::array<GLfloat, 4> shaderVec4)
+    void Renderer::Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)
     {
-        if (shaderTextureCoord != GL_INVALID_OPERATION) {
-            glVertexAttrib4f(shaderTextureCoord, shaderVec4[0], shaderVec4[1], shaderVec4[2],
-                             shaderVec4[3]);
-        }
+        if (shaderTextureSize != -1)
+            GL_CHECK_ERROR(glUniform2f(shaderTextureSize, shaderVec2[0], shaderVec2[1]));
     }
 
     void Renderer::Shader::setOpacity(GLfloat opacity)
     {
-        if (shaderOpacity != GL_INVALID_VALUE && shaderOpacity != GL_INVALID_OPERATION)
+        if (shaderOpacity != -1)
             GL_CHECK_ERROR(glUniform1f(shaderOpacity, opacity));
     }
 
     void Renderer::Shader::setSaturation(GLfloat saturation)
     {
-        if (shaderSaturation != GL_INVALID_VALUE && shaderSaturation != GL_INVALID_OPERATION)
+        if (shaderSaturation != -1)
             GL_CHECK_ERROR(glUniform1f(shaderSaturation, saturation));
     }
 
     void Renderer::Shader::setDimming(GLfloat dimming)
     {
-        if (shaderDimming != GL_INVALID_VALUE && shaderDimming != GL_INVALID_OPERATION)
+        if (shaderDimming != -1)
             GL_CHECK_ERROR(glUniform1f(shaderDimming, dimming));
     }
 
     void Renderer::Shader::setBGRAToRGBA(GLboolean BGRAToRGBA)
     {
-        if (shaderBGRAToRGBA != GL_INVALID_VALUE && shaderBGRAToRGBA != GL_INVALID_OPERATION)
+        if (shaderBGRAToRGBA != -1)
             GL_CHECK_ERROR(glUniform1i(shaderBGRAToRGBA, BGRAToRGBA ? 1 : 0));
+    }
+
+    void Renderer::Shader::setFont(GLboolean font)
+    {
+        if (shaderFont != -1)
+            GL_CHECK_ERROR(glUniform1i(shaderFont, font ? 1 : 0));
     }
 
     void Renderer::Shader::setPostProcessing(GLboolean postProcessing)
     {
-        if (shaderPostProcessing != GL_INVALID_VALUE &&
-            shaderPostProcessing != GL_INVALID_OPERATION)
+        if (shaderPostProcessing != -1)
             GL_CHECK_ERROR(glUniform1i(shaderPostProcessing, postProcessing ? 1 : 0));
     }
 
@@ -199,7 +235,7 @@ namespace Renderer
         }
     }
 
-    void Renderer::Shader::printShaderInfoLog(GLuint shaderID, GLenum shaderType)
+    void Renderer::Shader::printShaderInfoLog(GLuint shaderID, GLenum shaderType, bool error)
     {
         if (glIsShader(shaderID)) {
             int logLength;
@@ -208,10 +244,14 @@ namespace Renderer
             glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &maxLength);
             std::vector<char> infoLog(maxLength);
 
+            if (infoLog.size() == 0)
+                return;
+
             glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
             if (logLength > 0) {
-                LOG(LogDebug) << "Shader_GL21::printShaderInfoLog(): Error in "
+                LOG(LogDebug) << "Shader_GL21::printShaderInfoLog(): "
+                              << (error ? "Error" : "Warning") << " in "
                               << (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
                                                                    "FRAGMENT section:\n")
                               << std::string(infoLog.begin(), infoLog.end());
@@ -223,5 +263,3 @@ namespace Renderer
     }
 
 } // namespace Renderer
-
-#endif // USE_OPENGL_21

@@ -267,10 +267,8 @@ void Screensaver::renderScreensaver()
     if (isScreensaverActive()) {
         if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
             if (mHasMediaFiles) {
-#if defined(USE_OPENGL_21)
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
                     Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
-#endif
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
                     mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
@@ -295,7 +293,6 @@ void Screensaver::renderScreensaver()
         }
         else if (Settings::getInstance()->getString("ScreensaverType") == "video") {
             if (mHasMediaFiles) {
-#if defined(USE_OPENGL_21)
                 Renderer::postProcessingParams videoParameters;
                 unsigned int shaders {0};
                 if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
@@ -320,8 +317,10 @@ void Screensaver::renderScreensaver()
                         videoParameters.blurPasses = 2;        // 1080
                     // clang-format on
                 }
-                Renderer::shaderPostprocessing(shaders, videoParameters);
-#endif
+
+                if (shaders != 0)
+                    Renderer::shaderPostprocessing(shaders, videoParameters);
+
                 if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
                         Renderer::drawRect(
@@ -345,7 +344,6 @@ void Screensaver::renderScreensaver()
         }
         if (mFallbackScreensaver ||
             Settings::getInstance()->getString("ScreensaverType") == "dim") {
-#if defined(USE_OPENGL_21)
             Renderer::postProcessingParams dimParameters;
             dimParameters.dimming = mDimValue;
             dimParameters.saturation = mSaturationAmount;
@@ -354,22 +352,13 @@ void Screensaver::renderScreensaver()
                 mDimValue = glm::clamp(mDimValue - 0.015f, 0.68f, 1.0f);
             if (mSaturationAmount > 0.0)
                 mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
-#else
-            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                               0x000000A0, 0x000000A0);
-#endif
         }
         else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
-#if defined(USE_OPENGL_21)
             Renderer::postProcessingParams blackParameters;
             blackParameters.dimming = mDimValue;
             Renderer::shaderPostprocessing(Renderer::SHADER_CORE, blackParameters);
             if (mDimValue > 0.0)
                 mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
-#else
-            Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                               0x000000FF, 0x000000FF);
-#endif
         }
     }
 }

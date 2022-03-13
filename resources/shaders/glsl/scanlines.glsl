@@ -29,7 +29,6 @@
 #else
 #define COMPAT_VARYING varying
 #define COMPAT_ATTRIBUTE attribute
-#define COMPAT_TEXTURE texture2D
 #endif
 
 #ifdef GL_ES
@@ -38,44 +37,26 @@
 #define COMPAT_PRECISION
 #endif
 
-COMPAT_ATTRIBUTE vec4 VertexCoord;
-COMPAT_ATTRIBUTE vec4 COLOR;
 COMPAT_ATTRIBUTE vec4 TexCoord;
-COMPAT_VARYING vec4 COL0;
 COMPAT_VARYING vec4 TEX0;
 COMPAT_VARYING vec2 onex;
 COMPAT_VARYING vec2 oney;
 
-vec4 _oPosition1;
 uniform mat4 MVPMatrix;
-uniform COMPAT_PRECISION int FrameDirection;
-uniform COMPAT_PRECISION int FrameCount;
-uniform COMPAT_PRECISION vec2 OutputSize;
+COMPAT_ATTRIBUTE vec2 positionAttrib;
 uniform COMPAT_PRECISION vec2 TextureSize;
-uniform COMPAT_PRECISION vec2 InputSize;
 
 #define SourceSize vec4(TextureSize, 1.0 / TextureSize) // Either TextureSize or InputSize.
 
 void main()
 {
-    gl_Position = MVPMatrix * gl_Vertex;
-    COL0 = COLOR;
-    TEX0.xy = gl_MultiTexCoord0.xy;
+    gl_Position = MVPMatrix * vec4(positionAttrib.xy, 0.0, 1.0);
+    TEX0.xy = TexCoord.xy;
     onex = vec2(SourceSize.z, 0.0);
     oney = vec2(0.0, SourceSize.w);
 }
 
 #elif defined(FRAGMENT)
-
-#if __VERSION__ >= 130
-#define COMPAT_VARYING in
-#define COMPAT_TEXTURE texture
-out vec4 FragColor;
-#else
-#define COMPAT_VARYING varying
-#define FragColor gl_FragColor
-#define COMPAT_TEXTURE texture2D
-#endif
 
 #ifdef GL_ES
 #ifdef GL_FRAGMENT_PRECISION_HIGH
@@ -88,12 +69,18 @@ precision mediump float;
 #define COMPAT_PRECISION
 #endif
 
-uniform COMPAT_PRECISION int FrameDirection;
-uniform COMPAT_PRECISION int FrameCount;
-uniform COMPAT_PRECISION vec2 OutputSize;
+#if __VERSION__ >= 130
+#define COMPAT_VARYING in
+#define COMPAT_TEXTURE texture
+out COMPAT_PRECISION vec4 FragColor;
+#else
+#define COMPAT_VARYING varying
+#define FragColor gl_FragColor
+#define COMPAT_TEXTURE texture2D
+#endif
+
 uniform COMPAT_PRECISION vec2 TextureSize;
-uniform COMPAT_PRECISION vec2 InputSize;
-uniform COMPAT_PRECISION float opacity = 1.0;
+uniform COMPAT_PRECISION float opacity;
 uniform sampler2D Texture;
 COMPAT_VARYING vec4 TEX0;
 COMPAT_VARYING vec2 onex;
@@ -104,7 +91,6 @@ COMPAT_VARYING vec2 oney;
 #define vTexCoord TEX0.xy
 
 #define SourceSize vec4(TextureSize, 1.0 / TextureSize) // Either TextureSize or InputSize.
-#define OutputSize vec4(OutputSize, 1.0 / OutputSize)
 
 #ifdef PARAMETER_UNIFORM
 // All parameter floats need to have COMPAT_PRECISION in front of them.

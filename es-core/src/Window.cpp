@@ -20,9 +20,7 @@
 #include <algorithm>
 #include <iomanip>
 
-#if defined(USE_OPENGL_21)
 #define CLOCK_BACKGROUND_CREATION false
-#endif
 
 Window::Window() noexcept
     : mScreensaver {nullptr}
@@ -124,12 +122,10 @@ bool Window::init()
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
     }
 
-    mBackgroundOverlay->setImage(":/graphics/screen_gradient.png");
+    mBackgroundOverlay->setImage(":/graphics/frame.png");
     mBackgroundOverlay->setResize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 
-#if defined(USE_OPENGL_21)
     mPostprocessedBackground = TextureResource::get("");
-#endif
 
     mListScrollFont = Font::get(FONT_SIZE_LARGE);
 
@@ -146,9 +142,7 @@ void Window::deinit()
     for (auto it = mGuiStack.cbegin(); it != mGuiStack.cend(); ++it)
         (*it)->onHide();
 
-#if defined(USE_OPENGL_21)
     mPostprocessedBackground.reset();
-#endif
 
     InputManager::getInstance().deinit();
     ResourceManager::getInstance().unloadAll();
@@ -445,7 +439,6 @@ void Window::render()
             bottom->render(trans);
 
         if (bottom != top || mRenderLaunchScreen) {
-#if defined(USE_OPENGL_21)
             if (!mCachedBackground && mInvalidateCacheTimer == 0) {
                 // Generate a cache texture of the shaded background when opening the menu, which
                 // will remain valid until the menu is closed. This is way faster than having to
@@ -483,7 +476,8 @@ void Window::render()
                     // Also dim the background slightly.
                     backgroundParameters.dimming = 0.60f;
 
-                    Renderer::shaderPostprocessing(Renderer::SHADER_BLUR_HORIZONTAL |
+                    Renderer::shaderPostprocessing(Renderer::SHADER_CORE |
+                                                       Renderer::SHADER_BLUR_HORIZONTAL |
                                                        Renderer::SHADER_BLUR_VERTICAL,
                                                    backgroundParameters, &processedTexture[0]);
                 }
@@ -527,7 +521,6 @@ void Window::render()
                     mBackgroundOverlayOpacity =
                         glm::clamp(mBackgroundOverlayOpacity + 0.118f, 0.0f, 1.0f);
             }
-#endif // USE_OPENGL_21
 
             mBackgroundOverlay->render(trans);
 

@@ -199,8 +199,8 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
-    textureId = Renderer::createTexture(Renderer::Texture::ALPHA, false, false, false,
-                                        textureSize.x, textureSize.y, nullptr);
+    textureId = Renderer::createTexture(Renderer::Texture::RED, false, false, false, textureSize.x,
+                                        textureSize.y, nullptr);
 }
 
 void Font::FontTexture::deinitTexture()
@@ -346,8 +346,8 @@ Font::Glyph* Font::getGlyph(unsigned int id)
                                static_cast<float>(g->metrics.horiBearingY) / 64.0f};
 
     // Upload glyph bitmap to texture.
-    Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x, cursor.y,
-                            glyphSize.x, glyphSize.y, g->bitmap.buffer);
+    Renderer::updateTexture(tex->textureId, Renderer::Texture::RED, cursor.x, cursor.y, glyphSize.x,
+                            glyphSize.y, g->bitmap.buffer);
 
     // Update max glyph height.
     if (glyphSize.y > mMaxGlyphHeight)
@@ -380,7 +380,7 @@ void Font::rebuildTextures()
                               static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
 
         // Upload to texture.
-        Renderer::updateTexture(tex->textureId, Renderer::Texture::ALPHA, cursor.x, cursor.y,
+        Renderer::updateTexture(tex->textureId, Renderer::Texture::RED, cursor.x, cursor.y,
                                 glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
     }
 }
@@ -392,10 +392,11 @@ void Font::renderTextCache(TextCache* cache)
         return;
     }
 
-    for (auto it = cache->vertexLists.cbegin(); it != cache->vertexLists.cend(); ++it) {
+    for (auto it = cache->vertexLists.begin(); it != cache->vertexLists.end(); ++it) {
         assert(*it->textureIdPtr != 0);
 
         auto vertexList = *it;
+        it->verts[0].font = true;
 
         Renderer::bindTexture(*it->textureIdPtr);
         Renderer::drawTriangleStrips(&it->verts[0],

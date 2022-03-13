@@ -493,7 +493,6 @@ void GuiMenu::openUIOptions()
     screensaver_row.makeAcceptInputHandler(std::bind(&GuiMenu::openScreensaverOptions, this));
     s->addRow(screensaver_row);
 
-#if defined(USE_OPENGL_21)
     // Blur background when the menu is open.
     auto menu_blur_background = std::make_shared<SwitchComponent>();
     menu_blur_background->setState(Settings::getInstance()->getBool("MenuBlurBackground"));
@@ -507,7 +506,6 @@ void GuiMenu::openUIOptions()
             s->setInvalidateCachedBackground();
         }
     });
-#endif
 
     // Display pillarboxes (and letterboxes) for videos in the gamelists.
     auto gamelistVideoPillarbox = std::make_shared<SwitchComponent>();
@@ -522,7 +520,6 @@ void GuiMenu::openUIOptions()
         }
     });
 
-#if defined(USE_OPENGL_21)
     // Render scanlines for videos in the gamelists.
     auto gamelistVideoScanlines = std::make_shared<SwitchComponent>();
     gamelistVideoScanlines->setState(Settings::getInstance()->getBool("GamelistVideoScanlines"));
@@ -535,7 +532,6 @@ void GuiMenu::openUIOptions()
             s->setNeedsSaving();
         }
     });
-#endif
 
     // Sort folders on top of the gamelists.
     auto folders_on_top = std::make_shared<SwitchComponent>();
@@ -751,13 +747,11 @@ void GuiMenu::openUIOptions()
                 ->setOpacity(DISABLED_OPACITY);
 
             // Scanlines are theme-controlled for newer themes.
-#if defined(USE_OPENGL_21)
             gamelistVideoScanlines->setEnabled(false);
             gamelistVideoScanlines->setOpacity(DISABLED_OPACITY);
             gamelistVideoScanlines->getParent()
                 ->getChild(gamelistVideoScanlines->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
-#endif
         }
         else {
             gamelist_view_style->setEnabled(true);
@@ -778,13 +772,11 @@ void GuiMenu::openUIOptions()
                 ->getChild(gamelistVideoPillarbox->getChildIndex() - 1)
                 ->setOpacity(1.0f);
 
-#if defined(USE_OPENGL_21)
             gamelistVideoScanlines->setEnabled(true);
             gamelistVideoScanlines->setOpacity(1.0f);
             gamelistVideoScanlines->getParent()
                 ->getChild(gamelistVideoScanlines->getChildIndex() - 1)
                 ->setOpacity(1.0f);
-#endif
         }
     };
 

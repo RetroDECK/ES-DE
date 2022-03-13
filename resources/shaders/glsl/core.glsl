@@ -12,71 +12,98 @@
 
 #if __VERSION__ >= 130
 #define COMPAT_VARYING out
+#define COMPAT_ATTRIBUTE in
 #else
 #define COMPAT_VARYING varying
+#define COMPAT_ATTRIBUTE attribute
+#endif
+
+#ifdef GL_ES
+#define COMPAT_PRECISION mediump
+#else
+#define COMPAT_PRECISION
 #endif
 
 uniform mat4 MVPMatrix;
+COMPAT_ATTRIBUTE vec2 positionAttrib;
+COMPAT_ATTRIBUTE vec2 TexCoord;
+COMPAT_ATTRIBUTE vec4 colorAttrib;
 COMPAT_VARYING vec4 color;
 COMPAT_VARYING vec2 texCoord;
 
 void main(void)
 {
-    texCoord = gl_MultiTexCoord0.xy;
-    color.rgba = gl_Color.abgr;
-    gl_Position = MVPMatrix * gl_Vertex;
+    color.rgba = colorAttrib.abgr;
+    texCoord = TexCoord;
+    gl_Position = MVPMatrix * vec4(positionAttrib.xy, 0.0, 1.0);
 }
 
 #elif defined(FRAGMENT)
 // Fragment section of code:
 
+#ifdef GL_ES
+#define COMPAT_PRECISION mediump
+#else
+#define COMPAT_PRECISION
+#endif
+
 #if __VERSION__ >= 130
-#define COMPAT_VARYING out
+#define COMPAT_VARYING in
 #define COMPAT_TEXTURE texture
+out COMPAT_PRECISION vec4 FragColor;
 #else
 #define COMPAT_VARYING varying
 #define COMPAT_TEXTURE texture2D
+#define FragColor gl_FragColor
 #endif
 
-COMPAT_VARYING vec4 color;
-COMPAT_VARYING vec2 texCoord;
-uniform float opacity = 1.0f;
-uniform float saturation = 1.0f;
-uniform float dimming = 1.0f;
-uniform int BGRAToRGBA = 0;
-uniform int postProcessing = 0;
+COMPAT_VARYING COMPAT_PRECISION vec4 color;
+COMPAT_VARYING COMPAT_PRECISION vec4 color2;
+COMPAT_VARYING COMPAT_PRECISION vec2 texCoord;
+uniform COMPAT_PRECISION float opacity;
+uniform COMPAT_PRECISION float saturation;
+uniform COMPAT_PRECISION float dimming;
+uniform int BGRAToRGBA;
+uniform int font;
+uniform int postProcessing;
 uniform sampler2D myTexture;
 
 void main()
 {
-    vec4 color = COMPAT_TEXTURE(myTexture, texCoord) * color;
+    COMPAT_PRECISION vec4 sampledColor = COMPAT_TEXTURE(myTexture, texCoord);
+
+    // For fonts the alpha information is stored in the red channel.
+    if (font == 1)
+        sampledColor = vec4(1.0f, 1.0f, 1.0f, sampledColor.r);
+
+    sampledColor *= color;
 
     // When post-processing we drop the alpha channel to avoid strange issues
     // with some graphics drivers.
     if (postProcessing == 1)
-        color.a = 1.0f;
+        sampledColor.a = 1.0f;
 
     // Opacity.
     if (opacity != 1.0f)
-        color.a = color.a * opacity;
+        sampledColor.a = sampledColor.a * opacity;
 
     // Saturation.
     if (saturation != 1.0f) {
-        vec3 grayscale = vec3(dot(color.rgb, vec3(0.34f, 0.55f, 0.11f)));
-        vec3 blendedColor = mix(grayscale, color.rgb, saturation);
-        color = vec4(blendedColor, color.a);
+        COMPAT_PRECISION vec3 grayscale = vec3(dot(sampledColor.rgb, vec3(0.34f, 0.55f, 0.11f)));
+        COMPAT_PRECISION vec3 blendedColor = mix(grayscale, sampledColor.rgb, saturation);
+        sampledColor = vec4(blendedColor, sampledColor.a);
     }
 
     // Dimming
     if (dimming != 1.0f) {
-        vec4 dimColor = vec4(dimming, dimming, dimming, 1.0f);
-        color *= dimColor;
+        COMPAT_PRECISION vec4 dimColor = vec4(dimming, dimming, dimming, 1.0f);
+        sampledColor *= dimColor;
     }
 
     // BGRA to RGBA conversion.
     if (BGRAToRGBA == 1)
-        color = vec4(color.bgr, color.a);
+        sampledColor = vec4(sampledColor.bgr, sampledColor.a);
 
-    gl_FragColor = color;
+    FragColor = sampledColor;
 }
 #endif

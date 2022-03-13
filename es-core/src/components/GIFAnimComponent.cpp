@@ -44,11 +44,6 @@ GIFAnimComponent::GIFAnimComponent()
 {
     // Get an empty texture for rendering the animation.
     mTexture = TextureResource::get("");
-#if defined(USE_OPENGLES_10) || defined(USE_OPENGLES_20)
-    // This is not really supported by the OpenGL ES standard so hopefully it works
-    // with all drivers and on all operating systems.
-    mTexture->setFormat(Renderer::Texture::BGRA);
-#endif
 
     mAnimIO.read_proc = readProc;
     mAnimIO.write_proc = writeProc;

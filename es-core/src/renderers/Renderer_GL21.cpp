@@ -3,10 +3,8 @@
 //  EmulationStation Desktop Edition
 //  Renderer_GL21.cpp
 //
-//  OpenGL 2.1 rendering functions.
+//  OpenGL / OpenGL ES renderer.
 //
-
-#if defined(USE_OPENGL_21)
 
 #include "Settings.h"
 #include "Shader_GL21.h"
@@ -47,8 +45,12 @@ namespace Renderer
         // clang-format off
         switch (type) {
             case Texture::RGBA:  { return GL_RGBA;            } break;
+#if defined(USE_OPENGLES)
+            case Texture::BGRA:  { return GL_BGRA_EXT;        } break;
+#else
             case Texture::BGRA:  { return GL_BGRA;            } break;
-            case Texture::ALPHA: { return GL_LUMINANCE_ALPHA; } break;
+#endif
+            case Texture::RED:   { return GL_RED;             } break;
             default:             { return GL_ZERO;            }
         }
         // clang-format on
@@ -56,15 +58,16 @@ namespace Renderer
 
     void setupWindow()
     {
-#if defined(__APPLE__)
-        // This is required on macOS, as the operating system will otherwise insist on using
-        // a newer OpenGL version which completely breaks the application.
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
+
+#if defined(USE_OPENGLES)
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 #else
         SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 #endif
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
         SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
         SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -75,7 +78,6 @@ namespace Renderer
 
     bool createContext()
     {
-        bool missingExtension = false;
         sdlContext = SDL_GL_CreateContext(getSDLWindow());
 
         if (!sdlContext) {
@@ -103,46 +105,37 @@ namespace Renderer
         LOG(LogInfo) << "GL renderer: " << renderer;
         LOG(LogInfo) << "GL version: " << version;
 #if defined(_WIN64)
-        LOG(LogInfo) << "EmulationStation renderer: OpenGL 2.1 with GLEW";
+        LOG(LogInfo) << "EmulationStation renderer: OpenGL 3.3 with GLEW";
 #else
-        LOG(LogInfo) << "EmulationStation renderer: OpenGL 2.1";
+#if defined(USE_OPENGLES)
+        LOG(LogInfo) << "EmulationStation renderer: OpenGL ES 3.0";
+#else
+        LOG(LogInfo) << "EmulationStation renderer: OpenGL 3.3";
 #endif
-        LOG(LogInfo) << "Checking available OpenGL extensions...";
-        std::string glExts = glGetString(GL_EXTENSIONS) ?
-                                 reinterpret_cast<const char*>(glGetString(GL_EXTENSIONS)) :
-                                 "";
-        if (extensions.find("GL_ARB_texture_non_power_of_two") == std::string::npos) {
-            LOG(LogError) << "GL_ARB_texture_non_power_of_two: MISSING";
-            missingExtension = true;
-        }
-        else {
-            LOG(LogInfo) << "GL_ARB_texture_non_power_of_two: OK";
-        }
-        if (extensions.find("GL_ARB_vertex_shader") == std::string::npos) {
-            LOG(LogError) << "GL_ARB_vertex_shader: MISSING";
-            missingExtension = true;
-        }
-        else {
-            LOG(LogInfo) << "GL_ARB_vertex_shader: OK";
-        }
-        if (extensions.find("GL_ARB_fragment_shader") == std::string::npos) {
-            LOG(LogError) << "GL_ARB_fragment_shader: MISSING";
-            missingExtension = true;
-        }
-        else {
-            LOG(LogInfo) << "GL_ARB_fragment_shader: OK";
-        }
-        if (extensions.find("GL_EXT_framebuffer_blit") == std::string::npos) {
-            LOG(LogError) << "GL_EXT_framebuffer_blit: MISSING";
-            missingExtension = true;
-        }
-        else {
-            LOG(LogInfo) << "GL_EXT_framebuffer_blit: OK";
-        }
-        if (missingExtension) {
-            LOG(LogError) << "Required OpenGL extensions missing.";
-            return false;
-        }
+#endif
+
+#if !defined(USE_OPENGLES)
+        // TODO: Fix the issue that causes the first glClearColor function call to fail.
+        GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+#endif
+
+        GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+        GL_CHECK_ERROR(glActiveTexture(GL_TEXTURE0));
+        GL_CHECK_ERROR(glEnable(GL_BLEND));
+        GL_CHECK_ERROR(glPixelStorei(GL_PACK_ALIGNMENT, 1));
+        GL_CHECK_ERROR(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+
+        // These are used for the shader post processing.
+        GL_CHECK_ERROR(glGenFramebuffers(1, &shaderFBO1));
+        GL_CHECK_ERROR(glGenFramebuffers(1, &shaderFBO2));
+
+        GL_CHECK_ERROR(glGenBuffers(1, &vertexBuffer1));
+        GL_CHECK_ERROR(glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer1));
+        GL_CHECK_ERROR(glGenVertexArrays(1, &vertexBuffer2));
+        GL_CHECK_ERROR(glBindVertexArray(vertexBuffer2));
+
+        uint8_t data[4] = {255, 255, 255, 255};
+        whiteTexture = createTexture(Texture::RGBA, false, false, true, 1, 1, data);
 
         postProcTexture1 = createTexture(Texture::RGBA, false, false, false,
                                          static_cast<unsigned int>(getScreenWidth()),
@@ -152,21 +145,16 @@ namespace Renderer
                                          static_cast<unsigned int>(getScreenWidth()),
                                          static_cast<unsigned int>(getScreenHeight()), nullptr);
 
-        uint8_t data[4] = {255, 255, 255, 255};
-        whiteTexture = createTexture(Texture::RGBA, false, false, true, 1, 1, data);
+        // Attach textures to the shader framebuffers.
+        GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO1));
+        GL_CHECK_ERROR(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                                              postProcTexture1, 0));
 
-        GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-        GL_CHECK_ERROR(glEnable(GL_TEXTURE_2D));
-        GL_CHECK_ERROR(glEnable(GL_BLEND));
-        GL_CHECK_ERROR(glPixelStorei(GL_PACK_ALIGNMENT, 1));
-        GL_CHECK_ERROR(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
-        GL_CHECK_ERROR(glEnableClientState(GL_VERTEX_ARRAY));
-        GL_CHECK_ERROR(glEnableClientState(GL_TEXTURE_COORD_ARRAY));
-        GL_CHECK_ERROR(glEnableClientState(GL_COLOR_ARRAY));
+        GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO2));
+        GL_CHECK_ERROR(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
+                                              postProcTexture2, 0));
 
-        // These framebuffers are used for the shader post processing.
-        GL_CHECK_ERROR(glGenFramebuffers(1, &shaderFBO1));
-        GL_CHECK_ERROR(glGenFramebuffers(1, &shaderFBO2));
+        GL_CHECK_ERROR(glBindFramebuffer(GL_FRAMEBUFFER, 0));
 
         return true;
     }
@@ -209,24 +197,8 @@ namespace Renderer
                                        linearMagnify ? static_cast<GLfloat>(GL_LINEAR) :
                                                        static_cast<GLfloat>(GL_NEAREST)));
 
-        if (textureType == GL_LUMINANCE_ALPHA) {
-            uint8_t* a_data {reinterpret_cast<uint8_t*>(data)};
-            uint8_t* la_data {new uint8_t[width * height * 2]};
-            for (uint32_t i = 0; i < (width * height); ++i) {
-                la_data[(i * 2) + 0] = 255;
-                la_data[(i * 2) + 1] = a_data ? a_data[i] : 255;
-            }
-
-            GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0,
-                                        textureType, GL_UNSIGNED_BYTE, la_data));
-
-            delete[] la_data;
-        }
-        else {
-            GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0,
-                                        textureType, GL_UNSIGNED_BYTE, data));
-        }
-
+        GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
+                                    GL_UNSIGNED_BYTE, data));
         return texture;
     }
 
@@ -246,26 +218,8 @@ namespace Renderer
         const GLenum textureType = convertTextureType(type);
 
         GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
-
-        // Regular GL_ALPHA textures are black + alpha when used in shaders, so create a
-        // GL_LUMINANCE_ALPHA texture instead so it's white + alpha.
-        if (textureType == GL_LUMINANCE_ALPHA) {
-            uint8_t* a_data {reinterpret_cast<uint8_t*>(data)};
-            uint8_t* la_data {new uint8_t[width * height * 2]};
-            for (uint32_t i = 0; i < (width * height); ++i) {
-                la_data[(i * 2) + 0] = 255;
-                la_data[(i * 2) + 1] = a_data ? a_data[i] : 255;
-            }
-
-            GL_CHECK_ERROR(glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, textureType,
-                                           GL_UNSIGNED_BYTE, la_data));
-
-            delete[] la_data;
-        }
-        else {
-            GL_CHECK_ERROR(glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, textureType,
-                                           GL_UNSIGNED_BYTE, data));
-        }
+        GL_CHECK_ERROR(glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, textureType,
+                                       GL_UNSIGNED_BYTE, data));
 
         GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, whiteTexture));
     }
@@ -286,51 +240,57 @@ namespace Renderer
         const float width {vertices[3].position[0]};
         const float height {vertices[3].position[1]};
 
-        GL_CHECK_ERROR(glVertexPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].position));
-        GL_CHECK_ERROR(glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex), &vertices[0].texture));
-        GL_CHECK_ERROR(glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex), &vertices[0].color));
-
         GL_CHECK_ERROR(
             glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
 
         if (vertices->shaders == 0 || vertices->shaders & SHADER_CORE) {
-            Shader* runShader = getShaderProgram(SHADER_CORE);
-            if (runShader) {
-                runShader->activateShaders();
-                runShader->setModelViewProjectionMatrix(mTrans);
-                runShader->setOpacity(vertices->opacity);
-                runShader->setSaturation(vertices->saturation);
-                runShader->setDimming(vertices->dimming);
-                runShader->setBGRAToRGBA(vertices->convertBGRAToRGBA);
-                runShader->setPostProcessing(vertices->postProcessing);
+            Shader* shader {getShaderProgram(SHADER_CORE)};
+            if (shader) {
+                shader->activateShaders();
+                shader->setModelViewProjectionMatrix(mTrans);
+                shader->setAttribPointers();
+                GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
+                                            GL_DYNAMIC_DRAW));
+                shader->setOpacity(vertices->opacity);
+                shader->setSaturation(vertices->saturation);
+                shader->setDimming(vertices->dimming);
+                shader->setBGRAToRGBA(vertices->convertBGRAToRGBA);
+                shader->setFont(vertices->font);
+                shader->setPostProcessing(vertices->postProcessing);
                 GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
-                runShader->deactivateShaders();
+                shader->deactivateShaders();
             }
         }
         else if (vertices->shaders & SHADER_BLUR_HORIZONTAL) {
-            Shader* runShader = getShaderProgram(SHADER_BLUR_HORIZONTAL);
-            if (runShader) {
-                runShader->activateShaders();
-                runShader->setModelViewProjectionMatrix(mTrans);
-                runShader->setTextureSize({width, height});
+            Shader* shader {getShaderProgram(SHADER_BLUR_HORIZONTAL)};
+            if (shader) {
+                shader->activateShaders();
+                shader->setModelViewProjectionMatrix(mTrans);
+                shader->setAttribPointers();
+                GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
+                                            GL_DYNAMIC_DRAW));
+                shader->setTextureSize({width, height});
                 GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
-                runShader->deactivateShaders();
+                shader->deactivateShaders();
             }
             return;
         }
         else if (vertices->shaders & SHADER_BLUR_VERTICAL) {
-            Shader* runShader = getShaderProgram(SHADER_BLUR_VERTICAL);
-            if (runShader) {
-                runShader->activateShaders();
-                runShader->setModelViewProjectionMatrix(mTrans);
-                runShader->setTextureSize({width, height});
+            Shader* shader {getShaderProgram(SHADER_BLUR_VERTICAL)};
+            if (shader) {
+                shader->activateShaders();
+                shader->setModelViewProjectionMatrix(mTrans);
+                shader->setAttribPointers();
+                GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
+                                            GL_DYNAMIC_DRAW));
+                shader->setTextureSize({width, height});
                 GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
-                runShader->deactivateShaders();
+                shader->deactivateShaders();
             }
             return;
         }
         else if (vertices->shaders & SHADER_SCANLINES) {
-            Shader* runShader {getShaderProgram(SHADER_SCANLINES)};
+            Shader* shader {getShaderProgram(SHADER_SCANLINES)};
             float shaderWidth {width * 1.2f};
             // Scale the scanlines relative to screen resolution.
             float screenHeightModifier {getScreenHeightModifier()};
@@ -350,13 +310,16 @@ namespace Renderer
                 float modifier {1.41f + relativeAdjustment / 7.0f - (0.14f * screenHeightModifier)};
                 shaderHeight = height * modifier;
             }
-            if (runShader) {
-                runShader->activateShaders();
-                runShader->setModelViewProjectionMatrix(mTrans);
-                runShader->setOpacity(vertices->opacity);
-                runShader->setTextureSize({shaderWidth, shaderHeight});
+            if (shader) {
+                shader->activateShaders();
+                shader->setModelViewProjectionMatrix(mTrans);
+                shader->setAttribPointers();
+                GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
+                                            GL_DYNAMIC_DRAW));
+                shader->setOpacity(vertices->opacity);
+                shader->setTextureSize({shaderWidth, shaderHeight});
                 GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
-                runShader->deactivateShaders();
+                shader->deactivateShaders();
             }
         }
     }
@@ -446,8 +409,8 @@ namespace Renderer
         vertices->dimming = parameters.dimming;
         vertices->postProcessing = true;
 
-        shaderList.emplace_back(Renderer::SHADER_CORE);
-
+        if (shaders & Renderer::SHADER_CORE)
+            shaderList.push_back(Renderer::SHADER_CORE);
         if (shaders & Renderer::SHADER_BLUR_HORIZONTAL)
             shaderList.push_back(Renderer::SHADER_BLUR_HORIZONTAL);
         if (shaders & Renderer::SHADER_BLUR_VERTICAL)
@@ -458,15 +421,7 @@ namespace Renderer
         setMatrix(getIdentity());
         bindTexture(postProcTexture1);
 
-        GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO2));
-        GL_CHECK_ERROR(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                                              postProcTexture2, 0));
-
         GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, shaderFBO1));
-
-        // Attach texture to the shader framebuffer.
-        GL_CHECK_ERROR(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                                              postProcTexture1, 0));
 
         // Blit the screen contents to postProcTexture.
         GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
@@ -545,5 +500,3 @@ namespace Renderer
     }
 
 } // namespace Renderer
-
-#endif // USE_OPENGL_21

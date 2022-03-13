@@ -18,11 +18,11 @@
 #endif
 
 #include <SDL2/SDL.h>
-// Hack until shader support has been added for OpenGL ES.
-#if defined(USE_OPENGL_21)
-#include <SDL2/SDL_opengl.h>
-#else
+#if defined(USE_OPENGLES)
+#include <GLES3/gl3.h>
 #include <SDL2/SDL_opengles.h>
+#else
+#include <SDL2/SDL_opengl.h>
 #endif
 #include <array>
 #include <string>
@@ -47,12 +47,13 @@ namespace Renderer
         // One-way communication with the compiled shaders.
         void setModelViewProjectionMatrix(glm::mat4 mvpMatrix);
 
+        void setAttribPointers();
         void setTextureSize(std::array<GLfloat, 2> shaderVec2);
-        void setTextureCoordinates(std::array<GLfloat, 4> shaderVec4);
         void setOpacity(GLfloat opacity);
         void setSaturation(GLfloat saturation);
         void setDimming(GLfloat dimming);
         void setBGRAToRGBA(GLboolean BGRAToRGBA);
+        void setFont(GLboolean font);
         void setPostProcessing(GLboolean postProcessing);
         // Sets the shader program to use the loaded shaders.
         void activateShaders();
@@ -62,7 +63,7 @@ namespace Renderer
         GLuint getProgramID() { return mProgramID; }
         // Only used for error logging if the shaders fail to compile or link.
         void printProgramInfoLog(GLuint programID);
-        void printShaderInfoLog(GLuint shaderID, GLenum shaderType);
+        void printShaderInfoLog(GLuint shaderID, GLenum shaderType, bool error);
 
     private:
         GLuint mProgramID;
@@ -70,12 +71,15 @@ namespace Renderer
 
         // Variables used for communication with the compiled shaders.
         GLint shaderMVPMatrix;
-        GLint shaderTextureSize;
+        GLint shaderPosition;
         GLint shaderTextureCoord;
+        GLint shaderColor;
+        GLint shaderTextureSize;
         GLint shaderOpacity;
         GLint shaderSaturation;
         GLint shaderDimming;
         GLint shaderBGRAToRGBA;
+        GLint shaderFont;
         GLint shaderPostProcessing;
     };
 

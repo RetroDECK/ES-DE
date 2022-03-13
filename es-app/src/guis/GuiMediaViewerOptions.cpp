@@ -41,7 +41,6 @@ GuiMediaViewerOptions::GuiMediaViewerOptions(const std::string& title)
         }
     });
 
-#if defined(USE_OPENGL_21)
     // Render scanlines for videos using a shader.
     auto video_scanlines = std::make_shared<SwitchComponent>();
     video_scanlines->setState(Settings::getInstance()->getBool("MediaViewerVideoScanlines"));
@@ -79,5 +78,4 @@ GuiMediaViewerOptions::GuiMediaViewerOptions(const std::string& title)
             setNeedsSaving();
         }
     });
-#endif
 }

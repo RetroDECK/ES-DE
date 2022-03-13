@@ -149,7 +149,6 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
         }
     });
 
-#if defined(USE_OPENGL_21)
     // Render scanlines using a shader.
     auto screensaver_slideshow_scanlines = std::make_shared<SwitchComponent>();
     screensaver_slideshow_scanlines->setState(
@@ -163,7 +162,6 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
             s->setNeedsSaving();
         }
     });
-#endif
 
     // Whether to use custom images.
     auto screensaver_slideshow_custom_images = std::make_shared<SwitchComponent>();
@@ -262,7 +260,6 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
         }
     });
 
-#if defined(USE_OPENGL_21)
     // Render scanlines using a shader.
     auto screensaver_video_scanlines = std::make_shared<SwitchComponent>();
     screensaver_video_scanlines->setState(
@@ -289,7 +286,6 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
             s->setNeedsSaving();
         }
     });
-#endif
 
     s->setSize(mSize);
     mWindow->pushGui(s);

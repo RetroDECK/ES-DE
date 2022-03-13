@@ -47,11 +47,15 @@ namespace Renderer
     };
 
     static std::vector<Shader*> sShaderProgramVector;
-    static GLuint shaderFBO1;
-    static GLuint shaderFBO2;
-    // This is simply to get rid of a GCC false positive -Wunused-variable compiler warning.
+    static GLuint shaderFBO1 {0};
+    static GLuint shaderFBO2 {0};
+    static GLuint vertexBuffer1 {0};
+    static GLuint vertexBuffer2 {0};
+    // This is simply to get rid of some GCC false positive -Wunused-variable compiler warnings.
     static GLuint shaderFBODummy1 {shaderFBO1};
     static GLuint shaderFBODummy2 {shaderFBO2};
+    static GLuint vertexBufferDummy1 {vertexBuffer1};
+    static GLuint vertexBufferDummy2 {vertexBuffer2};
 
     static constexpr glm::mat4 getIdentity() { return glm::mat4 {1.0f}; }
     static inline glm::mat4 mTrans {getIdentity()};
@@ -64,11 +68,11 @@ namespace Renderer
         const GLenum errorCode = glGetError();
 
         if (errorCode != GL_NO_ERROR) {
-#if defined(USE_OPENGL_21)
-            LOG(LogError) << "OpenGL error: " << _funcName << " failed with error code: 0x"
+#if defined(USE_OPENGLES)
+            LOG(LogError) << "OpenGL ES error: " << _funcName << " failed with error code: 0x"
                           << std::hex << errorCode;
 #else
-            LOG(LogError) << "OpenGL ES error: " << _funcName << " failed with error code: 0x"
+            LOG(LogError) << "OpenGL error: " << _funcName << " failed with error code: 0x"
                           << std::hex << errorCode;
 #endif
         }
@@ -98,7 +102,7 @@ namespace Renderer
         enum Type {
             RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
             BGRA,
-            ALPHA
+            RED
         };
     }
 
@@ -124,6 +128,7 @@ namespace Renderer
         float saturation;
         float dimming;
         bool convertBGRAToRGBA;
+        bool font;
         bool postProcessing;
         unsigned int shaders;
 
@@ -132,6 +137,7 @@ namespace Renderer
             , saturation {1.0f}
             , dimming {1.0f}
             , convertBGRAToRGBA {false}
+            , font {false}
             , postProcessing {false}
             , shaders {0}
         {
@@ -144,6 +150,7 @@ namespace Renderer
             , saturation {1.0f}
             , dimming {1.0f}
             , convertBGRAToRGBA {false}
+            , font {false}
             , postProcessing {false}
             , shaders {0}
         {
