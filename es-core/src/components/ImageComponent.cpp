@@ -367,12 +367,12 @@ void ImageComponent::updateVertices()
 
     if (mFlipX) {
         for (int i = 0; i < 4; ++i)
-            mVertices[i].texture[0] = px - mVertices[i].texture[0];
+            mVertices[i].texcoord[0] = px - mVertices[i].texcoord[0];
     }
 
     if (mFlipY) {
         for (int i = 0; i < 4; ++i)
-            mVertices[i].texture[1] = py - mVertices[i].texture[1];
+            mVertices[i].texcoord[1] = py - mVertices[i].texcoord[1];
     }
 }
 

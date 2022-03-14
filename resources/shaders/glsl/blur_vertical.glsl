@@ -9,124 +9,51 @@
 
 #define VW 1.00
 
+// Vertex section of code:
 #if defined(VERTEX)
 
-#if __VERSION__ >= 130
-#define COMPAT_VARYING out
-#define COMPAT_ATTRIBUTE in
-#define COMPAT_TEXTURE texture
-#else
-#define COMPAT_VARYING varying
-#define COMPAT_ATTRIBUTE attribute
-#endif
-
-#ifdef GL_ES
-#define COMPAT_PRECISION mediump
-#else
-#define COMPAT_PRECISION
-#endif
-
-COMPAT_ATTRIBUTE vec2 positionAttrib;
-COMPAT_ATTRIBUTE vec4 TexCoord;
-COMPAT_VARYING vec4 TEX0;
 uniform mat4 MVPMatrix;
+in vec2 positionVertex;
+in vec2 texCoordVertex;
+out vec2 texCoord;
 
 void main()
 {
-    gl_Position = MVPMatrix * vec4(positionAttrib.xy, 0.0, 1.0);
-    TEX0.xy = TexCoord.xy;
+    gl_Position = MVPMatrix * vec4(positionVertex, 0.0, 1.0);
+    texCoord = texCoordVertex;
 }
 
+// Fragment section of code:
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-#ifdef GL_FRAGMENT_PRECISION_HIGH
-precision highp float;
-#else
 precision mediump float;
 #endif
-#define COMPAT_PRECISION mediump
-#else
-#define COMPAT_PRECISION
-#endif
 
-#if __VERSION__ >= 130
-#define COMPAT_VARYING in
-#define COMPAT_TEXTURE texture
-out COMPAT_PRECISION vec4 FragColor;
-#else
-#define COMPAT_VARYING varying
-#define FragColor gl_FragColor
-#define COMPAT_TEXTURE texture2D
-#endif
+uniform vec2 textureSize;
+uniform sampler2D textureSampler;
+in vec2 texCoord;
+out vec4 FragColor;
 
-uniform COMPAT_PRECISION vec2 TextureSize;
-uniform sampler2D Texture;
-COMPAT_VARYING COMPAT_PRECISION vec4 TEX0;
-
-// compatibility #defines
-#define Source Texture
-#define vTexCoord TEX0.xy
-
-#define SourceSize vec4(TextureSize, 1.0 / TextureSize) // Either TextureSize or InputSize.
+#define SourceSize vec4(textureSize, 1.0 / textureSize)
 
 void main()
 {
-    vec2 texcoord = vTexCoord;
     vec2 PIXEL_SIZE = vec2(SourceSize.z, SourceSize.w);
-
-#if __VERSION__ < 130
-    float sampleOffsets1 = 0.0;
-    float sampleOffsets2 = 1.4347826;
-    float sampleOffsets3 = 3.3478260;
-    float sampleOffsets4 = 5.2608695;
-    float sampleOffsets5 = 7.1739130;
-
-    float sampleWeights1 = 0.16818994;
-    float sampleWeights2 = 0.27276957;
-    float sampleWeights3 = 0.11690125;
-    float sampleWeights4 = 0.024067905;
-    float sampleWeights5 = 0.0021112196;
-
-    // Alpha is handled differently depending on the graphics driver, so set it explicitly to 1.0.
-    vec4 color = COMPAT_TEXTURE(Source, texcoord);
-    color = vec4(color.rgb, 1.0) * sampleWeights1;
-
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets2 * VW * PIXEL_SIZE.y)) *
-             sampleWeights2;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets2 * VW * PIXEL_SIZE.y)) *
-             sampleWeights2;
-
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets3 * VW * PIXEL_SIZE.y)) *
-             sampleWeights3;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets3 * VW * PIXEL_SIZE.y)) *
-             sampleWeights3;
-
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets4 * VW * PIXEL_SIZE.y)) *
-             sampleWeights4;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets4 * VW * PIXEL_SIZE.y)) *
-             sampleWeights4;
-
-    color += COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets5 * VW * PIXEL_SIZE.y)) *
-             sampleWeights5;
-    color += COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets5 * VW * PIXEL_SIZE.y)) *
-             sampleWeights5;
-#else
 
     float sampleOffsets[5] = float[5](0.0, 1.4347826, 3.3478260, 5.2608695, 7.1739130);
     float sampleWeights[5] =
         float[5](0.16818994, 0.27276957, 0.11690125, 0.024067905, 0.0021112196);
 
-    vec4 color = COMPAT_TEXTURE(Source, texcoord) * sampleWeights[0];
+    vec4 color = texture(textureSampler, texCoord) * sampleWeights[0];
     for (int i = 1; i < 5; i++) {
         color +=
-            COMPAT_TEXTURE(Source, texcoord + vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
+            texture(textureSampler, texCoord + vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
             sampleWeights[i];
         color +=
-            COMPAT_TEXTURE(Source, texcoord - vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
+            texture(textureSampler, texCoord - vec2(0.0, sampleOffsets[i] * VW * PIXEL_SIZE.y)) *
             sampleWeights[i];
     }
-#endif
 
     FragColor = vec4(color);
 }

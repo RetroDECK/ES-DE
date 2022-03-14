@@ -57,7 +57,7 @@ public:
 
     struct Vertex {
         glm::vec2 position;
-        glm::vec2 texture;
+        glm::vec2 texcoord;
         unsigned int color;
         float opacity;
         float saturation;
@@ -76,7 +76,7 @@ public:
 
         Vertex(const glm::vec2& position, const glm::vec2& textureCoord, const unsigned int color)
             : position(position)
-            , texture(textureCoord)
+            , texcoord(textureCoord)
             , color(color)
             , opacity {1.0f}
             , saturation {1.0f}

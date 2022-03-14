@@ -116,10 +116,10 @@ void ShaderOpenGL::getVariableLocations(GLuint programID)
 {
     // Some of the variable names are chosen to be compatible with the RetroArch GLSL shaders.
     mShaderMVPMatrix = glGetUniformLocation(mProgramID, "MVPMatrix");
-    mShaderPosition = glGetAttribLocation(mProgramID, "positionAttrib");
-    mShaderTextureCoord = glGetAttribLocation(mProgramID, "TexCoord");
-    mShaderColor = glGetAttribLocation(mProgramID, "colorAttrib");
-    mShaderTextureSize = glGetUniformLocation(mProgramID, "TextureSize");
+    mShaderPosition = glGetAttribLocation(mProgramID, "positionVertex");
+    mShaderTextureCoord = glGetAttribLocation(mProgramID, "texCoordVertex");
+    mShaderColor = glGetAttribLocation(mProgramID, "colorVertex");
+    mShaderTextureSize = glGetUniformLocation(mProgramID, "textureSize");
     mShaderOpacity = glGetUniformLocation(mProgramID, "opacity");
     mShaderSaturation = glGetUniformLocation(mProgramID, "saturation");
     mShaderDimming = glGetUniformLocation(mProgramID, "dimming");
@@ -142,7 +142,7 @@ void ShaderOpenGL::setAttribPointers()
     if (mShaderTextureCoord != -1)
         GL_CHECK_ERROR(glVertexAttribPointer(
             mShaderTextureCoord, 2, GL_FLOAT, GL_FALSE, sizeof(Renderer::Vertex),
-            reinterpret_cast<const void*>(offsetof(Renderer::Vertex, texture))));
+            reinterpret_cast<const void*>(offsetof(Renderer::Vertex, texcoord))));
 
     if (mShaderColor != -1)
         GL_CHECK_ERROR(glVertexAttribPointer(

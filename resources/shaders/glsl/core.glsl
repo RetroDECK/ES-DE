@@ -7,64 +7,40 @@
 //  opacity, saturation, dimming and BGRA to RGBA conversion.
 //
 
-#if defined(VERTEX)
 // Vertex section of code:
-
-#if __VERSION__ >= 130
-#define COMPAT_VARYING out
-#define COMPAT_ATTRIBUTE in
-#else
-#define COMPAT_VARYING varying
-#define COMPAT_ATTRIBUTE attribute
-#endif
-
-#ifdef GL_ES
-#define COMPAT_PRECISION mediump
-#else
-#define COMPAT_PRECISION
-#endif
+#if defined(VERTEX)
 
 uniform mat4 MVPMatrix;
-COMPAT_ATTRIBUTE vec2 positionAttrib;
-COMPAT_ATTRIBUTE vec2 TexCoord;
-COMPAT_ATTRIBUTE vec4 colorAttrib;
-COMPAT_VARYING vec4 color;
-COMPAT_VARYING vec2 texCoord;
+in vec2 positionVertex;
+in vec2 texCoordVertex;
+in vec4 colorVertex;
+
+out vec4 color;
+out vec2 texCoord;
 
 void main(void)
 {
-    color.rgba = colorAttrib.abgr;
-    texCoord = TexCoord;
-    gl_Position = MVPMatrix * vec4(positionAttrib.xy, 0.0, 1.0);
+    gl_Position = MVPMatrix * vec4(positionVertex.xy, 0.0, 1.0);
+    texCoord = texCoordVertex;
+    color.rgba = colorVertex.abgr;
 }
 
-#elif defined(FRAGMENT)
 // Fragment section of code:
+#elif defined(FRAGMENT)
 
 #ifdef GL_ES
-#define COMPAT_PRECISION mediump
-#else
-#define COMPAT_PRECISION
+precision mediump float;
 #endif
 
-#if __VERSION__ >= 130
-#define COMPAT_VARYING in
-#define COMPAT_TEXTURE texture
-out COMPAT_PRECISION vec4 FragColor;
-#else
-#define COMPAT_VARYING varying
-#define COMPAT_TEXTURE texture2D
-#define FragColor gl_FragColor
-#endif
-
-COMPAT_VARYING COMPAT_PRECISION vec4 color;
-COMPAT_VARYING COMPAT_PRECISION vec4 color2;
-COMPAT_VARYING COMPAT_PRECISION vec2 texCoord;
-uniform COMPAT_PRECISION float opacity;
-uniform COMPAT_PRECISION float saturation;
-uniform COMPAT_PRECISION float dimming;
+in vec4 color;
+in vec2 texCoord;
+uniform float opacity;
+uniform float saturation;
+uniform float dimming;
 uniform unsigned int shaderFlags;
+
 uniform sampler2D textureSampler;
+out vec4 FragColor;
 
 // shaderFlags:
 // 0x00000001 - BGRA to RGBA conversion
@@ -73,33 +49,33 @@ uniform sampler2D textureSampler;
 
 void main()
 {
-    COMPAT_PRECISION vec4 sampledColor = COMPAT_TEXTURE(textureSampler, texCoord);
+    vec4 sampledColor = texture(textureSampler, texCoord);
 
     // For fonts the alpha information is stored in the red channel.
     if (0u != (shaderFlags & 2u))
-        sampledColor = vec4(1.0f, 1.0f, 1.0f, sampledColor.r);
+        sampledColor = vec4(1.0, 1.0, 1.0, sampledColor.r);
 
     sampledColor *= color;
 
     // When post-processing we drop the alpha channel to avoid strange issues
     // with some graphics drivers.
     if (0u != (shaderFlags & 4u))
-        sampledColor.a = 1.0f;
+        sampledColor.a = 1.0;
 
     // Opacity.
-    if (opacity != 1.0f)
+    if (opacity != 1.0)
         sampledColor.a = sampledColor.a * opacity;
 
     // Saturation.
-    if (saturation != 1.0f) {
-        COMPAT_PRECISION vec3 grayscale = vec3(dot(sampledColor.rgb, vec3(0.34f, 0.55f, 0.11f)));
-        COMPAT_PRECISION vec3 blendedColor = mix(grayscale, sampledColor.rgb, saturation);
+    if (saturation != 1.0) {
+        vec3 grayscale = vec3(dot(sampledColor.rgb, vec3(0.34, 0.55, 0.11)));
+        vec3 blendedColor = mix(grayscale, sampledColor.rgb, saturation);
         sampledColor = vec4(blendedColor, sampledColor.a);
     }
 
     // Dimming
-    if (dimming != 1.0f) {
-        COMPAT_PRECISION vec4 dimColor = vec4(dimming, dimming, dimming, 1.0f);
+    if (dimming != 1.0) {
+        vec4 dimColor = vec4(dimming, dimming, dimming, 1.0);
         sampledColor *= dimColor;
     }
 

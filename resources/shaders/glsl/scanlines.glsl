@@ -20,85 +20,54 @@
 //  Taken from the RetroArch project and modified for ES-DE.
 //
 
+// Vertex section of code:
 #if defined(VERTEX)
 
-#if __VERSION__ >= 130
-#define COMPAT_VARYING out
-#define COMPAT_ATTRIBUTE in
-#define COMPAT_TEXTURE texture
-#else
-#define COMPAT_VARYING varying
-#define COMPAT_ATTRIBUTE attribute
-#endif
-
 #ifdef GL_ES
-#define COMPAT_PRECISION mediump
-#else
-#define COMPAT_PRECISION
+precision mediump float;
 #endif
-
-COMPAT_ATTRIBUTE vec4 TexCoord;
-COMPAT_VARYING vec4 TEX0;
-COMPAT_VARYING vec2 onex;
-COMPAT_VARYING vec2 oney;
 
 uniform mat4 MVPMatrix;
-COMPAT_ATTRIBUTE vec2 positionAttrib;
-uniform COMPAT_PRECISION vec2 TextureSize;
+in vec2 positionVertex;
+in vec2 texCoordVertex;
+uniform vec2 textureSize;
+out vec2 texCoord;
+out vec2 onex;
+out vec2 oney;
 
-#define SourceSize vec4(TextureSize, 1.0 / TextureSize) // Either TextureSize or InputSize.
+#define SourceSize vec4(textureSize, 1.0 / textureSize)
 
 void main()
 {
-    gl_Position = MVPMatrix * vec4(positionAttrib.xy, 0.0, 1.0);
-    TEX0.xy = TexCoord.xy;
+    gl_Position = MVPMatrix * vec4(positionVertex, 0.0, 1.0);
+    texCoord = texCoordVertex;
     onex = vec2(SourceSize.z, 0.0);
     oney = vec2(0.0, SourceSize.w);
 }
 
+// Fragment section of code:
 #elif defined(FRAGMENT)
 
 #ifdef GL_ES
-#ifdef GL_FRAGMENT_PRECISION_HIGH
-precision highp float;
-#else
 precision mediump float;
 #endif
-#define COMPAT_PRECISION mediump
-#else
-#define COMPAT_PRECISION
-#endif
 
-#if __VERSION__ >= 130
-#define COMPAT_VARYING in
-#define COMPAT_TEXTURE texture
-out COMPAT_PRECISION vec4 FragColor;
-#else
-#define COMPAT_VARYING varying
-#define FragColor gl_FragColor
-#define COMPAT_TEXTURE texture2D
-#endif
+uniform vec2 textureSize;
+uniform float opacity;
+uniform sampler2D textureSampler;
+in vec2 texCoord;
+in vec2 onex;
+in vec2 oney;
+out vec4 FragColor;
 
-uniform COMPAT_PRECISION vec2 TextureSize;
-uniform COMPAT_PRECISION float opacity;
-uniform sampler2D Texture;
-COMPAT_VARYING vec4 TEX0;
-COMPAT_VARYING vec2 onex;
-COMPAT_VARYING vec2 oney;
-
-// Compatibility #defines
-#define Source Texture
-#define vTexCoord TEX0.xy
-
-#define SourceSize vec4(TextureSize, 1.0 / TextureSize) // Either TextureSize or InputSize.
+#define SourceSize vec4(textureSize, 1.0 / textureSize)
 
 #ifdef PARAMETER_UNIFORM
-// All parameter floats need to have COMPAT_PRECISION in front of them.
-uniform COMPAT_PRECISION float SPOT_WIDTH;
-uniform COMPAT_PRECISION float SPOT_HEIGHT;
-uniform COMPAT_PRECISION float COLOR_BOOST;
-uniform COMPAT_PRECISION float InputGamma;
-uniform COMPAT_PRECISION float OutputGamma;
+uniform float SPOT_WIDTH;
+uniform float SPOT_HEIGHT;
+uniform float COLOR_BOOST;
+uniform float InputGamma;
+uniform float OutputGamma;
 #else
 #define SPOT_WIDTH 0.9
 #define SPOT_HEIGHT 0.75
@@ -110,7 +79,7 @@ uniform COMPAT_PRECISION float OutputGamma;
 #define GAMMA_IN(color) pow(color, vec4(InputGamma))
 #define GAMMA_OUT(color) pow(color, vec4(1.0 / OutputGamma))
 
-#define TEX2D(coords) GAMMA_IN(COMPAT_TEXTURE(Source, coords))
+#define TEX2D(coords) GAMMA_IN(texture(textureSampler, coords))
 
 // Macro for weights computing.
 #define WEIGHT(w)                                                                                  \
@@ -121,7 +90,7 @@ uniform COMPAT_PRECISION float OutputGamma;
 
 void main()
 {
-    vec2 coords = (vTexCoord * SourceSize.xy);
+    vec2 coords = (texCoord * SourceSize.xy);
     vec2 pixel_center = floor(coords) + vec2(0.5, 0.5);
     vec2 texture_coords = pixel_center * SourceSize.zw;
 
@@ -156,7 +125,7 @@ void main()
     WEIGHT(v_weight_00);
     color *= vec4(v_weight_00);
 
-    // get closest vertical neighbour to blend
+    // Get closest vertical neighbour to blend.
     vec2 coords10;
     if (dy > 0.0) {
         coords10 = oney;
