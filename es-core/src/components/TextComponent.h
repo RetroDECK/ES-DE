@@ -89,6 +89,7 @@ private:
     void calculateExtent();
     void onColorChanged();
 
+    Renderer* mRenderer;
     unsigned int mColor;
     unsigned int mBgColor;
     float mColorOpacity;

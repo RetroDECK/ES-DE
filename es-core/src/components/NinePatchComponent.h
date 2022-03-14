@@ -62,6 +62,7 @@ private:
     void buildVertices();
     void updateColors();
 
+    Renderer* mRenderer;
     Renderer::Vertex* mVertices;
 
     std::string mPath;

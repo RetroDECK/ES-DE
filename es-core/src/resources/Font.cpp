@@ -76,7 +76,8 @@ size_t Font::getTotalMemUsage()
 }
 
 Font::Font(int size, const std::string& path)
-    : mSize(size)
+    : mRenderer {Renderer::getInstance()}
+    , mSize(size)
     , mPath(path)
 {
     if (mSize < 9) {
@@ -199,14 +200,14 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
-    textureId = Renderer::createTexture(Renderer::Texture::RED, false, false, false, textureSize.x,
-                                        textureSize.y, nullptr);
+    textureId = Renderer::getInstance()->createTexture(
+        Renderer::TextureType::RED, false, false, false, textureSize.x, textureSize.y, nullptr);
 }
 
 void Font::FontTexture::deinitTexture()
 {
     if (textureId != 0) {
-        Renderer::destroyTexture(textureId);
+        Renderer::getInstance()->destroyTexture(textureId);
         textureId = 0;
     }
 }
@@ -346,8 +347,8 @@ Font::Glyph* Font::getGlyph(unsigned int id)
                                static_cast<float>(g->metrics.horiBearingY) / 64.0f};
 
     // Upload glyph bitmap to texture.
-    Renderer::updateTexture(tex->textureId, Renderer::Texture::RED, cursor.x, cursor.y, glyphSize.x,
-                            glyphSize.y, g->bitmap.buffer);
+    mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
+                             glyphSize.x, glyphSize.y, g->bitmap.buffer);
 
     // Update max glyph height.
     if (glyphSize.y > mMaxGlyphHeight)
@@ -380,8 +381,8 @@ void Font::rebuildTextures()
                               static_cast<int>(it->second.texSize.y * tex->textureSize.y)};
 
         // Upload to texture.
-        Renderer::updateTexture(tex->textureId, Renderer::Texture::RED, cursor.x, cursor.y,
-                                glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
+        mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
+                                 glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
     }
 }
 
@@ -398,9 +399,9 @@ void Font::renderTextCache(TextCache* cache)
         auto vertexList = *it;
         it->verts[0].font = true;
 
-        Renderer::bindTexture(*it->textureIdPtr);
-        Renderer::drawTriangleStrips(&it->verts[0],
-                                     static_cast<const unsigned int>(it->verts.size()));
+        mRenderer->bindTexture(*it->textureIdPtr);
+        mRenderer->drawTriangleStrips(&it->verts[0],
+                                      static_cast<const unsigned int>(it->verts.size()));
     }
 }
 

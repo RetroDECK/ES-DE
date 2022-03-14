@@ -14,7 +14,8 @@
 #include "resources/TextureResource.h"
 
 RatingComponent::RatingComponent(bool colorizeChanges)
-    : mColorOriginalValue {DEFAULT_COLORSHIFT}
+    : mRenderer {Renderer::getInstance()}
+    , mColorOriginalValue {DEFAULT_COLORSHIFT}
     , mColorChangedValue {DEFAULT_COLORSHIFT}
     , mColorShift {DEFAULT_COLORSHIFT}
     , mColorShiftEnd {DEFAULT_COLORSHIFT}
@@ -152,12 +153,12 @@ void RatingComponent::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans {parentTrans * getTransform()};
 
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
-            Renderer::drawRect(0.0f, 0.0f, mSize.y * NUM_RATING_STARS, mSize.y, 0xFF000033,
-                               0xFF000033);
+            mRenderer->drawRect(0.0f, 0.0f, mSize.y * NUM_RATING_STARS, mSize.y, 0xFF000033,
+                                0xFF000033);
         }
 
         if (mUnfilledTexture->bind()) {
@@ -167,16 +168,16 @@ void RatingComponent::render(const glm::mat4& parentTrans)
                         (mUnfilledColor & 0xFFFFFF00) + (mVertices[i].color & 0x000000FF);
             }
 
-            Renderer::drawTriangleStrips(&mVertices[4], 4);
-            Renderer::bindTexture(0);
+            mRenderer->drawTriangleStrips(&mVertices[4], 4);
+            mRenderer->bindTexture(0);
 
             if (mUnfilledColor != mColorShift)
                 updateColors();
         }
 
         if (mFilledTexture->bind()) {
-            Renderer::drawTriangleStrips(&mVertices[0], 4);
-            Renderer::bindTexture(0);
+            mRenderer->drawTriangleStrips(&mVertices[0], 4);
+            mRenderer->bindTexture(0);
         }
     }
 

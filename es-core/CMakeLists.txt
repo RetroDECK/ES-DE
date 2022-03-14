@@ -74,6 +74,7 @@ set(CORE_HEADERS
 
     # Renderers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer_GL21.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Shader_GL21.h
 
     # Resources

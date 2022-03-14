@@ -20,7 +20,8 @@
 #include "ThemeData.h"
 
 FlexboxComponent::FlexboxComponent(std::vector<FlexboxItem>& items)
-    : mItems {items}
+    : mRenderer {Renderer::getInstance()}
+    , mItems {items}
     , mDirection {DEFAULT_DIRECTION}
     , mAlignment {DEFAULT_ALIGNMENT}
     , mLines {DEFAULT_LINES}
@@ -42,10 +43,10 @@ void FlexboxComponent::render(const glm::mat4& parentTrans)
         computeLayout();
 
     glm::mat4 trans {parentTrans * getTransform()};
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugImage"))
-        Renderer::drawRect(0.0f, 0.0f, ceilf(mSize.x), ceilf(mSize.y), 0xFF000033, 0xFF000033);
+        mRenderer->drawRect(0.0f, 0.0f, ceilf(mSize.x), ceilf(mSize.y), 0xFF000033, 0xFF000033);
 
     for (auto& item : mItems) {
         if (!item.visible)

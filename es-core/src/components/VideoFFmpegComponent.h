@@ -84,6 +84,7 @@ private:
     static void detectHWDecoder();
     bool decoderInitHW();
 
+    Renderer* mRenderer;
     static enum AVHWDeviceType sDeviceType;
     static enum AVPixelFormat sPixelFormat;
     static std::vector<std::string> sSWDecodedVideos;

@@ -17,7 +17,8 @@ ButtonComponent::ButtonComponent(const std::string& text,
                                  const std::function<void()>& func,
                                  bool upperCase,
                                  bool flatStyle)
-    : mBox {":/graphics/button.svg"}
+    : mRenderer {Renderer::getInstance()}
+    , mBox {":/graphics/button.svg"}
     , mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mPadding {0.0f, 0.0f, 0.0f, 0.0f}
     , mFocused {false}
@@ -112,16 +113,16 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
 
     if (mFlatStyle) {
         if (mFocused) {
-            Renderer::setMatrix(trans);
-            Renderer::drawRect(mPadding.x, mPadding.y, mSize.x - mPadding.x - mPadding.z,
-                               mSize.y - mPadding.y - mPadding.w, mFlatColorFocused,
-                               mFlatColorFocused);
+            mRenderer->setMatrix(trans);
+            mRenderer->drawRect(mPadding.x, mPadding.y, mSize.x - mPadding.x - mPadding.z,
+                                mSize.y - mPadding.y - mPadding.w, mFlatColorFocused,
+                                mFlatColorFocused);
         }
         else {
-            Renderer::setMatrix(trans);
-            Renderer::drawRect(mPadding.x, mPadding.y, mSize.x - mPadding.x - mPadding.z,
-                               mSize.y - mPadding.y - mPadding.w, mFlatColorUnfocused,
-                               mFlatColorUnfocused);
+            mRenderer->setMatrix(trans);
+            mRenderer->drawRect(mPadding.x, mPadding.y, mSize.x - mPadding.x - mPadding.z,
+                                mSize.y - mPadding.y - mPadding.w, mFlatColorUnfocused,
+                                mFlatColorUnfocused);
         }
     }
     else {
@@ -134,13 +135,13 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
         trans = glm::translate(trans, centerOffset);
 
         if (Settings::getInstance()->getBool("DebugText")) {
-            Renderer::drawRect(centerOffset.x, 0.0f, mTextCache->metrics.size.x, mSize.y,
-                               0x00000033, 0x00000033);
-            Renderer::drawRect(mBox.getPosition().x, 0.0f, mBox.getSize().x, mSize.y, 0x0000FF33,
-                               0x0000FF33);
+            mRenderer->drawRect(centerOffset.x, 0.0f, mTextCache->metrics.size.x, mSize.y,
+                                0x00000033, 0x00000033);
+            mRenderer->drawRect(mBox.getPosition().x, 0.0f, mBox.getSize().x, mSize.y, 0x0000FF33,
+                                0x0000FF33);
         }
 
-        Renderer::setMatrix(trans);
+        mRenderer->setMatrix(trans);
 
         mTextCache->setColor(getCurTextColor());
         mFont->renderTextCache(mTextCache.get());

@@ -102,8 +102,9 @@ private:
     void legacyInitMDLabels();
     void legacyInitMDValues();
 
-    bool mLegacyMode;
+    Renderer* mRenderer;
     ViewController::GamelistViewStyle mViewStyle;
+    bool mLegacyMode;
 
     std::shared_ptr<ThemeData> mTheme;
     std::vector<GuiComponent*> mThemeExtras;

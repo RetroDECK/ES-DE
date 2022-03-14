@@ -72,6 +72,7 @@ public:
     bool tiled() { return mTile; }
 
 private:
+    Renderer* mRenderer;
     std::mutex mMutex;
 
     bool mTile;

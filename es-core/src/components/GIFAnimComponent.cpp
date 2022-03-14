@@ -20,7 +20,8 @@
 #include "utils/StringUtil.h"
 
 GIFAnimComponent::GIFAnimComponent()
-    : mFrameSize {0}
+    : mRenderer {Renderer::getInstance()}
+    , mFrameSize {0}
     , mAnimFile {nullptr}
     , mAnimation {nullptr}
     , mFrame {nullptr}
@@ -466,10 +467,10 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         }
     }
 
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugImage"))
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
 
     if (mTexture->getSize().x != 0.0f) {
         mTexture->bind();
@@ -493,6 +494,6 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         vertices->convertBGRAToRGBA = true;
 
         // Render it.
-        Renderer::drawTriangleStrips(&vertices[0], 4);
+        mRenderer->drawTriangleStrips(&vertices[0], 4);
     }
 }

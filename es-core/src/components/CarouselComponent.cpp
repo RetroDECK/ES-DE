@@ -21,6 +21,7 @@ namespace
 
 CarouselComponent::CarouselComponent()
     : IList<CarouselElement, SystemData*> {LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP}
+    , mRenderer {Renderer::getInstance()}
     , mCamOffset {0.0f}
     , mPreviousScrollVelocity {0}
     , mType {HORIZONTAL}
@@ -194,11 +195,11 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
         carouselTrans, glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f});
 
     glm::vec2 clipPos {carouselTrans[3].x, carouselTrans[3].y};
-    Renderer::setMatrix(carouselTrans);
+    mRenderer->setMatrix(carouselTrans);
 
     // Background box behind logos.
-    Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, mCarouselColor, mCarouselColorEnd,
-                       mColorGradientHorizontal);
+    mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mCarouselColor, mCarouselColorEnd,
+                        mColorGradientHorizontal);
 
     // Draw logos.
     // logoSpacing will also include the size of the logo itself.

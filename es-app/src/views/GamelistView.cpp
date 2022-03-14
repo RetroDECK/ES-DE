@@ -18,8 +18,9 @@
 
 GamelistView::GamelistView(FileData* root)
     : GamelistBase {root}
-    , mLegacyMode {false}
+    , mRenderer {Renderer::getInstance()}
     , mViewStyle {ViewController::BASIC}
+    , mLegacyMode {false}
 {
     mViewStyle = ViewController::getInstance()->getState().viewstyle;
 
@@ -247,9 +248,9 @@ void GamelistView::render(const glm::mat4& parentTrans)
     glm::ivec2 size {static_cast<int>(std::round(mSize.x * scaleX)),
                      static_cast<int>(std::round(mSize.y * scaleY))};
 
-    Renderer::pushClipRect(pos, size);
+    mRenderer->pushClipRect(pos, size);
     renderChildren(trans);
-    Renderer::popClipRect();
+    mRenderer->popClipRect();
 }
 
 HelpStyle GamelistView::getHelpStyle()

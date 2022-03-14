@@ -52,6 +52,7 @@ private:
     void updateVertices();
     void updateColors();
 
+    Renderer* mRenderer;
     float mValue;
     int mOriginalValue;
     unsigned int mColorOriginalValue;

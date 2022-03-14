@@ -15,7 +15,8 @@
 #define MOVE_REPEAT_RATE 40
 
 SliderComponent::SliderComponent(float min, float max, float increment, const std::string& suffix)
-    : mMin {min}
+    : mRenderer {Renderer::getInstance()}
+    , mMin {min}
     , mMax {max}
     , mSingleIncrement {increment}
     , mMoveRate {0.0f}
@@ -77,14 +78,14 @@ void SliderComponent::update(int deltaTime)
 void SliderComponent::render(const glm::mat4& parentTrans)
 {
     glm::mat4 trans {parentTrans * getTransform()};
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugText")) {
-        Renderer::drawRect(
+        mRenderer->drawRect(
             mSize.x - mTextCache->metrics.size.x, (mSize.y - mTextCache->metrics.size.y) / 2.0f,
             mTextCache->metrics.size.x, mTextCache->metrics.size.y, 0x0000FF33, 0x0000FF33);
-        Renderer::drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f, mTextCache->metrics.size.x,
-                           mSize.y, 0x00000033, 0x00000033);
+        mRenderer->drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f, mTextCache->metrics.size.x,
+                            mSize.y, 0x00000033, 0x00000033);
     }
 
     float width {mSize.x - mKnob.getSize().x -
@@ -97,8 +98,8 @@ void SliderComponent::render(const glm::mat4& parentTrans)
         mFont->renderTextCache(mTextCache.get());
 
     // Render bar.
-    Renderer::drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - mBarHeight / 2.0f, width,
-                       mBarHeight, 0x777777FF, 0x777777FF);
+    mRenderer->drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - mBarHeight / 2.0f, width,
+                        mBarHeight, 0x777777FF, 0x777777FF);
 
     // Render knob.
     mKnob.render(trans);

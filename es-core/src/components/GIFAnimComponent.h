@@ -69,6 +69,7 @@ private:
         return ftell(reinterpret_cast<FILE*>(handle));
     }
 
+    Renderer* mRenderer;
     std::shared_ptr<TextureResource> mTexture;
     std::vector<uint8_t> mPictureRGBA;
     size_t mFrameSize;

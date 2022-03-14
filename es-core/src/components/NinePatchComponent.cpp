@@ -16,7 +16,8 @@
 NinePatchComponent::NinePatchComponent(const std::string& path,
                                        unsigned int edgeColor,
                                        unsigned int centerColor)
-    : mVertices {nullptr}
+    : mRenderer {Renderer::getInstance()}
+    , mVertices {nullptr}
     , mPath {path}
     , mCornerSize {16.0f, 16.0f}
     , mSharpCorners {false}
@@ -131,10 +132,10 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     if (mTexture && mVertices != nullptr) {
-        Renderer::setMatrix(trans);
+        mRenderer->setMatrix(trans);
         mVertices->opacity = mOpacity;
         mTexture->bind();
-        Renderer::drawTriangleStrips(&mVertices[0], 6 * 9);
+        mRenderer->drawTriangleStrips(&mVertices[0], 6 * 9);
     }
 
     renderChildren(trans);

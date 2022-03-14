@@ -119,6 +119,7 @@ private:
     // Resolve any metadata assets that need to be downloaded and return.
     void returnResult(ScraperSearchResult result);
 
+    Renderer* mRenderer;
     ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mResultName;

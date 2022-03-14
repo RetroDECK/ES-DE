@@ -24,7 +24,8 @@
 #define DPI 96
 
 TextureData::TextureData(bool tile)
-    : mTile {tile}
+    : mRenderer {Renderer::getInstance()}
+    , mTile {tile}
     , mTextureID {0}
     , mDataRGBA {}
     , mWidth {0}
@@ -209,7 +210,7 @@ bool TextureData::uploadAndBind()
     // Check if it has already been uploaded.
     std::unique_lock<std::mutex> lock(mMutex);
     if (mTextureID != 0) {
-        Renderer::bindTexture(mTextureID);
+        mRenderer->bindTexture(mTextureID);
     }
     else {
         // Make sure we're ready to upload.
@@ -218,9 +219,9 @@ bool TextureData::uploadAndBind()
 
         // Upload texture.
         mTextureID =
-            Renderer::createTexture(Renderer::Texture::RGBA, true, mLinearMagnify, mTile,
-                                    static_cast<const unsigned int>(mWidth),
-                                    static_cast<const unsigned int>(mHeight), mDataRGBA.data());
+            mRenderer->createTexture(Renderer::TextureType::RGBA, true, mLinearMagnify, mTile,
+                                     static_cast<const unsigned int>(mWidth),
+                                     static_cast<const unsigned int>(mHeight), mDataRGBA.data());
     }
     return true;
 }
@@ -229,7 +230,7 @@ void TextureData::releaseVRAM()
 {
     std::unique_lock<std::mutex> lock(mMutex);
     if (mTextureID != 0) {
-        Renderer::destroyTexture(mTextureID);
+        mRenderer->destroyTexture(mTextureID);
         mTextureID = 0;
     }
 }

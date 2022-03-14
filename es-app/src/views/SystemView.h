@@ -108,6 +108,7 @@ private:
     void legacyApplyTheme(const std::shared_ptr<ThemeData>& theme);
     void renderElements(const glm::mat4& parentTrans, bool abovePrimary);
 
+    Renderer* mRenderer;
     std::unique_ptr<CarouselComponent> mCarousel;
     std::unique_ptr<TextComponent> mLegacySystemInfo;
     std::vector<SystemViewElements> mSystemElements;

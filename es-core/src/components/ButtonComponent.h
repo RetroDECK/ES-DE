@@ -50,6 +50,7 @@ private:
     unsigned int getCurTextColor() const;
     void updateImage();
 
+    Renderer* mRenderer;
     NinePatchComponent mBox;
 
     std::shared_ptr<Font> mFont;

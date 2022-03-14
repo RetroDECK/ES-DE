@@ -21,6 +21,8 @@
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
 
+#include <SDL2/SDL.h>
+
 GuiSettings::GuiSettings(std::string title)
     : mMenu {title}
     , mGoToSystem {nullptr}

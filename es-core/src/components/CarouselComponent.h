@@ -68,6 +68,7 @@ protected:
     }
 
 private:
+    Renderer* mRenderer;
     std::function<void(CursorState state)> mCursorChangedCallback;
     std::function<void()> mCancelTransitionsCallback;
 

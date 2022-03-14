@@ -30,7 +30,8 @@ glm::vec2 ImageComponent::getSize() const
 }
 
 ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
-    : mTargetSize {0, 0}
+    : mRenderer {Renderer::getInstance()}
+    , mTargetSize {0, 0}
     , mFlipX {false}
     , mFlipY {false}
     , mTargetIsMax {false}
@@ -396,14 +397,14 @@ void ImageComponent::render(const glm::mat4& parentTrans)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (mTexture && mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
             glm::vec2 targetSizePos {(mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f}};
-            Renderer::drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
-                               0xFF000033, 0xFF000033);
-            Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+            mRenderer->drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
+                                0xFF000033, 0xFF000033);
+            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
         }
         // An image with zero size would normally indicate a corrupt image file.
         if (mTexture->getSize() != glm::ivec2 {}) {
@@ -422,7 +423,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             mVertices->opacity = mThemeOpacity;
             mVertices->dimming = mDimming;
 
-            Renderer::drawTriangleStrips(&mVertices[0], 4);
+            mRenderer->drawTriangleStrips(&mVertices[0], 4);
         }
         else {
             if (!mTexture) {

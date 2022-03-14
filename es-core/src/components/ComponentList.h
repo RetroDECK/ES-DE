@@ -124,6 +124,7 @@ protected:
     void onCursorChanged(const CursorState& state) override;
 
 private:
+    Renderer* mRenderer;
     bool mFocused;
     bool mSetupCompleted;
     bool mBottomCameraOffset;

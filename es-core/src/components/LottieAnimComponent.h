@@ -48,6 +48,7 @@ public:
 private:
     void render(const glm::mat4& parentTrans) override;
 
+    Renderer* mRenderer;
     std::shared_ptr<TextureResource> mTexture;
     std::vector<uint8_t> mPictureRGBA;
     std::unordered_map<size_t, std::vector<uint8_t>> mFrameCache;

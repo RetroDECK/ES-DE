@@ -10,6 +10,7 @@
 #define ES_CORE_COMPONENTS_DATE_TIME_EDIT_COMPONENT_H
 
 #include "GuiComponent.h"
+#include "renderers/Renderer.h"
 #include "utils/TimeUtil.h"
 
 class TextCache;
@@ -66,6 +67,7 @@ private:
     void changeDate();
     void updateTextCache();
 
+    Renderer* mRenderer;
     Utils::Time::DateTime mTime;
     Utils::Time::DateTime mTimeBeforeEdit;
 

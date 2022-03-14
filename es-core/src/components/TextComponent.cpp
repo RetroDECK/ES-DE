@@ -14,6 +14,7 @@
 
 TextComponent::TextComponent()
     : mFont {Font::get(FONT_SIZE_MEDIUM)}
+    , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
     , mColorOpacity {1.0f}
@@ -39,6 +40,7 @@ TextComponent::TextComponent(const std::string& text,
                              glm::vec2 size,
                              unsigned int bgcolor)
     : mFont {nullptr}
+    , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
     , mBgColor {0x00000000}
     , mColorOpacity {1.0f}
@@ -161,11 +163,11 @@ void TextComponent::render(const glm::mat4& parentTrans)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (mRenderBackground)
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
-                           mOpacity * mThemeOpacity, mDimming);
+        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mBgColor, mBgColor, false,
+                            mOpacity * mThemeOpacity, mDimming);
 
     if (mTextCache) {
         const glm::vec2& textSize {mTextCache->metrics.size};
@@ -191,29 +193,29 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
         // Draw the "textbox" area, what we are aligned within.
         if (Settings::getInstance()->getBool("DebugText"))
-            Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
+            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
 
         trans = glm::translate(trans, off);
-        Renderer::setMatrix(trans);
+        mRenderer->setMatrix(trans);
 
         // Draw the text area, where the text actually is located.
         if (Settings::getInstance()->getBool("DebugText")) {
             switch (mHorizontalAlignment) {
                 case ALIGN_LEFT: {
-                    Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x,
-                                       mTextCache->metrics.size.y, 0x00000033, 0x00000033);
+                    mRenderer->drawRect(0.0f, 0.0f, mTextCache->metrics.size.x,
+                                        mTextCache->metrics.size.y, 0x00000033, 0x00000033);
                     break;
                 }
                 case ALIGN_CENTER: {
-                    Renderer::drawRect((mSize.x - mTextCache->metrics.size.x) / 2.0f, 0.0f,
-                                       mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                                       0x00000033, 0x00000033);
+                    mRenderer->drawRect((mSize.x - mTextCache->metrics.size.x) / 2.0f, 0.0f,
+                                        mTextCache->metrics.size.x, mTextCache->metrics.size.y,
+                                        0x00000033, 0x00000033);
                     break;
                 }
                 case ALIGN_RIGHT: {
-                    Renderer::drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f,
-                                       mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                                       0x00000033, 0x00000033);
+                    mRenderer->drawRect(mSize.x - mTextCache->metrics.size.x, 0.0f,
+                                        mTextCache->metrics.size.x, mTextCache->metrics.size.y,
+                                        0x00000033, 0x00000033);
                     break;
                 }
                 default: {

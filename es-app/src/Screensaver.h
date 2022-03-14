@@ -58,6 +58,7 @@ private:
         STATE_SCREENSAVER_ACTIVE
     };
 
+    Renderer* mRenderer;
     Window* mWindow;
     STATE mState;
 

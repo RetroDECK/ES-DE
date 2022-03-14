@@ -14,6 +14,7 @@
 
 ComponentList::ComponentList()
     : IList<ComponentListRow, void*> {LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP}
+    , mRenderer {Renderer::getInstance()}
     , mFocused {false}
     , mSetupCompleted {false}
     , mBottomCameraOffset {false}
@@ -294,8 +295,8 @@ void ComponentList::render(const glm::mat4& parentTrans)
     const int clipRectSizeX {static_cast<int>(std::round(dim.x))};
     const int clipRectSizeY {static_cast<int>(std::round(dim.y))};
 
-    Renderer::pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
-                           glm::ivec2 {clipRectSizeX, clipRectSizeY});
+    mRenderer->pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
+                            glm::ivec2 {clipRectSizeX, clipRectSizeY});
 
     // Scroll the camera.
     trans = glm::translate(trans, glm::vec3 {0.0f, -mCameraOffset, 0.0f});
@@ -374,20 +375,21 @@ void ComponentList::render(const glm::mat4& parentTrans)
     }
 
     // Custom rendering.
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     // Draw selector bar.
     if (mFocused) {
         const float selectedRowHeight = getRowHeight(mEntries.at(mCursor).data);
 
         if (mOpacity == 1.0f) {
-            Renderer::drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
-                               0xFFFFFFFF, 0xFFFFFFFF, false, mOpacity, mDimming,
-                               Renderer::Blend::ONE_MINUS_DST_COLOR, Renderer::Blend::ZERO);
+            mRenderer->drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
+                                0xFFFFFFFF, 0xFFFFFFFF, false, mOpacity, mDimming,
+                                Renderer::BlendFactor::ONE_MINUS_DST_COLOR,
+                                Renderer::BlendFactor::ZERO);
 
-            Renderer::drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
-                               0x777777FF, 0x777777FF, false, mOpacity, mDimming,
-                               Renderer::Blend::ONE, Renderer::Blend::ONE);
+            mRenderer->drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
+                                0x777777FF, 0x777777FF, false, mOpacity, mDimming,
+                                Renderer::BlendFactor::ONE, Renderer::BlendFactor::ONE);
         }
 
         for (auto it = drawAfterCursor.cbegin(); it != drawAfterCursor.cend(); ++it)
@@ -395,20 +397,20 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
         // Reset matrix if one of these components changed it.
         if (drawAfterCursor.size())
-            Renderer::setMatrix(trans);
+            mRenderer->setMatrix(trans);
     }
 
     // Draw separators.
     float y = 0;
     for (unsigned int i = 0; i < mEntries.size(); ++i) {
-        Renderer::drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
-                           0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
+        mRenderer->drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
+                            0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
         y += getRowHeight(mEntries.at(i).data);
     }
 
-    Renderer::drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
-                       0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
-    Renderer::popClipRect();
+    mRenderer->drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
+                        0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
+    mRenderer->popClipRect();
 }
 
 float ComponentList::getRowHeight(const ComponentListRow& row) const

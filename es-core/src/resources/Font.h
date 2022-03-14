@@ -107,6 +107,7 @@ public:
     static size_t getTotalMemUsage();
 
 private:
+    Renderer* mRenderer;
     static FT_Library sLibrary;
     static std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
 

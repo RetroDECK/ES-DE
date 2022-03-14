@@ -159,6 +159,7 @@ private:
     // Returns true if at least one component on the stack is processing.
     bool isProcessing();
 
+    Renderer* mRenderer;
     HelpComponent* mHelp;
     ImageComponent* mBackgroundOverlay;
     float mBackgroundOverlayOpacity;

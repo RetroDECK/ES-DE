@@ -19,7 +19,8 @@
 #define BLINKTIME 1000
 
 TextEditComponent::TextEditComponent()
-    : mFocused {false}
+    : mRenderer {Renderer::getInstance()}
+    , mFocused {false}
     , mEditing {false}
     , mCursor {0}
     , mBlinkTime {0}
@@ -304,16 +305,16 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
 
     glm::ivec2 clipDim {static_cast<int>(dimScaled.x - trans[3].x),
                         static_cast<int>(dimScaled.y - trans[3].y)};
-    Renderer::pushClipRect(clipPos, clipDim);
+    mRenderer->pushClipRect(clipPos, clipDim);
 
     trans = glm::translate(trans, glm::vec3 {-mScrollOffset.x, -mScrollOffset.y, 0.0f});
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (mTextCache)
         mFont->renderTextCache(mTextCache.get());
 
     // Pop the clip early to allow the cursor to be drawn outside of the "text area".
-    Renderer::popClipRect();
+    mRenderer->popClipRect();
 
     // Draw cursor.
     glm::vec2 cursorPos;
@@ -328,15 +329,15 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
     float cursorHeight = mFont->getHeight() * 0.8f;
 
     if (!mEditing) {
-        Renderer::drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
-                           2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0xC7C7C7FF,
-                           0xC7C7C7FF);
+        mRenderer->drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+                            2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0xC7C7C7FF,
+                            0xC7C7C7FF);
     }
 
     if (mEditing && mBlinkTime < BLINKTIME / 2) {
-        Renderer::drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
-                           2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x777777FF,
-                           0x777777FF);
+        mRenderer->drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+                            2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x777777FF,
+                            0x777777FF);
     }
 }
 

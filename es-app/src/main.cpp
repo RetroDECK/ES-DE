@@ -57,6 +57,7 @@
 namespace
 {
     SDL_Event event {};
+    Renderer* renderer {nullptr};
     Window* window {nullptr};
     int lastTime {0};
 
@@ -474,7 +475,7 @@ void applicationLoop()
         window->update(deltaTime);
         window->render();
 
-        Renderer::swapBuffers();
+        renderer->swapBuffers();
         Log::flush();
 #if !defined(__EMSCRIPTEN__)
     }
@@ -601,6 +602,7 @@ int main(int argc, char* argv[])
         }
     }
 
+    renderer = Renderer::getInstance();
     window = Window::getInstance();
     ViewController::getInstance();
     CollectionSystemsManager::getInstance();

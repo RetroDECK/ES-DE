@@ -40,6 +40,7 @@ public:
 private:
     void onValueChanged();
 
+    Renderer* mRenderer;
     float mMin, mMax;
     float mValue;
     float mSingleIncrement;

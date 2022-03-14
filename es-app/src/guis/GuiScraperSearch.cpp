@@ -38,7 +38,8 @@
 #define FAILED_VERIFICATION_RETRIES 8
 
 GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
-    : mGrid {glm::ivec2 {5, 3}}
+    : mRenderer {Renderer::getInstance()}
+    , mGrid {glm::ivec2 {5, 3}}
     , mSearchType {type}
     , mScrapeCount {scrapeCount}
     , mRefinedSearch {false}
@@ -630,10 +631,10 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     renderChildren(trans);
-    Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00000009, 0x00000009);
+    mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00000009, 0x00000009);
 
     if (mBlockAccept) {
-        Renderer::setMatrix(trans);
+        mRenderer->setMatrix(trans);
         mBusyAnim.render(trans);
     }
 }

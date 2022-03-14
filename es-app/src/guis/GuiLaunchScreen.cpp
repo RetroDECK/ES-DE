@@ -15,7 +15,8 @@
 #include "utils/StringUtil.h"
 
 GuiLaunchScreen::GuiLaunchScreen()
-    : mBackground {":/graphics/frame.svg"}
+    : mRenderer {Renderer::getInstance()}
+    , mBackground {":/graphics/frame.svg"}
     , mGrid {nullptr}
     , mMarquee {nullptr}
 {
@@ -224,7 +225,7 @@ void GuiLaunchScreen::render(const glm::mat4& /*parentTrans*/)
     setScale(mScaleUp);
 
     glm::mat4 trans {Renderer::getIdentity() * getTransform()};
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     GuiComponent::renderChildren(trans);
 

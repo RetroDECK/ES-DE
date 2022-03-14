@@ -13,7 +13,8 @@
 #include "views/ViewController.h"
 
 MediaViewer::MediaViewer()
-    : mVideo {nullptr}
+    : mRenderer {Renderer::getInstance()}
+    , mVideo {nullptr}
     , mImage {nullptr}
 {
     Window::getInstance()->setMediaViewer(this);
@@ -77,11 +78,11 @@ void MediaViewer::update(int deltaTime)
 void MediaViewer::render(const glm::mat4& /*parentTrans*/)
 {
     glm::mat4 trans {Renderer::getIdentity()};
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     // Render a black background below the game media.
-    Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                       0x000000FF, 0x000000FF);
+    mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                        0x000000FF, 0x000000FF);
 
     if (mVideo && !mDisplayingImage) {
         mVideo->render(trans);
@@ -112,17 +113,17 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
         }
 
         if (shaders != 0)
-            Renderer::shaderPostprocessing(shaders, videoParameters);
+            mRenderer->shaderPostprocessing(shaders, videoParameters);
     }
     else if (mImage && mImage->hasImage() && mImage->getSize() != glm::vec2 {}) {
         mImage->render(trans);
 
         if (mCurrentImageIndex == mScreenshotIndex &&
             Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
-            Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+            mRenderer->shaderPostprocessing(Renderer::SHADER_SCANLINES);
         else if (mCurrentImageIndex == mTitleScreenIndex &&
                  Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
-            Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+            mRenderer->shaderPostprocessing(Renderer::SHADER_SCANLINES);
 
         // This is necessary so that the video loops if viewing an image when
         // the video ends.

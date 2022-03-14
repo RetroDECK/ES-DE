@@ -151,6 +151,7 @@ private:
 
     void launch(FileData* game);
 
+    Renderer* mRenderer;
     std::string mNoGamesErrorMessage;
     std::string mRomDirectory;
     GuiMsgBox* mNoGamesMessageBox;

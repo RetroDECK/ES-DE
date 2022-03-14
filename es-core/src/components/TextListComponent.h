@@ -135,6 +135,7 @@ protected:
     void onCursorChanged(const CursorState& state) override;
 
 private:
+    Renderer* mRenderer;
     int mLoopOffset;
     int mLoopOffset2;
     int mLoopTime;
@@ -164,6 +165,7 @@ private:
 
 template <typename T> TextListComponent<T>::TextListComponent()
 {
+    mRenderer = Renderer::getInstance();
     mLoopOffset = 0;
     mLoopOffset2 = 0;
     mLoopTime = 0;
@@ -232,17 +234,17 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             mSelectorImage.render(trans);
         }
         else {
-            Renderer::setMatrix(trans);
-            Renderer::drawRect(0.0f, (mCursor - startEntry) * entrySize + mSelectorOffsetY, mSize.x,
-                               mSelectorHeight, mSelectorColor, mSelectorColorEnd,
-                               mSelectorColorGradientHorizontal);
+            mRenderer->setMatrix(trans);
+            mRenderer->drawRect(0.0f, (mCursor - startEntry) * entrySize + mSelectorOffsetY,
+                                mSize.x, mSelectorHeight, mSelectorColor, mSelectorColorEnd,
+                                mSelectorColorGradientHorizontal);
         }
     }
 
     if (Settings::getInstance()->getBool("DebugText")) {
-        Renderer::drawRect(mHorizontalMargin, 0.0f, mSize.x - mHorizontalMargin * 2.0f, mSize.y,
-                           0x00000033, 0x00000033);
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
+        mRenderer->drawRect(mHorizontalMargin, 0.0f, mSize.x - mHorizontalMargin * 2.0f, mSize.y,
+                            0x00000033, 0x00000033);
+        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
     }
 
     // Clip to inside margins.
@@ -250,7 +252,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
-    Renderer::pushClipRect(
+    mRenderer->pushClipRect(
         glm::ivec2 {static_cast<int>(std::round(trans[3].x + mHorizontalMargin)),
                     static_cast<int>(std::round(trans[3].y))},
         glm::ivec2 {static_cast<int>(std::round(dim.x - mHorizontalMargin * 2.0f)),
@@ -323,7 +325,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         if (mLoopOffset == 0 && mLoopOffset2 == 0)
             mLoopScroll = false;
 
-        Renderer::setMatrix(drawTrans);
+        mRenderer->setMatrix(drawTrans);
         font->renderTextCache(entry.data.textCache.get());
 
         // Render currently selected row again if text is moved far enough for it to repeat.
@@ -332,12 +334,12 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             drawTrans = trans;
             drawTrans = glm::translate(
                 drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f});
-            Renderer::setMatrix(drawTrans);
+            mRenderer->setMatrix(drawTrans);
             font->renderTextCache(entry.data.textCache.get());
         }
         y += entrySize;
     }
-    Renderer::popClipRect();
+    mRenderer->popClipRect();
     List::listRenderTitleOverlay(trans);
     GuiComponent::renderChildren(trans);
 }

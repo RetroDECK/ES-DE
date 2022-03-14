@@ -16,7 +16,8 @@
 #include "utils/StringUtil.h"
 
 DateTimeEditComponent::DateTimeEditComponent(bool alignRight, DisplayMode dispMode)
-    : mEditing {false}
+    : mRenderer {Renderer::getInstance()}
+    , mEditing {false}
     , mEditIndex {0}
     , mDisplayMode {dispMode}
     , mKeyRepeatDir {0}
@@ -181,16 +182,16 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
             off.x += referenceSize - mTextCache->metrics.size.x;
         trans = glm::translate(trans, off);
 
-        Renderer::setMatrix(trans);
+        mRenderer->setMatrix(trans);
 
         if (Settings::getInstance()->getBool("DebugText")) {
-            Renderer::setMatrix(trans);
+            mRenderer->setMatrix(trans);
             if (mTextCache->metrics.size.x > 0.0f) {
-                Renderer::drawRect(0.0f, 0.0f - off.y, mSize.x - off.x, mSize.y, 0x0000FF33,
-                                   0x0000FF33);
+                mRenderer->drawRect(0.0f, 0.0f - off.y, mSize.x - off.x, mSize.y, 0x0000FF33,
+                                    0x0000FF33);
             }
-            Renderer::drawRect(0.0f, 0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
-                               0x00000033, 0x00000033);
+            mRenderer->drawRect(0.0f, 0.0f, mTextCache->metrics.size.x, mTextCache->metrics.size.y,
+                                0x00000033, 0x00000033);
         }
 
         mTextCache->setColor((mColor & 0xFFFFFF00) | static_cast<int>(getOpacity() * 255.0f));
@@ -198,9 +199,9 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
 
         if (mEditing && mTime != 0) {
             if (mEditIndex >= 0 && static_cast<unsigned int>(mEditIndex) < mCursorBoxes.size())
-                Renderer::drawRect(mCursorBoxes[mEditIndex][0], mCursorBoxes[mEditIndex][1],
-                                   mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
-                                   0x00000022, 0x00000022);
+                mRenderer->drawRect(mCursorBoxes[mEditIndex][0], mCursorBoxes[mEditIndex][1],
+                                    mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
+                                    0x00000022, 0x00000022);
         }
     }
 }

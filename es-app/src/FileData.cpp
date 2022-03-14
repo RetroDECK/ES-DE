@@ -1163,7 +1163,7 @@ void FileData::launchGame()
     // flickering and to avoid showing the game launch message briefly when returning
     // from the game.
     if (!runInBackground)
-        Renderer::swapBuffers();
+        Renderer::getInstance()->swapBuffers();
 
     Scripting::fireEvent("game-start", romPath, getSourceFileData()->metadata.get("name"),
                          getSourceFileData()->getSystem()->getName(),

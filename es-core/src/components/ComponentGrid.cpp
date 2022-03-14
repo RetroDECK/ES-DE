@@ -13,7 +13,8 @@
 using namespace GridFlags;
 
 ComponentGrid::ComponentGrid(const glm::ivec2& gridDimensions)
-    : mGridSize {gridDimensions}
+    : mRenderer {Renderer::getInstance()}
+    , mGridSize {gridDimensions}
     , mCursor {0, 0}
 {
     assert(gridDimensions.x > 0 && gridDimensions.y > 0);
@@ -429,9 +430,9 @@ void ComponentGrid::render(const glm::mat4& parentTrans)
 
     // Draw cell separators.
     for (size_t i = 0; i < mSeparators.size(); ++i) {
-        Renderer::setMatrix(trans);
-        Renderer::drawRect(mSeparators[i][0], mSeparators[i][1], mSeparators[i][2],
-                           mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);
+        mRenderer->setMatrix(trans);
+        mRenderer->drawRect(mSeparators[i][0], mSeparators[i][1], mSeparators[i][2],
+                            mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);
     }
 }
 

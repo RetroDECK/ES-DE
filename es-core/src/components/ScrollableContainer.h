@@ -18,6 +18,7 @@
 #define AUTO_SCROLL_SPEED 4.0f
 
 #include "GuiComponent.h"
+#include "renderers/Renderer.h"
 
 class ScrollableContainer : public GuiComponent
 {
@@ -42,6 +43,7 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
 private:
+    Renderer* mRenderer;
     glm::vec2 mScrollPos;
     glm::vec2 mScrollDir;
 

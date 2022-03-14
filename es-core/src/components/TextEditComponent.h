@@ -56,6 +56,7 @@ private:
     glm::vec2 getTextAreaPos() const;
     glm::vec2 getTextAreaSize() const;
 
+    Renderer* mRenderer;
     std::string mText;
     std::string mTextOrig;
     bool mFocused;

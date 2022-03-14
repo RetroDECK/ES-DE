@@ -24,6 +24,8 @@
 #include "scrapers/Scraper.h"
 #include "views/ViewController.h"
 
+#include <SDL2/SDL.h>
+
 GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     : mMenu {"OPTIONS"}
     , mSystem {system}

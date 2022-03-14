@@ -23,7 +23,8 @@
 #define CLOCK_BACKGROUND_CREATION false
 
 Window::Window() noexcept
-    : mScreensaver {nullptr}
+    : mRenderer {Renderer::getInstance()}
+    , mScreensaver {nullptr}
     , mMediaViewer {nullptr}
     , mLaunchScreen {nullptr}
     , mInfoPopup {nullptr}
@@ -102,7 +103,7 @@ GuiComponent* Window::peekGui()
 
 bool Window::init()
 {
-    if (!Renderer::init()) {
+    if (!mRenderer->init()) {
         LOG(LogError) << "Renderer failed to initialize.";
         return false;
     }
@@ -146,7 +147,7 @@ void Window::deinit()
 
     InputManager::getInstance().deinit();
     ResourceManager::getInstance().unloadAll();
-    Renderer::deinit();
+    mRenderer->deinit();
 }
 
 void Window::input(InputConfig* config, Input input)
@@ -476,16 +477,16 @@ void Window::render()
                     // Also dim the background slightly.
                     backgroundParameters.dimming = 0.60f;
 
-                    Renderer::shaderPostprocessing(Renderer::SHADER_CORE |
-                                                       Renderer::SHADER_BLUR_HORIZONTAL |
-                                                       Renderer::SHADER_BLUR_VERTICAL,
-                                                   backgroundParameters, &processedTexture[0]);
+                    mRenderer->shaderPostprocessing(Renderer::SHADER_CORE |
+                                                        Renderer::SHADER_BLUR_HORIZONTAL |
+                                                        Renderer::SHADER_BLUR_VERTICAL,
+                                                    backgroundParameters, &processedTexture[0]);
                 }
                 else {
                     // Dim the background slightly.
                     backgroundParameters.dimming = 0.60f;
-                    Renderer::shaderPostprocessing(Renderer::SHADER_CORE, backgroundParameters,
-                                                   &processedTexture[0]);
+                    mRenderer->shaderPostprocessing(Renderer::SHADER_CORE, backgroundParameters,
+                                                    &processedTexture[0]);
                 }
 
                 mPostprocessedBackground->initFromPixels(
@@ -546,10 +547,10 @@ void Window::render()
 
     // Render the quick list scrolling overlay, which is triggered in IList.
     if (mListScrollOpacity != 0.0f) {
-        Renderer::setMatrix(Renderer::getIdentity());
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                           0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f),
-                           0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f));
+        mRenderer->setMatrix(Renderer::getIdentity());
+        mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                            0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f),
+                            0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f));
 
         glm::vec2 offset {mListScrollFont->sizeText(mListScrollText)};
         offset.x = (Renderer::getScreenWidth() - offset.x) * 0.5f;
@@ -604,7 +605,7 @@ void Window::render()
         mLaunchScreen->render(trans);
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
-        Renderer::setMatrix(Renderer::getIdentity());
+        mRenderer->setMatrix(Renderer::getIdentity());
         mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
     }
 }
@@ -612,9 +613,9 @@ void Window::render()
 void Window::renderLoadingScreen(std::string text)
 {
     glm::mat4 trans {Renderer::getIdentity()};
-    Renderer::setMatrix(trans);
-    Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                       0x000000FF, 0x000000FF);
+    mRenderer->setMatrix(trans);
+    mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                        0x000000FF, 0x000000FF);
 
     ImageComponent splash(true);
     splash.setImage(":/graphics/splash.svg");
@@ -629,11 +630,11 @@ void Window::renderLoadingScreen(std::string text)
     float x {std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f)};
     float y {std::round(Renderer::getScreenHeight() * 0.835f)};
     trans = glm::translate(trans, glm::vec3 {x, y, 0.0f});
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
     font->renderTextCache(cache);
     delete cache;
 
-    Renderer::swapBuffers();
+    mRenderer->swapBuffers();
 }
 
 void Window::renderListScrollOverlay(const float opacity, const std::string& text)

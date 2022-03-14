@@ -102,6 +102,7 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
+    Renderer* mRenderer;
     glm::vec2 mTargetSize;
 
     bool mFlipX;

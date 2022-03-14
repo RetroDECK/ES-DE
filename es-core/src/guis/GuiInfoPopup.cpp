@@ -15,7 +15,8 @@
 #include <SDL2/SDL_timer.h>
 
 GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
-    : mMessage {message}
+    : mRenderer {Renderer::getInstance()}
+    , mMessage {message}
     , mDuration {duration}
     , mAlpha {1.0f}
     , mRunning {true}
@@ -78,7 +79,7 @@ void GuiInfoPopup::render(const glm::mat4& /*parentTrans*/)
     glm::mat4 trans {getTransform() * Renderer::getIdentity()};
     if (mRunning && updateState()) {
         // If we're still supposed to be rendering it.
-        Renderer::setMatrix(trans);
+        mRenderer->setMatrix(trans);
         renderChildren(trans);
     }
 }

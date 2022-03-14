@@ -3,123 +3,25 @@
 //  EmulationStation Desktop Edition
 //  Renderer.h
 //
-//  General rendering functions.
+//  Generic rendering functions.
 //
 
 #ifndef ES_CORE_RENDERER_RENDERER_H
 #define ES_CORE_RENDERER_RENDERER_H
 
 #include "Log.h"
-#include "Shader_GL21.h"
 #include "utils/MathUtil.h"
 
+#include <stack>
 #include <string>
 #include <vector>
 
 struct SDL_Window;
+class Shader;
 
-namespace Renderer
+class Renderer
 {
-    // clang-format off
-    const unsigned int SHADER_CORE            {0x00000001};
-    const unsigned int SHADER_BLUR_HORIZONTAL {0x00000002};
-    const unsigned int SHADER_BLUR_VERTICAL   {0x00000004};
-    const unsigned int SHADER_SCANLINES       {0x00000008};
-    // clang-format on
-
-    struct postProcessingParams {
-        float opacity;
-        float saturation;
-        float dimming;
-        bool convertBGRAToRGBA;
-        unsigned int blurPasses;
-        unsigned int shaders;
-
-        postProcessingParams()
-            : opacity {1.0f}
-            , saturation {1.0f}
-            , dimming {1.0f}
-            , convertBGRAToRGBA {false}
-            , blurPasses {1}
-            , shaders {0}
-        {
-        }
-    };
-
-    static std::vector<Shader*> sShaderProgramVector;
-    static GLuint shaderFBO1 {0};
-    static GLuint shaderFBO2 {0};
-    static GLuint vertexBuffer1 {0};
-    static GLuint vertexBuffer2 {0};
-    // This is simply to get rid of some GCC false positive -Wunused-variable compiler warnings.
-    static GLuint shaderFBODummy1 {shaderFBO1};
-    static GLuint shaderFBODummy2 {shaderFBO2};
-    static GLuint vertexBufferDummy1 {vertexBuffer1};
-    static GLuint vertexBufferDummy2 {vertexBuffer2};
-
-    static constexpr glm::mat4 getIdentity() { return glm::mat4 {1.0f}; }
-    static inline glm::mat4 mTrans {getIdentity()};
-
-#if !defined(NDEBUG)
-#define GL_CHECK_ERROR(Function) (Function, _GLCheckError(#Function))
-
-    static inline void _GLCheckError(const std::string& _funcName)
-    {
-        const GLenum errorCode = glGetError();
-
-        if (errorCode != GL_NO_ERROR) {
-#if defined(USE_OPENGLES)
-            LOG(LogError) << "OpenGL ES error: " << _funcName << " failed with error code: 0x"
-                          << std::hex << errorCode;
-#else
-            LOG(LogError) << "OpenGL error: " << _funcName << " failed with error code: 0x"
-                          << std::hex << errorCode;
-#endif
-        }
-    }
-#else
-#define GL_CHECK_ERROR(Function) (Function)
-#endif
-
-    namespace Blend
-    {
-        enum Factor {
-            ZERO,
-            ONE,
-            SRC_COLOR,
-            ONE_MINUS_SRC_COLOR,
-            SRC_ALPHA,
-            ONE_MINUS_SRC_ALPHA,
-            DST_COLOR,
-            ONE_MINUS_DST_COLOR,
-            DST_ALPHA,
-            ONE_MINUS_DST_ALPHA
-        };
-    }
-
-    namespace Texture
-    {
-        enum Type {
-            RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-            BGRA,
-            RED
-        };
-    }
-
-    struct Rect {
-        Rect(const int xValue, const int yValue, const int wValue, const int hValue)
-            : x(xValue)
-            , y(yValue)
-            , w(wValue)
-            , h(hValue)
-        {
-        }
-        int x;
-        int y;
-        int w;
-        int h;
-    };
-
+public:
     struct Vertex {
         glm::vec2 position;
         glm::vec2 texture;
@@ -142,6 +44,7 @@ namespace Renderer
             , shaders {0}
         {
         }
+
         Vertex(const glm::vec2& position, const glm::vec2& textureCoord, const unsigned int color)
             : position(position)
             , texture(textureCoord)
@@ -157,10 +60,71 @@ namespace Renderer
         }
     };
 
+    enum class BlendFactor {
+        ZERO,
+        ONE,
+        SRC_COLOR,
+        ONE_MINUS_SRC_COLOR,
+        SRC_ALPHA,
+        ONE_MINUS_SRC_ALPHA,
+        DST_COLOR,
+        ONE_MINUS_DST_COLOR,
+        DST_ALPHA,
+        ONE_MINUS_DST_ALPHA
+    };
+
+    enum class TextureType {
+        RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        BGRA,
+        RED
+    };
+
+    struct postProcessingParams {
+        float opacity;
+        float saturation;
+        float dimming;
+        bool convertBGRAToRGBA;
+        unsigned int blurPasses;
+        unsigned int shaders;
+
+        postProcessingParams()
+            : opacity {1.0f}
+            , saturation {1.0f}
+            , dimming {1.0f}
+            , convertBGRAToRGBA {false}
+            , blurPasses {1}
+            , shaders {0}
+        {
+        }
+    };
+
+    struct Rect {
+        Rect(const int xValue, const int yValue, const int wValue, const int hValue)
+            : x(xValue)
+            , y(yValue)
+            , w(wValue)
+            , h(hValue)
+        {
+        }
+        int x;
+        int y;
+        int w;
+        int h;
+    };
+
+    static Renderer* getInstance();
+
+    void setIcon();
+    bool createWindow();
+    void destroyWindow();
     bool init();
     void deinit();
+
+    virtual bool loadShaders() = 0;
+
     void pushClipRect(const glm::ivec2& pos, const glm::ivec2& size);
     void popClipRect();
+
     void drawRect(const float x,
                   const float y,
                   const float w,
@@ -170,56 +134,87 @@ namespace Renderer
                   bool horizontalGradient = false,
                   const float opacity = 1.0,
                   const float dimming = 1.0,
-                  const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
-                  const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
-    SDL_Window* getSDLWindow();
-    const float getWindowWidth();
-    const float getWindowHeight();
-    const float getScreenWidth();
-    const float getScreenHeight();
-    const float getScreenOffsetX();
-    const float getScreenOffsetY();
-    const bool getScreenRotated();
-    const float getScreenWidthModifier();
-    const float getScreenHeightModifier();
-    const float getScreenAspectRatio();
+                  const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,
+                  const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA);
 
-    Shader* getShaderProgram(unsigned int shaderID);
-    const glm::mat4& getProjectionMatrix();
-    const glm::mat4& getProjectionMatrixNormal();
-    void shaderPostprocessing(
+    const glm::mat4& getProjectionMatrix()
+    {
+        if (mScreenRotated)
+            return mProjectionMatrixRotated;
+        else
+            return mProjectionMatrix;
+    }
+    const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrix; }
+    SDL_Window* getSDLWindow() { return mSDLWindow; }
+    const bool getScreenRotated() { return mScreenRotated; }
+    const float getWindowWidth() { return static_cast<float>(mWindowWidth); }
+    const float getWindowHeight() { return static_cast<float>(mWindowHeight); }
+    static const float getScreenWidth() { return static_cast<float>(sScreenWidth); }
+    static const float getScreenHeight() { return static_cast<float>(sScreenHeight); }
+    static const float getScreenWidthModifier() { return sScreenWidthModifier; }
+    static const float getScreenHeightModifier() { return sScreenHeightModifier; }
+    static const float getScreenAspectRatio() { return sScreenAspectRatio; }
+
+    static constexpr glm::mat4 getIdentity() { return glm::mat4 {1.0f}; }
+    glm::mat4 mTrans {getIdentity()};
+
+    virtual void shaderPostprocessing(
         const unsigned int shaders,
         const Renderer::postProcessingParams& parameters = postProcessingParams(),
-        unsigned char* textureRGBA = nullptr);
+        unsigned char* textureRGBA = nullptr) = 0;
 
-    void setupWindow();
-    bool createContext();
-    void destroyContext();
-    unsigned int createTexture(const Texture::Type type,
-                               const bool linearMinify,
-                               const bool linearMagnify,
-                               const bool repeat,
+    virtual void setup() = 0;
+    virtual bool createContext() = 0;
+    virtual void destroyContext() = 0;
+    virtual unsigned int createTexture(const TextureType type,
+                                       const bool linearMinify,
+                                       const bool linearMagnify,
+                                       const bool repeat,
+                                       const unsigned int width,
+                                       const unsigned int height,
+                                       void* data) = 0;
+    virtual void destroyTexture(const unsigned int texture) = 0;
+    virtual void updateTexture(const unsigned int texture,
+                               const TextureType type,
+                               const unsigned int x,
+                               const unsigned int y,
                                const unsigned int width,
                                const unsigned int height,
-                               void* data);
-    void destroyTexture(const unsigned int texture);
-    void updateTexture(const unsigned int texture,
-                       const Texture::Type type,
-                       const unsigned int x,
-                       const unsigned int y,
-                       const unsigned int width,
-                       const unsigned int height,
-                       void* data);
-    void bindTexture(const unsigned int texture);
-    void drawTriangleStrips(const Vertex* vertices,
-                            const unsigned int numVertices,
-                            const Blend::Factor srcBlendFactor = Blend::SRC_ALPHA,
-                            const Blend::Factor dstBlendFactor = Blend::ONE_MINUS_SRC_ALPHA);
-    void setMatrix(const glm::mat4& matrix);
-    void setScissor(const Rect& scissor);
-    void setSwapInterval();
-    void swapBuffers();
+                               void* data) = 0;
+    virtual void bindTexture(const unsigned int texture) = 0;
+    virtual void drawTriangleStrips(
+        const Vertex* vertices,
+        const unsigned int numVertices,
+        const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,
+        const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA) = 0;
+    virtual void setMatrix(const glm::mat4& matrix) = 0;
+    virtual void setScissor(const Rect& scissor) = 0;
+    virtual void setSwapInterval() = 0;
+    virtual void swapBuffers() = 0;
 
-} // namespace Renderer
+    // clang-format off
+    static constexpr unsigned int SHADER_CORE            {0x00000001};
+    static constexpr unsigned int SHADER_BLUR_HORIZONTAL {0x00000002};
+    static constexpr unsigned int SHADER_BLUR_VERTICAL   {0x00000004};
+    static constexpr unsigned int SHADER_SCANLINES       {0x00000008};
+    // clang-format on
+
+    std::stack<Rect> mClipStack;
+    SDL_Window* mSDLWindow {nullptr};
+    glm::mat4 mProjectionMatrix {};
+    glm::mat4 mProjectionMatrixRotated {};
+    int mWindowWidth {0};
+    int mWindowHeight {0};
+    static inline int sScreenWidth {0};
+    static inline int sScreenHeight {0};
+    int mScreenOffsetX {0};
+    int mScreenOffsetY {0};
+    bool mScreenRotated {0};
+    bool mInitialCursorState {1};
+    // Screen resolution modifiers relative to the 1920x1080 reference.
+    static inline float sScreenHeightModifier {0.0f};
+    static inline float sScreenWidthModifier {0.0f};
+    static inline float sScreenAspectRatio {0.0f};
+};
 
 #endif // ES_CORE_RENDERER_RENDERER_H

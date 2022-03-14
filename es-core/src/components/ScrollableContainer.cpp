@@ -15,7 +15,8 @@
 #include "resources/Font.h"
 
 ScrollableContainer::ScrollableContainer()
-    : mScrollPos {0.0f, 0.0f}
+    : mRenderer {Renderer::getInstance()}
+    , mScrollPos {0.0f, 0.0f}
     , mScrollDir {0.0f, 0.0f}
     , mClipSpacing {0.0f}
     , mAutoScrollDelay {0}
@@ -233,11 +234,11 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
     clipPos.y += static_cast<int>(mClipSpacing);
     clipDim.y -= static_cast<int>(mClipSpacing);
 
-    Renderer::pushClipRect(clipPos, clipDim);
+    mRenderer->pushClipRect(clipPos, clipDim);
 
     trans = glm::translate(trans, -glm::vec3 {mScrollPos.x, mScrollPos.y, 0.0f});
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     GuiComponent::renderChildren(trans);
-    Renderer::popClipRect();
+    mRenderer->popClipRect();
 }

@@ -10,6 +10,7 @@
 #define ES_APP_GUIS_GUI_INFO_POPUP_H
 
 #include "GuiComponent.h"
+#include "renderers/Renderer.h"
 
 class ComponentGrid;
 class NinePatchComponent;
@@ -27,6 +28,7 @@ public:
 private:
     bool updateState();
 
+    Renderer* mRenderer;
     ComponentGrid* mGrid;
     NinePatchComponent* mFrame;
 

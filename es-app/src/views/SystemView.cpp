@@ -22,7 +22,8 @@
 #endif
 
 SystemView::SystemView()
-    : mCamOffset {0.0f}
+    : mRenderer {Renderer::getInstance()}
+    , mCamOffset {0.0f}
     , mFadeOpacity {0.0f}
     , mPreviousScrollVelocity {0}
     , mUpdatedGameCount {false}
@@ -1048,7 +1049,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                 elementTrans = glm::translate(elementTrans,
                                               glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
 
-            Renderer::pushClipRect(
+            mRenderer->pushClipRect(
                 glm::ivec2 {static_cast<int>(glm::round(elementTrans[3].x)),
                             static_cast<int>(glm::round(elementTrans[3].y))},
                 glm::ivec2 {static_cast<int>(mSize.x), static_cast<int>(mSize.y)});
@@ -1081,7 +1082,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                 mLegacySystemInfo->render(elementTrans);
             }
 
-            Renderer::popClipRect();
+            mRenderer->popClipRect();
         }
     }
 }

@@ -30,7 +30,8 @@
 #define FADE_TIME 300.0f
 
 Screensaver::Screensaver()
-    : mWindow {Window::getInstance()}
+    : mRenderer {Renderer::getInstance()}
+    , mWindow {Window::getInstance()}
     , mState {STATE_INACTIVE}
     , mImageScreensaver {nullptr}
     , mVideoScreensaver {nullptr}
@@ -238,12 +239,12 @@ void Screensaver::renderScreensaver()
 {
     std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
     glm::mat4 trans {Renderer::getIdentity()};
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (mVideoScreensaver && screensaverType == "video") {
         // Render a black background below the video.
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                           0x000000FF, 0x000000FF);
+        mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                            0x000000FF, 0x000000FF);
 
         // Only render the video if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO)
@@ -251,8 +252,8 @@ void Screensaver::renderScreensaver()
     }
     else if (mImageScreensaver && screensaverType == "slideshow") {
         // Render a black background below the image.
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                           0x000000FF, 0x000000FF);
+        mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                            0x000000FF, 0x000000FF);
 
         // Only render the image if the state requires it.
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
@@ -268,11 +269,11 @@ void Screensaver::renderScreensaver()
         if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
             if (mHasMediaFiles) {
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
-                    Renderer::shaderPostprocessing(Renderer::SHADER_SCANLINES);
+                    mRenderer->shaderPostprocessing(Renderer::SHADER_SCANLINES);
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
                     mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
-                        Renderer::drawRect(
+                        mRenderer->drawRect(
                             mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
                             mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
                             0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
@@ -319,11 +320,11 @@ void Screensaver::renderScreensaver()
                 }
 
                 if (shaders != 0)
-                    Renderer::shaderPostprocessing(shaders, videoParameters);
+                    mRenderer->shaderPostprocessing(shaders, videoParameters);
 
                 if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
-                        Renderer::drawRect(
+                        mRenderer->drawRect(
                             mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
                             mGameOverlayRectangleCoords[2], mGameOverlayRectangleCoords[3],
                             0x00000000 | mRectangleFadeIn, 0x00000000 | mRectangleFadeIn);
@@ -347,7 +348,7 @@ void Screensaver::renderScreensaver()
             Renderer::postProcessingParams dimParameters;
             dimParameters.dimming = mDimValue;
             dimParameters.saturation = mSaturationAmount;
-            Renderer::shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
+            mRenderer->shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
             if (mDimValue > 0.63)
                 mDimValue = glm::clamp(mDimValue - 0.015f, 0.68f, 1.0f);
             if (mSaturationAmount > 0.0)
@@ -356,7 +357,7 @@ void Screensaver::renderScreensaver()
         else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
             Renderer::postProcessingParams blackParameters;
             blackParameters.dimming = mDimValue;
-            Renderer::shaderPostprocessing(Renderer::SHADER_CORE, blackParameters);
+            mRenderer->shaderPostprocessing(Renderer::SHADER_CORE, blackParameters);
             if (mDimValue > 0.0)
                 mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
         }
@@ -567,8 +568,8 @@ void Screensaver::generateOverlayInfo()
     if (mGameName == "" || mSystemName == "")
         return;
 
-    float posX {Renderer::getWindowWidth() * 0.023f};
-    float posY {Renderer::getWindowHeight() * 0.02f};
+    float posX {mRenderer->getWindowWidth() * 0.023f};
+    float posY {mRenderer->getWindowHeight() * 0.02f};
 
     std::string favoriteChar;
     if (mCurrentGame && mCurrentGame->getFavorite())
@@ -595,7 +596,7 @@ void Screensaver::generateOverlayInfo()
     else
         textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x;
 
-    float marginX {Renderer::getWindowWidth() * 0.01f};
+    float marginX {mRenderer->getWindowWidth() * 0.01f};
 
     mGameOverlayRectangleCoords.clear();
     mGameOverlayRectangleCoords.push_back(posX - marginX);

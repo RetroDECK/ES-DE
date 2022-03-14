@@ -31,7 +31,8 @@
 #include "views/SystemView.h"
 
 ViewController::ViewController() noexcept
-    : mNoGamesMessageBox {nullptr}
+    : mRenderer {Renderer::getInstance()}
+    , mNoGamesMessageBox {nullptr}
     , mCurrentView {nullptr}
     , mPreviousView {nullptr}
     , mSkipView {nullptr}
@@ -201,7 +202,7 @@ void ViewController::invalidAlternativeEmulatorDialog()
 void ViewController::goToStart(bool playTransition)
 {
     // Needed to avoid segfaults during emergency shutdown.
-    if (Renderer::getSDLWindow() == nullptr)
+    if (mRenderer->getSDLWindow() == nullptr)
         return;
 
 #if defined(__APPLE__)
@@ -287,7 +288,7 @@ void ViewController::cancelViewTransitions()
 
 void ViewController::stopScrolling()
 {
-    if (Renderer::getSDLWindow() == nullptr)
+    if (mRenderer->getSDLWindow() == nullptr)
         return;
 
     mSystemListView->stopScrolling();
@@ -905,9 +906,9 @@ void ViewController::render(const glm::mat4& parentTrans)
     // Fade out.
     if (mFadeOpacity) {
         unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255);
-        Renderer::setMatrix(parentTrans);
-        Renderer::drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
-                           fadeColor, fadeColor);
+        mRenderer->setMatrix(parentTrans);
+        mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+                            fadeColor, fadeColor);
     }
 }
 
@@ -999,7 +1000,7 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
 
 void ViewController::reloadAll()
 {
-    if (Renderer::getSDLWindow() == nullptr)
+    if (mRenderer->getSDLWindow() == nullptr)
         return;
 
     cancelViewTransitions();

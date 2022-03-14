@@ -15,6 +15,8 @@
 #include "Window.h"
 #include "resources/TextureResource.h"
 
+#include <SDL2/SDL.h>
+
 #include <algorithm>
 #include <iomanip>
 
@@ -24,7 +26,8 @@ std::vector<std::string> VideoFFmpegComponent::sHWDecodedVideos;
 std::vector<std::string> VideoFFmpegComponent::sSWDecodedVideos;
 
 VideoFFmpegComponent::VideoFFmpegComponent()
-    : mRectangleOffset {0.0f, 0.0f}
+    : mRenderer {Renderer::getInstance()}
+    , mRectangleOffset {0.0f, 0.0f}
     , mFrameProcessingThread {nullptr}
     , mFormatContext {nullptr}
     , mVideoStream {nullptr}
@@ -133,7 +136,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
     if (mIsPlaying && mFormatContext) {
         Renderer::Vertex vertices[4];
-        Renderer::setMatrix(parentTrans);
+        mRenderer->setMatrix(parentTrans);
 
         unsigned int rectColor {0x000000FF};
 
@@ -142,9 +145,9 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
         // Render the black rectangle behind the video.
         if (mVideoRectangleCoords.size() == 4) {
-            Renderer::drawRect(mVideoRectangleCoords[0], mVideoRectangleCoords[1],
-                               mVideoRectangleCoords[2], mVideoRectangleCoords[3], // Line break.
-                               rectColor, rectColor);
+            mRenderer->drawRect(mVideoRectangleCoords[0], mVideoRectangleCoords[1],
+                                mVideoRectangleCoords[2], mVideoRectangleCoords[3], // Line break.
+                                rectColor, rectColor);
         }
 
         // This is needed to avoid a slight gap before the video starts playing.
@@ -219,8 +222,8 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         }
 
         // Render it.
-        Renderer::setMatrix(trans);
-        Renderer::drawTriangleStrips(&vertices[0], 4);
+        mRenderer->setMatrix(trans);
+        mRenderer->drawTriangleStrips(&vertices[0], 4);
     }
     else {
         if (mVisible)

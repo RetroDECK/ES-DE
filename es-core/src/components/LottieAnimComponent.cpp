@@ -16,7 +16,8 @@
 #include "resources/ResourceManager.h"
 
 LottieAnimComponent::LottieAnimComponent()
-    : mCacheFrames {true}
+    : mRenderer {Renderer::getInstance()}
+    , mCacheFrames {true}
     , mMaxCacheSize {0}
     , mCacheSize {0}
     , mFrameSize {0}
@@ -53,8 +54,8 @@ LottieAnimComponent::LottieAnimComponent()
 
     // Set component defaults.
     setOrigin(0.5f, 0.5f);
-    setSize(Renderer::getScreenWidth() * 0.2f, Renderer::getScreenHeight() * 0.2f);
-    setPosition(Renderer::getScreenWidth() * 0.3f, Renderer::getScreenHeight() * 0.3f);
+    setSize(mRenderer->getScreenWidth() * 0.2f, mRenderer->getScreenHeight() * 0.2f);
+    setPosition(mRenderer->getScreenWidth() * 0.3f, mRenderer->getScreenHeight() * 0.3f);
     setDefaultZIndex(10.0f);
     setZIndex(10.0f);
 }
@@ -455,10 +456,10 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         }
     }
 
-    Renderer::setMatrix(trans);
+    mRenderer->setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugImage"))
-        Renderer::drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
 
     if (mTexture->getSize().x != 0.0f) {
         mTexture->bind();
@@ -482,6 +483,6 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         vertices->convertBGRAToRGBA = true;
 
         // Render it.
-        Renderer::drawTriangleStrips(&vertices[0], 4);
+        mRenderer->drawTriangleStrips(&vertices[0], 4);
     }
 }

@@ -36,6 +36,7 @@ private:
     void showNext() override;
     void showPrevious() override;
 
+    Renderer* mRenderer;
     FileData* mGame;
 
     bool mHasVideo;

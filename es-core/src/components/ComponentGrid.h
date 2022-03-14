@@ -128,6 +128,7 @@ private:
     const GridEntry* getCellAt(int x, int y) const;
     const GridEntry* getCellAt(const glm::ivec2& pos) const { return getCellAt(pos.x, pos.y); }
 
+    Renderer* mRenderer;
     std::vector<std::vector<float>> mSeparators;
     glm::ivec2 mGridSize;
     std::vector<GridEntry> mCells;
