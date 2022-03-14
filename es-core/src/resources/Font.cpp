@@ -397,7 +397,7 @@ void Font::renderTextCache(TextCache* cache)
         assert(*it->textureIdPtr != 0);
 
         auto vertexList = *it;
-        it->verts[0].font = true;
+        it->verts[0].shaderFlags = Renderer::ShaderFlags::FONT_TEXTURE;
 
         mRenderer->bindTexture(*it->textureIdPtr);
         mRenderer->drawTriangleStrips(&it->verts[0],

@@ -217,7 +217,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             vertices[0].opacity = mFadeIn * mThemeOpacity;
             if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoScanlines")) ||
                 (!mLegacyTheme && mRenderScanlines)) {
-                vertices[0].shaders = Renderer::SHADER_SCANLINES;
+                vertices[0].shaders = Renderer::Shader::SCANLINES;
             }
         }
 

@@ -269,7 +269,7 @@ void Screensaver::renderScreensaver()
         if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
             if (mHasMediaFiles) {
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
-                    mRenderer->shaderPostprocessing(Renderer::SHADER_SCANLINES);
+                    mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
                     mGameOverlay) {
                     if (mGameOverlayRectangleCoords.size() == 4) {
@@ -297,9 +297,9 @@ void Screensaver::renderScreensaver()
                 Renderer::postProcessingParams videoParameters;
                 unsigned int shaders {0};
                 if (Settings::getInstance()->getBool("ScreensaverVideoScanlines"))
-                    shaders = Renderer::SHADER_SCANLINES;
+                    shaders = Renderer::Shader::SCANLINES;
                 if (Settings::getInstance()->getBool("ScreensaverVideoBlur")) {
-                    shaders |= Renderer::SHADER_BLUR_HORIZONTAL;
+                    shaders |= Renderer::Shader::BLUR_HORIZONTAL;
                     float heightModifier = Renderer::getScreenHeightModifier();
                     // clang-format off
                     if (heightModifier < 1)
@@ -348,7 +348,7 @@ void Screensaver::renderScreensaver()
             Renderer::postProcessingParams dimParameters;
             dimParameters.dimming = mDimValue;
             dimParameters.saturation = mSaturationAmount;
-            mRenderer->shaderPostprocessing(Renderer::SHADER_CORE, dimParameters);
+            mRenderer->shaderPostprocessing(Renderer::Shader::CORE, dimParameters);
             if (mDimValue > 0.63)
                 mDimValue = glm::clamp(mDimValue - 0.015f, 0.68f, 1.0f);
             if (mSaturationAmount > 0.0)
@@ -357,7 +357,7 @@ void Screensaver::renderScreensaver()
         else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
             Renderer::postProcessingParams blackParameters;
             blackParameters.dimming = mDimValue;
-            mRenderer->shaderPostprocessing(Renderer::SHADER_CORE, blackParameters);
+            mRenderer->shaderPostprocessing(Renderer::Shader::CORE, blackParameters);
             if (mDimValue > 0.0)
                 mDimValue = glm::clamp(mDimValue - 0.045f, 0.0f, 1.0f);
         }

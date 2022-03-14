@@ -365,9 +365,9 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
     GL_CHECK_ERROR(glBlendFunc(convertBlendFactor(srcBlendFactorFactor),
                                convertBlendFactor(dstBlendFactorFactor)));
 
-    if (vertices->shaders == 0 || vertices->shaders & SHADER_CORE) {
+    if (vertices->shaders == 0 || vertices->shaders & Shader::CORE) {
         if (mCoreShader == nullptr)
-            mCoreShader = getShaderProgram(SHADER_CORE);
+            mCoreShader = getShaderProgram(Shader::CORE);
         if (mCoreShader) {
             if (mLastShader != mCoreShader)
                 mCoreShader->activateShaders();
@@ -379,16 +379,14 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             mCoreShader->setOpacity(vertices->opacity);
             mCoreShader->setSaturation(vertices->saturation);
             mCoreShader->setDimming(vertices->dimming);
-            mCoreShader->setBGRAToRGBA(vertices->convertBGRAToRGBA);
-            mCoreShader->setFont(vertices->font);
-            mCoreShader->setPostProcessing(vertices->postProcessing);
+            mCoreShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
             mLastShader = mCoreShader;
         }
     }
-    else if (vertices->shaders & SHADER_BLUR_HORIZONTAL) {
+    else if (vertices->shaders & Shader::BLUR_HORIZONTAL) {
         if (mBlurHorizontalShader == nullptr)
-            mBlurHorizontalShader = getShaderProgram(SHADER_BLUR_HORIZONTAL);
+            mBlurHorizontalShader = getShaderProgram(Shader::BLUR_HORIZONTAL);
         if (mBlurHorizontalShader) {
             if (mLastShader != mBlurHorizontalShader)
                 mBlurHorizontalShader->activateShaders();
@@ -403,9 +401,9 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
         }
         return;
     }
-    else if (vertices->shaders & SHADER_BLUR_VERTICAL) {
+    else if (vertices->shaders & Shader::BLUR_VERTICAL) {
         if (mBlurVerticalShader == nullptr)
-            mBlurVerticalShader = getShaderProgram(SHADER_BLUR_VERTICAL);
+            mBlurVerticalShader = getShaderProgram(Shader::BLUR_VERTICAL);
         if (mBlurVerticalShader) {
             if (mLastShader != mBlurVerticalShader)
                 mBlurVerticalShader->activateShaders();
@@ -420,9 +418,9 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
         }
         return;
     }
-    else if (vertices->shaders & SHADER_SCANLINES) {
+    else if (vertices->shaders & Shader::SCANLINES) {
         if (mScanlinelShader == nullptr)
-            mScanlinelShader = getShaderProgram(SHADER_SCANLINES);
+            mScanlinelShader = getShaderProgram(Shader::SCANLINES);
         float shaderWidth {width * 1.2f};
         // Scale the scanlines relative to screen resolution.
         float screenHeightModifier {getScreenHeightModifier()};
@@ -481,16 +479,16 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     vertices->opacity = parameters.opacity;
     vertices->saturation = parameters.saturation;
     vertices->dimming = parameters.dimming;
-    vertices->postProcessing = true;
+    vertices->shaderFlags = ShaderFlags::POST_PROCESSING;
 
-    if (shaders & SHADER_CORE)
-        shaderList.push_back(SHADER_CORE);
-    if (shaders & SHADER_BLUR_HORIZONTAL)
-        shaderList.push_back(SHADER_BLUR_HORIZONTAL);
-    if (shaders & SHADER_BLUR_VERTICAL)
-        shaderList.push_back(SHADER_BLUR_VERTICAL);
-    if (shaders & SHADER_SCANLINES)
-        shaderList.push_back(SHADER_SCANLINES);
+    if (shaders & Shader::CORE)
+        shaderList.push_back(Shader::CORE);
+    if (shaders & Shader::BLUR_HORIZONTAL)
+        shaderList.push_back(Shader::BLUR_HORIZONTAL);
+    if (shaders & Shader::BLUR_VERTICAL)
+        shaderList.push_back(Shader::BLUR_VERTICAL);
+    if (shaders & Shader::SCANLINES)
+        shaderList.push_back(Shader::SCANLINES);
 
     setMatrix(getIdentity());
     bindTexture(mPostProcTexture1);
@@ -511,8 +509,8 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
         int shaderPasses = 1;
         // For the blur shaders there is an optional variable to set the number of passes
         // to execute, which proportionally affects the blur amount.
-        if (shaderList[i] == Renderer::SHADER_BLUR_HORIZONTAL ||
-            shaderList[i] == Renderer::SHADER_BLUR_VERTICAL) {
+        if (shaderList[i] == Renderer::Shader::BLUR_HORIZONTAL ||
+            shaderList[i] == Renderer::Shader::BLUR_VERTICAL) {
             shaderPasses = parameters.blurPasses;
         }
 

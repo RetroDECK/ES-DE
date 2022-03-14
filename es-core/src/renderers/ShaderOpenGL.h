@@ -71,9 +71,7 @@ public:
     void setOpacity(GLfloat opacity);
     void setSaturation(GLfloat saturation);
     void setDimming(GLfloat dimming);
-    void setBGRAToRGBA(GLboolean BGRAToRGBA);
-    void setFont(GLboolean font);
-    void setPostProcessing(GLboolean postProcessing);
+    void setFlags(GLuint flags);
     // Sets the shader program to use the loaded shaders.
     void activateShaders();
     // Sets the shader program to 0 which reverts to the fixed function pipeline.
@@ -97,9 +95,7 @@ private:
     GLint mShaderOpacity;
     GLint mShaderSaturation;
     GLint mShaderDimming;
-    GLint mShaderBGRAToRGBA;
-    GLint mShaderFont;
-    GLint mShaderPostProcessing;
+    GLint mShaderFlags;
 };
 
 #endif // ES_CORE_RENDERER_SHADER_OPENGL_H

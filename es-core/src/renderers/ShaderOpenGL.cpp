@@ -22,9 +22,7 @@ ShaderOpenGL::ShaderOpenGL()
     , mShaderOpacity {0}
     , mShaderSaturation {0}
     , mShaderDimming {0}
-    , mShaderBGRAToRGBA {0}
-    , mShaderFont {0}
-    , mShaderPostProcessing {0}
+    , mShaderFlags {0}
 {
 }
 
@@ -125,9 +123,7 @@ void ShaderOpenGL::getVariableLocations(GLuint programID)
     mShaderOpacity = glGetUniformLocation(mProgramID, "opacity");
     mShaderSaturation = glGetUniformLocation(mProgramID, "saturation");
     mShaderDimming = glGetUniformLocation(mProgramID, "dimming");
-    mShaderBGRAToRGBA = glGetUniformLocation(mProgramID, "BGRAToRGBA");
-    mShaderFont = glGetUniformLocation(mProgramID, "font");
-    mShaderPostProcessing = glGetUniformLocation(mProgramID, "postProcessing");
+    mShaderFlags = glGetUniformLocation(mProgramID, "shaderFlags");
 }
 
 void ShaderOpenGL::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
@@ -178,22 +174,10 @@ void ShaderOpenGL::setDimming(GLfloat dimming)
         GL_CHECK_ERROR(glUniform1f(mShaderDimming, dimming));
 }
 
-void ShaderOpenGL::setBGRAToRGBA(GLboolean BGRAToRGBA)
+void ShaderOpenGL::setFlags(GLuint flags)
 {
-    if (mShaderBGRAToRGBA != -1)
-        GL_CHECK_ERROR(glUniform1i(mShaderBGRAToRGBA, BGRAToRGBA ? 1 : 0));
-}
-
-void ShaderOpenGL::setFont(GLboolean font)
-{
-    if (mShaderFont != -1)
-        GL_CHECK_ERROR(glUniform1i(mShaderFont, font ? 1 : 0));
-}
-
-void ShaderOpenGL::setPostProcessing(GLboolean postProcessing)
-{
-    if (mShaderPostProcessing != -1)
-        GL_CHECK_ERROR(glUniform1i(mShaderPostProcessing, postProcessing ? 1 : 0));
+    if (mShaderFlags != -1)
+        GL_CHECK_ERROR(glUniform1ui(mShaderFlags, flags));
 }
 
 void ShaderOpenGL::activateShaders()

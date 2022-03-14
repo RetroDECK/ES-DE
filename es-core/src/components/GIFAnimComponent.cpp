@@ -491,7 +491,7 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         vertices->saturation = mSaturation;
         vertices->opacity = mOpacity * mThemeOpacity;
         vertices->dimming = mDimming;
-        vertices->convertBGRAToRGBA = true;
+        vertices->shaderFlags = Renderer::ShaderFlags::BGRA_TO_RGBA;
 
         // Render it.
         mRenderer->drawTriangleStrips(&vertices[0], 4);

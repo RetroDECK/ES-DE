@@ -477,15 +477,15 @@ void Window::render()
                     // Also dim the background slightly.
                     backgroundParameters.dimming = 0.60f;
 
-                    mRenderer->shaderPostprocessing(Renderer::SHADER_CORE |
-                                                        Renderer::SHADER_BLUR_HORIZONTAL |
-                                                        Renderer::SHADER_BLUR_VERTICAL,
+                    mRenderer->shaderPostprocessing(Renderer::Shader::CORE |
+                                                        Renderer::Shader::BLUR_HORIZONTAL |
+                                                        Renderer::Shader::BLUR_VERTICAL,
                                                     backgroundParameters, &processedTexture[0]);
                 }
                 else {
                     // Dim the background slightly.
                     backgroundParameters.dimming = 0.60f;
-                    mRenderer->shaderPostprocessing(Renderer::SHADER_CORE, backgroundParameters,
+                    mRenderer->shaderPostprocessing(Renderer::Shader::CORE, backgroundParameters,
                                                     &processedTexture[0]);
                 }
 

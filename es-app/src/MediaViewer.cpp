@@ -90,9 +90,9 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
         Renderer::postProcessingParams videoParameters;
         unsigned int shaders {0};
         if (Settings::getInstance()->getBool("MediaViewerVideoScanlines"))
-            shaders = Renderer::SHADER_SCANLINES;
+            shaders = Renderer::Shader::SCANLINES;
         if (Settings::getInstance()->getBool("MediaViewerVideoBlur")) {
-            shaders |= Renderer::SHADER_BLUR_HORIZONTAL;
+            shaders |= Renderer::Shader::BLUR_HORIZONTAL;
             float heightModifier {Renderer::getScreenHeightModifier()};
             // clang-format off
             if (heightModifier < 1)
@@ -120,10 +120,10 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
 
         if (mCurrentImageIndex == mScreenshotIndex &&
             Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
-            mRenderer->shaderPostprocessing(Renderer::SHADER_SCANLINES);
+            mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
         else if (mCurrentImageIndex == mTitleScreenIndex &&
                  Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
-            mRenderer->shaderPostprocessing(Renderer::SHADER_SCANLINES);
+            mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
 
         // This is necessary so that the video loops if viewing an image when
         // the video ends.

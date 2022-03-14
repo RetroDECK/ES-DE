@@ -17,47 +17,14 @@
 #include <vector>
 
 struct SDL_Window;
-class Shader;
 
 class Renderer
 {
 public:
-    struct Vertex {
-        glm::vec2 position;
-        glm::vec2 texture;
-        unsigned int color;
-        float opacity;
-        float saturation;
-        float dimming;
-        bool convertBGRAToRGBA;
-        bool font;
-        bool postProcessing;
-        unsigned int shaders;
-
-        Vertex()
-            : opacity {1.0f}
-            , saturation {1.0f}
-            , dimming {1.0f}
-            , convertBGRAToRGBA {false}
-            , font {false}
-            , postProcessing {false}
-            , shaders {0}
-        {
-        }
-
-        Vertex(const glm::vec2& position, const glm::vec2& textureCoord, const unsigned int color)
-            : position(position)
-            , texture(textureCoord)
-            , color(color)
-            , opacity {1.0f}
-            , saturation {1.0f}
-            , dimming {1.0f}
-            , convertBGRAToRGBA {false}
-            , font {false}
-            , postProcessing {false}
-            , shaders {0}
-        {
-        }
+    enum class TextureType {
+        RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        BGRA,
+        RED
     };
 
     enum class BlendFactor {
@@ -73,17 +40,57 @@ public:
         ONE_MINUS_DST_ALPHA
     };
 
-    enum class TextureType {
-        RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-        BGRA,
-        RED
+    // clang-format off
+    enum Shader {
+        CORE =            0x00000001,
+        BLUR_HORIZONTAL = 0x00000002,
+        BLUR_VERTICAL =   0x00000004,
+        SCANLINES =       0x00000008
+    };
+
+    enum ShaderFlags {
+        BGRA_TO_RGBA =    0x00000001,
+        FONT_TEXTURE =    0x00000002,
+        POST_PROCESSING = 0x00000004
+    };
+    // clang-format on
+
+    struct Vertex {
+        glm::vec2 position;
+        glm::vec2 texture;
+        unsigned int color;
+        float opacity;
+        float saturation;
+        float dimming;
+        unsigned int shaders;
+        unsigned int shaderFlags;
+
+        Vertex()
+            : opacity {1.0f}
+            , saturation {1.0f}
+            , dimming {1.0f}
+            , shaders {0}
+            , shaderFlags {0}
+        {
+        }
+
+        Vertex(const glm::vec2& position, const glm::vec2& textureCoord, const unsigned int color)
+            : position(position)
+            , texture(textureCoord)
+            , color(color)
+            , opacity {1.0f}
+            , saturation {1.0f}
+            , dimming {1.0f}
+            , shaders {0}
+            , shaderFlags {0}
+        {
+        }
     };
 
     struct postProcessingParams {
         float opacity;
         float saturation;
         float dimming;
-        bool convertBGRAToRGBA;
         unsigned int blurPasses;
         unsigned int shaders;
 
@@ -91,7 +98,6 @@ public:
             : opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
-            , convertBGRAToRGBA {false}
             , blurPasses {1}
             , shaders {0}
         {
@@ -192,13 +198,7 @@ public:
     virtual void setSwapInterval() = 0;
     virtual void swapBuffers() = 0;
 
-    // clang-format off
-    static constexpr unsigned int SHADER_CORE            {0x00000001};
-    static constexpr unsigned int SHADER_BLUR_HORIZONTAL {0x00000002};
-    static constexpr unsigned int SHADER_BLUR_VERTICAL   {0x00000004};
-    static constexpr unsigned int SHADER_SCANLINES       {0x00000008};
-    // clang-format on
-
+private:
     std::stack<Rect> mClipStack;
     SDL_Window* mSDLWindow {nullptr};
     glm::mat4 mProjectionMatrix {};

@@ -63,24 +63,27 @@ COMPAT_VARYING COMPAT_PRECISION vec2 texCoord;
 uniform COMPAT_PRECISION float opacity;
 uniform COMPAT_PRECISION float saturation;
 uniform COMPAT_PRECISION float dimming;
-uniform int BGRAToRGBA;
-uniform int font;
-uniform int postProcessing;
-uniform sampler2D myTexture;
+uniform unsigned int shaderFlags;
+uniform sampler2D textureSampler;
+
+// shaderFlags:
+// 0x00000001 - BGRA to RGBA conversion
+// 0x00000002 - Font texture
+// 0x00000004 - Post processing
 
 void main()
 {
-    COMPAT_PRECISION vec4 sampledColor = COMPAT_TEXTURE(myTexture, texCoord);
+    COMPAT_PRECISION vec4 sampledColor = COMPAT_TEXTURE(textureSampler, texCoord);
 
     // For fonts the alpha information is stored in the red channel.
-    if (font == 1)
+    if (0u != (shaderFlags & 2u))
         sampledColor = vec4(1.0f, 1.0f, 1.0f, sampledColor.r);
 
     sampledColor *= color;
 
     // When post-processing we drop the alpha channel to avoid strange issues
     // with some graphics drivers.
-    if (postProcessing == 1)
+    if (0u != (shaderFlags & 4u))
         sampledColor.a = 1.0f;
 
     // Opacity.
@@ -101,7 +104,7 @@ void main()
     }
 
     // BGRA to RGBA conversion.
-    if (BGRAToRGBA == 1)
+    if (0u != (shaderFlags & 1u))
         sampledColor = vec4(sampledColor.bgr, sampledColor.a);
 
     FragColor = sampledColor;
