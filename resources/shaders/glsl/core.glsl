@@ -37,7 +37,7 @@ in vec2 texCoord;
 uniform float opacity;
 uniform float saturation;
 uniform float dimming;
-uniform unsigned int shaderFlags;
+uniform uint shaderFlags;
 
 uniform sampler2D textureSampler;
 out vec4 FragColor;
