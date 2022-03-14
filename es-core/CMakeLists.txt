@@ -74,8 +74,8 @@ set(CORE_HEADERS
 
     # Renderers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer_GL21.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Shader_GL21.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/RendererOpenGL.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/ShaderOpenGL.h
 
     # Resources
     ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/Font.h
@@ -150,8 +150,8 @@ set(CORE_SOURCES
 
     # Renderer
     ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Renderer_GL21.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/Shader_GL21.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/RendererOpenGL.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/renderers/ShaderOpenGL.cpp
 
     # Resources
     ${CMAKE_CURRENT_SOURCE_DIR}/src/resources/Font.cpp

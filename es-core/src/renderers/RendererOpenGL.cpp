@@ -1,12 +1,12 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  Renderer_GL21.cpp
+//  RendererOpenGL.cpp
 //
 //  OpenGL / OpenGL ES renderering functions.
 //
 
-#include "renderers/Renderer_GL21.h"
+#include "renderers/RendererOpenGL.h"
 
 #include "Settings.h"
 
@@ -43,7 +43,7 @@ RendererOpenGL* RendererOpenGL::getInstance()
     return &instance;
 }
 
-Shader* RendererOpenGL::getShaderProgram(unsigned int shaderID)
+ShaderOpenGL* RendererOpenGL::getShaderProgram(unsigned int shaderID)
 {
     unsigned int index {0};
 
@@ -71,7 +71,7 @@ bool RendererOpenGL::loadShaders()
     shaderFiles.push_back(":/shaders/glsl/scanlines.glsl");
 
     for (auto it = shaderFiles.cbegin(); it != shaderFiles.cend(); ++it) {
-        Shader* loadShader = new Shader();
+        ShaderOpenGL* loadShader = new ShaderOpenGL();
 
         loadShader->loadShaderFile(*it, GL_VERTEX_SHADER);
         loadShader->loadShaderFile(*it, GL_FRAGMENT_SHADER);
@@ -300,7 +300,7 @@ unsigned int RendererOpenGL::createTexture(const TextureType type,
                                            const unsigned int height,
                                            void* data)
 {
-    const GLenum textureType {RendererOpenGL::convertTextureType(type)};
+    const GLenum textureType {convertTextureType(type)};
     unsigned int texture;
 
     GL_CHECK_ERROR(glGenTextures(1, &texture));
@@ -337,7 +337,7 @@ void RendererOpenGL::updateTexture(const unsigned int texture,
                                    const unsigned int height,
                                    void* data)
 {
-    const GLenum textureType {RendererOpenGL::convertTextureType(type)};
+    const GLenum textureType {convertTextureType(type)};
 
     GL_CHECK_ERROR(glBindTexture(GL_TEXTURE_2D, texture));
     GL_CHECK_ERROR(glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, width, height, textureType,
@@ -362,12 +362,12 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
     const float width {vertices[3].position[0]};
     const float height {vertices[3].position[1]};
 
-    GL_CHECK_ERROR(glBlendFunc(RendererOpenGL::convertBlendFactor(srcBlendFactorFactor),
-                               RendererOpenGL::convertBlendFactor(dstBlendFactorFactor)));
+    GL_CHECK_ERROR(glBlendFunc(convertBlendFactor(srcBlendFactorFactor),
+                               convertBlendFactor(dstBlendFactorFactor)));
 
     if (vertices->shaders == 0 || vertices->shaders & SHADER_CORE) {
         if (mCoreShader == nullptr)
-            mCoreShader = RendererOpenGL::getShaderProgram(SHADER_CORE);
+            mCoreShader = getShaderProgram(SHADER_CORE);
         if (mCoreShader) {
             if (mLastShader != mCoreShader)
                 mCoreShader->activateShaders();
@@ -388,7 +388,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
     }
     else if (vertices->shaders & SHADER_BLUR_HORIZONTAL) {
         if (mBlurHorizontalShader == nullptr)
-            mBlurHorizontalShader = RendererOpenGL::getShaderProgram(SHADER_BLUR_HORIZONTAL);
+            mBlurHorizontalShader = getShaderProgram(SHADER_BLUR_HORIZONTAL);
         if (mBlurHorizontalShader) {
             if (mLastShader != mBlurHorizontalShader)
                 mBlurHorizontalShader->activateShaders();
@@ -405,7 +405,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
     }
     else if (vertices->shaders & SHADER_BLUR_VERTICAL) {
         if (mBlurVerticalShader == nullptr)
-            mBlurVerticalShader = RendererOpenGL::getShaderProgram(SHADER_BLUR_VERTICAL);
+            mBlurVerticalShader = getShaderProgram(SHADER_BLUR_VERTICAL);
         if (mBlurVerticalShader) {
             if (mLastShader != mBlurVerticalShader)
                 mBlurVerticalShader->activateShaders();
@@ -422,7 +422,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
     }
     else if (vertices->shaders & SHADER_SCANLINES) {
         if (mScanlinelShader == nullptr)
-            mScanlinelShader = RendererOpenGL::getShaderProgram(SHADER_SCANLINES);
+            mScanlinelShader = getShaderProgram(SHADER_SCANLINES);
         float shaderWidth {width * 1.2f};
         // Scale the scanlines relative to screen resolution.
         float screenHeightModifier {getScreenHeightModifier()};

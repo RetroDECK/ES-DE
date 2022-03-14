@@ -1,16 +1,16 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  Renderer_GL21.h
+//  RendererOpenGL.h
 //
 //  OpenGL / OpenGL ES renderering functions.
 //
 
-#ifndef ES_CORE_RENDERER_RENDERER_GL21_H
-#define ES_CORE_RENDERER_RENDERER_GL21_H
+#ifndef ES_CORE_RENDERER_RENDERER_OPENGL_H
+#define ES_CORE_RENDERER_RENDERER_OPENGL_H
 
-#include "Shader_GL21.h"
 #include "renderers/Renderer.h"
+#include "renderers/ShaderOpenGL.h"
 
 #if defined(USE_OPENGLES)
 #include <GLES3/gl3.h>
@@ -28,7 +28,7 @@ public:
 
     static RendererOpenGL* getInstance();
 
-    Shader* getShaderProgram(unsigned int shaderID);
+    ShaderOpenGL* getShaderProgram(unsigned int shaderID);
     bool loadShaders() override;
 
     GLenum convertBlendFactor(const BlendFactor BlendFactorFactor);
@@ -72,7 +72,7 @@ public:
         unsigned char* textureRGBA = nullptr) override;
 
 private:
-    std::vector<Shader*> mShaderProgramVector;
+    std::vector<ShaderOpenGL*> mShaderProgramVector;
     GLuint mShaderFBO1;
     GLuint mShaderFBO2;
     GLuint mVertexBuffer1;
@@ -82,11 +82,11 @@ private:
     GLuint mWhiteTexture;
     GLuint mPostProcTexture1;
     GLuint mPostProcTexture2;
-    Shader* mCoreShader;
-    Shader* mBlurHorizontalShader;
-    Shader* mBlurVerticalShader;
-    Shader* mScanlinelShader;
-    Shader* mLastShader;
+    ShaderOpenGL* mCoreShader;
+    ShaderOpenGL* mBlurHorizontalShader;
+    ShaderOpenGL* mBlurVerticalShader;
+    ShaderOpenGL* mScanlinelShader;
+    ShaderOpenGL* mLastShader;
 };
 
-#endif // ES_CORE_RENDERER_RENDERER_GL21_H
+#endif // ES_CORE_RENDERER_RENDERER_OPENGL_H

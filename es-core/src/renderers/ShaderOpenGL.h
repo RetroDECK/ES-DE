@@ -1,13 +1,13 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  Shader_GL21.h
+//  ShaderOpenGL.h
 //
-//  OpenGL 2.1 GLSL shader functions.
+//  OpenGL / OpenGL ES shader functions.
 //
 
-#ifndef ES_CORE_RENDERER_SHADER_GL21_H
-#define ES_CORE_RENDERER_SHADER_GL21_H
+#ifndef ES_CORE_RENDERER_SHADER_OPENGL_H
+#define ES_CORE_RENDERER_SHADER_OPENGL_H
 
 #define GL_GLEXT_PROTOTYPES
 
@@ -49,11 +49,11 @@ static inline void _GLCheckError(const std::string& funcName)
 #define GL_CHECK_ERROR(Function) (Function)
 #endif
 
-class Shader
+class ShaderOpenGL
 {
 public:
-    Shader();
-    ~Shader();
+    ShaderOpenGL();
+    ~ShaderOpenGL();
 
     // Loads the shader source code only, no compilation done at this point.
     void loadShaderFile(const std::string& path, GLenum shaderType);
@@ -102,4 +102,4 @@ private:
     GLint mShaderPostProcessing;
 };
 
-#endif // ES_CORE_RENDERER_SHADER_GL21_H
+#endif // ES_CORE_RENDERER_SHADER_OPENGL_H

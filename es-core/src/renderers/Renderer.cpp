@@ -11,8 +11,8 @@
 #include "ImageIO.h"
 #include "Log.h"
 #include "Settings.h"
-#include "Shader_GL21.h"
-#include "renderers/Renderer_GL21.h"
+#include "renderers/RendererOpenGL.h"
+#include "renderers/ShaderOpenGL.h"
 #include "resources/ResourceManager.h"
 
 #if defined(_WIN64)

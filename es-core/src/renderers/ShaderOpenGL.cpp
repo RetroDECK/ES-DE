@@ -1,18 +1,18 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  Shader_GL21.cpp
+//  ShaderOpenGL.cpp
 //
-//  OpenGL 2.1 GLSL shader functions.
+//  OpenGL / OpenGL ES shader functions.
 //
 
-#include "Shader_GL21.h"
+#include "ShaderOpenGL.h"
 
 #include "Log.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
 
-Shader::Shader()
+ShaderOpenGL::ShaderOpenGL()
     : mProgramID {0}
     , mShaderMVPMatrix {0}
     , mShaderPosition {0}
@@ -28,13 +28,13 @@ Shader::Shader()
 {
 }
 
-Shader::~Shader()
+ShaderOpenGL::~ShaderOpenGL()
 {
     // Delete the shader program when destroyed.
     deleteProgram(mProgramID);
 }
 
-void Shader::loadShaderFile(const std::string& path, GLenum shaderType)
+void ShaderOpenGL::loadShaderFile(const std::string& path, GLenum shaderType)
 {
     std::string preprocessorDefines;
     std::string shaderCode;
@@ -59,7 +59,7 @@ void Shader::loadShaderFile(const std::string& path, GLenum shaderType)
     mShaderVector.push_back(std::make_tuple(path, preprocessorDefines + shaderCode, shaderType));
 }
 
-bool Shader::createProgram()
+bool ShaderOpenGL::createProgram()
 {
     GLint programSuccess;
 
@@ -112,9 +112,9 @@ bool Shader::createProgram()
     return true;
 }
 
-void Shader::deleteProgram(GLuint programID) { GL_CHECK_ERROR(glDeleteProgram(programID)); }
+void ShaderOpenGL::deleteProgram(GLuint programID) { GL_CHECK_ERROR(glDeleteProgram(programID)); }
 
-void Shader::getVariableLocations(GLuint programID)
+void ShaderOpenGL::getVariableLocations(GLuint programID)
 {
     // Some of the variable names are chosen to be compatible with the RetroArch GLSL shaders.
     mShaderMVPMatrix = glGetUniformLocation(mProgramID, "MVPMatrix");
@@ -130,14 +130,14 @@ void Shader::getVariableLocations(GLuint programID)
     mShaderPostProcessing = glGetUniformLocation(mProgramID, "postProcessing");
 }
 
-void Shader::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
+void ShaderOpenGL::setModelViewProjectionMatrix(glm::mat4 mvpMatrix)
 {
     if (mShaderMVPMatrix != GL_INVALID_VALUE && mShaderMVPMatrix != GL_INVALID_OPERATION)
         GL_CHECK_ERROR(glUniformMatrix4fv(mShaderMVPMatrix, 1, GL_FALSE,
                                           reinterpret_cast<GLfloat*>(&mvpMatrix)));
 }
 
-void Shader::setAttribPointers()
+void ShaderOpenGL::setAttribPointers()
 {
     if (mShaderPosition != -1)
         GL_CHECK_ERROR(glVertexAttribPointer(
@@ -154,61 +154,61 @@ void Shader::setAttribPointers()
             reinterpret_cast<const void*>(offsetof(Renderer::Vertex, color))));
 }
 
-void Shader::setTextureSize(std::array<GLfloat, 2> shaderVec2)
+void ShaderOpenGL::setTextureSize(std::array<GLfloat, 2> shaderVec2)
 {
     if (mShaderTextureSize != -1)
         GL_CHECK_ERROR(glUniform2f(mShaderTextureSize, shaderVec2[0], shaderVec2[1]));
 }
 
-void Shader::setOpacity(GLfloat opacity)
+void ShaderOpenGL::setOpacity(GLfloat opacity)
 {
     if (mShaderOpacity != -1)
         GL_CHECK_ERROR(glUniform1f(mShaderOpacity, opacity));
 }
 
-void Shader::setSaturation(GLfloat saturation)
+void ShaderOpenGL::setSaturation(GLfloat saturation)
 {
     if (mShaderSaturation != -1)
         GL_CHECK_ERROR(glUniform1f(mShaderSaturation, saturation));
 }
 
-void Shader::setDimming(GLfloat dimming)
+void ShaderOpenGL::setDimming(GLfloat dimming)
 {
     if (mShaderDimming != -1)
         GL_CHECK_ERROR(glUniform1f(mShaderDimming, dimming));
 }
 
-void Shader::setBGRAToRGBA(GLboolean BGRAToRGBA)
+void ShaderOpenGL::setBGRAToRGBA(GLboolean BGRAToRGBA)
 {
     if (mShaderBGRAToRGBA != -1)
         GL_CHECK_ERROR(glUniform1i(mShaderBGRAToRGBA, BGRAToRGBA ? 1 : 0));
 }
 
-void Shader::setFont(GLboolean font)
+void ShaderOpenGL::setFont(GLboolean font)
 {
     if (mShaderFont != -1)
         GL_CHECK_ERROR(glUniform1i(mShaderFont, font ? 1 : 0));
 }
 
-void Shader::setPostProcessing(GLboolean postProcessing)
+void ShaderOpenGL::setPostProcessing(GLboolean postProcessing)
 {
     if (mShaderPostProcessing != -1)
         GL_CHECK_ERROR(glUniform1i(mShaderPostProcessing, postProcessing ? 1 : 0));
 }
 
-void Shader::activateShaders()
+void ShaderOpenGL::activateShaders()
 {
     // Install the shader program.
     GL_CHECK_ERROR(glUseProgram(mProgramID));
 }
 
-void Shader::deactivateShaders()
+void ShaderOpenGL::deactivateShaders()
 {
     // Remove the shader program.
     GL_CHECK_ERROR(glUseProgram(0));
 }
 
-void Shader::printProgramInfoLog(GLuint programID)
+void ShaderOpenGL::printProgramInfoLog(GLuint programID)
 {
     if (glIsProgram(programID)) {
         int logLength;
@@ -229,7 +229,7 @@ void Shader::printProgramInfoLog(GLuint programID)
     }
 }
 
-void Shader::printShaderInfoLog(GLuint shaderID, GLenum shaderType, bool error)
+void ShaderOpenGL::printShaderInfoLog(GLuint shaderID, GLenum shaderType, bool error)
 {
     if (glIsShader(shaderID)) {
         int logLength;
