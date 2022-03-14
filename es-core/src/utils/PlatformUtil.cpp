@@ -12,6 +12,8 @@
 #include "Window.h"
 #if defined(_WIN64)
 #include "utils/StringUtil.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
 #endif
 
 #include <SDL2/SDL_events.h>
@@ -181,16 +183,16 @@ namespace Utils
                 // There is sometimes a white flash the first time an emulator is started during the
                 // program session and a white single-pixel line will be visible at the bottom of
                 // the screen while the game is loading. But it's at least a tolerable workaround.
-                SDL_GetWindowSize(Renderer::getSDLWindow(), &width, &height);
-                SDL_SetWindowSize(Renderer::getSDLWindow(), width, height - 1);
+                SDL_GetWindowSize(Renderer::getInstance()->getSDLWindow(), &width, &height);
+                SDL_SetWindowSize(Renderer::getInstance()->getSDLWindow(), width, height - 1);
                 SDL_Delay(100);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-                Renderer::swapBuffers();
+                Renderer::getInstance()->swapBuffers();
 
                 WaitForSingleObject(pi.hThread, INFINITE);
                 WaitForSingleObject(pi.hProcess, INFINITE);
 
-                SDL_SetWindowSize(Renderer::getSDLWindow(), width, height);
+                SDL_SetWindowSize(Renderer::getInstance()->getSDLWindow(), width, height);
             }
 
             // If the return value is false, then something failed.
