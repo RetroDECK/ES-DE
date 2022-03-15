@@ -75,8 +75,8 @@ bool ShaderOpenGL::createProgram()
         glGetShaderiv(currentShader, GL_COMPILE_STATUS, &shaderCompiled);
 
         if (shaderCompiled != GL_TRUE) {
-            LOG(LogError) << "OpenGL error: Unable to compile shader " << currentShader << " ("
-                          << std::get<0>(*it) << ").";
+            LOG(LogError) << "ShaderOpenGL::createProgram(): Unable to compile shader "
+                          << currentShader << " (" << std::get<0>(*it) << ")";
             printShaderInfoLog(currentShader, std::get<2>(*it), true);
             return false;
         }
@@ -91,7 +91,7 @@ bool ShaderOpenGL::createProgram()
 
     glGetProgramiv(mProgramID, GL_LINK_STATUS, &programSuccess);
     if (programSuccess != GL_TRUE) {
-        LOG(LogError) << "OpenGL error: Unable to link program " << mProgramID << ".";
+        LOG(LogError) << "ShaderOpenGL::createProgram(): Unable to link program " << mProgramID;
         printProgramInfoLog(mProgramID);
         return false;
     }
@@ -204,12 +204,12 @@ void ShaderOpenGL::printProgramInfoLog(GLuint programID)
         glGetProgramInfoLog(programID, maxLength, &logLength, &infoLog.front());
 
         if (logLength > 0) {
-            LOG(LogDebug) << "Renderer_GL21::printProgramInfoLog():\n"
+            LOG(LogDebug) << "ShaderOpenGL::createProgram()::\n"
                           << std::string(infoLog.begin(), infoLog.end());
         }
     }
     else {
-        LOG(LogError) << "OpenGL error: " << programID << " is not a program.";
+        LOG(LogError) << "ShaderOpenGL::createProgram(): " << programID << " is not a program";
     }
 }
 
@@ -228,7 +228,7 @@ void ShaderOpenGL::printShaderInfoLog(GLuint shaderID, GLenum shaderType, bool e
         glGetShaderInfoLog(shaderID, maxLength, &logLength, &infoLog.front());
 
         if (logLength > 0) {
-            LOG(LogDebug) << "Shader_GL21::printShaderInfoLog(): " << (error ? "Error" : "Warning")
+            LOG(LogDebug) << "ShaderOpenGL::createProgram(): " << (error ? "Error" : "Warning")
                           << " in "
                           << (shaderType == GL_VERTEX_SHADER ? "VERTEX section:\n" :
                                                                "FRAGMENT section:\n")
@@ -236,6 +236,6 @@ void ShaderOpenGL::printShaderInfoLog(GLuint shaderID, GLenum shaderType, bool e
         }
     }
     else {
-        LOG(LogError) << "OpenGL error: " << shaderID << " is not a shader.";
+        LOG(LogError) << "ShaderOpenGL::createProgram():: " << shaderID << " is not a shader";
     }
 }

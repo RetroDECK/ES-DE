@@ -31,7 +31,7 @@ public:
     ShaderOpenGL* getShaderProgram(unsigned int shaderID);
     bool loadShaders() override;
 
-    GLenum convertBlendFactor(const BlendFactor BlendFactorFactor);
+    GLenum convertBlendFactor(const BlendFactor BlendFactor);
     GLenum convertTextureType(const TextureType type);
 
     void setup() override;

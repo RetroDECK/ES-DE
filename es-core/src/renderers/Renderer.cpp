@@ -363,8 +363,8 @@ void Renderer::drawRect(const float x,
                         bool horizontalGradient,
                         const float opacity,
                         const float dimming,
-                        const BlendFactor srcBlendFactorFactor,
-                        const BlendFactor dstBlendFactorFactor)
+                        const BlendFactor srcBlendFactor,
+                        const BlendFactor dstBlendFactor)
 {
     Vertex vertices[4];
 
@@ -393,5 +393,5 @@ void Renderer::drawRect(const float x,
     vertices->dimming = dimming;
 
     bindTexture(0);
-    drawTriangleStrips(vertices, 4, srcBlendFactorFactor, dstBlendFactorFactor);
+    drawTriangleStrips(vertices, 4, srcBlendFactor, dstBlendFactor);
 }

@@ -81,7 +81,7 @@ void main()
 
     // BGRA to RGBA conversion.
     if (0u != (shaderFlags & 1u))
-        sampledColor = vec4(sampledColor.bgr, sampledColor.a);
+        sampledColor = sampledColor.bgra;
 
     FragColor = sampledColor;
 }

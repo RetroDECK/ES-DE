@@ -87,10 +87,10 @@ bool RendererOpenGL::loadShaders()
     return true;
 }
 
-GLenum RendererOpenGL::convertBlendFactor(const BlendFactor BlendFactorFactor)
+GLenum RendererOpenGL::convertBlendFactor(const BlendFactor BlendFactor)
 {
     // clang-format off
-    switch (BlendFactorFactor) {
+    switch (BlendFactor) {
         case BlendFactor::ZERO:                { return GL_ZERO;                } break;
         case BlendFactor::ONE:                 { return GL_ONE;                 } break;
         case BlendFactor::SRC_COLOR:           { return GL_SRC_COLOR;           } break;
@@ -168,12 +168,10 @@ bool RendererOpenGL::createContext()
     LOG(LogInfo) << "GL version: " << version;
 #if defined(_WIN64)
     LOG(LogInfo) << "EmulationStation renderer: OpenGL 3.3 with GLEW";
-#else
-#if defined(USE_OPENGLES)
+#elif defined(USE_OPENGLES)
     LOG(LogInfo) << "EmulationStation renderer: OpenGL ES 3.0";
 #else
     LOG(LogInfo) << "EmulationStation renderer: OpenGL 3.3";
-#endif
 #endif
 
 #if !defined(USE_OPENGLES)
@@ -356,14 +354,14 @@ void RendererOpenGL::bindTexture(const unsigned int texture)
 
 void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
                                         const unsigned int numVertices,
-                                        const BlendFactor srcBlendFactorFactor,
-                                        const BlendFactor dstBlendFactorFactor)
+                                        const BlendFactor srcBlendFactor,
+                                        const BlendFactor dstBlendFactor)
 {
     const float width {vertices[3].position[0]};
     const float height {vertices[3].position[1]};
 
-    GL_CHECK_ERROR(glBlendFunc(convertBlendFactor(srcBlendFactorFactor),
-                               convertBlendFactor(dstBlendFactorFactor)));
+    GL_CHECK_ERROR(
+        glBlendFunc(convertBlendFactor(srcBlendFactor), convertBlendFactor(dstBlendFactor)));
 
     if (vertices->shaders == 0 || vertices->shaders & Shader::CORE) {
         if (mCoreShader == nullptr)
