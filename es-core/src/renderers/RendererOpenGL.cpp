@@ -178,11 +178,6 @@ bool RendererOpenGL::createContext()
     LOG(LogInfo) << "EmulationStation renderer: OpenGL 3.3";
 #endif
 
-#if !defined(USE_OPENGLES)
-    // TODO: Fix the issue that causes the first glClearColor function call to fail.
-    GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-#endif
-
     GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
     GL_CHECK_ERROR(glActiveTexture(GL_TEXTURE0));
     GL_CHECK_ERROR(glEnable(GL_BLEND));
