@@ -12,10 +12,10 @@
 #include "Window.h"
 #if defined(_WIN64)
 #include "utils/StringUtil.h"
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 #endif
 
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_events.h>
 
 #if !defined(_WIN64)
@@ -109,7 +109,7 @@ namespace Utils
             // Hack to avoid that the application window occasionally loses focus when returning
             // from a game, which only seems to happen on Raspberry Pi OS 10.
             SDL_Delay(50);
-            SDL_SetWindowInputFocus(Renderer::getSDLWindow());
+            SDL_SetWindowInputFocus(Renderer::getInstance()->getSDLWindow());
 #endif
 
             // We need to shift the return value as it contains some flags (which we don't need).
