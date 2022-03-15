@@ -18,7 +18,6 @@ For automatic code formatting [clang-format](https://clang.llvm.org/docs/ClangFo
 
 Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
 
-
 ## Building on Unix
 
 There are some dependencies that need to be fulfilled in order to build ES-DE. These are detailed per operating system below.
@@ -67,7 +66,9 @@ sudo apt-get install libcec-dev libp8-platform-dev
 
 The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
 
-Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required.
+Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. Likewise a display server (Xorg or Wayland) is required, direct framebuffer access is not supported.
+
+Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by default.
 
 **FreeBSD**
 
@@ -230,12 +231,13 @@ make
 ```
 You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
 
-To build with the GLES renderer, run the following:
+To build with the GLES 3.0 renderer, run the following:
 ```
 cmake -DGLES=on .
 make
 ```
-The GLES renderer is quite limited as there is no shader support for it, so ES-DE will definitely not look as pretty as when using the default OpenGL renderer. This option is basically deprecated as the releases for all supported platforms are built using the desktop OpenGL renderer (including the Raspberry Pi).
+
+This renderer is generally only needed on the Raspberry Pi and the desktop OpenGL renderer should otherwise be used.
 
 Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
 
@@ -848,7 +850,6 @@ A theme is not mandatory to start the application, but ES-DE will be basically u
 
 As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
-
 ## Using clang-format for automatic code formatting
 
 The entire ES-DE codebase is formatted using clang-format and all new code must be formatted using this tool before being committed.
@@ -987,7 +988,6 @@ git diff mamedevices
 
 The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions would have missing information. This is so as the MAME project sometimes removes older entries when they're reorganizing the ROM sets. By merging the files we retain backward compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
 
-
 ## Configuration
 
 **~/.emulationstation/es_settings.xml**
@@ -1032,7 +1032,6 @@ But if you have customized your button layout and your controller or keyboard st
 
 The input configuration is described in the [User guide](USERGUIDE-DEV.md#input-device-configuration).
 
-
 ## Command line options
 
 You can use **--help** or **-h** to view the list of command line options, as shown here.
@@ -1040,6 +1039,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 ```
 --display [index 1-4]           Display/monitor to use
 --resolution [width] [height]   Application resolution
+--screenrotate [1/on or 0/off]  Rotate application screen 180 degrees
 --vsync [1/on or 0/off]         Turn VSync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
 --no-splash                     Don't show the splash screen during startup
@@ -1068,7 +1068,6 @@ For the following options, the es_settings.xml file is immediately updated/saved
 --show-hidden-files
 --show-hidden-games
 ```
-
 
 ## es_systems.xml
 
@@ -1558,7 +1557,6 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 </ruleList>
 ```
 
-
 ## gamelist.xml
 
 The gamelist.xml file for a system defines the metadata for its entries, such as the game names, descriptions, release dates and ratings.
@@ -1686,7 +1684,6 @@ For folders, most of the fields are identical although some are removed. In the 
 
 * The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application (mostly useful for debugging purposes)
 
-
 ## Debug mode
 
 By passing the --debug command line option, ES-DE will increase the logging to include a lot of additional debug output which is useful both for development and in order to pinpoint issues as a user.
@@ -1709,7 +1706,6 @@ This will draw a semi-transparent blue frame around all text elements.
 This will reload either a single gamelist or all gamelists depending on where you're located when entering the key combination (go to the system view to make a complete reload). Very useful for theme development as any changes to the theme files will be activated without requiring an application restart. Note that the menu needs to be closed for this key combination to have any effect.
 
 By default all controller input (keyboard and controller button presses) will be logged when the --debug flag has been passed. To disable the input logging, the setting DebugSkipInputLogging kan be set to false in the es_settings.xml file. There is no menu entry to change this as it's intended for developers and not for end users.
-
 
 ## Portable installation on Windows
 

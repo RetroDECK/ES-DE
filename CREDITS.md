@@ -69,7 +69,7 @@ https://batocera.org
 The MD5 hash functions were adapted from code by the BZFlag project \
 https://www.bzflag.org
 
-A few of the GLSL shaders were borrowed from the RetroArch project \
+A couple of GLSL shaders were borrowed from the RetroArch project \
 https://www.retroarch.com
 
 

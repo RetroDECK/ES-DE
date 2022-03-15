@@ -14,6 +14,9 @@
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
+* Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
+* Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 and OpenGL ES 3.0 respectively
+* Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * The actual names for emulators with   find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
@@ -47,8 +50,9 @@
 * Added support for using the tilde (~) symbol in the es_systems.xml path entries to expand to the user home directory
 * Reduced CPU usage significantly when a menu is open by not rendering the bottom of the stack
 * Reduced CPU usage significantly by only rendering the necessary systems in SystemView
-* Added an OpenGL ES 2.0 renderer (borrowed from the RetroPie fork of EmulationStation)
+* Added support for dimming components (fade to black)
 * Added logging of the display refresh rate on startup
+* Added a command line option to rotate the application screen 180 degrees
 * Improved the theme loading error logging to make it consistent and easier to understand
 * Added a log warning for unthemed systems during theme set loading
 * Changed the warning log level for missing theme files to debug level if the paths are set using variables
@@ -56,6 +60,9 @@
 * Added a color model conversion shader for converting from BGRA to RGBA
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
+* Updated to build correctly with FFmpeg 5.0
+* Refactored the rendering code from a shared namespace into proper classes
+* Removed the deprecated OpenGL ES 1.0 renderer
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
@@ -92,6 +99,8 @@
 * The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling
 * Rating icon outlines would not fade out correctly when fast-scrolling in a gamelist
 * If setting an origin other than 0.5 for a video with pillarboxes enabled, the video would not get centered on the black rectangle
+* If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
+* When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded

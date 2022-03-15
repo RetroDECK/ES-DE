@@ -65,6 +65,9 @@ The roadmap is under constant review so expect it to change from time to time. S
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
 * Multiple new gamelist components (wheels, wall/grid etc.)
 * Lottie animation (vector graphics) and GIF animation support
+* OpenGL ES 3.0 renderer for use on the Raspberry Pi
+* Replace the OpenGL fixed function pipeline with a shader-based renderer
+* Improve the performance of the GLSL shader post-processing
 
 #### v2.1
 
@@ -92,7 +95,6 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Dependency on MoltenVK to get Metal support on macOS
 * Decommission of the OpenGL 2.1 and OpenGL ES renderers (or keep as legacy mode/legacy build?)
 * Better and more accurate GPU and memory usage statistics overlay
-* Improve the performance of the GLSL shader code
 * Bulk metadata editor
 * Improve multi-threading
 
