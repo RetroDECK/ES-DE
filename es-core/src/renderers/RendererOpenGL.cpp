@@ -116,7 +116,11 @@ GLenum RendererOpenGL::convertTextureType(const TextureType type)
 #else
         case TextureType::BGRA:  { return GL_BGRA;            } break;
 #endif
+#if defined(__EMSCRIPTEN__)
+        case TextureType::RED:   { return GL_LUMINANCE;       } break;
+#else
         case TextureType::RED:   { return GL_RED;             } break;
+#endif
         default:                 { return GL_ZERO;            }
     }
     // clang-format on

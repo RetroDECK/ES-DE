@@ -18,13 +18,11 @@
 
 #include <SDL2/SDL_events.h>
 
-#if defined(__APPLE__)
-#include <array>
-#endif
-
 #if !defined(_WIN64)
 #include <unistd.h>
 #endif
+
+#include <array>
 #include <fcntl.h>
 
 namespace Utils
