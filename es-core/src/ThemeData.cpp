@@ -249,7 +249,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"logoHorizontalAlignment", STRING},
        {"logoVerticalAlignment", STRING},
        {"logoAlignment", STRING}, // For backward compatibility with legacy themes.
-       {"maxLogoCount", UNSIGNED_INTEGER},
+       {"maxLogoCount", FLOAT},
        {"text", STRING},
        {"textColor", COLOR},
        {"textBackgroundColor", COLOR},

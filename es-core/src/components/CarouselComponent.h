@@ -83,7 +83,7 @@ private:
     float mLineSpacing;
     Alignment mLogoHorizontalAlignment;
     Alignment mLogoVerticalAlignment;
-    int mMaxLogoCount;
+    float mMaxLogoCount;
     glm::vec2 mLogoSize;
     float mLogoScale;
     float mLogoRotation;

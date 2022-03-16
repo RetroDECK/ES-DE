@@ -11,14 +11,6 @@
 #include "Log.h"
 #include "animations/LambdaAnimation.h"
 
-namespace
-{
-    // Buffer values for scrolling velocity (left, stopped, right).
-    const int logoBuffersLeft[] {-5, -2, -1};
-    const int logoBuffersRight[] {1, 2, 5};
-
-} // namespace
-
 CarouselComponent::CarouselComponent()
     : IList<CarouselElement, SystemData*> {LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP}
     , mRenderer {Renderer::getInstance()}
@@ -31,7 +23,7 @@ CarouselComponent::CarouselComponent()
     , mLineSpacing {1.5f}
     , mLogoHorizontalAlignment {ALIGN_CENTER}
     , mLogoVerticalAlignment {ALIGN_CENTER}
-    , mMaxLogoCount {3}
+    , mMaxLogoCount {3.0f}
     , mLogoSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
     , mLogoScale {1.2f}
     , mLogoRotation {7.5f}
@@ -194,7 +186,14 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
     carouselTrans = glm::translate(
         carouselTrans, glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f});
 
-    glm::vec2 clipPos {carouselTrans[3].x, carouselTrans[3].y};
+    mRenderer->pushClipRect(
+        glm::ivec2 {static_cast<int>(glm::clamp(std::round(carouselTrans[3].x), 0.0f,
+                                                mRenderer->getScreenWidth())),
+                    static_cast<int>(glm::clamp(std::round(carouselTrans[3].y), 0.0f,
+                                                mRenderer->getScreenHeight()))},
+        glm::ivec2 {static_cast<int>(std::min(std::round(mSize.x), mRenderer->getScreenWidth())),
+                    static_cast<int>(std::min(std::round(mSize.y), mRenderer->getScreenHeight()))});
+
     mRenderer->setMatrix(carouselTrans);
 
     // Background box behind logos.
@@ -239,19 +238,9 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
     }
 
     int center {static_cast<int>(mCamOffset)};
-    int logoCount {std::min(mMaxLogoCount, static_cast<int>(mEntries.size()))};
+    int logoInclusion {static_cast<int>(std::ceil(mMaxLogoCount / 2.0f))};
 
-    // Adding texture loading buffers depending on scrolling speed and status.
-    int bufferIndex {getScrollingVelocity() + 1};
-    int bufferLeft {logoBuffersLeft[bufferIndex]};
-    int bufferRight {logoBuffersRight[bufferIndex]};
-    if (logoCount == 1) {
-        bufferLeft = 0;
-        bufferRight = 0;
-    }
-
-    for (int i = center - logoCount / 2 + bufferLeft; // Line break.
-         i <= center + logoCount / 2 + bufferRight; ++i) {
+    for (int i = center - logoInclusion; i < center + logoInclusion + 2; ++i) {
         int index {i};
 
         while (index < 0)
@@ -263,7 +252,7 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
         logoTrans = glm::translate(
             logoTrans, glm::vec3 {i * logoSpacing.x + xOff, i * logoSpacing.y + yOff, 0.0f});
 
-        float distance = i - mCamOffset;
+        float distance {i - mCamOffset};
 
         float scale {1.0f + ((mLogoScale - 1.0f) * (1.0f - fabsf(distance)))};
         scale = std::min(mLogoScale, std::max(1.0f, scale));
@@ -273,7 +262,7 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             static_cast<int>(std::round(0x80 + ((0xFF - 0x80) * (1.0f - fabsf(distance)))))};
         opacity = std::max(static_cast<int>(0x80), opacity);
 
-        const std::shared_ptr<GuiComponent>& comp = mEntries.at(index).data.logo;
+        const std::shared_ptr<GuiComponent>& comp {mEntries.at(index).data.logo};
 
         if (comp == nullptr)
             continue;
@@ -295,6 +284,7 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
         comp->setOpacity(static_cast<float>(opacity) / 255.0f);
         comp->render(logoTrans);
     }
+    mRenderer->popClipRect();
 }
 
 void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -379,9 +369,13 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         mLogoSize = logoSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     }
-    if (elem->has("maxLogoCount"))
-        mMaxLogoCount =
-            glm::clamp(static_cast<int>(elem->get<unsigned int>("maxLogoCount")), 2, 30);
+
+    if (elem->has("maxLogoCount")) {
+        if (theme->isLegacyTheme())
+            mMaxLogoCount = std::ceil(glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f));
+        else
+            mMaxLogoCount = glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f);
+    }
 
     if (elem->has("logoRotation"))
         mLogoRotation = elem->get<float>("logoRotation");
@@ -495,6 +489,11 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     GuiComponent::applyTheme(theme, view, element, ALL);
+
+    mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
+                         mRenderer->getScreenWidth() * 1.5f);
+    mSize.y = glm::clamp(mSize.y, mRenderer->getScreenHeight() * 0.05f,
+                         mRenderer->getScreenHeight() * 1.5f);
 }
 
 void CarouselComponent::onCursorChanged(const CursorState& state)
