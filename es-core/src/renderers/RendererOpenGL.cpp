@@ -91,14 +91,14 @@ GLenum RendererOpenGL::convertBlendFactor(const BlendFactor BlendFactor)
 {
     // clang-format off
     switch (BlendFactor) {
-        case BlendFactor::ZERO:                { return GL_ZERO;                } break;
-        case BlendFactor::ONE:                 { return GL_ONE;                 } break;
-        case BlendFactor::SRC_COLOR:           { return GL_SRC_COLOR;           } break;
-        case BlendFactor::ONE_MINUS_SRC_COLOR: { return GL_ONE_MINUS_SRC_COLOR; } break;
         case BlendFactor::SRC_ALPHA:           { return GL_SRC_ALPHA;           } break;
         case BlendFactor::ONE_MINUS_SRC_ALPHA: { return GL_ONE_MINUS_SRC_ALPHA; } break;
         case BlendFactor::DST_COLOR:           { return GL_DST_COLOR;           } break;
         case BlendFactor::ONE_MINUS_DST_COLOR: { return GL_ONE_MINUS_DST_COLOR; } break;
+        case BlendFactor::ZERO:                { return GL_ZERO;                } break;
+        case BlendFactor::ONE:                 { return GL_ONE;                 } break;
+        case BlendFactor::SRC_COLOR:           { return GL_SRC_COLOR;           } break;
+        case BlendFactor::ONE_MINUS_SRC_COLOR: { return GL_ONE_MINUS_SRC_COLOR; } break;
         case BlendFactor::DST_ALPHA:           { return GL_DST_ALPHA;           } break;
         case BlendFactor::ONE_MINUS_DST_ALPHA: { return GL_ONE_MINUS_DST_ALPHA; } break;
         default:                               { return GL_ZERO;                }
