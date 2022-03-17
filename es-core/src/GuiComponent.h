@@ -113,10 +113,10 @@ public:
     void setVisible(bool visible) { mVisible = visible; }
 
     // clang-format off
-        enum ComponentThemeFlags : unsigned int {
-            SCROLL_HIDE    = 0x00000001,
-            SCROLL_FADE_IN = 0x00000002
-        };
+    enum ComponentThemeFlags : unsigned int {
+        SCROLL_HIDE    = 0x00000001,
+        SCROLL_FADE_IN = 0x00000002
+    };
     // clang-format on
 
     const bool getScrollHide() { return mComponentThemeFlags & ComponentThemeFlags::SCROLL_HIDE; }
@@ -303,6 +303,7 @@ protected:
     float mSaturation;
     float mDimming;
     float mThemeOpacity;
+    float mThemeSaturation;
     float mRotation;
     float mScale;
     float mDefaultZIndex;

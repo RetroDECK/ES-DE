@@ -54,6 +54,7 @@ precision mediump float;
 
 uniform vec2 textureSize;
 uniform float opacity;
+uniform float saturation;
 uniform sampler2D textureSampler;
 in vec2 texCoord;
 in vec2 onex;
@@ -100,6 +101,13 @@ void main()
     float h_weight_00 = dx / SPOT_WIDTH;
     WEIGHT(h_weight_00);
 
+    // Saturation.
+    if (saturation != 1.0) {
+        vec3 grayscale = vec3(dot(color.rgb, vec3(0.34, 0.55, 0.11)));
+        vec3 blendedColor = mix(grayscale, color.rgb, saturation);
+        color = vec4(blendedColor, color.a);
+    }
+
     color *= vec4(h_weight_00, h_weight_00, h_weight_00, h_weight_00);
 
     // Get closest horizontal neighbour to blend.
@@ -113,6 +121,13 @@ void main()
         dx = 1.0 + dx;
     }
     vec4 colorNB = TEX2D(texture_coords + coords01);
+
+    // Saturation.
+    if (saturation != 1.0) {
+        vec3 grayscale = vec3(dot(colorNB.rgb, vec3(0.34, 0.55, 0.11)));
+        vec3 blendedColor = mix(grayscale, colorNB.rgb, saturation);
+        colorNB = vec4(blendedColor, colorNB.a);
+    }
 
     float h_weight_01 = dx / SPOT_WIDTH;
     WEIGHT(h_weight_01);
@@ -136,6 +151,13 @@ void main()
         dy = 1.0 + dy;
     }
     colorNB = TEX2D(texture_coords + coords10);
+
+    // Saturation.
+    if (saturation != 1.0) {
+        vec3 grayscale = vec3(dot(colorNB.rgb, vec3(0.34, 0.55, 0.11)));
+        vec3 blendedColor = mix(grayscale, colorNB.rgb, saturation);
+        colorNB = vec4(blendedColor, colorNB.a);
+    }
 
     float v_weight_10 = dy / SPOT_HEIGHT;
     WEIGHT(v_weight_10);

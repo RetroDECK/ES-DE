@@ -33,6 +33,7 @@ GuiComponent::GuiComponent()
     , mSaturation {1.0f}
     , mDimming {1.0f}
     , mThemeOpacity {1.0f}
+    , mThemeSaturation {1.0f}
     , mRotation {0.0f}
     , mScale {1.0f}
     , mDefaultZIndex {0.0f}
@@ -375,6 +376,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mThemeOpacity = 0.0f;
     else
         setVisible(true);
+
+    if (properties & ThemeFlags::SATURATION && elem->has("saturation"))
+        mThemeSaturation = glm::clamp(elem->get<float>("saturation"), 0.0f, 1.0f);
 
     if (properties && elem->has("gameselector"))
         mThemeGameSelector = elem->get<std::string>("gameselector");

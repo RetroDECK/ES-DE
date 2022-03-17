@@ -62,7 +62,8 @@ namespace ThemeFlags
         Z_INDEX =         0x00004000,
         ROTATION =        0x00008000,
         OPACITY =         0x00010000,
-        VISIBLE =         0x00020000,
+        SATURATION =      0x00020000,
+        VISIBLE =         0x00040000,
         ALL = 0xFFFFFFFF
     };
     // clang-format on

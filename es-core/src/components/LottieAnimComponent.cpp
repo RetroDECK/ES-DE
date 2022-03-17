@@ -477,7 +477,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         for (int i = 0; i < 4; ++i)
             vertices[i].position = glm::round(vertices[i].position);
 
-        vertices->saturation = mSaturation;
+        vertices->saturation = mSaturation * mThemeSaturation;
         vertices->opacity = mOpacity * mThemeOpacity;
         vertices->dimming = mDimming;
         vertices->shaderFlags = Renderer::ShaderFlags::BGRA_TO_RGBA;

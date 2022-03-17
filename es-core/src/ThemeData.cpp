@@ -96,6 +96,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"gradientType", STRING},
        {"scrollFadeIn", BOOLEAN},
        {"opacity", FLOAT},
+       {"saturation", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"video",
@@ -116,6 +117,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fadeInTime", FLOAT},
        {"scrollFadeIn", BOOLEAN},
        {"opacity", FLOAT},
+       {"saturation", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT},
        {"showSnapshotNoVideo", BOOLEAN}, // For backward compatibility with legacy themes.
@@ -132,6 +134,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"keepAspectRatio", BOOLEAN},
        {"interpolation", STRING},
        {"opacity", FLOAT},
+       {"saturation", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"badges",

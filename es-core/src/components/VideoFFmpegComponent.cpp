@@ -165,10 +165,10 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         for (int i = 0; i < 4; ++i)
             vertices[i].position = glm::round(vertices[i].position);
 
-        if (mDecodedFrame && (mFadeIn < 1.0f || mThemeOpacity < 1.0f))
+        if (mFadeIn < 1.0f || mThemeOpacity < 1.0f)
             vertices->opacity = mFadeIn * mThemeOpacity;
 
-        vertices->saturation = mSaturation;
+        vertices->saturation = mSaturation * mThemeSaturation;
         vertices->dimming = mDimming;
 
         std::unique_lock<std::mutex> pictureLock(mPictureMutex);
