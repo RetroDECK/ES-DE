@@ -242,9 +242,17 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
 
     int center {static_cast<int>(mCamOffset)};
     int logoInclusion {static_cast<int>(std::ceil(mMaxLogoCount / 2.0f))};
+    bool singleEntry {mEntries.size() == 1};
 
     for (int i = center - logoInclusion; i < center + logoInclusion + 2; ++i) {
         int index {i};
+
+        // If there is only a single system, then only render the logo once (in the center).
+        if (singleEntry) {
+            mEntries.at(0).data.logo->render(
+                glm::translate(carouselTrans, glm::vec3 {0 + xOff, 0 + yOff, 0.0f}));
+            break;
+        }
 
         while (index < 0)
             index += static_cast<int>(mEntries.size());
