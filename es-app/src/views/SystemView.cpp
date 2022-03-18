@@ -487,7 +487,16 @@ void SystemView::populate()
                         elements.dateTimeComponents.back()->setDefaultZIndex(40.0f);
                         elements.dateTimeComponents.back()->applyTheme(
                             theme, "system", element.first, ThemeFlags::ALL);
+                        elements.dateTimeComponents.back()->setVisible(false);
                         elements.children.emplace_back(elements.dateTimeComponents.back().get());
+                    }
+                    else if (element.second.type == "rating") {
+                        elements.ratingComponents.emplace_back(std::make_unique<RatingComponent>());
+                        elements.ratingComponents.back()->setDefaultZIndex(45.0f);
+                        elements.ratingComponents.back()->applyTheme(theme, "system", element.first,
+                                                                     ThemeFlags::ALL);
+                        elements.ratingComponents.back()->setVisible(false);
+                        elements.children.emplace_back(elements.ratingComponents.back().get());
                     }
                 }
             }
@@ -631,8 +640,10 @@ void SystemView::updateGameSelectors()
             }
             else {
                 for (auto& selector : mSystemElements[cursor].gameSelectors) {
-                    if (selector->getSelectorName() == imageSelector)
+                    if (selector->getSelectorName() == imageSelector) {
                         gameSelector = selector.get();
+                        break;
+                    }
                 }
                 if (gameSelector == nullptr) {
                     LOG(LogWarning)
@@ -745,8 +756,10 @@ void SystemView::updateGameSelectors()
             }
             else {
                 for (auto& selector : mSystemElements[cursor].gameSelectors) {
-                    if (selector->getSelectorName() == videoSelector)
+                    if (selector->getSelectorName() == videoSelector) {
                         gameSelector = selector.get();
+                        break;
+                    }
                 }
                 if (gameSelector == nullptr) {
                     LOG(LogWarning)
@@ -781,8 +794,10 @@ void SystemView::updateGameSelectors()
             }
             else {
                 for (auto& selector : mSystemElements[cursor].gameSelectors) {
-                    if (selector->getSelectorName() == imageSelector)
+                    if (selector->getSelectorName() == imageSelector) {
                         gameSelector = selector.get();
+                        break;
+                    }
                 }
                 if (gameSelector == nullptr) {
                     LOG(LogWarning)
@@ -894,8 +909,10 @@ void SystemView::updateGameSelectors()
             }
             else {
                 for (auto& selector : mSystemElements[cursor].gameSelectors) {
-                    if (selector->getSelectorName() == textSelector)
+                    if (selector->getSelectorName() == textSelector) {
                         gameSelector = selector.get();
+                        break;
+                    }
                 }
                 if (gameSelector == nullptr) {
                     LOG(LogWarning)
@@ -956,8 +973,10 @@ void SystemView::updateGameSelectors()
             }
             else {
                 for (auto& selector : mSystemElements[cursor].gameSelectors) {
-                    if (selector->getSelectorName() == dateTimeSelector)
+                    if (selector->getSelectorName() == dateTimeSelector) {
                         gameSelector = selector.get();
+                        break;
+                    }
                 }
                 if (gameSelector == nullptr) {
                     LOG(LogWarning) << "SystemView::updateGameSelectors(): Invalid gameselector \""
@@ -973,6 +992,7 @@ void SystemView::updateGameSelectors()
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
         if (!games.empty()) {
+            dateTime->setVisible(true);
             const std::string metadata {dateTime->getThemeMetadata()};
             if (metadata == "releasedate")
                 dateTime->setValue(games.front()->metadata.get("releasedate"));
@@ -980,7 +1000,47 @@ void SystemView::updateGameSelectors()
                 dateTime->setValue(games.front()->metadata.get("lastplayed"));
         }
         else {
-            dateTime->setValue("19700101T000000");
+            dateTime->setVisible(false);
+        }
+    }
+
+    for (auto& rating : mSystemElements[cursor].ratingComponents) {
+        GameSelectorComponent* gameSelector {nullptr};
+        if (multipleSelectors) {
+            const std::string& ratingSelector {rating->getThemeGameSelector()};
+            if (ratingSelector == "") {
+                gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                LOG(LogWarning)
+                    << "SystemView::updateGameSelectors(): Multiple gameselector "
+                       "elements defined but rating element does not state which one to "
+                       "use, selecting first entry";
+            }
+            else {
+                for (auto& selector : mSystemElements[cursor].gameSelectors) {
+                    if (selector->getSelectorName() == ratingSelector) {
+                        gameSelector = selector.get();
+                        break;
+                    }
+                }
+                if (gameSelector == nullptr) {
+                    LOG(LogWarning)
+                        << "SystemView::updateGameSelectors(): Invalid gameselector \""
+                        << ratingSelector << "\" defined for rating element, selecting first entry";
+                    gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+                }
+            }
+        }
+        else {
+            gameSelector = mSystemElements[cursor].gameSelectors.front().get();
+        }
+        gameSelector->refreshGames();
+        std::vector<FileData*> games {gameSelector->getGames()};
+        if (!games.empty()) {
+            rating->setVisible(true);
+            rating->setValue(games.front()->metadata.get("rating"));
+        }
+        else {
+            rating->setVisible(false);
         }
     }
 }

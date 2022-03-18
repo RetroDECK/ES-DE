@@ -229,6 +229,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
+       {"gameselector", STRING},
        {"color", COLOR},
        {"filledPath", PATH},
        {"unfilledPath", PATH},

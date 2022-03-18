@@ -18,6 +18,7 @@
 #include "components/GIFAnimComponent.h"
 #include "components/GameSelectorComponent.h"
 #include "components/LottieAnimComponent.h"
+#include "components/RatingComponent.h"
 #include "components/TextComponent.h"
 #include "components/TextListComponent.h"
 #include "components/VideoFFmpegComponent.h"
@@ -35,13 +36,14 @@ struct SystemViewElements {
     std::vector<GuiComponent*> legacyExtras;
     std::vector<GuiComponent*> children;
 
-    std::vector<std::unique_ptr<TextComponent>> gameCountComponents;
-    std::vector<std::unique_ptr<TextComponent>> textComponents;
-    std::vector<std::unique_ptr<DateTimeComponent>> dateTimeComponents;
     std::vector<std::unique_ptr<ImageComponent>> imageComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
     std::vector<std::unique_ptr<LottieAnimComponent>> lottieAnimComponents;
     std::vector<std::unique_ptr<GIFAnimComponent>> GIFAnimComponents;
+    std::vector<std::unique_ptr<TextComponent>> gameCountComponents;
+    std::vector<std::unique_ptr<TextComponent>> textComponents;
+    std::vector<std::unique_ptr<DateTimeComponent>> dateTimeComponents;
+    std::vector<std::unique_ptr<RatingComponent>> ratingComponents;
 };
 
 class SystemView : public GuiComponent
