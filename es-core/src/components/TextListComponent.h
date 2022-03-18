@@ -487,7 +487,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             else {
                 setSelectorColorGradientHorizontal(true);
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                                   "<selectorGradientType> set to \""
+                                   "<selectorGradientType> defined as \""
                                 << gradientType << "\"";
             }
         }
@@ -515,7 +515,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 setAlignment(ALIGN_RIGHT);
             else
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                                   "<horizontalAlignment> set to \""
+                                   "<horizontalAlignment> defined as \""
                                 << str << "\"";
         }
         // Legacy themes only.
@@ -529,7 +529,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 setAlignment(ALIGN_RIGHT);
             else
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                                   "<alignment> set to \""
+                                   "<alignment> defined as \""
                                 << str << "\"";
         }
         if (elem->has("horizontalMargin")) {
@@ -551,9 +551,9 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setCapitalize(true);
         }
         else if (letterCase != "none") {
-            LOG(LogWarning)
-                << "TextListComponent: Invalid theme configuration, property <letterCase> set to \""
-                << letterCase << "\"";
+            LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                               "<letterCase> defined as \""
+                            << letterCase << "\"";
         }
     }
 

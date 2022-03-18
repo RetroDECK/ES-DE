@@ -147,7 +147,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             mStaticImage.setLinearInterpolation(false);
             LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                               "<interpolation> set to \""
+                               "<interpolation> defined as \""
                             << interpolation << "\"";
         }
     }

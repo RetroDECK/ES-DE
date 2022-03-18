@@ -334,7 +334,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<type> set to \""
+                               "<type> defined as \""
                             << type << "\"";
             mType = HORIZONTAL;
         }
@@ -358,7 +358,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             mColorGradientHorizontal = true;
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<gradientType> set to \""
+                               "<gradientType> defined as \""
                             << gradientType << "\"";
         }
     }
@@ -406,7 +406,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<logoHorizontalAlignment> set to \""
+                               "<logoHorizontalAlignment> defined as \""
                             << alignment << "\"";
             mLogoHorizontalAlignment = ALIGN_CENTER;
         }
@@ -425,7 +425,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<logoVerticalAlignment> set to \""
+                               "<logoVerticalAlignment> defined as \""
                             << alignment << "\"";
             mLogoVerticalAlignment = ALIGN_CENTER;
         }
@@ -456,7 +456,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<logoAlignment> set to \""
+                               "<logoAlignment> defined as \""
                             << alignment << "\"";
             mLogoHorizontalAlignment = ALIGN_CENTER;
             mLogoVerticalAlignment = ALIGN_CENTER;
@@ -492,9 +492,9 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mText = elem->get<std::string>("text");
         }
         else {
-            LOG(LogWarning)
-                << "CarouselComponent: Invalid theme configuration, property <letterCase> set to \""
-                << letterCase << "\"";
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "<letterCase> defined as \""
+                            << letterCase << "\"";
             mText = elem->get<std::string>("text");
         }
     }

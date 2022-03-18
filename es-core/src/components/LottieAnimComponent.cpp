@@ -231,8 +231,9 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("size")) {
         glm::vec2 size = elem->get<glm::vec2>("size");
         if (size.x == 0.0f && size.y == 0.0f) {
-            LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, <size> set to \""
-                            << size.x << " " << size.y << "\"";
+            LOG(LogWarning)
+                << "LottieAnimComponent: Invalid theme configuration, <size> defined as \""
+                << size.x << " " << size.y << "\"";
             return;
         }
     }
@@ -240,8 +241,9 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("speed")) {
         const float speed {elem->get<float>("speed")};
         if (speed < 0.2f || speed > 3.0f) {
-            LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, <speed> set to \""
-                            << std::fixed << std::setprecision(1) << speed << "\"";
+            LOG(LogWarning)
+                << "LottieAnimComponent: Invalid theme configuration, <speed> defined as \""
+                << std::fixed << std::setprecision(1) << speed << "\"";
         }
         else {
             mSpeedModifier = speed;
@@ -271,7 +273,7 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning)
-                << "LottieAnimComponent: Invalid theme configuration, <direction> set to \""
+                << "LottieAnimComponent: Invalid theme configuration, <direction> defined as \""
                 << direction << "\"";
             mStartDirection = "normal";
             mAlternate = false;

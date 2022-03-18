@@ -126,7 +126,7 @@ public:
             else {
                 mGameSelection = GameSelection::RANDOM;
                 LOG(LogWarning) << "GameSelectorComponent: Invalid theme configuration, property "
-                                   "<selection> set to \""
+                                   "<selection> defined as \""
                                 << selection << "\"";
             }
         }

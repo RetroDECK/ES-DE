@@ -197,9 +197,9 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("horizontalAlignment")) {
         const std::string horizontalAlignment {elem->get<std::string>("horizontalAlignment")};
         if (horizontalAlignment != "left" && horizontalAlignment != "right") {
-            LOG(LogWarning)
-                << "BadgeComponent: Invalid theme configuration, <horizontalAlignment> set to \""
-                << horizontalAlignment << "\"";
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <horizontalAlignment> "
+                               "defined as \""
+                            << horizontalAlignment << "\"";
         }
         else {
             mFlexboxComponent.setAlignment(horizontalAlignment);
@@ -209,8 +209,9 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else if (elem->has("alignment")) {
         const std::string alignment {elem->get<std::string>("alignment")};
         if (alignment != "left" && alignment != "right") {
-            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <alignment> set to \""
-                            << alignment << "\"";
+            LOG(LogWarning)
+                << "BadgeComponent: Invalid theme configuration, <alignment> defined as \""
+                << alignment << "\"";
         }
         else {
             mFlexboxComponent.setAlignment(alignment);
@@ -220,8 +221,9 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("direction")) {
         const std::string direction {elem->get<std::string>("direction")};
         if (direction != "row" && direction != "column") {
-            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <direction> set to \""
-                            << direction << "\"";
+            LOG(LogWarning)
+                << "BadgeComponent: Invalid theme configuration, <direction> defined as \""
+                << direction << "\"";
         }
         else {
             mFlexboxComponent.setDirection(direction);
@@ -231,7 +233,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("lines")) {
         const unsigned int lines {elem->get<unsigned int>("lines")};
         if (lines < 1 || lines > 10) {
-            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <lines> set to \""
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <lines> defined as \""
                             << lines << "\"";
         }
         else {
@@ -243,7 +245,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const unsigned int itemsPerLine {elem->get<unsigned int>("itemsPerLine")};
         if (itemsPerLine < 1 || itemsPerLine > 10) {
             LOG(LogWarning)
-                << "BadgeComponent: Invalid theme configuration, <itemsPerLine> set to \""
+                << "BadgeComponent: Invalid theme configuration, <itemsPerLine> defined as \""
                 << itemsPerLine << "\"";
         }
         else {
@@ -256,8 +258,9 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if ((itemMargin.x != -1.0 && itemMargin.y != -1.0) &&
             (itemMargin.x < 0.0f || itemMargin.x > 0.2f || itemMargin.y < 0.0f ||
              itemMargin.y > 0.2f)) {
-            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, <itemMargin> set to \""
-                            << itemMargin.x << " " << itemMargin.y << "\"";
+            LOG(LogWarning)
+                << "BadgeComponent: Invalid theme configuration, <itemMargin> defined as \""
+                << itemMargin.x << " " << itemMargin.y << "\"";
         }
         else {
             mFlexboxComponent.setItemMargin(itemMargin);
@@ -269,7 +272,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (controllerPos.x < -1.0f || controllerPos.x > 2.0f || controllerPos.y < -1.0f ||
             controllerPos.y > 2.0f) {
             LOG(LogWarning)
-                << "BadgeComponent: Invalid theme configuration, <controllerPos> set to \""
+                << "BadgeComponent: Invalid theme configuration, <controllerPos> defined as \""
                 << controllerPos.x << " " << controllerPos.y << "\"";
         }
         else {
@@ -281,7 +284,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const float controllerSize = elem->get<float>("controllerSize");
         if (controllerSize < 0.1f || controllerSize > 2.0f) {
             LOG(LogWarning)
-                << "BadgeComponent: Invalid theme configuration, <controllerSize> set to \""
+                << "BadgeComponent: Invalid theme configuration, <controllerSize> defined as \""
                 << controllerSize << "\"";
         }
         else {

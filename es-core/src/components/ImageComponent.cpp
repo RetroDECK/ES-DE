@@ -514,7 +514,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             mLinearInterpolation = false;
             LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                               "<interpolation> set to \""
+                               "<interpolation> defined as \""
                             << interpolation << "\"";
         }
     }
@@ -553,7 +553,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             else {
                 setColorGradientHorizontal(true);
                 LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                                   "<gradientType> set to \""
+                                   "<gradientType> defined as \""
                                 << gradientType << "\"";
             }
         }

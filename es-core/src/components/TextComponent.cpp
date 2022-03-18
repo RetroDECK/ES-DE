@@ -398,7 +398,7 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
-                               "<horizontalAlignment> set to \""
+                               "<horizontalAlignment> defined as \""
                             << str << "\"";
     }
 
@@ -413,7 +413,7 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
-                               "<verticalAlignment> set to \""
+                               "<verticalAlignment> defined as \""
                             << str << "\"";
     }
 
@@ -429,7 +429,7 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
-                               "<alignment> set to \""
+                               "<alignment> defined as \""
                             << str << "\"";
     }
 
@@ -455,7 +455,7 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else if (letterCase != "none") {
             LOG(LogWarning)
-                << "TextComponent: Invalid theme configuration, property <letterCase> set to \""
+                << "TextComponent: Invalid theme configuration, property <letterCase> defined as \""
                 << letterCase << "\"";
         }
     }

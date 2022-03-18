@@ -139,7 +139,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setHorizontalAlignment(ALIGN_RIGHT);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
-                               "<horizontalAlignment> set to \""
+                               "<horizontalAlignment> defined as \""
                             << str << "\"";
     }
 
@@ -153,7 +153,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setVerticalAlignment(ALIGN_BOTTOM);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
-                               "<verticalAlignment> set to \""
+                               "<verticalAlignment> defined as \""
                             << str << "\"";
     }
 
@@ -168,7 +168,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setHorizontalAlignment(ALIGN_RIGHT);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
-                               "<alignment> set to \""
+                               "<alignment> defined as \""
                             << str << "\"";
     }
 
@@ -193,9 +193,9 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setCapitalize(true);
         }
         else if (letterCase != "none") {
-            LOG(LogWarning)
-                << "DateTimeComponent: Invalid theme configuration, property <letterCase> set to \""
-                << letterCase << "\"";
+            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
+                               "<letterCase> defined as \""
+                            << letterCase << "\"";
         }
     }
 
