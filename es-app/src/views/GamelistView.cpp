@@ -211,6 +211,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 addChild(mRatingComponents.back().get());
             }
         }
+        mHelpStyle.applyTheme(mTheme, "gamelist");
     }
 
     mList.setDefaultZIndex(50.0f);
@@ -251,16 +252,6 @@ void GamelistView::render(const glm::mat4& parentTrans)
     mRenderer->pushClipRect(pos, size);
     renderChildren(trans);
     mRenderer->popClipRect();
-}
-
-HelpStyle GamelistView::getHelpStyle()
-{
-    HelpStyle style;
-    if (mLegacyMode)
-        style.applyTheme(mTheme, getName());
-    else
-        style.applyTheme(mTheme, "gamelist");
-    return style;
 }
 
 std::vector<HelpPrompt> GamelistView::getHelpPrompts()

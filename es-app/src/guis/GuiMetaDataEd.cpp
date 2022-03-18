@@ -30,7 +30,6 @@
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
-#include "views/ViewController.h"
 
 #define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.060f)
 
@@ -885,11 +884,4 @@ std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
     prompts.push_back(HelpPrompt("y", "scrape"));
     prompts.push_back(HelpPrompt("b", "back"));
     return prompts;
-}
-
-HelpStyle GuiMetaDataEd::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }

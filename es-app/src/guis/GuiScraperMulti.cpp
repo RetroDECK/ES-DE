@@ -22,7 +22,6 @@
 #include "components/TextComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperSearch.h"
-#include "views/ViewController.h"
 
 GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches,
                                  bool approveResults)
@@ -311,11 +310,4 @@ std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
     return prompts;
-}
-
-HelpStyle GuiScraperMulti::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }

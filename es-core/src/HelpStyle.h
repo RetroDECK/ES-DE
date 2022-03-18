@@ -3,8 +3,7 @@
 //  EmulationStation Desktop Edition
 //  HelpStyle.h
 //
-//  Style (default colors, position and origin) for the help system.
-//  Also theme handling.
+//  Style (colors, position, icons etc.) for the help system.
 //
 
 #ifndef ES_CORE_HELP_STYLE_H
@@ -21,6 +20,7 @@ class ThemeData;
 struct HelpStyle {
     glm::vec2 position;
     glm::vec2 origin;
+    std::string horizontalAlignment;
     unsigned int textColor;
     unsigned int textColorDimmed;
     unsigned int iconColor;
@@ -32,8 +32,7 @@ struct HelpStyle {
     std::string letterCase;
 
     struct CustomButtonIcons {
-
-        // General.
+        // Generic
         std::string dpad_updown;
         std::string dpad_leftright;
         std::string dpad_all;
@@ -44,7 +43,7 @@ struct HelpStyle {
         std::string button_lt;
         std::string button_rt;
 
-        // SNES.
+        // SNES
         std::string button_a_SNES;
         std::string button_b_SNES;
         std::string button_x_SNES;
@@ -52,7 +51,7 @@ struct HelpStyle {
         std::string button_start_SNES;
         std::string button_back_SNES;
 
-        // PS.
+        // PlayStation
         std::string button_a_PS;
         std::string button_b_PS;
         std::string button_x_PS;
@@ -62,7 +61,7 @@ struct HelpStyle {
         std::string button_start_PS5;
         std::string button_back_PS5;
 
-        // XBOX.
+        // XBOX
         std::string button_a_XBOX;
         std::string button_b_XBOX;
         std::string button_x_XBOX;
@@ -75,7 +74,7 @@ struct HelpStyle {
 
     CustomButtonIcons mCustomButtons;
 
-    HelpStyle(); // Default values.
+    HelpStyle();
     void applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view);
 };
 

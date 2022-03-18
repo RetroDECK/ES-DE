@@ -209,13 +209,6 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
     return prompts;
 }
 
-HelpStyle SystemView::getHelpStyle()
-{
-    HelpStyle style;
-    style.applyTheme(mCarousel->getEntry(mCarousel->getCursor()).object->getTheme(), "system");
-    return style;
-}
-
 void SystemView::onCursorChanged(const CursorState& /*state*/)
 {
     int cursor {mCarousel->getCursor()};
@@ -395,6 +388,7 @@ void SystemView::populate()
                 [](GuiComponent* a, GuiComponent* b) { return b->getZIndex() > a->getZIndex(); });
 
             mSystemElements.emplace_back(std::move(elements));
+            mSystemElements.back().helpStyle.applyTheme(theme, "system");
         }
 
         if (!mLegacyMode) {
@@ -517,6 +511,7 @@ void SystemView::populate()
                                  return b->getZIndex() > a->getZIndex();
                              });
             mSystemElements.emplace_back(std::move(elements));
+            mSystemElements.back().helpStyle.applyTheme(theme, "system");
         }
 
         CarouselComponent::Entry entry;

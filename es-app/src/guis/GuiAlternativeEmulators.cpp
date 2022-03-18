@@ -242,10 +242,3 @@ std::vector<HelpPrompt> GuiAlternativeEmulators::getHelpPrompts()
         prompts.push_back(HelpPrompt("a", "select"));
     return prompts;
 }
-
-HelpStyle GuiAlternativeEmulators::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
-}

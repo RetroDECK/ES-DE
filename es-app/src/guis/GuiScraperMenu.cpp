@@ -18,7 +18,6 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOfflineGenerator.h"
 #include "guis/GuiScraperMulti.h"
-#include "views/ViewController.h"
 
 GuiScraperMenu::GuiScraperMenu(std::string title)
     : mMenu {title}
@@ -1133,11 +1132,4 @@ std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "back"));
     prompts.push_back(HelpPrompt("y", "start"));
     return prompts;
-}
-
-HelpStyle GuiScraperMenu::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }

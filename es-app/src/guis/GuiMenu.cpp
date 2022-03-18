@@ -30,7 +30,6 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/PlatformUtil.h"
-#include "views/ViewController.h"
 
 #include <SDL2/SDL_events.h>
 #include <algorithm>
@@ -1475,11 +1474,4 @@ std::vector<HelpPrompt> GuiMenu::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "close menu"));
     prompts.push_back(HelpPrompt("start", "close menu"));
     return prompts;
-}
-
-HelpStyle GuiMenu::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }

@@ -17,7 +17,6 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "utils/StringUtil.h"
-#include "views/ViewController.h"
 
 GuiGamelistFilter::GuiGamelistFilter(SystemData* system,
                                      std::function<void(bool)> filterChangedCallback)
@@ -255,11 +254,4 @@ std::vector<HelpPrompt> GuiGamelistFilter::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "back"));
     prompts.push_back(HelpPrompt("a", "select"));
     return prompts;
-}
-
-HelpStyle GuiGamelistFilter::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }

@@ -117,6 +117,7 @@ public:
 
     std::vector<HelpPrompt> getHelpPrompts() override;
     HelpStyle getHelpStyle() override;
+    HelpStyle getViewHelpStyle();
 
     std::shared_ptr<GamelistView> getGamelistView(SystemData* system);
     std::shared_ptr<SystemView> getSystemListView();

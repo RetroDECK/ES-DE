@@ -307,6 +307,7 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     }
 
     sortChildren();
+    mHelpStyle.applyTheme(mTheme, getName());
 }
 
 void GamelistView::legacyUpdateInfoPanel()

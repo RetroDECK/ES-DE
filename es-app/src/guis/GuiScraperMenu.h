@@ -14,6 +14,7 @@
 #include "components/MenuComponent.h"
 #include "guis/GuiSettings.h"
 #include "scrapers/Scraper.h"
+#include "views/ViewController.h"
 
 class FileData;
 class SwitchComponent;
@@ -31,7 +32,7 @@ public:
     bool input(InputConfig* config, Input input) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     void pressedStart();

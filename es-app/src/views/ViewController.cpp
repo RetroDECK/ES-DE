@@ -905,7 +905,7 @@ void ViewController::render(const glm::mat4& parentTrans)
 
     // Fade out.
     if (mFadeOpacity) {
-        unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255);
+        unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255.0f);
         mRenderer->setMatrix(parentTrans);
         mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                             fadeColor, fadeColor);
@@ -981,6 +981,7 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
                 mCurrentView = newView;
 
             newView->populateCursorHistory(cursorHistoryTemp);
+            updateHelpPrompts();
             break;
         }
     }
@@ -1075,4 +1076,19 @@ HelpStyle ViewController::getHelpStyle()
         return GuiComponent::getHelpStyle();
 
     return mCurrentView->getHelpStyle();
+}
+
+HelpStyle ViewController::getViewHelpStyle()
+{
+    if (mState.getSystem()->getTheme()->isLegacyTheme()) {
+        // For backward compatibility with legacy theme sets, read the helpsystem theme config
+        // from the system view entry.
+        return getSystemListView()->getHelpStyle();
+    }
+    else {
+        if (mState.viewing == ViewMode::GAMELIST)
+            return getGamelistView(mState.getSystem())->getHelpStyle();
+        else
+            return getSystemListView()->getHelpStyle();
+    }
 }

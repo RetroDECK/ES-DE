@@ -13,6 +13,7 @@
 #include "GuiComponent.h"
 #include "components/MenuComponent.h"
 #include "guis/GuiSettings.h"
+#include "views/ViewController.h"
 
 class GuiMenu : public GuiComponent
 {
@@ -23,7 +24,7 @@ public:
     bool input(InputConfig* config, Input input) override;
     void onSizeChanged() override;
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     void close(bool closeAllWindows);

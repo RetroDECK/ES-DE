@@ -87,7 +87,7 @@ public:
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return mHelpStyle; }
     std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
@@ -103,6 +103,7 @@ private:
     void legacyInitMDValues();
 
     Renderer* mRenderer;
+    HelpStyle mHelpStyle;
     ViewController::GamelistViewStyle mViewStyle;
     bool mLegacyMode;
 

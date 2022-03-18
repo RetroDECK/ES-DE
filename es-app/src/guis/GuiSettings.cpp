@@ -19,7 +19,6 @@
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
 #include "views/GamelistView.h"
-#include "views/ViewController.h"
 
 #include <SDL2/SDL.h>
 
@@ -231,13 +230,6 @@ bool GuiSettings::input(InputConfig* config, Input input)
     }
 
     return GuiComponent::input(config, input);
-}
-
-HelpStyle GuiSettings::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }
 
 std::vector<HelpPrompt> GuiSettings::getHelpPrompts()

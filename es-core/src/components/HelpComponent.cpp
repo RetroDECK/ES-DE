@@ -20,6 +20,7 @@
 static std::map<std::string, std::string> sIconPathMap {};
 
 HelpComponent::HelpComponent()
+    : mRenderer {Renderer::getInstance()}
 {
     // Assign icons.
     assignIcons();
@@ -200,7 +201,7 @@ void HelpComponent::updateGrid()
         return;
     }
 
-    std::shared_ptr<Font>& font = mStyle.font;
+    std::shared_ptr<Font>& font {mStyle.font};
 
     mGrid = std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(mPrompts.size()) * 4, 1});
 
@@ -212,7 +213,7 @@ void HelpComponent::updateGrid()
     float width {0.0f};
     const float height {std::round(font->getLetterHeight() * 1.25f)};
 
-    // State variable indicating whether gui is dimmed.
+    // State variable indicating whether the GUI is dimmed.
     bool isDimmed {mWindow->isBackgroundDimmed()};
 
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); ++it) {
@@ -238,7 +239,7 @@ void HelpComponent::updateGrid()
 
         width +=
             icon->getSize().x + lbl->getSize().x +
-            ((mStyle.iconTextSpacing + mStyle.entrySpacing) * Renderer::getScreenWidthModifier());
+            ((mStyle.iconTextSpacing + mStyle.entrySpacing) * mRenderer->getScreenWidthModifier());
     }
 
     mGrid->setSize(width, height);
@@ -247,14 +248,27 @@ void HelpComponent::updateGrid()
         const int col = i * 4;
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(
-            col + 1, (mStyle.iconTextSpacing * Renderer::getScreenWidthModifier()) / width);
+            col + 1, (mStyle.iconTextSpacing * mRenderer->getScreenWidthModifier()) / width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
 
         mGrid->setEntry(icons.at(i), glm::ivec2 {col, 0}, false, false);
         mGrid->setEntry(labels.at(i), glm::ivec2 {col + 2, 0}, false, false);
     }
 
-    mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
+    if (mStyle.horizontalAlignment == "right") {
+        mGrid->setPosition({mRenderer->getScreenWidth() - mGrid->getSize().x - mStyle.position.x +
+                                mStyle.iconTextSpacing + mStyle.entrySpacing,
+                            mStyle.position.y, 0.0f});
+    }
+    else if (mStyle.horizontalAlignment == "center") {
+        mGrid->setPosition({(mRenderer->getScreenWidth() / 2.0f) - (mGrid->getSize().x / 2.0f) -
+                                mStyle.position.x + mStyle.iconTextSpacing,
+                            mStyle.position.y, 0.0f});
+    }
+    else {
+        mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
+    }
+
     mGrid->setOrigin(mStyle.origin);
 }
 

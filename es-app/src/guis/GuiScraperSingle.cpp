@@ -16,7 +16,6 @@
 #include "components/ButtonComponent.h"
 #include "components/MenuComponent.h"
 #include "components/TextComponent.h"
-#include "views/ViewController.h"
 
 GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
                                    std::function<void(const ScraperSearchResult&)> doneFunc,
@@ -190,13 +189,6 @@ std::vector<HelpPrompt> GuiScraperSingle::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "back (cancel)"));
 
     return prompts;
-}
-
-HelpStyle GuiScraperSingle::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }
 
 void GuiScraperSingle::close()

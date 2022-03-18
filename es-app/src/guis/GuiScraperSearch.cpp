@@ -33,7 +33,6 @@
 #include "guis/GuiTextEditPopup.h"
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
-#include "views/ViewController.h"
 
 #define FAILED_VERIFICATION_RETRIES 8
 
@@ -1006,11 +1005,4 @@ std::vector<HelpPrompt> GuiScraperSearch::getHelpPrompts()
         prompts.push_back(HelpPrompt("a", "accept result"));
 
     return prompts;
-}
-
-HelpStyle GuiScraperSearch::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }

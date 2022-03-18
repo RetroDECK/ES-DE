@@ -11,6 +11,7 @@
 
 #include "GuiComponent.h"
 #include "HelpStyle.h"
+#include "renderers/Renderer.h"
 
 class ComponentGrid;
 class ImageComponent;
@@ -32,6 +33,7 @@ public:
     void setStyle(const HelpStyle& style);
 
 private:
+    Renderer* mRenderer;
     std::shared_ptr<TextureResource> getIconTexture(const char* name);
     std::map<std::string, std::shared_ptr<TextureResource>> mIconCache;
 

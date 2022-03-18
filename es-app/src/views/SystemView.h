@@ -28,6 +28,7 @@
 class SystemData;
 
 struct SystemViewElements {
+    HelpStyle helpStyle;
     std::string name;
     std::string fullName;
     std::vector<std::unique_ptr<GameSelectorComponent>> gameSelectors;
@@ -96,7 +97,7 @@ public:
     void onThemeChanged(const std::shared_ptr<ThemeData>& theme);
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return mSystemElements[mCarousel->getCursor()].helpStyle; }
 
 protected:
     void onCursorChanged(const CursorState& state);

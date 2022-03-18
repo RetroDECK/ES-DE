@@ -26,7 +26,7 @@ private:
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
     MenuComponent mMenu;
     bool mHasSystems;

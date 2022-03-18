@@ -3,8 +3,7 @@
 //  EmulationStation Desktop Edition
 //  HelpStyle.cpp
 //
-//  Style (default colors, position and origin) for the help system.
-//  Also theme handling.
+//  Style (colors, position, icons etc.) for the help system.
 //
 
 #include "HelpStyle.h"
@@ -14,18 +13,18 @@
 #define PREFIX "button_"
 
 HelpStyle::HelpStyle()
+    : position {Renderer::getScreenWidth() * 0.012f, Renderer::getScreenHeight() * 0.9515f}
+    , origin {glm::vec2 {}}
+    , horizontalAlignment {"left"}
+    , textColor {0x777777FF}
+    , textColorDimmed {0x777777FF}
+    , iconColor {0x777777FF}
+    , iconColorDimmed {0x777777FF}
+    , entrySpacing {16.0f}
+    , iconTextSpacing {8.0f}
+    , opacity {1.0f}
+    , letterCase {"uppercase"}
 {
-    position =
-        glm::vec2 {Renderer::getScreenWidth() * 0.012f, Renderer::getScreenHeight() * 0.9515f};
-    origin = glm::vec2 {};
-    textColor = 0x777777FF;
-    textColorDimmed = 0x777777FF;
-    iconColor = 0x777777FF;
-    iconColorDimmed = 0x777777FF;
-    entrySpacing = 16.0f;
-    iconTextSpacing = 8.0f;
-    letterCase = "uppercase";
-    opacity = 1.0f;
 
     if (FONT_SIZE_SMALL != 0)
         font = Font::get(FONT_SIZE_SMALL);
@@ -39,12 +38,33 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
     if (!elem)
         return;
 
+    if (elem->has("horizontalAlignment")) {
+        horizontalAlignment = elem->get<std::string>("horizontalAlignment");
+        if (horizontalAlignment != "left" && horizontalAlignment != "center" &&
+            horizontalAlignment != "right") {
+            LOG(LogWarning) << "HelpSystem: Invalid theme configuration, property "
+                               "<horizontalAlignment> defined as \""
+                            << horizontalAlignment << "\"";
+            horizontalAlignment = "left";
+        }
+    }
+
+    if (horizontalAlignment == "center")
+        position.x = 0.0f;
+
     if (elem->has("pos"))
         position = elem->get<glm::vec2>("pos") *
                    glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
 
-    if (elem->has("origin"))
-        origin = elem->get<glm::vec2>("origin");
+    if (elem->has("origin")) {
+        if (theme->isLegacyTheme()) {
+            origin = elem->get<glm::vec2>("origin");
+        }
+        else {
+            LOG(LogWarning) << "HelpSystem: Invalid theme configuration, property "
+                               "<origin> not allowed for the helpsystem component";
+        }
+    }
 
     if (elem->has("textColor"))
         textColor = elem->get<unsigned int>("textColor");

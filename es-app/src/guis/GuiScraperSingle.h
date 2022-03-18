@@ -15,6 +15,7 @@
 #include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "guis/GuiScraperSearch.h"
+#include "views/ViewController.h"
 
 class GuiScraperSingle : public GuiComponent
 {
@@ -29,7 +30,7 @@ public:
     void update(int deltaTime) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     bool mClose;

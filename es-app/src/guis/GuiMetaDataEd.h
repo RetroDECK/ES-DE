@@ -19,6 +19,7 @@
 #include "components/ScrollIndicatorComponent.h"
 #include "guis/GuiSettings.h"
 #include "scrapers/Scraper.h"
+#include "views/ViewController.h"
 
 class ComponentList;
 class TextComponent;
@@ -37,7 +38,7 @@ public:
     void onSizeChanged() override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     void save();

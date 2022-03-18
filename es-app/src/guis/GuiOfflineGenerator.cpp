@@ -11,7 +11,6 @@
 
 #include "SystemData.h"
 #include "components/MenuComponent.h"
-#include "views/ViewController.h"
 
 GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     : mGameQueue {gameQueue}
@@ -326,11 +325,4 @@ std::vector<HelpPrompt> GuiOfflineGenerator::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
     return prompts;
-}
-
-HelpStyle GuiOfflineGenerator::getHelpStyle()
-{
-    HelpStyle style = HelpStyle();
-    style.applyTheme(ViewController::getInstance()->getState().getSystem()->getTheme(), "system");
-    return style;
 }

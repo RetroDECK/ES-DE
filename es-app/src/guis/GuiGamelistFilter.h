@@ -14,6 +14,7 @@
 #include "FileFilterIndex.h"
 #include "GuiComponent.h"
 #include "components/MenuComponent.h"
+#include "views/ViewController.h"
 
 template <typename T> class OptionListComponent;
 class SystemData;
@@ -27,7 +28,7 @@ public:
     bool input(InputConfig* config, Input input) override;
 
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     void initializeMenu();

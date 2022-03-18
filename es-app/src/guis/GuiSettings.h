@@ -13,6 +13,7 @@
 
 #include "SystemData.h"
 #include "components/MenuComponent.h"
+#include "views/ViewController.h"
 
 // This is just a really simple template for a GUI that calls some save functions when closed.
 class GuiSettings : public GuiComponent
@@ -60,7 +61,7 @@ public:
 
     bool input(InputConfig* config, Input input) override;
     std::vector<HelpPrompt> getHelpPrompts() override;
-    HelpStyle getHelpStyle() override;
+    HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
     MenuComponent mMenu;
