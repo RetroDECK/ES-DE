@@ -8,8 +8,7 @@
             <color>C6C6C6</color>
             <backgroundColor>555555D8</backgroundColor>
         </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7,
-                    info8, info9, info10, info11, info12">
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
             <color>B6B6B6</color>
         </text>
         <image name="background">

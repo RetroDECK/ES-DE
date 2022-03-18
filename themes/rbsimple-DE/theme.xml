@@ -43,8 +43,7 @@ based on: 'recalbox-multi' by the Recalbox community
     </view>
 
     <view name="system">
-        <text name="info1, info2, info3, info4, info5, info6, info7,
-                    info8, info9, info10, info11, info12">
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
             <horizontalAlignment>left</horizontalAlignment>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.021</fontSize>

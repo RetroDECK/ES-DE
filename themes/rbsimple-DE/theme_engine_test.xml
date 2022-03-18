@@ -12,8 +12,7 @@
             <color>D6D6D6</color>
             <backgroundColor>555555D8</backgroundColor>
         </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7,
-                info8, info9, info10, info11, info12">
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
             <color>B6B6B6</color>
         </text>
         <text name="system_name">
@@ -32,8 +31,7 @@
             <color>E6E6E6</color>
             <backgroundColor>55555500</backgroundColor>
         </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7,
-                info8, info9, info10, info11, info12">
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
             <color>D6D6D6</color>
         </text>
 
@@ -74,7 +72,7 @@
         <carousel name="system_carousel">
             <type>vertical_wheel</type>
             <size>0.25 1.0</size>
-            <pos>0. 0</pos>
+            <pos>0 0</pos>
             <logo>./${system.theme}/images/logo.svg</logo>
             <logoScale>1.23</logoScale>
             <logoSize>0.15 0.125</logoSize>
@@ -159,7 +157,7 @@
             <size>0.2 0</size>
             <origin>0 0</origin>
             <letterCase>uppercase</letterCase>
-            <horizontalAlignment>right</horizontalAlignment>
+            <horizontalAlignment>left</horizontalAlignment>
             <text>Last played</text>
             <zIndex>50</zIndex>
         </text>
@@ -174,6 +172,20 @@
             <gameCount>1</gameCount>
         </gameselector>
 
+        <rating name="random_game_rating">
+            <pos>0.26 0.167</pos>
+            <size>0.06 0.04</size>
+            <color>FFEE00</color>
+            <gameselector>selector_random</gameselector>
+        </rating>
+
+        <rating name="recent_game_rating">
+            <pos>0.889 0.042</pos>
+            <size>0.03 0.03</size>
+            <color>FFEE00</color>
+            <gameselector>selector_recent</gameselector>
+        </rating>
+
         <image name="random_background_image">
             <origin>0 0</origin>
             <pos>0 0</pos>
@@ -184,6 +196,7 @@
             <scrollFadeIn>true</scrollFadeIn>
             <zIndex>3</zIndex>
             <opacity>0.5</opacity>
+            <saturation>0.3</saturation>
         </image>
 
         <image name="recent_game_image">
@@ -200,7 +213,7 @@
 
         <video name="random_game_video">
             <origin>0 0</origin>
-            <pos>0.26 0.19</pos>
+            <pos>0.26 0.22</pos>
             <interpolation>linear</interpolation>
             <maxSize>0.3 0.424</maxSize>
             <imageType>marquee, titlescreen</imageType>
@@ -214,7 +227,8 @@
         </video>
 
         <helpsystem name="help">
-            <pos>0.528 0.954</pos>
+            <pos>0.020 0.954</pos>
+            <horizontalAlignment>right</horizontalAlignment>
         </helpsystem>
 
         <image name="consolegame">

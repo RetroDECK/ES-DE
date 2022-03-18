@@ -7,8 +7,7 @@
             <color>202020</color>
             <backgroundColor>DDDDDDD8</backgroundColor>
         </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7,
-                    info8, info9, info10, info11, info12">
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
             <color>262626</color>
         </text>
         <image name="background">
@@ -45,6 +44,8 @@
         <helpsystem name="help">
             <textColor>262626</textColor>
             <iconColor>262626</iconColor>
+            <textColorDimmed>B6B6B6</textColorDimmed>
+            <iconColorDimmed>B6B6B6</iconColorDimmed>
         </helpsystem>
         <image name="background">
             <color>707070</color>
