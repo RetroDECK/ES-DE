@@ -27,14 +27,17 @@
 * Added theme support for Lottie animations (vector graphics)
 * Added theme support for GIF animations
 * Added a GameSelectorComponent for displaying game media and metadata in the system view
-* Added support for displaying videos, Lottie animations and date/time elements to the system view
+* Added support to the system view for displaying videos, Lottie animations, GIF animations, date/time components and game ratings
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
 * Added theme support for defining the opacity for most element types
+* Added theme support for defining color saturation for images, videos and animations
 * Added theme support for defining the video fade-in time
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
 * Added theme support for enabling or disabling audio playback for videos
+* Added theme support for setting the horizontal alignment for the help prompts (left/center/right)
+* Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
@@ -72,6 +75,7 @@
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
+* Removed a lot of unnecessary applyTheme() calls when updating help prompts
 * Changed the opacity data type and functions from unsigned char to float throughout the codebase
 * Refactored the six gamelist classes into two new classes; GamelistBase and GamelistView
 * Rewrote the gamelist logic to handle an arbitrary amount of components per type and split the legacy code into a separate file
@@ -95,6 +99,7 @@
 * When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
+* The outermost logos would sometimes glitch out during carousel transitions
 * Horizontal and vertical gradients were mixed up (showing the opposite gradient type if set in a theme)
 * The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling
 * Rating icon outlines would not fade out correctly when fast-scrolling in a gamelist

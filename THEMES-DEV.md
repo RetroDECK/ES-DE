@@ -79,6 +79,8 @@ The following are the most important changes compared to the legacy theme struct
 * The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` component)
 * The `forceUppercase` property has been replaced with the more versatile `letterCase` property
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
+* The carousel property maxLogoCount is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine
+* The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
 * Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
 
@@ -787,7 +789,7 @@ Properties:
     - `3dbox` - This will look for a 3D box image.
     - `fanart` - This will look for a fan art image.
 * `gameselector` - type: STRING
-    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
+    - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
 * `interpolation` - type: STRING
@@ -808,6 +810,10 @@ Properties:
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
+* `saturation` - type: FLOAT
+    - Controls the level of color saturation.
+    - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
     - Default is `1`
 * `visible` - type: BOOLEAN
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
@@ -856,7 +862,7 @@ Properties:
     - `3dbox` - This will look for a 3D box image.
     - `fanart` - This will look for a fan art image.
 * `gameselector` - type: STRING
-    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
+    - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
 * `audio` - type: BOOLEAN
     - Whether to enable or disable audio playback for the video.
     - Default is `true`
@@ -884,6 +890,10 @@ Properties:
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
+* `saturation` - type: FLOAT
+    - Controls the level of color saturation. This affects both the static image and the video stream.
+    - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
     - Default is `1`
 * `visible` - type: BOOLEAN
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
@@ -936,6 +946,10 @@ Properties:
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
+    - Default is `1`
+* `saturation` - type: FLOAT
+    - Controls the level of color saturation.
+    - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
     - Default is `1`
 * `visible` - type: BOOLEAN
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
@@ -1106,7 +1120,7 @@ Properties:
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
 * `gameselector` - type: STRING
-    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
+    - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
 * `containerScrollSpeed` - type: FLOAT
@@ -1187,7 +1201,7 @@ Properties:
     - `releasedate` - The release date of the game.
     - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
 * `gameselector` - type: STRING
-    - If more than one gameselector elements have been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
+    - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -1286,7 +1300,10 @@ Properties:
 
 Displays a graphical representation of the game rating, from 0 to 5.
 
+To display game ratings in the `system` view, you first need to create a `gameselector` element.
+
 Supported views:
+* `system`
 * `gamelist`
 
 Instances per view:
@@ -1306,6 +1323,8 @@ Properties:
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the rating will be rotated.
     - Default is `0.5 0.5`
+* `gameselector` - type: STRING
+    - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `filledPath` - type: PATH
@@ -1327,6 +1346,8 @@ Properties:
 
 Displays a carousel for selecting game systems.
 
+ When using fade transitions, any elements placed below or at the same zIndex value as the carousel will be faded to black during transitions, and any elements with a higher zIndex value than the carousel will be faded to transparent.
+
 Supported views:
 * `system`
 
@@ -1339,12 +1360,14 @@ Properties:
     - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
     - Default is `horizontal`
 * `size` - type: NORMALIZED_PAIR
+    - Minimum value per axis is `0.05` and maximum value per axis is `1.5`
     - Default is `1 0.2325`
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0 0.38375`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0 0`
 * `color` - type: COLOR
     - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.
     - Default is `FFFFFFD8`
@@ -1382,9 +1405,9 @@ Properties:
     - Sets `logo` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
-* `maxLogoCount` - type: UNSIGNED_INTEGER
+* `maxLogoCount` - type: FLOAT
     - Sets the number of logos to display in the carousel.
-    - Minimum value is `2` and maximum value is `30`
+    - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
 * `text` - type: STRING
     - A string literal to display if there is no `logo` or `defaultLogo` properties defined and if no images were found.
@@ -1469,7 +1492,7 @@ Properties:
 
 #### gameselector
 
-Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image`, `video`, `text` and `datetime` elements.
+Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image`, `video`, `text`, `datetime` and `rating` elements.
 
 Supported views:
 * `system`
@@ -1489,7 +1512,7 @@ Properties:
 
 #### helpsystem
 
-The help system is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
+The help system is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements. As well an origin value of `0 0` is always applied for this element.
 
 Supported views:
 * `system`
@@ -1500,20 +1523,20 @@ Instances per view:
 
 Properties:
 * `pos` - type: NORMALIZED_PAIR
-    - Default is `0.012 0.9515`
-* `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
-      the element exactly in the middle of the screen.
-    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - This works a bit different than for the other elements. If `horizontalAlignment` is set to `left` then the x axis value works as expected, but if it's set to `right` then it acts as an offset from the right side of the screen. If setting the alignment to `center` the x axis value should be set to `0` as it doesn't make much sense to add an offset in this case. The y axis value always works as expected and is not affected by the choice of horizontal alignment.
+    - Default is `0.012 0.9515` when `horizontalAlignment` is set to `left` or `right`
+    - Default is `0 0.9515` when `horizontalAlignment` is set to `center`
+* `horizontalAlignment` - type: STRING
+    - Controls alignment on the X axis.
+    - Valid values are `left`, `center` or `right`
+    - Default is `left`
 * `textColor` - type: COLOR
     - Default is `777777FF`
 * `textColorDimmed` - type: COLOR
-    - Must be placed under the 'system' view.
     - Default is the same value as textColor.
 * `iconColor` - type: COLOR
     - Default is `777777FF`
 * `iconColorDimmed` - type: COLOR
-    - Must be placed under the 'system' view.
     - Default is the same value as iconColor.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT

@@ -985,7 +985,7 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Accepted values are "left", "right" or "center" when `type` is "vertical" or "vertical_wheel".
     - Default is "center"
 * `maxLogoCount` - type: FLOAT.
-    - Sets the number of logos to display in the carousel.
+    - Sets the number of logos to display in the carousel. Note that fractional values are rounded up.
     - Default is 3
 * `zIndex` - type: FLOAT.
     - z-index value for component. Components will be rendered in order of z-index value from low to high with the carousel above all other components.
