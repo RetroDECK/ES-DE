@@ -15,13 +15,12 @@
 HelpStyle::HelpStyle()
     : position {Renderer::getScreenWidth() * 0.012f, Renderer::getScreenHeight() * 0.9515f}
     , origin {glm::vec2 {}}
-    , horizontalAlignment {"left"}
     , textColor {0x777777FF}
     , textColorDimmed {0x777777FF}
     , iconColor {0x777777FF}
     , iconColorDimmed {0x777777FF}
-    , entrySpacing {16.0f}
-    , iconTextSpacing {8.0f}
+    , entrySpacing {0.00833f}
+    , iconTextSpacing {0.00416f}
     , opacity {1.0f}
     , letterCase {"uppercase"}
 {
@@ -38,33 +37,12 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
     if (!elem)
         return;
 
-    if (elem->has("horizontalAlignment")) {
-        horizontalAlignment = elem->get<std::string>("horizontalAlignment");
-        if (horizontalAlignment != "left" && horizontalAlignment != "center" &&
-            horizontalAlignment != "right") {
-            LOG(LogWarning) << "HelpSystem: Invalid theme configuration, property "
-                               "<horizontalAlignment> defined as \""
-                            << horizontalAlignment << "\"";
-            horizontalAlignment = "left";
-        }
-    }
-
-    if (horizontalAlignment == "center")
-        position.x = 0.0f;
-
     if (elem->has("pos"))
         position = elem->get<glm::vec2>("pos") *
                    glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
 
-    if (elem->has("origin")) {
-        if (theme->isLegacyTheme()) {
-            origin = elem->get<glm::vec2>("origin");
-        }
-        else {
-            LOG(LogWarning) << "HelpSystem: Invalid theme configuration, property "
-                               "<origin> not allowed for the helpsystem component";
-        }
-    }
+    if (elem->has("origin"))
+        origin = elem->get<glm::vec2>("origin");
 
     if (elem->has("textColor"))
         textColor = elem->get<unsigned int>("textColor");
@@ -86,10 +64,10 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         font = Font::getFromTheme(elem, ThemeFlags::ALL, font);
 
     if (elem->has("entrySpacing"))
-        entrySpacing = elem->get<float>("entrySpacing");
+        entrySpacing = glm::clamp(elem->get<float>("entrySpacing"), 0.0f, 0.04f);
 
     if (elem->has("iconTextSpacing"))
-        iconTextSpacing = elem->get<float>("iconTextSpacing");
+        iconTextSpacing = glm::clamp(elem->get<float>("iconTextSpacing"), 0.0f, 0.04f);
 
     if (elem->has("letterCase"))
         letterCase = elem->get<std::string>("letterCase");

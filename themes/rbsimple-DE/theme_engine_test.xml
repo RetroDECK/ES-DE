@@ -227,8 +227,8 @@
         </video>
 
         <helpsystem name="help">
-            <pos>0.020 0.954</pos>
-            <horizontalAlignment>right</horizontalAlignment>
+            <pos>0.9885 0.954</pos>
+            <origin>1 0 </origin>
         </helpsystem>
 
         <image name="consolegame">

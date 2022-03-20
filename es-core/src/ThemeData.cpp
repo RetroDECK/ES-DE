@@ -292,8 +292,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"gameCount", UNSIGNED_INTEGER}}},
      {"helpsystem",
       {{"pos", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR}, // For backward compatibility with legacy themes.
-       {"horizontalAlignment", STRING},
+       {"origin", NORMALIZED_PAIR},
        {"textColor", COLOR},
        {"textColorDimmed", COLOR},
        {"iconColor", COLOR},

@@ -237,9 +237,9 @@ void HelpComponent::updateGrid()
         lbl->setOpacity(mStyle.opacity);
         labels.push_back(lbl);
 
-        width +=
-            icon->getSize().x + lbl->getSize().x +
-            ((mStyle.iconTextSpacing + mStyle.entrySpacing) * mRenderer->getScreenWidthModifier());
+        width += icon->getSize().x + lbl->getSize().x +
+                 ((mStyle.iconTextSpacing * mRenderer->getScreenWidth() +
+                   mStyle.entrySpacing * mRenderer->getScreenWidth()));
     }
 
     mGrid->setSize(width, height);
@@ -247,27 +247,15 @@ void HelpComponent::updateGrid()
     for (unsigned int i = 0; i < icons.size(); ++i) {
         const int col = i * 4;
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
-        mGrid->setColWidthPerc(
-            col + 1, (mStyle.iconTextSpacing * mRenderer->getScreenWidthModifier()) / width);
+        mGrid->setColWidthPerc(col + 1,
+                               (mStyle.iconTextSpacing * mRenderer->getScreenWidth()) / width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
 
         mGrid->setEntry(icons.at(i), glm::ivec2 {col, 0}, false, false);
         mGrid->setEntry(labels.at(i), glm::ivec2 {col + 2, 0}, false, false);
     }
 
-    if (mStyle.horizontalAlignment == "right") {
-        mGrid->setPosition({mRenderer->getScreenWidth() - mGrid->getSize().x - mStyle.position.x +
-                                mStyle.iconTextSpacing + mStyle.entrySpacing,
-                            mStyle.position.y, 0.0f});
-    }
-    else if (mStyle.horizontalAlignment == "center") {
-        mGrid->setPosition({(mRenderer->getScreenWidth() / 2.0f) - (mGrid->getSize().x / 2.0f) -
-                                mStyle.position.x + mStyle.iconTextSpacing,
-                            mStyle.position.y, 0.0f});
-    }
-    else {
-        mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
-    }
+    mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
 
     mGrid->setOrigin(mStyle.origin);
 }
