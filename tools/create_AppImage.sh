@@ -37,7 +37,7 @@ chmod a+x linuxdeploy-x86_64.AppImage
 rm -rf ./AppDir
 mkdir AppDir
 
-rm CMakeCache.txt
+rm -f CMakeCache.txt
 cmake -DBUNDLED_CERTS=on .
 make clean
 make -j8
