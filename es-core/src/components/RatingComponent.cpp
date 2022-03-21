@@ -91,6 +91,13 @@ void RatingComponent::setOpacity(float opacity)
     updateColors();
 }
 
+void RatingComponent::setDimming(float dimming)
+{
+    mDimming = dimming;
+    mVertices[0].dimming = mDimming;
+    mVertices[4].dimming = mDimming;
+}
+
 void RatingComponent::setColorShift(unsigned int color)
 {
     mColorShift = color;

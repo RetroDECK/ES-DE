@@ -33,6 +33,7 @@ public:
     void onSizeChanged() override;
 
     void setOpacity(float opacity) override;
+    void setDimming(float dimming) override;
 
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;
