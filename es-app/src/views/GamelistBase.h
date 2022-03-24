@@ -21,23 +21,24 @@
 #include "components/RatingComponent.h"
 #include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
-#include "components/TextListComponent.h"
 #include "components/VideoFFmpegComponent.h"
+#include "components/primary/CarouselComponent.h"
+#include "components/primary/TextListComponent.h"
 
 #include <stack>
 
 class GamelistBase : public GuiComponent
 {
 public:
-    FileData* getCursor() { return mList.getSelected(); }
+    FileData* getCursor() { return mPrimary->getSelected(); }
     void setCursor(FileData*);
 
     bool input(InputConfig* config, Input input) override;
 
-    FileData* getNextEntry() { return mList.getNext(); }
-    FileData* getPreviousEntry() { return mList.getPrevious(); }
-    FileData* getFirstEntry() { return mList.getFirst(); }
-    FileData* getLastEntry() { return mList.getLast(); }
+    FileData* getNextEntry() { return mPrimary->getNext(); }
+    FileData* getPreviousEntry() { return mPrimary->getPrevious(); }
+    FileData* getFirstEntry() { return mPrimary->getFirst(); }
+    FileData* getLastEntry() { return mPrimary->getLast(); }
     FileData* getFirstGameEntry() { return mFirstGameEntry; }
 
     // These functions are used to retain the folder cursor history, for instance
@@ -58,9 +59,10 @@ public:
 
     const std::vector<std::string>& getFirstLetterIndex() { return mFirstLetterIndex; }
 
+    void stopListScrolling() override { mPrimary->stopScrolling(); }
+
 protected:
     GamelistBase(FileData* root);
-    ~GamelistBase();
 
     // Called when a FileData* is added, has its metadata changed, or is removed.
     virtual void onFileChanged(FileData* file, bool reloadGamelist) = 0;
@@ -72,14 +74,15 @@ protected:
 
     virtual void launch(FileData* game) = 0;
 
-    bool isListScrolling() override { return mList.isScrolling(); }
-    void stopListScrolling() override { mList.stopScrolling(); }
+    bool isListScrolling() override { return mPrimary->isScrolling(); }
 
     std::string getQuickSystemSelectRightButton() { return "right"; }
     std::string getQuickSystemSelectLeftButton() { return "left"; }
 
     FileData* mRoot;
-    TextListComponent<FileData*> mList;
+    std::unique_ptr<CarouselComponent<FileData*>> mCarousel;
+    std::unique_ptr<TextListComponent<FileData*>> mTextList;
+    PrimaryComponent<FileData*>* mPrimary;
 
     // Points to the first game in the list, i.e. the first entry which is of the type "GAME".
     FileData* mFirstGameEntry;
@@ -100,6 +103,7 @@ protected:
     bool mIsFiltered;
     bool mIsFolder;
     bool mVideoPlaying;
+    bool mLeftRightAvailable;
 
 private:
 };

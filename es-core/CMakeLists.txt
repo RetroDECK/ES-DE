@@ -31,7 +31,12 @@ set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/LambdaAnimation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/MoveCameraAnimation.h
 
-    # GUI components
+    # Primary GUI components
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/primary/CarouselComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/primary/PrimaryComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/primary/TextListComponent.h
+
+    # Secondary GUI components
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgeComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.h
@@ -111,7 +116,7 @@ set(CORE_SOURCES
     # Animations
     ${CMAKE_CURRENT_SOURCE_DIR}/src/animations/AnimationController.cpp
 
-    # GUI components
+    # Secondary GUI components
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/AnimatedImageComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BadgeComponent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/BusyComponent.cpp

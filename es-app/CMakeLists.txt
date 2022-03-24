@@ -25,10 +25,6 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/UIModeController.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.h
 
-    # Primary GUI components
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/CarouselComponent.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextListComponent.h
-
     # GUIs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiCollectionSystemsOptions.h
@@ -75,10 +71,6 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/UIModeController.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/VolumeControl.cpp
-
-    # Primary GUI components
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/CarouselComponent.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/TextListComponent.cpp
 
     # GUIs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/guis/GuiAlternativeEmulators.cpp

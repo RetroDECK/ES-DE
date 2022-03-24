@@ -26,13 +26,6 @@ GamelistView::GamelistView(FileData* root)
 
     if (mLegacyMode)
         return;
-
-    const float padding {0.01f};
-
-    mList.setPosition(mSize.x * (0.50f + padding), mList.getPosition().y);
-    mList.setSize(mSize.x * (0.50f - padding), mList.getSize().y);
-    mList.setAlignment(TextListComponent<FileData*>::ALIGN_LEFT);
-    mList.setCursorChangedCallback([&](const CursorState& /*state*/) { updateInfoPanel(); });
 }
 
 GamelistView::~GamelistView()
@@ -79,9 +72,11 @@ void GamelistView::onShow()
     GuiComponent::onShow();
 
     if (mLegacyMode)
-        legacyUpdateInfoPanel();
+        legacyUpdateInfoPanel(CursorState::CURSOR_STOPPED);
     else
-        updateInfoPanel();
+        updateInfoPanel(CursorState::CURSOR_STOPPED);
+
+    mPrimary->finishAnimation(0);
 }
 
 void GamelistView::onTransition()
@@ -111,6 +106,44 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
     if (mTheme->hasView("gamelist")) {
         for (auto& element : mTheme->getViewElements("gamelist").elements) {
+            if (element.second.type == "textlist" || element.second.type == "carousel") {
+                if (element.second.type == "carousel" && mTextList != nullptr) {
+                    LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
+                                    << "defined, skipping <carousel> configuration entry";
+                    continue;
+                }
+                if (element.second.type == "textlist" && mCarousel != nullptr) {
+                    LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
+                                    << "defined, skipping <textlist> configuration entry";
+                    continue;
+                }
+            }
+            if (element.second.type == "textlist") {
+                if (mTextList == nullptr) {
+                    mTextList = std::make_unique<TextListComponent<FileData*>>();
+                    mPrimary = mTextList.get();
+                }
+                mPrimary->setPosition(0.2f, mSize.y * 0.2f);
+                mPrimary->setSize(mSize.x * 0.7f, mSize.y * 0.6f);
+                mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
+                mPrimary->setCursorChangedCallback(
+                    [&](const CursorState& state) { updateInfoPanel(state); });
+                mPrimary->setDefaultZIndex(50.0f);
+                mPrimary->setZIndex(50.0f);
+                mPrimary->applyTheme(theme, "gamelist", element.first, ALL);
+                addChild(mPrimary);
+            }
+            if (element.second.type == "carousel") {
+                if (mCarousel == nullptr) {
+                    mCarousel = std::make_unique<CarouselComponent<FileData*>>();
+                    mPrimary = mCarousel.get();
+                }
+                mPrimary->setCursorChangedCallback(
+                    [&](const CursorState& state) { updateInfoPanel(state); });
+                mPrimary->setDefaultZIndex(50.0f);
+                mPrimary->applyTheme(theme, "gamelist", element.first, ALL);
+                addChild(mPrimary);
+            }
             if (element.second.type == "image") {
                 mImageComponents.push_back(std::make_unique<ImageComponent>());
                 mImageComponents.back()->setDefaultZIndex(30.0f);
@@ -211,11 +244,31 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 addChild(mRatingComponents.back().get());
             }
         }
+
+        if (mPrimary == nullptr) {
+            mTextList = std::make_unique<TextListComponent<FileData*>>();
+            mPrimary = mTextList.get();
+            mPrimary->setPosition(0.2f, mSize.y * 0.2f);
+            mPrimary->setSize(mSize.x * 0.7f, mSize.y * 0.6f);
+            mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
+            mPrimary->setCursorChangedCallback(
+                [&](const CursorState& state) { updateInfoPanel(state); });
+            mPrimary->setDefaultZIndex(50.0f);
+            mPrimary->setZIndex(50.0f);
+            mPrimary->applyTheme(theme, "gamelist", "", ALL);
+            addChild(mPrimary);
+        }
+
         mHelpStyle.applyTheme(mTheme, "gamelist");
+        populateList(mRoot->getChildrenListToDisplay(), mRoot);
     }
 
-    mList.setDefaultZIndex(50.0f);
-    mList.applyTheme(theme, "gamelist", "textlist_gamelist", ALL);
+    // Disable quick system select if the primary component uses the left and right buttons.
+    if (mCarousel != nullptr) {
+        if (mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL ||
+            mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL_WHEEL)
+            mLeftRightAvailable = false;
+    }
 
     sortChildren();
 }
@@ -259,7 +312,7 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
     std::vector<HelpPrompt> prompts;
 
     if (Settings::getInstance()->getBool("QuickSystemSelect") &&
-        SystemData::sSystemVector.size() > 1)
+        SystemData::sSystemVector.size() > 1 && mLeftRightAvailable)
         prompts.push_back(HelpPrompt("left/right", "system"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
@@ -301,20 +354,22 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
     return prompts;
 }
 
-void GamelistView::updateInfoPanel()
+void GamelistView::updateInfoPanel(const CursorState& state)
 {
     if (mLegacyMode) {
-        legacyUpdateInfoPanel();
+        legacyUpdateInfoPanel(state);
         return;
     }
 
-    FileData* file {(mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected()};
+    FileData* file {(mPrimary->size() > 0 && state == CursorState::CURSOR_STOPPED) ?
+                        mPrimary->getSelected() :
+                        nullptr};
 
     // If the game data has already been rendered to the info panel, then skip it this time.
     if (file == mLastUpdated)
         return;
 
-    if (!mList.isScrolling())
+    if (state == CursorState::CURSOR_STOPPED)
         mLastUpdated = file;
 
     bool hideMetaDataFields {false};
@@ -336,7 +391,7 @@ void GamelistView::updateInfoPanel()
 
     // If we're scrolling, hide the metadata fields if the last game had this options set,
     // or if we're in the grouped custom collection view.
-    if (mList.isScrolling()) {
+    if (state == CursorState::CURSOR_SCROLLING) {
         if ((mLastUpdated && mLastUpdated->metadata.get("hidemetadata") == "true") ||
             (mLastUpdated->getSystem()->isCustomCollection() &&
              mLastUpdated->getPath() == mLastUpdated->getSystem()->getName()))
@@ -686,10 +741,6 @@ void GamelistView::updateInfoPanel()
 
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
         GuiComponent* comp {*it};
-        if (!fadingOut && !comp->isAnimationPlaying(0)) {
-            comp->setOpacity(1.0f);
-            continue;
-        }
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
@@ -698,6 +749,9 @@ void GamelistView::updateInfoPanel()
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
     }
+
+    if (state == CursorState::CURSOR_SCROLLING)
+        mLastUpdated = nullptr;
 }
 
 void GamelistView::setGameImage(FileData* file, GuiComponent* comp)

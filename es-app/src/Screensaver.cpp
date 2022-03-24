@@ -215,9 +215,10 @@ void Screensaver::launchGame()
         // Launching game
         ViewController::getInstance()->triggerGameLaunch(mCurrentGame);
         ViewController::getInstance()->goToGamelist(mCurrentGame->getSystem());
-        GamelistView* view =
-            ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get();
+        GamelistView* view {
+            ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get()};
         view->setCursor(mCurrentGame);
+        view->stopListScrolling();
         ViewController::getInstance()->cancelViewTransitions();
         ViewController::getInstance()->pauseViewVideos();
     }
@@ -228,9 +229,10 @@ void Screensaver::goToGame()
     if (mCurrentGame != nullptr) {
         // Go to the game in the gamelist view, but don't launch it.
         ViewController::getInstance()->goToGamelist(mCurrentGame->getSystem());
-        GamelistView* view =
-            ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get();
+        GamelistView* view {
+            ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get()};
         view->setCursor(mCurrentGame);
+        view->stopListScrolling();
         ViewController::getInstance()->cancelViewTransitions();
     }
 }

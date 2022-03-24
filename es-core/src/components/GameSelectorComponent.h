@@ -11,6 +11,7 @@
 
 #include "GuiComponent.h"
 #include "Log.h"
+#include "Settings.h"
 #include "ThemeData.h"
 
 class GameSelectorComponent : public GuiComponent

@@ -67,7 +67,7 @@ void GamelistView::legacyPopulateFields()
     mImageComponents.back()->setThemeMetadata("image_md_image");
     mImageComponents.back()->setOrigin(0.5f, 0.5f);
     mImageComponents.back()->setPosition(mSize.x * 0.25f,
-                                         mList.getPosition().y + mSize.y * 0.2125f);
+                                         mPrimary->getPosition().y + mSize.y * 0.2125f);
     mImageComponents.back()->setMaxSize(mSize.x * (0.50f - 2.0f * padding), mSize.y * 0.4f);
     mImageComponents.back()->setDefaultZIndex(30.0f);
     mImageComponents.back()->setScrollFadeIn(true);
@@ -79,7 +79,7 @@ void GamelistView::legacyPopulateFields()
         mVideoComponents.back()->setThemeMetadata("video_md_video");
         mVideoComponents.back()->setOrigin(0.5f, 0.5f);
         mVideoComponents.back()->setPosition(mSize.x * 0.25f,
-                                             mList.getPosition().y + mSize.y * 0.2125f);
+                                             mPrimary->getPosition().y + mSize.y * 0.2125f);
         mVideoComponents.back()->setSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.4f);
         mVideoComponents.back()->setDefaultZIndex(30.0f);
         mVideoComponents.back()->setScrollFadeIn(true);
@@ -87,10 +87,11 @@ void GamelistView::legacyPopulateFields()
         addChild(mVideoComponents.back().get());
     }
 
-    mList.setPosition(mSize.x * (0.50f + padding), mList.getPosition().y);
-    mList.setSize(mSize.x * (0.50f - padding), mList.getSize().y);
-    mList.setAlignment(TextListComponent<FileData*>::ALIGN_LEFT);
-    mList.setCursorChangedCallback([&](const CursorState& /*state*/) { updateInfoPanel(); });
+    mPrimary->setPosition(mSize.x * (0.50f + padding), mPrimary->getPosition().y);
+    mPrimary->setSize(mSize.x * (0.50f - padding), mPrimary->getSize().y);
+    mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
+    mPrimary->setCursorChangedCallback(
+        [&](const CursorState& state) { legacyUpdateInfoPanel(state); });
 
     // Metadata labels + values.
     mTextComponents.push_back(std::make_unique<TextComponent>());
@@ -210,6 +211,11 @@ void GamelistView::legacyPopulateFields()
 
 void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
 {
+    if (mTextList == nullptr) {
+        mTextList = std::make_unique<TextListComponent<FileData*>>();
+        mPrimary = mTextList.get();
+    }
+
     legacyPopulateFields();
 
     using namespace ThemeFlags;
@@ -230,7 +236,11 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     for (auto extra : mThemeExtras)
         addChild(extra);
 
-    mList.applyTheme(theme, getName(), "textlist_gamelist", ALL);
+    mPrimary->setSize(mSize.x, mSize.y * 0.8f);
+    mPrimary->setPosition(0.0f, mSize.y * 0.2f);
+    mPrimary->setDefaultZIndex(50.0f);
+    mPrimary->applyTheme(theme, getName(), "textlist_gamelist", ALL);
+    addChild(mPrimary);
 
     mImageComponents[LegacyImage::MD_THUMBNAIL]->applyTheme(
         theme, getName(), mImageComponents[LegacyImage::MD_THUMBNAIL]->getThemeMetadata(), ALL);
@@ -306,19 +316,22 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
             container->setVisible(false);
     }
 
+    populateList(mRoot->getChildrenListToDisplay(), mRoot);
     sortChildren();
     mHelpStyle.applyTheme(mTheme, getName());
 }
 
-void GamelistView::legacyUpdateInfoPanel()
+void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
 {
-    FileData* file {(mList.size() == 0 || mList.isScrolling()) ? nullptr : mList.getSelected()};
+    FileData* file {(mPrimary->size() > 0 && state == CursorState::CURSOR_STOPPED) ?
+                        mPrimary->getSelected() :
+                        nullptr};
 
     // If the game data has already been rendered to the info panel, then skip it this time.
     if (file == mLastUpdated)
         return;
 
-    if (!mList.isScrolling())
+    if (state == CursorState::CURSOR_STOPPED)
         mLastUpdated = file;
 
     bool hideMetaDataFields {false};
@@ -340,7 +353,7 @@ void GamelistView::legacyUpdateInfoPanel()
 
     // If we're scrolling, hide the metadata fields if the last game had this options set,
     // or if we're in the grouped custom collection view.
-    if (mList.isScrolling()) {
+    if (mPrimary->isScrolling()) {
         if ((mLastUpdated && mLastUpdated->metadata.get("hidemetadata") == "true") ||
             (mLastUpdated->getSystem()->isCustomCollection() &&
              mLastUpdated->getPath() == mLastUpdated->getSystem()->getName()))
@@ -566,10 +579,6 @@ void GamelistView::legacyUpdateInfoPanel()
 
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
         GuiComponent* comp {*it};
-        if (!fadingOut && !comp->isAnimationPlaying(0)) {
-            comp->setOpacity(1.0f);
-            continue;
-        }
         // An animation is playing, then animate if reverse != fadingOut.
         // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
@@ -578,6 +587,9 @@ void GamelistView::legacyUpdateInfoPanel()
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
     }
+
+    if (state == CursorState::CURSOR_SCROLLING)
+        mLastUpdated = nullptr;
 }
 
 void GamelistView::legacyUpdate(int deltaTime)

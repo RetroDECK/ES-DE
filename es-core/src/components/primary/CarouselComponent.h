@@ -1,22 +1,147 @@
 //  SPDX-License-Identifier: MIT
 //
 //  EmulationStation Desktop Edition
-//  CarouselComponent.cpp
+//  CarouselComponent.h
 //
 //  Carousel.
 //
 
-#include "components/CarouselComponent.h"
+#ifndef ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
+#define ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
 
 #include "Log.h"
+#include "Sound.h"
 #include "animations/LambdaAnimation.h"
+#include "components/IList.h"
+#include "components/primary/PrimaryComponent.h"
+#include "resources/Font.h"
 
-CarouselComponent::CarouselComponent()
-    : IList<CarouselElement, SystemData*> {LIST_SCROLL_STYLE_SLOW, LIST_ALWAYS_LOOP}
+namespace
+{
+    struct CarouselElement {
+        std::shared_ptr<GuiComponent> logo;
+        std::string logoPath;
+        std::string defaultLogoPath;
+    };
+}; // namespace
+
+template <typename T>
+class CarouselComponent : public PrimaryComponent<T>, protected IList<CarouselElement, T>
+{
+    using List = IList<CarouselElement, T>;
+
+protected:
+    using List::mCursor;
+    using List::mEntries;
+    using List::mScrollVelocity;
+    using List::mSize;
+    using List::mWindow;
+
+    using GuiComponent::mDefaultZIndex;
+    using GuiComponent::mOrigin;
+    using GuiComponent::mPosition;
+    using GuiComponent::mZIndex;
+
+public:
+    using Entry = typename IList<CarouselElement, T>::Entry;
+
+    enum class CarouselType {
+        HORIZONTAL, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        VERTICAL,
+        VERTICAL_WHEEL,
+        HORIZONTAL_WHEEL,
+        NO_CAROUSEL
+    };
+
+    CarouselComponent();
+
+    void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme = nullptr);
+    Entry& getEntry(int index) { return mEntries.at(index); }
+    const CarouselType getType() { return mType; }
+
+    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
+    {
+        mCursorChangedCallback = func;
+    }
+    void setCancelTransitionsCallback(const std::function<void()>& func) override
+    {
+        mCancelTransitionsCallback = func;
+    }
+
+    bool input(InputConfig* config, Input input) override;
+    void update(int deltaTime) override;
+    void render(const glm::mat4& parentTrans) override;
+    void applyTheme(const std::shared_ptr<ThemeData>& theme,
+                    const std::string& view,
+                    const std::string& element,
+                    unsigned int properties) override;
+
+private:
+    void onCursorChanged(const CursorState& state) override;
+    void onScroll() override
+    {
+        NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
+    }
+
+    bool isScrolling() const override { return List::isScrolling(); }
+    void stopScrolling() override
+    {
+        List::stopScrolling();
+        // Only finish the animation if we're in the gamelist view.
+        if constexpr (std::is_same_v<T, FileData*>)
+            GuiComponent::finishAnimation(0);
+    }
+    const int getScrollingVelocity() override { return List::getScrollingVelocity(); }
+    void clear() override { List::clear(); }
+    const T& getSelected() const override { return List::getSelected(); }
+    const T& getNext() const override { return List::getNext(); }
+    const T& getPrevious() const override { return List::getPrevious(); }
+    const T& getFirst() const override { return List::getFirst(); }
+    const T& getLast() const override { return List::getLast(); }
+    bool setCursor(const T& obj) override { return List::setCursor(obj); }
+    bool remove(const T& obj) override { return List::remove(obj); }
+    int size() const override { return List::size(); }
+
+    int getCursor() override { return mCursor; }
+    const size_t getNumEntries() override { return mEntries.size(); }
+
+    Renderer* mRenderer;
+    std::function<void(CursorState state)> mCursorChangedCallback;
+    std::function<void()> mCancelTransitionsCallback;
+
+    float mEntryCamOffset;
+    int mPreviousScrollVelocity;
+    bool mTriggerJump;
+
+    CarouselType mType;
+    std::shared_ptr<Font> mFont;
+    unsigned int mTextColor;
+    unsigned int mTextBackgroundColor;
+    std::string mText;
+    float mLineSpacing;
+    Alignment mLogoHorizontalAlignment;
+    Alignment mLogoVerticalAlignment;
+    float mMaxLogoCount;
+    glm::vec2 mLogoSize;
+    float mLogoScale;
+    float mLogoRotation;
+    glm::vec2 mLogoRotationOrigin;
+    unsigned int mCarouselColor;
+    unsigned int mCarouselColorEnd;
+    bool mColorGradientHorizontal;
+};
+
+template <typename T>
+CarouselComponent<T>::CarouselComponent()
+    : IList<CarouselElement, T> {LIST_SCROLL_STYLE_SLOW,
+                                 (std::is_same_v<T, SystemData*> ?
+                                      ListLoopType::LIST_ALWAYS_LOOP :
+                                      ListLoopType::LIST_PAUSE_AT_END_ON_JUMP)}
     , mRenderer {Renderer::getInstance()}
-    , mCamOffset {0.0f}
+    , mEntryCamOffset {0.0f}
     , mPreviousScrollVelocity {0}
-    , mType {HORIZONTAL}
+    , mTriggerJump {false}
+    , mType {CarouselType::HORIZONTAL}
     , mFont {Font::get(FONT_SIZE_LARGE)}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
@@ -34,10 +159,11 @@ CarouselComponent::CarouselComponent()
 {
 }
 
-void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
-                                 Entry& entry,
-                                 bool legacyMode)
+template <typename T>
+void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
 {
+    bool legacyMode {theme->isLegacyTheme()};
+
     // Make logo.
     if (legacyMode) {
         const ThemeData::ThemeElement* logoElem {
@@ -96,8 +222,10 @@ void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
         }
         if (!legacyMode) {
             text->setLineSpacing(mLineSpacing);
-            if (mText != "")
-                text->setValue(mText);
+            if constexpr (std::is_same_v<T, SystemData*>) {
+                if (mText != "")
+                    text->setValue(mText);
+            }
             text->setColor(mTextColor);
             text->setBackgroundColor(mTextBackgroundColor);
             text->setRenderBackground(true);
@@ -126,64 +254,116 @@ void CarouselComponent::addEntry(const std::shared_ptr<ThemeData>& theme,
     glm::vec2 denormalized {mLogoSize * entry.data.logo->getOrigin()};
     entry.data.logo->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
 
-    add(entry);
+    List::add(entry);
 }
 
-bool CarouselComponent::input(InputConfig* config, Input input)
+template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Input input)
 {
     if (input.value != 0) {
         switch (mType) {
-            case VERTICAL:
-            case VERTICAL_WHEEL:
+            case CarouselType::VERTICAL:
+            case CarouselType::VERTICAL_WHEEL:
                 if (config->isMappedLike("up", input)) {
                     if (mCancelTransitionsCallback)
                         mCancelTransitionsCallback();
-                    listInput(-1);
+                    List::listInput(-1);
                     return true;
                 }
                 if (config->isMappedLike("down", input)) {
                     if (mCancelTransitionsCallback)
                         mCancelTransitionsCallback();
-                    listInput(1);
+                    List::listInput(1);
                     return true;
                 }
                 break;
-            case HORIZONTAL:
-            case HORIZONTAL_WHEEL:
+            case CarouselType::HORIZONTAL:
+            case CarouselType::HORIZONTAL_WHEEL:
             default:
                 if (config->isMappedLike("left", input)) {
                     if (mCancelTransitionsCallback)
                         mCancelTransitionsCallback();
-                    listInput(-1);
+                    List::listInput(-1);
                     return true;
                 }
                 if (config->isMappedLike("right", input)) {
                     if (mCancelTransitionsCallback)
                         mCancelTransitionsCallback();
-                    listInput(1);
+                    List::listInput(1);
                     return true;
                 }
                 break;
         }
+        if constexpr (std::is_same_v<T, FileData*>) {
+            if (config->isMappedLike("leftshoulder", input)) {
+                if (getCursor() == 0) {
+                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+                    return true;
+                }
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                List::listInput(-10);
+                return true;
+            }
+            if (config->isMappedLike("rightshoulder", input)) {
+                if (getCursor() == static_cast<int>(mEntries.size()) - 1) {
+                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+                    return true;
+                }
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                List::listInput(10);
+                return true;
+            }
+            if (config->isMappedLike("lefttrigger", input)) {
+                mTriggerJump = true;
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                return this->listFirstRow();
+            }
+            if (config->isMappedLike("righttrigger", input)) {
+                mTriggerJump = true;
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                return this->listLastRow();
+            }
+        }
     }
     else {
-        if (config->isMappedLike("left", input) || config->isMappedLike("right", input) ||
-            config->isMappedLike("up", input) || config->isMappedLike("down", input)) {
-            listInput(0);
+        if constexpr (std::is_same_v<T, FileData*>) {
+            if (config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
+                config->isMappedLike("left", input) || config->isMappedLike("right", input) ||
+                config->isMappedLike("leftshoulder", input) ||
+                config->isMappedLike("rightshoulder", input) ||
+                config->isMappedLike("lefttrigger", input) ||
+                config->isMappedLike("righttrigger", input)) {
+                onCursorChanged(CursorState::CURSOR_STOPPED);
+                List::listInput(0);
+                mTriggerJump = false;
+            }
+        }
+        if constexpr (std::is_same_v<T, SystemData*>) {
+            if (config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
+                config->isMappedLike("left", input) || config->isMappedLike("right", input))
+                List::listInput(0);
         }
     }
 
     return GuiComponent::input(config, input);
 }
 
-void CarouselComponent::update(int deltaTime)
+template <typename T> void CarouselComponent<T>::update(int deltaTime)
 {
-    listUpdate(deltaTime);
+    List::listUpdate(deltaTime);
     GuiComponent::update(deltaTime);
 }
 
-void CarouselComponent::render(const glm::mat4& parentTrans)
+template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentTrans)
 {
+    if (mEntries.size() == 0)
+        return;
+
     glm::mat4 carouselTrans {parentTrans};
     carouselTrans = glm::translate(carouselTrans, glm::vec3 {mPosition.x, mPosition.y, 0.0f});
     carouselTrans = glm::translate(
@@ -210,15 +390,15 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
     float yOff {0.0f};
 
     switch (mType) {
-        case HORIZONTAL_WHEEL:
-        case VERTICAL_WHEEL:
-            xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mCamOffset * logoSpacing.y));
+        case CarouselType::HORIZONTAL_WHEEL:
+        case CarouselType::VERTICAL_WHEEL:
+            xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mEntryCamOffset * logoSpacing.y));
             yOff = (mSize.y - mLogoSize.y) / 2.0f;
             break;
-        case VERTICAL:
+        case CarouselType::VERTICAL:
             logoSpacing.y =
                 ((mSize.y - (mLogoSize.y * mMaxLogoCount)) / (mMaxLogoCount)) + mLogoSize.y;
-            yOff = (mSize.y - mLogoSize.y) / 2.0f - (mCamOffset * logoSpacing.y);
+            yOff = (mSize.y - mLogoSize.y) / 2.0f - (mEntryCamOffset * logoSpacing.y);
             if (mLogoHorizontalAlignment == ALIGN_LEFT)
                 xOff = mLogoSize.x / 10.0f;
             else if (mLogoHorizontalAlignment == ALIGN_RIGHT)
@@ -226,11 +406,11 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             else
                 xOff = (mSize.x - mLogoSize.x) / 2.0f;
             break;
-        case HORIZONTAL:
+        case CarouselType::HORIZONTAL:
         default:
             logoSpacing.x =
                 ((mSize.x - (mLogoSize.x * mMaxLogoCount)) / (mMaxLogoCount)) + mLogoSize.x;
-            xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mCamOffset * logoSpacing.x));
+            xOff = std::round((mSize.x - mLogoSize.x) / 2.0f - (mEntryCamOffset * logoSpacing.x));
             if (mLogoVerticalAlignment == ALIGN_TOP)
                 yOff = mLogoSize.y / 10.0f;
             else if (mLogoVerticalAlignment == ALIGN_BOTTOM)
@@ -240,7 +420,7 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
             break;
     }
 
-    int center {static_cast<int>(mCamOffset)};
+    int center {static_cast<int>(mEntryCamOffset)};
     int logoInclusion {static_cast<int>(std::ceil(mMaxLogoCount / 2.0f))};
     bool singleEntry {mEntries.size() == 1};
 
@@ -263,7 +443,7 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
         logoTrans = glm::translate(
             logoTrans, glm::vec3 {i * logoSpacing.x + xOff, i * logoSpacing.y + yOff, 0.0f});
 
-        float distance {i - mCamOffset};
+        float distance {i - mEntryCamOffset};
 
         float scale {1.0f + ((mLogoScale - 1.0f) * (1.0f - fabsf(distance)))};
         scale = std::min(mLogoScale, std::max(1.0f, scale));
@@ -278,16 +458,16 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
         if (comp == nullptr)
             continue;
 
-        if (mType == VERTICAL_WHEEL || mType == HORIZONTAL_WHEEL) {
+        if (mType == CarouselType::VERTICAL_WHEEL || mType == CarouselType::HORIZONTAL_WHEEL) {
             comp->setRotationDegrees(mLogoRotation * distance);
             comp->setRotationOrigin(mLogoRotationOrigin);
         }
 
-        // When running at lower resolutions, prevent the scale-down to go all the way to the
-        // minimum value. This avoids potential single-pixel alignment issues when the logo
-        // can't be vertically placed exactly in the middle of the carousel. Although the
-        // problem theoretically exists at all resolutions, it's not visble at around 1080p
-        // and above.
+        // When running at lower resolutions, prevent the scale-down to go all the way to
+        // the minimum value. This avoids potential single-pixel alignment issues when the
+        // logo can't be vertically placed exactly in the middle of the carousel. Although
+        // the problem theoretically exists at all resolutions, it's not visble at around
+        // 1080p and above.
         if (std::min(Renderer::getScreenWidth(), Renderer::getScreenHeight()) < 1080.0f)
             scale = glm::clamp(scale, 1.0f / mLogoScale + 0.01f, 1.0f);
 
@@ -298,10 +478,11 @@ void CarouselComponent::render(const glm::mat4& parentTrans)
     mRenderer->popClipRect();
 }
 
-void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
-                                   const std::string& view,
-                                   const std::string& element,
-                                   unsigned int properties)
+template <typename T>
+void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
+                                      const std::string& view,
+                                      const std::string& element,
+                                      unsigned int properties)
 {
     using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "carousel")};
@@ -312,7 +493,7 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mPosition.y = floorf(0.5f * (Renderer::getScreenHeight() - mSize.y));
     mCarouselColor = 0xFFFFFFD8;
     mCarouselColorEnd = 0xFFFFFFD8;
-    mDefaultZIndex = 50.0f;
+    mZIndex = mDefaultZIndex;
     mText = "";
 
     if (!elem)
@@ -321,22 +502,22 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("type")) {
         const std::string type {elem->get<std::string>("type")};
         if (type == "horizontal") {
-            mType = HORIZONTAL;
+            mType = CarouselType::HORIZONTAL;
         }
         else if (type == "horizontal_wheel") {
-            mType = HORIZONTAL_WHEEL;
+            mType = CarouselType::HORIZONTAL_WHEEL;
         }
         else if (type == "vertical") {
-            mType = VERTICAL;
+            mType = CarouselType::VERTICAL;
         }
         else if (type == "vertical_wheel") {
-            mType = VERTICAL_WHEEL;
+            mType = CarouselType::VERTICAL_WHEEL;
         }
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
                                "<type> defined as \""
                             << type << "\"";
-            mType = HORIZONTAL;
+            mType = CarouselType::HORIZONTAL;
         }
     }
 
@@ -395,10 +576,10 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("logoHorizontalAlignment")) {
         const std::string alignment {elem->get<std::string>("logoHorizontalAlignment")};
-        if (alignment == "left" && mType != HORIZONTAL) {
+        if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
             mLogoHorizontalAlignment = ALIGN_LEFT;
         }
-        else if (alignment == "right" && mType != HORIZONTAL) {
+        else if (alignment == "right" && mType != CarouselType::HORIZONTAL) {
             mLogoHorizontalAlignment = ALIGN_RIGHT;
         }
         else if (alignment == "center") {
@@ -414,10 +595,10 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("logoVerticalAlignment")) {
         const std::string alignment {elem->get<std::string>("logoVerticalAlignment")};
-        if (alignment == "top" && mType != VERTICAL) {
+        if (alignment == "top" && mType != CarouselType::VERTICAL) {
             mLogoVerticalAlignment = ALIGN_TOP;
         }
-        else if (alignment == "bottom" && mType != VERTICAL) {
+        else if (alignment == "bottom" && mType != CarouselType::VERTICAL) {
             mLogoVerticalAlignment = ALIGN_BOTTOM;
         }
         else if (alignment == "center") {
@@ -434,19 +615,19 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Legacy themes only.
     if (elem->has("logoAlignment")) {
         const std::string alignment {elem->get<std::string>("logoAlignment")};
-        if (alignment == "left" && mType != HORIZONTAL) {
+        if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
             mLogoHorizontalAlignment = ALIGN_LEFT;
             mLogoVerticalAlignment = ALIGN_CENTER;
         }
-        else if (alignment == "right" && mType != HORIZONTAL) {
+        else if (alignment == "right" && mType != CarouselType::HORIZONTAL) {
             mLogoHorizontalAlignment = ALIGN_RIGHT;
             mLogoVerticalAlignment = ALIGN_CENTER;
         }
-        else if (alignment == "top" && mType != VERTICAL) {
+        else if (alignment == "top" && mType != CarouselType::VERTICAL) {
             mLogoVerticalAlignment = ALIGN_TOP;
             mLogoHorizontalAlignment = ALIGN_CENTER;
         }
-        else if (alignment == "bottom" && mType != VERTICAL) {
+        else if (alignment == "bottom" && mType != CarouselType::VERTICAL) {
             mLogoVerticalAlignment = ALIGN_BOTTOM;
             mLogoHorizontalAlignment = ALIGN_CENTER;
         }
@@ -507,20 +688,28 @@ void CarouselComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                          mRenderer->getScreenHeight() * 1.5f);
 }
 
-void CarouselComponent::onCursorChanged(const CursorState& state)
+template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorState& state)
 {
-    float startPos {mCamOffset};
+    float startPos {mEntryCamOffset};
     float posMax {static_cast<float>(mEntries.size())};
     float target {static_cast<float>(mCursor)};
 
     // Find the shortest path to the target.
     float endPos {target}; // Directly.
-    float dist {fabsf(endPos - startPos)};
 
-    if (fabsf(target + posMax - startPos - mScrollVelocity) < dist)
-        endPos = target + posMax; // Loop around the end (0 -> max).
-    if (fabsf(target - posMax - startPos - mScrollVelocity) < dist)
-        endPos = target - posMax; // Loop around the start (max - 1 -> -1).
+    if (mPreviousScrollVelocity > 0 && mScrollVelocity == 0 && mEntryCamOffset > posMax - 1.0f)
+        startPos = 0.0f;
+
+    // If quick jumping to the start or end of the list using the trigger button when in
+    // the gamelist view, then always animate in the requested direction.
+    if (!mTriggerJump) {
+        float dist {fabsf(endPos - startPos)};
+
+        if (fabsf(target + posMax - startPos - mScrollVelocity) < dist)
+            endPos = target + posMax; // Loop around the end (0 -> max).
+        if (fabsf(target - posMax - startPos - mScrollVelocity) < dist)
+            endPos = target - posMax; // Loop around the start (max - 1 -> -1).
+    }
 
     // Make sure there are no reverse jumps between logos.
     bool changedDirection {false};
@@ -536,11 +725,11 @@ void CarouselComponent::onCursorChanged(const CursorState& state)
     if (mScrollVelocity != 0)
         mPreviousScrollVelocity = mScrollVelocity;
 
-    // No need to animate transition, we're not going anywhere (probably mEntries.size() == 1).
-    if (endPos == mCamOffset)
+    // No need to animate transition, we're not going anywhere.
+    if (endPos == mEntryCamOffset)
         return;
 
-    Animation* anim = new LambdaAnimation(
+    Animation* anim {new LambdaAnimation(
         [this, startPos, endPos, posMax](float t) {
             t -= 1;
             float f {glm::mix(startPos, endPos, t * t * t + 1)};
@@ -549,12 +738,14 @@ void CarouselComponent::onCursorChanged(const CursorState& state)
             if (f >= posMax)
                 f -= posMax;
 
-            mCamOffset = f;
+            mEntryCamOffset = f;
         },
-        500);
+        500)};
 
-    setAnimation(anim, 0, nullptr, false, 0);
+    GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
 
     if (mCursorChangedCallback)
         mCursorChangedCallback(state);
 }
+
+#endif // ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H

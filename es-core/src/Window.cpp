@@ -240,7 +240,7 @@ void Window::input(InputConfig* config, Input input)
         // up. So scale it to full size so it won't be stuck at a smaller size when returning
         // from the submenu.
         mTopScale = 1.0f;
-        GuiComponent* menu = mGuiStack.back();
+        GuiComponent* menu {mGuiStack.back()};
         glm::vec2 menuCenter {menu->getCenter()};
         menu->setOrigin(0.5f, 0.5f);
         menu->setPosition(menuCenter.x, menuCenter.y, 0.0f);

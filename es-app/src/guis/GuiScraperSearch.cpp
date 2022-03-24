@@ -130,7 +130,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     // Result list.
     mResultList = std::make_shared<ComponentList>();
     mResultList->setCursorChangedCallback([this](CursorState state) {
-        if (state == CURSOR_STOPPED)
+        if (state == CursorState::CURSOR_STOPPED)
             updateInfoPane();
     });
 

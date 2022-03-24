@@ -13,7 +13,7 @@
 #define TOTAL_HORIZONTAL_PADDING_PX 20.0f
 
 ComponentList::ComponentList()
-    : IList<ComponentListRow, void*> {LIST_SCROLL_STYLE_SLOW, LIST_NEVER_LOOP}
+    : IList<ComponentListRow, void*> {LIST_SCROLL_STYLE_SLOW, ListLoopType::LIST_NEVER_LOOP}
     , mRenderer {Renderer::getInstance()}
     , mFocused {false}
     , mSetupCompleted {false}
@@ -53,7 +53,7 @@ void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
 
     if (setCursorHere) {
         mCursor = static_cast<int>(mEntries.size()) - 1;
-        onCursorChanged(CURSOR_STOPPED);
+        onCursorChanged(CursorState::CURSOR_STOPPED);
     }
 }
 

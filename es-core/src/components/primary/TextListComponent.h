@@ -12,34 +12,38 @@
 #include "Log.h"
 #include "Sound.h"
 #include "components/IList.h"
+#include "components/primary/PrimaryComponent.h"
 #include "resources/Font.h"
-#include "utils/StringUtil.h"
 
-#include <memory>
+namespace
+{
+    struct TextListData {
+        unsigned int colorId;
+        std::shared_ptr<TextCache> textCache;
+    };
+}; // namespace
 
-class TextCache;
-
-struct TextListData {
-    unsigned int colorId;
-    std::shared_ptr<TextCache> textCache;
-};
-
-// A scrollable text list supporting multiple row colors.
-template <typename T> class TextListComponent : public IList<TextListData, T>
+template <typename T>
+class TextListComponent : public PrimaryComponent<T>, private IList<TextListData, T>
 {
     using List = IList<TextListData, T>;
 
 protected:
     using List::mCursor;
     using List::mEntries;
+    using List::mScrollVelocity;
     using List::mSize;
     using List::mWindow;
 
 public:
-    using GuiComponent::setColor;
     using List::size;
+    using Entry = typename IList<TextListData, T>::Entry;
+    using PrimaryAlignment = typename PrimaryComponent<T>::PrimaryAlignment;
+    using GuiComponent::setColor;
 
     TextListComponent();
+
+    void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme = nullptr);
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -49,23 +53,15 @@ public:
                     const std::string& element,
                     unsigned int properties) override;
 
-    void add(const std::string& name, const T& obj, unsigned int colorId);
+    void setAlignment(PrimaryAlignment align) override { mAlignment = align; }
 
-    enum Alignment {
-        ALIGN_LEFT, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
-        ALIGN_CENTER,
-        ALIGN_RIGHT
-    };
-
-    void setAlignment(Alignment align)
-    {
-        // Set alignment.
-        mAlignment = align;
-    }
-
-    void setCursorChangedCallback(const std::function<void(CursorState state)>& func)
+    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
     {
         mCursorChangedCallback = func;
+    }
+    void setCancelTransitionsCallback(const std::function<void()>& func) override
+    {
+        mCancelTransitionsCallback = func;
     }
 
     void setFont(const std::shared_ptr<Font>& font)
@@ -135,16 +131,37 @@ protected:
     void onCursorChanged(const CursorState& state) override;
 
 private:
+    bool isScrolling() const override { return List::isScrolling(); }
+    void stopScrolling() override { List::stopScrolling(); }
+    const int getScrollingVelocity() override { return List::getScrollingVelocity(); }
+    void clear() override { List::clear(); }
+    const T& getSelected() const override { return List::getSelected(); }
+    const T& getNext() const override { return List::getNext(); }
+    const T& getPrevious() const override { return List::getPrevious(); }
+    const T& getFirst() const override { return List::getFirst(); }
+    const T& getLast() const override { return List::getLast(); }
+    bool setCursor(const T& obj) override { return List::setCursor(obj); }
+    bool remove(const T& obj) override { return List::remove(obj); }
+    int size() const override { return List::size(); }
+
+    int getCursor() override { return mCursor; }
+    const size_t getNumEntries() override { return mEntries.size(); }
+
     Renderer* mRenderer;
+    std::function<void()> mCancelTransitionsCallback;
+    float mCamOffset;
+    int mPreviousScrollVelocity;
+
     int mLoopOffset;
     int mLoopOffset2;
     int mLoopTime;
     bool mLoopScroll;
 
-    Alignment mAlignment;
+    PrimaryAlignment mAlignment;
     float mHorizontalMargin;
 
     std::function<void(CursorState state)> mCursorChangedCallback;
+    ImageComponent mSelectorImage;
 
     std::shared_ptr<Font> mFont;
     bool mUppercase;
@@ -159,34 +176,162 @@ private:
     unsigned int mSelectedColor;
     static const unsigned int COLOR_ID_COUNT = 2;
     unsigned int mColors[COLOR_ID_COUNT];
-
-    ImageComponent mSelectorImage;
 };
 
-template <typename T> TextListComponent<T>::TextListComponent()
+template <typename T>
+TextListComponent<T>::TextListComponent()
+    : IList<TextListData, T> {(std::is_same_v<T, SystemData*> ? LIST_SCROLL_STYLE_SLOW :
+                                                                LIST_SCROLL_STYLE_QUICK),
+                              ListLoopType::LIST_PAUSE_AT_END}
+    , mRenderer {Renderer::getInstance()}
+    , mCamOffset {0.0f}
+    , mPreviousScrollVelocity {0}
+    , mLoopOffset {0}
+    , mLoopOffset2 {0}
+    , mLoopTime {0}
+    , mLoopScroll {false}
+    , mAlignment {PrimaryAlignment::ALIGN_CENTER}
+    , mHorizontalMargin {0.0f}
+    , mFont {Font::get(FONT_SIZE_MEDIUM)}
+    , mUppercase {false}
+    , mLowercase {false}
+    , mCapitalize {false}
+    , mLineSpacing {1.5f}
+    , mSelectorHeight {mFont->getSize() * 1.5f}
+    , mSelectorOffsetY {0.0f}
+    , mSelectorColor {0x000000FF}
+    , mSelectorColorEnd {0x000000FF}
+    , mSelectorColorGradientHorizontal {true}
+    , mSelectedColor {0}
+    , mColors {0x0000FFFF, 0x00FF00FF}
 {
-    mRenderer = Renderer::getInstance();
-    mLoopOffset = 0;
-    mLoopOffset2 = 0;
-    mLoopTime = 0;
-    mLoopScroll = false;
+}
 
-    mHorizontalMargin = 0.0f;
-    mAlignment = ALIGN_CENTER;
+template <typename T>
+void TextListComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
+{
+    List::add(entry);
+}
 
-    mFont = Font::get(FONT_SIZE_MEDIUM);
-    mUppercase = false;
-    mLowercase = false;
-    mCapitalize = false;
-    mLineSpacing = 1.5f;
-    mSelectorHeight = mFont->getSize() * 1.5f;
-    mSelectorOffsetY = 0;
-    mSelectorColor = 0x000000FF;
-    mSelectorColorEnd = 0x000000FF;
-    mSelectorColorGradientHorizontal = true;
-    mSelectedColor = 0;
-    mColors[0] = 0x0000FFFF;
-    mColors[1] = 0x00FF00FF;
+template <typename T> bool TextListComponent<T>::input(InputConfig* config, Input input)
+{
+    if (size() > 0) {
+        if (input.value != 0) {
+            if (config->isMappedLike("up", input)) {
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                List::listInput(-1);
+                return true;
+            }
+            if (config->isMappedLike("down", input)) {
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                List::listInput(1);
+                return true;
+            }
+            if (config->isMappedLike("leftshoulder", input)) {
+                if (getCursor() == 0) {
+                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+                    return true;
+                }
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                List::listInput(-10);
+                return true;
+            }
+            if (config->isMappedLike("rightshoulder", input)) {
+                if (getCursor() == static_cast<int>(mEntries.size()) - 1) {
+                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+                    return true;
+                }
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                List::listInput(10);
+                return true;
+            }
+            if (config->isMappedLike("righttrigger", input)) {
+                if (getCursor() == static_cast<int>(mEntries.size()) - 1) {
+                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+                    return true;
+                }
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                return this->listLastRow();
+            }
+            if (config->isMappedLike("lefttrigger", input)) {
+                if (getCursor() == 0) {
+                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+                    return true;
+                }
+                if (mCancelTransitionsCallback)
+                    mCancelTransitionsCallback();
+                return this->listFirstRow();
+            }
+        }
+        else {
+            if (config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
+                config->isMappedLike("leftshoulder", input) ||
+                config->isMappedLike("rightshoulder", input) ||
+                config->isMappedLike("lefttrigger", input) ||
+                config->isMappedLike("righttrigger", input)) {
+                if constexpr (std::is_same_v<T, SystemData*>)
+                    List::listInput(0);
+                else
+                    List::stopScrolling();
+            }
+        }
+    }
+
+    return GuiComponent::input(config, input);
+}
+
+template <typename T> void TextListComponent<T>::update(int deltaTime)
+{
+    List::listUpdate(deltaTime);
+
+    if (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling())
+        List::stopScrolling();
+
+    if (!isScrolling() && size() > 0) {
+        // Always reset the loop offsets.
+        mLoopOffset = 0;
+        mLoopOffset2 = 0;
+
+        // If we're not scrolling and this object's text exceeds our size, then loop it.
+        const float textLength {mFont
+                                    ->sizeText(Utils::String::toUpper(
+                                        mEntries.at(static_cast<unsigned int>(mCursor)).name))
+                                    .x};
+        const float limit {mSize.x - mHorizontalMargin * 2.0f};
+
+        if (textLength > limit) {
+            // Loop the text.
+            const float speed {mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
+            const float delay {3000.0f};
+            const float scrollLength {textLength};
+            const float returnLength {speed * 1.5f};
+            const float scrollTime {(scrollLength * 1000.0f) / speed};
+            const float returnTime {(returnLength * 1000.0f) / speed};
+            const int maxTime {static_cast<int>(delay + scrollTime + returnTime)};
+
+            mLoopTime += deltaTime;
+            while (mLoopTime > maxTime)
+                mLoopTime -= maxTime;
+
+            mLoopOffset = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
+                                                             static_cast<float>(mLoopTime),
+                                                             scrollLength + returnLength));
+
+            if (mLoopOffset > (scrollLength - (limit - returnLength)))
+                mLoopOffset2 = static_cast<int>(mLoopOffset - (scrollLength + returnLength));
+        }
+    }
+
+    GuiComponent::update(deltaTime);
 }
 
 template <typename T> void TextListComponent<T>::render(const glm::mat4& parentTrans)
@@ -259,7 +404,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
                     static_cast<int>(std::round(dim.y))});
 
     for (int i = startEntry; i < listCutoff; ++i) {
-        typename IList<TextListData, T>::Entry& entry {mEntries.at(static_cast<unsigned int>(i))};
+        Entry& entry {mEntries.at(i)};
 
         unsigned int color;
         if (mCursor == i && mSelectedColor)
@@ -282,28 +427,33 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
                     std::unique_ptr<TextCache>(font->buildTextCache(entry.name, 0, 0, 0x000000FF));
         }
 
-        // If a game is marked as hidden, lower the text opacity a lot.
-        // If a game is marked to not be counted, lower the opacity a moderate amount.
-        if (entry.object->getHidden())
-            entry.data.textCache->setColor(color & 0xFFFFFF44);
-        else if (!entry.object->getCountAsGame())
-            entry.data.textCache->setColor(color & 0xFFFFFF77);
-        else
+        if constexpr (std::is_same_v<T, FileData*>) {
+            // If a game is marked as hidden, lower the text opacity a lot.
+            // If a game is marked to not be counted, lower the opacity a moderate amount.
+            if (entry.object->getHidden())
+                entry.data.textCache->setColor(color & 0xFFFFFF44);
+            else if (!entry.object->getCountAsGame())
+                entry.data.textCache->setColor(color & 0xFFFFFF77);
+            else
+                entry.data.textCache->setColor(color);
+        }
+        else {
             entry.data.textCache->setColor(color);
+        }
 
         glm::vec3 offset {0.0f, y, 0.0f};
 
         switch (mAlignment) {
-            case ALIGN_LEFT:
+            case PrimaryAlignment::ALIGN_LEFT:
                 offset.x = mHorizontalMargin;
                 break;
-            case ALIGN_CENTER:
+            case PrimaryAlignment::ALIGN_CENTER:
                 offset.x =
                     static_cast<float>((mSize.x - entry.data.textCache->metrics.size.x) / 2.0f);
                 if (offset.x < mHorizontalMargin)
                     offset.x = mHorizontalMargin;
                 break;
-            case ALIGN_RIGHT:
+            case PrimaryAlignment::ALIGN_RIGHT:
                 offset.x = (mSize.x - entry.data.textCache->metrics.size.x);
                 offset.x -= mHorizontalMargin;
                 if (offset.x < mHorizontalMargin)
@@ -340,120 +490,9 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         y += entrySize;
     }
     mRenderer->popClipRect();
-    List::listRenderTitleOverlay(trans);
+    if constexpr (std::is_same_v<T, FileData*>)
+        List::listRenderTitleOverlay(trans);
     GuiComponent::renderChildren(trans);
-}
-
-template <typename T> bool TextListComponent<T>::input(InputConfig* config, Input input)
-{
-    if (size() > 0) {
-        if (input.value != 0) {
-            if (config->isMappedLike("down", input)) {
-                List::listInput(1);
-                return true;
-            }
-
-            if (config->isMappedLike("up", input)) {
-                List::listInput(-1);
-                return true;
-            }
-            if (config->isMappedLike("rightshoulder", input)) {
-                List::listInput(10);
-                return true;
-            }
-
-            if (config->isMappedLike("leftshoulder", input)) {
-                List::listInput(-10);
-                return true;
-            }
-
-            if (config->isMappedLike("righttrigger", input)) {
-                return this->listLastRow();
-            }
-
-            if (config->isMappedLike("lefttrigger", input)) {
-                return this->listFirstRow();
-            }
-        }
-        else {
-            if (config->isMappedLike("down", input) || config->isMappedLike("up", input) ||
-                config->isMappedLike("rightshoulder", input) ||
-                config->isMappedLike("leftshoulder", input) ||
-                config->isMappedLike("lefttrigger", input) ||
-                config->isMappedLike("righttrigger", input))
-                List::stopScrolling();
-        }
-    }
-
-    return GuiComponent::input(config, input);
-}
-
-template <typename T> void TextListComponent<T>::update(int deltaTime)
-{
-    List::listUpdate(deltaTime);
-
-    if (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling())
-        List::stopScrolling();
-
-    if (!List::isScrolling() && size() > 0) {
-        // Always reset the loop offsets.
-        mLoopOffset = 0;
-        mLoopOffset2 = 0;
-
-        // If we're not scrolling and this object's text exceeds our size, then loop it.
-        const float textLength {mFont
-                                    ->sizeText(Utils::String::toUpper(
-                                        mEntries.at(static_cast<unsigned int>(mCursor)).name))
-                                    .x};
-        const float limit {mSize.x - mHorizontalMargin * 2.0f};
-
-        if (textLength > limit) {
-            // Loop the text.
-            const float speed {mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
-            const float delay {3000.0f};
-            const float scrollLength {textLength};
-            const float returnLength {speed * 1.5f};
-            const float scrollTime {(scrollLength * 1000.0f) / speed};
-            const float returnTime {(returnLength * 1000.0f) / speed};
-            const int maxTime {static_cast<int>(delay + scrollTime + returnTime)};
-
-            mLoopTime += deltaTime;
-            while (mLoopTime > maxTime)
-                mLoopTime -= maxTime;
-
-            mLoopOffset = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
-                                                             static_cast<float>(mLoopTime),
-                                                             scrollLength + returnLength));
-
-            if (mLoopOffset > (scrollLength - (limit - returnLength)))
-                mLoopOffset2 = static_cast<int>(mLoopOffset - (scrollLength + returnLength));
-        }
-    }
-
-    GuiComponent::update(deltaTime);
-}
-
-// List management stuff.
-template <typename T>
-void TextListComponent<T>::add(const std::string& name, const T& obj, unsigned int color)
-{
-    assert(color < COLOR_ID_COUNT);
-
-    typename IList<TextListData, T>::Entry entry;
-    entry.name = name;
-    entry.object = obj;
-    entry.data.colorId = color;
-    static_cast<IList<TextListData, T>*>(this)->add(entry);
-}
-
-template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)
-{
-    mLoopOffset = 0;
-    mLoopOffset2 = 0;
-    mLoopTime = 0;
-
-    if (mCursorChangedCallback)
-        mCursorChangedCallback(state);
 }
 
 template <typename T>
@@ -508,11 +547,11 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("horizontalAlignment")) {
             const std::string& str {elem->get<std::string>("horizontalAlignment")};
             if (str == "left")
-                setAlignment(ALIGN_LEFT);
+                setAlignment(PrimaryAlignment::ALIGN_LEFT);
             else if (str == "center")
-                setAlignment(ALIGN_CENTER);
+                setAlignment(PrimaryAlignment::ALIGN_CENTER);
             else if (str == "right")
-                setAlignment(ALIGN_RIGHT);
+                setAlignment(PrimaryAlignment::ALIGN_RIGHT);
             else
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
                                    "<horizontalAlignment> defined as \""
@@ -522,11 +561,11 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else if (elem->has("alignment")) {
             const std::string& str {elem->get<std::string>("alignment")};
             if (str == "left")
-                setAlignment(ALIGN_LEFT);
+                setAlignment(PrimaryAlignment::ALIGN_LEFT);
             else if (str == "center")
-                setAlignment(ALIGN_CENTER);
+                setAlignment(PrimaryAlignment::ALIGN_CENTER);
             else if (str == "right")
-                setAlignment(ALIGN_RIGHT);
+                setAlignment(PrimaryAlignment::ALIGN_RIGHT);
             else
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
                                    "<alignment> defined as \""
@@ -588,6 +627,37 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else {
         mSelectorImage.setImage("");
     }
+}
+
+template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)
+{
+    mLoopOffset = 0;
+    mLoopOffset2 = 0;
+    mLoopTime = 0;
+
+    if constexpr (std::is_same_v<T, SystemData*>) {
+        float startPos {mCamOffset};
+        float posMax {static_cast<float>(mEntries.size())};
+        float endPos {static_cast<float>(mCursor)};
+
+        Animation* anim {new LambdaAnimation(
+            [this, startPos, endPos, posMax](float t) {
+                t -= 1;
+                float f {glm::mix(startPos, endPos, t * t * t + 1)};
+                if (f < 0)
+                    f += posMax;
+                if (f >= posMax)
+                    f -= posMax;
+
+                mCamOffset = f;
+            },
+            500)};
+
+        GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
+    }
+
+    if (mCursorChangedCallback)
+        mCursorChangedCallback(state);
 }
 
 #endif // ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H

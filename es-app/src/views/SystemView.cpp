@@ -23,6 +23,8 @@
 
 SystemView::SystemView()
     : mRenderer {Renderer::getInstance()}
+    , mPrimary {nullptr}
+    , mPrimaryType {PrimaryType::CAROUSEL}
     , mCamOffset {0.0f}
     , mFadeOpacity {0.0f}
     , mPreviousScrollVelocity {0}
@@ -34,20 +36,6 @@ SystemView::SystemView()
     , mFadeTransitions {false}
 {
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
-
-    mCarousel = std::make_unique<CarouselComponent>();
-    mCarousel->setCursorChangedCallback([&](const CursorState& state) { onCursorChanged(state); });
-    mCarousel->setCancelTransitionsCallback([&] {
-        ViewController::getInstance()->cancelViewTransitions();
-        mNavigated = true;
-        if (mSystemElements.size() > 1) {
-            for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
-                anim->setPauseAnimation(true);
-            for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
-                anim->setPauseAnimation(true);
-        }
-    });
-
     populate();
 }
 
@@ -65,29 +53,29 @@ SystemView::~SystemView()
 
 void SystemView::onTransition()
 {
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
         anim->setPauseAnimation(true);
 
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
         anim->setPauseAnimation(true);
 }
 
 void SystemView::goToSystem(SystemData* system, bool animate)
 {
-    mCarousel->setCursor(system);
+    mPrimary->setCursor(system);
 
-    for (auto& selector : mSystemElements[mCarousel->getCursor()].gameSelectors) {
+    for (auto& selector : mSystemElements[mPrimary->getCursor()].gameSelectors) {
         if (selector->getGameSelection() == GameSelectorComponent::GameSelection::RANDOM)
             selector->setNeedsRefresh();
     }
 
-    for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+    for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
         video->setStaticVideo();
 
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
         anim->resetFileAnimation();
 
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
         anim->resetFileAnimation();
 
     updateGameSelectors();
@@ -111,9 +99,9 @@ bool SystemView::input(InputConfig* config, Input input)
         }
 
         if (config->isMappedTo("a", input)) {
-            mCarousel->stopScrolling();
+            mPrimary->stopScrolling();
             pauseViewVideos();
-            ViewController::getInstance()->goToGamelist(mCarousel->getSelected());
+            ViewController::getInstance()->goToGamelist(mPrimary->getSelected());
             NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
             return true;
         }
@@ -122,7 +110,7 @@ bool SystemView::input(InputConfig* config, Input input)
              config->isMappedTo("rightthumbstickclick", input))) {
             // Get a random system and jump to it.
             NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
-            mCarousel->setCursor(SystemData::getRandomSystem(mCarousel->getSelected()));
+            mPrimary->setCursor(SystemData::getRandomSystem(mPrimary->getSelected()));
             return true;
         }
 
@@ -138,23 +126,23 @@ bool SystemView::input(InputConfig* config, Input input)
         }
     }
 
-    return mCarousel->input(config, input);
+    return mPrimary->input(config, input);
 }
 
 void SystemView::update(int deltaTime)
 {
-    if (!mCarousel->isAnimationPlaying(0))
+    if (!mPrimary->isAnimationPlaying(0))
         mMaxFade = false;
 
-    mCarousel->update(deltaTime);
+    mPrimary->update(deltaTime);
 
-    for (auto& video : mSystemElements[mCarousel->getCursor()].videoComponents)
+    for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
         video->update(deltaTime);
 
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
         anim->update(deltaTime);
 
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
         anim->update(deltaTime);
 
     GuiComponent::update(deltaTime);
@@ -162,7 +150,7 @@ void SystemView::update(int deltaTime)
 
 void SystemView::render(const glm::mat4& parentTrans)
 {
-    if (mCarousel->getNumEntries() == 0)
+    if (mPrimary->getNumEntries() == 0)
         return; // Nothing to render.
 
     bool fade {false};
@@ -174,7 +162,7 @@ void SystemView::render(const glm::mat4& parentTrans)
         renderElements(parentTrans, false);
     glm::mat4 trans {getTransform() * parentTrans};
 
-    mCarousel->render(trans);
+    mPrimary->render(trans);
 
     // For legacy themes the carousel is always rendered on top of all other elements.
     if (!mLegacyMode && !fade)
@@ -191,11 +179,16 @@ void SystemView::onThemeChanged(const std::shared_ptr<ThemeData>& /*theme*/)
 std::vector<HelpPrompt> SystemView::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
-    if (mCarousel->getType() == CarouselComponent::VERTICAL ||
-        mCarousel->getType() == CarouselComponent::VERTICAL_WHEEL)
+    if (mCarousel != nullptr) {
+        if (mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL ||
+            mCarousel->getType() == CarouselComponent<SystemData*>::CarouselType::VERTICAL_WHEEL)
+            prompts.push_back(HelpPrompt("up/down", "choose"));
+        else
+            prompts.push_back(HelpPrompt("left/right", "choose"));
+    }
+    else if (mTextList != nullptr) {
         prompts.push_back(HelpPrompt("up/down", "choose"));
-    else
-        prompts.push_back(HelpPrompt("left/right", "choose"));
+    }
 
     prompts.push_back(HelpPrompt("a", "select"));
 
@@ -209,9 +202,9 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
     return prompts;
 }
 
-void SystemView::onCursorChanged(const CursorState& /*state*/)
+void SystemView::onCursorChanged(const CursorState& state)
 {
-    int cursor {mCarousel->getCursor()};
+    int cursor {mPrimary->getCursor()};
 
     for (auto& selector : mSystemElements[cursor].gameSelectors) {
         if (selector->getGameSelection() == GameSelectorComponent::GameSelection::RANDOM)
@@ -221,34 +214,41 @@ void SystemView::onCursorChanged(const CursorState& /*state*/)
     for (auto& video : mSystemElements[cursor].videoComponents)
         video->setStaticVideo();
 
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].lottieAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
         anim->resetFileAnimation();
 
-    for (auto& anim : mSystemElements[mCarousel->getCursor()].GIFAnimComponents)
+    for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
         anim->resetFileAnimation();
 
     updateGameSelectors();
     startViewVideos();
     updateHelpPrompts();
 
-    int scrollVelocity {mCarousel->getScrollingVelocity()};
+    int scrollVelocity {mPrimary->getScrollingVelocity()};
     float startPos {mCamOffset};
-    float posMax {static_cast<float>(mCarousel->getNumEntries())};
+    float posMax {static_cast<float>(mPrimary->getNumEntries())};
     float target {static_cast<float>(cursor)};
+    float endPos {target};
 
-    // Find the shortest path to the target.
-    float endPos {target}; // Directly.
-    float dist {fabs(endPos - startPos)};
+    if (mPreviousScrollVelocity > 0 && scrollVelocity == 0 && mCamOffset > posMax - 1.0f)
+        startPos = 0.0f;
 
-    if (fabs(target + posMax - startPos - scrollVelocity) < dist)
-        endPos = target + posMax; // Loop around the end (0 -> max).
-    if (fabs(target - posMax - startPos - scrollVelocity) < dist)
-        endPos = target - posMax; // Loop around the start (max - 1 -> -1).
+    if (mPrimaryType == PrimaryType::CAROUSEL) {
+        // Find the shortest path to the target.
+        float dist {fabs(endPos - startPos)};
+
+        if (fabs(target + posMax - startPos - scrollVelocity) < dist)
+            endPos = target + posMax; // Loop around the end (0 -> max).
+        if (fabs(target - posMax - startPos - scrollVelocity) < dist)
+            endPos = target - posMax; // Loop around the start (max - 1 -> -1).
+    }
 
     // Make sure transitions do not animate in reverse.
     bool changedDirection {false};
-    if (mPreviousScrollVelocity != 0 && mPreviousScrollVelocity != scrollVelocity)
-        changedDirection = true;
+    if (mPreviousScrollVelocity != 0 && mPreviousScrollVelocity != scrollVelocity) {
+        if (scrollVelocity > 0 && startPos + scrollVelocity < posMax)
+            changedDirection = true;
+    }
 
     if (!changedDirection && scrollVelocity > 0 && endPos < startPos)
         endPos = endPos + posMax;
@@ -374,8 +374,27 @@ void SystemView::populate()
         std::string logoPath;
         std::string defaultLogoPath;
 
-        if (mLegacyMode && mViewNeedsReload)
+        if (mLegacyMode && mViewNeedsReload) {
+            if (mCarousel == nullptr) {
+                mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
+                mPrimary = mCarousel.get();
+                mPrimary->setDefaultZIndex(50.0f);
+                mPrimary->setCursorChangedCallback(
+                    [&](const CursorState& state) { onCursorChanged(state); });
+                mPrimary->setCancelTransitionsCallback([&] {
+                    ViewController::getInstance()->cancelViewTransitions();
+                    mNavigated = true;
+                    if (mSystemElements.size() > 1) {
+                        for (auto& anim :
+                             mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
+                            anim->setPauseAnimation(true);
+                        for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
+                            anim->setPauseAnimation(true);
+                    }
+                });
+            }
             legacyApplyTheme(theme);
+        }
 
         if (mLegacyMode) {
             SystemViewElements elements;
@@ -404,12 +423,51 @@ void SystemView::populate()
                                                                   ThemeFlags::ALL);
                         elements.gameSelectors.back()->setNeedsRefresh();
                     }
-                    if (element.second.type == "carousel") {
-                        mCarousel->applyTheme(theme, "system", element.first, ThemeFlags::ALL);
-                        if (element.second.has("logo"))
-                            logoPath = element.second.get<std::string>("logo");
-                        if (element.second.has("defaultLogo"))
-                            defaultLogoPath = element.second.get<std::string>("defaultLogo");
+                    if (element.second.type == "textlist" || element.second.type == "carousel") {
+                        if (element.second.type == "carousel" && mTextList != nullptr) {
+                            LOG(LogWarning)
+                                << "SystemView::populate(): Multiple primary components "
+                                << "defined, skipping <carousel> configuration entry";
+                            continue;
+                        }
+                        if (element.second.type == "textlist" && mCarousel != nullptr) {
+                            LOG(LogWarning)
+                                << "SystemView::populate(): Multiple primary components "
+                                << "defined, skipping <textlist> configuration entry";
+                            continue;
+                        }
+                        if (element.second.type == "carousel" && mCarousel == nullptr) {
+                            mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
+                            mPrimary = mCarousel.get();
+                            mPrimaryType = PrimaryType::CAROUSEL;
+                        }
+                        else if (element.second.type == "textlist" && mTextList == nullptr) {
+                            mTextList = std::make_unique<TextListComponent<SystemData*>>();
+                            mPrimary = mTextList.get();
+                            mPrimaryType = PrimaryType::TEXTLIST;
+                        }
+                        mPrimary->setDefaultZIndex(50.0f);
+                        mPrimary->applyTheme(theme, "system", element.first, ThemeFlags::ALL);
+                        mPrimary->setCursorChangedCallback(
+                            [&](const CursorState& state) { onCursorChanged(state); });
+                        mPrimary->setCancelTransitionsCallback([&] {
+                            ViewController::getInstance()->cancelViewTransitions();
+                            mNavigated = true;
+                            if (mSystemElements.size() > 1) {
+                                for (auto& anim :
+                                     mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
+                                    anim->setPauseAnimation(true);
+                                for (auto& anim :
+                                     mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
+                                    anim->setPauseAnimation(true);
+                            }
+                        });
+                        if (mCarousel != nullptr) {
+                            if (element.second.has("logo"))
+                                logoPath = element.second.get<std::string>("logo");
+                            if (element.second.has("defaultLogo"))
+                                defaultLogoPath = element.second.get<std::string>("defaultLogo");
+                        }
                     }
                     else if (element.second.type == "image") {
                         elements.imageComponents.emplace_back(std::make_unique<ImageComponent>());
@@ -500,10 +558,6 @@ void SystemView::populate()
                     }
                 }
             }
-            else {
-                // Apply default carousel configuration.
-                mCarousel->applyTheme(theme, "system", "", ThemeFlags::ALL);
-            }
 
             std::stable_sort(
                 elements.children.begin(), elements.children.end(),
@@ -523,13 +577,41 @@ void SystemView::populate()
             mSystemElements.back().helpStyle.applyTheme(theme, "system");
         }
 
-        CarouselComponent::Entry entry;
-        entry.name = it->getName();
-        entry.object = it;
-        entry.data.logoPath = logoPath;
-        entry.data.defaultLogoPath = defaultLogoPath;
+        if (mPrimary == nullptr) {
+            mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
+            mPrimary = mCarousel.get();
+            mPrimaryType = PrimaryType::CAROUSEL;
+            mPrimary->setDefaultZIndex(50.0f);
+            mPrimary->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            mPrimary->setCursorChangedCallback(
+                [&](const CursorState& state) { onCursorChanged(state); });
+            mPrimary->setCancelTransitionsCallback([&] {
+                ViewController::getInstance()->cancelViewTransitions();
+                mNavigated = true;
+                if (mSystemElements.size() > 1) {
+                    for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
+                        anim->setPauseAnimation(true);
+                    for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
+                        anim->setPauseAnimation(true);
+                }
+            });
+        }
 
-        mCarousel->addEntry(theme, entry, mLegacyMode);
+        if (mCarousel != nullptr) {
+            CarouselComponent<SystemData*>::Entry entry;
+            entry.name = it->getName();
+            entry.object = it;
+            entry.data.logoPath = logoPath;
+            entry.data.defaultLogoPath = defaultLogoPath;
+            mCarousel->addEntry(entry, theme);
+        }
+        if (mTextList != nullptr) {
+            TextListComponent<SystemData*>::Entry entry;
+            entry.name = it->getFullName();
+            entry.object = it;
+            entry.data.colorId = 0;
+            mTextList->addEntry(entry);
+        }
     }
 
     for (auto& elements : mSystemElements) {
@@ -545,7 +627,7 @@ void SystemView::populate()
         }
     }
 
-    if (mCarousel->getNumEntries() == 0) {
+    if (mPrimary->getNumEntries() == 0) {
         // Something is wrong, there is not a single system to show, check if UI mode is not full.
         if (!UIModeController::getInstance()->isUIModeFull()) {
             Settings::getInstance()->setString("UIMode", "full");
@@ -562,21 +644,21 @@ void SystemView::populate()
 void SystemView::updateGameCount()
 {
     std::pair<unsigned int, unsigned int> gameCount =
-        mCarousel->getSelected()->getDisplayedGameCount();
+        mPrimary->getSelected()->getDisplayedGameCount();
     std::stringstream ss;
     std::stringstream ssGames;
     std::stringstream ssFavorites;
     bool games {false};
 
-    if (!mCarousel->getSelected()->isGameSystem()) {
+    if (!mPrimary->getSelected()->isGameSystem()) {
         ss << "Configuration";
     }
-    else if (mCarousel->getSelected()->isCollection() &&
-             (mCarousel->getSelected()->getName() == "favorites")) {
+    else if (mPrimary->getSelected()->isCollection() &&
+             (mPrimary->getSelected()->getName() == "favorites")) {
         ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s");
     }
-    else if (mCarousel->getSelected()->isCollection() &&
-             (mCarousel->getSelected()->getName() == "recent")) {
+    else if (mPrimary->getSelected()->isCollection() &&
+             (mPrimary->getSelected()->getName() == "recent")) {
         // The "recent" gamelist has probably been trimmed after sorting, so we'll cap it at
         // its maximum limit of 50 games.
         ss << (gameCount.first > 50 ? 50 : gameCount.first) << " Game"
@@ -594,7 +676,7 @@ void SystemView::updateGameCount()
         mLegacySystemInfo->setText(ss.str());
     }
     else {
-        for (auto& gameCount : mSystemElements[mCarousel->getCursor()].gameCountComponents) {
+        for (auto& gameCount : mSystemElements[mPrimary->getCursor()].gameCountComponents) {
             if (gameCount->getThemeSystemdata() == "gamecount") {
                 gameCount->setValue(ss.str());
             }
@@ -619,7 +701,7 @@ void SystemView::updateGameSelectors()
     if (mLegacyMode)
         return;
 
-    int cursor {mCarousel->getCursor()};
+    int cursor {mPrimary->getCursor()};
 
     if (mSystemElements[cursor].gameSelectors.size() == 0)
         return;
@@ -1052,10 +1134,13 @@ void SystemView::legacyApplyTheme(const std::shared_ptr<ThemeData>& theme)
     else
         mViewNeedsReload = true;
 
-    mCarousel->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
+    if (mCarousel != nullptr)
+        mPrimary->applyTheme(theme, "system", "carousel_systemcarousel", ThemeFlags::ALL);
+    else if (mTextList != nullptr)
+        mPrimary->applyTheme(theme, "system", "textlist_gamelist", ThemeFlags::ALL);
 
     mLegacySystemInfo->setSize(mSize.x, mLegacySystemInfo->getFont()->getLetterHeight() * 2.2f);
-    mLegacySystemInfo->setPosition(0.0f, mCarousel->getPosition().y + mCarousel->getSize().y);
+    mLegacySystemInfo->setPosition(0.0f, mPrimary->getPosition().y + mPrimary->getSize().y);
     mLegacySystemInfo->setBackgroundColor(0xDDDDDDD8);
     mLegacySystemInfo->setRenderBackground(true);
     mLegacySystemInfo->setFont(
@@ -1076,33 +1161,41 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
 {
     glm::mat4 trans {getTransform() * parentTrans};
 
-    const float primaryZIndex {mCarousel->getZIndex()};
+    const float primaryZIndex {mPrimary->getZIndex()};
 
-    int renderLeft {static_cast<int>(mCamOffset)};
-    int renderRight {static_cast<int>(mCamOffset)};
+    int renderBefore {static_cast<int>(mCamOffset)};
+    int renderAfter {static_cast<int>(mCamOffset)};
 
     // If we're transitioning then also render the previous and next systems.
-    if (mCarousel->isAnimationPlaying(0)) {
-        renderLeft -= 1;
-        renderRight += 1;
+    if (mPrimary->isAnimationPlaying(0)) {
+        renderBefore -= 1;
+        renderAfter += 1;
     }
 
-    for (int i = renderLeft; i <= renderRight; ++i) {
+    for (int i = renderBefore; i <= renderAfter; ++i) {
         int index {i};
         while (index < 0)
-            index += static_cast<int>(mCarousel->getNumEntries());
-        while (index >= static_cast<int>(mCarousel->getNumEntries()))
-            index -= static_cast<int>(mCarousel->getNumEntries());
+            index += static_cast<int>(mPrimary->getNumEntries());
+        while (index >= static_cast<int>(mPrimary->getNumEntries()))
+            index -= static_cast<int>(mPrimary->getNumEntries());
 
-        if (mCarousel->isAnimationPlaying(0) || index == mCarousel->getCursor()) {
+        if (mPrimary->isAnimationPlaying(0) || index == mPrimary->getCursor()) {
             glm::mat4 elementTrans {trans};
-            if (mCarousel->getType() == CarouselComponent::HORIZONTAL ||
-                mCarousel->getType() == CarouselComponent::HORIZONTAL_WHEEL)
-                elementTrans = glm::translate(elementTrans,
-                                              glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f});
-            else
+            if (mCarousel != nullptr) {
+                if (mCarousel->getType() ==
+                        CarouselComponent<SystemData*>::CarouselType::HORIZONTAL ||
+                    mCarousel->getType() ==
+                        CarouselComponent<SystemData*>::CarouselType::HORIZONTAL_WHEEL)
+                    elementTrans = glm::translate(
+                        elementTrans, glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f});
+                else
+                    elementTrans = glm::translate(
+                        elementTrans, glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
+            }
+            else if (mTextList != nullptr) {
                 elementTrans = glm::translate(elementTrans,
                                               glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
+            }
 
             mRenderer->pushClipRect(
                 glm::ivec2 {static_cast<int>(glm::round(elementTrans[3].x)),

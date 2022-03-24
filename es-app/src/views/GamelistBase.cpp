@@ -16,6 +16,7 @@
 
 GamelistBase::GamelistBase(FileData* root)
     : mRoot {root}
+    , mPrimary {nullptr}
     , mRandomGame {nullptr}
     , mLastUpdated {nullptr}
     , mGameCount {0}
@@ -25,33 +26,22 @@ GamelistBase::GamelistBase(FileData* root)
     , mIsFiltered {false}
     , mIsFolder {false}
     , mVideoPlaying {false}
+    , mLeftRightAvailable {true}
 {
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
-
-    mList.setSize(mSize.x, mSize.y * 0.8f);
-    mList.setPosition(0.0f, mSize.y * 0.2f);
-    mList.setDefaultZIndex(20.0f);
-    addChild(&mList);
-
-    populateList(root->getChildrenListToDisplay(), root);
-}
-
-GamelistBase::~GamelistBase()
-{
-    //
 }
 
 void GamelistBase::setCursor(FileData* cursor)
 {
-    if (!mList.setCursor(cursor) && (!cursor->isPlaceHolder())) {
+    if (!mPrimary->setCursor(cursor) && (!cursor->isPlaceHolder())) {
         populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
-        mList.setCursor(cursor);
+        mPrimary->setCursor(cursor);
 
         // Update our cursor stack in case our cursor just got set to some folder
         // we weren't in before.
         if (mCursorStack.empty() || mCursorStack.top() != cursor->getParent()) {
             std::stack<FileData*> tmp;
-            FileData* ptr = cursor->getParent();
+            FileData* ptr {cursor->getParent()};
 
             while (ptr && ptr != mRoot) {
                 tmp.push(ptr);
@@ -72,7 +62,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
 {
     if (input.value != 0) {
         if (config->isMappedTo("a", input)) {
-            FileData* cursor = getCursor();
+            FileData* cursor {getCursor()};
             if (cursor->getType() == GAME) {
                 pauseViewVideos();
                 ViewController::getInstance()->cancelViewTransitions();
@@ -87,7 +77,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     mCursorStack.push(cursor);
                     populateList(cursor->getChildrenListToDisplay(), cursor);
 
-                    FileData* newCursor = nullptr;
+                    FileData* newCursor {nullptr};
                     std::vector<FileData*> listEntries = cursor->getChildrenListToDisplay();
                     // Check if there is an entry in the cursor stack history matching any entry
                     // in the currect folder. If so, select that entry.
@@ -105,6 +95,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     if (!newCursor)
                         newCursor = getCursor();
                     setCursor(newCursor);
+                    stopListScrolling();
                     if (mRoot->getSystem()->getThemeFolder() == "custom-collections")
                         updateHelpPrompts();
                 }
@@ -124,6 +115,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 populateList(mCursorStack.top()->getParent()->getChildrenListToDisplay(),
                              mCursorStack.top()->getParent());
                 setCursor(mCursorStack.top());
+                stopListScrolling();
                 if (mCursorStack.size() > 0)
                     mCursorStack.pop();
                 if (mRoot->getSystem()->getThemeFolder() == "custom-collections")
@@ -173,7 +165,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
-            if (Settings::getInstance()->getBool("QuickSystemSelect") &&
+            if (mLeftRightAvailable && Settings::getInstance()->getBool("QuickSystemSelect") &&
                 SystemData::sSystemVector.size() > 1) {
                 muteViewVideos();
                 onFocusLost();
@@ -183,7 +175,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
-            if (Settings::getInstance()->getBool("QuickSystemSelect") &&
+            if (mLeftRightAvailable && Settings::getInstance()->getBool("QuickSystemSelect") &&
                 SystemData::sSystemVector.size() > 1) {
                 muteViewVideos();
                 onFocusLost();
@@ -199,7 +191,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 stopListScrolling();
                 // Jump to a random game.
                 NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-                FileData* randomGame = getCursor()->getSystem()->getRandomGame(getCursor());
+                FileData* randomGame {getCursor()->getSystem()->getRandomGame(getCursor())};
                 if (randomGame)
                     setCursor(randomGame);
                 return true;
@@ -214,8 +206,8 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
                 // If there is already an mCursorStackHistory entry for the collection, then
                 // remove it so we don't get multiple entries.
-                std::vector<FileData*> listEntries =
-                    mRandomGame->getSystem()->getRootFolder()->getChildrenListToDisplay();
+                std::vector<FileData*> listEntries {
+                    mRandomGame->getSystem()->getRootFolder()->getChildrenListToDisplay()};
                 for (auto it = mCursorStackHistory.begin(); it != mCursorStackHistory.end(); ++it) {
                     if (std::find(listEntries.begin(), listEntries.end(), *it) !=
                         listEntries.end()) {
@@ -224,6 +216,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     }
                 }
                 setCursor(mRandomGame);
+                stopListScrolling();
                 updateHelpPrompts();
             }
             else {
@@ -258,13 +251,13 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 // When marking or unmarking a game as favorite, don't jump to the new position
                 // it gets after the gamelist sorting. Instead retain the cursor position in the
                 // list using the logic below.
-                FileData* entryToUpdate = getCursor();
-                SystemData* system = getCursor()->getSystem();
+                FileData* entryToUpdate {getCursor()};
+                SystemData* system {getCursor()->getSystem()};
                 bool favoritesSorting;
-                bool removedLastFavorite = false;
-                bool selectLastEntry = false;
-                bool isEditing = CollectionSystemsManager::getInstance()->isEditing();
-                bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
+                bool removedLastFavorite {false};
+                bool selectLastEntry {false};
+                bool isEditing {CollectionSystemsManager::getInstance()->isEditing()};
+                bool foldersOnTop {Settings::getInstance()->getBool("FoldersOnTop")};
                 // If the current list only contains folders, then treat it as if the folders
                 // are not sorted on top, this way the logic should work exactly as for mixed
                 // lists or files-only lists.
@@ -412,8 +405,8 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     // As the toggling of the game destroyed this object, we need to get the view
                     // from ViewController instead of using the reference that existed before the
                     // destruction. Otherwise we get random crashes.
-                    GamelistView* view =
-                        ViewController::getInstance()->getGamelistView(system).get();
+                    GamelistView* view {
+                        ViewController::getInstance()->getGamelistView(system).get()};
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                         !entryToUpdate->getSystem()->isCustomCollection()) {
@@ -428,7 +421,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                         setCursor(getFirstEntry());
                         view->setCursor(view->getFirstEntry());
                     }
-                    else if (selectLastEntry && mList.size() > 0) {
+                    else if (selectLastEntry && mPrimary->size() > 0) {
                         setCursor(getLastEntry());
                         view->setCursor(view->getLastEntry());
                     }
@@ -498,45 +491,65 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
             favoriteStar = Settings::getInstance()->getBool("FavoritesStar");
     }
 
-    mList.clear();
+    if (mPrimary != nullptr)
+        mPrimary->clear();
+
+    auto theme = mRoot->getSystem()->getTheme();
+    std::string name;
+    unsigned int color {0};
 
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); ++it) {
-            if (!mFirstGameEntry && (*it)->getType() == GAME)
-                mFirstGameEntry = (*it);
-            // Add a leading tick mark icon to the game name if it's part of the custom collection
-            // currently being edited.
-            if (isEditing && (*it)->getType() == GAME) {
-                if (CollectionSystemsManager::getInstance()->inCustomCollection(editingCollection,
-                                                                                (*it))) {
-                    if (Settings::getInstance()->getBool("SpecialCharsASCII"))
-                        inCollectionPrefix = "! ";
-                    else
-                        inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
-                }
-                else {
-                    inCollectionPrefix = "";
-                }
+            if (mCarousel != nullptr) {
+                CarouselComponent<FileData*>::Entry carouselEntry;
+                carouselEntry.name = (*it)->getName();
+                carouselEntry.object = *it;
+                carouselEntry.data.logoPath = (*it)->getMarqueePath();
+                mCarousel->addEntry(carouselEntry, theme);
             }
 
-            if ((*it)->getFavorite() && favoriteStar &&
-                mRoot->getSystem()->getName() != "favorites") {
-                if (Settings::getInstance()->getBool("SpecialCharsASCII"))
-                    mList.add(inCollectionPrefix + "* " + (*it)->getName(), *it,
-                              ((*it)->getType() == FOLDER));
-                else
-                    mList.add(inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
-                                  (*it)->getName(),
-                              *it, ((*it)->getType() == FOLDER));
-            }
-            else if ((*it)->getType() == FOLDER && mRoot->getSystem()->getName() != "collections") {
-                if (Settings::getInstance()->getBool("SpecialCharsASCII"))
-                    mList.add("# " + (*it)->getName(), *it, true);
-                else
-                    mList.add(ViewController::FOLDER_CHAR + "  " + (*it)->getName(), *it, true);
-            }
-            else {
-                mList.add(inCollectionPrefix + (*it)->getName(), *it, ((*it)->getType() == FOLDER));
+            if (mTextList != nullptr) {
+                TextListComponent<FileData*>::Entry textListEntry;
+                if (!mFirstGameEntry && (*it)->getType() == GAME)
+                    mFirstGameEntry = (*it);
+                // Add a leading tick mark icon to the game name if it's part of the custom
+                // collection currently being edited.
+                if (isEditing && (*it)->getType() == GAME) {
+                    if (CollectionSystemsManager::getInstance()->inCustomCollection(
+                            editingCollection, (*it))) {
+                        if (Settings::getInstance()->getBool("SpecialCharsASCII"))
+                            inCollectionPrefix = "! ";
+                        else
+                            inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
+                    }
+                    else {
+                        inCollectionPrefix = "";
+                    }
+                }
+
+                if ((*it)->getFavorite() && favoriteStar &&
+                    mRoot->getSystem()->getName() != "favorites") {
+                    if (Settings::getInstance()->getBool("SpecialCharsASCII"))
+                        name = inCollectionPrefix + "* " + (*it)->getName();
+                    else
+                        name = inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
+                               (*it)->getName();
+                }
+                else if ((*it)->getType() == FOLDER &&
+                         mRoot->getSystem()->getName() != "collections") {
+                    if (Settings::getInstance()->getBool("SpecialCharsASCII"))
+                        name = "# " + (*it)->getName();
+                    else
+                        name = ViewController::FOLDER_CHAR + "  " + (*it)->getName();
+                }
+                else {
+                    name = inCollectionPrefix + (*it)->getName();
+                }
+                color = (*it)->getType() == FOLDER;
+                textListEntry.name = name;
+                textListEntry.object = *it;
+                textListEntry.data.colorId = color;
+                mTextList->addEntry(textListEntry);
             }
         }
     }
@@ -551,14 +564,26 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 void GamelistBase::addPlaceholder(FileData* firstEntry)
 {
     // Empty list, add a placeholder.
-    FileData* placeholder;
+    FileData* placeholder {nullptr};
 
     if (firstEntry && firstEntry->getSystem()->isGroupedCustomCollection())
         placeholder = firstEntry->getSystem()->getPlaceholder();
     else
         placeholder = this->mRoot->getSystem()->getPlaceholder();
 
-    mList.add(placeholder->getName(), placeholder, (placeholder->getType() == PLACEHOLDER));
+    if (mTextList != nullptr) {
+        TextListComponent<FileData*>::Entry textListEntry;
+        textListEntry.name = placeholder->getName();
+        textListEntry.object = placeholder;
+        textListEntry.data.colorId = 1;
+        mTextList->addEntry(textListEntry);
+    }
+    if (mCarousel != nullptr) {
+        CarouselComponent<FileData*>::Entry carouselEntry;
+        carouselEntry.name = placeholder->getName();
+        carouselEntry.object = placeholder;
+        mCarousel->addEntry(carouselEntry, mRoot->getSystem()->getTheme());
+    }
 }
 
 void GamelistBase::generateFirstLetterIndex(const std::vector<FileData*>& files)
@@ -679,9 +704,10 @@ void GamelistBase::remove(FileData* game, bool deleteFile)
                 setCursor(siblings.at(gamePos - 1));
         }
     }
-    mList.remove(game);
 
-    if (mList.size() == 0)
+    mPrimary->remove(game);
+
+    if (mPrimary->size() == 0)
         addPlaceholder(nullptr);
 
     // If a game has been deleted, immediately remove the entry from gamelist.xml

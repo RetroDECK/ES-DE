@@ -13,14 +13,15 @@
 #include "components/ImageComponent.h"
 #include "utils/StringUtil.h"
 
-enum CursorState {
+enum class CursorState {
     CURSOR_STOPPED, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     CURSOR_SCROLLING
 };
 
-enum ListLoopType {
+enum class ListLoopType {
     LIST_ALWAYS_LOOP, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
     LIST_PAUSE_AT_END,
+    LIST_PAUSE_AT_END_ON_JUMP,
     LIST_NEVER_LOOP
 };
 
@@ -57,7 +58,7 @@ const ScrollTierList LIST_SCROLL_STYLE_SLOW = {
 };
 // clang-format on
 
-template <typename EntryData, typename UserData> class IList : public GuiComponent
+template <typename EntryData, typename UserData> class IList : public virtual GuiComponent
 {
 public:
     struct Entry {
@@ -67,6 +68,10 @@ public:
     };
 
 protected:
+    Window* mWindow;
+    std::vector<Entry> mEntries;
+    const ScrollTierList& mTierList;
+    const ListLoopType mLoopType;
     int mCursor;
     int mScrollTier;
     int mScrollVelocity;
@@ -76,32 +81,23 @@ protected:
     float mTitleOverlayOpacity;
     unsigned int mTitleOverlayColor;
 
-    const ScrollTierList& mTierList;
-    const ListLoopType mLoopType;
-
-    std::vector<Entry> mEntries;
-    Window* mWindow;
-
 public:
     IList(const ScrollTierList& tierList = LIST_SCROLL_STYLE_QUICK,
-          const ListLoopType& loopType = LIST_PAUSE_AT_END)
-        : mTierList {tierList}
+          const ListLoopType& loopType = ListLoopType::LIST_PAUSE_AT_END)
+        : mWindow {Window::getInstance()}
+        , mTierList {tierList}
         , mLoopType {loopType}
-        , mWindow {Window::getInstance()}
+        , mCursor {0}
+        , mScrollTier {0}
+        , mScrollVelocity {0}
+        , mScrollTierAccumulator {0}
+        , mScrollCursorAccumulator {0}
+        , mTitleOverlayOpacity {0.0f}
+        , mTitleOverlayColor {0xFFFFFF00}
     {
-        mCursor = 0;
-        mScrollTier = 0;
-        mScrollVelocity = 0;
-        mScrollTierAccumulator = 0;
-        mScrollCursorAccumulator = 0;
-
-        mTitleOverlayOpacity = 0.0f;
-        mTitleOverlayColor = 0xFFFFFF00;
     }
 
-    bool isScrolling() const { return (mScrollVelocity != 0 && mScrollTier > 0); }
-
-    int getScrollingVelocity() { return mScrollVelocity; }
+    const bool isScrolling() const { return (mScrollVelocity != 0 && mScrollTier > 0); }
 
     void stopScrolling()
     {
@@ -109,15 +105,17 @@ public:
 
         listInput(0);
         if (mScrollVelocity == 0)
-            onCursorChanged(CURSOR_STOPPED);
+            onCursorChanged(CursorState::CURSOR_STOPPED);
     }
+
+    const int getScrollingVelocity() const { return mScrollVelocity; }
 
     void clear()
     {
         mEntries.clear();
         mCursor = 0;
         listInput(0);
-        onCursorChanged(CURSOR_STOPPED);
+        onCursorChanged(CursorState::CURSOR_STOPPED);
     }
 
     const std::string& getSelectedName()
@@ -166,16 +164,15 @@ public:
     {
         assert(it != mEntries.cend());
         mCursor = it - mEntries.cbegin();
-        onCursorChanged(CURSOR_STOPPED);
+        onCursorChanged(CursorState::CURSOR_STOPPED);
     }
 
-    // Returns true if successful (select is in our list), false if not.
     bool setCursor(const UserData& obj)
     {
         for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it) {
             if ((*it).object == obj) {
                 mCursor = static_cast<int>(it - mEntries.cbegin());
-                onCursorChanged(CURSOR_STOPPED);
+                onCursorChanged(CursorState::CURSOR_STOPPED);
                 return true;
             }
         }
@@ -205,7 +202,7 @@ protected:
     {
         if (mCursor > 0 && it - mEntries.cbegin() <= mCursor) {
             --mCursor;
-            onCursorChanged(CURSOR_STOPPED);
+            onCursorChanged(CursorState::CURSOR_STOPPED);
         }
 
         mEntries.erase(it);
@@ -214,7 +211,7 @@ protected:
     bool listFirstRow()
     {
         mCursor = 0;
-        onCursorChanged(CURSOR_STOPPED);
+        onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
         return true;
     }
@@ -222,7 +219,7 @@ protected:
     bool listLastRow()
     {
         mCursor = static_cast<int>(mEntries.size()) - 1;
-        onCursorChanged(CURSOR_STOPPED);
+        onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
         return true;
     }
@@ -257,7 +254,7 @@ protected:
         // We delay scrolling until after scroll tier has updated so isScrolling() returns
         // accurately during onCursorChanged callbacks. We don't just do scroll tier first
         // because it would not catch the scrollDelay == tier length case.
-        int scrollCount = 0;
+        int scrollCount {0};
         while (mScrollCursorAccumulator >= mTierList.tiers[mScrollTier].scrollDelay) {
             mScrollCursorAccumulator -= mTierList.tiers[mScrollTier].scrollDelay;
             ++scrollCount;
@@ -275,45 +272,47 @@ protected:
             scroll(mScrollVelocity);
     }
 
-    void listRenderTitleOverlay(const glm::mat4& /*trans*/)
+    void listRenderTitleOverlay(const glm::mat4&)
     {
-        if (!Settings::getInstance()->getBool("ListScrollOverlay"))
-            return;
+        if constexpr (std::is_same_v<UserData, FileData*>) {
+            if (!Settings::getInstance()->getBool("ListScrollOverlay"))
+                return;
 
-        if (size() == 0 || mTitleOverlayOpacity == 0.0f) {
-            mWindow->renderListScrollOverlay(0.0f, "");
-            return;
-        }
+            if (size() == 0 || mTitleOverlayOpacity == 0.0f) {
+                mWindow->renderListScrollOverlay(0.0f, "");
+                return;
+            }
 
-        std::string titleIndex;
-        bool favoritesSorting;
+            std::string titleIndex;
+            bool favoritesSorting;
 
-        if (getSelected()->getSystem()->isCustomCollection())
-            favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
-        else
-            favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
+            if (getSelected()->getSystem()->isCustomCollection())
+                favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
+            else
+                favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
-        if (favoritesSorting && getSelected()->getFavorite()) {
+            if (favoritesSorting && getSelected()->getFavorite()) {
 #if defined(_MSC_VER) // MSVC compiler.
-            titleIndex = Utils::String::wideStringToString(L"\uF005");
+                titleIndex = Utils::String::wideStringToString(L"\uF005");
 #else
-            titleIndex = "\uF005";
+                titleIndex = "\uF005";
 #endif
-        }
-        else {
-            titleIndex = getSelected()->getName();
-            if (titleIndex.size()) {
-                titleIndex[0] = toupper(titleIndex[0]);
-                if (titleIndex.size() > 1) {
-                    titleIndex = titleIndex.substr(0, 2);
-                    titleIndex[1] = tolower(titleIndex[1]);
+            }
+            else {
+                titleIndex = getSelected()->getName();
+                if (titleIndex.size()) {
+                    titleIndex[0] = toupper(titleIndex[0]);
+                    if (titleIndex.size() > 1) {
+                        titleIndex = titleIndex.substr(0, 2);
+                        titleIndex[1] = tolower(titleIndex[1]);
+                    }
                 }
             }
-        }
 
-        // The actual rendering takes place in Window to make sure that the overlay is placed on
-        // top of all GUI elements but below the info popups and GPU statistics overlay.
-        mWindow->renderListScrollOverlay(mTitleOverlayOpacity, titleIndex);
+            // The actual rendering takes place in Window to make sure that the overlay is placed on
+            // top of all GUI elements but below the info popups and GPU statistics overlay.
+            mWindow->renderListScrollOverlay(mTitleOverlayOpacity, titleIndex);
+        }
     }
 
     void scroll(int amt)
@@ -321,14 +320,23 @@ protected:
         if (mScrollVelocity == 0 || size() < 2)
             return;
 
-        int cursor = mCursor + amt;
-        int absAmt = amt < 0 ? -amt : amt;
+        int cursor {mCursor + amt};
+        int absAmt {amt < 0 ? -amt : amt};
 
-        // Stop at the end if we've been holding down the button for a long time or
-        // we're scrolling faster than one item at a time (e.g. page up/down).
-        // Otherwise, loop around.
-        if ((mLoopType == LIST_PAUSE_AT_END && (mScrollTier > 0 || absAmt > 1)) ||
-            mLoopType == LIST_NEVER_LOOP) {
+        bool stopScroll {false};
+
+        // Depending on the loop type we'll either pause at the ends if holding a navigation
+        // button, or we'll only stop if it's a quick jump key (should or trigger button) that
+        // is held, or we never loop.
+        if (mLoopType == ListLoopType::LIST_PAUSE_AT_END && (mScrollTier > 0 || absAmt > 1))
+            stopScroll = true;
+        else if (mLoopType == ListLoopType::LIST_PAUSE_AT_END_ON_JUMP && abs(mScrollVelocity) > 1 &&
+                 (mScrollTier > 0 || absAmt > 1))
+            stopScroll = true;
+        else if (mLoopType == ListLoopType::LIST_NEVER_LOOP)
+            stopScroll = true;
+
+        if (stopScroll) {
             if (cursor < 0) {
                 cursor = 0;
                 mScrollVelocity = 0;
@@ -351,10 +359,11 @@ protected:
             onScroll();
 
         mCursor = cursor;
-        onCursorChanged((mScrollTier > 0) ? CURSOR_SCROLLING : CURSOR_STOPPED);
+        onCursorChanged((mScrollTier > 0) ? CursorState::CURSOR_SCROLLING :
+                                            CursorState::CURSOR_STOPPED);
     }
 
-    virtual void onCursorChanged(const CursorState& /*state*/) {}
+    virtual void onCursorChanged(const CursorState&) {}
     virtual void onScroll() {}
 };
 

@@ -25,7 +25,7 @@ public:
     void onShow() override;
     void onTransition() override;
 
-    void preloadGamelist() { updateInfoPanel(); }
+    void preloadGamelist() { updateInfoPanel(CursorState::CURSOR_STOPPED); }
     void launch(FileData* game) override { ViewController::getInstance()->triggerGameLaunch(game); }
 
     std::string getName() const
@@ -91,13 +91,13 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    void updateInfoPanel();
+    void updateInfoPanel(const CursorState& state);
     void setGameImage(FileData* file, GuiComponent* comp);
 
     // Legacy (backward compatibility) functions.
     void legacyPopulateFields();
     void legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme);
-    void legacyUpdateInfoPanel();
+    void legacyUpdateInfoPanel(const CursorState& state);
     void legacyUpdate(int deltaTime);
     void legacyInitMDLabels();
     void legacyInitMDValues();

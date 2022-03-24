@@ -121,17 +121,18 @@ void GuiMenu::openUIOptions()
                 Scripting::fireEvent("theme-changed", theme_set->getSelected(),
                                      Settings::getInstance()->getString("ThemeSet"));
                 Settings::getInstance()->setString("ThemeSet", theme_set->getSelected());
-                CollectionSystemsManager::getInstance()->updateSystemsList();
                 mWindow->setChangedThemeSet();
                 // This is required so that the custom collection system does not disappear
                 // if the user is editing a custom collection when switching theme sets.
-                if (CollectionSystemsManager::getInstance()->isEditing()) {
+                if (CollectionSystemsManager::getInstance()->isEditing())
                     CollectionSystemsManager::getInstance()->exitEditMode();
-                    s->setNeedsCollectionsUpdate();
-                }
+                // TODO: Eliminate this extra reload or only execute it when switching from
+                // a legacy theme to a non-legacy theme.
+                ViewController::getInstance()->reloadAll();
                 s->setNeedsSaving();
                 s->setNeedsReloading();
                 s->setNeedsGoToStart();
+                s->setNeedsCollectionsUpdate();
                 s->setInvalidateCachedBackground();
             }
         });

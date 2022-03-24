@@ -355,19 +355,33 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
     if (applicationStartup) {
         mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
-            if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
-                getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
+            if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::CAROUSEL) {
+                if (getSystemListView()->getCarouselType() ==
+                        CarouselComponent<SystemData*>::CarouselType::HORIZONTAL ||
+                    getSystemListView()->getCarouselType() ==
+                        CarouselComponent<SystemData*>::CarouselType::HORIZONTAL_WHEEL)
+                    mCamera[3].y += Renderer::getScreenHeight();
+                else
+                    mCamera[3].x -= Renderer::getScreenWidth();
+            }
+            else if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::TEXTLIST) {
                 mCamera[3].y += Renderer::getScreenHeight();
-            else
-                mCamera[3].x -= Renderer::getScreenWidth();
+            }
             updateHelpPrompts();
         }
         else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
-            if (getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL ||
-                getSystemListView()->getCarouselType() == CarouselComponent::HORIZONTAL_WHEEL)
+            if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::CAROUSEL) {
+                if (getSystemListView()->getCarouselType() ==
+                        CarouselComponent<SystemData*>::CarouselType::HORIZONTAL ||
+                    getSystemListView()->getCarouselType() ==
+                        CarouselComponent<SystemData*>::CarouselType::HORIZONTAL_WHEEL)
+                    mCamera[3].y += Renderer::getScreenHeight();
+                else
+                    mCamera[3].x += Renderer::getScreenWidth();
+            }
+            else if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::TEXTLIST) {
                 mCamera[3].y += Renderer::getScreenHeight();
-            else
-                mCamera[3].x += Renderer::getScreenWidth();
+            }
         }
         else {
             updateHelpPrompts();
@@ -415,9 +429,9 @@ void ViewController::goToPrevGamelist()
 
 void ViewController::goToGamelist(SystemData* system)
 {
-    bool wrapFirstToLast = false;
-    bool wrapLastToFirst = false;
-    bool slideTransitions = false;
+    bool wrapFirstToLast {false};
+    bool wrapLastToFirst {false};
+    bool slideTransitions {false};
 
     if (mCurrentView != nullptr)
         mCurrentView->onTransition();
@@ -521,6 +535,7 @@ void ViewController::goToGamelist(SystemData* system)
     }
 
     mCurrentView = getGamelistView(system);
+    mCurrentView->finishAnimation(0);
 
     // Application startup animation, if starting in a gamelist rather than in the system view.
     if (mState.viewing == NOTHING) {
