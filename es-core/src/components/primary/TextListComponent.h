@@ -15,13 +15,10 @@
 #include "components/primary/PrimaryComponent.h"
 #include "resources/Font.h"
 
-namespace
-{
-    struct TextListData {
-        unsigned int colorId;
-        std::shared_ptr<TextCache> textCache;
-    };
-}; // namespace
+struct TextListData {
+    unsigned int colorId;
+    std::shared_ptr<TextCache> textCache;
+};
 
 template <typename T>
 class TextListComponent : public PrimaryComponent<T>, private IList<TextListData, T>

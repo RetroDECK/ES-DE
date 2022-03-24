@@ -16,14 +16,11 @@
 #include "components/primary/PrimaryComponent.h"
 #include "resources/Font.h"
 
-namespace
-{
-    struct CarouselElement {
-        std::shared_ptr<GuiComponent> logo;
-        std::string logoPath;
-        std::string defaultLogoPath;
-    };
-}; // namespace
+struct CarouselElement {
+    std::shared_ptr<GuiComponent> logo;
+    std::string logoPath;
+    std::string defaultLogoPath;
+};
 
 template <typename T>
 class CarouselComponent : public PrimaryComponent<T>, protected IList<CarouselElement, T>
