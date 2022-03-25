@@ -245,23 +245,24 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             }
         }
 
-        if (mPrimary == nullptr) {
-            mTextList = std::make_unique<TextListComponent<FileData*>>();
-            mPrimary = mTextList.get();
-            mPrimary->setPosition(0.2f, mSize.y * 0.2f);
-            mPrimary->setSize(mSize.x * 0.7f, mSize.y * 0.6f);
-            mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
-            mPrimary->setCursorChangedCallback(
-                [&](const CursorState& state) { updateInfoPanel(state); });
-            mPrimary->setDefaultZIndex(50.0f);
-            mPrimary->setZIndex(50.0f);
-            mPrimary->applyTheme(theme, "gamelist", "", ALL);
-            addChild(mPrimary);
-        }
-
         mHelpStyle.applyTheme(mTheme, "gamelist");
-        populateList(mRoot->getChildrenListToDisplay(), mRoot);
     }
+
+    if (mPrimary == nullptr) {
+        mTextList = std::make_unique<TextListComponent<FileData*>>();
+        mPrimary = mTextList.get();
+        mPrimary->setPosition(0.2f, mSize.y * 0.2f);
+        mPrimary->setSize(mSize.x * 0.7f, mSize.y * 0.6f);
+        mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
+        mPrimary->setCursorChangedCallback(
+            [&](const CursorState& state) { updateInfoPanel(state); });
+        mPrimary->setDefaultZIndex(50.0f);
+        mPrimary->setZIndex(50.0f);
+        mPrimary->applyTheme(theme, "gamelist", "", ALL);
+        addChild(mPrimary);
+    }
+
+    populateList(mRoot->getChildrenListToDisplay(), mRoot);
 
     // Disable quick system select if the primary component uses the left and right buttons.
     if (mCarousel != nullptr) {
