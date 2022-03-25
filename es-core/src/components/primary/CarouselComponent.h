@@ -292,34 +292,28 @@ template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Inpu
         }
         if constexpr (std::is_same_v<T, FileData*>) {
             if (config->isMappedLike("leftshoulder", input)) {
-                if (getCursor() == 0) {
-                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
-                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-                    return true;
-                }
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
                 List::listInput(-10);
                 return true;
             }
             if (config->isMappedLike("rightshoulder", input)) {
-                if (getCursor() == static_cast<int>(mEntries.size()) - 1) {
-                    if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
-                        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-                    return true;
-                }
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
                 List::listInput(10);
                 return true;
             }
             if (config->isMappedLike("lefttrigger", input)) {
+                if (getCursor() == 0)
+                    return true;
                 mTriggerJump = true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
                 return this->listFirstRow();
             }
             if (config->isMappedLike("righttrigger", input)) {
+                if (getCursor() == static_cast<int>(mEntries.size()) - 1)
+                    return true;
                 mTriggerJump = true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
