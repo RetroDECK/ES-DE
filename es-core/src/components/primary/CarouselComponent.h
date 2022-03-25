@@ -294,14 +294,26 @@ template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Inpu
             if (config->isMappedLike("leftshoulder", input)) {
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
-                List::listInput(-10);
-                return true;
+                if (mEntries.size() < 10 && getCursor() != 0) {
+                    mTriggerJump = true;
+                    return this->listFirstRow();
+                }
+                else {
+                    List::listInput(-10);
+                    return true;
+                }
             }
             if (config->isMappedLike("rightshoulder", input)) {
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
-                List::listInput(10);
-                return true;
+                if (mEntries.size() < 10 && getCursor() != static_cast<int>(mEntries.size()) - 1) {
+                    mTriggerJump = true;
+                    return this->listLastRow();
+                }
+                else {
+                    List::listInput(10);
+                    return true;
+                }
             }
             if (config->isMappedLike("lefttrigger", input)) {
                 if (getCursor() == 0)
