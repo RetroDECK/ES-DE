@@ -9,6 +9,14 @@ based on: 'recalbox-multi' by the Recalbox community
 <theme>
     <include>./navigationsounds.xml</include>
 
+    <variant name="themeEngineTest_1">
+        <include>./theme_engine_test_1.xml</include>
+    </variant>
+
+    <variant name="themeEngineTest_2">
+        <include>./theme_engine_test_2.xml</include>
+    </variant>
+
     <variant name="lightMode, lightModeNoVideos">
         <include>./colors_light.xml</include>
     </variant>
@@ -17,30 +25,32 @@ based on: 'recalbox-multi' by the Recalbox community
         <include>./colors_dark.xml</include>
     </variant>
 
-    <view name="system">
-        <carousel name="system_carousel">
-            <logo>./${system.theme}/images/logo.svg</logo>
-            <logoScale>1.23</logoScale>
-            <logoSize>0.25 0.125</logoSize>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.070</fontSize>
-            <letterCase>uppercase</letterCase>
-            <lineSpacing>1.2</lineSpacing>
-            <text>${system.fullName}</text>
-            <maxLogoCount>3</maxLogoCount>
-        </carousel>
-        <text name="game_counter">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.035</fontSize>
-            <pos>0.5 0.6437</pos>
-            <size>1 0.056</size>
-            <origin>0.5 0.5</origin>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>center</horizontalAlignment>
-            <systemdata>gamecount</systemdata>
-            <zIndex>50</zIndex>
-        </text>
-    </view>
+    <variant name="lightMode, lightModeNoVideos, darkMode, darkModeNoVideos">
+        <view name="system">
+            <carousel name="system_carousel">
+                <logo>./${system.theme}/images/logo.svg</logo>
+                <logoScale>1.23</logoScale>
+                <logoSize>0.25 0.125</logoSize>
+                <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+                <fontSize>0.070</fontSize>
+                <letterCase>uppercase</letterCase>
+                <lineSpacing>1.2</lineSpacing>
+                <text>${system.fullName}</text>
+                <maxLogoCount>3</maxLogoCount>
+            </carousel>
+            <text name="game_counter">
+                <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+                <fontSize>0.035</fontSize>
+                <pos>0.5 0.6437</pos>
+                <size>1 0.056</size>
+                <origin>0.5 0.5</origin>
+                <letterCase>uppercase</letterCase>
+                <horizontalAlignment>center</horizontalAlignment>
+                <systemdata>gamecount</systemdata>
+                <zIndex>50</zIndex>
+            </text>
+        </view>
+    </variant>
 
     <view name="system">
         <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
@@ -90,11 +100,6 @@ based on: 'recalbox-multi' by the Recalbox community
             <pos>0.38 0.904</pos>
         </text>
     </view>
-
-    <variant name="themeEngineTest">
-        <include>./colors_dark.xml</include>
-        <include>./theme_engine_test.xml</include>
-    </variant>
 
     <view name="system, gamelist">
         <image name="background">
@@ -192,14 +197,22 @@ based on: 'recalbox-multi' by the Recalbox community
             <fontSize>0.02</fontSize>
             <size>0.144 0.02</size>
         </datetime>
-        <textlist name="gamelist">
-            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.025</fontSize>
-            <letterCase>uppercase</letterCase>
-        </textlist>
     </view>
 
-    <!-- All except basic -->
+    <variant name="lightMode, lightModeNoVideos, darkMode, darkModeNoVideos">
+        <view name="gamelist">
+            <textlist name="textlist_gamelist">
+                <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+                <fontSize>0.025</fontSize>
+                <letterCase>uppercase</letterCase>
+                <pos>0.025 0.201</pos>
+                <size>0.39 0.711</size>
+                <horizontalAlignment>left</horizontalAlignment>
+                <horizontalMargin>0.01</horizontalMargin>
+            </textlist>
+        </view>
+    </variant>
+
     <view name="gamelist">
         <image name="backframe2">
             <pos>0.02 0.19</pos>
@@ -285,12 +298,6 @@ based on: 'recalbox-multi' by the Recalbox community
             <size>0.346 0.235</size>
             <fontSize>0.02</fontSize>
         </text>
-        <textlist name="gamelist">
-            <pos>0.025 0.201</pos>
-            <size>0.39 0.711</size>
-            <horizontalAlignment>left</horizontalAlignment>
-            <horizontalMargin>0.01</horizontalMargin>
-        </textlist>
         <gamelistinfo name="gamelistInfo">
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
@@ -321,7 +328,7 @@ based on: 'recalbox-multi' by the Recalbox community
                 <origin>0 0</origin>
                 <path>./core/images/frame.png</path>
             </image>
-            <textlist name="gamelist">
+            <textlist name="textlist_gamelist">
                 <pos>0.04 0.201</pos>
                 <size>0.92 0.71</size>
                 <horizontalAlignment>center</horizontalAlignment>

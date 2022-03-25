@@ -1,75 +1,6 @@
 <theme>
     <view name="system">
         <carousel name="system_carousel">
-            <color>00000099</color>
-            <textColor>F0F0F0</textColor>
-        </carousel>
-        <text name="game_counter">
-            <color>D6D6D6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <text name="game_counter2">
-            <color>D6D6D6</color>
-            <backgroundColor>555555D8</backgroundColor>
-        </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <color>B6B6B6</color>
-        </text>
-        <text name="system_name">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <text name="game_name">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <datetime name="game_release_date">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </datetime>
-        <text name="recently_played_text">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <color>D6D6D6</color>
-        </text>
-
-        <image name="background">
-            <color>000000</color>
-        </image>
-        <text name="logoText">
-            <color>B6B6B6</color>
-        </text>
-    </view>
-
-    <view name="system, gamelist">
-        <helpsystem name="help">
-            <textColor>D6D6D6</textColor>
-            <iconColor>D6D6D6</iconColor>
-            <textColorDimmed>969696</textColorDimmed>
-            <iconColorDimmed>969696</iconColorDimmed>
-        </helpsystem>
-    </view>
-
-    <!-- Default band colors (used if a system is unthemed). -->
-    <view name="system, gamelist">
-        <image name="band1">
-            <visible>false</visible>
-        </image>
-        <image name="band2">
-            <visible>false</visible>
-        </image>
-        <image name="band3">
-            <visible>false</visible>
-        </image>
-        <image name="band4">
-            <visible>false</visible>
-        </image>
-    </view>
-
-    <view name="system">
-        <carousel name="system_carousel">
             <type>vertical_wheel</type>
             <size>0.25 1.0</size>
             <pos>0 0</pos>
@@ -97,7 +28,6 @@
             <systemdata>gamecount</systemdata>
             <zIndex>50</zIndex>
         </text>
-
         <text name="game_counter2">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
@@ -110,7 +40,6 @@
             <zIndex>50</zIndex>
             <visible>false</visible>
         </text>
-
         <text name="system_name">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.085</fontSize>
@@ -122,7 +51,6 @@
             <systemdata>fullname</systemdata>
             <zIndex>50</zIndex>
         </text>
-
         <text name="game_name">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
@@ -135,7 +63,6 @@
             <metadata>name</metadata>
             <zIndex>50</zIndex>
         </text>
-
         <datetime name="game_release_date">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
@@ -149,7 +76,6 @@
             <metadata>lastplayed</metadata>
             <zIndex>50</zIndex>
         </datetime>
-
         <text name="recently_played_text">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
@@ -161,31 +87,26 @@
             <text>Last played</text>
             <zIndex>50</zIndex>
         </text>
-
         <gameselector name="selector_recent">
             <selection>lastplayed</selection>
             <gameCount>3</gameCount>
         </gameselector>
-
         <gameselector name="selector_random">
             <selection>random</selection>
             <gameCount>1</gameCount>
         </gameselector>
-
         <rating name="random_game_rating">
             <pos>0.26 0.167</pos>
             <size>0.06 0.04</size>
             <color>FFEE00</color>
             <gameselector>selector_random</gameselector>
         </rating>
-
         <rating name="recent_game_rating">
             <pos>0.889 0.042</pos>
             <size>0.03 0.03</size>
             <color>FFEE00</color>
             <gameselector>selector_recent</gameselector>
         </rating>
-
         <image name="random_background_image">
             <origin>0 0</origin>
             <pos>0 0</pos>
@@ -198,7 +119,6 @@
             <opacity>0.5</opacity>
             <saturation>0.3</saturation>
         </image>
-
         <image name="recent_game_image">
             <origin>0 0</origin>
             <pos>0.775 0.08</pos>
@@ -210,7 +130,6 @@
             <zIndex>3</zIndex>
             <opacity>1</opacity>
         </image>
-
         <video name="random_game_video">
             <origin>0 0</origin>
             <pos>0.26 0.22</pos>
@@ -225,19 +144,16 @@
             <audio>true</audio>
             <delay>1.7</delay>
         </video>
-
         <helpsystem name="help">
             <pos>0.9885 0.954</pos>
-            <origin>1 0 </origin>
+            <origin>1 0</origin>
         </helpsystem>
-
         <image name="consolegame">
             <visible>false</visible>
         </image>
         <image name="controller">
             <visible>false</visible>
         </image>
-
         <text name="info1">
             <pos>0.58 0.695</pos>
             <horizontalAlignment>right</horizontalAlignment>
@@ -279,18 +195,23 @@
             <horizontalAlignment>right</horizontalAlignment>
         </text>
     </view>
-    <!--
-    <view name="gamelist">
-        <image name="md_image">
-            <origin>0.5 0.5</origin>
-            <pos>0.63 0.45</pos>
-            <maxSize>0.360 0.424</maxSize>
-            <imageType>image</imageType>
-            <interpolation>nearest</interpolation>
-            <scrollFadeIn>true</scrollFadeIn>
+
+    <!-- Hide the bands. -->
+    <view name="system, gamelist">
+        <image name="band1">
+            <visible>false</visible>
+        </image>
+        <image name="band2">
+            <visible>false</visible>
+        </image>
+        <image name="band3">
+            <visible>false</visible>
+        </image>
+        <image name="band4">
+            <visible>false</visible>
         </image>
     </view>
--->
+
     <view name="gamelist">
         <video name="md_video">
             <origin>0.5 0.5</origin>
@@ -303,4 +224,108 @@
         </video>
     </view>
 
+    <view name="system, gamelist">
+        <helpsystem name="help">
+            <textColor>A6A6A6</textColor>
+            <iconColor>A6A6A6</iconColor>
+            <textColorDimmed>969696</textColorDimmed>
+            <iconColorDimmed>969696</iconColorDimmed>
+        </helpsystem>
+    </view>
+
+    <view name="gamelist">
+        <textlist name="textlist_gamelist">
+            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+            <fontSize>0.025</fontSize>
+            <letterCase>uppercase</letterCase>
+        </textlist>
+        <textlist name="textlist_gamelist">
+            <pos>0.025 0.201</pos>
+            <size>0.39 0.711</size>
+            <horizontalAlignment>left</horizontalAlignment>
+            <horizontalMargin>0.01</horizontalMargin>
+        </textlist>
+        <image name="background">
+            <color>404040</color>
+        </image>
+        <textlist name="textlist_gamelist">
+            <selectorColor>161616</selectorColor>
+            <selectedColor>AFAFAF</selectedColor>
+            <primaryColor>000000</primaryColor>
+            <secondaryColor>333333</secondaryColor>
+        </textlist>
+        <gamelistinfo name="gamelistInfo">
+            <color>303030</color>
+        </gamelistinfo>
+    </view>
+
+    <variant name="noMedia">
+        <view name="gamelist">
+            <image name="backframe1">
+                <color>9F9F9F</color>
+            </image>
+        </view>
+    </variant>
+
+    <view name="system">
+        <carousel name="system_carousel">
+            <color>00000099</color>
+            <textColor>F0F0F0</textColor>
+        </carousel>
+        <text name="game_counter">
+            <color>C6C6C6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <text name="game_counter2">
+            <color>D6D6D6</color>
+            <backgroundColor>555555D8</backgroundColor>
+        </text>
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+            <color>B6B6B6</color>
+        </text>
+        <text name="system_name">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <text name="game_name">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <datetime name="game_release_date">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </datetime>
+        <text name="recently_played_text">
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
+        </text>
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+            <color>D6D6D6</color>
+        </text>
+        <image name="background">
+            <color>000000</color>
+        </image>
+        <text name="logoText">
+            <color>B6B6B6</color>
+        </text>
+    </view>
+
+    <view name="gamelist">
+        <image name="backframe2">
+            <color>6F6F6F</color>
+        </image>
+        <image name="backframe3">
+            <color>6F6F6F</color>
+        </image>
+        <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
+                    md_lbl_publisher, md_lbl_genre, md_lbl_players,
+                    md_lbl_lastplayed, md_lbl_playcount, md_developer,
+                    md_publisher, md_genre, md_players, md_playcount,
+                    md_description">
+            <color>000000</color>
+        </text>
+        <datetime name="md_releasedate, md_lastplayed">
+            <color>000000</color>
+        </datetime>
+    </view>
 </theme>

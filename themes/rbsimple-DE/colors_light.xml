@@ -50,7 +50,7 @@
         <image name="background">
             <color>707070</color>
         </image>
-        <textlist name="gamelist">
+        <textlist name="textlist_gamelist">
             <selectorColor>262626</selectorColor>
             <selectedColor>9F9F9F</selectedColor>
             <primaryColor>262626</primaryColor>
@@ -69,7 +69,6 @@
         </view>
     </variant>
 
-    <!-- All except basic -->
     <view name="gamelist">
         <image name="backframe2">
             <color>9F9F9F</color>
