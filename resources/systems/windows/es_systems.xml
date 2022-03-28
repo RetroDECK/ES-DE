@@ -357,7 +357,8 @@
         <fullname>Sega Dreamcast</fullname>
         <path>%ROMPATH%\dreamcast</path>
         <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
+        <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
+        <command label="Redream (Standalone)">%EMULATOR_REDREAM% %ROM%</command>
         <platform>dreamcast</platform>
         <theme>dreamcast</theme>
     </system>
@@ -764,6 +765,7 @@
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume_libretro.dll %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume2015_libretro.dll %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\melonds_libretro.dll %ROM%</command>
+        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>
@@ -996,6 +998,7 @@
         <command label="Beetle PSX HW">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_psx_hw_libretro.dll %ROM%</command>
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\pcsx_rearmed_libretro.dll %ROM%</command>
         <command label="DuckStation">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\duckstation_libretro.dll %ROM%</command>
+        <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% %ROM%</command>
         <platform>psx</platform>
         <theme>psx</theme>
     </system>
@@ -1332,8 +1335,8 @@
         <name>wiiu</name>
         <fullname>Nintendo Wii U</fullname>
         <path>%ROMPATH%\wiiu</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.rpx .RPX</extension>
+        <command label="Cemu (Standalone)">%EMULATOR_CEMU% -f -g %ROM%</command>
         <platform>wiiu</platform>
         <theme>wiiu</theme>
     </system>

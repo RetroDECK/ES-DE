@@ -44,6 +44,12 @@
             <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
+    <emulator name="MELONDS">
+        <!-- Nintendo DS and DSi emulator melonDS -->
+        <rule type="staticpath">
+            <entry>/Applications/melonDS.app/Contents/MacOS/melonDS</entry>
+        </rule>
+    </emulator>
     <emulator name="MGBA">
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="staticpath">
@@ -77,6 +83,18 @@
             <entry>/Applications/PPSSPPSDL.app/Contents/MacOS/PPSSPPSDL</entry>
             <entry>/opt/homebrew/bin/ppsspp</entry>
             <entry>/usr/local/bin/ppsspp</entry>
+        </rule>
+    </emulator>
+    <emulator name="REDREAM">
+        <!-- Sega Dreamcast emulator Redream -->
+        <rule type="staticpath">
+            <entry>/Applications/redream.app/Contents/MacOS/redream</entry>
+        </rule>
+    </emulator>
+    <emulator name="SIXTYFORCE">
+        <!-- Nintendo 64 emulator sixtyforce -->
+        <rule type="staticpath">
+            <entry>/Applications/sixtyforce.app/Contents/MacOS/sixtyforce</entry>
         </rule>
     </emulator>
     <emulator name="VBA-M">

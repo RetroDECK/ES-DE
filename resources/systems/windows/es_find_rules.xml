@@ -36,6 +36,16 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="CEMU">
+        <!-- Nintendo Wii U emulator Cemu -->
+        <rule type="systempath">
+            <entry>Cemu.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\cemu\Cemu.exe</entry>
+            <entry>%ESPATH%\..\cemu\Cemu.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="systempath">
@@ -70,6 +80,19 @@
             <entry>%ESPATH%\..\dosbox-staging\dosbox.exe</entry>
         </rule>
     </emulator>
+    <emulator name="DUCKSTATION">
+        <!-- Sony PlayStation 1 emulator DuckStation -->
+        <rule type="systempath">
+            <entry>duckstation-nogui-x64-ReleaseLTCG.exe</entry>
+            <entry>duckstation-qt-x64-ReleaseLTCG.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\..\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\..\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="systempath">
@@ -88,6 +111,16 @@
         <rule type="staticpath">
             <entry>%ESPATH%\mame\mame.exe</entry>
             <entry>%ESPATH%\..\mame\mame.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="MELONDS">
+        <!-- Nintendo DS and DSi emulator melonDS -->
+        <rule type="systempath">
+            <entry>melonDS.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\melonDS\melonDS.exe</entry>
+            <entry>%ESPATH%\..\melonDS\melonDS.exe</entry>
         </rule>
     </emulator>
     <emulator name="MGBA">
@@ -141,6 +174,16 @@
             <entry>D:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\..\PPSSPP\PPSSPPWindows64.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="REDREAM">
+        <!-- Sega Dreamcast emulator Redream -->
+        <rule type="systempath">
+            <entry>redream.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\redream\redream.exe</entry>
+            <entry>%ESPATH%\..\redream\redream.exe</entry>
         </rule>
     </emulator>
     <emulator name="RPCS3">

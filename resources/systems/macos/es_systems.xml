@@ -17,6 +17,7 @@
         <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
         <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% %ROM%</command>
+        <command label="sixtyforce (Standalone)">%EMULATOR_SIXTYFORCE% %ROM%</command>
         <platform>n64</platform>
         <theme>64dd</theme>
     </system>
@@ -355,7 +356,8 @@
         <fullname>Sega Dreamcast</fullname>
         <path>%ROMPATH%/dreamcast</path>
         <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.dylib %ROM%</command>
+        <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.dylib %ROM%</command>
+        <command label="Redream (Standalone)">%EMULATOR_REDREAM% %ROM%</command>
         <platform>dreamcast</platform>
         <theme>dreamcast</theme>
     </system>
@@ -729,6 +731,7 @@
         <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
         <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% %ROM%</command>
+        <command label="sixtyforce (Standalone)">%EMULATOR_SIXTYFORCE% %ROM%</command>
         <platform>n64</platform>
         <theme>n64</theme>
     </system>
@@ -758,6 +761,7 @@
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume_libretro.dylib %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/desmume2015_libretro.dylib %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/melonds_libretro.dylib %ROM%</command>
+        <command label="melonDS (Standalone)">%EMULATOR_MELONDS% %ROM%</command>
         <platform>nds</platform>
         <theme>nds</theme>
     </system>

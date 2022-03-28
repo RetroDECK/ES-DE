@@ -67,6 +67,23 @@
             <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="DUCKSTATION">
+        <!-- Sony PlayStation 1 emulator DuckStation -->
+        <rule type="systempath">
+            <entry>duckstation-nogui</entry>
+            <entry>duckstation-qt</entry>
+            <entry>org.duckstation.DuckStation</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.duckstation.DuckStation</entry>
+            <entry>~/Applications/duckstation-nogui-x64.AppImage</entry>
+            <entry>~/.local/bin/duckstation-nogui-x64.AppImage</entry>
+            <entry>~/bin/duckstation-nogui-x64.AppImage</entry>
+            <entry>~/Applications/duckstation-qt-x64.AppImage</entry>
+            <entry>~/.local/bin/duckstation-qt-x64.AppImage</entry>
+            <entry>~/bin/duckstation-qt-x64.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="systempath">
@@ -82,6 +99,17 @@
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
             <entry>mame</entry>
+        </rule>
+    </emulator>
+    <emulator name="MELONDS">
+        <!-- Nintendo DS and DSi emulator melonDS -->
+        <rule type="systempath">
+            <entry>melonds</entry>
+            <entry>melonDS</entry>
+            <entry>net.kuribo64.melonDS</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.kuribo64.melonDS</entry>
         </rule>
     </emulator>
     <emulator name="MGBA">
@@ -126,6 +154,12 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
+        </rule>
+    </emulator>
+    <emulator name="REDREAM">
+        <!-- Sega Dreamcast emulator Redream -->
+        <rule type="systempath">
+            <entry>redream</entry>
         </rule>
     </emulator>
     <emulator name="RPCS3">
