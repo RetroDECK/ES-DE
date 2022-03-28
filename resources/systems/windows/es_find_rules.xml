@@ -93,6 +93,16 @@
             <entry>%ESPATH%\..\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
         </rule>
     </emulator>
+    <emulator name="FLYCAST">
+        <!-- Sega Dreamcast emulator Flycast -->
+        <rule type="systempath">
+            <entry>flycast.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\flycast\flycast.exe</entry>
+            <entry>%ESPATH%\..\flycast\flycast.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="systempath">

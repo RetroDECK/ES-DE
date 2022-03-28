@@ -84,6 +84,16 @@
             <entry>~/bin/duckstation-qt-x64.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="FLYCAST">
+        <!-- Sega Dreamcast emulator Flycast -->
+        <rule type="systempath">
+            <entry>flycast</entry>
+            <entry>org.flycast.Flycast</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.flycast.Flycast</entry>
+        </rule>
+    </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="systempath">

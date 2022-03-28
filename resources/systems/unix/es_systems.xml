@@ -215,7 +215,8 @@
         <fullname>Atomiswave</fullname>
         <path>%ROMPATH%/atomiswave</path>
         <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
+        <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
+        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <platform>atomiswave</platform>
         <theme>atomiswave</theme>
     </system>
@@ -358,6 +359,7 @@
         <path>%ROMPATH%/dreamcast</path>
         <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
+        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Redream (Standalone)">%EMULATOR_REDREAM% %ROM%</command>
         <platform>dreamcast</platform>
         <theme>dreamcast</theme>
@@ -744,7 +746,8 @@
         <fullname>Sega NAOMI</fullname>
         <path>%ROMPATH%/naomi</path>
         <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
+        <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
+        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <platform>naomi</platform>
         <theme>naomi</theme>
     </system>
@@ -753,7 +756,8 @@
         <fullname>Sega NAOMI GD-ROM</fullname>
         <path>%ROMPATH%/naomigd</path>
         <extension>.chd .CHD .cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
+        <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.so %ROM%</command>
+        <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <platform>naomi</platform>
         <theme>naomigd</theme>
     </system>

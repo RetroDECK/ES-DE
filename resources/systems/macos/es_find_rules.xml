@@ -36,6 +36,12 @@
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="FLYCAST">
+        <!-- Sega Dreamcast emulator Flycast -->
+        <rule type="staticpath">
+            <entry>/Applications/Flycast.app/Contents/MacOS/Flycast</entry>
+        </rule>
+    </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
         <rule type="staticpath">
