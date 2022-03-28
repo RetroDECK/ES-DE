@@ -137,6 +137,7 @@ v1.2 maintenance release. Some minor bugs were fixed but most importantly this r
 * During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
 * The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
 * Fixed an incorrect RetroArch core path for the emulator VBA-M
+* modern-DE: Small adjustment to make the help system fit on screen at all times
 
 ## Version 1.2.0
 
