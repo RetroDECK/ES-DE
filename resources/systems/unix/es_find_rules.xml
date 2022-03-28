@@ -168,13 +168,22 @@
             <entry>rpcs3</entry>
             <entry>rpcs3-emu.rpcs3</entry>
             <entry>net.rpcs3.RPCS3</entry>
-            <entry>rpcs3.AppImage</entry>
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3</entry>
             <entry>~/Applications/rpcs3*.AppImage</entry>
             <entry>~/.local/bin/rpcs3*.AppImage</entry>
             <entry>~/bin/rpcs3*.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="RYUJINX">
+        <!-- Nintendo Switch emulator Ryujinx -->
+        <rule type="systempath">
+            <entry>Ryujinx</entry>
+            <entry>org.ryujinx.Ryujinx</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
         </rule>
     </emulator>
     <emulator name="VBA-M">
@@ -201,7 +210,6 @@
         <rule type="systempath">
             <entry>yuzu</entry>
             <entry>org.yuzu_emu.yuzu</entry>
-            <entry>yuzu.AppImage</entry>
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>

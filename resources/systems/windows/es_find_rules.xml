@@ -196,6 +196,16 @@
             <entry>%ESPATH%\..\RPCS3\rpcs3.exe</entry>
         </rule>
     </emulator>
+    <emulator name="RYUJINX">
+        <!-- Nintendo Switch emulator Ryujinx -->
+        <rule type="systempath">
+            <entry>Ryujinx.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\ryujinx\Ryujinx.exe</entry>
+            <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="systempath">
