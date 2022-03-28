@@ -1344,12 +1344,13 @@ Properties:
 
 #### carousel
 
-Displays a carousel for selecting game systems.
+A carousel for navigating and selecting games or systems.
 
- When using fade transitions, any elements placed below or at the same zIndex value as the carousel will be faded to black during transitions, and any elements with a higher zIndex value than the carousel will be faded to transparent.
+On the system view when using fade transitions, any elements placed below or at the same zIndex value as the carousel will be faded to black during transitions, and any elements with a higher zIndex value than the carousel will be faded to transparent.
 
 Supported views:
 * `system`
+* `gamelist`
 
 Instances per view:
 * `single`
@@ -1433,9 +1434,10 @@ Properties:
 
 #### textlist
 
-A text list for navigating and selecting games.
+A text list for navigating and selecting games or systems.
 
 Supported views:
+* `system`
 * `gamelist`
 
 Instances per view:
@@ -1512,7 +1514,9 @@ Properties:
 
 #### helpsystem
 
-The help system is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements. As well an origin value of `0 0` is always applied for this element.
+The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
+
+It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>0.99 0.954</pos>` and `<origin>1 0</origin>` will place it in the lower right corner of the screen.
 
 Supported views:
 * `system`
@@ -1523,29 +1527,33 @@ Instances per view:
 
 Properties:
 * `pos` - type: NORMALIZED_PAIR
-    - This works a bit different than for the other elements. If `horizontalAlignment` is set to `left` then the x axis value works as expected, but if it's set to `right` then it acts as an offset from the right side of the screen. If setting the alignment to `center` the x axis value should be set to `0` as it doesn't make much sense to add an offset in this case. The y axis value always works as expected and is not affected by the choice of horizontal alignment.
-    - Default is `0.012 0.9515` when `horizontalAlignment` is set to `left` or `right`
-    - Default is `0 0.9515` when `horizontalAlignment` is set to `center`
-* `horizontalAlignment` - type: STRING
-    - Controls alignment on the X axis.
-    - Valid values are `left`, `center` or `right`
-    - Default is `left`
+    - Default is `0.012 0.9515`
+* `origin` - type: NORMALIZED_PAIR
+    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0 0`
 * `textColor` - type: COLOR
     - Default is `777777FF`
 * `textColorDimmed` - type: COLOR
+    - Text color to use when the background is dimmed (when a menu is open).
     - Default is the same value as textColor.
 * `iconColor` - type: COLOR
     - Default is `777777FF`
 * `iconColorDimmed` - type: COLOR
+    - Icon color to use when the background is dimmed (when a menu is open).
     - Default is the same value as iconColor.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
+    - This property also implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element.
+    - Default is `0.035`
 * `entrySpacing` - type: FLOAT
-    - Spacing in pixels between the help system elements.
-    - Default is `16.0`
+    - Spacing between the help element pairs.
+    - Minimum value is `0` and maximum value is `0.04`
+    - Default is `0.00833`
 * `iconTextSpacing` - type: FLOAT
-    - Spacing in pixels within a help system element between its icon and text.
-    - Default is `8.0`
+    - Spacing between the icon and text within a help element pair.
+    - Minimum value is `0` and maximum value is `0.04`
+    - Default is `0.00416`
 * `letterCase` - type: STRING
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`

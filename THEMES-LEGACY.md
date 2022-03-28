@@ -870,10 +870,6 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 * `iconColorDimmed` - type: COLOR. Default is the same value as iconColor. Must be placed under the 'system' view.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
-* `entrySpacing` - type: FLOAT. Default is 16.0.
-    - Spacing in pixels between the help system components.
-* `iconTextSpacing` - type: FLOAT. Default is 8.0.
-    - Spacing in pixels within a help system component between it's icon and text.
 * `customButtonIcon` - type: PATH.
     - A button icon override. Specify the button type in the attribute `button`. The available buttons are:
       `dpad_updown`,

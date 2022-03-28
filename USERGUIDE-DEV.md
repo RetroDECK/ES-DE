@@ -530,15 +530,17 @@ chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 
 At the moment the following emulators are supported in AppImage format when using the bundled configuration:
 
-| System name  | Emulator  | Filename configuration          |
-| :----------- | :-------- | :------------------------------ |
-| _Multiple_   | RetroArch | RetroArch-Linux-x86_64.AppImage |
-| gba          | mGBA      | mGBA*.AppImage                  |
-| gc           | Dolphin   | Dolphin_Emulator*.AppImage      |
-| ps3          | RPCS3     | rpcs3*.AppImage                 |
-| xbox         | xemu      | Xemu*.AppImage                  |
-| switch       | Yuzu      | yuzu*.AppImage                  |
-| wii          | Dolphin   | Dolphin_Emulator*.AppImage      |
+| System name  | Emulator    | Filename configuration          |
+| :----------- | :---------- | :------------------------------ |
+| _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage |
+| gba          | mGBA        | mGBA*.AppImage                  |
+| gc           | Dolphin     | Dolphin_Emulator*.AppImage      |
+| ps3          | RPCS3       | rpcs3*.AppImage                 |
+| psx          | DuckStation | duckstation-nogui-x64.AppImage  |
+| psx          | DuckStation | duckstation-qt-x64.AppImage     |
+| xbox         | xemu        | Xemu*.AppImage                  |
+| switch       | Yuzu        | yuzu*.AppImage                  |
+| wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
 
 RetroArch does not embed any version information into the filename so no wildcard is required.
 
@@ -2034,7 +2036,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
 | 3do                   | 3DO                                            | 4DO                               |                                   |              |                                      |
-| 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*] |              |                                      |
+| 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] |              |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Placeholder_                     |                                   |              |                                      |
 | amiga                 | Commodore Amiga                                | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
 | amiga600              | Commodore Amiga 600                            | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
@@ -2070,7 +2072,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Core                       | DOSBox-Pure,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
-| dreamcast             | Sega Dreamcast                                 | Flycast                           |                                   |              |                                      |
+| dreamcast             | Sega Dreamcast                                 | Flycast                           | Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
 | famicom               | Nintendo Family Computer                       | Nestopia UE                       | FCEUmm,<br>Mesen,<br>QuickNES | No           | Single archive or ROM file in root folder |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
@@ -2108,8 +2110,8 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | naomi                 | Sega NAOMI                                     | Flycast                           |                                   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           |                                   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
-| nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>melonDS          |              |                                      |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
+| nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>melonDS,<br>melonDS **(Standalone)** [UMW*] |              |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
@@ -2133,7 +2135,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single ISO file in root folder       |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
-| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>DuckStation | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>DuckStation,<br>DuckStation **(Standalone)** [UW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
 | samcoupe              | SAM Coupé                                      | SimCoupe                          |                                   |              |                                      |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
@@ -2167,7 +2169,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   |              |                                      |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)** [UMW*]   |              |                                      |
-| wiiu                  | Nintendo Wii U                                 | _Placeholder_                     |                                   |              |                                      |
+| wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)** [W*]        |                                   | No           | In separate folder                   |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      |                                   |              |                                      |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      |                                   |              |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file in root folder |

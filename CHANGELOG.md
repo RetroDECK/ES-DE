@@ -18,7 +18,7 @@
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 and OpenGL ES 3.0 respectively
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
-* The actual names for emulators with   find rule entries are now displayed in the error popup window if they're not found during game launch
+* The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
 * Removed the "Play videos immediately (override theme)" setting
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
@@ -36,12 +36,12 @@
 * Added theme support for defining the video fade-in time
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
 * Added theme support for enabling or disabling audio playback for videos
-* Added theme support for setting the horizontal alignment for the help prompts (left/center/right)
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
 * Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
+* Changed the helpsystem properties entrySpacing and iconTextSpacing from fixed pixel values to relative values
 * Added support for using unsigned integers for theme properties
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
@@ -60,7 +60,7 @@
 * Added a log warning for unthemed systems during theme set loading
 * Changed the warning log level for missing theme files to debug level if the paths are set using variables
 * Added new theme system variables for differentiating between collections and non-collection systems
-* Added a color model conversion shader for converting from BGRA to RGBA
+* Added shader support for performing BGRA to RGBA color conversion
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
 * Updated to build correctly with FFmpeg 5.0
@@ -71,7 +71,7 @@
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Moved all Platform functions to the utility namespace instead of using the global namespace
-* Implemented proper XML attribute support in ThemeData that eliminated the risk of name collisions
+* Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
@@ -93,10 +93,11 @@
 
 ### Bug fixes
 
-* During some menu operations that reloaded the gamelist view, the cached background could miss some elements as they were not rendered in time
+* During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
 * When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
+* Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
 * The outermost logos would sometimes glitch out during carousel transitions
@@ -114,6 +115,28 @@
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
+
+## Version 1.2.1 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+v1.2 maintenance release. Some minor bugs were fixed but most importantly this release brings support for a lot more standalone emulators on all supported platforms.
+
+### Detailed list of changes
+
+* Added support for the standalone emulators Citra, Dolphin, DuckStation, MAME, melonDS, mGBA, Mupen64Plus, PPSSPP, Redream and VBA-M
+* Added support for the standalone emulators sixtyforce and xemu on macOS
+* Added support for the standalone emulator Cemu on Windows
+* Added the .rvz file extension for the Dolphin emulator
+
+### Bug fixes
+
+* When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
+* During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
+* The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
+* Fixed an incorrect RetroArch core path for the emulator VBA-M
 
 ## Version 1.2.0
 
