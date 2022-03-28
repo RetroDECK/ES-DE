@@ -37,6 +37,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Linux Mint 20
 * Manjaro 21
 * Fedora 35 Workstation
+* SteamOS 3.0
 * elementary OS 6
 * Raspberry Pi OS 10 and 11 (armv7l and aarch64)
 * FreeBSD 13.0

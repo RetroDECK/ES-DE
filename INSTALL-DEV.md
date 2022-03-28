@@ -1749,6 +1749,7 @@ Dolphin-x64\Dolphin.exe
 dosbox-staging\dosbox.exe
 duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 duckstation\duckstation-qt-x64-ReleaseLTCG.exe
+flycast\flycast.exe
 mame\mame.exe
 melonDS\melonDS.exe
 mGBA\mGBA.exe
@@ -1757,6 +1758,7 @@ PCSX2\pcsx2.exe
 PPSSPP\PPSSPPWindows64.exe
 redream\redream.exe
 RPCS3\rpcs3.exe
+ryujinx\Ryujinx.exe
 VBA-M\visualboyadvance-m.exe
 xemu\xemu.exe
 xenia\xenia.exe
@@ -1770,6 +1772,7 @@ yuzu\yuzu-windows-msvc\yuzu.exe
 ..\dosbox-staging\dosbox.exe
 ..\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 ..\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
+..\flycast\flycast.exe
 ..\mame\mame.exe
 ..\melonDS\melonDS.exe
 ..\mGBA\mGBA.exe
@@ -1778,6 +1781,7 @@ yuzu\yuzu-windows-msvc\yuzu.exe
 ..\PPSSPP\PPSSPPWindows64.exe
 ..\redream\redream.exe
 ..\RPCS3\rpcs3.exe
+..\ryujinx\Ryujinx.exe
 ..\VBA-M\visualboyadvance-m.exe
 ..\xemu\xemu.exe
 ..\xenia\xenia.exe

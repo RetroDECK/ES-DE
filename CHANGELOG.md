@@ -126,9 +126,9 @@ v1.2 maintenance release. Some minor bugs were fixed but most importantly this r
 
 ### Detailed list of changes
 
-* Added support for the standalone emulators Citra, Dolphin, DuckStation, MAME, melonDS, mGBA, Mupen64Plus, PPSSPP, Redream and VBA-M
-* Added support for the standalone emulators sixtyforce and xemu on macOS
-* Added support for the standalone emulator Cemu on Windows
+* Added support for the standalone emulators Citra, Dolphin, DuckStation, MAME, melonDS, mGBA, Mupen64Plus, PPSSPP, Redream, Ryujinx and VBA-M
+* Added support for the standalone emulators sixtyforce and xemu specifically for macOS
+* Added support for the standalone emulator Cemu specifically for Windows
 * Added the .rvz file extension for the Dolphin emulator
 
 ### Bug fixes
