@@ -150,7 +150,7 @@ void SystemView::update(int deltaTime)
 
 void SystemView::render(const glm::mat4& parentTrans)
 {
-    if (mPrimary->getNumEntries() == 0)
+    if (mPrimary == nullptr)
         return; // Nothing to render.
 
     bool fade {false};
@@ -355,6 +355,9 @@ void SystemView::onCursorChanged(const CursorState& state)
 
 void SystemView::populate()
 {
+    if (SystemData::sSystemVector.size() == 0)
+        return;
+
     LOG(LogDebug) << "SystemView::populate(): Populating carousel";
 
     auto themeSets = ThemeData::getThemeSets();
