@@ -55,7 +55,9 @@ cd ../../..
 ./linuxdeploy-x86_64.AppImage -l /lib/x86_64-linux-gnu/libOpenGL.so.0 -l /lib/x86_64-linux-gnu/libgio-2.0.so.0 --appdir AppDir
 ./appimagetool-x86_64.AppImage AppDir
 
-VERSION=$(grep PROGRAM_VERSION_STRING es-app/src/EmulationStation.h | cut -f3 -d" " | sed s/\"//g)
-mv EmulationStation_Desktop_Edition-x86_64.AppImage emulationstation-de-${VERSION}-x64.AppImage
+#VERSION=$(grep PROGRAM_VERSION_STRING es-app/src/EmulationStation.h | cut -f3 -d" " | sed s/\"//g)
+#mv EmulationStation_Desktop_Edition-x86_64.AppImage EmulationStation-DE-${VERSION}-x64.AppImage
+#echo -e "\nCreated AppImage EmulationStation-DE-${VERSION}-x64.AppImage"
 
-echo -e "\nCreated AppImage emulationstation-de-${VERSION}-x64.AppImage"
+mv EmulationStation_Desktop_Edition-x86_64.AppImage EmulationStation-DE-x64.AppImage
+echo -e "\nCreated AppImage EmulationStation-DE-x64.AppImage"
