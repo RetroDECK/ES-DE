@@ -36,6 +36,12 @@
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="DUCKSTATION">
+        <!-- Sony PlayStation 1 emulator DuckStation -->
+        <rule type="staticpath">
+            <entry>/Applications/DuckStation.app/Contents/MacOS/DuckStation</entry>
+        </rule>
+    </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="staticpath">

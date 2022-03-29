@@ -483,7 +483,7 @@
         <name>gc</name>
         <fullname>Nintendo GameCube</fullname>
         <path>%ROMPATH%\gc</path>
-        <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .rvz .RVZ .tgc .TGC .wad .WAD .7z .7Z .zip .ZIP</extension>
+        <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .wia .WIA .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .rvz .RVZ .tgc .TGC .wad .WAD .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dolphin_libretro.dll %ROM%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% -b -e %ROM%</command>
         <platform>gc</platform>
@@ -1330,7 +1330,7 @@
         <name>wii</name>
         <fullname>Nintendo Wii</fullname>
         <path>%ROMPATH%\wii</path>
-        <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .rvz .RVZ .tgc .TGC .wad .WAD .7z .7Z .zip .ZIP</extension>
+        <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .wia .WIA .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .rvz .RVZ .tgc .TGC .wad .WAD .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dolphin_libretro.dll %ROM%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% -b -e %ROM%</command>
         <platform>wii</platform>

@@ -166,6 +166,16 @@
             <entry>/var/lib/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
         </rule>
     </emulator>
+    <emulator name="PRIMEHACK">
+        <!-- PrimeHack, fork of Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="systempath">
+            <entry>primehack</entry>
+            <entry>io.github.shiiion.primehack</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.github.shiiion.primehack</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="systempath">
