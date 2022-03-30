@@ -216,24 +216,13 @@ In general it should be straightforward to run ES-DE on Windows. Almost all emul
 
 Just make sure to not place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
 
-But in order for ES-DE to run at all, graphics drivers with OpenGL support have to be installed. If not, the application won't start. It's still possible to run via software rendering by using [Mesa3D for Windows](https://fdossena.com/?p=mesa/index.frag) but the performance is terrible when doing this so it should only be used as a last resort. If ES-DE doesn't start, take a look in the es_log.txt file. If you see the following text, it means OpenGL drivers are missing:
+In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start.
 
-```
-Dec 30  Info:   Checking available OpenGL extensions...
-Dec 30  Error:  GL_ARB_texture_non_power_of_two: MISSING
-Dec 30  Error:  GL_ARB_vertex_shader: MISSING
-Dec 30  Error:  GL_ARB_fragment_shader: MISSING
-Dec 30  Error:  GL_EXT_framebuffer_blit: MISSING
-Dec 30  Error:  Required OpenGL extensions missing.
-```
+Installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
 
-The log file is located in the ES-DE home directory and would be something like `C:\Users\myusername\.emulationstation\es_log.txt`
+An issue on Windows is that many emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with the installation path). Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These emulators are commonly shipped as a ZIP file that can be unpacked anywhere on the filesystem.
 
-Another possibility is that OpenGL drivers are actually installed but the GPU doesn't support the extensions listed above. That would be quite surprising though as these extensions have existed for many years. But for ancient graphics cards there's the possibility that ES-DE won't run.
-
-An issue on Windows is that some emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with the installation path). This is the case for instance for RPCS3, xemu and xenia. Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These type of emulators are simply shipped as a ZIP file that can be unpacked anywhere on the filesystem.
-
-In order for ES-DE to find these emulators there are two possible solutions, the first is to manually add the emulator directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. The second option is to place the emulators inside the ES-DE installation directory (for example `C:\Program Files\EmulationStation-DE\`) in which case they will also be found when launching a game.
+In order for ES-DE to find these emulators there are two possible solutions, the first is to manually add the emulator directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. The second option is to place the emulators inside the ES-DE installation directory (for example `C:\Program Files\EmulationStation-DE\`) in which case they will be found when launching a game.
 
 ## Specific notes for macOS
 
@@ -2082,7 +2071,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | gb                    | Nintendo Game Boy                              | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes |              |                                      |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** [UMW*],<br>VBA Next,<br>gpSP       | No           | Single archive or ROM file in root folder |
 | gbc                   | Nintendo Game Boy Color                        | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes |              |                                      |
-| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*]   | No           | Single ISO file in root folder       |
+| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*], PrimeHack **(Standalone)** [U] | No           | Single ISO file in root folder       |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 | _Placeholder_                     |                                   |              |                                      |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
@@ -2134,7 +2123,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single ISO file in root folder       |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
-| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>DuckStation,<br>DuckStation **(Standalone)** [UW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>DuckStation,<br>DuckStation **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
 | samcoupe              | SAM Coupé                                      | SimCoupe                          |                                   |              |                                      |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
@@ -2167,7 +2156,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   |              | Single disk, tape or cartridge image in root folder |
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         |                                   |              |                                      |
-| wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)** [UMW*]   |              |                                      |
+| wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)** [UMW*],<br>PrimeHack **(Standalone)** [U] |              |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)** [W*]        |                                   | No           | In separate folder                   |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      |                                   |              |                                      |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      |                                   |              |                                      |

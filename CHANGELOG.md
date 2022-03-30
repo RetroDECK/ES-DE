@@ -46,8 +46,7 @@
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
-* Set the option "Scrape actual folders" as enabled by default and moved it higher up in the scraper options menu
-* Set the option "Play audio for screensaver videos" as enabled by default
+* Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
 * Added support for using the tilde (~) symbol in the es_systems.xml path entries to expand to the user home directory
@@ -89,6 +88,7 @@
 * Greatly simplified the video controls code (play/stop/pause etc.)
 * Removed the deprecated VideoVlcComponent
 * Lots of general code cleanup and refactoring
+* Changed tools/create_AppImage.sh to not include version information in the AppImage filename
 * Updated and improved the theming documentation
 
 ### Bug fixes
@@ -96,7 +96,6 @@
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
-* When multi-scraping in semi-automatic mode and a long game name was scrolling, the start position was not reset when scraping the next game
 * Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
@@ -108,28 +107,27 @@
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
-* The ScummVM platform entry was missing for TheGamesDB which resulted in very inaccurate scraper searches
-* During multi-scraping the busy indicator was not displayed after a result was acquired but before the thumbnail was completely downloaded
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 
-## Version 1.2.1 (in development)
+## Version 1.2.1
 
-**Release date:** TBD
+**Release date:** 2022-03-30
 
 ### Release overview
 
-v1.2 maintenance release. Some minor bugs were fixed but most importantly this release brings support for a lot more standalone emulators on all supported platforms.
+v1.2 maintenance release. Some minor bugs were fixed and some smaller adjustments were made but most importantly this release brings support for a lot more standalone emulators on all supported platforms.
 
 ### Detailed list of changes
 
 * Added support for the standalone emulators Citra, Dolphin, DuckStation, MAME, melonDS, mGBA, Mupen64Plus, PPSSPP, Redream, Ryujinx and VBA-M
-* Added support for the standalone emulators sixtyforce and xemu specifically for macOS
-* Added support for the standalone emulator Cemu specifically for Windows
-* Added the .rvz file extension for the Dolphin emulator
+* Added support for the standalone emulators sixtyforce and xemu for macOS, Cemu for Windows and PrimeHack for Unix
+* Added the .m3u, .rvz and .wia file extensions for the Dolphin emulator
+* Set the option "Scrape actual folders" as enabled by default
+* Set the option "Play audio for screensaver videos" as enabled by default
 
 ### Bug fixes
 
@@ -606,6 +604,8 @@ Many bugs have been fixed, and numerous features that were only partially implem
 **The issues below are relevant for ES-DE v1.2.0**
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
+
+* On Windows installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
 
 * On macOS, the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window when a game is launched. Possibly it's the same issue with other emulators as well.
 
