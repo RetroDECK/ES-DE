@@ -1715,6 +1715,7 @@ For this example, let's assume that the removable media has the device name `F:\
 
 These are the steps to perform:
 
+* Install ES-DE
 * Copy the EmulationStation-DE installation directory to F:\
 * Copy your emulator directories to F:\EmulationStation-DE\
 * Copy your ROMs directory to F:\EmulationStation-DE\

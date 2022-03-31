@@ -601,7 +601,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 ## Known issues
 
-**The issues below are relevant for ES-DE v1.2.0**
+**The issues below are relevant for ES-DE v1.2.1**
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
 
