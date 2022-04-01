@@ -565,6 +565,10 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             // Marquee (wheel).
             processMedia(result, media_list, ssConfig.media_marquee, result.marqueeUrl,
                          result.marqueeFormat, region);
+            // Marquee HD (wheel-hd) fallback if no regular wheel image was found.
+            if (result.marqueeUrl == "")
+                processMedia(result, media_list, ssConfig.media_marquee_hd, result.marqueeUrl,
+                             result.marqueeFormat, region);
             // Physical media.
             processMedia(result, media_list, ssConfig.media_physicalmedia, result.physicalmediaUrl,
                          result.physicalmediaFormat, region);
