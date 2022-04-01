@@ -676,7 +676,8 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 The RPCS3 emulator requires a bit of special setup.
 
-On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe.
+On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe, or you can optionally place the RPCS3 directory inside the ES-DE installation directory in which case it will be found when launching a game. Both these options are described in more detail [here](USERGUIDE-DEV.md#specific-notes-for-windows)
+
 
 The macOS release ships as a regular DMG file that is installed as usual.
 
