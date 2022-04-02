@@ -46,7 +46,6 @@
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
-* Added fallback for high resolution marquee/wheel image for ScreenScraper if no regular wheel image was found
 * Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
@@ -113,6 +112,22 @@
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
+
+## Version 1.2.2 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+v1.2 maintenance release.
+
+### Detailed list of changes
+
+* Added fallback for high resolution marquee/wheel image for ScreenScraper if no regular wheel image was found
+
+### Bug fixes
+
+* Fixed a font loading crash caused by an insufficient font texture size
 
 ## Version 1.2.1
 

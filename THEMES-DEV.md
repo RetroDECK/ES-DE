@@ -2,6 +2,8 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
+If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because ES-DE theme functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. It would be confusing and annoying for users that attempt to use ES-DE theme sets in older EmulationStation forks as they would get unthemed systems, crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
+
 Table of contents:
 
 [[_TOC_]]
