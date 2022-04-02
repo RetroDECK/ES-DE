@@ -59,7 +59,7 @@ size_t Font::getMemUsage() const
 
 size_t Font::getTotalMemUsage()
 {
-    size_t total = 0;
+    size_t total {0};
 
     auto it = sFontMap.cbegin();
     while (it != sFontMap.cend()) {
@@ -118,8 +118,9 @@ Font::~Font()
 
 std::shared_ptr<Font> Font::get(int size, const std::string& path)
 {
-    const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(path);
-    std::pair<std::string, int> def(canonicalPath.empty() ? getDefaultPath() : canonicalPath, size);
+    const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
+    std::pair<std::string, int> def {canonicalPath.empty() ? getDefaultPath() : canonicalPath,
+                                     size};
 
     auto foundFont = sFontMap.find(def);
     if (foundFont != sFontMap.cend()) {
@@ -127,7 +128,7 @@ std::shared_ptr<Font> Font::get(int size, const std::string& path)
             return foundFont->second.lock();
     }
 
-    std::shared_ptr<Font> font = std::shared_ptr<Font>(new Font(def.second, def.first));
+    std::shared_ptr<Font> font {std::shared_ptr<Font>(new Font(def.second, def.first))};
     sFontMap[def] = std::weak_ptr<Font>(font);
     ResourceManager::getInstance().addReloadable(font);
     return font;
@@ -145,21 +146,21 @@ Font::FontTexture::FontTexture(const int mSize)
 
     // This is a hack to add some extra texture size when running at very low resolutions. If not
     // doing this, the use of fallback fonts (such as Japanese characters) could result in the
-    // texture not fitting the glyphs which would crash the application.
+    // texture not fitting the glyphs.
     int extraTextureSize {0};
-    const float screenSizeModifier =
-        std::min(Renderer::getScreenWidthModifier(), Renderer::getScreenHeightModifier());
+    const float screenSizeModifier {
+        std::min(Renderer::getScreenWidthModifier(), Renderer::getScreenHeightModifier())};
 
     if (screenSizeModifier < 0.2f)
         extraTextureSize += 6;
     if (screenSizeModifier < 0.45f)
         extraTextureSize += 4;
 
-    // It's not entirely clear if the 18 and 6 constants are correct, but they seem to provide
-    // a texture buffer large enough to hold the fonts (otherwise the application would crash).
-    // This logic is obviously a hack though and needs to be properly reviewed and improved.
-    textureSize = glm::ivec2 {mSize * (18 + extraTextureSize), mSize * (6 + extraTextureSize / 2)};
-    writePos = glm::ivec2 {};
+    // It's not entirely clear if the 20 and 8 constants are correct, but they seem to provide
+    // a texture buffer large enough to hold the fonts. This logic is obviously a hack though
+    // and needs to be properly reviewed and improved.
+    textureSize = glm::ivec2 {mSize * (20 + extraTextureSize), mSize * (8 + extraTextureSize / 2)};
+    writePos = glm::ivec2 {0, 0};
     rowHeight = 0;
 }
 
@@ -225,7 +226,16 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
             return; // Yes.
     }
 
-    // Current textures are full, make a new one.
+    // This should never happen, assuming the texture size is large enough to fit the font,
+    // as set in the FontTexture constructor. In the unlikely situation that it still happens,
+    // setting the texture to nullptr makes sure the application doesn't crash and that the
+    // user is clearly notified of the problem by the fact that the glyph/character will be
+    // completely missing.
+    if (mGlyphMap.size() > 0) {
+        tex_out = nullptr;
+        return;
+    }
+
     mTextures.push_back(FontTexture(mSize));
     tex_out = &mTextures.back();
     tex_out->initTexture();
@@ -270,7 +280,7 @@ std::vector<std::string> getFallbackFontPaths()
 
 FT_Face Font::getFaceForChar(unsigned int id)
 {
-    static const std::vector<std::string> fallbackFonts = getFallbackFontPaths();
+    static const std::vector<std::string> fallbackFonts {getFallbackFontPaths()};
 
     // Look through our current font + fallback fonts to see if any have the
     // glyph we're looking for.
@@ -295,7 +305,7 @@ FT_Face Font::getFaceForChar(unsigned int id)
     return mFaceCache.cbegin()->second->face;
 }
 
-Font::Glyph* Font::getGlyph(unsigned int id)
+Font::Glyph* Font::getGlyph(const unsigned int id)
 {
     // Is it already loaded?
     auto it = mGlyphMap.find(id);
@@ -303,14 +313,14 @@ Font::Glyph* Font::getGlyph(unsigned int id)
         return &it->second;
 
     // Nope, need to make a glyph.
-    FT_Face face = getFaceForChar(id);
+    FT_Face face {getFaceForChar(id)};
     if (!face) {
         LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
                       << mPath;
         return nullptr;
     }
 
-    FT_GlyphSlot g = face->glyph;
+    FT_GlyphSlot g {face->glyph};
 
     if (FT_Load_Char(face, id, FT_LOAD_RENDER)) {
         LOG(LogError) << "Couldn't find glyph for character " << id << " for font " << mPath
@@ -320,8 +330,8 @@ Font::Glyph* Font::getGlyph(unsigned int id)
 
     glm::ivec2 glyphSize {g->bitmap.width, g->bitmap.rows};
 
-    FontTexture* tex = nullptr;
-    glm::ivec2 cursor;
+    FontTexture* tex {nullptr};
+    glm::ivec2 cursor {0, 0};
     getTextureForNewGlyph(glyphSize, tex, cursor);
 
     // getTextureForNewGlyph can fail if the glyph is bigger than the max texture
@@ -333,7 +343,7 @@ Font::Glyph* Font::getGlyph(unsigned int id)
     }
 
     // Create glyph.
-    Glyph& glyph = mGlyphMap[id];
+    Glyph& glyph {mGlyphMap[id]};
 
     glyph.texture = tex;
     glyph.texPos = glm::vec2 {cursor.x / static_cast<float>(tex->textureSize.x),
@@ -366,13 +376,13 @@ void Font::rebuildTextures()
 
     // Re-upload the texture data.
     for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); ++it) {
-        FT_Face face = getFaceForChar(it->first);
-        FT_GlyphSlot glyphSlot = face->glyph;
+        FT_Face face {getFaceForChar(it->first)};
+        FT_GlyphSlot glyphSlot {face->glyph};
 
         // Load the glyph bitmap through FT.
         FT_Load_Char(face, it->first, FT_LOAD_RENDER);
 
-        FontTexture* tex = it->second.texture;
+        FontTexture* tex {it->second.texture};
 
         // Find the position/size.
         glm::ivec2 cursor {static_cast<int>(it->second.texPos.x * tex->textureSize.x),
@@ -407,16 +417,16 @@ void Font::renderTextCache(TextCache* cache)
 
 glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 {
-    float lineWidth = 0.0f;
-    float highestWidth = 0.0f;
+    float lineWidth {0.0f};
+    float highestWidth {0.0f};
 
-    const float lineHeight = getHeight(lineSpacing);
+    const float lineHeight {getHeight(lineSpacing)};
 
-    float y = lineHeight;
+    float y {lineHeight};
 
-    size_t i = 0;
+    size_t i {0};
     while (i < text.length()) {
-        unsigned int character = Utils::String::chars2Unicode(text, i); // Advances i.
+        unsigned int character {Utils::String::chars2Unicode(text, i)}; // Advances i.
 
         if (character == '\n') {
             if (lineWidth > highestWidth)
@@ -426,7 +436,7 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
             y += lineHeight;
         }
 
-        Glyph* glyph = getGlyph(character);
+        Glyph* glyph {getGlyph(character)};
         if (glyph)
             lineWidth += glyph->advance.x;
     }
@@ -439,7 +449,7 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 
 std::string Font::getTextMaxWidth(std::string text, float maxWidth)
 {
-    float width = sizeText(text).x;
+    float width {sizeText(text).x};
     while (width > maxWidth) {
         text.pop_back();
         width = sizeText(text).x;
@@ -455,7 +465,7 @@ float Font::getHeight(float lineSpacing) const
 
 float Font::getLetterHeight()
 {
-    Glyph* glyph = getGlyph('S');
+    Glyph* glyph {getGlyph('S')};
     assert(glyph);
     return glyph->texSize.y * glyph->texture->textureSize.y;
 }
@@ -468,9 +478,9 @@ std::string Font::wrapText(std::string text, float xLen)
     std::string abbreviatedWord;
     std::string temp;
 
-    size_t space;
-    glm::vec2 textSize;
-    float dotsSize = sizeText("...").x;
+    size_t space {0};
+    glm::vec2 textSize {0.0f, 0.0f};
+    float dotsSize {sizeText("...").x};
 
     // While there's text or we still have text to render.
     while (text.length() > 0) {
@@ -495,7 +505,7 @@ std::string Font::wrapText(std::string text, float xLen)
 
             // If the word is too long to fit within xLen, then abbreviate it.
             if (xLen > 0 && sizeText(word).x > xLen) {
-                float length = xLen - dotsSize;
+                float length {xLen - dotsSize};
                 if (length < 0)
                     length = 0;
                 abbreviatedWord = getTextMaxWidth(word, length);
@@ -527,16 +537,16 @@ glm::vec2 Font::getWrappedTextCursorOffset(std::string text,
                                            size_t stop,
                                            float lineSpacing)
 {
-    std::string wrappedText = wrapText(text, xLen);
+    std::string wrappedText {wrapText(text, xLen)};
 
-    float lineWidth = 0.0f;
-    float y = 0.0f;
+    float lineWidth {0.0f};
+    float y {0.0f};
 
-    size_t wrapCursor = 0;
-    size_t cursor = 0;
+    size_t wrapCursor {0};
+    size_t cursor {0};
     while (cursor < stop) {
-        unsigned int wrappedCharacter = Utils::String::chars2Unicode(wrappedText, wrapCursor);
-        unsigned int character = Utils::String::chars2Unicode(text, cursor);
+        unsigned int wrappedCharacter {Utils::String::chars2Unicode(wrappedText, wrapCursor)};
+        unsigned int character {Utils::String::chars2Unicode(text, cursor)};
 
         if (wrappedCharacter == '\n' && character != '\n') {
             // This is where the wordwrap inserted a newline
@@ -576,7 +586,7 @@ float Font::getNewlineStartOffset(const std::string& text,
             return 0;
         }
         case ALIGN_CENTER: {
-            int endChar = 0;
+            int endChar {0};
             endChar = static_cast<int>(text.find('\n', charStart));
             return (xLen - sizeText(text.substr(charStart,
                                                 static_cast<size_t>(endChar) != std::string::npos ?
@@ -606,9 +616,9 @@ TextCache* Font::buildTextCache(const std::string& text,
                                 float lineSpacing,
                                 bool noTopMargin)
 {
-    float x = offset[0] + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0);
-    float yTop = 0;
-    float yBot = 0;
+    float x {offset[0] + (xLen != 0 ? getNewlineStartOffset(text, 0, xLen, alignment) : 0)};
+    float yTop {0.0f};
+    float yBot {0.0f};
 
     if (noTopMargin) {
         yTop = 0;
@@ -619,16 +629,16 @@ TextCache* Font::buildTextCache(const std::string& text,
         yBot = getHeight(lineSpacing);
     }
 
-    float y = offset[1] + (yBot + yTop) / 2.0f;
+    float y {offset[1] + (yBot + yTop) / 2.0f};
 
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
 
-    size_t cursor = 0;
+    size_t cursor {0};
     while (cursor < text.length()) {
         // Also advances cursor.
-        unsigned int character = Utils::String::chars2Unicode(text, cursor);
-        Glyph* glyph;
+        unsigned int character {Utils::String::chars2Unicode(text, cursor)};
+        Glyph* glyph {nullptr};
 
         // Invalid character.
         if (character == 0)
@@ -649,10 +659,10 @@ TextCache* Font::buildTextCache(const std::string& text,
         if (glyph == nullptr)
             continue;
 
-        std::vector<Renderer::Vertex>& verts = vertMap[glyph->texture];
-        size_t oldVertSize = verts.size();
+        std::vector<Renderer::Vertex>& verts {vertMap[glyph->texture]};
+        size_t oldVertSize {verts.size()};
         verts.resize(oldVertSize + 6);
-        Renderer::Vertex* vertices = verts.data() + oldVertSize;
+        Renderer::Vertex* vertices {verts.data() + oldVertSize};
 
         const float glyphStartX {x + glyph->bearing.x};
         const glm::ivec2& textureSize {glyph->texture->textureSize};
@@ -682,11 +692,11 @@ TextCache* Font::buildTextCache(const std::string& text,
         x += glyph->advance.x;
     }
 
-    TextCache* cache = new TextCache();
+    TextCache* cache {new TextCache()};
     cache->vertexLists.resize(vertMap.size());
     cache->metrics = {sizeText(text, lineSpacing)};
 
-    unsigned int i = 0;
+    unsigned int i {0};
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
         TextCache::VertexList& vertList = cache->vertexLists.at(i);
 
@@ -742,9 +752,9 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
 
     std::shared_ptr<Font> font;
     int size = (orig ? orig->mSize : FONT_SIZE_MEDIUM);
-    std::string path = (orig ? orig->mPath : getDefaultPath());
+    std::string path {orig ? orig->mPath : getDefaultPath()};
 
-    float sh = static_cast<float>(Renderer::getScreenHeight());
+    float sh {static_cast<float>(Renderer::getScreenHeight())};
     if (properties & FONT_SIZE && elem->has("fontSize"))
         size = static_cast<int>(sh * elem->get<float>("fontSize"));
     if (properties & FONT_PATH && elem->has("fontPath"))
