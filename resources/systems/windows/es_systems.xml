@@ -1001,6 +1001,7 @@
         <command label="Beetle PSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_psx_libretro.dll %ROM%</command>
         <command label="Beetle PSX HW">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_psx_hw_libretro.dll %ROM%</command>
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\pcsx_rearmed_libretro.dll %ROM%</command>
+        <command label="SwanStation">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\swanstation_libretro.dll %ROM%</command>
         <command label="DuckStation">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\duckstation_libretro.dll %ROM%</command>
         <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% %ROM%</command>
         <platform>psx</platform>
