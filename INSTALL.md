@@ -1974,17 +1974,17 @@ For folders, most of the fields are identical although some are removed. In the 
 By passing the --debug command line option, ES-DE will increase the logging to include a lot of additional debug output which is useful both for development and in order to pinpoint issues as a user.
 In addition to this extra logging, a few key combinations are enabled when in debug mode. These are useful both for working on ES-DE itself as well as for theme developers.
 
-**Ctrl + g**
-
-This will render a grid on the user interface, most notably in the menus, showing the layout of all the GUI elements. Note that any open screen needs to be closed and reopened again after using the key combination in order for it to have any effect.
-
 **Ctrl + i**
 
-This will draw a semi-transparent red frame behind all image elements.
+This will draw a semi-transparent red frame behind all image and animation components.
 
 **Ctrl + t**
 
-This will draw a semi-transparent blue frame around all text elements.
+This will draw a semi-transparent blue frame around all text components.
+
+**Ctrl + g**
+
+This option only applies to menus, where it will render a grid on the user interace. Note that any open screen needs to be closed and reopened again after using the key combination in order for it to have any effect.
 
 **Ctrl + r**
 
