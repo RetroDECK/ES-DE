@@ -220,7 +220,7 @@ Installing DS4Windows will break controller input in ES-DE for unknown reasons. 
 
 An issue on Windows is that many emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with the installation path). Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These emulators are commonly shipped as a ZIP file that can be unpacked anywhere on the filesystem.
 
-In order for ES-DE to find these emulators there are two possible solutions, the first is to manually add the emulator directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. The second option is to place the emulators inside the ES-DE installation directory (for example `C:\Program Files\EmulationStation-DE\`) in which case they will be found when launching a game.
+In order for ES-DE to find these emulators there are two possible solutions, the first is to manually add the emulator directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. If running ES-DE via Steam, you need to restart Steam as well to apply the changes to the Path variable. The second option is to place the emulators inside the ES-DE installation directory (for example `C:\Program Files\EmulationStation-DE\`) in which case they will be found when launching a game. Due to the Windows security model this could potentially cause issues for some emulators, so if you experience such problems ES-DE may need to be installed at a location where User Account Control (UAC) is not interfering.
 
 ## Specific notes for macOS
 
@@ -247,6 +247,8 @@ Another problem on macOS 11 Big Sur (and possibly older OS versions) is that whe
 ## Specific notes for Valve Steam Deck
 
 As the Steam Deck is essentially a Linux desktop computer with a custom user interface, there is really not much specifically to consider when running ES-DE compared to any other Linux-based operating system. There is a specific AppImage available for the Steam Deck though that is recommended to use, as a number of settings will be tuned for the best possible experience on this device.
+
+Another approach is to install ES-DE using [EmuDeck](https://www.emudeck.com) which will automatically download the latest Steam Deck release.
 
 For Flatpak releases of some emulators you may need to give extra permissions to be able to launch games placed on external devices such as a memory card. This is the case for instance for melonDS and RPCS3. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
@@ -553,6 +555,12 @@ Also make sure to set the AppImage as executable or ES-DE will not be able to la
 cd ~/Applications
 chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
 ```
+
+## Running emulators in fullscreen mode
+
+In general ES-DE does not pass command line parameters to emulators to start them in fullscreen mode. This is so as for most (if not all) emulators, command line arguments overrides the settings the user has defined. This means that windowed mode would have become impossible to achieve without creating custom systems configuration entries if ES-DE enforced fullscreen mode. There are only a very few exceptions for emulators where there is no other way to enter fullscreen mode than by passing such options during game launch.
+
+So if an emulator starts in windowed mode and you prefer to have it running in fullscreen mode instead, make sure to enable that option in the emulator settings or configuration file (which should be a one-time job).
 
 ## Getting your games into ES-DE
 

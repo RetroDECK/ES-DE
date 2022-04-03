@@ -124,6 +124,14 @@ cmake .
 make
 ```
 
+To make a build specifically for the Valve Steam Deck, run this:
+```
+cmake -DSTEAM_DECK=on .
+make
+```
+
+This will change some Steam Deck-specific settings like increasing the default VRAM limit.
+
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```

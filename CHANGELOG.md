@@ -124,10 +124,13 @@ v1.2 maintenance release.
 ### Detailed list of changes
 
 * Added fallback for high resolution marquee/wheel image for ScreenScraper if no regular wheel image was found
+* Added the SwanStation RetroArch core as an alternative emulator
+* Increased the default VRAM limit from 256 MiB to 512 MiB on the Steam Deck
 
 ### Bug fixes
 
 * Fixed a font loading crash caused by an insufficient font texture size
+* The help system was not properly updated after results were returned by the scraper
 
 ## Version 1.2.1
 

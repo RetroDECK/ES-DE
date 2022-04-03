@@ -222,7 +222,7 @@ Installing DS4Windows will break controller input in ES-DE for unknown reasons. 
 
 An issue on Windows is that many emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with the installation path). Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These emulators are commonly shipped as a ZIP file that can be unpacked anywhere on the filesystem.
 
-In order for ES-DE to find these emulators there are two possible solutions, the first is to manually add the emulator directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. The second option is to place the emulators inside the ES-DE installation directory (for example `C:\Program Files\EmulationStation-DE\`) in which case they will be found when launching a game.
+In order for ES-DE to find these emulators there are two possible solutions, the first is to manually add the emulator directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. If running ES-DE via Steam, you need to restart Steam as well to apply the changes to the Path variable. The second option is to place the emulators inside the ES-DE installation directory (for example `C:\Program Files\EmulationStation-DE\`) in which case they will be found when launching a game. Due to the Windows security model this could potentially cause issues for some emulators, so if you experience such problems ES-DE may need to be installed at a location where User Account Control (UAC) is not interfering.
 
 ## Specific notes for macOS
 
@@ -249,6 +249,8 @@ Another problem on macOS 11 Big Sur (and possibly older OS versions) is that whe
 ## Specific notes for Valve Steam Deck
 
 As the Steam Deck is essentially a Linux desktop computer with a custom user interface, there is really not much specifically to consider when running ES-DE compared to any other Linux-based operating system. There is a specific AppImage available for the Steam Deck though that is recommended to use, as a number of settings will be tuned for the best possible experience on this device.
+
+Another approach is to install ES-DE using [EmuDeck](https://www.emudeck.com) which will automatically download the latest Steam Deck release.
 
 For Flatpak releases of some emulators you may need to give extra permissions to be able to launch games placed on external devices such as a memory card. This is the case for instance for melonDS and RPCS3. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
@@ -537,6 +539,12 @@ At the moment the following emulators are supported in AppImage format when usin
 | wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
 
 RetroArch does not embed any version information into the filename so no wildcard is required.
+
+## Running emulators in fullscreen mode
+
+In general ES-DE does not pass command line parameters to emulators to start them in fullscreen mode. This is so as for most (if not all) emulators, command line arguments overrides the settings the user has defined. This means that windowed mode would have become impossible to achieve without creating custom systems configuration entries if ES-DE enforced fullscreen mode. There are only a very few exceptions for emulators where there is no other way to enter fullscreen mode than by passing such options during game launch.
+
+So if an emulator starts in windowed mode and you prefer to have it running in fullscreen mode instead, make sure to enable that option in the emulator settings or configuration file (which should be a one-time job).
 
 ## Getting your games into ES-DE
 
@@ -1554,7 +1562,7 @@ This setting defines the directory for the game media, i.e. game images and vide
 
 **VRAM limit**
 
-The amount of video RAM to use for the application. Defaults to 256 MiB (184 MiB on the Raspberry Pi) which works fine most of the time when running at 1080p resolution and with a moderate amount of game systems. If running at 4K resolution or similar and with lots of game systems enabled, it's recommended to increase this number to 512 MiB or possibly more to avoid stuttering transition animations caused by unloading and loading of textures from the cache. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used, which is helpful to determine a reasonable value for this option. The allowed range for the settings is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.xml file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
+The amount of video RAM to use for the application. Defaults to 256 MiB (512 MiB on the Steam Deck and 184 MiB on the Raspberry Pi) which works fine most of the time when running at 1080p resolution and with a moderate amount of game systems. If running at 4K resolution or similar and with lots of game systems enabled, it's recommended to increase this number to 512 MiB or possibly more to avoid stuttering transition animations caused by unloading and loading of textures from the cache. Enabling the GPU statistics overlay gives some indications regarding the amount of texture memory currently used, which is helpful to determine a reasonable value for this option. The allowed range for the settings is 80 to 1024 MiB. If you try to set it lower or higher than this by passing such values as command line parameters or by editing the es_settings.xml file manually, ES-DE will log a warning and automatically adjust the value within the allowable range.
 
 **Display/monitor index (requires restart)**
 
@@ -2132,7 +2140,7 @@ All emulators are RetroArch cores unless marked as **(Standalone**)
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single ISO file in root folder       |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
-| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>DuckStation,<br>DuckStation **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation [UW],<br>DuckStation **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
 | samcoupe              | SAM Coupé                                      | SimCoupe                          |                                   |              |                                      |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
