@@ -439,6 +439,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
 
     mBlockAccept = false;
     updateInfoPane();
+    updateHelpPrompts();
 
     // If there is a single result in semi-automatic mode or a single or more results in
     // fully automatic mode, then block the ability to manually accept the entry as it will
