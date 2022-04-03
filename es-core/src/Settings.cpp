@@ -215,7 +215,9 @@ void Settings::setDefaults()
 
     // Other settings.
     mStringMap["MediaDirectory"] = {"", ""};
-#if defined(_RPI_)
+#if defined(STEAM_DECK)
+    mIntMap["MaxVRAM"] = {512, 512};
+#elif defined(_RPI_)
     mIntMap["MaxVRAM"] = {184, 184};
 #else
     mIntMap["MaxVRAM"] = {256, 256};
