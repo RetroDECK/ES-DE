@@ -142,7 +142,8 @@
         <fullname>Atari 5200</fullname>
         <path>%ROMPATH%\atari5200</path>
         <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
+        <command label="a5200">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\a5200_libretro.dll %ROM%</command>
+        <command label="Atari800">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
         <platform>atari5200</platform>
         <theme>atari5200</theme>
     </system>
@@ -336,7 +337,7 @@
         <name>dos</name>
         <fullname>DOS (PC)</fullname>
         <path>%ROMPATH%\dos</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
@@ -872,7 +873,7 @@
         <name>pc</name>
         <fullname>IBM PC</fullname>
         <path>%ROMPATH%\pc</path>
-        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
+        <extension>.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_core_libretro.dll %ROM%</command>
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_pure_libretro.dll %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dosbox_svn_libretro.dll %ROM%</command>
