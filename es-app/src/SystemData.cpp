@@ -656,8 +656,9 @@ bool SystemData::loadConfig()
     }
 
     // Sort systems by sortName, which will normally be the same as the full name.
-    std::sort(std::begin(sSystemVector), std::end(sSystemVector),
-              [](SystemData* a, SystemData* b) { return a->getSortName() < b->getSortName(); });
+    std::sort(std::begin(sSystemVector), std::end(sSystemVector), [](SystemData* a, SystemData* b) {
+        return Utils::String::toUpper(a->getSortName()) < Utils::String::toUpper(b->getSortName());
+    });
 
     // Don't load any collections if there are no systems available.
     if (sSystemVector.size() > 0)
