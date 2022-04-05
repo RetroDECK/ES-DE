@@ -194,8 +194,14 @@ namespace GamelistFileParser
                 }
                 else if (!file->isArcadeAsset()) {
                     std::string defaultName = file->metadata.get("name");
-                    file->metadata =
-                        MetaDataList::createFromXML(GAME_METADATA, fileNode, relativeTo);
+                    if (file->getType() == FOLDER) {
+                        file->metadata =
+                            MetaDataList::createFromXML(FOLDER_METADATA, fileNode, relativeTo);
+                    }
+                    else {
+                        file->metadata =
+                            MetaDataList::createFromXML(GAME_METADATA, fileNode, relativeTo);
+                    }
 
                     // Make sure a name gets set if one doesn't exist.
                     if (file->metadata.get("name").empty())
@@ -270,7 +276,7 @@ namespace GamelistFileParser
         // because there might be information missing in our systemdata which we would otherwise
         // miss in the new XML file. We have the complete information for every game though, so
         // we can simply remove a game we already have in the system from the XML, and then add
-        // it back from its GameData information...
+        // it back from its GameData information.
         if (Settings::getInstance()->getBool("IgnoreGamelist"))
             return;
 
@@ -343,7 +349,7 @@ namespace GamelistFileParser
 
         // Now we have all the information from the XML file, so iterate
         // through all our games and add the information from there.
-        FileData* rootFolder = system->getRootFolder();
+        FileData* rootFolder {system->getRootFolder()};
         if (rootFolder != nullptr) {
             int numUpdated = 0;
 
