@@ -947,7 +947,7 @@
         <name>ps2</name>
         <fullname>Sony PlayStation 2</fullname>
         <path>%ROMPATH%/ps2</path>
-        <extension>.iso .ISO .isz .ISZ .cso .CSO .bin .BIN .elf .ELF</extension>
+        <extension>.bin .BIN .chd .CHD .cso .CSO .elf .ELF .iso .ISO .isz .ISZ</extension>
         <command label="PCSX2 (Standalone)">%EMULATOR_PCSX2% --nogui %ROM%</command>
         <platform>ps2</platform>
         <theme>ps2</theme>
@@ -1090,6 +1090,19 @@
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
         <platform>segacd</platform>
         <theme>segacd</theme>
+    </system>
+    <system>
+        <name>sfc</name>
+        <fullname>Nintendo SFC (Super Famicom)</fullname>
+        <path>%ROMPATH%/sfc</path>
+        <extension>.bin .BIN .bml .BML .bs .BS .bsx .BSX .dx2 .DX2 .fig .FIG .gd3 .GD3 .gd7 .GD7 .mgd .MGD .sfc .SFC .smc .SMC .st .ST .swc .SWC .7z .7Z .zip .ZIP</extension>
+        <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
+        <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.dylib %ROM%</command>
+        <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.dylib %ROM%</command>
+        <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.dylib %ROM%</command>
+        <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.dylib %ROM%</command>
+        <platform>snes</platform>
+        <theme>sfc</theme>
     </system>
     <system>
         <name>sg-1000</name>

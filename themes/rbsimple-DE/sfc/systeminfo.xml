@@ -1,0 +1,34 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1990</text>
+        </text>
+        <text name="info3">
+            <text>Units sold:  49.10 million</text>
+        </text>
+        <text name="info4">
+            <text>Best-selling game:  Super Mario World</text>
+        </text>
+        <text name="info5">
+            <text>CPU:  8/16-bit Ricoh 5A22 @ 3.58 MHz</text>
+        </text>
+        <text name="info6">
+            <text>RAM:  128 KB / VRAM:  64 KB</text>
+        </text>
+        <text name="info7">
+            <text>Graphics:  16-bit PPU (Picture Processing Unit)</text>
+        </text>
+        <text name="info8">
+            <text>Resolution:  256×224 pixels, 256 colors (32768 color palette)</text>
+        </text>
+        <text name="info9">
+            <text>Sound:  8-bit Sony SPC700, 8 channels, stereo</text>
+        </text>
+        <text name="info10">
+            <text>Cart size:  256 KB to 6 MB</text>
+        </text>
+    </view>
+</theme>
