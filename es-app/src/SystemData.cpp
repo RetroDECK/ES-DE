@@ -461,8 +461,8 @@ bool SystemData::loadConfig()
             auto nameFindFunc = [&] {
                 for (auto system : sSystemVector) {
                     if (system->mName == name) {
-                        LOG(LogWarning) << "A system with the name \"" << name
-                                        << "\" has already been loaded, skipping duplicate entry";
+                        LOG(LogDebug) << "A system with the name \"" << name
+                                      << "\" has already been loaded, skipping duplicate entry";
                         return true;
                     }
                 }
