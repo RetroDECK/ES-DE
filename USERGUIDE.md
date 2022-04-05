@@ -597,7 +597,7 @@ It's highly recommended to use filenames that are corresponding to the full name
 
 **Note:** Symlinks are supported for both ROM directories and individual game files, but make sure to not symlink between files within the same system directory or there may be undefined application behavior when scraping, launching games etc.
 
-The default game folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs, on macOS /Users/\<username\>/ROMs and on Windows C:\Users\\<username\>\ROMs\. If the --home command line option was used to start ES-DE, the tilde `~` symbol will resolve to whatever directory was passed as an argument to this option.
+The default game folder is ~/ROMs. On Unix this defaults to /home/\<username\>/ROMs, on macOS /Users/\<username\>/ROMs and on Windows C:\Users\\<username\>\ROMs\. If the --home command line option was used to start ES-DE, the tilde symbol will resolve to whatever directory was passed as an argument to this option.
 
 Assuming the default ROM directory is used, we need to create a subdirectory corresponding to the \<path\> tag in es_systems.xml, for this example it's `nes`.
 
@@ -701,6 +701,32 @@ But if using the AppImage release it's a bit more complicated. See [here](USERGU
 For Windows, ES-DE will look for _yuzu.exe_ in the system Path as well as in the default installation directory `~\AppData\Local\yuzu\yuzu-windows-msvc\`
 
 Apart from the potential difficulty in locating the emulator binary, there are some special configuration steps required for the emulator, refer to the Yuzu website for more information about this.
+
+#### Nintendo Wii U
+
+This section is specific to Windows as Cemu is currently only supported on this operating system.
+
+Cemu works a bit different compared to most other emulators, with games stored in an unpacked format. The content of each game is divided into the three directories _code, content_ and _meta_.
+
+The first step is to prepare the target directory in the `wiiu` ROMs directory, for this example we'll go for the game _Super Mario 3D World_. So simply create a directory with this name inside the wiiu folder. It should look something like the following:
+```
+C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\
+```
+
+The next step is done inside the emulator user interface. You should install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, right click on the game and choose _Game directory_. An Explorer window should now open showing the content of the game. Here's the game directory for our example:
+```
+C:\Games\cemu\mlc01\usr\title\00050000\10145d00\code
+```
+
+Go up one level and copy the _code, content_ and _meta_ directories and paste them into the C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\ directory. It should now look something like the following:
+
+```
+C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\code
+C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\content
+C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\meta
+```
+
+Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U system. The actual game file with the extension .rpx is stored inside the _code_ directory, and does not normally match the name of the game. For this example it's named `RedCarpet.rpx`. When scraping the .rpx file you therefore need to refine the search and manually enter the game name. ES-DE fully supports scraping of directories, so you can scrape the _Super Mario 3D World_ folder as well.
 
 #### Sony PlayStation 3
 

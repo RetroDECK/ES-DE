@@ -2,7 +2,7 @@
 
 **This document covers the creation of legacy themes only, which is a theme structure that is backward compatible with RetroPie EmulationStation. As ES-DE v2.0 and later has a new theme engine with much improved theming capabilities, this document is mostly intended for historical reference. For creating or porting themes to ES-DE the documentation in [THEMES.md](THEMES.md) should be used instead.**
 
-If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
+In general ES-DE is backward compatible with RetroPie theme sets with the notable exception of the _Grid_ view style which is not supported. Themes with grid view styles included will still load correctly, but you can't actually use this view style.
 
 Table of contents:
 
@@ -331,11 +331,10 @@ Below are the default zIndex values per element type:
 * `carousel name="systemcarousel"` - 40
 * `text name="systemInfo"` - 50
 
-#### basic, detailed, video, grid
+#### basic, detailed, video
 * `image name="background"` - 0
 * Extra Elements `extra="true"` - 10
 * `textlist name="gamelist"` - 20
-* `imagegrid name="gamegrid"` - 20
 * Media
     * `image name="md_image"` - 30
     * `video name="md_video"` - 30
@@ -546,62 +545,6 @@ or to specify only a portion of the value of a theme property:
         * `text name="md_name"` - ALL
             - The "name" metadata (the game name). Unlike the others metadata fields, the name is positioned offscreen by default
 
-
-#### grid
-* `helpsystem name="help"` - ALL
-    - The help system style for this view.
-* `image name="background"` - ALL
-    - This is a background image that exists for convenience. It goes from (0, 0) to (1, 1).
-* `text name="logoText"` - ALL
-    - Displays the name of the system.  Only present if no "logo" image is specified.  Displayed at the top of the screen, centered by default.
-* `image name="logo"` - ALL
-    - A header image.  If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
-* `imagegrid name="gamegrid"` - ALL
-    - The gamegrid. The number of tile displayed is controlled by its size, margin and the default tile max size.
-* `gridtile name="default"` - ALL
-    - Note that many of the default gridtile parameters change the selected gridtile parameters if they are not explicitly set by the theme. For example, changing the background image of the default gridtile also change the background image of the selected gridtile. Refer to the gridtile documentation for more informations.
-* `gridtile name="selected"` - ALL
-    - See default gridtile description right above.
-* `text name="gamelistInfo"` - ALL
-    - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
-
-- Metadata
-    - Labels
-        * `text name="md_lbl_rating"` - ALL
-        * `text name="md_lbl_releasedate"` - ALL
-        * `text name="md_lbl_developer"` - ALL
-        * `text name="md_lbl_publisher"` - ALL
-        * `text name="md_lbl_genre"` - ALL
-        * `text name="md_lbl_players"` - ALL
-        * `text name="md_lbl_lastplayed"` - ALL
-        * `text name="md_lbl_playcount"` - ALL
-
-    * Values
-        - _All values will follow to the right of their labels if a position isn't specified._
-        * `rating name="md_rating"` - ALL
-            - The "rating" metadata.
-        * `datetime name="md_releasedate"` - ALL
-            - The "releasedate" metadata.
-        * `text name="md_developer"` - ALL
-            - The "developer" metadata.
-        * `text name="md_publisher"` - ALL
-            - The "publisher" metadata.
-        * `text name="md_genre"` - ALL
-            - The "genre" metadata.
-        * `text name="md_players"` - ALL
-            - The "players" metadata (number of players the game supports).
-        * `badges name="md_badges"` - ALL
-            - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
-        * `datetime name="md_lastplayed"` - ALL
-            - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
-        * `text name="md_playcount"` - ALL
-            - The "playcount" metadata (number of times the game has been played).
-        * `text name="md_description"` - POSITION | SIZE | FONT_PATH | FONT_SIZE | COLOR | Z_INDEX
-            - Text is the "desc" metadata.  If no `pos`/`size` is specified, will move and resize to fit under the lowest label and reach to the bottom of the screen.
-        * `text name="md_name"` - ALL
-            - The "name" metadata (the game name). Unlike the others metadata fields, the name is positioned offscreen by default
-
-
 ### Types of properties
 
 * NORMALIZED_PAIR - two decimals, in the range [0..1], delimited by a space.  For example, `0.25 0.5`.  Most commonly used for position (x and y coordinates) and size (width and height).
@@ -648,54 +591,6 @@ Can be created as an extra.
     - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
     - z-index value for component.  Components will be rendered in order of z-index value from low to high.
-
-#### imagegrid
-
-* `pos` - type: NORMALIZED_PAIR.
-* `size` - type: NORMALIZED_PAIR.
-    - The size of the grid. Take care the selected tile can go out of the grid size, so don't position the grid too close to another element or the screen border.
-* `margin` - type: NORMALIZED_PAIR. Margin between tiles.
-* `padding` - type: NORMALIZED_RECT.
-    - NEW : Padding for displaying tiles.
-* `autoLayout` - type: NORMALIZED_PAIR.
-    - NEW : Number of column and rows in the grid (integer values).
-* `autoLayoutSelectedZoom` - type: FLOAT.
-    - NEW : Zoom factor to apply when a tile is selected.
-* `gameImage` - type: PATH.
-    - The default image used for games which doesn't have an image.
-* `folderImage` - type: PATH.
-    - The default image used for folders which doesn't have an image.
-* `imageSource` - type: STRING.
-    - Selects the image to display. `thumbnail` by default, can also be set to `image`, `miximage`, `screenshot`, `cover`, `marquee` or `3dbox`. If selecting `image`, the media type `miximage` will be tried first, with fallback to `screenshot` and then `cover`.
-* `scrollDirection` - type: STRING.
-    - `vertical` by default, can also be set to `horizontal`. Not that in `horizontal` mod, the tiles are ordered from top to bottom, then from left to right.
-* `centerSelection` - type: BOOLEAN.
-    - `false` by default, when `true` the selected tile will be locked to the center of the grid.
-* `scrollLoop` - type: BOOLEAN.
-    - `false` by default, when `true` the grid will seamlessly loop around when scrolling reaches the end of the list.  Only works when `centerSelection` is `true`.
-* `animate` - type : BOOLEAN.
-    - `true` by default, when  `false` the grid scrolling will not be animated.
-* `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
-
-#### gridtile
-
-* `size` - type: NORMALIZED_PAIR.
-    - The size of the default gridtile is used to calculate how many tiles can fit in the imagegrid. If not explicitly set, the size of the selected gridtile is equal the size of the default gridtile * 1.2
-* `padding` - type: NORMALIZED_PAIR.
-    - The padding around the gridtile content. Default `16 16`. If not explicitly set, the selected tile padding will be equal to the default tile padding.
-* `imageColor` - type: COLOR.
-    - The default tile image color and selected tile image color have no influence on each others.
-* `backgroundImage` - type: PATH.
-    - If not explicitly set, the selected tile background image will be the same as the default tile background image.
-* `backgroundCornerSize` - type: NORMALIZED_PAIR.
-    - The corner size of the ninepatch used for the tile background. Default is `16 16`.
-* `backgroundColor` - type: COLOR.
-    - A shortcut to define both the center color and edge color at the same time. The default tile background color and selected tile background color have no influence on each others.
-* `backgroundCenterColor` - type: COLOR.
-    - Set the color of the center part of the ninepatch. The default tile background center color and selected tile background center color have no influence on each others.
-* `backgroundEdgeColor` - type: COLOR.
-    - Set the color of the edge parts of the ninepatch. The default tile background edge color and selected tile background edge color have no influence on each others.
 
 #### video
 

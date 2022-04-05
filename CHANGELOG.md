@@ -123,13 +123,20 @@ v1.2 maintenance release.
 
 ### Detailed list of changes
 
-* Added fallback for high resolution marquee/wheel image for ScreenScraper if no regular wheel image was found
-* Added the SwanStation RetroArch core as an alternative emulator
+* ScreenScraper searches in automatic mode are now faster and much more accurate
+* Added fallback to high resolution marquee/wheel images for ScreenScraper if no regular wheel image was found
+* Added support for the Nintendo SFC (Super Famicom) game system
+* Added the SwanStation RetroArch core as an alternative emulator for the psx system
+* Added the a5200 RetroArch core for the atari5200 system and set it as default, with atari800 as the alternative
+* Added the .chd file extension to the ps2 system
+* Added the .dosz file extension to the dos and pc systems
+* Emulator Flatpaks can now be installed to the home directory on Debian
 * Increased the default VRAM limit from 256 MiB to 512 MiB on the Steam Deck
 
 ### Bug fixes
 
-* Fixed a font loading crash caused by an insufficient font texture size
+* A crash could occur under some circumstances due to an insufficient font texture size
+* The systems were not always sorted correctly
 * The help system was not properly updated after results were returned by the scraper
 
 ## Version 1.2.1
