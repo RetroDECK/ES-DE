@@ -172,8 +172,9 @@ void screenscraper_generate_scraper_requests(const ScraperSearchParams& params,
                                              std::vector<ScraperSearchResult>& results)
 {
     std::string path;
-
     ScreenScraperRequest::ScreenScraperConfig ssConfig;
+
+    ssConfig.automaticMode = params.automaticMode;
 
     if (params.game->isArcadeGame())
         ssConfig.isArcadeSystem = true;
@@ -743,7 +744,7 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
             singleSearch = true;
     }
 
-    if (singleSearch) {
+    if (automaticMode || singleSearch) {
         screenScraperURL = API_URL_BASE + "/jeuInfos.php?devid=" +
                            Utils::String::scramble(API_DEV_U, API_DEV_KEY) +
                            "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY) +
