@@ -130,6 +130,8 @@ v1.2 maintenance release.
 * Added the a5200 RetroArch core for the atari5200 system and set it as default, with atari800 as the alternative
 * Added the .chd file extension to the ps2 system
 * Added the .dosz file extension to the dos and pc systems
+* Added the .lnk file extension to the desktop, kodi and ports systems on Windows
+* Added the .url file extension to the steam system on Windows
 * Emulator Flatpaks can now be installed to the home directory on Debian
 * Increased the default VRAM limit from 256 MiB to 512 MiB on the Steam Deck
 
