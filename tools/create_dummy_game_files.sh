@@ -17,7 +17,7 @@ if [ ! -f ./systems.txt ]; then
   exit
 fi
 
-for folder in $(cat systems.txt | cut -f1 -d":"); do
+for folder in $(cat systems.txt | cut -f1 -d":" | sed s/"(custom system)"/""/g); do
   echo Creating dummy file for system ${folder}
   touch ${folder}/dummy$(grep "^\." ${folder}/systeminfo.txt | cut -f1 -d " ")
 done
