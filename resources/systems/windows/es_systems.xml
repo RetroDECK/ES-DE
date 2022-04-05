@@ -319,8 +319,8 @@
         <name>desktop</name>
         <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%\desktop</path>
-        <extension>.bat</extension>
-        <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
+        <extension>.bat .lnk .LNK</extension>
+        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>desktop</theme>
     </system>
@@ -533,8 +533,8 @@
         <name>kodi</name>
         <fullname>Kodi Home Theatre Software</fullname>
         <path>%ROMPATH%\kodi</path>
-        <extension>.bat</extension>
-        <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
+        <extension>.bat .lnk .LNK</extension>
+        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>kodi</theme>
     </system>
@@ -942,7 +942,7 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%\ports</path>
-        <extension>.bat</extension>
+        <extension>.bat .lnk .LNK</extension>
         <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>ports</theme>
@@ -1177,7 +1177,7 @@
         <name>steam</name>
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%\steam</path>
-        <extension>.bat</extension>
+        <extension>.bat .url .URL</extension>
         <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>
