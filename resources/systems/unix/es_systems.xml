@@ -413,7 +413,9 @@
         <fullname>Nintendo Famicom Disk System</fullname>
         <path>%ROMPATH%/fds</path>
         <extension>.nes .NES .fds .FDS .unf .UNF .UNIF .UNIF .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
+        <command label="Nestopia UE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
+        <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
+        <command label="Mesen">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen_libretro.so %ROM%</command>
         <platform>fds</platform>
         <theme>fds</theme>
     </system>
@@ -449,6 +451,10 @@
         <command label="TGB Dual">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/tgbdual_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="mGBA">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mgba_libretro.so %ROM%</command>
+        <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
+        <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.so %ROM%</command>
+        <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
         <platform>gb</platform>
         <theme>gb</theme>
     </system>
@@ -477,6 +483,10 @@
         <command label="TGB Dual">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/tgbdual_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="mGBA">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mgba_libretro.so %ROM%</command>
+        <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
+        <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.so %ROM%</command>
+        <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
         <platform>gbc</platform>
         <theme>gbc</theme>
     </system>
@@ -1026,6 +1036,7 @@
         <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
         <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.so %ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="bsnes-hd">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_hd_beta_libretro.so %ROM%</command>
         <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
         <platform>satellaview</platform>
@@ -1110,6 +1121,7 @@
         <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
         <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.so %ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="bsnes-hd">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_hd_beta_libretro.so %ROM%</command>
         <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.so %ROM%</command>
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supafaust_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
@@ -1136,6 +1148,7 @@
         <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
         <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.so %ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="bsnes-hd">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_hd_beta_libretro.so %ROM%</command>
         <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.so %ROM%</command>
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supafaust_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
@@ -1150,6 +1163,7 @@
         <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
         <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.so %ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="bsnes-hd">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_hd_beta_libretro.so %ROM%</command>
         <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.so %ROM%</command>
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supafaust_libretro.so %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mesen-s_libretro.so %ROM%</command>
@@ -1200,6 +1214,7 @@
         <command label="Snes9x - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
         <command label="Snes9x 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/snes9x2010_libretro.so %ROM%</command>
         <command label="bsnes">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_libretro.so %ROM%</command>
+        <command label="bsnes-hd">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_hd_beta_libretro.so %ROM%</command>
         <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bsnes_mercury_accuracy_libretro.so %ROM%</command>
         <platform>sufami</platform>
         <theme>sufami</theme>
