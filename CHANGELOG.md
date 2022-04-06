@@ -127,6 +127,9 @@ v1.2 maintenance release.
 * Added fallback to high resolution marquee/wheel images for ScreenScraper if no regular wheel image was found
 * Added support for the Nintendo SFC (Super Famicom) game system
 * Added the SwanStation RetroArch core as an alternative emulator for the psx system
+* Added mGBA, mGBA standalone, VBA-M and VBA-M standalone as alternative emulators for the gb and gbc systems
+* Added the bsnes-hd RetroArch core as an alternative emulator to the satellaview, snes, snesna and sufami systems
+* Added the FCEUmm and Mesen RetroArch cores as alternative emulators for the fds system
 * Added the a5200 RetroArch core for the atari5200 system and set it as default, with atari800 as the alternative
 * Added the .chd file extension to the ps2 system
 * Added the .dosz file extension to the dos and pc systems
