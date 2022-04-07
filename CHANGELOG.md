@@ -113,18 +113,19 @@
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 
-## Version 1.2.2 (in development)
+## Version 1.2.2
 
-**Release date:** TBD
+**Release date:** 2022-04-07
 
 ### Release overview
 
-v1.2 maintenance release.
+v1.2 maintenance release. The accuracy of the automatic (non-interactive) scraper has been greatly increased when using ScreenScraper. Some bugs were also fixed and a number of alternative emulators and file extensions have been added.
 
 ### Detailed list of changes
 
 * ScreenScraper searches in automatic mode are now faster and much more accurate
 * Added fallback to high resolution marquee/wheel images for ScreenScraper if no regular wheel image was found
+* Set the interactive scraper as disabled by default
 * Added support for the Nintendo SFC (Super Famicom) game system
 * Added the SwanStation RetroArch core as an alternative emulator for the psx system
 * Added mGBA, mGBA standalone, VBA-M and VBA-M standalone as alternative emulators for the gb and gbc systems
