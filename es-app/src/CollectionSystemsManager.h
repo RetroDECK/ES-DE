@@ -62,7 +62,7 @@ struct CollectionSystemData {
     bool isPopulated;
 };
 
-struct stringComparator {
+struct StringComparator {
     bool operator()(const std::string& a, const std::string& b) const
     {
         return Utils::String::toUpper(a) < Utils::String::toUpper(b);
@@ -120,12 +120,12 @@ public:
     // Repopulate the collection, which is basically a forced update of its complete content.
     void repopulateCollection(SystemData* sysData);
 
-    const std::map<std::string, CollectionSystemData, stringComparator>& // Line break.
+    const std::map<std::string, CollectionSystemData, StringComparator>& // Line break.
     getAutoCollectionSystems() const
     {
         return mAutoCollectionSystemsData;
     }
-    const std::map<std::string, CollectionSystemData, stringComparator>&
+    const std::map<std::string, CollectionSystemData, StringComparator>&
     getCustomCollectionSystems()
     {
         return mCustomCollectionSystemsData;
@@ -140,9 +140,9 @@ private:
     CollectionSystemsManager() noexcept;
 
     SystemEnvironmentData* mCollectionEnvData;
-    std::map<std::string, CollectionSystemDecl, stringComparator> mCollectionSystemDeclsIndex;
-    std::map<std::string, CollectionSystemData, stringComparator> mAutoCollectionSystemsData;
-    std::map<std::string, CollectionSystemData, stringComparator> mCustomCollectionSystemsData;
+    std::map<std::string, CollectionSystemDecl, StringComparator> mCollectionSystemDeclsIndex;
+    std::map<std::string, CollectionSystemData, StringComparator> mAutoCollectionSystemsData;
+    std::map<std::string, CollectionSystemData, StringComparator> mCustomCollectionSystemsData;
     Window* mWindow;
     bool mIsEditingCustom;
     bool mHasEnabledCustomCollection;
@@ -168,7 +168,7 @@ private:
     // Functions to handle System View removal and insertion of collections:
     void removeCollectionsFromDisplayedSystems();
     void addEnabledCollectionsToDisplayedSystems(
-        std::map<std::string, CollectionSystemData, stringComparator>* colSystemData);
+        std::map<std::string, CollectionSystemData, StringComparator>* colSystemData);
 
     // Auxiliary functions:
     std::vector<std::string> getSystemsFromConfig();

@@ -46,18 +46,18 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     // Automatic collections.
     collection_systems_auto = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "SELECT COLLECTIONS", true);
-    std::map<std::string, CollectionSystemData, stringComparator> autoSystems =
-        CollectionSystemsManager::getInstance()->getAutoCollectionSystems();
+    std::map<std::string, CollectionSystemData, StringComparator> autoSystems {
+        CollectionSystemsManager::getInstance()->getAutoCollectionSystems()};
     // Add automatic systems.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
+    for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
              autoSystems.cbegin();
          it != autoSystems.cend(); ++it)
         collection_systems_auto->add(it->second.decl.fullName, it->second.decl.name,
                                      it->second.isEnabled);
     addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
     addSaveFunc([this, autoSystems] {
-        std::string autoSystemsSelected = Utils::String::vectorToDelimitedString(
-            collection_systems_auto->getSelectedObjects(), ",", true);
+        std::string autoSystemsSelected {Utils::String::vectorToDelimitedString(
+            collection_systems_auto->getSelectedObjects(), ",", true)};
         std::string autoSystemsConfig = Settings::getInstance()->getString("CollectionSystemsAuto");
         if (autoSystemsSelected != autoSystemsConfig) {
             if (CollectionSystemsManager::getInstance()->isEditing())
@@ -71,10 +71,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                 addedAutoSystems = Utils::String::delimitedStringToVector(autoSystemsSelected, ",");
             }
             else if (autoSystemsSelected != "") {
-                std::vector<std::string> selectedVector =
-                    Utils::String::delimitedStringToVector(autoSystemsSelected, ",");
-                std::vector<std::string> configuredVector =
-                    Utils::String::delimitedStringToVector(autoSystemsConfig, ",");
+                std::vector<std::string> selectedVector {
+                    Utils::String::delimitedStringToVector(autoSystemsSelected, ",")};
+                std::vector<std::string> configuredVector {
+                    Utils::String::delimitedStringToVector(autoSystemsConfig, ",")};
                 for (std::string system : selectedVector) {
                     if (std::find(configuredVector.begin(), configuredVector.end(), system) ==
                         configuredVector.end())
@@ -95,10 +95,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     // Custom collections.
     collection_systems_custom = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "SELECT COLLECTIONS", true);
-    std::map<std::string, CollectionSystemData, stringComparator> customSystems =
-        CollectionSystemsManager::getInstance()->getCustomCollectionSystems();
+    std::map<std::string, CollectionSystemData, StringComparator> customSystems {
+        CollectionSystemsManager::getInstance()->getCustomCollectionSystems()};
     // Add custom systems.
-    for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
+    for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
              customSystems.cbegin();
          it != customSystems.cend(); ++it)
         collection_systems_custom->add(it->second.decl.fullName, it->second.decl.name,
@@ -107,10 +107,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
     addSaveFunc([this, customSystems] {
         if (!mDeletedCustomCollection) {
-            std::string customSystemsSelected = Utils::String::vectorToDelimitedString(
-                collection_systems_custom->getSelectedObjects(), ",", true);
-            std::string customSystemsConfig =
-                Settings::getInstance()->getString("CollectionSystemsCustom");
+            std::string customSystemsSelected {Utils::String::vectorToDelimitedString(
+                collection_systems_custom->getSelectedObjects(), ",", true)};
+            std::string customSystemsConfig {
+                Settings::getInstance()->getString("CollectionSystemsCustom")};
             if (customSystemsSelected != customSystemsConfig) {
                 if (CollectionSystemsManager::getInstance()->isEditing())
                     CollectionSystemsManager::getInstance()->exitEditMode();
@@ -125,10 +125,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                         Utils::String::delimitedStringToVector(customSystemsSelected, ",");
                 }
                 else if (customSystemsSelected != "") {
-                    std::vector<std::string> selectedVector =
-                        Utils::String::delimitedStringToVector(customSystemsSelected, ",");
-                    std::vector<std::string> configuredVector =
-                        Utils::String::delimitedStringToVector(customSystemsConfig, ",");
+                    std::vector<std::string> selectedVector {
+                        Utils::String::delimitedStringToVector(customSystemsSelected, ",")};
+                    std::vector<std::string> configuredVector {
+                        Utils::String::delimitedStringToVector(customSystemsConfig, ",")};
                     for (std::string system : selectedVector) {
                         if (std::find(configuredVector.begin(), configuredVector.end(), system) ==
                             configuredVector.end())
@@ -158,8 +158,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     }
 
     // Create custom collection from theme.
-    std::vector<std::string> unusedFolders =
-        CollectionSystemsManager::getInstance()->getUnusedSystemsFromTheme();
+    std::vector<std::string> unusedFolders {
+        CollectionSystemsManager::getInstance()->getUnusedSystemsFromTheme()};
     if (unusedFolders.size() > 0) {
         ComponentListRow row;
         auto themeCollection = std::make_shared<TextComponent>(
@@ -178,10 +178,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             // Add custom systems.
             for (auto it = unusedFolders.cbegin(); it != unusedFolders.cend(); ++it) {
                 ComponentListRow row;
-                std::string name = *it;
-                std::function<void()> createCollectionCall = [this, name] {
-                    createCustomCollection(name);
-                };
+                std::string name {*it};
+                std::function<void()> createCollectionCall {
+                    [this, name] { createCustomCollection(name); }};
                 row.makeAcceptInputHandler(createCollectionCall);
                 auto themeFolder = std::make_shared<TextComponent>(
                     Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
@@ -244,11 +243,11 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
         auto ss = new GuiSettings("SELECT COLLECTION TO DELETE");
         std::shared_ptr<OptionListComponent<std::string>> customCollections {
             std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "", true)};
-        for (std::map<std::string, CollectionSystemData, stringComparator>::const_iterator it =
+        for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
                  customSystems.cbegin();
              it != customSystems.cend(); ++it) {
             ComponentListRow row;
-            std::string name = (*it).first;
+            std::string name {(*it).first};
             std::function<void()> deleteCollectionCall = [this, name] {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
@@ -261,8 +260,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                         if (CollectionSystemsManager::getInstance()->isEditing())
                             CollectionSystemsManager::getInstance()->exitEditMode();
                         mDeletedCustomCollection = true;
-                        std::vector<std::string> selectedCustomCollections =
-                            collection_systems_custom->getSelectedObjects();
+                        std::vector<std::string> selectedCustomCollections {
+                            collection_systems_custom->getSelectedObjects()};
                         std::string collectionsConfigEntry;
                         // Create the configuration file entry. If the collection to be
                         // deleted was activated, then exclude it.
