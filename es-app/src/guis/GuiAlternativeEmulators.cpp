@@ -220,6 +220,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
     auto menuPos = s->getMenuPosition();
 
     s->setMenuPosition(glm::vec3 {(s->getSize().x - menuSize.x) / 2.0f, menuPos.y, menuPos.z});
+    s->refreshList();
 
     mWindow->pushGui(s);
 }
