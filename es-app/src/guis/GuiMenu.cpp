@@ -98,8 +98,10 @@ void GuiMenu::openUIOptions()
 
     // Theme options section.
 
-    std::map<std::string, ThemeData::ThemeSet> themeSets {ThemeData::getThemeSets()};
-    std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet;
+    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator> themeSets {
+        ThemeData::getThemeSets()};
+    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
+        selectedSet;
 
     auto theme_set =
         std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
@@ -153,8 +155,8 @@ void GuiMenu::openUIOptions()
 
     auto themeVariantsFunc = [=](const std::string& selectedTheme,
                                  const std::string& selectedVariant) {
-        std::map<std::string, ThemeData::ThemeSet>::const_iterator currentSet {
-            themeSets.find(selectedTheme)};
+        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
+            currentSet {themeSets.find(selectedTheme)};
         if (currentSet == themeSets.cend())
             return;
         // We need to recreate the OptionListComponent entries.
@@ -209,8 +211,8 @@ void GuiMenu::openUIOptions()
 
     auto themeAspectRatiosFunc = [=](const std::string& selectedTheme,
                                      const std::string& selectedAspectRatio) {
-        std::map<std::string, ThemeData::ThemeSet>::const_iterator currentSet {
-            themeSets.find(selectedTheme)};
+        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
+            currentSet {themeSets.find(selectedTheme)};
         if (currentSet == themeSets.cend())
             return;
         // We need to recreate the OptionListComponent entries.

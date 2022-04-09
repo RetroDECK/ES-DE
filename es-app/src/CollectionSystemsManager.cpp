@@ -1355,7 +1355,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromTheme()
     if (themeSets.empty())
         return systems; // No theme sets available.
 
-    std::map<std::string, ThemeData::ThemeSet>::const_iterator set =
+    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator set =
         themeSets.find(Settings::getInstance()->getString("ThemeSet"));
     if (set == themeSets.cend()) {
         // Currently selected theme set is missing, so just pick the first available set.

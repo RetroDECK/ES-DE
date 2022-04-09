@@ -13,6 +13,7 @@
 
 #include "utils/FileSystemUtil.h"
 #include "utils/MathUtil.h"
+#include "utils/StringUtil.h"
 
 #include <algorithm>
 #include <any>
@@ -200,6 +201,13 @@ public:
         }
     };
 
+    struct StringComparator {
+        bool operator()(const std::string& a, const std::string& b) const
+        {
+            return Utils::String::toUpper(a) < Utils::String::toUpper(b);
+        }
+    };
+
     void loadFile(const std::map<std::string, std::string>& sysDataMap, const std::string& path);
     bool hasView(const std::string& view);
     ThemeView& getViewElements(std::string view) { return mViews[view]; }
@@ -211,7 +219,7 @@ public:
                                    const std::string& element,
                                    const std::string& expectedType) const;
 
-    const static std::map<std::string, ThemeSet>& getThemeSets();
+    const static std::map<std::string, ThemeSet, StringComparator>& getThemeSets();
     const static std::string getThemeFromCurrentSet(const std::string& system);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
 
@@ -256,8 +264,8 @@ private:
     static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
     static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
 
-    static inline std::map<std::string, ThemeSet> mThemeSets;
-    std::map<std::string, ThemeData::ThemeSet>::iterator mCurrentThemeSet;
+    static inline std::map<std::string, ThemeSet, StringComparator> mThemeSets;
+    std::map<std::string, ThemeSet, StringComparator>::iterator mCurrentThemeSet;
 
     std::map<std::string, ThemeView> mViews;
     std::deque<std::string> mPaths;

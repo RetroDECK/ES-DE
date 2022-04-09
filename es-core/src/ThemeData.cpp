@@ -500,7 +500,8 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
     return &elemIt->second;
 }
 
-const std::map<std::string, ThemeData::ThemeSet>& ThemeData::getThemeSets()
+const std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>&
+ThemeData::getThemeSets()
 {
     if (!mThemeSets.empty())
         return mThemeSets;
@@ -564,7 +565,7 @@ const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
         // No theme sets available.
         return "";
 
-    std::map<std::string, ThemeSet>::const_iterator set {
+    std::map<std::string, ThemeSet, StringComparator>::const_iterator set {
         mThemeSets.find(Settings::getInstance()->getString("ThemeSet"))};
     if (set == mThemeSets.cend()) {
         // Currently configured theme set is missing, attempt to load the default theme set

@@ -361,8 +361,8 @@ void SystemView::populate()
     LOG(LogDebug) << "SystemView::populate(): Populating carousel";
 
     auto themeSets = ThemeData::getThemeSets();
-    std::map<std::string, ThemeData::ThemeSet>::const_iterator selectedSet {
-        themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
+    std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
+        selectedSet {themeSets.find(Settings::getInstance()->getString("ThemeSet"))};
 
     assert(selectedSet != themeSets.cend());
     mLegacyMode = selectedSet->second.capabilities.legacyTheme;
