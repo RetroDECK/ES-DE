@@ -178,6 +178,9 @@ void thegamesdb_generate_json_scraper_requests(
         // Trim leading and trailing whitespaces.
         cleanName = Utils::String::trim(cleanName);
 
+        if (Settings::getInstance()->getBool("ScraperConvertUnderscores"))
+            cleanName = Utils::String::replace(cleanName, "_", " ");
+
         path += "/Games/ByGameName?" + apiKey +
                 "&fields=players,publishers,genres,overview,last_updated,rating,"
                 "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=" +

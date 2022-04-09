@@ -879,6 +879,20 @@ void GuiScraperMenu::openOtherOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
+    // Convert underscores to spaces when searching.
+    auto scraperConvertUnderscores = std::make_shared<SwitchComponent>();
+    scraperConvertUnderscores->setState(
+        Settings::getInstance()->getBool("ScraperConvertUnderscores"));
+    s->addWithLabel("CONVERT UNDERSCORES TO SPACES WHEN SEARCHING", scraperConvertUnderscores);
+    s->addSaveFunc([scraperConvertUnderscores, s] {
+        if (scraperConvertUnderscores->getState() !=
+            Settings::getInstance()->getBool("ScraperConvertUnderscores")) {
+            Settings::getInstance()->setBool("ScraperConvertUnderscores",
+                                             scraperConvertUnderscores->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Retry search on peer verification errors (TLS/certificate issues).
     auto retry_peer_verification = std::make_shared<SwitchComponent>();
     retry_peer_verification->setState(

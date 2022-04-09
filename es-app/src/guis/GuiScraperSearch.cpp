@@ -901,6 +901,9 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         searchString = params.nameOverride;
     }
 
+    if (Settings::getInstance()->getBool("ScraperConvertUnderscores"))
+        searchString = Utils::String::replace(searchString, "_", " ");
+
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
         mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), "REFINE SEARCH", searchString,
                                                       searchForFunc, false, "SEARCH",

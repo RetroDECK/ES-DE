@@ -692,6 +692,9 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
     // Trim leading and trailing whitespaces.
     searchName = Utils::String::trim(searchName);
 
+    if (Settings::getInstance()->getBool("ScraperConvertUnderscores"))
+        searchName = Utils::String::replace(searchName, "_", " ");
+
     // If only whitespaces were entered as the search string, then search using a random string
     // that will not return any results. This is a quick and dirty way to avoid french error
     // messages about malformed URLs that would surely confuse the user.
