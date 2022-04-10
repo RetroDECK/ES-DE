@@ -63,7 +63,7 @@
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
-            <entry>dolphin.exe</entry>
+            <entry>Dolphin.exe</entry>
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\Dolphin-x64\Dolphin.exe</entry>
