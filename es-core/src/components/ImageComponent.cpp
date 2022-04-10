@@ -124,11 +124,10 @@ void ImageComponent::resize()
         }
     }
 
-    // Make sure sub-pixel values are not rounded to zero.
-    if (mSize.x < 1.0f)
-        mSize.x = 1.0f;
-    if (mSize.y < 1.0f)
-        mSize.y = 1.0f;
+    // Make sure sub-pixel values are not rounded to zero and that the size is not unreasonably
+    // large (which may be caused by a mistake in the theme configuration).
+    mSize.x = glm::clamp(mSize.x, 1.0f, mRenderer->getScreenWidth() * 2.0f);
+    mSize.y = glm::clamp(mSize.y, 1.0f, mRenderer->getScreenHeight() * 2.0f);
 
     mTexture->rasterizeAt(mSize.x, mSize.y);
 

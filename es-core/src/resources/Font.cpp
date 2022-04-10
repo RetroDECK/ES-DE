@@ -160,6 +160,16 @@ Font::FontTexture::FontTexture(const int mSize)
     // a texture buffer large enough to hold the fonts. This logic is obviously a hack though
     // and needs to be properly reviewed and improved.
     textureSize = glm::ivec2 {mSize * (20 + extraTextureSize), mSize * (8 + extraTextureSize / 2)};
+
+    // Make sure the size is not unreasonably large (which may be caused by a mistake in the
+    // theme configuration).
+    if (textureSize.x > static_cast<int>(Renderer::getScreenWidth()) * 10)
+        textureSize.x =
+            glm::clamp(textureSize.x, 0, static_cast<int>(Renderer::getScreenWidth()) * 10);
+    if (textureSize.y > static_cast<int>(Renderer::getScreenHeight()) * 10)
+        textureSize.y =
+            glm::clamp(textureSize.y, 0, static_cast<int>(Renderer::getScreenHeight()) * 10);
+
     writePos = glm::ivec2 {0, 0};
     rowHeight = 0;
 }
@@ -755,8 +765,13 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
     std::string path {orig ? orig->mPath : getDefaultPath()};
 
     float sh {static_cast<float>(Renderer::getScreenHeight())};
+
+    // Make sure the size is not unreasonably large (which may be caused by a mistake in the
+    // theme configuration).
     if (properties & FONT_SIZE && elem->has("fontSize"))
-        size = static_cast<int>(sh * elem->get<float>("fontSize"));
+        size = glm::clamp(static_cast<int>(sh * elem->get<float>("fontSize")), 0,
+                          static_cast<int>(Renderer::getInstance()->getScreenHeight()));
+
     if (properties & FONT_PATH && elem->has("fontPath"))
         path = elem->get<std::string>("fontPath");
 

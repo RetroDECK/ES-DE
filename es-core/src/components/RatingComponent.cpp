@@ -111,6 +111,11 @@ void RatingComponent::setColorShift(unsigned int color)
 
 void RatingComponent::onSizeChanged()
 {
+    // Make sure the size is not unreasonably large (which may be caused by a mistake in
+    // the theme configuration).
+    mSize.x = glm::clamp(mSize.x, 0.0f, mRenderer->getScreenWidth() / 2.0f);
+    mSize.y = glm::clamp(mSize.y, 0.0f, mRenderer->getScreenHeight() / 2.0f);
+
     if (mSize.y == 0.0f)
         mSize.y = mSize.x / NUM_RATING_STARS;
     else if (mSize.x == 0.0f)
