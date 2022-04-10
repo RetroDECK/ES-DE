@@ -87,6 +87,9 @@ private:
     ShaderOpenGL* mBlurVerticalShader;
     ShaderOpenGL* mScanlinelShader;
     ShaderOpenGL* mLastShader;
+
+    int mMajorGLVersion;
+    int mMinorGLVersion;
 };
 
 #endif // ES_CORE_RENDERER_RENDERER_OPENGL_H

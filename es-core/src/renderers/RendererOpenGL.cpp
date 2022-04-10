@@ -28,6 +28,8 @@ RendererOpenGL::RendererOpenGL() noexcept
     , mBlurVerticalShader {nullptr}
     , mScanlinelShader {nullptr}
     , mLastShader {nullptr}
+    , mMajorGLVersion {0}
+    , mMinorGLVersion {0}
 {
 }
 
@@ -128,15 +130,54 @@ GLenum RendererOpenGL::convertTextureType(const TextureType type)
 
 void RendererOpenGL::setup()
 {
+    std::string glVersion {Settings::getInstance()->getString("OpenGLVersion")};
+
 #if defined(USE_OPENGLES)
+    if (glVersion == "" || glVersion == "3.0") {
+        mMajorGLVersion = 3;
+        mMinorGLVersion = 0;
+    }
+    else if (glVersion == "3.1") {
+        mMajorGLVersion = 3;
+        mMinorGLVersion = 1;
+    }
+    else if (glVersion == "3.2") {
+        mMajorGLVersion = 3;
+        mMinorGLVersion = 2;
+    }
+    else {
+        LOG(LogWarning) << "Unsupported OpenGL ES version \"" << glVersion
+                        << "\" requested, defaulting to 3.0 (valid versions are 3.0, 3.1 and 3.2)";
+        mMajorGLVersion = 3;
+        mMinorGLVersion = 0;
+    }
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
 #else
+    if (glVersion == "" || glVersion == "3.3") {
+        mMajorGLVersion = 3;
+        mMinorGLVersion = 3;
+    }
+    else if (glVersion == "4.2") {
+        mMajorGLVersion = 4;
+        mMinorGLVersion = 2;
+    }
+    else if (glVersion == "4.6") {
+        mMajorGLVersion = 4;
+        mMinorGLVersion = 6;
+    }
+    else {
+        LOG(LogWarning) << "Unsupported OpenGL version \"" << glVersion
+                        << "\" requested, defaulting to 3.3 (valid versions are 3.3, 4.2 and 4.6)";
+        mMajorGLVersion = 3;
+        mMinorGLVersion = 3;
+    }
+
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 #endif
+
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, mMajorGLVersion);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, mMinorGLVersion);
 
     SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
@@ -170,12 +211,17 @@ bool RendererOpenGL::createContext()
     LOG(LogInfo) << "GL vendor: " << vendor;
     LOG(LogInfo) << "GL renderer: " << renderer;
     LOG(LogInfo) << "GL version: " << version;
-#if defined(_WIN64)
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL 3.3 with GLEW";
-#elif defined(USE_OPENGLES)
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL ES 3.0";
+#if defined(USE_OPENGLES)
+    LOG(LogInfo) << "EmulationStation renderer: OpenGL ES " << mMajorGLVersion << "."
+                 << mMinorGLVersion;
 #else
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL 3.3";
+#if defined(_WIN64)
+    LOG(LogInfo) << "EmulationStation renderer: OpenGL " << mMajorGLVersion << "."
+                 << mMinorGLVersion << " with GLEW";
+#else
+    LOG(LogInfo) << "EmulationStation renderer: OpenGL " << mMajorGLVersion << "."
+                 << mMinorGLVersion;
+#endif
 #endif
 
     GL_CHECK_ERROR(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));

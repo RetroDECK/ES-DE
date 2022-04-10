@@ -279,6 +279,7 @@ void Settings::setDefaults()
     //
 
     mBoolMap["DebugSkipInputLogging"] = {false, false};
+    mStringMap["OpenGLVersion"] = {"", ""};
     mStringMap["ROMDirectory"] = {"", ""};
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
     mIntMap["LottieMaxFileCache"] = {150, 150};
