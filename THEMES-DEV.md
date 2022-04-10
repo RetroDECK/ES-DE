@@ -726,6 +726,14 @@ It can also be used to specify only a portion of the value of a theme property:
 <path>./core/images/${system.theme}.svg</path>
 ````
 
+Nesting of variables is supported, so the following could be done:
+```
+<variables>
+    <colorRed>8b0000</colorRed>
+    <themeColor>${colorRed}</themeColor>
+</variables>
+```
+
 ## Reference
 
 This section describes each element and their properties in detail and also contains example configuration snippets.

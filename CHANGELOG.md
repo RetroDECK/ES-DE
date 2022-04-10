@@ -15,7 +15,9 @@
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
-* Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 and OpenGL ES 3.0 respectively
+* Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (as default) and OpenGL ES 3.0 respectively
+* OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
+* OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
@@ -37,6 +39,8 @@
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
 * Added theme support for enabling or disabling audio playback for videos
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
+* Added support for nesting of theme variables
+* Prevented loading of theme sets using the "resolution" tag introduced by RetroPie in 2020 as it's a very bad idea to use this logic
 * Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
@@ -55,6 +59,7 @@
 * Added support for dimming components (fade to black)
 * Added logging of the display refresh rate on startup
 * Added a command line option to rotate the application screen 180 degrees
+* Added support for the platform pico8 (only platform and scraper support, no system or theme configuration added yet)
 * Improved the theme loading error logging to make it consistent and easier to understand
 * Added a log warning for unthemed systems during theme set loading
 * Changed the warning log level for missing theme files to debug level if the paths are set using variables
@@ -71,6 +76,7 @@
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
+* Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
@@ -110,8 +116,29 @@
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
+* Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase in theme names)
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
+
+## Version 1.2.3 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+v1.2 maintenance release.
+
+### Detailed list of changes
+
+* Added a scraper setting to convert underscores _ to spaces when searching
+* Replaced the RetroArch core 4DO with Opera for the 3do system
+* Added the .wud and .wux file extensions for the wiiu system on Windows
+* Added missing scraper entries for samcoupe and zx81 for TheGamesDB and zmachine for ScreenScraper
+* neogeocd is now scraped specifically as "Neo Geo CD" instead of the more generic "Neo Geo"
+
+### Bug fixes
+
+* Navigating the list of alternative emulators would sometimes lead to an incorrect row positioning
 
 ## Version 1.2.2
 

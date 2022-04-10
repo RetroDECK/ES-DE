@@ -2,7 +2,7 @@
 
 **This document covers the creation of legacy themes only, which is a theme structure that is backward compatible with RetroPie EmulationStation. As ES-DE v2.0 and later has a new theme engine with much improved theming capabilities, this document is mostly intended for historical reference. For creating or porting themes to ES-DE the documentation in [THEMES.md](THEMES.md) should be used instead.**
 
-In general ES-DE is backward compatible with RetroPie theme sets with the notable exception of the _Grid_ view style which is not supported. Themes with grid view styles included will still load correctly, but you can't actually use this view style.
+In general ES-DE is backward compatible with RetroPie theme sets with the notable exception of the _Grid_ view style which is not supported. Themes with grid view styles included will still load correctly, but you can't actually use this view style. As well, any RetroPie theme using the `<resolution>` tag introduced in 2020 will not get loaded. This tag was a very bad idea as it changes sizing of components from relative values to absolute pixel values.
 
 Table of contents:
 
@@ -401,6 +401,14 @@ or to specify only a portion of the value of a theme property:
 <color>${themeColor}c0</color>
 <path>./art/logo/${system.theme}.svg</path>
 ````
+
+Nesting of variables is supported, so the following could be done:
+```
+<variables>
+    <colorRed>8b0000</colorRed>
+    <themeColor>${colorRed}</themeColor>
+</variables>
+```
 
 
 ## Reference

@@ -4,13 +4,17 @@
 
 Contributions are very much appreciated as there are many things that need to be implemented and improved.
 
-There are basically three areas where help is needed:
+In addition to the information below about work on ES-DE itself, the project is currently looking for a developer to create a configuration utility for customizing systems (i.e. to avoid having to manually edit XML configuration files). For various reasons this should be a standalone application, and it needs to be cross-platform with support for Windows, macOS and Linux. Get in touch if you would be interested in working on this!
+
+Apart from the above there are basically four areas where help is needed:
 
 * Programming: If you are experienced with developing cross-platform client applications in C++ then ES-DE could be an interesting project! Although the application does not have a huge codebase, it is still fairly complex as it covers many different areas like OpenGL rendering, audio playback, video playback, controller input, network access, XML and JSON parsing etc. To work on the project you need to be able to test your code on Linux, macOS and Windows, but apart from that it should hopefully be fairly straightforward.
 
 * Graphics: There are a few different areas where help is needed, but primarily it would be to create game systems vector graphics for the default rbsimple-DE theme as it's missing a lot of assets today. Check out [MISSING.md](themes/rbsimple-DE/MISSING.md) for more details about this.
 
-* Emulator configuration and testing: As one of the main goals of ES-DE is easy setup, the application needs to ship with all game systems preconfigured. This means that the es_systems.xml files have to be populated with both primary and alternative emulators for all supported operating systems. There could also be a need to add additional platforms that ES-DE does not support today. Please refer to [USERGUIDE-DEV.md](USERGUIDE-DEV.md#supported-game-systems) for the current game systems status. You can also review the es_systems.xml files directly: [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml).
+* Emulator configuration and testing: As one of the main goals of ES-DE is easy setup, the application needs to ship with all game systems preconfigured. This means that the es_systems.xml files have to be populated with both default and alternative emulators for all supported operating systems. There could also be a need to add additional platforms that ES-DE does not support today. Please refer to [USERGUIDE-DEV.md](USERGUIDE-DEV.md#supported-game-systems) for the current game systems status. You can also review the es_systems.xml files directly: [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml).
+
+* Theme creation. With ES-DE v2.0 a new theme engine will be introduced with improved capabilities compared to the current engine. Existing themes would need to be ported over to the new engine, potentially also from other frontends than RetroPie EmulationStation. Completely new themes would also be nice to showcase the new engine.
 
 Another specific area where help is needed is to research and potentially develop a usable web version of ES-DE. A proof of concept compilation to WebAssembly (using Emscripten) has been done and the application actually runs somehow correctly in a browser. But it needs to be investigated whether games/emulators can actually be launched when running in this environment and there are many improvements to be completed before the WebAssembly build is usable.
 
