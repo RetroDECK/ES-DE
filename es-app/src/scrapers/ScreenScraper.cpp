@@ -90,6 +90,7 @@ namespace
         {PC, 135},
         {VALVE_STEAM, 135},
         {NEC_PCFX, 72},
+        {GAMEENGINE_PICO8, 234},
         {PHILIPS_CDI, 133},
         {GAMEENGINE_OPENBOR, 214},
         {TANGERINE_ORIC, 131},
