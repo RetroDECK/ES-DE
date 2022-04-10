@@ -68,7 +68,7 @@ namespace
         {MSX2, "4929"},
         {MSX_TURBO_R, "4929"},
         {SNK_NEO_GEO, "24"},
-        {SNK_NEO_GEO_CD, "24"},
+        {SNK_NEO_GEO_CD, "4956"},
         {SNK_NEO_GEO_POCKET, "4922"},
         {SNK_NEO_GEO_POCKET_COLOR, "4923"},
         {NINTENDO_3DS, "4912"},
