@@ -388,6 +388,12 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     if (mCurrentThemeSet != mThemeSets.cend())
         mLegacyTheme = mCurrentThemeSet->second.capabilities.legacyTheme;
 
+    // The resolution tag introduced in RetroPie EmulationStation in 2020 is a very bad idea
+    // as it changes sizing of components from relative values to absolute pixel values.
+    // So themes using it will simply not get loaded at all.
+    if (root.child("resolution") != nullptr)
+        throw error << ": <resolution> tag not supported";
+
     // Check for legacy theme version.
     int legacyVersion {root.child("formatVersion").text().as_int(-1)};
 
