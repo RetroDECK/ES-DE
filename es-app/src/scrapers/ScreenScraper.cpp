@@ -106,6 +106,7 @@ namespace
         {SHARP_X1, 220},
         {SHARP_X68000, 79},
         {GAMEENGINE_SOLARUS, 223},
+        {GAMEENGINE_Z_MACHINE, 215},
         {SONY_PLAYSTATION, 57},
         {SONY_PLAYSTATION_2, 58},
         {SONY_PLAYSTATION_3, 59},
