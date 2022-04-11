@@ -23,11 +23,6 @@
 #include <sstream>
 #include <vector>
 
-#if defined(_WIN64)
-// Why this is needed here is anyone's guess but without it the compilation fails.
-#include <winsock2.h>
-#endif
-
 namespace pugi
 {
     class xml_node;

@@ -212,12 +212,28 @@ void Screensaver::nextGame()
 void Screensaver::launchGame()
 {
     if (mCurrentGame != nullptr) {
+        // If the game is inside a folder where a "launch file" entry is present, then jump to
+        // that folder instead of to the actual game file. Also check the complete hierarchy in
+        // case launch file entries are set on multiple levels of the folder structure.
+        FileData* entry {mCurrentGame};
+        FileData* selectGame {mCurrentGame};
+        FileData* launchFolder {nullptr};
+
+        while (entry != nullptr) {
+            entry = entry->getParent();
+            if (entry != nullptr && entry->metadata.get("launchfile") != "")
+                launchFolder = entry;
+        }
+
+        if (launchFolder != nullptr)
+            selectGame = launchFolder;
+
         // Launching game
         ViewController::getInstance()->triggerGameLaunch(mCurrentGame);
         ViewController::getInstance()->goToGamelist(mCurrentGame->getSystem());
         GamelistView* view {
             ViewController::getInstance()->getGamelistView(mCurrentGame->getSystem()).get()};
-        view->setCursor(mCurrentGame);
+        view->setCursor(selectGame);
         view->stopListScrolling();
         ViewController::getInstance()->cancelViewTransitions();
         ViewController::getInstance()->pauseViewVideos();
@@ -227,6 +243,18 @@ void Screensaver::launchGame()
 void Screensaver::goToGame()
 {
     if (mCurrentGame != nullptr) {
+        FileData* entry {mCurrentGame};
+        FileData* launchFolder {nullptr};
+
+        while (entry != nullptr) {
+            entry = entry->getParent();
+            if (entry != nullptr && entry->metadata.get("launchfile") != "")
+                launchFolder = entry;
+        }
+
+        if (launchFolder != nullptr)
+            mCurrentGame = launchFolder;
+
         // Go to the game in the gamelist view, but don't launch it.
         ViewController::getInstance()->goToGamelist(mCurrentGame->getSystem());
         GamelistView* view {

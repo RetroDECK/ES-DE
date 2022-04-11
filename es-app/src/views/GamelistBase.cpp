@@ -6,6 +6,11 @@
 //  Gamelist base class with utility functions and other low-level logic.
 //
 
+#if defined(_WIN64)
+// Why this is needed here is anyone's guess but without it the compilation fails.
+#include <winsock2.h>
+#endif
+
 #include "views/GamelistBase.h"
 
 #include "CollectionSystemsManager.h"
@@ -73,12 +78,33 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 // It's a folder.
                 if (cursor->getChildren().size() > 0) {
                     ViewController::getInstance()->cancelViewTransitions();
+                    // If a "launch file" entry has been set on the folder, then check if it
+                    // corresponds to an actual child entry, and if so then launch this child
+                    // instead of entering the folder.
+                    if (!CollectionSystemsManager::getInstance()->isEditing() &&
+                        cursor->metadata.get("launchfile") != "") {
+                        std::string launchFile;
+                        launchFile.append(cursor->getPath())
+                            .append("/")
+                            .append(Utils::String::replace(cursor->metadata.get("launchfile"), "\\",
+                                                           "/"));
+                        for (auto child : cursor->getChildrenRecursive()) {
+                            if (child->getPath() == launchFile) {
+                                pauseViewVideos();
+                                ViewController::getInstance()->cancelViewTransitions();
+                                stopListScrolling();
+                                launch(child);
+                                return true;
+                            }
+                        }
+                    }
+
                     NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
                     mCursorStack.push(cursor);
                     populateList(cursor->getChildrenListToDisplay(), cursor);
 
                     FileData* newCursor {nullptr};
-                    std::vector<FileData*> listEntries = cursor->getChildrenListToDisplay();
+                    std::vector<FileData*> listEntries {cursor->getChildrenListToDisplay()};
                     // Check if there is an entry in the cursor stack history matching any entry
                     // in the currect folder. If so, select that entry.
                     for (auto it = mCursorStackHistory.begin(); // Line break.
@@ -469,6 +495,41 @@ bool GamelistBase::input(InputConfig* config, Input input)
     return GuiComponent::input(config, input);
 }
 
+void GamelistBase::enterDirectory(FileData* cursor)
+{
+    assert(cursor->getType() == FOLDER);
+
+    if (cursor->getChildren().size() > 0) {
+        ViewController::getInstance()->cancelViewTransitions();
+        NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
+        mCursorStack.push(cursor);
+        populateList(cursor->getChildrenListToDisplay(), cursor);
+
+        FileData* newCursor {nullptr};
+        std::vector<FileData*> listEntries = cursor->getChildrenListToDisplay();
+        // Check if there is an entry in the cursor stack history matching any entry
+        // in the currect folder. If so, select that entry.
+        for (auto it = mCursorStackHistory.begin(); it != mCursorStackHistory.end(); ++it) {
+            if (std::find(listEntries.begin(), listEntries.end(), *it) != listEntries.end()) {
+                newCursor = *it;
+                mCursorStackHistory.erase(it);
+                break;
+            }
+        }
+
+        // If there was no match in the cursor history, simply select the first entry.
+        if (!newCursor)
+            newCursor = getCursor();
+        setCursor(newCursor);
+        stopListScrolling();
+        if (mRoot->getSystem()->getThemeFolder() == "custom-collections")
+            updateHelpPrompts();
+    }
+    else {
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+    }
+}
+
 void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* firstEntry)
 {
     mFirstGameEntry = nullptr;
@@ -537,10 +598,18 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 }
                 else if ((*it)->getType() == FOLDER &&
                          mRoot->getSystem()->getName() != "collections") {
-                    if (Settings::getInstance()->getBool("SpecialCharsASCII"))
-                        name = "# " + (*it)->getName();
-                    else
-                        name = ViewController::FOLDER_CHAR + "  " + (*it)->getName();
+                    if (Settings::getInstance()->getBool("SpecialCharsASCII")) {
+                        if ((*it)->metadata.get("launchfile") != "")
+                            name = "> " + (*it)->getName();
+                        else
+                            name = "# " + (*it)->getName();
+                    }
+                    else {
+                        if ((*it)->metadata.get("launchfile") != "")
+                            name = ViewController::FOLDERLINK_CHAR + "  " + (*it)->getName();
+                        else
+                            name = ViewController::FOLDER_CHAR + "  " + (*it)->getName();
+                    }
                 }
                 else {
                     name = inCollectionPrefix + (*it)->getName();

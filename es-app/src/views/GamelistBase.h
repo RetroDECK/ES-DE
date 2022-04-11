@@ -34,6 +34,7 @@ public:
     void setCursor(FileData*);
 
     bool input(InputConfig* config, Input input) override;
+    void enterDirectory(FileData* cursor);
 
     FileData* getNextEntry() { return mPrimary->getNext(); }
     FileData* getPreviousEntry() { return mPrimary->getPrevious(); }

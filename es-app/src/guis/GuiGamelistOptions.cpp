@@ -10,6 +10,11 @@
 //  metadata edit interface is covered by GuiMetaDataEd.
 //
 
+#if defined(_WIN64)
+// Why this is needed here is anyone's guess but without it the compilation fails.
+#include <winsock2.h>
+#endif
+
 #include "GuiGamelistOptions.h"
 
 #include "CollectionSystemsManager.h"
@@ -33,6 +38,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     , mCancelled {false}
     , mIsCustomCollection {false}
     , mIsCustomCollectionGroup {false}
+    , mLaunchFileOverride {false}
     , mCustomCollectionSystem {nullptr}
 {
     addChild(&mMenu);
@@ -228,6 +234,19 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         }
     }
 
+    if (file->getType() == FOLDER && file->metadata.get("launchfile") != "") {
+        row.elements.clear();
+        row.addElement(std::make_shared<TextComponent>("ENTER FOLDER (OVERRIDE LAUNCH FILE)",
+                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                       true);
+        row.makeAcceptInputHandler([this, file] {
+            mLaunchFileOverride = true;
+            getGamelist()->enterDirectory(file);
+            delete this;
+        });
+        mMenu.addRow(row);
+    }
+
     // Buttons. The logic to apply or cancel settings are handled by the destructor.
     if ((!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() == 0) ||
         system->getName() == "recent") {
@@ -308,7 +327,8 @@ GuiGamelistOptions::~GuiGamelistOptions()
         }
     }
 
-    if (mSystem->getRootFolder()->getChildren().size() != 0 && mSystem->getName() != "recent")
+    if (mSystem->getRootFolder()->getChildren().size() != 0 && mSystem->getName() != "recent" &&
+        !mLaunchFileOverride)
         NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
 }
 

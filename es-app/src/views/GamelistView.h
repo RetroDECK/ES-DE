@@ -10,8 +10,6 @@
 #define ES_APP_VIEWS_GAMELIST_VIEW_H
 
 #include "views/GamelistBase.h"
-
-#include "renderers/Renderer.h"
 #include "views/ViewController.h"
 
 class GamelistView : public GamelistBase

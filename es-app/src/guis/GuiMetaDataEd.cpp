@@ -52,6 +52,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     , mMediaFilesUpdated {false}
     , mSavedMediaAndAborted {false}
     , mInvalidEmulatorEntry {false}
+    , mInvalidLaunchFileEntry {false}
 {
     if (ViewController::getInstance()->getState().getSystem()->isCustomCollection() ||
         ViewController::getInstance()->getState().getSystem()->getThemeFolder() ==
@@ -70,9 +71,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
     // Extract possible subfolders from the path.
-    std::string folderPath =
+    std::string folderPath {
         Utils::String::replace(Utils::FileSystem::getParent(scraperParams.game->getPath()),
-                               scraperParams.system->getSystemEnvData()->mStartPath, "");
+                               scraperParams.system->getSystemEnvData()->mStartPath, "")};
 
     if (folderPath.size() >= 2) {
         folderPath.erase(0, 1);
@@ -112,8 +113,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     // Populate list.
     for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
         std::shared_ptr<GuiComponent> ed;
-        std::string currentKey = it->key;
-        std::string originalValue = mMetaData->get(it->key);
+        std::string currentKey {it->key};
+        std::string originalValue {mMetaData->get(it->key)};
         std::string gamePath;
 
         // Only display the custom collections sortname entry if we're editing the game
@@ -162,7 +163,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
                 ed = std::make_shared<RatingComponent>(true);
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
-                const float height = lbl->getSize().y * 0.71f;
+                const float height {lbl->getSize().y * 0.71f};
                 ed->setSize(0.0f, height);
                 row.addElement(ed, false, true);
 
@@ -200,7 +201,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
-                const std::string title = it->displayPrompt;
+                const std::string title {it->displayPrompt};
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [ed, originalValue](const std::string& newVal) {
@@ -212,15 +213,15 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 };
 
                 row.makeAcceptInputHandler([this, title, ed, updateVal] {
-                    GuiSettings* s = new GuiSettings(title);
+                    GuiSettings* s {new GuiSettings(title)};
 
                     for (auto controller : mControllerBadges) {
-                        std::string selectedLabel = ed->getValue();
+                        std::string selectedLabel {ed->getValue()};
                         std::string label;
                         ComponentListRow row;
 
-                        std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
-                            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                        std::shared_ptr<TextComponent> labelText {std::make_shared<TextComponent>(
+                            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
                         labelText->setSelectable(true);
                         labelText->setValue(controller.displayName);
 
@@ -243,9 +244,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     // If a value is set, then display "Clear entry" as the last entry.
                     if (ed->getValue() != "") {
                         ComponentListRow row;
-                        std::shared_ptr<TextComponent> clearText = std::make_shared<TextComponent>(
+                        std::shared_ptr<TextComponent> clearText {std::make_shared<TextComponent>(
                             ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
-                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
                         clearText->setSelectable(true);
                         row.addElement(clearText, true);
                         row.makeAcceptInputHandler([s, ed] {
@@ -282,7 +283,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
-                const std::string title = it->displayPrompt;
+                const std::string title {it->displayPrompt};
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
@@ -313,10 +314,10 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     scraperParams.system->getSystemEnvData()->mLaunchCommands.size() > 1) {
                     row.makeAcceptInputHandler([this, title, scraperParams, ed, updateVal,
                                                 originalValue] {
-                        GuiSettings* s = nullptr;
+                        GuiSettings* s {nullptr};
 
-                        bool singleEntry =
-                            scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1;
+                        bool singleEntry {
+                            scraperParams.system->getSystemEnvData()->mLaunchCommands.size() == 1};
 
                         if (mInvalidEmulatorEntry && singleEntry)
                             s = new GuiSettings("CLEAR INVALID ENTRY");
@@ -326,8 +327,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         if (!mInvalidEmulatorEntry && ed->getValue() == "" && singleEntry)
                             return;
 
-                        std::vector<std::pair<std::string, std::string>> launchCommands =
-                            scraperParams.system->getSystemEnvData()->mLaunchCommands;
+                        std::vector<std::pair<std::string, std::string>> launchCommands {
+                            scraperParams.system->getSystemEnvData()->mLaunchCommands};
 
                         if (ed->getValue() != "" && mInvalidEmulatorEntry && singleEntry)
                             launchCommands.push_back(std::make_pair(
@@ -342,7 +343,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                                     ViewController::EXCLAMATION_CHAR + " " + originalValue)
                                 continue;
 
-                            std::string selectedLabel = ed->getValue();
+                            std::string selectedLabel {ed->getValue()};
                             std::string label;
                             ComponentListRow row;
 
@@ -351,9 +352,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                             else
                                 label = entry.second;
 
-                            std::shared_ptr<TextComponent> labelText =
+                            std::shared_ptr<TextComponent> labelText {
                                 std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM),
-                                                                0x777777FF);
+                                                                0x777777FF)};
                             labelText->setSelectable(true);
 
                             if (scraperParams.system->getAlternativeEmulator() == "" &&
@@ -404,6 +405,110 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 }
                 break;
             }
+            case MD_LAUNCH_FILE: {
+                ed = std::make_shared<TextComponent>(
+                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+                row.addElement(ed, true);
+
+                auto spacer = std::make_shared<GuiComponent>();
+                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
+                row.addElement(spacer, false);
+
+                auto bracket = std::make_shared<ImageComponent>();
+                bracket->setImage(":/graphics/arrow.svg");
+                bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+                row.addElement(bracket, false);
+
+                const std::string title {it->displayPrompt};
+
+                std::vector<FileData*> children;
+                if (originalValue != "")
+                    mInvalidLaunchFileEntry = true;
+
+                for (auto child : mScraperParams.game->getChildrenRecursive()) {
+                    if (child->getType() == GAME && child->getCountAsGame() &&
+                        !child->getHidden()) {
+                        children.emplace_back(child);
+                        std::string filePath {child->getPath()};
+                        std::string systemPath {child->getSystem()->getRootFolder()->getPath() +
+                                                "/" + mScraperParams.game->getFileName() + "/"};
+                        if (Utils::String::replace(filePath, systemPath, "") == originalValue)
+                            mInvalidLaunchFileEntry = false;
+                    }
+                }
+
+                // OK callback (apply new value to ed).
+                auto updateVal = [this, ed, originalValue](const std::string& newVal) {
+                    mInvalidLaunchFileEntry = false;
+                    ed->setValue(newVal);
+                    if (newVal == originalValue)
+                        ed->setColor(DEFAULT_TEXTCOLOR);
+                    else
+                        ed->setColor(TEXTCOLOR_USERMARKED);
+                };
+
+                row.makeAcceptInputHandler([this, children, title, ed, updateVal] {
+                    GuiSettings* s {new GuiSettings(title)};
+
+                    for (auto child : children) {
+                        std::string selectedLabel {ed->getValue()};
+                        std::string label;
+                        ComponentListRow row;
+
+                        std::string filePath {child->getPath()};
+                        std::string systemPath {child->getSystem()->getRootFolder()->getPath() +
+                                                "/" + mScraperParams.game->getFileName() + "/"};
+
+                        filePath = Utils::String::replace(filePath, systemPath, "");
+
+                        std::shared_ptr<TextComponent> labelText {std::make_shared<TextComponent>(
+                            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+                        labelText->setSelectable(true);
+                        labelText->setValue(filePath);
+
+                        label = filePath;
+
+                        row.addElement(labelText, true);
+
+                        row.makeAcceptInputHandler([s, updateVal, filePath] {
+                            updateVal(filePath);
+                            delete s;
+                        });
+
+                        // Select the row that corresponds to the selected label.
+                        if (selectedLabel == label)
+                            s->addRow(row, true);
+                        else
+                            s->addRow(row, false);
+                    }
+
+                    // If a value is set, then display "Clear entry" as the last entry.
+                    if (ed->getValue() != "") {
+                        ComponentListRow row;
+                        std::shared_ptr<TextComponent> clearText {std::make_shared<TextComponent>(
+                            ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
+                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+                        clearText->setSelectable(true);
+                        row.addElement(clearText, true);
+                        row.makeAcceptInputHandler([this, s, ed] {
+                            mInvalidLaunchFileEntry = false;
+                            ed->setValue("");
+                            delete s;
+                        });
+                        s->addRow(row, false);
+                    }
+
+                    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+                    float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                    float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
+
+                    s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
+                    s->setMenuPosition(
+                        glm::vec3 {(s->getSize().x - maxWidth) / 2.0f, mPosition.y, mPosition.z});
+                    mWindow->pushGui(s);
+                });
+                break;
+            }
             case MD_MULTILINE_STRING:
             default: {
                 // MD_STRING.
@@ -420,8 +525,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 row.addElement(bracket, false);
 
-                bool multiLine = it->type == MD_MULTILINE_STRING;
-                const std::string title = it->displayPrompt;
+                bool multiLine {it->type == MD_MULTILINE_STRING};
+                const std::string title {it->displayPrompt};
 
                 gamePath = Utils::FileSystem::getStem(mScraperParams.game->getPath());
 
@@ -488,11 +593,14 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         assert(ed);
         mList->addRow(row);
 
-        if (it->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry == true) {
+        if (it->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry) {
+            ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
+        }
+        else if (it->type == MD_LAUNCH_FILE && mInvalidLaunchFileEntry) {
             ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
         }
         else if (it->type == MD_CONTROLLER && mMetaData->get(it->key) != "") {
-            std::string displayName = BadgeComponent::getDisplayName(mMetaData->get(it->key));
+            std::string displayName {BadgeComponent::getDisplayName(mMetaData->get(it->key))};
             if (displayName != "unknown")
                 ed->setValue(displayName);
             else
@@ -637,6 +745,9 @@ void GuiMetaDataEd::save()
         const std::string& key {mMetaDataDecl.at(i + offset).key};
 
         if (key == "altemulator" && mInvalidEmulatorEntry == true)
+            continue;
+
+        if (key == "launchfile" && mInvalidLaunchFileEntry)
             continue;
 
         if (key == "controller" && mEditors.at(i)->getValue() != "") {
@@ -807,7 +918,10 @@ void GuiMetaDataEd::close()
 
         const std::string& key {mMetaDataDecl.at(i + offset).key};
 
-        if (key == "altemulator" && mInvalidEmulatorEntry == true)
+        if (key == "altemulator" && mInvalidEmulatorEntry)
+            continue;
+
+        if (key == "launchfile" && mInvalidLaunchFileEntry)
             continue;
 
         std::string mMetaDataValue {mMetaData->get(key)};

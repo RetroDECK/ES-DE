@@ -23,6 +23,7 @@
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
+#include "views/GamelistView.h"
 #include "views/ViewController.h"
 
 #include <assert.h>
@@ -1233,11 +1234,18 @@ void FileData::launchGame()
     // Update number of times the game has been launched.
     FileData* gameToUpdate = getSourceFileData();
 
-    int timesPlayed = gameToUpdate->metadata.getInt("playcount") + 1;
+    int timesPlayed {gameToUpdate->metadata.getInt("playcount") + 1};
     gameToUpdate->metadata.set("playcount", std::to_string(static_cast<long long>(timesPlayed)));
 
     // Update last played time.
     gameToUpdate->metadata.set("lastplayed", Utils::Time::DateTime(Utils::Time::now()));
+
+    // If the cursor is a folder, the "launch file" functionality must have been used, so set
+    // the lastplayed timestamp for this folder to the same as the launched game.
+    FileData* cursor {
+        ViewController::getInstance()->getGamelistView(gameToUpdate->getSystem())->getCursor()};
+    if (cursor->getType() == FOLDER)
+        cursor->metadata.set("lastplayed", gameToUpdate->metadata.get("lastplayed"));
 
     // If the parent is a folder and it's not the root of the system, then update its lastplayed
     // timestamp to the same time as the game that was just launched.

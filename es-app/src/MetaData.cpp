@@ -20,7 +20,7 @@ namespace
     // The statistic entries must be placed at the bottom or otherwise there will be problems with
     // saving the values in GuiMetaDataEd.
     MetaDataDecl gameDecls[] {
-    // key,                type,                default,           statistic, name in GuiMetaDataEd,         prompt in GuiMetaDataEd,            shouldScrape
+    // Key                 Type                 Default value      Statistic  Name in GuiMetaDataEd          Prompt in GuiMetaDataEd             Scrape
     {"name",               MD_STRING,           "",                false,     "name",                        "enter name",                       true},
     {"sortname",           MD_STRING,           "",                false,     "sortname",                    "enter sortname",                   false},
     {"collectionsortname", MD_STRING,           "",                false,     "custom collections sortname", "enter collections sortname",       false},
@@ -46,6 +46,7 @@ namespace
     };
 
     MetaDataDecl folderDecls[] {
+    // Key            Type                 Default value      Statistic  Name in GuiMetaDataEd            Prompt in GuiMetaDataEd             Scrape
     {"name",          MD_STRING,           "",                false,     "name",                          "enter name",                       true},
     {"desc",          MD_MULTILINE_STRING, "",                false,     "description",                   "enter description",                true},
     {"rating",        MD_RATING,           "0",               false,     "rating",                        "enter rating",                     true},
@@ -62,6 +63,7 @@ namespace
     {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper",    "enter no multi-scrape off/on",     false},
     {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",          "enter hide metadata off/on",       false},
     {"controller",    MD_CONTROLLER,       "",                false,     "controller",                    "select controller",                true},
+    {"launchfile",    MD_LAUNCH_FILE,      "",                false,     "launch file",                   "select launch file",               false},
     {"lastplayed",    MD_TIME,             "0",               true,      "last played",                   "enter last played date",           false}
     };
     // clang-format on

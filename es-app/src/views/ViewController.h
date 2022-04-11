@@ -132,6 +132,7 @@ public:
     static inline const std::string FAVORITE_CHAR {Utils::String::wideStringToString(L"\uf005")};
     static inline const std::string FILTER_CHAR {Utils::String::wideStringToString(L"\uf0b0")};
     static inline const std::string FOLDER_CHAR {Utils::String::wideStringToString(L"\uf07C")};
+    static inline const std::string FOLDERLINK_CHAR {Utils::String::wideStringToString(L"\uf090")};
     static inline const std::string GEAR_CHAR {Utils::String::wideStringToString(L"\uf013")};
     static inline const std::string KEYBOARD_CHAR {Utils::String::wideStringToString(L"\uf11c")};
     static inline const std::string TICKMARK_CHAR {Utils::String::wideStringToString(L"\uf14A")};
@@ -142,6 +143,7 @@ public:
     static inline const std::string FAVORITE_CHAR {"\uf005"};
     static inline const std::string FILTER_CHAR {"\uf0b0"};
     static inline const std::string FOLDER_CHAR {"\uf07C"};
+    static inline const std::string FOLDERLINK_CHAR {"\uf090"};
     static inline const std::string GEAR_CHAR {"\uf013"};
     static inline const std::string KEYBOARD_CHAR {"\uf11c"};
     static inline const std::string TICKMARK_CHAR {"\uf14a"};
