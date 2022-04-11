@@ -14,6 +14,7 @@
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
+* Added support for launching game files inside folders without having to enter the folder
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (as default) and OpenGL ES 3.0 respectively
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
@@ -133,6 +134,8 @@ v1.2 maintenance release.
 * Added a scraper setting to convert underscores _ to spaces when searching
 * Replaced the RetroArch core 4DO with Opera for the 3do system
 * Added the .wud and .wux file extensions for the wiiu system on Windows
+* Added --escape-exit command line option for the PPSSPP standalone emulator
+* Added -batch command line option for the DuckStation standalone emulator
 * Added missing scraper entries for samcoupe and zx81 for TheGamesDB and zmachine for ScreenScraper
 * neogeocd is now scraped specifically as "Neo Geo CD" instead of the more generic "Neo Geo"
 
