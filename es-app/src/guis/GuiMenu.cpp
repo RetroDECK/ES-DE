@@ -9,6 +9,11 @@
 
 #include "guis/GuiMenu.h"
 
+#if defined(_WIN64)
+// Why this is needed here is anyone's guess but without it the compilation fails.
+#include <winsock2.h>
+#endif
+
 #include "CollectionSystemsManager.h"
 #include "EmulationStation.h"
 #include "FileFilterIndex.h"
