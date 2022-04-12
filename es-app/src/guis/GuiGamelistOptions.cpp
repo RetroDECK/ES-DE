@@ -38,7 +38,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     , mCancelled {false}
     , mIsCustomCollection {false}
     , mIsCustomCollectionGroup {false}
-    , mLaunchFileOverride {false}
+    , mFolderLinkOverride {false}
     , mCustomCollectionSystem {nullptr}
 {
     addChild(&mMenu);
@@ -234,13 +234,13 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         }
     }
 
-    if (file->getType() == FOLDER && file->metadata.get("launchfile") != "") {
+    if (file->getType() == FOLDER && file->metadata.get("folderlink") != "") {
         row.elements.clear();
-        row.addElement(std::make_shared<TextComponent>("ENTER FOLDER (OVERRIDE LAUNCH FILE)",
+        row.addElement(std::make_shared<TextComponent>("ENTER FOLDER (OVERRIDE FOLDER LINK)",
                                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
                        true);
         row.makeAcceptInputHandler([this, file] {
-            mLaunchFileOverride = true;
+            mFolderLinkOverride = true;
             getGamelist()->enterDirectory(file);
             delete this;
         });
@@ -328,7 +328,7 @@ GuiGamelistOptions::~GuiGamelistOptions()
     }
 
     if (mSystem->getRootFolder()->getChildren().size() != 0 && mSystem->getName() != "recent" &&
-        !mLaunchFileOverride)
+        !mFolderLinkOverride)
         NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
 }
 

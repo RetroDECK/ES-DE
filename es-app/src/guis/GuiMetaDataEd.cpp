@@ -52,7 +52,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     , mMediaFilesUpdated {false}
     , mSavedMediaAndAborted {false}
     , mInvalidEmulatorEntry {false}
-    , mInvalidLaunchFileEntry {false}
+    , mInvalidFolderLinkEntry {false}
 {
     if (ViewController::getInstance()->getState().getSystem()->isCustomCollection() ||
         ViewController::getInstance()->getState().getSystem()->getThemeFolder() ==
@@ -405,7 +405,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 }
                 break;
             }
-            case MD_LAUNCH_FILE: {
+            case MD_FOLDER_LINK: {
                 ed = std::make_shared<TextComponent>(
                     "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
                 row.addElement(ed, true);
@@ -423,7 +423,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
                 std::vector<FileData*> children;
                 if (originalValue != "")
-                    mInvalidLaunchFileEntry = true;
+                    mInvalidFolderLinkEntry = true;
 
                 for (auto child : mScraperParams.game->getChildrenRecursive()) {
                     if (child->getType() == GAME && child->getCountAsGame() &&
@@ -433,13 +433,13 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         std::string systemPath {child->getSystem()->getRootFolder()->getPath() +
                                                 "/" + mScraperParams.game->getFileName() + "/"};
                         if (Utils::String::replace(filePath, systemPath, "") == originalValue)
-                            mInvalidLaunchFileEntry = false;
+                            mInvalidFolderLinkEntry = false;
                     }
                 }
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
-                    mInvalidLaunchFileEntry = false;
+                    mInvalidFolderLinkEntry = false;
                     ed->setValue(newVal);
                     if (newVal == originalValue)
                         ed->setColor(DEFAULT_TEXTCOLOR);
@@ -491,7 +491,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         clearText->setSelectable(true);
                         row.addElement(clearText, true);
                         row.makeAcceptInputHandler([this, s, ed] {
-                            mInvalidLaunchFileEntry = false;
+                            mInvalidFolderLinkEntry = false;
                             ed->setValue("");
                             delete s;
                         });
@@ -596,7 +596,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         if (it->type == MD_ALT_EMULATOR && mInvalidEmulatorEntry) {
             ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
         }
-        else if (it->type == MD_LAUNCH_FILE && mInvalidLaunchFileEntry) {
+        else if (it->type == MD_FOLDER_LINK && mInvalidFolderLinkEntry) {
             ed->setValue(ViewController::EXCLAMATION_CHAR + " " + originalValue);
         }
         else if (it->type == MD_CONTROLLER && mMetaData->get(it->key) != "") {
@@ -747,7 +747,7 @@ void GuiMetaDataEd::save()
         if (key == "altemulator" && mInvalidEmulatorEntry == true)
             continue;
 
-        if (key == "launchfile" && mInvalidLaunchFileEntry)
+        if (key == "folderlink" && mInvalidFolderLinkEntry)
             continue;
 
         if (key == "controller" && mEditors.at(i)->getValue() != "") {
@@ -921,7 +921,7 @@ void GuiMetaDataEd::close()
         if (key == "altemulator" && mInvalidEmulatorEntry)
             continue;
 
-        if (key == "launchfile" && mInvalidLaunchFileEntry)
+        if (key == "folderlink" && mInvalidFolderLinkEntry)
             continue;
 
         std::string mMetaDataValue {mMetaData->get(key)};

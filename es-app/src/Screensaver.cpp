@@ -212,16 +212,16 @@ void Screensaver::nextGame()
 void Screensaver::launchGame()
 {
     if (mCurrentGame != nullptr) {
-        // If the game is inside a folder where a "launch file" entry is present, then jump to
+        // If the game is inside a folder where a folder link entry is present, then jump to
         // that folder instead of to the actual game file. Also check the complete hierarchy in
-        // case launch file entries are set on multiple levels of the folder structure.
+        // case folder link entries are set on multiple levels.
         FileData* entry {mCurrentGame};
         FileData* selectGame {mCurrentGame};
         FileData* launchFolder {nullptr};
 
         while (entry != nullptr) {
             entry = entry->getParent();
-            if (entry != nullptr && entry->metadata.get("launchfile") != "")
+            if (entry != nullptr && entry->metadata.get("folderlink") != "")
                 launchFolder = entry;
         }
 
@@ -248,7 +248,7 @@ void Screensaver::goToGame()
 
         while (entry != nullptr) {
             entry = entry->getParent();
-            if (entry != nullptr && entry->metadata.get("launchfile") != "")
+            if (entry != nullptr && entry->metadata.get("folderlink") != "")
                 launchFolder = entry;
         }
 

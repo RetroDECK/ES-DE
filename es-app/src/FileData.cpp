@@ -1240,8 +1240,8 @@ void FileData::launchGame()
     // Update last played time.
     gameToUpdate->metadata.set("lastplayed", Utils::Time::DateTime(Utils::Time::now()));
 
-    // If the cursor is a folder, the "launch file" functionality must have been used, so set
-    // the lastplayed timestamp for this folder to the same as the launched game.
+    // If the cursor is on a folder then a folder link must have been configured, so set the
+    // lastplayed timestamp for this folder to the same as the launched game.
     FileData* cursor {
         ViewController::getInstance()->getGamelistView(gameToUpdate->getSystem())->getCursor()};
     if (cursor->getType() == FOLDER)

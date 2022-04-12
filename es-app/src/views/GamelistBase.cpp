@@ -78,18 +78,18 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 // It's a folder.
                 if (cursor->getChildren().size() > 0) {
                     ViewController::getInstance()->cancelViewTransitions();
-                    // If a "launch file" entry has been set on the folder, then check if it
+                    // If a folder link entry has been set on the folder, then check if it
                     // corresponds to an actual child entry, and if so then launch this child
                     // instead of entering the folder.
                     if (!CollectionSystemsManager::getInstance()->isEditing() &&
-                        cursor->metadata.get("launchfile") != "") {
-                        std::string launchFile;
-                        launchFile.append(cursor->getPath())
+                        cursor->metadata.get("folderlink") != "") {
+                        std::string folderLink;
+                        folderLink.append(cursor->getPath())
                             .append("/")
-                            .append(Utils::String::replace(cursor->metadata.get("launchfile"), "\\",
+                            .append(Utils::String::replace(cursor->metadata.get("folderlink"), "\\",
                                                            "/"));
                         for (auto child : cursor->getChildrenRecursive()) {
-                            if (child->getPath() == launchFile) {
+                            if (child->getPath() == folderLink) {
                                 pauseViewVideos();
                                 ViewController::getInstance()->cancelViewTransitions();
                                 stopListScrolling();
@@ -599,13 +599,13 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 else if ((*it)->getType() == FOLDER &&
                          mRoot->getSystem()->getName() != "collections") {
                     if (Settings::getInstance()->getBool("SpecialCharsASCII")) {
-                        if ((*it)->metadata.get("launchfile") != "")
+                        if ((*it)->metadata.get("folderlink") != "")
                             name = "> " + (*it)->getName();
                         else
                             name = "# " + (*it)->getName();
                     }
                     else {
-                        if ((*it)->metadata.get("launchfile") != "")
+                        if ((*it)->metadata.get("folderlink") != "")
                             name = ViewController::FOLDERLINK_CHAR + "  " + (*it)->getName();
                         else
                             name = ViewController::FOLDER_CHAR + "  " + (*it)->getName();

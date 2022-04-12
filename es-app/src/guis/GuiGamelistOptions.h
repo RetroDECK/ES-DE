@@ -59,7 +59,7 @@ private:
     bool mCancelled;
     bool mIsCustomCollection;
     bool mIsCustomCollectionGroup;
-    bool mLaunchFileOverride;
+    bool mFolderLinkOverride;
     SystemData* mCustomCollectionSystem;
     std::vector<std::string> mFirstLetterIndex;
     std::string mCurrentFirstCharacter;

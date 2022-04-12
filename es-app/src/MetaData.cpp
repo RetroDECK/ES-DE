@@ -63,7 +63,7 @@ namespace
     {"nomultiscrape", MD_BOOL,             "false",           false,     "exclude from multi-scraper",    "enter no multi-scrape off/on",     false},
     {"hidemetadata",  MD_BOOL,             "false",           false,     "hide metadata fields",          "enter hide metadata off/on",       false},
     {"controller",    MD_CONTROLLER,       "",                false,     "controller",                    "select controller",                true},
-    {"launchfile",    MD_LAUNCH_FILE,      "",                false,     "launch file",                   "select launch file",               false},
+    {"folderlink",    MD_FOLDER_LINK,      "",                false,     "folder link",                   "select folder link",               false},
     {"lastplayed",    MD_TIME,             "0",               true,      "last played",                   "enter last played date",           false}
     };
     // clang-format on
