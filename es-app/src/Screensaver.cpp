@@ -570,7 +570,7 @@ void Screensaver::pickRandomCustomImage(std::string& path)
     if (mImageCustomFiles.size() == 0)
         return;
 
-    if (mVideoFiles.size() == 1) {
+    if (mImageCustomFiles.size() == 1) {
         mPreviousCustomImage = mImageCustomFiles.front();
         path = mImageCustomFiles.front();
         return;

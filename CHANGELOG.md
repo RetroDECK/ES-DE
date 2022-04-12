@@ -141,6 +141,7 @@ v1.2 maintenance release.
 
 ### Bug fixes
 
+* Using a custom image directory for the slideshow screensaver would hang the application if there was only a single image
 * Navigating the list of alternative emulators would sometimes lead to an incorrect row positioning
 
 ## Version 1.2.2
