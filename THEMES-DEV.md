@@ -12,6 +12,8 @@ Table of contents:
 
 ES-DE allows the grouping of themes for multiple game systems into a **theme set**. A theme is a collection of **elements**, each with their own **properties** that define the way they look and behave. These elements include things like text lists, carousels, images and animations.
 
+Internally ES-DE uses the concept of **components** to actually implement the necessary building blocks to parse and render the elements, and although this is normally beyond the scope of what a theme author needs to consider, it's still good to be aware of the term as it's sometimes used in the documentation.
+
 Every game system has its own subdirectory within the theme set directory structure, and these are defined in the systems configuration file `es_systems.xml` either via the optional `<theme>` tag, or otherwise via the mandatory `<name>` tag. When ES-DE populates a system on startup it will look for a file named `theme.xml` in each such directory.
 
 By placing a theme.xml file directly in the root of the theme set directory, that file will be processed as a default if there is no system-specific theme.xml file available.
@@ -78,7 +80,7 @@ The following are the most important changes compared to the legacy theme struct
 * The concept of _features_ is gone
 * The `<formatVersion>` tag is gone as tracking theme versions doesn't make much sense after all
 * The `video` element properties `showSnapshotNoVideo` and `showSnapshotDelay` have been removed
-* The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` component)
+* The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` element)
 * The `forceUppercase` property has been replaced with the more versatile `letterCase` property
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
 * The carousel property maxLogoCount is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine
@@ -135,8 +137,8 @@ This is the element structure:
 </ElementTypeHere>
 ```
 
-Finally _properties_ control how a particular element looks and behaves, for example its position, size, image path, animation controls etc.  The property type determines what kinds of values you can use.  You can read about each type below in the
-[Reference](THEMES-DEV.md#reference) section.  Properties are defined like this:
+Finally _properties_ control how a particular element looks and behaves, for example its position, size, image path, animation controls etc. The property type determines what kinds of values you can use. You can read about each type below in the
+[Reference](THEMES-DEV.md#reference) section. Properties are defined like this:
 
 ```xml
 <propertyNameHere>ValueHere</propertyNameHere>
@@ -214,7 +216,7 @@ In addition to this, if the name is used for the same element type but for diffe
 
 ## Debugging during theme development
 
-If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so, you can read error messages directly in the terminal window without having to open the es_log.txt file.  You can also reload the current gamelist or system view with `Ctrl+r` if the `--debug` flag has been set. There is also support for highlighting the size and position of each image and animation element by using the `Ctrl+i` key combination and likewise to highlight each text element by using the `Ctrl+t` keys. Again, both of these require that ES-DE has been launched with the `--debug` command line option, for example:
+If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so, you can read error messages directly in the terminal window without having to open the es_log.txt file. You can also reload the current gamelist or system view with `Ctrl+r` if the `--debug` flag has been set. There is also support for highlighting the size and position of each image and animation element by using the `Ctrl+i` key combination and likewise to highlight each text element by using the `Ctrl+t` keys. Again, both of these require that ES-DE has been launched with the `--debug` command line option, for example:
 ```
 emulationstation --debug --resolution 1280 720
 ```
@@ -235,7 +237,7 @@ Note however that warnings are not printed for all invalid properties as that wo
 
 A core concept of ES-DE is the use of theme set _variants_ to provide different theme profiles. These are not fixed presets and a theme author can instead name and define whatever variants he wants for his theme (or possibly use no variants at all as they are optional).
 
-The variants could be purely cosmetic, such as providing light and dark mode versions of the theme set, or they could provide different functionality by for instance using different primary components such as a carousel or a text list.
+The variants could be purely cosmetic, such as providing light and dark mode versions of the theme set, or they could provide different functionality by for instance using different primary elements such as a carousel or a text list.
 
 Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detailed later in this document.
 
@@ -688,7 +690,7 @@ The `helpsystem` element does not really have a zIndex value and is always rende
 
 ### Theme variables
 
-Theme variables can be used to simplify theme construction.  There are 2 types of variables available.
+Theme variables can be used to simplify theme construction. There are 2 types of variables available.
 * System variables
 * Theme defined variables
 
@@ -740,18 +742,18 @@ This section describes each element and their properties in detail and also cont
 
 ### Property data types
 
-* NORMALIZED_PAIR - two decimals, in the range [0..1], delimited by a space.  For example, `0.25 0.5`.  Most commonly used for position (x and y coordinates) and size (width and height).
-* NORMALIZED_RECT - four decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5 0.10 0.30`.  Most commonly used for padding to store top, left, bottom and right coordinates.
-* PATH - a path.  If the first character is a `~`, it will be expanded into the environment variable for the home path (`$HOME` for Unix and macOS or `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a `.`, it will be expanded to the theme file's directory, allowing you to specify resources relative to the theme file, like so: `./../core/fonts/myfont.ttf`.
+* NORMALIZED_PAIR - two decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5`. Most commonly used for position (x and y coordinates) and size (width and height).
+* NORMALIZED_RECT - four decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5 0.10 0.30`. Most commonly used for padding to store top, left, bottom and right coordinates.
+* PATH - a path. If the first character is a `~`, it will be expanded into the environment variable for the home path (`$HOME` for Unix and macOS or `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  f the first character is a `.`, it will be expanded to the theme file's directory, allowing you to specify resources relative to the theme file, like so: `./../core/fonts/myfont.ttf`.
 * BOOLEAN - `true`/`1` or `false`/`0`.
-* COLOR - a hexidecimal RGB or RGBA color (6 or 8 digits).  If 6 digits, will assume the alpha channel is `FF` (completely opaque).
+* COLOR - a hexadecimal RGB or RGBA color (6 or 8 digits). If 6 digits, will assume the alpha channel is `FF` (completely opaque).
 * UNSIGNED_INTEGER - an unsigned integer.
 * FLOAT - a decimal.
 * STRING - a string of text.
 
 ### Element types and their properties
 
-Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type.  They are normalized in terms of their "parent" object's size; 99% of the time this is just the size of the screen.  In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down). You can also use numbers outside of the [0..1] range if you want to place an element partially or completely off-screen.
+Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type. They are normalized in terms of their "parent" object's size; 99% of the time this is just the size of the screen. In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down). You can also use numbers outside of the [0..1] range if you want to place an element partially or completely off-screen.
 
 The order in which you define properties does not matter and you only need to define the ones where you want to override the default value.
 
@@ -771,19 +773,19 @@ Properties:
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the image's aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
-    - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
+    - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Angle in degrees that the image should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the image will be rotated.
     - Default is `0.5 0.5`
 * `path` - type: PATH
-    - Explicit path to an image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
+    - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
 * `default` - type: PATH
     - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a valid `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING
@@ -801,13 +803,13 @@ Properties:
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
 * `tile` - type: BOOLEAN
-    - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
+    - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR
-    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
+    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `colorEnd` - type: COLOR
     - Works exactly in the same way as `color` but can be set as the end color to apply a color shift gradient to the image.
 * `gradientType` - type: STRING
@@ -829,7 +831,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `30`
 
 #### video
@@ -848,9 +850,9 @@ Properties:
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the video's aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
-    - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
+    - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `path` - type: PATH
@@ -909,7 +911,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `30`
 
 #### animation
@@ -928,17 +930,17 @@ Properties:
 * `size` - type: NORMALIZED_PAIR
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the animation's aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information.
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the animation should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Angle in degrees that the animation should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the animation will be rotated.
     - Default is `0.5 0.5`
 * `path` - type: PATH
-    - Path to the animation file.  Only the .json extension is supported.
+    - Path to the animation file. Only the .json extension is supported.
 * `speed` - type: FLOAT.
     - The relative speed at which to play the animation.
     - Minimum value is `0.2` and maximum value is `3`
@@ -965,7 +967,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `35`
 
 #### badges
@@ -986,11 +988,11 @@ Properties:
     - Minimum value per axis is `0.03` and maximum value per axis is `1`
     - Default is `0.15 0.20`
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the badges should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Angle in degrees that the badges should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the image will be rotated.
@@ -1071,7 +1073,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `35`
 
 #### text
@@ -1091,13 +1093,13 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Rotation is not possible if the `container` property has been set to true.
+    - Angle in degrees that the text should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise. Rotation is not possible if the `container` property has been set to true.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the text will be rotated.
@@ -1174,7 +1176,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `40`
 
 #### datetime
@@ -1194,13 +1196,13 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Angle in degrees that the text should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the text will be rotated.
@@ -1251,7 +1253,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `40`
 
 #### gamelistinfo
@@ -1270,13 +1272,13 @@ Properties:
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Angle in degrees that the text should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the element will be rotated.
@@ -1303,7 +1305,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `45`
 
 #### rating
@@ -1322,13 +1324,13 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - Only one value is actually used. The other value should be zero.  (e.g. specify width OR height, but not both.  This is done to maintain the aspect ratio.)
+    - Only one value is actually used. The other value should be zero (e.g. specify width OR height, but not both. This is done to maintain the aspect ratio.)
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `rotation` - type: FLOAT
-    - Angle in degrees that the rating should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - Angle in degrees that the rating should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the rating will be rotated.
@@ -1336,11 +1338,11 @@ Properties:
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
 * `color` - type: COLOR
-    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
+    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `filledPath` - type: PATH
-    - Path to the "filled" rating image.  Image must be square (width equals height).
+    - Path to the "filled" rating image. Image must be square (width equals height).
 * `unfilledPath` - type: PATH
-    - Path to the "unfilled" rating image.  Image must be square (width equals height).
+    - Path to the "unfilled" rating image. Image must be square (width equals height).
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -1349,7 +1351,7 @@ Properties:
     - If set to false, the element will be disabled. This is equivalent to setting `opacity` to `0`
     - Default is `true`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `45`
 
 #### carousel
@@ -1376,7 +1378,7 @@ Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0 0.38375`
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the carousel `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `color` - type: COLOR
@@ -1390,9 +1392,9 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `logo` - type: PATH
-    - Path to the logo image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+    - Path to the logo image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `defaultLogo` - type: PATH
-    - Path to the default logo file which will be displayed if the image defined via the `logo` property is not found.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+    - Path to the default logo file which will be displayed if the image defined via the `logo` property is not found. Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `logoSize` - type: NORMALIZED_PAIR
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
@@ -1401,7 +1403,7 @@ Properties:
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.2`
 * `logoRotation` - type: FLOAT
-    - Angle in degrees that the logos should be rotated.  Value should be positive.
+    - Angle in degrees that the logos should be rotated. Value should be positive.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `7.5`
 * `logoRotationOrigin` - type: NORMALIZED_PAIR
@@ -1439,7 +1441,7 @@ Properties:
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
 
 #### textlist
@@ -1457,12 +1459,12 @@ Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.  If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
 * `selectorHeight` - type: FLOAT
     - Height of the "selector bar".
 * `selectorOffsetY` - type: FLOAT
-    - Allows moving of the "selector bar" up or down from its computed position.  Useful for fine tuning the position of the "selector bar" relative to the text.
+    - Allows moving of the "selector bar" up or down from its computed position. Useful for fine tuning the position of the "selector bar" relative to the text.
 * `selectorColor` - type: COLOR
     - Color of the selector bar.
     - Default is `000000FF`
@@ -1480,9 +1482,9 @@ Properties:
 * `selectedColor` - type: COLOR
     - Color of the highlighted entry text.
 * `primaryColor` - type: COLOR
-    - Primary color; what this means depends on the text list.  For example, for game lists, it is the color of a game.
+    - Primary color; what this means depends on the text list. For example, for game lists, it is the color of a game.
 * `secondaryColor` - type: COLOR
-    - Secondary color; what this means depends on the text list.  For example, for game lists, it is the color of a folder.
+    - Secondary color; what this means depends on the text list. For example, for game lists, it is the color of a folder.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
 * `horizontalAlignment` - type: STRING
@@ -1490,7 +1492,7 @@ Properties:
     - Valid values are `left`, `center` or `right`
     - Default is `left`
 * `horizontalMargin` - type: FLOAT
-    - Horizontal offset for text from the alignment point. If `horizontalAlignment` is "left", offsets the text to the right.  If `horizontalAlignment` is "right", offsets text to the left. No effect if `horizontalAlignment` is "center". Given as a percentage of the element's parent's width (same unit as `size`'s X value).
+    - Horizontal offset for text from the alignment point. If `horizontalAlignment` is "left", offsets the text to the right. If `horizontalAlignment` is "right", offsets text to the left. No effect if `horizontalAlignment` is "center". Given as a percentage of the element's parent's width (same unit as `size`'s X value).
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
@@ -1499,7 +1501,7 @@ Properties:
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `zIndex` - type: FLOAT
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
 
 #### gameselector
@@ -1539,7 +1541,7 @@ Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0.012 0.9515`
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `textColor` - type: COLOR
@@ -1631,11 +1633,11 @@ Deprecated.
 * `centerSelection` - type: BOOLEAN.
     - `false` by default, when `true` the selected tile will be locked to the center of the grid.
 * `scrollLoop` - type: BOOLEAN.
-    - `false` by default, when `true` the grid will seamlessly loop around when scrolling reaches the end of the list.  Only works when `centerSelection` is `true`.
+    - `false` by default, when `true` the grid will seamlessly loop around when scrolling reaches the end of the list. Only works when `centerSelection` is `true`.
 * `animate` - type : BOOLEAN.
     - `true` by default, when  `false` the grid scrolling will not be animated.
 * `zIndex` - type: FLOAT.
-    - z-index value for element.  Elements will be rendered in order of zIndex value from low to high.
+    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
 
 #### gridtile
 

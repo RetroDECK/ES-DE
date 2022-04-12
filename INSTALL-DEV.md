@@ -1676,7 +1676,8 @@ For folders, most of the fields are identical although some are removed. In the 
 * `nomultiscrape`
 * `hidemetadata`
 * `controller`
-* `lastplayed` - statistic, for folders this is inherited by the latest game file launched inside the folder.
+* `folderlink` - string, points to a file inside the game's folder structure that will be launched instead of entering the folder
+* `lastplayed` - statistic, datetime, for folders this is inherited by the latest game file launched inside the folder.
 
 **Additional gamelist.xml information**
 

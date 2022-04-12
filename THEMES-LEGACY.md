@@ -2,7 +2,7 @@
 
 **This document covers the creation of legacy themes only, which is a theme structure that is backward compatible with RetroPie EmulationStation. As ES-DE v2.0 and later has a new theme engine with much improved theming capabilities, this document is mostly intended for historical reference. For creating or porting themes to ES-DE the documentation in [THEMES.md](THEMES.md) should be used instead.**
 
-In general ES-DE is backward compatible with RetroPie theme sets with the notable exception of the _Grid_ view style which is not supported. Themes with grid view styles included will still load correctly, but you can't actually use this view style. As well, any RetroPie theme using the `<resolution>` tag introduced in 2020 will not get loaded. This tag was a very bad idea as it changes sizing of components from relative values to absolute pixel values.
+In general ES-DE is backward compatible with RetroPie theme sets with the notable exception of the _Grid_ view style which is not supported. Themes with grid view styles included will still load correctly, but you can't actually use this view style. As well, any RetroPie theme using the `<resolution>` tag introduced in 2020 will not get loaded. This tag was a very bad idea as it changes sizing of elements from relative values to absolute pixel values.
 
 Table of contents:
 
@@ -92,7 +92,7 @@ A _view_ can be thought of as a particular "screen" within ES-DE. Views are defi
 </view>
 ```
 
-An *element* is a particular visual element, such as an image or a piece of text.  You can modify an element that already exists for a particular view, as was done for the "description" example:
+An *element* is a particular visual element, such as an image or a piece of text. You can modify an element that already exists for a particular view, as was done for the "description" example:
 
 ```xml
 <elementTypeHere name="ExistingElementNameHere">
@@ -112,7 +112,7 @@ Or you can create your own elements by adding `extra="true"`, as was done for th
 
 
 
-*Properties* control how a particular *element* looks - for example its position, size, image path etc.  The type of the property determines what kinds of values you can use.  You can read about the types below in the "Reference" section.  Properties are defined like this:
+*Properties* control how a particular *element* looks - for example its position, size, image path etc. The type of the property determines what kinds of values you can use. You can read about the types below in the "Reference" section. Properties are defined like this:
 
 ```xml
 <propertyNameHere>ValueHere</propertyNameHere>
@@ -121,7 +121,7 @@ Or you can create your own elements by adding `extra="true"`, as was done for th
 
 ## Advanced features
 
-If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so, you can read error messages directly in the terminal window without having to open the log file.  You can also reload the current gamelist view and system view with `Ctrl-R` if the `--debug` flag has been set.
+If you are writing a theme it's recommended to launch ES-DE with the `--debug` flag from a terminal window. You can also pass the `--resolution` flag to avoid having the application window fill the entire screen. By doing so, you can read error messages directly in the terminal window without having to open the log file. You can also reload the current gamelist view and system view with `Ctrl-R` if the `--debug` flag has been set.
 
 ### The \<include\> tag
 
@@ -175,7 +175,7 @@ Note that properties can get merged. In the above example the `<color>` tag from
 
 ### Theming multiple views simultaneously
 
-Sometimes you want to apply the same properties to the same elements across multiple views.  The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas).  So for example, to apply the same logo to the basic and detailed views you could write the following:
+Sometimes you want to apply the same properties to the same elements across multiple views. The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas). So for example, to apply the same logo to the basic and detailed views you could write the following:
 
 ```xml
 <theme>
@@ -219,7 +219,7 @@ The above is equivalent to:
 
 ### Theming multiple elements simultaneously
 
-You can theme multiple elements *of the same type* simultaneously.  The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas). This is useful if you want to, say, apply the same color to all the metadata labels:
+You can theme multiple elements *of the same type* simultaneously. The `name` attribute actually works as a list (delimited by any characters of `\t\r\n ,` - that is, whitespace and commas). This is useful if you want to, say, apply the same color to all the metadata labels:
 
 ```xml
 <theme>
@@ -370,7 +370,7 @@ Below are the default zIndex values per element type:
 
 ### Theme variables
 
-Theme variables can be used to simplify theme construction.  There are 2 types of variables available.
+Theme variables can be used to simplify theme construction. There are 2 types of variables available.
 * System variables
 * Theme defined variables
 
@@ -437,11 +437,11 @@ Nesting of variables is supported, so the following could be done:
 * `image name="background"` - ALL
     - This is a background image that exists for convenience. It goes from (0, 0) to (1, 1).
 * `text name="logoText"` - ALL
-    - Displays the name of the system.  Only present if no "logo" image is specified.  Displayed at the top of the screen, centered by default.
+    - Displays the name of the system. Only present if no "logo" image is specified. Displayed at the top of the screen, centered by default.
 * `image name="logo"` - ALL
-    - A header image.  If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
+    - A header image. If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
 * `textlist name="gamelist"` - ALL
-    - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders.  Centered by default.
+    - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders. Centered by default.
 
 
 #### detailed
@@ -450,11 +450,11 @@ Nesting of variables is supported, so the following could be done:
 * `image name="background"` - ALL
     - This is a background image that exists for convenience. It goes from (0, 0) to (1, 1).
 * `text name="logoText"` - ALL
-    - Displays the name of the system.  Only present if no "logo" image is specified.  Displayed at the top of the screen, centered by default.
+    - Displays the name of the system. Only present if no "logo" image is specified. Displayed at the top of the screen, centered by default.
 * `image name="logo"` - ALL
-    - A header image.  If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
+    - A header image. If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
 * `textlist name="gamelist"` - ALL
-    - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders.  Left aligned by default.
+    - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders. Left aligned by default.
 * `text name="gamelistInfo"` - ALL
     - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
@@ -488,11 +488,11 @@ Nesting of variables is supported, so the following could be done:
         * `badges name="md_badges"` - ALL
             - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
-            - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
+            - The "lastplayed" metadata. Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
             - The "playcount" metadata (number of times the game has been played).
         * `text name="md_description"` - POSITION | SIZE | FONT_PATH | FONT_SIZE | COLOR | Z_INDEX
-            - Text is the "desc" metadata.  If no `pos`/`size` is specified, will move and resize to fit under the lowest label and reach to the bottom of the screen.
+            - Text is the "desc" metadata. If no `pos`/`size` is specified, will move and resize to fit under the lowest label and reach to the bottom of the screen.
         * `text name="md_name"` - ALL
             - The "name" metadata (the game name). Unlike the others metadata fields, the name is positioned offscreen by default
 
@@ -503,11 +503,11 @@ Nesting of variables is supported, so the following could be done:
 * `image name="background"` - ALL
     - This is a background image that exists for convenience. It goes from (0, 0) to (1, 1).
 * `text name="logoText"` - ALL
-    - Displays the name of the system.  Only present if no "logo" image is specified.  Displayed at the top of the screen, centered by default.
+    - Displays the name of the system. Only present if no "logo" image is specified. Displayed at the top of the screen, centered by default.
 * `image name="logo"` - ALL
-    - A header image.  If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
+    - A header image. If a non-empty `path` is specified, `text name="logoText"` will be hidden and this image will be, by default, displayed roughly in its place.
 * `textlist name="gamelist"` - ALL
-    - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders.  Left aligned by default.
+    - The gamelist.  `primaryColor` is for games, `secondaryColor` is for folders. Left aligned by default.
 * `text name="gamelistInfo"` - ALL
     - Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left. Left aligned by default.
 
@@ -545,28 +545,28 @@ Nesting of variables is supported, so the following could be done:
         * `badges name="md_badges"` - ALL
             - The "badges" metadata. Displayed as a group of badges that indicate metadata such as favorites and completed games.
         * `datetime name="md_lastplayed"` - ALL
-            - The "lastplayed" metadata.  Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
+            - The "lastplayed" metadata. Displayed as a string representing the time relative to "now" (e.g. "3 hours ago").
         * `text name="md_playcount"` - ALL
             - The "playcount" metadata (number of times the game has been played).
         * `text name="md_description"` - POSITION | SIZE | FONT_PATH | FONT_SIZE | COLOR | Z_INDEX
-            - Text is the "desc" metadata.  If no `pos`/`size` is specified, will move and resize to fit under the lowest label and reach to the bottom of the screen.
+            - Text is the "desc" metadata. If no `pos`/`size` is specified, will move and resize to fit under the lowest label and reach to the bottom of the screen.
         * `text name="md_name"` - ALL
             - The "name" metadata (the game name). Unlike the others metadata fields, the name is positioned offscreen by default
 
 ### Types of properties
 
-* NORMALIZED_PAIR - two decimals, in the range [0..1], delimited by a space.  For example, `0.25 0.5`.  Most commonly used for position (x and y coordinates) and size (width and height).
-* NORMALIZED_RECT - four decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5 0.10 0.30`.  Most commonly used for padding to store top, left, bottom and right coordinates.
-* PATH - a path.  If the first character is a `~`, it will be expanded into the environment variable for the home path (`$HOME` for Linux or `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a `.`, it will be expanded to the theme file's directory, allowing you to specify resources relative to the theme file, like so: `./../general_art/myfont.ttf`.
+* NORMALIZED_PAIR - two decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5`. Most commonly used for position (x and y coordinates) and size (width and height).
+* NORMALIZED_RECT - four decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5 0.10 0.30`. Most commonly used for padding to store top, left, bottom and right coordinates.
+* PATH - a path. If the first character is a `~`, it will be expanded into the environment variable for the home path (`$HOME` for Linux or `%HOMEPATH%` for Windows) unless overridden using the --home command line option. If the first character is a `.`, it will be expanded to the theme file's directory, allowing you to specify resources relative to the theme file, like so: `./../general_art/myfont.ttf`.
 * BOOLEAN - `true`/`1` or `false`/`0`.
-* COLOR - a hexidecimal RGB or RGBA color (6 or 8 digits).  If 6 digits, will assume the alpha channel is `FF` (not transparent).
+* COLOR - a hexadecimal RGB or RGBA color (6 or 8 digits). If 6 digits, will assume the alpha channel is `FF` (not transparent).
 * FLOAT - a decimal.
 * STRING - a string of text.
 
 
 ### Types of elements and their properties
 
-Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type.  They are normalized in terms of their "parent" object's size; 99% of the time, this is just the size of the screen.  In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down).  `pos` almost always refers to the top left corner of your element.  You *can* use numbers outside of the [0..1] range if you want to place an element partially or completely off-screen.
+Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type. They are normalized in terms of their "parent" object's size; 99% of the time, this is just the size of the screen. In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down).  `pos` almost always refers to the top left corner of your element. You *can* use numbers outside of the [0..1] range if you want to place an element partially or completely off-screen.
 
 The order you define properties in does not matter.
 Remember, you do *not* need to specify every property!
@@ -580,25 +580,25 @@ Can be created as an extra.
 * `size` - type: NORMALIZED_PAIR.
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the image's aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR.
-    - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
+    - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the image `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
-    - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - angle in degrees that the image should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the image will be rotated. Default is `0.5 0.5`.
 * `path` - type: PATH.
-    - Path to the image file.  Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+    - Path to the image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif).
 * `default` - type: PATH.
-    - Path to default image file.  Default image will be displayed when selected game does not have an image.
+    - Path to default image file. Default image will be displayed when selected game does not have an image.
 * `tile` - type: BOOLEAN.
-    - If true, the image will be tiled instead of stretched to fit its size.  Useful for backgrounds.
+    - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
 * `color` - type: COLOR.
-    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
+    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If true, element will be rendered, otherwise rendering will be skipped. Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high.
 
 #### video
 
@@ -606,25 +606,25 @@ Can be created as an extra.
 * `size` - type: NORMALIZED_PAIR.
     - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the video's aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR.
-    - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
+    - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the image `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
-    - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - angle in degrees that the text should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the text will be rotated. Default is `0.5 0.5`.
-* `delay` - type: FLOAT.  Default is false.
+* `delay` - type: FLOAT. Default is false.
     - Delay in seconds before video will start playing.
 * `default` - type: PATH.
-    - Path to default video file.  Default video will be played when selected game does not have a video.
+    - Path to default video file. Default video will be played when selected game does not have a video.
 * `showSnapshotNoVideo` - type: BOOLEAN
     - If true, image will be shown when selected game does not have a video and no `default` video is configured.
 * `showSnapshotDelay` - type: BOOLEAN
     - If true, playing of video will be delayed for `delayed` seconds, when game is selected.
 * `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If true, element will be rendered, otherwise rendering will be skipped. Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high.
 
 #### text
 
@@ -635,11 +635,11 @@ Can be created as an extra.
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
-    - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - angle in degrees that the text should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `text` - type: STRING.
@@ -650,20 +650,20 @@ Can be created as an extra.
 * `fontSize` - type: FLOAT.
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `alignment` - type: STRING.
-    - Valid values are "left", "center", or "right".  Controls alignment on the X axis.  "center" will also align vertically.
-* `forceUppercase` - type: BOOLEAN.  Draw text in uppercase.
-* `lineSpacing` - type: FLOAT.  Controls the space between lines (as a multiple of font height).  Default is 1.5.
+    - Valid values are "left", "center", or "right". Controls alignment on the X axis.  "center" will also align vertically.
+* `forceUppercase` - type: BOOLEAN. Draw text in uppercase.
+* `lineSpacing` - type: FLOAT. Controls the space between lines (as a multiple of font height). Default is 1.5.
 * `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If true, element will be rendered, otherwise rendering will be skipped. Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high.
 
 #### textlist
 
 * `pos` - type: NORMALIZED_PAIR.
 * `size` - type: NORMALIZED_PAIR.
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `selectorColor` - type: COLOR.
     - Color of the "selector bar."
 * `selectorImagePath` - type: PATH.
@@ -673,23 +673,23 @@ Can be created as an extra.
 * `selectorHeight` - type: FLOAT.
     - Height of the "selector bar".
 * `selectorOffsetY` - type: FLOAT.
-    - Allows moving of the "selector bar" up or down from its computed position.  Useful for fine tuning the position of the "selector bar" relative to the text.
+    - Allows moving of the "selector bar" up or down from its computed position. Useful for fine tuning the position of the "selector bar" relative to the text.
 * `selectedColor` - type: COLOR.
     - Color of the highlighted entry text.
 * `primaryColor` - type: COLOR.
-    - Primary color; what this means depends on the text list.  For example, for game lists, it is the color of a game.
+    - Primary color; what this means depends on the text list. For example, for game lists, it is the color of a game.
 * `secondaryColor` - type: COLOR.
-    - Secondary color; what this means depends on the text list.  For example, for game lists, it is the color of a folder.
+    - Secondary color; what this means depends on the text list. For example, for game lists, it is the color of a folder.
 * `fontPath` - type: PATH.
 * `fontSize` - type: FLOAT.
 * `alignment` - type: STRING.
-    - Valid values are "left", "center", or "right".  Controls alignment on the X axis.
+    - Valid values are "left", "center", or "right". Controls alignment on the X axis.
 * `horizontalMargin` - type: FLOAT.
-    - Horizontal offset for text from the alignment point.  If `alignment` is "left", offsets the text to the right.  If `alignment` is "right", offsets text to the left.  No effect if `alignment` is "center".  Given as a percentage of the element's parent's width (same unit as `size`'s X value).
-* `forceUppercase` - type: BOOLEAN.  Draw text in uppercase.
-* `lineSpacing` - type: FLOAT.  Controls the space between lines (as a multiple of font height).  Default is 1.5.
+    - Horizontal offset for text from the alignment point. If `alignment` is "left", offsets the text to the right. If `alignment` is "right", offsets text to the left. No effect if `alignment` is "center". Given as a percentage of the element's parent's width (same unit as `size`'s X value).
+* `forceUppercase` - type: BOOLEAN. Draw text in uppercase.
+* `lineSpacing` - type: FLOAT. Controls the space between lines (as a multiple of font height). Default is 1.5.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high.
 
 #### ninepatch
 
@@ -697,9 +697,9 @@ Can be created as an extra.
 * `size` - type: NORMALIZED_PAIR.
 * `path` - type: PATH.
 * `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If true, element will be rendered, otherwise rendering will be skipped. Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high.
 
 ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Currently the implementation is very simple and hard-coded to only use 48x48px images (16x16px for each "patch"). Check the `data/resources` directory for some examples (button.png, frame.png).
 
@@ -707,23 +707,23 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 
 * `pos` - type: NORMALIZED_PAIR.
 * `size` - type: NORMALIZED_PAIR.
-    - Only one value is actually used. The other value should be zero.  (e.g. specify width OR height, but not both.  This is done to maintain the aspect ratio.)
+    - Only one value is actually used. The other value should be zero (e.g. specify width OR height, but not both. This is done to maintain the aspect ratio.)
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
-    - angle in degrees that the rating should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - angle in degrees that the rating should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the rating will be rotated. Default is `0.5 0.5`.
 * `filledPath` - type: PATH.
-    - Path to the "filled star" image.  Image must be square (width equals height).
+    - Path to the "filled star" image. Image must be square (width equals height).
 * `unfilledPath` - type: PATH.
-    - Path to the "unfilled star" image.  Image must be square (width equals height).
+    - Path to the "unfilled star" image. Image must be square (width equals height).
 * `color` - type: COLOR.
-    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red.  You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
+    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If true, element will be rendered, otherwise rendering will be skipped. Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high.
 
 #### datetime
 * `pos` - type: NORMALIZED_PAIR.
@@ -731,11 +731,11 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
     - Possible combinations:
     - `0 0` - automatically size so text fits on one line (expanding horizontally).
     - `w 0` - automatically wrap text so it doesn't go beyond `w` (expanding vertically).
-    - `w h` - works like a "text box."  If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
+    - `w h` - works like a "text box". If `h` is non-zero and `h` <= `fontSize` (implying it should be a single line of text), text that goes beyond `w` will be truncated with an elipses (...).
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
-    - angle in degrees that the text should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise.
+    - angle in degrees that the text should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the text will be rotated. Default is `0.5 0.5`.
 * `color` - type: COLOR.
@@ -745,14 +745,14 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 * `fontSize` - type: FLOAT.
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
 * `alignment` - type: STRING.
-    - Valid values are "left", "center", or "right".  Controls alignment on the X axis.  "center" will also align vertically.
-* `forceUppercase` - type: BOOLEAN.  Draw text in uppercase.
-* `lineSpacing` - type: FLOAT.  Controls the space between lines (as a multiple of font height).  Default is 1.5.
+    - Valid values are "left", "center", or "right". Controls alignment on the X axis.  "center" will also align vertically.
+* `forceUppercase` - type: BOOLEAN. Draw text in uppercase.
+* `lineSpacing` - type: FLOAT. Controls the space between lines (as a multiple of font height). Default is 1.5.
 * `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If true, element will be rendered, otherwise rendering will be skipped. Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high.
-* `displayRelative` - type: BOOLEAN.  Renders the datetime as a a relative string (ex: 'x days ago')
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high.
+* `displayRelative` - type: BOOLEAN. Renders the datetime as a a relative string (ex: 'x days ago')
 * `format` - type: STRING. Specifies format for rendering datetime.
     - %Y: The year, including the century (1900)
     - %m: The month number [01,12]
@@ -765,8 +765,8 @@ ES-DE borrows the concept of "nine patches" from Android (or "9-Slices"). Curren
 
 * `pos` - type: NORMALIZED_PAIR. Default is "0.012 0.9515"
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
-      the component exactly in the middle of the screen.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place
+      the element exactly in the middle of the screen.
 * `textColor` - type: COLOR. Default is 777777FF.
 * `textColorDimmed` - type: COLOR. Default is the same value as textColor. Must be placed under the 'system' view.
 * `iconColor` - type: COLOR. Default is 777777FF.
@@ -816,9 +816,9 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Possible combinations:
     - `w h` - Dimensions of the badges container. The badges will be scaled to fit within these dimensions. Minimum value per axis is `0.03`, maximum value is `1.0`. Default is `0.15 0.20`.
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the component `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the component exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied. Default is `0.5 0.5`.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied. Default is `0.5 0.5`.
 * `rotation` - type: FLOAT.
-    - angle in degrees that the image should be rotated.  Positive values will rotate clockwise, negative values will rotate counterclockwise. Default is `0`.
+    - angle in degrees that the image should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise. Default is `0`.
 * `rotationOrigin` - type: NORMALIZED_PAIR.
     - Point around which the image will be rotated. Default is `0.5 0.5`.
 * `alignment` - type: STRING.
@@ -850,9 +850,9 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - A controller icon override. Specify the controller type in the attribute `controller`. These are the available types:
     - `gamepad_generic`, `gamepad_nintendo_nes`, `gamepad_nintendo_snes`, `gamepad_nintendo_64`, `gamepad_playstation`, `gamepad_sega_md_3_buttons`, `gamepad_sega_md_6_buttons`, `gamepad_xbox`, `joystick_generic`, `joystick_arcade_no_buttons`, `joystick_arcade_1_button`, `joystick_arcade_2_buttons`, `joystick_arcade_3_buttons`, `joystick_arcade_4_buttons`, `joystick_arcade_5_buttons`, `joystick_arcade_6_buttons`, `keyboard_generic`, `keyboard_and_mouse_generic`, `mouse_generic`, `mouse_amiga`, `lightgun_generic`, `lightgun_nintendo`, `steering_wheel_generic`, `flight_stick_generic`, `spinner_generic`, `trackball_generic`, `wii_remote_nintendo`, `wii_remote_and_nunchuk_nintendo`, `joycon_left_or_right_nintendo`, `joycon_pair_nintendo`, `unknown`.
 * `visible` - type: BOOLEAN.
-    - If true, component will be rendered, otherwise rendering will be skipped.  Can be used to hide elements from a particular view.
+    - If true, element will be rendered, otherwise rendering will be skipped. Can be used to hide elements from a particular view.
 * `zIndex` - type: FLOAT.
-    - z-index value for component.  Components will be rendered in order of z-index value from low to high. Default is `50`.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high. Default is `50`.
 
 #### carousel
 
@@ -861,18 +861,18 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Accepted values are "horizontal", "vertical", "horizontal_wheel" or "vertical_wheel".
     - Default is "horizontal".
 * `size` - type: NORMALIZED_PAIR. Default is "1 0.2325"
-* `pos` - type: NORMALIZED_PAIR.  Default is "0 0.38375".
+* `pos` - type: NORMALIZED_PAIR. Default is "0 0.38375".
 * `origin` - type: NORMALIZED_PAIR.
-    - Where on the carousel `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
+    - Where on the carousel `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen. If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `color` - type: COLOR.
     - Controls the color of the carousel background.
     - Default is FFFFFFD8
-* `logoSize` - type: NORMALIZED_PAIR.  Default is "0.25 0.155"
+* `logoSize` - type: NORMALIZED_PAIR. Default is "0.25 0.155"
 * `logoScale` - type: FLOAT.
     - Selected logo is increased in size by this scale
     - Default is 1.2
 * `logoRotation` - type: FLOAT.
-    - Angle in degrees that the logos should be rotated.  Value should be positive.
+    - Angle in degrees that the logos should be rotated. Value should be positive.
     - Default is 7.5
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
 * `logoRotationOrigin` - type: NORMALIZED_PAIR.
@@ -887,9 +887,9 @@ It's strongly recommended to use the same image dimensions for all badges as var
     - Sets the number of logos to display in the carousel. Note that fractional values are rounded up.
     - Default is 3
 * `zIndex` - type: FLOAT.
-    - z-index value for component. Components will be rendered in order of z-index value from low to high with the carousel above all other components.
+    - z-index value for element. Elements will be rendered in order of z-index value from low to high with the carousel above all other elements.
 
-The help system is a special element that displays a context-sensitive list of actions the user can take at any time.  You should try and keep the position constant throughout every screen.  Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
+The help system is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Keep in mind the "default" settings (including position) are used whenever the user opens a menu.
 
 
 ## Example theme sets
