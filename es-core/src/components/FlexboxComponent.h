@@ -18,11 +18,16 @@ public:
     struct FlexboxItem {
         // Optional label, mostly a convenience for the calling class to track items.
         std::string label;
+
         // Main image that governs grid sizing and placement.
         ImageComponent baseImage;
+
         // Optional overlay image that can be sized and positioned relative to the base image.
         ImageComponent overlayImage;
-        bool visible = false;
+        glm::vec2 overlayPosition {0.5f, 0.5f};
+        float overlaySize {0.5f};
+
+        bool visible {false};
     };
 
     FlexboxComponent(std::vector<FlexboxItem>& items);
@@ -68,12 +73,6 @@ public:
     const glm::vec2& getItemMargin() const { return mItemMargin; }
     void setItemMargin(glm::vec2 value);
 
-    const glm::vec2& getOverlayPosition() const { return mOverlayPosition; }
-    void setOverlayPosition(glm::vec2 position) { mOverlayPosition = position; }
-
-    float getOverlaySize() const { return mOverlaySize; }
-    void setOverlaySize(float size) { mOverlaySize = size; }
-
     void onSizeChanged() override { mLayoutValid = false; }
     void render(const glm::mat4& parentTrans) override;
 
@@ -91,9 +90,6 @@ private:
     unsigned int mItemsPerLine;
     std::string mItemPlacement;
     glm::vec2 mItemMargin;
-
-    glm::vec2 mOverlayPosition;
-    float mOverlaySize;
 
     bool mLayoutValid;
 };

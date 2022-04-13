@@ -578,19 +578,26 @@ void GamelistView::updateInfoPanel(const CursorState& state)
             for (auto& badge : badgeComponent->getBadgeTypes()) {
                 BadgeComponent::BadgeInfo badgeInfo;
                 badgeInfo.badgeType = badge;
-                if (badge == "controller") {
+                if (badge == "folder") {
+                    if (file->getType() == FOLDER) {
+                        if (file->metadata.get("folderlink") != "")
+                            badgeInfo.folderLink = true;
+                        badgeSlots.emplace_back(badgeInfo);
+                    }
+                }
+                else if (badge == "controller") {
                     if (file->metadata.get("controller") != "") {
                         badgeInfo.gameController = file->metadata.get("controller");
-                        badgeSlots.push_back(badgeInfo);
+                        badgeSlots.emplace_back(badgeInfo);
                     }
                 }
                 else if (badge == "altemulator") {
                     if (file->metadata.get(badge) != "")
-                        badgeSlots.push_back(badgeInfo);
+                        badgeSlots.emplace_back(badgeInfo);
                 }
                 else {
                     if (file->metadata.get(badge) == "true")
-                        badgeSlots.push_back(badgeInfo);
+                        badgeSlots.emplace_back(badgeInfo);
                 }
             }
             badgeComponent->setBadges(badgeSlots);

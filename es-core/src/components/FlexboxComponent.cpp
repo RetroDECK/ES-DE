@@ -28,8 +28,6 @@ FlexboxComponent::FlexboxComponent(std::vector<FlexboxItem>& items)
     , mItemsPerLine {DEFAULT_ITEMS_PER_LINE}
     , mItemPlacement {DEFAULT_ITEM_PLACEMENT}
     , mItemMargin {glm::vec2 {DEFAULT_MARGIN_X, DEFAULT_MARGIN_Y}}
-    , mOverlayPosition {0.5f, 0.5f}
-    , mOverlaySize {0.5f}
     , mLayoutValid {false}
 {
 }
@@ -220,11 +218,13 @@ void FlexboxComponent::computeLayout()
 
         // Optional overlay image.
         if (item.overlayImage.getTexture() != nullptr) {
-            item.overlayImage.setResize(item.baseImage.getSize().x * mOverlaySize, 0.0f);
+            item.overlayImage.setResize(item.baseImage.getSize().x * item.overlaySize, 0.0f);
             item.overlayImage.setPosition(
-                item.baseImage.getPosition().x + (item.baseImage.getSize().x * mOverlayPosition.x) -
+                item.baseImage.getPosition().x +
+                    (item.baseImage.getSize().x * item.overlayPosition.x) -
                     item.overlayImage.getSize().x / 2.0f,
-                item.baseImage.getPosition().y + (item.baseImage.getSize().y * mOverlayPosition.y) -
+                item.baseImage.getPosition().y +
+                    (item.baseImage.getSize().y * item.overlayPosition.y) -
                     item.overlayImage.getSize().y / 2.0f);
         }
 

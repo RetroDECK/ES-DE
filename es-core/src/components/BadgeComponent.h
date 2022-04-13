@@ -27,6 +27,7 @@ public:
     struct BadgeInfo {
         std::string badgeType;
         std::string gameController;
+        bool folderLink {false};
     };
 
     static void populateGameControllers();

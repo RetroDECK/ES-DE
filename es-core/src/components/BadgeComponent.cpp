@@ -7,6 +7,7 @@
 //  Used by the gamelist views.
 //
 
+#define SLOT_FOLDER "folder"
 #define SLOT_FAVORITE "favorite"
 #define SLOT_COMPLETED "completed"
 #define SLOT_KIDGAME "kidgame"
@@ -66,9 +67,10 @@ namespace
 BadgeComponent::BadgeComponent()
     : mFlexboxItems {}
     , mFlexboxComponent {mFlexboxItems}
-    , mBadgeTypes {{SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME, SLOT_BROKEN, SLOT_CONTROLLER,
-                    SLOT_ALTEMULATOR}}
+    , mBadgeTypes {{SLOT_FOLDER, SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME, SLOT_BROKEN,
+                    SLOT_CONTROLLER, SLOT_ALTEMULATOR}}
 {
+    mBadgeIcons[SLOT_FOLDER] = ":/graphics/badge_folder.svg";
     mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
     mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
     mBadgeIcons[SLOT_KIDGAME] = ":/graphics/badge_kidgame.svg";
@@ -115,6 +117,13 @@ void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
             std::string texturePath;
             if (it->overlayImage.getTexture() != nullptr)
                 texturePath = it->overlayImage.getTexture()->getTextureFilePath();
+
+            if (badge.badgeType == "folder") {
+                if (badge.folderLink)
+                    it->overlayImage.setVisible(true);
+                else
+                    it->overlayImage.setVisible(false);
+            }
 
             if (badge.gameController != "" && badge.gameController != texturePath) {
 
@@ -267,31 +276,6 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (elem->has("controllerPos")) {
-        const glm::vec2 controllerPos = elem->get<glm::vec2>("controllerPos");
-        if (controllerPos.x < -1.0f || controllerPos.x > 2.0f || controllerPos.y < -1.0f ||
-            controllerPos.y > 2.0f) {
-            LOG(LogWarning)
-                << "BadgeComponent: Invalid theme configuration, <controllerPos> defined as \""
-                << controllerPos.x << " " << controllerPos.y << "\"";
-        }
-        else {
-            mFlexboxComponent.setOverlayPosition(controllerPos);
-        }
-    }
-
-    if (elem->has("controllerSize")) {
-        const float controllerSize = elem->get<float>("controllerSize");
-        if (controllerSize < 0.1f || controllerSize > 2.0f) {
-            LOG(LogWarning)
-                << "BadgeComponent: Invalid theme configuration, <controllerSize> defined as \""
-                << controllerSize << "\"";
-        }
-        else {
-            mFlexboxComponent.setOverlaySize(controllerSize);
-        }
-    }
-
     if (elem->has("slots")) {
         // Replace possible whitespace separators with commas.
         std::string slotsTag = Utils::String::toLower(elem->get<std::string>("slots"));
@@ -300,7 +284,15 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 character = ',';
         }
         slotsTag = Utils::String::replace(slotsTag, ",,", ",");
-        std::vector<std::string> slots = Utils::String::delimitedStringToVector(slotsTag, ",");
+        std::vector<std::string> slots {Utils::String::delimitedStringToVector(slotsTag, ",")};
+
+        // If the "all" value has been set, then populate all badges not already defined.
+        if (std::find(slots.begin(), slots.end(), "all") != slots.end()) {
+            for (auto& badge : mBadgeTypes) {
+                if (std::find(slots.begin(), slots.end(), badge) == slots.end())
+                    slots.emplace_back(badge);
+            }
+        }
 
         for (auto slot : slots) {
             if (std::find(mBadgeTypes.cbegin(), mBadgeTypes.cend(), slot) != mBadgeTypes.end()) {
@@ -317,6 +309,36 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 item.baseImage = badgeImage;
                 item.overlayImage = ImageComponent {};
 
+                if (slot == "folder") {
+                    if (elem->has("customFolderLinkIcon"))
+                        item.overlayImage.setImage(elem->get<std::string>("customFolderLinkIcon"));
+                    else
+                        item.overlayImage.setImage(":/graphics/badge_folderlink_overlay.svg");
+
+                    if (elem->has("folderLinkPos")) {
+                        glm::vec2 folderLinkPos {elem->get<glm::vec2>("folderLinkPos")};
+                        folderLinkPos.x = glm::clamp(folderLinkPos.x, -1.0f, 2.0f);
+                        folderLinkPos.y = glm::clamp(folderLinkPos.y, -1.0f, 2.0f);
+                        item.overlayPosition = folderLinkPos;
+                    }
+
+                    if (elem->has("folderLinkSize")) {
+                        item.overlaySize =
+                            glm::clamp(elem->get<float>("folderLinkSize"), 0.1f, 1.0f);
+                    }
+                }
+                else if (slot == "controller") {
+                    if (elem->has("controllerPos")) {
+                        glm::vec2 controllerPos {elem->get<glm::vec2>("controllerPos")};
+                        controllerPos.x = glm::clamp(controllerPos.x, -1.0f, 2.0f);
+                        controllerPos.y = glm::clamp(controllerPos.y, -1.0f, 2.0f);
+                        item.overlayPosition = controllerPos;
+                    }
+
+                    if (elem->has("controllerSize"))
+                        item.overlaySize =
+                            glm::clamp(elem->get<float>("controllerSize"), 0.1f, 2.0f);
+                }
                 mFlexboxItems.emplace_back(std::move(item));
             }
             else {
