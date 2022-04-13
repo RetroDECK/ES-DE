@@ -18,6 +18,13 @@
    sodipodi:docname="badge_folderlink_overlay.svg">
   <defs
      id="defs4919">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 33.866667 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="67.733333 : 33.866667 : 1"
+       inkscape:persp3d-origin="33.866667 : 22.577778 : 1"
+       id="perspective4757" />
     <inkscape:path-effect
        effect="bend_path"
        id="path-effect5913"
@@ -44,9 +51,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="8.2744158"
-     inkscape:cx="28.277138"
-     inkscape:cy="121.96495"
+     inkscape:zoom="3.6483386"
+     inkscape:cx="1.5605443"
+     inkscape:cy="151.93477"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -81,7 +88,7 @@
          id="g3951" />
     </g>
     <g
-       transform="matrix(0,0.05452653,-0.05854543,0,63.139382,235.87278)"
+       transform="matrix(0,0.05022601,-0.05854543,0,63.139382,238.02282)"
        id="g12-5"
        style="fill:#141414;fill-opacity:1">
       <path
