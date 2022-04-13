@@ -80,16 +80,6 @@ make -j${JOBS}
 cp libSDL2-2.0.dylib ../../..
 cd ../..
 
-echo "\nBuilding FDK AAC"
-cd fdk-aac
-rm -f CMakeCache.txt
-cmake -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
-make clean
-make -j${JOBS}
-make install
-cp libfdk-aac.2.0.2.dylib ../../libfdk-aac.2.dylib
-cd ..
-
 echo "\nBuilding libvpx"
 cd libvpx
 ./configure --disable-examples --disable-docs --enable-pic --enable-vp9-highbitdepth --prefix=$(pwd)/../local_install
@@ -129,7 +119,8 @@ cd ..
 
 echo "\nBuilding FFmpeg"
 cd FFmpeg
-PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --enable-gpl --enable-nonfree --enable-shared --enable-libvorbis --enable-libopus --enable-libfdk-aac --enable-libvpx --enable-postproc
+PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --enable-gpl --enable-shared --enable-libvorbis --enable-libopus --enable-libvpx --enable-postproc
+
 make clean
 make -j${JOBS}
 install_name_tool -rpath /usr/local/lib @executable_path libavcodec/libavcodec.58.dylib

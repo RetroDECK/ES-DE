@@ -32,13 +32,6 @@ cleanup:
   - /lib/libvpx.a
 
 modules:
-  - name: fdk-aac
-    buildsystem: cmake
-    sources:
-    - type: git
-      url: https://git.code.sf.net/p/opencore-amr/fdk-aac.git
-      tag: v2.0.2
-
   - name: libvpx
     config-opts:
     - --disable-examples
@@ -84,11 +77,9 @@ modules:
     - --disable-programs
     - --disable-doc
     - --enable-gpl
-    - --enable-nonfree
     - --enable-shared
     - --enable-libvorbis
     - --enable-libopus
-    - --enable-libfdk-aac
     - --enable-libvpx
     - --enable-postproc
     sources:

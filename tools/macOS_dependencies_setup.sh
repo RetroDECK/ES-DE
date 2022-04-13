@@ -162,13 +162,6 @@ ln -s include SDL2
 mkdir build
 cd ..
 
-echo "\nSetting up FDK AAC"
-rm -rf fdk-aac
-git clone https://git.code.sf.net/p/opencore-amr/fdk-aac.git
-cd fdk-aac
-git checkout v2.0.2
-cd ..
-
 echo "\nSetting up libvpx"
 rm -rf libvpx
 git clone https://github.com/webmproject/libvpx.git

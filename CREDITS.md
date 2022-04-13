@@ -33,11 +33,11 @@ https://curl.haxx.se
 FFmpeg \
 https://ffmpeg.org
 
-FreeType \
-https://www.freetype.org
-
 FreeImage \
 http://www.freeimage.sourceforge.net
+
+FreeType \
+https://www.freetype.org
 
 GLEW \
 http://glew.sourceforge.net
@@ -45,8 +45,17 @@ http://glew.sourceforge.net
 GLM \
 https://github.com/g-truc/glm
 
+libvpx \
+https://github.com/webmproject/libvpx
+
 nanosvg \
 https://github.com/memononen/nanosvg
+
+Ogg \
+https://github.com/xiph/ogg
+
+Opus \
+https://gitlab.xiph.org/xiph/opus
 
 pugixml \
 https://pugixml.org
@@ -60,6 +69,8 @@ https://github.com/Samsung/rlottie
 SDL \
 https://www.libsdl.org
 
+Vorbis \
+https://gitlab.xiph.org/xiph/vorbis
 
 # Code
 
