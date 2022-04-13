@@ -1014,21 +1014,24 @@ Properties:
     - Minimum value per axis is `0` and maximum value per axis is `0.2`
     - Default is `0.01 0.01`.
 * `slots` - type: STRING
-    - The badge types that should be displayed. Should be specified as a list of strings delimited by commas or by whitespace characters (tabs, spaces or line breaks). The order in which they are defined will be followed when placing badges on screen. Available badges are:
+    - The badge types that should be displayed. Specified as a list of strings delimited by commas or by whitespace characters (tabs, spaces or line breaks). The order in which they are defined will be followed when placing badges on screen. Available badges are:
+    - `folder` - Will be shown when the current entry is a folder. If a folder link has been setup, then a configurable link icon will overlay this badge.
     - `favorite` - Will be shown when the game is marked as favorite.
     - `completed` - Will be shown when the game is marked as completed.
     - `kidgame` - Will be shown when the game is marked as a kids game.
     - `broken` - Will be shown when the game is marked as broken.
     - `controller` - Will be shown and overlaid by the corresponding controller icon if a controller type has been selected for the game (using the metadata editor or via scraping).
     - `altemulator` - Will be shown when an alternative emulator is setup for the game.
+    - `all` - Including this value will enable all badges. If some badges have been added already they will be shown in the order they were defined and the remaining ones will be added at the end, in the order listed above.
 * `controllerPos` - type: NORMALIZED_PAIR
     - The position of the controller icon relative to the parent `controller` badge.
     - Minimum value per axis is `-1` and maximum value per axis is `2`
     - Default is `0.5 0.5` which centers the controller icon on the badge.
 * `controllerSize` - type: FLOAT
     - The size of the controller icon relative to the parent `controller` badge.
-    - Setting the value to `1` sizes the controller icon to the same width as the parent badge. The image aspect ratio is always maintained.
+    - Setting the value to `1` sizes the icon to the same width as the parent badge. The image aspect ratio is always maintained.
     - Minimum value is `0.1` and maximum value is `2`
+    - Default is `0.5`
 * `customBadgeIcon` - type: PATH
     - A badge icon override. Specify the badge type in the attribute `badge`. The available badges are the ones listed above.
 * `customControllerIcon` - type: PATH
@@ -1065,6 +1068,17 @@ Properties:
     `joycon_left_or_right_nintendo`,
     `joycon_pair_nintendo`,
     `unknown`
+* `folderLinkPos` - type: NORMALIZED_PAIR
+    - The position of the folder link icon relative to the parent `folder` badge.
+    - Minimum value per axis is `-1` and maximum value per axis is `2`
+    - Default is `0.5 0.5` which centers the folder link icon on the badge.
+* `folderLinkSize` - type: FLOAT
+    - The size of the folder link icon relative to the parent `folder` badge.
+    - Setting the value to `1` sizes the icon to the same width as the parent badge. The image aspect ratio is always maintained.
+    - Minimum value is `0.1` and maximum value is `1`
+    - Default is `0.5`
+* `customFolderLinkIcon` - type: PATH
+    - Folder link icon override.
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -1659,15 +1673,3 @@ Deprecated.
     - Set the color of the center part of the ninepatch. The default tile background center color and selected tile background center color have no influence on each others.
 * `backgroundEdgeColor` - type: COLOR.
     - Set the color of the edge parts of the ninepatch. The default tile background edge color and selected tile background edge color have no influence on each others.
-
-## Example legacy theme sets
-
-To see some example EmulationStation legacy themes, the following resources are recommended:
-
-https://aloshi.com/emulationstation#themes
-
-https://github.com/RetroPie
-
-https://gitlab.com/recalbox/recalbox-themes
-
-https://wiki.batocera.org/themes

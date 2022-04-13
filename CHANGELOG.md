@@ -15,6 +15,7 @@
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Added support for folder links, used for launching game files inside folders without having to enter them
+* Added a folder badge, including a folder link overlay in case a link has been configured
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (as default) and OpenGL ES 3.0 respectively
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
