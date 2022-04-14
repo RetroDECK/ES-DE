@@ -8,95 +8,93 @@ based on:       Switch Theme by Lilbud
 -->
 
 <theme>
-	<formatVersion>7</formatVersion>
+    <formatVersion>7</formatVersion>
 
-	<!-- generic styles -->
-	<view name="system, basic, detailed, video">
-		<helpsystem name="help">
-			<fontSize>0.028</fontSize>
-			<entrySpacing>36</entrySpacing>
-			<iconTextSpacing>8</iconTextSpacing>
-		</helpsystem>
-		<image name="arrowblock" extra="true">
-			<size>0.029 0.047</size>
-		</image>
-		<text name="system_name_1" extra="true">
-			<size>0.743 0.015</size>
-			<pos>0.07 0.235</pos>
-		</text>
-	</view>
+    <!-- generic styles -->
+    <view name="system, basic, detailed, video">
+        <helpsystem name="help">
+            <fontSize>0.028</fontSize>
+            <entrySpacing>36</entrySpacing>
+            <iconTextSpacing>8</iconTextSpacing>
+        </helpsystem>
+        <image name="arrowblock" extra="true">
+            <size>0.029 0.047</size>
+        </image>
+        <text name="system_name_1" extra="true">
+            <size>0.743 0.015</size>
+            <pos>0.07 0.235</pos>
+        </text>
+    </view>
 
-	<!-- system specific styles -->
-	<view name="system">
-		<image name="logoPlaceholderImage">
-			<size>0.235 0.313</size>
-		</image>
-		<text name="logoPlaceholderText">
-			<size>0.18 0.32</size>
-			<fontSize>0.035</fontSize>
-		</text>
-		<image name="selection_bottom" extra="true">
-			<pos>0.5 0.66</pos>
-			<size>0.24 0.003</size>
-		</image>
-		<image name="selection_top" extra="true">
-			<pos>0.5 0.34</pos>
-			<size>0.24 0.003</size>
-		</image>
-		<image name="selection_left" extra="true">
-			<pos>0.38 0.5</pos>
-			<size>0.0016875 0.3208</size>
-		</image>
-		<image name="selection_right" extra="true">
-			<pos>0.620 0.5</pos>
-			<size>0.0016875 0.3208</size>
-		</image>
-	</view>
+    <!-- system specific styles -->
+    <view name="system">
+        <image name="logoPlaceholderImage">
+            <size>0.235 0.313</size>
+        </image>
+        <text name="logoPlaceholderText">
+            <size>0.18 0.32</size>
+            <fontSize>0.035</fontSize>
+        </text>
+        <image name="selection_bottom" extra="true">
+            <pos>0.5 0.66</pos>
+            <size>0.24 0.003</size>
+        </image>
+        <image name="selection_top" extra="true">
+            <pos>0.5 0.34</pos>
+            <size>0.24 0.003</size>
+        </image>
+        <image name="selection_left" extra="true">
+            <pos>0.38 0.5</pos>
+            <size>0.0016875 0.3208</size>
+        </image>
+        <image name="selection_right" extra="true">
+            <pos>0.620 0.5</pos>
+            <size>0.0016875 0.3208</size>
+        </image>
+    </view>
 
-	<!-- gamelist specific styles -->
-	<view name="detailed, video">
-		<text name="md_lbl_players">
-			<pos>0.657 0.336</pos>
-		</text>
-		<text name="md_players">
-			<pos>0.74 0.3285</pos>
-		</text>
-		<text name="md_lbl_genre">
-			<pos>0.657 0.287</pos>
-		</text>
-		<text name="md_genre">
-			<pos>0.73 0.292</pos>
-			<size>0.2 0.028</size>
-		</text>
-		<text name="md_lbl_developer">
-			<pos>0.657 0.189</pos>
-		</text>
-		<text name="md_developer">
-			<pos>0.770 0.194</pos>
-			<size>0.2 0.028</size>
-		</text>
-		<text name="md_lbl_releasedate">
-			<pos>0.657 0.238</pos>
-		</text>
-		<datetime name="md_releasedate">
-			<pos>0.758 0.2306</pos>
-		</datetime>
-		<datetime name="md_lastplayed">
-			<pos>1 1</pos>
-		</datetime>
-		<badges name="md_badges">
-			<itemsPerLine>4</itemsPerLine>
-			<lines>2</lines>
-			<itemMargin>0.005 0.00375</itemMargin>
-		</badges>
-	</view>
-	<feature supported="carousel">
-		<view name="system">
-			<carousel name="systemcarousel">
-				<maxLogoCount>3.5</maxLogoCount>
-			</carousel>
-		</view>
-	</feature>
+    <!-- gamelist specific styles -->
+    <view name="detailed, video">
+        <text name="md_lbl_players">
+            <pos>0.657 0.336</pos>
+        </text>
+        <text name="md_players">
+            <pos>0.74 0.3285</pos>
+        </text>
+        <text name="md_lbl_genre">
+            <pos>0.657 0.287</pos>
+        </text>
+        <text name="md_genre">
+            <pos>0.73 0.292</pos>
+            <size>0.2 0.028</size>
+        </text>
+        <text name="md_lbl_developer">
+            <pos>0.657 0.189</pos>
+        </text>
+        <text name="md_developer">
+            <pos>0.770 0.194</pos>
+            <size>0.2 0.028</size>
+        </text>
+        <text name="md_lbl_releasedate">
+            <pos>0.657 0.238</pos>
+        </text>
+        <datetime name="md_releasedate">
+            <pos>0.758 0.2306</pos>
+        </datetime>
+        <datetime name="md_lastplayed">
+            <pos>1 1</pos>
+        </datetime>
+        <badges name="md_badges">
+            <itemsPerLine>4</itemsPerLine>
+            <lines>2</lines>
+            <itemMargin>0.005 0.00375</itemMargin>
+        </badges>
+    </view>
+    <feature supported="carousel">
+        <view name="system">
+            <carousel name="systemcarousel">
+                <maxLogoCount>3.5</maxLogoCount>
+            </carousel>
+        </view>
+    </feature>
 </theme>
-		
-		
