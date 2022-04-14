@@ -166,6 +166,8 @@
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="systempath">
             <entry>mupen64plus-ui-console.exe</entry>
+        </rule>
+        <rule type="staticpath">
             <entry>%ESPATH%\mupen64plus\mupen64plus-ui-console.exe</entry>
             <entry>%ESPATH%\Emulators\mupen64plus\mupen64plus-ui-console.exe</entry>
             <entry>%ESPATH%\..\mupen64plus\mupen64plus-ui-console.exe</entry>
