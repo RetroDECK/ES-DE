@@ -28,8 +28,6 @@ cleanup:
   - /lib/debug
   - /lib/pkgconfig
   - /lib/libfreeimage.a
-  - /lib/libogg.a
-  - /lib/libvpx.a
 
 modules:
   - name: ffmpeg
