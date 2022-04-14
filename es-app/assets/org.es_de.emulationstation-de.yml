@@ -50,8 +50,6 @@ modules:
     no-autogen: true
     build-options:
         cxxflags: -std=c++14
-    make-args:
-    - DESTDIR=/app
     sources:
     - type: archive
       url: http://downloads.sourceforge.net/freeimage/FreeImage3180.zip
