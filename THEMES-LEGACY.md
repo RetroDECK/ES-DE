@@ -52,7 +52,7 @@ There are two places that ES-DE can load theme sets from:
 * `[INSTALLATION PATH]/themes/[THEME_SET]/`
 
 An example installation path would be: \
-`/usr/share/emulationstation/themes/rbsimple-DE/`
+`/usr/share/emulationstation/themes/slate-DE/`
 
 If a theme set with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
 

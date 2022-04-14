@@ -1,10 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) - Missing rbsimple-DE theme set data
-
-# Missing systems
-
-None at the moment.
-
-# Missing (or not updated) theme data
+# EmulationStation Desktop Edition (ES-DE) - Missing slate-DE theme set data
 
 * 64dd : Nintendo 64DD - consolegame.svg, console.svg, game.svg
 * ags: Adventure Game Studio - consolegame.svg, console.svg, controller.svg

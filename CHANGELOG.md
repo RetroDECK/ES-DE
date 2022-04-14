@@ -14,6 +14,7 @@
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
+* Renamed the default theme set from rbsimple-DE to slate-DE
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders

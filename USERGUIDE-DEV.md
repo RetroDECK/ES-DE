@@ -356,7 +356,7 @@ If you have issues with your input configuration, as a last resort you can reset
 
 When starting ES-DE with the default settings, you will see the System view first. From here you can navigate your game systems and enter their respective gamelists.
 
-Depending on the theme, the system navigation carousel can be horizontal, vertical or displayed as a wheel. The default theme rbsimple-DE provides horizontal navigation, i.e. you browse your systems by scrolling left or right.
+Depending on the theme, the system navigation carousel can be horizontal, vertical or displayed as a wheel. The default theme slate-DE provides horizontal navigation, i.e. you browse your systems by scrolling left or right.
 
 The game systems are sorted by their full names by default, as defined in the es_systems.xml file. It's however possible to set a custom sortname per system, as explained in the [INSTALL-DEV.md](INSTALL-DEV.md#es_systemsxml) document.
 
@@ -369,7 +369,7 @@ The gamelist view is where you browse and start your games, and it's where you w
 
 Upon startup with the default settings, ES-DE is set to the gamelist view style **Automatic**. In this mode the application will look for any game media files (videos and images) and set the view style accordingly. If at least one image is found for any game, the view style **Detailed** will be shown, and if at least one video file is found, the view style **Video** will be selected (superceding the Detailed style). If no game media files are found for a system, the simple **Basic** view style will be selected. This automatic selection is applied per game system.
 
-Note that the Video view style requires that the theme supports it. If not, the Detailed style will be selected instead. The default theme rbsimple-DE supports both of these view styles.
+Note that the Video view style requires that the theme supports it. If not, the Detailed style will be selected instead. The default theme slate-DE supports both of these view styles.
 
 It's possible to manually set a specific gamelist view style in the UI settings entry of the main menu, but this is applied globally regardless of what media files are available per game system. The manual setting also overrides the theme-supported view styles which has the potential of making ES-DE very ugly indeed if the theme does not support the selected view style.
 
@@ -1283,7 +1283,7 @@ Various settings that affect the user interface.
 
 **Theme set**
 
-The theme set to use. Defaults to rbsimple-DE which is shipped with the application. There are two types of theme sets; the new type which was introduced with ES-DE v2.0 and legacy themes that are supported for backward compatibility with RetroPie EmulationStation. The use of legacy themes is however discouraged as their functionality is very limited. As well the backward compabitility will likely be removed at some point in the future.
+The theme set to use. Defaults to slate-DE which is shipped with the application. There are two types of theme sets; the new type which was introduced with ES-DE v2.0 and legacy themes that are supported for backward compatibility with RetroPie EmulationStation. The use of legacy themes is however discouraged as their functionality is very limited. As well the backward compabitility will likely be removed at some point in the future.
 
 **Theme variant**
 
@@ -1335,7 +1335,7 @@ This option will blur the background behind the menu slightly. Normally this can
 
 **Display pillarboxes for gamelist videos** _Only for legacy theme sets_
 
-With this option enabled, there are black pillarboxes (and to a lesser extent letterboxes) displayed around videos with non-standard aspect ratios. This will probably be most commonly used for vertical arcade shooters, or for game systems that has a screen in portrait orientation. For wider than normal videos, letterboxes are added, but this is quite rare compared to videos in portrait orientation. This option looks good with some theme sets such as rbsimple-DE, but on others it may be more visually pleasing to disable it. On less wide displays such as those in 4:3 aspect ratio this option should probably be disabled as it may otherwise add quite excessive letterboxing. This option is only available for legacy theme sets as it's otherwise managed by the theme author.
+With this option enabled, there are black pillarboxes (and to a lesser extent letterboxes) displayed around videos with non-standard aspect ratios. This will probably be most commonly used for vertical arcade shooters, or for game systems that has a screen in portrait orientation. For wider than normal videos, letterboxes are added, but this is quite rare compared to videos in portrait orientation. This option looks good with some theme sets such as slate-DE, but on others it may be more visually pleasing to disable it. On less wide displays such as those in 4:3 aspect ratio this option should probably be disabled as it may otherwise add quite excessive letterboxing. This option is only available for legacy theme sets as it's otherwise managed by the theme author.
 
 **Render scanlines for gamelist videos** _Only for legacy theme sets_
 
@@ -1551,7 +1551,7 @@ This lets you enable or disable your own custom game collections. If there are n
 
 **Create new custom collection from theme** _(Entry only visible if the ability is provided by the theme set)_
 
-If the theme set in use provides themes for custom collections, then this entry can be selected. For example, there could be themes for _Fighting games_ or _Driving games_ etc. The default rbsimple-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE-DEV.md#custom-collections) in this guide.
+If the theme set in use provides themes for custom collections, then this entry can be selected. For example, there could be themes for _Fighting games_ or _Driving games_ etc. The default slate-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE-DEV.md#custom-collections) in this guide.
 
 **Create new custom collection**
 
@@ -1940,7 +1940,7 @@ These automatic collections can be individually enabled or disabled by going to 
 
 These are collections that you create yourself. Examples could be grouping in genres like _Shoot em up_, _Fighting games_ etc. or perhaps a time period like _1980s_, _1990s_ and so on.
 
-If the theme set supports it, you can create a custom collection directly from a theme. However, rbsimple-DE and modern-DE do not provide such themes as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
+If the theme set supports it, you can create a custom collection directly from a theme. However, slate-DE and modern-DE do not provide such themes as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
 So if you have enabled the option _Group unthemed custom collections_ (it's enabled by default), any collections you add will show up in the special _Collections_ system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list. You can also quick jump to this random game by pressing the _Y_ button.
 
@@ -1993,7 +1993,7 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ## Themes
 
-ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use any RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
+ES-DE is fully themeable, and although the application ships with the comprehensive slate-DE and modern-DE theme sets, you can use any RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
 
 As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in this guide.
 
@@ -2007,11 +2007,11 @@ For this example, we've downloaded the [Carbon](https://github.com/RetroPie/es-t
 ~/.emulationstation/themes/es-theme-fundamental
 ```
 
-We now have four entries in the Theme set selector in the UI settings menu, i.e. _rbsimple-DE, modern-DE, es-theme-carbon_ and _es-theme-fundamental_.
+We now have four entries in the Theme set selector in the UI settings menu, i.e. _slate-DE, modern-DE, es-theme-carbon_ and _es-theme-fundamental_.
 
-Although you place additional themes in your ES-DE home directory, the default rbsimple-DE and modern-DE themes are located in the installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
+Although you place additional themes in your ES-DE home directory, the default slate-DE and modern-DE themes are located in the installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
 
-So if you would like to customize the rbsimple-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
+So if you would like to customize the slate-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
 
 
 Here are some resources where additional theme sets can be downloaded.
@@ -2025,7 +2025,7 @@ https://gitlab.com/recalbox/recalbox-themes
 https://wiki.batocera.org/themes
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default rbsimple-DE theme)._
+_This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default slate-DE theme)._
 
 ## Custom event scripts
 
@@ -2039,7 +2039,7 @@ See the [INSTALL-DEV.md](INSTALL-DEV.md#command-line-options) document for a lis
 
 ## Supported game systems
 
-**Note:** The following list is what the default es_systems.xml files and the rbsimple-DE and modern-DE themes support. These theme sets are very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. ES-DE will still work but the game system will unthemed which looks very ugly.
+**Note:** The following list is what the default es_systems.xml files and the slate-DE and modern-DE themes support. These theme sets are very comprehensive, so if you're using another theme, it may be that some or many of these systems are not supported. ES-DE will still work but the game system will unthemed which looks very ugly.
 
 Note as well that the list and corresponding es_systems.xml templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
 

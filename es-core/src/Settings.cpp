@@ -130,7 +130,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperRetryPeerVerification"] = {false, false};
 
     // UI settings.
-    mStringMap["ThemeSet"] = {"rbsimple-DE", "rbsimple-DE"};
+    mStringMap["ThemeSet"] = {"slate-DE", "slate-DE"};
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};

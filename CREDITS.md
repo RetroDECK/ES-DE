@@ -16,11 +16,9 @@ https://gitlab.com/leonstyhre/emulationstation-de
 
 Nils Bonenberger
 
-
 # Licenses
 
 Please find the individual license files inside the `licenses` directory. There is also additional license information in the headers of most source files.
-
 
 # Libraries
 
@@ -74,7 +72,7 @@ https://gitlab.xiph.org/xiph/vorbis
 
 # Code
 
-Some code (like the virtual keyboard) was borrowed from Batocera.linux \
+Some code (like the virtual keyboard) was borrowed from Batocera EmulationStation \
 https://batocera.org
 
 The MD5 hash functions were adapted from code by the BZFlag project \
@@ -82,7 +80,6 @@ https://www.bzflag.org
 
 A couple of GLSL shaders were borrowed from the RetroArch project \
 https://www.retroarch.com
-
 
 # Resources
 
@@ -113,15 +110,13 @@ https://www.mamedev.org
 CA certificates (for TLS/SSL support on Windows) \
 https://wiki.mozilla.org/CA
 
+# slate-DE theme set
 
-# rbsimple-DE theme
-
-Recalbox Multi (rbsimple-DE is based on this theme, using assets from before their change to a more restrictive license in 2018) \
+Recalbox Multi (slate-DE is based on this theme, using assets from before their change to a more restrictive license in 2018) \
 https://gitlab.com/recalbox/recalbox-themes
 
 Carbon (some graphics taken from this theme) \
 https://github.com/RetroPie/es-theme-carbon
-
 
 # Sounds
 
