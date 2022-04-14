@@ -40,6 +40,7 @@ The latest version is 1.2.2 (released 2022-04-07)
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
 | Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.2-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/34286991/download)|
+| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.2-x64_Portable.zip](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/34940033/download)|
 | macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.2-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/34286968/download)|
 | macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.2-arm64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/34286943/download)|
 | Debian DEB package   | Ubuntu 20.04 to 21.10, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.2-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/34286957/download)|

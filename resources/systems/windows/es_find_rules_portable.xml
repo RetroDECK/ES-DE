@@ -1,29 +1,8 @@
 <?xml version="1.0"?>
-<!-- This is the ES-DE find rules configuration file for Windows -->
+<!-- This is the ES-DE find rules configuration file for Windows for portable installations -->
 <ruleList>
     <emulator name="RETROARCH">
-        <rule type="winregistrypath">
-            <!-- Check for an App Paths entry in the Windows Registry -->
-            <entry>retroarch.exe</entry>
-        </rule>
-        <rule type="systempath">
-            <!-- This requires that the user has manually updated the Path variable -->
-            <entry>retroarch.exe</entry>
-        </rule>
         <rule type="staticpath">
-            <!-- Some reasonable installation locations as fallback -->
-            <entry>C:\RetroArch-Win64\retroarch.exe</entry>
-            <entry>C:\RetroArch\retroarch.exe</entry>
-            <entry>~\AppData\Roaming\RetroArch\retroarch.exe</entry>
-            <entry>C:\Program Files\RetroArch-Win64\retroarch.exe</entry>
-            <entry>C:\Program Files\RetroArch\retroarch.exe</entry>
-            <entry>C:\Program Files (x86)\RetroArch-Win64\retroarch.exe</entry>
-            <entry>C:\Program Files (x86)\RetroArch\retroarch.exe</entry>
-            <!-- Steam release at some default locations -->
-            <entry>C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
-            <entry>D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
-            <entry>C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
-            <entry>D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
             <!-- Portable installation -->
             <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
@@ -40,9 +19,6 @@
     </core>
     <emulator name="CEMU">
         <!-- Nintendo Wii U emulator Cemu -->
-        <rule type="systempath">
-            <entry>Cemu.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\cemu\Cemu.exe</entry>
             <entry>%ESPATH%\Emulators\cemu\Cemu.exe</entry>
@@ -51,12 +27,7 @@
     </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
-        <rule type="systempath">
-            <entry>citra.exe</entry>
-        </rule>
         <rule type="staticpath">
-            <entry>~\AppData\Local\Citra\nightly-mingw\citra.exe</entry>
-            <entry>~\AppData\Local\Citra\canary-mingw\citra.exe</entry>
             <entry>%ESPATH%\Citra\nightly-mingw\citra.exe</entry>
             <entry>%ESPATH%\Citra\canary-mingw\citra.exe</entry>
             <entry>%ESPATH%\Emulators\Citra\nightly-mingw\citra.exe</entry>
@@ -67,9 +38,6 @@
     </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
-        <rule type="systempath">
-            <entry>Dolphin.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\Dolphin-x64\Dolphin.exe</entry>
             <entry>%ESPATH%\Emulators\Dolphin-x64\Dolphin.exe</entry>
@@ -78,9 +46,6 @@
     </emulator>
     <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
-        <rule type="systempath">
-            <entry>dosbox.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\dosbox-staging\dosbox.exe</entry>
             <entry>%ESPATH%\Emulators\dosbox-staging\dosbox.exe</entry>
@@ -89,10 +54,6 @@
     </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
-        <rule type="systempath">
-            <entry>duckstation-nogui-x64-ReleaseLTCG.exe</entry>
-            <entry>duckstation-qt-x64-ReleaseLTCG.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
@@ -104,9 +65,6 @@
     </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
-        <rule type="systempath">
-            <entry>flycast.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\flycast\flycast.exe</entry>
             <entry>%ESPATH%\Emulators\flycast\flycast.exe</entry>
@@ -115,9 +73,6 @@
     </emulator>
     <emulator name="FS-UAE">
         <!-- Commodore Amiga emulator FS-UAE -->
-        <rule type="systempath">
-            <entry>fs-uae.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
             <entry>%ESPATH%\Emulators\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
@@ -126,9 +81,6 @@
     </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
-        <rule type="systempath">
-            <entry>mame.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\mame\mame.exe</entry>
             <entry>%ESPATH%\Emulators\mame\mame.exe</entry>
@@ -137,9 +89,6 @@
     </emulator>
     <emulator name="MELONDS">
         <!-- Nintendo DS and DSi emulator melonDS -->
-        <rule type="systempath">
-            <entry>melonDS.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\melonDS\melonDS.exe</entry>
             <entry>%ESPATH%\Emulators\melonDS\melonDS.exe</entry>
@@ -148,15 +97,7 @@
     </emulator>
     <emulator name="MGBA">
         <!-- Nintendo Game Boy Advance emulator mGBA -->
-        <rule type="winregistryvalue">
-            <entry>SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\mGBA_is1\InstallLocation|mGBA.exe</entry>
-        </rule>
-        <rule type="systempath">
-            <entry>mGBA.exe</entry>
-        </rule>
         <rule type="staticpath">
-            <entry>C:\Program Files\mGBA\mGBA.exe</entry>
-            <entry>D:\Program Files\mGBA\mGBA.exe</entry>
             <entry>%ESPATH%\mGBA\mGBA.exe</entry>
             <entry>%ESPATH%\Emulators\mGBA\mGBA.exe</entry>
             <entry>%ESPATH%\..\mGBA\mGBA.exe</entry>
@@ -164,9 +105,6 @@
     </emulator>
     <emulator name="MUPEN64PLUS">
         <!-- Nintendo 64 emulator Mupen64Plus -->
-        <rule type="systempath">
-            <entry>mupen64plus-ui-console.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\mupen64plus\mupen64plus-ui-console.exe</entry>
             <entry>%ESPATH%\Emulators\mupen64plus\mupen64plus-ui-console.exe</entry>
@@ -175,15 +113,7 @@
     </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
-        <rule type="winregistryvalue">
-            <entry>SOFTWARE\PCSX2\Install_Dir|\pcsx2.exe</entry>
-        </rule>
-        <rule type="systempath">
-            <entry>pcsx2.exe</entry>
-        </rule>
         <rule type="staticpath">
-            <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
-            <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
@@ -191,15 +121,7 @@
     </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
-        <rule type="winregistryvalue">
-            <entry>SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\PPSSPP_is1\InstallLocation|PPSSPPWindows64.exe</entry>
-        </rule>
-        <rule type="systempath">
-            <entry>PPSSPPWindows64.exe</entry>
-        </rule>
         <rule type="staticpath">
-            <entry>C:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
-            <entry>D:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\Emulators\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\..\PPSSPP\PPSSPPWindows64.exe</entry>
@@ -207,9 +129,6 @@
     </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
-        <rule type="systempath">
-            <entry>redream.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\redream\redream.exe</entry>
             <entry>%ESPATH%\Emulators\redream\redream.exe</entry>
@@ -218,9 +137,6 @@
     </emulator>
     <emulator name="RPCS3">
         <!-- Sony PlayStation 3 emulator RPCS3 -->
-        <rule type="systempath">
-            <entry>rpcs3.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\RPCS3\rpcs3.exe</entry>
             <entry>%ESPATH%\Emulators\RPCS3\rpcs3.exe</entry>
@@ -229,9 +145,6 @@
     </emulator>
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
-        <rule type="systempath">
-            <entry>Ryujinx.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\Emulators\ryujinx\Ryujinx.exe</entry>
@@ -240,9 +153,6 @@
     </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
-        <rule type="systempath">
-            <entry>visualboyadvance-m.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\VBA-M\visualboyadvance-m.exe</entry>
             <entry>%ESPATH%\Emulators\VBA-M\visualboyadvance-m.exe</entry>
@@ -251,9 +161,6 @@
     </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
-        <rule type="systempath">
-            <entry>xemu.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\xemu\xemu.exe</entry>
             <entry>%ESPATH%\Emulators\xemu\xemu.exe</entry>
@@ -262,9 +169,6 @@
     </emulator>
     <emulator name="XENIA">
         <!-- Microsoft Xbox 360 emulator xenia -->
-        <rule type="systempath">
-            <entry>xenia.exe</entry>
-        </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\xenia\xenia.exe</entry>
             <entry>%ESPATH%\Emulators\xenia\xenia.exe</entry>
@@ -273,11 +177,7 @@
     </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
-        <rule type="systempath">
-            <entry>yuzu.exe</entry>
-        </rule>
         <rule type="staticpath">
-            <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>

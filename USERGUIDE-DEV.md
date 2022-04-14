@@ -214,15 +214,19 @@ Note that the above are only examples to illustrate the general approach, you ma
 
 In general it should be straightforward to run ES-DE on Windows. Almost all emulators are available on this operating system and driver quality and controller support is normally very good.
 
-Just make sure to not place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
+Just make sure to not place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations and extremely long startup times if you have a large collection. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
 
 In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start.
 
 Installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
 
-An issue on Windows is that many emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with the installation path). Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These emulators are commonly shipped as a ZIP file that can be unpacked anywhere on the filesystem.
+There are two ES-DE releases available for Windows; a regular installer and a portable/ZIP version. If going for the first option, an issue is that many emulators are not shipped with proper installers that implement any mechanism to inform ES-DE where they have been installed (like adding a Registry key with their installation path). Such emulators are marked accordingly in the _Supported game systems_ table at the bottom of this guide. These emulators are commonly shipped as a ZIP file that can be unpacked anywhere on the filesystem.
 
-In order for ES-DE to find these emulators there are two possible solutions, the first is to manually add the emulator directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. If running ES-DE via Steam, you need to restart Steam as well to apply the changes to the Path variable. The second option is to place the emulators inside the ES-DE installation directory (for example `C:\Program Files\EmulationStation-DE\`) in which case they will be found when launching a game. Due to the Windows security model this could potentially cause issues for some emulators, so if you experience such problems ES-DE may need to be installed at a location where User Account Control (UAC) is not interfering.
+In order for ES-DE to find these emulators you need to add their directories to the operating system's Path environment variable. This is very easy to do, just open the _Settings_ application and then search for _path_ in the _Find a setting_ search box. Select the _Edit the system environment variables_ entry and then click the _Environment variables..._ button and add the emulator directory to the _Path_ variable. You need to restart ES-DE after changing the variable, but following this the emulator should be found when launching a game. If running ES-DE via Steam, you need to restart Steam as well to apply the changes to the Path variable.
+
+The second alternative is to use the portable/ZIP release of ES-DE. This can be unzipped anywhere, including to removable devices such as hard drives or USB memory sticks. Together with games and emulators this makes for a fully portable retrogaming solution. There is a README.txt file distributed with this release that describes the setup, but essentially you just place your games in the ROMs directory and your emulators in the Emulators directory, both of which are included in the portable release.
+
+If you want to create your own portable intallation from scratch or customize the setup, [INSTALL-DEV.md](INSTALL-DEV.md#portable-installation-on-windows) provides additional details.
 
 ## Specific notes for macOS
 
@@ -2029,10 +2033,6 @@ There are numerous locations throughout ES-DE where custom scripts will be execu
 
 The setup for event scripts is a bit technical, so refer to the [INSTALL-DEV.md](INSTALL-DEV.md#custom-event-scripts) document to see how it's configured.
 
-## Portable installation (Windows only)
-
-On Windows, ES-DE can be installed to and run from a removable media device such as a USB memory stick. Together with games and emulators this makes for a fully portable retrogaming solution. The setup is somewhat technical, refer to [INSTALL-DEV.md](INSTALL-DEV.md#portable-installation-on-windows) to see how it's done.
-
 ## Command line options
 
 See the [INSTALL-DEV.md](INSTALL-DEV.md#command-line-options) document for a list of the command line options per operating system.
@@ -2051,7 +2051,7 @@ Sometimes the name of the console is (more or less) the same for multiple region
 
 For the **Full name** column, text inside square brackets [] are comments and not part of the actual system name.
 
-The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If one or more of the platforms are not specified it means that the system is not available on those platforms. For example Lutris which only exists on Unix is marked with only a [U]. There is a special [W*] indication for Windows which means that you need to manually add the emulator directory to the operating system's Path environment variable or place it inside the ES-DE installation directory. This is required as some emulators don't ship with proper installers but instead only as a zip file that can be extracted anywhere on the filesystem. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core. A number of systems are marked as _Placeholder_ which means that although there is a configuration entry present, the actual emulator is not preconfigured. If you want to use such a system, you need to add a custom configuration yourself. The long term goal is to have these placeholders replaced with proper emulator configuration so all systems can be used without requiring manual setup.
+The **Default emulator** column lists the primary emulator as configured in es_systems.xml. If this differs between Unix, macOS and Windows then it's specified in square brackets, such as [UW] for Unix and Windows and [M] for macOS. If one or more of the platforms are not specified it means that the system is not available on those platforms. For example Lutris which only exists on Unix is marked with only a [U]. There is a special [W*] indication for Windows which means that you need to manually add the emulator directory to the operating system's Path environment variable. This is required as some emulators don't ship with proper installers but instead only as a zip file that can be extracted anywhere on the filesystem. However, if using the portable/ZIP release of ES-DE, then this is not applicable as all emulators placed inside the `Emulators` directory will be automatically found. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core. A number of systems are marked as _Placeholder_ which means that although there is a configuration entry present, the actual emulator is not preconfigured. If you want to use such a system, you need to add a custom configuration yourself. The long term goal is to have these placeholders replaced with proper emulator configuration so all systems can be used without requiring manual setup.
 
 The **Alternative emulators** column lists additional emulators configured in es_systems.xml that can be selected per system and per game, as explained earlier in this guide. This does not necessarily include everything in existence, as for some platforms there are a lot of emulators to choose from. In those cases the included emulators is a curated selection. In the same manner as the _Default emulator_ column, differences between Unix, macOS and Windows are marked using square brackets. Unless explicitly marked as **(Standalone)**, each emulator is a RetroArch core.
 
@@ -2072,7 +2072,7 @@ In general .zip or .7z files are recommended for smaller-sized games like those 
 Consider the table below a work in progress as it's obvioulsy not fully populated yet!
 
 Default emulator/Alternative emulators columns: \
-**[U]**: Unix, **[M]**: macOS, **[W]**: Windows, **[W\*]**: Windows, needs to have a Path environment variable entry or be placed inside the ES-DE installation directory
+**[U]**: Unix, **[M]**: macOS, **[W]**: Windows, **[W\*]**: Windows, needs to have a Path environment variable entry (not applicable if using the portable ES-DE release)
 
 All emulators are RetroArch cores unless marked as **(Standalone**)
 
