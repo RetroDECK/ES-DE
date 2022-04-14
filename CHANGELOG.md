@@ -137,6 +137,8 @@ v1.2 maintenance release.
 * Added the .wud and .wux file extensions for the wiiu system on Windows
 * Added --escape-exit command line option for the PPSSPP standalone emulator
 * Added -batch command line option for the DuckStation standalone emulator
+* (Windows) Added a separate find rules configuration file for use with portable installations
+* (Windows) Added an "Emulators" directory to all emulators for portable installations
 * Added missing scraper entries for samcoupe and zx81 for TheGamesDB and zmachine for ScreenScraper
 * neogeocd is now scraped specifically as "Neo Geo CD" instead of the more generic "Neo Geo"
 
@@ -144,6 +146,7 @@ v1.2 maintenance release.
 
 * Using a custom image directory for the slideshow screensaver would hang the application if there was only a single image
 * Navigating the list of alternative emulators would sometimes lead to an incorrect row positioning
+* On Windows, the find rule for the Mupen64Plus standalone emulator was not setup correctly
 
 ## Version 1.2.2
 
