@@ -16,7 +16,6 @@ For automatic code formatting [clang-format](https://clang.llvm.org/docs/ClangFo
 
 Any code editor can be used of course, but I recommend [VSCode](https://code.visualstudio.com).
 
-
 ## Building on Unix
 
 There are some dependencies that need to be fulfilled in order to build ES-DE. These are detailed per operating system below.
@@ -1992,8 +1991,9 @@ This will reload either a single gamelist or all gamelists depending on where yo
 
 By default all controller input (keyboard and controller button presses) will be logged when the --debug flag has been passed. To disable the input logging, the setting DebugSkipInputLogging kan be set to false in the es_settings.xml file. There is no menu entry to change this as it's intended for developers and not for end users.
 
-
 ## Portable installation on Windows
+
+_As there is a preconfigured portable release available for Windows, this section is mostly relevant for understanding how the setup works, as well as to provide information on how to make customizations._
 
 It's possible to easily create a portable installation of ES-DE on Windows, for example to place on a USB memory stick.
 
@@ -2003,79 +2003,27 @@ These are the steps to perform:
 
 * Install ES-DE
 * Copy the EmulationStation-DE installation directory to F:\
-* Copy your emulator directories to F:\EmulationStation-DE\
+* Create a directory named F:\EmulationStation-DE\Emulators
+* Copy your emulator directories to F:\EmulationStation-DE\Emulators\
 * Copy your ROMs directory to F:\EmulationStation-DE\
 * Create an empty file named portable.txt in F:\EmulationStation-DE\
 
 You should end up with something like this:
 ```
 F:\EmulationStation-DE\
-F:\EmulationStation-DE\dosbox-staging\
-F:\EmulationStation-DE\RetroArch-Win64\
+F:\EmulationStation-DE\Emulators\dosbox-staging\
+F:\EmulationStation-DE\Emulators\RetroArch-Win64\
+F:\EmulationStation-DE\Emulators\RPCS3\
+F:\EmulationStation-DE\Emulators\xemu\
 F:\EmulationStation-DE\ROMs\
-F:\EmulationStation-DE\RPCS3\
-F:\EmulationStation-DE\xemu\
 F:\EmulationStation-DE\portable.txt
 ```
 
-This is just an example as you may of course not use these specific emulators. There are also many more emulators supported as described below. As well there will be many more files and directories than those listed above inside the F:\EmulationStation-DE directory.
+This is just an example as you may of course not use these specific emulators. There are also many more emulators supported as detailed in the `es_find_rules.xml` configuration file. As well there will be many more files and directories than those listed above inside the F:\EmulationStation-DE folder.
 
 How the portable setup works is that when ES-DE finds a file named portable.txt in its executable directory, it will by default locate the .emulationstation directory directly inside this folder. It's also possible to modify portable.txt with a path relative to the ES-DE executable directory. For instance if two dots `..` are placed inside the portable.txt file, then the .emulationstation directory will be located in the parent folder, which would be directly under F:\ for this example.
 
 If the --home command line parameter is passed when starting ES-DE, that will override the portable.txt file.
-
-By default the emulators that will be automatically searched for by ES-DE are (relative to the EmulationStation-DE directory):
-
-```
-RetroArch-Win64\retroarch.exe
-RetroArch\retroarch.exe
-cemu\Cemu.exe
-Citra\canary-mingw\citra.exe
-Citra\nightly-mingw\citra.exe
-Dolphin-x64\Dolphin.exe
-dosbox-staging\dosbox.exe
-duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
-duckstation\duckstation-qt-x64-ReleaseLTCG.exe
-flycast\flycast.exe
-mame\mame.exe
-melonDS\melonDS.exe
-mGBA\mGBA.exe
-mupen64plus\mupen64plus-ui-console.exe
-PCSX2\pcsx2.exe
-PPSSPP\PPSSPPWindows64.exe
-redream\redream.exe
-RPCS3\rpcs3.exe
-ryujinx\Ryujinx.exe
-VBA-M\visualboyadvance-m.exe
-xemu\xemu.exe
-xenia\xenia.exe
-yuzu\yuzu-windows-msvc\yuzu.exe
-..\RetroArch-Win64\retroarch.exe
-..\RetroArch\retroarch.exe
-..\cemu\Cemu.exe
-..\Citra\canary-mingw\citra.exe
-..\Citra\nightly-mingw\citra.exe
-..\Dolphin-x64\Dolphin.exe
-..\dosbox-staging\dosbox.exe
-..\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
-..\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
-..\flycast\flycast.exe
-..\mame\mame.exe
-..\melonDS\melonDS.exe
-..\mGBA\mGBA.exe
-..\mupen64plus\mupen64plus-ui-console.exe
-..\PCSX2\pcsx2.exe
-..\PPSSPP\PPSSPPWindows64.exe
-..\redream\redream.exe
-..\RPCS3\rpcs3.exe
-..\ryujinx\Ryujinx.exe
-..\VBA-M\visualboyadvance-m.exe
-..\xemu\xemu.exe
-..\xenia\xenia.exe
-..\yuzu\yuzu-windows-msvc\yuzu.exe
-```
-
-If you want to place your emulators elsewhere, you need to create a customized es_find_rules.xml file, which is explained earlier in this document.
 
 Start ES-DE from the F:\ device and check that everything works as expected. Just be aware that some emulators may not play that well with a portable setup and may store their configuration files in your home directory (probably on your C: drive) or at some other location. So when using the portable installation on another computer you may need to perform some additional emulator-specific setup.
 
@@ -2087,7 +2035,7 @@ F:\EmulationStation-DE\.emulationstation\downloaded_media\
 F:\EmulationStation-DE\.emulationstation\gamelists\
 ```
 
-You could also copy over your entire .emulationstation directory, but in this case make sure that you have no settings in es_settings.xml that point to a specific location on your local filesystem, such as the game ROMs or game media directories.
+You could alternatively copy over your entire .emulationstation directory, but in this case make sure that you have no settings in es_settings.xml that point to a specific location on your local filesystem, such as the game ROMs or game media directories.
 
 You now have a fully functional portable retrogaming installation!
 
