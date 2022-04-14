@@ -1527,6 +1527,8 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <!-- Portable installation -->
             <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\Emulators\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\Emulators\RetroArch\retroarch.exe</entry>
             <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
         </rule>
@@ -1548,6 +1550,7 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
     </emulator>
@@ -1559,6 +1562,7 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         <rule type="staticpath">
             <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
     </emulator>
@@ -1773,6 +1777,31 @@ VBA-M\visualboyadvance-m.exe
 xemu\xemu.exe
 xenia\xenia.exe
 yuzu\yuzu-windows-msvc\yuzu.exe
+
+Emulators\RetroArch-Win64\retroarch.exe
+Emulators\RetroArch\retroarch.exe
+Emulators\cemu\Cemu.exe
+Emulators\Citra\canary-mingw\citra.exe
+Emulators\Citra\nightly-mingw\citra.exe
+Emulators\Dolphin-x64\Dolphin.exe
+Emulators\dosbox-staging\dosbox.exe
+Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
+Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
+Emulators\flycast\flycast.exe
+Emulators\mame\mame.exe
+Emulators\melonDS\melonDS.exe
+Emulators\mGBA\mGBA.exe
+Emulators\mupen64plus\mupen64plus-ui-console.exe
+Emulators\PCSX2\pcsx2.exe
+Emulators\PPSSPP\PPSSPPWindows64.exe
+Emulators\redream\redream.exe
+Emulators\RPCS3\rpcs3.exe
+Emulators\ryujinx\Ryujinx.exe
+Emulators\VBA-M\visualboyadvance-m.exe
+Emulators\xemu\xemu.exe
+Emulators\xenia\xenia.exe
+Emulators\yuzu\yuzu-windows-msvc\yuzu.exe
+
 ..\RetroArch-Win64\retroarch.exe
 ..\RetroArch\retroarch.exe
 ..\cemu\Cemu.exe

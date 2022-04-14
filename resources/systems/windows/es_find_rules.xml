@@ -27,6 +27,8 @@
             <!-- Portable installation -->
             <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\Emulators\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\Emulators\RetroArch\retroarch.exe</entry>
             <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
         </rule>
@@ -43,6 +45,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\cemu\Cemu.exe</entry>
+            <entry>%ESPATH%\Emulators\cemu\Cemu.exe</entry>
             <entry>%ESPATH%\..\cemu\Cemu.exe</entry>
         </rule>
     </emulator>
@@ -55,8 +58,10 @@
             <entry>~\AppData\Local\Citra\nightly-mingw\citra.exe</entry>
             <entry>~\AppData\Local\Citra\canary-mingw\citra.exe</entry>
             <entry>%ESPATH%\Citra\nightly-mingw\citra.exe</entry>
-            <entry>%ESPATH%\..\Citra\nightly-mingw\citra.exe</entry>
             <entry>%ESPATH%\Citra\canary-mingw\citra.exe</entry>
+            <entry>%ESPATH%\Emulators\Citra\nightly-mingw\citra.exe</entry>
+            <entry>%ESPATH%\Emulators\Citra\canary-mingw\citra.exe</entry>
+            <entry>%ESPATH%\..\Citra\nightly-mingw\citra.exe</entry>
             <entry>%ESPATH%\..\Citra\canary-mingw\citra.exe</entry>
         </rule>
     </emulator>
@@ -67,6 +72,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\Dolphin-x64\Dolphin.exe</entry>
+            <entry>%ESPATH%\Emulators\Dolphin-x64\Dolphin.exe</entry>
             <entry>%ESPATH%\..\Dolphin-x64\Dolphin.exe</entry>
         </rule>
     </emulator>
@@ -77,6 +83,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\dosbox-staging\dosbox.exe</entry>
+            <entry>%ESPATH%\Emulators\dosbox-staging\dosbox.exe</entry>
             <entry>%ESPATH%\..\dosbox-staging\dosbox.exe</entry>
         </rule>
     </emulator>
@@ -89,6 +96,8 @@
         <rule type="staticpath">
             <entry>%ESPATH%\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
+            <entry>%ESPATH%\Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\..\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe</entry>
             <entry>%ESPATH%\..\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
         </rule>
@@ -100,6 +109,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\flycast\flycast.exe</entry>
+            <entry>%ESPATH%\Emulators\flycast\flycast.exe</entry>
             <entry>%ESPATH%\..\flycast\flycast.exe</entry>
         </rule>
     </emulator>
@@ -110,6 +120,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
+            <entry>%ESPATH%\Emulators\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
             <entry>%ESPATH%\..\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
         </rule>
     </emulator>
@@ -120,6 +131,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\mame\mame.exe</entry>
+            <entry>%ESPATH%\Emulators\mame\mame.exe</entry>
             <entry>%ESPATH%\..\mame\mame.exe</entry>
         </rule>
     </emulator>
@@ -130,6 +142,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\melonDS\melonDS.exe</entry>
+            <entry>%ESPATH%\Emulators\melonDS\melonDS.exe</entry>
             <entry>%ESPATH%\..\melonDS\melonDS.exe</entry>
         </rule>
     </emulator>
@@ -145,6 +158,7 @@
             <entry>C:\Program Files\mGBA\mGBA.exe</entry>
             <entry>D:\Program Files\mGBA\mGBA.exe</entry>
             <entry>%ESPATH%\mGBA\mGBA.exe</entry>
+            <entry>%ESPATH%\Emulators\mGBA\mGBA.exe</entry>
             <entry>%ESPATH%\..\mGBA\mGBA.exe</entry>
         </rule>
     </emulator>
@@ -153,6 +167,7 @@
         <rule type="systempath">
             <entry>mupen64plus-ui-console.exe</entry>
             <entry>%ESPATH%\mupen64plus\mupen64plus-ui-console.exe</entry>
+            <entry>%ESPATH%\Emulators\mupen64plus\mupen64plus-ui-console.exe</entry>
             <entry>%ESPATH%\..\mupen64plus\mupen64plus-ui-console.exe</entry>
         </rule>
     </emulator>
@@ -168,6 +183,7 @@
             <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
     </emulator>
@@ -183,6 +199,7 @@
             <entry>C:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>D:\Program Files\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\PPSSPP\PPSSPPWindows64.exe</entry>
+            <entry>%ESPATH%\Emulators\PPSSPP\PPSSPPWindows64.exe</entry>
             <entry>%ESPATH%\..\PPSSPP\PPSSPPWindows64.exe</entry>
         </rule>
     </emulator>
@@ -193,6 +210,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\redream\redream.exe</entry>
+            <entry>%ESPATH%\Emulators\redream\redream.exe</entry>
             <entry>%ESPATH%\..\redream\redream.exe</entry>
         </rule>
     </emulator>
@@ -203,6 +221,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\RPCS3\rpcs3.exe</entry>
+            <entry>%ESPATH%\Emulators\RPCS3\rpcs3.exe</entry>
             <entry>%ESPATH%\..\RPCS3\rpcs3.exe</entry>
         </rule>
     </emulator>
@@ -213,6 +232,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\ryujinx\Ryujinx.exe</entry>
+            <entry>%ESPATH%\Emulators\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
         </rule>
     </emulator>
@@ -223,6 +243,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\VBA-M\visualboyadvance-m.exe</entry>
+            <entry>%ESPATH%\Emulators\VBA-M\visualboyadvance-m.exe</entry>
             <entry>%ESPATH%\..\VBA-M\visualboyadvance-m.exe</entry>
         </rule>
     </emulator>
@@ -233,6 +254,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\xemu\xemu.exe</entry>
+            <entry>%ESPATH%\Emulators\xemu\xemu.exe</entry>
             <entry>%ESPATH%\..\xemu\xemu.exe</entry>
         </rule>
     </emulator>
@@ -243,6 +265,7 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\xenia\xenia.exe</entry>
+            <entry>%ESPATH%\Emulators\xenia\xenia.exe</entry>
             <entry>%ESPATH%\..\xenia\xenia.exe</entry>
         </rule>
     </emulator>
@@ -254,6 +277,7 @@
         <rule type="staticpath">
             <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
     </emulator>
