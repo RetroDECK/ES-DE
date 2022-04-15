@@ -209,6 +209,8 @@ based on: recalbox-multi by the Recalbox community
                 <size>0.39 0.711</size>
                 <horizontalAlignment>left</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
+                <indicators>symbols</indicators>
+                <collectionIndicators>symbols</collectionIndicators>
             </textlist>
         </view>
     </variant>
@@ -318,7 +320,7 @@ based on: recalbox-multi by the Recalbox community
             <folderLinkPos>0.54 0.64</folderLinkPos>
             <folderLinkSize>0.31</folderLinkSize>
             <itemMargin>-1.0 0.005</itemMargin>
-            <slots>folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
+            <slots>collection, favorite, completed, kidgame, broken, controller, altemulator</slots>
         </badges>
     </view>
 
