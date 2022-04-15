@@ -119,6 +119,7 @@ public:
     void setColor(unsigned int id, unsigned int color) { mColors[id] = color; }
     void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
     const std::string& getIndicators() const { return mIndicators; }
+    const std::string& getCollectionIndicators() const { return mCollectionIndicators; }
 
 protected:
     void onScroll() override
@@ -163,6 +164,7 @@ private:
 
     std::shared_ptr<Font> mFont;
     std::string mIndicators;
+    std::string mCollectionIndicators;
     bool mUppercase;
     bool mLowercase;
     bool mCapitalize;
@@ -193,6 +195,7 @@ TextListComponent<T>::TextListComponent()
     , mHorizontalMargin {0.0f}
     , mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mIndicators {"symbols"}
+    , mCollectionIndicators {"symbols"}
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
@@ -609,6 +612,19 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
                                "<indicators> defined as \""
                             << indicators << "\"";
+        }
+    }
+
+    if (elem->has("collectionIndicators")) {
+        std::string collectionIndicators {elem->get<std::string>("collectionIndicators")};
+        if (collectionIndicators == "symbols" || collectionIndicators == "ascii") {
+            mCollectionIndicators = collectionIndicators;
+        }
+        else {
+            mCollectionIndicators = "symbols";
+            LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                               "<collectionIndicators> defined as \""
+                            << collectionIndicators << "\"";
         }
     }
 

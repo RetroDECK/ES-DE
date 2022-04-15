@@ -572,29 +572,30 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
             if (mTextList != nullptr) {
                 TextListComponent<FileData*>::Entry textListEntry;
                 std::string indicators {mTextList->getIndicators()};
+                std::string collectionIndicators {mTextList->getCollectionIndicators()};
 
                 if (!mFirstGameEntry && (*it)->getType() == GAME)
                     mFirstGameEntry = (*it);
 
+                // Add a leading tick mark icon to the game name if it's part of the custom
+                // collection currently being edited.
+                if (isEditing && (*it)->getType() == GAME) {
+                    if (CollectionSystemsManager::getInstance()->inCustomCollection(
+                            editingCollection, (*it))) {
+                        if (collectionIndicators == "ascii")
+                            inCollectionPrefix = "! ";
+                        else
+                            inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
+                    }
+                    else {
+                        inCollectionPrefix = "";
+                    }
+                }
+
                 if (indicators == "none") {
-                    name = (*it)->getName();
+                    name = inCollectionPrefix + (*it)->getName();
                 }
                 else {
-                    // Add a leading tick mark icon to the game name if it's part of the custom
-                    // collection currently being edited.
-                    if (isEditing && (*it)->getType() == GAME) {
-                        if (CollectionSystemsManager::getInstance()->inCustomCollection(
-                                editingCollection, (*it))) {
-                            if (indicators == "ascii")
-                                inCollectionPrefix = "! ";
-                            else
-                                inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
-                        }
-                        else {
-                            inCollectionPrefix = "";
-                        }
-                    }
-
                     if ((*it)->getFavorite() && favoriteStar &&
                         mRoot->getSystem()->getName() != "favorites") {
                         if (indicators == "ascii")
