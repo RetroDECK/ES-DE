@@ -126,13 +126,13 @@ endif()
 if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
     if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-        install(FILES ../avcodec-58.dll
-                      ../avfilter-7.dll
-                      ../avformat-58.dll
-                      ../avutil-56.dll
-                      ../postproc-55.dll
-                      ../swresample-3.dll
-                      ../swscale-5.dll
+        install(FILES ../avcodec-59.dll
+                      ../avfilter-8.dll
+                      ../avformat-59.dll
+                      ../avutil-57.dll
+                      ../postproc-56.dll
+                      ../swresample-4.dll
+                      ../swscale-6.dll
                       ../FreeImage.dll
                       ../freetype.dll
                       ../glew32.dll
@@ -148,13 +148,13 @@ if(WIN32)
                       ../VCRUNTIME140_1.dll
                       DESTINATION .)
     else()
-        install(FILES ../avcodec-58.dll
-                      ../avfilter-7.dll
-                      ../avformat-58.dll
-                      ../avutil-56.dll
-                      ../postproc-55.dll
-                      ../swresample-3.dll
-                      ../swscale-5.dll
+        install(FILES ../avcodec-59.dll
+                      ../avfilter-8.dll
+                      ../avformat-59.dll
+                      ../avutil-57.dll
+                      ../postproc-56.dll
+                      ../swresample-4.dll
+                      ../swscale-6.dll
                       ../FreeImage.dll
                       ../glew32.dll
                       ../libcrypto-1_1-x64.dll

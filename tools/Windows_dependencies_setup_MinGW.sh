@@ -59,26 +59,26 @@ cd ..
 echo -e "\nSetting up SDL"
 rm -rf SDL2-*
 
-curl -O https://www.libsdl.org/release/SDL2-devel-2.0.18-mingw.tar.gz
-tar xvzf SDL2-devel-2.0.18-mingw.tar.gz
+curl -O https://www.libsdl.org/release/SDL2-devel-2.0.20-mingw.tar.gz
+tar xvzf SDL2-devel-2.0.20-mingw.tar.gz
 # Needed due to some kind of file system race condition that sometimes occurs on Windows.
 sleep 1
-mv SDL2-2.0.18/x86_64-w64-mingw32/include/SDL2 SDL2-2.0.18/
-cp -p SDL2-2.0.18/x86_64-w64-mingw32/lib/libSDL2main.a ..
-cp -p SDL2-2.0.18/x86_64-w64-mingw32/bin/SDL2.dll ..
+mv SDL2-2.0.20/x86_64-w64-mingw32/include/SDL2 SDL2-2.0.20/
+cp -p SDL2-2.0.20/x86_64-w64-mingw32/lib/libSDL2main.a ..
+cp -p SDL2-2.0.20/x86_64-w64-mingw32/bin/SDL2.dll ..
 
 echo -e "\nSetting up FFmpeg"
 rm -rf ffmpeg-*
 
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n4.4-latest-win64-gpl-shared-4.4.zip
-unzip ffmpeg-n4.4-latest-win64-gpl-shared-4.4.zip
-cp -p ffmpeg-n4.4-latest-win64-gpl-shared-4.4/bin/avcodec-58.dll ..
-cp -p ffmpeg-n4.4-latest-win64-gpl-shared-4.4/bin/avfilter-7.dll ..
-cp -p ffmpeg-n4.4-latest-win64-gpl-shared-4.4/bin/avformat-58.dll ..
-cp -p ffmpeg-n4.4-latest-win64-gpl-shared-4.4/bin/avutil-56.dll ..
-cp -p ffmpeg-n4.4-latest-win64-gpl-shared-4.4/bin/postproc-55.dll ..
-cp -p ffmpeg-n4.4-latest-win64-gpl-shared-4.4/bin/swresample-3.dll ..
-cp -p ffmpeg-n4.4-latest-win64-gpl-shared-4.4/bin/swscale-5.dll ..
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n5.0-latest-win64-gpl-shared-5.0.zip
+unzip ffmpeg-n5.0-latest-win64-gpl-shared-5.0.zip
+cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avcodec-59.dll ..
+cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avfilter-8.dll ..
+cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avformat-59.dll ..
+cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avutil-57.dll ..
+cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/postproc-56.dll ..
+cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/swresample-4.dll ..
+cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/swscale-6.dll ..
 
 echo -e "\nSetting up OpenSSL"
 

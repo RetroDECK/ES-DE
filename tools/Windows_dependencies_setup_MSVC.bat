@@ -105,41 +105,41 @@ cd ..
 echo:
 echo Setting up SDL
 
-if exist SDL2-2.0.18\ (
-  rmdir /S /Q SDL2-2.0.18
+if exist SDL2-2.0.20\ (
+  rmdir /S /Q SDL2-2.0.20
 )
 
-curl -O https://www.libsdl.org/release/SDL2-devel-2.0.18-VC.zip
-7z x SDL2-devel-2.0.18-VC.zip
-cd SDL2-2.0.18
+curl -O https://www.libsdl.org/release/SDL2-devel-2.0.20-VC.zip
+7z x SDL2-devel-2.0.20-VC.zip
+cd SDL2-2.0.20
 rename include SDL2
 cd ..
-copy /Y SDL2-2.0.18\lib\x64\SDL2.dll ..
-copy /Y SDL2-2.0.18\lib\x64\SDL2.lib ..
-copy /Y SDL2-2.0.18\lib\x64\SDL2main.lib ..
+copy /Y SDL2-2.0.20\lib\x64\SDL2.dll ..
+copy /Y SDL2-2.0.20\lib\x64\SDL2.lib ..
+copy /Y SDL2-2.0.20\lib\x64\SDL2main.lib ..
 
 echo:
 echo Setting up FFmpeg
 
-if exist ffmpeg-n4.4-latest-win64-gpl-shared-4.4\ (
-  rmdir /S /Q ffmpeg-n4.4-latest-win64-gpl-shared-4.4
+if exist ffmpeg-n5.0-latest-win64-gpl-shared-5.0\ (
+  rmdir /S /Q ffmpeg-n5.0-latest-win64-gpl-shared-5.0
 )
 
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n4.4-latest-win64-gpl-shared-4.4.zip
-7z x ffmpeg-n4.4-latest-win64-gpl-shared-4.4.zip
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\bin\avcodec-58.dll ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\bin\avfilter-7.dll ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\bin\avformat-58.dll ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\bin\avutil-56.dll ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\bin\postproc-55.dll ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\bin\swresample-3.dll ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\bin\swscale-5.dll ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\lib\avcodec.lib ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\lib\avfilter.lib ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\lib\avformat.lib ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\lib\avutil.lib ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\lib\swresample.lib ..
-copy /Y ffmpeg-n4.4-latest-win64-gpl-shared-4.4\lib\swscale.lib ..
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n5.0-latest-win64-gpl-shared-5.0.zip
+7z x ffmpeg-n5.0-latest-win64-gpl-shared-5.0.zip
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\bin\avcodec-59.dll ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\bin\avfilter-8.dll ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\bin\avformat-59.dll ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\bin\avutil-57.dll ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\bin\postproc-56.dll ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\bin\swresample-4.dll ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\bin\swscale-6.dll ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\lib\avcodec.lib ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\lib\avfilter.lib ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\lib\avformat.lib ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\lib\avutil.lib ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\lib\swresample.lib ..
+copy /Y ffmpeg-n5.0-latest-win64-gpl-shared-5.0\lib\swscale.lib ..
 
 echo:
 echo Setting up OpenSSL

@@ -354,11 +354,11 @@ elseif(WIN32)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/curl-7.80.0-win64-mingw/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/glew-2.1.0/include
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-n4.4-latest-win64-gpl-shared-4.4/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-n5.0-latest-win64-gpl-shared-5.0/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.0.18)
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.0.20)
 elseif(EMSCRIPTEN)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
@@ -426,12 +426,12 @@ elseif(WIN32)
                              ${PROJECT_SOURCE_DIR}/SDL2.lib
                              Winmm.dll)
     else()
-        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec-58.dll
-                             ${PROJECT_SOURCE_DIR}/avfilter-7.dll
-                             ${PROJECT_SOURCE_DIR}/avformat-58.dll
-                             ${PROJECT_SOURCE_DIR}/avutil-56.dll
-                             ${PROJECT_SOURCE_DIR}/swresample-3.dll
-                             ${PROJECT_SOURCE_DIR}/swscale-5.dll
+        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec-59.dll
+                             ${PROJECT_SOURCE_DIR}/avfilter-8.dll
+                             ${PROJECT_SOURCE_DIR}/avformat-59.dll
+                             ${PROJECT_SOURCE_DIR}/avutil-57.dll
+                             ${PROJECT_SOURCE_DIR}/swresample-4.dll
+                             ${PROJECT_SOURCE_DIR}/swscale-6.dll
                              ${PROJECT_SOURCE_DIR}/FreeImage.dll
                              ${PROJECT_SOURCE_DIR}/glew32.dll
                              ${PROJECT_SOURCE_DIR}/libcurl-x64.dll
