@@ -241,6 +241,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    mFlexboxComponent.setLines(3);
     if (elem->has("lines")) {
         const unsigned int lines {elem->get<unsigned int>("lines")};
         if (lines < 1 || lines > 10) {
@@ -251,10 +252,8 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mFlexboxComponent.setLines(lines);
         }
     }
-    else {
-        mFlexboxComponent.setLines(3);
-    }
 
+    mFlexboxComponent.setItemsPerLine(4);
     if (elem->has("itemsPerLine")) {
         const unsigned int itemsPerLine {elem->get<unsigned int>("itemsPerLine")};
         if (itemsPerLine < 1 || itemsPerLine > 10) {
@@ -265,9 +264,6 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             mFlexboxComponent.setItemsPerLine(itemsPerLine);
         }
-    }
-    else {
-        mFlexboxComponent.setItemsPerLine(4);
     }
 
     if (elem->has("itemMargin")) {
