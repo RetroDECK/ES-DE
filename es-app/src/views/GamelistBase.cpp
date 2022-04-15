@@ -571,48 +571,56 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 
             if (mTextList != nullptr) {
                 TextListComponent<FileData*>::Entry textListEntry;
+                std::string indicators {mTextList->getIndicators()};
+
                 if (!mFirstGameEntry && (*it)->getType() == GAME)
                     mFirstGameEntry = (*it);
-                // Add a leading tick mark icon to the game name if it's part of the custom
-                // collection currently being edited.
-                if (isEditing && (*it)->getType() == GAME) {
-                    if (CollectionSystemsManager::getInstance()->inCustomCollection(
-                            editingCollection, (*it))) {
-                        if (Settings::getInstance()->getBool("SpecialCharsASCII"))
-                            inCollectionPrefix = "! ";
-                        else
-                            inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
-                    }
-                    else {
-                        inCollectionPrefix = "";
-                    }
-                }
 
-                if ((*it)->getFavorite() && favoriteStar &&
-                    mRoot->getSystem()->getName() != "favorites") {
-                    if (Settings::getInstance()->getBool("SpecialCharsASCII"))
-                        name = inCollectionPrefix + "* " + (*it)->getName();
-                    else
-                        name = inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
-                               (*it)->getName();
-                }
-                else if ((*it)->getType() == FOLDER &&
-                         mRoot->getSystem()->getName() != "collections") {
-                    if (Settings::getInstance()->getBool("SpecialCharsASCII")) {
-                        if ((*it)->metadata.get("folderlink") != "")
-                            name = "> " + (*it)->getName();
-                        else
-                            name = "# " + (*it)->getName();
-                    }
-                    else {
-                        if ((*it)->metadata.get("folderlink") != "")
-                            name = ViewController::FOLDERLINK_CHAR + "  " + (*it)->getName();
-                        else
-                            name = ViewController::FOLDER_CHAR + "  " + (*it)->getName();
-                    }
+                if (indicators == "none") {
+                    name = (*it)->getName();
                 }
                 else {
-                    name = inCollectionPrefix + (*it)->getName();
+                    // Add a leading tick mark icon to the game name if it's part of the custom
+                    // collection currently being edited.
+                    if (isEditing && (*it)->getType() == GAME) {
+                        if (CollectionSystemsManager::getInstance()->inCustomCollection(
+                                editingCollection, (*it))) {
+                            if (indicators == "ascii")
+                                inCollectionPrefix = "! ";
+                            else
+                                inCollectionPrefix = ViewController::TICKMARK_CHAR + "  ";
+                        }
+                        else {
+                            inCollectionPrefix = "";
+                        }
+                    }
+
+                    if ((*it)->getFavorite() && favoriteStar &&
+                        mRoot->getSystem()->getName() != "favorites") {
+                        if (indicators == "ascii")
+                            name = inCollectionPrefix + "* " + (*it)->getName();
+                        else
+                            name = inCollectionPrefix + ViewController::FAVORITE_CHAR + "  " +
+                                   (*it)->getName();
+                    }
+                    else if ((*it)->getType() == FOLDER &&
+                             mRoot->getSystem()->getName() != "collections") {
+                        if (indicators == "ascii") {
+                            if ((*it)->metadata.get("folderlink") != "")
+                                name = "> " + (*it)->getName();
+                            else
+                                name = "# " + (*it)->getName();
+                        }
+                        else {
+                            if ((*it)->metadata.get("folderlink") != "")
+                                name = ViewController::FOLDERLINK_CHAR + "  " + (*it)->getName();
+                            else
+                                name = ViewController::FOLDER_CHAR + "  " + (*it)->getName();
+                        }
+                    }
+                    else {
+                        name = inCollectionPrefix + (*it)->getName();
+                    }
                 }
                 color = (*it)->getType() == FOLDER;
                 textListEntry.name = name;

@@ -118,6 +118,7 @@ public:
     void setSelectedColor(unsigned int color) { mSelectedColor = color; }
     void setColor(unsigned int id, unsigned int color) { mColors[id] = color; }
     void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
+    const std::string& getIndicators() const { return mIndicators; }
 
 protected:
     void onScroll() override
@@ -161,6 +162,7 @@ private:
     ImageComponent mSelectorImage;
 
     std::shared_ptr<Font> mFont;
+    std::string mIndicators;
     bool mUppercase;
     bool mLowercase;
     bool mCapitalize;
@@ -190,6 +192,7 @@ TextListComponent<T>::TextListComponent()
     , mAlignment {PrimaryAlignment::ALIGN_CENTER}
     , mHorizontalMargin {0.0f}
     , mFont {Font::get(FONT_SIZE_MEDIUM)}
+    , mIndicators {"symbols"}
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
@@ -587,8 +590,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("selectorHeight"))
             setSelectorHeight(elem->get<float>("selectorHeight") * Renderer::getScreenHeight());
         if (elem->has("selectorOffsetY")) {
-            float scale = this->mParent ? this->mParent->getSize().y :
-                                          static_cast<float>(Renderer::getScreenHeight());
+            float scale {this->mParent ? this->mParent->getSize().y :
+                                         static_cast<float>(Renderer::getScreenHeight())};
             setSelectorOffsetY(elem->get<float>("selectorOffsetY") * scale);
         }
         else {
@@ -596,8 +599,21 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (elem->has("indicators")) {
+        std::string indicators {elem->get<std::string>("indicators")};
+        if (indicators == "symbols" || indicators == "ascii" || indicators == "none") {
+            mIndicators = indicators;
+        }
+        else {
+            mIndicators = "symbols";
+            LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                               "<indicators> defined as \""
+                            << indicators << "\"";
+        }
+    }
+
     if (elem->has("selectorImagePath")) {
-        std::string path = elem->get<std::string>("selectorImagePath");
+        std::string path {elem->get<std::string>("selectorImagePath")};
         bool tile = elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile");
         mSelectorImage.setImage(path, tile);
         mSelectorImage.setSize(mSize.x, mSelectorHeight);
