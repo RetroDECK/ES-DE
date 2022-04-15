@@ -398,12 +398,12 @@ endif()
 if(APPLE)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          ${CURL_LIBRARIES}
-                         ${PROJECT_SOURCE_DIR}/libavcodec.58.dylib
-                         ${PROJECT_SOURCE_DIR}/libavfilter.7.dylib
-                         ${PROJECT_SOURCE_DIR}/libavformat.58.dylib
-                         ${PROJECT_SOURCE_DIR}/libavutil.56.dylib
-                         ${PROJECT_SOURCE_DIR}/libswresample.3.dylib
-                         ${PROJECT_SOURCE_DIR}/libswscale.5.dylib
+                         ${PROJECT_SOURCE_DIR}/libavcodec.59.dylib
+                         ${PROJECT_SOURCE_DIR}/libavfilter.8.dylib
+                         ${PROJECT_SOURCE_DIR}/libavformat.59.dylib
+                         ${PROJECT_SOURCE_DIR}/libavutil.57.dylib
+                         ${PROJECT_SOURCE_DIR}/libswresample.4.dylib
+                         ${PROJECT_SOURCE_DIR}/libswscale.6.dylib
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
                          ${PROJECT_SOURCE_DIR}/libpugixml.a

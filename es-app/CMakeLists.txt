@@ -187,19 +187,19 @@ elseif(APPLE)
                                 GROUP_READ GROUP_EXECUTE
                                 WORLD_READ WORLD_EXECUTE)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.58.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.59.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.7.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.8.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.58.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.59.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.56.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.57.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.55.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.56.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libswresample.3.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libswresample.4.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.5.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.6.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libvorbis.0.4.9.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)

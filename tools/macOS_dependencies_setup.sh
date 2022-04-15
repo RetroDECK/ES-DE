@@ -157,7 +157,7 @@ echo "\nSetting up SDL"
 rm -rf SDL
 git clone https://github.com/libsdl-org/SDL.git
 cd SDL
-git checkout release-2.0.18
+git checkout release-2.0.20
 ln -s include SDL2
 mkdir build
 cd ..
@@ -194,4 +194,4 @@ echo "\nSetting up FFmpeg"
 rm -rf FFmpeg
 git clone https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
-git checkout n4.4.1
+git checkout n5.0.1

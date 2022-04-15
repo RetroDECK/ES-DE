@@ -123,19 +123,19 @@ PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --prefix=/usr/
 
 make clean
 make -j${JOBS}
-install_name_tool -rpath /usr/local/lib @executable_path libavcodec/libavcodec.58.dylib
-cp libavcodec/libavcodec.58.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libavfilter/libavfilter.7.dylib
-cp libavfilter/libavfilter.7.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libavformat/libavformat.58.dylib
-cp libavformat/libavformat.58.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libavutil/libavutil.56.dylib
-cp libavutil/libavutil.56.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libpostproc/libpostproc.55.dylib
-cp libpostproc/libpostproc.55.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libswresample/libswresample.3.dylib
-cp libswresample/libswresample.3.dylib ../..
-install_name_tool -rpath /usr/local/lib @executable_path libswscale/libswscale.5.dylib
-cp libswscale/libswscale.5.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libavcodec/libavcodec.59.dylib
+cp libavcodec/libavcodec.59.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libavfilter/libavfilter.8.dylib
+cp libavfilter/libavfilter.8.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libavformat/libavformat.59.dylib
+cp libavformat/libavformat.59.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libavutil/libavutil.57.dylib
+cp libavutil/libavutil.57.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libpostproc/libpostproc.56.dylib
+cp libpostproc/libpostproc.56.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libswresample/libswresample.4.dylib
+cp libswresample/libswresample.4.dylib ../..
+install_name_tool -rpath /usr/local/lib @executable_path libswscale/libswscale.6.dylib
+cp libswscale/libswscale.6.dylib ../..
 
 unset PKG_CONFIG_PATH
