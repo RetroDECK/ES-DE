@@ -580,20 +580,6 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // Use ASCII for special characters in the gamelist view instead of the Font Awesome symbols.
-    auto special_chars_ascii = std::make_shared<SwitchComponent>();
-    special_chars_ascii->setState(Settings::getInstance()->getBool("SpecialCharsASCII"));
-    s->addWithLabel("USE PLAIN ASCII FOR SPECIAL GAMELIST CHARACTERS", special_chars_ascii);
-    s->addSaveFunc([special_chars_ascii, s] {
-        if (special_chars_ascii->getState() !=
-            Settings::getInstance()->getBool("SpecialCharsASCII")) {
-            Settings::getInstance()->setBool("SpecialCharsASCII", special_chars_ascii->getState());
-            s->setNeedsSaving();
-            s->setNeedsReloading();
-            s->setInvalidateCachedBackground();
-        }
-    });
-
     // Enable quick list scrolling overlay.
     auto list_scroll_overlay = std::make_shared<SwitchComponent>();
     list_scroll_overlay->setState(Settings::getInstance()->getBool("ListScrollOverlay"));

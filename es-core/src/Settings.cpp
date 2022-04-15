@@ -184,7 +184,6 @@ void Settings::setDefaults()
     mBoolMap["FoldersOnTop"] = {true, true};
     mBoolMap["FavoritesFirst"] = {true, true};
     mBoolMap["FavoritesStar"] = {true, true};
-    mBoolMap["SpecialCharsASCII"] = {false, false};
     mBoolMap["ListScrollOverlay"] = {false, false};
     mBoolMap["VirtualKeyboard"] = {true, true};
     mBoolMap["ScrollIndicators"] = {true, true};
