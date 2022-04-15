@@ -320,7 +320,7 @@ based on: recalbox-multi by the Recalbox community
             <folderLinkPos>0.54 0.64</folderLinkPos>
             <folderLinkSize>0.31</folderLinkSize>
             <itemMargin>-1.0 0.005</itemMargin>
-            <slots>collection, favorite, completed, kidgame, broken, controller, altemulator</slots>
+            <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
         </badges>
     </view>
 
