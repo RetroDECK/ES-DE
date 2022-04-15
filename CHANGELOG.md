@@ -17,6 +17,7 @@
 * Renamed the default theme set from rbsimple-DE to slate-DE
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
+* Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (as default) and OpenGL ES 3.0 respectively
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
@@ -34,6 +35,10 @@
 * Added a GameSelectorComponent for displaying game media and metadata in the system view
 * Added support to the system view for displaying videos, Lottie animations, GIF animations, date/time components and game ratings
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
+* Added theme support for setting the TextListComponent indicators to symbols, ascii or none
+* Added theme support for setting the TextListComponent custom collection indicators to symbols or ascii
+* Removed the "Use plain ASCII for special gamelist characters" menu option as it's now theme-controlled
+* Changed the badges default lines property value from 2 to 3
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
 * Added theme support for defining the opacity for most element types

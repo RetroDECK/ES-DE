@@ -1004,7 +1004,7 @@ Properties:
     - Default is `row`
 * `lines` - type: UNSIGNED_INTEGER
     - The number of lines available.
-    - Default is `2`
+    - Default is `3`
 * `itemsPerLine` - type: UNSIGNED_INTEGER
     - Number of badges that fit on a line. When more badges are available a new line will be started.
     - Default is `4`
@@ -1015,6 +1015,7 @@ Properties:
     - Default is `0.01 0.01`.
 * `slots` - type: STRING
     - The badge types that should be displayed. Specified as a list of strings delimited by commas or by whitespace characters (tabs, spaces or line breaks). The order in which they are defined will be followed when placing badges on screen. Available badges are:
+    - `collection` - Will be shown when editing a custom collection and the current entry is part of that collection.
     - `folder` - Will be shown when the current entry is a folder. If a folder link has been setup, then a configurable link icon will overlay this badge.
     - `favorite` - Will be shown when the game is marked as favorite.
     - `completed` - Will be shown when the game is marked as completed.
@@ -1514,6 +1515,14 @@ Properties:
     - Controls the space between lines (as a multiple of font height).
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
+* `indicators` - type: STRING
+    - Controls the style of the indicators which get displayed when an entry is a favorite, a folder or a folderlink. If set to `none` it's strongly recommended to enable the corresponding badges as it would otherwise be very confusing for the user as there would be no way to discern this important information about each entry. The `symbols` value uses Font Awesome graphics to prefix the game name and `ascii` uses plain ASCII characters instead, as provided by the selected font. The latter sometimes looks better on "lo-fi" themes using pixelated fonts and similar. When using ASCII characters, favorites are marked as `*` folders as `#` and folderlinks as `>`
+    - Valid values are `none`, `ascii` and `symbols`
+    - Default is `symbols`
+* `collectionIndicators` - type: STRING
+    - Controls the style of the indicators which get displayed when editing a custom collection. This property can't be disabled as it's crucial for getting a visual overview when editing collections. When set to `ascii`, the indicator is displayed as a `!`
+    - Valid values are `ascii` and `symbols`
+    - Default is `symbols`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
