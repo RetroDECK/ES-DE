@@ -522,7 +522,14 @@ void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
             for (auto& badge : badgeComponent->getBadgeTypes()) {
                 BadgeComponent::BadgeInfo badgeInfo;
                 badgeInfo.badgeType = badge;
-                if (badge == "folder") {
+                if (badge == "collection" && CollectionSystemsManager::getInstance()->isEditing()) {
+                    if (CollectionSystemsManager::getInstance()->inCustomCollection(
+                            CollectionSystemsManager::getInstance()->getEditingCollection(),
+                            file)) {
+                        badgeSlots.emplace_back(badgeInfo);
+                    }
+                }
+                else if (badge == "folder") {
                     if (file->getType() == FOLDER) {
                         if (file->metadata.get("folderlink") != "")
                             badgeInfo.folderLink = true;

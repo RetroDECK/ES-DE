@@ -7,6 +7,7 @@
 //  Used by the gamelist views.
 //
 
+#define SLOT_COLLECTION "collection"
 #define SLOT_FOLDER "folder"
 #define SLOT_FAVORITE "favorite"
 #define SLOT_COMPLETED "completed"
@@ -67,9 +68,10 @@ namespace
 BadgeComponent::BadgeComponent()
     : mFlexboxItems {}
     , mFlexboxComponent {mFlexboxItems}
-    , mBadgeTypes {{SLOT_FOLDER, SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME, SLOT_BROKEN,
-                    SLOT_CONTROLLER, SLOT_ALTEMULATOR}}
+    , mBadgeTypes {{SLOT_COLLECTION, SLOT_FOLDER, SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME,
+                    SLOT_BROKEN, SLOT_CONTROLLER, SLOT_ALTEMULATOR}}
 {
+    mBadgeIcons[SLOT_COLLECTION] = ":/graphics/badge_collection.svg";
     mBadgeIcons[SLOT_FOLDER] = ":/graphics/badge_folder.svg";
     mBadgeIcons[SLOT_FAVORITE] = ":/graphics/badge_favorite.svg";
     mBadgeIcons[SLOT_COMPLETED] = ":/graphics/badge_completed.svg";
@@ -249,6 +251,9 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mFlexboxComponent.setLines(lines);
         }
     }
+    else {
+        mFlexboxComponent.setLines(3);
+    }
 
     if (elem->has("itemsPerLine")) {
         const unsigned int itemsPerLine {elem->get<unsigned int>("itemsPerLine")};
@@ -260,6 +265,9 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             mFlexboxComponent.setItemsPerLine(itemsPerLine);
         }
+    }
+    else {
+        mFlexboxComponent.setItemsPerLine(4);
     }
 
     if (elem->has("itemMargin")) {
