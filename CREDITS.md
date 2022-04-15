@@ -120,7 +120,7 @@ https://github.com/RetroPie/es-theme-carbon
 
 # Sounds
 
-Used by the default rbsimple-DE theme as well as for fallback sounds (for themes that lack navigation sounds).
+Used by the default slate-DE theme as well as for fallback sounds (for themes that lack navigation sounds).
 
 https://freesound.org/people/adcbicycle/sounds/14066
 

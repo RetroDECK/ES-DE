@@ -15,7 +15,7 @@ Although there are multiple forks of EmulationStation in existence, the goal of 
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
 
-Two comprehensive theme sets, **rbsimple-DE** and **modern-DE** are bundled with the application.
+Two comprehensive theme sets, **slate-DE** (rbsimple-DE in the 1.x releases) and **modern-DE** are bundled with the application.
 
 The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
@@ -86,7 +86,7 @@ If you would like to contribute to the development of ES-DE, then that's great! 
 
 # Some feature highlights
 
-Here are some highlights of what ES-DE provides, displayed using the default theme set rbsimple-DE. There are of course many more features available, as covered in the  [User guide](USERGUIDE.md).
+Here are some highlights of what ES-DE provides, displayed using the default theme set slate-DE. There are of course many more features available, as covered in the  [User guide](USERGUIDE.md).
 
 ![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view**, which is the default starting point for the application, it's here that you browse through your game systems._
@@ -98,7 +98,7 @@ _The **Gamelist view**, it's here that you browse the actual games per system. N
 _Another example of the gamelist view, displaying advanced folder support. You can scrape folders for game info and game media, sort folders as you would files, mark them as favorites etc. In this example ES-DE has been configured to sort favorite games above non-favorites._
 
 ![alt text](images/es-de_custom_collections.png "ES-DE Custom Collections")
-_Games can be grouped into your own custom collections, in this example they're defined as game genres but you can name them anything you like. All gamelist views including the custom collections support both game images or game videos. By default the rbsimple-DE theme will display the game image for a short moment before starting to play the video._
+_Games can be grouped into your own custom collections, in this example they're defined as game genres but you can name them anything you like. All gamelist views including the custom collections support both game images or game videos. By default the slate-DE theme will display the game image for a short moment before starting to play the video._
 
 ![alt text](images/es-de_scraper_running.png "ES-DE Scraper Running")
 _This is a view of the built-in scraper which downloads game info and game media from either [screenscraper.fr](https://screenscraper.fr) or [thegamesdb.net](https://thegamesdb.net). It's possible to scrape a single game, or to run the multi-scraper which can scrape a complete game system or even your entire collection._
@@ -113,7 +113,7 @@ _In addition to the scraper there is a fully-featured metadata editor that can b
 _There are four types of built-in screensavers available, including a slideshow and the video screensaver shown in action above. These screensavers start after a configurable number of minutes of inactivity, and randomly display game media that you have previously scraped. If the corresponding option has been enabled, you can jump to the game from the screensaver, or even launch it directly. There is shader support in ES-DE to render scanlines and screen blur on top of the videos (for the slideshow screensaver, scanline rendering is provided)._
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_ES-DE is fully themeable, so if you prefer another look than what the default theme rbsimple-DE offers, it's possible to apply another theme set. The image above is of the modern-DE theme that is also bundled with the application. Note that although ES-DE is backward compatible with older RetroPie EmulationStation themes, some newer features which are specific to ES-DE will not work, at least not until the theme authors update their themes._
+_ES-DE is fully themeable, so if you prefer another look than what the default theme slate-DE offers, it's possible to apply another theme set. The image above is of the modern-DE theme that is also bundled with the application. Note that although ES-DE is backward compatible with older RetroPie EmulationStation themes, some newer features which are specific to ES-DE will not work, at least not until the theme authors update their themes._
 
 ![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _A lot of effort has been spent on making ES-DE easy to setup and use. The above screenshot shows the dialog if starting the application without any game files present in the default ROM directory. ES-DE also ships with a comprehensive game systems configuration file, so unless you really want to customize your setup, you should not need to tinker with the configuration._
