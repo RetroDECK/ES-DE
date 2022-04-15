@@ -586,17 +586,28 @@ namespace Utils
                             const std::string& from,
                             const std::string& to)
         {
-            std::string replaced;
-            size_t lastPos {0};
-            size_t findPos {0};
+            std::string result {stringArg};
 
-            while ((findPos = stringArg.find(from, lastPos)) != std::string::npos) {
-                replaced.append(stringArg, lastPos, findPos - lastPos).append(to);
-                lastPos = findPos + from.length();
+            // The outer loop makes sure that we're eliminating all repeating occurances
+            // of the 'from' value.
+            while (result.find(from) != std::string::npos) {
+                // Prevent endless loops.
+                if (from == to)
+                    break;
+
+                std::string replaced;
+                size_t lastPos {0};
+                size_t findPos {0};
+
+                while ((findPos = result.find(from, lastPos)) != std::string::npos) {
+                    replaced.append(result, lastPos, findPos - lastPos).append(to);
+                    lastPos = findPos + from.length();
+                }
+
+                replaced.append(result.substr(lastPos));
+                result = replaced;
             }
-
-            replaced.append(stringArg.substr(lastPos));
-            return replaced;
+            return result;
         }
 
         std::wstring stringToWideString(const std::string& stringArg)
