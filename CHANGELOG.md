@@ -71,6 +71,7 @@
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
 * Updated to build correctly with FFmpeg 5.0
+* Updated FFmpeg to 5.0 and SDL to 2.0.20 on Windows and macOS
 * Refactored the rendering code from a shared namespace into proper classes
 * Removed the deprecated OpenGL ES 1.0 renderer
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
