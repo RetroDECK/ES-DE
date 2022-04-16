@@ -55,6 +55,10 @@ public:
     void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme = nullptr);
     Entry& getEntry(int index) { return mEntries.at(index); }
     const CarouselType getType() { return mType; }
+    const std::string& getItemType() { return mItemType; }
+    void setItemType(std::string itemType) { mItemType = itemType; }
+    const std::string& getDefaultItem() { return mDefaultItem; }
+    void setDefaultItem(std::string defaultItem) { mDefaultItem = defaultItem; }
 
     void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
     {
@@ -111,6 +115,8 @@ private:
     bool mTriggerJump;
 
     CarouselType mType;
+    std::string mItemType;
+    std::string mDefaultItem;
     std::shared_ptr<Font> mFont;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
@@ -547,6 +553,75 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (!theme->isLegacyTheme()) {
+        if (elem->has("itemScale"))
+            mLogoScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 3.0f);
+        if (elem->has("itemSize")) {
+            // Keep size within a 0.05 and 1.0 multiple of the screen size.
+            glm::vec2 logoSize {elem->get<glm::vec2>("itemSize")};
+            if (std::max(logoSize.x, logoSize.y) > 1.0f) {
+                logoSize /= std::max(logoSize.x, logoSize.y);
+            }
+            else if (std::min(logoSize.x, logoSize.y) < 0.005f) {
+                float ratio {std::min(logoSize.x, logoSize.y) / 0.005f};
+                logoSize /= ratio;
+                // Just an extra precaution if a crazy ratio was used.
+                logoSize.x = glm::clamp(logoSize.x, 0.005f, 1.0f);
+                logoSize.y = glm::clamp(logoSize.y, 0.005f, 1.0f);
+            }
+            mLogoSize =
+                logoSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        }
+
+        if (elem->has("maxItemCount"))
+            mMaxLogoCount = glm::clamp(elem->get<float>("maxItemCount"), 0.5f, 30.0f);
+
+        if (elem->has("itemRotation"))
+            mLogoRotation = elem->get<float>("itemRotation");
+        if (elem->has("itemRotationOrigin"))
+            mLogoRotationOrigin = elem->get<glm::vec2>("itemRotationOrigin");
+
+        if (elem->has("itemHorizontalAlignment")) {
+            const std::string alignment {elem->get<std::string>("itemHorizontalAlignment")};
+            if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
+                mLogoHorizontalAlignment = ALIGN_LEFT;
+            }
+            else if (alignment == "right" && mType != CarouselType::HORIZONTAL) {
+                mLogoHorizontalAlignment = ALIGN_RIGHT;
+            }
+            else if (alignment == "center") {
+                mLogoHorizontalAlignment = ALIGN_CENTER;
+            }
+            else {
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "<itemHorizontalAlignment> defined as \""
+                                << alignment << "\"";
+                mLogoHorizontalAlignment = ALIGN_CENTER;
+            }
+        }
+
+        if (elem->has("itemVerticalAlignment")) {
+            const std::string alignment {elem->get<std::string>("itemVerticalAlignment")};
+            if (alignment == "top" && mType != CarouselType::VERTICAL) {
+                mLogoVerticalAlignment = ALIGN_TOP;
+            }
+            else if (alignment == "bottom" && mType != CarouselType::VERTICAL) {
+                mLogoVerticalAlignment = ALIGN_BOTTOM;
+            }
+            else if (alignment == "center") {
+                mLogoVerticalAlignment = ALIGN_CENTER;
+            }
+            else {
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "<itemVerticalAlignment> defined as \""
+                                << alignment << "\"";
+                mLogoVerticalAlignment = ALIGN_CENTER;
+            }
+        }
+    }
+
+    // Start of legacy themes only section.
+
     if (elem->has("logoScale"))
         mLogoScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
     if (elem->has("logoSize")) {
@@ -577,45 +652,6 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("logoRotationOrigin"))
         mLogoRotationOrigin = elem->get<glm::vec2>("logoRotationOrigin");
 
-    if (elem->has("logoHorizontalAlignment")) {
-        const std::string alignment {elem->get<std::string>("logoHorizontalAlignment")};
-        if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
-            mLogoHorizontalAlignment = ALIGN_LEFT;
-        }
-        else if (alignment == "right" && mType != CarouselType::HORIZONTAL) {
-            mLogoHorizontalAlignment = ALIGN_RIGHT;
-        }
-        else if (alignment == "center") {
-            mLogoHorizontalAlignment = ALIGN_CENTER;
-        }
-        else {
-            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<logoHorizontalAlignment> defined as \""
-                            << alignment << "\"";
-            mLogoHorizontalAlignment = ALIGN_CENTER;
-        }
-    }
-
-    if (elem->has("logoVerticalAlignment")) {
-        const std::string alignment {elem->get<std::string>("logoVerticalAlignment")};
-        if (alignment == "top" && mType != CarouselType::VERTICAL) {
-            mLogoVerticalAlignment = ALIGN_TOP;
-        }
-        else if (alignment == "bottom" && mType != CarouselType::VERTICAL) {
-            mLogoVerticalAlignment = ALIGN_BOTTOM;
-        }
-        else if (alignment == "center") {
-            mLogoVerticalAlignment = ALIGN_CENTER;
-        }
-        else {
-            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<logoVerticalAlignment> defined as \""
-                            << alignment << "\"";
-            mLogoVerticalAlignment = ALIGN_CENTER;
-        }
-    }
-
-    // Legacy themes only.
     if (elem->has("logoAlignment")) {
         const std::string alignment {elem->get<std::string>("logoAlignment")};
         if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
@@ -646,6 +682,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mLogoVerticalAlignment = ALIGN_CENTER;
         }
     }
+
+    // End of legacy theme section.
 
     mFont = Font::getFromTheme(elem, properties, mFont);
 

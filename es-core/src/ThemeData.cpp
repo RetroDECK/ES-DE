@@ -48,7 +48,13 @@ std::vector<std::string> ThemeData::sLegacyElements {
     {"showSnapshotDelay"},
     {"forceUppercase"},
     {"alignment"},
-    {"logoAlignment"}};
+    {"defaultLogo"},
+    {"logoSize"},
+    {"logoScale"},
+    {"logoRotation"},
+    {"logoRotationOrigin"},
+    {"logoAlignment"},
+    {"maxLogoCount"}};
 
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"16:9", "16:9"},
@@ -120,8 +126,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"saturation", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT},
-       {"showSnapshotNoVideo", BOOLEAN}, // For backward compatibility with legacy themes.
-       {"showSnapshotDelay", BOOLEAN}}}, // For backward compatibility with legacy themes.
+       {"showSnapshotNoVideo", BOOLEAN},           // For backward compatibility with legacy themes.
+       {"showSnapshotDelay", BOOLEAN}}},           // For backward compatibility with legacy themes.
      {"animation",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
@@ -144,7 +150,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"horizontalAlignment", STRING},
-       {"alignment", STRING}, // For backward compatibility with legacy themes.
+       {"alignment", STRING},                      // For backward compatibility with legacy themes.
        {"direction", STRING},
        {"lines", UNSIGNED_INTEGER},
        {"itemsPerLine", UNSIGNED_INTEGER},
@@ -178,11 +184,11 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"horizontalAlignment", STRING},
        {"verticalAlignment", STRING},
-       {"alignment", STRING}, // For backward compatibility with legacy themes.
+       {"alignment", STRING},                      // For backward compatibility with legacy themes.
        {"color", COLOR},
        {"backgroundColor", COLOR},
        {"letterCase", STRING},
-       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
+       {"forceUppercase", BOOLEAN},                // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
@@ -199,11 +205,11 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"horizontalAlignment", STRING},
        {"verticalAlignment", STRING},
-       {"alignment", STRING}, // For backward compatibility with legacy themes.
+       {"alignment", STRING},                      // For backward compatibility with legacy themes.
        {"color", COLOR},
        {"backgroundColor", COLOR},
        {"letterCase", STRING},
-       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
+       {"forceUppercase", BOOLEAN},                // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"format", STRING},
        {"displayRelative", BOOLEAN},
@@ -222,7 +228,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"backgroundColor", COLOR},
        {"horizontalAlignment", STRING},
        {"verticalAlignment", STRING},
-       {"alignment", STRING}, // For backward compatibility with legacy themes.
+       {"alignment", STRING},                      // For backward compatibility with legacy themes.
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
@@ -247,16 +253,23 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"color", COLOR},
        {"colorEnd", COLOR},
        {"gradientType", STRING},
-       {"logo", PATH},
-       {"defaultLogo", PATH},
-       {"logoSize", NORMALIZED_PAIR},
-       {"logoScale", FLOAT},
-       {"logoRotation", FLOAT},
-       {"logoRotationOrigin", NORMALIZED_PAIR},
-       {"logoHorizontalAlignment", STRING},
-       {"logoVerticalAlignment", STRING},
-       {"logoAlignment", STRING}, // For backward compatibility with legacy themes.
-       {"maxLogoCount", FLOAT},
+       {"staticItem", PATH},
+       {"itemType", STRING},
+       {"defaultItem", PATH},
+       {"itemSize", NORMALIZED_PAIR},
+       {"itemScale", FLOAT},
+       {"itemRotation", FLOAT},
+       {"itemRotationOrigin", NORMALIZED_PAIR},
+       {"itemHorizontalAlignment", STRING},
+       {"itemVerticalAlignment", STRING},
+       {"maxItemCount", FLOAT},
+       {"defaultLogo", PATH},                      // For backward compatibility with legacy themes.
+       {"logoSize", NORMALIZED_PAIR},              // For backward compatibility with legacy themes.
+       {"logoScale", FLOAT},                       // For backward compatibility with legacy themes.
+       {"logoRotation", FLOAT},                    // For backward compatibility with legacy themes.
+       {"logoRotationOrigin", NORMALIZED_PAIR},    // For backward compatibility with legacy themes.
+       {"logoAlignment", STRING},                  // For backward compatibility with legacy themes.
+       {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
        {"text", STRING},
        {"textColor", COLOR},
        {"textBackgroundColor", COLOR},
@@ -265,7 +278,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"lineSpacing", FLOAT},
        {"zIndex", FLOAT},
-       {"legacyZIndexMode", STRING}}}, // For backward compatibility with legacy themes.
+       {"legacyZIndexMode", STRING}}},             // For backward compatibility with legacy themes.
      {"textlist",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
@@ -282,12 +295,12 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"secondaryColor", COLOR},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"scrollSound", PATH}, // For backward compatibility with legacy themes.
+       {"scrollSound", PATH},                      // For backward compatibility with legacy themes.
        {"horizontalAlignment", STRING},
-       {"alignment", STRING}, // For backward compatibility with legacy themes.
+       {"alignment", STRING},                      // For backward compatibility with legacy themes.
        {"horizontalMargin", FLOAT},
        {"letterCase", STRING},
-       {"forceUppercase", BOOLEAN}, // For backward compatibility with legacy themes.
+       {"forceUppercase", BOOLEAN},                // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"indicators", STRING},
        {"collectionIndicators", STRING},
@@ -307,7 +320,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"entrySpacing", FLOAT},
        {"iconTextSpacing", FLOAT},
        {"letterCase", STRING},
-       {"textStyle", STRING}, // For backward compatibility with legacy themes.
+       {"textStyle", STRING},                      // For backward compatibility with legacy themes.
        {"opacity", FLOAT},
        {"customButtonIcon", PATH}}},
      {"sound",

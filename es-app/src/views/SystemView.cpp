@@ -466,10 +466,10 @@ void SystemView::populate()
                             }
                         });
                         if (mCarousel != nullptr) {
-                            if (element.second.has("logo"))
-                                logoPath = element.second.get<std::string>("logo");
-                            if (element.second.has("defaultLogo"))
-                                defaultLogoPath = element.second.get<std::string>("defaultLogo");
+                            if (element.second.has("staticItem"))
+                                logoPath = element.second.get<std::string>("staticItem");
+                            if (element.second.has("defaultItem"))
+                                defaultLogoPath = element.second.get<std::string>("defaultItem");
                         }
                     }
                     else if (element.second.type == "image") {

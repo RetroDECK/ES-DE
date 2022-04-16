@@ -136,6 +136,27 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             if (element.second.type == "carousel") {
                 if (mCarousel == nullptr) {
                     mCarousel = std::make_unique<CarouselComponent<FileData*>>();
+                    if (element.second.has("itemType")) {
+                        const std::string itemType {element.second.get<std::string>("itemType")};
+                        if (itemType == "marquee" || itemType == "cover" || itemType == "3dbox" ||
+                            itemType == "screenshot" || itemType == "titlescreen" ||
+                            itemType == "backcover" || itemType == "miximage" ||
+                            itemType == "fanart") {
+                            mCarousel->setItemType(itemType);
+                        }
+                        else {
+                            LOG(LogWarning)
+                                << "GamelistView::onThemeChanged(): Invalid theme configuration, "
+                                   "<itemType> property defined as \""
+                                << itemType << "\"";
+                            mCarousel->setItemType("marquee");
+                        }
+                    }
+                    else {
+                        mCarousel->setItemType("marquee");
+                    }
+                    if (element.second.has("defaultItem"))
+                        mCarousel->setDefaultItem(element.second.get<std::string>("defaultItem"));
                     mPrimary = mCarousel.get();
                 }
                 mPrimary->setCursorChangedCallback(

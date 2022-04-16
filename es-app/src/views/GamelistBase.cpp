@@ -557,15 +557,43 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 
     auto theme = mRoot->getSystem()->getTheme();
     std::string name;
+    std::string carouselItemType;
+    std::string carouselDefaultItem;
     unsigned int color {0};
+
+    if (mCarousel != nullptr) {
+        carouselItemType = mCarousel->getItemType();
+        carouselDefaultItem = mCarousel->getDefaultItem();
+    }
 
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); ++it) {
             if (mCarousel != nullptr) {
+                assert(carouselItemType != "");
+
                 CarouselComponent<FileData*>::Entry carouselEntry;
                 carouselEntry.name = (*it)->getName();
                 carouselEntry.object = *it;
-                carouselEntry.data.logoPath = (*it)->getMarqueePath();
+                if (carouselItemType == "" || carouselItemType == "marquee")
+                    carouselEntry.data.logoPath = (*it)->getMarqueePath();
+                else if (carouselItemType == "cover")
+                    carouselEntry.data.logoPath = (*it)->getCoverPath();
+                else if (carouselItemType == "3dbox")
+                    carouselEntry.data.logoPath = (*it)->get3DBoxPath();
+                else if (carouselItemType == "screenshot")
+                    carouselEntry.data.logoPath = (*it)->getScreenshotPath();
+                else if (carouselItemType == "titlescreen")
+                    carouselEntry.data.logoPath = (*it)->getTitleScreenPath();
+                else if (carouselItemType == "backcover")
+                    carouselEntry.data.logoPath = (*it)->getBackCoverPath();
+                else if (carouselItemType == "miximage")
+                    carouselEntry.data.logoPath = (*it)->getMiximagePath();
+                else if (carouselItemType == "fanart")
+                    carouselEntry.data.logoPath = (*it)->getFanArtPath();
+
+                if (carouselDefaultItem != "")
+                    carouselEntry.data.defaultLogoPath = carouselDefaultItem;
+
                 mCarousel->addEntry(carouselEntry, theme);
             }
 
