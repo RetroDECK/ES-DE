@@ -141,6 +141,7 @@ v1.2 maintenance release.
 
 * Added a scraper setting to convert underscores _ to spaces when searching
 * Replaced the RetroArch core 4DO with Opera for the 3do system
+* Added the .rom file extension to the atari800 system
 * Added the .wud and .wux file extensions for the wiiu system on Windows
 * Added --escape-exit command line option for the PPSSPP standalone emulator
 * Added -batch command line option for the DuckStation standalone emulator
@@ -148,6 +149,7 @@ v1.2 maintenance release.
 * (Windows) Added an "Emulators" directory to all emulators for portable installations
 * Added missing scraper entries for samcoupe and zx81 for TheGamesDB and zmachine for ScreenScraper
 * neogeocd is now scraped specifically as "Neo Geo CD" instead of the more generic "Neo Geo"
+* (rbsimple-DE) Made the xbox console graphics slightly darker
 
 ### Bug fixes
 

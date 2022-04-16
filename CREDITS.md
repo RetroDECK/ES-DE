@@ -11,7 +11,6 @@ https://retropie.org.uk
 Leon Styhre (Desktop Edition fork, based on the RetroPie version) \
 https://gitlab.com/leonstyhre/emulationstation-de
 
-
 # UI Art & Design
 
 Nils Bonenberger
@@ -111,6 +110,8 @@ CA certificates (for TLS/SSL support on Windows) \
 https://wiki.mozilla.org/CA
 
 # slate-DE theme set
+
+Original vector graphics by Matthew Stapleton
 
 Recalbox Multi (slate-DE is based on this theme, using assets from before their change to a more restrictive license in 2018) \
 https://gitlab.com/recalbox/recalbox-themes
