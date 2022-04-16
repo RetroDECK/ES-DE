@@ -4,18 +4,18 @@
             <type>vertical_wheel</type>
             <size>0.25 1.0</size>
             <pos>0 0</pos>
-            <logo>./${system.theme}/images/logo.svg</logo>
-            <logoScale>1.23</logoScale>
-            <logoSize>0.15 0.125</logoSize>
-            <logoRotation>6.5</logoRotation>
-            <logoRotationOrigin>-5 0.4</logoRotationOrigin>
-            <logoHorizontalAlignment>left</logoHorizontalAlignment>
+            <staticItem>./${system.theme}/images/logo.svg</staticItem>
+            <itemSize>0.15 0.125</itemSize>
+            <itemScale>1.23</itemScale>
+            <itemRotation>6.5</itemRotation>
+            <itemRotationOrigin>-5 0.4</itemRotationOrigin>
+            <itemHorizontalAlignment>left</itemHorizontalAlignment>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.070</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
             <text>${system.fullName}</text>
-            <maxLogoCount>10</maxLogoCount>
+            <maxItemCount>10</maxItemCount>
         </carousel>
         <text name="game_counter">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>

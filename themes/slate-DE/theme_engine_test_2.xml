@@ -146,22 +146,40 @@
     </view>
 
     <view name="gamelist">
-        <carousel name="system_carousel">
+        <carousel name="gamelist_carousel">
             <type>vertical</type>
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
-            <logoHorizontalAlignment>center</logoHorizontalAlignment>
-            <logo>./${system.theme}/images/logo.svg</logo>
-            <logoScale>1.23</logoScale>
-            <logoSize>0.25 0.125</logoSize>
+            <itemType>marquee</itemType>
+            <itemHorizontalAlignment>center</itemHorizontalAlignment>
+            <itemVerticalAlignment>bottom</itemVerticalAlignment>
+            <itemScale>1.23</itemScale>
+            <itemSize>0.20 0.105</itemSize>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.070</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
-            <text>${system.fullName}</text>
-            <maxLogoCount>5</maxLogoCount>
+            <maxItemCount>5</maxItemCount>
             <zIndex>80</zIndex>
         </carousel>
+        <!--
+        <carousel name="gamelist_carousel">
+            <type>horizontal</type>
+            <pos>0.025 0.201</pos>
+            <size>0.39 0.511</size>
+            <itemType>cover</itemType>
+            <itemHorizontalAlignment>center</itemHorizontalAlignment>
+            <itemVerticalAlignment>bottom</itemVerticalAlignment>
+            <itemScale>1.23</itemScale>
+            <itemSize>0.35 0.225</itemSize>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.070</fontSize>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.2</lineSpacing>
+            <maxItemCount>3</maxItemCount>
+            <zIndex>80</zIndex>
+        </carousel>
+    -->
         <image name="md_image">
             <origin>0.5 0.5</origin>
             <pos>0.63 0.45</pos>
@@ -174,7 +192,7 @@
 
     <!-- Gamelist view colors. -->
     <view name="gamelist">
-        <carousel name="system_carousel">
+        <carousel name="gamelist_carousel">
             <color>74747400</color>
             <textColor>262626</textColor>
         </carousel>

@@ -28,15 +28,15 @@ based on: recalbox-multi by the Recalbox community
     <variant name="lightMode, lightModeNoVideos, darkMode, darkModeNoVideos">
         <view name="system">
             <carousel name="system_carousel">
-                <logo>./${system.theme}/images/logo.svg</logo>
-                <logoScale>1.23</logoScale>
-                <logoSize>0.25 0.125</logoSize>
+                <staticItem>./${system.theme}/images/logo.svg</staticItem>
+                <itemScale>1.23</itemScale>
+                <itemSize>0.25 0.125</itemSize>
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.070</fontSize>
                 <letterCase>uppercase</letterCase>
                 <lineSpacing>1.2</lineSpacing>
                 <text>${system.fullName}</text>
-                <maxLogoCount>3</maxLogoCount>
+                <maxItemCount>3</maxItemCount>
             </carousel>
             <text name="game_counter">
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
