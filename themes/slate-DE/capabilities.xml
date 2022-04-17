@@ -52,6 +52,11 @@ Theme capabilities for rbsimple-DE.
         <selectable>true</selectable>
     </variant>
 
+    <variant name="themeEngineTest_3">
+        <label>Theme engine test 3</label>
+        <selectable>true</selectable>
+    </variant>
+
     <variant name="noMedia">
         <label>No game media</label>
         <selectable>false</selectable>

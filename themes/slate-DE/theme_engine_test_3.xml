@@ -1,0 +1,236 @@
+<theme>
+    <view name="system">
+        <textlist name="textlist_gamelist">
+            <pos>0.025 0.201</pos>
+            <size>0.39 0.711</size>
+            <horizontalAlignment>left</horizontalAlignment>
+            <horizontalMargin>0.01</horizontalMargin>
+            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+            <fontSize>0.025</fontSize>
+            <letterCase>uppercase</letterCase>
+        </textlist>
+        <text name="game_counter">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <pos>0.45 0.225</pos>
+            <size>0.4 0.056</size>
+            <origin>0 0.5</origin>
+            <letterCase>uppercase</letterCase>
+            <horizontalAlignment>left</horizontalAlignment>
+            <systemdata>gamecount</systemdata>
+            <zIndex>50</zIndex>
+        </text>
+        <image name="consolegame">
+            <pos>0.45 0.29</pos>
+            <maxSize>0.35 0.28</maxSize>
+            <origin>0 0</origin>
+        </image>
+        <image name="controller">
+            <pos>0.94 0.29</pos>
+            <maxSize>0.12 0.28</maxSize>
+            <origin>1 0</origin>
+        </image>
+        <image name="backframe2">
+            <pos>0.02 0.19</pos>
+            <size>0.4 0.735</size>
+            <origin>0 0</origin>
+            <path>./core/images/frame.png</path>
+            <zIndex>10</zIndex>
+        </image>
+        <image name="backframe3">
+            <pos>0.44 0.19</pos>
+            <size>0.54 0.735</size>
+            <origin>0 0</origin>
+            <path>./core/images/frame.png</path>
+            <zIndex>10</zIndex>
+        </image>
+        <image name="logo">
+            <pos>0.02 0.17</pos>
+            <maxSize>0.32 0.13</maxSize>
+            <origin>0 1</origin>
+        </image>
+        <text name="info1">
+            <pos>0.45 0.665</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info2">
+            <pos>0.45 0.686</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info3">
+            <pos>0.45 0.707</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info4">
+            <pos>0.45 0.728</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info5">
+            <pos>0.45 0.769</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info6">
+            <pos>0.45 0.790</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info7">
+            <pos>0.45 0.811</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info8">
+            <pos>0.45 0.832</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info9">
+            <pos>0.45 0.853</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+        <text name="info10">
+            <pos>0.45 0.874</pos>
+            <horizontalAlignment>left</horizontalAlignment>
+        </text>
+    </view>
+
+    <!-- System view colors. -->
+    <view name="system">
+        <text name="game_counter">
+            <color>202020</color>
+            <backgroundColor>00000000</backgroundColor>
+        </text>
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+            <color>262626</color>
+        </text>
+        <image name="background">
+            <color>404040</color>
+        </image>
+        <text name="logoText">
+            <color>262626</color>
+        </text>
+        <helpsystem name="help">
+            <textColor>C6C6C6</textColor>
+            <iconColor>C6C6C6</iconColor>
+            <textColorDimmed>B6B6B6</textColorDimmed>
+            <iconColorDimmed>B6B6B6</iconColorDimmed>
+            <entrySpacing>0.00833</entrySpacing>
+            <iconTextSpacing>0.00416</iconTextSpacing>
+            <fontSize>0.035</fontSize>
+        </helpsystem>
+        <textlist name="textlist_gamelist">
+            <selectorColor>161616</selectorColor>
+            <selectedColor>AFAFAF</selectedColor>
+            <primaryColor>262626</primaryColor>
+            <secondaryColor>333333</secondaryColor>
+        </textlist>
+        <image name="backframe2">
+            <color>6F6F6F</color>
+        </image>
+        <image name="backframe3">
+            <color>6F6F6F</color>
+        </image>
+    </view>
+
+    <!-- Default band colors (used if a system is unthemed). -->
+    <view name="system, gamelist">
+        <image name="band1">
+            <color>F6DD08</color>
+        </image>
+        <image name="band2">
+            <color>800000</color>
+        </image>
+        <image name="band3">
+            <color>FF0000</color>
+        </image>
+        <image name="band4">
+            <color>303030</color>
+        </image>
+    </view>
+
+    <view name="gamelist">
+        <carousel name="gamelist_carousel">
+            <type>horizontal</type>
+            <pos>0.025 0.231</pos>
+            <size>0.95 0.511</size>
+            <itemType>cover</itemType>
+            <itemHorizontalAlignment>center</itemHorizontalAlignment>
+            <itemVerticalAlignment>bottom</itemVerticalAlignment>
+            <itemScale>1.23</itemScale>
+            <itemSize>0.15 0.255</itemSize>
+            <unfocusedItemOpacity>1</unfocusedItemOpacity>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.070</fontSize>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.2</lineSpacing>
+            <maxItemCount>7</maxItemCount>
+            <zIndex>80</zIndex>
+        </carousel>
+        <text name="game_name">
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.045</fontSize>
+            <pos>0.03 0.195</pos>
+            <size>0.7 0.05</size>
+            <origin>0 0</origin>
+            <letterCase>none</letterCase>
+            <gameselector>selector_recent</gameselector>
+            <horizontalAlignment>left</horizontalAlignment>
+            <metadata>name</metadata>
+            <zIndex>50</zIndex>
+        </text>
+    </view>
+
+    <!-- Gamelist view colors. -->
+    <view name="gamelist">
+        <carousel name="gamelist_carousel">
+            <color>74747400</color>
+            <textColor>262626</textColor>
+        </carousel>
+        <helpsystem name="help">
+            <textColor>A6A6A6</textColor>
+            <iconColor>A6A6A6</iconColor>
+            <textColorDimmed>969696</textColorDimmed>
+            <iconColorDimmed>969696</iconColorDimmed>
+        </helpsystem>
+        <image name="background">
+            <color>404040</color>
+        </image>
+        <gamelistinfo name="gamelistInfo">
+            <color>303030</color>
+        </gamelistinfo>
+    </view>
+
+    <variant name="noMedia">
+        <view name="gamelist">
+            <image name="backframe1">
+                <color>9F9F9F</color>
+            </image>
+        </view>
+    </variant>
+
+    <view name="gamelist">
+        <image name="backframe2">
+            <color>6F6F6F</color>
+        </image>
+        <image name="backframe3">
+            <color>6F6F6F</color>
+        </image>
+        <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
+                        md_lbl_publisher, md_lbl_genre, md_lbl_players,
+                        md_lbl_lastplayed, md_lbl_playcount, md_developer,
+                        md_publisher, md_genre, md_players, md_playcount,
+                        md_description">
+            <color>262626</color>
+        </text>
+        <text name="md_lbl_rating, ,
+                        md_lbl_publisher, md_lbl_genre, md_lbl_players,
+                        md_lbl_lastplayed, md_lbl_playcount, ,
+                        md_publisher, md_genre, md_players, md_playcount,
+                        md_description">
+            <color>26262600</color>
+        </text>
+        <datetime name="md_releasedate, md_lastplayed">
+            <color>262626</color>
+        </datetime>
+        <datetime name="md_lastplayed">
+            <color>26262600</color>
+        </datetime>
+    </view>
+</theme>

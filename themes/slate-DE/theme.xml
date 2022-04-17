@@ -17,6 +17,10 @@ based on: recalbox-multi by the Recalbox community
         <include>./theme_engine_test_2.xml</include>
     </variant>
 
+    <variant name="themeEngineTest_3">
+        <include>./theme_engine_test_3.xml</include>
+    </variant>
+
     <variant name="lightMode, lightModeNoVideos">
         <include>./colors_light.xml</include>
     </variant>
@@ -34,6 +38,7 @@ based on: recalbox-multi by the Recalbox community
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.070</fontSize>
                 <letterCase>uppercase</letterCase>
+                <unfocusedItemOpacity>0.5</unfocusedItemOpacity>
                 <lineSpacing>1.2</lineSpacing>
                 <text>${system.fullName}</text>
                 <maxItemCount>3</maxItemCount>
@@ -303,8 +308,8 @@ based on: recalbox-multi by the Recalbox community
         <gamelistinfo name="gamelistInfo">
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
-            <size>0.2 0.1</size>
-            <pos>0.773 0.162</pos>
+            <size>0.2 0.05</size>
+            <pos>0.773 0.193</pos>
             <horizontalAlignment>right</horizontalAlignment>
         </gamelistinfo>
         <badges name="md_badges">
@@ -323,6 +328,37 @@ based on: recalbox-multi by the Recalbox community
             <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
         </badges>
     </view>
+
+    <variant name="themeEngineTest_3">
+        <view name="gamelist">
+            <image name="backframe2">
+                <pos>0.02 0.19</pos>
+                <size>0.96 0.735</size>
+                <origin>0 0</origin>
+                <path>./core/images/frame.png</path>
+                <zIndex>10</zIndex>
+            </image>
+            <image name="backframe3">
+                <visible>false</visible>
+            </image>
+            <text name="md_description">
+                <lineSpacing>1.2</lineSpacing>
+                <pos>0.025 0.205</pos>
+                <size>0.446 0.185</size>
+                <fontSize>0.02</fontSize>
+            </text>
+            <rating name="md_rating">
+                <pos>0.815 0.203</pos>
+                <size>0.04 0.03</size>
+            </rating>
+            <badges name="md_badges">
+                <pos>0.03 0.255</pos>
+                <size>0.38 0.08</size>
+                <lines>1</lines>
+                <itemsPerLine>10</itemsPerLine>
+            </badges>
+        </view>
+    </variant>
 
     <variant name="noMedia">
         <view name="gamelist">
