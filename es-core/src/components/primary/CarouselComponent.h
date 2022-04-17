@@ -124,6 +124,7 @@ private:
     float mLineSpacing;
     Alignment mItemHorizontalAlignment;
     Alignment mItemVerticalAlignment;
+    float mUnfocusedItemOpacity;
     float mMaxItemCount;
     glm::vec2 mItemSize;
     float mItemScale;
@@ -151,6 +152,7 @@ CarouselComponent<T>::CarouselComponent()
     , mLineSpacing {1.5f}
     , mItemHorizontalAlignment {ALIGN_CENTER}
     , mItemVerticalAlignment {ALIGN_CENTER}
+    , mUnfocusedItemOpacity {0.5f}
     , mMaxItemCount {3.0f}
     , mItemSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
     , mItemScale {1.2f}
@@ -461,9 +463,18 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         scale = std::min(mItemScale, std::max(1.0f, scale));
         scale /= mItemScale;
 
-        int opacity {
-            static_cast<int>(std::round(0x80 + ((0xFF - 0x80) * (1.0f - fabsf(distance)))))};
-        opacity = std::max(static_cast<int>(0x80), opacity);
+        float opacity {0.0f};
+
+        if (distance == 0.0f || mUnfocusedItemOpacity == 1.0f) {
+            opacity = 1.0f;
+        }
+        else if (fabsf(distance) >= 1.0f) {
+            opacity = mUnfocusedItemOpacity;
+        }
+        else {
+            float maxDiff {1.0f - mUnfocusedItemOpacity};
+            opacity = mUnfocusedItemOpacity + (maxDiff - (maxDiff * fabsf(distance)));
+        }
 
         const std::shared_ptr<GuiComponent>& comp {mEntries.at(index).data.item};
 
@@ -484,7 +495,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             scale = glm::clamp(scale, 1.0f / mItemScale + 0.01f, 1.0f);
 
         comp->setScale(scale);
-        comp->setOpacity(static_cast<float>(opacity) / 255.0f);
+        comp->setOpacity(opacity);
         comp->render(itemTrans);
     }
     mRenderer->popClipRect();
@@ -621,6 +632,10 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 mItemVerticalAlignment = ALIGN_CENTER;
             }
         }
+
+        if (elem->has("unfocusedItemOpacity"))
+            mUnfocusedItemOpacity =
+                glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
     }
 
     // Start of legacy themes only section.
