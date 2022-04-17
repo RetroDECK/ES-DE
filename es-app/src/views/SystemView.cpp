@@ -374,8 +374,8 @@ void SystemView::populate()
 
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};
-        std::string logoPath;
-        std::string defaultLogoPath;
+        std::string itemPath;
+        std::string defaultItemPath;
 
         if (mLegacyMode && mViewNeedsReload) {
             if (mCarousel == nullptr) {
@@ -467,9 +467,9 @@ void SystemView::populate()
                         });
                         if (mCarousel != nullptr) {
                             if (element.second.has("staticItem"))
-                                logoPath = element.second.get<std::string>("staticItem");
+                                itemPath = element.second.get<std::string>("staticItem");
                             if (element.second.has("defaultItem"))
-                                defaultLogoPath = element.second.get<std::string>("defaultItem");
+                                defaultItemPath = element.second.get<std::string>("defaultItem");
                         }
                     }
                     else if (element.second.type == "image") {
@@ -604,8 +604,8 @@ void SystemView::populate()
             CarouselComponent<SystemData*>::Entry entry;
             entry.name = it->getName();
             entry.object = it;
-            entry.data.logoPath = logoPath;
-            entry.data.defaultLogoPath = defaultLogoPath;
+            entry.data.itemPath = itemPath;
+            entry.data.defaultItemPath = defaultItemPath;
             mCarousel->addEntry(entry, theme);
         }
         if (mTextList != nullptr) {

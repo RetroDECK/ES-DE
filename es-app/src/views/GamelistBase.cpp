@@ -575,24 +575,24 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 carouselEntry.name = (*it)->getName();
                 carouselEntry.object = *it;
                 if (carouselItemType == "" || carouselItemType == "marquee")
-                    carouselEntry.data.logoPath = (*it)->getMarqueePath();
+                    carouselEntry.data.itemPath = (*it)->getMarqueePath();
                 else if (carouselItemType == "cover")
-                    carouselEntry.data.logoPath = (*it)->getCoverPath();
+                    carouselEntry.data.itemPath = (*it)->getCoverPath();
                 else if (carouselItemType == "3dbox")
-                    carouselEntry.data.logoPath = (*it)->get3DBoxPath();
+                    carouselEntry.data.itemPath = (*it)->get3DBoxPath();
                 else if (carouselItemType == "screenshot")
-                    carouselEntry.data.logoPath = (*it)->getScreenshotPath();
+                    carouselEntry.data.itemPath = (*it)->getScreenshotPath();
                 else if (carouselItemType == "titlescreen")
-                    carouselEntry.data.logoPath = (*it)->getTitleScreenPath();
+                    carouselEntry.data.itemPath = (*it)->getTitleScreenPath();
                 else if (carouselItemType == "backcover")
-                    carouselEntry.data.logoPath = (*it)->getBackCoverPath();
+                    carouselEntry.data.itemPath = (*it)->getBackCoverPath();
                 else if (carouselItemType == "miximage")
-                    carouselEntry.data.logoPath = (*it)->getMiximagePath();
+                    carouselEntry.data.itemPath = (*it)->getMiximagePath();
                 else if (carouselItemType == "fanart")
-                    carouselEntry.data.logoPath = (*it)->getFanArtPath();
+                    carouselEntry.data.itemPath = (*it)->getFanArtPath();
 
                 if (carouselDefaultItem != "")
-                    carouselEntry.data.defaultLogoPath = carouselDefaultItem;
+                    carouselEntry.data.defaultItemPath = carouselDefaultItem;
 
                 mCarousel->addEntry(carouselEntry, theme);
             }
