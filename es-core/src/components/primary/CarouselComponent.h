@@ -387,6 +387,10 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
     mRenderer->setMatrix(carouselTrans);
 
+    // In image debug mode, draw a green rectangle covering the entire carousel area.
+    if (Settings::getInstance()->getBool("DebugImage"))
+        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00FF0033, 0x00FF0033);
+
     // Background box behind the items.
     mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mCarouselColor, mCarouselColorEnd,
                         mColorGradientHorizontal);

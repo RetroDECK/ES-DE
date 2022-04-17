@@ -376,7 +376,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     if (Settings::getInstance()->getBool("DebugText")) {
         mRenderer->drawRect(mHorizontalMargin, 0.0f, mSize.x - mHorizontalMargin * 2.0f, mSize.y,
                             0x00000033, 0x00000033);
-        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
+        mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00FF0033, 0x00FF0033);
     }
 
     // Clip to inside margins.
