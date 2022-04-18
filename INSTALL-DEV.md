@@ -1704,11 +1704,11 @@ In addition to this extra logging, a few key combinations are enabled when in de
 
 **Ctrl + i**
 
-This will draw a semi-transparent red frame behind all image and animation components.
+This will draw a semi-transparent red frame behind all image and animation components. It will also draw a green frame around the carousel.
 
 **Ctrl + t**
 
-This will draw a semi-transparent blue frame around all text components.
+This will draw a semi-transparent blue frame around all text components. It will also draw a green frame around the textlist.
 
 **Ctrl + g**
 

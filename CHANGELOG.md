@@ -55,6 +55,8 @@
 * Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
 * Changed the helpsystem properties entrySpacing and iconTextSpacing from fixed pixel values to relative values
 * Added support for using unsigned integers for theme properties
+* Added the rendering of a green rectangle around the CarouselComponent when pressing Ctrl+i in debug mode
+* Changed the color of the rectangle from blue to green for TextListComponent when pressing Ctrl+t in debug mode
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
@@ -87,6 +89,9 @@
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
+* Changed the carousel properties to be more generic by renaming "logo" to "item", e.g. itemSize, maxItemCount etc.
+* Added reflections support to the carousel
+* Added carousel theme support for setting the opacity for unfocused entries
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
 * Removed a lot of unnecessary applyTheme() calls when updating help prompts
@@ -108,6 +113,7 @@
 
 ### Bug fixes
 
+* A renderer heisenbug caused single-pixel alignment issues at multiple places throughout the application
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances

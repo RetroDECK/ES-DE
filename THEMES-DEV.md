@@ -82,6 +82,7 @@ The following are the most important changes compared to the legacy theme struct
 * The `video` element properties `showSnapshotNoVideo` and `showSnapshotDelay` have been removed
 * The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` element)
 * The `forceUppercase` property has been replaced with the more versatile `letterCase` property
+* Many property names for the carousel have been renamed, with _logo_ being replaced by _item_ as this element can now be used in both the gamelist and system views. As well, setting the alignment will not automatically add any margins as is the case for legacy themes. These can still be set manually using the `horizontalOffset` and `verticalOffset` properties if needed
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
 * The carousel property maxLogoCount is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine
 * The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
@@ -1406,39 +1407,73 @@ Properties:
     - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
-* `logo` - type: PATH
-    - Path to the logo image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif).
-* `defaultLogo` - type: PATH
-    - Path to the default logo file which will be displayed if the image defined via the `logo` property is not found. Most common extensions are supported (including .jpg, .png, and unanimated .gif).
-* `logoSize` - type: NORMALIZED_PAIR
+* `staticItem` - type: PATH
+    - Path to a static image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
+* `itemType` - type: STRING
+    - This displays a game image of a certain media type, and can only be used in the `gamelist` view.
+    - Valid values:
+    - `marquee` - This will look for a marquee (wheel) image.
+    - `cover` - This will look for a box front cover image.
+    - `backcover` - This will look for a box back cover image.
+    - `3dbox` - This will look for a 3D box image.
+    - `screenshot` - This will look for a screenshot image.
+    - `titlescreen` - This will look for a title screen image.
+    - `miximage` - This will look for a miximage.
+    - `fanart` - This will look for a fan art image.
+    - Default is `marquee`
+* `defaultItem` - type: PATH
+    - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+* `itemSize` - type: NORMALIZED_PAIR
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
-* `logoScale` - type: FLOAT.
-    - Selected logo is increased in size by this scale
+* `itemScale` - type: FLOAT.
+    - Selected item is increased in size by this scale
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.2`
-* `logoRotation` - type: FLOAT
-    - Angle in degrees that the logos should be rotated. Value should be positive.
+* `itemRotation` - type: FLOAT
+    - Angle in degrees that the item should be rotated. Value should be positive.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `7.5`
-* `logoRotationOrigin` - type: NORMALIZED_PAIR
-    - Point around which the logos will be rotated.
+* `itemRotationOrigin` - type: NORMALIZED_PAIR
+    - Point around which the item will be rotated.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `-3 0.5`
-* `logoHorizontalAlignment` - type: STRING
-    - Sets `logo` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
+* `itemHorizontalAlignment` - type: STRING
+    - Sets `staticItem` / `itemType` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
     - Valid values are `left`, `center` or `right`
     - Default is `center`
-* `logoVerticalAlignment` - type: STRING
-    - Sets `logo` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
+* `itemVerticalAlignment` - type: STRING
+    - Sets `staticItem` / `itemType` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
-* `maxLogoCount` - type: FLOAT
-    - Sets the number of logos to display in the carousel.
+* `horizontalOffset` - type: FLOAT
+    - Offsets the carousel horizontally inside its designated area, as defined by the `size` property. The value of this property is relative to the width of the carousel (with `1` being equivalent to its entire width). This property can be used to add a margin if using `itemHorizontalAlignment`.
+    - Minimum value is `-1.0` and maximum value is `1`
+    - Default is `0`
+* `verticalOffset` - type: FLOAT
+    - Offsets the carousel vertically inside its designated area, as defined by the `size` property. The value of this property is relative to the height of the carousel (with `1` being equivalent to its entire height). This can be used to add a margin if using `itemVerticalAlignment` but is even more useful if `reflections` has been set as it allows the control of how much of the reflections to display by relocating the carousel inside its clipping area.
+    - Minimum value is `-1.0` and maximum value is `1`
+    - Default is `0`
+* `reflections` - type: BOOLEAN
+    - Enables reflections beneath the carousel items. This is only available for the `horizontal` carousel type. It's probably a good idea to combine this with the `verticalOffset` property to define how much of the reflections should be visible.
+* `reflectionsOpacity` - type: FLOAT
+    - Defines the base opacity for the reflections.
+    - Minimum value is `0.1` and maximum value is `1`
+    - Default is `0.5`
+* `reflectionsFalloff` - type: FLOAT
+    - Defines the opacity falloff for the reflections, starting from the base opacity value. Setting this property to `1` will fade the bottom of the reflection to complete transparency. Setting it above `1` will lead to a more aggressive falloff.
+    - Minimum value is `0` and maximum value is `5`
+    - Default is `1`
+* `unfocusedItemOpacity` - type: FLOAT
+    - Sets the opacity for the items that are not currently focused.
+    - Minimum value is `0.1` and maximum value is `1`
+    - Default is `0.5`
+* `maxItemCount` - type: FLOAT
+    - Sets the number of items to display in the carousel.
     - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
 * `text` - type: STRING
-    - A string literal to display if there is no `logo` or `defaultLogo` properties defined and if no images were found.
+    - A string literal to display if there is no `staticItem` / `itemType` or `defaultItem` properties defined or if no images were found.
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
@@ -1447,7 +1482,7 @@ Properties:
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
 * `fontPath` - type: PATH
-    - Path to a TrueType font (.ttf) used as fallback if there is no `logo` image defined or found, and if `defaultLogo` has not been defined.
+    - Path to a TrueType font (.ttf) used as fallback if there is no `staticItem` / `itemType` image defined or found, and if `defaultItem` has not been defined.
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
     - Default is `0.085`
@@ -1679,6 +1714,6 @@ Deprecated.
 * `backgroundColor` - type: COLOR.
     - A shortcut to define both the center color and edge color at the same time. The default tile background color and selected tile background color have no influence on each others.
 * `backgroundCenterColor` - type: COLOR.
-    - Set the color of the center part of the ninepatch. The default tile background center color and selected tile background center color have no influence on each others.
+    - Sets the color of the center part of the ninepatch. The default tile background center color and selected tile background center color have no influence on each others.
 * `backgroundEdgeColor` - type: COLOR.
-    - Set the color of the edge parts of the ninepatch. The default tile background edge color and selected tile background edge color have no influence on each others.
+    - Sets the color of the edge parts of the ninepatch. The default tile background edge color and selected tile background edge color have no influence on each others.
