@@ -149,31 +149,36 @@
         <carousel name="gamelist_carousel">
             <type>horizontal</type>
             <pos>0.025 0.231</pos>
-            <size>0.95 0.511</size>
+            <size>0.95 0.692</size>
             <itemType>cover</itemType>
-            <itemHorizontalAlignment>center</itemHorizontalAlignment>
-            <itemVerticalAlignment>bottom</itemVerticalAlignment>
-            <itemScale>1.23</itemScale>
-            <itemSize>0.15 0.255</itemSize>
+            <itemVerticalAlignment>center</itemVerticalAlignment>
+            <itemScale>1.53</itemScale>
+            <itemSize>0.105 0.235</itemSize>
             <unfocusedItemOpacity>1</unfocusedItemOpacity>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.070</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
-            <maxItemCount>7</maxItemCount>
-            <zIndex>80</zIndex>
+            <reflections>true</reflections>
+            <reflectionsOpacity>0.3</reflectionsOpacity>
+            <reflectionsFalloff>1.05</reflectionsFalloff>
+            <verticalOffset>0.1</verticalOffset>
+            <maxItemCount>5</maxItemCount>
+            <zIndex>60</zIndex>
         </carousel>
         <text name="game_name">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
-            <pos>0.03 0.195</pos>
-            <size>0.7 0.05</size>
+            <pos>0.03 0.77</pos>
+            <size>0.95 0.08</size>
             <origin>0 0</origin>
+            <color>DDDDDD</color>
             <letterCase>none</letterCase>
             <gameselector>selector_recent</gameselector>
-            <horizontalAlignment>left</horizontalAlignment>
+            <horizontalAlignment>center</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
             <metadata>name</metadata>
-            <zIndex>50</zIndex>
+            <zIndex>80</zIndex>
         </text>
     </view>
 
@@ -207,29 +212,27 @@
 
     <view name="gamelist">
         <image name="backframe2">
-            <color>6F6F6F</color>
+            <color>181818</color>
+            <!--            <color>181818</color> -->
         </image>
         <image name="backframe3">
             <color>6F6F6F</color>
         </image>
-        <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
-                        md_lbl_publisher, md_lbl_genre, md_lbl_players,
-                        md_lbl_lastplayed, md_lbl_playcount, md_developer,
-                        md_publisher, md_genre, md_players, md_playcount,
-                        md_description">
+        <text name="md_lbl_rating,
+                    md_lbl_publisher, md_lbl_genre, md_lbl_players,
+                    md_lbl_lastplayed, md_lbl_playcount,
+                    md_publisher, md_genre, md_players, md_playcount,
+                    md_description">
             <color>262626</color>
         </text>
-        <text name="md_lbl_rating, ,
-                        md_lbl_publisher, md_lbl_genre, md_lbl_players,
-                        md_lbl_lastplayed, md_lbl_playcount, ,
-                        md_publisher, md_genre, md_players, md_playcount,
-                        md_description">
+        <text name="md_lbl_rating,
+                    md_lbl_publisher, md_lbl_releasedate, md_lbl_developer, md_lbl_genre,
+                    md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_developer,
+                    md_publisher, md_genre, md_players, md_playcount,
+                    md_description">
             <color>26262600</color>
         </text>
-        <datetime name="md_releasedate, md_lastplayed">
-            <color>262626</color>
-        </datetime>
-        <datetime name="md_lastplayed">
+        <datetime name="md_releasedate md_lastplayed">
             <color>26262600</color>
         </datetime>
     </view>

@@ -350,9 +350,10 @@ based on: recalbox-multi by the Recalbox community
             <rating name="md_rating">
                 <pos>0.815 0.203</pos>
                 <size>0.04 0.03</size>
+                <color>FFEE00</color>
             </rating>
             <badges name="md_badges">
-                <pos>0.03 0.255</pos>
+                <pos>0.03 0.205</pos>
                 <size>0.38 0.08</size>
                 <lines>1</lines>
                 <itemsPerLine>10</itemsPerLine>
