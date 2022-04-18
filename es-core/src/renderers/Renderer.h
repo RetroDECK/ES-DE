@@ -62,6 +62,7 @@ public:
         float opacity;
         float saturation;
         float dimming;
+        float reflectionsFalloff;
         unsigned int shaders;
         unsigned int shaderFlags;
 
@@ -69,6 +70,7 @@ public:
             : opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
+            , reflectionsFalloff {0.0f}
             , shaders {0}
             , shaderFlags {0}
         {
@@ -81,6 +83,7 @@ public:
             , opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
+            , reflectionsFalloff {0.0f}
             , shaders {0}
             , shaderFlags {0}
         {

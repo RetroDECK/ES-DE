@@ -37,6 +37,7 @@ in vec2 texCoord;
 uniform float opacity;
 uniform float saturation;
 uniform float dimming;
+uniform float reflectionsFalloff;
 uniform uint shaderFlags;
 
 uniform sampler2D textureSampler;
@@ -82,6 +83,10 @@ void main()
     // BGRA to RGBA conversion.
     if (0u != (shaderFlags & 1u))
         sampledColor = sampledColor.bgra;
+
+    // Reflections falloff.
+    if (reflectionsFalloff > 0.0)
+        sampledColor.a = mix(sampledColor.a, sampledColor.a - reflectionsFalloff, texCoord.y);
 
     FragColor = sampledColor;
 }

@@ -117,6 +117,7 @@ private:
     CarouselType mType;
     std::string mItemType;
     std::string mDefaultItem;
+    bool mLegacyMode;
     std::shared_ptr<Font> mFont;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
@@ -133,6 +134,11 @@ private:
     unsigned int mCarouselColor;
     unsigned int mCarouselColorEnd;
     bool mColorGradientHorizontal;
+    bool mReflections;
+    float mReflectionsOpacity;
+    float mReflectionsFalloff;
+    float mHorizontalOffset;
+    float mVerticalOffset;
 };
 
 template <typename T>
@@ -146,6 +152,7 @@ CarouselComponent<T>::CarouselComponent()
     , mPreviousScrollVelocity {0}
     , mTriggerJump {false}
     , mType {CarouselType::HORIZONTAL}
+    , mLegacyMode {false}
     , mFont {Font::get(FONT_SIZE_LARGE)}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
@@ -161,6 +168,11 @@ CarouselComponent<T>::CarouselComponent()
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
+    , mReflections {false}
+    , mReflectionsOpacity {0.5f}
+    , mReflectionsFalloff {1.0f}
+    , mHorizontalOffset {0.0f}
+    , mVerticalOffset {0.0f}
 {
 }
 
@@ -183,7 +195,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
                 auto item = std::make_shared<ImageComponent>(false, false);
                 item->setLinearInterpolation(true);
-                item->setMaxSize(glm::round(mItemSize * mItemScale));
+                item->setMaxSize(mItemSize * mItemScale);
                 item->applyTheme(theme, "system", "image_logo",
                                  ThemeFlags::PATH | ThemeFlags::COLOR);
                 item->setRotateByTargetSize(true);
@@ -197,7 +209,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             auto item = std::make_shared<ImageComponent>(false, false);
             item->setLinearInterpolation(true);
             item->setImage(entry.data.itemPath);
-            item->setMaxSize(glm::round(mItemSize * mItemScale));
+            item->setMaxSize(mItemSize * mItemScale);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
             item->setRotateByTargetSize(true);
             entry.data.item = item;
@@ -207,7 +219,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             auto defaultItem = std::make_shared<ImageComponent>(false, false);
             defaultItem->setLinearInterpolation(true);
             defaultItem->setImage(entry.data.defaultItemPath);
-            defaultItem->setMaxSize(glm::round(mItemSize * mItemScale));
+            defaultItem->setMaxSize(mItemSize * mItemScale);
             defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
             defaultItem->setRotateByTargetSize(true);
             entry.data.item = defaultItem;
@@ -403,36 +415,59 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     float xOff {0.0f};
     float yOff {0.0f};
 
-    switch (mType) {
-        case CarouselType::HORIZONTAL_WHEEL:
-        case CarouselType::VERTICAL_WHEEL:
-            xOff = std::round((mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.y));
-            yOff = (mSize.y - mItemSize.y) / 2.0f;
-            break;
-        case CarouselType::VERTICAL:
-            itemSpacing.y =
-                ((mSize.y - (mItemSize.y * mMaxItemCount)) / (mMaxItemCount)) + mItemSize.y;
-            yOff = (mSize.y - mItemSize.y) / 2.0f - (mEntryCamOffset * itemSpacing.y);
-            if (mItemHorizontalAlignment == ALIGN_LEFT)
+    if (mType == CarouselType::HORIZONTAL_WHEEL || mType == CarouselType::VERTICAL_WHEEL) {
+        xOff = (mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.y);
+        yOff = (mSize.y - mItemSize.y) / 2.0f;
+    }
+    else if (mType == CarouselType::VERTICAL) {
+        itemSpacing.y = ((mSize.y - (mItemSize.y * mMaxItemCount)) / (mMaxItemCount)) + mItemSize.y;
+        yOff = (mSize.y - mItemSize.y) / 2.0f - (mEntryCamOffset * itemSpacing.y);
+        if (mItemHorizontalAlignment == ALIGN_LEFT) {
+            if (mLegacyMode)
                 xOff = mItemSize.x / 10.0f;
-            else if (mItemHorizontalAlignment == ALIGN_RIGHT)
-                xOff = mSize.x - (mItemSize.x * 1.1f);
             else
-                xOff = (mSize.x - mItemSize.x) / 2.0f;
-            break;
-        case CarouselType::HORIZONTAL:
-        default:
-            itemSpacing.x =
-                ((mSize.x - (mItemSize.x * mMaxItemCount)) / (mMaxItemCount)) + mItemSize.x;
-            xOff = std::round((mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.x));
-            if (mItemVerticalAlignment == ALIGN_TOP)
+                xOff = 0.0f;
+        }
+        else if (mItemHorizontalAlignment == ALIGN_RIGHT) {
+            if (mLegacyMode)
+                xOff = mSize.x - mItemSize.x * 1.1f;
+            else
+                xOff = mSize.x - mItemSize.x;
+        }
+        else {
+            xOff = (mSize.x - mItemSize.x) / 2.0f;
+        }
+    }
+    else { // HORIZONTAL.
+        itemSpacing.x = ((mSize.x - (mItemSize.x * mMaxItemCount)) / (mMaxItemCount)) + mItemSize.x;
+        xOff = (mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.x);
+        if (mItemVerticalAlignment == ALIGN_TOP) {
+            if (mLegacyMode)
                 yOff = mItemSize.y / 10.0f;
-            else if (mItemVerticalAlignment == ALIGN_BOTTOM)
+            else
+                yOff = 0.0f;
+        }
+        else if (mItemVerticalAlignment == ALIGN_BOTTOM) {
+            if (mLegacyMode)
                 yOff = mSize.y - (mItemSize.y * 1.1f);
             else
+                yOff = mSize.y - mItemSize.y - (mReflections ? ((mItemSize.y * mItemScale)) : 0.0f);
+        }
+        else {
+            if (mLegacyMode)
                 yOff = (mSize.y - mItemSize.y) / 2.0f;
-            break;
+            else
+                yOff = (mSize.y - (mItemSize.y * (mReflections ? 2.0f : 1.0f))) / 2.0f;
+        }
     }
+
+    if (!mLegacyMode) {
+        xOff += mSize.x * mHorizontalOffset;
+        yOff += mSize.y * mVerticalOffset;
+    }
+
+    xOff = std::round(xOff);
+    yOff = std::round(yOff);
 
     int center {static_cast<int>(mEntryCamOffset)};
     int itemInclusion {static_cast<int>(std::ceil(mMaxItemCount / 2.0f))};
@@ -441,27 +476,26 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     for (int i = center - itemInclusion; i < center + itemInclusion + 2; ++i) {
         int index {i};
 
-        // If there is only a single entry, then only render the item once (in the center).
-        if (singleEntry) {
-            mEntries.at(0).data.item->render(
-                glm::translate(carouselTrans, glm::vec3 {0 + xOff, 0 + yOff, 0.0f}));
-            break;
-        }
-
         while (index < 0)
             index += static_cast<int>(mEntries.size());
         while (index >= static_cast<int>(mEntries.size()))
             index -= static_cast<int>(mEntries.size());
 
-        glm::mat4 itemTrans {carouselTrans};
-        itemTrans = glm::translate(
-            itemTrans, glm::vec3 {i * itemSpacing.x + xOff, i * itemSpacing.y + yOff, 0.0f});
-
         float distance {i - mEntryCamOffset};
+
+        if (singleEntry)
+            distance = 0.0f;
 
         float scale {1.0f + ((mItemScale - 1.0f) * (1.0f - fabsf(distance)))};
         scale = std::min(mItemScale, std::max(1.0f, scale));
         scale /= mItemScale;
+
+        glm::mat4 itemTrans {carouselTrans};
+        if (singleEntry)
+            itemTrans = glm::translate(carouselTrans, glm::vec3 {xOff, yOff, 0.0f});
+        else
+            itemTrans = glm::translate(
+                itemTrans, glm::vec3 {i * itemSpacing.x + xOff, i * itemSpacing.y + yOff, 0.0f});
 
         float opacity {0.0f};
 
@@ -486,17 +520,33 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             comp->setRotationOrigin(mItemRotationOrigin);
         }
 
-        // When running at lower resolutions, prevent the scale-down to go all the way to
-        // the minimum value. This avoids potential single-pixel alignment issues when the
-        // item can't be vertically placed exactly in the middle of the carousel. Although
-        // the problem theoretically exists at all resolutions, it's not visble at around
-        // 1080p and above.
-        if (std::min(Renderer::getScreenWidth(), Renderer::getScreenHeight()) < 1080.0f)
-            scale = glm::clamp(scale, 1.0f / mItemScale + 0.01f, 1.0f);
-
         comp->setScale(scale);
         comp->setOpacity(opacity);
         comp->render(itemTrans);
+
+        // Don't attempt to add reflections for text entries.
+        if (mReflections && (mEntries.at(index).data.itemPath != "" ||
+                             mEntries.at(index).data.defaultItemPath != "")) {
+            itemTrans =
+                glm::translate(itemTrans, glm::vec3 {0.0f, comp->getSize().y * scale, 0.0f});
+            const unsigned int colorShift {comp->getColorShift()};
+            comp->setColorGradientHorizontal(false);
+            comp->setColorShift(0xFFFFFF00 | static_cast<int>(mReflectionsOpacity * 255.0f));
+            float falloff {glm::clamp(mReflectionsFalloff, 0.0f, 1.0f)};
+            falloff = mReflectionsOpacity * (1.0f - falloff);
+            comp->setColorShiftEnd(0xFFFFFF00 | static_cast<int>(falloff * 255.0f));
+            // "Extra" falloff as a value of 1.0 already fades the image completely.
+            if (mReflectionsFalloff > 1.0f)
+                comp->setReflectionsFalloff(mReflectionsFalloff - 1.0f);
+            comp->setFlipY(true);
+            comp->render(itemTrans);
+            comp->setFlipY(false);
+            comp->setColorShift(colorShift);
+            comp->setReflectionsFalloff(0.0f);
+        }
+
+        if (singleEntry)
+            break;
     }
     mRenderer->popClipRect();
 }
@@ -521,6 +571,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (!elem)
         return;
+
+    mLegacyMode = theme->isLegacyTheme();
 
     if (elem->has("type")) {
         const std::string type {elem->get<std::string>("type")};
@@ -567,7 +619,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (!theme->isLegacyTheme()) {
+    if (!mLegacyMode) {
         if (elem->has("itemScale"))
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 3.0f);
         if (elem->has("itemSize")) {
@@ -633,75 +685,98 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
         }
 
+        if (elem->has("horizontalOffset"))
+            mHorizontalOffset = glm::clamp(elem->get<float>("horizontalOffset"), -1.0f, 1.0f);
+
+        if (elem->has("verticalOffset"))
+            mVerticalOffset = glm::clamp(elem->get<float>("verticalOffset"), -1.0f, 1.0f);
+
+        if (elem->has("reflections") && elem->get<bool>("reflections")) {
+            if (mType == CarouselType::HORIZONTAL) {
+                mReflections = elem->get<bool>("reflections");
+            }
+            else {
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "<reflections> only supported for horizontal carousel type";
+            }
+        }
+
+        if (elem->has("reflectionsOpacity"))
+            mReflectionsOpacity = glm::clamp(elem->get<float>("reflectionsOpacity"), 0.1f, 1.0f);
+
+        if (elem->has("reflectionsFalloff"))
+            mReflectionsFalloff = glm::clamp(elem->get<float>("reflectionsFalloff"), 0.0f, 5.0f);
+
         if (elem->has("unfocusedItemOpacity"))
             mUnfocusedItemOpacity =
                 glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
     }
 
-    // Start of legacy themes only section.
+    // Legacy themes.
+    if (mLegacyMode) {
+        if (elem->has("logoScale"))
+            mItemScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
+        if (elem->has("logoSize")) {
+            // Keep size within a 0.05 and 1.0 multiple of the screen size.
+            glm::vec2 itemSize {elem->get<glm::vec2>("logoSize")};
+            if (std::max(itemSize.x, itemSize.y) > 1.0f) {
+                itemSize /= std::max(itemSize.x, itemSize.y);
+            }
+            else if (std::min(itemSize.x, itemSize.y) < 0.005f) {
+                float ratio {std::min(itemSize.x, itemSize.y) / 0.005f};
+                itemSize /= ratio;
+                // Just an extra precaution if a crazy ratio was used.
+                itemSize.x = glm::clamp(itemSize.x, 0.005f, 1.0f);
+                itemSize.y = glm::clamp(itemSize.y, 0.005f, 1.0f);
+            }
+            mItemSize =
+                itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        }
 
-    if (elem->has("logoScale"))
-        mItemScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
-    if (elem->has("logoSize")) {
-        // Keep size within a 0.05 and 1.0 multiple of the screen size.
-        glm::vec2 itemSize {elem->get<glm::vec2>("logoSize")};
-        if (std::max(itemSize.x, itemSize.y) > 1.0f) {
-            itemSize /= std::max(itemSize.x, itemSize.y);
+        if (elem->has("maxLogoCount")) {
+            if (theme->isLegacyTheme())
+                mMaxItemCount =
+                    std::ceil(glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f));
+            else
+                mMaxItemCount = glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f);
         }
-        else if (std::min(itemSize.x, itemSize.y) < 0.005f) {
-            float ratio {std::min(itemSize.x, itemSize.y) / 0.005f};
-            itemSize /= ratio;
-            // Just an extra precaution if a crazy ratio was used.
-            itemSize.x = glm::clamp(itemSize.x, 0.005f, 1.0f);
-            itemSize.y = glm::clamp(itemSize.y, 0.005f, 1.0f);
+
+        if (elem->has("logoRotation"))
+            mItemRotation = elem->get<float>("logoRotation");
+        if (elem->has("logoRotationOrigin"))
+            mItemRotationOrigin = elem->get<glm::vec2>("logoRotationOrigin");
+
+        if (elem->has("logoAlignment")) {
+            const std::string alignment {elem->get<std::string>("logoAlignment")};
+            if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
+                mItemHorizontalAlignment = ALIGN_LEFT;
+                mItemVerticalAlignment = ALIGN_CENTER;
+            }
+            else if (alignment == "right" && mType != CarouselType::HORIZONTAL) {
+                mItemHorizontalAlignment = ALIGN_RIGHT;
+                mItemVerticalAlignment = ALIGN_CENTER;
+            }
+            else if (alignment == "top" && mType != CarouselType::VERTICAL) {
+                mItemVerticalAlignment = ALIGN_TOP;
+                mItemHorizontalAlignment = ALIGN_CENTER;
+            }
+            else if (alignment == "bottom" && mType != CarouselType::VERTICAL) {
+                mItemVerticalAlignment = ALIGN_BOTTOM;
+                mItemHorizontalAlignment = ALIGN_CENTER;
+            }
+            else if (alignment == "center") {
+                mItemHorizontalAlignment = ALIGN_CENTER;
+                mItemVerticalAlignment = ALIGN_CENTER;
+            }
+            else {
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "<logoAlignment> defined as \""
+                                << alignment << "\"";
+                mItemHorizontalAlignment = ALIGN_CENTER;
+                mItemVerticalAlignment = ALIGN_CENTER;
+            }
         }
-        mItemSize = itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     }
-
-    if (elem->has("maxLogoCount")) {
-        if (theme->isLegacyTheme())
-            mMaxItemCount = std::ceil(glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f));
-        else
-            mMaxItemCount = glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f);
-    }
-
-    if (elem->has("logoRotation"))
-        mItemRotation = elem->get<float>("logoRotation");
-    if (elem->has("logoRotationOrigin"))
-        mItemRotationOrigin = elem->get<glm::vec2>("logoRotationOrigin");
-
-    if (elem->has("logoAlignment")) {
-        const std::string alignment {elem->get<std::string>("logoAlignment")};
-        if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
-            mItemHorizontalAlignment = ALIGN_LEFT;
-            mItemVerticalAlignment = ALIGN_CENTER;
-        }
-        else if (alignment == "right" && mType != CarouselType::HORIZONTAL) {
-            mItemHorizontalAlignment = ALIGN_RIGHT;
-            mItemVerticalAlignment = ALIGN_CENTER;
-        }
-        else if (alignment == "top" && mType != CarouselType::VERTICAL) {
-            mItemVerticalAlignment = ALIGN_TOP;
-            mItemHorizontalAlignment = ALIGN_CENTER;
-        }
-        else if (alignment == "bottom" && mType != CarouselType::VERTICAL) {
-            mItemVerticalAlignment = ALIGN_BOTTOM;
-            mItemHorizontalAlignment = ALIGN_CENTER;
-        }
-        else if (alignment == "center") {
-            mItemHorizontalAlignment = ALIGN_CENTER;
-            mItemVerticalAlignment = ALIGN_CENTER;
-        }
-        else {
-            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<logoAlignment> defined as \""
-                            << alignment << "\"";
-            mItemHorizontalAlignment = ALIGN_CENTER;
-            mItemVerticalAlignment = ALIGN_CENTER;
-        }
-    }
-
-    // End of legacy theme section.
 
     mFont = Font::getFromTheme(elem, properties, mFont);
 

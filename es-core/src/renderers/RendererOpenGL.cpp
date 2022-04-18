@@ -277,8 +277,8 @@ void RendererOpenGL::destroyContext()
 
 void RendererOpenGL::setMatrix(const glm::mat4& matrix)
 {
-    mTrans = matrix;
-    mTrans = getProjectionMatrix() * mTrans;
+    // Set matrix for use with shader.
+    mTrans = getProjectionMatrix() * matrix;
 }
 
 void RendererOpenGL::setScissor(const Rect& scissor)
@@ -421,6 +421,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             mCoreShader->setOpacity(vertices->opacity);
             mCoreShader->setSaturation(vertices->saturation);
             mCoreShader->setDimming(vertices->dimming);
+            mCoreShader->setReflectionsFalloff(vertices->reflectionsFalloff);
             mCoreShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
             mLastShader = mCoreShader;

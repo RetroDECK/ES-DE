@@ -66,8 +66,8 @@ public:
 
     // Multiply all pixels in the image by this color when rendering.
     void setColorShift(unsigned int color) override;
-    void setColorShiftEnd(unsigned int color);
-    void setColorGradientHorizontal(bool horizontal);
+    void setColorShiftEnd(unsigned int color) override;
+    void setColorGradientHorizontal(bool horizontal) override;
 
     unsigned int getColorShift() const override { return mColorShift; }
 
@@ -75,8 +75,9 @@ public:
     void setSaturation(float saturation) override;
     void setDimming(float dimming) override;
 
-    void setFlipX(bool flip); // Mirror on the X axis.
-    void setFlipY(bool flip); // Mirror on the Y axis.
+    void setReflectionsFalloff(float falloff) override { mReflectionsFalloff = falloff; }
+    void setFlipX(bool flip) override; // Mirror on the X axis.
+    void setFlipY(bool flip) override; // Mirror on the Y axis.
 
     // Flag indicating if rotation should be based on target size vs. actual size.
     void setRotateByTargetSize(bool rotate) { mRotateByTargetSize = rotate; }
@@ -129,6 +130,7 @@ private:
 
     std::shared_ptr<TextureResource> mTexture;
     float mFadeOpacity;
+    float mReflectionsFalloff;
     bool mFading;
     bool mForceLoad;
     bool mDynamic;

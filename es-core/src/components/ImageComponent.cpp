@@ -40,6 +40,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mColorShiftEnd {0xFFFFFFFF}
     , mColorGradientHorizontal {true}
     , mFadeOpacity {0.0f}
+    , mReflectionsFalloff {0.0f}
     , mFading {false}
     , mForceLoad {forceLoad}
     , mDynamic {dynamic}
@@ -248,7 +249,7 @@ void ImageComponent::cropTransparentPadding(const float maxSizeX, const float ma
     glm::ivec2 imageSize {mTexture.get()->getSize()};
     cimg_library::CImg<unsigned char> imageCImg(imageSize.x, imageSize.y, 1, 4, 0);
 
-    int paddingCoords[4] {};
+    int paddingCoords[4] {0, 0, 0, 0};
 
     // We need to convert our RGBA data to the CImg internal format as CImg does not interleave
     // the pixels (as in RGBARGBARGBA).
@@ -377,7 +378,7 @@ void ImageComponent::updateVertices()
 
 void ImageComponent::updateColors()
 {
-    const float opacity = (mOpacity * (mFading ? mFadeOpacity : 1.0f));
+    const float opacity {mOpacity * (mFading ? mFadeOpacity : 1.0f)};
     const unsigned int color {(mColorShift & 0xFFFFFF00) |
                               static_cast<unsigned char>((mColorShift & 0xFF) * opacity)};
     const unsigned int colorEnd {(mColorShiftEnd & 0xFFFFFF00) |
@@ -421,6 +422,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             mVertices->saturation = mSaturation * mThemeSaturation;
             mVertices->opacity = mThemeOpacity;
             mVertices->dimming = mDimming;
+            mVertices->reflectionsFalloff = mReflectionsFalloff;
 
             mRenderer->drawTriangleStrips(&mVertices[0], 4);
         }

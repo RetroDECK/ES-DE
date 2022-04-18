@@ -262,6 +262,11 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemRotationOrigin", NORMALIZED_PAIR},
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},
+       {"horizontalOffset", FLOAT},
+       {"verticalOffset", FLOAT},
+       {"reflections", BOOLEAN},
+       {"reflectionsOpacity", FLOAT},
+       {"reflectionsFalloff", FLOAT},
        {"unfocusedItemOpacity", FLOAT},
        {"maxItemCount", FLOAT},
        {"defaultLogo", PATH},                      // For backward compatibility with legacy themes.

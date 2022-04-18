@@ -207,8 +207,13 @@ public:
         mColorShift = color;
         mColorShiftEnd = color;
     }
+    virtual void setColorShiftEnd(unsigned int color) { mColorShiftEnd = color; }
     virtual void setOriginalColor(unsigned int color) { mColorOriginalValue = color; }
     virtual void setChangedColor(unsigned int color) { mColorChangedValue = color; }
+    virtual void setColorGradientHorizontal(bool horizontal) {}
+    virtual void setReflectionsFalloff(float falloff) {}
+    virtual void setFlipX(bool flip) {}
+    virtual void setFlipY(bool flip) {}
 
     virtual void setImage(const std::string& path, bool tile = false) {}
 
