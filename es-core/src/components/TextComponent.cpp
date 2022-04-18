@@ -171,31 +171,37 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
     if (mTextCache) {
         const glm::vec2& textSize {mTextCache->metrics.size};
-        float yOff = 0.0f;
-        switch (mVerticalAlignment) {
-            case ALIGN_TOP: {
-                yOff = 0.0f;
-                break;
-            }
-            case ALIGN_BOTTOM: {
-                yOff = (getSize().y - textSize.y);
-                break;
-            }
-            case ALIGN_CENTER: {
-                yOff = (getSize().y - textSize.y) / 2.0f;
-                break;
-            }
-            default: {
-                break;
+        float yOff {0.0f};
+
+        if (mSize.y > textSize.y) {
+            switch (mVerticalAlignment) {
+                case ALIGN_TOP: {
+                    yOff = 0.0f;
+                    break;
+                }
+                case ALIGN_BOTTOM: {
+                    yOff = (getSize().y - textSize.y);
+                    break;
+                }
+                case ALIGN_CENTER: {
+                    yOff = (getSize().y - textSize.y) / 2.0f;
+                    break;
+                }
+                default: {
+                    break;
+                }
             }
         }
-        glm::vec3 off {0.0f, yOff, 0.0f};
+        else {
+            // If height is smaller than the font height, then always center vertically.
+            yOff = (getSize().y - textSize.y) / 2.0f;
+        }
 
         // Draw the "textbox" area, what we are aligned within.
         if (Settings::getInstance()->getBool("DebugText"))
             mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
 
-        trans = glm::translate(trans, off);
+        trans = glm::translate(trans, glm::vec3 {0.0f, std::round(yOff), 0.0f});
         mRenderer->setMatrix(trans);
 
         // Draw the text area, where the text actually is located.
