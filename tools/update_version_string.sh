@@ -42,9 +42,9 @@ TEMPFILE=update_version_string.tmp
 
 ##### CMakeLists.txt
 
-MODIFYFILE=../es-app/CMakeLists.txt
-MODIFYSTRING=$(grep "set(CPACK_PACKAGE_VERSION" $MODIFYFILE)
-NEWSTRING="set(CPACK_PACKAGE_VERSION \"${1}.${2}.${3}${SUFFIX}\")"
+MODIFYFILE=../CMakeLists.txt
+MODIFYSTRING=$(grep "set(ES_VERSION" $MODIFYFILE)
+NEWSTRING="set(ES_VERSION ${1}.${2}.${3}${SUFFIX})"
 
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
 mv $TEMPFILE $MODIFYFILE
