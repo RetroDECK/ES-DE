@@ -18,7 +18,7 @@ if(APPLE)
 endif()
 project(emulationstation-de)
 
-# Application version, update this when there has been a new release.
+# Application version, update this when making a new release.
 set(ES_VERSION 2.0.0-alpha)
 
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
