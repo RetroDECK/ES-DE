@@ -31,8 +31,6 @@ emulationstation - EmulationStation Desktop Edition
 [DESCRIPTION]
 EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and launching games from your multi-platform game collection.
 
-It's intended to be used in conjunction with emulators such as the RetroArch cores.
-
 [AUTHOR]
 Leon Styhre (Desktop Edition fork) <https://es-de.org/>
 
