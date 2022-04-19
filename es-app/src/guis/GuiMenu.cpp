@@ -1384,7 +1384,14 @@ void GuiMenu::addVersionInfo()
 {
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
     mVersion.setColor(0x5E5E5EFF);
+
+#if defined(MENU_BUILD_DATE)
+    mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
+                     " (Built " + __DATE__ + ")");
+#else
     mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING));
+#endif
+
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
     addChild(&mVersion);
 }
