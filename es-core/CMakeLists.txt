@@ -6,7 +6,7 @@
 #  CMake configuration for es-core.
 #
 
-project("core")
+project(core)
 
 set(CORE_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/AsyncHandle.h

@@ -10,19 +10,22 @@
 
 cmake_minimum_required(VERSION 3.13)
 if(APPLE)
-    # Set this to the operating system version you're building on, and also update
+    # Set this to the minimum supported macOS version, and also update
     # es-app/assets/EmulationStation-DE_Info.plist accordingly.
-    set(CMAKE_OSX_DEPLOYMENT_TARGET "10.14" CACHE STRING "macOS deployment target")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.14 CACHE STRING "macOS deployment target")
     # This optional variable is used for code signing the DMG installer.
     set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS code signing certificate identity")
 endif()
 project(emulationstation-de)
 
+# Application version, update this when there has been a new release.
+set(ES_VERSION 2.0.0-alpha)
+
 # Set this to ON to show verbose compiler output (e.g. compiler flags, include directories etc.)
 set(CMAKE_VERBOSE_MAKEFILE OFF CACHE BOOL "Show verbose compiler output" FORCE)
 
 # Package type to use for CPack on Linux.
-set(LINUX_CPACK_GENERATOR "DEB" CACHE STRING "CPack generator, DEB or RPM")
+set(LINUX_CPACK_GENERATOR DEB CACHE STRING "CPack generator, DEB or RPM")
 
 # Add local find modules to the CMake path.
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
@@ -43,7 +46,7 @@ option(UBSAN "Set to ON to build with UndefinedBehaviorSanitizer" ${UBSAN})
 
 if(CLANG_TIDY)
     find_program(CLANG_TIDY_BINARY NAMES clang-tidy)
-    if(CLANG_TIDY_BINARY STREQUAL "CLANG_TIDY_BINARY-NOTFOUND")
+    if(CLANG_TIDY_BINARY MATCHES CLANG_TIDY_BINARY-NOTFOUND)
         message("-- CLANG_TIDY was set but the clang-tidy binary was not found")
     else()
         message("-- Building with the clang-tidy static analyzer")
@@ -64,7 +67,7 @@ endif()
 # Raspberry Pi setup.
 
 # Raspberry Pi OS 32-bit (armv7l).
-if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
+if(EXISTS ${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h)
     set(RPI ON)
     set(RPI_32 ON)
     set(GLES ON)
@@ -73,7 +76,7 @@ if(EXISTS "${CMAKE_FIND_ROOT_PATH}/opt/vc/include/bcm_host.h")
 endif()
 
 # Raspberry Pi OS 64-bit (aarch64).
-if(EXISTS "/usr/include/bcm_host.h")
+if(EXISTS /usr/include/bcm_host.h)
     set(RPI ON)
     set(RPI_64 ON)
     set(GLES ON)
@@ -86,7 +89,7 @@ endif()
 
 if(EMSCRIPTEN)
     set(GLES ON)
-    set(CMAKE_EXECUTABLE_SUFFIX ".html")
+    set(CMAKE_EXECUTABLE_SUFFIX .html)
 endif()
 
 #---------------------------------------------------------------------------------------------------
@@ -104,7 +107,7 @@ set_property(CACHE GLSYSTEM PROPERTY STRINGS "Desktop OpenGL" "Embedded OpenGL")
 # Package dependencies.
 
 if(GLSYSTEM MATCHES "Desktop OpenGL")
-    set(OpenGL_GL_PREFERENCE "GLVND")
+    set(OpenGL_GL_PREFERENCE GLVND)
     find_package(OpenGL REQUIRED)
 elseif(GLES AND NOT EMSCRIPTEN)
     find_package(OpenGLES2 REQUIRED)
@@ -136,19 +139,19 @@ if(CEC)
 endif()
 
 # Add ALSA for Linux.
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+if(CMAKE_SYSTEM_NAME MATCHES Linux)
     find_package(ALSA REQUIRED)
 endif()
 
 #---------------------------------------------------------------------------------------------------
 # Compiler and linker settings.
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+if(CMAKE_CXX_COMPILER_ID MATCHES Clang)
     message("-- Compiler is Clang/LLVM")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0.0)
         message(SEND_ERROR "You need at least Clang 5.0.0 to compile EmulationStation-DE")
     endif()
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES GNU)
     message("-- Compiler is GNU/GCC")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.1)
         message(SEND_ERROR "You need at least GCC 7.1 to compile EmulationStation-DE")
@@ -156,10 +159,10 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     if(WIN32)
         set(CMAKE_CXX_FLAGS "-mwindows ${CMAKE_CXX_FLAGS}")
     endif()
-elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
     message("-- Compiler is MSVC")
     # If using the MSVC compiler on Windows, disable the built-in min() and max() macros.
-    add_definitions(-DNOMINMAX)
+    add_compile_definitions(NOMINMAX)
 endif()
 
 if(CMAKE_BUILD_TYPE)
@@ -169,7 +172,7 @@ endif()
 # Set up compiler and linker flags for debug, profiling or release builds.
 if(CMAKE_BUILD_TYPE MATCHES Debug)
     # Enable the C++17 standard and disable optimizations as it's a debug build.
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /Od /DEBUG:FULL")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O0 -g3 -Wall -Wpedantic -Wsign-compare -Wnarrowing -Wmissing-field-initializers -Wunused-macros")
@@ -179,12 +182,12 @@ if(CMAKE_BUILD_TYPE MATCHES Debug)
     # Comment this out if you're using LLDB for debugging as this flag makes the binary
     # much larger and the application much slower. On macOS this setting is never enabled
     # as LLDB is the default debugger on this OS.
-    if(NOT APPLE AND CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+    if(NOT APPLE AND CMAKE_CXX_COMPILER_ID MATCHES Clang)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_GLIBCXX_DEBUG")
     endif()
 elseif(CMAKE_BUILD_TYPE MATCHES Profiling)
     # For the profiling build, we enable optimizations and supply the required profiler flags.
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /O2 /DEBUG:FULL")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -g3 -Wall -Wpedantic -Wsign-compare -Wnarrowing -Wmissing-field-initializers -Wunused-macros")
@@ -193,7 +196,7 @@ elseif(CMAKE_BUILD_TYPE MATCHES Profiling)
 else()
     # Enable the C++17 standard and enable optimizations as it's a release build.
     # This will also disable all assert() macros. Strip the binary too.
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DNDEBUG /std:c++17 /O2 /DEBUG:NONE")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -DNDEBUG -Wall -Wpedantic -Wsign-compare -Wnarrowing -Wmissing-field-initializers -Wunused-macros")
@@ -227,7 +230,7 @@ endif()
 
 if(ASAN)
     message("-- Building with AddressSanitizer")
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /fsanitize=address")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
@@ -236,7 +239,7 @@ endif()
 
 if(TSAN)
     message("-- Building with ThreadSanitizer")
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         message(FATAL_ERROR "-- ThreadSanitizer not available for MSVC")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=thread -fno-omit-frame-pointer")
@@ -245,7 +248,7 @@ endif()
 
 if(UBSAN)
     message("-- Building with UndefinedBehaviorSanitizer")
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         message(FATAL_ERROR "-- UndefinedBehaviorSanitizer not available for MSVC")
     else()
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined -fno-omit-frame-pointer")
@@ -277,53 +280,53 @@ endif()
 # Preprocessor directives.
 
 if(GLES)
-    add_definitions(-DUSE_OPENGLES)
+    add_compile_definitions(USE_OPENGLES)
 endif()
 
 if(STEAM_DECK)
-    add_definitions(-DSTEAM_DECK)
+    add_compile_definitions(STEAM_DECK)
     message("-- Building for the Valve Steam Deck")
 endif()
 
 if(RPI)
-    add_definitions(-D_RPI_)
+    add_compile_definitions(_RPI_)
 endif()
 
 if(BUNDLED_CERTS)
-    add_definitions(-DUSE_BUNDLED_CERTIFICATES)
+    add_compile_definitions(USE_BUNDLED_CERTIFICATES)
     message("-- Building with bundled TLS/SSL certificates")
 endif()
 
 if(DEFINED libCEC_FOUND)
-    add_definitions(-DHAVE_LIBCEC)
+    add_compile_definitions(HAVE_LIBCEC)
 endif()
 
 if(VIDEO_HW_DECODING)
-    add_definitions(-DVIDEO_HW_DECODING)
+    add_compile_definitions(VIDEO_HW_DECODING)
 endif()
 
 if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
-    add_definitions(-DLEGACY_MACOS)
+    add_compile_definitions(LEGACY_MACOS)
 endif()
 
 # GLM library options.
-add_definitions(-DGLM_FORCE_CXX17)
-add_definitions(-DGLM_FORCE_XYZW_ONLY)
+add_compile_definitions(GLM_FORCE_CXX17)
+add_compile_definitions(GLM_FORCE_XYZW_ONLY)
 
 # For Unix systems, assign the installation prefix. If it's not explicitly set,
 # we use /usr on Linux, /usr/pkg on NetBSD and /usr/local on FreeBSD and OpenBSD.
 if(NOT WIN32 AND NOT APPLE)
     if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-        if(CMAKE_SYSTEM_NAME MATCHES "Linux")
-            set(CMAKE_INSTALL_PREFIX "/usr" CACHE INTERNAL "CMAKE_INSTALL_PREFIX")
-        elseif(CMAKE_SYSTEM_NAME MATCHES "NetBSD")
-            set(CMAKE_INSTALL_PREFIX "/usr/pkg" CACHE INTERNAL "CMAKE_INSTALL_PREFIX")
+        if(CMAKE_SYSTEM_NAME MATCHES Linux)
+            set(CMAKE_INSTALL_PREFIX /usr CACHE INTERNAL CMAKE_INSTALL_PREFIX)
+        elseif(CMAKE_SYSTEM_NAME MATCHES NetBSD)
+            set(CMAKE_INSTALL_PREFIX /usr/pkg CACHE INTERNAL CMAKE_INSTALL_PREFIX)
         else()
-            set(CMAKE_INSTALL_PREFIX "/usr/local" CACHE INTERNAL "CMAKE_INSTALL_PREFIX")
+            set(CMAKE_INSTALL_PREFIX /usr/local CACHE INTERNAL CMAKE_INSTALL_PREFIX)
         endif()
     endif()
     message("-- Installation prefix is set to " ${CMAKE_INSTALL_PREFIX})
-    add_definitions(-DES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
+    add_compile_definitions(ES_INSTALL_PREFIX="${CMAKE_INSTALL_PREFIX}")
 endif()
 
 # For Windows, set the minimum OS version to Windows 7.
@@ -381,7 +384,7 @@ if(DEFINED libCEC_FOUND)
 endif()
 
 # For Linux, add the ALSA include directory.
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+if(CMAKE_SYSTEM_NAME MATCHES Linux)
     list(APPEND COMMON_INCLUDE_DIRS ${ALSA_INCLUDE_DIRS})
 endif()
 
@@ -409,7 +412,7 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
                          ${PROJECT_SOURCE_DIR}/libSDL2-2.0.dylib)
 elseif(WIN32)
-    if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec.lib
                              ${PROJECT_SOURCE_DIR}/avfilter.lib
                              ${PROJECT_SOURCE_DIR}/avformat.lib
@@ -507,7 +510,7 @@ if(DEFINED libCEC_FOUND)
 endif()
 
 # Add ALSA for Linux libraries.
-if(CMAKE_SYSTEM_NAME MATCHES "Linux")
+if(CMAKE_SYSTEM_NAME MATCHES Linux)
     list(APPEND COMMON_LIBRARIES ${ALSA_LIBRARY})
 endif()
 
@@ -515,7 +518,7 @@ endif()
 if(BCMHOST)
     list(APPEND COMMON_LIBRARIES bcm_host vchiq_arm)
     if(RPI_32)
-        link_directories("${CMAKE_FIND_ROOT_PATH}/opt/vc/lib")
+        link_directories(${CMAKE_FIND_ROOT_PATH}/opt/vc/lib)
     endif()
 endif()
 
@@ -534,9 +537,9 @@ set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 
 # Add each component.
-add_subdirectory("external")
-add_subdirectory("es-core")
-add_subdirectory("es-app")
+add_subdirectory(external)
+add_subdirectory(es-core)
+add_subdirectory(es-app)
 
 # Make sure rlottie is built before es-core and set lottie2gif to not be built.
 add_dependencies(es-core rlottie)
