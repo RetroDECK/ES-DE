@@ -178,6 +178,10 @@ template <typename T>
 void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
 {
     bool legacyMode {theme->isLegacyTheme()};
+    bool dynamic {true};
+
+    if constexpr (std::is_same_v<T, SystemData*>)
+        dynamic = false;
 
     if (legacyMode) {
         const ThemeData::ThemeElement* itemElem {
@@ -191,7 +195,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 itemElem->has("default") ? itemElem->get<std::string>("default") : ""};
             if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
                 (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
-                auto item = std::make_shared<ImageComponent>(false, false);
+                auto item = std::make_shared<ImageComponent>(false, dynamic);
                 item->setLinearInterpolation(true);
                 item->setMaxSize(mItemSize * mItemScale);
                 item->applyTheme(theme, "system", "image_logo",
@@ -204,7 +208,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     else {
         if (entry.data.itemPath != "" &&
             ResourceManager::getInstance().fileExists(entry.data.itemPath)) {
-            auto item = std::make_shared<ImageComponent>(false, false);
+            auto item = std::make_shared<ImageComponent>(false, dynamic);
             item->setLinearInterpolation(true);
             item->setImage(entry.data.itemPath);
             item->setMaxSize(mItemSize * mItemScale);
@@ -214,7 +218,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         }
         else if (entry.data.defaultItemPath != "" &&
                  ResourceManager::getInstance().fileExists(entry.data.defaultItemPath)) {
-            auto defaultItem = std::make_shared<ImageComponent>(false, false);
+            auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
             defaultItem->setLinearInterpolation(true);
             defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->setMaxSize(mItemSize * mItemScale);
