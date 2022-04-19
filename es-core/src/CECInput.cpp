@@ -17,13 +17,13 @@
 
 #include <SDL2/SDL_events.h>
 
-#if defined(_RPI_)
+#if defined(RASPBERRY_PI)
 extern "C" {
 #include <interface/vmcs_host/vc_cecservice.h>
 #include <interface/vmcs_host/vc_tvservice.h>
 #include <interface/vmcs_host/vchost.h>
 }
-#endif // _RPI_
+#endif // RASPBERRY_PI
 #endif // HAVE_LIBCEC
 
 // Hack for CEC support.
@@ -59,7 +59,7 @@ static void onLogMessage(void* /*cbParam*/, const CEC::cec_log_message* message)
     LOG(LogDebug) << "CECInput::onLogMessage message: " << message->message;
 }
 
-#if defined(_RPI_)
+#if defined(RASPBERRY_PI)
 static void vchi_tv_and_cec_init()
 {
     VCHI_INSTANCE_T vchi_instance;
@@ -75,18 +75,18 @@ static void vchi_tv_and_cec_deinit()
     vc_vchi_cec_stop();
     vc_vchi_tv_stop();
 }
-#endif // _RPI_
+#endif // RASPBERRY_PI
 #endif // HAVE_LIBCEC
 
 CECInput::CECInput()
     : mlibCEC(nullptr)
 {
 #if defined(HAVE_LIBCEC)
-#if defined(_RPI_)
+#if defined(RASPBERRY_PI)
     // Restart vchi tv and CEC in case we just came back from another app using CEC (like Kodi).
     vchi_tv_and_cec_deinit();
     vchi_tv_and_cec_init();
-#endif // _RPI_
+#endif // RASPBERRY_PI
 
     CEC::ICECCallbacks callbacks;
     CEC::libcec_configuration config;
@@ -147,10 +147,10 @@ CECInput::~CECInput()
         mlibCEC = nullptr;
     }
 
-#if defined(_RPI_)
+#if defined(RASPBERRY_PI)
     // Deinit vchi tv and CEC in case we are going to launch another app using CEC (like Kodi).
     vchi_tv_and_cec_deinit();
-#endif // _RPI_
+#endif // RASPBERRY_PI
 #endif // HAVE_LIBCEC
 }
 

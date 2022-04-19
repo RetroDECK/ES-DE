@@ -105,7 +105,7 @@ namespace Utils
 
             returnValue = pclose(commandPipe);
 
-#if defined(_RPI_)
+#if defined(RASPBERRY_PI)
             // Hack to avoid that the application window occasionally loses focus when returning
             // from a game, which only seems to happen on Raspberry Pi OS 10.
             SDL_Delay(50);

@@ -144,7 +144,7 @@ void Settings::setDefaults()
     // UI settings -> media viewer settings.
     mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
     mBoolMap["MediaViewerStretchVideos"] = {false, false};
-#if defined(_RPI_)
+#if defined(RASPBERRY_PI)
     mBoolMap["MediaViewerVideoScanlines"] = {false, false};
 #else
     mBoolMap["MediaViewerVideoScanlines"] = {true, true};
@@ -171,7 +171,7 @@ void Settings::setDefaults()
     mIntMap["ScreensaverSwapVideoTimeout"] = {0, 0};
     mBoolMap["ScreensaverStretchVideos"] = {false, false};
     mBoolMap["ScreensaverVideoGameInfo"] = {true, true};
-#if defined(_RPI_)
+#if defined(RASPBERRY_PI)
     mBoolMap["ScreensaverVideoScanlines"] = {false, false};
 #else
     mBoolMap["ScreensaverVideoScanlines"] = {true, true};
@@ -217,7 +217,7 @@ void Settings::setDefaults()
     mStringMap["MediaDirectory"] = {"", ""};
 #if defined(STEAM_DECK)
     mIntMap["MaxVRAM"] = {512, 512};
-#elif defined(_RPI_)
+#elif defined(RASPBERRY_PI)
     mIntMap["MaxVRAM"] = {184, 184};
 #else
     mIntMap["MaxVRAM"] = {256, 256};

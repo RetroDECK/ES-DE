@@ -289,7 +289,7 @@ if(STEAM_DECK)
 endif()
 
 if(RPI)
-    add_compile_definitions(_RPI_)
+    add_compile_definitions(RASPBERRY_PI)
 endif()
 
 if(BUNDLED_CERTS)
