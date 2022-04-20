@@ -1161,17 +1161,6 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-    // Whether to preload the gamelists on application startup.
-    auto preloadGamelists = std::make_shared<SwitchComponent>();
-    preloadGamelists->setState(Settings::getInstance()->getBool("PreloadGamelists"));
-    s->addWithLabel("PRELOAD GAMELISTS ON STARTUP", preloadGamelists);
-    s->addSaveFunc([preloadGamelists, s] {
-        if (preloadGamelists->getState() != Settings::getInstance()->getBool("PreloadGamelists")) {
-            Settings::getInstance()->setBool("PreloadGamelists", preloadGamelists->getState());
-            s->setNeedsSaving();
-        }
-    });
-
     // Whether to enable alternative emulators per game (the option to disable this is intended
     // primarily for testing purposes).
     auto alternativeEmulatorPerGame = std::make_shared<SwitchComponent>();
