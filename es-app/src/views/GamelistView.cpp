@@ -387,6 +387,9 @@ void GamelistView::updateInfoPanel(const CursorState& state)
                         mPrimary->getSelected() :
                         nullptr};
 
+    if (mCarousel != nullptr)
+        mCarousel->onDemandTextureLoad();
+
     // If the game data has already been rendered to the info panel, then skip it this time.
     if (file == mLastUpdated)
         return;

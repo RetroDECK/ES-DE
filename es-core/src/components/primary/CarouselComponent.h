@@ -16,16 +16,16 @@
 #include "components/primary/PrimaryComponent.h"
 #include "resources/Font.h"
 
-struct CarouselElement {
+struct CarouselEntry {
     std::shared_ptr<GuiComponent> item;
     std::string itemPath;
     std::string defaultItemPath;
 };
 
 template <typename T>
-class CarouselComponent : public PrimaryComponent<T>, protected IList<CarouselElement, T>
+class CarouselComponent : public PrimaryComponent<T>, protected IList<CarouselEntry, T>
 {
-    using List = IList<CarouselElement, T>;
+    using List = IList<CarouselEntry, T>;
 
 protected:
     using List::mCursor;
@@ -38,7 +38,7 @@ protected:
     using GuiComponent::mZIndex;
 
 public:
-    using Entry = typename IList<CarouselElement, T>::Entry;
+    using Entry = typename IList<CarouselEntry, T>::Entry;
 
     enum class CarouselType {
         HORIZONTAL, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
@@ -50,8 +50,10 @@ public:
 
     CarouselComponent();
 
-    void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme = nullptr);
+    void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
+    void updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
     Entry& getEntry(int index) { return mEntries.at(index); }
+    void onDemandTextureLoad();
     const CarouselType getType() { return mType; }
     const std::string& getItemType() { return mItemType; }
     void setItemType(std::string itemType) { mItemType = itemType; }
@@ -87,7 +89,7 @@ private:
     {
         List::stopScrolling();
         // Only finish the animation if we're in the gamelist view.
-        if constexpr (std::is_same_v<T, FileData*>)
+        if (mGamelistView)
             GuiComponent::finishAnimation(0);
     }
     const int getScrollingVelocity() override { return List::getScrollingVelocity(); }
@@ -111,6 +113,7 @@ private:
     float mEntryCamOffset;
     int mPreviousScrollVelocity;
     bool mTriggerJump;
+    bool mGamelistView;
 
     CarouselType mType;
     std::string mItemType;
@@ -141,14 +144,15 @@ private:
 
 template <typename T>
 CarouselComponent<T>::CarouselComponent()
-    : IList<CarouselElement, T> {LIST_SCROLL_STYLE_SLOW,
-                                 (std::is_same_v<T, SystemData*> ?
-                                      ListLoopType::LIST_ALWAYS_LOOP :
-                                      ListLoopType::LIST_PAUSE_AT_END_ON_JUMP)}
+    : IList<CarouselEntry, T> {LIST_SCROLL_STYLE_SLOW,
+                               (std::is_same_v<T, SystemData*> ?
+                                    ListLoopType::LIST_ALWAYS_LOOP :
+                                    ListLoopType::LIST_PAUSE_AT_END_ON_JUMP)}
     , mRenderer {Renderer::getInstance()}
     , mEntryCamOffset {0.0f}
     , mPreviousScrollVelocity {0}
     , mTriggerJump {false}
+    , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mType {CarouselType::HORIZONTAL}
     , mLegacyMode {false}
     , mFont {Font::get(FONT_SIZE_LARGE)}
@@ -180,7 +184,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     bool legacyMode {theme->isLegacyTheme()};
     bool dynamic {true};
 
-    if constexpr (std::is_same_v<T, SystemData*>)
+    if (!mGamelistView)
         dynamic = false;
 
     if (legacyMode) {
@@ -240,7 +244,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         }
         if (!legacyMode) {
             text->setLineSpacing(mLineSpacing);
-            if constexpr (std::is_same_v<T, SystemData*>) {
+            if (!mGamelistView) {
                 if (mText != "")
                     text->setValue(mText);
             }
@@ -273,6 +277,85 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
 
     List::add(entry);
+}
+
+template <typename T>
+void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
+{
+    if (entry.data.itemPath != "") {
+        auto item = std::make_shared<ImageComponent>(false, true);
+        item->setLinearInterpolation(true);
+        item->setImage(entry.data.itemPath);
+        item->setMaxSize(mItemSize * mItemScale);
+        item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        item->setRotateByTargetSize(true);
+        entry.data.item = item;
+    }
+    else {
+        return;
+    }
+
+    // Set origin for the items based on their alignment so they line up properly.
+    if (mItemHorizontalAlignment == ALIGN_LEFT)
+        entry.data.item->setOrigin(0.0f, 0.5f);
+    else if (mItemHorizontalAlignment == ALIGN_RIGHT)
+        entry.data.item->setOrigin(1.0f, 0.5f);
+    else
+        entry.data.item->setOrigin(0.5f, 0.5f);
+
+    if (mItemVerticalAlignment == ALIGN_TOP)
+        entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.0f);
+    else if (mItemVerticalAlignment == ALIGN_BOTTOM)
+        entry.data.item->setOrigin(entry.data.item->getOrigin().x, 1.0f);
+    else
+        entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.5f);
+
+    glm::vec2 denormalized {mItemSize * entry.data.item->getOrigin()};
+    entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
+}
+
+template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
+{
+    if constexpr (std::is_same_v<T, FileData*>) {
+        int numEntries {static_cast<int>(mEntries.size())};
+        int center {getCursor()};
+        int itemInclusion {static_cast<int>(std::ceil((mMaxItemCount + 1) / 2.0f))};
+
+        for (int i = center - itemInclusion + 1; i < center + itemInclusion; ++i) {
+            int cursor {i};
+
+            while (cursor < 0)
+                cursor += numEntries;
+            while (cursor >= numEntries)
+                cursor -= numEntries;
+
+            auto& entry = mEntries.at(cursor);
+
+            if (entry.data.itemPath == "") {
+                FileData* game {entry.object};
+
+                if (mItemType == "" || mItemType == "marquee")
+                    entry.data.itemPath = game->getMarqueePath();
+                else if (mItemType == "cover")
+                    entry.data.itemPath = game->getCoverPath();
+                else if (mItemType == "3dbox")
+                    entry.data.itemPath = game->get3DBoxPath();
+                else if (mItemType == "screenshot")
+                    entry.data.itemPath = game->getScreenshotPath();
+                else if (mItemType == "titlescreen")
+                    entry.data.itemPath = game->getTitleScreenPath();
+                else if (mItemType == "backcover")
+                    entry.data.itemPath = game->getBackCoverPath();
+                else if (mItemType == "miximage")
+                    entry.data.itemPath = game->getMiximagePath();
+                else if (mItemType == "fanart")
+                    entry.data.itemPath = game->getFanArtPath();
+
+                auto theme = game->getSystem()->getTheme();
+                updateEntry(entry, theme);
+            }
+        }
+    }
 }
 
 template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Input input)
@@ -311,7 +394,7 @@ template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Inpu
                 }
                 break;
         }
-        if constexpr (std::is_same_v<T, FileData*>) {
+        if (mGamelistView) {
             if (config->isMappedLike("leftshoulder", input)) {
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
@@ -355,7 +438,7 @@ template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Inpu
         }
     }
     else {
-        if constexpr (std::is_same_v<T, FileData*>) {
+        if (mGamelistView) {
             if (config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
                 config->isMappedLike("left", input) || config->isMappedLike("right", input) ||
                 config->isMappedLike("leftshoulder", input) ||
@@ -367,7 +450,7 @@ template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Inpu
                 mTriggerJump = false;
             }
         }
-        if constexpr (std::is_same_v<T, SystemData*>) {
+        else {
             if (config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
                 config->isMappedLike("left", input) || config->isMappedLike("right", input))
                 List::listInput(0);
@@ -385,7 +468,9 @@ template <typename T> void CarouselComponent<T>::update(int deltaTime)
 
 template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentTrans)
 {
-    if (mEntries.size() == 0)
+    int numEntries {static_cast<int>(mEntries.size())};
+
+    if (numEntries == 0)
         return;
 
     glm::mat4 carouselTrans {parentTrans};
@@ -475,15 +560,26 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
     int center {static_cast<int>(mEntryCamOffset)};
     int itemInclusion {static_cast<int>(std::ceil(mMaxItemCount / 2.0f))};
-    bool singleEntry {mEntries.size() == 1};
+    bool singleEntry {numEntries == 1};
+
+    struct renderStruct {
+        int index;
+        float distance;
+        float scale;
+        float opacity;
+        glm::mat4 trans;
+    };
+
+    std::vector<renderStruct> renderItems;
+    std::vector<renderStruct> renderItemsSorted;
 
     for (int i = center - itemInclusion; i < center + itemInclusion + 2; ++i) {
         int index {i};
 
         while (index < 0)
-            index += static_cast<int>(mEntries.size());
-        while (index >= static_cast<int>(mEntries.size()))
-            index -= static_cast<int>(mEntries.size());
+            index += numEntries;
+        while (index >= numEntries)
+            index -= numEntries;
 
         float distance {i - mEntryCamOffset};
 
@@ -514,25 +610,47 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             opacity = mUnfocusedItemOpacity + (maxDiff - (maxDiff * fabsf(distance)));
         }
 
-        const std::shared_ptr<GuiComponent>& comp {mEntries.at(index).data.item};
+        renderStruct renderItem;
+        renderItem.index = index;
+        renderItem.distance = distance;
+        renderItem.scale = scale;
+        renderItem.opacity = opacity;
+        renderItem.trans = itemTrans;
+
+        renderItems.emplace_back(renderItem);
+    }
+
+    int belowCenter {static_cast<int>(std::ceil(renderItems.size() / 2)) - 1};
+
+    // TODO: Fix glitches when navigating to the right.
+    // The following sorting makes sure that overlapping items are rendered in the correct order.
+    for (int i = 0; i < belowCenter - 0; ++i)
+        renderItemsSorted.emplace_back(renderItems[i]);
+
+    for (int i = static_cast<int>(renderItems.size()) - 1; i > belowCenter - 1; --i)
+        renderItemsSorted.emplace_back(renderItems[i]);
+
+    for (auto& renderItem : renderItemsSorted) {
+        const std::shared_ptr<GuiComponent>& comp {mEntries.at(renderItem.index).data.item};
 
         if (comp == nullptr)
             continue;
 
         if (mType == CarouselType::VERTICAL_WHEEL || mType == CarouselType::HORIZONTAL_WHEEL) {
-            comp->setRotationDegrees(mItemRotation * distance);
+            comp->setRotationDegrees(mItemRotation * renderItem.distance);
             comp->setRotationOrigin(mItemRotationOrigin);
         }
 
-        comp->setScale(scale);
-        comp->setOpacity(opacity);
-        comp->render(itemTrans);
+        comp->setScale(renderItem.scale);
+        comp->setOpacity(renderItem.opacity);
+        comp->render(renderItem.trans);
 
+        // TODO: Rewrite to use "real" reflections instead of this hack.
         // Don't attempt to add reflections for text entries.
-        if (mReflections && (mEntries.at(index).data.itemPath != "" ||
-                             mEntries.at(index).data.defaultItemPath != "")) {
-            itemTrans =
-                glm::translate(itemTrans, glm::vec3 {0.0f, comp->getSize().y * scale, 0.0f});
+        if (mReflections && (mEntries.at(renderItem.index).data.itemPath != "" ||
+                             mEntries.at(renderItem.index).data.defaultItemPath != "")) {
+            glm::mat4 reflectionTrans {glm::translate(
+                renderItem.trans, glm::vec3 {0.0f, comp->getSize().y * renderItem.scale, 0.0f})};
             const unsigned int colorShift {comp->getColorShift()};
             comp->setColorGradientHorizontal(false);
             comp->setColorShift(0xFFFFFF00 | static_cast<int>(mReflectionsOpacity * 255.0f));
@@ -543,7 +661,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             if (mReflectionsFalloff > 1.0f)
                 comp->setReflectionsFalloff(mReflectionsFalloff - 1.0f);
             comp->setFlipY(true);
-            comp->render(itemTrans);
+            comp->render(reflectionTrans);
             comp->setFlipY(false);
             comp->setColorShift(colorShift);
             comp->setReflectionsFalloff(0.0f);
