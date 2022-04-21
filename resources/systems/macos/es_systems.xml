@@ -966,7 +966,7 @@
         <name>ps3</name>
         <fullname>Sony PlayStation 3</fullname>
         <path>%ROMPATH%/ps3</path>
-        <extension>.ps3dir .PS3DIR</extension>
+        <extension>.ps3 .PS3 .ps3dir .PS3DIR</extension>
         <command label="RPCS3 (Standalone)">%EMULATOR_RPCS3% --no-gui %ROM%</command>
         <platform>ps3</platform>
         <theme>ps3</theme>
@@ -1059,7 +1059,7 @@
         <name>scummvm</name>
         <fullname>ScummVM Game Engine</fullname>
         <path>%ROMPATH%/scummvm</path>
-        <extension>.scummvm .7z .7Z .zip .ZIP</extension>
+        <extension>.scummvm .SCUMMVM .svm .SVM</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/scummvm_libretro.dylib %ROM%</command>
         <platform>scummvm</platform>
         <theme>scummvm</theme>
