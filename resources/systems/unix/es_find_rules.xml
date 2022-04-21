@@ -194,6 +194,11 @@
         <rule type="systempath">
             <entry>redream</entry>
         </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/redream</entry>
+            <entry>~/.local/bin/redream</entry>
+            <entry>~/bin/redream</entry>
+        </rule>
     </emulator>
     <emulator name="RPCS3">
         <!-- Sony PlayStation 3 emulator RPCS3 -->
@@ -219,6 +224,9 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.ryujinx.Ryujinx</entry>
+            <entry>~/Applications/publish/Ryujinx</entry>
+            <entry>~/.local/bin/publish/Ryujinx</entry>
+            <entry>~/bin/publish/Ryujinx</entry>
         </rule>
     </emulator>
     <emulator name="VBA-M">
