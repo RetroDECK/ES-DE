@@ -530,7 +530,7 @@ cd ~/Applications
 chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 ```
 
-At the moment the following emulators are supported in AppImage format when using the bundled configuration:
+The following emulators are supported in AppImage format when using the bundled configuration:
 
 | System name  | Emulator    | Filename configuration          |
 | :----------- | :---------- | :------------------------------ |
@@ -545,6 +545,32 @@ At the moment the following emulators are supported in AppImage format when usin
 | wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
 
 RetroArch does not embed any version information into the filename so no wildcard is required.
+
+## Using manually downloaded emulators on Linux
+
+Normally on Linux you would install emulators using either one of the established package formats, i.e. Flatpak, AppImage or Snap, or you would install them using the operating system repository. Less likely would be to build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS), you don't even have the choice to install them to a standard system directory.
+
+For these situations ES-DE looks for emulators in the same directories where it looks for AppImages (as explained in the section above), meaning:
+```
+~/Applications/
+~/.local/bin/
+~/bin/
+```
+
+So placing a manually downloaded emulator binary in either of these directories will make ES-DE able to locate it during game launch.
+
+The following manually downloaded emulators are supported when using the bundled configuration:
+
+| System name  | Emulator    | Filename configuration          |
+| :----------- | :---------- | :------------------------------ |
+| dreamcast    | Redream     | redream                         |
+| switch       | Ryujinx     | publish/Ryujinx                 |
+
+Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
+```
+cd ~/Applications/publish
+chmod +x ./Ryujinx
+```
 
 ## Running emulators in fullscreen mode
 
@@ -652,17 +678,17 @@ There is a very special use case which ES-DE supports where you can interpret a 
 
 If you add the extension that is configured for the emulator to a directory name it will be loaded as if it was a file when ES-DE starts up.
 
-As an example using the Sony PlayStation 3 system, the extension in es_systems.xml is .ps3dir so this is what such a directory could look like:
+As an example using the Sony PlayStation 3 system, the extension in es_systems.xml is .ps3 so this is what such a directory could look like:
 ```
-~/ROMs/ps3/Gran Turismo 5.ps3dir
+~/ROMs/ps3/Gran Turismo 5.ps3
 ```
 
 It's also possible to combine these types of special directories with normal directories, for a setup like this:
 ```
-~/ROMs/ps3/racing/Gran Turismo 5.ps3dir
+~/ROMs/ps3/racing/Gran Turismo 5.ps3
 ```
 
-For all intents and purposes the `Gran Turismo 5.ps3dir` directory will now be considered a file within ES-DE, i.e. all file metadata fields can be used and the directory can be part of both automatic and custom collections.
+For all intents and purposes the `Gran Turismo 5.ps3` directory will now be considered a file within ES-DE, i.e. all file metadata fields can be used and the directory can be part of both automatic and custom collections.
 
 The only exception is that the _Delete_ button in the metadata editor will be disabled for these special types of entries as ES-DE does not support deletion of directories for safety reasons.
 
@@ -732,33 +758,33 @@ But if using the AppImage release it's a bit more complicated. See [here](USERGU
 
 If using the Flatpak release and your games are stored on an external device (such as a memory card if using a Steam Deck), you need to give RPCS3 the necessary permissions. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
-As for the game installation on both Windows and Linux as well as on macOS, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3dir extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
+As for the game installation on both Windows and Linux as well as on macOS, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3 extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
 
 Here's an example of what a Blu-ray disc directory could look like:
 ```
-~/ROMs/ps3/Gran Turismo 5.ps3dir
+~/ROMs/ps3/Gran Turismo 5.ps3
 ```
 
-It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3dir extension.
+It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3 extension.
 
 Here's how to do it on Linux and macOS:
 ```
 cd ~/ROMs
-ln -s ~/games/PS3/Gran\ Turismo\ 5 Gran\ Turismo\ 5.ps3dir
+ln -s ~/games/PS3/Gran\ Turismo\ 5 Gran\ Turismo\ 5.ps3
 ```
 
 And here's how to do it on Windows (you need to run this as Administrator):
 ```
 cd C:\Users\Myusername\ROMs\ps3
-mklink /D "Gran Turismo 5.ps3dir" "C:\Games\PS3\Gran Turismo 5"
+mklink /D "Gran Turismo 5.ps3" "C:\Games\PS3\Gran Turismo 5"
 ```
 
-If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3dir extension.
+If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3 extension.
 
 An example on Linux:
 ```
 cd ~/ROMs
-ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 Bejeweled2.ps3dir
+ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 Bejeweled2.ps3
 ```
 
 This example is for the AppImage version of RPCS3, for the Snap or Flatpak versions, the installed games will be located in a different directory.
@@ -766,10 +792,10 @@ This example is for the AppImage version of RPCS3, for the Snap or Flatpak versi
 Here's how to achieve the same on Windows:
 ```
 cd C:\Users\Myusername\ROMs\ps3
-mklink /D "Bejeweled2.ps3dir" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
+mklink /D "Bejeweled2.ps3" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
 ```
 
-Of course you can name the symlink anything you want as long as it has the .ps3dir extension.
+Of course you can name the symlink anything you want as long as it has the .ps3 extension.
 
 Apparently some specific games have issues launching when using symlinks so you need to test and experiment with what works for your collection.
 
@@ -1616,10 +1642,6 @@ Enabling this option makes ES-DE continue to run while a game is launched. This 
 
 With this option enabled, videos with lower frame rates than 60 FPS, such as 24 and 30 will get upscaled to 60 FPS. This results in slightly smoother playback for some videos. There is a small performance hit from this option, so on weaker machines it may be necessary to keep it disabled for fluent video playback.
 
-**Preload gamelists on startup**
-
-When this option is enabled, all gamelists will be loaded on application startup. This will increase the startup time slightly and lead to a higher initial memory utilization, but navigation will be smoother the first time a gamelist is entered. The improvement is especially noticeable when the _slide_ transition style has been selected.
-
 **Enable alternative emulators per game**
 
 If enabled, you will be able to select alternative emulators per game using the metadata editor, which will be used when launching the game. If disabled, the corresponding entry in the metadata editor will be hidden, the alternative emulator badges will not be displayed and it will not be possible to filter the gamelist based on these values. As well, the game will be launched using the default emulator, or using the system-wide alternative emulator if this has been configured for the game system. It's only recommended to disable this option for testing purposes.
@@ -2172,7 +2194,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW] | Yes          |                                      |
-| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3dir extension) |
+| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3 extension) |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single ISO file in root folder       |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |

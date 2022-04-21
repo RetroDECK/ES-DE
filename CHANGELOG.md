@@ -26,6 +26,7 @@
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
+* Removed the "Preload gamelists on startup" setting
 * Removed the "Play videos immediately (override theme)" setting
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
 * Added support for defining which types of game media to use for all image elements (and also for the video component static image)
@@ -85,6 +86,7 @@
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
 * Large refactoring to improve thread safety and improve singleton pattern usage
+* Added the build date to to main menu for alpha and dev builds
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
@@ -113,7 +115,7 @@
 
 ### Bug fixes
 
-* A renderer heisenbug caused single-pixel alignment issues at multiple places throughout the application
+* A vertex rounding heisenbug caused single-pixel alignment issues at multiple places throughout the application
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
@@ -146,8 +148,11 @@ v1.2 maintenance release.
 ### Detailed list of changes
 
 * Added a scraper setting to convert underscores _ to spaces when searching
+* Added support for using the manually downloaded emulators Redream and Ryujinx on Unix/Linux
 * Replaced the RetroArch core 4DO with Opera for the 3do system
+* Added the .ps3 file extension to the ps3 system
 * Added the .rom file extension to the atari800 system
+* Added the .svm file extension to the scummvm system and removed support for .7z and .zip extensions
 * Added the .wud and .wux file extensions for the wiiu system on Windows
 * Added --escape-exit command line option for the PPSSPP standalone emulator
 * Added -batch command line option for the DuckStation standalone emulator
