@@ -147,6 +147,7 @@ v1.2 maintenance release.
 
 ### Detailed list of changes
 
+* Made it possible to directly launch files inside directories that are interpreted as files
 * Added a scraper setting to convert underscores _ to spaces when searching
 * Added support for using the manually downloaded emulators Redream and Ryujinx on Unix/Linux
 * Replaced the RetroArch core 4DO with Opera for the 3do system

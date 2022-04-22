@@ -648,13 +648,13 @@ The platform name for the Commodore 64 is `c64`, so the following structure woul
 ~/ROMs/c64/Tape
 ~/ROMs/c64/Disk
 ~/ROMs/c64/Multidisk
-~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2A.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2B.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E0.d64
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E1.d64
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E2.d64
-~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
+~/ROMs/c64/Multidisk/Last Ninja 2.m3u/LNINJA2A.D64
+~/ROMs/c64/Multidisk/Last Ninja 2.m3u/LNINJA2B.D64
+~/ROMs/c64/Multidisk/Last Ninja 2.m3u/Last Ninja 2.m3u
+~/ROMs/c64/Multidisk/Pirates!.m3u/PIRAT-E0.d64
+~/ROMs/c64/Multidisk/Pirates!.m3u/PIRAT-E1.d64
+~/ROMs/c64/Multidisk/Pirates!.m3u/PIRAT-E2.d64
+~/ROMs/c64/Multidisk/Pirates!.m3u/Pirates!.m3u
 ```
 
 It's highly recommended to create `.m3u` playlist files for multi-disc images as this normally automates disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
@@ -666,19 +666,33 @@ LNINJA2A.D64
 LNINJA2B.D64
 ```
 
-It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist files. ES-DE is flexible so do whatever makes most sense for the situation.
+Setting the directories to the same name as the .m3u files will interpret them as files, meaning they will behave just like any normal files inside ES-DE instead of being displayed as folders. When launching such a game, the file inside the directory that matches the directory name will be passed to the emulator. See the following section below for more information about this functionality.
 
-When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see the metadata for the games also when browsing the folders. ES-DE fully supports scraping folders, although some metadata is not included for logical reasons (and while it's possible to mark a folder as favorite, it will not be part of the Favorites collection as only files can be part of collections). If you only scrape the folders and not the actual game files, it may look somehow ok when browsing the gamelist, but when such a game is part of a collection, the metadata will be missing there. This includes the _All games, Favorites_ and _Last played_ collections but also any custom collection where the game has been added.
-
-It's also recommended to use the metadata editor to set the flags _Exclude from game counter_ and _Exclude from automatic scraper_ for the actual game files so that they are not counted for the game statistics display and not scraped when running the multi-scraper. If you don't want to hide the individual game files but still want a cleaner look, it's also possible to set the flag _Hide metadata fields_ for the game files.
+This setup is of course entirely optional, you can also leave the directories as normal folders, meaning they will behave just like you would expect, i.e. you will have to enter them and then select the file you want to launch. If going for this setup it's possible to easily hide the files that are not relevant using the metadata editor.
 
 ### Directories interpreted as files
 
-There is a very special use case which ES-DE supports where you can interpret a directory as if it were a file. This is used in some cases such as for the PlayStation 3 emulator RPCS3 where a directory rather than a file is passed as an argument to the emulator during game launch.
+There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-disc games and similar while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
 
-If you add the extension that is configured for the emulator to a directory name it will be loaded as if it was a file when ES-DE starts up.
+In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This means that the directory can be part of the automatic collections and any custom collections.
 
-As an example using the Sony PlayStation 3 system, the extension in es_systems.xml is .ps3 so this is what such a directory could look like:
+The only difference between a real file and a directory interpreted as a file is that the _Delete_ button in the metadata editor will be disabled as ES-DE does not support deletion of directories for safety reasons.
+
+For the first scenario, to automatically launch a file inside a directory, just rename the directory to the same name as the file inside the folder that you would like to launch. For example:
+```
+~/ROMs/dreamcast/Jet Grind Radio.cue/
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio.cue
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio.gdi
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio (Track 1).bin
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio (Track 2).bin
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio (Track 3).bin
+```
+
+In this case the directory is named _Jet Grind Radio.cue_, i.e. exactly the same name as one of the files inside the directory. This means that when launching the game, `~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio.cue` will actually be passed to the emulator.
+
+The second scenario is when an emulator supports passing a directory rather than a file to launch a game. Such an example is the PlayStation 3 emulator RPCS3.
+
+For PS3 games the extension in es_systems.xml is .ps3 so this is what a game directory could look like:
 ```
 ~/ROMs/ps3/Gran Turismo 5.ps3
 ```
@@ -688,11 +702,7 @@ It's also possible to combine these types of special directories with normal dir
 ~/ROMs/ps3/racing/Gran Turismo 5.ps3
 ```
 
-For all intents and purposes the `Gran Turismo 5.ps3` directory will now be considered a file within ES-DE, i.e. all file metadata fields can be used and the directory can be part of both automatic and custom collections.
-
-The only exception is that the _Delete_ button in the metadata editor will be disabled for these special types of entries as ES-DE does not support deletion of directories for safety reasons.
-
-When setting up a directory like this, make sure to not name any files or folders inside the base directory using the same extension as that will force the base directory to be processed normally, breaking the functionality.
+Also in this case the directory will be displayed as a regular game file inside ES-DE and when launching the game the directory is passed as the game ROM argument to RPCS3.
 
 ### Special game installation considerations
 
@@ -844,11 +854,27 @@ An example setup could look like the following:
 
 To clarify, the sky.scummvm file should contain just the single word `sky` and likewise the queen.scummvm file should only contain the word `queen`.
 
+In order to avoid having to display each game as a directory inside ES-DE (that needs to be entered each time you want to launch a game), you can optionally interpret each game directory as a file. Make sure to read the _Directories interpreted as files_ section [here](USERGUIDE-DEV.md#directories-interpreted-as-files) to understand how this functionality works, but essentially the following would be the setup required for our example:
+```
+~/ROMs/scummvm/sky.scummvm/sky.scummvm
+~/ROMs/scummvm/queen.scummvm/queen.scummvm
+```
+
+In this case the two entries _sky_ and _queen_ will show up inside ES-DE and these will be handled like any other game files and can be part of automatic and custom collections for instance.
+
+The only drawback of this approach is that when scraping using TheGamesDB you will get very inaccurate results as this scraper service does not support ScummVM short names. It can however be worked around by refining the searches. ScreenScraper does natively support ScummVM short names and you should get very accurate results with this scraper service.
+
+A final alternative is to use _folder links_ to keep the directory structure intact while still being able to launch the game file directly without having to enter the directory, but for ScummVM specifically that is not really recommended.
+
 #### Ports
 
-Ports are not really executed using emulators, but are rather applications running natively on the operating system. The easiest way to handle these is to add a simple shell script or batch file where you can customize the exact launch parameters for the game.
+Ports are not executed using emulators, but are rather applications running natively on the operating system.
 
-It's possible to add these files directly to the root folder, but normally it's recommended to setup a separate directory per game as there may be more than a single file required. For instance you often want to have easy access to the game setup utility which may have to be executed separately from the actual game.
+On Windows it's straightforward to add these to ES-DE, simply copy the Start Menu entries for your games into the ~\ROMs\ports directory. These files have the .lnk extension and can be launched directly from within ES-DE.
+
+For Linux and macOS it's a bit more complicated.  The easiest way to handle these is to add a simple shell script where you can customize the exact launch parameters for the game. It's possible to add these files directly to the root of the ports folder, but normally it's recommended to setup a separate directory per game as there may be more than a single file required. For instance you often want to have easy access to the game setup utility which may have to be executed separately from the actual game.
+
+That's possibly also true on Windows, so even when just copying .lnk files from the Start Menu it may be a good idea to separate the games into their own folders.
 
 Here's an example for setting up Chocolate-Doom, GZDoom and DarkPlaces on Unix:
 
