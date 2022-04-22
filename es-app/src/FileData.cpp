@@ -819,8 +819,8 @@ void FileData::launchGame()
 
     LOG(LogInfo) << "Launching game \"" << this->metadata.get("name") << "\"...";
 
-    SystemData* gameSystem = nullptr;
-    std::string command = "";
+    SystemData* gameSystem {nullptr};
+    std::string command;
     std::string alternativeEmulator;
 
     if (mSystem->isCollection())
@@ -868,17 +868,30 @@ void FileData::launchGame()
     if (command.empty())
         command = mEnvData->mLaunchCommands.front().first;
 
-    std::string commandRaw = command;
+    std::string commandRaw {command};
+    std::string romPath {Utils::FileSystem::getEscapedPath(mPath)};
 
-    const std::string romPath = Utils::FileSystem::getEscapedPath(getPath());
-    const std::string baseName = Utils::FileSystem::getStem(getPath());
-    const std::string romRaw = Utils::FileSystem::getPreferredPath(getPath());
-    const std::string esPath = Utils::FileSystem::getExePath();
-    bool runInBackground = false;
+    // For the special case where a directory has a supported file extension and is therefore
+    // interpreted as a file, check if there is a matching filename inside the directory.
+    // This is used as a shortcut to be able to launch games directly inside folders.
+    if (mType == GAME && Utils::FileSystem::isDirectory(mPath)) {
+        for (std::string& file : Utils::FileSystem::getDirContent(mPath)) {
+            if (Utils::FileSystem::getFileName(file) == Utils::FileSystem::getFileName(mPath) &&
+                (Utils::FileSystem::isRegularFile(file) || Utils::FileSystem::isSymlink(file))) {
+                romPath = Utils::FileSystem::getEscapedPath(file);
+                break;
+            }
+        }
+    }
+
+    const std::string baseName {Utils::FileSystem::getStem(mPath)};
+    const std::string romRaw {Utils::FileSystem::getPreferredPath(mPath)};
+    const std::string esPath {Utils::FileSystem::getExePath()};
+    bool runInBackground {false};
 
     // In addition to the global RunInBackground setting it's possible to define this flag
     // per launch command in es_systems.xml.
-    size_t inBackgroundPos = command.find("%RUNINBACKGROUND%");
+    size_t inBackgroundPos {command.find("%RUNINBACKGROUND%")};
 
     if (inBackgroundPos != std::string::npos) {
         runInBackground = true;
