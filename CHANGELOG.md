@@ -109,6 +109,7 @@
 * Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
 * Greatly simplified the video controls code (play/stop/pause etc.)
 * Removed the deprecated VideoVlcComponent
+* Removed the deprecated tools/update_theme_formatversion.sh script
 * Lots of general code cleanup and refactoring
 * Changed tools/create_AppImage.sh to not include version information in the AppImage filename
 * Updated and improved the theming documentation

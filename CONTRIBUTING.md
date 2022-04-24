@@ -74,8 +74,8 @@ The roadmap is under constant review so expect it to change from time to time. S
 #### v2.1
 
 * Animated menu elements like switches, tick boxes, smooth scrolling etc.
+* New texture/cache manager with support for SVG images and Lottie animations
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
-* Scrollbar component for the gamelist view which can be used by the themes
 * Support for additional scraper services (if feasible?)
 * Web proxy support for the scraper
 * RetroAchievements.org integration
@@ -83,17 +83,18 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.2
 
-* Reorganize the menus, possibly adding basic/advanced modes
-* Localization/multi-language support
 * Simple file browsing component
+* Scrollbar component for the gamelist view which can be used by the themes
+* Background music (theme controlled or custom playlist)
+* Proper audio mixer
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
-* New texture/cache manager with support for SVG images and Lottie animations
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets
 * Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
 
 #### v2.3
 
 * Vulkan renderer for all supported operating systems
+* Localization/multi-language support
 * Dependency on MoltenVK to get Metal support on macOS
 * Decommission of the OpenGL 2.1 and OpenGL ES renderers (or keep as legacy mode/legacy build?)
 * Better and more accurate GPU and memory usage statistics overlay
@@ -102,6 +103,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.4
 
+* Reorganize the menus, possibly adding basic/advanced modes
 * Migration tools for importing game metadata and media from other frontend applications
 * Audit tools to clean up orphaned gamelist entries, media files etc.
 * Auto-import tools for Steam, Lutris etc.
