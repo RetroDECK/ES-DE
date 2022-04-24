@@ -263,7 +263,8 @@ namespace Utils
 
             for (auto it = pathList.cbegin(); it != pathList.cend(); ++it) {
                 pathTest = it->c_str() + ("/" + executable);
-                if (exists(pathTest))
+                if (Utils::FileSystem::isRegularFile(pathTest) ||
+                    Utils::FileSystem::isSymlink(pathTest))
                     return it->c_str();
             }
             return "";
