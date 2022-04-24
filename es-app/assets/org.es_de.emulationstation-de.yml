@@ -17,10 +17,14 @@ finish-args:
   - --socket=x11
   - --socket=wayland
   - --socket=pulseaudio
-  - --device=dri
-  - --filesystem=host
+  - --device=all
+  - --filesystem=host:ro
+  - --filesystem=/var/lib/flatpak:ro
   - --filesystem=home
+  - --filesystem=~/.var/app
   - --share=network
+  - --talk-name=org.freedesktop.Flatpak
+  - --env=PATH=/app/bin:/usr/bin:/var/lib/flatpak/exports/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/var/lib/snapd/snap/bin
 cleanup:
   - /include
   - /share/ffmpeg
@@ -70,6 +74,8 @@ modules:
 
   - name: emulationstation
     buildsystem: cmake
+    config-opts:
+    - -DFLATPAK_BUILD=on .
     sources:
     - type: git
       url: https://gitlab.com/leonstyhre/emulationstation-de.git
