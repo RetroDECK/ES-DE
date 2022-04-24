@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=1.0
 Exec=emulationstation
-Icon=emulationstation
+Icon=org.es_de.emulationstation-de
 Terminal=false
 Type=Application
 StartupNotify=true

@@ -227,7 +227,7 @@ else()
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.desktop
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
-    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.svg
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.svg
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/pixmaps)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/org.es_de.emulationstation-de.appdata.xml
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
