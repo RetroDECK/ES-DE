@@ -162,6 +162,10 @@ v1.2 maintenance release.
 * Added missing scraper entries for samcoupe and zx81 for TheGamesDB and zmachine for ScreenScraper
 * neogeocd is now scraped specifically as "Neo Geo CD" instead of the more generic "Neo Geo"
 * (rbsimple-DE) Made the xbox console graphics slightly darker
+* Added a CMake flag to build as Flatpak which prefixes "flatpak-spawn --host" to all launch commands
+* A check is now done on game launch that emulator binaries are actually files or symlinks
+* (Unix) The RetroArch core path search order now matches the emulator binary search order
+* (Unix) Renamed the icon emulationstation.svg to org.es_de.emulationstation-de.svg
 
 ### Bug fixes
 

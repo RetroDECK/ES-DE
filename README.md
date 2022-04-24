@@ -62,8 +62,6 @@ All previous releases can be downloaded from [here](https://gitlab.com/leonstyhr
 
 The _current_ version of the Linux AppImage ships with newer libraries and better controller support but requires distributions with libc 2.34 or later to work.
 
-Flatpak will not be supported on Linux as this packaging system is too restrictive with its sandbox approach, making ES-DE virtually useless as it can't freely locate and launch emulators on the system.
-
 If using FreeBSD, NetBSD or OpenBSD you will need to build ES-DE from source code for the time being, as explained in [INSTALL.md](INSTALL.md).
 
 Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about the releases, including known issues.

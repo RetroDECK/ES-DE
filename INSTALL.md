@@ -1642,6 +1642,7 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.libretro.RetroArch</entry>
             <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
             <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
             <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
@@ -1649,18 +1650,18 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
     </emulator>
     <core name="RETROARCH">
         <rule type="corepath">
-            <!-- Snap package -->
-            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
-            <!-- Flatpak package -->
-            <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
-            <!-- AppImage and compiled from source -->
-            <entry>~/.config/retroarch/cores</entry>
             <!-- Ubuntu and Linux Mint repository -->
             <entry>/usr/lib/x86_64-linux-gnu/libretro</entry>
             <!-- Fedora repository -->
             <entry>/usr/lib64/libretro</entry>
             <!-- Manjaro repository -->
             <entry>/usr/lib/libretro</entry>
+            <!-- Snap package -->
+            <entry>~/snap/retroarch/current/.config/retroarch/cores</entry>
+            <!-- Flatpak package -->
+            <entry>~/.var/app/org.libretro.RetroArch/config/retroarch/cores</entry>
+            <!-- AppImage and compiled from source -->
+            <entry>~/.config/retroarch/cores</entry>
             <!-- FreeBSD and OpenBSD repository -->
             <entry>/usr/local/lib/libretro</entry>
             <!-- NetBSD repository -->
