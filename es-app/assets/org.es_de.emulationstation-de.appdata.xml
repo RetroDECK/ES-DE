@@ -5,8 +5,7 @@
     <summary>Emulator frontend</summary>
     <description>
         <p>EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and
-           launching games from your multi-platform game collection. It's intended
-           to be used in conjunction with emulators such as the RetroArch cores.</p>
+           launching games from your multi-platform game collection.</p>
     </description>
     <launchable type="desktop-id">org.es_de.emulationstation-de.desktop</launchable>
     <categories>
