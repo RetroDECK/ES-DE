@@ -256,13 +256,12 @@ namespace Utils
             return "";
 #else
 #if defined(FLATPAK_BUILD)
-            // Ugly hack for the Flatpak build as Flathub doesn't allow the "--env=PATH=" option
-            // to be used and I have not found a way to pass the actual PATH variable from the host
-            // to the sandbox. This variable value is a combination of all common paths found on
-            // all supported distributions.
-            std::string pathVariable {"/app/bin:/var/lib/flatpak/exports/bin:/usr/bin:/usr/local/"
-                                      "bin:/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/"
-                                      "local/games:/snap/bin:/var/lib/snapd/snap/bin"};
+            // Ugly hack for the Flatpak build to find emulators installed as Flatpaks and Snaps.
+            // Note that due to limitations of this package format anything installed under /usr
+            // and similar system directories will not be possible to launch as they are shadowed
+            // by the Flatpak sandbox directories. Therefore they are excluded here.
+            std::string pathVariable {
+                "/var/lib/flatpak/exports/bin:/snap/bin:/var/lib/snapd/snap/bin"};
 #else
             std::string pathVariable {std::string(getenv("PATH"))};
 #endif
