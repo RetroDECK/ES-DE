@@ -1184,15 +1184,15 @@ void FileData::launchGame()
                          getSourceFileData()->getSystem()->getFullName());
     int returnValue = 0;
 
-#if defined(FLATPAK_BUILD)
-    // Break out of the sandbox.
-    command = "flatpak-spawn --host " + command;
-#endif
-
     LOG(LogDebug) << "Raw emulator launch command:";
     LOG(LogDebug) << commandRaw;
     LOG(LogInfo) << "Expanded emulator launch command:";
     LOG(LogInfo) << command;
+
+#if defined(FLATPAK_BUILD)
+    // Break out of the sandbox.
+    command = "flatpak-spawn --host " + command;
+#endif
 
     // Possibly keep ES-DE running in the background while the game is launched.
 
