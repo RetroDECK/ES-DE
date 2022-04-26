@@ -255,9 +255,19 @@ namespace Utils
 #if defined(_WIN64)
             return "";
 #else
-            std::string pathVariable = std::string(getenv("PATH"));
-            std::vector<std::string> pathList =
-                Utils::String::delimitedStringToVector(pathVariable, ":");
+#if defined(FLATPAK_BUILD)
+            // Ugly hack for the Flatpak build as Flathub doesn't allow the "--env=PATH=" option
+            // to be used and I have not found a way to pass the actual PATH variable from the host
+            // to the sandbox. This variable value is a combination of all common paths found on
+            // all supported distributions.
+            std::string pathVariable {"/app/bin:/var/lib/flatpak/exports/bin:/usr/bin:/usr/local/"
+                                      "bin:/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/"
+                                      "local/games:/snap/bin:/var/lib/snapd/snap/bin"};
+#else
+            std::string pathVariable {std::string(getenv("PATH"))};
+#endif
+            std::vector<std::string> pathList {
+                Utils::String::delimitedStringToVector(pathVariable, ":")};
 
             std::string pathTest;
 
