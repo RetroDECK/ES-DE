@@ -18,19 +18,17 @@ finish-args:
   - --socket=pulseaudio
   - --device=all
   - --filesystem=host:ro
-  - --filesystem=/var/lib/flatpak:ro
+  - --filesystem=/var/lib/flatpak/exports/bin:ro
   - --filesystem=home
   - --filesystem=~/.var/app
   - --share=network
   - --talk-name=org.freedesktop.Flatpak
-  - --env=PATH=/app/bin:/usr/bin:/var/lib/flatpak/exports/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/var/lib/snapd/snap/bin
 cleanup:
   - /include
   - /share/ffmpeg
   - /lib/cmake
-  - /lib/debug
   - /lib/pkgconfig
-  - /lib/*.a
+  - '*.a'
 
 modules:
   - name: ffmpeg
@@ -53,9 +51,14 @@ modules:
     no-autogen: true
     build-options:
         cxxflags: -std=c++14
+        arch:
+            aarch64:
+                # See https://sourceforge.net/p/freeimage/bugs/325/
+                cflags: -fPIC -DPNG_ARM_NEON_OPT=0
+                cxxflags: -fPIC
     sources:
     - type: archive
-      url: http://downloads.sourceforge.net/freeimage/FreeImage3180.zip
+      url: https://downloads.sourceforge.net/freeimage/FreeImage3180.zip
       sha256: f41379682f9ada94ea7b34fe86bf9ee00935a3147be41b6569c9605a53e438fd
     - type: shell
       commands:
@@ -78,4 +81,4 @@ modules:
     sources:
     - type: git
       url: https://gitlab.com/leonstyhre/emulationstation-de.git
-      commit: 3cb464c7adcea8d020cdff92803c64b7f72fb443
+      commit: ed4e832ea591269ea853f26060740782dcaeb2f0
