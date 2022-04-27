@@ -275,10 +275,12 @@ void RendererOpenGL::destroyContext()
     mSDLContext = nullptr;
 }
 
-void RendererOpenGL::setMatrix(const glm::mat4& matrix)
+void RendererOpenGL::setMatrix(const glm::mat4& matrix, bool roundVertices)
 {
-    // Set matrix for use with shader.
-    mTrans = getProjectionMatrix() * matrix;
+    mTrans = matrix;
+    if (roundVertices)
+        mTrans[3] = glm::round(mTrans[3]);
+    mTrans = getProjectionMatrix() * mTrans;
 }
 
 void RendererOpenGL::setScissor(const Rect& scissor)

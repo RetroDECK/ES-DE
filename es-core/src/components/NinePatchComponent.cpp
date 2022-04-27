@@ -132,7 +132,6 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     if (mTexture && mVertices != nullptr) {
-        trans[3] = glm::round(trans[3]);
         mRenderer->setMatrix(trans);
         mVertices->opacity = mOpacity;
         mTexture->bind();

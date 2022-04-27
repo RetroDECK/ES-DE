@@ -9,7 +9,6 @@
 #ifndef ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
 #define ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
 
-#include "Log.h"
 #include "Sound.h"
 #include "animations/LambdaAnimation.h"
 #include "components/IList.h"

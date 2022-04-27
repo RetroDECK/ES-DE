@@ -397,7 +397,12 @@ void ImageComponent::render(const glm::mat4& parentTrans)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
-    mRenderer->setMatrix(trans);
+
+    // Don't round vertices if scaled as it may lead to single-pixel alignment issues.
+    if (mScale == 1.0f)
+        mRenderer->setMatrix(trans, true);
+    else
+        mRenderer->setMatrix(trans, false);
 
     if (mTexture && mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
