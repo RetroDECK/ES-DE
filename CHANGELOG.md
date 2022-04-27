@@ -155,7 +155,7 @@ v1.2 maintenance release.
 * Added the .ps3 file extension to the ps3 system
 * Added the .rom file extension to the atari800 system
 * Added the .svm file extension to the scummvm system and removed support for .7z and .zip extensions
-* Added the .wud and .wux file extensions for the wiiu system on Windows
+* Added the .wua, .wud and .wux file extensions for the wiiu system on Windows
 * Added --escape-exit command line option for the PPSSPP standalone emulator
 * Added -batch command line option for the DuckStation standalone emulator
 * (Windows) Added a separate find rules configuration file for use with portable installations
@@ -165,7 +165,6 @@ v1.2 maintenance release.
 * (rbsimple-DE) Made the xbox console graphics slightly darker
 * Added a CMake flag to build as Flatpak which prefixes "flatpak-spawn --host" to all launch commands
 * A check is now done on game launch that emulator binaries are actually files or symlinks
-* (Unix) The RetroArch core path search order now matches the emulator binary search order
 * (Unix) Renamed the icon emulationstation.svg to org.es_de.emulationstation-de.svg
 
 ### Bug fixes
