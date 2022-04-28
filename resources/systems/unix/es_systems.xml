@@ -587,7 +587,7 @@
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so %ROM%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbneo_libretro.so %ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbalpha2012_libretro.so %ROM%</command>
-        <command label="MAME (Standalone)">%EMULATOR_MAME% -rompath %ROMPATH%/arcade %BASENAME%</command>
+        <command label="MAME (Standalone)">%EMULATOR_MAME% -rompath %ROMPATH%/mame %BASENAME%</command>
         <platform>arcade</platform>
         <theme>mame</theme>
     </system>
