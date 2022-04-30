@@ -37,7 +37,7 @@ namespace Utils
                            const std::string& startDirectory,
                            bool runInBackground);
         int launchGameWindows(const std::wstring& cmd_utf16,
-                              std::wstring& startDirectory,
+                              const std::wstring& startDirectory,
                               bool runInBackground,
                               bool hideWindow);
 

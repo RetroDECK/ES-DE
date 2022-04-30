@@ -147,7 +147,7 @@ namespace Utils
         }
 
         int launchGameWindows(const std::wstring& cmd_utf16,
-                              std::wstring& startDirectory,
+                              const std::wstring& startDirectory,
                               bool runInBackground,
                               bool hideWindow)
         {
@@ -165,7 +165,8 @@ namespace Utils
             bool processReturnValue = true;
             DWORD errorCode = 0;
 
-            wchar_t* startDir {startDirectory == L"" ? nullptr : &startDirectory[0]};
+            std::wstring startDirectoryTemp {startDirectory};
+            wchar_t* startDir {startDirectory == L"" ? nullptr : &startDirectoryTemp[0]};
 
             // clang-format off
             processReturnValue = CreateProcessW(
