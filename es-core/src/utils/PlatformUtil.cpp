@@ -74,7 +74,9 @@ namespace Utils
 #endif
         }
 
-        int launchGameUnix(const std::string& cmd_utf8, bool runInBackground)
+        int launchGameUnix(const std::string& cmd_utf8,
+                           const std::string& startDirectory,
+                           bool runInBackground)
         {
 #if defined(__unix__) || defined(__APPLE__)
             std::string command = std::string(cmd_utf8) + " 2>&1 &";
@@ -93,6 +95,9 @@ namespace Utils
             std::array<char, 128> buffer;
             std::string commandOutput;
             int returnValue;
+
+            if (startDirectory != "")
+                command = "cd " + startDirectory + " && " + command;
 
             if (!(commandPipe = reinterpret_cast<FILE*>(popen(command.c_str(), "r")))) {
                 LOG(LogError) << "Couldn't open pipe to command.";
@@ -141,7 +146,10 @@ namespace Utils
 #endif
         }
 
-        int launchGameWindows(const std::wstring& cmd_utf16, bool runInBackground, bool hideWindow)
+        int launchGameWindows(const std::wstring& cmd_utf16,
+                              std::wstring& startDirectory,
+                              bool runInBackground,
+                              bool hideWindow)
         {
 #if defined(_WIN64)
             STARTUPINFOW si {};
@@ -157,18 +165,20 @@ namespace Utils
             bool processReturnValue = true;
             DWORD errorCode = 0;
 
+            wchar_t* startDir {startDirectory == L"" ? nullptr : &startDirectory[0]};
+
             // clang-format off
-    processReturnValue = CreateProcessW(
-        nullptr,                                 // No application name (use command line).
-        const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
-        nullptr,                                 // Process attributes.
-        nullptr,                                 // Thread attributes.
-        FALSE,                                   // Handles inheritance.
-        0,                                       // Creation flags.
-        nullptr,                                 // Use parent's environment block.
-        nullptr,                                 // Use parent's starting directory.
-        &si,                                     // Pointer to the STARTUPINFOW structure.
-        &pi);                                    // Pointer to the PROCESS_INFORMATION structure.
+            processReturnValue = CreateProcessW(
+                nullptr,                         // No application name (use command line).
+                const_cast<wchar_t*>(cmd_utf16.c_str()), // Command line.
+                nullptr,                         // Process attributes.
+                nullptr,                         // Thread attributes.
+                FALSE,                           // Handles inheritance.
+                0,                               // Creation flags.
+                nullptr,                         // Use parent's environment block.
+                startDir,                        // Starting directory, possibly the same as parent.
+                &si,                             // Pointer to the STARTUPINFOW structure.
+                &pi);                            // Pointer to the PROCESS_INFORMATION structure.
             // clang-format on
 
             if (!runInBackground) {
