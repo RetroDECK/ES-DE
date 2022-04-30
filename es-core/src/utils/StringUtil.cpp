@@ -606,6 +606,10 @@ namespace Utils
 
                 replaced.append(result.substr(lastPos));
                 result = replaced;
+
+                // Prevent endless loops.
+                if (to.find(from) != std::string::npos)
+                    break;
             }
             return result;
         }
