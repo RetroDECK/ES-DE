@@ -584,6 +584,10 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             // Video.
             processMedia(result, media_list, ssConfig.media_video, result.videoUrl,
                          result.videoFormat, region);
+            // Fallback to normalized video if no regular video was found.
+            if (result.videoUrl == "")
+                processMedia(result, media_list, ssConfig.media_video_normalized, result.videoUrl,
+                             result.videoFormat, region);
         }
         result.mediaURLFetch = COMPLETED;
         out_results.push_back(result);

@@ -80,6 +80,7 @@ public:
         std::string media_screenshot = "ss";
         std::string media_titlescreen = "sstitle";
         std::string media_video = "video";
+        std::string media_video_normalized = "video-normalized";
 
         bool isArcadeSystem;
         bool automaticMode;
