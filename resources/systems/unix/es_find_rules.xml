@@ -167,6 +167,15 @@
             <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
         </rule>
     </emulator>
+    <emulator name="PLAY!">
+        <!-- Sony PlayStation 2 emulator Play! -->
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.purei.Play</entry>
+            <entry>~/Applications/Play!*.AppImage</entry>
+            <entry>~/.local/bin/Play!*.AppImage</entry>
+            <entry>~/bin/Play!*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="systempath">

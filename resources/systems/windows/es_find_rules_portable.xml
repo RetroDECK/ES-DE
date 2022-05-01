@@ -119,6 +119,14 @@
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PLAY!">
+        <!-- Sony PlayStation 2 emulator Play! -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Play\Play.exe</entry>
+            <entry>%ESPATH%\Emulators\Play\Play.exe</entry>
+            <entry>%ESPATH%\..\Play\Play.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="PPSSPP">
         <!-- Sony PlayStation Portable emulator PPSSPP -->
         <rule type="staticpath">

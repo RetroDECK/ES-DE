@@ -83,10 +83,10 @@
             <entry>/Applications/PCSX2.app/Contents/MacOS/PCSX2</entry>
         </rule>
     </emulator>
-    <emulator name="RPCS3">
-        <!-- Sony PlayStation 3 emulator RPCS3 -->
+    <emulator name="PLAY!">
+        <!-- Sony PlayStation 2 emulator Play! -->
         <rule type="staticpath">
-            <entry>/Applications/RPCS3.app/Contents/MacOS/rpcs3</entry>
+            <entry>/Applications/Play.app/Contents/MacOS/Play</entry>
         </rule>
     </emulator>
     <emulator name="PPSSPP">
@@ -101,6 +101,12 @@
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="staticpath">
             <entry>/Applications/redream.app/Contents/MacOS/redream</entry>
+        </rule>
+    </emulator>
+    <emulator name="RPCS3">
+        <!-- Sony PlayStation 3 emulator RPCS3 -->
+        <rule type="staticpath">
+            <entry>/Applications/RPCS3.app/Contents/MacOS/rpcs3</entry>
         </rule>
     </emulator>
     <emulator name="SIXTYFORCE">
