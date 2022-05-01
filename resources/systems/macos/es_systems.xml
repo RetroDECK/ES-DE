@@ -259,8 +259,9 @@
         <name>cdimono1</name>
         <fullname>Philips CD-i</fullname>
         <path>%ROMPATH%/cdimono1</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.chd .CHD .cue .CUE .iso .ISO</extension>
+        <command label="SAME CDi">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/same_cdi_libretro.dylib %ROM%</command>
+        <command label="CDi 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/cdi2015_libretro.dylib %ROM%</command>
         <platform>cdimono1</platform>
         <theme>cdimono1</theme>
     </system>
