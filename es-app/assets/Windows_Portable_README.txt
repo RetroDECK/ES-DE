@@ -23,6 +23,7 @@ Preconfigured emulator locations:
 
 Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
+Emulators\atari800\atari800.exe
 Emulators\cemu\Cemu.exe
 Emulators\Citra\canary-mingw\citra.exe
 Emulators\Citra\nightly-mingw\citra.exe
@@ -36,10 +37,12 @@ Emulators\melonDS\melonDS.exe
 Emulators\mGBA\mGBA.exe
 Emulators\mupen64plus\mupen64plus-ui-console.exe
 Emulators\PCSX2\pcsx2.exe
+Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
 Emulators\redream\redream.exe
 Emulators\RPCS3\rpcs3.exe
 Emulators\ryujinx\Ryujinx.exe
+Emulators\snes9x\snes9x-x64.exe
 Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
