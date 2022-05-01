@@ -238,6 +238,17 @@
             <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SNES9X">
+        <!-- Super Nintendo emulator Snes9x -->
+        <rule type="systempath">
+            <entry>snes9x-x64.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\snes9x\snes9x-x64.exe</entry>
+            <entry>%ESPATH%\Emulators\snes9x\snes9x-x64.exe</entry>
+            <entry>%ESPATH%\..\snes9x\snes9x-x64.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="systempath">

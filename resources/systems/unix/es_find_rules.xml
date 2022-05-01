@@ -215,6 +215,15 @@
             <entry>~/bin/rpcs3*.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="SNES9X">
+        <!-- Super Nintendo emulator Snes9x -->
+        <rule type="systempath">
+            <entry>snes9x</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.snes9x.Snes9x</entry>
+        </rule>
+    </emulator>
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">

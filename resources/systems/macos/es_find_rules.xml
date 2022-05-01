@@ -109,6 +109,12 @@
             <entry>/Applications/sixtyforce.app/Contents/MacOS/sixtyforce</entry>
         </rule>
     </emulator>
+    <emulator name="SNES9X">
+        <!-- Super Nintendo emulator Snes9x -->
+        <rule type="staticpath">
+            <entry>/Applications/Snes9x.app/Contents/MacOS/Snes9x</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="staticpath">
