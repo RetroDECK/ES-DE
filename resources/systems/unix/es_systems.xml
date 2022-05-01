@@ -515,6 +515,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.so %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.so %ROM%</command>
+        <command label="BlastEm (Standalone)">%EMULATOR_BLASTEM% -m gen %ROM%</command>
         <platform>genesis</platform>
         <theme>genesis</theme>
     </system>
@@ -658,6 +659,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.so %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.so %ROM%</command>
+        <command label="BlastEm (Standalone)">%EMULATOR_BLASTEM% -m gen %ROM%</command>
         <platform>megadrive</platform>
         <theme>megadrive</theme>
     </system>

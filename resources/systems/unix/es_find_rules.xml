@@ -35,6 +35,16 @@
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="BLASTEM">
+        <!-- Sega Mega Drive/Genesis emulator BlastEm -->
+        <rule type="systempath">
+            <entry>blastem</entry>
+            <entry>com.retrodev.blastem</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.retrodev.blastem</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="systempath">
