@@ -14,6 +14,13 @@
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
+    <emulator name="ATARI800">
+        <!-- Atari 8-bit computer emulator Atari800 -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/atari800</entry>
+            <entry>/usr/local/bin/atari800</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="staticpath">

@@ -35,6 +35,13 @@
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="ATARI800">
+        <!-- Atari 8-bit computer emulator Atari800 -->
+        <rule type="systempath">
+            <entry>atari800</entry>
+            <entry>atari800-jz.atari800</entry>
+        </rule>
+    </emulator>
     <emulator name="BLASTEM">
         <!-- Sega Mega Drive/Genesis emulator BlastEm -->
         <rule type="systempath">

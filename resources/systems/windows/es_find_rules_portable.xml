@@ -17,6 +17,14 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="ATARI800">
+        <!-- Atari 8-bit computer emulator Atari800 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\atari800\atari800.exe</entry>
+            <entry>%ESPATH%\Emulators\atari800\atari800.exe</entry>
+            <entry>%ESPATH%\..\atari800\atari800.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="CEMU">
         <!-- Nintendo Wii U emulator Cemu -->
         <rule type="staticpath">
