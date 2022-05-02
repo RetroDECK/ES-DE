@@ -150,9 +150,6 @@ v1.2 maintenance release. Support has been added for displaying multi-disc/multi
 
 * Made it possible to directly launch files inside directories that are interpreted as files
 * Added a scraper setting to convert underscores _ to spaces when searching
-* The %ROMPATH% variable can now be used inside the es_systems.xml command tag
-* Added a %STARTDIR% variable to set the start directory when running an emulator (required by MAME standalone)
-* Added an %EMUDIR% variable that expands to the emulator binary directory
 * If no ScreenScraper video is found when scraping, a fallback will now be done to the normalized (low quality) video
 * Added support for using the manually downloaded emulators Redream and Ryujinx on Unix
 * Added Play! standalone as an alternative emulator for the ps2 system
@@ -174,6 +171,9 @@ v1.2 maintenance release. Support has been added for displaying multi-disc/multi
 * Added missing scraper entries for samcoupe and zx81 for TheGamesDB and zmachine for ScreenScraper
 * neogeocd is now scraped specifically as "Neo Geo CD" instead of the more generic "Neo Geo"
 * (rbsimple-DE) Made the xbox console graphics slightly darker
+* The %ROMPATH% variable can now be used inside the es_systems.xml command tag
+* Added a %STARTDIR% variable to set the start directory when running an emulator (required by MAME standalone)
+* Added an %EMUDIR% variable that expands to the emulator binary directory
 * Added a CMake flag to build as Flatpak which prefixes "flatpak-spawn --host" to all launch commands
 * Added some Flatpak-specific code to work around the sandbox restrictions of this package format
 * A check is now done on game launch that emulator binaries are actually files or symlinks
@@ -184,6 +184,7 @@ v1.2 maintenance release. Support has been added for displaying multi-disc/multi
 * The MAME standalone emulator couldn't be launched
 * Using a custom image directory for the slideshow screensaver would hang the application if there was only a single image
 * On Unix and macOS, staticpaths rules in es_find_rules.xml containing blank spaces would not work
+* %ESPATH% variables could not be used in es_systems.xml
 * Navigating the list of alternative emulators would sometimes lead to an incorrect row positioning
 * On Windows, the find rule for the Mupen64Plus standalone emulator was not setup correctly
 

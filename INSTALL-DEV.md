@@ -1181,6 +1181,13 @@ Below is an overview of the file layout with various examples. For the command t
         expanded to the directory of the ES-DE executable. -->
         <command>"%ESPATH%\RetroArch\retroarch.exe" -L "%ESPATH%\RetroArch\cores\snes9x_libretro.dll" %ROM%</command>
 
+        <!-- An example of setting the start directory to the directory of the emulator binary, which is required for standalone MAME
+        on Windows. The %ROMPATH% variable is also used as this emulator needs to receive the ROM directory and game file separately. -->
+        <command label="MAME (Standalone)">%HIDEWINDOW% %EMULATOR_MAME% %STARTDIR%=%EMUDIR% -rompath %ROMPATH%\arcade %BASENAME%</command>
+
+        <!-- The equivalent setup of standalone MAME for Unix. If not existing, the start directory will be created on game launch. -->
+        <command label="MAME (Standalone)">%EMULATOR_MAME% %STARTDIR%=~/.mame -rompath %ROMPATH%/arcade %BASENAME%</command>
+
         <!-- An example on Unix which launches a script, this is for example used by source ports, Steam games etc. The %RUNINBACKGROUND%
         variable does exactly what it sounds like, it keeps ES-DE running in the background while a game is launched. This is required
         for launching Steam games properly. -->
@@ -1215,9 +1222,15 @@ The following variables are expanded for the `command` tag:
 
 `%ROMRAW%`	- Replaced with the unescaped, absolute path to the selected ROM.  If your emulator is picky about paths, you might want to use this instead of %ROM%, but enclosed in quotes.
 
+`%ROMPATH%` - Replaced with the path defined in the setting ROMDirectory in es_settings.xml. If combined with a path that contains blankspaces, then it must be surrounded by quotation marks, for example `%ROMPATH%"\Arcade Games"`. Note that the quotation mark must be located before the directory separator in this case.
+
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
-`%EMUPATH%` - Replaced with the path to the emulator binary. This is expanded using either the PATH environment variable of the operating system, or using an absolute emulator path if this has been defined.
+`%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators like standalone MAME will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used with this variable, such as `%STARTDIR%=C:\Games\mame` or the `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%`. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch.
+
+`%EMUPATH%` - Replaced with the path to the emulator binary. This variable is used for manually specifying emulator core locations, and a check for the existence of the core file will be done on game launch and an error displayed if it can't be found. Normally %EMUPATH% should not be used as the %CORE_ variable is the recommended method for defining core locations.
+
+`%EMUDIR%` - Replaced with the path to the emulator binary. This is a general purpose variable as opposed to %EMUPATH% which is intended specifically for core locations.
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
