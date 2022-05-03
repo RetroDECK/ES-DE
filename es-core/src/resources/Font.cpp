@@ -156,10 +156,10 @@ Font::FontTexture::FontTexture(const int mSize)
     if (screenSizeModifier < 0.45f)
         extraTextureSize += 4;
 
-    // It's not entirely clear if the 22 and 10 constants are correct, but they seem to provide
+    // It's not entirely clear if the 20 and 8 constants are correct, but they seem to provide
     // a texture buffer large enough to hold the fonts. This logic is obviously a hack though
     // and needs to be properly reviewed and improved.
-    textureSize = glm::ivec2 {mSize * (22 + extraTextureSize), mSize * (10 + extraTextureSize / 2)};
+    textureSize = glm::ivec2 {mSize * (20 + extraTextureSize), mSize * (8 + extraTextureSize / 2)};
 
     // Make sure the size is not unreasonably large (which may be caused by a mistake in the
     // theme configuration).
