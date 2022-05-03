@@ -63,6 +63,13 @@
             <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
+    <emulator name="MAME">
+        <!-- Arcade emulator MAME -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/mame</entry>
+            <entry>/usr/local/bin/mame</entry>
+        </rule>
+    </emulator>
     <emulator name="MELONDS">
         <!-- Nintendo DS and DSi emulator melonDS -->
         <rule type="staticpath">
