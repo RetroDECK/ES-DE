@@ -545,11 +545,12 @@ At the moment the following emulators are supported in AppImage format:
 | _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage |
 | gba          | mGBA        | mGBA.AppImage                   |
 | gc           | Dolphin     | Dolphin_Emulator.AppImage       |
+| ps2          | Play!       | Play!.AppImage                  |
 | ps3          | RPCS3       | rpcs3.AppImage                  |
 | psx          | DuckStation | duckstation-nogui-x64.AppImage  |
 | psx          | DuckStation | duckstation-qt-x64.AppImage     |
-| xbox         | xemu        | Xemu.AppImage                   |
 | switch       | Yuzu        | yuzu.AppImage                   |
+| xbox         | xemu        | Xemu.AppImage                   |
 | wii          | Dolphin     | Dolphin_Emulator.AppImage       |
 
 Symlinking RetroArch is only required if using AppImageLauncher as the filename is otherwise not containing any version information, instead simply being named `RetroArch-Linux-x86_64.AppImage`. The same is true for DuckStation.
@@ -560,6 +561,32 @@ Also make sure to set the AppImage as executable or ES-DE will not be able to la
 ```
 cd ~/Applications
 chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64_54579676ed3fa60dafec7188286495e4.AppImage
+```
+
+## Using manually downloaded emulators on Linux
+
+Normally on Linux you would install emulators using either one of the established package formats, i.e. Flatpak, AppImage or Snap, or you would install them using the operating system repository. Less likely would be to build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS), you don't even have the choice to install them to a standard system directory.
+
+For these situations ES-DE looks for emulators in the same directories where it looks for AppImages (as explained in the section above), meaning:
+```
+~/Applications/
+~/.local/bin/
+~/bin/
+```
+
+So placing a manually downloaded emulator binary in either of these directories will make ES-DE able to locate it during game launch.
+
+The following manually downloaded emulators are supported when using the bundled configuration:
+
+| System name  | Emulator    | Filename configuration          |
+| :----------- | :---------- | :------------------------------ |
+| dreamcast    | Redream     | redream                         |
+| switch       | Ryujinx     | publish/Ryujinx                 |
+
+Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
+```
+cd ~/Applications/publish
+chmod +x ./Ryujinx
 ```
 
 ## Running emulators in fullscreen mode
@@ -629,22 +656,22 @@ That's it, start ES-DE and the NES game system should be populated. You can now 
 
 ### Multiple game files installation
 
-For some systems, there are sometimes (or always) multiple gamefiles per game. Such an example would be the Commodore 64 when multidisk games are being played. For such instances, simply group the files inside folders.
+For some systems, there are sometimes (or always) multiple files per game. Such an example would be the Commodore 64 when multidisk games are being played. For such instances, simply group the files inside folders.
 
-The platform name for the Commodore 64 is `c64`, so the following structure would be a possible approach:
+The system name for the Commodore 64 is `c64`, so the following structure would be a possible approach:
 
 ```
 ~/ROMs/c64/Cartridge
 ~/ROMs/c64/Tape
 ~/ROMs/c64/Disk
 ~/ROMs/c64/Multidisk
-~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2A.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/LNINJA2B.D64
-~/ROMs/c64/Multidisk/Last Ninja 2/Last Ninja 2.m3u
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E0.d64
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E1.d64
-~/ROMs/c64/Multidisk/Pirates/PIRAT-E2.d64
-~/ROMs/c64/Multidisk/Pirates/Pirates!.m3u
+~/ROMs/c64/Multidisk/Last Ninja 2.m3u/LNINJA2A.D64
+~/ROMs/c64/Multidisk/Last Ninja 2.m3u/LNINJA2B.D64
+~/ROMs/c64/Multidisk/Last Ninja 2.m3u/Last Ninja 2.m3u
+~/ROMs/c64/Multidisk/Pirates!.m3u/PIRAT-E0.d64
+~/ROMs/c64/Multidisk/Pirates!.m3u/PIRAT-E1.d64
+~/ROMs/c64/Multidisk/Pirates!.m3u/PIRAT-E2.d64
+~/ROMs/c64/Multidisk/Pirates!.m3u/Pirates!.m3u
 ```
 
 It's highly recommended to create `.m3u` playlist files for multi-disc images as this normally automates disk swapping in the emulator. It's then this .m3u file that should be selected for launching the game.
@@ -656,33 +683,43 @@ LNINJA2A.D64
 LNINJA2B.D64
 ```
 
-It's of course also possible to skip this type of directory structure and put all the games in the root folder, but then there will be multiple entries for the same game which is not so tidy. Another approach would be to put all the files in the root folder and then hide the game files, showing only the .m3u playlist files. ES-DE is flexible so do whatever makes most sense for the situation.
+Setting the directories to the same name as the .m3u files will interpret them as files, meaning they will behave just like any normal files inside ES-DE instead of being displayed as folders. When launching such a game, the file inside the directory that matches the directory name will be passed to the emulator. See the following section below for more information about this functionality.
 
-When setting up games in this fashion, it's recommended to scrape the directory in addition to the .m3u file as it looks nicer to see the metadata for the games also when browsing the folders. ES-DE fully supports scraping folders, although some metadata is not included for logical reasons (and while it's possible to mark a folder as favorite, it will not be part of the Favorites collection as only files can be part of collections). If you only scrape the folders and not the actual game files, it may look somehow ok when browsing the gamelist, but when such a game is part of a collection, the metadata will be missing there. This includes the _All games, Favorites_ and _Last played_ collections but also any custom collection where the game has been added.
-
-It's also recommended to use the metadata editor to set the flags _Exclude from game counter_ and _Exclude from automatic scraper_ for the actual game files so that they are not counted for the game statistics display and not scraped when running the multi-scraper. If you don't want to hide the individual game files but still want a cleaner look, it's also possible to set the flag _Hide metadata fields_ for the game files.
+This setup is of course entirely optional, you can also leave the directories as normal folders, meaning they will behave just like you would expect, i.e. you will have to enter them and then select the file you want to launch. If going for this setup it's possible to easily hide the files that are not relevant using the metadata editor.
 
 ### Directories interpreted as files
 
-There is a very special use case which ES-DE supports where you can interpret a directory as if it were a file. This is used in some cases such as for the PlayStation 3 emulator RPCS3 where a directory rather than a file is passed as an argument to the emulator during game launch.
+There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-disc games and similar while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
 
-If you add the extension that is configured for the emulator to a directory name it will be loaded as if it was a file when ES-DE starts up.
+In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This means that the directory can be part of the automatic collections and any custom collections.
 
-As an example using the Sony PlayStation 3 system, the extension in es_systems.xml is .ps3dir so this is what such a directory could look like:
+The only difference between a real file and a directory interpreted as a file is that the _Delete_ button in the metadata editor will be disabled as ES-DE does not support deletion of directories for safety reasons.
+
+For the first scenario, to automatically launch a file inside a directory, just rename the directory to the same name as the file inside the folder that you would like to launch. For example:
 ```
-~/ROMs/ps3/Gran Turismo 5.ps3dir
+~/ROMs/dreamcast/Jet Grind Radio.cue/
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio.cue
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio.gdi
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio (Track 1).bin
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio (Track 2).bin
+~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio (Track 3).bin
+```
+
+In this case the directory is named _Jet Grind Radio.cue_, i.e. exactly the same name as one of the files inside the directory. This means that when launching the game, `~/ROMs/dreamcast/Jet Grind Radio.cue/Jet Grind Radio.cue` will actually be passed to the emulator.
+
+The second scenario is when an emulator supports passing a directory rather than a file to launch a game. Such an example is the PlayStation 3 emulator RPCS3.
+
+For PS3 games the extension in es_systems.xml is .ps3 so this is what a game directory could look like:
+```
+~/ROMs/ps3/Gran Turismo 5.ps3
 ```
 
 It's also possible to combine these types of special directories with normal directories, for a setup like this:
 ```
-~/ROMs/ps3/racing/Gran Turismo 5.ps3dir
+~/ROMs/ps3/racing/Gran Turismo 5.ps3
 ```
 
-For all intents and purposes the `Gran Turismo 5.ps3dir` directory will now be considered a file within ES-DE, i.e. all file metadata fields can be used and the directory can be part of both automatic and custom collections.
-
-The only exception is that the _Delete_ button in the metadata editor will be disabled for these special types of entries as ES-DE does not support deletion of directories for safety reasons.
-
-When setting up a directory like this, make sure to not name any files or folders inside the base directory using the same extension as that will force the base directory to be processed normally, breaking the functionality.
+Also in this case the directory will be displayed as a regular game file inside ES-DE and when launching the game the directory is passed as the game ROM argument to RPCS3.
 
 ### Special game installation considerations
 
@@ -748,33 +785,33 @@ But if using the AppImage release it's a bit more complicated. See [here](USERGU
 
 If using the Flatpak release and your games are stored on an external device (such as a memory card if using a Steam Deck), you need to give RPCS3 the necessary permissions. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
-As for the game installation on both Windows and Linux as well as on macOS, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3dir extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
+As for the game installation on both Windows and Linux as well as on macOS, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3 extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
 
 Here's an example of what a Blu-ray disc directory could look like:
 ```
-~/ROMs/ps3/Gran Turismo 5.ps3dir
+~/ROMs/ps3/Gran Turismo 5.ps3
 ```
 
-It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3dir extension.
+It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3 extension.
 
 Here's how to do it on Linux and macOS:
 ```
 cd ~/ROMs
-ln -s ~/games/PS3/Gran\ Turismo\ 5 Gran\ Turismo\ 5.ps3dir
+ln -s ~/games/PS3/Gran\ Turismo\ 5 Gran\ Turismo\ 5.ps3
 ```
 
 And here's how to do it on Windows (you need to run this as Administrator):
 ```
 cd C:\Users\Myusername\ROMs\ps3
-mklink /D "Gran Turismo 5.ps3dir" "C:\Games\PS3\Gran Turismo 5"
+mklink /D "Gran Turismo 5.ps3" "C:\Games\PS3\Gran Turismo 5"
 ```
 
-If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3dir extension.
+If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3 extension.
 
 An example on Linux:
 ```
 cd ~/ROMs
-ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 Bejeweled2.ps3dir
+ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 Bejeweled2.ps3
 ```
 
 This example is for the AppImage version of RPCS3, for the Snap or Flatpak versions, the installed games will be located in a different directory.
@@ -782,10 +819,10 @@ This example is for the AppImage version of RPCS3, for the Snap or Flatpak versi
 Here's how to achieve the same on Windows:
 ```
 cd C:\Users\Myusername\ROMs\ps3
-mklink /D "Bejeweled2.ps3dir" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
+mklink /D "Bejeweled2.ps3" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
 ```
 
-Of course you can name the symlink anything you want as long as it has the .ps3dir extension.
+Of course you can name the symlink anything you want as long as it has the .ps3 extension.
 
 Apparently some specific games have issues launching when using symlinks so you need to test and experiment with what works for your collection.
 
@@ -833,6 +870,16 @@ An example setup could look like the following:
 ```
 
 To clarify, the sky.scummvm file should contain just the single word `sky` and likewise the queen.scummvm file should only contain the word `queen`.
+
+In order to avoid having to display each game as a directory inside ES-DE (that needs to be entered each time you want to launch a game), you can optionally interpret each game directory as a file. Make sure to read the _Directories interpreted as files_ section [here](USERGUIDE.md#directories-interpreted-as-files) to understand how this functionality works, but essentially the following would be the setup required for our example:
+```
+~/ROMs/scummvm/sky.scummvm/sky.scummvm
+~/ROMs/scummvm/queen.scummvm/queen.scummvm
+```
+
+In this case the two entries _sky_ and _queen_ will show up inside ES-DE and these will be handled like any other game files and can be part of automatic and custom collections for instance.
+
+The only drawback of this approach is that when scraping using TheGamesDB you will get very inaccurate results as this scraper service does not support ScummVM short names. It can however be worked around by refining the searches. ScreenScraper does natively support ScummVM short names and you should get very accurate results with this scraper service.
 
 #### Ports
 
@@ -1276,6 +1323,10 @@ If this setting is enabled and a folder has its flag set to be excluded from the
 **Scrape actual folders** _(Multi-scraper only)_
 
 Enabling this option causes folders themselves to be included by the scraper. This is useful for DOS or ScummVM games or for multi-disc games where there is a folder for each individual game.
+
+**Convert underscores to spaces when searching**
+
+With this option enabled underscores _ in game names are converted to spaces when performing scraper searches. This affects both the single-game scraper and the multi-scraper and it will also be applied automatically to the _Refine search_ dialog.
 
 **Auto-retry on peer verification errors** _(ScreenScraper only)_
 
@@ -2067,23 +2118,23 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
-| 3do                   | 3DO                                            | 4DO                               |                                   |              |                                      |
+| 3do                   | 3DO                                            | Opera                             |                                   |              |                                      |
 | 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] |              |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Placeholder_                     |                                   |              |                                      |
-| amiga                 | Commodore Amiga                                | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
-| amiga600              | Commodore Amiga 600                            | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
-| amiga1200             | Commodore Amiga 1200                           | PUAE                              |                                   | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
-| amigacd32             | Commodore Amiga CD32                           | PUAE                              |                                   |              |                                      |
+| amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
+| amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
+| amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          | WHDLoad hard disk image in .hdf or .hdz format in root folder, or diskette image in .adf format in root folder if single-disc, or in separate folder with .m3u playlist if multi-disc |
+| amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         |              |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           |              |                                      |
 | android               | Google Android                                 | _Placeholder_                     |                                   |              |                                      |
 | apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
 | apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2000,<br>MAME 2003-Plus,<br>MAME 2010,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>MAME **(Standalone)** [UW*] | Depends      | Single archive file following MAME name standard in root folder |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2000,<br>MAME 2003-Plus,<br>MAME 2010,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>MAME **(Standalone)** [UMW*] | Depends      | Single archive file following MAME name standard in root folder |
 | astrocade             | Bally Astrocade                                | _Placeholder_                     |                                   |              |                                      |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014                       | No           | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800                          |              |                                      |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         |                                   |              |                                      |
-| atari800              | Atari 800                                      | Atari800                          |                                   |              |                                      |
+| atari800              | Atari 800                                      | Atari800                          | Atari800 **(Standalone)** [UMW*]  | No           |                                      |
 | atarijaguar           | Atari Jaguar                                   | Virtual Jaguar                    |                                   |              |                                      |
 | atarijaguarcd         | Atari Jaguar CD                                | Virtual Jaguar                    |                                   |              |                                      |
 | atarilynx             | Atari Lynx                                     | Handy                             | Beetle Lynx                       |              |                                      |
@@ -2093,7 +2144,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | bbcmicro              | BBC Micro                                      | _Placeholder_                     |                                   |              |                                      |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single disk, tape or cartridge image in root folder and/or multi-disc images in separate folder |
 | cavestory             | Cave Story (NXEngine)                          | NXEngine                          |                                   |              |                                      |
-| cdimono1              | Philips CD-i                                   | _Placeholder_                     |                                   |              |                                      |
+| cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015                          | Yes          | Single .bin/.cue pair in root folder |
 | cdtv                  | Commodore CDTV                                 | _Placeholder_                     |                                   |              |                                      |
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
@@ -2115,22 +2166,22 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gb                    | Nintendo Game Boy                              | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** [UMW*],<br>VBA Next,<br>gpSP       | No           | Single archive or ROM file in root folder |
 | gbc                   | Nintendo Game Boy Color                        | SameBoy                           | Gambatte,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
-| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*], PrimeHack **(Standalone)** [U] | No           | Single ISO file in root folder       |
-| genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | No           | Single archive or ROM file in root folder |
+| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*], PrimeHack **(Standalone)** [U] | No           | Single .iso file in root folder       |
+| genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U] | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 | _Placeholder_                     |                                   |              |                                      |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
-| j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | Yes          | Single JAR file in root folder       |
+| j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | Yes          | Single .jar file in root folder       |
 | kodi                  | Kodi Home Theatre Software                     | N/A                               |                                   | No           |                                      |
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | Shell script in root folder          |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | _Placeholder_                     |                                   |              |                                      |
-| mame                  | Multiple Arcade Machine Emulator               | MAME 2003-Plus                    | MAME 2000,<br>MAME 2010,<br>MAME - Current,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>MAME **(Standalone)** [UW*] | Depends      | Single archive file following MAME name standard in root folder |
+| mame                  | Multiple Arcade Machine Emulator               | MAME 2003-Plus                    | MAME 2000,<br>MAME 2010,<br>MAME - Current,<br>FinalBurn Neo,<br>FB Alpha 2012,<br>MAME **(Standalone)** [UMW*] | Depends      | Single archive file following MAME name standard in root folder |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      | Single archive file following MAME name standard in root folder |
 | mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      | Single archive file following MAME name standard in root folder |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive | No           | Single archive or ROM file in root folder |
 | megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive |              |                                      |
 | megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive |              |                                      |
-| megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm | No           | Single archive or ROM file in root folder |
+| megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U] | No           | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
 | moonlight             | Moonlight Game Streaming                       | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
@@ -2162,12 +2213,12 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   |              |                                      |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
-| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW] | Yes          |                                      |
-| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3dir extension) |
+| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW],<br>Play! **(Standalone)** [UMW*] | Yes (No for Play!) |                                      |
+| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3 extension) |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
-| psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single ISO file in root folder       |
+| psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
-| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation@ [UW],<br>DuckStation **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
+| psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
 | samcoupe              | SAM Coupé                                      | SimCoupe                          |                                   |              |                                      |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause |              |                                      |
@@ -2177,10 +2228,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | sega32xna             | Sega Genesis 32X [North America]               | PicoDrive                         |                                   | No           | Single archive or ROM file in root folder |
 | segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive |              |                                      |
-| sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
+| sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | sg-1000               | Sega SG-1000                                   | Gearsystem                        | Genesis Plus GX,<br>Genesis Plus GX Wide,<br>blueMSX |              |                                      |
-| snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
-| snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
+| snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
+| snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | solarus               | Solarus Game Engine                            | _Placeholder_                     |                                   |              |                                      |
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
 | steam                 | Valve Steam                                    | Steam application **(Standalone)** |                                  | No           | Shell script/batch file in root folder (and .url files supported on Windows) |
@@ -2207,7 +2258,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      |                                   |              |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file in root folder |
 | x68000                | Sharp X68000                                   | PX68k                             |                                   |              |                                      |
-| xbox                  | Microsoft Xbox                                 | xemu **(Standalone)** [UMW*]      |                                   | Yes          | Single ISO file in root folder       |
+| xbox                  | Microsoft Xbox                                 | xemu **(Standalone)** [UMW*]      |                                   | Yes          | Single .iso file in root folder       |
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W*]       |                                   | No           |                                      |
 | zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
