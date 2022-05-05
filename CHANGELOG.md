@@ -138,6 +138,16 @@
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 
+## Version 1.2.4 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+### Detailed list of changes
+
+### Bug fixes
+
 ## Version 1.2.3
 
 **Release date:** 2022-05-04
@@ -184,7 +194,7 @@ v1.2 maintenance release. Support has been added for displaying multi-disc/multi
 
 * The MAME standalone emulator couldn't be launched
 * Using a custom image directory for the slideshow screensaver would hang the application if there was only a single image
-* On Unix and macOS, staticpaths rules in es_find_rules.xml containing blank spaces would not work
+* On Unix and macOS, staticpaths rules in es_find_rules.xml containing spaces would not work
 * %ESPATH% variables could not be used in es_systems.xml
 * Navigating the list of alternative emulators would sometimes lead to an incorrect row positioning
 * On Windows, the find rule for the Mupen64Plus standalone emulator was not setup correctly
