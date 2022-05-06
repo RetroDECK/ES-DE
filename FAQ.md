@@ -6,7 +6,7 @@ This project started in 2020 as a fork of RetroPie EmulationStation and it has b
 
 ## What's the correct name? EmulationStation, ES-DE, Emulation Station, EmuStation etc?
 
-The correct name is EmulationStation Desktop Edition, which is for practical reasons often shortened to EmulationStation-DE or more commonly ES-DE. It's not spelled Emulation Station in the same manner as you don't write Sony Play Station or Nintendo Game Cube.
+The correct name is EmulationStation Desktop Edition, which is for practical reasons often shortened to EmulationStation-DE or more commonly ES-DE. It's not spelled Emulation Station (i.e. two separate words) in the same manner as you don't write Sony Play Station or Nintendo Game Cube.
 
 ## Is this software available for free, and is it open source?
 
@@ -32,13 +32,17 @@ ES-DE comes preconfigured with support for many alternative emulators, see the [
 
 On Windows ES-DE is shipped as a portable installation and as a regular installer. If you're using the portable installation you need to drop your emulators inside the Emulators directory. Make sure to read the README.txt file directly in the EmulationStation-DE folder for more details. For the regular installer many emulators do not provide a method to inform ES-DE where they are installed, so you will need to add their installation directories to the Path environment variable in Windows. It's strongly recommended to read the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows) before attempting to setup and use ES-DE on Windows.
 
-## The emulator configuration is all wrong, what's going on?
+## The emulators don't seem to be properly configured?
 
-ES-DE acts strictly as a frontend, it does not interfere at all with the emulator configuration. So you need to configure your emulators separately. This includes your controllers as the controller configuration inside ES-DE will have no effect on the emulators. You could of course also use an automated tool to setup your emulator environment, such as using EmuDeck on the Steam Deck.
+ES-DE acts strictly as a frontend, it does not interfere at all with the emulator configuration. So you need to configure your emulators separately. This includes your controllers as well since the controller configuration inside ES-DE will have no effect on the emulators. You could of course also use an automated tool to setup your emulator environment, such as using EmuDeck on the Steam Deck.
+
+## On game launch the screen just flashes black and the game won't start, how do I solve this?
+
+This is almost always caused by missing emulator BIOS files which have to be installed separately from ES-DE. See the previous question.
 
 ## How do I exit back from the emulators to ES-DE?
 
-This is related to the previous question, ES-DE does not perform any emulator configuration or general system configuration. So you would either need to configure an exit button combination inside your emulator, or use a third party tool to map for instance Alt + F4 or Command + Q to a certain button combination on your controller. If you use RetroArch then it's easy to setup a button combination to exit back to ES-DE, which will apply to all cores. Refer to the RetroArch documentation or their support channels on how to accomplish this.
+This is related to the two questions above, ES-DE does not perform any emulator configuration or general system configuration. So you would either need to configure an exit button combination inside your emulator, or use a third party tool to map for instance Alt + F4 or Command + Q to a certain button combination on your controller. If you use RetroArch then it's easy to setup a button combination to exit back to ES-DE, which will apply to all cores. Refer to the RetroArch documentation or their support channels on how to accomplish this.
 
 ## I have many games with multiple files, is there a way to show these as single entries?
 
