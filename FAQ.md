@@ -6,7 +6,7 @@ This project started in 2020 as a fork of RetroPie EmulationStation and it has b
 
 ## What's the correct name? EmulationStation, ES-DE, Emulation Station, EmuStation etc?
 
-The correct name is EmulationStation Desktop Edition, which is often shortened to ES-DE for practical reasons. It's not spelled Emulation Station in the same manner as you don't write Sony Play Station or Nintendo Game Cube.
+The correct name is EmulationStation Desktop Edition, which is for practical reasons often shortened to EmulationStation-DE or more commonly ES-DE. It's not spelled Emulation Station in the same manner as you don't write Sony Play Station or Nintendo Game Cube.
 
 ## Is this software available for free, and is it open source?
 
