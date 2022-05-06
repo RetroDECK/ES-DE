@@ -1,7 +1,5 @@
 # EmulationStation Desktop Edition (ES-DE) - Frequently Asked Questions
 
-[[_TOC_]]
-
 ## What is this project and how it is related to other EmulationStation forks?
 
 This project started in 2020 as a fork of RetroPie EmulationStation and it has been in very active development ever since. Large parts of the application have been rewritten and much functionality has been added, so overall it's a quite different application by now. It's a completely independent project from all other EmulationStation forks.
@@ -24,7 +22,7 @@ ES-DE and EmuDeck are completely different projects, but we are friends and we c
 
 ## What systems/platforms and emulators are supported by ES-DE?
 
-See the _Supported game systems_ section of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing all supported systems/platforms and emulators.
+See the _Supported game systems_ section at the bottom of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing all supported systems/platforms and emulators.
 
 ## I don't like the default emulator for a certain system, how can I choose an alternative?
 
@@ -40,11 +38,11 @@ ES-DE acts strictly as a frontend, it does not interfere at all with the emulato
 
 ## How do I exit back from the emulators to ES-DE?
 
-This is related to the previous question, ES-DE does not perform any emulator configuration or general system configuration. So you would either need to configure an exit button combination inside your emulator, or use a third party tool to map for instance Alt + F4 or Command + Q to a certain button combination on your controller. With that said, the plan is to add a section to the user guide on how to configure such third party tools. If you use RetroArch then it's easy to setup a button combination to exit back to ES-DE, which will apply to all cores. Refer to the RetroArch documentation or their support channels on how to accomplish this.
+This is related to the previous question, ES-DE does not perform any emulator configuration or general system configuration. So you would either need to configure an exit button combination inside your emulator, or use a third party tool to map for instance Alt + F4 or Command + Q to a certain button combination on your controller. If you use RetroArch then it's easy to setup a button combination to exit back to ES-DE, which will apply to all cores. Refer to the RetroArch documentation or their support channels on how to accomplish this.
 
 ## How do I add more themes?
 
-Most RetroPie EmulationStation theme sets will work with ES-DE, and there are numerous resources online where to find these. How to install them is described in the _Themes_ section of the [User guide](USERGUIDE.md#themes). Just be aware that some of these themes do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme is written.
+Most RetroPie EmulationStation theme sets will work with ES-DE, and there are numerous resources online on where to find these. How to install them is described in the _Themes_ section of the [User guide](USERGUIDE.md#themes). Just be aware that some of these themes do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme is written.
 
 ## The themes I've added don't seem to work, what's wrong?
 
@@ -52,11 +50,19 @@ Only RetroPie EmulationStation themes are supported, you can't use themes that w
 
 ## I used to be a Batocera/Recalbox user and ES-DE can't seem to find some of my games?
 
-ES-DE uses the RetroPie naming conventions. In most cases the ROM directories are identical but for historical reasons some of them unfortunately don't match. For example Nintendo GameCube is called _gc_ in RetroPie and ES-DE while being named _gamecube_ in Batocera and Recalbox. The same is true for some other systems like n3ds vs. 3ds for Nintendo 3DS etc. See the _Supported game systems_ section of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing the ROM directory names that ES-DE expects.
+ES-DE uses the RetroPie naming conventions. In most cases the ROM directories are identical but for historical reasons some of them unfortunately don't match. For example Nintendo GameCube is called _gc_ in RetroPie and ES-DE while being named _gamecube_ in Batocera and Recalbox. The same is true for some other systems like n3ds vs. 3ds for Nintendo 3DS. See the _Supported game systems_ section at the bottom of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing the system names that ES-DE expects.
 
 ## Can ES-DE update itself automatically when a new release becomes available?
 
 This functionality is planned but not yet implemented. It will probably be rolled out in two steps, with the first step being a notitication that a new release is available, and at a later stage adding complete in-application update support. For the time being you therefore need to regularly check the https://es-de.org website or join the ES-DE [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/) where new releases are announced.
+
+## I can't find any game media links in the gamelist.xml files, where is this data stored?
+
+ES-DE works completely different compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are simply matched against the ROM/game file name which makes for a much simpler, faster and completely portable setup. So replacing a game media file manually just involves copying a new file in place to overwrite the old file, no further updates are needed. Also see the next question below for more information.
+
+## Can I use an external scraper application instead of the built-in scraper?
+
+Yes to a certain extent this is supported and already used by some people. Few if any dedicated scrapers are updated specifically to support ES-DE though, so you may need to do some manual renaming and moving of files and directories for the time being. See the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details about this.
 
 ## I'm missing a feature, how can I request to have it added?
 

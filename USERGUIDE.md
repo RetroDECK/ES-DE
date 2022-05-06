@@ -2,6 +2,8 @@
 
 This document is intended as a quick start guide and as a reference for the application settings and general functionality. For details on how to build ES-DE from source code and to perform more advanced configuration, please refer to [INSTALL.md](INSTALL.md).
 
+It's generally recommended to read the [Frequently Asked Questions](FAQ.md) document prior to diving into the information in this guide.
+
 Table of contents:
 
 [[_TOC_]]

@@ -4,6 +4,8 @@ This document is intended as a quick start guide and as a reference for the appl
 
 This version of the user guide is only relevant for the current ES-DE development version, if you are using the latest stable release, refer to [USERGUIDE.md](USERGUIDE.md) instead.
 
+It's generally recommended to read the [Frequently Asked Questions](FAQ.md) document prior to diving into the information in this guide.
+
 Table of contents:
 
 [[_TOC_]]
@@ -2232,7 +2234,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   |              |                                      |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
-| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW],<br>Play! **(Standalone)** [UMW*] | Yes (No for Play!) |                                      |
+| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW],<br>Play! **(Standalone)** [UMW*],<br>AetherSX2 **(Standalone)** [M] | Yes (No for Play!) |                                      |
 | ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3 extension) |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |

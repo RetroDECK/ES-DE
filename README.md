@@ -72,6 +72,8 @@ If you would like to contribute to the development of ES-DE, then that's great! 
 
 # Additional information
 
+[FAQ.md](FAQ.md) covers a number of Frequently Asked Questions and is recommended reading before diving into the other documents listed below.
+
 [USERGUIDE.md](USERGUIDE.md) is a comprehensive guide on how to use ES-DE and it also contains a complete reference to all application settings.
 
 [CHANGELOG.md](CHANGELOG.md) contains information about the current release as well as previous releases. This covers the features, improvements, bug fixes and known issues.

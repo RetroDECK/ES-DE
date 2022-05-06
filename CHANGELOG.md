@@ -146,6 +146,8 @@
 
 ### Detailed list of changes
 
+* Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
+
 ### Bug fixes
 
 ## Version 1.2.3
