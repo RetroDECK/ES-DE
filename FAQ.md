@@ -1,6 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE) - Frequently Asked Questions
 
-## What is this project and how it is related to other EmulationStation forks?
+## What is this project and how is it related to other EmulationStation forks?
 
 This project started in 2020 as a fork of RetroPie EmulationStation and it has been in very active development ever since. Large parts of the application have been rewritten and much functionality has been added, so overall it's a quite different application by now. It's a completely independent project from all other EmulationStation forks.
 
