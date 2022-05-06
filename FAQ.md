@@ -58,13 +58,13 @@ This functionality is planned but not yet implemented. It will probably be rolle
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 
-ES-DE works completely different compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are simply matched against the ROM/game file name which makes for a much simpler, faster and completely portable setup. So replacing a game media file manually just involves copying a new file in place to overwrite the old file, no further updates are needed. Also see the next question below for more information.
+ES-DE works very differently compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are simply matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Manually replacing a game media file just involves copying a new file in place to overwrite the old file, no further updates are needed. Also see the next question below for more information.
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
-Yes to a certain extent this is supported and already used by some people. Few if any dedicated scrapers are updated specifically to support ES-DE though, so you may need to do some manual renaming and moving of files and directories for the time being. See the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details about this.
+Yes to a certain extent this is supported and already used by some people. Few if any dedicated scrapers are yet updated specifically to support ES-DE though, so you may need to do some manual renaming and moving of files and directories. See the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details about this.
 
-## I'm missing a feature, how can I request to have it added?
+## I'm missing a feature, how can I make a request to have it added?
 
 First check the project [Kanban](https://gitlab.com/leonstyhre/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](CONTRIBUTING.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/).
 
