@@ -40,6 +40,18 @@ ES-DE acts strictly as a frontend, it does not interfere at all with the emulato
 
 This is related to the previous question, ES-DE does not perform any emulator configuration or general system configuration. So you would either need to configure an exit button combination inside your emulator, or use a third party tool to map for instance Alt + F4 or Command + Q to a certain button combination on your controller. If you use RetroArch then it's easy to setup a button combination to exit back to ES-DE, which will apply to all cores. Refer to the RetroArch documentation or their support channels on how to accomplish this.
 
+## I have many games with multiple files, is there a way to show these as single entries?
+
+Yes, as from version 1.2.3 there is support to display such games as single entries. That is true for both single-disc games using a .bin/.cue pair or similar, or for multi-disc games where .m3u files are used for emulator disc swapping. See the _Directories interpreted as files_ section of the [User guide](USERGUIDE.md#directories-interpreted-as-files) for details on how to configure this.
+
+## I see both .bin and .cue files for many of my games, how can I hide the unnecessary files?
+
+See the question above for a possible solution. Another approach would be to hide the game files you don't want to see using the metadata editor. Yet another solution which is actually recommended is to convert your games to the .chd format. This combines the .bin/.cue files into a single file that is also compressed, leading to space savings. A custom systems configuration entry could also be created, but that is not really recommended or required due to the solutions just mentioned. The reason why .bin files are included in the first place is that some emulators can launch these files directly, and some users have game collections comprised of such files. If the .bin files were filtered out in the bundled configuration, then all these users would have their games removed from within ES-DE next time they upgrade the application.
+
+## When I hide a game using the metadata editor it's not really getting hidden, is this a bug?
+
+No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower text opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
+
 ## How do I add more themes?
 
 Most RetroPie EmulationStation theme sets will work with ES-DE, and there are numerous resources online on where to find these. How to install them is described in the _Themes_ section of the [User guide](USERGUIDE.md#themes). Just be aware that some of these themes do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme is written.
