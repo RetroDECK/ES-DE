@@ -748,11 +748,30 @@ bool SystemData::createSystemDirectories()
     }
 
     if (!Utils::FileSystem::exists(rompath)) {
+#if defined(_WIN64)
+        if (rompath.size() == 3 && rompath[1] == ':' && rompath[2] == '\\') {
+            if (Utils::FileSystem::driveExists(rompath)) {
+                LOG(LogInfo) << "ROM directory set to root of device " << rompath;
+            }
+            else {
+                LOG(LogError) << "Device " << rompath << " does not exist";
+                return true;
+            }
+        }
+        else {
+            LOG(LogInfo) << "Creating base ROM directory \"" << rompath << "\"...";
+            if (!Utils::FileSystem::createDirectory(rompath)) {
+                LOG(LogError) << "Couldn't create directory, permission problems or disk full?";
+                return true;
+            }
+        }
+#else
         LOG(LogInfo) << "Creating base ROM directory \"" << rompath << "\"...";
         if (!Utils::FileSystem::createDirectory(rompath)) {
             LOG(LogError) << "Couldn't create directory, permission problems or disk full?";
             return true;
         }
+#endif
     }
     else {
         LOG(LogInfo) << "Base ROM directory \"" << rompath << "\" already exists";
