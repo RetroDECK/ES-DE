@@ -630,7 +630,7 @@ namespace Utils
                 if (GetFinalPathNameByHandleW(hFile, const_cast<LPWSTR>(resolvedW.data()),
                                               static_cast<DWORD>(resolvedW.size()),
                                               FILE_NAME_NORMALIZED) > 0) {
-                    resolvedW.resize(resolvedW.size() - 1);
+                    resolvedW.resize(resolvedW.size() - 2);
                     resolved = getGenericPath(Utils::String::wideStringToString(resolvedW));
                 }
                 CloseHandle(hFile);
