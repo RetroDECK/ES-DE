@@ -32,6 +32,10 @@ ES-DE comes preconfigured with support for many alternative emulators, see the [
 
 On Windows ES-DE is shipped as a portable installation and as a regular installer. If you're using the portable installation you need to drop your emulators inside the Emulators directory. Make sure to read the README.txt file directly in the EmulationStation-DE folder for more details. For the regular installer many emulators do not provide a method to inform ES-DE where they are installed, so you will need to add their installation directories to the Path environment variable in Windows. It's strongly recommended to read the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows) before attempting to setup and use ES-DE on Windows.
 
+## I'm on Windows and ES-DE refuses to start, is the application broken?
+
+That's very unlikely, you're probably missing the OpenGL drivers required to run ES-DE. Try to download and install the latest drivers for your graphics card. If you have a really old GPU this may not work though, and you may have to go for OpenGL software rendering instead. How this is setup is described in the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows).
+
 ## The emulators don't seem to be properly configured?
 
 ES-DE acts strictly as a frontend, it does not interfere at all with the emulator configuration. So you need to configure your emulators separately. This includes your controllers as well since the controller configuration inside ES-DE will have no effect on the emulators. You could of course also use an automated tool to setup your emulator environment, such as using EmuDeck on the Steam Deck.
