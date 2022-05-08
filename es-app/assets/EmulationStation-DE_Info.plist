@@ -20,6 +20,8 @@
     <string>APPL</string>
     <key>CFBundleVersion</key>
     <string>2.0.0-alpha</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.games</string>
     <key>LSMinimumSystemVersion</key>
     <string>10.14.0</string>
     <key>LSUIPresentationMode</key>
