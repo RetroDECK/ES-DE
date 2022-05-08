@@ -914,16 +914,27 @@ void FileData::launchGame()
     std::vector<std::string> emulatorCorePaths;
 
 #if defined(_WIN64)
-    bool hideWindow = false;
+    bool hideWindow {false};
 
     // If the %HIDEWINDOW% variable is defined, we pass a flag to launchGameWindows() to
     // hide the window. This is intended primarily for hiding console windows when launching
     // scripts (used for example by Steam games and source ports).
-    size_t hideWindowPos = command.find("%HIDEWINDOW%");
-
-    if (hideWindowPos != std::string::npos) {
+    if (command.find("%HIDEWINDOW%") != std::string::npos) {
         hideWindow = true;
         command = Utils::String::replace(command, "%HIDEWINDOW%", "");
+        // Trim any leading whitespaces as they could cause the script execution to fail.
+        command.erase(command.begin(), std::find_if(command.begin(), command.end(), [](char c) {
+                          return !std::isspace(static_cast<unsigned char>(c));
+                      }));
+    }
+
+    bool escapeSpecials {false};
+
+    // If calling scripts and links using some binaries like cmd.exe then the special characters
+    // &()^=;, must be escaped.
+    if (command.find("%ESCAPESPECIALS%") != std::string::npos) {
+        escapeSpecials = true;
+        command = Utils::String::replace(command, "%ESCAPESPECIALS%", "");
         // Trim any leading whitespaces as they could cause the script execution to fail.
         command.erase(command.begin(), std::find_if(command.begin(), command.end(), [](char c) {
                           return !std::isspace(static_cast<unsigned char>(c));
@@ -1260,6 +1271,26 @@ void FileData::launchGame()
                           << startDirectory << "\"";
         }
     }
+
+#if defined(_WIN64)
+    if (escapeSpecials) {
+        bool foundSpecial {false};
+
+        // The special characters need to be procesed in this order.
+        std::string specialCharacters {"^&()=;,"};
+
+        for (size_t i = 0; i < specialCharacters.size(); ++i) {
+            std::string special(1, specialCharacters[i]);
+            if (romPath.find(special) != std::string::npos) {
+                romPath = Utils::String::replace(romPath, special, "^" + special);
+                foundSpecial = true;
+            }
+        }
+
+        if (foundSpecial)
+            romPath = Utils::String::replace(romPath, " ", "^ ");
+    }
+#endif
 
     // Replace the remaining variables with their actual values.
     command = Utils::String::replace(command, "%ROM%", romPath);
