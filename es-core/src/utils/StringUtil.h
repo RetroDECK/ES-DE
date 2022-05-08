@@ -30,8 +30,8 @@ namespace Utils
         std::string toCapitalized(const std::string& stringArg);
         std::string trim(const std::string& stringArg);
         std::string replace(const std::string& stringArg,
-                            const std::string& replace,
-                            const std::string& with);
+                            const std::string& from,
+                            const std::string& to);
         std::wstring stringToWideString(const std::string& stringArg);
         std::string wideStringToString(const std::wstring& stringArg);
         bool startsWith(const std::string& stringArg, const std::string& start);
