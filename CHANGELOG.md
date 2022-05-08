@@ -104,7 +104,6 @@
 * Renamed GuiGameScraper.cpp to GuiScraperSingle.cpp
 * Renamed SystemScreensaver.cpp to Screensaver.cpp
 * Moved UIModeController.cpp from the es-app/views directory to es-app
-* Updated the StringUtil::replace function as the old function was dangerous and could run into an endless loop
 * Set the clang-format option SpaceBeforeCpp11BracedList to true and reformatted the codebase
 * Removed some unnecessary typedefs and replaced the remaining ones with the more modern "using" keyword
 * Greatly simplified the video controls code (play/stop/pause etc.)
@@ -144,11 +143,20 @@
 
 ### Release overview
 
+v1.2 maintenance release.
+
 ### Detailed list of changes
 
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
+* (macOS) Categorized the application as a game in Info.plist
+* (Windows) Added an %ESCAPESPECIALS% variable that escapes the special characters &()^=;,
+* Updated the StringUtil::replace function as the old function was dangerous and could run into an endless loop
 
 ### Bug fixes
+
+* (Windows) Fixed an issue where symlinking game media directories would crash the application
+* (Windows) Scripts and links executed using cmd.exe could not contain the special characters &()^=;,
+* (Windows) ROM directories could not be created in the root of a device such as D:\ or E:\
 
 ## Version 1.2.3
 
@@ -727,7 +735,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 * On Windows installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
 
-* On Windows ampersands (&) can't be used in filenames executed by cmd.exe (applicable for the desktop, epic, kodi, ports and steam systems).
+* On Windows the special characters &()^=;, can't be used in filenames executed by cmd.exe (applicable for the desktop, epic, kodi, ports and steam systems). This issue will be resolved with the 1.2.4 release.
 
 * There could be problems with Chinese characters under some circumstances which may cause them to not get rendered properly in the gamelist view. This will hopefully be resolved with the 2.0 release.
 

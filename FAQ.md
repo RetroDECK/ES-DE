@@ -34,7 +34,7 @@ On Windows ES-DE is shipped as a portable installation and as a regular installe
 
 ## I'm on Windows and ES-DE refuses to start, is the application broken?
 
-That's very unlikely, you're probably missing the OpenGL drivers required to run ES-DE. Try to download and install the latest drivers for your graphics card. If you have a really old GPU this may not work though, and you may have to go for OpenGL software rendering instead. How this is setup is described in the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows).
+You're probably missing the OpenGL drivers required to run ES-DE. Try to download and install the latest drivers for your graphics card. If you have a really old GPU this may not work though, and you may have to go for OpenGL software rendering instead. How this is setup is described in the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows).
 
 ## The emulators don't seem to be properly configured?
 

@@ -1194,8 +1194,9 @@ Below is an overview of the file layout with various examples. For the command t
         <command>%RUNINBACKGROUND% bash %ROM%</command>
 
         <!-- The equivalent configuration as above, but for Windows.
-        The optional %HIDEWINDOW% variable is used to hide the console window, which would otherwise be visible when launching games. -->
-        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
+        The optional %HIDEWINDOW% variable is used to hide the console window which would otherwise be visible when launching games
+        and %ESCAPESPECIALS% escapes the characters &()^=;, that cmd.exe can't otherwise handle. -->
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
 
         <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
         The entry is case insensitive as it will be converted to lower case during startup.
@@ -1241,6 +1242,8 @@ The following variables are expanded for the `command` tag:
 `%RUNINBACKGROUND%` - When this variable is present, ES-DE will continue to run in the background while a game is launched. This will also prevent the gamelist video from playing, the screensaver from starting, and the game name and game description from scrolling. This functionality is required for some systems such as Valve Steam. The variable can be placed anywhere in the launch command.
 
 `%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching games. The variable can be placed anywhere in the launch command.
+
+`%ESCAPESPECIALS%` - This variable is only available on Windows and is used to escape the characters &()^=;, which would otherwise make binaries like cmd.exe fail when launching scripts or links. The variable can be placed anywhere in the launch command.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
