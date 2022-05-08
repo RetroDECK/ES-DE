@@ -38,7 +38,7 @@ You're probably missing the OpenGL drivers required to run ES-DE. Try to downloa
 
 ## The emulators don't seem to be properly configured?
 
-ES-DE acts strictly as a frontend, it does not interfere at all with the emulator configuration. So you need to configure your emulators separately. This includes your controllers as well since the controller configuration inside ES-DE will have no effect on the emulators. You could of course also use an automated tool to setup your emulator environment, such as using EmuDeck on the Steam Deck.
+ES-DE acts strictly as a frontend, it does not interfere with the emulator configuration. The only instance when ES-DE passes specific options to an emulator is when there is no choice, like when fullscreen mode can't be enabled except via a command line option, or when a flag is needed to place the emulator in batch mode to work properly with a frontend. So you need to configure your emulators separately. This includes your controllers as well since the controller configuration inside ES-DE will have no effect on the emulators. You could of course also use an automated tool to setup your emulator environment, such as using EmuDeck on the Steam Deck.
 
 ## On game launch the screen just flashes black and the game won't start, how do I solve this?
 
@@ -59,6 +59,10 @@ See the question above for a possible solution. Another approach would be to hid
 ## When I hide a game using the metadata editor it's not really getting hidden, is this a bug?
 
 No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower text opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
+
+## Is there a way to customize existing systems, and/or to add more systems than those shipped by default?
+
+Yes it's possible to both customize existing systems that are part of the bundled configuration as well as to add more systems than those shipped with ES-DE. Almost nothing is hardcoded in the application so there is a huge flexibility when it comes to such configuration. How this is done is covered in the _Game system customizations_ section of the [User guide](USERGUIDE.md#game-system-customizations). Just make sure to never modify the es_systems.xml and es_find_rules.xml files included in the application installation directory as these will be overwritten when upgrading ES-DE in the future. Always place your customizations in ~/.emulationstation/custom_systems/ as is also described in the user guide.
 
 ## How do I add more themes?
 

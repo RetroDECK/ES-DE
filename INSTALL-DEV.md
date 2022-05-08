@@ -1243,7 +1243,7 @@ The following variables are expanded for the `command` tag:
 
 `%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching games. The variable can be placed anywhere in the launch command.
 
-`%ESCAPESPECIALS%` - This variable is only available on Windows and is used to escape the characters &()^=;, which would otherwise make binaries like cmd.exe fail when launching scripts or links. The variable can be placed anywhere in the launch command.
+`%ESCAPESPECIALS%` - This variable is only available on Windows and is used to escape the characters &()^=;, for the %ROM% variable, which would otherwise make binaries like cmd.exe fail when launching scripts or links. The variable can be placed anywhere in the launch command.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
