@@ -50,6 +50,7 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/com.retrodev.blastem</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.retrodev.blastem</entry>
         </rule>
     </emulator>
     <emulator name="CITRA">
@@ -188,6 +189,7 @@
         <!-- Sony PlayStation 2 emulator Play! -->
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.purei.Play</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.purei.Play</entry>
             <entry>~/Applications/Play!*.AppImage</entry>
             <entry>~/.local/bin/Play!*.AppImage</entry>
             <entry>~/bin/Play!*.AppImage</entry>
@@ -248,6 +250,7 @@
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/com.snes9x.Snes9x</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.snes9x.Snes9x</entry>
         </rule>
     </emulator>
     <emulator name="RYUJINX">
