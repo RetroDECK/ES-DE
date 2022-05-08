@@ -326,7 +326,7 @@
         <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%\desktop</path>
         <extension>.bat .lnk .LNK</extension>
-        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>desktop</theme>
     </system>
@@ -376,7 +376,7 @@
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%\epic</path>
         <extension>.bat</extension>
-        <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>epic</theme>
     </system>
@@ -550,7 +550,7 @@
         <fullname>Kodi Home Theatre Software</fullname>
         <path>%ROMPATH%\kodi</path>
         <extension>.bat .lnk .LNK</extension>
-        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>kodi</theme>
     </system>
@@ -959,7 +959,7 @@
         <fullname>Ports</fullname>
         <path>%ROMPATH%\ports</path>
         <extension>.bat .lnk .LNK</extension>
-        <command>%HIDEWINDOW% cmd.exe /C %ROM%</command>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>ports</theme>
     </system>
@@ -1201,7 +1201,7 @@
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%\steam</path>
         <extension>.bat .url .URL</extension>
-        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>
     </system>
