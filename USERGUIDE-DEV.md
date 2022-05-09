@@ -518,6 +518,8 @@ Therefore all bundled emulator configuration entries that support AppImages will
 ~/bin/
 ```
 
+It's generally recommended to go for the ~/Applications/ directory, but depending on your Linux distribution this may or may not exist by default. If the directory doesn't exist, then just go ahead and create it. Keep in mind that Linux is case-sensitive so make sure to spell it with a capital A.
+
 As AppImages often embed version information into the actual filename, the bundled configuration uses wildcards to locate the files, such as `rpcs3*.AppImage` which would match the filename `rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage` for instance. Note that if multiple files match the wildcard pattern, the first file returned by the operating system will be selected.
 
 This approach also works when using [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which is recommended as it properly integrates AppImages into the application menu and such. When first launching an AppImage with AppImageLauncher installed a question will be asked whether to integrate the application. If accepting this, the AppImage will be moved to the `~/Applications` directory and a hash will be added to the filename, like in this example:
@@ -559,6 +561,8 @@ For these situations ES-DE looks for emulators in the same directories where it 
 ~/.local/bin/
 ~/bin/
 ```
+
+It's generally recommended to go for the ~/Applications/ directory, but depending on your Linux distribution this may or may not exist by default. If the directory doesn't exist, then just go ahead and create it. Keep in mind that Linux is case-sensitive so make sure to spell it with a capital A.
 
 So placing a manually downloaded emulator binary in either of these directories will make ES-DE able to locate it during game launch.
 
