@@ -488,16 +488,16 @@ void GuiGamelistOptions::openMetaDataEd()
 
 void GuiGamelistOptions::jumpToLetter()
 {
-    char letter {mJumpToLetterList->getSelected().front()};
+    std::string letter {Utils::String::getFirstCharacter(mJumpToLetterList->getSelected())};
 
     // Get the gamelist.
-    const std::vector<FileData*>& files =
-        getGamelist()->getCursor()->getParent()->getChildrenListToDisplay();
+    const std::vector<FileData*>& files {
+        getGamelist()->getCursor()->getParent()->getChildrenListToDisplay()};
 
     for (unsigned int i = 0; i < files.size(); ++i) {
         if (mFavoritesSorting && (mFirstLetterIndex.front() == ViewController::FAVORITE_CHAR ||
                                   mFirstLetterIndex.front() == ViewController::FOLDER_CHAR)) {
-            if (static_cast<char>(toupper(files.at(i)->getSortName().front())) == letter &&
+            if (Utils::String::getFirstCharacter(files.at(i)->getSortName()) == letter &&
                 !files.at(i)->getFavorite()) {
                 if (!mOnlyHasFolders && mFoldersOnTop && files.at(i)->getType() == FOLDER) {
                     continue;
@@ -509,7 +509,7 @@ void GuiGamelistOptions::jumpToLetter()
             }
         }
         else {
-            if (static_cast<char>(toupper(files.at(i)->getSortName().front())) == letter) {
+            if (Utils::String::getFirstCharacter(files.at(i)->getSortName()) == letter) {
                 if (!mOnlyHasFolders && mFoldersOnTop && files.at(i)->getType() == FOLDER) {
                     continue;
                 }
