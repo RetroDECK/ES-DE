@@ -250,7 +250,7 @@ A minor annoyance is that macOS creates metadata files starting with ._ in the f
 
 Another problem on macOS 11 Big Sur (and possibly older OS versions) is that when connecting a Sony DualShock 4 controller either via Bluetooth or using a USB cable, two separate controller devices are registered in parallel. This is a bug in either macOS or the DualShock driver and it makes it seem as if ES-DE is registering double button presses when actually two separate controller devices are generating identical input. A workaround if using Bluetooth mode is to plug in the USB cable just after connecting the controller, wait a second or two and then remove the cable again. This will remove the cabled device, leaving only the Bluetooth device active. Another workaround is to enable the setting _Only accept input from first controller_ in the ES-DE input device settings. The reason why this bug may not be visible in some other games and applications is that ES-DE enables and auto-configures all connected controllers. The issue appears to be resolved in macOS Monterey.
 
-## Specific notes for Valve Steam Deck
+## Specific notes for Steam Deck
 
 As the Steam Deck is essentially a Linux desktop computer with a custom user interface, there is really not much specifically to consider when running ES-DE compared to any other Linux-based operating system. There is a specific AppImage available for the Steam Deck though that is recommended to use, as a number of settings will be tuned for the best possible experience on this device.
 
@@ -868,9 +868,37 @@ Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games
 
 #### DOS / PC
 
-The DOS (and PC) platform uses the DOSBox emulator and the recommended approach here is to keep the directory structure intact, just as if running the game on a real DOS PC. So this means one folder per game in ES-DE. It's also recommended to set the metadata field _Count as game_ to off for all files but the actual file used to launch the game, i.e. the binary or the .bat batch file. This is done so that the game counter correctly reflects the number of games you have installed. It's also possible to mark files and subdirectories as hidden to avoid seeing them in ES-DE. Both of these fields can be set using the metadata editor.
+For this platform there are two basic approaches to how the setup could be done, either to present each game as a single entry inside ES-DE, or to retain each game's directory structure. The first alternative is more user-friendly, tidy and requires less setup but has some small adverse side effect as described below.
 
-Apart from this, DOS games should work the same as any other system. The game folders can be scraped so that it looks nice when browsing the list of games, but make sure to also scrape the files used to launch the games or otherwise the entries in the collections _All games, Favorites_ and _Last played_ as well as any custom collections will miss the game metadata and game media. If you don't have these collections activated, then this can of course be skipped.
+To present the games as single entries there are two options, the first is to compress each game directory into a ZIP file with either the .zip or .dosz file extension. But be aware that only the DOSBox-Pure RetroArch core currently supports this setup. On game launch a menu will be displayed by DOSBox-Pure, asking which file inside the archive you would like to execute. This makes it possible to for example select the actual game file, or a setup utility like SETUP.EXE or INSTALL.EXE.
+
+Here's an example of a .zip archive setup for use with DOSBox-Pure:
+```
+~/ROMs/dos/Dune 2 - The Building of a Dynasty.zip
+~/ROMs/dos/Quake.zip
+~/ROMs/dos/Tyrian.zip
+~/ROMs/dos/UFO Enemy Unknown.zip
+```
+
+The second option is to use the _Directories interpreted as files_ functionality explained elsewhere in this guide. This makes it possible to use other DOSBox forks than DOSBox-Pure, but requires some additional setup. How this works is that you create a .bat file inside each game directory with the name of the game, and inside this .bat file you enter the game file you would like to launch. You then rename the game directory to the name of the .bat file including the file extension. Doing this will present the game as a single entry while still giving you the ability to use any DOSBox fork. The negative side effect of this setup is that there is no way to launch any configuration utilities like SETUP.EXE or INSTALL.EXE unless you first switch to DOSBox-Pure as this fork will present you with a menu of which file to launch. On the other hand this is very easy to do in the rare instances where you want to change some game settings.
+
+Here's an example of the _Directories interpreted as files_ setup for use with any DOSBox fork:
+
+```
+~/ROMs/dos/Dune 2 - The Building of a Dynasty.bat/Dune 2 - The Building of a Dynasty.bat
+~/ROMs/dos/Quake.bat/Quake.bat
+~/ROMs/dos/Tyrian.bat/Tyrian.bat
+~/ROMs/dos/UFO Enemy Unknown.bat/UFO Enemy Unknown.bat
+```
+
+For this example, the contents of Tyrian.bat could look like the following:
+```
+TYRIAN.EXE
+```
+
+The second approach for DOS games is to keep the directory structure intact for each game, just as if running the game on a real DOS PC. If going for this approach it's recommended to set the metadata field _Count as game_ to off for all files except the actual file used to launch the game, i.e. the binary or the .bat batch file. This is done so that the game counter correctly reflects the number of games you have installed. It's also possible to mark files and subdirectories as hidden to avoid seeing them in ES-DE. Both of these fields can be set using the metadata editor. While this setup is a bit tedious and not as tidy, it can be used with all DOSBox forks while still being able to easily access all files inside the game directory, such as any game setup utilities.
+
+When going for this approach the game folders can be scraped so that it looks nice when browsing the gamelist, but make sure to also scrape the files used to launch the games or otherwise their entries in the collections _All games, Favorites_ and _Last played_ as well as any custom collections will miss the game metadata and game media. If you don't have these collections activated, then this can of course be skipped.
 
 #### ScummVM
 

@@ -149,6 +149,9 @@ v1.2 maintenance release.
 
 * (Windows) Set %RUNINBACKGROUND% when launching MAME standalone as this emulator may otherwise hang on exit
 * Removed the --escape-exit command line option for the PPSSPP standalone emulator as it caused issues for some users
+* Changed the default emulator for the famicom, fds and nes systems from Nestopia UE to Mesen
+* Changed the default emulator for the dos and pc systems from DOSBox-Core to DOSBox-Pure
+* Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
 * (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * (Windows) Added an %ESCAPESPECIALS% variable that escapes the special characters &()^=;,
