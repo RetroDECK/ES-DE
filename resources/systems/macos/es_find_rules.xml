@@ -49,6 +49,14 @@
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="DOSBOX-X">
+        <!-- DOS emulator DOSBox-X -->
+        <rule type="staticpath">
+            <entry>/Applications/dosbox-x.app/Contents/MacOS/DosBox</entry>
+            <entry>/opt/homebrew/bin/dosbox-x</entry>
+            <entry>/usr/local/bin/dosbox-x</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="staticpath">

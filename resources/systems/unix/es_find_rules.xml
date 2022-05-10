@@ -89,6 +89,17 @@
             <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
+    <emulator name="DOSBOX-X">
+        <!-- DOS emulator DOSBox-X -->
+        <rule type="systempath">
+            <entry>dosbox-x</entry>
+            <entry>com.dosbox_x.DOSBox-X</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.dosbox_x.DOSBox-X</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.dosbox_x.DOSBox-X</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="systempath">

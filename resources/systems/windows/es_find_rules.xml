@@ -98,6 +98,20 @@
             <entry>%ESPATH%\..\dosbox-staging\dosbox.exe</entry>
         </rule>
     </emulator>
+    <emulator name="DOSBOX-X">
+        <!-- DOS emulator DOSBox-X -->
+        <rule type="winregistryvalue">
+            <entry>SOFTWARE\DOSBox-X\Path|\dosbox-x.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <entry>dosbox-x.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\DOSBox-X\dosbox-x.exe</entry>
+            <entry>%ESPATH%\Emulators\DOSBox-X\dosbox-x.exe</entry>
+            <entry>%ESPATH%\..\DOSBox-X\dosbox-x.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DUCKSTATION">
         <!-- Sony PlayStation 1 emulator DuckStation -->
         <rule type="systempath">
