@@ -852,9 +852,9 @@ Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games
 
 #### DOS / PC
 
-For this platform there are two basic approaches to how the setup could be done, either to present each game as a single entry inside ES-DE, or to retain each game's directory structure. The first alternative is more user-friendly, tidy and requires less setup but has some small adverse side effect as described below.
+For this platform there are two basic approaches for how the setup could be done; either to present each game as a single entry inside ES-DE, or to retain each game's directory structure. The first alternative is more user-friendly, tidy and requires less setup but has some small adverse side effects, as described below.
 
-To present the games as single entries there are two options, the first is to compress each game directory into a ZIP file with either the .zip or .dosz file extension. But be aware that only the DOSBox-Pure RetroArch core currently supports this setup. On game launch a menu will be displayed by DOSBox-Pure, asking which file inside the archive you would like to execute. This makes it possible to for example select the actual game file, or a setup utility like SETUP.EXE or INSTALL.EXE.
+If you prefer to present the games as single entries then there are two options. The first is to compress each game directory into a ZIP file with either the .zip or .dosz file extension, but be aware that only the DOSBox-Pure RetroArch core currently supports this setup. On game launch a menu will be displayed by DOSBox-Pure, asking which file inside the archive you would like to execute. This makes it possible to select the actual game file, or for example a setup utility like SETUP.EXE or INSTALL.EXE.
 
 Here's an example of a .zip archive setup for use with DOSBox-Pure:
 ```
@@ -864,7 +864,7 @@ Here's an example of a .zip archive setup for use with DOSBox-Pure:
 ~/ROMs/dos/UFO Enemy Unknown.zip
 ```
 
-The second option is to use the _Directories interpreted as files_ functionality explained elsewhere in this guide. This makes it possible to use other DOSBox forks than DOSBox-Pure, but requires some additional setup. How this works is that you create a .bat file inside each game directory with the name of the game, and inside this .bat file you enter the game file you would like to launch. You then rename the game directory to the name of the .bat file including the file extension. Doing this will present the game as a single entry while still giving you the ability to use any DOSBox fork. The negative side effect of this setup is that there is no way to launch any configuration utilities like SETUP.EXE or INSTALL.EXE unless you first switch to DOSBox-Pure as this fork will present you with a menu of which game file to launch. On the other hand this is very easy to do in the rare instances where you want to change some game settings.
+The second option is to use the _Directories interpreted as files_ functionality explained elsewhere in this guide. This makes it possible to use other DOSBox forks than DOSBox-Pure, but requires some additional setup. How this works is that you create a .bat file inside each game directory with the name of the game, and inside this .bat file you enter the game file you would like to launch. You then rename the game directory to the name of the .bat file including the file extension. Doing this will present the game as a single entry while still giving you the ability to use any DOSBox fork. The negative side effect of this setup is that there is no way to launch configuration utilities like SETUP.EXE or INSTALL.EXE unless you first switch to DOSBox-Pure (as this fork will present you with a menu of which game file to execute when you have launched a game). On the other hand this is very easy to do in the rare instances where you want to change some game settings.
 
 Here's an example of the _Directories interpreted as files_ setup for use with any DOSBox fork:
 
