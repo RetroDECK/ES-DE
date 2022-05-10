@@ -2,7 +2,7 @@ EmulationStation Desktop Edition (ES-DE) - Portable installation on Windows
 ---------------------------------------------------------------------------
 
 ES-DE release:
-1.2.3
+1.2.4
 
 Instructions:
 
@@ -29,6 +29,7 @@ Emulators\Citra\canary-mingw\citra.exe
 Emulators\Citra\nightly-mingw\citra.exe
 Emulators\Dolphin-x64\Dolphin.exe
 Emulators\dosbox-staging\dosbox.exe
+Emulators\DOSBox-X\dosbox-x.exe
 Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\flycast\flycast.exe
