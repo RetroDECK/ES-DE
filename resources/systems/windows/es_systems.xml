@@ -113,9 +113,9 @@
         <path>%ROMPATH%\arcade</path>
         <extension>.cmd .CMD .7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
+        <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
+        <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %EMULATOR_MAME% %STARTDIR%=%EMUDIR% -rompath %ROMPATH%\arcade %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
@@ -587,10 +587,10 @@
         <fullname>Multiple Arcade Machine Emulator</fullname>
         <path>%ROMPATH%\mame</path>
         <extension>.cmd .CMD .7z .7Z .zip .ZIP</extension>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
+        <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
-        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %EMULATOR_MAME% %STARTDIR%=%EMUDIR% -rompath %ROMPATH%\mame %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
