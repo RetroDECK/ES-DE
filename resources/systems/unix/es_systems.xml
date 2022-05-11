@@ -347,8 +347,8 @@
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
-        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX-STAGING% %ROM%</command>
         <command label="DOSBox-X (Standalone)">%EMULATOR_DOSBOX-X% %ROM%</command>
+        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX-STAGING% %ROM%</command>
         <platform>dos</platform>
         <theme>dos</theme>
     </system>
@@ -897,8 +897,8 @@
         <command label="DOSBox-Pure">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%</command>
         <command label="DOSBox-Core">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%</command>
         <command label="DOSBox-SVN">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%</command>
-        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX-STAGING% %ROM%</command>
         <command label="DOSBox-X (Standalone)">%EMULATOR_DOSBOX-X% %ROM%</command>
+        <command label="DOSBox Staging (Standalone)">%EMULATOR_DOSBOX-STAGING% %ROM%</command>
         <platform>pc</platform>
         <theme>pc</theme>
     </system>
