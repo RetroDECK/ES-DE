@@ -852,9 +852,9 @@ Advanced topics such as the need for the Amiga Kickstart ROMs to run Amiga games
 
 #### DOS / PC
 
-For this platform there are two basic approaches for how the setup could be done; either to present each game as a single entry inside ES-DE, or to retain each game's directory structure. The first alternative is more user-friendly, tidy and requires less setup but has some small adverse side effects, as described below.
+For this platform there are two basic approaches for how the setup could be done; either to present each game as a single entry inside ES-DE, or to retain each game's directory structure. The first alternative is more user-friendly, tidy and requires less setup but basically restricts the emulator selection to the DOSBox-Pure RetroArch core. There is an alternative way to setup single entries to work with all DOSBox forks, but it has some drawbacks as discussed below.
 
-If you prefer to present the games as single entries then there are two options. The first is to compress each game directory into a ZIP file with either the .zip or .dosz file extension, but be aware that only the DOSBox-Pure RetroArch core currently supports this setup. On game launch a menu will be displayed by DOSBox-Pure, asking which file inside the archive you would like to execute. This makes it possible to select the actual game file, or for example a setup utility like SETUP.EXE or INSTALL.EXE.
+If you prefer to present the games as single entries you could compress each game directory into a ZIP file with either the .zip or .dosz file extension. On game launch a menu will be displayed by DOSBox-Pure, asking which file inside the archive you would like to execute. This makes it possible to select the actual game file, or for example a setup utility like SETUP.EXE or INSTALL.EXE. Attempting to launch such an archive file with any other DOSBox fork will fail, or not work as expected.
 
 Here's an example of a .zip archive setup for use with DOSBox-Pure:
 ```
@@ -864,16 +864,22 @@ Here's an example of a .zip archive setup for use with DOSBox-Pure:
 ~/ROMs/dos/UFO Enemy Unknown.zip
 ```
 
-The second option is to use the _Directories interpreted as files_ functionality explained elsewhere in this guide. This makes it possible to use other DOSBox forks than DOSBox-Pure, but requires some additional setup. How this works is that you create a .bat file inside each game directory with the name of the game, and inside this .bat file you enter the game file you would like to launch. You then rename the game directory to the name of the .bat file including the file extension. Doing this will present the game as a single entry while still giving you the ability to use any DOSBox fork. The negative side effect of this setup is that there is no way to launch configuration utilities like SETUP.EXE or INSTALL.EXE unless you first switch to DOSBox-Pure (as this fork will present you with a menu of which game file to execute when you have launched a game). On the other hand this is very easy to do in the rare instances where you want to change some game settings.
+The alternative setup to get single entries working is to use the _Directories interpreted as files_ functionality explained elsewhere in this guide. This makes it possible to use other DOSBox forks than DOSBox-Pure, but requires some additional setup. How this works is that you create a .bat file inside each game directory with the name of the game, and inside this .bat file you enter the game file you would like to launch. You then rename the game directory to the name of the .bat file including the file extension.
 
-Here's an example of the _Directories interpreted as files_ setup for use with any DOSBox fork:
+There are however multiple issues with this approach, the first being that only DOSBox-X supports long filenames (LFN) so you can only use directory names with a maximum of 8 characters plus the .bat extension if using another DOSBox fork. The second issue is that as of the time of writing, this setup does not seem to work at all with DOSBox-Core.
+
+The third issue is that by this setup you will no longer be able to reach any other file than the binary you have defined inside the .bat file. So if you want to be able to reach both the game itself and a configuration utility like SETUP.EXE or INSTALL.EXE, then you would have to create some kind of simple menu inside the batch file that will be displayed on game launch. While this is certainly doable, it's beyond the scope of this guide.
+
+Here's an example of the _Directories interpreted as files_ setup for use with any DOSBox fork except DOSBox-Core:
 
 ```
-~/ROMs/dos/Dune 2 - The Building of a Dynasty.bat/Dune 2 - The Building of a Dynasty.bat
+~/ROMs/dos/Dune 2/Dune 2.bat
 ~/ROMs/dos/Quake.bat/Quake.bat
 ~/ROMs/dos/Tyrian.bat/Tyrian.bat
-~/ROMs/dos/UFO Enemy Unknown.bat/UFO Enemy Unknown.bat
+~/ROMs/dos/Xcom1/Xcom1.bat
 ```
+
+If DOSBox-X is used, then the game names could be longer than this, as long filenames (LFN) are supported by this fork.
 
 For this example, the contents of Tyrian.bat could look like the following:
 ```
@@ -2206,7 +2212,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | daphne                | Daphne Arcade LaserDisc Emulator               | _Placeholder_                     |                                   |              |                                      |
 | desktop               | Desktop Applications                           | N/A                               |                                   | No           |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
-| dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UMW*],<br>DOSBox-X **(Standalone)** | No           | In separate folder (one folder per game with complete file structure retained) |
+| dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)** [UMW*],<br>Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
@@ -2258,7 +2264,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | openbor               | OpenBOR Game Engine                            | _Placeholder_                     |                                   |              |                                      |
 | oric                  | Tangerine Computer Systems Oric                | _Placeholder_                     |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
-| pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox Staging **(Standalone)** [UMW*],<br>DOSBox-X **(Standalone)** | No           | In separate folder (one folder per game with complete file structure retained) |
+| pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
 | pc88                  | NEC PC-8800 Series                             | QUASI88                           |                                   |              |                                      |
 | pc98                  | NEC PC-9800 Series                             | Neko Project II Kai               | Neko Project II                   |              |                                      |
 | pcengine              | NEC PC Engine                                  | Beetle PCE                        | Beetle PCE FAST                   | No           | Single archive or ROM file in root folder |

@@ -155,9 +155,10 @@ v1.2 maintenance release.
 * Changed the default emulator for the mame system from MAME 2003-Plus to MAME - Current
 * Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
+* (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * (Windows) Set %RUNINBACKGROUND% when launching MAME standalone as this emulator may otherwise hang on exit
 * (Windows) Added an %ESCAPESPECIALS% variable that escapes the special characters &()^=;,
-* (macOS) Categorized the application as a game so it shows up in the Launchpad games section
+* (Windows) Added %ESCAPESPECIALS% to the desktop, epic, kodi, ports and steam systems
 * Updated the StringUtil::replace function as the old function was dangerous and could run into an endless loop
 
 ### Bug fixes
@@ -748,7 +749,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 * On Windows the special characters &()^=;, can't be used in filenames executed by cmd.exe (applicable for the desktop, epic, kodi, ports and steam systems). This issue will be resolved with the 1.2.4 release.
 
-* There could be problems with Chinese characters under some circumstances which may cause them to not get rendered properly in the gamelist view. This will hopefully be resolved with the 2.0 release.
+* There could be problems with Chinese characters under some circumstances which may cause them to not get rendered properly in the gamelist view. This issue will be resolved with the 1.2.4 release.
 
 * On macOS, the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window when a game is launched. Possibly it's the same issue with other emulators as well.
 
