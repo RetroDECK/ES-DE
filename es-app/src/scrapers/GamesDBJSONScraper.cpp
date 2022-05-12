@@ -44,6 +44,7 @@ namespace
         {AMSTRAD_CPC, "4914"},
         {APPLE_II, "4942"},
         {ARCADE, "23"},
+        {BALLY_ASTROCADE, "4968"},
         {ATARI_800, "4943"},
         {ATARI_2600, "22"},
         {ATARI_5200, "26"},

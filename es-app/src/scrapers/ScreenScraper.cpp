@@ -36,6 +36,7 @@ namespace
         {APPLE_II, 86},
         {APPLE_IIGS, 217},
         {ARCADE, 75},
+        {BALLY_ASTROCADE, 44},
         {ATARI_800, 43},
         {ATARI_2600, 26},
         {ATARI_5200, 40},

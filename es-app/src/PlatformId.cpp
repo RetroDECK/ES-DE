@@ -26,7 +26,7 @@ namespace PlatformIds
         "apple2",               // Apple II
         "apple2gs",             // Apple IIGS
         "arcade",               // Arcade
-        "astrocade",            // Bally Astrocade
+        "astrocde",             // Bally Astrocade
         "atari2600",            // Atari 2600
         "atari5200",            // Atari 5200
         "atari7800",            // Atari 7800
