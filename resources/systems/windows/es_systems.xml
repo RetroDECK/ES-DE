@@ -123,12 +123,13 @@
         <theme>arcade</theme>
     </system>
     <system>
-        <name>astrocade</name>
+        <name>astrocde</name>
         <fullname>Bally Astrocade</fullname>
-        <path>%ROMPATH%\astrocade</path>
+        <path>%ROMPATH%\astrocde</path>
         <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
-        <platform>astrocade</platform>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %EMULATOR_MAME% %STARTDIR%=%EMUDIR% -rompath %ROMPATH%\astrocde astrocde -cart %BASENAME%</command>
+        <platform>astrocde</platform>
         <theme>astrocade</theme>
     </system>
     <system>
@@ -325,7 +326,7 @@
         <name>desktop</name>
         <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%\desktop</path>
-        <extension>.bat .lnk .LNK</extension>
+        <extension>.bat .BAT .lnk .LNK</extension>
         <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>desktop</theme>
@@ -376,7 +377,7 @@
         <name>epic</name>
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%\epic</path>
-        <extension>.bat</extension>
+        <extension>.bat .BAT</extension>
         <command>%HIDEWINDOW% %ESCAPESPECIALS% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>epic</theme>
@@ -550,7 +551,7 @@
         <name>kodi</name>
         <fullname>Kodi Home Theatre Software</fullname>
         <path>%ROMPATH%\kodi</path>
-        <extension>.bat .lnk .LNK</extension>
+        <extension>.bat .BAT .lnk .LNK</extension>
         <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>kodi</theme>
@@ -960,7 +961,7 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%\ports</path>
-        <extension>.bat .lnk .LNK</extension>
+        <extension>.bat .BAT .lnk .LNK</extension>
         <command>%HIDEWINDOW% %ESCAPESPECIALS% cmd.exe /C %ROM%</command>
         <platform>pc</platform>
         <theme>ports</theme>
@@ -1202,7 +1203,7 @@
         <name>steam</name>
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%\steam</path>
-        <extension>.bat .url .URL</extension>
+        <extension>.bat .BAT .url .URL</extension>
         <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>

@@ -123,12 +123,13 @@
         <theme>arcade</theme>
     </system>
     <system>
-        <name>astrocade</name>
+        <name>astrocde</name>
         <fullname>Bally Astrocade</fullname>
-        <path>%ROMPATH%/astrocade</path>
+        <path>%ROMPATH%/astrocde</path>
         <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
-        <platform>astrocade</platform>
+        <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mame_libretro.so %ROM%</command>
+        <command label="MAME (Standalone)">%EMULATOR_MAME% %STARTDIR%=~/.mame -rompath %ROMPATH%/astrocde astrocde -cart %BASENAME%</command>
+        <platform>astrocde</platform>
         <theme>astrocade</theme>
     </system>
     <system>
