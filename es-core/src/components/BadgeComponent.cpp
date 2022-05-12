@@ -60,6 +60,7 @@ namespace
         {"wii_remote_and_nunchuk_nintendo", "Wii Remote and Nunchuk (Nintendo)",           ":/graphics/controllers/wii_remote_and_nunchuk_nintendo.svg"},
         {"joycon_left_or_right_nintendo",   "Joy-Con Left or Right (Nintendo)",            ":/graphics/controllers/joycon_left_or_right_nintendo.svg"},
         {"joycon_pair_nintendo",            "Joy-Con Pair (Nintendo)",                     ":/graphics/controllers/joycon_pair_nintendo.svg"},
+        {"xbox_kinect",                     "Xbox Kinect",                                 ":/graphics/controllers/xbox_kinect.svg"},
         {"unknown",                         "Unknown Controller",                          ":/graphics/controllers/unknown.svg"}
     };
     // clang-format on
