@@ -116,7 +116,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %EMULATOR_MAME% %STARTDIR%=%EMUDIR% -rompath %ROMPATH%\arcade %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %ROMPATH%\arcade %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
         <platform>arcade</platform>
@@ -128,7 +128,7 @@
         <path>%ROMPATH%\astrocde</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command label="MAME - Current">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %EMULATOR_MAME% %STARTDIR%=%EMUDIR% -rompath %ROMPATH%\astrocde astrocde -cart %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %ROMPATH%\astrocde astrocde -cart %BASENAME%</command>
         <platform>astrocde</platform>
         <theme>astrocade</theme>
     </system>
@@ -166,8 +166,8 @@
         <fullname>Atari 800</fullname>
         <path>%ROMPATH%\atari800</path>
         <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .rom .ROM .7z .7Z .zip .ZIP</extension>
-        <command label="Atari800">%EMULATOR_RETROARCH% %STARTDIR%=%EMUDIR% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
-        <command label="Atari800 (Standalone)">%EMULATOR_ATARI800% %STARTDIR%=%EMUDIR% %ROM%</command>
+        <command label="Atari800">%STARTDIR%=%EMUDIR% %EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
+        <command label="Atari800 (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ATARI800% %ROM%</command>
         <platform>atari800</platform>
         <theme>atari800</theme>
     </system>
@@ -592,7 +592,7 @@
         <command label="MAME 2010">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2010_libretro.dll %ROM%</command>
         <command label="MAME 2003-Plus">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2003_plus_libretro.dll %ROM%</command>
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
-        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %EMULATOR_MAME% %STARTDIR%=%EMUDIR% -rompath %ROMPATH%\mame %BASENAME%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %ROMPATH%\mame %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
         <platform>arcade</platform>
