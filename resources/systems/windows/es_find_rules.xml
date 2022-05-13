@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Windows -->
 <ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>cmd.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="RETROARCH">
         <rule type="winregistrypath">
             <!-- Check for an App Paths entry in the Windows Registry -->

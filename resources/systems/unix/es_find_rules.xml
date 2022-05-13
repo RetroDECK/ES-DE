@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Unix -->
 <ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>bash</entry>
+            <entry>sh</entry>
+        </rule>
+    </emulator>
     <emulator name="RETROARCH">
         <rule type="systempath">
             <entry>retroarch</entry>
