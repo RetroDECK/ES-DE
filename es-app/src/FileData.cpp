@@ -1239,10 +1239,18 @@ void FileData::launchGame()
             startDirectory = Utils::String::replace(
                 startDirectory, "%EMUDIR%",
                 Utils::FileSystem::getParent(Utils::String::replace(binaryPath, "\"", "")));
+
+            startDirectory = Utils::String::replace(
+                startDirectory, "%GAMEDIR%",
+                Utils::FileSystem::getParent(Utils::String::replace(romPath, "\"", "")));
 #else
             startDirectory = Utils::String::replace(
                 startDirectory, "%EMUDIR%",
                 Utils::FileSystem::getParent(Utils::String::replace(binaryPath, "\\", "")));
+
+            startDirectory = Utils::String::replace(
+                startDirectory, "%GAMEDIR%",
+                Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")));
 #endif
             if (!Utils::FileSystem::isDirectory(startDirectory)) {
                 Utils::FileSystem::createDirectory(startDirectory);
