@@ -770,13 +770,13 @@ Recently Cemu added support for the .wua archive format which is much easier to 
 
 .wud and .wux files are also supported, but these two formats are not discussed here as the .wua format is clearly the way to go in the future.
 
-Method 1, using .wua files:
+**Method 1, using .wua files:**
 
 Start Cemu and install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, open the _Title Manager_ from the _Tools_ menu, select your game, right click and select _Convert to compressed Wii U archive (.wua)_ and select your `wiiu` ROMs directory as the target. You can modify the file name if you want to, or keep it at its default value. Press the _Save_ button and the game will be automatically packaged as a .wua file.
 
 Following this just start ES-DE and the game should be shown as a single entry that can be launched using Cemu.
 
-Method 2, unpacked games:
+**Method 2, unpacked games:**
 
 Using this unpacked approach, the content of each game is divided into the three directories _code, content_ and _meta_.
 
@@ -1075,7 +1075,7 @@ This of course assumes that you have menu entries setup for your Steam games.
 
 To greatly simplify this setup, automatic Steam library import is planned for a future ES-DE release.
 
-### OpenBOR
+#### OpenBOR
 
 The Open Beats of Rage (OpenBOR) game engine is available on Windows and Linux. Unfortunately the macOS ports seems to have been abandoned.
 
