@@ -1069,6 +1069,7 @@ Properties:
     `wii_remote_and_nunchuk_nintendo`,
     `joycon_left_or_right_nintendo`,
     `joycon_pair_nintendo`,
+    `xbox_kinect`,
     `unknown`
 * `folderLinkPos` - type: NORMALIZED_PAIR
     - The position of the folder link icon relative to the parent `folder` badge.

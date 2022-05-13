@@ -96,7 +96,6 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Vulkan renderer for all supported operating systems
 * Localization/multi-language support
 * Dependency on MoltenVK to get Metal support on macOS
-* Decommission of the OpenGL 2.1 and OpenGL ES renderers (or keep as legacy mode/legacy build?)
 * Better and more accurate GPU and memory usage statistics overlay
 * Bulk metadata editor
 * Improve multi-threading

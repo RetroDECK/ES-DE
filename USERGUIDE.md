@@ -230,13 +230,13 @@ If you want to create your own portable intallation from scratch or customize th
 
 ## Specific notes for macOS
 
-As macOS does not support Vulkan some emulators are not available, and some that do exist have not been updated for this operating system in recent years. As well many emulators available for download are not codesigned and notarized which requires you to override the operating system's security settings to be able to use them. If you see an error popup stating the application couldn't be checked for malicious software or that the developer couldn't be verified, go to _System Preferences_, then _Security & Privacy_ and click the _Open Anyway_ button under the _General_ tab. Just note that doing so comes with some potential risks of virus infections and similar. Additionally some emulators are available via the Homebrew package manager, and these do not have the security issues just mentioned so they should be fine to use. Most RetroArch cores are also available on macOS so overall this operating system is still fine for retrogaming albeit with some restrictions.
+As macOS does not support Vulkan some emulators are not available, and some that do exist have not been updated for this operating system in recent years. But emulator support is steadily improving and native M1/ARM releases are also getting more common. One issue though is that some emulators are not codesigned and notarized so macOS refuses to run them by default. You can override the operating system's security settings however, which will work around this problem. Some emulators are also available via the [Homebrew](https://brew.sh) package manager and in many instances ES-DE includes support for these releases using the bundled configuration.
 
-Lack of controller support is a problem though, and in some instances controller drivers are available but quite buggy. In general it seems as if Sony PlayStation controllers are better supported than Microsoft Xbox controllers. For third party controllers you need to investgate the macOS support as it seems to differ quite a lot.
+Lack of controller support is a bit of a problem on macOS, and in some instances controller drivers are available but quite buggy. In general it seems as if Sony PlayStation controllers are better supported than Microsoft Xbox controllers. For third party controllers you need to investigate the macOS support as it seems to differ quite a lot.
 
-ES-DE is available both as an Intel/x86 build and as a native M1 build. If running on an M1 Mac it's possible to launch either M1 or Intel emulators from ES-DE and in some instances it's recommended to go for the Intel versions. The reason is that some emulators are not yet working properly on the M1 architecture, and for RetroArch some cores are only available for the x86 platform. So investigate what makes most sense for your setup. Over time this situation should improve as M1 support matures.
+ES-DE is available both as an Intel/x86 build and as a native M1/ARM build. If running on an M1 Mac it's possible to launch either M1 or Intel emulators from ES-DE and it's sometimes recommended to go for the Intel versions. The reason is that some emulators are not yet working properly on the M1 architecture, and for RetroArch some cores are only available for the x86 platform. So investigate what makes most sense for your setup. Over time this situation should improve as M1 support matures.
 
-A macOS-specific requirement is that the RetroArch setting "Start in Fullscreen mode" is set as enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's unclear if only RetroArch is affected by this issue, at least it has not been observed for any other emulators so far. The standalone PlayStation 2 emulator PCSX2 has a similar issue but that seems to be GPU driver related and is problematic also on other operating systems. If using this emulator you need to manually switch to the PCSX2 window using Command + Tab after launching a game.
+One macOS-specific requirement is that the RetroArch setting _Start in Fullscreen mode_ is enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. It's unclear if only RetroArch is affected by this issue, at least it has not been observed for any other emulators so far. The standalone PlayStation 2 emulator PCSX2 has a similar issue but that seems to be GPU driver related and is problematic also on other operating systems. If using this emulator you need to manually switch to the PCSX2 window using Command + Tab after launching a game. If using an M1 Mac then the AetherSX2 emulator is recommended instead of PCSX2.
 
 The first time you launch a RetroArch-emulated game from within ES-DE the operating system will present you with a security option with the following description:
 
@@ -245,6 +245,8 @@ The first time you launch a RetroArch-emulated game from within ES-DE the operat
 If you don't allow this, you will not be able to place system BIOS ROMs in the RetroArch default system directory `~/Documents/RetroArch/system` even if you've already given RetroArch access to this folder. This is so because RetroArch runs as a subprocess to ES-DE and therefore inherits the security settings from the parent application. Attempting to launch a game without enabling the access will simply display an error message in the emulator that the BIOS files are missing. This of course only applies to emulators that require BIOS ROMs, all other games should work fine regardless of this security setting.
 
 If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
+
+By default files and directories starting with a dot are hidden on macOS, so to show the .emulationstation directory in your home directory you need to enable hidden files in Finder. You do this using the keyboard combination Shift + Command + . (a dot).
 
 A minor annoyance is that macOS creates metadata files starting with ._ in the filename when placing game/ROM files on some filesystem types such as exFAT. This means that you will see double entries inside ES-DE for all such games. To hide these extra files, the option _Show hidden files and folders (requires restart)_ in the _Other settings_ menu can be set to disabled.
 
@@ -767,14 +769,26 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 This section is specific to Windows as Cemu is currently only supported on this operating system.
 
-Cemu works a bit different compared to most other emulators, with games stored in an unpacked format. The content of each game is divided into the three directories _code, content_ and _meta_.
+Recently Cemu added support for the .wua archive format which is much easier to use than the unpacked game format. Therefore this is now the recommended approach. But both this and the traditional method of adding unpacked games are covered here.
+
+.wud and .wux files are also supported, but these two formats are not discussed here as the .wua format is clearly the way to go in the future.
+
+Method 1, using .wua files:
+
+Start Cemu and install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, open the _Title Manager_ from the _Tools_ menu, select your game, right click and select _Convert to compressed Wii U archive (.wua)_ and select your `wiiu` ROMs directory as the target. You can modify the file name if you want to, or keep it at its default value. Press the _Save_ button and the game will be automatically packaged as a .wua file.
+
+Following this just start ES-DE and the game should be shown as a single entry that can be launched using Cemu.
+
+Method 2, unpacked games:
+
+Using this unpacked approach, the content of each game is divided into the three directories _code, content_ and _meta_.
 
 The first step is to prepare the target directory in the `wiiu` ROMs directory, for this example we'll go for the game _Super Mario 3D World_. So simply create a directory with this name inside the wiiu folder. It should look something like the following:
 ```
 C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\
 ```
 
-The next step is done inside the emulator user interface. You should install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, right click on the game and choose _Game directory_. An Explorer window should now open showing the content of the game. Here's the game directory for our example:
+The next step is done inside the Cemu user interface. You should install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, right click on the game and choose _Game directory_. An Explorer window should now open showing the content of the game. Here's the game directory for our example:
 ```
 C:\Games\cemu\mlc01\usr\title\00050000\10145d00\code
 ```
