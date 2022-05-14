@@ -89,6 +89,7 @@ namespace
         {BANDAI_SUFAMI_TURBO, 108},
         {DOS, 135},
         {PC, 135},
+        {PC_WINDOWS, 138},
         {VALVE_STEAM, 138},
         {NEC_PCFX, 72},
         {GAMEENGINE_PICO8, 234},

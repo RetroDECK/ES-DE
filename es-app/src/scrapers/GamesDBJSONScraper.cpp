@@ -93,6 +93,7 @@ namespace
         {DOS, "1"},
         {GAMEENGINE_SCUMMVM, "1"},
         {PC, "1"},
+        {PC_WINDOWS, "1"},
         {VALVE_STEAM, "1"},
         {NEC_PCFX, "4930"},
         {PHILIPS_CDI, "4917"},
