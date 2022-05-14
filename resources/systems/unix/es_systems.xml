@@ -379,7 +379,7 @@
         <path>%ROMPATH%/epic</path>
         <extension>.sh</extension>
         <command>%EMULATOR_OS-SHELL% %ROM%</command>
-        <platform>pc</platform>
+        <platform>moonlight</platform>
         <theme>epic</theme>
     </system>
     <system>

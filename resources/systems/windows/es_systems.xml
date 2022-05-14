@@ -379,7 +379,7 @@
         <path>%ROMPATH%\epic</path>
         <extension>.bat .BAT</extension>
         <command>%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
-        <platform>pc</platform>
+        <platform>moonlight</platform>
         <theme>epic</theme>
     </system>
     <system>
