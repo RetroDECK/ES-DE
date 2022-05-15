@@ -235,7 +235,7 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     if (mPrimaryType == PrimaryType::CAROUSEL) {
         // Find the shortest path to the target.
-        float dist {fabs(endPos - startPos)};
+        float dist {fabsf(endPos - startPos)};
 
         if (fabs(target + posMax - startPos - scrollVelocity) < dist)
             endPos = target + posMax; // Loop around the end (0 -> max).
