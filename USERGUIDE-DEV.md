@@ -37,7 +37,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Windows 11, 10 and 8.1
 * macOS 10.14 "Mojave" to 12 "Monterey" (M1 and Intel)
 * macOS 10.11 "El Capitan" (legacy release)
-* Ubuntu 20.04 to 21.10
+* Ubuntu 20.04 to 22.04
 * Linux Mint 20
 * Manjaro 21
 * Fedora 35 Workstation
@@ -93,7 +93,7 @@ For a better desktop integration it's recommended to install [AppImageLauncher](
 
 **Installing on macOS and Windows**
 
-There's not really much to say about these operating systems, just install ES-DE as you would any other application. On macOS it's via the .dmg drag-and-drop installer, and on Windows via the normal application installer.
+There's not really much to say about these operating systems, just install ES-DE as you would any other application. On macOS it's via the .dmg drag-and-drop installer, and on Windows via the normal application installer or by unpacking the portable zip file somewhere on your filesystem.
 
 **On first application startup**
 
@@ -152,6 +152,34 @@ There will be a lot of directories created if using the es_systems.xml file bund
 
 ![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
+
+## Upgrading to a newer release
+
+**Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/.emulationstation/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your .emulationstation directory.
+
+**Linux .deb and .rpm packages**
+
+Upgrading ES-DE using these packages is very straightforward, just run them through the package manager of your operating system and the process should be entirely automatic. Note that you need to manually download the packages from [https://es-de.org](https://es-de.org) as ES-DE is not currently included in any operating system repositories.
+
+**Linux AUR**
+
+AUR upgrades should be automatically handled via your package manager and it should be a completely automatic process. When a new release is available you should be notified of this.
+
+**Linux AppImage**
+
+As the ES-DE AppImages always retain their filenames between releases you only need to replace the previous AppImage with the new one and you're done. Just make sure to set the new AppImage as executable so it can be launched.
+
+**macOS**
+
+Open _Applications_ in Finder and right click on _EmulationStation Desktop Edition_ and choose _Move to Trash_. Then simply install the new release using the .dmg drag-and-drop installer.
+
+**Windows installer**
+
+Just run the installer for the new release. A question will be asked whether you would like to uninstall the old version first. Say yes to this question and then proceed with running through the installer.
+
+**Windows portable**
+
+When upgrading the portable release it's recommended to not overwrite the contents by unpacking on top of the old release but instead to rename the old _EmulationStation-DE_ directory to something else, such as _EmulationStation-DE_OLD_ and then unpack the new release next to it. Following this, move over the contents inside _Emulators_, _ROMs_, _themes_ and _.emulationstation_ from the old to the new directory. That's the safest way to make the upgrade.
 
 ## Placing games into non-standard directories
 

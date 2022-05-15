@@ -56,6 +56,10 @@ Yes, as from version 1.2.3 there is support to display such games as single entr
 
 See the question above for a possible solution. Another approach would be to hide the game files you don't want to see using the metadata editor. Yet another solution which is actually recommended is to convert your games to the .chd format. This combines the .bin/.cue files into a single file that is also compressed, leading to space savings. A custom systems configuration entry could also be created, but that is not really recommended or required due to the solutions just mentioned. The reason why .bin files are included in the first place is that some emulators can launch these files directly, and some users have game collections comprised of such files. If the .bin files were filtered out in the bundled configuration, then all these users would have their games removed from within ES-DE next time they upgrade the application.
 
+## Can I "flatten" directories to not show them as folders inside ES-DE?
+
+No.
+
 ## When I hide a game using the metadata editor it's not really getting hidden, is this a bug?
 
 No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower text opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
@@ -82,7 +86,7 @@ ES-DE uses the RetroPie naming conventions. In most cases the ROM directories ar
 
 ## Can ES-DE update itself automatically when a new release becomes available?
 
-This functionality is planned but not yet implemented. It will probably be rolled out in two steps, with the first step being a notitication that a new release is available, and at a later stage adding complete in-application update support. For the time being you therefore need to regularly check the https://es-de.org website or join the ES-DE [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/) where new releases are announced.
+This functionality is planned but not yet implemented. It will probably be rolled out in two steps, with the first step being a notitication that a new release is available, and at a later stage adding complete in-application update support. For the time being you therefore need to regularly check the https://es-de.org website or join the ES-DE [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/) where new releases are announced. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release).
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 

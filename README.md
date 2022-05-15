@@ -11,6 +11,9 @@ YouTube channel with installation instruction videos:\
 Discord server:\
 [https://discord.gg/EVVX4DqWAP](https://discord.gg/EVVX4DqWAP)
 
+Reddit (r/EmulationStation_DE):\
+[https://www.reddit.com/r/EmulationStation_DE](https://www.reddit.com/r/EmulationStation_DE)
+
 Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
 The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
@@ -22,7 +25,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Windows 11, 10 and 8.1
 * macOS 10.14 "Mojave" to 12 "Monterey" (M1 and Intel)
 * macOS 10.11 "El Capitan" (legacy release)
-* Ubuntu 20.04 to 21.10
+* Ubuntu 20.04 to 22.04
 * Linux Mint 20
 * Manjaro 21
 * Fedora 35 Workstation
@@ -43,7 +46,7 @@ The latest version is 1.2.3 (released 2022-05-04)
 | Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.3-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880305/download)|
 | macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.3-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880259/download)|
 | macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.3-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880205/download)|
-| Debian DEB package   | Ubuntu 20.04 to 21.10, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.3-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880232/download)|
+| Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.3-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880232/download)|
 | Fedora RPM package   | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.3-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880315/download)|
 | Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
 | Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880344/download)|
