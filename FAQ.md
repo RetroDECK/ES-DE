@@ -72,7 +72,7 @@ Yes it's possible to both customize existing systems that are part of the bundle
 
 Most RetroPie EmulationStation theme sets will work with ES-DE, and there are numerous resources online on where to find these. How to install them is described in the _Themes_ section of the [User guide](USERGUIDE.md#themes). Just be aware that some of these themes do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme is written.
 
-## The themes I've added don't seem to work, what's wrong?
+## The themes I've added don't seem to work?
 
 Only RetroPie EmulationStation themes are supported, you can't use themes that were specifically developed for Batocera or Recalbox EmulationStation. A very few RetroPie themes like es-theme-carbon-2021 will not work either due to technical reasons.
 
@@ -94,7 +94,7 @@ Yes to a certain extent this is supported and at least [Skraper](https://www.skr
 
 ## I'm missing a feature, how can I make a request to have it added?
 
-First check the project [Kanban](https://gitlab.com/leonstyhre/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](CONTRIBUTING.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/).
+First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](CONTRIBUTING.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/).
 
 ## I want to setup a gaming appliance based on the Raspberry Pi, can I use ES-DE for this?
 

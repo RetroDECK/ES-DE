@@ -158,6 +158,9 @@ v1.2 maintenance release.
 * Changed the default emulator for the mame system from MAME 2003-Plus to MAME - Current
 * Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
+* Changed the steam platform to use the ScreenScraper "PC Windows" platform ID
+* Added a new pcwindows platform for scraping PC (Windows) games
+* Changed the platform to pcwindows for the epic system
 * Added an Xbox Kinect controller badge icon
 * (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * Replaced the explicit shell commands in es_systems.xml with %EMULATOR_OS-SHELL% find rules

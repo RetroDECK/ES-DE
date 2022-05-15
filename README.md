@@ -39,26 +39,26 @@ The latest version is 1.2.3 (released 2022-05-04)
 
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.3-x64.exe](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880279/download)|
-| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.3-x64_Portable.zip](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880305/download)|
-| macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.3-x64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880259/download)|
-| macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.3-arm64.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880205/download)|
-| Debian DEB package   | Ubuntu 20.04 to 21.10, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.3-x64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880232/download)|
-| Fedora RPM package   | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.3-x64.rpm](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880315/download)|
+| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.3-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880279/download)|
+| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.3-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880305/download)|
+| macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.3-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880259/download)|
+| macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.3-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880205/download)|
+| Debian DEB package   | Ubuntu 20.04 to 21.10, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.3-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880232/download)|
+| Fedora RPM package   | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.3-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880315/download)|
 | Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
-| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-x64.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880344/download)|
-| Linux AppImage       | Current Linux distributions with libc 2.34 or later     | x64 (x86)    | [EmulationStation-DE-x64_Current.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880370/download)|
-| Linux AppImage       | Steam Deck / SteamOS 3.0 specific                       | x64 (x86)    | [EmulationStation-DE-x64_SteamDeck.AppImage](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880401/download)|
-| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.3-armv7l.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880216/download)|
-| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.3-aarch64.deb](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/36880165/download)|
+| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880344/download)|
+| Linux AppImage       | Current Linux distributions with libc 2.34 or later     | x64 (x86)    | [EmulationStation-DE-x64_Current.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880370/download)|
+| Linux AppImage       | Steam Deck / SteamOS 3.0 specific                       | x64 (x86)    | [EmulationStation-DE-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880401/download)|
+| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.3-armv7l.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880216/download)|
+| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.3-aarch64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/36880165/download)|
 
 Version 1.2.0 (released 2021-12-28) will be the last legacy release for macOS
 
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| macOS DMG installer  | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/leonstyhre/emulationstation-de/-/package_files/25023954/download)|
+| macOS DMG installer  | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/25023954/download)|
 
-All previous releases can be downloaded from [here](https://gitlab.com/leonstyhre/emulationstation-de/-/packages).
+All previous releases can be downloaded from [here](https://gitlab.com/es-de/emulationstation-de/-/packages).
 
 The _current_ version of the Linux AppImage ships with newer libraries and better controller support but requires distributions with libc 2.34 or later to work.
 

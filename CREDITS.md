@@ -9,7 +9,7 @@ RetroPie Community (RetroPie fork) \
 https://retropie.org.uk
 
 Leon Styhre (Desktop Edition fork, based on the RetroPie version) \
-https://gitlab.com/leonstyhre/emulationstation-de
+https://gitlab.com/es-de/emulationstation-de
 
 # UI Art & Design
 

@@ -80,5 +80,5 @@ modules:
     - -DFLATPAK_BUILD=on
     sources:
     - type: git
-      url: https://gitlab.com/leonstyhre/emulationstation-de.git
+      url: https://gitlab.com/es-de/emulationstation-de.git
       commit: cb16b510022e95cc1a8e51a6ab26caaa0b73bb58

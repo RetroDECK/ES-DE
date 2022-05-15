@@ -16,8 +16,8 @@
     <metadata_license>CC0-1.0</metadata_license>
     <project_license>MIT</project_license>
     <url type="homepage">https://es-de.org</url>
-    <url type="bugtracker">https://gitlab.com/leonstyhre/emulationstation-de/-/issues</url>
-    <url type="help">https://gitlab.com/leonstyhre/emulationstation-de/-/blob/master/USERGUIDE.md</url>
+    <url type="bugtracker">https://gitlab.com/es-de/emulationstation-de/-/issues</url>
+    <url type="help">https://gitlab.com/es-de/emulationstation-de/-/blob/master/USERGUIDE.md</url>
     <url type="donation">https://es-de.org/#Donations</url>
     <screenshots>
         <screenshot type="default">
@@ -39,22 +39,22 @@
     </screenshots>
     <releases>
         <release version="1.2.3" date="2022-05-04">
-            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>
         <release version="1.2.2" date="2022-04-07">
-            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>
         <release version="1.2.1" date="2022-03-30">
-            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>
         <release version="1.2.0" date="2021-12-28">
-            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>
         <release version="1.1.0" date="2021-08-10">
-            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>
         <release version="1.0.1" date="2021-05-01">
-            <url>https://gitlab.com/leonstyhre/emulationstation-de/-/releases</url>
+            <url>https://gitlab.com/es-de/emulationstation-de/-/releases</url>
         </release>
     </releases>
 </component>

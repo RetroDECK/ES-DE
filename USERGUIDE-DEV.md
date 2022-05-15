@@ -744,7 +744,7 @@ This is required by the TheGamesDB scraper where the expanded filenames are used
 Place the ROMs in the astrocde directory, the files must have the short MAME names such as _astrobat.zip_ and _conan.zip_. If using MAME standalone then no further setup is required and the games should just launch. But if using the _MAME - Current_ RetroArch core, then a hash file must be added to the RetroArch system directory at this location:
 
 ```
-system/mame/hash/astrocde.xml
+mame/hash/astrocde.xml
 ```
 
 The file is available from the MAME GitHub repository (make sure to save it as a raw file): \
@@ -1117,7 +1117,7 @@ The second option on Windows is to unpack the game somewhere outside the ROMs di
 
 **Linux:**
 
-On Linux you need to supply your own game engine binary as few (if any) games are distributed with the Linux release of OpenBOR. Download the .7z archive from the [https://github.com/DCurrent/openbor](https://github.com/DCurrent/openbor) repository. The file you want is _OpenBOR_3.0_6391.AppImage_ which is located inside the LINUX/OpenBOR folder.
+On Linux you need to supply your own game engine binary as few (if any) games are distributed with the Linux release of OpenBOR. Download the .7z archive from the [https://github.com/DCurrent/openbor](https://github.com/DCurrent/openbor) repository. The file you want is _OpenBOR_3.0_6391.AppImage_ which is located inside the LINUX/OpenBOR folder. If you need an older engine for some specific game, then you may need to download an earlier release instead.
 
 Copy this file to the game directory and make it executable using the command `chmod +x OpenBOR_3.0_6391.AppImage`
 

@@ -113,7 +113,7 @@ make install
 To clone the source repository, run the following:
 
 ```
-git clone https://gitlab.com/leonstyhre/emulationstation-de.git
+git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
 
 Then generate the Makefile and build the software:
@@ -470,7 +470,7 @@ sudo /usr/sbin/DevToolsSecurity --enable
 To clone the source repository, run the following:
 
 ```
-git clone https://gitlab.com/leonstyhre/emulationstation-de.git
+git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
 
 On macOS all dependencies are built in-tree in the `external` directory tree. There are two scripts in the tools directory that automate this entirely and they are executed such as this:
@@ -723,7 +723,7 @@ In the descriptions below it's assumed that all build steps for MinGW/GCC will b
 To clone the source repository, run the following:
 
 ```
-git clone https://gitlab.com/leonstyhre/emulationstation-de.git
+git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
 
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
