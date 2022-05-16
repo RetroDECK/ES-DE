@@ -308,8 +308,9 @@
         <name>colecovision</name>
         <fullname>ColecoVision</fullname>
         <path>%ROMPATH%/coleco</path>
-        <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.so %ROM%</command>
+        <extension>.bin .BIN .cas .CAS .col .COL .cv .CV .dsk .DSK .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ri .RI .rom .ROM .sc .SC .sg .SG .7z .7Z .zip .ZIP</extension>
+        <command label="Gearcoleco">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearcoleco_libretro.so %ROM%</command>
+        <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.so %ROM%</command>
         <platform>colecovision</platform>
         <theme>colecovision</theme>
     </system>
