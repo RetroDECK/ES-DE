@@ -114,7 +114,7 @@ bool SystemView::input(InputConfig* config, Input input)
             return true;
         }
 
-        if (!UIModeController::getInstance()->isUIModeKid() && config->isMappedTo("back", input) &&
+        if (config->isMappedTo("back", input) &&
             Settings::getInstance()->getBool("ScreensaverControls")) {
             if (!mWindow->isScreensaverActive()) {
                 ViewController::getInstance()->stopScrolling();
@@ -195,8 +195,7 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
     if (Settings::getInstance()->getBool("RandomAddButton"))
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
-    if (!UIModeController::getInstance()->isUIModeKid() &&
-        Settings::getInstance()->getBool("ScreensaverControls"))
+    if (Settings::getInstance()->getBool("ScreensaverControls"))
         prompts.push_back(HelpPrompt("back", "screensaver"));
 
     return prompts;
