@@ -90,11 +90,15 @@ This functionality is planned but not yet implemented. It will probably be rolle
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 
-ES-DE works very differently compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are simply matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Migrating game media from other EmulationStation forks (and potentially from other frontends as well) can be accomplished quite easily. See the next question below for more information.
+ES-DE works very differently compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are simply matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Migrating game media from other EmulationStation forks (and potentially from other frontends as well) can be accomplished quite easily. See the next question below for more information. Make sure to also read the _Migrating from other EmulationStation forks_ section of the [User guide](USERGUIDE.md#migrating-from-other-emulationstation-forks) to avoid data loss if running ES-DE with existing data from another EmulationStation fork.
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
 Yes to a certain extent this is supported and at least [Skraper](https://www.skraper.net) and [Skyscraper](https://github.com/muldjord/skyscraper) have been used by some people. Few if any dedicated scraper applications are yet updated specifically to support ES-DE though, so you may need to do some manual renaming and moving of files and directories. See the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details about this.
+
+## My controller isn't working in ES-DE, is there a way to fix this?
+
+If the controller works in other applications and games but not in ES-DE, then you may be able to get it to run in ES-DE as well. The required setup is described in detail in the _Adding custom controller profiles_ section of the [Building and advanced configuration](INSTALL.md#adding-custom-controller-profiles) document.
 
 ## I'm missing a feature, how can I make a request to have it added?
 

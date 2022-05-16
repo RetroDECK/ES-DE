@@ -156,11 +156,13 @@ v1.2 maintenance release.
 * Changed the default emulator for the gamegear system from Gearsystem to Genesis Plus GX
 * Changed the default emulator for the dos and pc systems from DOSBox-Core to DOSBox-Pure
 * Changed the default emulator for the mame system from MAME 2003-Plus to MAME - Current
+* Added the Gearcoleco RetroArch core for the colecovision system and set it as the default emulator
 * Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
 * Changed the steam platform to use the ScreenScraper "PC Windows" platform ID
 * Added a new pcwindows platform for scraping PC (Windows) games
 * Changed the platform to pcwindows for the epic system
+* Enabled screensaver controls when running in Kid UI mode
 * Added an Xbox Kinect controller badge icon
 * (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * Replaced the explicit shell commands in es_systems.xml with %EMULATOR_OS-SHELL% find rules
@@ -174,6 +176,7 @@ v1.2 maintenance release.
 
 * Chinese characters would sometimes not render correctly
 * The "Jump to.." quick selector didn't work correctly with multi-byte Unicode characters
+* All games were included in the video and slideshow screeensavers when in Kid UI mode
 * (Linux) Flatpak directories were missing for user installations of the standalone emulators BlastEm, Play! and Snes9x
 * (Windows) Fixed an issue where symlinking game media directories would crash the application
 * (Windows) Scripts and links executed using cmd.exe could not contain the special characters &()^=;,

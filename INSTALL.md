@@ -2005,6 +2005,31 @@ This will reload either a single gamelist or all gamelists depending on where yo
 
 By default all controller input (keyboard and controller button presses) will be logged when the --debug flag has been passed. To disable the input logging, the setting DebugSkipInputLogging kan be set to false in the es_settings.xml file. There is no menu entry to change this as it's intended for developers and not for end users.
 
+## Adding custom controller profiles
+
+Before attempting to add a custom profile for your controller you need to check whether there is device driver support for it in your operating system. If the controller works in other applications and games, then proceed with the instructions below, but if it doesn't work anywhere else then chances are very low that you can get it to work in ES-DE.
+
+ES-DE uses the [SDL](https://www.libsdl.org) (Simple DirectMedia Layer) library to handle controller input, so in order for a controller to work in ES-DE, it has to be supported by SDL. There is however a possibility to add custom controller profiles to SDL which in some cases could enable devices in ES-DE that would otherwise not be supported. This is generally a temporary solution though, as controller support is constantly getting improved natively in SDL. As a first step it's therefore recommended to open a request at the SDL [issue tracker](https://github.com/libsdl-org/SDL/issues) to have your specific controller added to a future SDL release.
+
+Assuming the controller works in other applications than ES-DE, you can attempt to add a custom profile by creating the file `~/.emulationstation/es_controller_mappings.cfg` and enter the appropriate configuration inside this file.
+
+The required format is described here:\
+https://github.com/gabomdq/SDL_GameControllerDB
+
+The really blunt approach is to copy the entire content of the following file into es_controller_mappings.cfg: \
+https://raw.githubusercontent.com/gabomdq/SDL_GameControllerDB/master/gamecontrollerdb.txt
+
+But just do this as a first step to see whether you controller gets enabled. If it does, then you should remove all entries that are not relevant. That is important as this file will take precedence over the built-in controller profiles in the SDL library, so any future controller bug fixes and similar would not apply. In the past the gamecontrollerdb.txt file has also included some invalid configuration entries, so even though it may make your controller work, it could actually break some other controllers that you may want to use now or in the future.
+
+Therefore only keep the entries in the es_controller_mappings.cfg file that are relevant for your devices. You can find each relevant controller GUID by starting ES-DE and then looking in the ~/.emulationstation/es_log.txt file. You should see entries such as the following:
+```
+May 16 18:26:17 Info:   Added controller with custom configuration: "X360 Controller" (GUID: 030000005e0400008e02000010010000, instance ID: 0, device index: 0)
+```
+
+It's the GUID that is the key, and it's the lines matching these IDs that you want to retain inside the es_controller_mappings.cfg file. All other rows can be deleted.
+
+Even if pasting the entire content of gamecontrollerdb.txt into the es_controller_mappings.cfg file did not enable your controller, all hope is not lost. You may still be able to create your own custom controller entry, but doing that is beyond the scope of this document and you would have to look into the instructions at the SDL_GameControllerDB URL mentioned above.
+
 ## Portable installation on Windows
 
 _As there is a preconfigured portable release available for Windows, this section is mostly relevant for understanding how the setup works, as well as to provide information on how to make customizations._

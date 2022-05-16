@@ -360,6 +360,10 @@ Due to this, always make backups of at least the following directories before te
 ~/.emulationstation/collections/
 ```
 
+Also note that if you have gamelist.xml files in your ROMs directory tree then ES-DE will be able to use those as well, so make sure to make backups of these files too.
+
+It's however recommended to move all such files to the ~/.emulationstation/gamelists/ tree as any new system you add to ES-DE will have its gamelist.xml file created there. The ability to read gamelist.xml files from the ROMs directory tree is only a backward compatibility feature and/or functionality for the few people who insist on keeping their existing gamelist.xml files there.
+
 It's also strongly adviced to not rename an old es_settings.cfg file to es_settings.xml for use in ES-DE. Although this has been tested to some extent, it may cause undefined behavior.
 
 If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
@@ -425,7 +429,7 @@ These modes mandate the functionalty provided by the application in the followin
 
 * Full - This is the default mode which enables all functionality.
 * Kiosk - The main menu will be severely restricted, only displaying the entry to change the audio volume. The game options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag or unflag games as favorites will be removed. Apart from this all games will be playable.
-* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled, as well as the screensaver controls and the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see _Enable menu in kid mode_ for additional information.
+* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled as is the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see _Enable menu in kid mode_ for additional information.
 
 There is an unlock code available to revert to the Full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A** (or equivalent buttons if an Xbox controller is not used). Either the keyboard or a controller can be used to input the passkey sequence, but it can't be entered when a menu is open.
 
@@ -769,14 +773,14 @@ This is required by the TheGamesDB scraper where the expanded filenames are used
 
 **Bally Astrocade:**
 
-Place the ROMs in the astrocde directory, the files must have the short MAME names such as _astrobat.zip_ and _conan.zip_. If using MAME standalone then no further setup is required and the games should just launch. But if using the _MAME - Current_ RetroArch core, then a hash file must be added to the RetroArch system directory at this location:
+Place the ROMs in the astrocde directory, the files must have the short MAME names such as _astrobat.zip_ and _conan.zip_. If using MAME standalone then no further setup is required and the games should just launch. But if using the _MAME - Current_ RetroArch core, then a hash file must be added inside the RetroArch system directory at this location:
 
 ```
 mame/hash/astrocde.xml
 ```
 
-The file is available from the MAME GitHub repository (make sure to save it as a raw file): \
-https://github.com/mamedev/mame/blob/master/hash/astrocde.xml
+The hash file is available from the MAME GitHub repository: \
+https://raw.githubusercontent.com/mamedev/mame/master/hash/astrocde.xml
 
 #### Nintendo Switch
 
@@ -2335,7 +2339,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
 | coco                  | Tandy Color Computer                           | _Placeholder_                     |                                   |              |                                      |
-| colecovision          | ColecoVision                                   | blueMSX                           |                                   |              |                                      |
+| colecovision          | ColecoVision                                   | Gearcoleco                        | blueMSX                           |              |                                      |
 | daphne                | Daphne Arcade LaserDisc Emulator               | _Placeholder_                     |                                   |              |                                      |
 | desktop               | Desktop Applications                           | N/A                               |                                   | No           |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
