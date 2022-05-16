@@ -1394,9 +1394,22 @@ void FileData::launchGame()
 #endif
     }
 
-    Scripting::fireEvent("game-end", romPath, getSourceFileData()->metadata.get("name"),
-                         getSourceFileData()->getSystem()->getName(),
-                         getSourceFileData()->getSystem()->getFullName());
+    // If running in the background then don't trigger the game-end event, which will instead be
+    // triggered in ViewController when manually waking up the application.
+    if (!runInBackground) {
+        Scripting::fireEvent("game-end", romPath, getSourceFileData()->metadata.get("name"),
+                             getSourceFileData()->getSystem()->getName(),
+                             getSourceFileData()->getSystem()->getFullName());
+    }
+    else {
+        std::vector<std::string>& gameEndParams {
+            ViewController::getInstance()->getGameEndEventParams()};
+        gameEndParams.emplace_back("game-end");
+        gameEndParams.emplace_back(romPath);
+        gameEndParams.emplace_back(getSourceFileData()->metadata.get("name"));
+        gameEndParams.emplace_back(getSourceFileData()->getSystem()->getName());
+        gameEndParams.emplace_back(getSourceFileData()->getSystem()->getFullName());
+    }
 
     // Unless we're running in the background while the game is launched, re-enable the text
     // scrolling that was disabled in ViewController.

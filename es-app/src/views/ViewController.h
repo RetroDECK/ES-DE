@@ -79,6 +79,7 @@ public:
         mLockInput = true;
     };
     bool getGameLaunchTriggered() { return (mGameToLaunch != nullptr); }
+    std::vector<std::string>& getGameEndEventParams() { return mGameEndEventParams; }
 
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
@@ -170,6 +171,7 @@ private:
     std::map<SystemData*, std::shared_ptr<GamelistView>> mGamelistViews;
     std::shared_ptr<SystemView> mSystemListView;
 
+    std::vector<std::string> mGameEndEventParams;
     FileData* mGameToLaunch;
     State mState;
 
