@@ -311,10 +311,10 @@ bool SystemData::populateFolder(FileData* folder)
             FileData* newGame = new FileData(GAME, filePath, mEnvData, this);
 
             // If adding a configured file extension to a directory it will get interpreted as
-            // a regular file. This is useful for some emulators that can get directories passed
-            // to them as command line parameters instead of regular files. In these instances
-            // we remove the extension from the metadata name so it does not show up in the
-            // gamelists and similar.
+            // a regular file. This is useful for displaying multi-file/multi-disc games as single
+            // entries or for emulators that can get directories passed to them as command line
+            // parameters instead of regular files. In these instances we remove the extension
+            // from the metadata name so it does not show up in the gamelists and similar.
             if (Utils::FileSystem::isDirectory(filePath)) {
                 const std::string folderName = newGame->metadata.get("name");
                 newGame->metadata.set(
