@@ -119,7 +119,7 @@ bool SystemView::input(InputConfig* config, Input input)
             if (!mWindow->isScreensaverActive()) {
                 ViewController::getInstance()->stopScrolling();
                 ViewController::getInstance()->cancelViewTransitions();
-                mWindow->startScreensaver();
+                mWindow->startScreensaver(false);
                 mWindow->renderScreensaver();
             }
             return true;

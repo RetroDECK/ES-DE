@@ -25,6 +25,7 @@
 #include "MameNames.h"
 #include "MediaViewer.h"
 #include "Screensaver.h"
+#include "Scripting.h"
 #include "Settings.h"
 #include "Sound.h"
 #include "SystemData.h"
@@ -549,6 +550,8 @@ int main(int argc, char* argv[])
 #endif
         return 0;
     }
+
+    Scripting::fireEvent("startup");
 
 #if defined(__EMSCRIPTEN__)
     // TODO: Remove when application window resizing has been implemented.

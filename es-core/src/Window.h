@@ -107,7 +107,7 @@ public:
     }
     void stopInfoPopup();
 
-    void startScreensaver();
+    void startScreensaver(bool onTimer);
     bool stopScreensaver();
     void renderScreensaver();
     void screensaverTriggerNextGame() { mScreensaver->triggerNextGame(); }
