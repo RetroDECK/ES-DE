@@ -42,7 +42,7 @@ ES-DE acts strictly as a frontend, it does not interfere with the emulator confi
 
 ## On game launch the screen just flashes black and the game won't start, how do I solve this?
 
-This is almost always caused by missing emulator BIOS files which have to be installed separately from ES-DE. See the previous question.
+This is almost always caused by either corrupt ROMs/disc images or by missing emulator BIOS files (which have to be installed separately from ES-DE).
 
 ## How do I exit back from the emulators to ES-DE?
 
