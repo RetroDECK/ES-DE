@@ -97,6 +97,7 @@ public:
     std::string getThemePath() const;
 
     std::pair<unsigned int, unsigned int> getDisplayedGameCount() const;
+    const bool getFlattenFolders() const { return mFlattenFolders; }
     const bool getScrapeFlag() const { return mScrapeFlag; }
     void setScrapeFlag(bool scrapeflag) { mScrapeFlag = scrapeflag; }
 
@@ -156,6 +157,7 @@ private:
     bool mIsGroupedCustomCollectionSystem;
     bool mIsGameSystem;
     bool mScrapeFlag; // Only used by scraper GUI to remember which systems to scrape.
+    bool mFlattenFolders;
 
     bool populateFolder(FileData* folder);
     void indexAllGameFilters(const FileData* folder);

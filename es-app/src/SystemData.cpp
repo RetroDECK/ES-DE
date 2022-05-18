@@ -185,17 +185,18 @@ SystemData::SystemData(const std::string& name,
                        const std::string& themeFolder,
                        bool CollectionSystem,
                        bool CustomCollectionSystem)
-    : mName(name)
-    , mFullName(fullName)
-    , mSortName(sortName)
-    , mEnvData(envData)
-    , mThemeFolder(themeFolder)
-    , mIsCollectionSystem(CollectionSystem)
-    , mIsCustomCollectionSystem(CustomCollectionSystem)
-    , mIsGroupedCustomCollectionSystem(false)
-    , mIsGameSystem(true)
-    , mScrapeFlag(false)
-    , mPlaceholder(nullptr)
+    : mName {name}
+    , mFullName {fullName}
+    , mSortName {sortName}
+    , mEnvData {envData}
+    , mThemeFolder {themeFolder}
+    , mIsCollectionSystem {CollectionSystem}
+    , mIsCustomCollectionSystem {CustomCollectionSystem}
+    , mIsGroupedCustomCollectionSystem {false}
+    , mIsGameSystem {true}
+    , mScrapeFlag {false}
+    , mFlattenFolders {false}
+    , mPlaceholder {nullptr}
 {
     mFilterIndex = new FileFilterIndex();
 
@@ -271,6 +272,13 @@ bool SystemData::populateFolder(FileData* folder)
     if (dirContent.size() == 0)
         return false;
 
+    if (std::find(dirContent.cbegin(), dirContent.cend(), mEnvData->mStartPath + "/flatten.txt") !=
+        dirContent.cend()) {
+        LOG(LogInfo) << "A flatten.txt file is present for the \"" << mName
+                     << "\" system, folder flattening will be applied";
+        mFlattenFolders = true;
+    }
+
     for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
          it != dirContent.cend(); ++it) {
         filePath = *it;
@@ -344,11 +352,17 @@ bool SystemData::populateFolder(FileData* folder)
             FileData* newFolder = new FileData(FOLDER, filePath, mEnvData, this);
             populateFolder(newFolder);
 
-            // Ignore folders that do not contain games.
-            if (newFolder->getChildrenByFilename().size() == 0)
-                delete newFolder;
-            else
-                folder->addChild(newFolder);
+            if (mFlattenFolders) {
+                for (auto& entry : newFolder->getChildrenByFilename())
+                    folder->addChild(entry.second);
+            }
+            else {
+                // Ignore folders that do not contain games.
+                if (newFolder->getChildrenByFilename().size() == 0)
+                    delete newFolder;
+                else
+                    folder->addChild(newFolder);
+            }
         }
     }
     return true;

@@ -446,7 +446,8 @@ const bool FileData::isArcadeGame() const
 void FileData::addChild(FileData* file)
 {
     assert(mType == FOLDER);
-    assert(file->getParent() == nullptr);
+    if (!mSystem->getFlattenFolders())
+        assert(file->getParent() == nullptr);
 
     const std::string key = file->getKey();
     if (mChildrenByFilename.find(key) == mChildrenByFilename.cend()) {
