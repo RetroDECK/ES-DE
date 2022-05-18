@@ -10,7 +10,6 @@
 #include "ResourceManager.h"
 
 #include "Log.h"
-#include "Scripting.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
@@ -77,7 +76,6 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
 #endif
                 LOG(LogError) << testExePath;
                 LOG(LogError) << "Has EmulationStation been properly installed?";
-                Scripting::fireEvent("quit");
                 Utils::Platform::emergencyShutdown();
             }
             else {

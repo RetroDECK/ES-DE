@@ -9,6 +9,7 @@
 #include "utils/PlatformUtil.h"
 
 #include "Log.h"
+#include "Scripting.h"
 #include "Window.h"
 #if defined(_WIN64)
 #include "utils/StringUtil.h"
@@ -286,15 +287,20 @@ namespace Utils
             switch (sQuitMode) {
                 case QuitMode::REBOOT: {
                     LOG(LogInfo) << "Rebooting system";
+                    Scripting::fireEvent("quit");
+                    Scripting::fireEvent("reboot");
                     runRebootCommand();
                     break;
                 }
                 case QuitMode::POWEROFF: {
                     LOG(LogInfo) << "Powering off system";
+                    Scripting::fireEvent("quit");
+                    Scripting::fireEvent("poweroff");
                     runPoweroffCommand();
                     break;
                 }
                 default: {
+                    Scripting::fireEvent("quit");
                     break;
                 }
             }
@@ -303,6 +309,7 @@ namespace Utils
         void emergencyShutdown()
         {
             LOG(LogError) << "Critical - Performing emergency shutdown...";
+            Scripting::fireEvent("quit");
 
             Window::getInstance()->deinit();
             Log::flush();

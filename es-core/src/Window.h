@@ -12,7 +12,6 @@
 
 #include "HelpPrompt.h"
 #include "InputConfig.h"
-#include "Scripting.h"
 #include "Settings.h"
 #include "resources/TextureResource.h"
 
