@@ -36,7 +36,6 @@ public:
     class Screensaver
     {
     public:
-        virtual bool allowSleep() = 0;
         virtual bool isScreensaverActive() = 0;
         virtual bool isFallbackScreensaver() = 0;
 
@@ -94,10 +93,6 @@ public:
 
     void normalizeNextUpdate() { mNormalizeNextUpdate = true; }
 
-    bool getAllowSleep() { return mAllowSleep; }
-    void setAllowSleep(bool sleep) { mAllowSleep = sleep; }
-    bool isSleeping() const { return mSleeping; }
-
     void renderLoadingScreen(std::string text);
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
     void renderListScrollOverlay(const float opacity, const std::string& text);
@@ -153,9 +148,6 @@ private:
     Window() noexcept;
     ~Window();
 
-    void onSleep() { Scripting::fireEvent("sleep"); }
-    void onWake() { Scripting::fireEvent("wake"); }
-
     // Returns true if at least one component on the stack is processing.
     bool isProcessing();
 
@@ -185,8 +177,6 @@ private:
     unsigned int mTimeSinceLastInput;
 
     bool mNormalizeNextUpdate;
-    bool mAllowSleep;
-    bool mSleeping;
 
     bool mRenderScreensaver;
     bool mRenderMediaViewer;

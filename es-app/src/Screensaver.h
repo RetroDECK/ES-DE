@@ -23,10 +23,6 @@ public:
     Screensaver();
     virtual ~Screensaver();
 
-    virtual bool allowSleep()
-    {
-        return ((mVideoScreensaver == nullptr) && (mImageScreensaver == nullptr));
-    }
     virtual bool isScreensaverActive() { return (mState != STATE_INACTIVE); }
     virtual bool isFallbackScreensaver() { return mFallbackScreensaver; }
 

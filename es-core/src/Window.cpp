@@ -34,8 +34,6 @@ Window::Window() noexcept
     , mAverageDeltaTime {10}
     , mTimeSinceLastInput {0}
     , mNormalizeNextUpdate {false}
-    , mAllowSleep {true}
-    , mSleeping {false}
     , mRenderScreensaver {false}
     , mRenderMediaViewer {false}
     , mRenderLaunchScreen {false}
@@ -204,27 +202,17 @@ void Window::input(InputConfig* config, Input input)
                     // Launch game.
                     stopScreensaver();
                     mScreensaver->launchGame();
-                    // To force handling the wake up process.
-                    mSleeping = true;
+                    return;
                 }
                 else if (config->isMappedTo("y", input) && input.value != 0) {
                     // Jump to the game in its gamelist, but do not launch it.
                     stopScreensaver();
                     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                     mScreensaver->goToGame();
-                    // To force handling the wake up process.
-                    mSleeping = true;
+                    return;
                 }
             }
         }
-    }
-
-    if (mSleeping) {
-        // Wake up.
-        stopScreensaver();
-        mSleeping = false;
-        onWake();
-        return;
     }
 
     // Any keypress cancels the screensaver.
@@ -587,16 +575,6 @@ void Window::render()
     // Always call the screensaver render function regardless of whether the screensaver is active
     // or not because it may perform a fade on transition.
     renderScreensaver();
-
-    if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
-        if (!isProcessing() && mAllowSleep && (!mScreensaver)) {
-            // Go to sleep.
-            if (mSleeping == false) {
-                mSleeping = true;
-                onSleep();
-            }
-        }
-    }
 
     if (mRenderMediaViewer)
         mMediaViewer->render(trans);
