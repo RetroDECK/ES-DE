@@ -163,6 +163,7 @@ v1.2 maintenance release.
 * Added a new pcwindows platform for scraping PC (Windows) games
 * Changed the platform to pcwindows for the epic system
 * Enabled screensaver controls when running in Kid UI mode
+* Added a --create-systemdirs command line option to generate the game system directories
 * Added an Xbox Kinect controller badge icon
 * (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * Replaced the explicit shell commands in es_systems.xml with %EMULATOR_OS-SHELL% find rules
@@ -170,6 +171,7 @@ v1.2 maintenance release.
 * (Windows) Set %RUNINBACKGROUND% when launching MAME standalone as this emulator may otherwise hang on exit
 * (Windows) Added an %ESCAPESPECIALS% variable that escapes the special characters &()^=;,
 * (Windows) Added %ESCAPESPECIALS% to the desktop, epic, kodi, ports and steam systems
+* Added experimental support for folder flattening
 * Updated the StringUtil::replace function as the old function was dangerous and could run into an endless loop
 
 ### Bug fixes

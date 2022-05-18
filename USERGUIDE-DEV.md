@@ -757,6 +757,47 @@ It's also possible to combine these types of special directories with normal dir
 
 Also in this case the directory will be displayed as a regular game file inside ES-DE and when launching the game the directory is passed as the game ROM argument to RPCS3.
 
+### Folder flattening
+
+**This functionality is unsupported and experimental and may cause all sorts of issues including corrupting your gamelist.xml files, so make sure to have backups of your data prior to attempting to use this.**
+
+ES-DE works according to the filesystem paradigm used on most operating systems, meaning the file and directory structure of your ROMs directory is reflected inside the application. So if you create a directory on the filesystem and place some games in there, it will be reflected inside ES-DE as a folder that you can enter and launch games from.
+
+A slight exception to this is the _Directories interpreted as files_ functionality where you can display a folder as a single entry. But even then, the basic directory structure is retained.
+
+However, some users have a setup where they have separated games inside their systems into folders but would still want to see these as a flat structure in ES-DE. While this is possible to accomplish, it's strongly discouraged as it will cause multiple issues:
+* It completely disables folder support for the system
+* Any identically named files will be added only once in a semi-random fashion, meaning you could miss a lot of games
+* If there is metadata available for multiple games with the same filename (which could happen if scraping was done prior to flattening the folders) then the behavior is undefined and metadata from the wrong game may get used
+* Some systems like MS-DOS and ScummVM may be completely broken
+* The setup may cause confusion when reorganizing your collection and similar as what you'll see inside ES-DE will not reflect what you see if navigating the ROM directory in your operating system's file manager
+
+Again, it's not recommended to flatten the folder structure, only enable this functionality if you know exactly what you're doing and understand the adverse side effects mentioned above. If you have any name collisions in your directory structure then make sure to rename each file to have a unique name. Also delete your gamelist.xml file and rescrape the entire system after fixing any collisions as it's otherwise random which metadata will be used for those games.
+
+If you still want to go ahead and enable folder flattening, then place an empty file named `flatten.txt` in the root of each system where you would like to have this applied.
+
+Here's an example setup:
+```
+~/ROMs/nes/EU/Kid Icarus.zip
+~/ROMs/nes/EU/Metal Gear (EU).zip
+~/ROMs/nes/USA/Kid Icarus.zip
+~/ROMs/nes/USA/Metal Gear (USA).zip
+~/ROMs/nes/Contra.zip
+~/ROMs/nes/Recca.zip
+~/ROMs/nes/flatten.txt
+```
+
+For this example the following entries will show up inside ES-DE:
+```
+Contra
+Kid Icarus
+Metal Gear (EU)
+Metal Gear (USA)
+Recca
+```
+
+Note that _Kid Icarus_ will only show up once since there is a name collision present and in this case only the first file processed will be added and any other identically named files will be ignored. Also note that in this case it's random whether metadata from _EU/Kid Icarus_ or _USA/Kid Icarus_ will be used.
+
 ### Special game installation considerations
 
 Not all systems are as simple as described above, or there may be multiple ways to do the configuration. Specifics for such systems will be covered here. Consider this a work in progress as there are many platforms supported by ES-DE.
