@@ -62,6 +62,7 @@ namespace
     int lastTime {0};
 
     bool forceInputConfig {false};
+    bool createSystemDirectories {false};
     bool settingsNeedSaving {false};
 
     enum loadSystemsReturnCode {
@@ -349,6 +350,9 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--force-input-config") == 0) {
             forceInputConfig = true;
         }
+        else if (strcmp(argv[i], "--create-systemdirs") == 0) {
+            createSystemDirectories = true;
+        }
         else if (strcmp(argv[i], "--debug") == 0) {
             Settings::getInstance()->setBool("Debug", true);
             Log::setReportingLevel(LogDebug);
@@ -377,6 +381,7 @@ bool parseArgs(int argc, char* argv[])
 "  --force-kiosk                   Force the UI mode to Kiosk\n"
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-input-config            Force configuration of input device\n"
+"  --create-systemdirs             Create game system directories\n"
 "  --home [path]                   Directory to use as home path\n"
 "  --debug                         Print debug information\n"
 "  --version, -v                   Display version information\n"
@@ -542,6 +547,16 @@ int main(int argc, char* argv[])
 
     // Always close the log on exit.
     atexit(&onExit);
+
+    if (createSystemDirectories) {
+        if (!SystemData::createSystemDirectories() && !Settings::getInstance()->getBool("Debug"))
+            std::cout << "System directories successfully created" << std::endl;
+        LOG(LogInfo) << "EmulationStation cleanly shutting down";
+#if defined(_WIN64)
+        FreeConsole();
+#endif
+        return 0;
+    }
 
 #if defined(__EMSCRIPTEN__)
     // TODO: Remove when application window resizing has been implemented.
