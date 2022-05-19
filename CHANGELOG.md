@@ -160,16 +160,20 @@ v1.2 maintenance release.
 * Added the Gearcoleco RetroArch core for the colecovision system and set it as the default emulator
 * Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
+* Added the file extensions .ciso, .dump, .gz, .m3u, .mdf, .img and .nrg to the ps2 system
+* Added the "citra" binary for Citra standalone on Linux (makes it possible to use the repository or AUR release)
 * Changed the steam platform to use the ScreenScraper "PC Windows" platform ID
 * Added a new pcwindows platform for scraping PC (Windows) games
 * Changed the platform to pcwindows for the epic system
+* Added scraper support for the platforms arcadia (Emerson Arcadia 2001) and crvision (VTech CreatiVision)
 * Enabled screensaver controls when running in Kid UI mode
 * Added custom event script triggers on application startup, screensaver start and screensaver end
-* Added a --create-systemdirs command line option to generate the game system directories
+* Added a --create-system-dirs command line option to generate the game system directories
 * Added an Xbox Kinect controller badge icon
 * (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * Replaced the explicit shell commands in es_systems.xml with %EMULATOR_OS-SHELL% find rules
-* Added a new %GAMEDIR% variable to be used in conjunction with the %STARTDIR% variable (required by OpenBOR)
+* Added a %GAMEDIR% variable that expands to the game directory (required by Hypseus Singe)
+* Made the %GAMEDIR% variable usable with the %STARTDIR% variable (required by OpenBOR)
 * (Windows) Set %RUNINBACKGROUND% when launching MAME standalone as this emulator may otherwise hang on exit
 * (Windows) Added an %ESCAPESPECIALS% variable that escapes the special characters &()^=;,
 * (Windows) Added %ESCAPESPECIALS% to the desktop, epic, kodi, ports and steam systems
@@ -181,6 +185,7 @@ v1.2 maintenance release.
 * Chinese characters would sometimes not render correctly
 * The "Jump to.." quick selector didn't work correctly with multi-byte Unicode characters
 * All games were included in the video and slideshow screeensavers when in Kid UI mode
+* The %BASENAME% variable didn't work correctly with the "Directories interpreted as files" functionality
 * The game-end event was triggered immediately on game launch if running in the background
 * The "quit" custom event script trigger was not executed when quitting the application using the quit key combo
 * (Linux) Flatpak directories were missing for user installations of the standalone emulators BlastEm, Play! and Snes9x

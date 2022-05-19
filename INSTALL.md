@@ -1355,7 +1355,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --force-kiosk                   Force the UI mode to Kiosk
 --force-kid                     Force the UI mode to Kid
 --force-input-config            Force configuration of input device
---create-systemdirs             Create game system directories
+--create-system-dirs            Create game system directories
 --home [path]                   Directory to use as home path
 --debug                         Print debug information
 --version, -v                   Display version information
@@ -1366,7 +1366,7 @@ As you can see above, you can override the home directory path using the `--home
 
 Setting the resolution to a lower or higher value than the display resolution will add a border to the application window.
 
-Running with the --create-systemdirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
+Running with the --create-system-dirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
 
 For the following options, the es_settings.xml file is immediately updated/saved when passing the parameter:
 ```

@@ -729,7 +729,7 @@ This setup is of course entirely optional, you can also leave the directories as
 
 ### Directories interpreted as files
 
-There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-disc games and similar while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
+There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-file/multi-disc games while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
 
 In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This means that the directory can be part of the automatic collections and any custom collections.
 
@@ -1215,6 +1215,20 @@ For this example, the filename structure needs to look like the following:
 ~/.emulationstation/downloaded_media/c64/screenshots/Multidisk/Last Ninja 2/Last Ninja 2.jpg
 ~/.emulationstation/downloaded_media/c64/videos/Multidisk/Last Ninja 2/Last Ninja 2.mp4
 ```
+
+Note that there is seemingly an exception to this logic if the _Directories interpreted as files_ functionality has been used, in which case the "file extension" added to the directory is also included in the game media filenames. Take for example the following ScummVM game:
+```
+~/ROMs/scummvm/dig.scummvm/dig.scummvm
+```
+
+The media files for this directory which is interpreted as a file will be:
+
+```
+~/.emulationstation/downloaded_media/scummvm/screenshots/dig.scummvm.png
+~/.emulationstation/downloaded_media/scummvm/videos/dig.scummvm.mp4
+```
+
+This is not a bug as these are not really file extensions after all, it's just a directory with a dot in the filename that happens to look like a file extension because that's how the _Directories interpreted as files_ logic works.
 
 For images .jpg and .png file extensions are supported and for videos .avi, .mkv, .mov, .mp4 and .wmv are supported.
 

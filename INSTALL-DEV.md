@@ -1059,7 +1059,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --force-kiosk                   Force the UI mode to Kiosk
 --force-kid                     Force the UI mode to Kid
 --force-input-config            Force configuration of input device
---create-systemdirs             Create game system directories
+--create-system-dirs            Create game system directories
 --home [path]                   Directory to use as home path
 --debug                         Print debug information
 --version, -v                   Display version information
@@ -1070,7 +1070,7 @@ As you can see above, you can override the home directory path using the `--home
 
 Setting the resolution to a lower or higher value than the display resolution will add a border to the application window.
 
-Running with the --create-systemdirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
+Running with the --create-system-dirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
 
 For the following options, the es_settings.xml file is immediately updated/saved when passing the parameter:
 ```
@@ -1235,6 +1235,8 @@ The following variables are expanded for the `command` tag:
 `%EMUPATH%` - Replaced with the path to the emulator binary. This variable is used for manually specifying emulator core locations, and a check for the existence of the core file will be done on game launch and an error displayed if it can't be found. Normally %EMUPATH% should not be used as the %CORE_ variable is the recommended method for defining core locations.
 
 `%EMUDIR%` - Replaced with the path to the emulator binary. This is a general purpose variable as opposed to %EMUPATH% which is intended specifically for core locations.
+
+`%GAMEDIR%` - Replaced with the path to the game.
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
@@ -1819,7 +1821,7 @@ Just make sure to not place the portable installation on a network share that us
 
 ## Custom event scripts
 
-There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
+There are numerous locations throughout ES-DE where custom scripts can be executed if the option to do so has been enabled in the settings. You'll find the option _Enable custom event scripts_ on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
 
 The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files. There are up to four parameters that will be passed to these scripts, as detailed below:
 

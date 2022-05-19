@@ -713,7 +713,7 @@ This setup is of course entirely optional, you can also leave the directories as
 
 ### Directories interpreted as files
 
-There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-disc games and similar while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
+There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-file/multi-disc games while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
 
 In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This means that the directory can be part of the automatic collections and any custom collections.
 
@@ -759,20 +759,20 @@ Also in this case the directory will be displayed as a regular game file inside 
 
 ### Folder flattening
 
-**This functionality is unsupported and experimental and may cause all sorts of issues including corrupting your gamelist.xml files, so make sure to have backups of your data prior to attempting to use this.**
+**This functionality is experimental and may cause all sorts of issues including corrupting your gamelist.xml files, so make sure to have backups of your data prior to attempting to use this.**
 
 ES-DE works according to the filesystem paradigm used on most operating systems, meaning the file and directory structure of your ROMs directory is reflected inside the application. So if you create a directory on the filesystem and place some games in there, it will be reflected inside ES-DE as a folder that you can enter and launch games from.
 
 A slight exception to this is the _Directories interpreted as files_ functionality where you can display a folder as a single entry. But even then, the basic directory structure is retained.
 
-However, some users have a setup where they have separated games inside their systems into folders but would still want to see these as a flat structure in ES-DE. While this is possible to accomplish, it's strongly discouraged as it will cause multiple issues:
+However, some users have a setup where they have separated games inside their systems into folders but would still want to see these as a flat structure in ES-DE. While this is possible to accomplish, it's discouraged as it will cause multiple issues:
 * It completely disables folder support for the system
-* Any identically named files will be added only once in a semi-random fashion, meaning you could miss a lot of games
+* Any identically named files will be added only once in a semi-random fashion, meaning you could miss some games
 * If there is metadata available for multiple games with the same filename (which could happen if scraping was done prior to flattening the folders) then the behavior is undefined and metadata from the wrong game may get used
 * Some systems like MS-DOS and ScummVM may be completely broken
 * The setup may cause confusion when reorganizing your collection and similar as what you'll see inside ES-DE will not reflect what you see if navigating the ROM directory in your operating system's file manager
 
-Again, it's not recommended to flatten the folder structure, only enable this functionality if you know exactly what you're doing and understand the adverse side effects mentioned above. If you have any name collisions in your directory structure then make sure to rename each file to have a unique name. Also delete your gamelist.xml file and rescrape the entire system after fixing any collisions as it's otherwise random which metadata will be used for those games.
+Only enable this functionality if you know exactly what you're doing and understand the adverse side effects mentioned above. If you have any name collisions in your directory structure then make sure to rename each file to have a unique name. Also delete your gamelist.xml file and rescrape the entire system after fixing any collisions as it's otherwise random which metadata will be used for those games.
 
 If you still want to go ahead and enable folder flattening, then place an empty file named `flatten.txt` in the root of each system where you would like to have this applied.
 
@@ -1335,6 +1335,20 @@ For this example, the filename structure needs to look like the following:
 ~/.emulationstation/downloaded_media/c64/screenshots/Multidisk/Last Ninja 2/Last Ninja 2.jpg
 ~/.emulationstation/downloaded_media/c64/videos/Multidisk/Last Ninja 2/Last Ninja 2.mp4
 ```
+
+Note that there is seemingly an exception to this logic if the _Directories interpreted as files_ functionality has been used, in which case the "file extension" added to the directory is also included in the game media filenames. Take for example the following ScummVM game:
+```
+~/ROMs/scummvm/dig.scummvm/dig.scummvm
+```
+
+The media files for this directory which is interpreted as a file will be:
+
+```
+~/.emulationstation/downloaded_media/scummvm/screenshots/dig.scummvm.png
+~/.emulationstation/downloaded_media/scummvm/videos/dig.scummvm.mp4
+```
+
+This is not a bug as these are not really file extensions after all, it's just a directory with a dot in the filename that happens to look like a file extension because that's how the _Directories interpreted as files_ logic works.
 
 For images .jpg and .png file extensions are supported and for videos .avi, .mkv, .mov, .mp4 and .wmv are supported.
 

@@ -18,7 +18,7 @@ ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distribut
 
 ## What is the relationship between ES-DE and EmuDeck?
 
-ES-DE and EmuDeck are completely different projects, but we are friends and we collaborate to give the best possible user experience. EmuDeck is an installation script that downloads emulators and applies configuration to these, and it can also download and install ES-DE. EmuDeck is not needed to run ES-DE, but on the Steam Deck it provides a fast and convenient way of setting up an emulator environment, so its use is recommended.
+ES-DE and EmuDeck are completely separate projects, but we collaborate to give the best possible user experience. EmuDeck is an installation script that downloads emulators and applies configuration to these, and it can also download and install ES-DE. EmuDeck is not needed to run ES-DE, but on the Steam Deck it provides a convenient way of setting up an emulator environment.
 
 ## What systems/platforms and emulators are supported by ES-DE?
 
@@ -38,7 +38,7 @@ You're probably missing the OpenGL drivers required to run ES-DE. Try to downloa
 
 ## The emulators don't seem to be properly configured?
 
-ES-DE acts strictly as a frontend, it does not interfere with the emulator configuration. The only instance when ES-DE passes specific options to an emulator is when there is no choice, like when fullscreen mode can't be enabled except via a command line option, or when a flag is needed to place the emulator in batch mode to work properly with a frontend. So you need to configure your emulators separately. This includes your controllers as well since the controller configuration inside ES-DE will have no effect on the emulators. You could of course also use an automated tool to setup your emulator environment, such as using EmuDeck on the Steam Deck.
+ES-DE acts strictly as a frontend, it does not interfere with the emulator configuration. The only instance when ES-DE passes specific options to an emulator is when there is no choice, like when fullscreen mode can't be enabled except via a command line option, or when a flag is needed to place the emulator in batch mode to work properly with a frontend. So you need to configure your emulators separately. This includes your controllers as well since the controller configuration inside ES-DE will have no effect on the emulators.
 
 ## On game launch the screen just flashes black and the game won't start, how do I solve this?
 
@@ -55,10 +55,6 @@ Yes, as from version 1.2.3 there is support to display such games as single entr
 ## I see both .bin and .cue files for many of my games, how can I hide the unnecessary files?
 
 See the question above for a possible solution. Another approach would be to hide the game files you don't want to see using the metadata editor. Yet another solution which is actually recommended is to convert your games to the .chd format. This combines the .bin/.cue files into a single file that is also compressed, leading to space savings. A custom systems configuration entry could also be created, but that is not really recommended or required due to the solutions just mentioned. The reason why .bin files are included in the first place is that some emulators can launch these files directly, and some users have game collections comprised of such files. If the .bin files were filtered out in the bundled configuration, then all these users would have their games removed from within ES-DE next time they upgrade the application.
-
-## Can I "flatten" directories to not show them as folders inside ES-DE?
-
-No.
 
 ## When I hide a game using the metadata editor it's not really getting hidden, is this a bug?
 

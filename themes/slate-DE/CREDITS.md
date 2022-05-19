@@ -6,7 +6,6 @@ Some graphics was also taken from the carbon theme by Rookervik.
 
 ## Original vector graphics for slate-DE
 
-- Matthew Stapleton
 - Leon Styhre
 
 ## recalbox-multi

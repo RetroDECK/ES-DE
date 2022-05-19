@@ -111,8 +111,6 @@ https://wiki.mozilla.org/CA
 
 # slate-DE theme set
 
-Original vector graphics by Matthew Stapleton
-
 Recalbox Multi (slate-DE is based on this theme, using assets from before their change to a more restrictive license in 2018) \
 https://gitlab.com/recalbox/recalbox-themes
 
