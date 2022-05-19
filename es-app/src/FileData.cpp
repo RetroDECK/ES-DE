@@ -871,6 +871,7 @@ void FileData::launchGame()
 
     std::string commandRaw {command};
     std::string romPath {Utils::FileSystem::getEscapedPath(mPath)};
+    std::string baseName {Utils::FileSystem::getStem(mPath)};
 
     // For the special case where a directory has a supported file extension and is therefore
     // interpreted as a file, check if there is a matching filename inside the directory.
@@ -880,12 +881,12 @@ void FileData::launchGame()
             if (Utils::FileSystem::getFileName(file) == Utils::FileSystem::getFileName(mPath) &&
                 (Utils::FileSystem::isRegularFile(file) || Utils::FileSystem::isSymlink(file))) {
                 romPath = Utils::FileSystem::getEscapedPath(file);
+                baseName = baseName.substr(0, baseName.find("."));
                 break;
             }
         }
     }
 
-    const std::string baseName {Utils::FileSystem::getStem(mPath)};
     const std::string romRaw {Utils::FileSystem::getPreferredPath(mPath)};
     const std::string esPath {Utils::FileSystem::getExePath()};
     bool runInBackground {false};
@@ -1313,11 +1314,17 @@ void FileData::launchGame()
     command = Utils::String::replace(command, "%EMUDIR%",
                                      Utils::FileSystem::getEscapedPath(Utils::FileSystem::getParent(
                                          Utils::String::replace(binaryPath, "\"", ""))));
+    command = Utils::String::replace(command, "%GAMEDIR%",
+                                     Utils::FileSystem::getEscapedPath(Utils::FileSystem::getParent(
+                                         Utils::String::replace(romPath, "\"", ""))));
 #else
     command = Utils::String::replace(command, "%ESPATH%", Utils::FileSystem::getExePath());
     command = Utils::String::replace(command, "%EMUDIR%",
                                      Utils::FileSystem::getEscapedPath(Utils::FileSystem::getParent(
                                          Utils::String::replace(binaryPath, "\\", ""))));
+    command = Utils::String::replace(command, "%GAMEDIR%",
+                                     Utils::FileSystem::getEscapedPath(Utils::FileSystem::getParent(
+                                         Utils::String::replace(romPath, "\\", ""))));
 #endif
 
     // Trim any leading and trailing whitespace characters as they could cause launch issues.
