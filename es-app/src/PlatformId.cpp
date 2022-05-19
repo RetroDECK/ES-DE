@@ -26,6 +26,7 @@ namespace PlatformIds
         "apple2",               // Apple II
         "apple2gs",             // Apple IIGS
         "arcade",               // Arcade
+        "arcadia",              // Emerson Arcadia 2001
         "astrocde",             // Bally Astrocade
         "atari2600",            // Atari 2600
         "atari5200",            // Atari 5200
@@ -45,6 +46,7 @@ namespace PlatformIds
         "channelf",             // Fairchild Channel F
         "coco",                 // Tandy Color Computer
         "colecovision",         // ColecoVision
+        "crvision",             // VTech CreatiVision
         "daphne",               // Daphne Arcade Laserdisc Emulator
         "dos",                  // DOS (PC)
         "dragon32",             // Dragon 32

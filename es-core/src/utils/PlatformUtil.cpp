@@ -142,7 +142,7 @@ namespace Utils
 
             return returnValue;
 
-#else // __unix__
+#else
             return 0;
 #endif
         }
