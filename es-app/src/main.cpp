@@ -351,7 +351,7 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--force-input-config") == 0) {
             forceInputConfig = true;
         }
-        else if (strcmp(argv[i], "--create-systemdirs") == 0) {
+        else if (strcmp(argv[i], "--create-system-dirs") == 0) {
             createSystemDirectories = true;
         }
         else if (strcmp(argv[i], "--debug") == 0) {
@@ -382,7 +382,7 @@ bool parseArgs(int argc, char* argv[])
 "  --force-kiosk                   Force the UI mode to Kiosk\n"
 "  --force-kid                     Force the UI mode to Kid\n"
 "  --force-input-config            Force configuration of input device\n"
-"  --create-systemdirs             Create game system directories\n"
+"  --create-system-dirs            Create game system directories\n"
 "  --home [path]                   Directory to use as home path\n"
 "  --debug                         Print debug information\n"
 "  --version, -v                   Display version information\n"
