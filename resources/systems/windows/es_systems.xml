@@ -318,8 +318,9 @@
         <name>daphne</name>
         <fullname>Daphne Arcade LaserDisc Emulator</fullname>
         <path>%ROMPATH%\daphne</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.daphne .singe</extension>
+        <command label="Hypseus [Daphne] (Standalone)">%EMULATOR_HYPSEUS-SINGE% %BASENAME% vldp -framefile %GAMEDIR%\%BASENAME%.txt %INJECT%=%BASENAME%.commands</command>
+        <command label="Hypseus [Singe] (Standalone)">%EMULATOR_HYPSEUS-SINGE% singe vldp -framefile %GAMEDIR%\%BASENAME%.txt -script %GAMEDIR%\%BASENAME%.singe %INJECT%=%BASENAME%.commands</command>
         <platform>daphne</platform>
         <theme>daphne</theme>
     </system>

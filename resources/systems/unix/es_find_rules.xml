@@ -149,6 +149,17 @@
             <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE</entry>
         </rule>
     </emulator>
+    <emulator name="HYPSEUS-SINGE">
+        <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
+        <rule type="systempath">
+            <entry>hypseus.bin</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/hypseus-singe/hypseus.bin</entry>
+            <entry>~/.local/bin/hypseus-singe/hypseus.bin</entry>
+            <entry>~/bin/hypseus-singe/hypseus.bin</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">

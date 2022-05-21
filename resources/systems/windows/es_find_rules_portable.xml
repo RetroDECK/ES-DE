@@ -101,6 +101,14 @@
             <entry>%ESPATH%\..\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
         </rule>
     </emulator>
+    <emulator name="HYPSEUS-SINGE">
+        <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Hypseus Singe\hypseus.exe</entry>
+            <entry>%ESPATH%\Hypseus Singe\hypseus.exe</entry>
+            <entry>%ESPATH%\..\Hypseus Singe\hypseus.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="staticpath">

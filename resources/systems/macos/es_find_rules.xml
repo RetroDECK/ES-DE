@@ -84,6 +84,12 @@
             <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
+    <emulator name="HYPSEUS-SINGE">
+        <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
+        <rule type="systempath">
+            <entry>hypseus.bin</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="staticpath">
