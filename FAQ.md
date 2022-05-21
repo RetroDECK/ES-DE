@@ -28,6 +28,10 @@ See the _Supported game systems_ section at the bottom of the [User guide](USERG
 
 ES-DE comes preconfigured with support for many alternative emulators, see the [What's new in ES-DE v1.2](https://www.youtube.com/watch?v=rpnMJqceSNk) video on the ES-DE YouTube channel for a brief overview of how this works. More emulators are continuously being added with each release.
 
+## Why can't I press the up button in menus to jump to the bottom row and vice versa?
+
+Menus in ES-DE are not lists but grids, sometimes there is only a list but sometimes there are buttons beneath the list. Enabling the up and down buttons to wrap around would therefore not work consistently as it would sometimes jump to the last row of the list and sometimes to a button, depending on the menu layout. This type of contextual navigation feels very weird and inconsistent in practice. The solution is instead to use the shoulder buttons (which will jump six rows), or the trigger buttons (which will jump to the first and last row). These buttons work consistently throughout the application and avoid the strange side effects just mentioned. If you observe this more closely you will also realize that "wrap around" is very rare in GUI design, you don't jump to the top of a web page when you scroll to the bottom and likewise the settings menus of your mobile phone will not wrap around.
+
 ## I'm on Windows and ES-DE can't find my emulators, what is wrong?
 
 On Windows ES-DE is shipped as a portable installation and as a regular installer. If you're using the portable installation you need to drop your emulators inside the Emulators directory. Make sure to read the README.txt file directly in the EmulationStation-DE folder for more details. For the regular installer many emulators do not provide a method to inform ES-DE where they are installed, so you will need to add their installation directories to the Path environment variable in Windows. It's strongly recommended to read the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows) before attempting to setup and use ES-DE on Windows.

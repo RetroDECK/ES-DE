@@ -602,16 +602,19 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name  | Emulator    | Filename configuration          |
-| :----------- | :---------- | :------------------------------ |
-| dreamcast    | Redream     | redream                         |
-| switch       | Ryujinx     | publish/Ryujinx                 |
+| System name  | Emulator      | Filename configuration          |
+| :----------- | :------------ | :------------------------------ |
+| daphne       | Hypseus Singe | hypseus-singe/hypseus.bin       |
+| dreamcast    | Redream       | redream                         |
+| switch       | Ryujinx       | publish/Ryujinx                 |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
 cd ~/Applications/publish
 chmod +x ./Ryujinx
 ```
+
+Hypseus Singe is also a special case as you may have to compile this emulator yourself as mentioned elsewhere in this guide.
 
 ## Running emulators in fullscreen mode
 
@@ -715,7 +718,7 @@ This setup is of course entirely optional, you can also leave the directories as
 
 There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-file/multi-disc games while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
 
-In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This means that the directory can be part of the automatic collections and any custom collections.
+In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This also means that the directory can be part of the automatic collections and any custom collections.
 
 The only difference between a real file and a directory interpreted as a file is that the _Delete_ button in the metadata editor will be disabled as ES-DE does not support deletion of directories for safety reasons.
 
@@ -741,7 +744,7 @@ Here's another example when using .m3u files:
 ~/ROMs/psx/Final Fantasy VII.m3u/Final Fantasy VII.m3u
 ```
 
-In exactly the same manner, the file `~/ROMs/psx/Final Fantasy VII.m3u/Final Fantasy VII.m3u` will be passed to the emulator on game launch. See the section just above this one, _Multiple game files installation_ for details on how .m3u files work.
+In exactly the same manner, the file `~/ROMs/psx/Final Fantasy VII.m3u/Final Fantasy VII.m3u` will be passed to the emulator on game launch. See the section just above this one, _Multiple game files installation_ for an explanations of how .m3u files work.
 
 The second scenario is when an emulator supports passing a directory rather than a file to launch a game. Such an example is the PlayStation 3 emulator RPCS3.
 
@@ -750,7 +753,7 @@ For PS3 games the extension in es_systems.xml is .ps3 so this is what a game dir
 ~/ROMs/ps3/Gran Turismo 5.ps3
 ```
 
-It's also possible to combine these types of special directories with normal directories, for a setup like this:
+It's possible to combine these types of special directories with normal directories, for a setup like this:
 ```
 ~/ROMs/ps3/racing/Gran Turismo 5.ps3
 ```
@@ -1147,6 +1150,114 @@ grep steam ~/.local/share/applications/*desktop | grep rungameid
 This of course assumes that you have menu entries setup for your Steam games.
 
 To greatly simplify this setup, automatic Steam library import is planned for a future ES-DE release.
+
+#### Hypseus Singe (Daphne)
+
+Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is very particular so make sure to read this section thoroughly to get it to work.
+
+The first step is to even get the emulator to run. On Windows it's straightforward, just download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
+
+For Linux there does not seem to be any precompiled release that is working reliably so you will need to compile it yourself. If running a distribution with access to the AUR, there is a Hypseus Singe release available but this seems to be broken somehow and does not seem to be usable. If the AUR release doesn't work for you, then make sure to uninstall it as it will otherwise be tried first and you'll never get LaserDisc games to work.
+
+Fortunately compiling Hypseus Singe is easy, just make sure that you have the necessary dependencies installed and then follow these steps:
+```
+git clone https://github.com/DirtBagXon/hypseus-singe.git
+cd hypseus-singe/src
+cmake .
+make -j
+mkdir -p ~/Applications/hypseus-singe
+cp -r ../fonts ~/Applications/hypseus-singe
+cp -r ../roms ~/Applications/hypseus-singe
+cp -r ../sound ~/Applications/hypseus-singe
+cp -r ../pics ~/Applications/hypseus-singe
+cp hypseus ~/Applications/hypseus-singe/hypseus.bin
+```
+
+Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit more involved than compiling code on Linux so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
+
+After the emlulator is installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
+
+There are two types of games supported by Hypseus and these are _Daphne_ and _Singe_. It's beyond the scope of this document to describe these game formats in detail but there are many resources available online for this. The setup differs a bit between these two types however, and you need to use an alternative emulator entry in ES-DE to launch Singe games.
+
+**Daphne games**
+
+For Daphne games the structure will look something like the following, which is for the game _Dragon's Lair_:
+
+```
+~/ROMs/daphne/lair.daphne/
+~/ROMs/daphne/lair.daphne/lair.dat
+~/ROMs/daphne/lair.daphne/lair.m2v
+~/ROMs/daphne/lair.daphne/lair.m2v.bf
+~/ROMs/daphne/lair.daphne/lair.ogg
+~/ROMs/daphne/lair.daphne/lair.ogg.bf
+~/ROMs/daphne/lair.daphne/lair.txt
+```
+
+The directory name has to keep this naming convention with the name consisting of the Daphne game type (_lair_ for this example) followed by the .daphne extension. This name logic with a short name per game is similar to how it works in MAME and ScummVM. A list of available games can be found here: \
+[http://www.daphne-emu.com/mediawiki/index.php/CmdLine](http://www.daphne-emu.com/mediawiki/index.php/CmdLine)
+
+In order to get the games to work, simply create an empty file named _\<game\>.daphne_ inside the game directory, for example `lair.daphne` in this case. The _Directories interpreted as files_ functionality will then allow the game to be launched even though it shows up as a single entry inside ES-DE.
+
+There is also the option to add command line parameters for each game which is somehow important as different games may require different DIP switches to be set and you may also want to apply general options like fullscreen mode.
+
+To accomplish this, create a file named _\<game\>.commands_ such as `lair.commands` for this example. The content of this file could look something like the following:
+```
+-fastboot -fullscreen
+```
+
+The -fastboot option is recommended in particular since it leads to a much shorter startup time for those games that support it. All command line options are described at the daphne-emu.com URL posted above.
+
+With these files in place, the game directory should look something like this:
+
+```
+~/ROMs/daphne/lair.daphne/
+~/ROMs/daphne/lair.daphne/lair.commands
+~/ROMs/daphne/lair.daphne/lair.daphne
+~/ROMs/daphne/lair.daphne/lair.dat
+~/ROMs/daphne/lair.daphne/lair.m2v
+~/ROMs/daphne/lair.daphne/lair.m2v.bf
+~/ROMs/daphne/lair.daphne/lair.ogg
+~/ROMs/daphne/lair.daphne/lair.ogg.bf
+~/ROMs/daphne/lair.daphne/lair.txt
+```
+
+**Singe games**
+
+Singe games work a bit differently compared to Daphne games. They come packaged with a lot of files and the game directories normally just consist of the game names, such as:
+```
+~/ROMs/daphne/fireandice/
+~/ROMs/daphne/mononoke/
+```
+
+To make these games work, rename the directories by appending the .singe extension, such as:
+```
+~/ROMs/daphne/fireandice.singe/
+~/ROMs/daphne/mononoke.singe/
+```
+
+You could optionally create a .commands file as well to specify some additional command line parameters, as described above in the Daphne section.
+
+The next step is to modify the _\<game\>.singe_ file to point to the exact game directory.
+
+So for example on Unix, modify the file `~/ROMs/daphne/mononoke.singe/mononoke.singe` by changing the following line:
+```
+MYDIR = "singe/mononoke/"
+```
+To this:
+```
+MYDIR = "/home/myusername/ROMs/daphne/mononoke.singe/"
+```
+
+Note that the tilde ~ character can not be used inside this file to point to your home directory, you have to set the absolute path. And you should of course replace _myusername_ with your own username. The forward slash at the end of the path is also required.
+
+If on Windows, it could look like the following instead:
+```
+MYDIR = "C:\\Users\\myusername\\ROMs\\daphne\\mononoke.singe\\"
+```
+
+You have to put double backslash characters as shown above (including at the end of the path), otherwise the game won't start.
+
+The last step to get Singe games to work is to assign the alternative emulator _Hypseus [Singe] (Standalone)_ to these games. This is done via the _Alternative emulator_ entry in the metadata editor. Attempting to launch a Singe game using the default emulator will not work.
 
 #### OpenBOR
 
@@ -2296,16 +2407,9 @@ Although you place additional themes in your ES-DE home directory, the default s
 
 So if you would like to customize the slate-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
 
+Here is a good resource with a list of themes (although you will have to search online for the download location for each theme set):
 
-Here are some resources where additional theme sets can be downloaded.
-
-https://aloshi.com/emulationstation#themes
-
-https://github.com/RetroPie
-
-https://gitlab.com/recalbox/recalbox-themes
-
-https://wiki.batocera.org/themes
+https://retropie.org.uk/docs/Themes
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default slate-DE theme)._
@@ -2395,7 +2499,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
 | coco                  | Tandy Color Computer                           | _Placeholder_                     |                                   |              |                                      |
 | colecovision          | ColecoVision                                   | Gearcoleco                        | blueMSX                           |              |                                      |
-| daphne                | Daphne Arcade LaserDisc Emulator               | _Placeholder_                     |                                   |              |                                      |
+| daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes (Daphne games) | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | N/A                               |                                   | No           |                                      |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
@@ -2447,7 +2551,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE                              |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE                              |              |                                      |
 | odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |
-| openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)** [UW]     |                                   |              | See the specific OpenBOR section elsewhere in this guide |
+| openbor               | OpenBOR Game Engine                            | OpenBOR **(Standalone)** [UW]     |                                   |              | See the specific _OpenBOR_ section elsewhere in this guide |
 | oric                  | Tangerine Computer Systems Oric                | _Placeholder_                     |                                   |              |                                      |
 | palm                  | Palm OS                                        | Mu                                |                                   |              |                                      |
 | pc                    | IBM PC                                         | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |

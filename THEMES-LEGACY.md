@@ -894,12 +894,6 @@ The help system is a special element that displays a context-sensitive list of a
 
 ## Example theme sets
 
-To see some example EmulationStation themes, the following resources are recommended:
+To see some example EmulationStation themes, the following resource is recommended:
 
-https://aloshi.com/emulationstation#themes
-
-https://github.com/RetroPie
-
-https://gitlab.com/recalbox/recalbox-themes
-
-https://wiki.batocera.org/themes
+https://retropie.org.uk/docs/Themes

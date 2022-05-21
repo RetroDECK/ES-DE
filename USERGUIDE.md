@@ -731,7 +731,7 @@ This setup is of course entirely optional, you can also leave the directories as
 
 There are two scenarios where it's useful to interpret directories as files inside ES-DE. The first one is to hide the directory structure for multi-file/multi-disc games while still being able to directly launch files inside these folders, and the second is that some emulators support passing a directory rather than an individual file as the game ROM argument.
 
-In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This means that the directory can be part of the automatic collections and any custom collections.
+In both cases, renaming a directory to one of the supported file extensions will automatically make ES-DE interpret it as a file. This also means that the directory can be part of the automatic collections and any custom collections.
 
 The only difference between a real file and a directory interpreted as a file is that the _Delete_ button in the metadata editor will be disabled as ES-DE does not support deletion of directories for safety reasons.
 
@@ -757,7 +757,7 @@ Here's another example when using .m3u files:
 ~/ROMs/psx/Final Fantasy VII.m3u/Final Fantasy VII.m3u
 ```
 
-In exactly the same manner, the file `~/ROMs/psx/Final Fantasy VII.m3u/Final Fantasy VII.m3u` will be passed to the emulator on game launch. See the section just above this one, _Multiple game files installation_ for details on how .m3u files work.
+In exactly the same manner, the file `~/ROMs/psx/Final Fantasy VII.m3u/Final Fantasy VII.m3u` will be passed to the emulator on game launch. See the section just above this one, _Multiple game files installation_ for an explanations of how .m3u files work.
 
 The second scenario is when an emulator supports passing a directory rather than a file to launch a game. Such an example is the PlayStation 3 emulator RPCS3.
 
@@ -766,7 +766,7 @@ For PS3 games the extension in es_systems.xml is .ps3 so this is what a game dir
 ~/ROMs/ps3/Gran Turismo 5.ps3
 ```
 
-It's also possible to combine these types of special directories with normal directories, for a setup like this:
+It's possible to combine these types of special directories with normal directories, for a setup like this:
 ```
 ~/ROMs/ps3/racing/Gran Turismo 5.ps3
 ```
@@ -2163,16 +2163,9 @@ Although you place additional themes in your ES-DE home directory, the default r
 
 So if you would like to customize the rbsimple-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
 
+Here is a good resource with a list of themes (although you will have to search online for the download location for each theme set):
 
-Here are some resources where additional theme sets can be downloaded.
-
-https://aloshi.com/emulationstation#themes
-
-https://github.com/RetroPie
-
-https://gitlab.com/recalbox/recalbox-themes
-
-https://wiki.batocera.org/themes
+https://retropie.org.uk/docs/Themes
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default rbsimple-DE theme)._

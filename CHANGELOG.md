@@ -148,6 +148,7 @@ v1.2 maintenance release.
 
 ### Detailed list of changes
 
+* Added configuration for the Daphne arcade LaserDisc system using the emulator Hypseus Singe
 * Added configuration for the OpenBOR game engine on Linux and Windows
 * Added emulator configuration for the astrocde (Bally Astrocade) system
 * Added scraper support for the astrocde system (ScreenScraper and TheGamesDB)
@@ -171,12 +172,13 @@ v1.2 maintenance release.
 * Added a --create-system-dirs command line option to generate the game system directories
 * Added an Xbox Kinect controller badge icon
 * (macOS) Categorized the application as a game so it shows up in the Launchpad games section
-* Replaced the explicit shell commands in es_systems.xml with %EMULATOR_OS-SHELL% find rules
+* Added an %INJECT% variable for injecting launch arguments from game config files (required by Hypseus Singe)
 * Added a %GAMEDIR% variable that expands to the game directory (required by Hypseus Singe)
 * Made the %GAMEDIR% variable usable with the %STARTDIR% variable (required by OpenBOR)
 * (Windows) Set %RUNINBACKGROUND% when launching MAME standalone as this emulator may otherwise hang on exit
 * (Windows) Added an %ESCAPESPECIALS% variable that escapes the special characters &()^=;,
 * (Windows) Added %ESCAPESPECIALS% to the desktop, epic, kodi, ports and steam systems
+* Replaced the explicit shell commands in es_systems.xml with %EMULATOR_OS-SHELL% find rules
 * Added experimental support for folder flattening
 * Updated the StringUtil::replace function as the old function was dangerous and could run into an endless loop
 
