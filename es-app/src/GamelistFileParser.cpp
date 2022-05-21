@@ -190,6 +190,15 @@ namespace GamelistFileParser
                 }
 
                 FileData* file = findOrCreateFile(system, path, type);
+
+                // Don't load entries with the wrong type. This should very rarely (if ever) happen.
+                if (file != nullptr && ((tag == "game" && file->getType() == FOLDER) ||
+                                        (tag == "folder" && file->getType() == GAME))) {
+                    LOG(LogWarning)
+                        << "Game/folder mismatch for \"" << path << "\", skipping entry";
+                    continue;
+                }
+
                 if (!file) {
                     LOG(LogError) << "Couldn't find or create \"" << path << "\", skipping entry";
                     continue;
