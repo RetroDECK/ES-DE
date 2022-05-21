@@ -220,7 +220,14 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
     auto menuPos = s->getMenuPosition();
 
     s->setMenuPosition(glm::vec3 {(s->getSize().x - menuSize.x) / 2.0f, menuPos.y, menuPos.z});
-    s->refreshList();
+
+    // Hack to properly update the window and set the scroll indicators. Why this is required
+    // is currently a mystery.
+    auto list = s->getMenu().getList();
+    list->update(1);
+    int cursor {list->getCursorId()};
+    list->setCursor(list->getFirst());
+    list->moveCursor(cursor);
 
     mWindow->pushGui(s);
 }

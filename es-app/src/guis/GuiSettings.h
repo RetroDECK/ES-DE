@@ -38,11 +38,11 @@ public:
                                   bool isPassword = false);
     void addSaveFunc(const std::function<void()>& func) { mSaveFuncs.push_back(func); }
 
+    MenuComponent& getMenu() { return mMenu; }
     glm::vec2 getMenuSize() { return mMenu.getSize(); }
     void setMenuSize(glm::vec2 size) { mMenu.setSize(size); }
     glm::vec3 getMenuPosition() { return mMenu.getPosition(); }
     void setMenuPosition(glm::vec3 position) { mMenu.setPosition(glm::round(position)); }
-    void refreshList() { mMenu.getList()->onSizeChanged(); }
 
     void setNeedsSaving(bool state = true) { mNeedsSaving = state; }
     void setNeedsReloadHelpPrompts() { mNeedsReloadHelpPrompts = true; }
