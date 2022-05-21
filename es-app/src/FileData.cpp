@@ -76,7 +76,7 @@ FileData::~FileData()
 
 std::string FileData::getDisplayName() const
 {
-    std::string stem = Utils::FileSystem::getStem(mPath);
+    std::string stem {Utils::FileSystem::getStem(mPath)};
     return stem;
 }
 
@@ -156,7 +156,7 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
         childrenRecursive.emplace_back((*it).second);
         // Recurse through any subdirectories.
         if ((*it).second->getType() == FOLDER) {
-            std::vector<FileData*> childrenSubdirectory = (*it).second->getChildrenRecursive();
+            std::vector<FileData*> childrenSubdirectory {(*it).second->getChildrenRecursive()};
             childrenRecursive.insert(childrenRecursive.end(), childrenSubdirectory.begin(),
                                      childrenSubdirectory.end());
         }
@@ -167,8 +167,8 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
 
 const std::string FileData::getROMDirectory()
 {
-    std::string romDirSetting = Settings::getInstance()->getString("ROMDirectory");
-    std::string romDirPath = "";
+    std::string romDirSetting {Settings::getInstance()->getString("ROMDirectory")};
+    std::string romDirPath;
 
     if (romDirSetting == "") {
         romDirPath = Utils::FileSystem::getHomePath() + "/ROMs/";
@@ -196,8 +196,8 @@ const std::string FileData::getROMDirectory()
 
 const std::string FileData::getMediaDirectory()
 {
-    std::string mediaDirSetting = Settings::getInstance()->getString("MediaDirectory");
-    std::string mediaDirPath = "";
+    std::string mediaDirSetting {Settings::getInstance()->getString("MediaDirectory")};
+    std::string mediaDirPath;
 
     if (mediaDirSetting == "") {
         mediaDirPath = Utils::FileSystem::getHomePath() + "/.emulationstation/downloaded_media/";
@@ -221,7 +221,7 @@ const std::string FileData::getMediaDirectory()
 
 const std::string FileData::getMediafilePath(const std::string& subdirectory) const
 {
-    const std::vector<std::string> extList = {".png", ".jpg"};
+    const std::vector<std::string> extList {".png", ".jpg"};
     std::string subFolders;
 
     // Extract possible subfolders from the path.
@@ -229,12 +229,12 @@ const std::string FileData::getMediafilePath(const std::string& subdirectory) co
         subFolders =
             Utils::String::replace(Utils::FileSystem::getParent(mPath), mEnvData->mStartPath, "");
 
-    const std::string tempPath = getMediaDirectory() + mSystemName + "/" + subdirectory +
-                                 subFolders + "/" + getDisplayName();
+    const std::string tempPath {getMediaDirectory() + mSystemName + "/" + subdirectory +
+                                subFolders + "/" + getDisplayName()};
 
     // Look for an image file in the media directory.
     for (size_t i = 0; i < extList.size(); ++i) {
-        std::string mediaPath = tempPath + extList[i];
+        std::string mediaPath {tempPath + extList[i]};
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
     }
@@ -245,7 +245,8 @@ const std::string FileData::getMediafilePath(const std::string& subdirectory) co
 const std::string FileData::getImagePath() const
 {
     // Look for a mix image (a combination of screenshot, 2D/3D box and marquee).
-    std::string image = getMediafilePath("miximages");
+    std::string image {getMediafilePath("miximages")};
+
     if (image != "")
         return image;
 
@@ -325,7 +326,7 @@ const std::string FileData::getThumbnailPath() const
 
 const std::string FileData::getVideoPath() const
 {
-    const std::vector<std::string> extList = {".avi", ".mkv", ".mov", ".mp4", ".wmv"};
+    const std::vector<std::string> extList {".avi", ".mkv", ".mov", ".mp4", ".wmv"};
     std::string subFolders;
 
     // Extract possible subfolders from the path.
@@ -333,12 +334,12 @@ const std::string FileData::getVideoPath() const
         subFolders =
             Utils::String::replace(Utils::FileSystem::getParent(mPath), mEnvData->mStartPath, "");
 
-    const std::string tempPath =
-        getMediaDirectory() + mSystemName + "/videos" + subFolders + "/" + getDisplayName();
+    const std::string tempPath {getMediaDirectory() + mSystemName + "/videos" + subFolders + "/" +
+                                getDisplayName()};
 
     // Look for media in the media directory.
     for (size_t i = 0; i < extList.size(); ++i) {
-        std::string mediaPath = tempPath + extList[i];
+        std::string mediaPath {tempPath + extList[i]};
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
     }
@@ -348,7 +349,7 @@ const std::string FileData::getVideoPath() const
 
 const std::vector<FileData*>& FileData::getChildrenListToDisplay()
 {
-    FileFilterIndex* idx = mSystem->getIndex();
+    FileFilterIndex* idx {mSystem->getIndex()};
     if (idx->isFiltered() || UIModeController::getInstance()->isUIModeKid()) {
         mFilteredChildren.clear();
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
@@ -368,7 +369,7 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
                                                    bool countAllGames) const
 {
     std::vector<FileData*> out;
-    FileFilterIndex* idx = mSystem->getIndex();
+    FileFilterIndex* idx {mSystem->getIndex()};
 
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
         if ((*it)->getType() & typeMask) {
@@ -380,7 +381,7 @@ std::vector<FileData*> FileData::getFilesRecursive(unsigned int typeMask,
             }
         }
         if ((*it)->getChildren().size() > 0) {
-            std::vector<FileData*> subChildren = (*it)->getFilesRecursive(typeMask, displayedOnly);
+            std::vector<FileData*> subChildren {(*it)->getFilesRecursive(typeMask, displayedOnly)};
             if (countAllGames) {
                 out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
             }
@@ -418,8 +419,8 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
             continue;
 
         if ((*it)->getChildren().size() > 0) {
-            std::vector<FileData*> subChildren = (*it)->getScrapeFilesRecursive(
-                includeFolders, excludeRecursively, respectExclusions);
+            std::vector<FileData*> subChildren {(*it)->getScrapeFilesRecursive(
+                includeFolders, excludeRecursively, respectExclusions)};
             out.insert(out.cend(), subChildren.cbegin(), subChildren.cend());
         }
     }
@@ -429,7 +430,7 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
 
 const bool FileData::isArcadeAsset() const
 {
-    const std::string stem = Utils::FileSystem::getStem(mPath);
+    const std::string stem {Utils::FileSystem::getStem(mPath)};
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
                          mSystem->hasPlatformId(PlatformIds::SNK_NEO_GEO))) &&
             (MameNames::getInstance().isBios(stem) || MameNames::getInstance().isDevice(stem)));
@@ -437,7 +438,7 @@ const bool FileData::isArcadeAsset() const
 
 const bool FileData::isArcadeGame() const
 {
-    const std::string stem = Utils::FileSystem::getStem(mPath);
+    const std::string stem {Utils::FileSystem::getStem(mPath)};
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
                          mSystem->hasPlatformId(PlatformIds::SNK_NEO_GEO))) &&
             (!MameNames::getInstance().isBios(stem) && !MameNames::getInstance().isDevice(stem)));
@@ -479,9 +480,9 @@ void FileData::sort(ComparisonFunction& comparator,
 {
     mOnlyFolders = true;
     mHasFolders = false;
-    bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
-    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
-    bool isKidMode = UIModeController::getInstance()->isUIModeKid();
+    bool foldersOnTop {Settings::getInstance()->getBool("FoldersOnTop")};
+    bool showHiddenGames {Settings::getInstance()->getBool("ShowHiddenGames")};
+    bool isKidMode {UIModeController::getInstance()->isUIModeKid()};
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenOthers;
 
@@ -510,7 +511,7 @@ void FileData::sort(ComparisonFunction& comparator,
     // The main custom collections view is sorted during startup in CollectionSystemsManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
-        std::pair<unsigned int, unsigned int> tempGameCount = {};
+        std::pair<unsigned int, unsigned int> tempGameCount {};
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
             if ((*it)->getChildren().size() > 0)
                 (*it)->sort(comparator, gameCount);
@@ -593,9 +594,9 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
 {
     mOnlyFolders = true;
     mHasFolders = false;
-    bool foldersOnTop = Settings::getInstance()->getBool("FoldersOnTop");
-    bool showHiddenGames = Settings::getInstance()->getBool("ShowHiddenGames");
-    bool isKidMode = UIModeController::getInstance()->isUIModeKid();
+    bool foldersOnTop {Settings::getInstance()->getBool("FoldersOnTop")};
+    bool showHiddenGames {Settings::getInstance()->getBool("ShowHiddenGames")};
+    bool isKidMode {UIModeController::getInstance()->isUIModeKid()};
     std::vector<FileData*> mChildrenFolders;
     std::vector<FileData*> mChildrenFavoritesFolders;
     std::vector<FileData*> mChildrenFavorites;
@@ -747,8 +748,8 @@ void FileData::sort(const SortType& type, bool mFavoritesOnTop)
 
 void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
 {
-    bool isKidMode = (Settings::getInstance()->getString("UIMode") == "kid" ||
-                      Settings::getInstance()->getBool("ForceKid"));
+    bool isKidMode {(Settings::getInstance()->getString("UIMode") == "kid" ||
+                     Settings::getInstance()->getBool("ForceKid"))};
 
     for (unsigned int i = 0; i < mChildren.size(); ++i) {
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
@@ -806,7 +807,7 @@ const FileData::SortType& FileData::getSortTypeFromString(const std::string& des
     std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
 
     for (unsigned int i = 0; i < FileSorts::SortTypes.size(); ++i) {
-        const FileData::SortType& sort = FileSorts::SortTypes.at(i);
+        const FileData::SortType& sort {FileSorts::SortTypes.at(i)};
         if (sort.description == desc)
             return sort;
     }
@@ -910,9 +911,9 @@ void FileData::launchGame()
 
     std::string coreEntry;
     std::string coreName;
-    size_t coreEntryPos = 0;
-    size_t coreFilePos = 0;
-    bool foundCoreFile = false;
+    size_t coreEntryPos {0};
+    size_t coreFilePos {0};
+    bool foundCoreFile {false};
     std::vector<std::string> emulatorCorePaths;
 
 #if defined(_WIN64)
@@ -966,11 +967,11 @@ void FileData::launchGame()
     command = Utils::FileSystem::expandHomePath(command);
 
     // Check that the emulator binary actually exists, and if so, get its path.
-    std::string binaryPath = findEmulatorPath(command);
+    std::string binaryPath {findEmulatorPath(command)};
 
     // Hack to show an error message if there was no emulator entry in es_find_rules.xml.
     if (binaryPath.substr(0, 18) == "NO EMULATOR RULE: ") {
-        std::string emulatorEntry = binaryPath.substr(18, binaryPath.size() - 18);
+        std::string emulatorEntry {binaryPath.substr(18, binaryPath.size() - 18)};
         LOG(LogError) << "Couldn't launch game, either there is no emulator entry for \""
                       << emulatorEntry << "\" in es_find_rules.xml or there are no rules defined";
         LOG(LogError) << "Raw emulator launch command:";
@@ -1022,16 +1023,16 @@ void FileData::launchGame()
 
     // If %EMUPATH% is used in es_systems.xml for this system, then check that the core
     // file actually exists.
-    size_t emuPathPos = command.find("%EMUPATH%");
+    size_t emuPathPos {command.find("%EMUPATH%")};
     if (emuPathPos != std::string::npos) {
-        bool hasQuotationMark = false;
-        unsigned int quotationMarkPos = 0;
+        bool hasQuotationMark {false};
+        unsigned int quotationMarkPos {0};
         if (command.find("\"%EMUPATH%", emuPathPos - 1) != std::string::npos) {
             hasQuotationMark = true;
             quotationMarkPos =
                 static_cast<unsigned int>(command.find("\"", emuPathPos + 9) - emuPathPos);
         }
-        size_t spacePos = command.find(" ", emuPathPos + quotationMarkPos);
+        size_t spacePos {command.find(" ", emuPathPos + quotationMarkPos)};
         std::string coreRaw;
         std::string coreFile;
         if (spacePos != std::string::npos) {
@@ -1107,7 +1108,7 @@ void FileData::launchGame()
         coreFilePos = command.find("%", coreEntryPos + 6);
 
         size_t separatorPos;
-        size_t quotePos = command.find("\"", coreFilePos);
+        size_t quotePos {command.find("\"", coreFilePos)};
         if (quotePos == std::string::npos)
             separatorPos = command.find(" ", coreFilePos);
         else
@@ -1117,13 +1118,13 @@ void FileData::launchGame()
             coreName = command.substr(coreFilePos + 2, separatorPos - (coreFilePos + 2));
 
 #if defined(_WIN64)
-            std::string coreFile = Utils::FileSystem::expandHomePath(path + "\\" + coreName);
+            std::string coreFile {Utils::FileSystem::expandHomePath(path + "\\" + coreName)};
 #else
-            std::string coreFile = Utils::FileSystem::expandHomePath(path + "/" + coreName);
+            std::string coreFile {Utils::FileSystem::expandHomePath(path + "/" + coreName)};
 #endif
 
             // Expand %EMUPATH% if it has been used in the %CORE_ variable.
-            size_t stringPos = coreFile.find("%EMUPATH%");
+            size_t stringPos {coreFile.find("%EMUPATH%")};
             if (stringPos != std::string::npos) {
 #if defined(_WIN64)
                 coreFile = coreFile.replace(
@@ -1344,7 +1345,6 @@ void FileData::launchGame()
             injectFile = Utils::FileSystem::getParent(Utils::String::replace(romPath, "\\", "")) +
                          "/" + injectFile;
 #endif
-
         if (Utils::FileSystem::isRegularFile(injectFile) ||
             Utils::FileSystem::isSymlink(injectFile)) {
             LOG(LogDebug) << "FileData::launchGame(): Injecting arguments from file \""
@@ -1438,7 +1438,7 @@ void FileData::launchGame()
     Scripting::fireEvent("game-start", romPath, getSourceFileData()->metadata.get("name"),
                          getSourceFileData()->getSystem()->getName(),
                          getSourceFileData()->getSystem()->getFullName());
-    int returnValue = 0;
+    int returnValue {0};
 
     LOG(LogDebug) << "Raw emulator launch command:";
     LOG(LogDebug) << commandRaw;
@@ -1520,7 +1520,7 @@ void FileData::launchGame()
     }
 
     // Update number of times the game has been launched.
-    FileData* gameToUpdate = getSourceFileData();
+    FileData* gameToUpdate {getSourceFileData()};
 
     int timesPlayed {gameToUpdate->metadata.getInt("playcount") + 1};
     gameToUpdate->metadata.set("playcount", std::to_string(static_cast<long long>(timesPlayed)));
@@ -1602,14 +1602,14 @@ const std::string FileData::findEmulatorPath(std::string& command)
 #if defined(_WIN64)
     for (std::string path : emulatorWinRegistryPaths) {
         // Search for the emulator using the App Paths keys in the Windows Registry.
-        std::string registryKeyPath =
-            "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + path;
+        std::string registryKeyPath {"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" +
+                                     path};
 
         HKEY registryKey;
-        LSTATUS keyStatus = -1;
-        LSTATUS pathStatus = -1;
+        LSTATUS keyStatus {-1};
+        LSTATUS pathStatus {-1};
         char registryPath[1024] {};
-        DWORD pathSize = 1024;
+        DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
         keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER, registryKeyPath.c_str(), 0, KEY_QUERY_VALUE,
@@ -1648,7 +1648,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
         // If the pipe character is found, then the string following this should be appended
         // to the key value, assuming the key is found.
         std::string appendString;
-        size_t pipePos = value.find('|');
+        size_t pipePos {value.find('|')};
 
         if (pipePos != std::string::npos) {
             appendString = value.substr(pipePos + 1, std::string::npos);
@@ -1656,15 +1656,15 @@ const std::string FileData::findEmulatorPath(std::string& command)
         }
 
         // Search for the defined value in the Windows Registry.
-        std::string registryValueKey =
-            Utils::String::replace(Utils::FileSystem::getParent(value), "/", "\\");
-        std::string registryValue = Utils::FileSystem::getFileName(value);
+        std::string registryValueKey {
+            Utils::String::replace(Utils::FileSystem::getParent(value), "/", "\\")};
+        std::string registryValue {Utils::FileSystem::getFileName(value)};
 
         HKEY registryKey;
-        LSTATUS keyStatus = -1;
-        LSTATUS pathStatus = -1;
+        LSTATUS keyStatus {-1};
+        LSTATUS pathStatus {-1};
         char path[1024] {};
-        DWORD pathSize = 1024;
+        DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
         keyStatus = RegOpenKeyEx(HKEY_CURRENT_USER, registryValueKey.c_str(), 0, KEY_QUERY_VALUE,
@@ -1710,16 +1710,16 @@ const std::string FileData::findEmulatorPath(std::string& command)
 
     for (std::string path : emulatorSystemPaths) {
 #if defined(_WIN64)
-        std::wstring pathWide = Utils::String::stringToWideString(path);
+        std::wstring pathWide {Utils::String::stringToWideString(path)};
         // Search for the emulator using the PATH environment variable.
-        DWORD size = SearchPathW(nullptr, pathWide.c_str(), L".exe", 0, nullptr, nullptr);
+        DWORD size {SearchPathW(nullptr, pathWide.c_str(), L".exe", 0, nullptr, nullptr)};
 
         if (size) {
             std::vector<wchar_t> pathBuffer(static_cast<size_t>(size) + 1);
-            wchar_t* fileName = nullptr;
+            wchar_t* fileName {nullptr};
 
             SearchPathW(nullptr, pathWide.c_str(), L".exe", size + 1, pathBuffer.data(), &fileName);
-            std::wstring pathString = pathBuffer.data();
+            std::wstring pathString {pathBuffer.data()};
 
             if (pathString.length()) {
                 exePath = Utils::String::wideStringToString(
@@ -1778,7 +1778,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
     // If the first character is a quotation mark, then we need to extract up to the
     // next quotation mark, otherwise we'll only extract up to the first space character.
     if (command.front() == '\"') {
-        std::string emuTemp = command.substr(1, std::string::npos);
+        std::string emuTemp {command.substr(1, std::string::npos)};
         emuExecutable = emuTemp.substr(0, emuTemp.find('"'));
     }
     else {
@@ -1794,13 +1794,13 @@ const std::string FileData::findEmulatorPath(std::string& command)
     }
 
 #if defined(_WIN64)
-    std::wstring emuExecutableWide = Utils::String::stringToWideString(emuExecutable);
+    std::wstring emuExecutableWide {Utils::String::stringToWideString(emuExecutable)};
     // Search for the emulator using the PATH environment variable.
-    DWORD size = SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr);
+    DWORD size {SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr)};
 
     if (size) {
         std::vector<wchar_t> pathBuffer(static_cast<size_t>(size) + 1);
-        wchar_t* fileName = nullptr;
+        wchar_t* fileName {nullptr};
 
         SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", size + 1, pathBuffer.data(),
                     &fileName);
