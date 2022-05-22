@@ -161,6 +161,8 @@ v1.2 maintenance release.
 * Added the Gearcoleco RetroArch core for the colecovision system and set it as the default emulator
 * Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
+* Added the Flycast RetroArch core and Flycast Standalone as alternative emulators for the arcade and mame systems
+* Added Atari800 standalone as an alternative emulator for the atarixe system
 * Added the file extensions .ciso, .dump, .gz, .m3u, .mdf, .img and .nrg to the ps2 system
 * Added the "citra" binary for Citra standalone on Linux (makes it possible to use the repository or AUR release)
 * Changed the steam platform to use the ScreenScraper "PC Windows" platform ID
@@ -188,6 +190,9 @@ v1.2 maintenance release.
 * The "Jump to.." quick selector didn't work correctly with multi-byte Unicode characters
 * All games were included in the video and slideshow screeensavers when in Kid UI mode
 * The %BASENAME% variable didn't work correctly with the "Directories interpreted as files" functionality
+* Under very rare circumstances, games and folders could get mixed up during gamelist.xml parsing
+* The scroll indicators would sometimes not work correctly in the Alternative Emulators screen
+* Fixed a minor rounding issue which sometimes led to the menu scroll indicators not being positioned correctly
 * The game-end event was triggered immediately on game launch if running in the background
 * The "quit" custom event script trigger was not executed when quitting the application using the quit key combo
 * (Linux) Flatpak directories were missing for user installations of the standalone emulators BlastEm, Play! and Snes9x

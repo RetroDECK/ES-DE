@@ -24,13 +24,13 @@ ES-DE and EmuDeck are completely separate projects, but we collaborate to give t
 
 See the _Supported game systems_ section at the bottom of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing all supported systems/platforms and emulators.
 
+## Why can't I press the up button in menus to jump to the bottom row and vice versa?
+
+Menus in ES-DE are not lists but grids, sometimes there is only a list but sometimes there are buttons beneath the list. Enabling the up and down buttons to wrap around would therefore not work consistently as it would sometimes jump to the last row of the list and sometimes to a button, depending on the menu layout. This type of contextual navigation feels very weird in practice. The solution is instead to use the shoulder buttons (which will jump six rows), or the trigger buttons (which will jump to the first and last row). These buttons work consistently throughout the application and avoid the strange side effects just mentioned. If you observe this more closely you will also realize that "wrap around" is very rare in GUI design, you don't jump to the top of a web page when you scroll to the bottom and likewise the settings menus of your mobile phone will not wrap around.
+
 ## I don't like the default emulator for a certain system, how can I choose an alternative?
 
 ES-DE comes preconfigured with support for many alternative emulators, see the [What's new in ES-DE v1.2](https://www.youtube.com/watch?v=rpnMJqceSNk) video on the ES-DE YouTube channel for a brief overview of how this works. More emulators are continuously being added with each release.
-
-## Why can't I press the up button in menus to jump to the bottom row and vice versa?
-
-Menus in ES-DE are not lists but grids, sometimes there is only a list but sometimes there are buttons beneath the list. Enabling the up and down buttons to wrap around would therefore not work consistently as it would sometimes jump to the last row of the list and sometimes to a button, depending on the menu layout. This type of contextual navigation feels very weird and inconsistent in practice. The solution is instead to use the shoulder buttons (which will jump six rows), or the trigger buttons (which will jump to the first and last row). These buttons work consistently throughout the application and avoid the strange side effects just mentioned. If you observe this more closely you will also realize that "wrap around" is very rare in GUI design, you don't jump to the top of a web page when you scroll to the bottom and likewise the settings menus of your mobile phone will not wrap around.
 
 ## I'm on Windows and ES-DE can't find my emulators, what is wrong?
 
