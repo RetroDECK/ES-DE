@@ -50,7 +50,7 @@
 * pcfx: NEC PC-FX - consolegame.svg, console.svg, controller.svg, game.svg
 * pokemini: Nintendo Pokémon Mini - consolegame.svg, console.svg, controller.svg, game.svg
 * ports: Source ports - consolegame.svg, console.svg, controller.svg, game.svg
-* ps3: Sony PlayStation 3 - consolegame.svg, console.svg, controller.svg, game.svg
+* ps3: Sony PlayStation 3 - consolegame.svg, console.svg, game.svg
 * ps4: Sony PlayStation 4 - consolegame.svg, console.svg, controller.svg, game.svg
 * psvita: Sony PlayStation Vita - consolegame.svg, console.svg, controller.svg, game.svg
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
