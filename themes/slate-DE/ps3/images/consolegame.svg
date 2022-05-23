@@ -23,7 +23,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -806,9 +806,9 @@
      inkscape:window-height="2065"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="495.237"
-     inkscape:cy="83.180681"
+     inkscape:zoom="2.5273543"
+     inkscape:cx="300.0748"
+     inkscape:cy="165.29216"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -992,7 +992,7 @@
     </g>
   </g>
   <g
-     id="g13287">
+     id="g5940">
     <path
        sodipodi:nodetypes="sccscccs"
        inkscape:connector-curvature="0"
@@ -1528,19 +1528,19 @@
        cy="205.82474"
        cx="141.01131"
        id="path6056"
-       style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:#3e3e3e;stroke-width:0.588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+       style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <circle
        r="2.2743759"
        cy="205.82474"
        cx="147.48834"
        id="path6056-4"
-       style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:#3e3e3e;stroke-width:0.588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+       style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <circle
        r="2.2743759"
        cy="205.82474"
        cx="153.96536"
        id="path6056-4-2"
-       style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:#3e3e3e;stroke-width:0.588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
+       style="opacity:1;vector-effect:none;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.588;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" />
     <g
        transform="matrix(1.5821745,0,0,1.5821745,-43.5098,-114.56561)"
        style="fill:#000000;fill-opacity:1"
