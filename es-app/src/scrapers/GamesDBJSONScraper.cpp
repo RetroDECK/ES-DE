@@ -44,6 +44,8 @@ namespace
         {AMSTRAD_CPC, "4914"},
         {APPLE_II, "4942"},
         {ARCADE, "23"},
+        {ATOMISWAVE, "23"},
+        {SEGA_NAOMI, "23"},
         {ARCADIA_2001, "4963"},
         {BALLY_ASTROCADE, "4968"},
         {ATARI_800, "4943"},
