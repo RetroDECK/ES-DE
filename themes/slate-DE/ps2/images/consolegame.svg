@@ -685,9 +685,9 @@
      inkscape:window-height="2065"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="2.0179407"
-     inkscape:cx="284.29058"
-     inkscape:cy="199.26006"
+     inkscape:zoom="5.1000511"
+     inkscape:cx="655.32867"
+     inkscape:cy="74.561661"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -695,7 +695,7 @@
      inkscape:snap-global="true"
      inkscape:snap-bbox="false" />
   <g
-     id="g5589">
+     id="g5649">
     <path
        d="m 612.59676,227.00251 c 0,36.92956 30.05563,66.8669 67.13109,66.8669 37.07548,0 67.1311,-29.93734 67.1311,-66.8669 0,-36.92956 -30.05562,-66.86691 -67.1311,-66.86691 -37.07546,0 -67.13109,29.93735 -67.13109,66.86691"
        style="fill:#06408b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.77896607"
@@ -722,6 +722,14 @@
        id="rect1644"
        d="m 680.46489,295.65302 c 21.96129,0 41.43529,-10.8478 53.55432,-27.57216 H 626.91058 c 12.11903,16.72436 31.59303,27.57216 53.55431,27.57216 z"
        style="opacity:1;fill:#0e0e0e;fill-opacity:1;stroke:none;stroke-width:0.31246316;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
+    <rect
+       transform="scale(-1)"
+       y="-268.15347"
+       x="-733.53369"
+       height="0.65978462"
+       width="108.10227"
+       id="rect2555"
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.24415898;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <g
        style="fill:#556789;fill-opacity:1"
        transform="matrix(-0.8205503,0,0,0.81732106,627.06186,186.79199)"
@@ -742,14 +750,6 @@
          style="fill:#c6c6c6;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-opacity:1"
          d="m 0,0 c -12.455,0 -22.558,10.122 -22.558,22.577 0,12.456 10.103,22.558 22.558,22.558 12.475,0 22.577,-10.102 22.577,-22.558 C 22.577,10.122 12.475,0 0,0 m 0,46.697 c -13.325,0 -24.12,-10.795 -24.12,-24.12 0,-13.325 10.795,-24.119 24.12,-24.119 13.325,0 24.139,10.794 24.139,24.119 0,13.325 -10.814,24.12 -24.139,24.12" />
     </g>
-    <rect
-       transform="scale(-1)"
-       y="-268.15347"
-       x="-733.53369"
-       height="0.65978462"
-       width="108.10227"
-       id="rect2555"
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.24415898;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers" />
     <ellipse
        ry="9.1752234"
        rx="9.2114744"
@@ -774,12 +774,12 @@
       <polygon
          style="fill:url(#SVGID_2_)"
          id="polygon14"
-         points="364.131,0 364.131,6.986 274.038,6.986 274.038,97.762 176.62,97.762 176.62,90.777 266.713,90.777 266.713,0 "
+         points="176.62,97.762 176.62,90.777 266.713,90.777 266.713,0 364.131,0 364.131,6.986 274.038,6.986 274.038,97.762 "
          transform="matrix(0.09303829,0,0,0.09303829,638.50627,74.738159)" />
       <polygon
          style="fill:url(#SVGID_3_)"
          id="polygon21"
-         points="169.639,6.986 169.639,45.387 0,45.387 0,97.762 6.986,97.762 6.986,52.375 176.62,52.375 176.62,0 0,0 0,6.873 "
+         points="0,45.387 0,97.762 6.986,97.762 6.986,52.375 176.62,52.375 176.62,0 0,0 0,6.873 169.639,6.986 169.639,45.387 "
          transform="matrix(0.09303829,0,0,0.09303829,638.50627,74.738159)" />
     </g>
     <g
