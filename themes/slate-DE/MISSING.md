@@ -62,7 +62,6 @@
 * steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg
 * stratagus: Stratagus game engine - consolegame.svg, console.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg, console.svg, game.svg
-* switch: Nintendo Switch - consolegame.svg, console.svg, controller.svg, game.svg
 * symbian: Symbian - system info (needs improvement), consolegame.svg, console.svg, controller.svg, game.svg
 * tanodragon: Tano Dragon - consolegame.svg, console.svg, controller.svg, game.svg
 * ti99: Texas Instruments TI-99 - consolegame.svg, console.svg
