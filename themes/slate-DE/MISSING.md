@@ -54,8 +54,8 @@
 * psvita: Sony PlayStation Vita - consolegame.svg, console.svg, controller.svg, game.svg
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
 * satellaview: Nintendo Satellaview - consolegame.svg, console.svg, game.svg
-* saturn: Sega Saturn - consolegame.svg, console.svg, controller.svg, game.svg
-* saturnjp: Sega Saturn - consolegame.svg, console.svg, controller.svg, game.svg
+* saturn: Sega Saturn - controller.svg
+* saturnjp: Sega Saturn - controller.svg
 * solarus: Solarus game engine - consolegame.svg, console.svg
 * spectravideo: Spectravideo - consolegame.svg, console.svg, controller.svg, game.svg
 * steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg
