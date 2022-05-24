@@ -1440,7 +1440,7 @@
         <fullname>Microsoft Xbox</fullname>
         <path>%ROMPATH%/xbox</path>
         <extension>.iso .ISO</extension>
-        <command label="xemu (Standalone)">%EMULATOR_XEMU% -full-screen -dvd_path %ROM%</command>
+        <command label="xemu (Standalone)">%EMULATOR_XEMU% -dvd_path %ROM%</command>
         <platform>xbox</platform>
         <theme>xbox</theme>
     </system>
