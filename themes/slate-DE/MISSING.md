@@ -75,5 +75,4 @@
 * x1:  Sharp X1 - consolegame.svg, console.svg, game.svg
 * x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
 * xbox: Microsoft Xbox - controller.svg
-* xbox360: Microsoft Xbox - consolegame.svg, console.svg, game.svg
 * zmachine: Infocom Z-machine - consolegame.svg, console.svg
