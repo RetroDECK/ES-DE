@@ -122,6 +122,7 @@
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Model 2 Emulator (Standalone)">%RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MODEL2% %BASENAME%</command>
+        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% %ROM%</command>
         <platform>arcade</platform>
         <theme>arcade</theme>
     </system>
@@ -604,6 +605,7 @@
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <command label="Model 2 Emulator (Standalone)">%RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MODEL2% %BASENAME%</command>
+        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% %ROM%</command>
         <platform>arcade</platform>
         <theme>mame</theme>
     </system>

@@ -46,6 +46,7 @@ Emulators\redream\redream.exe
 Emulators\RPCS3\rpcs3.exe
 Emulators\ryujinx\Ryujinx.exe
 Emulators\snes9x\snes9x-x64.exe
+Emulators\Supermodel\Supermodel.exe
 Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe

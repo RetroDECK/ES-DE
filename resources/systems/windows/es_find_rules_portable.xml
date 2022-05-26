@@ -205,6 +205,14 @@
             <entry>%ESPATH%\..\snes9x\snes9x-x64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SUPERMODEL">
+        <!-- Sega Model 3 emulator Supermodel -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Supermodel\Supermodel.exe</entry>
+            <entry>%ESPATH%\Supermodel\Supermodel.exe</entry>
+            <entry>%ESPATH%\..\Supermodel\Supermodel.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="staticpath">
