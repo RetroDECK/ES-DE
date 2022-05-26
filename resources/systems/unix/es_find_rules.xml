@@ -203,6 +203,16 @@
             <entry>~/.local/share/flatpak/exports/bin/io.github.m64p.m64p</entry>
         </rule>
     </emulator>
+    <emulator name="NESTOPIA-UE">
+        <!-- NES/Famicom emulator Nestopia UE -->
+        <rule type="systempath">
+            <entry>nestopia</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
+            <entry>~/.local/share/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">
