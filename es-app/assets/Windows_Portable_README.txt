@@ -37,6 +37,7 @@ Emulators\Hypseus Singe\hypseus.exe
 Emulators\mame\mame.exe
 Emulators\melonDS\melonDS.exe
 Emulators\mGBA\mGBA.exe
+Emulators\Model2\EMULATOR.EXE
 Emulators\mupen64plus\mupen64plus-ui-console.exe
 Emulators\PCSX2\pcsx2.exe
 Emulators\Play\Play.exe

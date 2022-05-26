@@ -204,6 +204,17 @@
             <entry>%ESPATH%\..\mGBA\mGBA.exe</entry>
         </rule>
     </emulator>
+    <emulator name="MODEL2">
+        <!-- Sega Model 2 Emulator -->
+        <rule type="systempath">
+            <entry>EMULATOR.EXE</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Model2\EMULATOR.EXE</entry>
+            <entry>%ESPATH%\Model2\EMULATOR.EXE</entry>
+            <entry>%ESPATH%\..\Model2\EMULATOR.EXE</entry>
+        </rule>
+    </emulator>
     <emulator name="MUPEN64PLUS">
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="systempath">
