@@ -275,8 +275,9 @@
         <name>cdtv</name>
         <fullname>Commodore CDTV</fullname>
         <path>%ROMPATH%/cdtv</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
+        <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <platform>cdtv</platform>
         <theme>cdtv</theme>
     </system>
