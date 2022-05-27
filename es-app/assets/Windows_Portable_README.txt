@@ -41,6 +41,8 @@ Emulators\mGBA\mGBA.exe
 Emulators\Model2\EMULATOR.EXE
 Emulators\mupen64plus\mupen64plus-ui-console.exe
 Emulators\PCSX2\pcsx2.exe
+Emulators\PCSX2-Qt\pcsx2-qtx64.exe
+Emulators\PCSX2-wxWidgets\pcsx2x64.exe
 Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
 Emulators\redream\redream.exe
