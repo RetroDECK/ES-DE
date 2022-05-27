@@ -785,6 +785,8 @@ For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is required by the TheGamesDB scraper where the expanded filenames are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
+If emulating Sega Model 2 games using _Model 2 Emulator_, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. This file is found in the emulator installation directory.
+
 #### Nintendo Switch
 
 The Nintendo Switch emulator Yuzu is distributed as a Snap package, Flatpak package or AppImage on Linux and as a regular installer on Windows. At the moment there is unfortunately no macOS release of this emulator and it's unclear if it can run on BSD Unix.

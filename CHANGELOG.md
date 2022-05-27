@@ -144,61 +144,78 @@
 
 ### Release overview
 
-v1.2 maintenance release.
+v1.2 maintenance release. Support has been added for multiple systems such as arcade LaserDisc (Daphne) and OpenBOR. A number of default emulators have been changed, some standalone emulators have been added and a number of bugs have been fixed. Some low-level functionality has also been implemented to enable more advanced emulator launch options and quite a number of missing theme assets have been created for the default rbsimple-DE theme.
 
 ### Detailed list of changes
 
-* Added configuration for the Daphne arcade LaserDisc system using the emulator Hypseus Singe
+* Added configuration for the Daphne arcade LaserDisc system using the Hypseus Singe emulator
 * Added configuration for the OpenBOR game engine on Linux and Windows
-* Added emulator configuration for the astrocde (Bally Astrocade) system
-* Added scraper support for the astrocde system (ScreenScraper and TheGamesDB)
-* Removed the --escape-exit command line option for the PPSSPP standalone emulator as it caused issues for some users
+* Added emulator configuration for the astrocde (Bally Astrocade) and cdtv systems
 * Changed the default emulator for the famicom, fds and nes systems from Nestopia UE to Mesen
 * Changed the default emulator for the gb and gbc systems from SameBoy to Gambatte
-* Changed the default emulator for the gamegear system from Gearsystem to Genesis Plus GX
+* Changed the default emulator for the gamegear and sg-1000 systems from Gearsystem to Genesis Plus GX
 * Changed the default emulator for the dos and pc systems from DOSBox-Core to DOSBox-Pure
 * Changed the default emulator for the mame system from MAME 2003-Plus to MAME - Current
-* Added the Gearcoleco RetroArch core for the colecovision system and set it as the default emulator
-* Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
+* Removed the --escape-exit command line option for the PPSSPP standalone emulator as it caused issues for some users
+* Added experimental support for PCSX2 Qt and PCSX2 wxWidgets for the ps2 system on Windows
 * Added AetherSX2 standalone as an alternative emulator for the ps2 system on macOS
-* Added the Flycast RetroArch core and Flycast Standalone as alternative emulators for the arcade and mame systems
+* Added DOSBox-X standalone as an alternative emulator for the dos and pc systems
+* Added bsnes standalone as an alternative emulator for the satellaview, sfc, snes, snesna and sufami systems
+* Added Snes9x standalone as an alternative emulator for the satellaview and sufami systems
 * Added Atari800 standalone as an alternative emulator for the atarixe system
+* Added the Flycast RetroArch core and Flycast standalone as alternative emulators for the arcade and mame systems
+* Added the Gearcoleco RetroArch core as an alternative emulator for the colecovision system
+* Added Nestopia UE standalone as an alternative emulator for the famicom, fds and nes systems on Unix
+* Added DeSmuME standalone as an alternative emulator for the nds system on Unix
+* Added Model 2 Emulator standalone as an alternative emulator for the arcade and mame systems on Windows
+* Added Supermodel standalone as an alternative emulator for the arcade and mame systems on Windows
 * Added the file extensions .ciso, .dump, .gz, .m3u, .mdf, .img and .nrg to the ps2 system
-* Added the "citra" binary for Citra standalone on Linux (makes it possible to use the repository or AUR release)
-* Changed the steam platform to use the ScreenScraper "PC Windows" platform ID
+* Removed the .chd file extension from the naomi, naomigd and atomiswave systems
+* Removed the .bin file extension from the pcengine, pcenginecd, tg16 and tg-cd systems
+* Added the "citra" binary for Citra standalone on Linux (making it possible to use the repository or AUR release)
+* Removed the -full-screen command line option for the xemu emulator
+* Set %STARTDIR%=%EMUDIR% for the xenia (Xbox 360) emulator
+* Added scraper support for the astrocde platform
+* Added scraper support for the arcadia (Emerson Arcadia 2001) and crvision (VTech CreatiVision) platforms
+* Changed the platform to arcade for the atomiswave, naomi and naomigd systems to improve scraping
+* Added TheGamesDB scraper support for the atomiswave and naomi platforms
 * Added a new pcwindows platform for scraping PC (Windows) games
+* Changed the steam platform internally to use the ScreenScraper "PC Windows" platform ID
 * Changed the platform to pcwindows for the epic system
-* Added scraper support for the platforms arcadia (Emerson Arcadia 2001) and crvision (VTech CreatiVision)
 * Enabled screensaver controls when running in Kid UI mode
 * Added custom event script triggers on application startup, screensaver start and screensaver end
 * Added a --create-system-dirs command line option to generate the game system directories
-* Added an Xbox Kinect controller badge icon
-* (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * Added an %INJECT% variable for injecting launch arguments from game config files (required by Hypseus Singe)
 * Added a %GAMEDIR% variable that expands to the game directory (required by Hypseus Singe)
 * Made the %GAMEDIR% variable usable with the %STARTDIR% variable (required by OpenBOR)
 * (Windows) Set %RUNINBACKGROUND% when launching MAME standalone as this emulator may otherwise hang on exit
 * (Windows) Added an %ESCAPESPECIALS% variable that escapes the special characters &()^=;,
 * (Windows) Added %ESCAPESPECIALS% to the desktop, epic, kodi, ports and steam systems
+* (rbsimple-DE) Added console and controller graphics for the ps2 and ps3 systems
+* (rbsimple-DE) Added console graphics for the n3ds, saturn, saturnjp, switch and xbox360 systems
+* Added an Xbox Kinect controller badge icon
+* Swapped the colors of the Joy-Con controller badge icons
+* (macOS) Categorized the application as a game so it shows up in the Launchpad games section
 * Replaced the explicit shell commands in es_systems.xml with %EMULATOR_OS-SHELL% find rules
-* Added experimental support for folder flattening
 * Updated the StringUtil::replace function as the old function was dangerous and could run into an endless loop
+* Added experimental support for folder flattening
 
 ### Bug fixes
 
-* Chinese characters would sometimes not render correctly
-* The "Jump to.." quick selector didn't work correctly with multi-byte Unicode characters
 * All games were included in the video and slideshow screeensavers when in Kid UI mode
-* The %BASENAME% variable didn't work correctly with the "Directories interpreted as files" functionality
 * Under very rare circumstances, games and folders could get mixed up during gamelist.xml parsing
+* The %BASENAME% variable didn't work correctly with the "Directories interpreted as files" functionality
 * The scroll indicators would sometimes not work correctly in the Alternative Emulators screen
 * Fixed a minor rounding issue which sometimes led to the menu scroll indicators not being positioned correctly
-* The game-end event was triggered immediately on game launch if running in the background
+* The game-end event was triggered immediately on game launch if running ES-DE in the background
 * The "quit" custom event script trigger was not executed when quitting the application using the quit key combo
-* (Linux) Flatpak directories were missing for user installations of the standalone emulators BlastEm, Play! and Snes9x
+* Chinese characters would sometimes not render correctly
+* The "Jump to.." quick selector didn't work correctly with multi-byte Unicode characters
 * (Windows) Fixed an issue where symlinking game media directories would crash the application
 * (Windows) Scripts and links executed using cmd.exe could not contain the special characters &()^=;,
 * (Windows) ROM directories could not be created in the root of a device such as D:\ or E:\
+* (Linux) Flatpak directories were missing for user installations of the standalone emulators BlastEm, Play! and Snes9x
+* (rbsimple-DE) The systeminfo text for the saturn and saturnjp systems had mixed up megabytes with megabits
 
 ## Version 1.2.3
 
