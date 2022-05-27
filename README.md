@@ -53,7 +53,7 @@ The latest version is 1.2.4 (released 2022-05-27)
 | Linux AppImage       | Current Linux distributions with libc 2.34 or later     | x64 (x86)    | [EmulationStation-DE-x64_Current.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/40176633/download)|
 | Linux AppImage       | Steam Deck / SteamOS 3.0 specific                       | x64 (x86)    | [EmulationStation-DE-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/40176752/download)|
 | Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.4-armv7l.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/40175649/download)|
-| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.4-aarch64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/40175605/download)|
+| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.4-aarch64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/40175355/download)|
 
 Version 1.2.0 (released 2021-12-28) will be the last legacy release for macOS
 
