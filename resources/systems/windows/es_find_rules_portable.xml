@@ -31,6 +31,14 @@
             <entry>%ESPATH%\..\atari800\atari800.exe</entry>
         </rule>
     </emulator>
+    <emulator name="BSNES">
+        <!-- Super Nintendo/Super Famicom emulator bsnes -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\bsnes\bsnes.exe</entry>
+            <entry>%ESPATH%\bsnes\bsnes.exe</entry>
+            <entry>%ESPATH%\..\bsnes\bsnes.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="CEMU">
         <!-- Nintendo Wii U emulator Cemu -->
         <rule type="staticpath">
