@@ -138,13 +138,13 @@
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 
-## Version 1.2.4 (in development)
+## Version 1.2.4
 
-**Release date:** TBD
+**Release date:** 2022-05-27
 
 ### Release overview
 
-v1.2 maintenance release. Support has been added for multiple systems such as arcade LaserDisc (Daphne) and OpenBOR. A number of default emulators have been changed, some standalone emulators have been added and a number of bugs have been fixed. Some low-level functionality has also been implemented to enable more advanced emulator launch options and quite a number of missing theme assets have been created for the default rbsimple-DE theme.
+v1.2 maintenance release. Support has been added for multiple systems such as Daphne (arcade LaserDisc) and OpenBOR. A number of default emulators have been changed, some standalone emulators have been added and numerous bugs have been fixed. Some low-level functionality has also been implemented to enable more advanced emulator launch options and quite a number of missing theme assets have been created for the default rbsimple-DE theme.
 
 ### Detailed list of changes
 
@@ -788,15 +788,11 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 ## Known issues
 
-**The issues below are relevant for ES-DE v1.2.3**
+**The issues below are relevant for ES-DE v1.2.4**
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
 
 * On Windows installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
-
-* On Windows the special characters &()^=;, can't be used in filenames executed by cmd.exe (applicable for the desktop, epic, kodi, ports and steam systems). This issue will be resolved with the 1.2.4 release.
-
-* There could be problems with Chinese characters under some circumstances which may cause them to not get rendered properly in the gamelist view. This issue will be resolved with the 1.2.4 release.
 
 * On macOS, the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window when a game is launched. Possibly it's the same issue with other emulators as well.
 

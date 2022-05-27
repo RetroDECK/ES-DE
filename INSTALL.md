@@ -1480,8 +1480,9 @@ Below is an overview of the file layout with various examples. For the command t
         <command>%RUNINBACKGROUND% bash %ROM%</command>
 
         <!-- The equivalent configuration as above, but for Windows.
-        The optional %HIDEWINDOW% variable is used to hide the console window, which would otherwise be visible when launching games. -->
-        <command>%HIDEWINDOW% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
+        The optional %HIDEWINDOW% variable is used to hide the console window which would otherwise be visible when launching games
+        and %ESCAPESPECIALS% escapes the characters &()^=;, that cmd.exe can't otherwise handle. -->
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% cmd.exe /C %ROM%</command>
 
         <!-- The platform(s) to use when scraping. You can see the full list of supported platforms in es-app/src/PlatformId.cpp.
         The entry is case insensitive as it will be converted to lower case during startup.
@@ -1512,11 +1513,15 @@ The following variables are expanded for the `command` tag:
 
 `%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
 
-`%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators like standalone MAME will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used with this variable, such as `%STARTDIR%=C:\Games\mame` or the `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%`. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch.
+`%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators and game engines like standalone MAME and OpenBOR will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used with this variable, such as `%STARTDIR%=C:\Games\mame` or the `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%` or the `%GAMEDIR%` variable can be used to start in the directory where the game file is located, i.e. `%STARTDIR%=%GAMEDIR%`. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch. The variable can be placed anywhere in the launch command if the %EMULATOR_ variable is used, otherwise it has to be placed after the emulator binary.
+
+`%INJECT%` - This allows the injection of launch arguments stored in a text file on the filesystem. This is for example required by the Hypseus Singe (arcade LaserDisc) emulator. The variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands`. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the tilde ~ symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"` The variable can be placed anywhere in the launch command and the arguments will be injected at that position. The specified file is optional, if it does not exist or if there are insufficient permissions to read the file content, then it will simply be skipped. For safety reasons the arguments file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This variable is used for manually specifying emulator core locations, and a check for the existence of the core file will be done on game launch and an error displayed if it can't be found. Normally %EMUPATH% should not be used as the %CORE_ variable is the recommended method for defining core locations.
 
 `%EMUDIR%` - Replaced with the path to the emulator binary. This is a general purpose variable as opposed to %EMUPATH% which is intended specifically for core locations.
+
+`%GAMEDIR%` - Replaced with the path to the game.
 
 `%ESPATH%` - Replaced with the path to the ES-DE binary. Mostly useful for portable emulator installations, for example on a USB memory stick.
 
@@ -1527,6 +1532,8 @@ The following variables are expanded for the `command` tag:
 `%RUNINBACKGROUND%` - When this variable is present, ES-DE will continue to run in the background while a game is launched. This will also prevent the gamelist video from playing, the screensaver from starting, and the game name and game description from scrolling. This functionality is required for some systems such as Valve Steam. The variable can be placed anywhere in the launch command.
 
 `%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching games. The variable can be placed anywhere in the launch command.
+
+`%ESCAPESPECIALS%` - This variable is only available on Windows and is used to escape the characters &()^=;, for the %ROM% variable, which would otherwise make binaries like cmd.exe fail when launching scripts or links. The variable can be placed anywhere in the launch command.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
@@ -2087,17 +2094,34 @@ Just make sure to not place the portable installation on a network share that us
 
 ## Custom event scripts
 
-There are numerous locations throughout ES-DE where custom scripts will be executed if the option to do so has been enabled in the settings. You'll find the option on the Main menu under `Other settings`. By default it's deactivated so be sure to enable it to use this feature.
+There are numerous locations throughout ES-DE where custom scripts can be executed if the option to do so has been enabled in the settings. You'll find the option _Enable custom event scripts_ on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
 
-The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files.
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files. There are up to four parameters that will be passed to these scripts, as detailed below:
+
+| Event                    | Parameters*                                        | Description                                                                 |
+| :----------------------- | :------------------------------------------------- | :-------------------------------------------------------------------------- |
+| startup                  |                                                    | Application startup                                                         |
+| quit                     |                                                    | Application quit/shutdown                                                   |
+| reboot                   |                                                    | System reboot (quit event triggered as well)                                |
+| poweroff                 |                                                    | System power off (quit event triggered as well)                             |
+| config-changed           |                                                    | On saving application settings or controller configuration                  |
+| settings-changed         |                                                    | On saving application settings (config-changed event triggered as well)     |
+| controls-changed         |                                                    | On saving controller configuration (config-changed event triggered as well) |
+| theme-changed            | New theme name, old theme name                     | When manually changing theme sets in the UI Settings menu                   |
+| game-start               | ROM path, game name, system name, system full name | On game launch                                                              |
+| game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)         |
+| screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                   |
+| screensaver-end          | _cancel_ or _game-jump_ or _game-start_            | Screensaver ends via cancellation, jump to game or start/launch of game     |
+
+***)** Parameters in _italics_ are literal strings.
 
 We'll go through two examples:
 * Creating a log file that will record the start and end time for each game we play, letting us see how much time we spend on retro-gaming
 * Changing the system resolution when launching and returning from a game in order to run the emulator at a lower resolution than ES-DE
 
-The following examples are for Unix systems, but it works the same way on macOS (which is also Unix after all), and on Windows (although .bat batch files are then used instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix).
+The following examples are for Unix systems, but it works the same way on macOS and Windows (although .bat batch files are used on Windows instead of shell scripts and any spaces in the parameters are not escaped as is the case on Unix and macOS).
 
-The events executed when a game starts and ends are named `game-start` and `game-end` respectively. Finding these event names is easily achieved by starting ES-DE with the `--debug` flag. If this is done, all attempts to execute custom event scripts will be logged to es_log.txt, including the event names.
+As can be seen in the table above, the events executed when a game starts and ends are named _game-start_ and _game-end_
 
 So let's create the folders for these events in the scripts directory. The location is `~/.emulationstation/scripts`
 
