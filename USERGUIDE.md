@@ -631,7 +631,7 @@ chmod +x ./Ryujinx
 
 ## Running emulators in fullscreen mode
 
-In general ES-DE does not pass command line parameters to emulators to start them in fullscreen mode. This is so as for most (if not all) emulators, command line arguments overrides the settings the user has defined. This means that windowed mode would have become impossible to achieve without creating custom systems configuration entries if ES-DE enforced fullscreen mode. There are only a very few exceptions for emulators where there is no other way to enter fullscreen mode than by passing such options during game launch.
+In general ES-DE does not pass command line parameters to emulators to start them in fullscreen mode. This is so as for most (if not all) emulators, command line arguments overrides the settings the user has defined. This means that windowed mode would become impossible to achieve without creating custom systems configuration entries if ES-DE enforced fullscreen mode. There are only a very few exceptions for emulators where there is no other way to enter fullscreen mode than by passing such options during game launch.
 
 So if an emulator starts in windowed mode and you prefer to have it running in fullscreen mode instead, make sure to enable that option in the emulator settings or configuration file (which should be a one-time job).
 
@@ -1168,23 +1168,57 @@ The first step is to even get the emulator to run. On Windows it's straightforwa
 
 For Linux there does not seem to be any precompiled release that is working reliably so you will need to compile it yourself. If running a distribution with access to the AUR, there is a Hypseus Singe release available but this seems to be broken somehow and does not seem to be usable. If the AUR release doesn't work for you, then make sure to uninstall it as it will otherwise be tried first and you'll never get LaserDisc games to work.
 
-Fortunately compiling Hypseus Singe is easy, just make sure that you have the necessary dependencies installed and then follow these steps:
+Fortunately compiling Hypseus Singe is easy, just follow these steps (tested on Ubuntu 20.04 and 22.04):
 ```
+sudo apt install build-essential autoconf autotools-dev libtool libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-ttf-dev libvorbis-dev
 git clone https://github.com/DirtBagXon/hypseus-singe.git
-cd hypseus-singe/src
-cmake .
-make -j
+mkdir hypseus-singe/build
+cd hypseus-singe/build
+cmake ../src
+make -j4
 mkdir -p ~/Applications/hypseus-singe
 cp -r ../fonts ~/Applications/hypseus-singe
 cp -r ../roms ~/Applications/hypseus-singe
 cp -r ../sound ~/Applications/hypseus-singe
 cp -r ../pics ~/Applications/hypseus-singe
+cp ../doc/hypinput.ini ~/Applications/hypseus-singe
 cp hypseus ~/Applications/hypseus-singe/hypseus.bin
 ```
 
 Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit more involved than compiling code on Linux so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
 
-After the emlulator is installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
+After the emlulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
+
+Controller configuration using the `hypinput.ini` file is described in the official Hypseus Singe documentation, but the following example is usable with Xbox 360-compatible controllers:
+
+```
+[KEYBOARD]
+KEY_UP = SDLK_UP SDLK_r 5 -002
+KEY_DOWN = SDLK_DOWN SDLK_f 7 +002
+KEY_LEFT = SDLK_LEFT SDLK_d 8 -001
+KEY_RIGHT = SDLK_RIGHT SDLK_g 6 +001
+KEY_COIN1 = SDLK_5 0 1
+KEY_COIN2 = SDLK_6 0 0
+KEY_START1 = SDLK_1 0 4
+KEY_START2 = SDLK_2 0 0
+KEY_BUTTON1 = SDLK_LCTRL SDLK_a 14
+KEY_BUTTON2 = SDLK_LALT SDLK_s 15
+KEY_BUTTON3 = SDLK_SPACE SDLK_d 16
+KEY_SKILL1 = SDLK_LSHIFT SDLK_w 0
+KEY_SKILL2 = SDLK_z SDLK_i 0
+KEY_SKILL3 = SDLK_x SDLK_k 0
+KEY_SERVICE = SDLK_9 0 0
+KEY_TEST = SDLK_F2 0 0
+KEY_RESET = SDLK_0 0 0
+KEY_SCREENSHOT = SDLK_F12 0 0
+KEY_QUIT = SDLK_ESCAPE SDLK_q 17
+KEY_PAUSE = SDLK_p 0 0
+KEY_CONSOLE = SDLK_BACKSLASH 0 0
+KEY_TILT = SDLK_t 0 0
+END
+```
+
+With this configuration, pressing the _A_ and _Y_ buttons at the same time exits the emulator.
 
 There are two types of games supported by Hypseus and these are _Daphne_ and _Singe_. It's beyond the scope of this document to describe these game formats in detail but there are many resources available online for this. The setup differs a bit between these two types however, and you need to use an alternative emulator entry in ES-DE to launch Singe games.
 

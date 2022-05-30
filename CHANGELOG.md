@@ -138,6 +138,18 @@
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 
+## Version 1.2.5 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+v1.2 maintenance release.
+
+### Detailed list of changes
+
+### Bug fixes
+
 ## Version 1.2.4
 
 **Release date:** 2022-05-27

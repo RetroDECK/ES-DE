@@ -2111,7 +2111,7 @@ The approach is quite straightforward, ES-DE will look for any files inside a sc
 | game-start               | ROM path, game name, system name, system full name | On game launch                                                              |
 | game-end                 | ROM path, game name, system name, system full name | On game end (or on application wakeup if running in the background)         |
 | screensaver-start        | _timer_ or _manual_                                | Screensaver started via timer or manually                                   |
-| screensaver-end          | _cancel_ or _game-jump_ or _game-start_            | Screensaver ends via cancellation, jump to game or start/launch of game     |
+| screensaver-end          | _cancel_ or _game-jump_ or _game-start_            | Screensaver ended via cancellation, jump to game or start/launch of game    |
 
 ***)** Parameters in _italics_ are literal strings.
 
