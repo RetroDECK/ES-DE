@@ -284,9 +284,9 @@
             <entry>redream</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/redream</entry>
-            <entry>~/.local/bin/redream</entry>
-            <entry>~/bin/redream</entry>
+            <entry>~/Applications/redream/redream</entry>
+            <entry>~/.local/bin/redream/redream</entry>
+            <entry>~/bin/redream/redream</entry>
         </rule>
     </emulator>
     <emulator name="RPCS3">
