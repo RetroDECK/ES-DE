@@ -909,6 +909,27 @@ void FileData::launchGame()
     if (Settings::getInstance()->getBool("RunInBackground"))
         runInBackground = true;
 
+#if !defined(_WIN64)
+    // Whether to parse .desktop files on Unix or open apps or alias files on macOS.
+    bool isShortcut {false};
+    size_t enableShortcutsPos {command.find("%ENABLESHORTCUTS%")};
+
+    if (enableShortcutsPos != std::string::npos) {
+#if defined(__APPLE__)
+        if (Utils::FileSystem::getExtension(romRaw) == ".app")
+#else
+        if (Utils::FileSystem::getExtension(romRaw) == ".desktop")
+#endif
+            isShortcut = true;
+
+        command = Utils::String::replace(command, "%ENABLESHORTCUTS%", "");
+        // Trim any leading whitespaces as they could cause the script execution to fail.
+        command.erase(command.begin(), std::find_if(command.begin(), command.end(), [](char c) {
+                          return !std::isspace(static_cast<unsigned char>(c));
+                      }));
+    }
+#endif
+
     std::string coreEntry;
     std::string coreName;
     size_t coreEntryPos {0};
@@ -1010,7 +1031,7 @@ void FileData::launchGame()
         window->setAllowFileAnimation(true);
         return;
     }
-    else {
+    else if (!isShortcut) {
 #if defined(_WIN64)
         LOG(LogDebug) << "FileData::launchGame(): Found emulator binary "
                       << Utils::String::replace(
@@ -1393,6 +1414,68 @@ void FileData::launchGame()
         if (foundSpecial)
             romPath = Utils::String::replace(romPath, " ", "^ ");
     }
+#endif
+
+#if !defined(_WIN64)
+#if defined(__APPLE__)
+    if (isShortcut) {
+        if (Utils::FileSystem::exists(Utils::String::replace(romPath, "\\", ""))) {
+            LOG(LogInfo) << "Opening app or alias file \""
+                         << Utils::String::replace(romPath, "\\", "") << "\"";
+            command = Utils::String::replace(command, binaryPath, "open -a");
+        }
+        else {
+            LOG(LogError) << "App or alias file \"" << romPath
+                          << "\" doesn't exist or is unreadable";
+            window->queueInfoPopup("ERROR: APP OR ALIAS FILE DOESN'T EXIST OR IS UNREADABLE", 6000);
+            window->setAllowTextScrolling(true);
+            window->setAllowFileAnimation(true);
+            return;
+        }
+    }
+#else
+    if (isShortcut) {
+        if (Utils::FileSystem::exists(Utils::String::replace(romPath, "\\", "")) &&
+            !Utils::FileSystem::isDirectory(Utils::String::replace(romPath, "\\", ""))) {
+            LOG(LogInfo) << "Parsing desktop file \"" << Utils::String::replace(romPath, "\\", "")
+                         << "\"";
+            bool validFile {false};
+            bool execEntry {false};
+            std::ifstream desktopFileStream;
+            desktopFileStream.open(Utils::String::replace(romPath, "\\", ""));
+            for (std::string line; getline(desktopFileStream, line);) {
+                if (line.find("[Desktop Entry]") != std::string::npos)
+                    validFile = true;
+                if (line.substr(0, 5) == "Exec=") {
+                    romPath = {line.substr(5, line.size() - 5)};
+                    romPath = Utils::String::replace(romPath, "%F", "");
+                    romPath = Utils::String::replace(romPath, "%f", "");
+                    romPath = Utils::String::replace(romPath, "%U", "");
+                    romPath = Utils::String::replace(romPath, "%u", "");
+                    romPath = Utils::String::trim(romPath);
+                    command = Utils::String::replace(command, binaryPath, "");
+                    execEntry = true;
+                    break;
+                }
+            }
+            desktopFileStream.close();
+            if (!validFile || !execEntry) {
+                LOG(LogError) << "File is invalid or unreadable";
+                window->queueInfoPopup("ERROR: DESKTOP FILE IS INVALID OR UNREADABLE", 6000);
+                window->setAllowTextScrolling(true);
+                window->setAllowFileAnimation(true);
+                return;
+            }
+        }
+        else {
+            LOG(LogError) << "Desktop file \"" << romPath << "\" doesn't exist or is unreadable";
+            window->queueInfoPopup("ERROR: DESKTOP FILE DOESN'T EXIST OR IS UNREADABLE", 6000);
+            window->setAllowTextScrolling(true);
+            window->setAllowFileAnimation(true);
+            return;
+        }
+    }
+#endif
 #endif
 
     // Replace the remaining variables with their actual values.
