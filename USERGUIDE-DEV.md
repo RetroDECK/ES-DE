@@ -21,7 +21,7 @@ If you just want to get started as quickly as possible, simply follow these step
 5) Start RetroArch and install the required emulator cores
 6) Start ES-DE, scrape game media for your collection and play some games!
 
-You can always close the application immediately by using the keyboard, by default the exit key is mapped to F4 but this can be changed to Alt + F4, Alt + Q or Command Q (on macOS) using the _Exit button combo_ menu option.
+You can always close the application immediately using the keyboard, by default the quit shortcut is Alt + F4 on Windows and Linux and Command + Q on macOS. This shortcut can also be changed to Ctrl + Q, Alt + Q or F4 using the _Keyboard quit shortcut_ menu option.
 
 For additional details, read on below.
 
@@ -503,9 +503,9 @@ _(Insert on Unix and Windows, F13 on macOS)_
 
 Marks games as favorites in the gamelist view (if the _Enable toggle favorites button_ option has been enabled). Used by some other minor functions as explained by the help system and/or this guide.
 
-**F4 (keyboard only)** _Could alternatively be Alt + F4, Alt + Q or Command + Q_
+**Alt + F4 (Windows and Linux) or Command + Q (macOS) (keyboard only)**
 
-Quits the application. This key combination can be changed using the _Exit button combo_ menu option described later in this document.
+Quits the application. This key combination can be changed to Ctrl + Q, Alt + Q or F4 using the _Keyboard quit shortcut_ menu option described later in this document.
 
 ## RetroArch setup
 
@@ -605,7 +605,7 @@ The following manually downloaded emulators are supported when using the bundled
 | System name  | Emulator      | Filename configuration          |
 | :----------- | :------------ | :------------------------------ |
 | daphne       | Hypseus Singe | hypseus-singe/hypseus.bin       |
-| dreamcast    | Redream       | redream                         |
+| dreamcast    | Redream       | redream/redream                 |
 | switch       | Ryujinx       | publish/Ryujinx                 |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
@@ -613,8 +613,6 @@ Note that the Ryujinx binary is not set as executable after unpacking the archiv
 cd ~/Applications/publish
 chmod +x ./Ryujinx
 ```
-
-Hypseus Singe is also a special case as you may have to compile this emulator yourself as mentioned elsewhere in this guide.
 
 ## Running emulators in fullscreen mode
 
@@ -1155,32 +1153,20 @@ To greatly simplify this setup, automatic Steam library import is planned for a 
 
 #### Hypseus Singe (Daphne)
 
-Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is very particular so make sure to read this section thoroughly to get it to work.
+Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is quite particular so make sure to read this section thoroughly to get it to work.
 
-The first step is to even get the emulator to run. On Windows it's straightforward, just download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
+The first step is to install the emulator. On Windows it's straightforward, download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
 
-For Linux there does not seem to be any precompiled release that is working reliably so you will need to compile it yourself. If running a distribution with access to the AUR, there is a Hypseus Singe release available but this seems to be broken somehow and does not seem to be usable. If the AUR release doesn't work for you, then make sure to uninstall it as it will otherwise be tried first and you'll never get LaserDisc games to work.
-
-Fortunately compiling Hypseus Singe is easy, just follow these steps (tested on Ubuntu 20.04 and 22.04):
+Similarly on Linux, download the .tar.gz release that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
 ```
-sudo apt install build-essential autoconf autotools-dev libtool libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-ttf-dev libvorbis-dev
-git clone https://github.com/DirtBagXon/hypseus-singe.git
-mkdir hypseus-singe/build
-cd hypseus-singe/build
-cmake ../src
-make -j4
-mkdir -p ~/Applications/hypseus-singe
-cp -r ../fonts ~/Applications/hypseus-singe
-cp -r ../roms ~/Applications/hypseus-singe
-cp -r ../sound ~/Applications/hypseus-singe
-cp -r ../pics ~/Applications/hypseus-singe
-cp ../doc/hypinput.ini ~/Applications/hypseus-singe
-cp hypseus ~/Applications/hypseus-singe/hypseus.bin
+/home/myusername/Applications/hypseus-singe/
 ```
 
-Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit more involved than compiling code on Linux so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
+If the Applications directory doesn't exist yet, then just go ahead and create it and then unpack the emulator inside it. Just be aware that the name has to start with a capital A.
 
-After the emlulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
+Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
+
+After the emulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
 
 Controller configuration using the `hypinput.ini` file is described in the official Hypseus Singe documentation, but the following example is usable with Xbox 360-compatible controllers:
 
@@ -1505,7 +1491,7 @@ It's possible to change the game media directory location from within ES-DE, for
 
 ## Main menu
 
-This menu can be accessed from both the system view and gamelist view. It contains the scraper, application settings and various tools such as the input configurator and the miximage generator. Settings are saved when navigating back from any menu screen, assuming at least one setting was changed. Pressing the application exit key (F4 by default) will also save any pending changes.
+This menu can be accessed from both the system view and gamelist view. It contains the scraper, application settings and various tools such as the input configurator and the miximage generator. Settings are saved when navigating back from any menu screen, assuming at least one setting was changed. Using the keyboard quit shortcut (Alt + F4 / Command + Q by default) will also save any pending changes.
 
 ![alt text](images/es-de_main_menu.png "ES-DE Main Menu")
 _The main menu with its multiple submenus._
@@ -2034,9 +2020,9 @@ The amount of video RAM to use for the application. Defaults to 256 MiB (512 MiB
 
 This option sets the display to use for ES-DE for multi-monitor setups. The possible values are the monitor index numbers 1, 2, 3 or 4. If a value is set here for a display that does not actually exist, then ES-DE will set it to 1 upon startup. Index 1 is the primary display for the computer. It's also possible to override the setting by passing the --display command line argument. Doing so will also overwrite the display index setting in es_settings.xml. The Display/monitor index option only changes the display used by ES-DE; the emulators need to be configured separately (which can easily be done globally if using RetroArch).
 
-**Exit button combo**
+**Keyboard quit shortcut**
 
-This gives the choice of which key combination to use to close the application. The default value is F4, but this can be changed to Alt + F4 on all operating systems. Additionally on macOS the Command + Q combination is selectable and on all other operating systems Alt + Q is selectable instead. Note that on Windows and most window managers on Unix/Linux, Alt + F4 will close the application regardless of the selected option as that key combination is a default which can't be restricted by ES-DE. Similarly on macOS, Command + Q always closes the application, so selecting this combination simply disables the previously selected exit button.
+This gives the choice of which key combination to use to quit the application. The default value is Alt + F4 on Windows and Linux and Command + Q on macOS. Other possible values are Ctrl + Q, Alt + Q and F4 but selecting either of these alternatives will not disable the default quit shortcut as that's implemented globally by the operating system.
 
 **When to save game metadata**
 
@@ -2536,12 +2522,12 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | coco                  | Tandy Color Computer                           | _Placeholder_                     |                                   |              |                                      |
 | colecovision          | ColecoVision                                   | blueMSX                           | Gearcoleco                        |              |                                      |
 | daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes (Daphne games) | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
-| desktop               | Desktop Applications                           | N/A                               |                                   | No           |                                      |
+| desktop               | Desktop Applications                           | N/A                               |                                   | No           | Shortcut in root folder              |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)** [UMW*],<br>Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |
-| epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shell script/batch file in root folder |
+| epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shortcut in root folder |
 | famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES | No           | Single archive or ROM file in root folder |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
@@ -2556,7 +2542,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gx4000                | Amstrad GX4000                                 | _Placeholder_                     |                                   |              |                                      |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
 | j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | Yes          | Single .jar file in root folder       |
-| kodi                  | Kodi Home Theatre Software                     | N/A                               |                                   | No           |                                      |
+| kodi                  | Kodi Home Theatre Software                     | N/A                               |                                   | No           | Shortcut in root folder               |
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | Shell script in root folder          |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | _Placeholder_                     |                                   |              |                                      |
@@ -2597,9 +2583,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pcenginecd            | NEC PC Engine CD                               | Beetle PCE                        | Beetle PCE FAST                   | Yes          |                                      |
 | pcfx                  | NEC PC-FX                                      | Beetle PC-FX                      |                                   |              |                                      |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
-| ports                 | Ports                                          | N/A                               |                                   | No           | Shell/batch script in separate folder (possibly combined with game data) |
+| ports                 | Ports                                          | N/A                               |                                   | No           | Shortcut in root folder or shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW],<br>PCSX2 Qt **(Standalone)** [W*],<br>PCSX2 wxWidgets **(Standalone)** [W*],<br>Play! **(Standalone)** [UMW*],<br>AetherSX2 **(Standalone)** [M] | Yes (No for Play!) |                                      |
-| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     |                                   | Yes          | In separate folder (one folder per game with complete file structure retained, renamed to the .ps3 extension) |
+| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     | RPCS3 [Symlink] **(Standalone)** [UMW*] | Yes    | Shortcut in root folder              |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
@@ -2619,7 +2605,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | solarus               | Solarus Game Engine                            | _Placeholder_                     |                                   |              |                                      |
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
-| steam                 | Valve Steam                                    | Steam application **(Standalone)** |                                  | No           | Shell script/batch file in root folder (and .url files supported on Windows) |
+| steam                 | Valve Steam                                    | Steam application **(Standalone)** |                                  | No           | Shortcut in root folder              |
 | stratagus             | Stratagus Game Engine                          | _Placeholder_                     |                                   |              |                                      |
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*] |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE                        |              |                                      |

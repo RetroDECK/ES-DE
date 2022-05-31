@@ -148,7 +148,21 @@ v1.2 maintenance release.
 
 ### Detailed list of changes
 
+* Added an %ENABLESHORTCUTS% variable to support launching of .desktop files on Unix and apps and aliases on macOS
+* Added support for launching .desktop files to the desktop, epic, kodi, lutris, ports and steam systems on Unix
+* Added support for launching .app directories and alias files to the desktop, epic, kodi, ports and steam systems on macOS
+* Changed the ps3 system to use shortcuts and created an alternative emulator entry for backward compatibility with symlinks
+* Added the .lnk file extension to the epic system on Windows
+* Added the pcwindows platform to the lutris system on Unix to improve scraping
+* Renamed the "Exit button combo" menu option to "Keyboard quit shortcut"
+* Changed the default quit shortcut from F4 to Alt + F4 on Windows and Linux
+* Changed the default quit shortcut from F4 to Command + Q on macOS
+* Added Ctrl + Q as a user-selectable quit shortcut
+* (Linux) Changed the manually downloaded Redream emulator location from ~/Applications/redream to ~/Applications/redream/redream
+
 ### Bug fixes
+
+* When running ES-DE in the background, quitting a game or application using Alt + F4 sometimes made ES-DE quit as well
 
 ## Version 1.2.4
 

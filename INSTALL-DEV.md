@@ -1191,10 +1191,10 @@ Below is an overview of the file layout with various examples. For the command t
         <!-- The equivalent setup of standalone MAME for Unix. If not existing, the start directory will be created on game launch. -->
         <command label="MAME (Standalone)">%EMULATOR_MAME% %STARTDIR%=~/.mame -rompath %ROMPATH%/arcade %BASENAME%</command>
 
-        <!-- An example on Unix which launches a script, this is for example used by source ports, Steam games etc. The %RUNINBACKGROUND%
-        variable does exactly what it sounds like, it keeps ES-DE running in the background while a game is launched. This is required
-        for launching Steam games properly. -->
-        <command>%RUNINBACKGROUND% bash %ROM%</command>
+        <!-- An example on Unix which launches either a .desktop file or a shell script. This is for example used by the ports system.
+        The %RUNINBACKGROUND% variable does exactly what it sounds like, it keeps ES-DE running in the background while the game is
+        launched. This is required for launching Steam games properly as well as for some other systems. -->
+        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
 
         <!-- The equivalent configuration as above, but for Windows.
         The optional %HIDEWINDOW% variable is used to hide the console window which would otherwise be visible when launching games
@@ -1251,6 +1251,8 @@ The following variables are expanded for the `command` tag:
 `%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching games. The variable can be placed anywhere in the launch command.
 
 `%ESCAPESPECIALS%` - This variable is only available on Windows and is used to escape the characters &()^=;, for the %ROM% variable, which would otherwise make binaries like cmd.exe fail when launching scripts or links. The variable can be placed anywhere in the launch command.
+
+`%ENABLESHORTCUTS%` - This variable is only available on Unix and macOS and is used to enable shortcuts to games and applications. On Unix these come in the form of .desktop files and ES-DE has a simple parser which essentially extracts the command defined in the Exec key and then executes it. Although some basic file structure checks are performed, the actual command listed with the Exec key is blindly executed. In addition to this the variables %F, %f, %U and %u are removed from the Exec key entry. On macOS shortcuts in the form of .app directories and alias files are executed using the `open -a` command. This makes it possible to launch both shortcuts from emulators and applications like Steam as well as aliases for any applications. However the latter need to be renamed to the .app file extension or it won't work. When a file is matching the .desktop or .app extension respectively, the emulator command defined using the %EMULATOR% variable will be stripped. An %EMULATOR% entry is however still required for the %ENABLESHORTCUTS% variable to work, the intention is to combine shortcuts with the ability to launch shell scripts without having to setup alternative emulators. The %ROM% variable is expanded to the command to execute when using %ENABLESHORTCUTS%, which also means that this variable has to be used, and for example %ROMRAW% will not work.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
