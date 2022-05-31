@@ -572,7 +572,7 @@
         <path>%ROMPATH%/lutris</path>
         <extension>.desktop .sh</extension>
         <command>%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <platform>pc</platform>
+        <platform>pc, pcwindows</platform>
         <theme>lutris</theme>
     </system>
     <system>
