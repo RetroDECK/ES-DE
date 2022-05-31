@@ -332,8 +332,8 @@
         <name>desktop</name>
         <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%/desktop</path>
-        <extension>.sh</extension>
-        <command>%EMULATOR_OS-SHELL% %ROM%</command>
+        <extension>.desktop .sh</extension>
+        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc</platform>
         <theme>desktop</theme>
     </system>
@@ -383,8 +383,8 @@
         <name>epic</name>
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%/epic</path>
-        <extension>.sh</extension>
-        <command>%EMULATOR_OS-SHELL% %ROM%</command>
+        <extension>.desktop .sh</extension>
+        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pcwindows</platform>
         <theme>epic</theme>
     </system>
@@ -561,8 +561,8 @@
         <name>kodi</name>
         <fullname>Kodi Home Theatre Software</fullname>
         <path>%ROMPATH%/kodi</path>
-        <extension>.sh</extension>
-        <command>%EMULATOR_OS-SHELL% %ROM%</command>
+        <extension>.desktop .sh</extension>
+        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc</platform>
         <theme>kodi</theme>
     </system>
@@ -570,8 +570,8 @@
         <name>lutris</name>
         <fullname>Lutris Open Gaming Platform</fullname>
         <path>%ROMPATH%/lutris</path>
-        <extension>.sh</extension>
-        <command>%EMULATOR_OS-SHELL% %ROM%</command>
+        <extension>.desktop .sh</extension>
+        <command>%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc</platform>
         <theme>lutris</theme>
     </system>
@@ -976,8 +976,8 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%/ports</path>
-        <extension>.sh</extension>
-        <command>%EMULATOR_OS-SHELL% %ROM%</command>
+        <extension>.desktop .sh</extension>
+        <command>%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc</platform>
         <theme>ports</theme>
     </system>
@@ -996,8 +996,9 @@
         <name>ps3</name>
         <fullname>Sony PlayStation 3</fullname>
         <path>%ROMPATH%/ps3</path>
-        <extension>.ps3 .PS3 .ps3dir .PS3DIR</extension>
-        <command label="RPCS3 (Standalone)">%EMULATOR_RPCS3% --no-gui %ROM%</command>
+        <extension>.desktop .ps3 .PS3 .ps3dir .PS3DIR</extension>
+        <command label="RPCS3 (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="RPCS3 [Symlink] (Standalone)">%EMULATOR_RPCS3% --no-gui %ROM%</command>
         <platform>ps3</platform>
         <theme>ps3</theme>
     </system>
@@ -1223,8 +1224,8 @@
         <name>steam</name>
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%/steam</path>
-        <extension>.sh</extension>
-        <command>%RUNINBACKGROUND% bash %ROM%</command>
+        <extension>.desktop .sh</extension>
+        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>
     </system>
