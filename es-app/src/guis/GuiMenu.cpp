@@ -1059,24 +1059,31 @@ void GuiMenu::openOtherOptions()
         }
     });
 
-    // Exit button configuration.
-    auto exit_button_config = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "EXIT BUTTON COMBO", false);
-    std::string selectedExitButtonCombo = Settings::getInstance()->getString("ExitButtonCombo");
-    exit_button_config->add("F4", "F4", selectedExitButtonCombo == "F4");
-    exit_button_config->add("Alt + F4", "AltF4", selectedExitButtonCombo == "AltF4");
+    // Keyboard quit shortcut.
+    auto keyboardQuitShortcut = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "KEYBOARD QUIT SHORTCUT", false);
+    std::string selectedShortcut {Settings::getInstance()->getString("KeyboardQuitShortcut")};
 #if defined(_WIN64) || defined(__unix__)
-    exit_button_config->add("Alt + Q", "AltQ", selectedExitButtonCombo == "AltQ");
+    keyboardQuitShortcut->add("Alt + F4", "AltF4", selectedShortcut == "AltF4");
+    keyboardQuitShortcut->add("Ctrl + Q", "CtrlQ", selectedShortcut == "CtrlQ");
+    keyboardQuitShortcut->add("Alt + Q", "AltQ", selectedShortcut == "AltQ");
 #endif
 #if defined(__APPLE__)
-    exit_button_config->add("\u2318 + Q", "CmdQ", selectedExitButtonCombo == "CmdQ");
+    keyboardQuitShortcut->add("\u2318 + Q", "CmdQ", selectedShortcut == "CmdQ");
+    keyboardQuitShortcut->add("Ctrl + Q", "CtrlQ", selectedShortcut == "CtrlQ");
+    keyboardQuitShortcut->add("Alt + Q", "AltQ", selectedShortcut == "AltQ");
 #endif
-    s->addWithLabel("EXIT BUTTON COMBO", exit_button_config);
-    s->addSaveFunc([exit_button_config, s] {
-        if (exit_button_config->getSelected() !=
-            Settings::getInstance()->getString("ExitButtonCombo")) {
-            Settings::getInstance()->setString("ExitButtonCombo",
-                                               exit_button_config->getSelected());
+    keyboardQuitShortcut->add("F4", "F4", selectedShortcut == "F4");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the keyboard quit shortcut to the first entry in this case.
+    if (keyboardQuitShortcut->getSelectedObjects().size() == 0)
+        keyboardQuitShortcut->selectEntry(0);
+    s->addWithLabel("KEYBOARD QUIT SHORTCUT", keyboardQuitShortcut);
+    s->addSaveFunc([keyboardQuitShortcut, s] {
+        if (keyboardQuitShortcut->getSelected() !=
+            Settings::getInstance()->getString("KeyboardQuitShortcut")) {
+            Settings::getInstance()->setString("KeyboardQuitShortcut",
+                                               keyboardQuitShortcut->getSelected());
             s->setNeedsSaving();
         }
     });

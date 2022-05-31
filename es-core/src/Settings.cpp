@@ -223,7 +223,11 @@ void Settings::setDefaults()
     mIntMap["MaxVRAM"] = {256, 256};
 #endif
     mIntMap["DisplayIndex"] = {1, 1};
-    mStringMap["ExitButtonCombo"] = {"F4", "F4"};
+#if defined(__APPLE__)
+    mStringMap["KeyboardQuitShortcut"] = {"CmdQ", "CmdQ"};
+#else
+    mStringMap["KeyboardQuitShortcut"] = {"AltF4", "AltF4"};
+#endif
     mStringMap["SaveGamelistsMode"] = {"always", "always"};
 #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = {false, false};

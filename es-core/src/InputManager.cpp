@@ -24,12 +24,11 @@
 #define KEYBOARD_GUID_STRING "-1"
 #define CEC_GUID_STRING "-2"
 
-int SDL_USER_CECBUTTONDOWN = -1;
-int SDL_USER_CECBUTTONUP = -1;
-
-// Save button states for combo-button exit support and predefine exit option-function map.
-static bool sAltDown {false};
-static bool sLguiDown {false};
+namespace
+{
+    int SDL_USER_CECBUTTONDOWN {-1};
+    int SDL_USER_CECBUTTONUP {-1};
+} // namespace
 
 InputManager::InputManager() noexcept
     : mWindow {Window::getInstance()}
@@ -334,8 +333,8 @@ InputConfig* InputManager::getInputConfigByDevice(int device)
 
 bool InputManager::parseEvent(const SDL_Event& event)
 {
-    bool causedEvent = false;
-    int32_t axisValue;
+    bool causedEvent {false};
+    int32_t axisValue {0};
 
     switch (event.type) {
         case SDL_CONTROLLERAXISMOTION: {
@@ -418,35 +417,37 @@ bool InputManager::parseEvent(const SDL_Event& event)
             return true;
         }
         case SDL_KEYDOWN: {
-
-            // Save button states for alt and command.
-            if (event.key.keysym.sym == SDLK_LALT)
-                sAltDown = true;
-            if (event.key.keysym.sym == SDLK_LGUI)
-                sLguiDown = true;
-
             if (event.key.keysym.sym == SDLK_BACKSPACE && SDL_IsTextInputActive())
                 mWindow->textInput("\b");
 
             if (event.key.repeat)
                 return false;
 
-            // Handle application exit.
-            bool exitState;
-            std::string exitOption = Settings::getInstance()->getString("ExitButtonCombo");
-            if (exitOption == "AltF4")
-                exitState = event.key.keysym.sym == SDLK_F4 && sAltDown;
-            else if (exitOption == "CmdQ")
-                exitState = event.key.keysym.sym == SDLK_q && sLguiDown;
-            else if (exitOption == "AltQ")
-                exitState = event.key.keysym.sym == SDLK_q && sAltDown;
-            else
-                exitState = event.key.keysym.sym == SDLK_F4;
-            if (exitState) {
-                SDL_Event quit;
-                quit.type = SDL_QUIT;
-                SDL_PushEvent(&quit);
-                return false;
+            // There is no need to handle the OS-default quit shortcut (Alt + F4 on Windows and
+            // Linux and Command + Q on macOS) as that's taken care of by the window manager.
+            std::string quitShortcut {Settings::getInstance()->getString("KeyboardQuitShortcut")};
+#if defined(__APPLE__)
+            if (quitShortcut != "CmdQ") {
+#else
+            if (quitShortcut != "AltF4") {
+#endif
+                bool quitES {false};
+                if (quitShortcut == "F4" && event.key.keysym.sym == SDLK_F4 &&
+                    !(event.key.keysym.mod & KMOD_LALT))
+                    quitES = true;
+                else if (quitShortcut == "CtrlQ" && event.key.keysym.sym == SDLK_q &&
+                         event.key.keysym.mod & KMOD_CTRL)
+                    quitES = true;
+                else if (quitShortcut == "AltQ" && event.key.keysym.sym == SDLK_q &&
+                         event.key.keysym.mod & KMOD_LALT)
+                    quitES = true;
+
+                if (quitES) {
+                    SDL_Event quit;
+                    quit.type = SDL_QUIT;
+                    SDL_PushEvent(&quit);
+                    return false;
+                }
             }
 
             mWindow->input(getInputConfigByDevice(DEVICE_KEYBOARD),
@@ -454,13 +455,6 @@ bool InputManager::parseEvent(const SDL_Event& event)
             return true;
         }
         case SDL_KEYUP: {
-
-            // Release button states.
-            if (event.key.keysym.sym == SDLK_LALT)
-                sAltDown = false;
-            if (event.key.keysym.sym == SDLK_LGUI)
-                sLguiDown = false;
-
             mWindow->input(getInputConfigByDevice(DEVICE_KEYBOARD),
                            Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));
             return true;
