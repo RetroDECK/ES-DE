@@ -878,58 +878,29 @@ Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U sy
 
 #### Sony PlayStation 3
 
-The RPCS3 emulator requires a bit of special setup.
+Adding PS3 games to ES-DE is accomplished by using shortcuts. In the past symlinks were used instead, but since shortcuts are much easier to use, the old method has been deprecated and is not described here any longer. If you have existing games setup using symlinks, then you need to change to the alternative emulator _RPCS3 [Symlink] (Standalone)_ or you won't be able to launch them.
 
-On Windows RPCS3 does not ship with an installer but rather as a zip file that contains all application files. You will need to unzip the content and manually add that directory to your environment Path variable so that ES-DE will be able to find the emulator binary rpcs3.exe, or you can optionally place the RPCS3 directory inside the ES-DE installation directory in which case it will be found when launching a game. Both these options are described in more detail [here](USERGUIDE-DEV.md#specific-notes-for-windows)
+If using the Flatpak release of RPCS3 on Linux and your games are stored on an external device (such as a memory card), then you need to give RPCS3 the necessary permissions. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
-The macOS release ships as a regular DMG file that is installed as usual.
+First install your games inside RPCS3, then right click on each entry and select _Create Shortcut_ followed by _Create Desktop Shortcut_. On Windows this will create shortcuts with the .lnk extension, on Unix/Linux they will have the .desktop extension and on macOS they will have the .app extension.
 
-On Linux RPCS3 is shipped as a Snap package, Flatpak package or AppImage. If installed as a Snap or Flatpak or if built from source code, ES-DE should be able to easily locate the emulator binary.
-
-But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
-
-If using the Flatpak release and your games are stored on an external device (such as a memory card if using a Steam Deck), you need to give RPCS3 the necessary permissions. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
-
-As for the game installation on both Windows and Linux as well as on macOS, you need to retain the directory structure of the Blu-ray disc or the directory created by installing the .pkg file. Each directory needs to be renamed by adding the .ps3 extension, which will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
-
-Here's an example of what a Blu-ray disc directory could look like:
+Then simply move these files from your desktop to your ~/ROMs/ps3 directory and you're done. Here's an example of what this could look like on Linux:
 ```
-~/ROMs/ps3/Gran Turismo 5.ps3
+~/ROMs/ps3/Bejeweled 2.desktop
+~/ROMs/ps3/Gran Turismo 5.desktop
 ```
 
-It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3 extension.
-
-Here's how to do it on Linux and macOS:
+Note that if using the Flatpak release of RPCS3 on Linux there is currently a bug where the .desktop files will include the wrong path to the emulator binary. The Exec key will look something like this:
 ```
-cd ~/ROMs
-ln -s ~/games/PS3/Gran\ Turismo\ 5 Gran\ Turismo\ 5.ps3
+Exec="/app/bin/rpcs3" --no-gui "/home/myusername/.var/app/net.rpcs3.RPCS3/config/rpcs3/dev_hdd0/game/NPUA30002"
 ```
 
-And here's how to do it on Windows (you need to run this as Administrator):
+This you need to change to the full path of the emulator binary, such as:
 ```
-cd C:\Users\Myusername\ROMs\ps3
-mklink /D "Gran Turismo 5.ps3" "C:\Games\PS3\Gran Turismo 5"
-```
-
-If you've installed a .pkg using RPCS3 you can either symlink to the installation directory or move the directory to the ROMs folder. Also in this case the directory (or symlink) needs to be named with the .ps3 extension.
-
-An example on Linux:
-```
-cd ~/ROMs
-ln -s ~/.config/rpcs3/dev_hdd0/game/NPUA30002 Bejeweled2.ps3
+Exec="/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3" --no-gui "/home/myusername/.var/app/net.rpcs3.RPCS3/config/rpcs3/dev_hdd0/game/NPUA30002"
 ```
 
-This example is for the AppImage version of RPCS3, for the Snap or Flatpak versions, the installed games will be located in a different directory.
-
-Here's how to achieve the same on Windows:
-```
-cd C:\Users\Myusername\ROMs\ps3
-mklink /D "Bejeweled2.ps3" "C:\Emulators\RPCS3\dev_hdd0\game\NPUA30002"
-```
-
-Of course you can name the symlink anything you want as long as it has the .ps3 extension.
-
-Apparently some specific games have issues launching when using symlinks so you need to test and experiment with what works for your collection.
+If using the AppImage release of RPCS3 on Linux another issue may be that the path to the emulator could change when upgrading to a newer release, which may or may not require manual updates to the desktop files.
 
 Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the RPCS3 documentation.
 
@@ -1022,134 +993,116 @@ The only drawback of this approach is that when scraping using TheGamesDB you wi
 
 A final alternative is to use _folder links_ to keep the directory structure intact while still being able to launch the game file directly without having to enter the directory, but for ScummVM specifically that is not really recommended.
 
-#### Ports
+#### Ports and desktop applications
 
-Ports are not executed using emulators, but are rather applications running natively on the operating system.
+As ports and desktop applications are handled in exactly the same way in ES-DE both of these are described in this section. For these systems it's generally native applications rather than emulators that are executed. There are two main approaches to setting up such entries and these are _shortcuts_ and _scripts_. Note that these can be mixed in the same system, you can have some entries that are shortcuts and some that are scripts and they will still all work.
 
-On Windows it's straightforward to add these to ES-DE, simply copy the Start Menu entries for your games into the ~\ROMs\ports directory. These files have the .lnk extension and can be launched directly from within ES-DE.
+**Shortcuts**
 
-For Linux and macOS it's a bit more complicated.  The easiest way to handle these is to add a simple shell script where you can customize the exact launch parameters for the game. It's possible to add these files directly to the root of the ports folder, but normally it's recommended to setup a separate directory per game as there may be more than a single file required. For instance you often want to have easy access to the game setup utility which may have to be executed separately from the actual game.
+Shortcuts are very easy to setup, on Windows you can simply copy any .lnk file from the Start Menu into the `ports` or `desktop` ROMs folders and then you can launch them directly from inside ES-DE. You can also create shortcuts manually to any file by right clicking on it in Explorer and selecting _Create shortcut_.
 
-That's possibly also true on Windows, so even when just copying .lnk files from the Start Menu it may be a good idea to separate the games into their own folders.
+Likewise on Unix you can copy any .desktop shortcut into the ROMs directories and they can then be launched by ES-DE.
 
-Here's an example for setting up Chocolate-Doom, GZDoom and DarkPlaces on Unix:
-
+Here's an example on Windows:
 ```
-~/ROMs/ports/Chocolate-Doom/chocolate-doom.sh
-~/ROMs/ports/Chocolate-Doom/chocolate-doom-setup.sh
+~\ROMs\ports\ecwolf.lnk
+~\ROMs\ports\openxcom.lnk
+```
+
+And here's an example on Unix:
+```
+~/ROMs/desktop/org.libretro.RetroArch.desktop
+~/ROMs/desktop/spotify.desktop
+```
+
+On macOS there are two ways to create shortcuts to applications, the first option is .app folders which can be directly executed by ES-DE and the second option is aliases. To create an alias for an appliction, right click on it in Finder, then select _Make Alias_. Following this move the alias file to the `ports` or `desktop` ROMs directory and as a final step you need to add the .app extension to the file.
+
+Here's an example using alias files on macOS:
+```
+~/ROMs/desktop/Chess.app
+~/ROMs/desktop/System Preferences.app
+```
+
+**Scripts**
+
+For more advanced setups you may want to use scripts. While it's possible to add these files directly to the root of the ROMs directories it's instead generally recommended to setup a separate directory per game as there may be more than a single file required. For instance you may have multiple game variants or mods or you may want to keep game data files within the ROMs directory tree. Only examples for Unix are provided here, but it's the same process for Windows and macOS except that in Windows .bat batch files are used instead of shell scripts.
+
+Here's a setup of GZDoom and vkQuake:
+```
 ~/ROMs/ports/GZDoom/gzdoom.sh
-~/ROMs/ports/DarkPlaces/darkplaces.sh
-```
-
-chocolate-doom.sh:
-
-```
-#!/bin/bash
-chocolate-doom
-```
-
-chocolate-doom-setup.sh:
-
-```
-#!/bin/bash
-chocolate-doom-setup
+~/ROMs/ports/vkQuake/vkquake.sh
+~/ROMs/ports/vkQuake/vkquake_arcane_dimensions.sh
 ```
 
 gzdoom.sh:
-
 ```
 #!/bin/bash
-GZ_dir=/home/myusername/Games/Ports/GZDoom
+GZ_dir=~/ROMs/ports/GZDoom
 
-gzdoom -iwad /home/myusername/Games/Ports/GameData/Doom/doom.wad -config $GZ_dir/gzdoom.ini -savedir $GZ_dir/Savegames \
+gzdoom -iwad $GZ_dir/GameData/Doom/doom.wad -config $GZ_dir/gzdoom.ini -savedir $GZ_dir/Savegames \
 -file $GZ_dir/Mods/DoomMetalVol4_44100.wad \
 -file $GZ_dir/Mods/brutalv21.pk3 \
 -file $GZ_dir/Mods/DHTP-2019_11_17.pk3
 ```
 
-darkplaces.sh:
-
+vkquake.sh:
 ```
 #!/bin/bash
-darkplaces -basedir ~/Games/Ports/GameData/Quake
+~/Applications/vkquake/vkquake.AppImage -basedir ~/ROMs/ports/vkQuake/GameData/Quake
+```
+
+vkquake_arcane_dimensions.sh:
+```
+#!/bin/bash
+~/Applications/vkquake/vkquake.AppImage -basedir ~/ROMs/ports/vkQuake/GameData/Quake -game ad
 ```
 
 You don't need to set execution permissions for these scripts, ES-DE will run them anyway.
 
 #### Lutris
 
-Lutris runs only on Unix so it's only present as a placeholder in the es_systems.xml files for macOS and Windows.
+Adding these games is most easily accomplished by using .desktop files that can be created from inside the Lutris application. Right click on each game you would like to add to ES-DE and select _Create desktop shortcut_, then simply move these shortcuts from your desktop to the `lutris` ROMs directory. You may also want to rename some of the files as their names may be a bit cryptic which will confuse the scraper. Remember that it's the physical filenames that will show up inside ES-DE.
 
-These games are executed via the Lutris binary (well it's actually a Python script) and you simply create a shell script per game inside the lutris system directory.
-
-Add the game information to each shell script using the syntax `lutris lutris:rungame/<game name>`
-
-You can see the list of installed games by running this command:
-```
-lutris --list-games
-```
-
-Here's an example for adding Diablo and Fallout:
+After doing this you should end up with something like the following:
 
 ```
-~/ROMs/lutris/Diablo.sh
-~/ROMs/lutris/Fallout.sh
+~/ROMs/lutris/Diablo.desktop
+~/ROMs/lutris/Fallout.desktop
 ```
-
-Diablo.sh:
-
-```
-lutris lutris:rungame/diablo
-```
-
-Fallout.sh:
-
-```
-lutris lutris:rungame/fallout
-```
-
-You don't need to set execution permissions for these scripts, ES-DE will run them anyway.
-
-As an alternative, you can add the Lutris games to the Ports game system, if you prefer to not separate them. The instructions above are identical in this case except that the shell scripts should be located inside the `ports` directory rather than inside the `lutris` directory.
+As an alternative you can add Lutris games to the Ports system using the procedure described above.
 
 #### Steam
 
-**Note:** Launching Steam games currently has some limitations such as missing error messages when a game fails to start as well as missing game output logging. ES-DE also needs to keep running in the background for technical reasons, which has some minor side effects.
+These games can easily be added to ES-DE using shortcuts, just be aware that this requires that the games have been installed locally.
 
-On Windows it's straightforward to add Steam games to ES-DE, simply copy the Start Menu entries for your Steam games into the ~\ROMs\steam directory. These files have the .url extension and can be launched directly from within ES-DE.
+Make sure to have the Steam application minimized when launching games from ES-DE or otherwise Steam may try to steal focus and you would need to manually switch to the ES-DE window after quitting a game. Unfortunately this does not seem to work on macOS as Steam insists on stealing focus on this operating system.
 
-For Linux and macOS it's a bit more complicated. For these platforms it's recommended to place shell scripts directly in the steam system directory, with filenames corresponding to the game names.
+**Windows**
 
-Add the game information to each shell script using the syntax `<steam binary> steam://rungameid/<game ID>`
-
-Here's an example for the game Broforce, first on Unix with the filename `Broforce.sh`:
+Simply copy the Start Menu entries for your Steam games into the ~\ROMs\steam directory. These files have the .url extension and can be launched directly from within ES-DE. For example you may end up with something like the following:
 
 ```
-steam steam://rungameid/274190
+~\ROMs\steam\Axiom Verge.url
+~\ROMs\steam\Undertale.url
 ```
 
-And on macOS with the filename `Broforce.sh`:
-```
-/Applications/Steam.app/Contents/MacOS/steam_osx steam://rungameid/274190
-```
+**Unix/Linux**
 
-The game ID can be found by going to [https://store.steampowered.com](https://store.steampowered.com) and searching for a game. The Broforce example would have an URL such as this:
-
-https://store.steampowered.com/app/274190/Broforce
-
-On Linux it's very easy to find all your game ID's by looking in the desktop entries.
+Copy the .desktop shortcuts for your games into the ~/ROMs/steam directory. If your desktop environment does not allow you to copy them directly from the application menu then you may need to navigate to `~/.local/share/applications` using your file manager and copy the .desktop files from there. Alternatively you can also create shortcuts from inside Steam by right clicking on the game, selecting _Manage_ and then _Add desktop shortcut_. These file can then be moved from your desktop to your ~/ROMs/steam directory. This is an example of what you could end up with:
 
 ```
-grep steam ~/.local/share/applications/*desktop | grep rungameid
-/home/myusername/.local/share/applications/Broforce.desktop:Exec=steam steam://rungameid/274190
-/home/myusername/.local/share/applications/FEZ.desktop:Exec=steam steam://rungameid/224760
-/home/myusername/.local/share/applications/INSIDE.desktop:Exec=steam steam://rungameid/304430
-/home/myusername/.local/share/applications/Subnautica.desktop:Exec=steam steam://rungameid/264710
+~/ROMs/steam/Axiom Verge.desktop
+~/ROMs/steam/Undertale.desktop
 ```
 
-This of course assumes that you have menu entries setup for your Steam games.
+**macOS**
 
-To greatly simplify this setup, automatic Steam library import is planned for a future ES-DE release.
+On macOS the shortcuts come with the .app extension and are actually directories rather than files. They work exactly as regular shortcuts though. Unless you already have shortcuts available for your games, then go into Steam, right click on the game and select _Manage_ followed by _Add desktop shortcut_. Then move these .app directories to the ~/ROMs/steam directory. You should have something like the following after making these steps:
+
+```
+~/ROMs/steam/Axiom Verge.app/
+~/ROMs/steam/Undertale.app/
+```
 
 #### Hypseus Singe (Daphne)
 

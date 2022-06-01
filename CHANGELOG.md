@@ -155,7 +155,7 @@ v1.2 maintenance release.
 * Added the .lnk file extension to the epic system on Windows
 * Added the pcwindows platform to the lutris system on Unix to improve scraping
 * Renamed the "Exit button combo" menu option to "Keyboard quit shortcut"
-* Changed the default quit shortcut from F4 to Alt + F4 on Windows and Linux
+* Changed the default quit shortcut from F4 to Alt + F4 on Windows and Unix
 * Changed the default quit shortcut from F4 to Command + Q on macOS
 * Added Ctrl + Q as a user-selectable quit shortcut
 * (Linux) Changed the manually downloaded Redream emulator location from ~/Applications/redream to ~/Applications/redream/redream
