@@ -332,8 +332,9 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     int startEntry {0};
     float y {0.0f};
 
-    const float entrySize {std::max(floorf(font->getHeight(1.0f)),
-                                    floorf(static_cast<float>(font->getSize())) * mLineSpacing)};
+    const float entrySize {
+        std::max(floorf(font->getHeight(1.0f)), floorf(static_cast<float>(font->getSize()))) *
+        mLineSpacing};
     const float lineSpacingHeight {floorf(font->getHeight(mLineSpacing) - font->getHeight(1.0f))};
 
     // This extra vertical margin is technically incorrect, but it adds a little extra leeway
