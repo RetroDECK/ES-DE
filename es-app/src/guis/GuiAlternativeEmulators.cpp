@@ -23,9 +23,14 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
     // Horizontal sizes for the system and label entries.
     float systemSizeX {mMenu.getSize().x / 3.27f};
 
-    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
-         it != SystemData::sSystemVector.cend(); ++it) {
+    std::vector<SystemData*> sortedSystems {SystemData::sSystemVector};
 
+    // Sort systems by short name.
+    std::sort(std::begin(sortedSystems), std::end(sortedSystems), [](SystemData* a, SystemData* b) {
+        return Utils::String::toUpper(a->getName()) < Utils::String::toUpper(b->getName());
+    });
+
+    for (auto it = sortedSystems.cbegin(); it != sortedSystems.cend(); ++it) {
         // Only include systems that have at least two command entries, unless the system
         // has an invalid entry.
         if ((*it)->getAlternativeEmulator().substr(0, 9) != "<INVALID>" &&
@@ -86,10 +91,14 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
                            systemText->getSize().y);
 
         row.addElement(labelText, false);
-        row.makeAcceptInputHandler([this, it, labelText] {
+
+        SystemData* systemEntry {
+            *std::find(SystemData::sSystemVector.cbegin(), SystemData::sSystemVector.cend(), *it)};
+
+        row.makeAcceptInputHandler([this, systemEntry, labelText] {
             if (labelText->getValue() == ViewController::CROSSEDCIRCLE_CHAR + " CLEARED ENTRY")
                 return;
-            selectorWindow(*it);
+            selectorWindow(systemEntry);
         });
 
         mMenu.addRow(row);
@@ -194,7 +203,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
     // reference.
     float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    float maxWidthModifier {glm::clamp(0.72f * aspectValue, 0.50f, 0.92f)};
+    float maxWidthModifier {glm::clamp(0.77f * aspectValue, 0.50f, 0.92f)};
     float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
 
     // Set the width of the selector window to the menu width, unless the system full name is
@@ -202,7 +211,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
     // above.
     float systemTextWidth {
         Font::get(FONT_SIZE_LARGE)->sizeText(Utils::String::toUpper(system->getFullName())).x *
-        1.05f};
+        1.15f};
 
     float width {0.0f};
     float menuWidth {mMenu.getSize().x};
