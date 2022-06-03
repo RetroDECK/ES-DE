@@ -164,8 +164,7 @@ void SystemView::render(const glm::mat4& parentTrans)
 
     mPrimary->render(trans);
 
-    // For legacy themes the carousel is always rendered on top of all other elements.
-    if (!mLegacyMode && !fade)
+    if (!fade || mLegacyMode)
         renderElements(parentTrans, true);
 }
 
@@ -1206,7 +1205,10 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
 
             if (mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
                 for (auto element : mSystemElements[index].legacyExtras) {
-                    if (mFadeTransitions || element->getDimming() != 1.0f)
+                    if (abovePrimary && element->getZIndex() < primaryZIndex)
+                        continue;
+                    if ((mFadeTransitions || element->getDimming() != 1.0f) &&
+                        element->getZIndex() < primaryZIndex)
                         element->setDimming(1.0f - mFadeOpacity);
                     element->render(elementTrans);
                 }
@@ -1226,7 +1228,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                 }
             }
 
-            if (mLegacyMode) {
+            if (mLegacyMode && !abovePrimary) {
                 if (mFadeTransitions)
                     mLegacySystemInfo->setDimming(1.0f - mFadeOpacity);
                 mLegacySystemInfo->render(elementTrans);
