@@ -23,7 +23,6 @@
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
-* Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
 * Removed the "Preload gamelists on startup" setting
@@ -92,8 +91,10 @@
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed the carousel properties to be more generic by renaming "logo" to "item", e.g. itemSize, maxItemCount etc.
+* Added a wheelHorizontalAlignment property for aligning the carousel within the overall element area (horizontal/vertical wheel only)
 * Added reflections support to the carousel
 * Added carousel theme support for setting the opacity for unfocused entries
+* Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
 * Removed a lot of unnecessary applyTheme() calls when updating help prompts
@@ -153,16 +154,25 @@ v1.2 maintenance release.
 * Added support for launching .app directories and alias files to the desktop, epic, kodi, ports and steam systems on macOS
 * Changed the ps3 system to use shortcuts and created an alternative emulator entry for backward compatibility with symlinks
 * Added the .lnk file extension to the epic system on Windows
+* Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
+* (Linux) Changed to find rule wildcard matching for the AppImages for Dolphin, mGBA, Play!, RPCS3, Xemu and Yuzu
+* Changed the sorting in the Alternative emulators interface to use short system names instead of full system names
 * Added the pcwindows platform to the lutris system on Unix to improve scraping
 * Renamed the "Exit button combo" menu option to "Keyboard quit shortcut"
 * Changed the default quit shortcut from F4 to Alt + F4 on Windows and Unix
 * Changed the default quit shortcut from F4 to Command + Q on macOS
 * Added Ctrl + Q as a user-selectable quit shortcut
+* Increased the window width slightly for the Alternative emulators interface when displaying long system names
+* Changed to a new API key for TheGamesDB
 * (Linux) Changed the manually downloaded Redream emulator location from ~/Applications/redream to ~/Applications/redream/redream
 
 ### Bug fixes
 
 * When running ES-DE in the background, quitting a game or application using Alt + F4 sometimes made ES-DE quit as well
+* Thumbnails were not included in theme sets that used them for the Detailed view style
+* Game images were not included in theme sets that used them for the Video view style
+* The menu scroll indicators and title sometimes overlapped (e.g. seen in the Alternative emulators interface)
+* There was a small rounding error that caused a minimal distortion when rendering the menu titles
 
 ## Version 1.2.4
 

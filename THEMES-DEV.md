@@ -82,7 +82,7 @@ The following are the most important changes compared to the legacy theme struct
 * The `video` element properties `showSnapshotNoVideo` and `showSnapshotDelay` have been removed
 * The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` element)
 * The `forceUppercase` property has been replaced with the more versatile `letterCase` property
-* Many property names for the carousel have been renamed, with _logo_ being replaced by _item_ as this element can now be used in both the gamelist and system views. As well, setting the alignment will not automatically add any margins as is the case for legacy themes. These can still be set manually using the `horizontalOffset` and `verticalOffset` properties if needed
+* Many property names for the carousel have been renamed, with _logo_ being replaced by _item_ as this element can now be used in both the gamelist and system views. As well, setting the alignment will not automatically add any margins as is the case for legacy themes. These can still be set manually using the `horizontalOffset` and `verticalOffset` properties if needed. The way that alignment works in general for both carousel items and the overall carousel has also changed
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
 * The carousel property maxLogoCount is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine
 * The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
@@ -1446,6 +1446,10 @@ Properties:
 * `itemVerticalAlignment` - type: STRING
     - Sets `staticItem` / `itemType` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
     - Valid values are `top`, `center` or `bottom`
+    - Default is `center`
+* `wheelHorizontalAlignment` - type: STRING
+    - Sets the alignment of the actual carousel inside the overall element area. This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
+    - Valid values are `left`, `center` or `right`
     - Default is `center`
 * `horizontalOffset` - type: FLOAT
     - Offsets the carousel horizontally inside its designated area, as defined by the `size` property. The value of this property is relative to the width of the carousel (with `1` being equivalent to its entire width). This property can be used to add a margin if using `itemHorizontalAlignment`.

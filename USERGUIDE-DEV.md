@@ -895,7 +895,7 @@ Note that if using the Flatpak release of RPCS3 on Linux there is currently a bu
 Exec="/app/bin/rpcs3" --no-gui "/home/myusername/.var/app/net.rpcs3.RPCS3/config/rpcs3/dev_hdd0/game/NPUA30002"
 ```
 
-This you need to change to the full path of the emulator binary, such as:
+You need to change this to the full path of the emulator binary, such as:
 ```
 Exec="/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3" --no-gui "/home/myusername/.var/app/net.rpcs3.RPCS3/config/rpcs3/dev_hdd0/game/NPUA30002"
 ```
@@ -995,7 +995,7 @@ A final alternative is to use _folder links_ to keep the directory structure int
 
 #### Ports and desktop applications
 
-As ports and desktop applications are handled in exactly the same way in ES-DE both of these are described in this section. For these systems it's generally native applications rather than emulators that are executed. There are two main approaches to setting up such entries and these are _shortcuts_ and _scripts_. Note that these can be mixed in the same system, you can have some entries that are shortcuts and some that are scripts and they will still all work.
+As ports and desktop applications are handled in exactly the same way in ES-DE both of these are described in this section. For these systems it's generally native applications rather that emulated games that are executed. There are two main approaches to setting up such entries and these are _shortcuts_ and _scripts_. Note that these can be mixed in the same system, you can have some entries that are shortcuts and some that are scripts and they will still all work.
 
 **Shortcuts**
 
@@ -1015,7 +1015,7 @@ And here's an example on Unix:
 ~/ROMs/desktop/spotify.desktop
 ```
 
-On macOS there are two ways to create shortcuts to applications, the first option is .app folders which can be directly executed by ES-DE and the second option is aliases. To create an alias for an appliction, right click on it in Finder, then select _Make Alias_. Following this move the alias file to the `ports` or `desktop` ROMs directory and as a final step you need to add the .app extension to the file.
+On macOS there are two ways to create shortcuts to applications, the first option is .app folders which can be directly executed by ES-DE and the second option is aliases. To create an alias for an appliction, right click on it in Finder, then select _Make Alias_. Following this move the alias file to the `ports` or `desktop` ROMs directory. As a final step you need to add the .app extension to the file.
 
 Here's an example using alias files on macOS:
 ```
@@ -1061,7 +1061,7 @@ You don't need to set execution permissions for these scripts, ES-DE will run th
 
 #### Lutris
 
-Adding these games is most easily accomplished by using .desktop files that can be created from inside the Lutris application. Right click on each game you would like to add to ES-DE and select _Create desktop shortcut_, then simply move these shortcuts from your desktop to the `lutris` ROMs directory. You may also want to rename some of the files as their names may be a bit cryptic which will confuse the scraper. Remember that it's the physical filenames that will show up inside ES-DE.
+Adding these games is most easily accomplished by using .desktop files that can be created from inside the Lutris application. Right click on each game you would like to add to ES-DE and select _Create desktop shortcut_, then simply move these shortcuts from your desktop to the `lutris` ROMs directory. You may also want to rename some of the files as their names may be a bit cryptic which could confuse the scraper. Remember that it's the physical filenames that will show up inside ES-DE.
 
 After doing this you should end up with something like the following:
 
@@ -1088,7 +1088,7 @@ Simply copy the Start Menu entries for your Steam games into the ~\ROMs\steam di
 
 **Unix/Linux**
 
-Copy the .desktop shortcuts for your games into the ~/ROMs/steam directory. If your desktop environment does not allow you to copy them directly from the application menu then you may need to navigate to `~/.local/share/applications` using your file manager and copy the .desktop files from there. Alternatively you can also create shortcuts from inside Steam by right clicking on the game, selecting _Manage_ and then _Add desktop shortcut_. These file can then be moved from your desktop to your ~/ROMs/steam directory. This is an example of what you could end up with:
+Copy the .desktop shortcuts for your games into the ~/ROMs/steam directory. If your desktop environment does not allow you to copy them directly from the application menu then you may need to navigate to `~/.local/share/applications` using your file manager and copy the .desktop files from there. Alternatively you can also create shortcuts from inside Steam by right clicking on a game, selecting _Manage_ and then _Add desktop shortcut_. These file can then be moved from your desktop to your ~/ROMs/steam directory. This is an example of what you could end up with:
 
 ```
 ~/ROMs/steam/Axiom Verge.desktop
@@ -1097,7 +1097,7 @@ Copy the .desktop shortcuts for your games into the ~/ROMs/steam directory. If y
 
 **macOS**
 
-On macOS the shortcuts come with the .app extension and are actually directories rather than files. They work exactly as regular shortcuts though. Unless you already have shortcuts available for your games, then go into Steam, right click on the game and select _Manage_ followed by _Add desktop shortcut_. Then move these .app directories to the ~/ROMs/steam directory. You should have something like the following after making these steps:
+On macOS the shortcuts come with the .app extension and are actually directories rather than files. They work exactly as regular shortcuts though. Unless you already have shortcuts available for your games, then go into Steam, right click on a game and select _Manage_ followed by _Add desktop shortcut_. Then move these .app directories to the ~/ROMs/steam directory. You should have something like the following after making these steps:
 
 ```
 ~/ROMs/steam/Axiom Verge.app/
@@ -1110,7 +1110,7 @@ Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still ma
 
 The first step is to install the emulator. On Windows it's straightforward, download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
 
-Similarly on Linux, download the .tar.gz release that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
+Similarly on Linux, download the  [hypseus-singe_2.8.2a_ES-DE.tar.gz](https://gitlab.com/es-de/emulationstation-de/-/package_files/41533436/download) release that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
 ```
 /home/myusername/Applications/hypseus-singe/
 ```

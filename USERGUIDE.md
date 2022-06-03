@@ -618,10 +618,11 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name  | Emulator    | Filename configuration          |
-| :----------- | :---------- | :------------------------------ |
-| dreamcast    | Redream     | redream                         |
-| switch       | Ryujinx     | publish/Ryujinx                 |
+| System name  | Emulator      | Filename configuration          |
+| :----------- | :------------ | :------------------------------ |
+| daphne       | Hypseus Singe | hypseus-singe/hypseus.bin       |
+| dreamcast    | Redream       | redream                         |
+| switch       | Ryujinx       | publish/Ryujinx                 |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -1162,32 +1163,20 @@ To greatly simplify this setup, automatic Steam library import is planned for a 
 
 #### Hypseus Singe (Daphne)
 
-Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is very particular so make sure to read this section thoroughly to get it to work.
+Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is quite particular so make sure to read this section thoroughly to get it to work.
 
-The first step is to even get the emulator to run. On Windows it's straightforward, just download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
+The first step is to install the emulator. On Windows it's straightforward, download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
 
-For Linux there does not seem to be any precompiled release that is working reliably so you will need to compile it yourself. If running a distribution with access to the AUR, there is a Hypseus Singe release available but this seems to be broken somehow and does not seem to be usable. If the AUR release doesn't work for you, then make sure to uninstall it as it will otherwise be tried first and you'll never get LaserDisc games to work.
-
-Fortunately compiling Hypseus Singe is easy, just follow these steps (tested on Ubuntu 20.04 and 22.04):
+Similarly on Linux, download the  [hypseus-singe_2.8.2a_ES-DE.tar.gz](https://gitlab.com/es-de/emulationstation-de/-/package_files/41533436/download) release that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
 ```
-sudo apt install build-essential autoconf autotools-dev libtool libsdl2-dev libsdl2-gfx-dev libsdl2-image-dev libsdl2-ttf-dev libvorbis-dev
-git clone https://github.com/DirtBagXon/hypseus-singe.git
-mkdir hypseus-singe/build
-cd hypseus-singe/build
-cmake ../src
-make -j4
-mkdir -p ~/Applications/hypseus-singe
-cp -r ../fonts ~/Applications/hypseus-singe
-cp -r ../roms ~/Applications/hypseus-singe
-cp -r ../sound ~/Applications/hypseus-singe
-cp -r ../pics ~/Applications/hypseus-singe
-cp ../doc/hypinput.ini ~/Applications/hypseus-singe
-cp hypseus ~/Applications/hypseus-singe/hypseus.bin
+/home/myusername/Applications/hypseus-singe/
 ```
 
-Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit more involved than compiling code on Linux so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
+If the Applications directory doesn't exist yet, then just go ahead and create it and then unpack the emulator inside it. Just be aware that the name has to start with a capital A.
 
-After the emlulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
+Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
+
+After the emulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
 
 Controller configuration using the `hypinput.ini` file is described in the official Hypseus Singe documentation, but the following example is usable with Xbox 360-compatible controllers:
 
