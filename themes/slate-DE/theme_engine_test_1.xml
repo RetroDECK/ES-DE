@@ -2,7 +2,7 @@
     <view name="system">
         <carousel name="system_carousel">
             <type>vertical_wheel</type>
-            <size>0.25 1.0</size>
+            <size>0.23 1.0</size>
             <pos>0 0</pos>
             <staticItem>./${system.theme}/images/logo.svg</staticItem>
             <itemSize>0.15 0.125</itemSize>
@@ -10,6 +10,8 @@
             <itemRotation>6.5</itemRotation>
             <itemRotationOrigin>-5 0.4</itemRotationOrigin>
             <itemHorizontalAlignment>left</itemHorizontalAlignment>
+            <wheelHorizontalAlignment>right</wheelHorizontalAlignment>
+            <horizontalOffset>-0.05</horizontalOffset>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.070</fontSize>
             <letterCase>uppercase</letterCase>
@@ -116,8 +118,8 @@
             <interpolation>nearest</interpolation>
             <scrollFadeIn>true</scrollFadeIn>
             <zIndex>3</zIndex>
-            <opacity>0.5</opacity>
-            <saturation>0.3</saturation>
+            <opacity>0.6</opacity>
+            <saturation>0.6</saturation>
         </image>
         <image name="recent_game_image">
             <origin>0 0</origin>
