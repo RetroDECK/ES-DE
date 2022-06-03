@@ -124,6 +124,15 @@ void MenuComponent::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.055f);
 
     mGrid.setSize(mSize);
+
+    // Limit the title size to reserve space for the scroll indicators.
+    float indicatorsSize {mSize.x * 0.09f};
+
+    glm::vec2 titleSize {mTitle->getSize()};
+    mTitle->setSize(titleSize.x - indicatorsSize, titleSize.y);
+
+    glm::vec3 titlePos {mTitle->getPosition()};
+    mTitle->setPosition(titlePos.x + std::round(indicatorsSize / 2.0f), titlePos.y, titlePos.z);
 }
 
 void MenuComponent::addButton(const std::string& name,
