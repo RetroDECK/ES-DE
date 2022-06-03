@@ -262,6 +262,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemRotationOrigin", NORMALIZED_PAIR},
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},
+       {"wheelHorizontalAlignment", STRING},
        {"horizontalOffset", FLOAT},
        {"verticalOffset", FLOAT},
        {"reflections", BOOLEAN},

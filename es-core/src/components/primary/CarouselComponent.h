@@ -125,6 +125,7 @@ private:
     float mLineSpacing;
     Alignment mItemHorizontalAlignment;
     Alignment mItemVerticalAlignment;
+    Alignment mWheelHorizontalAlignment;
     float mUnfocusedItemOpacity;
     float mMaxItemCount;
     glm::vec2 mItemSize;
@@ -160,6 +161,7 @@ CarouselComponent<T>::CarouselComponent()
     , mLineSpacing {1.5f}
     , mItemHorizontalAlignment {ALIGN_CENTER}
     , mItemVerticalAlignment {ALIGN_CENTER}
+    , mWheelHorizontalAlignment {ALIGN_CENTER}
     , mUnfocusedItemOpacity {0.5f}
     , mMaxItemCount {3.0f}
     , mItemSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
@@ -502,10 +504,47 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     glm::vec2 itemSpacing {0.0f, 0.0f};
     float xOff {0.0f};
     float yOff {0.0f};
+    float scaleSize {mItemSize.x * mItemScale - mItemSize.x};
 
     if (mType == CarouselType::HORIZONTAL_WHEEL || mType == CarouselType::VERTICAL_WHEEL) {
         xOff = (mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.y);
         yOff = (mSize.y - mItemSize.y) / 2.0f;
+        // Alignment of the actual carousel inside to the overall component area.
+        if (mLegacyMode) {
+            if (mItemHorizontalAlignment == ALIGN_LEFT)
+                xOff = mSize.x / 10.0f;
+            else if (mItemHorizontalAlignment == ALIGN_RIGHT)
+                xOff = mSize.x - (mItemSize.x * 1.1f);
+            else
+                xOff = (mSize.x - mItemSize.x) / 2.0f;
+        }
+        else {
+            if (mWheelHorizontalAlignment == ALIGN_RIGHT) {
+                xOff += mSize.x / 2.0f;
+                if (mItemHorizontalAlignment == ALIGN_LEFT)
+                    xOff -= mItemSize.x / 2.0f + scaleSize;
+                else if (mItemHorizontalAlignment == ALIGN_RIGHT)
+                    xOff -= mItemSize.x / 2.0f;
+                else
+                    xOff -= mItemSize.x / 2.0f + scaleSize / 2.0f;
+            }
+            else if (mWheelHorizontalAlignment == ALIGN_LEFT) {
+                xOff -= (mSize.x / 2.0f);
+                if (mItemHorizontalAlignment == ALIGN_LEFT)
+                    xOff += mItemSize.x / 2.0f;
+                else if (mItemHorizontalAlignment == ALIGN_RIGHT)
+                    xOff += mItemSize.x / 2.0f + scaleSize;
+                else
+                    xOff += mItemSize.x / 2.0f + scaleSize / 2.0f;
+            }
+            else if (mWheelHorizontalAlignment == ALIGN_CENTER &&
+                     mItemHorizontalAlignment != ALIGN_CENTER) {
+                if (mItemHorizontalAlignment == ALIGN_RIGHT)
+                    xOff += scaleSize / 2.0f;
+                else if (mItemHorizontalAlignment == ALIGN_LEFT)
+                    xOff -= scaleSize / 2.0f;
+            }
+        }
     }
     else if (mType == CarouselType::VERTICAL) {
         itemSpacing.y = ((mSize.y - (mItemSize.y * mMaxItemCount)) / (mMaxItemCount)) + mItemSize.y;
@@ -803,6 +842,25 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    "<itemVerticalAlignment> defined as \""
                                 << alignment << "\"";
                 mItemVerticalAlignment = ALIGN_CENTER;
+            }
+        }
+
+        if (elem->has("wheelHorizontalAlignment")) {
+            const std::string alignment {elem->get<std::string>("wheelHorizontalAlignment")};
+            if (alignment == "left") {
+                mWheelHorizontalAlignment = ALIGN_LEFT;
+            }
+            else if (alignment == "right") {
+                mWheelHorizontalAlignment = ALIGN_RIGHT;
+            }
+            else if (alignment == "center") {
+                mWheelHorizontalAlignment = ALIGN_CENTER;
+            }
+            else {
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "<wheelHorizontalAlignment> defined as \""
+                                << alignment << "\"";
+                mWheelHorizontalAlignment = ALIGN_CENTER;
             }
         }
 
