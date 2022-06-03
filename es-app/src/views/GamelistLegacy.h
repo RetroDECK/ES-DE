@@ -36,6 +36,7 @@ void GamelistView::legacyPopulateFields()
     mImageComponents.back()->setOrigin(0.5f, 0.0f);
     mImageComponents.back()->setPosition(mSize.x / 2.0f, 0.0f);
     mImageComponents.back()->setDefaultZIndex(50.0f);
+    mImageComponents.back()->setVisible(false);
     addChild(mImageComponents.back().get());
 
     // Background.
@@ -50,6 +51,8 @@ void GamelistView::legacyPopulateFields()
     mImageComponents.back()->setOrigin(0.5f, 0.5f);
     mImageComponents.back()->setMaxSize(mSize.x * (0.25f - 2.0f * padding), mSize.y * 0.10f);
     mImageComponents.back()->setDefaultZIndex(25.0f);
+    mImageComponents.back()->setScrollFadeIn(true);
+    mImageComponents.back()->setVisible(false);
     addChild(mImageComponents.back().get());
 
     // Marquee.
@@ -57,9 +60,9 @@ void GamelistView::legacyPopulateFields()
     mImageComponents.back()->setThemeMetadata("image_md_marquee");
     mImageComponents.back()->setLinearInterpolation(true);
     mImageComponents.back()->setOrigin(0.5f, 0.5f);
-    mImageComponents.back()->setVisible(false);
     mImageComponents.back()->setMaxSize(mSize.x * (0.5f - 2.0f * padding), mSize.y * 0.18f);
     mImageComponents.back()->setDefaultZIndex(35.0f);
+    mImageComponents.back()->setVisible(false);
     addChild(mImageComponents.back().get());
 
     // Image.
@@ -224,6 +227,10 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mImageComponents[LOGO]->applyTheme(theme, getName(), "image_logo", ALL);
     mImageComponents[BACKGROUND]->applyTheme(theme, getName(), "image_background", ALL);
 
+    // Make sure we don't display both the logo and logo text.
+    if (mImageComponents[LOGO]->getTexture() != nullptr)
+        mTextComponents[LOGOTEXT]->setVisible(false);
+
     // Remove old theme extras.
     for (auto extra : mThemeExtras) {
         removeChild(extra);
@@ -257,6 +264,10 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
         mVideoComponents.front()->applyTheme(
             theme, getName(), mVideoComponents.front()->getThemeMetadata(),
             POSITION | ThemeFlags::SIZE | ThemeFlags::DELAY | Z_INDEX | ROTATION | VISIBLE);
+        mImageComponents[LegacyImage::MD_IMAGE]->setVisible(false);
+        mImageComponents[LegacyImage::MD_IMAGE]->applyTheme(
+            theme, getName(), mImageComponents[LegacyImage::MD_IMAGE]->getThemeMetadata(),
+            POSITION | ThemeFlags::SIZE | Z_INDEX | ROTATION | VISIBLE);
     }
 
     legacyInitMDLabels();
@@ -401,8 +412,7 @@ void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
             mRandomGame = CollectionSystemsManager::getInstance()->updateCollectionFolderMetadata(
                 file->getSystem());
             if (mRandomGame) {
-                mImageComponents[LegacyImage::MD_THUMBNAIL]->setImage(
-                    mRandomGame->getThumbnailPath());
+                mImageComponents[LegacyImage::MD_THUMBNAIL]->setImage(mRandomGame->getImagePath());
                 mImageComponents[LegacyImage::MD_MARQUEE]->setImage(mRandomGame->getMarqueePath());
                 if (mViewStyle == ViewController::VIDEO) {
                     mVideoComponents.front()->setImage(mRandomGame->getImagePath());
@@ -412,6 +422,7 @@ void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
                         mVideoComponents.front()->setDefaultVideo();
 
                     mVideoComponents.front()->startVideoPlayer();
+                    mImageComponents[LegacyImage::MD_IMAGE]->setImage(mRandomGame->getImagePath());
                 }
                 else {
                     mImageComponents[LegacyImage::MD_IMAGE]->setImage(mRandomGame->getImagePath());
@@ -429,7 +440,7 @@ void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
             }
         }
         else {
-            mImageComponents[LegacyImage::MD_THUMBNAIL]->setImage(file->getThumbnailPath());
+            mImageComponents[LegacyImage::MD_THUMBNAIL]->setImage(file->getImagePath());
             mImageComponents[LegacyImage::MD_MARQUEE]->setImage(file->getMarqueePath());
             if (mViewStyle == ViewController::VIDEO) {
                 mVideoComponents.front()->setImage(file->getImagePath());
@@ -439,6 +450,7 @@ void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
                     mVideoComponents.front()->setDefaultVideo();
 
                 mVideoComponents.front()->startVideoPlayer();
+                mImageComponents[LegacyImage::MD_IMAGE]->setImage(file->getImagePath());
             }
             else {
                 mImageComponents[LegacyImage::MD_IMAGE]->setImage(file->getImagePath());
@@ -486,20 +498,35 @@ void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
 
         if (mViewStyle == ViewController::DETAILED) {
             // Fade in the game image.
-            auto func = [this](float t) {
+            auto funcImage = [this](float t) {
                 mImageComponents[LegacyImage::MD_IMAGE]->setOpacity(
                     glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
             };
             mImageComponents[LegacyImage::MD_IMAGE]->setAnimation(
-                new LambdaAnimation(func, FADE_IN_TIME), 0, nullptr, false);
+                new LambdaAnimation(funcImage, FADE_IN_TIME), 0, nullptr, false);
+
+            // Fade in the thumbnail.
+            auto funcThumbnail = [this](float t) {
+                mImageComponents[LegacyImage::MD_THUMBNAIL]->setOpacity(
+                    glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
+            };
+            mImageComponents[LegacyImage::MD_THUMBNAIL]->setAnimation(
+                new LambdaAnimation(funcThumbnail, FADE_IN_TIME), 0, nullptr, false);
         }
         else if (mViewStyle == ViewController::VIDEO) {
             // Fade in the static image.
-            auto func = [this](float t) {
+            auto funcVideo = [this](float t) {
                 mVideoComponents.front()->setOpacity(glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
             };
-            mVideoComponents.front()->setAnimation(new LambdaAnimation(func, FADE_IN_TIME), 0,
+            mVideoComponents.front()->setAnimation(new LambdaAnimation(funcVideo, FADE_IN_TIME), 0,
                                                    nullptr, false);
+            // Fade in the game image.
+            auto funcImage = [this](float t) {
+                mImageComponents[LegacyImage::MD_IMAGE]->setOpacity(
+                    glm::mix(FADE_IN_START_OPACITY, 1.0f, t));
+            };
+            mImageComponents[LegacyImage::MD_IMAGE]->setAnimation(
+                new LambdaAnimation(funcImage, FADE_IN_TIME), 0, nullptr, false);
         }
 
         mTextComponents[LegacyText::MD_DESCRIPTION]->setText(file->metadata.get("desc"));

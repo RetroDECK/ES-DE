@@ -910,11 +910,4 @@ void GamelistBase::removeMedia(FileData* game)
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
-
-    while (Utils::FileSystem::exists(game->getThumbnailPath())) {
-        mediaType = "thumbnails";
-        path = game->getThumbnailPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
 }

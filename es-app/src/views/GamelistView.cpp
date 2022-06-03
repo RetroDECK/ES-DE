@@ -860,13 +860,6 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
                 break;
             }
         }
-        else if (imageType == "thumbnail") {
-            path = file->getThumbnailPath();
-            if (path != "") {
-                comp->setImage(path);
-                break;
-            }
-        }
     }
     // This is needed so the default image is set if no game media was found.
     if (path == "" && comp->getThemeImageTypes().size() > 0)

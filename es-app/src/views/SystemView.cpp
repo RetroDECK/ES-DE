@@ -807,13 +807,6 @@ void SystemView::updateGameSelectors()
                         break;
                     }
                 }
-                else if (imageType == "thumbnail") {
-                    path = games.front()->getThumbnailPath();
-                    if (path != "") {
-                        image->setImage(path);
-                        break;
-                    }
-                }
             }
             // This is needed so the default image is set if no game media was found.
             if (path == "" && image->getThemeImageTypes().size() > 0)
@@ -956,13 +949,6 @@ void SystemView::updateGameSelectors()
                 }
                 else if (imageType == "fanart") {
                     path = games.front()->getFanArtPath();
-                    if (path != "") {
-                        video->setImage(path);
-                        break;
-                    }
-                }
-                else if (imageType == "thumbnail") {
-                    path = games.front()->getThumbnailPath();
                     if (path != "") {
                         video->setImage(path);
                         break;

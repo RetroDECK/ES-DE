@@ -80,7 +80,6 @@ public:
     const std::string getMiximagePath() const;
     const std::string getScreenshotPath() const;
     const std::string getTitleScreenPath() const;
-    const std::string getThumbnailPath() const;
     const std::string getVideoPath() const;
 
     const bool getDeletionFlag() const { return mDeletionFlag; }
