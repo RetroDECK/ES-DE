@@ -501,12 +501,26 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                          glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
     if (properties & ThemeFlags::SIZE) {
-        if (elem->has("size"))
-            setResize(elem->get<glm::vec2>("size") * scale);
-        else if (elem->has("maxSize"))
-            setMaxSize(elem->get<glm::vec2>("maxSize") * scale);
-        else if (elem->has("minSize"))
-            setMinSize(elem->get<glm::vec2>("minSize") * scale);
+        if (elem->has("size")) {
+            glm::vec2 imageSize {elem->get<glm::vec2>("size")};
+            if (imageSize == glm::vec2 {0.0f, 0.0f}) {
+                LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property <size> "
+                                   "for element \""
+                                << element.substr(6) << "\" is set to zero";
+                imageSize = {0.001f, 0.001f};
+            }
+            if (imageSize.x > 0.0f)
+                imageSize.x = glm::clamp(imageSize.x, 0.001f, 2.0f);
+            if (imageSize.y > 0.0f)
+                imageSize.y = glm::clamp(imageSize.y, 0.001f, 2.0f);
+            setResize(imageSize * scale);
+        }
+        else if (elem->has("maxSize")) {
+            glm::vec2 imageMaxSize {elem->get<glm::vec2>("maxSize")};
+            imageMaxSize.x = glm::clamp(imageMaxSize.x, 0.001f, 2.0f);
+            imageMaxSize.y = glm::clamp(imageMaxSize.y, 0.001f, 2.0f);
+            setMaxSize(imageMaxSize * scale);
+        }
     }
 
     if (elem->has("interpolation")) {

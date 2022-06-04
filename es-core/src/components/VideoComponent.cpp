@@ -119,12 +119,26 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
-            setResize(elem->get<glm::vec2>("size") * scale);
-            mVideoAreaSize = elem->get<glm::vec2>("size") * scale;
+            glm::vec2 videoSize {elem->get<glm::vec2>("size")};
+            if (videoSize == glm::vec2 {0.0f, 0.0f}) {
+                LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property <size> "
+                                   "for element \""
+                                << element.substr(6) << "\" is set to zero";
+                videoSize = {0.01f, 0.01f};
+            }
+            if (videoSize.x > 0.0f)
+                videoSize.x = glm::clamp(videoSize.x, 0.01f, 2.0f);
+            if (videoSize.y > 0.0f)
+                videoSize.y = glm::clamp(videoSize.y, 0.01f, 2.0f);
+            setResize(videoSize * scale);
+            mVideoAreaSize = videoSize * scale;
         }
         else if (elem->has("maxSize")) {
-            setMaxSize(elem->get<glm::vec2>("maxSize") * scale);
-            mVideoAreaSize = elem->get<glm::vec2>("maxSize") * scale;
+            glm::vec2 videoMaxSize {elem->get<glm::vec2>("maxSize")};
+            videoMaxSize.x = glm::clamp(videoMaxSize.x, 0.01f, 2.0f);
+            videoMaxSize.y = glm::clamp(videoMaxSize.y, 0.01f, 2.0f);
+            setMaxSize(videoMaxSize * scale);
+            mVideoAreaSize = videoMaxSize * scale;
         }
     }
 
