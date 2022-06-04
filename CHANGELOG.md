@@ -163,6 +163,7 @@ v1.2 maintenance release.
 * Changed the default quit shortcut from F4 to Command + Q on macOS
 * Added Ctrl + Q as a user-selectable quit shortcut
 * Increased the window width slightly for the Alternative emulators interface when displaying long system names
+* Added size restrictions to the "size" and "maxSize" theme properties for the image and video elements
 * Changed to a new API key for TheGamesDB
 * (Linux) Changed the manually downloaded Redream emulator location from ~/Applications/redream to ~/Applications/redream/redream
 
@@ -171,6 +172,7 @@ v1.2 maintenance release.
 * When running ES-DE in the background, quitting a game or application using Alt + F4 sometimes made ES-DE quit as well
 * Thumbnails were not included in theme sets that used them for the Detailed view style
 * Game images were not included in theme sets that used them for the Video view style
+* Themes with large pixelated fonts sometimes displayed too many textlist rows
 * The menu scroll indicators and title sometimes overlapped (e.g. seen in the Alternative emulators interface)
 * There was a small rounding error that caused a minimal distortion when rendering the menu titles
 

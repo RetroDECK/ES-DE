@@ -624,10 +624,12 @@ Remember, you do *not* need to specify every property!
 Can be created as an extra.
 
 * `pos` - type: NORMALIZED_PAIR.
-* `size` - type: NORMALIZED_PAIR.
-    - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the image's aspect ratio.
-* `maxSize` - type: NORMALIZED_PAIR.
-    - The image will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
+* `size` - type: NORMALIZED_PAIR
+    - If only one axis is specified (and the other is zero), then the other will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case.
+    - Minimum value per axis is `0.001` and maximum value per axis is `2`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
+* `maxSize` - type: NORMALIZED_PAIR
+    - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
+    - Minimum value per axis is `0.001` and maximum value per axis is `2`
 * `origin` - type: NORMALIZED_PAIR.
     - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
@@ -698,10 +700,12 @@ Can be created as an extra.
 #### video
 
 * `pos` - type: NORMALIZED_PAIR.
-* `size` - type: NORMALIZED_PAIR.
-    - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the video's aspect ratio.
-* `maxSize` - type: NORMALIZED_PAIR.
-    - The video will be resized as large as possible so that it fits within this size and maintains its aspect ratio.  Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
+* `size` - type: NORMALIZED_PAIR
+    - If only one axis is specified (and the other is zero), then the other will be automatically calculated in accordance with the static image's aspect ratio and the video's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.01 0.01` in this case.
+    - Minimum value per axis is `0.01` and maximum value per axis is `2`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
+* `maxSize` - type: NORMALIZED_PAIR
+    - The static image and video will be resized as large as possible so that they fit within this size while maintaining their aspect ratios. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
+    - Minimum value per axis is `0.01` and maximum value per axis is `2`
 * `origin` - type: NORMALIZED_PAIR.
     - Where on the image `pos` refers to.  For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the image exactly in the middle of the screen.  If the "POSITION" and "SIZE" attributes are themeable, "ORIGIN" is implied.
 * `rotation` - type: FLOAT.
