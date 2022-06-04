@@ -1057,7 +1057,7 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
 
     GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
 
-    if (mCursorChangedCallback)
+    if (mCursorChangedCallback && !mEntries.empty())
         mCursorChangedCallback(state);
 }
 
