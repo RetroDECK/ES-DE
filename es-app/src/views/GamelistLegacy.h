@@ -25,9 +25,9 @@ void GamelistView::legacyPopulateFields()
     mTextComponents.back()->setSize(mSize.x, 0.0f);
     mTextComponents.back()->setPosition(0.0f, 0.0f);
     mTextComponents.back()->setHorizontalAlignment(ALIGN_CENTER);
-    mTextComponents.back()->setColor(0xFFFFFFFF);
+    mTextComponents.back()->setColor(0x000000FF);
     mTextComponents.back()->setDefaultZIndex(50.0f);
-    mTextComponents.back()->setVisible(false);
+    mTextComponents.back()->setZIndex(10.0f);
     addChild(mTextComponents.back().get());
 
     // Logo.
@@ -227,8 +227,8 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mImageComponents[LOGO]->applyTheme(theme, getName(), "image_logo", ALL);
     mImageComponents[BACKGROUND]->applyTheme(theme, getName(), "image_background", ALL);
 
-    // Make sure we don't display both the logo and logo text.
-    if (mImageComponents[LOGO]->getTexture() != nullptr)
+    // Make sure we don't display both the logo image and logo text.
+    if (mImageComponents[LOGO]->hasImage())
         mTextComponents[LOGOTEXT]->setVisible(false);
 
     // Remove old theme extras.
@@ -320,8 +320,6 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
     // Hide some components if we're in Basic mode.
     if (mViewStyle == ViewController::BASIC) {
-        if (mTheme->getElement(getName(), "text_logoText", "text") == nullptr)
-            mTextComponents[LegacyText::LOGOTEXT]->setVisible(false);
         mImageComponents[LegacyImage::MD_IMAGE]->setVisible(false);
         for (auto& container : mContainerComponents)
             container->setVisible(false);
