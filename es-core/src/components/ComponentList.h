@@ -62,7 +62,7 @@ public:
     ComponentList();
 
     enum ScrollIndicator {
-        SCROLL_NONE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        SCROLL_NONE,
         SCROLL_UP,
         SCROLL_UP_DOWN,
         SCROLL_DOWN

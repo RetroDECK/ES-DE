@@ -56,7 +56,7 @@ struct MetaDataDecl {
 };
 
 enum MetaDataListType {
-    GAME_METADATA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    GAME_METADATA,
     FOLDER_METADATA
 };
 

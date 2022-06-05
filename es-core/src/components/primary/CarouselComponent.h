@@ -40,7 +40,7 @@ public:
     using Entry = typename IList<CarouselEntry, T>::Entry;
 
     enum class CarouselType {
-        HORIZONTAL, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        HORIZONTAL,
         VERTICAL,
         VERTICAL_WHEEL,
         HORIZONTAL_WHEEL,

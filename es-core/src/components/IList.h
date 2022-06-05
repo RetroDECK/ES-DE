@@ -14,12 +14,12 @@
 #include "utils/StringUtil.h"
 
 enum class CursorState {
-    CURSOR_STOPPED, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    CURSOR_STOPPED,
     CURSOR_SCROLLING
 };
 
 enum class ListLoopType {
-    LIST_ALWAYS_LOOP, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    LIST_ALWAYS_LOOP,
     LIST_PAUSE_AT_END,
     LIST_PAUSE_AT_END_ON_JUMP,
     LIST_NEVER_LOOP

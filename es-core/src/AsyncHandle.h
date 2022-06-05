@@ -12,7 +12,7 @@
 #include <string>
 
 enum AsyncHandleStatus {
-    ASYNC_IN_PROGRESS, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    ASYNC_IN_PROGRESS,
     ASYNC_ERROR,
     ASYNC_DONE
 };

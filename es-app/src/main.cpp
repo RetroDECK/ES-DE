@@ -67,14 +67,14 @@ namespace
     bool settingsNeedSaving {false};
 
     enum loadSystemsReturnCode {
-        LOADING_OK, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        LOADING_OK,
         INVALID_FILE,
         NO_ROMS
     };
 
 #if defined(_WIN64)
     enum win64ConsoleType {
-        NO_CONSOLE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        NO_CONSOLE,
         PARENT_CONSOLE,
         ALLOCATED_CONSOLE
     };

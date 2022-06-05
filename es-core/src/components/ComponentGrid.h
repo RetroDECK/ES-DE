@@ -15,7 +15,7 @@
 namespace GridFlags
 {
     enum UpdateType {
-        UPDATE_ALWAYS, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        UPDATE_ALWAYS,
         UPDATE_WHEN_SELECTED,
         UPDATE_NEVER
     };

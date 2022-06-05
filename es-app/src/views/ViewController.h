@@ -86,14 +86,14 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
     enum ViewMode {
-        NOTHING, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        NOTHING,
         START_SCREEN,
         SYSTEM_SELECT,
         GAMELIST
     };
 
     enum GamelistViewStyle {
-        AUTOMATIC, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        AUTOMATIC,
         BASIC,
         DETAILED,
         VIDEO

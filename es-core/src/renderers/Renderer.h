@@ -22,7 +22,7 @@ class Renderer
 {
 public:
     enum class TextureType {
-        RGBA, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        RGBA,
         BGRA,
         RED
     };

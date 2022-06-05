@@ -28,7 +28,7 @@ class FileData;
 class SystemData;
 
 enum downloadStatus {
-    NOT_STARTED, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    NOT_STARTED,
     IN_PROGRESS,
     COMPLETED
 };

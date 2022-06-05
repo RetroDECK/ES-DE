@@ -24,7 +24,7 @@
         Log().get(level)
 
 enum LogLevel {
-    LogError, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    LogError,
     LogWarning,
     LogInfo,
     LogDebug

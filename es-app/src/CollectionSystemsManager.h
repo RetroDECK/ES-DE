@@ -34,7 +34,7 @@ class Window;
 struct SystemEnvironmentData;
 
 enum CollectionSystemType {
-    AUTO_ALL_GAMES, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    AUTO_ALL_GAMES,
     AUTO_LAST_PLAYED,
     AUTO_FAVORITES,
     CUSTOM_COLLECTION

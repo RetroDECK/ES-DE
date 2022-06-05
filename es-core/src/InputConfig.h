@@ -20,7 +20,7 @@
 #define DEVICE_CEC -2
 
 enum InputType {
-    TYPE_AXIS, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    TYPE_AXIS,
     TYPE_BUTTON,
     TYPE_KEY,
     TYPE_CEC_BUTTON,

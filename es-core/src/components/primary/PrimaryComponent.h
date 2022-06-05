@@ -13,12 +13,12 @@ template <typename T> class PrimaryComponent : public virtual GuiComponent
 {
 public:
     enum class PrimaryType {
-        CAROUSEL, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        CAROUSEL,
         TEXTLIST
     };
 
     enum class PrimaryAlignment {
-        ALIGN_LEFT, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        ALIGN_LEFT,
         ALIGN_CENTER,
         ALIGN_RIGHT
     };

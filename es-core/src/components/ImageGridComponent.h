@@ -18,12 +18,12 @@
 #define EXTRAITEMS 2
 
 enum ScrollDirection {
-    SCROLL_VERTICALLY, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    SCROLL_VERTICALLY,
     SCROLL_HORIZONTALLY
 };
 
 enum ImageSource {
-    THUMBNAIL, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+    THUMBNAIL,
     IMAGE,
     MIXIMAGE,
     SCREENSHOT,

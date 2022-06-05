@@ -20,7 +20,7 @@ class DateTimeEditComponent : public GuiComponent
 {
 public:
     enum DisplayMode {
-        DISP_DATE, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        DISP_DATE,
         DISP_DATE_TIME,
         DISP_RELATIVE_TO_NOW
     };

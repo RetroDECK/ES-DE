@@ -20,7 +20,7 @@ namespace Utils
     namespace Platform
     {
         enum QuitMode {
-            QUIT = 0, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+            QUIT = 0,
             REBOOT = 1,
             POWEROFF = 2
         };

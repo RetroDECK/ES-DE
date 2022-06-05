@@ -34,7 +34,7 @@ public:
     }
 
     enum class GameSelection {
-        RANDOM, // Replace with AllowShortEnumsOnASingleLine: false (clang-format >=11.0).
+        RANDOM,
         LAST_PLAYED,
         MOST_PLAYED
     };
