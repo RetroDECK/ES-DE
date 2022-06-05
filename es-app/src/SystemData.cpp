@@ -272,6 +272,12 @@ bool SystemData::populateFolder(FileData* folder)
     if (dirContent.size() == 0)
         return false;
 
+    if (std::find(dirContent.cbegin(), dirContent.cend(), mEnvData->mStartPath + "/noload.txt") !=
+        dirContent.cend()) {
+        LOG(LogInfo) << "Not populating system \"" << mName << "\" as a noload.txt file is present";
+        return false;
+    }
+
     if (std::find(dirContent.cbegin(), dirContent.cend(), mEnvData->mStartPath + "/flatten.txt") !=
         dirContent.cend()) {
         LOG(LogInfo) << "A flatten.txt file is present for the \"" << mName
