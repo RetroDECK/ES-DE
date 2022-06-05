@@ -165,6 +165,7 @@ private:
     std::shared_ptr<Font> mFont;
     std::string mIndicators;
     std::string mCollectionIndicators;
+    bool mLegacyMode;
     bool mUppercase;
     bool mLowercase;
     bool mCapitalize;
@@ -196,6 +197,7 @@ TextListComponent<T>::TextListComponent()
     , mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mIndicators {"symbols"}
     , mCollectionIndicators {"symbols"}
+    , mLegacyMode {false}
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
@@ -330,6 +332,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     std::shared_ptr<Font>& font {mFont};
 
     int startEntry {0};
+    int screenCount {0};
     float y {0.0f};
 
     const float entrySize {
@@ -337,15 +340,19 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         mLineSpacing};
     const float lineSpacingHeight {floorf(font->getHeight(mLineSpacing) - font->getHeight(1.0f))};
 
-    // This extra vertical margin is technically incorrect, but it adds a little extra leeway
-    // to avoid removing the last row on some older theme sets. There was a sizing bug in the
-    // RetroPie fork of EmulationStation and some theme authors set sizes that are just slightly
-    // too small for the last row to show up when the sizing calculation is done correctly.
-    const float extraMargin {(Renderer::getScreenHeightModifier() >= 1.0f ? 3.0f : 0.0f)};
-
-    // Number of entries that can fit on the screen simultaneously.
-    int screenCount {
-        static_cast<int>(floorf((mSize.y + lineSpacingHeight / 2.0f + extraMargin) / entrySize))};
+    if (mLegacyMode) {
+        // This extra vertical margin is technically incorrect, but it adds a little extra leeway
+        // to avoid removing the last row on some older theme sets. There was a sizing bug in the
+        // RetroPie fork of EmulationStation and some theme authors set sizes that are just slightly
+        // too small for the last row to show up when the sizing calculation is done correctly.
+        const float extraMargin {(Renderer::getScreenHeightModifier() >= 1.0f ? 3.0f : 0.0f)};
+        // Number of entries that can fit on the screen simultaneously.
+        screenCount = static_cast<int>(
+            floorf((mSize.y + lineSpacingHeight / 2.0f + extraMargin) / entrySize));
+    }
+    else {
+        screenCount = static_cast<int>(floorf((mSize.y + lineSpacingHeight / 2.0f) / entrySize));
+    }
 
     if (size() >= screenCount) {
         startEntry = mCursor - screenCount / 2;
@@ -494,6 +501,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "textlist")};
     if (!elem)
         return;
+
+    mLegacyMode = theme->isLegacyTheme();
 
     using namespace ThemeFlags;
     if (properties & COLOR) {
