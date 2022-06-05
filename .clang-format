@@ -4,7 +4,7 @@
 #  .clang-format
 #
 #  Style configuration file for automatic C++ code formatting using clang-format.
-#  This file requires at least clang-format version 10.0.
+#  This file requires at least clang-format version 11.0.
 #
 
 ---
@@ -23,8 +23,7 @@ AllowAllConstructorInitializersOnNextLine: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortBlocksOnASingleLine: Empty
 AllowShortCaseLabelsOnASingleLine: false
-# The following option requires version >= 11.0.
-#####AllowShortEnumsOnASingleLine: false
+AllowShortEnumsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: All
 AllowShortLambdasOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: Never
