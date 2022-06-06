@@ -76,10 +76,10 @@ std::string RatingComponent::getValue() const
     return ss.str();
 }
 
-std::string RatingComponent::getRatingValue() const
+std::string RatingComponent::getRatingValue(const std::string& rating)
 {
     std::stringstream ss;
-    ss << mValue * NUM_RATING_STARS;
+    ss << (std::round(stof(rating) / 0.1f) / 10.0f) * NUM_RATING_STARS;
     return ss.str();
 }
 

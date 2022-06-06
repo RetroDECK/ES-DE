@@ -698,7 +698,7 @@ void GamelistView::updateInfoPanel(const CursorState& state)
                 continue;
 
             if (metadata == "rating") {
-                text->setValue(mRatingComponents.front()->getRatingValue());
+                text->setValue(RatingComponent::getRatingValue(file->metadata.get("rating")));
                 continue;
             }
             else if (metadata == "controller") {
@@ -717,7 +717,7 @@ void GamelistView::updateInfoPanel(const CursorState& state)
                 continue;
 
             if (metadata == "rating") {
-                text->setValue(mRatingComponents.front()->getRatingValue());
+                text->setValue(RatingComponent::getRatingValue(file->metadata.get("rating")));
                 continue;
             }
             else if (metadata == "controller") {

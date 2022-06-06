@@ -23,7 +23,8 @@ public:
     RatingComponent(bool colorizeChanges = false);
 
     std::string getValue() const override;
-    std::string getRatingValue() const;
+    // Returns a rating value between 0 and 5 as a string.
+    static std::string getRatingValue(const std::string& rating);
     // Should be a normalized float (in the range [0..1]) - if it's not, it will be clamped.
     void setValue(const std::string& value) override;
 
