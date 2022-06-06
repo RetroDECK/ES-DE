@@ -1002,6 +1002,9 @@ void SystemView::updateGameSelectors()
                 text->setValue(games.front()->metadata.get("name"));
             if (metadata == "description")
                 text->setValue(games.front()->metadata.get("desc"));
+            if (metadata == "rating")
+                text->setValue(
+                    RatingComponent::getRatingValue(games.front()->metadata.get("rating")));
             if (metadata == "developer")
                 text->setValue(games.front()->metadata.get("developer"));
             if (metadata == "publisher")
