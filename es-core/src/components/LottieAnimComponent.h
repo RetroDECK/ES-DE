@@ -6,6 +6,11 @@
 //  Component to play Lottie animations using the rlottie library.
 //
 
+#if defined(_MSC_VER) // MSVC compiler.
+// Disable rlottie DLL interface warnings.
+#pragma warning(disable : 4251)
+#endif
+
 #ifndef ES_CORE_COMPONENTS_LOTTIE_ANIM_COMPONENT_H
 #define ES_CORE_COMPONENTS_LOTTIE_ANIM_COMPONENT_H
 
