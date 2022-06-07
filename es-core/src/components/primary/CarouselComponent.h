@@ -339,14 +339,16 @@ template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
                     entry.data.itemPath = game->getMarqueePath();
                 else if (mItemType == "cover")
                     entry.data.itemPath = game->getCoverPath();
+                else if (mItemType == "backcover")
+                    entry.data.itemPath = game->getBackCoverPath();
                 else if (mItemType == "3dbox")
                     entry.data.itemPath = game->get3DBoxPath();
+                else if (mItemType == "physicalmedia")
+                    entry.data.itemPath = game->getPhysicalMediaPath();
                 else if (mItemType == "screenshot")
                     entry.data.itemPath = game->getScreenshotPath();
                 else if (mItemType == "titlescreen")
                     entry.data.itemPath = game->getTitleScreenPath();
-                else if (mItemType == "backcover")
-                    entry.data.itemPath = game->getBackCoverPath();
                 else if (mItemType == "miximage")
                     entry.data.itemPath = game->getMiximagePath();
                 else if (mItemType == "fanart")

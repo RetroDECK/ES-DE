@@ -800,6 +800,13 @@ void SystemView::updateGameSelectors()
                         break;
                     }
                 }
+                else if (imageType == "physicalmedia") {
+                    path = games.front()->getPhysicalMediaPath();
+                    if (path != "") {
+                        image->setImage(path);
+                        break;
+                    }
+                }
                 else if (imageType == "fanart") {
                     path = games.front()->getFanArtPath();
                     if (path != "") {
@@ -942,6 +949,13 @@ void SystemView::updateGameSelectors()
                 }
                 else if (imageType == "3dbox") {
                     path = games.front()->get3DBoxPath();
+                    if (path != "") {
+                        video->setImage(path);
+                        break;
+                    }
+                }
+                else if (imageType == "physicalmedia") {
+                    path = games.front()->getPhysicalMediaPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
