@@ -4,6 +4,8 @@ The theme set slate-DE is based on recalbox-multi by the Recalbox community.
 
 Some graphics was also taken from the carbon theme by Rookervik.
 
+Some logotype graphics by Dan Patrick.
+
 ## Original vector graphics for slate-DE
 
 - Leon Styhre

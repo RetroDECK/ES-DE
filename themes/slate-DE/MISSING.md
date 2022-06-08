@@ -22,6 +22,7 @@
 * chailove: Löve game engine - consolegame.svg, console.svg, controller.svg
 * channelf: Fairchild Channel F - consolegame.svg, console.svg, controller.svg, game.svg
 * coco: Tandy Color Computer - consolegame.svg, console.svg, controller.svg, game.svg
+* cps: Capcom Play System - consolegame.svg, console.svg, controller.svg, game.svg
 * custom-collections - customized colors, consolegame.svg, (uses temporary art)
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, console.svg, controller.svg, game.svg
 * desktop: Desktop applications - consolegame.svg, console.svg, controller.svg
