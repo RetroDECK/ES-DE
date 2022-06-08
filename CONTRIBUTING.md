@@ -85,7 +85,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 * Simple file browsing component
 * Scrollbar component for the gamelist view which can be used by the themes
-* Background music (theme controlled or custom playlist)
+* Background music
 * Proper audio mixer
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets

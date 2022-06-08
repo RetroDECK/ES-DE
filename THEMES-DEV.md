@@ -802,6 +802,7 @@ Properties:
     - `cover` - This will look for a box front cover image.
     - `backcover` - This will look for a box back cover image.
     - `3dbox` - This will look for a 3D box image.
+    - `physicalmedia` - This will look for a physical media image.
     - `fanart` - This will look for a fan art image.
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
@@ -877,6 +878,7 @@ Properties:
     - `cover` - This will look for a box front cover image.
     - `backcover` - This will look for a box back cover image.
     - `3dbox` - This will look for a 3D box image.
+    - `physicalmedia` - This will look for a physical media image.
     - `fanart` - This will look for a fan art image.
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
@@ -1421,6 +1423,7 @@ Properties:
     - `cover` - This will look for a box front cover image.
     - `backcover` - This will look for a box back cover image.
     - `3dbox` - This will look for a 3D box image.
+    - `physicalmedia` - This will look for a physical media image.
     - `screenshot` - This will look for a screenshot image.
     - `titlescreen` - This will look for a title screen image.
     - `miximage` - This will look for a miximage.

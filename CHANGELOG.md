@@ -156,6 +156,7 @@ v1.2 maintenance release.
 * Added support for launching .app directories and alias files to the desktop, epic, kodi, ports and steam systems on macOS
 * Changed the ps3 system to use shortcuts and created an alternative emulator entry for backward compatibility with symlinks
 * Added the .lnk file extension to the epic system on Windows
+* Added support for the Capcom Play System (cps) game system
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * (Linux) Changed to find rule wildcard matching for the AppImages for Dolphin, mGBA, Play!, RPCS3, Xemu and Yuzu
 * Changed the sorting in the Alternative emulators interface to use short system names instead of full system names
@@ -830,6 +831,8 @@ Many bugs have been fixed, and numerous features that were only partially implem
 ## Known issues
 
 **The issues below are relevant for ES-DE v1.2.4**
+
+* When using Windows on some handheld devices with AMD GPUs, ES-DE will only display a black screen on startup. This can be seen on for instance the Steam Deck, AYA NEO and ONEXPLAYER 8.4. The issue seems to be caused by buggy GPU drivers, and can be worked around by specifying a window size for ES-DE that is a single pixel larger than the actual screen resolution. So for example for a 1280x800 screen, the resolution can be set to 1281x800 and it should then work correctly. This is applied using the --resolution command line option, for instance `EmulationStation.exe --resolution 1281 800`
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
 
