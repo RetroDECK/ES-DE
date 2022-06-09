@@ -703,6 +703,24 @@
         <theme>mess</theme>
     </system>
     <system>
+        <name>model2</name>
+        <fullname>Sega Model 2</fullname>
+        <path>%ROMPATH%\model2</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command label="Model 2 Emulator (Standalone)">%RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MODEL2% %BASENAME%</command>
+        <platform>arcade</platform>
+        <theme>model2</theme>
+    </system>
+    <system>
+        <name>model3</name>
+        <fullname>Sega Model 3</fullname>
+        <path>%ROMPATH%\model3</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command label="Supermodel (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SUPERMODEL% -fullscreen %ROM%</command>
+        <platform>arcade</platform>
+        <theme>model3</theme>
+    </system>
+    <system>
         <name>moonlight</name>
         <fullname>Moonlight Game Streaming</fullname>
         <path>%ROMPATH%\moonlight</path>
