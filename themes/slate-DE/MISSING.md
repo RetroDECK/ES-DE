@@ -35,6 +35,8 @@
 * lutris: Lutris open gaming platform - consolegame.svg, console.svg, controller.svg, game.svg
 * macintosh: Apple Macintosh - consolegame.svg, console.svg, controller.svg, game.svg
 * mess: MESS (Multi Emulator Super System) - consolegame.svg, console.svg, controller.svg
+* model2: Sega Model 2 - consolegame.svg, console.svg, controller.svg, game.svg
+* model3: Sega Model 3 - consolegame.svg, console.svg, controller.svg, game.svg
 * moto: Thomson MO/TO series - consolegame.svg, console.svg, controller.svg, game.svg
 * msxturbor: MSX Turbo R - consolegame.svg, console.svg, controller.svg, game.svg
 * multivision: Othello Multivision - consolegame.svg, console.svg, controller.svg, game.svg
