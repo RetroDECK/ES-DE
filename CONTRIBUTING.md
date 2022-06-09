@@ -16,6 +16,10 @@ Apart from the above there are basically three areas where help is needed:
 
 Another specific area where help is needed is to research and potentially develop a usable web version of ES-DE. A proof of concept compilation to WebAssembly (using Emscripten) has been done and the application actually runs somehow correctly in a browser. But it needs to be investigated whether games/emulators can actually be launched when running in this environment and there are many improvements to be completed before the WebAssembly build is usable.
 
+Merge requests are only accepted from project members so if you would like to contribute to the project then please get in contact and we can discuss what you would like to work on and such.
+
+You can contact me (Leon) via email, either at info@es-de.org or alternatively using the address I use for my code commits. You can also join our [Discord server](https://discord.gg/EVVX4DqWAP) where I go under the username LeonSe.
+
 The ES-DE development is tracked using a Kanban board which is publicly visible at the GitLab project site:
 
 [https://gitlab.com/es-de/emulationstation-de/-/boards](https://gitlab.com/es-de/emulationstation-de/-/boards)
@@ -23,8 +27,6 @@ The ES-DE development is tracked using a Kanban board which is publicly visible 
 Development takes place in the `master` branch, and bug fixes/point releases are handled in the `stable` branch.
 
 Only the latest stable version is maintained.
-
-You can contact me (Leon) via email, either at info@es-de.org or alternatively using the address I use for my code commits.
 
 ### Release roadmap
 

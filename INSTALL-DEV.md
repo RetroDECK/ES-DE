@@ -160,10 +160,15 @@ cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
 make
 ```
 
-To enable ThreadSanitizer which helps with identifying data races for multi-threaded code, build with the TSAN option:
+To enable ThreadSanitizer which helps with identifying data races and other thread-related issues, build with the TSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
 make
+```
+
+It could also be a good idea to use the `TSAN_suppressions` file included in the repository to suppress issues reported by some third party libraries, for example:
+```
+TSAN_OPTIONS="suppressions=TSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
 ```
 
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
