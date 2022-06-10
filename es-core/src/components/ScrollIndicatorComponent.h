@@ -30,120 +30,104 @@ public:
         scrollUp->setOpacity(0.0f);
         scrollDown->setOpacity(0.0f);
 
-        if (!Settings::getInstance()->getBool("ScrollIndicators")) {
-            // If the scroll indicators setting is disabled, then show a permanent down arrow
-            // symbol when the component list contains more entries than can fit on screen.
-            componentList.get()->setScrollIndicatorChangedCallback(
-                [scrollUp, scrollDown](ComponentList::ScrollIndicator state, bool singleRowScroll) {
-                    if (state == ComponentList::SCROLL_UP ||
-                        state == ComponentList::SCROLL_UP_DOWN ||
-                        state == ComponentList::SCROLL_DOWN) {
-                        scrollDown->setOpacity(1.0f);
-                    }
-                });
-        }
-        else {
-            // If the scroll indicator setting is enabled, then also show the up and up/down
-            // combination and switch between these as the list is scrolled.
-            componentList.get()->setScrollIndicatorChangedCallback(
-                [this, scrollUp, scrollDown](ComponentList::ScrollIndicator state,
-                                             bool singleRowScroll) {
-                    float fadeTime {FADE_IN_TIME};
+        componentList.get()->setScrollIndicatorChangedCallback(
+            [this, scrollUp, scrollDown](ComponentList::ScrollIndicator state,
+                                         bool singleRowScroll) {
+                float fadeTime {FADE_IN_TIME};
 
-                    bool upFadeIn = false;
-                    bool upFadeOut = false;
-                    bool downFadeIn = false;
-                    bool downFadeOut = false;
+                bool upFadeIn = false;
+                bool upFadeOut = false;
+                bool downFadeIn = false;
+                bool downFadeOut = false;
 
-                    scrollUp->finishAnimation(0);
-                    scrollDown->finishAnimation(0);
+                scrollUp->finishAnimation(0);
+                scrollDown->finishAnimation(0);
 
-                    if (state == ComponentList::SCROLL_UP &&
-                        mPreviousScrollState == ComponentList::SCROLL_NONE) {
-                        scrollUp->setOpacity(1.0f);
-                    }
-                    else if (state == ComponentList::SCROLL_UP &&
-                             mPreviousScrollState == ComponentList::SCROLL_UP_DOWN) {
-                        downFadeOut = true;
-                    }
-                    else if (state == ComponentList::SCROLL_UP &&
-                             mPreviousScrollState == ComponentList::SCROLL_DOWN) {
-                        upFadeIn = true;
-                        fadeTime *= 2.0f;
-                        scrollDown->setOpacity(0.0f);
-                    }
-                    else if (state == ComponentList::SCROLL_UP_DOWN &&
-                             mPreviousScrollState == ComponentList::SCROLL_NONE) {
-                        scrollUp->setOpacity(1.0f);
-                        scrollDown->setOpacity(1.0f);
-                    }
-                    else if (state == ComponentList::SCROLL_UP_DOWN &&
-                             mPreviousScrollState == ComponentList::SCROLL_DOWN) {
-                        upFadeIn = true;
-                    }
-                    else if (state == ComponentList::SCROLL_UP_DOWN &&
-                             mPreviousScrollState == ComponentList::SCROLL_UP) {
-                        downFadeIn = true;
-                    }
-                    else if (state == ComponentList::SCROLL_DOWN &&
-                             mPreviousScrollState == ComponentList::SCROLL_NONE) {
-                        scrollDown->setOpacity(1.0f);
-                    }
-                    else if (state == ComponentList::SCROLL_DOWN &&
-                             mPreviousScrollState == ComponentList::SCROLL_UP_DOWN) {
-                        upFadeOut = true;
-                    }
-                    else if (state == ComponentList::SCROLL_DOWN &&
-                             mPreviousScrollState == ComponentList::SCROLL_UP) {
-                        downFadeIn = true;
-                        fadeTime *= 2.0f;
-                        scrollUp->setOpacity(0.0f);
-                    }
+                if (state == ComponentList::SCROLL_UP &&
+                    mPreviousScrollState == ComponentList::SCROLL_NONE) {
+                    scrollUp->setOpacity(1.0f);
+                }
+                else if (state == ComponentList::SCROLL_UP &&
+                         mPreviousScrollState == ComponentList::SCROLL_UP_DOWN) {
+                    downFadeOut = true;
+                }
+                else if (state == ComponentList::SCROLL_UP &&
+                         mPreviousScrollState == ComponentList::SCROLL_DOWN) {
+                    upFadeIn = true;
+                    fadeTime *= 2.0f;
+                    scrollDown->setOpacity(0.0f);
+                }
+                else if (state == ComponentList::SCROLL_UP_DOWN &&
+                         mPreviousScrollState == ComponentList::SCROLL_NONE) {
+                    scrollUp->setOpacity(1.0f);
+                    scrollDown->setOpacity(1.0f);
+                }
+                else if (state == ComponentList::SCROLL_UP_DOWN &&
+                         mPreviousScrollState == ComponentList::SCROLL_DOWN) {
+                    upFadeIn = true;
+                }
+                else if (state == ComponentList::SCROLL_UP_DOWN &&
+                         mPreviousScrollState == ComponentList::SCROLL_UP) {
+                    downFadeIn = true;
+                }
+                else if (state == ComponentList::SCROLL_DOWN &&
+                         mPreviousScrollState == ComponentList::SCROLL_NONE) {
+                    scrollDown->setOpacity(1.0f);
+                }
+                else if (state == ComponentList::SCROLL_DOWN &&
+                         mPreviousScrollState == ComponentList::SCROLL_UP_DOWN) {
+                    upFadeOut = true;
+                }
+                else if (state == ComponentList::SCROLL_DOWN &&
+                         mPreviousScrollState == ComponentList::SCROLL_UP) {
+                    downFadeIn = true;
+                    fadeTime *= 2.0f;
+                    scrollUp->setOpacity(0.0f);
+                }
 
-                    // If jumping more than one row using the shoulder or trigger buttons, then
-                    // don't fade the indicators.
-                    if (!singleRowScroll)
-                        fadeTime = 0.0f;
+                // If jumping more than one row using the shoulder or trigger buttons, then
+                // don't fade the indicators.
+                if (!singleRowScroll)
+                    fadeTime = 0.0f;
 
-                    if (upFadeIn) {
-                        auto upFadeInFunc = [scrollUp](float t) {
-                            scrollUp->setOpacity(glm::mix(0.0f, 1.0f, t));
-                        };
-                        scrollUp->setAnimation(
-                            new LambdaAnimation(upFadeInFunc, static_cast<int>(fadeTime)), 0,
-                            nullptr, false);
-                    }
+                if (upFadeIn) {
+                    auto upFadeInFunc = [scrollUp](float t) {
+                        scrollUp->setOpacity(glm::mix(0.0f, 1.0f, t));
+                    };
+                    scrollUp->setAnimation(
+                        new LambdaAnimation(upFadeInFunc, static_cast<int>(fadeTime)), 0, nullptr,
+                        false);
+                }
 
-                    if (upFadeOut) {
-                        auto upFadeOutFunc = [scrollUp](float t) {
-                            scrollUp->setOpacity(glm::mix(0.0f, 1.0f, t));
-                        };
-                        scrollUp->setAnimation(
-                            new LambdaAnimation(upFadeOutFunc, static_cast<int>(fadeTime)), 0,
-                            nullptr, true);
-                    }
+                if (upFadeOut) {
+                    auto upFadeOutFunc = [scrollUp](float t) {
+                        scrollUp->setOpacity(glm::mix(0.0f, 1.0f, t));
+                    };
+                    scrollUp->setAnimation(
+                        new LambdaAnimation(upFadeOutFunc, static_cast<int>(fadeTime)), 0, nullptr,
+                        true);
+                }
 
-                    if (downFadeIn) {
-                        auto downFadeInFunc = [scrollDown](float t) {
-                            scrollDown->setOpacity(glm::mix(0.0f, 1.0f, t));
-                        };
-                        scrollDown->setAnimation(
-                            new LambdaAnimation(downFadeInFunc, static_cast<int>(fadeTime)), 0,
-                            nullptr, false);
-                    }
+                if (downFadeIn) {
+                    auto downFadeInFunc = [scrollDown](float t) {
+                        scrollDown->setOpacity(glm::mix(0.0f, 1.0f, t));
+                    };
+                    scrollDown->setAnimation(
+                        new LambdaAnimation(downFadeInFunc, static_cast<int>(fadeTime)), 0, nullptr,
+                        false);
+                }
 
-                    if (downFadeOut) {
-                        auto downFadeOutFunc = [scrollDown](float t) {
-                            scrollDown->setOpacity(glm::mix(0.0f, 1.0f, t));
-                        };
-                        scrollDown->setAnimation(
-                            new LambdaAnimation(downFadeOutFunc, static_cast<int>(fadeTime)), 0,
-                            nullptr, true);
-                    }
+                if (downFadeOut) {
+                    auto downFadeOutFunc = [scrollDown](float t) {
+                        scrollDown->setOpacity(glm::mix(0.0f, 1.0f, t));
+                    };
+                    scrollDown->setAnimation(
+                        new LambdaAnimation(downFadeOutFunc, static_cast<int>(fadeTime)), 0,
+                        nullptr, true);
+                }
 
-                    mPreviousScrollState = state;
-                });
-        }
+                mPreviousScrollState = state;
+            });
     }
 
 private:

@@ -186,7 +186,6 @@ void Settings::setDefaults()
     mBoolMap["FavoritesStar"] = {true, true};
     mBoolMap["ListScrollOverlay"] = {false, false};
     mBoolMap["VirtualKeyboard"] = {true, true};
-    mBoolMap["ScrollIndicators"] = {true, true};
     mBoolMap["FavoritesAddButton"] = {true, true};
     mBoolMap["RandomAddButton"] = {false, false};
     mBoolMap["GamelistFilters"] = {true, true};
