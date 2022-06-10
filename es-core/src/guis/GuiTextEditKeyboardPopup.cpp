@@ -470,6 +470,9 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
 
 void GuiTextEditKeyboardPopup::update(int deltaTime)
 {
+    if (mText->isEditing())
+        mNavigationRepeatDirX = 0;
+
     updateNavigationRepeat(deltaTime);
     updateDeleteRepeat(deltaTime);
     GuiComponent::update(deltaTime);
