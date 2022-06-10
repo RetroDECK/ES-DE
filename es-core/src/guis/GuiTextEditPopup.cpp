@@ -165,15 +165,13 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
         return true;
     }
 
-    // If the keyboard has been configured with backspace as the back button (which is the default
-    // configuration) then ignore this key if we're currently editing or otherwise it would be
-    // impossible to erase characters using this key.
-    bool keyboardBackspace = (config->getDeviceId() == DEVICE_KEYBOARD && mText->isEditing() &&
-                              input.id == SDLK_BACKSPACE);
+    // Ignore whatever key is mapped to the back button so it can be used for text input.
+    bool keyboardBack {config->getDeviceId() == DEVICE_KEYBOARD && mText->isEditing() &&
+                       config->isMappedLike("b", input)};
 
     // Pressing back (or the escape key if using keyboard input) closes us.
     if ((config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_ESCAPE) ||
-        (!keyboardBackspace && input.value && config->isMappedTo("b", input))) {
+        (!keyboardBack && input.value && config->isMappedTo("b", input))) {
         if (mText->getValue() != mInitValue) {
             // Changes were made, ask if the user wants to save them.
             mWindow->pushGui(new GuiMsgBox(
@@ -210,7 +208,9 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
             if (!editing)
                 mText->startEditing();
 
+            mText->setMaskInput(false);
             mText->textInput("\b");
+            mText->setMaskInput(true);
 
             if (!editing)
                 mText->stopEditing();
@@ -227,7 +227,9 @@ bool GuiTextEditPopup::input(InputConfig* config, Input input)
         if (!editing)
             mText->startEditing();
 
+        mText->setMaskInput(false);
         mText->textInput(" ");
+        mText->setMaskInput(true);
 
         if (!editing)
             mText->stopEditing();
@@ -272,7 +274,9 @@ void GuiTextEditPopup::updateDeleteRepeat(int deltaTime)
         if (!editing)
             mText->startEditing();
 
+        mText->setMaskInput(false);
         mText->textInput("\b");
+        mText->setMaskInput(true);
 
         if (!editing)
             mText->stopEditing();

@@ -22,6 +22,7 @@ TextEditComponent::TextEditComponent()
     : mRenderer {Renderer::getInstance()}
     , mFocused {false}
     , mEditing {false}
+    , mMaskInput {true}
     , mCursor {0}
     , mBlinkTime {0}
     , mCursorRepeatDir {0}
@@ -66,6 +67,9 @@ void TextEditComponent::setValue(const std::string& val)
 
 void TextEditComponent::textInput(const std::string& text)
 {
+    if (mMaskInput)
+        return;
+
     if (mEditing) {
         mBlinkTime = 0;
         mCursorRepeatDir = 0;
@@ -114,37 +118,32 @@ void TextEditComponent::stopEditing()
 {
     SDL_StopTextInput();
     mEditing = false;
+    mMaskInput = false;
     mCursorRepeatDir = 0;
     updateHelpPrompts();
 }
 
 bool TextEditComponent::input(InputConfig* config, Input input)
 {
-    bool const cursor_left =
-        (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("left", input)) ||
-        (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_LEFT);
-    bool const cursor_right =
-        (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("right", input)) ||
-        (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_RIGHT);
-    bool const cursor_up =
-        (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("up", input)) ||
-        (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_UP);
-    bool const cursor_down =
-        (config->getDeviceId() != DEVICE_KEYBOARD && config->isMappedLike("down", input)) ||
-        (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_DOWN);
-    bool const shoulder_left = (config->isMappedLike("leftshoulder", input));
-    bool const shoulder_right = (config->isMappedLike("rightshoulder", input));
-    bool const trigger_left = (config->isMappedLike("lefttrigger", input));
-    bool const trigger_right = (config->isMappedLike("righttrigger", input));
+    bool const cursorLeft {config->isMappedLike("left", input)};
+    bool const cursorRight {config->isMappedLike("right", input)};
+    bool const cursorUp {config->isMappedLike("up", input)};
+    bool const cursorDown {config->isMappedLike("down", input)};
+    bool const shoulderLeft {config->isMappedLike("leftshoulder", input)};
+    bool const shoulderRight {config->isMappedLike("rightshoulder", input)};
+    bool const triggerLeft {config->isMappedLike("lefttrigger", input)};
+    bool const triggerRight {config->isMappedLike("righttrigger", input)};
 
-    if (input.value == 0) {
-        if (cursor_left || cursor_right || cursor_up || cursor_down || shoulder_left ||
-            shoulder_right | trigger_left || trigger_right) {
+    mMaskInput = true;
+
+    if (cursorLeft || cursorRight || cursorUp || cursorDown || shoulderLeft ||
+        shoulderRight | triggerLeft || triggerRight) {
+        if (input.value == 0)
             mCursorRepeatDir = 0;
-        }
-
-        return false;
     }
+
+    if (input.value == 0)
+        return false;
 
     if ((config->isMappedTo("a", input) ||
          (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_RETURN)) &&
@@ -154,63 +153,64 @@ bool TextEditComponent::input(InputConfig* config, Input input)
     }
 
     if (mEditing) {
-        if (config->getDeviceId() == DEVICE_KEYBOARD && input.id == SDLK_RETURN) {
-            if (isMultiline())
-                textInput("\n");
-            else
-                stopEditing();
+        if (config->getDeviceId() == DEVICE_KEYBOARD) {
+            // Special handling for keyboard input as the "A" and "B" buttons are overridden.
+            if (input.id == SDLK_RETURN) {
+                if (isMultiline())
+                    textInput("\n");
+                else
+                    stopEditing();
 
-            return true;
+                return true;
+            }
+            else if (input.id == SDLK_DELETE) {
+                if (mCursor < static_cast<int>(mText.length())) {
+                    // Fake as Backspace one char to the right.
+                    mMaskInput = false;
+                    moveCursor(1);
+                    textInput("\b");
+                }
+                return true;
+            }
+            else if (input.id == SDLK_BACKSPACE) {
+                mMaskInput = false;
+                textInput("\b");
+                return true;
+            }
         }
 
-        if (cursor_left || cursor_right) {
+        if (cursorLeft || cursorRight) {
             mBlinkTime = 0;
-            mCursorRepeatDir = cursor_left ? -1 : 1;
+            mCursorRepeatDir = cursorLeft ? -1 : 1;
             mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);
             moveCursor(mCursorRepeatDir);
+            return false;
         }
-        // Stop editing and let the button down event be captured by the parent component.
-        else if (cursor_down) {
+        else if (cursorDown) {
+            // Stop editing and let the button down event be captured by the parent component.
             stopEditing();
             return false;
         }
-        else if (shoulder_left || shoulder_right) {
-            mBlinkTime = 0;
-            mCursorRepeatDir = shoulder_left ? -10 : 10;
-            mCursorRepeatTimer = -(CURSOR_REPEAT_START_DELAY - CURSOR_REPEAT_SPEED);
-            moveCursor(mCursorRepeatDir);
+        else if (shoulderLeft) {
+            mMaskInput = false;
+            textInput("\b");
+            return true;
         }
-        // Jump to beginning of text.
-        else if (trigger_left) {
+        else if (triggerLeft) {
+            // Jump to beginning of text.
             mBlinkTime = 0;
             setCursor(0);
+            return true;
         }
-        // Jump to end of text.
-        else if (trigger_right) {
+        else if (triggerRight) {
+            // Jump to end of text.
             mBlinkTime = 0;
             setCursor(mText.length());
+            return true;
         }
-        else if (config->getDeviceId() == DEVICE_KEYBOARD) {
-            switch (input.id) {
-                case SDLK_HOME: {
-                    setCursor(0);
-                    break;
-                }
-                case SDLK_END: {
-                    setCursor(std::string::npos);
-                    break;
-                }
-                case SDLK_DELETE: {
-                    if (mCursor < static_cast<int>(mText.length())) {
-                        // Fake as Backspace one char to the right.
-                        moveCursor(1);
-                        textInput("\b");
-                    }
-                    break;
-                }
-            }
-        }
+
         // Consume all input when editing text.
+        mMaskInput = false;
         return true;
     }
 

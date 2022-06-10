@@ -42,6 +42,7 @@ public:
     std::shared_ptr<Font> getFont() const override { return mFont; }
 
     void setCursor(size_t pos);
+    void setMaskInput(bool state) { mMaskInput = state; }
 
     std::vector<HelpPrompt> getHelpPrompts() override;
 
@@ -61,6 +62,7 @@ private:
     std::string mTextOrig;
     bool mFocused;
     bool mEditing;
+    bool mMaskInput;
     int mCursor; // Cursor position in characters.
     int mBlinkTime;
 
