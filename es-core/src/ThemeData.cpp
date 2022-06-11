@@ -531,11 +531,9 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
     return &elemIt->second;
 }
 
-const std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>&
-ThemeData::getThemeSets()
+void ThemeData::populateThemeSets()
 {
-    if (!mThemeSets.empty())
-        return mThemeSets;
+    assert(mThemeSets.empty());
 
     LOG(LogInfo) << "Checking for available theme sets...";
 
@@ -583,8 +581,6 @@ ThemeData::getThemeSets()
             }
         }
     }
-
-    return mThemeSets;
 }
 
 const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)

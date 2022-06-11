@@ -214,7 +214,11 @@ public:
                                    const std::string& element,
                                    const std::string& expectedType) const;
 
-    const static std::map<std::string, ThemeSet, StringComparator>& getThemeSets();
+    static void populateThemeSets();
+    const static std::map<std::string, ThemeSet, StringComparator>& getThemeSets()
+    {
+        return mThemeSets;
+    }
     const static std::string getThemeFromCurrentSet(const std::string& system);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
 

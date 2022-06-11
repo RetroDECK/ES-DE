@@ -1079,27 +1079,22 @@ std::string SystemData::getGamelistPath(bool forWrite) const
 
 std::string SystemData::getThemePath() const
 {
-    // Locations where we check for themes, in the following order:
-    // 1. [SYSTEM_PATH]/theme.xml
-    // 2. System theme from currently selected theme set [CURRENT_THEME_PATH]/[SYSTEM]/theme.xml
-    // 3. Default system theme from currently selected theme set [CURRENT_THEME_PATH]/theme.xml
+    // Check for the precence of [CURRENT_THEME_PATH]/[SYSTEM]/theme.xml and if this does not
+    // exist, then try the default for the theme set, i.e. [CURRENT_THEME_PATH]/theme.xml
+    std::string themePath {ThemeData::getThemeFromCurrentSet(mThemeFolder)};
 
-    // First, check game folder.
-    std::string localThemePath = mRootFolder->getPath() + "/theme.xml";
-    if (Utils::FileSystem::exists(localThemePath))
-        return localThemePath;
+    if (Utils::FileSystem::exists(themePath))
+        return themePath;
 
-    // Not in game folder, try system theme in theme sets.
-    localThemePath = ThemeData::getThemeFromCurrentSet(mThemeFolder);
+    themePath = Utils::FileSystem::getParent(Utils::FileSystem::getParent(themePath));
 
-    if (Utils::FileSystem::exists(localThemePath))
-        return localThemePath;
+    if (themePath != "") {
+        themePath.append("/theme.xml");
+        if (Utils::FileSystem::exists(themePath))
+            return themePath;
+    }
 
-    // Not system theme, try default system theme in theme set.
-    localThemePath =
-        Utils::FileSystem::getParent(Utils::FileSystem::getParent(localThemePath)) + "/theme.xml";
-
-    return localThemePath;
+    return "";
 }
 
 SystemData* SystemData::getRandomSystem(const SystemData* currentSystem)
@@ -1260,7 +1255,7 @@ void SystemData::loadTheme()
 {
     mTheme = std::make_shared<ThemeData>();
 
-    std::string path = getThemePath();
+    std::string path {getThemePath()};
 
     if (!Utils::FileSystem::exists(path)) {
         // No theme available for this platform.
