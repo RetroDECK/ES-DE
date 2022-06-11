@@ -93,7 +93,7 @@ namespace PlatformIds
         "pcenginecd",           // NEC PC Engine CD / TurboGrafx-CD
         "pcfx",                 // NEC PC-FX
         "pcwindows",            // PC (Windows)
-        "pico8",                // PICO-8 game engine
+        "pico8",                // PICO-8 Fantasy Console (game engine)
         "pokemini",             // Nintendo Pokémon Mini
         "ps2",                  // Sony PlayStation 2
         "ps3",                  // Sony PlayStation 3
