@@ -1000,6 +1000,16 @@
         <theme>pcfx</theme>
     </system>
     <system>
+        <name>pico8</name>
+        <fullname>PICO-8 Fantasy Console</fullname>
+        <path>%ROMPATH%/pico8</path>
+        <extension>.p8 .P8 .png .PNG</extension>
+        <command label="PICO-8 (Standalone)">%EMULATOR_PICO-8% -root_path %GAMEDIR% -run %ROM%</command>
+        <command label="PICO-8 Splore (Standalone)">%EMULATOR_PICO-8% -root_path %GAMEDIR% -splore</command>
+        <platform>pico8</platform>
+        <theme>pico8</theme>
+    </system>
+    <system>
         <name>pokemini</name>
         <fullname>Nintendo Pokémon Mini</fullname>
         <path>%ROMPATH%/pokemini</path>

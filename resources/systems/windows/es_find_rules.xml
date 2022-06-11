@@ -275,6 +275,19 @@
             <entry>%ESPATH%\..\PCSX2-wxWidgets\pcsx2x64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PICO-8">
+        <!-- PICO-8 Fantasy Console (game engine) -->
+        <rule type="systempath">
+            <entry>pico8.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>C:\Program Files (x86)\PICO-8\pico8.exe</entry>
+            <entry>D:\Program Files (x86)\PICO-8\pico8.exe</entry>
+            <entry>%ESPATH%\Emulators\PICO-8\pico8.exe</entry>
+            <entry>%ESPATH%\PICO-8\pico8.exe</entry>
+            <entry>%ESPATH%\..\PICO-8\pico8.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="PLAY!">
         <!-- Sony PlayStation 2 emulator Play! -->
         <rule type="systempath">

@@ -246,6 +246,17 @@
             <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
         </rule>
     </emulator>
+    <emulator name="PICO-8">
+        <!-- PICO-8 Fantasy Console (game engine) -->
+        <rule type="systempath">
+            <entry>pico8</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/pico-8/pico8</entry>
+            <entry>~/.local/bin/pico-8/pico8</entry>
+            <entry>~/bin/pico-8/pico8</entry>
+        </rule>
+    </emulator>
     <emulator name="PLAY!">
         <!-- Sony PlayStation 2 emulator Play! -->
         <rule type="staticpath">
