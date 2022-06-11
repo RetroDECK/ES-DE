@@ -38,6 +38,7 @@
 * Added theme support for setting the TextListComponent indicators to symbols, ascii or none
 * Added theme support for setting the TextListComponent custom collection indicators to symbols or ascii
 * Removed the "Use plain ASCII for special gamelist characters" menu option as it's now theme-controlled
+* Removed the "Enable menu scroll indicators" menu option
 * Changed the badges default lines property value from 2 to 3
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
@@ -69,7 +70,7 @@
 * Added support for dimming components (fade to black)
 * Added logging of the display refresh rate on startup
 * Added a command line option to rotate the application screen 180 degrees
-* Added support for the platform pico8 (only platform and scraper support, no system or theme configuration added yet)
+* Improved the behavior and consistency for the virtual keyboard when using non-standard keyboard mappings
 * Improved the theme loading error logging to make it consistent and easier to understand
 * Added a log warning for unthemed systems during theme set loading
 * Changed the warning log level for missing theme files to debug level if the paths are set using variables
@@ -156,6 +157,7 @@ v1.2 maintenance release.
 * Added support for launching .app directories and alias files to the desktop, epic, kodi, ports and steam systems on macOS
 * Changed the ps3 system to use shortcuts and created an alternative emulator entry for backward compatibility with symlinks
 * Added the .lnk file extension to the epic system on Windows
+* Added support for the PICO-8 (pico8) game system
 * Added support for the Capcom Play System (cps) game system
 * Added support for the Sega Model 2 and 3 (model2 and model3) game systems on Windows
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
@@ -167,6 +169,7 @@ v1.2 maintenance release.
 * Changed the default quit shortcut from F4 to Command + Q on macOS
 * Added Ctrl + Q as a user-selectable quit shortcut
 * Added support for placing a noload.txt file in the root of a system/ROM directory to keep it from getting loaded
+* (Windows) Added support for creating a portable installation in the root of a device, such as E: or F:
 * Increased the window width slightly for the Alternative emulators interface when displaying long system names
 * Added size restrictions to the "size" and "maxSize" theme properties for the image and video elements
 * Changed to a new API key for TheGamesDB
@@ -178,6 +181,7 @@ v1.2 maintenance release.
 * Thumbnails were not included in theme sets that used them for the Detailed view style
 * Game images were not included in theme sets that used them for the Video view style
 * Themes with large pixelated fonts sometimes displayed too many textlist rows
+* When entering the text edit field for the virtual keyboard, a navigation key repeat would sometimes continue to run
 * The menu scroll indicators and title sometimes overlapped (e.g. seen in the Alternative emulators interface)
 * There was a small rounding error that caused a minimal distortion when rendering menu titles
 

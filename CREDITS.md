@@ -2,14 +2,15 @@
 
 # Programming
 
-Alec Lofquist (original version) \
-http://www.aloshi.com
+**Original version**\
+Alec Lofquist
 
-RetroPie Community (RetroPie fork) \
-https://retropie.org.uk
+**RetroPie Fork**\
+RetroPie community
 
-Leon Styhre (Desktop Edition fork, based on the RetroPie version) \
-https://gitlab.com/es-de/emulationstation-de
+**Desktop Edition fork**\
+Leon Styhre \
+Sophia Hadash
 
 # UI Art & Design
 
