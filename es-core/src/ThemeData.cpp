@@ -581,6 +581,12 @@ void ThemeData::populateThemeSets()
             }
         }
     }
+
+    if (mThemeSets.empty()) {
+        LOG(LogWarning) << "Couldn't find any theme sets, creating dummy entry";
+        ThemeSet set {"no-theme-sets", ThemeCapability()};
+        mThemeSets[set.getName()] = set;
+    }
 }
 
 const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
