@@ -50,6 +50,7 @@
 * pc88 : NEC PC-8800 series - consolegame.svg, console.svg, game.svg
 * pc98 : NEC PC-9800 series - consolegame.svg, console.svg, game.svg
 * pcfx: NEC PC-FX - consolegame.svg, console.svg, controller.svg, game.svg
+* pico8: PICO-8 Fantasy Console - consolegame.svg, console.svg, controller.svg, game.svg
 * pokemini: Nintendo Pokémon Mini - consolegame.svg, console.svg, controller.svg, game.svg
 * ports: Source ports - consolegame.svg, console.svg, controller.svg, game.svg
 * ps4: Sony PlayStation 4 - consolegame.svg, console.svg, controller.svg, game.svg

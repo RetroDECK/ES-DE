@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Creator:  Lexaloffle Games</text>
+        </text>
+        <text name="info2">
+            <text>Initial release:  2015</text>
+        </text>
+        <text name="info3">
+            <text>PICO-8 is a fantasy console for making, playing and sharing tiny games.</text>
+        </text>
+        <text name="info4">
+            <text>Built-in features:  Code editor, Sprite Editor, Tile Map Editor, SFX Editor</text>
+        </text>
+        <text name="info5">
+            <text>Resolution:  128×128 pixels, 16 colors</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  4 channels</text>
+        </text>
+    </view>
+</theme>
