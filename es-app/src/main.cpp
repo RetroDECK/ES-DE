@@ -152,7 +152,7 @@ bool parseArgs(int argc, char* argv[])
         outputToConsole(false);
 #endif
 
-    std::string portableFilePath = Utils::FileSystem::getExePath() + "/portable.txt";
+    std::string portableFilePath {Utils::FileSystem::getExePath() + "/portable.txt"};
 
     // This is primarily intended for portable ES-DE installations on Windows (for example
     // placed on a USB memory stick) but it may be usable for other operating systems too.
@@ -177,8 +177,16 @@ bool parseArgs(int argc, char* argv[])
 #if defined(_WIN64)
             homePath = Utils::String::replace(homePath, "/", "\\");
 #endif
+            bool homeExists {false};
 
-            if (!Utils::FileSystem::exists(homePath)) {
+            if (Utils::FileSystem::exists(homePath))
+                homeExists = true;
+#if defined(_WIN64)
+            else if (homePath.size() == 2 && Utils::FileSystem::driveExists(homePath))
+                homeExists = true;
+#endif
+
+            if (!homeExists) {
                 std::cerr << "Error: Defined home path \"" << homePath << "\" does not exist\n";
             }
             else if (Utils::FileSystem::isRegularFile(homePath)) {
