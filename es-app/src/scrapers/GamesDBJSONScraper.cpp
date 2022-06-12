@@ -94,6 +94,7 @@ namespace
         {NINTENDO_SWITCH, "4971"},
         {BANDAI_SUFAMI_TURBO, "6"},
         {DOS, "1"},
+        {TANGERINE_ORIC, "4986"},
         {GAMEENGINE_SCUMMVM, "1"},
         {PC, "1"},
         {PC_WINDOWS, "1"},
@@ -131,7 +132,8 @@ namespace
         {VIDEOPAC_ODYSSEY2, "4927"},
         {VECTREX, "4939"},
         {TANDY_COLOR_COMPUTER, "4941"},
-        {TANDY_TRS80, "4941"}};
+        {TANDY_TRS80, "4941"},
+        {TEXAS_INSTRUMENTS_TI99, "4953"}};
 
 } // namespace
 
