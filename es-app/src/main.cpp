@@ -65,6 +65,7 @@ namespace
     bool forceInputConfig {false};
     bool createSystemDirectories {false};
     bool settingsNeedSaving {false};
+    bool portableMode {false};
 
     enum loadSystemsReturnCode {
         LOADING_OK,
@@ -195,6 +196,7 @@ bool parseArgs(int argc, char* argv[])
             else {
                 std::cout << "Setting home path to \"" << homePath << "\"\n";
                 Utils::FileSystem::setHomePath(homePath);
+                portableMode = true;
             }
         }
         portableFile.close();
@@ -223,6 +225,7 @@ bool parseArgs(int argc, char* argv[])
                 return false;
             }
             Utils::FileSystem::setHomePath(argv[i + 1]);
+            portableMode = false;
             break;
         }
     }
@@ -545,6 +548,10 @@ int main(int argc, char* argv[])
     Log::open();
     LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << ", built "
                  << PROGRAM_BUILT_STRING;
+
+    if (portableMode) {
+        LOG(LogInfo) << "Running in portable mode";
+    }
 
     // Always close the log on exit.
     atexit(&onExit);
