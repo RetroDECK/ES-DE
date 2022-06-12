@@ -133,6 +133,7 @@ namespace
         {VECTREX, 102},
         {TANDY_TRS80, 144},
         {TANDY_COLOR_COMPUTER, 144},
+        {TEXAS_INSTRUMENTS_TI99, 205},
         {SEGA_NAOMI, 56},
         {THOMSON_MOTO, 141},
         {UZEBOX, 216},
