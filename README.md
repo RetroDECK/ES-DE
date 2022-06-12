@@ -28,7 +28,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Ubuntu 20.04 to 22.04
 * Linux Mint 20
 * Manjaro 21
-* Fedora 35 Workstation
+* Fedora 36 Workstation
 * SteamOS 3.0
 * elementary OS 6
 * Raspberry Pi OS 10 and 11 (armv7l and aarch64)
@@ -47,7 +47,7 @@ The latest version is 1.2.4 (released 2022-05-27)
 | macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.4-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/40175816/download)|
 | macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.4-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/40175605/download)|
 | Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.4-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/40175731/download)|
-| Fedora RPM package   | Fedora Workstation 35, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.4-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/40176214/download)|
+| Fedora RPM package   | Fedora Workstation 36, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.4-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/40176214/download)|
 | Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
 | Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/40176382/download)|
 | Linux AppImage       | Current Linux distributions with libc 2.34 or later     | x64 (x86)    | [EmulationStation-DE-x64_Current.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/40176633/download)|

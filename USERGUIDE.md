@@ -38,7 +38,7 @@ The following operating systems have been tested (all for the x86 architecture u
 * Ubuntu 20.04 to 22.04
 * Linux Mint 20
 * Manjaro 21
-* Fedora 35 Workstation
+* Fedora 36 Workstation
 * SteamOS 3.0
 * elementary OS 6
 * Raspberry Pi OS 10 and 11 (armv7l and aarch64)
@@ -840,7 +840,13 @@ For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is required by the TheGamesDB scraper where the expanded filenames are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
-If emulating Sega Model 2 games using _Model 2 Emulator_, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. This file is found in the emulator installation directory.
+If emulating Sega Model 2 games using _Model 2 Emulator_, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. If you're using a portable ES-DE installation, then you can set the ROM directory path to be relative, for example:
+```
+[RomDirs]
+Dir1=..\..\ROMs\arcade\Sega Model 2
+```
+
+The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 #### Vintage systems emulated using MAME
 

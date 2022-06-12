@@ -5,10 +5,10 @@
 **Original version**\
 Alec Lofquist
 
-**RetroPie Fork**\
+**RetroPie fork**\
 RetroPie community
 
-**Desktop Edition fork**\
+**Desktop Edition**\
 Leon Styhre \
 Sophia Hadash
 

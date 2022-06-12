@@ -163,6 +163,8 @@ v1.2 maintenance release.
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * (Linux) Changed to find rule wildcard matching for the AppImages for Dolphin, mGBA, Play!, RPCS3, Xemu and Yuzu
 * Changed the sorting in the Alternative emulators interface to use short system names instead of full system names
+* Added scraper support for the ti99 platform
+* Added TheGamesDB scraper support for the oric platform
 * Added the pcwindows platform to the lutris system on Unix to improve scraping
 * Renamed the "Exit button combo" menu option to "Keyboard quit shortcut"
 * Changed the default quit shortcut from F4 to Alt + F4 on Windows and Unix
@@ -848,8 +850,6 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * On Raspberry Pi OS 10, Sony DualShock 4 controllers have problems with some button presses that don't register correctly. The issue appears resolved in Raspberry Pi OS 11.
 
 * On Raspberry Pi OS 11 there are various graphics issues and sometimes the application or emulator completely freezes which requires a power cycle of the machine. This is seemingly due to GPU driver bugs and we can only wait for OS updates to address these problems. These issues have not been encountered on Raspberry Pi OS 10.
-
-* On Fedora 35 a problem has been observed where the screen turns completely black or flickers intensely when starting ES-DE for the first time. A workaround for this is to simply exit the application with F4 or Alt+F4 and starting it again. Everything should then render correctly, and any subsequent startups will work fine including after suspending/resuming the computer. It's currently unclear if this is limited to only Intel GPU drivers or if it's a general issue under Fedora and/or Wayland. At least Wayland on Ubuntu 21.10 does not trigger the same issue.
 
 * There is some screen tearing present on Unix/Linux which is especially visible during horizontal slide transitions. The problem exists on both x86 and ARM as well as on Intel, AMD and Nvidia GPUs and on the Broadcom VideoCore. The problem seems to be Xorg-related as tearing has not been observed when using Wayland, and it's not present on macOS or Windows either.
 

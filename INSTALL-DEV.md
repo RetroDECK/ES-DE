@@ -429,13 +429,23 @@ The process to create a Linux AppImage is completely automated. You simply run t
 tools/create_AppImage.sh
 ```
 
-This script has only been tested on Ubuntu 20.04 LTS and it's recommended to go for an older operating system when building the AppImage to achieve compatibility with a large number of distributions. This does come with some sacrifices though, such as the use of an older SDL version which may not support the latest game controllers.
+This script has only been tested on Ubuntu (20.04 LTS and 22.04 LTS) and it's recommended to go for an older operating system when building the AppImage to achieve compatibility with a large number of distributions. This does come with some sacrifices though, such as the use of an older SDL version which may not support the latest game controllers.
 
-The script will delete CMakeCache.txt and run cmake with the BUNDLED_CERTS option, as otherwise scraping wouldn't work on Fedora (and probably on openSUSE and a few other distributions as well).
-
-Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running create_AppImage.sh.
+The script will delete CMakeCache.txt and run cmake with the BUNDLED_CERTS option, as otherwise scraping wouldn't work on Fedora (and probably not on openSUSE and a few other distributions as well).
 
 After creating the AppImage it's recommended to delete CMakeCache.txt manually so the BUNDLED_CERTS option is not accidentally enabled when building the other packages.
+
+To build the Steam Deck-specific AppImage, run the following:
+```
+tools/create_AppImage_SteamDeck.sh
+```
+
+This is similar to the regular AppImage but does not build with the BUNDLED_CERTS option and changes some settings like the VRAM limit.
+
+Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script. Be aware though that some releases of linuxdeploy may be broken and could lead to the inclusion of invalid dependencies that will make the package unusable on some distributions. The release with the following -V output has been tested and is working correctly:
+```
+linuxdeploy version 1-alpha (git commit ID 9aa59f3), GitHub actions build 41 built on 2021-11-20 01:00:04 UTC
+```
 
 ## Building on macOS
 
@@ -711,7 +721,7 @@ Note that most GDB builds for Windows have broken Python support so that pretty 
 **Other preparations**
 
 In order to get clang-format onto the system you need to download and install Clang: \
-[https://llvm.org/builds](https://llvm.org/builds)
+[https://releases.llvm.org](https://releases.llvm.org)
 
 Just run the installer and make sure to select the option _Add LLVM to the system PATH for current user_.
 
