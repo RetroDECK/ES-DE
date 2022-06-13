@@ -155,7 +155,8 @@ v1.2 maintenance release.
 * Added an %ENABLESHORTCUTS% variable to support launching of .desktop files on Unix and apps and aliases on macOS
 * Added support for launching .desktop files to the desktop, epic, kodi, lutris, ports and steam systems on Unix
 * Added support for launching .app directories and alias files to the desktop, epic, kodi, ports and steam systems on macOS
-* Changed the ps3 system to use shortcuts and created an alternative emulator entry for backward compatibility with symlinks
+* Setup two emulator entries for the desktop system, "Suspend ES-DE" and "Keep ES-DE running" to control the launch behavior
+* Changed the ps3 system to use shortcuts by default and created an alternative emulator entry for the old directory approach
 * Added the .lnk file extension to the epic system on Windows
 * Added support for the PICO-8 (pico8) game system
 * Added support for the Capcom Play System (cps) game system
@@ -839,7 +840,7 @@ Many bugs have been fixed, and numerous features that were only partially implem
 
 **The issues below are relevant for ES-DE v1.2.4**
 
-* When using Windows on some handheld devices with AMD GPUs, ES-DE will only display a black screen on startup. This can be seen on for instance the Steam Deck, AYA NEO and ONEXPLAYER 8.4. The issue seems to be caused by buggy GPU drivers, and can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for instance `EmulationStation.exe --resolution 1281 800`
+* When using Windows on some handheld devices with AMD GPUs, ES-DE may only display a black screen on startup. This can be seen on for instance the Steam Deck, AYA NEO and ONEXPLAYER 8.4. The issue seems to be caused by buggy GPU drivers, and can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for instance `EmulationStation.exe --resolution 1281 800`
 
 * On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
 

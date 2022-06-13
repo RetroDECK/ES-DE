@@ -251,16 +251,18 @@ Note that the above are only examples to illustrate the general approach, you ma
 
 In general it should be straightforward to run ES-DE on Windows. Almost all emulators are available on this operating system and driver quality and controller support is normally very good.
 
-Just make sure to not place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations and extremely long startup times if you have a large collection. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
+Just make sure to never place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations and extremely long startup times if you have a large collection. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
 
 In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start. For really old graphics cards the available drivers may not provide an OpenGL version that is modern enough for ES-DE to work, and in this case a last resort solution would be to install the _Mesa3D for Windows_ library which provides software-based OpenGL rendering. The 64-bit version of this library can be downloaded from [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag) and you simply extract the opengl32.dll file into the ES-DE installation directory. Just be aware that the performance may be quite bad.
 
-On some handheld devices with AMD GPUs, ES-DE will only display a black screen on startup. This can be seen on for instance the Steam Deck (although not if using SteamOS), AYA NEO and ONEXPLAYER 8.4. The issue seems to be caused by buggy GPU drivers, and can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for example:
+On some handheld devices with AMD GPUs, ES-DE may only display a black screen on startup. This can be seen on for instance the Steam Deck (although not if using SteamOS), AYA NEO and ONEXPLAYER 8.4. The issue seems to be caused by buggy GPU drivers, and can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for example:
 ```
 EmulationStation.exe --resolution 1281 800
 ```
 
-Some older games and emulators may not work properly when run via ES-DE unless you set their compatibility mode to an older Windows release. This is done by right clicking on the .exe file or .lnk shortcut for the game or emulator, selecting _Properties_ and then the _Compatibility_ tab, then checking the box named _Run this program in compatibility mode for:_ and finally selecting an appropriate Windows release. Some experimentation with different Windows versions may be required. Don't attempt to change the compatibility mode for ES-DE itself though as that may cause any types of unforeseen issues.
+Some older games (and possibly emulators too) may not work correctly or even start at all if ES-DE is set to run in the background while a game is launched. So if you experience strange issues with some games, make sure that the setting _Run in background (while game is launched)_ is disabled. If launching any of these problematic games from the _desktop_ system, also make sure to use the default emulator entry _Suspend ES-DE_ and not the alternative emulator _Keep ES-DE running_.
+
+In a similar fashion, some older games may require the compatibility mode to be set to an older Windows release. This is done by right clicking on the .exe file or .lnk shortcut for the game or emulator, selecting _Properties_ and then the _Compatibility_ tab, then checking the box named _Run this program in compatibility mode for:_ and finally selecting an appropriate Windows release. Some experimentation with different Windows versions may be required. Don't attempt to change the compatibility mode for ES-DE itself though as that may cause any types of unforeseen issues.
 
 Installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
 
@@ -907,11 +909,17 @@ Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U sy
 
 #### Sony PlayStation 3
 
-Adding PS3 games to ES-DE is accomplished by using shortcuts. In the past symlinks were used instead, but since shortcuts are much easier to use, the old method has been deprecated and is not described here any longer. If you have existing games setup using symlinks, then you need to change to the alternative emulator _RPCS3 [Symlink] (Standalone)_ or you won't be able to launch them.
+There are two ways to add PS3 games to ES-DE; by using shortcuts or by adding game directories directly to the ~/ROMs/ps3 folder and interpreting these as files. Shortcuts is generally the way to go as it's easier to setup and for HDD/pkg games it's the only way to make it work unless you manually create symlinks to the internal RPCS3 directory structure. So another benefit with shortcuts is consistency as both HDD/pkg games and disc-based games will be setup in the same manner. This also means that the same RPCS3 emulator entry can be used to launch every game.
+
+Be aware that if you still want to have games installed using the directory method, then you will need to change to the alternative emulator _RPCS3 Directory (Standalone)_ or you won't be able to launch these games. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis.
 
 If using the Flatpak release of RPCS3 on Linux and your games are stored on an external device (such as a memory card), then you need to give RPCS3 the necessary permissions. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is _All system files_ in the _Filesystem_ section.
 
-First install your games inside RPCS3, then right click on each entry and select _Create Shortcut_ followed by _Create Desktop Shortcut_. On Windows this will create shortcuts with the .lnk extension, on Unix/Linux they will have the .desktop extension and on macOS they will have the .app extension.
+Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the RPCS3 documentation.
+
+**Shortcuts**
+
+First install your games inside RPCS3, then right click on each entry and select _Create Shortcut_ followed by _Create Desktop Shortcut_. On Windows this will create shortcuts with the .lnk extension, on macOS they will have the .app extension and on Unix/Linux they will have the .desktop extension.
 
 Then simply move these files from your desktop to your ~/ROMs/ps3 directory and you're done. Here's an example of what this could look like on Linux:
 ```
@@ -929,11 +937,22 @@ You need to change this to the full path of the emulator binary, such as:
 Exec="/var/lib/flatpak/exports/bin/net.rpcs3.RPCS3" --no-gui "/home/myusername/.var/app/net.rpcs3.RPCS3/config/rpcs3/dev_hdd0/game/NPUA30002"
 ```
 
-If using the AppImage release of RPCS3 on Linux another issue may be that the path to the emulator could change when upgrading to a newer release, which may or may not require manual updates to the desktop files.
+If using the AppImage release of RPCS3 on Linux then another issue may be that the path to the emulator could change when upgrading to a newer release, which may or may not require manual updates to the desktop files.
 
 Regardless of how you've installed RPCS3, make sure to always test the shortcuts outside ES-DE first, because if they don't work from the desktop, then they will not work from inside ES-DE either.
 
-Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the RPCS3 documentation.
+**Directories**
+
+This approach is only intended for disc-based games as for HDD/pkg games you should use shortcuts instead. When using this method you need to retain the directory structure of the Blu-ray disc, and each directory needs to be renamed by adding the .ps3 extension. This will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
+
+Here's an example of what a game entry could look like:
+```
+~/ROMs/ps3/Gran Turismo 5.ps3
+```
+
+It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3 extension. But if you want to locate your games outside the ~/ROMs/ps3 directory anyway, then it's probably easier to just use shortcuts.
+
+When using this setup method you need to set the alternative emulator to _RPCS3 Directory (Standalone)_ or game launching will not work.
 
 #### Commodore Amiga
 
@@ -1026,7 +1045,9 @@ A final alternative is to use _folder links_ to keep the directory structure int
 
 #### Ports and desktop applications
 
-As ports and desktop applications are handled in exactly the same way in ES-DE both of these are described in this section. For these systems it's generally native applications rather that emulated games that are executed. There are two main approaches to setting up such entries and these are _shortcuts_ and _scripts_. Note that these can be mixed in the same system, you can have some entries that are shortcuts and some that are scripts and they will still all work.
+As ports and desktop applications are handled in almost exactly the same way in ES-DE both of these are described in this section. For these systems it's generally native applications rather that emulated games that are executed. There are two main approaches to setting up such entries and these are _shortcuts_ and _scripts_. Note that these can be mixed in the same system, you can have some entries that are shortcuts and some that are scripts and they will still all work.
+
+For the _desktop_ system specifically, you can choose to suspend ES-DE while an application or game is launched, or you can choose to keep ES-DE running in the background. This is controlled by the selection of either the default emulator _Suspend ES-DE_ or the alternative emulator _Keep ES-DE running_. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis.
 
 **Shortcuts**
 
@@ -2469,7 +2490,7 @@ The **Alternative emulators** column lists additional emulators configured in es
 
 The **Needs BIOS** column indicates if additional BIOS/system ROMs are required, as should be explained by the emulator documentation. Good starting points for such documentation are [https://docs.libretro.com](https://docs.libretro.com) and [https://docs.libretro.com/library/bios](https://docs.libretro.com/library/bios)
 
-For additional details regarding which game file extensions are supported per system, refer to the es_systems.xml files [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml). Normally the extensions setup in these files should cover everything that the emulators support. For systems that have alternative emulators defined, the list of extensions is a combination of what is supported by all the emulators. This approach is necessary as you want to be able to see all games for each system while potentially testing and switching between different emulators, either system-wide or on a per game basis.
+For additional details regarding which game file extensions are supported per system, refer to the es_systems.xml files [unix/es_systems.xml](resources/systems/unix/es_systems.xml), [macos/es_systems.xml](resources/systems/macos/es_systems.xml) and [windows/es_systems.xml](resources/systems/windows/es_systems.xml). Normally the extensions setup in these files should cover everything that the emulators support. For systems that have alternative emulators defined, the list of extensions is a combination of what is supported by all the emulators. This approach is necessary as you want to be able to see all games for each system while potentially testing and switching between different emulators, either system-wide or on a per-game basis.
 
 If you generated the ROMs directory structure when first starting ES-DE, the systeminfo.txt files located in each game system directory will also contain information about the emulators and supported file extensions.
 
@@ -2526,7 +2547,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | colecovision          | ColecoVision                                   | blueMSX                           | Gearcoleco                        |              |                                      |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | Single archive file following MAME name standard in root folder |
 | daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes (Daphne games) | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
-| desktop               | Desktop Applications                           | N/A                               |                                   | No           | Shortcut in root folder              |
+| desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | Shortcut or script/batch file in root folder |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | In separate folder (one folder per game with complete file structure retained) |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
@@ -2592,7 +2613,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | N/A                               |                                   | No           | Shortcut in root folder or shell/batch script in separate folder (possibly combined with game data) |
 | ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW],<br>PCSX2 Qt **(Standalone)** [W*],<br>PCSX2 wxWidgets **(Standalone)** [W*],<br>Play! **(Standalone)** [UMW*],<br>AetherSX2 **(Standalone)** [M] | Yes (No for Play!) |                                      |
-| ps3                   | Sony PlayStation 3                             | RPCS3 **(Standalone)** [UMW*]     | RPCS3 [Symlink] **(Standalone)** [UMW*] | Yes    | Shortcut in root folder              |
+| ps3                   | Sony PlayStation 3                             | RPCS3 Shortcut **(Standalone)** [UMW*] | RPCS3 Directory **(Standalone)** [UMW*] | Yes    | See the specific _Sony PlayStation 3_ section elsewhere in this guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |
 | psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
