@@ -1043,8 +1043,8 @@
         <fullname>Sony PlayStation 3</fullname>
         <path>%ROMPATH%\ps3</path>
         <extension>.lnk .LNK .ps3 .PS3 .ps3dir .PS3DIR</extension>
-        <command label="RPCS3 (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
-        <command label="RPCS3 [Symlink] (Standalone)">%EMULATOR_RPCS3% --no-gui %ROM%</command>
+        <command label="RPCS3 Shortcut (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="RPCS3 Directory (Standalone)">%EMULATOR_RPCS3% --no-gui %ROM%</command>
         <platform>ps3</platform>
         <theme>ps3</theme>
     </system>
