@@ -351,7 +351,8 @@
         <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%/desktop</path>
         <extension>.desktop .sh</extension>
-        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Suspend ES-DE">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Keep ES-DE running">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc</platform>
         <theme>desktop</theme>
     </system>

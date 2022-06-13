@@ -353,7 +353,8 @@
         <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%\desktop</path>
         <extension>.bat .BAT .lnk .LNK</extension>
-        <command>%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Suspend ES-DE">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Keep ES-DE running">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>pc</platform>
         <theme>desktop</theme>
     </system>
