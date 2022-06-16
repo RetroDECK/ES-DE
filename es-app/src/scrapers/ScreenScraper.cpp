@@ -610,14 +610,14 @@ void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
                                         std::string& fileFormat,
                                         std::string region)
 {
-    pugi::xml_node art = pugi::xml_node(nullptr);
+    pugi::xml_node art {pugi::xml_node(nullptr)};
 
     // Do an XPath query for media[type='$media_type'], then filter by region.
     // We need to do this because any child of 'medias' has the form
     // <media type="..." region="..." format="...">
     // and we need to find the right media for the region.
-    pugi::xpath_node_set results = media_list.select_nodes(
-        (static_cast<std::string>("media[@type='") + mediaType + "']").c_str());
+    pugi::xpath_node_set results {media_list.select_nodes(
+        (static_cast<std::string>("media[@type='") + mediaType + "']").c_str())};
 
     if (results.size()) {
         // Videos and fan art don't have any region attributes, so just take the first entry
@@ -626,13 +626,23 @@ void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
             art = results.first().node();
         }
         else {
-            // Region fallback: WOR(LD), US, CUS(TOM?), JP, EU.
-            for (auto _region : std::vector<std::string> {region, "wor", "us", "cus", "jp", "eu"}) {
+            std::string otherRegion;
+            if (Settings::getInstance()->getBool("ScraperRegionFallback")) {
+                // In case none of the regular fallback regions are found, try whatever is the
+                // first region in the returned results. This should capture games only released
+                // for specific countries and such as well as invalid database entries where the
+                // wrong region was defined. This fallback also includes the ss/ScreenScraper
+                // region which adds media for unofficial games (e.g. for OpenBOR and PICO-8).
+                otherRegion = results.first().node().attribute("region").as_string();
+            }
+            // Region fallback: world, USA, Japan, EU and custom.
+            for (auto regionEntry :
+                 std::vector<std::string> {region, "wor", "us", "jp", "eu", "cus", otherRegion}) {
                 if (art)
                     break;
 
                 for (auto node : results) {
-                    if (node.node().attribute("region").value() == _region) {
+                    if (node.node().attribute("region").value() == regionEntry) {
                         art = node.node();
                         break;
                     }

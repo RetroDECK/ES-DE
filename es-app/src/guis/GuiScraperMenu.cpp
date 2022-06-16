@@ -893,6 +893,28 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
+    // Whether to fallback to additional regions.
+    auto scraperRegionFallback = std::make_shared<SwitchComponent>(mWindow);
+    scraperRegionFallback->setState(Settings::getInstance()->getBool("ScraperRegionFallback"));
+    s->addWithLabel("ENABLE FALLBACK TO ADDITIONAL REGIONS", scraperRegionFallback);
+    s->addSaveFunc([scraperRegionFallback, s] {
+        if (scraperRegionFallback->getState() !=
+            Settings::getInstance()->getBool("ScraperRegionFallback")) {
+            Settings::getInstance()->setBool("ScraperRegionFallback",
+                                             scraperRegionFallback->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Regions are not supported by TheGamesDB, so gray out the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scraperRegionFallback->setEnabled(false);
+        scraperRegionFallback->setOpacity(DISABLED_OPACITY);
+        scraperRegionFallback->getParent()
+            ->getChild(scraperRegionFallback->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Retry search on peer verification errors (TLS/certificate issues).
     auto retry_peer_verification = std::make_shared<SwitchComponent>();
     retry_peer_verification->setState(
