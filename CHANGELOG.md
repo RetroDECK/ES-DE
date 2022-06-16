@@ -163,6 +163,7 @@ v1.2 maintenance release.
 * Added support for the Sega Model 2 and 3 (model2 and model3) game systems on Windows
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * (Linux) Changed to find rule wildcard matching for the AppImages for Dolphin, mGBA, Play!, RPCS3, Xemu and Yuzu
+* Added a ScreenScraper option to fallback to additional regions to allow scraping of country-specific games and unofficial releases
 * Changed the sorting in the Alternative emulators interface to use short system names instead of full system names
 * Added scraper support for the ti99 platform
 * Added TheGamesDB scraper support for the oric platform

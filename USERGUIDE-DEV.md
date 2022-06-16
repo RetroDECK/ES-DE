@@ -1725,6 +1725,10 @@ If this setting is enabled and a folder has its flag set to be excluded from the
 
 With this option enabled underscores _ in game names are converted to spaces when performing scraper searches. This affects both the single-game scraper and the multi-scraper and it will also be applied automatically to the _Refine search_ dialog.
 
+**Enable fallback to additional regions** _(ScreenScraper only)_
+
+When a certain game media file does not exist for the selected region, ES-DE automatically performs a fallback to the regions _world_, _USA_, _Japan_, _EU_, and _custom_ in this specific order. If this setting is enabled then an additional fallback is performed to all other country-specific regions. This makes it possible to scrape media for some games only released in specific countries like Brazil or South Korea. It may also make it possible to scrape some game media that has been uploaded to ScreenScraper using the wrong region. The special _ss/ScreenScraper_ region is also enabled via this option, and among other things it contains media for games that never had official releases. This is relevant for instance for OpenBOR and PICO-8 games where 3D boxes and other images may become available. The drawback of this setting is that you may get inaccurate data such as box art in the wrong language or unofficial box art for arcade games, so you may want to experiment with this option on a per-system basis.
+
 **Auto-retry on peer verification errors** _(ScreenScraper only)_
 
 ScreenScraper sometimes has issues with its TLS certificates which causes searches to randomly fail. It's normally resolved within a few days, but in the meanwhile activating this setting will have the scraper automatically make up to eight additional attempts when this error occurs. That is normally enough to complete the search, but if not, just press _Retry_ in the error dialog and ES-DE will try eight more times. This setting applies to both the single-game scraper and the multi-scraper. The following error notification dialog and corresponding es_log.txt entry is displayed when this error occurs: "Error downloading thumbnail: SSL peer certificate or SSH remote key was not OK".
@@ -2084,9 +2088,9 @@ It's possible to trigger custom scripts for a number of actions in ES-DE, as is 
 
 If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES-DE. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
 
-**Disable desktop composition (requires restart)** _(Unix only)_
+**Disable desktop composition (requires restart)** _(Unix and X11/Xorg only)_
 
-The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphics cards and when running at higher resolution. As such the desktop compositor is disabled by default, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that this setting can cause problems with some graphics drivers (notably the Nvidia proprietary drivers) so if you see strange flickering and similar after quitting ES-DE, then disable the setting. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option).
+The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphics cards and when running at higher resolution. As such the desktop compositor is disabled by default, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that this setting can cause problems with some graphics drivers (notably the Nvidia proprietary drivers) so if you see strange flickering and similar after quitting ES-DE, then disable the setting. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option). This setting has no effect if using Wayland, it only applies to X11/Xorg.
 
 **Display GPU statistics overlay**
 
