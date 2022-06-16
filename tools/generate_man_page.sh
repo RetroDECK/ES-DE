@@ -32,7 +32,7 @@ emulationstation - EmulationStation Desktop Edition
 EmulationStation Desktop Edition (ES-DE) is a frontend for browsing and launching games from your multi-platform game collection.
 
 [AUTHOR]
-Leon Styhre (Desktop Edition fork) <https://es-de.org/>
+Leon Styhre (Desktop Edition) <https://es-de.org/>
 
 RetroPie community (RetroPie fork)
 
