@@ -234,6 +234,17 @@
             <entry>~/.local/share/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
         </rule>
     </emulator>
+    <emulator name="ORICUTRON">
+        <!-- Tangerine Computer Systems emulator Oricutron -->
+        <rule type="systempath">
+            <entry>Oricutron</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/oricutron/Oricutron</entry>
+            <entry>~/.local/bin/oricutron/Oricutron</entry>
+            <entry>~/bin/oricutron/Oricutron</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="systempath">

@@ -118,6 +118,12 @@
             <entry>/usr/local/bin/mupen64plus</entry>
         </rule>
     </emulator>
+    <emulator name="ORICUTRON">
+        <!-- Tangerine Computer Systems emulator Oricutron -->
+        <rule type="staticpath">
+            <entry>/Applications/Oricutron.app/Contents/MacOS/Oricutron</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="staticpath">

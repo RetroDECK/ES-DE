@@ -916,8 +916,8 @@
         <name>oric</name>
         <fullname>Tangerine Computer Systems Oric</fullname>
         <path>%ROMPATH%/oric</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.dsk .DSK .ort .ORT .tap .TAP .wav .WAV</extension>
+        <command label="Oricutron (Standalone)">%EMULATOR_ORICUTRON% %STARTDIR%=%EMUDIR% %ROM%</command>
         <platform>oric</platform>
         <theme>oric</theme>
     </system>

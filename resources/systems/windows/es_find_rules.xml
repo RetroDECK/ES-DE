@@ -237,6 +237,17 @@
             <entry>%ESPATH%\..\mupen64plus\mupen64plus-ui-console.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ORICUTRON">
+        <!-- Tangerine Computer Systems emulator Oricutron -->
+        <rule type="systempath">
+            <entry>oricutron.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Oricutron\oricutron.exe</entry>
+            <entry>%ESPATH%\Oricutron\oricutron.exe</entry>
+            <entry>%ESPATH%\..\Oricutron\oricutron.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 (legacy) -->
         <rule type="winregistryvalue">
