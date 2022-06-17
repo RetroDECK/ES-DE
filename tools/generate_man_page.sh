@@ -39,7 +39,7 @@ RetroPie community (RetroPie fork)
 Alec Lofquist (original version)
 
 [SEE ALSO]
-Full documentation is available at: <https://gitlab.com/es-de/emulationstation-de/>
+Full documentation available at: <https://gitlab.com/es-de/emulationstation-de/>
 "
 
 echo "${MAN_INCLUDE}" > $TEMPFILE_INPUT
