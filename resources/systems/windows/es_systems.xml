@@ -84,8 +84,8 @@
         <name>android</name>
         <fullname>Google Android</fullname>
         <path>%ROMPATH%\android</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.lnk .LNK</extension>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %STARTDIR%=%EMUDIR% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>android</platform>
         <theme>android</theme>
     </system>
