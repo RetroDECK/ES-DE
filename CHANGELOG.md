@@ -161,6 +161,9 @@ v1.2 maintenance release.
 * Added support for the PICO-8 (pico8) game system
 * Added support for the Capcom Play System (cps) game system
 * Added support for the Sega Model 2 and 3 (model2 and model3) game systems on Windows
+* Added configuration for the Tangerine Computer Systems Oric (oric) system on Unix and Windows
+* Added configuration for the Texas Instruments TI-99 (ti99) system on Unix and Windows
+* Added configuration for the Google Android (android) system on Windows
 * Added support for asterisks/wildcards for emulator name matching, usable both in es_find_rules.xml and es_systems.xml
 * (Linux) Changed to find rule wildcard matching for the AppImages for Dolphin, mGBA, Play!, RPCS3, Xemu and Yuzu
 * Added a ScreenScraper option to fallback to additional regions to allow scraping of country-specific games and unofficial releases
@@ -188,6 +191,7 @@ v1.2 maintenance release.
 * When entering the text edit field for the virtual keyboard, a navigation key repeat would sometimes continue to run
 * The menu scroll indicators and title sometimes overlapped (e.g. seen in the Alternative emulators interface)
 * There was a small rounding error that caused a minimal distortion when rendering menu titles
+* (macOS) The platform tag was missing for the NEC TurboGrafx-CD (tg-cd) system, leading to inaccurate scraping
 
 ## Version 1.2.4
 
