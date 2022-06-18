@@ -1417,7 +1417,7 @@ void FileData::launchGame()
         if (Utils::FileSystem::exists(Utils::String::replace(romPath, "\\", ""))) {
             LOG(LogInfo) << "Opening app or alias file \""
                          << Utils::String::replace(romPath, "\\", "") << "\"";
-            command = Utils::String::replace(command, binaryPath, "open -a");
+            command = Utils::String::replace(command, binaryPath, "open -W -a");
         }
         else {
             LOG(LogError) << "App or alias file \"" << romPath
