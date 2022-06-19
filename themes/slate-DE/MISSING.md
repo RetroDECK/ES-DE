@@ -77,5 +77,4 @@
 * wiiu: Nintendo Wii U - consolegame.svg, console.svg, controller.svg, game.svg
 * x1:  Sharp X1 - consolegame.svg, console.svg, game.svg
 * x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
-* xbox: Microsoft Xbox - controller.svg
 * zmachine: Infocom Z-machine - consolegame.svg, console.svg
