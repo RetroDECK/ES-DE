@@ -57,7 +57,6 @@
 * psvita: Sony PlayStation Vita - consolegame.svg, console.svg, controller.svg, game.svg
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
 * satellaview: Nintendo Satellaview - consolegame.svg, console.svg, game.svg
-* saturnjp: Sega Saturn - controller.svg
 * solarus: Solarus game engine - consolegame.svg, console.svg
 * spectravideo: Spectravideo - consolegame.svg, console.svg, controller.svg, game.svg
 * steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg
@@ -73,7 +72,6 @@
 * vectrex: Vectrex - consolegame.svg, console.svg (needs simplification as it takes a long time to rasterize)
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
 * virtualboy: Nintendo Virtual Boy - consolegame.svg, console.svg (needs simplification as it takes a long time to rasterize)
-* wiiu: Nintendo Wii U - consolegame.svg, console.svg, controller.svg, game.svg
 * x1:  Sharp X1 - consolegame.svg, console.svg, game.svg
 * x68000: Sharp X68000 - consolegame.svg, console.svg (image of actual console)
 * zmachine: Infocom Z-machine - consolegame.svg, console.svg
