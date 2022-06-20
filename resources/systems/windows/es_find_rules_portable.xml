@@ -117,6 +117,14 @@
             <entry>%ESPATH%\..\Hypseus Singe\hypseus.exe</entry>
         </rule>
     </emulator>
+    <emulator name="M2EMULATOR">
+        <!-- Sega Model 2 Emulator -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\m2emulator\EMULATOR.EXE</entry>
+            <entry>%ESPATH%\m2emulator\EMULATOR.EXE</entry>
+            <entry>%ESPATH%\..\m2emulator\EMULATOR.EXE</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="staticpath">
@@ -139,14 +147,6 @@
             <entry>%ESPATH%\Emulators\mGBA\mGBA.exe</entry>
             <entry>%ESPATH%\mGBA\mGBA.exe</entry>
             <entry>%ESPATH%\..\mGBA\mGBA.exe</entry>
-        </rule>
-    </emulator>
-    <emulator name="MODEL2">
-        <!-- Sega Model 2 Emulator -->
-        <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\Model2\EMULATOR.EXE</entry>
-            <entry>%ESPATH%\Model2\EMULATOR.EXE</entry>
-            <entry>%ESPATH%\..\Model2\EMULATOR.EXE</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">

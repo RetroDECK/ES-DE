@@ -35,10 +35,10 @@ Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\flycast\flycast.exe
 Emulators\Hypseus Singe\hypseus.exe
+Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\melonDS\melonDS.exe
 Emulators\mGBA\mGBA.exe
-Emulators\Model2\EMULATOR.EXE
 Emulators\mupen64plus\mupen64plus-ui-console.exe
 Emulators\Oricutron\oricutron.exe
 Emulators\PCSX2\pcsx2.exe
