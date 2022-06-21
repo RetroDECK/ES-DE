@@ -1267,7 +1267,7 @@ The following variables are expanded for the `command` tag:
 
 `%ESCAPESPECIALS%` - This variable is only available on Windows and is used to escape the characters &()^=;, for the %ROM% variable, which would otherwise make binaries like cmd.exe fail when launching scripts or links. The variable can be placed anywhere in the launch command.
 
-`%ENABLESHORTCUTS%` - This variable is only available on Unix and macOS and is used to enable shortcuts to games and applications. On Unix these come in the form of .desktop files and ES-DE has a simple parser which essentially extracts the command defined in the Exec key and then executes it. Although some basic file structure checks are performed, the actual command listed with the Exec key is blindly executed. In addition to this the variables %F, %f, %U and %u are removed from the Exec key entry. On macOS shortcuts in the form of .app directories and alias files are executed using the `open -a` command. This makes it possible to launch both shortcuts from emulators and applications like Steam as well as aliases for any applications. However the latter need to be renamed to the .app file extension or it won't work. When a file is matching the .desktop or .app extension respectively, the emulator command defined using the %EMULATOR% variable will be stripped. An %EMULATOR% entry is however still required for the %ENABLESHORTCUTS% variable to work, the intention is to combine shortcuts with the ability to launch shell scripts without having to setup alternative emulators. The %ROM% variable is expanded to the command to execute when using %ENABLESHORTCUTS%, which also means that this variable has to be used, and for example %ROMRAW% will not work.
+`%ENABLESHORTCUTS%` - This variable is only available on Unix and macOS and is used to enable shortcuts to games and applications. On Unix these come in the form of .desktop files and ES-DE has a simple parser which essentially extracts the command defined in the Exec key and then executes it. Although some basic file structure checks are performed, the actual command listed with the Exec key is blindly executed. In addition to this the variables %F, %f, %U and %u are removed from the Exec key entry. On macOS shortcuts in the form of .app directories and alias files are executed using the `open -W -a` command. This makes it possible to launch shortcuts to emulators and applications like Steam as well as aliases for any application. However the latter need to be renamed to the .app file extension or it won't work. When a file is matching the .desktop or .app extension respectively, the emulator command defined using the %EMULATOR% variable will be stripped. An %EMULATOR% entry is however still required for the %ENABLESHORTCUTS% variable to work as the intention is to combine shortcuts with the ability to launch shell scripts without having to setup alternative emulators. The %ROM% variable is expanded to the command to execute when using %ENABLESHORTCUTS%, which also means that this variable has to be used, and for example %ROMRAW% will not work.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
@@ -1566,10 +1566,10 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
             <entry>D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
             <!-- Portable installation -->
-            <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
-            <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
             <entry>%ESPATH%\Emulators\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\Emulators\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
             <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
         </rule>
@@ -1590,8 +1590,8 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         <rule type="staticpath">
             <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
-            <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
     </emulator>
@@ -1602,8 +1602,8 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         </rule>
         <rule type="staticpath">
             <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
     </emulator>
