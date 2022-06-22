@@ -1401,6 +1401,16 @@ The bundled es_systems.xml file is located in the resources directory that is pa
 
 It doesn't matter in which order you define the systems as they will be sorted by the `<fullname>` tag or by the optional `<systemsortname>` tag when displayed inside the application. But it's still a good idea to add the systems in alphabetical order to make the configuration file easier to maintain.
 
+Wildcards are supported for emulator binaries, but not for directories:
+```xml
+<!-- This is supported, first matching file will be selected -->
+<command>~/Applications/yuzu*.AppImage %ROM%</command>
+<!-- This is also supported -->
+<command>~/Applications/yuzu*.App* %ROM%</command>
+<!-- This is NOT supported -->
+<command>~/App*/yuzu*.AppImage %ROM%</command>
+```
+
 Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
 
 Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic described later in this document removes the need for most of the legacy options, but they are still supported for special configurations and for backward compatibility with old configuration files.
@@ -1459,6 +1469,10 @@ Below is an overview of the file layout with various examples. For the command t
         the find rules for the emulator cores. -->
         <command>retroarch -L %CORE_RETROARCH%/snes9x_libretro.so %ROM%</command>
 
+        <!-- This example for Unix uses a wildcard to find the first matching RPCS3 AppImage in the ~/Applications directory.
+        This is useful as AppImages often have version information embedded in the filename that may change when upgrading the package. -->
+        <command label="RPCS3 (Standalone)">~/Applications/rpcs3*.AppImage --no-gui %ROM%</command>
+
         <!-- This is an example for macOS, which is very similar to the Unix example above except using an absolute path to the emulator. -->
         <command>/Applications/RetroArch.app/Contents/MacOS/RetroArch -L %CORE_RETROARCH%/snes9x_libretro.dylib %ROM%</command>
 
@@ -1484,10 +1498,10 @@ Below is an overview of the file layout with various examples. For the command t
         <!-- The equivalent setup of standalone MAME for Unix. If not existing, the start directory will be created on game launch. -->
         <command label="MAME (Standalone)">%EMULATOR_MAME% %STARTDIR%=~/.mame -rompath %ROMPATH%/arcade %BASENAME%</command>
 
-        <!-- An example on Unix which launches a script, this is for example used by source ports, Steam games etc. The %RUNINBACKGROUND%
-        variable does exactly what it sounds like, it keeps ES-DE running in the background while a game is launched. This is required
-        for launching Steam games properly. -->
-        <command>%RUNINBACKGROUND% bash %ROM%</command>
+        <!-- An example on Unix which launches either a .desktop file or a shell script. This is for example used by the ports system.
+        The %RUNINBACKGROUND% variable does exactly what it sounds like, it keeps ES-DE running in the background while the game is
+        launched. This is required for launching Steam games properly as well as for some other systems. -->
+        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
 
         <!-- The equivalent configuration as above, but for Windows.
         The optional %HIDEWINDOW% variable is used to hide the console window which would otherwise be visible when launching games
@@ -1544,6 +1558,8 @@ The following variables are expanded for the `command` tag:
 `%HIDEWINDOW%` - This variable is only available on Windows and is used primarily for hiding console windows when launching scripts (used for example by Steam games and source ports). If not defining this, the console window will be visible when launching games. The variable can be placed anywhere in the launch command.
 
 `%ESCAPESPECIALS%` - This variable is only available on Windows and is used to escape the characters &()^=;, for the %ROM% variable, which would otherwise make binaries like cmd.exe fail when launching scripts or links. The variable can be placed anywhere in the launch command.
+
+`%ENABLESHORTCUTS%` - This variable is only available on Unix and macOS and is used to enable shortcuts to games and applications. On Unix these come in the form of .desktop files and ES-DE has a simple parser which essentially extracts the command defined in the Exec key and then executes it. Although some basic file structure checks are performed, the actual command listed with the Exec key is blindly executed. In addition to this the variables %F, %f, %U and %u are removed from the Exec key entry. On macOS shortcuts in the form of .app directories and alias files are executed using the `open -W -a` command. This makes it possible to launch shortcuts to emulators and applications like Steam as well as aliases for any application. However the latter need to be renamed to the .app file extension or it won't work. When a file is matching the .desktop or .app extension respectively, the emulator command defined using the %EMULATOR% variable will be stripped. An %EMULATOR% entry is however still required for the %ENABLESHORTCUTS% variable to work as the intention is to combine shortcuts with the ability to launch shell scripts without having to setup alternative emulators. The %ROM% variable is expanded to the command to execute when using %ENABLESHORTCUTS%, which also means that this variable has to be used, and for example %ROMRAW% will not work.
 
 Here are some additional real world examples of system entries, the first one for Unix:
 
@@ -1720,9 +1736,9 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
-            <entry>~/Applications/yuzu.AppImage</entry>
-            <entry>~/.local/bin/yuzu.AppImage</entry>
-            <entry>~/bin/yuzu.AppImage</entry>
+            <entry>~/Applications/yuzu*.AppImage</entry>
+            <entry>~/.local/bin/yuzu*.AppImage</entry>
+            <entry>~/bin/yuzu*.AppImage</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1746,7 +1762,18 @@ The `winregistrypath` rule searches the Windows Registry "App Paths" keys for th
 
 The `winregistryvalue` rule will search for the specific registry value, and if it exists, it will use that value as the path to the emulator binary. HKEY_CURRENT_USER will be tried first, followed by HKEY_LOCAL_MACHINE. In the same manner as `winregistrypath`, ES-DE will check that the binary defined in the registry value actually exists. If not, it will proceed with the next rule. For example, if setting the `<entry>` tag for this rule to `SOFTWARE\Valve\Steam\SteamExe`, the emulator binary would be set to `c:\program files (x86)\steam\steam.exe`, assuming that's where Steam has been installed. As this rule can be used to query any value in the Registry, it's a quite powerful tool to locate various emulators and applications. In addition to this it's posssible to append an arbitrary string to the key value if it's found and use that as the emulator binary path. This is accomplished by using the pipe sign, so for example the entry `SOFTWARE\PCSX2\Install_Dir|\pcsx2.exe` will look for the key `SOFTWARE\PCSX2\Install_Dir` and if it's found it will take the value of that key and append the string `\pcsx2.exe` to it. This could for example result in `C:\Program Files (x86)\PCSX2\pcsx2.exe`. Also for this setup, ES-DE will check that the emulator binary actually exists, or it will proceed to the next rule.
 
-The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag.
+The other rules are probably self-explanatory with `systempath` searching the PATH environment variable for the binary names defined by the `<entry>` tags and `staticpath` defines absolute paths to the emulators. For staticpath, the actual emulator binary must be included in the entry tag. Wildcards (*) are supported for the emulator binary, but not for directories. Wildcards are very useful for AppImages which often embed version information into the filenames. Note that if multiple files match a wildcard pattern, the first file returned by the operating system will be selected.
+
+```xml
+<rule type="staticpath">
+    <!-- This is supported, first matching file will be selected -->
+    <entry>~/Applications/yuzu*.AppImage</entry>
+    <!-- This is also supported -->
+    <entry>~/Applications/yuzu*.App*</entry>
+    <!-- This is NOT supported -->
+    <entry>~/App*/yuzu*.AppImage</entry>
+</rule>
+```
 
 The winregistrypath rules are always processed first, followed by winregistryvalue, then systempath and finally staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
 
@@ -1779,11 +1806,11 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>/Applications/RetroArch.app/Contents/Resources/cores</entry>
         </rule>
     </core>
-    <emulator name="DOSBOX_STAGING">
+    <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
         <rule type="staticpath">
             <entry>/Applications/dosbox-staging.app/Contents/MacOS/dosbox</entry>
-            <!-- Homebrew version -->
+            <entry>/opt/homebrew/bin/dosbox-staging</entry>
             <entry>/usr/local/bin/dosbox-staging</entry>
         </rule>
     </emulator>
@@ -1791,7 +1818,6 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         <!-- Nintendo 64 emulator Mupen64Plus -->
         <rule type="staticpath">
             <entry>/Applications/mupen64plus.app/Contents/MacOS/mupen64plus</entry>
-            <!-- Homebrew version -->
             <entry>/usr/local/bin/mupen64plus</entry>
         </rule>
     </emulator>
@@ -1832,6 +1858,8 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <entry>C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
             <entry>D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe</entry>
             <!-- Portable installation -->
+            <entry>%ESPATH%\Emulators\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\Emulators\RetroArch\retroarch.exe</entry>
             <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
             <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
@@ -1854,7 +1882,7 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         <rule type="staticpath">
             <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
             <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
-            <!-- Portable installation -->
+            <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
             <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
@@ -1866,14 +1894,13 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         </rule>
         <rule type="staticpath">
             <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <!-- Portable installation -->
+            <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
     </emulator>
 </ruleList>
 ```
-
 
 ## gamelist.xml
 

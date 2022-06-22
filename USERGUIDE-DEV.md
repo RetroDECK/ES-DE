@@ -562,7 +562,7 @@ D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
 
 If you have installed RetroArch at another location, simply start the Settings application, search for _path_ in the _Find a setting_ field and choose _Edit environment variables for your account_. Edit the _Path_ variable and add the directory where RetroArch is installed. This is required as there is no apparent way for ES-DE to find where RetroArch has been installed by the Steam application.
 
-Unfortunately on Linux it's at the moment not possible to run the Steam release of RetroArch due to technical reasons. This RetroArch release runs as a type of container which can't be executed from ES-DE while correctly passing the necessary core and game options. Similarly it's not possible to launch RetroArch via the Steam application either as there seems to be a bug in Steam or RetroArch that prevents blankspaces from being present in game ROM files when passed as arguments (this works fine on Windows so it's definitely a Linux-specific issue and as well the same problem occurs if attempting to manually enter the launch command from a terminal window).
+On Linux the Steam release of RetroArch is currently not supported.
 
 ## Using emulators in AppImage format on Linux
 
