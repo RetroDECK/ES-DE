@@ -901,7 +901,7 @@ If using the Flatpak release of RPCS3 on Linux and your games are stored on an e
 
 Apart from this you need to install the PS3 system firmware to use the emulator, but that is described in the RPCS3 documentation.
 
-**Shortcuts**
+**Method 1, shortcuts**
 
 First install your games inside RPCS3, then right click on each entry and select _Create Shortcut_ followed by _Create Desktop Shortcut_. On Windows this will create shortcuts with the .lnk extension, on macOS they will have the .app extension and on Unix/Linux they will have the .desktop extension.
 
@@ -925,7 +925,7 @@ If using the AppImage release of RPCS3 on Linux then another issue may be that t
 
 Regardless of how you've installed RPCS3, make sure to always test the shortcuts outside ES-DE first, because if they don't work from the desktop, then they will not work from inside ES-DE either.
 
-**Directories**
+**Method 2, directories**
 
 This approach is only intended for disc-based games as for HDD/pkg games you should use shortcuts instead. When using this method you need to retain the directory structure of the Blu-ray disc, and each directory needs to be renamed by adding the .ps3 extension. This will make ES-DE interpret the directory as if it were a file and pass that directory to the emulator when launching a game.
 
@@ -1031,7 +1031,7 @@ As ports and desktop applications are handled in almost exactly the same way in 
 
 For the _desktop_ system specifically, you can choose to suspend ES-DE while an application or game is launched, or you can choose to keep ES-DE running in the background. This is controlled by the selection of either the default emulator _Suspend ES-DE_ or the alternative emulator _Keep ES-DE running_. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis.
 
-**Shortcuts**
+**Method 1, shortcuts**
 
 Shortcuts are very easy to setup, on Windows you can simply copy any .lnk file from the Start Menu into the `ports` or `desktop` ROMs folders and then you can launch them directly from inside ES-DE. You can also create shortcuts manually to any file by right clicking on it in Explorer and selecting _Create shortcut_.
 
@@ -1057,7 +1057,7 @@ Here's an example using alias files on macOS:
 ~/ROMs/desktop/System Preferences.app
 ```
 
-**Scripts**
+**Method 2, scripts**
 
 For more advanced setups you may want to use scripts. While it's possible to add these files directly to the root of the ROMs directories it's instead generally recommended to setup a separate directory per game as there may be more than a single file required. For instance you may have multiple game variants or mods or you may want to keep game data files within the ROMs directory tree. Only examples for Unix are provided here, but it's the same process for Windows and macOS except that in Windows .bat batch files are used instead of shell scripts.
 
