@@ -15,6 +15,7 @@
 #include <iomanip>
 #include <iostream>
 #include <map>
+#include <mutex>
 #include <sstream>
 
 #define LOG(level)                                                                                 \
@@ -33,18 +34,21 @@ enum LogLevel {
 class Log
 {
 public:
+    // Constructor/deconstructor handle a lock, making get() thread-safe.
+    Log();
     ~Log();
     std::ostringstream& get(LogLevel level = LogInfo);
 
-    static LogLevel getReportingLevel() { return sReportingLevel; }
-    static void setReportingLevel(LogLevel level) { sReportingLevel = level; }
-    static std::string getLogPath()
-    {
-        return Utils::FileSystem::getHomePath() + "/.emulationstation/es_log.txt";
-    }
+    static LogLevel getReportingLevel();
+    static void setReportingLevel(LogLevel level);
 
-    static void flush();
+    // getLogPath() is not thread-safe.
+    static std::string getLogPath();
+    // init() is not thread-safe.
     static void init();
+
+    // The following static functions are thread-safe.
+    static void flush();
     static void open();
     static void close();
 
@@ -59,6 +63,7 @@ private:
                                                   {LogDebug, "Debug"}};
     static inline std::ofstream sFile;
     static inline LogLevel sReportingLevel = LogInfo;
+    static inline std::recursive_mutex sLogMutex;
     LogLevel mMessageLevel;
 };
 

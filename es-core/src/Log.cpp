@@ -9,8 +9,37 @@
 #include "Log.h"
 #include "utils/StringUtil.h"
 
+LogLevel Log::getReportingLevel()
+{
+    // Static Log functions need to grab the lock.
+    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
+    return sReportingLevel;
+}
+
+void Log::setReportingLevel(LogLevel level)
+{
+    // Static Log functions need to grab the lock.
+    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
+    sReportingLevel = level;
+}
+
+std::string Log::getLogPath()
+{
+    // No attempt is made to make this thread-safe.
+    // Currently getLogPath is public, and called in contexts with
+    // and without sLogMutex locked.
+
+    // getHomePath() currently does not generate any Log messages.
+    return Utils::FileSystem::getHomePath() + "/.emulationstation/es_log.txt";
+}
+
 void Log::init()
 {
+    // No attempt is made to make this thread-safe.
+    // It is unlikely to be called across multiple threads.
+    // Both removeFile and renameFile might generate log messages,
+    // so they might try to grab the lock.
+
     Utils::FileSystem::removeFile(getLogPath() + ".bak");
     // Rename the previous log file.
     Utils::FileSystem::renameFile(getLogPath(), getLogPath() + ".bak", true);
@@ -19,6 +48,8 @@ void Log::init()
 
 void Log::open()
 {
+    // Static Log functions need to grab the lock.
+    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
 #if defined(_WIN64)
     sFile.open(Utils::String::stringToWideString(getLogPath()).c_str());
 #else
@@ -28,6 +59,7 @@ void Log::open()
 
 std::ostringstream& Log::get(LogLevel level)
 {
+    // This function is not-static, lock is guarded by the Log() instance.
     time_t t {time(nullptr)};
     struct tm tm;
 #if defined(_WIN64)
@@ -45,18 +77,30 @@ std::ostringstream& Log::get(LogLevel level)
 
 void Log::flush()
 {
-    // Flush file.
+    // Flush file. Static Log functions need to grab the lock.
+    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
     sFile.flush();
 }
 
 void Log::close()
 {
+    // Static Log functions need to grab the lock.
+    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
     if (sFile.is_open())
         sFile.close();
 }
 
+Log::Log()
+{
+    // Log instance created. We grab the lock until destruction.
+    // This permits `Log().get(...) << msg << msg << msg;` to
+    // function as expected.
+    sLogMutex.lock();
+}
+
 Log::~Log()
 {
+    // sLogMutex was (and still is) locked from the constructor Log().
     mOutStringStream << std::endl;
 
     if (!sFile.is_open()) {
@@ -72,4 +116,8 @@ Log::~Log()
     // If it's an error or the --debug flag has been set, then print to the console as well.
     if (mMessageLevel == LogError || sReportingLevel >= LogDebug)
         std::cerr << mOutStringStream.str();
+
+    // Release the lock, after any and all operations have been performed
+    // on mOutStringStream or sFile.
+    sLogMutex.unlock();
 }
