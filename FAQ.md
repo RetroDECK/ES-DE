@@ -32,10 +32,6 @@ Menus in ES-DE are not lists but grids, sometimes there is only a list but somet
 
 ES-DE comes preconfigured with support for many alternative emulators, see the [What's new in ES-DE v1.2](https://www.youtube.com/watch?v=rpnMJqceSNk) video on the ES-DE YouTube channel for a brief overview of how this works. More emulators are continuously being added with each release.
 
-## I'm using a Steam Deck and ES-DE seems to crash when I attempt to open the main menu?
-
-You've probably mapped your _Back_ button to F4 which is the default application exit key in ES-DE. To fix this, temporarily unmap the button or plug in an external keyboard into your Steam Deck, start ES-DE, open the menu (via the _Escape_ key if using a keyboard) and find the _Exit button combo_ entry in the _Other settings_ menu. You can set this to either F4, Alt + F4 or Alt + Q.
-
 ## I'm on Windows and ES-DE can't find my emulators, what is wrong?
 
 On Windows ES-DE is shipped as a portable installation and as a regular installer. If you're using the portable installation you need to drop your emulators inside the Emulators directory. Make sure to read the README.txt file directly in the EmulationStation-DE folder for more details. For the regular installer many emulators do not provide a method to inform ES-DE where they are installed, so you will need to add their installation directories to the Path environment variable in Windows. It's strongly recommended to read the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows) before attempting to setup and use ES-DE on Windows.
