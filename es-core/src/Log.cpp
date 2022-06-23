@@ -12,14 +12,14 @@
 LogLevel Log::getReportingLevel()
 {
     // Static Log functions need to grab the lock.
-    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
+    std::unique_lock<std::mutex> lock {sLogMutex};
     return sReportingLevel;
 }
 
 void Log::setReportingLevel(LogLevel level)
 {
     // Static Log functions need to grab the lock.
-    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
+    std::unique_lock<std::mutex> lock {sLogMutex};
     sReportingLevel = level;
 }
 
@@ -49,7 +49,7 @@ void Log::init()
 void Log::open()
 {
     // Static Log functions need to grab the lock.
-    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
+    std::unique_lock<std::mutex> lock {sLogMutex};
 #if defined(_WIN64)
     sFile.open(Utils::String::stringToWideString(getLogPath()).c_str());
 #else
@@ -57,9 +57,25 @@ void Log::open()
 #endif
 }
 
+void Log::flush()
+{
+    // Flush file. Static Log functions need to grab the lock.
+    std::unique_lock<std::mutex> lock {sLogMutex};
+    sFile.flush();
+}
+
+void Log::close()
+{
+    // Static Log functions need to grab the lock.
+    std::unique_lock<std::mutex> lock {sLogMutex};
+    if (sFile.is_open())
+        sFile.close();
+}
+
 std::ostringstream& Log::get(LogLevel level)
 {
-    // This function is not-static, lock is guarded by the Log() instance.
+    // This function is not-static, but only touches instance member variables.
+    // The lock is not needed.
     time_t t {time(nullptr)};
     struct tm tm;
 #if defined(_WIN64)
@@ -75,33 +91,18 @@ std::ostringstream& Log::get(LogLevel level)
     return mOutStringStream;
 }
 
-void Log::flush()
-{
-    // Flush file. Static Log functions need to grab the lock.
-    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
-    sFile.flush();
-}
-
-void Log::close()
-{
-    // Static Log functions need to grab the lock.
-    std::unique_lock<std::recursive_mutex> lock {sLogMutex};
-    if (sFile.is_open())
-        sFile.close();
-}
-
-Log::Log()
-{
-    // Log instance created. We grab the lock until destruction.
-    // This permits `Log().get(...) << msg << msg << msg;` to
-    // function as expected.
-    sLogMutex.lock();
-}
-
 Log::~Log()
 {
-    // sLogMutex was (and still is) locked from the constructor Log().
     mOutStringStream << std::endl;
+
+    // Log() constructor does not need the lock.
+    // Log::get() does not need the lock.
+    // get(..) << msg << msg also does not need the lock,
+    // since get() returns the instance member mOutStringStream.
+
+    // It is only now that we need the lock, to guard access to
+    // both std::cerr and sFile.
+    std::unique_lock<std::mutex> lock {sLogMutex};
 
     if (!sFile.is_open()) {
         // Not open yet, print to stdout.
@@ -116,8 +117,4 @@ Log::~Log()
     // If it's an error or the --debug flag has been set, then print to the console as well.
     if (mMessageLevel == LogError || sReportingLevel >= LogDebug)
         std::cerr << mOutStringStream.str();
-
-    // Release the lock, after any and all operations have been performed
-    // on mOutStringStream or sFile.
-    sLogMutex.unlock();
 }
