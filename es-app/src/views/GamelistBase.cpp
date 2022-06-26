@@ -568,6 +568,10 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); ++it) {
+
+            if (!mFirstGameEntry && (*it)->getType() == GAME)
+                mFirstGameEntry = (*it);
+
             if (mCarousel != nullptr) {
                 assert(carouselItemType != "");
 
@@ -585,9 +589,6 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 TextListComponent<FileData*>::Entry textListEntry;
                 std::string indicators {mTextList->getIndicators()};
                 std::string collectionIndicators {mTextList->getCollectionIndicators()};
-
-                if (!mFirstGameEntry && (*it)->getType() == GAME)
-                    mFirstGameEntry = (*it);
 
                 // Add a leading tick mark icon to the game name if it's part of the custom
                 // collection currently being edited.
