@@ -1147,7 +1147,8 @@
         <fullname>ScummVM Game Engine</fullname>
         <path>%ROMPATH%/scummvm</path>
         <extension>.scummvm .SCUMMVM .svm .SVM</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/scummvm_libretro.so %ROM%</command>
+        <command label="ScummVM">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/scummvm_libretro.so %ROM%</command>
+        <command label="ScummVM (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SCUMMVM% %BASENAME%</command>
         <platform>scummvm</platform>
         <theme>scummvm</theme>
     </system>

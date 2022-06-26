@@ -363,6 +363,20 @@
             <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SCUMMVM">
+        <!-- ScummVM game engine -->
+        <rule type="winregistryvalue">
+            <entry>SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\ScummVM_is1\InstallLocation|scummvm.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <entry>scummvm.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\scummvm\scummvm.exe</entry>
+            <entry>%ESPATH%\scummvm\scummvm.exe</entry>
+            <entry>%ESPATH%\..\scummvm\scummvm.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">

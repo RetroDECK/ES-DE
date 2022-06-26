@@ -162,6 +162,14 @@
             <entry>/Applications/RPCS3.app/Contents/MacOS/rpcs3</entry>
         </rule>
     </emulator>
+    <emulator name="SCUMMVM">
+        <!-- ScummVM game engine -->
+        <rule type="staticpath">
+            <entry>/Applications/ScummVM.app/Contents/MacOS/scummvm</entry>
+            <entry>/opt/homebrew/bin/scummvm</entry>
+            <entry>/usr/local/bin/scummvm</entry>
+        </rule>
+    </emulator>
     <emulator name="SIXTYFORCE">
         <!-- Nintendo 64 emulator sixtyforce -->
         <rule type="staticpath">

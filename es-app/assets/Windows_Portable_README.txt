@@ -2,7 +2,7 @@ EmulationStation Desktop Edition (ES-DE) - Portable installation on Windows
 ---------------------------------------------------------------------------
 
 ES-DE release:
-1.2.5
+1.2.6
 
 Instructions:
 
@@ -50,6 +50,7 @@ Emulators\PPSSPP\PPSSPPWindows64.exe
 Emulators\redream\redream.exe
 Emulators\RPCS3\rpcs3.exe
 Emulators\ryujinx\Ryujinx.exe
+Emulators\scummvm\scummvm.exe
 Emulators\snes9x\snes9x-x64.exe
 Emulators\Supermodel\Supermodel.exe
 Emulators\VBA-M\visualboyadvance-m.exe

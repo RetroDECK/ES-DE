@@ -237,6 +237,14 @@
             <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SCUMMVM">
+        <!-- ScummVM game engine -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\scummvm\scummvm.exe</entry>
+            <entry>%ESPATH%\scummvm\scummvm.exe</entry>
+            <entry>%ESPATH%\..\scummvm\scummvm.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="staticpath">

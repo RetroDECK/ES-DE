@@ -337,6 +337,17 @@
             <entry>~/bin/rpcs3*.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="SCUMMVM">
+        <!-- ScummVM game engine -->
+        <rule type="systempath">
+            <entry>scummvm</entry>
+            <entry>org.scummvm.ScummVM</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.scummvm.ScummVM</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.scummvm.ScummVM</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">
