@@ -190,11 +190,11 @@ namespace Utils
                 // Hack to make the emulator window render correctly when launching games while
                 // running in full screen mode. If not done, the emulator window will simply be
                 // black although the game actually works and outputs sounds, accepts input etc.
-                // There is sometimes a white flash the first time an emulator is started during the
-                // program session and a white single-pixel line will be visible at the bottom of
-                // the screen while the game is loading. But it's at least a tolerable workaround.
+                // There is sometimes a white flash the first time an emulator is started during
+                // the program session and possibly some other brief screen flashing on game
+                // launch but it's at least a tolerable workaround.
                 SDL_GetWindowSize(Renderer::getInstance()->getSDLWindow(), &width, &height);
-                SDL_SetWindowSize(Renderer::getInstance()->getSDLWindow(), width, height - 1);
+                SDL_SetWindowSize(Renderer::getInstance()->getSDLWindow(), width + 1, height);
                 SDL_Delay(100);
                 glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
                 Renderer::getInstance()->swapBuffers();
