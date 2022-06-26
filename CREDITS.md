@@ -10,6 +10,7 @@ RetroPie community
 
 **Desktop Edition**\
 Leon Styhre \
+Joseph Geumlek \
 Sophia Hadash
 
 # UI Art & Design

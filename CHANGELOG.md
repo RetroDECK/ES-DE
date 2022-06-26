@@ -15,6 +15,7 @@
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
+* (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
@@ -86,6 +87,7 @@
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
 * Large refactoring to improve thread safety and improve singleton pattern usage
+* Made the logging thread safe
 * Added the build date to to main menu for alpha and dev builds
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
@@ -141,6 +143,20 @@
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase in theme names)
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
+
+## Version 1.2.6 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+v1.2 maintenance release.
+
+### Detailed list of changes
+
+* Added experimental support for PCSX2 Qt standalone for the ps2 system on Unix
+
+### Bug fixes
 
 ## Version 1.2.5
 

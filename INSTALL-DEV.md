@@ -1786,6 +1786,8 @@ It's the GUID that is the key, and it's the lines matching these IDs that you wa
 
 Even if pasting the entire content of gamecontrollerdb.txt into the es_controller_mappings.cfg file did not enable your controller, all hope is not lost. You may still be able to create your own custom controller entry, but doing that is beyond the scope of this document and you would have to look into the instructions at the SDL_GameControllerDB URL mentioned above.
 
+As a final note, this configuration file can also be used for the opposite purpose, i.e. to blacklist devices so that they will not work inside ES-DE. Some wireless controllers with buggy drivers will register as two devices meaning every button press will be registered twice. In this situation, blacklisting one of these entries will make the controller behave correctly. Although it's possible to enable the _Only accept input from first controller_ menu option as a workaround, this will completely ignore all other controllers which may not be what you want. To blacklist a controller, follow the same procedure described above but leave the button configuration blank for the GUID entry.
+
 ## Portable installation on Windows
 
 _As there is a preconfigured portable release available for Windows, this section is mostly relevant for understanding how the setup works, as well as to provide information on how to make customizations._
