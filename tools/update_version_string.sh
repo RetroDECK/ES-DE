@@ -95,8 +95,10 @@ NEWSTRING="<string>EmulationStation Desktop Edition ${1}.${2}.${3}"
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
 mv $TEMPFILE $MODIFYFILE
 
-MODIFYSTRING=$(grep "<string>${OLDVERSION}" $MODIFYFILE)
+MODIFYSTRING=$(grep -m1 "<string>${OLDVERSION}" $MODIFYFILE)
 MODIFYSTRING=$(echo $MODIFYSTRING | sed s/".........$"//)
+# Adding the suffix is not fully compliant with the Apple documentation but seems to be working.
+# It's not used for the release builds anyway so it should hopefully not be an issue.
 NEWSTRING="<string>${1}.${2}.${3}${SUFFIX}"
 
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
