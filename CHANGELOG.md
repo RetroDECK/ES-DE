@@ -155,6 +155,9 @@ v1.2 maintenance release.
 ### Detailed list of changes
 
 * Added experimental support for PCSX2 Qt standalone for the ps2 system on Unix
+* Added ScummVM standalone as an alternative emulator for the scummvm system
+* Added the Kronos RetroArch core as an alternative emulator for the arcade and mame systems
+* (macOS) Improved Apple compliance for the Info.plist file
 
 ### Bug fixes
 
