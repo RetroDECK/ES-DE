@@ -1073,9 +1073,8 @@
         <name>psvita</name>
         <fullname>Sony PlayStation Vita</fullname>
         <path>%ROMPATH%\psvita</path>
-        <extension>.psvita .PSVITA .lnk .LNK</extension>
-        <command label="Vita3K Title ID (Standalone)">%EMULATOR_VITA3K% -r %BASENAME%</command>
-        <command label="Vita3K Shortcut (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <extension>.psvita</extension>
+        <command label="Vita3K (Standalone)">%EMULATOR_VITA3K% -r %INJECT%=%BASENAME%.psvita</command>
         <platform>psvita</platform>
         <theme>psvita</theme>
     </system>
