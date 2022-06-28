@@ -378,6 +378,18 @@
             <entry>visualboyadvance-m</entry>
         </rule>
     </emulator>
+    <emulator name="VITA3K">
+        <!-- Sony PlayStation Vita emulator Vita3K -->
+        <rule type="systempath">
+            <entry>vita3k</entry>
+            <entry>Vita3K</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Vita3K/Vita3K</entry>
+            <entry>~/.local/bin/Vita3K/Vita3K</entry>
+            <entry>~/bin/Vita3K/Vita3K</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">

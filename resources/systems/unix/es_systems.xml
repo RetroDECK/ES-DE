@@ -1075,8 +1075,9 @@
         <name>psvita</name>
         <fullname>Sony PlayStation Vita</fullname>
         <path>%ROMPATH%/psvita</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.psvita .PSVITA .desktop</extension>
+        <command label="Vita3K Title ID (Standalone)">%EMULATOR_VITA3K% -r %BASENAME%</command>
+        <command label="Vita3K Shortcut (Standalone)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>psvita</platform>
         <theme>psvita</theme>
     </system>

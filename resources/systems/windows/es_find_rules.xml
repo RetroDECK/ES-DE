@@ -410,6 +410,19 @@
             <entry>%ESPATH%\..\VBA-M\visualboyadvance-m.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VITA3K">
+        <!-- Sony PlayStation Vita emulator Vita3K -->
+        <rule type="systempath">
+            <entry>Vita3K.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <rule type="staticpath">
+                <entry>%ESPATH%\Emulators\Vita3K\Vita3K.exe</entry>
+                <entry>%ESPATH%\Vita3K\Vita3K.ex</entry>
+                <entry>%ESPATH%\..\Vita3K\Vita3K.ex</entry>
+            </rule>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="systempath">
