@@ -634,12 +634,19 @@ The following manually downloaded emulators are supported when using the bundled
 | dreamcast    | Redream       | redream/redream                 |
 | oric         | Oricutron     | oricutron/Oricutron             |
 | pico8        | PICO-8        | pico-8/pico8                    |
+| psvita       | Vita3K        | Vita3K/Vita3K                   |
 | switch       | Ryujinx       | publish/Ryujinx                 |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
 cd ~/Applications/publish
 chmod +x ./Ryujinx
+```
+
+The same is true for Vita3K:
+```
+cd ~/Applications/Vita3K
+chmod +x ./Vita3K
 ```
 
 ## Running emulators in fullscreen mode
@@ -899,7 +906,7 @@ Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U sy
 
 #### Sony PlayStation 3
 
-There are two ways to add PS3 games to ES-DE; by using shortcuts or by adding game directories directly to the ~/ROMs/ps3 folder and interpreting these as files. Shortcuts is generally the way to go as it's easier to setup and for HDD/pkg games it's the only way to make it work unless you manually create symlinks to the internal RPCS3 directory structure. So another benefit with shortcuts is consistency as both HDD/pkg games and disc-based games will be setup in the same manner. This also means that the same RPCS3 emulator entry can be used to launch every game.
+There are two ways to add PS3 games to ES-DE; by using shortcuts or by adding game directories directly to the ~/ROMs/ps3 folder and interpreting these as files. Shortcuts is generally the way to go as it's easier to setup and for HDD/pkg games it's the only way to make it work unless you manually create symlinks to the internal RPCS3 directory structure. So another benefit with shortcuts is consistency as both HDD/pkg games and disc-based games will be setup in the same manner. This also means that the same RPCS3 emulator entry can be used to launch every game. The drawback to using shortcuts is that they're not portable, if you change the location of RPCS3 or your games, you need to manually update the shortcuts as well.
 
 Be aware that if you still want to have games installed using the directory method, then you will need to change to the alternative emulator _RPCS3 Directory (Standalone)_ or you won't be able to launch these games. As is the case for all alternative emulator entries, this can be configured system-wide or on a per-game basis.
 
@@ -943,6 +950,53 @@ Here's an example of what a game entry could look like:
 It's possible to create a symlink instead, and in this case only the symlink needs to have the .ps3 extension. But if you want to locate your games outside the ~/ROMs/ps3 directory anyway, then it's probably easier to just use shortcuts.
 
 When using this setup method you need to set the alternative emulator to _RPCS3 Directory (Standalone)_ or game launching will not work.
+
+#### Sony PlayStation Vita
+
+Support for the PS Vita is currently experimental due to the early stages of development for the Vita3K emulator. While there's a growing list of games that are playable, integration with ES-DE is a bit rough at the moment. Hopefully this will improve as Vita3K evolves. As such, the setup procedure documented here is likely to change in the future.
+
+There are two ways in which Vita games can be setup, either using title ID files, or using shortcuts. If you want to use shortcuts you need to change to the alternative emulator _Vita3K Shortcut (Standalone)_. This second installation method is mostly added in anticipation that Vita3K will add builtin shortcut export support in the same manner as RPCS3. It can however be used already if you manually create the shortcut files.
+
+Although a macOS release of Vita3K seems to be in the works this does not seem to be readily available for download so there is currently no macOS support for this system in ES-DE.
+
+First install Vita3K, add your games to the GUI and make sure that they work correctly when launched from inside the emulator. Then proceed with either setup method described below.
+
+On Windows the Vita3K installation is straightforward, but on Linux you may need to place the emulator in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details. If using a Linux distribution that provides Vita3K via the repository (such as the AUR on Arch/Manjaro) then you can skip this step and install the emulator using your OS package manager.
+
+**Method 1, title ID files**
+
+To setup games using this method, open the Vita3K GUI and look for the code listed in the _Title ID_ column. For example the game _WipEout 2048_ has a title ID named PCSF00007. Create a file with this name and the .psvita file extension in the ~/ROMs/psvita directory, such as:
+```
+~/ROMs/psvita/PCSF00007.psvita
+```
+
+Launching the file from within ES-DE should now work correctly. The drawback of this setup method is that you will need to refine the game name when scraping or you won't get any search results.
+
+**Method 2, shortcuts**
+
+Using this installation method on Unix/Linux is currently a bit tricky as you need to manually create a .desktop file and you also need to provide the absolute path to the emulator (unless it's in your PATH variable). As mentioned above, support for shortcuts is primarily added in anticipation of shortcut exports becoming available from within the Vita3K GUI in the future.
+
+If you would still like to create .desktop shortcuts manually, the following example would be for the file `~/ROMs/psvita/WipEout.desktop`:
+```
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec="/home/myusername/Applications/Vita3K/Vita3K" -r PCSF00007
+Name=WipEout 2048
+Categories=Application;Game
+Comment=WipEout 2048
+```
+
+You need to change the path to the Vita3K binary in the Exec key, and the game Title ID needs to be supplied after the -r flag.
+
+On Windows it's more straightforward to setup shortcuts, you simple right click on the Vita3k.exe file, select _Create shortcut_ and then rename that shortcut to the name of the game, for example `WipEout 2048.lnk`. Then right click on the shortcut, select _Properties_ and in the _Target_ field add the -r flag followed by the game Title ID, for example:
+```
+C:\Games\EmulationStation-DE\Emulators\Vita3K\Vita3K.exe -r PCSF00007
+```
+
+The benefit shortcuts bring over the title ID files method is that you will be able to scrape the games more easily, but the drawback is that the setup is not portable as you will need to manually update the shortcut if you move the Vita3K binary to some other location.
 
 #### Commodore Amiga
 
@@ -1315,6 +1369,8 @@ The second option on Windows is to unpack the game somewhere outside the ROMs di
 ```
 ~\ROMs\openbor\The Endless Quest.lnk
 ```
+
+The drawback to using shortcuts is that they're not portable, if you change the location of your games, you will need to manually update the shortcuts as well.
 
 **Linux:**
 
@@ -2656,7 +2712,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | ps3                   | Sony PlayStation 3                             | RPCS3 Shortcut **(Standalone)** [UMW*] | RPCS3 Directory **(Standalone)** [UMW*] | Yes    | See the specific _Sony PlayStation 3_ section elsewhere in this guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |
-| psvita                | Sony PlayStation Vita                          | _Placeholder_                     |                                   |              |                                      |
+| psvita                | Sony PlayStation Vita                          | Vita3K Title ID **(Standalone)** [UW*] | Vita3K Shortcut **(Standalone)** | Yes          | See the specific _Sony PlayStation Vita_ section elsewhere in this guide |
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
 | samcoupe              | SAM Coupé                                      | SimCoupe                          |                                   |              |                                      |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Mesen-S |              |                                      |
