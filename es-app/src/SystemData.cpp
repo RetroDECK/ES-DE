@@ -418,6 +418,10 @@ bool SystemData::loadConfig()
 
     LOG(LogInfo) << "Populating game systems...";
 
+    if (Settings::getInstance()->getBool("ParseGamelistOnly")) {
+        LOG(LogInfo) << "Only parsing the gamelist.xml files, not scanning system directories";
+    }
+
     std::vector<std::string> configPaths = getConfigPath(true);
     const std::string rompath = FileData::getROMDirectory();
 
