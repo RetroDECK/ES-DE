@@ -77,7 +77,7 @@ Use pkg to install the dependencies:
 pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage pugixml
 ```
 
-Clang/LLVM and cURL should already be included in the base OS installation.
+Clang/LLVM and curl should already be included in the base OS installation.
 
 **NetBSD**
 
@@ -95,7 +95,7 @@ Use pkg_add to install the dependencies:
 pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage
 ```
 
-In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
+In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
 
 Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
@@ -1091,9 +1091,46 @@ For the following options, the es_settings.xml file is immediately updated/saved
 ```
 --display
 --max-vram
+--gamelist-only
 --show-hidden-files
 --show-hidden-games
 ```
+
+As well, passing the option --ignore-gamelist will disable the ParseGamelistOnly setting controlled by --gamelist-only and immediately save the es_settings.xml file. If passing both the --ignore-gamelist and --gamelist-only parameters then --ignore-gamelist will take precedence and --gamelist-only will be ignored.
+
+The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show ROMs from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
+
+## Settings not configurable via the GUI
+
+There are some settings which are not configurable via the GUI as modifying these should normally not be required. To change these, edit the es_settings.xml file directly.
+
+**DebugSkipInputLogging**
+
+Enabling this will skip all input event logging (button and key presses).
+
+**LottieMaxFileCache**
+
+Sets the maximum per-file animation cache for Lottie animations. Minimum value is 0 MiB and maximum value is 1024 MiB. Default value is 150 MiB.
+
+**LottieMaxTotalCache**
+
+Sets the maximum total animation cache for Lottie animations. Minimum value is 0 MiB and maximum value is 4096 MiB. Default value is 1024 MiB.
+
+**OpenGLVersion**
+
+If using the regular desktop OpenGL renderer, the allowed values are 3.3 (the default), 4.2 or 4.6. If using the OpenGL ES renderer, the allowed values are 3.0 (the default), 3.1 or 3.2.
+
+**ScraperConnectionTimeout**
+
+Sets the server connection timeout for the scraper. Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 60 seconds.
+
+**ScraperTransferTimeout**
+
+Sets the transfer timeout per HTTPS request (i.e. per media file). Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 120 seconds.
+
+**UIMode_passkey**
+
+The passkey to use to change from the _Kiosk_ or _Kid_ UI modes to the _Full_ UI mode.
 
 ## es_systems.xml
 

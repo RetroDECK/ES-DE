@@ -99,7 +99,7 @@ If building with the optional VLC video player, the following package is also ne
 pkg install vlc
 ```
 
-Clang/LLVM and cURL should already be included in the base OS installation.
+Clang/LLVM and curl should already be included in the base OS installation.
 
 **NetBSD**
 
@@ -127,7 +127,7 @@ If building with the optional VLC video player, the following package is also ne
 pkg_add vlc
 ```
 
-In the same manner as for FreeBSD, Clang/LLVM and cURL should already be installed by default.
+In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
 
 Pugixml does exist in the package collection but somehow this version is not properly detected by CMake, so you need to compile this manually as well:
 
@@ -812,7 +812,7 @@ FFmpeg (choose the n4.4 package with win64-gpl-shared in the filename, the snaps
 FreeImage (binary distribution) \
 [https://sourceforge.net/projects/freeimage](https://sourceforge.net/projects/freeimage)
 
-cURL (Windows 64 bit binary, select the MinGW version even if using MSVC) \
+curl (Windows 64 bit binary, select the MinGW version even if using MSVC) \
 [https://curl.haxx.se/download.html](https://curl.haxx.se/download.html)
 
 SDL2 (development libraries, MinGW or VC/MSVC) \
@@ -905,7 +905,7 @@ As there is no standardized include directory structure in Windows, you need to 
 
 Make a directory in your build environment tree, for instance under `C:\Programming\include`
 
-Copy the include files for cURL, FFmpeg, FreeImage, FreeType, GLEW, pugixml, SDL2 and optionally VLC to this directory.
+Copy the include files for curl, FFmpeg, FreeImage, FreeType, GLEW, pugixml, SDL2 and optionally VLC to this directory.
 
 You may need to create the SDL2 directory manually and copy the header files there.
 

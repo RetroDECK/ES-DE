@@ -959,14 +959,14 @@ On Windows the Vita3K installation is straightforward, but on Linux you may need
 
 Although a macOS release of Vita3K seems to be in the works this does not seem to be readily available for download so there is currently no macOS support for this system in ES-DE.
 
-After you've installed Vita3K, add your games to the GUI and make sure that they work correctly when launched from inside the emulator.
+After you've installed Vita3K, add your games via the GUI and make sure that they work correctly when launched from inside the emulator.
 
 To add an installed game to ES-DE, create an empty file in `~/ROMs/psvita` and name it as the game name followed by the .psvita file extension, such as the following:
 ```
 ~/ROMs/psvita/WipEout 2048.psvita
 ```
 
-Then add the game Title ID to this file. This ID can be found inside the Vita3K GUI, in the _Title ID_ column. For example the game _WipEout 2048_ has an ID that is _PCSF00007_. So simply add the string PCSF00007 to the `WipEout 2048.psvita` file and the setup for this game is complete.
+Then add the game Title ID to this file. This ID can be found inside the Vita3K GUI, in the _Title ID_ column. For example the game _WipEout 2048_ has an ID that is PCSF00007. So simply add the string PCSF00007 to the `WipEout 2048.psvita` file and the setup for this game is complete.
 
 Game launching and scraping should now work fine in ES-DE.
 

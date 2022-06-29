@@ -158,9 +158,15 @@ v1.2 maintenance release.
 * Added experimental support for PCSX2 Qt standalone for the ps2 system on Unix
 * Added ScummVM standalone as an alternative emulator for the scummvm system
 * Added the Kronos RetroArch core as an alternative emulator for the arcade and mame systems
+* Added connection and transfer timeout settings to the scraper (not configurable via the GUI)
+* Added an es_log.txt entry when the "Only show ROMs from gamelist.xml files" setting is enabled
+* Passing the --ignore-gamelist command line option now immediately disables the ParseGamelistOnly setting
 * (macOS) Improved Apple compliance for the Info.plist file
+* (rbsimple-DE) Added console graphics for the psvita system
 
 ### Bug fixes
+
+* The IgnoreGamelist setting was saved to es_settings.xml although it shouldn't
 
 ## Version 1.2.5
 
