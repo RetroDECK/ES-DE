@@ -54,7 +54,6 @@
 * pokemini: Nintendo Pokémon Mini - consolegame.svg, console.svg, controller.svg, game.svg
 * ports: Source ports - consolegame.svg, console.svg, controller.svg, game.svg
 * ps4: Sony PlayStation 4 - consolegame.svg, console.svg, controller.svg, game.svg
-* psvita: Sony PlayStation Vita - consolegame.svg, console.svg, controller.svg, game.svg
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
 * satellaview: Nintendo Satellaview - consolegame.svg, console.svg, game.svg
 * solarus: Solarus game engine - consolegame.svg, console.svg
