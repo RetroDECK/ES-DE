@@ -26,7 +26,7 @@ Please find the individual license files inside the `licenses` directory. There 
 CImg \
 https://www.cimg.eu
 
-cURL \
+curl \
 https://curl.haxx.se
 
 FFmpeg \

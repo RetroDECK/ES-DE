@@ -5,7 +5,7 @@
 #  create_AppImage.sh
 #
 #  Runs the complete process of building a Linux AppImage.
-#  The BUNDLED_CERTS option is very important as otherwise cURL will not work on all
+#  The BUNDLED_CERTS option is very important as otherwise curl will not work on all
 #  distributions as for example Debian-based systems place the TLS certificates in a
 #  different location under /etc than Fedora and openSUSE.
 #

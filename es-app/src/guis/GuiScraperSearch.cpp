@@ -141,7 +141,7 @@ GuiScraperSearch::~GuiScraperSearch()
 {
     // The following manual resets are required to avoid a race condition when the
     // STOP button is pressed in the multi-scraper. Without this code there will be
-    // a memory leak as the cURL easy handle is not cleaned up. For a normally completed
+    // a memory leak as the curl easy handle is not cleaned up. For a normally completed
     // scraping however, the destructor will already have been called in HttpReq.
     if (mSearchHandle)
         mSearchHandle.reset();

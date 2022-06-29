@@ -19,7 +19,7 @@ echo -e "Setting up dependencies in the ./external directory..."
 
 cd external
 
-echo -e "\nSetting up cURL"
+echo -e "\nSetting up curl"
 rm -rf curl-*
 
 curl -O https://curl.se/windows/dl-7.80.0_2/curl-7.80.0_2-win64-mingw.zip

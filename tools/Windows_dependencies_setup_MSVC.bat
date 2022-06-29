@@ -33,7 +33,7 @@ echo:
 
 cd external
 
-echo Setting up cURL
+echo Setting up curl
 
 if exist curl-7.80.0-win64-mingw\ (
   rmdir /S /Q curl-7.80.0-win64-mingw
