@@ -11,6 +11,7 @@
 #include "HttpReq.h"
 
 #include "Log.h"
+#include "Settings.h"
 #include "resources/ResourceManager.h"
 #include "utils/FileSystemUtil.h"
 
@@ -52,7 +53,7 @@ HttpReq::HttpReq(const std::string& url)
     , mHandle(nullptr)
 {
     // The multi-handle is cleaned up via a call from GuiScraperSearch after the scraping
-    // has been completed for a game, meaning the handle is valid for all cURL requests
+    // has been completed for a game, meaning the handle is valid for all curl requests
     // performed for the current game.
     if (!s_multi_handle)
         s_multi_handle = curl_multi_init();
@@ -60,13 +61,13 @@ HttpReq::HttpReq(const std::string& url)
     mHandle = curl_easy_init();
 
 #if defined(USE_BUNDLED_CERTIFICATES)
-    // Use the bundled cURL TLS/SSL certificates (which actually come from the Mozilla project).
+    // Use the bundled curl TLS/SSL certificates (which actually come from the Mozilla project).
     // This is enabled by default on Windows. Although there is a possibility to use the OS
     // provided Schannel certificates I haven't been able to get this to work, and it also seems
     // to be problematic on older Windows versions.
     // The bundled certificates are also required on Linux when building an AppImage package as
     // distributions such as Debian, Ubuntu, Linux Mint and Manjaro place the TLS certificates in
-    // a different directory than for example Fedora and openSUSE. This makes cURL unusable on
+    // a different directory than for example Fedora and openSUSE. This makes curl unusable on
     // these latter operating systems unless the bundled file is used.
     curl_easy_setopt(mHandle, CURLOPT_CAINFO,
                      ResourceManager::getInstance()
@@ -82,6 +83,36 @@ HttpReq::HttpReq(const std::string& url)
 
     // Set the url.
     CURLcode err = curl_easy_setopt(mHandle, CURLOPT_URL, url.c_str());
+    if (err != CURLE_OK) {
+        mStatus = REQ_IO_ERROR;
+        onError(curl_easy_strerror(err));
+        return;
+    }
+
+    long connectionTimeout {
+        static_cast<long>(Settings::getInstance()->getInt("ScraperConnectionTimeout"))};
+
+    if (connectionTimeout < 0 || connectionTimeout > 300)
+        connectionTimeout =
+            static_cast<long>(Settings::getInstance()->getDefaultInt("ScraperConnectionTimeout"));
+
+    // Set connection timeout (default is 300 seconds).
+    err = curl_easy_setopt(mHandle, CURLOPT_CONNECTTIMEOUT, connectionTimeout);
+    if (err != CURLE_OK) {
+        mStatus = REQ_IO_ERROR;
+        onError(curl_easy_strerror(err));
+        return;
+    }
+
+    long transferTimeout {
+        static_cast<long>(Settings::getInstance()->getInt("ScraperTransferTimeout"))};
+
+    if (transferTimeout < 0 || transferTimeout > 300)
+        transferTimeout =
+            static_cast<long>(Settings::getInstance()->getDefaultInt("ScraperTransferTimeout"));
+
+    // Set transfer timeout (default is 0/infinity).
+    err = curl_easy_setopt(mHandle, CURLOPT_TIMEOUT, transferTimeout);
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
         onError(curl_easy_strerror(err));

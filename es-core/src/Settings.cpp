@@ -285,6 +285,8 @@ void Settings::setDefaults()
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
     mIntMap["LottieMaxFileCache"] = {150, 150};
     mIntMap["LottieMaxTotalCache"] = {1024, 1024};
+    mIntMap["ScraperConnectionTimeout"] = {60, 60};
+    mIntMap["ScraperTransferTimeout"] = {120, 120};
 
     //
     // Hardcoded or program-internal settings.
