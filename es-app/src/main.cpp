@@ -337,6 +337,7 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--gamelist-only") == 0) {
             Settings::getInstance()->setBool("ParseGamelistOnly", true);
+            settingsNeedSaving = true;
         }
         else if (strcmp(argv[i], "--ignore-gamelist") == 0) {
             Settings::getInstance()->setBool("IgnoreGamelist", true);
@@ -407,6 +408,11 @@ bool parseArgs(int argc, char* argv[])
             std::cout << "Try 'emulationstation --help' for more information.\n";
             return false; // Exit after printing message.
         }
+    }
+
+    if (Settings::getInstance()->getBool("IgnoreGamelist")) {
+        Settings::getInstance()->setBool("ParseGamelistOnly", false);
+        settingsNeedSaving = true;
     }
 
     return true;

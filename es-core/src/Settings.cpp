@@ -29,7 +29,6 @@ namespace
         // These options can be set using command-line arguments:
         "WindowWidth",          // Set via --resolution [width] [height]
         "WindowHeight",         // set via --resolution [width] [height]
-        "ParseGamelistOnly"     // --gamelist-only
         "IgnoreGamelist",       // --ignore-gamelist
         "SplashScreen",         // --no-splash
         "Debug",                // --debug
@@ -359,7 +358,7 @@ void Settings::loadFile()
     pugi::xml_parse_result result = doc.load_file(configFile.c_str());
 #endif
     if (!result) {
-        LOG(LogError) << "Could not parse the es_settings.xml file\n   " << result.description();
+        LOG(LogError) << "Couldn't parse the es_settings.xml file: " << result.description();
         return;
     }
 
