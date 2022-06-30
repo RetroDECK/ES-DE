@@ -94,7 +94,7 @@
         <fullname>Apple II</fullname>
         <path>%ROMPATH%/apple2</path>
         <extension>.do .DO .dsk .DSK .nib .NIB .po .PO</extension>
-        <command label="linapple (Standalone)">%EMULATOR_LINAPPLE% -f -b --d1 %ROM%</command>
+        <command label="LinApple (Standalone)">%EMULATOR_LINAPPLE% -f -b --d1 %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %ROMPATH%/apple2 apple2e -flop1 %ROM%</command>
         <platform>apple2</platform>
         <theme>apple2</theme>

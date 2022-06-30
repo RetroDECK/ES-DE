@@ -182,7 +182,7 @@
         </rule>
     </emulator>
     <emulator name="LINAPPLE">
-        <!-- Apple II emulator linapple -->
+        <!-- Apple II emulator LinApple -->
         <rule type="systempath">
             <entry>linapple</entry>
         </rule>
