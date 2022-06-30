@@ -181,6 +181,17 @@
             <entry>~/bin/hypseus-singe/hypseus.bin</entry>
         </rule>
     </emulator>
+    <emulator name="LINAPPLE">
+        <!-- Apple II emulator linapple -->
+        <rule type="systempath">
+            <entry>linapple</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/linapple/linapple</entry>
+            <entry>~/.local/bin/linapple/linapple</entry>
+            <entry>~/bin/linapple/linapple</entry>
+        </rule>
+    </emulator>
     <emulator name="MAME">
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
@@ -294,6 +305,8 @@
         <rule type="systempath">
             <entry>ppsspp-emu.ppsspp-sdl</entry>
             <entry>org.ppsspp.PPSSPP</entry>
+            <entry>PPSSPPSDL</entry>
+            <entry>PPSSPPQt</entry>
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>

@@ -23,6 +23,14 @@
             <entry>%EMUPATH%\cores</entry>
         </rule>
     </core>
+    <emulator name="APPLEWIN">
+        <!-- Apple II emulator AppleWin -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\AppleWin\AppleWin.exe</entry>
+            <entry>%ESPATH%\AppleWin\AppleWin.exe</entry>
+            <entry>%ESPATH%\..\AppleWin\AppleWin.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="staticpath">

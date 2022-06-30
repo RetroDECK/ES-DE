@@ -23,6 +23,7 @@ Preconfigured emulator locations:
 
 Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
+Emulators\AppleWin\AppleWin.exe
 Emulators\atari800\atari800.exe
 Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe

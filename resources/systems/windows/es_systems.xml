@@ -93,8 +93,9 @@
         <name>apple2</name>
         <fullname>Apple II</fullname>
         <path>%ROMPATH%\apple2</path>
-        <extension>.nib .NIB .do .DO .po .PO .dsk .DSK .7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.do .DO .dsk .DSK .nib .NIB .po .PO</extension>
+        <command label="AppleWin (Standalone)">%EMULATOR_APPLEWIN% -f -d1 %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %ROMPATH%\apple2 apple2e -flop1 %ROM%</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
     </system>
@@ -102,8 +103,8 @@
         <name>apple2gs</name>
         <fullname>Apple IIGS</fullname>
         <path>%ROMPATH%\apple2gs</path>
-        <extension>.nib .NIB .do .DO .po .PO .dsk .DSK .7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.2mg .2MG</extension>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %ROMPATH%\apple2gs apple2gs -flop3 %ROM%</command>
         <platform>apple2gs</platform>
         <theme>apple2gs</theme>
     </system>
@@ -925,7 +926,7 @@
         <fullname>Tangerine Computer Systems Oric</fullname>
         <path>%ROMPATH%\oric</path>
         <extension>.dsk .DSK .ort .ORT .tap .TAP .wav .WAV</extension>
-        <command label="Oricutron (Standalone)">%EMULATOR_ORICUTRON% %STARTDIR%=%EMUDIR% %ROM%</command>
+        <command label="Oricutron (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ORICUTRON% %ROM%</command>
         <platform>oric</platform>
         <theme>oric</theme>
     </system>
