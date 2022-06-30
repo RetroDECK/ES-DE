@@ -632,6 +632,7 @@ The following manually downloaded emulators are supported when using the bundled
 | :----------- | :------------ | :------------------------------ |
 | daphne       | Hypseus Singe | hypseus-singe/hypseus.bin       |
 | dreamcast    | Redream       | redream/redream                 |
+| apple2       | LinApple      | linapple/linapple               |
 | oric         | Oricutron     | oricutron/Oricutron             |
 | pico8        | PICO-8        | pico-8/pico8                    |
 | psvita       | Vita3K        | Vita3K/Vita3K                   |
@@ -972,7 +973,7 @@ Game launching and scraping should now work fine in ES-DE.
 
 #### Commodore Amiga
 
-There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf` or `.hdz` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
+There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf`, `.hdz` or `.lha` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
 An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described earlier.
 
@@ -1399,6 +1400,35 @@ This is what the complete setup could look like:
 ~/ROMs/pico8/xzero-3.p8.png
 ```
 
+#### Apple II
+
+On Unix/Linux you can emulate Apple II games using either the [LinApple](http://linapple.sourceforge.net) emulator or MAME standalone and on Windows you can use [AppleWin](https://github.com/AppleWin/AppleWin) or MAME standalone. On macOS there is a port of AppleWin available named [Mariani](https://github.com/sh95014/AppleWin) but it appears broken at the moment as it does not accept any command line parameters. Instead only MAME standalone is supported on macOS for the time being.
+
+Depending on which Unix/Linux operating system you're using, LinApple may not be readily available and you may have to build it from source code or obtain a binary from somewhere on the Internet. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where it needs to be installed. If you're using an OS with access to the AUR, such as Arch or Manjaro, then LinApple is available there. Note that you need to use the _linapple-git_ package though as the regular _linapple_ package does not work correctly.
+
+Once the LinApple or AppleWin emulator is installed no additional configuration is required, just drop your games into the ~/ROMs/apple2 folder and launch them from inside ES-DE.
+
+If you want to use MAME standalone to emulate Apple II games (or if you're on macOS) then you need to place the following ROM files in the ~/ROMs/apple2 directory:
+```
+a2diskiing.zip
+apple2e.zip
+d2fdc.zip
+votrax.zip
+```
+
+Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated Apple II computer.
+
+#### Apple IIGS
+
+The Apple IIGS computer is emulated using MAME. There is a dedicated emulator available for this system named [GSplus](https://apple2.gs/plus) but it appears to not be able to parse command line parameters correctly so disk images can't be supplied to it. As such it's currently unsupported.
+
+In order to run Apple IIGS games in MAME, you need to place the following ROM file in the ~/ROMs/apple2gs directory:
+```
+apple2gs.zip
+```
+
+Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated Apple IIGS computer.
+
 #### Tangerine Computer Systems Oric
 
 These games are executed using the Oricutron emulator which is readily available on Windows but quite problematic to get hold on for Unix and macOS.
@@ -1441,7 +1471,7 @@ Emulating the TI-99 can be quite confusing as games are available in various inc
 
 In addition to the game files you need the `ti99_4a.zip` archive which contains the TI-99 system ROMs. This file has to be placed in the root of the ~/ROMs/ti99 directory.
 
-Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked by the emulator as it's used by the emulated TI-99 computer.
+Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated TI-99 computer.
 
 Scraping can also be a bit challenging as MAME short names are used and neither ScreenScraper nor TheGamesDB can parse these names. So it's recommended to run the scraper in interactive mode and refine the searches for all games that are not properly identified.
 
@@ -2590,8 +2620,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           |              |                                      |
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file in root folder  |
-| apple2                | Apple II                                       | _Placeholder_                     |                                   |              |                                      |
-| apple2gs              | Apple IIGS                                     | _Placeholder_                     |                                   |              |                                      |
+| apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>MAME **(Standalone)** [M],<br>AppleWin **(Standalone)** [W*] | MAME **(Standalone)** [UW*] | Yes for MAME | See the specific _Apple II_ section elsewhere in this guide |
+| apple2gs              | Apple IIGS                                     | MAME **(Standalone)** [UMW*]      |                                   | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)** [UMW*]      |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014                       | No           | Single archive or ROM file in root folder |

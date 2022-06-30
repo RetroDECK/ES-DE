@@ -1102,7 +1102,7 @@ The --ignore-gamelist option is only active during the program session and is no
 
 ## Settings not configurable via the GUI
 
-There are some settings which are not configurable via the GUI as modifying these should normally not be required. To change these, edit the es_settings.xml file directly.
+There are some settings which are not configurable via the GUI as modifying these should normally not be required. To still change these, edit the es_settings.xml file directly.
 
 **DebugSkipInputLogging**
 
@@ -1118,7 +1118,7 @@ Sets the maximum total animation cache for Lottie animations. Minimum value is 0
 
 **OpenGLVersion**
 
-If using the regular desktop OpenGL renderer, the allowed values are 3.3 (the default), 4.2 or 4.6. If using the OpenGL ES renderer, the allowed values are 3.0 (the default), 3.1 or 3.2.
+If using the regular desktop OpenGL renderer, the allowed values are 3.3 (the default), 4.2 and 4.6. If using the OpenGL ES renderer, the allowed values are 3.0 (the default), 3.1 and 3.2.
 
 **ScraperConnectionTimeout**
 
@@ -1126,7 +1126,7 @@ Sets the server connection timeout for the scraper. Minimum value is 0 seconds (
 
 **ScraperTransferTimeout**
 
-Sets the transfer timeout per HTTPS request (i.e. per media file). Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 120 seconds.
+Sets the transfer timeout per HTTPS request. Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 120 seconds.
 
 **UIMode_passkey**
 
