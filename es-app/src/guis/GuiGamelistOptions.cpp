@@ -400,6 +400,20 @@ void GuiGamelistOptions::openMetaDataEd()
     std::function<void()> deleteGameBtnFunc;
 
     clearGameBtnFunc = [this, file] {
+#if defined(_WIN64)
+        if (file->getType() == FOLDER) {
+            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder \""
+                         << Utils::String::replace(file->getFullPath(), "/", "\\") << "\"";
+        }
+        else if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath())) {
+            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the "
+                            "file-interpreted folder \""
+                         << Utils::String::replace(file->getFullPath(), "/", "\\") << "\"";
+        }
+        else {
+            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file \""
+                         << Utils::String::replace(file->getFullPath(), "/", "\\") << "\"";
+#else
         if (file->getType() == FOLDER) {
             LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder \""
                          << file->getFullPath() << "\"";
@@ -412,6 +426,7 @@ void GuiGamelistOptions::openMetaDataEd()
         else {
             LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file \""
                          << file->getFullPath() << "\"";
+#endif
         }
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
 

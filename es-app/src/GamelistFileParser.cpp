@@ -112,7 +112,12 @@ namespace GamelistFileParser
             return;
         }
 
+#if defined(_WIN64)
+        LOG(LogInfo) << "Parsing gamelist file \"" << Utils::String::replace(xmlpath, "/", "\\")
+                     << "\"...";
+#else
         LOG(LogInfo) << "Parsing gamelist file \"" << xmlpath << "\"...";
+#endif
 
         pugi::xml_document doc;
 #if defined(_WIN64)
@@ -174,7 +179,12 @@ namespace GamelistFileParser
                     fileNode.child("path").text().get(), relativeTo, false);
 
                 if (!trustGamelist && !Utils::FileSystem::exists(path)) {
+#if defined(_WIN64)
+                    LOG(LogWarning) << (type == GAME ? "File \"" : "Folder \"")
+                                    << Utils::String::replace(path, "/", "\\")
+#else
                     LOG(LogWarning) << (type == GAME ? "File \"" : "Folder \"") << path
+#endif
                                     << "\" does not exist, ignoring entry";
                     continue;
                 }
@@ -432,7 +442,11 @@ namespace GamelistFileParser
                     LOG(LogDebug) << "GamelistFileParser::updateGamelist(): Added/updated "
                                   << numUpdated
                                   << (numUpdated == 1 ? " entity in \"" : " entities in \"")
+#if defined(_WIN64)
+                                  << Utils::String::replace(xmlWritePath, "/", "\\") << "\"";
+#else
                                   << xmlWritePath << "\"";
+#endif
                 }
 #if defined(_WIN64)
                 if (!doc.save_file(Utils::String::stringToWideString(xmlWritePath).c_str())) {

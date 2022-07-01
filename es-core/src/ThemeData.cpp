@@ -564,11 +564,21 @@ void ThemeData::populateThemeSets()
         for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isDirectory(*it)) {
+#if defined(_WIN64)
+                LOG(LogDebug) << "Loading theme set capabilities for \""
+                              << Utils::String::replace(*it, "/", "\\") << "\"...";
+#else
                 LOG(LogDebug) << "Loading theme set capabilities for \"" << *it << "\"...";
+#endif
                 ThemeCapability capabilities {parseThemeCapabilities(*it)};
 
+#if defined(_WIN64)
+                LOG(LogInfo) << "Added" << (capabilities.legacyTheme ? " legacy" : "")
+                             << " theme set \"" << Utils::String::replace(*it, "/", "\\") << "\"";
+#else
                 LOG(LogInfo) << "Added" << (capabilities.legacyTheme ? " legacy" : "")
                              << " theme set \"" << *it << "\"";
+#endif
                 if (!capabilities.legacyTheme) {
                     LOG(LogDebug) << "Theme set includes support for "
                                   << capabilities.variants.size() << " variant"

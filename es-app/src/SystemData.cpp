@@ -66,7 +66,12 @@ void FindRules::loadFindRules()
         return;
     }
 
+#if defined(_WIN64)
+    LOG(LogInfo) << "Parsing find rules configuration file \""
+                 << Utils::String::replace(path, "/", "\\") << "\"...";
+#else
     LOG(LogInfo) << "Parsing find rules configuration file \"" << path << "\"...";
+#endif
 
     pugi::xml_document doc;
 #if defined(_WIN64)
@@ -433,7 +438,12 @@ bool SystemData::loadConfig()
         if (onlyProcessCustomFile)
             break;
 
+#if defined(_WIN64)
+        LOG(LogInfo) << "Parsing systems configuration file \""
+                     << Utils::String::replace(configPath, "/", "\\") << "\"...";
+#else
         LOG(LogInfo) << "Parsing systems configuration file \"" << configPath << "\"...";
+#endif
 
         pugi::xml_document doc;
 #if defined(_WIN64)
@@ -514,7 +524,12 @@ bool SystemData::loadConfig()
             // processing.
             if (!Utils::FileSystem::exists(path)) {
                 LOG(LogDebug) << "SystemData::loadConfig(): Skipping system \"" << name
+#if defined(_WIN64)
+                              << "\" as the defined ROM directory \""
+                              << Utils::String::replace(path, "/", "\\")
+#else
                               << "\" as the defined ROM directory \"" << path
+#endif
                               << "\" does not exist";
                 continue;
             }
@@ -720,9 +735,16 @@ std::vector<std::string> SystemData::getConfigPath(bool legacyWarning)
             Utils::FileSystem::getHomePath() + "/.emulationstation/es_systems.cfg";
 
         if (Utils::FileSystem::exists(legacyConfigFile)) {
+#if defined(_WIN64)
+            LOG(LogInfo) << "Found legacy systems configuration file \""
+                         << Utils::String::replace(legacyConfigFile, "/", "\\")
+                         << "\", to retain your customizations move it to "
+                            "\"custom_systems\\es_systems.xml\" or otherwise delete the file";
+#else
             LOG(LogInfo) << "Found legacy systems configuration file \"" << legacyConfigFile
                          << "\", to retain your customizations move it to "
                             "\"custom_systems/es_systems.xml\" or otherwise delete the file";
+#endif
         }
     }
 
@@ -829,7 +851,12 @@ bool SystemData::createSystemDirectories()
         if (onlyProcessCustomFile && configPath == configPaths.front())
             continue;
 
+#if defined(_WIN64)
+        LOG(LogInfo) << "Parsing systems configuration file \""
+                     << Utils::String::replace(configPath, "/", "\\") << "\"...";
+#else
         LOG(LogInfo) << "Parsing systems configuration file \"" << configPath << "\"...";
+#endif
 
         pugi::xml_document doc;
 #if defined(_WIN64)
