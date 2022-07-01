@@ -548,20 +548,6 @@ The default es_systems.xml file is paired with a file named es_find_rules.xml wh
 
 If ES-DE is unable to find an emulator when a game is launched, a notification popup will be shown. Likewise a notification will be shown if the defined emulator core is not installed. The es_log.txt file will also provide additional details.
 
-## Using the Steam release of RetroArch
-
-On Windows it's no problem to use the Steam release of RetroArch although you may have to add the installation location manually to your Path environment variable. By default the following locations will be searched:
-```
-C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
-D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
-C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
-D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
-```
-
-If you have installed RetroArch at another location, simply start the Settings application, search for _path_ in the _Find a setting_ field and choose _Edit environment variables for your account_. Edit the _Path_ variable and add the directory where RetroArch is installed. This is required as there is no apparent way for ES-DE to find where RetroArch has been installed by the Steam application.
-
-On Linux the Steam release of RetroArch is currently not supported.
-
 ## Using emulators in AppImage format on Linux
 
 AppImages is a great way to package emulators on Linux as they work across many different distributions, and launching and running them introduces virtually no overhead. There is one small problem though in that there is no standardized directory for storing these files, meaning ES-DE could have issues locating them.

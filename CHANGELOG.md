@@ -88,6 +88,7 @@
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Made the logging thread safe
+* (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
 * Added the build date to to main menu for alpha and dev builds
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
@@ -143,6 +144,8 @@
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase in theme names)
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
+* (Windows) File paths would get escaped with quotation marks even if they did not contain any spaces
+* (Windows) The emulator binary path would sometimes not get escaped correctly in es_log.txt on game launch
 
 ## Version 1.2.6 (in development)
 
@@ -161,6 +164,7 @@ v1.2 maintenance release.
 * Added ScummVM standalone as an alternative emulator for the scummvm system
 * Added the Kronos RetroArch core as an alternative emulator for the arcade and mame systems
 * Added support for the repository-installed PPSSPP standalone (SDL and Qt) on Unix
+* Added find rule entries for Valve Steam to simplify the setup of the RetroArch Steam release
 * Added connection and transfer timeout settings to the scraper (not configurable via the GUI)
 * Added an es_log.txt entry when the "Only show ROMs from gamelist.xml files" setting is enabled
 * Passing the --ignore-gamelist command line option now immediately disables the ParseGamelistOnly setting

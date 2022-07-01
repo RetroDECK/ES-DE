@@ -554,17 +554,35 @@ If ES-DE is unable to find an emulator when a game is launched, a notification p
 
 ## Using the Steam release of RetroArch
 
-On Windows it's no problem to use the Steam release of RetroArch although you may have to add the installation location manually to your Path environment variable. By default the following locations will be searched:
+As this release of RetroArch is executed via the Steam application it's behaving a bit glitchy and strange with ES-DE. This is due to the nature of Steam and it's unavoidable. The following issues have been observed:
+
+* ES-DE will continue to run in the background due to the way that Steam works
+* Game launching is not seamless and there will be some flickering
+* Core searches will not work, if an emulator core is missing there will be no error notification inside ES-DE and game launching will just silently fail
+* Logging from the emulator is not possible due to ES-DE running in the background
+
+As well, adding support for the Steam release of RetroArch for all systems that ES-DE supports requires hundreds of additional alternative emulator entries. For all these reasons there will be no official support for this release of RetroArch. If you insist on still using it, it's however quite easy to make [custom system configuration](USERGUIDE-DEV.md#game-system-customizations) entries as the setup has been partly prepared in the bundled configuration.
+
+Simply add alternative emulator entries such as the following. This example enables support for the Nestopia UE core for the nes system:
 ```
-C:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
-D:\Program Files (x86)\Steam\steamapps\common\RetroArch\retroarch.exe
-C:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
-D:\Program Files\Steam\steamapps\common\RetroArch\retroarch.exe
+<command label="Nestopia UE (Steam)">%RUNINBACKGROUND% %EMULATOR_STEAM% -applaunch 1118310 -L nestopia_libretro %ROM%</command>
 ```
 
-If you have installed RetroArch at another location, simply start the Settings application, search for _path_ in the _Find a setting_ field and choose _Edit environment variables for your account_. Edit the _Path_ variable and add the directory where RetroArch is installed. This is required as there is no apparent way for ES-DE to find where RetroArch has been installed by the Steam application.
+This will work on both Linux and Windows.
 
-On Linux the Steam release of RetroArch is currently not supported.
+So a complete entry for the nes system could look like the following:
+```
+<system>
+    <name>nes</name>
+    <fullname>Nintendo Entertainment System</fullname>
+    <path>%ROMPATH%/nes</path>
+    <extension>.nes .NES .unf .UNF .unif .UNIF .7z .7Z .zip .ZIP</extension>
+    <command label="Nestopia UE (Steam)">%RUNINBACKGROUND% %EMULATOR_STEAM% -applaunch 1118310 -L nestopia_libretro %ROM%</command>
+    <command label="FCEUmm (Steam)">%RUNINBACKGROUND% %EMULATOR_STEAM% -applaunch 1118310 -L fceumm_libretro %ROM%</command>
+    <platform>nes</platform>
+    <theme>nes</theme>
+</system>
+```
 
 ## Using emulators in AppImage format on Linux
 
