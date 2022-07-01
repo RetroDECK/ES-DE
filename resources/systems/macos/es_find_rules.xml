@@ -182,6 +182,12 @@
             <entry>/Applications/Snes9x.app/Contents/MacOS/Snes9x</entry>
         </rule>
     </emulator>
+    <emulator name="STEAM">
+        <!-- Valve Steam -->
+        <rule type="staticpath">
+            <entry>/Applications/Steam.app/Contents/MacOS/steam_osx</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="staticpath">

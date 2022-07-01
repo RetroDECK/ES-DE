@@ -399,6 +399,19 @@
             <entry>%ESPATH%\..\snes9x\snes9x-x64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="STEAM">
+        <!-- Valve Steam -->
+        <rule type="winregistryvalue">
+            <entry>SOFTWARE\Valve\Steam\SteamExe</entry>
+        </rule>
+        <rule type="systempath">
+            <entry>steam.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>C:\Program Files (x86)\Steam\steam.exe</entry>
+            <entry>D:\Program Files (x86)\Steam\steam.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SUPERMODEL">
         <!-- Sega Model 3 emulator Supermodel -->
         <rule type="systempath">

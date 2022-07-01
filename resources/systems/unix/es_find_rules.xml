@@ -371,6 +371,12 @@
             <entry>~/.local/share/flatpak/exports/bin/com.snes9x.Snes9x</entry>
         </rule>
     </emulator>
+    <emulator name="STEAM">
+        <!-- Valve Steam -->
+        <rule type="systempath">
+            <entry>steam</entry>
+        </rule>
+    </emulator>
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">
