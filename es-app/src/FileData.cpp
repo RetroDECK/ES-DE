@@ -1027,9 +1027,11 @@ void FileData::launchGame()
     }
 #if defined(_WIN64)
     else {
-        LOG(LogDebug) << "FileData::launchGame(): Found emulator binary "
-                      << Utils::String::replace(
-                             Utils::String::replace(binaryPath, "%ESPATH%", esPath), "/", "\\");
+        std::string binaryLogPath {Utils::String::replace(
+            Utils::String::replace(binaryPath, "%ESPATH%", esPath), "/", "\\")};
+        if (binaryLogPath.front() != '\"' && binaryLogPath.back() != '\"')
+            binaryLogPath = "\"" + binaryLogPath + "\"";
+        LOG(LogDebug) << "FileData::launchGame(): Found emulator binary " << binaryLogPath;
 #else
     else if (!isShortcut) {
         LOG(LogDebug) << "FileData::launchGame(): Found emulator binary \""
@@ -1714,9 +1716,10 @@ const std::string FileData::findEmulatorPath(std::string& command)
         if (pathStatus == ERROR_SUCCESS) {
             if (Utils::FileSystem::isRegularFile(registryPath) ||
                 Utils::FileSystem::isSymlink(registryPath)) {
-                command.replace(startPos, endPos - startPos + 1, registryPath);
+                exePath = Utils::FileSystem::getEscapedPath(registryPath);
+                command.replace(startPos, endPos - startPos + 1, exePath);
                 RegCloseKey(registryKey);
-                return registryPath;
+                return exePath;
             }
         }
         RegCloseKey(registryKey);
@@ -1777,9 +1780,10 @@ const std::string FileData::findEmulatorPath(std::string& command)
         // so check for that as well.
         if (pathStatus == ERROR_SUCCESS) {
             if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
-                command.replace(startPos, endPos - startPos + 1, path);
+                exePath = Utils::FileSystem::getEscapedPath(path);
+                command.replace(startPos, endPos - startPos + 1, exePath);
                 RegCloseKey(registryKey);
-                return path;
+                return exePath;
             }
         }
         RegCloseKey(registryKey);
@@ -1807,6 +1811,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
         }
         if (exePath != "") {
             exePath += "\\" + path;
+            exePath = Utils::FileSystem::getEscapedPath(exePath);
             command.replace(startPos, endPos - startPos + 1, exePath);
             return exePath;
         }
@@ -1842,9 +1847,9 @@ const std::string FileData::findEmulatorPath(std::string& command)
         }
 
         if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
-            path = Utils::FileSystem::getEscapedPath(path);
-            command.replace(startPos, endPos - startPos + 1, path);
-            return path;
+            exePath = Utils::FileSystem::getEscapedPath(path);
+            command.replace(startPos, endPos - startPos + 1, exePath);
+            return exePath;
         }
     }
 
