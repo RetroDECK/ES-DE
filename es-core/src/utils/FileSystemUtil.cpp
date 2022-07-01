@@ -390,7 +390,10 @@ namespace Utils
 
 #if defined(_WIN64)
             // Windows escapes stuff by just putting everything in quotes.
-            return '"' + getPreferredPath(escapedPath) + '"';
+            if (escapedPath.find(" ") != std::string::npos)
+                return '"' + getPreferredPath(escapedPath) + '"';
+            else
+                return getPreferredPath(escapedPath);
 #else
             // Insert a backslash before most characters that would mess up a bash path.
             const char* invalidChars = "\\ '\"!$^&*(){}[]?;<>";
