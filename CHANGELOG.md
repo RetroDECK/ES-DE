@@ -164,6 +164,7 @@ v1.2 maintenance release.
 * Added ScummVM standalone as an alternative emulator for the scummvm system
 * Added the Kronos RetroArch core as an alternative emulator for the arcade and mame systems
 * Added support for the repository-installed PPSSPP standalone (SDL and Qt) on Unix
+* Added the .json file extension to the gc and wii systems
 * Added find rule entries for Valve Steam to simplify the setup of the RetroArch Steam release
 * Added connection and transfer timeout settings to the scraper (not configurable via the GUI)
 * Added an es_log.txt entry when the "Only show ROMs from gamelist.xml files" setting is enabled

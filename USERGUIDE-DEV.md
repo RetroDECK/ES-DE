@@ -554,23 +554,25 @@ If ES-DE is unable to find an emulator when a game is launched, a notification p
 
 ## Using the Steam release of RetroArch
 
-As this release of RetroArch is executed via the Steam application it's behaving a bit glitchy and strange with ES-DE. This is due to the nature of Steam and it's unavoidable. The following issues have been observed:
+As this release of RetroArch is executed via the Steam application it's behaving a bit glitchy and strange with ES-DE (which is due to the nature of Steam). In addition to this there seem to be some bugs in either Steam or RetroArch, or both. The following issues have been observed:
 
 * ES-DE will continue to run in the background due to the way that Steam works
 * Game launching is not seamless and there will be some flickering
+* If the Steam GUI is visible, focus may not return to ES-DE when exiting a game. Minimizing Steam increases the chances of this working properly but it's not guaranteed to completely fix the problem
+* Filenames containing apostrophes do not work, you need to rename these game files to be able to launch them
 * Core searches will not work, if an emulator core is missing there will be no error notification inside ES-DE and game launching will just silently fail
-* Logging from the emulator is not possible due to ES-DE running in the background
+* Logging output from emulators is not possible due to ES-DE running in the background
 
 As well, adding support for the Steam release of RetroArch for all systems that ES-DE supports requires hundreds of additional alternative emulator entries. For all these reasons there will be no official support for this release of RetroArch. If you insist on still using it, it's however quite easy to make [custom system configuration](USERGUIDE-DEV.md#game-system-customizations) entries as the setup has been partly prepared in the bundled configuration.
 
-Simply add alternative emulator entries such as the following. This example enables support for the Nestopia UE core for the nes system:
+Simply add alternative emulator entries such as the following example which enables support for the Nestopia UE core for the nes system:
 ```
 <command label="Nestopia UE (Steam)">%RUNINBACKGROUND% %EMULATOR_STEAM% -applaunch 1118310 -L nestopia_libretro %ROM%</command>
 ```
 
 This will work on both Linux and Windows.
 
-So a complete entry for the nes system could look like the following:
+A complete entry for the nes system could look like the following:
 ```
 <system>
     <name>nes</name>
