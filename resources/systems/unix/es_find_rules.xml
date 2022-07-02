@@ -49,6 +49,20 @@
             <entry>atari800-jz.atari800</entry>
         </rule>
     </emulator>
+    <emulator name="BASILISKII">
+        <!-- Macintosh 68k emulator Basilisk II -->
+        <rule type="systempath">
+            <entry>BasiliskII</entry>
+            <entry>net.cebix.basilisk</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.cebix.basilisk</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
+            <entry>~/Applications/BasiliskII-x86_64.AppImage</entry>
+            <entry>~/.local/bin/BasiliskII-x86_64.AppImage</entry>
+            <entry>~/bin/BasiliskII-x86_64.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="BLASTEM">
         <!-- Sega Mega Drive/Genesis emulator BlastEm -->
         <rule type="systempath">
@@ -359,6 +373,17 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.scummvm.ScummVM</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.scummvm.ScummVM</entry>
+        </rule>
+    </emulator>
+    <emulator name="SHEEPSHAVER">
+        <!-- Macintosh PowerPC emulator SheepShaver -->
+        <rule type="systempath">
+            <entry>SheepShaver</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/SheepShaver-x86_64.AppImage</entry>
+            <entry>~/.local/bin/SheepShaver-x86_64.AppImage</entry>
+            <entry>~/bin/SheepShaver-x86_64.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="SNES9X">

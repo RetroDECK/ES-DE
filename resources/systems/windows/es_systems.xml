@@ -607,8 +607,9 @@
         <name>macintosh</name>
         <fullname>Apple Macintosh</fullname>
         <path>%ROMPATH%\macintosh</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.game .GAME</extension>
+        <command label="Basilisk II (Standalone)">%EMULATOR_BASILISKII% --nogui true</command>
+        <command label="SheepShaver (Standalone)">%EMULATOR_SHEEPSHAVER% --nogui true</command>
         <platform>macintosh</platform>
         <theme>macintosh</theme>
     </system>

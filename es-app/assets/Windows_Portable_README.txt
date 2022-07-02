@@ -25,6 +25,7 @@ Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
 Emulators\AppleWin\AppleWin.exe
 Emulators\atari800\atari800.exe
+Emulators\BasiliskII\BasiliskII.exe
 Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe
 Emulators\Citra\canary-mingw\citra.exe
@@ -52,6 +53,7 @@ Emulators\redream\redream.exe
 Emulators\RPCS3\rpcs3.exe
 Emulators\ryujinx\Ryujinx.exe
 Emulators\scummvm\scummvm.exe
+Emulators\SheepShaver\SheepShaver.exe
 Emulators\snes9x\snes9x-x64.exe
 Emulators\Supermodel\Supermodel.exe
 Emulators\VBA-M\visualboyadvance-m.exe

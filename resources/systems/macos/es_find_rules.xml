@@ -34,6 +34,12 @@
             <entry>/usr/local/bin/atari800</entry>
         </rule>
     </emulator>
+    <emulator name="BASILISKII">
+        <!-- Macintosh 68k emulator Basilisk II -->
+        <rule type="staticpath">
+            <entry>/Applications/BasiliskII.app/Contents/MacOS/BasiliskII</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="staticpath">
@@ -168,6 +174,12 @@
             <entry>/Applications/ScummVM.app/Contents/MacOS/scummvm</entry>
             <entry>/opt/homebrew/bin/scummvm</entry>
             <entry>/usr/local/bin/scummvm</entry>
+        </rule>
+    </emulator>
+    <emulator name="SHEEPSHAVER">
+        <!-- Macintosh PowerPC emulator SheepShaver -->
+        <rule type="staticpath">
+            <entry>/Applications/SheepShaver.app/Contents/MacOS/SheepShaver</entry>
         </rule>
     </emulator>
     <emulator name="SIXTYFORCE">

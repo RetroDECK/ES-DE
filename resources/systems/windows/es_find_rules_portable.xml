@@ -39,6 +39,14 @@
             <entry>%ESPATH%\..\atari800\atari800.exe</entry>
         </rule>
     </emulator>
+    <emulator name="BASILISKII">
+        <!-- Macintosh 68k emulator Basilisk II -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\BasiliskII\BasiliskII.exe</entry>
+            <entry>%ESPATH%\BasiliskII\BasiliskII.exe</entry>
+            <entry>%ESPATH%\..\BasiliskII\BasiliskII.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="BSNES">
         <!-- Super Nintendo/Super Famicom emulator bsnes -->
         <rule type="staticpath">
@@ -251,6 +259,14 @@
             <entry>%ESPATH%\Emulators\scummvm\scummvm.exe</entry>
             <entry>%ESPATH%\scummvm\scummvm.exe</entry>
             <entry>%ESPATH%\..\scummvm\scummvm.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="SHEEPSHAVER">
+        <!-- Macintosh PowerPC emulator SheepShaver -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\SheepShaver\SheepShaver.exe</entry>
+            <entry>%ESPATH%\SheepShaver\SheepShaver.exe</entry>
+            <entry>%ESPATH%\..\SheepShaver\SheepShaver.exe</entry>
         </rule>
     </emulator>
     <emulator name="SNES9X">
