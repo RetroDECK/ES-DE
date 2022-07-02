@@ -621,6 +621,8 @@ The following emulators are supported in AppImage format when using the bundled 
 | _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage |
 | gba          | mGBA        | mGBA*.AppImage                  |
 | gc           | Dolphin     | Dolphin_Emulator*.AppImage      |
+| macintosh    | Basilisk II | BasiliskII-x86_64.AppImage      |
+| macintosh    | SheepShaver | SheepShaver-x86_64.AppImage     |
 | ps2          | Play!       | Play!*.AppImage                 |
 | ps3          | RPCS3       | rpcs3*.AppImage                 |
 | psx          | DuckStation | duckstation-nogui-x64.AppImage  |
@@ -1448,6 +1450,35 @@ apple2gs.zip
 ```
 
 Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated Apple IIGS computer.
+
+#### Apple Macintosh
+
+The _macintosh_ system provides emulation using Basilisk II for older Macintosh II and Quadra computers and SheepShaver for more modern PowerPC-based models.
+
+Emulation for this system works quite differently than other platforms as it's not possible to launch games individually from ES-DE. Instead ES-DE only acts as a game browser which simply launches the emulator. The game then needs to be manually started from inside Mac OS.
+
+As for how to setup the Basilisk II emulator the following YouTube video is a good resource:
+
+https://www.youtube.com/watch?v=QSWWZ4hkvVk
+
+Once the emulator is up and running and you can boot into Mac OS 7 or 8 you need to install your games. These are commonly distributed with the .sit file extension which are compressed archives in the proprietary StuffIt Expander format. You should uncompress these files inside the emulator or otherwise you will very likely run into problems with running your games. This is also covered in the YouTube video.
+
+As for game locations it's possible to uncompress the games inside the ~/ROMs/macintosh folder and mount this inside the emulator, but this is not recommended. It's instead better to create a _Games_ folder or similar inside Mac OS and place your installed games there.
+
+The setup of SheepShaver is essentially identical to that of Basilisk II as these two emulators are developed by the same team and are therefore very similar.
+
+To add a game entry in ES-DE just create an empty file with the .game extension, for example `Marathon.game`. This entry can then be scraped and edited in the same way as any regular system. But as mentioned above, ES-DE will only act as a browser and individual games cannot be started directly. So when you launch a game, the emulator will boot into the Mac OS desktop and you will have to manually navigate to your game folder to run the game.
+
+To launch a game entry using SheepShaver instead of Basilisk II you just need to select the alternative emulator _SheepShaver (Standalone)_.
+
+This is an example of what the game setup could look like:
+```
+~/ROMs/macintosh/Marathon.game
+~/ROMs/macintosh/Marathon 2.game
+~/ROMs/macintosh/Prince of Persia.game
+```
+
+Note that scraper support is currently very poor for this system, so you may need to manually add images and information for your games. It's encouraged to support ScreenScraper and TheGamesDB by contributing game media and metadata so this situation improves over time.
 
 #### Tangerine Computer Systems Oric
 
@@ -2688,7 +2719,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | kodi                  | Kodi Home Theatre Software                     | N/A                               |                                   | No           | Shortcut in root folder               |
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
-| macintosh             | Apple Macintosh                                | _Placeholder_                     |                                   |              |                                      |
+| macintosh             | Apple Macintosh                                | Basilisk II **(Standalone)** [UMW*] | SheepShaver **(Standalone)** [UMW*] | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
 | mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      |                                      |
 | mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      |                                      |
