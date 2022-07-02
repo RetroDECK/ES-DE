@@ -608,8 +608,8 @@
         <fullname>Apple Macintosh</fullname>
         <path>%ROMPATH%\macintosh</path>
         <extension>.game .GAME</extension>
-        <command label="Basilisk II (Standalone)">%EMULATOR_BASILISKII% --nogui true</command>
-        <command label="SheepShaver (Standalone)">%EMULATOR_SHEEPSHAVER% --nogui true</command>
+        <command label="Basilisk II (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_BASILISKII% --nogui true</command>
+        <command label="SheepShaver (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SHEEPSHAVER%</command>
         <platform>macintosh</platform>
         <theme>macintosh</theme>
     </system>
