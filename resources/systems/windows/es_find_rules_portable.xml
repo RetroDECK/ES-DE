@@ -133,6 +133,14 @@
             <entry>%ESPATH%\..\Hypseus Singe\hypseus.exe</entry>
         </rule>
     </emulator>
+    <emulator name="KEMULATOR">
+        <!-- Java 2 Micro Edition emulator KEmulator -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\KEmulator\KEmulator.exe</entry>
+            <entry>%ESPATH%\KEmulator\KEmulator.exe</entry>
+            <entry>%ESPATH%\..\KEmulator\KEmulator.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="M2EMULATOR">
         <!-- Sega Model 2 Emulator -->
         <rule type="staticpath">

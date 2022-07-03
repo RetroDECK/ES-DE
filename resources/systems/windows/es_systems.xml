@@ -572,7 +572,8 @@
         <fullname>Java 2 Micro Edition (J2ME)</fullname>
         <path>%ROMPATH%\j2me</path>
         <extension>.jar .JAR .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\squirreljme_libretro.dll %ROM%</command>
+        <command label="SquirrelJME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\squirreljme_libretro.dll %ROM%</command>
+        <command label="KEmulator (Standalone)">%STARTDIR%=%EMUDIR% %RUNINBACKGROUND% %EMULATOR_KEMULATOR% %ROM%</command>
         <platform>android</platform>
         <theme>j2me</theme>
     </system>

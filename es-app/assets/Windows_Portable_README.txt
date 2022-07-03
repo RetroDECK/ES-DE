@@ -37,6 +37,7 @@ Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\flycast\flycast.exe
 Emulators\Hypseus Singe\hypseus.exe
+Emulators\KEmulator\KEmulator.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
 Emulators\melonDS\melonDS.exe
