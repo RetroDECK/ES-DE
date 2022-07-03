@@ -1174,6 +1174,36 @@ END
 
 With this configuration, pressing the _A_ and _Y_ buttons at the same time exits the emulator.
 
+Here's an alternative configuration as described in the following YouTube video: \
+https://www.youtube.com/watch?v=mO2UiI6byJo
+
+```
+[KEYBOARD]
+KEY_UP = SDLK_UP SDLK_r 0 -002
+KEY_DOWN = SDLK_DOWN SDLK_f 0 +002
+KEY_LEFT = SDLK_LEFT SDLK_d 0 -001
+KEY_RIGHT = SDLK_RIGHT SDLK_g 0 +001
+KEY_COIN1 = SDLK_5 0 7
+KEY_COIN2 = SDLK_6 0 0
+KEY_START1 = SDLK_1 0 8
+KEY_START2 = SDLK_2 0 0
+KEY_BUTTON1 = SDLK_LCTRL SDLK_a 1
+KEY_BUTTON2 = SDLK_LALT SDLK_s 0
+KEY_BUTTON3 = SDLK_SPACE SDLK_d 11
+KEY_SKILL1 = SDLK_LSHIFT SDLK_w 3
+KEY_SKILL2 = SDLK_z SDLK_i 4
+KEY_SKILL3 = SDLK_x SDLK_k 2
+KEY_SERVICE = SDLK_9 0 0
+KEY_TEST = SDLK_F2 0 0
+KEY_RESET = SDLK_0 0 0
+KEY_SCREENSHOT = SDLK_F12 0 0
+KEY_QUIT = SDLK_ESCAPE SDLK_q 17
+KEY_PAUSE = SDLK_p 0 0
+KEY_CONSOLE = SDLK_BACKSLASH 0 0
+KEY_TILT = SDLK_t 0 0
+END
+```
+
 There are two types of games supported by Hypseus and these are _Daphne_ and _Singe_. It's beyond the scope of this document to describe these game formats in detail but there are many resources available online for this. The setup differs a bit between these two types however, and you need to use an alternative emulator entry in ES-DE to launch Singe games.
 
 **Daphne games**

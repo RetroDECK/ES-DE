@@ -1243,6 +1243,36 @@ END
 
 With this configuration, pressing the _A_ and _Y_ buttons at the same time exits the emulator.
 
+Here's an alternative configuration as described in the following YouTube video: \
+https://www.youtube.com/watch?v=mO2UiI6byJo
+
+```
+[KEYBOARD]
+KEY_UP = SDLK_UP SDLK_r 0 -002
+KEY_DOWN = SDLK_DOWN SDLK_f 0 +002
+KEY_LEFT = SDLK_LEFT SDLK_d 0 -001
+KEY_RIGHT = SDLK_RIGHT SDLK_g 0 +001
+KEY_COIN1 = SDLK_5 0 7
+KEY_COIN2 = SDLK_6 0 0
+KEY_START1 = SDLK_1 0 8
+KEY_START2 = SDLK_2 0 0
+KEY_BUTTON1 = SDLK_LCTRL SDLK_a 1
+KEY_BUTTON2 = SDLK_LALT SDLK_s 0
+KEY_BUTTON3 = SDLK_SPACE SDLK_d 11
+KEY_SKILL1 = SDLK_LSHIFT SDLK_w 3
+KEY_SKILL2 = SDLK_z SDLK_i 4
+KEY_SKILL3 = SDLK_x SDLK_k 2
+KEY_SERVICE = SDLK_9 0 0
+KEY_TEST = SDLK_F2 0 0
+KEY_RESET = SDLK_0 0 0
+KEY_SCREENSHOT = SDLK_F12 0 0
+KEY_QUIT = SDLK_ESCAPE SDLK_q 17
+KEY_PAUSE = SDLK_p 0 0
+KEY_CONSOLE = SDLK_BACKSLASH 0 0
+KEY_TILT = SDLK_t 0 0
+END
+```
+
 There are two types of games supported by Hypseus and these are _Daphne_ and _Singe_. It's beyond the scope of this document to describe these game formats in detail but there are many resources available online for this. The setup differs a bit between these two types however, and you need to use an alternative emulator entry in ES-DE to launch Singe games.
 
 **Daphne games**
@@ -1453,7 +1483,7 @@ Note that you may also need to reconfigure your exit key in MAME as the default 
 
 #### Apple Macintosh
 
-The _macintosh_ system provides emulation using Basilisk II for older Macintosh II and Quadra computers and SheepShaver for more modern PowerPC-based models.
+The macintosh system uses the Basilisk II emulator for older Macintosh II and Quadra computers and SheepShaver for more modern PowerPC-based models.
 
 Emulation for this system works quite differently than other platforms as it's not possible to launch games individually from ES-DE. Instead ES-DE only acts as a game browser which simply launches the emulator. The game then needs to be manually started from inside Mac OS.
 
@@ -1466,6 +1496,8 @@ Once the emulator is up and running and you can boot into Mac OS 7 or 8 you need
 As for game locations it's possible to uncompress the games inside the ~/ROMs/macintosh folder and mount this inside the emulator, but this is not recommended. It's instead better to create a _Games_ folder or similar inside Mac OS and place your installed games there.
 
 The setup of SheepShaver is essentially identical to that of Basilisk II as these two emulators are developed by the same team and are therefore very similar.
+
+On macOS you need to download the separate Basilisk II GUI application to configure the emulator and with SheepShaver you need to start the emulator using a command line option to point to a valid ROM file. Only then can you reach the Preferences from the menu (this is however only needed the first time you setup SheepShaver). Quite a strange and unusual approach.
 
 To add a game entry in ES-DE just create an empty file with the .game extension, for example `Marathon.game`. This entry can then be scraped and edited in the same way as any regular system. But as mentioned above, ES-DE will only act as a browser and individual games cannot be started directly. So when you launch a game, the emulator will boot into the Mac OS desktop and you will have to manually navigate to your game folder to run the game.
 
@@ -2715,7 +2747,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U] | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 | _Placeholder_                     |                                   |              |                                      |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
-| j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       |                                   | Yes          | Single .jar file in root folder       |
+| j2me                  | Java 2 Micro Edition (J2ME)                    | SquirrelJME                       | KEmulator **(Standalone)** [W*]   | No           | Single .jar file in root folder       |
 | kodi                  | Kodi Home Theatre Software                     | N/A                               |                                   | No           | Shortcut in root folder               |
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |

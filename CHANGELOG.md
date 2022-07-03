@@ -164,6 +164,7 @@ v1.2 maintenance release.
 * Added experimental support for PCSX2 Qt standalone for the ps2 system on Unix
 * Added ScummVM standalone as an alternative emulator for the scummvm system
 * Added the Kronos RetroArch core as an alternative emulator for the arcade and mame systems
+* Added KEmulator standalone as an alternative emulator for the j2me system on Windows
 * Added support for the repository-installed PPSSPP standalone (SDL and Qt) on Unix
 * Added the .json file extension to the gc and wii systems
 * Added find rule entries for Valve Steam to simplify the setup of the RetroArch Steam release
