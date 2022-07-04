@@ -61,6 +61,7 @@ namespace
         {COLECOVISION, "31"},
         {COMMODORE_64, "40"},
         {COMMODORE_VIC20, "4945"},
+        {CREATRONIC_MEGA_DUCK, "4948"},
         {DAPHNE, "23"},
         {INTELLIVISION, "32"},
         {APPLE_MACINTOSH, "37"},
@@ -131,6 +132,7 @@ namespace
         {SINCLAIR_ZX81_SINCLAR, "5010"},
         {VIDEOPAC_ODYSSEY2, "4927"},
         {VECTREX, "4939"},
+        {WATARA_SUPERVISION, "4959"},
         {TANDY_COLOR_COMPUTER, "4941"},
         {TANDY_TRS80, "4941"},
         {TEXAS_INSTRUMENTS_TI99, "4953"}};

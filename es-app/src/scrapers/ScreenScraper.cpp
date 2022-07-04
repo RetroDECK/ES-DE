@@ -55,6 +55,7 @@ namespace
         {COMMODORE_64, 66},
         {COMMODORE_CDTV, 129},
         {COMMODORE_VIC20, 73},
+        {CREATRONIC_MEGA_DUCK, 90},
         {DAPHNE, 49},
         {INTELLIVISION, 115},
         {GAMEENGINE_LUTRO, 206},
@@ -137,6 +138,7 @@ namespace
         {SEGA_NAOMI, 56},
         {THOMSON_MOTO, 141},
         {UZEBOX, 216},
+        {WATARA_SUPERVISION, 207},
         {SPECTRAVIDEO, 218},
         {PALM_OS, 219}};
 

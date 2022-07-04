@@ -67,6 +67,7 @@ namespace PlatformIds
         "macintosh",            // Apple Macintosh
         "mastersystem",         // Sega Master System
         "megadrive",            // Sega Mega Drive
+        "megaduck",             // Creatronic Mega Duck
         "mess",                 // Multi Emulator Super System
         "moonlight",            // Moonlight game streaming
         "moto",                 // Thomson MO/TO series
@@ -116,6 +117,7 @@ namespace PlatformIds
         "stratagus",            // Stratagus game engine
         "sufami",               // Bandai SuFami Turbo
         "supergrafx",           // NEC SuperGrafx
+        "supervision",          // Watara Supervision
         "switch",               // Nintendo Switch
         "ti99",                 // Texas Instruments TI-99
         "tic80",                // TIC-80 game engine
