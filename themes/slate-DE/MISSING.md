@@ -34,6 +34,7 @@
 * kodi: Kodi home theatre software - consolegame.svg, console.svg, controller.svg
 * lutris: Lutris open gaming platform - consolegame.svg, console.svg, controller.svg, game.svg
 * macintosh: Apple Macintosh - consolegame.svg, console.svg, controller.svg, game.svg
+* megaduck: Creatronic Mega Duck - consolegame.svg, console.svg, game.svg
 * mess: MESS (Multi Emulator Super System) - consolegame.svg, console.svg, controller.svg
 * model2: Sega Model 2 - consolegame.svg, console.svg, controller.svg, game.svg
 * model3: Sega Model 3 - consolegame.svg, console.svg, controller.svg, game.svg
@@ -61,6 +62,7 @@
 * steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg
 * stratagus: Stratagus game engine - consolegame.svg, console.svg
 * sufami: Bandai SuFami Turbo - consolegame.svg, console.svg, game.svg
+* supervision: Watara Supervision - consolegame.svg, console.svg, game.svg
 * symbian: Symbian - system info (needs improvement), consolegame.svg, console.svg, controller.svg, game.svg
 * tanodragon: Tano Dragon - consolegame.svg, console.svg, controller.svg, game.svg
 * ti99: Texas Instruments TI-99 - consolegame.svg, console.svg

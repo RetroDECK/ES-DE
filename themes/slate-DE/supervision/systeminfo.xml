@@ -1,0 +1,22 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Watara</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1992</text>
+        </text>
+        <text name="info3">
+            <text>CPU:  8-bit 65C02 @ 4 MHz</text>
+        </text>
+        <text name="info4">
+            <text>Screen:  2.37 inch (61 mm), tiltable</text>
+        </text>
+        <text name="info5">
+            <text>Resolution:  160×160 pixels, 4 shades of gray</text>
+        </text>
+        <text name="info6">
+            <text>Sound:  2 tonal channels + 1 noise channel</text>
+        </text>
+    </view>
+</theme>
