@@ -103,6 +103,13 @@
             <entry>/usr/local/bin/mame</entry>
         </rule>
     </emulator>
+    <emulator name="MEDNAFEN">
+        <!-- Multi-system emulator Mednafen -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/mednafen</entry>
+            <entry>/usr/local/bin/mednafen</entry>
+        </rule>
+    </emulator>
     <emulator name="MELONDS">
         <!-- Nintendo DS and DSi emulator melonDS -->
         <rule type="staticpath">

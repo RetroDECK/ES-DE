@@ -40,6 +40,7 @@ Emulators\Hypseus Singe\hypseus.exe
 Emulators\KEmulator\KEmulator.exe
 Emulators\m2emulator\EMULATOR.EXE
 Emulators\mame\mame.exe
+Emulators\mednafen\mednafen.exe
 Emulators\melonDS\melonDS.exe
 Emulators\mGBA\mGBA.exe
 Emulators\mupen64plus\mupen64plus-ui-console.exe

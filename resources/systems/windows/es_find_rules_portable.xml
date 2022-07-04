@@ -157,6 +157,17 @@
             <entry>%ESPATH%\..\mame\mame.exe</entry>
         </rule>
     </emulator>
+    <emulator name="MEDNAFEN">
+        <!-- Multi-system emulator Mednafen -->
+        <rule type="systempath">
+            <entry>mednafen.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\mednafen\mednafen.exe</entry>
+            <entry>%ESPATH%\mednafen\mednafen.exe</entry>
+            <entry>%ESPATH%\..\mednafen\mednafen.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="MELONDS">
         <!-- Nintendo DS and DSi emulator melonDS -->
         <rule type="staticpath">

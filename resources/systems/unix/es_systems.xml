@@ -95,6 +95,7 @@
         <path>%ROMPATH%/apple2</path>
         <extension>.do .DO .dsk .DSK .nib .NIB .po .PO</extension>
         <command label="LinApple (Standalone)">%EMULATOR_LINAPPLE% -f -b --d1 %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module apple2 %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %ROMPATH%/apple2 apple2e -flop1 %ROM%</command>
         <platform>apple2</platform>
         <theme>apple2</theme>
@@ -200,6 +201,7 @@
         <extension>.lnx .LNX .o .O .7z .7Z .zip .ZIP</extension>
         <command label="Handy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/handy_libretro.so %ROM%</command>
         <command label="Beetle Lynx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_lynx_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module lynx %ROM%</command>
         <platform>atarilynx</platform>
         <theme>atarilynx</theme>
     </system>
@@ -419,6 +421,7 @@
         <command label="Nestopia UE (Standalone)">%EMULATOR_NESTOPIA-UE% --fullscreen %ROM%</command>
         <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
         <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
         <platform>famicom</platform>
         <theme>famicom</theme>
     </system>
@@ -453,6 +456,7 @@
         <command label="Nestopia UE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nestopia_libretro.so %ROM%</command>
         <command label="Nestopia UE (Standalone)">%EMULATOR_NESTOPIA-UE% --fullscreen %ROM%</command>
         <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
         <platform>fds</platform>
         <theme>fds</theme>
     </system>
@@ -474,6 +478,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.so %ROM%</command>
         <command label="Gearsystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearsystem_libretro.so %ROM%</command>
         <command label="SMS Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/smsplus_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gg %ROM%</command>
         <platform>gamegear</platform>
         <theme>gamegear</theme>
     </system>
@@ -548,6 +553,7 @@
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.so %ROM%</command>
         <command label="BlastEm (Standalone)">%EMULATOR_BLASTEM% -m gen %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command>
         <platform>genesis</platform>
         <theme>genesis</theme>
     </system>
@@ -661,6 +667,7 @@
         <command label="SMS Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/smsplus_libretro.so %ROM%</command>
         <command label="Gearsystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearsystem_libretro.so %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module sms %ROM%</command>
         <platform>mastersystem</platform>
         <theme>mastersystem</theme>
     </system>
@@ -696,6 +703,7 @@
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.so %ROM%</command>
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/blastem_libretro.so %ROM%</command>
         <command label="BlastEm (Standalone)">%EMULATOR_BLASTEM% -m gen %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command>
         <platform>megadrive</platform>
         <theme>megadrive</theme>
     </system>
@@ -884,6 +892,7 @@
         <command label="Nestopia UE (Standalone)">%EMULATOR_NESTOPIA-UE% --fullscreen %ROM%</command>
         <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fceumm_libretro.so %ROM%</command>
         <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quicknes_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
         <platform>nes</platform>
         <theme>nes</theme>
     </system>
@@ -894,6 +903,7 @@
         <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.so %ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ngp %ROM%</command>
         <platform>ngp</platform>
         <theme>ngp</theme>
     </system>
@@ -904,6 +914,7 @@
         <extension>.ngp .NGP .ngc .NGC .ngpc .NGPC .npc .NPC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.so %ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ngp %ROM%</command>
         <platform>ngpc</platform>
         <theme>ngpc</theme>
     </system>
@@ -982,6 +993,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.so %ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_fast_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pce %ROM%</command>
         <platform>pcengine</platform>
         <theme>pcengine</theme>
     </system>
@@ -992,6 +1004,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.so %ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_fast_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pce %ROM%</command>
         <platform>pcenginecd</platform>
         <theme>pcenginecd</theme>
     </system>
@@ -1000,7 +1013,8 @@
         <fullname>NEC PC-FX</fullname>
         <path>%ROMPATH%/pcfx</path>
         <extension>.cue CUE .ccd .CCD .toc .TOC .chd .CHD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pcfx_libretro.so %ROM%</command>
+        <command label="Beetle PC-FX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pcfx_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pcfx %ROM%</command>
         <platform>pcfx</platform>
         <theme>pcfx</theme>
     </system>
@@ -1092,6 +1106,7 @@
         <command label="PCSX ReARMed">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pcsx_rearmed_libretro.so %ROM%</command>
         <command label="SwanStation">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/swanstation_libretro.so %ROM%</command>
         <command label="DuckStation (Standalone)">%EMULATOR_DUCKSTATION% -batch %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module psx %ROM%</command>
         <platform>psx</platform>
         <theme>psx</theme>
     </system>
@@ -1129,6 +1144,7 @@
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabasanshiro_libretro.so %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
         <platform>saturn</platform>
         <theme>saturn</theme>
     </system>
@@ -1141,6 +1157,7 @@
         <command label="Kronos">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/kronos_libretro.so %ROM%</command>
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabasanshiro_libretro.so %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/yabause_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
         <platform>saturn</platform>
         <theme>saturnjp</theme>
     </system>
@@ -1351,6 +1368,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.so %ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_fast_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pce %ROM%</command>
         <platform>pcengine</platform>
         <theme>tg16</theme>
     </system>
@@ -1361,6 +1379,7 @@
         <extension>.ccd .CCD .chd .CHD .cue .CUE .img .IMG .iso .ISO .m3u .M3U .pce .PCE .sgx .SGX .toc .TOC .7z .7Z .zip .ZIP</extension>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.so %ROM%</command>
         <command label="Beetle PCE FAST">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_fast_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module pce %ROM%</command>
         <platform>pcenginecd</platform>
         <theme>tg-cd</theme>
     </system>
@@ -1441,7 +1460,8 @@
         <fullname>Nintendo Virtual Boy</fullname>
         <path>%ROMPATH%/virtualboy</path>
         <extension>.vb .VB .vboy .VBOY .bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_vb_libretro.so %ROM%</command>
+        <command label="Beetle VB">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_vb_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module vb %ROM%</command>
         <platform>virtualboy</platform>
         <theme>virtualboy</theme>
     </system>
@@ -1470,7 +1490,8 @@
         <fullname>Bandai WonderSwan</fullname>
         <path>%ROMPATH%/wonderswan</path>
         <extension>.ws .WS .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.so %ROM%</command>
+        <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
         <platform>wonderswan</platform>
         <theme>wonderswan</theme>
     </system>
@@ -1479,7 +1500,8 @@
         <fullname>Bandai WonderSwan Color</fullname>
         <path>%ROMPATH%/wonderswancolor</path>
         <extension>.ws .WS .wsc .WSC .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.so %ROM%</command>
+        <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.so %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
         <platform>wonderswancolor</platform>
         <theme>wonderswancolor</theme>
     </system>
