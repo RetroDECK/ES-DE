@@ -701,6 +701,15 @@
         <theme>megadrive</theme>
     </system>
     <system>
+        <name>megaduck</name>
+        <fullname>Creatronic Mega Duck</fullname>
+        <path>%ROMPATH%/megaduck</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="SameDuck">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/sameduck_libretro.dylib %ROM%</command>
+        <platform>megaduck</platform>
+        <theme>megaduck</theme>
+    </system>
+    <system>
         <name>mess</name>
         <fullname>Multi Emulator Super System</fullname>
         <path>%ROMPATH%/mess</path>
@@ -1308,6 +1317,15 @@
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.dylib %ROM%</command>
         <platform>supergrafx</platform>
         <theme>supergrafx</theme>
+    </system>
+    <system>
+        <name>supervision</name>
+        <fullname>Watara Supervision</fullname>
+        <path>%ROMPATH%/supervision</path>
+        <extension>.bin .BIN .sv .SV .7z .7Z .zip .ZIP</extension>
+        <command label="Potator">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/potator_libretro.dylib %ROM%</command>
+        <platform>supervision</platform>
+        <theme>supervision</theme>
     </system>
     <system>
         <name>switch</name>
