@@ -154,6 +154,7 @@
         <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
         <command label="a5200">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/a5200_libretro.so %ROM%</command>
         <command label="Atari800">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/atari800_libretro.so %ROM%</command>
+        <command label="Atari800 (Standalone)">%EMULATOR_ATARI800% %ROM%</command>
         <platform>atari5200</platform>
         <theme>atari5200</theme>
     </system>
