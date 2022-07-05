@@ -1429,6 +1429,12 @@ Starting ES-DE and launching the game should now work fine, but a further improv
 
 Doing this will make the game show up as if it was a single file inside ES-DE and it can be included in automatic collections, custom collections and so on.
 
+#### M.U.G.E.N Game Engine
+
+This system is only available on Windows and these games are commonly shipped as self-contained units with both the game engine and game data. To add a M.U.G.E.N game to ES-DE, right click on the game's .exe file, select Create Shortcut_ followed by _Create Desktop Shortcut_. This will create a file with the .lnk extension which you should then move to the `~\ROMs\mugen` directory. Note that this setup is not portable, if you move your game files somewhere else you will need to manually update your shortcuts as these contain absolute paths.
+
+Neither ScreenScraper nor TheGamesDB support scraping of M.U.G.E.N games so you will need to manually enter metadata and add game media.
+
 #### PICO-8
 
 PICO-8 Fantasy Console is a game engine developed by [Lexaloffle Games](https://www.lexaloffle.com/pico-8.php) that you need to buy a license to use. Doing so will provide you with download links to releases for Linux, macOS and Windows. Make sure to use the 64-bit release as the 32-bit release reportedly has some technical issues. On macOS and Windows the installation is straightforward, but on Linux you need to place PICO-8 in a location recognized by ES-DE. See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details.
@@ -2771,6 +2777,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | msx1                  | MSX1                                           | blueMSX                           | fMSX                              |              |                                      |
 | msx2                  | MSX2                                           | blueMSX                           | fMSX                              |              |                                      |
 | msxturbor             | MSX Turbo R                                    | blueMSX                           |                                   |              |                                      |
+| mugen                 | M.U.G.E.N Game Engine                          | M.U.G.E.N **(Standalone)** [W]    |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
@@ -2842,7 +2849,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)** [UMW*]  | No           |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file in root folder |
 | x68000                | Sharp X68000                                   | PX68k                             |                                   | Yes          |                                      |
-| xbox                  | Microsoft Xbox                                 | xemu **(Standalone)** [UMW*]      |                                   | Yes          | Single .iso file in root folder      |
+| xbox                  | Microsoft Xbox                                 | xemu **(Standalone)** [UMW*]      | Cxbx-Reloaded **(Standalone)** [W*] | Yes for xemu | Single .iso file in root folder for xemu or unpacked .iso directory for Cxbx-Reloaded |
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W*]       |                                   | No           |                                      |
 | zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
