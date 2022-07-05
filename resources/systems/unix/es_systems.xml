@@ -802,6 +802,15 @@
         <theme>msxturbor</theme>
     </system>
     <system>
+        <name>mugen</name>
+        <fullname>M.U.G.E.N Game Engine</fullname>
+        <path>%ROMPATH%/mugen</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>mugen</platform>
+        <theme>mugen</theme>
+    </system>
+    <system>
         <name>multivision</name>
         <fullname>Othello Multivision</fullname>
         <path>%ROMPATH%/multivision</path>

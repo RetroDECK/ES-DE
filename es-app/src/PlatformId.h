@@ -73,6 +73,7 @@ namespace PlatformIds
         MSX,
         MSX2,
         MSX_TURBO_R,
+        GAMEENGINE_MUGEN,
         NINTENDO_3DS,
         NINTENDO_64,
         SEGA_NAOMI,

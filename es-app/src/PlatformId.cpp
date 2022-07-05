@@ -74,6 +74,7 @@ namespace PlatformIds
         "msx",                  // MSX
         "msx2",                 // MSX2
         "msxturbor",            // MSX Turbo R
+        "mugen",                // M.U.G.E.N game engine
         "n3ds",                 // Nintendo 3DS
         "n64",                  // Nintendo 64
         "naomi",                // Sega NAOMI
