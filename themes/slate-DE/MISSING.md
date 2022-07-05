@@ -40,6 +40,7 @@
 * model3: Sega Model 3 - consolegame.svg, console.svg, controller.svg, game.svg
 * moto: Thomson MO/TO series - consolegame.svg, console.svg, controller.svg, game.svg
 * msxturbor: MSX Turbo R - consolegame.svg, console.svg, controller.svg, game.svg
+* mugen: M.U.G.E.N Game Engine - consolegame.svg, console.svg, controller.svg, game.svg
 * multivision: Othello Multivision - consolegame.svg, console.svg, controller.svg, game.svg
 * naomi: Sega NAOMI - consolegame.svg, console.svg, game.svg
 * naomigd: Sega NAOMI GD-ROM - consolegame.svg, console.svg, game.svg
