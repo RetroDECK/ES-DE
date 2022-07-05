@@ -402,6 +402,13 @@
             <entry>~/.local/share/flatpak/exports/bin/com.snes9x.Snes9x</entry>
         </rule>
     </emulator>
+    <emulator name="SOLARUS">
+        <!-- Solarus game engine -->
+        <rule type="systempath">
+            <entry>solarus-run</entry>
+            <entry>solarus.run</entry>
+        </rule>
+    </emulator>
     <emulator name="STEAM">
         <!-- Valve Steam -->
         <rule type="systempath">

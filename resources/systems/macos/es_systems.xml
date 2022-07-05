@@ -1271,8 +1271,8 @@
         <name>solarus</name>
         <fullname>Solarus Game Engine</fullname>
         <path>%ROMPATH%/solarus</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.solarus</extension>
+        <command>%EMULATOR_SOLARUS% %ROM%</command>
         <platform>solarus</platform>
         <theme>solarus</theme>
     </system>

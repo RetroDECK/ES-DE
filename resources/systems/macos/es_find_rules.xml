@@ -201,6 +201,13 @@
             <entry>/Applications/Snes9x.app/Contents/MacOS/Snes9x</entry>
         </rule>
     </emulator>
+    <emulator name="SOLARUS">
+        <!-- Solarus game engine -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/solarus-run</entry>
+            <entry>/usr/local/bin/solarus-run</entry>
+        </rule>
+    </emulator>
     <emulator name="STEAM">
         <!-- Valve Steam -->
         <rule type="staticpath">

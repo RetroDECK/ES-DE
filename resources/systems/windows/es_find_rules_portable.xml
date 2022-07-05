@@ -304,6 +304,14 @@
             <entry>%ESPATH%\..\snes9x\snes9x-x64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SOLARUS">
+        <!-- Solarus game engine -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\solarus\solarus-run.exe</entry>
+            <entry>%ESPATH%\solarus\solarus-run.exe</entry>
+            <entry>%ESPATH%\..\solarus\solarus-run.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="STEAM">
         <!-- Valve Steam -->
         <rule type="winregistryvalue">

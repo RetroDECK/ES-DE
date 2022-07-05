@@ -58,6 +58,7 @@ Emulators\ryujinx\Ryujinx.exe
 Emulators\scummvm\scummvm.exe
 Emulators\SheepShaver\SheepShaver.exe
 Emulators\snes9x\snes9x-x64.exe
+Emulators\solarus\solarus-run.exe
 Emulators\Supermodel\Supermodel.exe
 Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\Vita3K\Vita3K.exe
