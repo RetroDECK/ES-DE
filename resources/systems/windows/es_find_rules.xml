@@ -115,6 +115,17 @@
             <entry>%ESPATH%\..\Citra\canary-mingw\citra.exe</entry>
         </rule>
     </emulator>
+    <emulator name="CXBX-RELOADED">
+        <!-- Microsoft Xbox emulator Cxbx-Reloaded -->
+        <rule type="systempath">
+            <entry>cxbx.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Cxbx-Reloaded\cxbx.exe</entry>
+            <entry>%ESPATH%\Cxbx-Reloaded\cxbx.exe</entry>
+            <entry>%ESPATH%\..\Cxbx-Reloaded\cxbx.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">

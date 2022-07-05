@@ -1553,8 +1553,9 @@
         <name>xbox</name>
         <fullname>Microsoft Xbox</fullname>
         <path>%ROMPATH%\xbox</path>
-        <extension>.iso .ISO</extension>
+        <extension>.iso .ISO .xbe .XBE</extension>
         <command label="xemu (Standalone)">%EMULATOR_XEMU% -dvd_path %ROM%</command>
+        <command label="Cxbx-Reloaded (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_CXBX-RELOADED% %ROM%</command>
         <platform>xbox</platform>
         <theme>xbox</theme>
     </system>
