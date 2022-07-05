@@ -1272,7 +1272,7 @@
         <fullname>Solarus Game Engine</fullname>
         <path>%ROMPATH%/solarus</path>
         <extension>.solarus</extension>
-        <command>%EMULATOR_SOLARUS% %ROM%</command>
+        <command>%EMULATOR_SOLARUS% -fullscreen=yes %ROM%</command>
         <platform>solarus</platform>
         <theme>solarus</theme>
     </system>
