@@ -19,6 +19,8 @@ This portable release contains a specific es_find_rules.xml file that will only 
 If you would like to use the default configuration file instead which will also look for emulators elsewhere on your system then go to resources\systems\windows\
 and delete the es_find_rules.xml file and rename es_find_rules_default.xml to es_find_rules.xml
 
+See resources\systems\windows\es_find_rules.xml for more details about the emulators listed below.
+
 Preconfigured emulator locations:
 
 Emulators\RetroArch-Win64\retroarch.exe
@@ -60,6 +62,7 @@ Emulators\SheepShaver\SheepShaver.exe
 Emulators\snes9x\snes9x-x64.exe
 Emulators\solarus\solarus-run.exe
 Emulators\Supermodel\Supermodel.exe
+Emulators\tsugaru\Tsugaru_CUI.exe
 Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\Vita3K\Vita3K.exe
 Emulators\xemu\xemu.exe

@@ -489,6 +489,17 @@
             <entry>%ESPATH%\..\Supermodel\Supermodel.exe</entry>
         </rule>
     </emulator>
+    <emulator name="TSUGARU">
+        <!-- Fujitsu FM Towns emulator Tsugaru -->
+        <rule type="systempath">
+            <entry>Tsugaru_CUI.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\tsugaru\Tsugaru_CUI.exe</entry>
+            <entry>%ESPATH%\tsugaru\Tsugaru_CUI.exe</entry>
+            <entry>%ESPATH%\..\tsugaru\Tsugaru_CUI.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="systempath">

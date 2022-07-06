@@ -52,6 +52,7 @@ namespace PlatformIds
         SEGA_DREAMCAST,
         NINTENDO_FAMICOM,
         NINTENDO_FAMICOM_DISK_SYSTEM,
+        FUJITSU_FM_TOWNS,
         NINTENDO_GAME_AND_WATCH,
         SEGA_GAME_GEAR,
         NINTENDO_GAME_BOY,

@@ -462,6 +462,15 @@
         <theme>fds</theme>
     </system>
     <system>
+        <name>fmtowns</name>
+        <fullname>Fujitsu FM Towns</fullname>
+        <path>%ROMPATH%/fmtowns</path>
+        <extension>.cue .CUE .iso .ISO</extension>
+        <command label="Tsugaru (Standalone)">%EMULATOR_TSUGARU% %EMUDIR%/roms -HOSTSHORTCUT ESC 0 0 FORCEQUIT -FULLSCREEN -CD %ROM% %INJECT%=%BASENAME%.cfg</command>
+        <platform>fmtowns</platform>
+        <theme>fmtowns</theme>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%/gameandwatch</path>

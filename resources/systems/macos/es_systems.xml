@@ -458,6 +458,15 @@
         <theme>fds</theme>
     </system>
     <system>
+        <name>fmtowns</name>
+        <fullname>Fujitsu FM Towns</fullname>
+        <path>%ROMPATH%/fmtowns</path>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
+        <platform>fmtowns</platform>
+        <theme>fmtowns</theme>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%/gameandwatch</path>

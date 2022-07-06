@@ -53,6 +53,7 @@ namespace PlatformIds
         "dreamcast",            // Sega Dreamcast
         "famicom",              // Nintendo Family Computer
         "fds",                  // Nintendo Famicom Disk System
+        "fmtowns",              // Fujitsu FM Towns
         "gameandwatch",         // Nintendo Game and Watch
         "gamegear",             // Sega Game Gear
         "gb",                   // Nintendo Game Boy

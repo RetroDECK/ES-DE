@@ -429,6 +429,14 @@
             <entry>~/bin/publish/Ryujinx</entry>
         </rule>
     </emulator>
+    <emulator name="TSUGARU">
+        <!-- Fujitsu FM Towns emulator Tsugaru -->
+        <rule type="staticpath">
+            <entry>~/Applications/tsugaru/Tsugaru_CUI</entry>
+            <entry>~/.local/bin/tsugaru/Tsugaru_CUI</entry>
+            <entry>~/bin/tsugaru/Tsugaru_CUI</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="systempath">
