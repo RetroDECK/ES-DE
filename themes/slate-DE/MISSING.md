@@ -28,6 +28,7 @@
 * desktop: Desktop applications - consolegame.svg, console.svg, controller.svg
 * dragon32: Dragon 32 - consolegame.svg, console.svg, controller.svg, game.svg
 * epic: Epic Games Store - consolegame.svg, console.svg, controller.svg, game.svg
+* fmtowns: Fujitsu FM Towns - consolegame.svg, console.svg, controller.svg, game.svg
 * gx4000: Amstrad GX4000 - consolegame.svg, console.svg, controller.svg, game.svg
 * intellivision: Intellivision - consolegame.svg, console.svg, controller.svg, game.svg
 * j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, console.svg, controller.svg, game.svg
