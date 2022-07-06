@@ -655,6 +655,7 @@ The following manually downloaded emulators are supported when using the bundled
 | daphne       | Hypseus Singe | hypseus-singe/hypseus.bin       |
 | dreamcast    | Redream       | redream/redream                 |
 | apple2       | LinApple      | linapple/linapple               |
+| fmtowns      | Tsugaru       | tsugaru/Tsugaru_CUI             |
 | oric         | Oricutron     | oricutron/Oricutron             |
 | pico8        | PICO-8        | pico-8/pico8                    |
 | psvita       | Vita3K        | Vita3K/Vita3K                   |
@@ -992,6 +993,44 @@ To add an installed game to ES-DE, create an empty file in `~/ROMs/psvita` and n
 Then add the game Title ID to this file. This ID can be found inside the Vita3K GUI, in the _Title ID_ column. For example the game _WipEout 2048_ has an ID that is PCSF00007. So simply add the string PCSF00007 to the `WipEout 2048.psvita` file and the setup for this game is complete.
 
 Game launching and scraping should now work fine in ES-DE.
+
+#### Fujitsu FM Towns
+
+The Tsugaru emulator is still somehow experimental and although there are builds available for Windows, macOS and Linux on the Tsugaru [GitHub](https://github.com/captainys/TOWNSEMU) page, only the Windows release seems to be functioning entirely correctly. The Linux build has controller/input issues as described later below. It's also made specifically for Ubuntu and there is no AppImage release available, so if you run some other Linux distribution then it may not run at all. The macOS release does not seem to include the command line binary for the emulator which makes it unusable with ES-DE.
+
+For both the Windows and Linux release you need to create a `roms` subdirectory inside the emulator directory where the system BIOS/ROM files need to be located. The directory structure should look like the following on Windows:
+```
+tsugaru\roms\
+tsugaru\Tsugaru_CUI.exe
+tsugaru\Tsugaru_GUI.exe
+```
+
+And on Linux it's basically identical:
+```
+tsugaru/roms/
+tsugaru/Tsugaru_CUI
+tsugaru/Tsugaru_GUI
+```
+
+See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where to locate the emulator directory.
+
+Only CD-ROM games in .iso and .cue format are supported, and you simply place these inside the `~/ROMs/fmtowns` directory.
+
+Optionally you can provide custom emulator command line flags on a per-game basis. This can be used to set things like the CPU frequency of the emulated machine, controller/input settings and more. Refer to the Tsugaru emulator documentation for more details about available options.
+
+On Linux controller input seems to be broken for the time being, so you will likely need to map this input to the keyboard instead. Mouse input is also very laggy and it's unclear whether this can be improved via some emulator setting.
+
+To create a game-specific configuration entry, simply add a file with the same filename as the gamefile but with the .cfg file extension, for example:
+```
+~/ROMs/fmtowns/Shadow of the Beast (1994)(Psygnosis)(Jp-En).bin
+~/ROMs/fmtowns/Shadow of the Beast (1994)(Psygnosis)(Jp-En).cfg
+~/ROMs/fmtowns/Shadow of the Beast (1994)(Psygnosis)(Jp-En).cue
+```
+
+To map the controller to the keyboard and to set a 33 MHz CPU speed, the file content of the .cfg file would look like the following:
+```
+-FREQ 33 -GAMEPORT0 KEY
+```
 
 #### Commodore Amiga
 
@@ -2746,6 +2785,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
+| fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW*]    |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | gameandwatch          | Nintendo Game and Watch                        | GW                                |                                   |              |                                      |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>Mednafen **(Standalone)** [UMW*] |              |                                      |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
@@ -2822,7 +2862,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX | No           |                                      |
 | snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
-| solarus               | Solarus Game Engine                            | _Placeholder_                     |                                   |              |                                      |
+| solarus               | Solarus Game Engine                            | Solarus **(Standalone)** [UMW*]   |                                   | No           | Single .solarus game file in root folder |
 | spectravideo          | Spectravideo                                   | blueMSX                           |                                   |              |                                      |
 | steam                 | Valve Steam                                    | Steam application **(Standalone)** |                                  | No           | See the specific _Steam_ section elsewhere in this guide |
 | stratagus             | Stratagus Game Engine                          | _Placeholder_                     |                                   |              |                                      |
