@@ -1,0 +1,13 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>EasyRPG is a community project to create a free,</text>
+        </text>
+        <text name="info2">
+            <text>open source, role playing game creation tool,</text>
+        </text>
+        <text name="info3">
+            <text>compatible with RPG Maker 2000/2003 games.</text>
+        </text>
+    </view>
+</theme>
