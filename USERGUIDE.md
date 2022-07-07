@@ -89,6 +89,13 @@ chmod +x EmulationStation-DE-x64.AppImage
 
 For a better desktop integration it's recommended to install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which will add an ES-DE entry to the application menu and move the AppImage file to the `~/Applications` directory (which is the recommended location for all AppImages).
 
+To run AppImage files you need libfuse2 installed, but some newer distributions like Ubuntu 22.04 LTS no longer ship with this library preinstalled. You can however easily install it like this:
+```
+sudo apt install libfuse2
+```
+
+Of course, if you're not using a Debian-based distribution, you may need to use another package manager than apt to install the library.
+
 **Installing on macOS and Windows**
 
 There's not really much to say about these operating systems, just install ES-DE as you would any other application. On macOS it's via the .dmg drag-and-drop installer, and on Windows via the normal application installer or by unpacking the portable zip file somewhere on your filesystem.

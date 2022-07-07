@@ -442,10 +442,7 @@ tools/create_AppImage_SteamDeck.sh
 
 This is similar to the regular AppImage but does not build with the BUNDLED_CERTS option and changes some settings like the VRAM limit.
 
-Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script. Be aware though that some releases of linuxdeploy may be broken and could lead to the inclusion of invalid dependencies that will make the package unusable on some distributions. The release with the following -V output has been tested and is working correctly:
-```
-linuxdeploy version 1-alpha (git commit ID 9aa59f3), GitHub actions build 41 built on 2021-11-20 01:00:04 UTC
-```
+Both _appimagetool_ and _linuxdeploy_ are required for the build process but they will be downloaded automatically by the script if they don't exist. So to force an update to the latest build tools, delete these two AppImages prior to running the build script.
 
 ## Building on macOS
 
@@ -1146,6 +1143,8 @@ The bundled es_systems.xml file is located in the resources directory that is pa
 
 It doesn't matter in which order you define the systems as they will be sorted by the `<fullname>` tag or by the optional `<systemsortname>` tag when displayed inside the application. But it's still a good idea to add the systems in alphabetical order to make the configuration file easier to maintain.
 
+Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011.
+
 Wildcards are supported for emulator binaries, but not for directories:
 ```xml
 <!-- This is supported, first matching file will be selected -->
@@ -1178,7 +1177,7 @@ Below is an overview of the file layout with various examples. For the command t
         <!-- By default the systems are sorted by their full names, but this can be overridden by setting the optional
         <systemsortname> tag to an arbitrary value. As far as sorting is concerned, the effect will be identical to
         changing the <fullname> tag. Apart for system sorting, this tag has no effect and its actual value will not
-        be displayed anywhere within the appliction. -->
+        be displayed anywhere within the appliction. Note that the sorting is done in lexicographic order. -->
         <systemsortname>Super Nintendo</systemsortname>
 
         <!-- The path to look for ROMs in. '~' will be expanded to $HOME or %HOMEPATH%, depending on the operating system.

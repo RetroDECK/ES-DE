@@ -91,6 +91,13 @@ chmod +x EmulationStation-DE-x64.AppImage
 
 For a better desktop integration it's recommended to install [AppImageLauncher](https://github.com/TheAssassin/AppImageLauncher) which will add an ES-DE entry to the application menu and move the AppImage file to the `~/Applications` directory (which is the recommended location for all AppImages).
 
+To run AppImage files you need libfuse2 installed, but some newer distributions like Ubuntu 22.04 LTS no longer ship with this library preinstalled. You can however easily install it like this:
+```
+sudo apt install libfuse2
+```
+
+Of course, if you're not using a Debian-based distribution, you may need to use another package manager than apt to install the library.
+
 **Installing on macOS and Windows**
 
 There's not really much to say about these operating systems, just install ES-DE as you would any other application. On macOS it's via the .dmg drag-and-drop installer, and on Windows via the normal application installer or by unpacking the portable zip file somewhere on your filesystem.
@@ -616,20 +623,22 @@ chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 
 The following emulators are supported in AppImage format when using the bundled configuration:
 
-| System name  | Emulator    | Filename configuration          |
-| :----------- | :---------- | :------------------------------ |
-| _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage |
-| gba          | mGBA        | mGBA*.AppImage                  |
-| gc           | Dolphin     | Dolphin_Emulator*.AppImage      |
-| macintosh    | Basilisk II | BasiliskII-x86_64.AppImage      |
-| macintosh    | SheepShaver | SheepShaver-x86_64.AppImage     |
-| ps2          | Play!       | Play!*.AppImage                 |
-| ps3          | RPCS3       | rpcs3*.AppImage                 |
-| psx          | DuckStation | duckstation-nogui-x64.AppImage  |
-| psx          | DuckStation | duckstation-qt-x64.AppImage     |
-| switch       | Yuzu        | yuzu*.AppImage                  |
-| xbox         | xemu        | Xemu*.AppImage                  |
-| wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
+| System name  | Emulator    | Filename configuration                   |
+| :----------- | :---------- | :--------------------------------------- |
+| _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage          |
+| easyrpg      | EasyRPG     | easyrpg/easyrpg-player                   |
+| gba          | mGBA        | mGBA*.AppImage                           |
+| gc           | Dolphin     | Dolphin_Emulator*.AppImage               |
+| macintosh    | Basilisk II | BasiliskII-x86_64.AppImage               |
+| macintosh    | SheepShaver | SheepShaver-x86_64.AppImage              |
+| ps2          | PCSX2       | pcsx2-*-linux-AppImage-64bit-Qt.AppImage |
+| ps2          | Play!       | Play!*.AppImage                          |
+| ps3          | RPCS3       | rpcs3*.AppImage                          |
+| psx          | DuckStation | duckstation-nogui-x64.AppImage           |
+| psx          | DuckStation | duckstation-qt-x64.AppImage              |
+| switch       | Yuzu        | yuzu*.AppImage                           |
+| xbox         | xemu        | Xemu*.AppImage                           |
+| wii          | Dolphin     | Dolphin_Emulator*.AppImage               |
 
 RetroArch does not embed any version information into the filename so no wildcard is required.
 
@@ -1473,6 +1482,23 @@ Doing this will make the game show up as if it was a single file inside ES-DE an
 This system is only available on Windows and these games are commonly shipped as self-contained units with both the game engine and game data. To add a M.U.G.E.N game to ES-DE, right click on the game's .exe file, select Create Shortcut_ followed by _Create Desktop Shortcut_. This will create a file with the .lnk extension which you should then move to the `~\ROMs\mugen` directory. Note that this setup is not portable, if you move your game files somewhere else you will need to manually update your shortcuts as these contain absolute paths.
 
 Neither ScreenScraper nor TheGamesDB support scraping of M.U.G.E.N games so you will need to manually enter metadata and add game media.
+
+#### EasyRPG Game Engine
+
+Some Linux distributions ship with EasyRPG Player in the repository and on Ubuntu-based systems it's available as a Snap. But for some distributions it may need to be manually downloaded. For these scenarios see the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide.
+
+Games are usually provided as .zip archives which you need to unzip into the `~/ROMs/easyrpg` directory. Following this you should rename the directory by adding the .easyrpg extension. The final step is to create an empty file inside the directory with the same name as the folder itself.
+
+Optionally you can also add a file with the .easycfg extension to the game directory to pass game-specific command line parameters on launch. See the EasyRPG documentation for a list of valid options.
+
+Here's an example of what a setup could look like:
+```
+~/ROMs/easyrpg/Dreamscape.easyrpg/
+~/ROMs/easyrpg/Dreamscape.easyrpg/Dreamscape.easyrpg
+~/ROMs/easyrpg/Dreamscape.easyrpg/Dreamscape.easycfg
+~/ROMs/easyrpg/The Chimera Report.easyrpg/
+~/ROMs/easyrpg/The Chimera Report.easyrpg/The Chimera Report.easyrpg
+```
 
 #### PICO-8
 
@@ -2780,6 +2806,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | See the specific _DOS / PC_ section elsewhere in this guide |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)** [UMW*],<br>Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |
+| easyrpg               | EasyRPG Game Engine                            | EasyRPG Player **(Standalone)**   |                                   | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shortcut in root folder |
 | famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>Mednafen **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |

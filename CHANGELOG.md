@@ -159,6 +159,7 @@ v1.2 maintenance release.
 
 * Added experimental support for Vita3K for the psvita system on Unix and Windows
 * Added support for the Fujitsu FM Towns (fmtowns) game system on Unix and Windows
+* Added support for the EasyRPG game engine (easyrpg) game system
 * Added support for the Creatronic Mega Duck (megaduck) game system
 * Added support for the Watara Supervision (supervision) game system
 * Added support for the M.U.G.E.N Game Engine (mugen) game system on Windows
@@ -167,7 +168,7 @@ v1.2 maintenance release.
 * Added emulator configuration for the macintosh system
 * Added emulator configuration for the solarus system
 * Added Mednafen standalone as an alternative emulator for many systems
-* Added experimental support for PCSX2 Qt standalone for the ps2 system on Unix
+* Added PCSX2 Qt standalone as an alternative emulator for the ps2 system on Unix
 * Added ScummVM standalone as an alternative emulator for the scummvm system
 * Added Cxbx-Reloaded standalone as an alternative emulator for the xbox system on Windows
 * Added Atari800 standalone as an alternative emulator for the a5200 system
