@@ -303,11 +303,11 @@
         <!-- Sony PlayStation 2 emulator PCSX2 (Qt) -->
         <rule type="systempath">
             <entry>pcsx2-qt</entry>
-            <entry>net.pcsx2.PCSX2</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
-            <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
+            <entry>~/Applications/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
+            <entry>~/.local/bin/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
+            <entry>~/bin/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="PICO-8">
