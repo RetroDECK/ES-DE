@@ -1530,6 +1530,12 @@ void FileData::launchGame()
     command = "flatpak-spawn --host " + command;
 #endif
 
+    // Flush the log buffer to es_log.txt, otherwise game launch logging will only be written
+    // once we have returned from the game.
+    if (!runInBackground) {
+        Log::flush();
+    }
+
     // Possibly keep ES-DE running in the background while the game is launched.
 
 #if defined(_WIN64)
