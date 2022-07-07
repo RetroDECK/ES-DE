@@ -99,6 +99,7 @@ namespace
         {GAMEENGINE_PICO8, 234},
         {PHILIPS_CDI, 133},
         {GAMEENGINE_OPENBOR, 214},
+        {GAMEENGINE_EASYRPG, 231},
         {TANGERINE_ORIC, 131},
         {GAMEENGINE_SCUMMVM, 123},
         {SEGA_32X, 19},

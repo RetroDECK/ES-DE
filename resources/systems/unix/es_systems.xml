@@ -404,6 +404,15 @@
         <theme>dreamcast</theme>
     </system>
     <system>
+        <name>easyrpg</name>
+        <fullname>EasyRPG Game Engine</fullname>
+        <path>%ROMPATH%/easyrpg</path>
+        <extension>.easyrpg</extension>
+        <command label="EasyRPG Player">%STARTDIR%=%GAMEDIR% %EMULATOR_EASYRPG% %INJECT%=%BASENAME%.easycfg</command>
+        <platform>easyrpg</platform>
+        <theme>easyrpg</theme>
+    </system>
+    <system>
         <name>epic</name>
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%/epic</path>

@@ -161,6 +161,17 @@
             <entry>~/bin/duckstation-qt-x64.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="EASYRPG">
+        <!-- EasyRPG game engine -->
+        <rule type="systempath">
+            <entry>easyrpg-player</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/easyrpg/easyrpg-player</entry>
+            <entry>~/.local/bin/easyrpg/easyrpg-player</entry>
+            <entry>~/bin/easyrpg/easyrpg-player</entry>
+        </rule>
+    </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="systempath">

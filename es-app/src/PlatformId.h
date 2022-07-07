@@ -50,6 +50,7 @@ namespace PlatformIds
         DOS,
         DRAGON32,
         SEGA_DREAMCAST,
+        GAMEENGINE_EASYRPG,
         NINTENDO_FAMICOM,
         NINTENDO_FAMICOM_DISK_SYSTEM,
         FUJITSU_FM_TOWNS,

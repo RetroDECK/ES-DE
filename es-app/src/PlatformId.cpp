@@ -51,6 +51,7 @@ namespace PlatformIds
         "dos",                  // DOS (PC)
         "dragon32",             // Dragon 32
         "dreamcast",            // Sega Dreamcast
+        "easyrpg",              // EasyRPG eame engine
         "famicom",              // Nintendo Family Computer
         "fds",                  // Nintendo Famicom Disk System
         "fmtowns",              // Fujitsu FM Towns

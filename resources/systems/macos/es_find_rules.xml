@@ -76,6 +76,14 @@
             <entry>/Applications/DuckStation.app/Contents/MacOS/DuckStation</entry>
         </rule>
     </emulator>
+    <emulator name="EASYRPG">
+        <!-- EasyRPG game engine -->
+        <rule type="staticpath">
+            <entry>/Applications/EasyRPG Player.app/Contents/MacOS/EasyRPG Player</entry>
+            <entry>/opt/homebrew/bin/easyrpg-player</entry>
+            <entry>/usr/local/bin/easyrpg-player</entry>
+        </rule>
+    </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="staticpath">

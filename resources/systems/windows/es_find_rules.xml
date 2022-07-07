@@ -177,6 +177,17 @@
             <entry>%ESPATH%\..\duckstation\duckstation-qt-x64-ReleaseLTCG.exe</entry>
         </rule>
     </emulator>
+    <emulator name="EASYRPG">
+        <!-- EasyRPG game engine -->
+        <rule type="systempath">
+            <entry>Player.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\EasyRPG\Player.exe</entry>
+            <entry>%ESPATH%\EasyRPG\Player.exe</entry>
+            <entry>%ESPATH%\..\EasyRPG\Player.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="systempath">

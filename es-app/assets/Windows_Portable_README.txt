@@ -38,6 +38,7 @@ Emulators\dosbox-staging\dosbox.exe
 Emulators\DOSBox-X\dosbox-x.exe
 Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
+Emulators\EasyRPG\Player.exe
 Emulators\flycast\flycast.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\KEmulator\KEmulator.exe
