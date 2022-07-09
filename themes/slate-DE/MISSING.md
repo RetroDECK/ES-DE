@@ -29,6 +29,7 @@
 * dragon32: Dragon 32 - consolegame.svg, console.svg, controller.svg, game.svg
 * easyrpg: EasyRPG Game Engine - consolegame.svg, console.svg, controller.svg, game.svg
 * epic: Epic Games Store - consolegame.svg, console.svg, controller.svg, game.svg
+* flash: Adobe Flash - consolegame.svg, console.svg, controller.svg, game.svg
 * fmtowns: Fujitsu FM Towns - consolegame.svg, console.svg, controller.svg, game.svg
 * gx4000: Amstrad GX4000 - consolegame.svg, console.svg, controller.svg, game.svg
 * intellivision: Intellivision - consolegame.svg, console.svg, controller.svg, game.svg
