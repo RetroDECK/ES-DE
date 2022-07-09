@@ -626,7 +626,6 @@ The following emulators are supported in AppImage format when using the bundled 
 | System name  | Emulator    | Filename configuration                   |
 | :----------- | :---------- | :--------------------------------------- |
 | _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage          |
-| easyrpg      | EasyRPG     | easyrpg/easyrpg-player                   |
 | gba          | mGBA        | mGBA*.AppImage                           |
 | gc           | Dolphin     | Dolphin_Emulator*.AppImage               |
 | macintosh    | Basilisk II | BasiliskII-x86_64.AppImage               |
@@ -661,9 +660,11 @@ The following manually downloaded emulators are supported when using the bundled
 
 | System name  | Emulator      | Filename configuration          |
 | :----------- | :------------ | :------------------------------ |
+| apple2       | LinApple      | linapple/linapple               |
 | daphne       | Hypseus Singe | hypseus-singe/hypseus.bin       |
 | dreamcast    | Redream       | redream/redream                 |
-| apple2       | LinApple      | linapple/linapple               |
+| easyrpg      | EasyRPG       | easyrpg/easyrpg-player          |
+| flash        | Ruffle        | ruffle/ruffle                   |
 | fmtowns      | Tsugaru       | tsugaru/Tsugaru_CUI             |
 | oric         | Oricutron     | oricutron/Oricutron             |
 | pico8        | PICO-8        | pico-8/pico8                    |
@@ -2812,6 +2813,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
+| flash                 | Adobe Flash                                    | Ruffle **(Standalone)** [UMW*]    | ArcadeFlashWeb **(Standalone)** [W*] | No        | Single .swf file in root folder      |
 | fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW*]    |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | gameandwatch          | Nintendo Game and Watch                        | GW                                |                                   |              |                                      |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>Mednafen **(Standalone)** [UMW*] |              |                                      |
