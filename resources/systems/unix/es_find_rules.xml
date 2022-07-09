@@ -381,6 +381,17 @@
             <entry>~/bin/rpcs3*.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="RUFFLE">
+        <!-- Adobe Flash player Ruffle -->
+        <rule type="systempath">
+            <entry>ruffle</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/ruffle/ruffle</entry>
+            <entry>~/.local/bin/ruffle/ruffle</entry>
+            <entry>~/bin/ruffle/ruffle</entry>
+        </rule>
+    </emulator>
     <emulator name="RYUJINX">
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">

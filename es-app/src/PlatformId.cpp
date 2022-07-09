@@ -54,6 +54,7 @@ namespace PlatformIds
         "easyrpg",              // EasyRPG eame engine
         "famicom",              // Nintendo Family Computer
         "fds",                  // Nintendo Famicom Disk System
+        "flash",                // Adobe Flash
         "fmtowns",              // Fujitsu FM Towns
         "gameandwatch",         // Nintendo Game and Watch
         "gamegear",             // Sega Game Gear

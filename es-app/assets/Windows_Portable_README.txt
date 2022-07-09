@@ -26,6 +26,7 @@ Preconfigured emulator locations:
 Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
 Emulators\AppleWin\AppleWin.exe
+Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\atari800\atari800.exe
 Emulators\BasiliskII\BasiliskII.exe
 Emulators\bsnes\bsnes.exe
@@ -57,6 +58,7 @@ Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
 Emulators\redream\redream.exe
 Emulators\RPCS3\rpcs3.exe
+Emulators\ruffle\ruffle.exe
 Emulators\ryujinx\Ryujinx.exe
 Emulators\scummvm\scummvm.exe
 Emulators\SheepShaver\SheepShaver.exe

@@ -183,6 +183,12 @@
             <entry>/Applications/RPCS3.app/Contents/MacOS/rpcs3</entry>
         </rule>
     </emulator>
+    <emulator name="RUFFLE">
+        <!-- Adobe Flash player Ruffle -->
+        <rule type="staticpath">
+            <entry>/Applications/Ruffle.app/Contents/MacOS/ruffle</entry>
+        </rule>
+    </emulator>
     <emulator name="SCUMMVM">
         <!-- ScummVM game engine -->
         <rule type="staticpath">

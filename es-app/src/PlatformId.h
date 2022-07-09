@@ -53,6 +53,7 @@ namespace PlatformIds
         GAMEENGINE_EASYRPG,
         NINTENDO_FAMICOM,
         NINTENDO_FAMICOM_DISK_SYSTEM,
+        ADOBE_FLASH,
         FUJITSU_FM_TOWNS,
         NINTENDO_GAME_AND_WATCH,
         SEGA_GAME_GEAR,

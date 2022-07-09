@@ -31,6 +31,14 @@
             <entry>%ESPATH%\..\AppleWin\AppleWin.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ARCADEFLASHWEB">
+        <!-- Adobe Flash player ArcadeFlashWeb -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe</entry>
+            <entry>%ESPATH%\ArcadeFlashWeb\ArcadeFlashWeb.exe</entry>
+            <entry>%ESPATH%\..\ArcadeFlashWeb\ArcadeFlashWeb.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="staticpath">
@@ -278,6 +286,14 @@
             <entry>%ESPATH%\Emulators\RPCS3\rpcs3.exe</entry>
             <entry>%ESPATH%\RPCS3\rpcs3.exe</entry>
             <entry>%ESPATH%\..\RPCS3\rpcs3.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="RUFFLE">
+        <!-- Adobe Flash player Ruffle -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ruffle\ruffle.exe</entry>
+            <entry>%ESPATH%\ruffle\ruffle.exe</entry>
+            <entry>%ESPATH%\..\ruffle\ruffle.exe</entry>
         </rule>
     </emulator>
     <emulator name="RYUJINX">

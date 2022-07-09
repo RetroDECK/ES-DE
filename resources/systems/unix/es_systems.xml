@@ -471,6 +471,15 @@
         <theme>fds</theme>
     </system>
     <system>
+        <name>flash</name>
+        <fullname>Adobe Flash</fullname>
+        <path>%ROMPATH%/flash</path>
+        <extension>.swf .SWF</extension>
+        <command label="Ruffle (Standalone)">%EMULATOR_RUFFLE% --fullscreen %ROM%</command>
+        <platform>flash</platform>
+        <theme>flash</theme>
+    </system>
+    <system>
         <name>fmtowns</name>
         <fullname>Fujitsu FM Towns</fullname>
         <path>%ROMPATH%/fmtowns</path>
