@@ -25,8 +25,8 @@
         <name>ags</name>
         <fullname>Adventure Game Studio Game Engine</fullname>
         <path>%ROMPATH%\ags</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.lnk .LNK</extension>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>ags</platform>
         <theme>ags</theme>
     </system>
