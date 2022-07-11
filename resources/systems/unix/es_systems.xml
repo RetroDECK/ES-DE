@@ -1451,8 +1451,8 @@
         <name>tic80</name>
         <fullname>TIC-80 Game Engine</fullname>
         <path>%ROMPATH%/tic80</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.tic .TIC</extension>
+        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/tic80_libretro.so %ROM%</command>
         <platform>tic80</platform>
         <theme>tic80</theme>
     </system>
