@@ -1474,9 +1474,9 @@
         <fullname>Tandy TRS-80</fullname>
         <path>%ROMPATH%\trs-80</path>
         <extension>.cmd .CMD .dsk .DSK</extension>
-        <command label="sdl2trs DOS Diskette (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SDL2TRS% -rom %ROMPATH%\trs-80\level2.rom -disk0 %ROMPATH%\trs-80\boot.dsk -disk1 %ROM%</command>
-        <command label="sdl2trs Bootable Diskette (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SDL2TRS% -rom %ROMPATH%\trs-80\level2.rom -disk0 %ROM%</command>
-        <command label="sdl2trs CMD File (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_SDL2TRS% -rom %ROMPATH%\trs-80\level2.rom %ROM%</command>
+        <command label="sdl2trs DOS Diskette (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SDL2TRS% -rom %ROMPATH%\trs-80\level2.rom -disk0 %ROMPATH%\trs-80\boot.dsk -disk1 %ROM%</command>
+        <command label="sdl2trs Bootable Diskette (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SDL2TRS% -rom %ROMPATH%\trs-80\level2.rom -disk0 %ROM%</command>
+        <command label="sdl2trs CMD File (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_SDL2TRS% -rom %ROMPATH%\trs-80\level2.rom %ROM%</command>
         <platform>trs-80</platform>
         <theme>trs-80</theme>
     </system>
