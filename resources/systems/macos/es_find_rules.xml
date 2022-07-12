@@ -189,6 +189,12 @@
             <entry>/Applications/Ruffle.app/Contents/MacOS/ruffle</entry>
         </rule>
     </emulator>
+    <emulator name="SIMCOUPE">
+        <!-- SAM Coupé emulator SimCoupé -->
+        <rule type="staticpath">
+            <entry>/Applications/SimCoupe.app/Contents/MacOS/SimCoupe</entry>
+        </rule>
+    </emulator>
     <emulator name="SCUMMVM">
         <!-- ScummVM game engine -->
         <rule type="staticpath">

@@ -1150,7 +1150,7 @@
         <fullname>SAM Coupé</fullname>
         <path>%ROMPATH%/samcoupe</path>
         <extension>.dsk .DSK .mgt .MGT .sbt .SBT .sad .SAD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/simcp_libretro.dylib %ROM%</command>
+        <command>%EMULATOR_SIMCOUPE% %ROM%</command>
         <platform>samcoupe</platform>
         <theme>samcoupe</theme>
     </system>

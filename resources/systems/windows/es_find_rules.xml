@@ -476,6 +476,20 @@
             <entry>%ESPATH%\..\SheepShaver\SheepShaver.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SIMCOUPE">
+        <!-- SAM Coupé emulator SimCoupé -->
+        <rule type="winregistrypath">
+            <entry>SimCoupe.exe</entry>
+        </rule>
+        <rule type="systempath">
+            <entry>SimCoupe.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\SimCoupe\SimCoupe.exe</entry>
+            <entry>%ESPATH%\SimCoupe\SimCoupe.exe</entry>
+            <entry>%ESPATH%\..\SimCoupe\SimCoupe.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">
