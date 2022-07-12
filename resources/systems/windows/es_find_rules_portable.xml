@@ -312,6 +312,14 @@
             <entry>%ESPATH%\..\scummvm\scummvm.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SDL2TRS">
+        <!-- Tandy TRS-80 emulator sdl2trs -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\sdl2trs\sdl2trs64.exe</entry>
+            <entry>%ESPATH%\sdl2trs\sdl2trs64.exe</entry>
+            <entry>%ESPATH%\..\sdl2trs\sdl2trs64.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SHEEPSHAVER">
         <!-- Macintosh PowerPC emulator SheepShaver -->
         <rule type="staticpath">

@@ -417,6 +417,17 @@
             <entry>~/.local/share/flatpak/exports/bin/org.scummvm.ScummVM</entry>
         </rule>
     </emulator>
+    <emulator name="SDL2TRS">
+        <!-- Tandy TRS-80 emulator sdl2trs -->
+        <rule type="systempath">
+            <entry>sdl2trs</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/sdl2trs/sdl2trs</entry>
+            <entry>~/.local/bin/sdl2trs/sdl2trs</entry>
+            <entry>~/bin/sdl2trs/sdl2trs</entry>
+        </rule>
+    </emulator>
     <emulator name="SHEEPSHAVER">
         <!-- Macintosh PowerPC emulator SheepShaver -->
         <rule type="systempath">

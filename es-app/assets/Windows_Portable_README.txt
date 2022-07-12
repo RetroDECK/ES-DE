@@ -61,6 +61,7 @@ Emulators\RPCS3\rpcs3.exe
 Emulators\ruffle\ruffle.exe
 Emulators\ryujinx\Ryujinx.exe
 Emulators\scummvm\scummvm.exe
+Emulators\sdl2trs\sdl2trs64.exe
 Emulators\SheepShaver\SheepShaver.exe
 Emulators\SimCoupe\SimCoupe.exe
 Emulators\snes9x\snes9x-x64.exe
