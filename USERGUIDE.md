@@ -395,7 +395,7 @@ It's however recommended to move all such files to the ~/.emulationstation/gamel
 
 It's also strongly adviced to not rename an old es_settings.cfg file to es_settings.xml for use in ES-DE. Although this has been tested to some extent, it may cause undefined behavior.
 
-If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
+If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for most game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
 
 ## Running on high resolution displays
 
@@ -1502,24 +1502,22 @@ Apart from this, hopefully the scraping process should be self-explanatory.
 
 If you already have a library of game media (images and videos) you can manually copy these files into ES-DE.
 
-The default media directory is `~/.emulationstation/downloaded_media/<game system>/<media type>`
+The default media directory is `~/.emulationstation/downloaded_media/<system name>/<media type>`
 
-For example on Unix:
+See the [Supported game systems](USERGUIDE.md#supported-game-systems) table at the bottom of this guide for a list of all system names.
+
+An example on Unix:
 ```
 /home/myusername/.emulationstation/downloaded_media/c64/screenshots/
 ```
 
-For example on macOS:
+An example on macOS:
 
 ```
 /Users/myusername/.emulationstation/downloaded_media/c64/screenshots/
 ```
 
-For example on Windows:
-
-```
-C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\
-```
+An example on Windows:
 
 The media directories per game system are:
 
@@ -2285,7 +2283,7 @@ This is the name that will be shown when browsing the gamelist. If no sortname h
 
 **Sortname** _(files only)_
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. Also note that this entry only applies if the sort order has been set to _Filename, Ascending_ or _Filename, Descending_.
 
 **Description**
 
@@ -2479,7 +2477,7 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ## Themes
 
-ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use any RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
+ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
 
 As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in this guide.
 
@@ -2522,7 +2520,7 @@ See the [INSTALL.md](INSTALL.md#command-line-options) document for a list of the
 
 Note as well that the list and corresponding es_systems.xml templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
 
-The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`. This follows the RetroPie naming convention, with some additions for systems that are not supported on RetroPie. So if migrating from Batocera or Recalbox, check this carefully and rename your system folders as required or ES-DE will not be able to find your games.
+The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`. This mostly follows the RetroPie naming convention so if migrating from Batocera or Recalbox then check this carefully and rename your system folders as required or ES-DE will not be able to find your games.
 
 Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be customized in the es_systems.xml file if you wish.
 

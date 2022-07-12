@@ -397,7 +397,7 @@ It's however recommended to move all such files to the ~/.emulationstation/gamel
 
 It's also strongly adviced to not rename an old es_settings.cfg file to es_settings.xml for use in ES-DE. Although this has been tested to some extent, it may cause undefined behavior.
 
-If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
+If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for most game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
 
 ## Running on high resolution displays
 
@@ -669,7 +669,9 @@ The following manually downloaded emulators are supported when using the bundled
 | oric         | Oricutron     | oricutron/Oricutron             |
 | pico8        | PICO-8        | pico-8/pico8                    |
 | psvita       | Vita3K        | Vita3K/Vita3K                   |
+| samcoupe     | SimCoupé      | simcoupe/simcoupe               |
 | switch       | Ryujinx       | publish/Ryujinx                 |
+| trs-80       | sdl2trs       | sdl2trs/sdl2trs                 |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -880,6 +882,8 @@ For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is required by the TheGamesDB scraper where the expanded filenames are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
+By default ES-DE will filter out BIOSes and devices that can't be launched directly, meaning these will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file and BIOSes and devices for systems like MESS and Model 2 will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
+
 If emulating Sega Model 2 games using _Model 2 Emulator_, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. If you're using a portable ES-DE installation, then you can set the ROM directory path to be relative, for example:
 ```
 [RomDirs]
@@ -887,6 +891,8 @@ Dir1=..\..\ROMs\arcade\Sega Model 2
 ```
 
 The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
+
+Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
 
 #### Nintendo Switch
 
@@ -1486,19 +1492,24 @@ Neither ScreenScraper nor TheGamesDB support scraping of M.U.G.E.N games so you 
 
 #### EasyRPG Game Engine
 
-Some Linux distributions ship with EasyRPG Player in the repository and on Ubuntu-based systems it's available as a Snap. But for some distributions it may need to be manually downloaded. For these scenarios see the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide.
+Both the EasyRPG RetroArch core, which is named _RPG Maker 2000/2003 (EasyRPG)_ in the RetroArch GUI, and the standalone EasyRPG Player are supported.
 
-Games are usually provided as .zip archives which you need to unzip into the `~/ROMs/easyrpg` directory. Following this you should rename the directory by adding the .easyrpg extension. The final step is to create an empty file inside the directory with the same name as the folder itself.
+Some Linux distributions ship with the standalone EasyRPG Player in the repository and on Ubuntu-based systems it's available as a Snap. But for some distributions it may need to be built from source code or manually downloaded. For these scenarios see the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide.
 
-Optionally you can also add a file with the .easycfg extension to the game directory to pass game-specific command line parameters on launch. See the EasyRPG documentation for a list of valid options.
+If using the RetroArch core you can either launch games compressed as .zip archives, or you can uncompress and rename them by adding .easyrpg to the directory name. The latter alternative is recommended.
 
-Here's an example of what a setup could look like:
+Using either approach, the games should go into the `~/ROMs/easyrpg` directory. This is all the setup required, and here's an example of what it could look like:
+
 ```
 ~/ROMs/easyrpg/Dreamscape.easyrpg/
-~/ROMs/easyrpg/Dreamscape.easyrpg/Dreamscape.easyrpg
-~/ROMs/easyrpg/Dreamscape.easyrpg/Dreamscape.easycfg
+~/ROMs/easyrpg/The Chimera Report.zip
+```
+
+Setup for the standalone EasyRPG Player is identical with the exception that running games compressed as .zip files is not supported. So in this case the setup should look like the following:
+
+```
+~/ROMs/easyrpg/Dreamscape.easyrpg/
 ~/ROMs/easyrpg/The Chimera Report.easyrpg/
-~/ROMs/easyrpg/The Chimera Report.easyrpg/The Chimera Report.easyrpg
 ```
 
 #### PICO-8
@@ -1585,6 +1596,41 @@ This is an example of what the game setup could look like:
 ```
 
 Note that scraper support is currently very poor for this system, so you may need to manually add images and information for your games. It's encouraged to support ScreenScraper and TheGamesDB by contributing game media and metadata so this situation improves over time.
+
+#### Tandy TRS-80
+
+Tandy Corporation made the somewhat dumb decision of naming several unrelated computers as TRS-80 which has caused decades of confusion. The _Tandy TRS-80_ system in ES-DE emulates the original black-and-white TRS-80 Model I. If you want to emulate the TRS-80 Color Computer then you'll want to use the _Tandy Color Computer_ system instead.
+
+The TRS-80 is emulated using [sdl2trs](https://gitlab.com/jengun/sdltrs) which is available for Unix/Linux and Windows, seemingly there is no macOS port. If you use a Debian-based Linux distribution there is a .deb package made by the developers and if you're using an Arch-based distribution you can install it using the AUR. For other distributions you may have to build from source code or download a pre-built binary from some other location.  See the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where sdl2trs will need to be installed in that case.
+
+On Windows only the 64-bit release of the emulator is supported, with the filename `sdl2trs64.exe`.
+
+The setup requires the files `level2.rom` and `boot.dsk` to be placed in the root of the `~/ROMs/trs-80` directory. Note that both filenames are case sensitive. The boot.dsk file has to be a copy of one of the supported DOS operating systems for the TRS-80, but _NewDos/80 v2.0_ is recommended.
+
+The setup in ES-DE supports three types of game files:
+* Diskette images (.dsk extension) that have to be accessed via DOS
+* Diskette images (.dsk extension) that can be booted directly
+* Direct launch of program files (.cmd extension)
+
+These modes are executed using three separate emulator entries, so you will need to change to either of the alternative emulator entries if you want to use option two or three above.
+
+Most games and software needs to be executed via the DOS operating system so in most instances you should leave the emulator set to _sdl2trs DOS Diskette (Standalone)_. In this case the DOS operating system on the boot.dsk diskette image will be inserted into the first virtual floppy drive and automatically loaded. The launched .dsk image will be in the second drive. No automatic startup of the content of this diskette will take place, instead you need to run the game file manually. You can use the DIR command to see a listing of files on the diskette, and you simply run any CMD file by typing its name, for instance ZORK2. Running BASIC games require additional commands but that is beyond the scope of this document, there are many resources available online on how to use the TRS-80 computer.
+
+To instead run a bootable floppy image you need to change to the alternative emulator entry _sdl2trs Bootable Diskette (Standalone)_. Launching such a diskette image will insert it into the first virtual floppy drive and automatically load the game.
+
+The third option requires the _sdl2trs CMD File (Standalone)_ emulator entry. In the same manner as a bootable diskette image, the game file with the .cmd extension will be automatically loaded when launched.
+
+There is no scraper support specifically for the TRS-80, instead these games will be scraped as TRS-80 Color Computer (also known as Tandy Color Computer) which is likely highly inaccurate.
+
+Here's what a complete setup could look like:
+```
+~/ROMs/trs-80/boot.dsk
+~/ROMs/trs-80/level2.rom
+~/ROMs/trs-80/palace.cmd
+~/ROMs/trs-80/zaxxon.dsk
+~/ROMs/trs-80/zork1.dsk
+~/ROMs/trs-80/zork2.dsk
+```
 
 #### Tangerine Computer Systems Oric
 
@@ -1701,20 +1747,22 @@ Apart from this, hopefully the scraping process should be self-explanatory.
 
 If you already have a library of game media (images and videos) you can manually copy these files into ES-DE.
 
-The default media directory is `~/.emulationstation/downloaded_media/<game system>/<media type>`
+The default media directory is `~/.emulationstation/downloaded_media/<system name>/<media type>`
 
-For example on Unix:
+See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for a list of all system names.
+
+An example on Unix:
 ```
 /home/myusername/.emulationstation/downloaded_media/c64/screenshots/
 ```
 
-For example on macOS:
+An example on macOS:
 
 ```
 /Users/myusername/.emulationstation/downloaded_media/c64/screenshots/
 ```
 
-For example on Windows:
+An example on Windows:
 
 ```
 C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\
@@ -2484,7 +2532,7 @@ This is the name that will be shown when browsing the gamelist. If no sortname h
 
 **Sortname** _(files only)_
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. The _sortname_ entry also affects custom collections, although for these it's possible to override the value as described below.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. The _sortname_ entry also affects custom collections, although for these it's possible to override the value as described below. This entry only applies if the sort order has been set to _Filename, Ascending_ or _Filename, Descending_.
 
 **Custom collections sortname** _(only visible when editing a game from within a custom collection)_
 
@@ -2688,7 +2736,7 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ## Themes
 
-ES-DE is fully themeable, and although the application ships with the comprehensive slate-DE and modern-DE theme sets, you can use any RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
+ES-DE is fully themeable, and although the application ships with the comprehensive slate-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
 
 As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in this guide.
 
@@ -2731,7 +2779,7 @@ See the [INSTALL-DEV.md](INSTALL-DEV.md#command-line-options) document for a lis
 
 Note as well that the list and corresponding es_systems.xml templates may not reflect what is readily available for all supported operating system. This is especially true on Unix/Linux if installing RetroArch via the OS repository instead of using the Snap or Flatpak distributions (or compiling from source code) as the repository versions are normally quite crippled.
 
-The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`. This follows the RetroPie naming convention, with some additions for systems that are not supported on RetroPie. So if migrating from Batocera or Recalbox, check this carefully and rename your system folders as required or ES-DE will not be able to find your games.
+The column **System name** corresponds to the directory where you should put your game files, e.g. `~/ROMs/c64` or `~/ROMs/megadrive`. This mostly follows the RetroPie naming convention so if migrating from Batocera or Recalbox then check this carefully and rename your system folders as required or ES-DE will not be able to find your games.
 
 Regional differences are handled by simply using the game system name corresponding to your region. For example for Sega Mega Drive, _megadrive_ would be used by most people in the world, although persons from North America would use _genesis_ instead. The same is true for _pcengine_ vs _tg16_ etc. This only affects the theme selection and the corresponding theme graphics, the same emulator and scraper settings are still used for the regional variants although that can of course be customized in the es_systems.xml file if you wish.
 
@@ -2770,7 +2818,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
 | 3do                   | 3DO                                            | Opera                             |                                   | Yes          |                                      |
 | 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] |              |                                      |
-| ags                   | Adventure Game Studio Game Engine              | _Placeholder_                     |                                   |              |                                      |
+| ags                   | Adventure Game Studio Game Engine              | _Native game binaries_            |                                   | No           | Shortcut (.desktop/.app/.lnk) file in root folder  |
 | amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
 | amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
 | amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
@@ -2779,7 +2827,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file in root folder  |
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W*] | Mednafen **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME **(Standalone)** [UMW*]      |                                   | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)** [UMW*]      |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014                       | No           | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** [UMW*] | Yes          |                                      |
@@ -2807,7 +2855,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | See the specific _DOS / PC_ section elsewhere in this guide |
 | dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)** [UMW*],<br>Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |
-| easyrpg               | EasyRPG Game Engine                            | EasyRPG Player **(Standalone)**   |                                   | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
+| easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** [UMW*] | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shortcut in root folder |
 | famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>Mednafen **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
@@ -2829,7 +2877,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | Basilisk II **(Standalone)** [UMW*] | SheepShaver **(Standalone)** [UMW*] | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      |                                      |
 | mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      |                                      |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
@@ -2838,7 +2886,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | megaduck              | Creatronic Mega Duck                           | SameDuck                          |                                   | No           | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
-| model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W*] |                              |              | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W*] | Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*] |              | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | model3                | Sega Model 3                                   | Supermodel **(Standalone)** [W*]  |                                   |              | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | moonlight             | Moonlight Game Streaming                       | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
@@ -2878,7 +2926,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |
 | psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)** [UW*]     |                                   | Yes          | See the specific _Sony PlayStation Vita_ section elsewhere in this guide |
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** [UMW*],<br>Mednafen **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
-| samcoupe              | SAM Coupé                                      | SimCoupe                          |                                   |              |                                      |
+| samcoupe              | SAM Coupé                                      | SimCoupé **(Standalone)** [UW]    |                                   | No           | Single archive or ROM file in root folder |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
@@ -2904,9 +2952,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*] | Yes          |                                      |
 | ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)** [UW*]       |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |
-| tic80                 | TIC-80 Game Engine                             | _Placeholder_                     |                                   |              |                                      |
+| tic80                 | TIC-80 Game Engine                             | TIC-80                            |                                   | No           | Single .tic file in root folder      |
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |
-| trs-80                | Tandy TRS-80                                   | _Placeholder_                     |                                   |              |                                      |
+| trs-80                | Tandy TRS-80                                   | sdl2trs DOS Diskette **(Standalone)** [UW*] | sdl2trs Bootable Diskette **(Standalone)** [UW*],<br>sdl2trs CMD File **(Standalone)** [UW*] | Yes          | See the specific _Tandy TRS-80_ section elsewhere in this guide |
 | uzebox                | Uzebox                                         | Uzem                              |                                   |              |                                      |
 | vectrex               | Vectrex                                        | vecx                              |                                   | No           |                                      |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         |                                   |              | Single disk, tape or cartridge image in root folder |

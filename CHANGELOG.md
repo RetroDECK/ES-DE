@@ -164,10 +164,15 @@ v1.2 maintenance release.
 * Added support for the Creatronic Mega Duck (megaduck) game system
 * Added support for the Watara Supervision (supervision) game system
 * Added support for the M.U.G.E.N Game Engine (mugen) game system on Windows
+* Renamed the ROM directory for the ColecoVision system from coleco to colecovision
 * Added emulator configuration for the apple2 system
 * Added emulator configuration for the apple2gs system
 * Added emulator configuration for the macintosh system
+* Added emulator configuration for the trs-80 system
 * Added emulator configuration for the solarus system
+* Added emulator configuration for the tic80 system
+* Added emulator configuration for the ags system
+* Replaced the invalid SimCoupé RetroArch core with SimCoupé standalone for the samcoupe system
 * Added Mednafen standalone as an alternative emulator for many systems
 * Added PCSX2 Qt standalone as an alternative emulator for the ps2 system on Unix and macOS
 * Added ScummVM standalone as an alternative emulator for the scummvm system
@@ -175,10 +180,14 @@ v1.2 maintenance release.
 * Added Atari800 standalone as an alternative emulator for the a5200 system
 * Added the Kronos RetroArch core as an alternative emulator for the arcade and mame systems
 * Added KEmulator standalone as an alternative emulator for the j2me system on Windows
+* Added Model 2 Emulator [Suspend ES-DE] as an alternative emulator for the arcade, mame and model2 systems on Windows
 * Added support for the repository-installed PPSSPP standalone (SDL and Qt) on Unix
+* Added the .fds file extension to the famicom and nes systems
+* Added the .32x file extension to the genesis and megadrive systems
 * Added the .json file extension to the gc and wii systems
 * Added find rule entries for Valve Steam to simplify the setup of the RetroArch Steam release
 * Added connection and transfer timeout settings to the scraper (not configurable via the GUI)
+* Added a %GAMEENTRYDIR% variable to be used with the %STARTDIR% variable (required by the EasyRPG Player standalone)
 * Added an es_log.txt entry when the "Only show ROMs from gamelist.xml files" setting is enabled
 * Passing the --ignore-gamelist command line option now immediately disables the ParseGamelistOnly setting
 * (Windows) Added code signing to both the application binary and installer
@@ -188,6 +197,7 @@ v1.2 maintenance release.
 ### Bug fixes
 
 * The IgnoreGamelist setting was saved to es_settings.xml although it shouldn't
+* (modern-DE) The trs-80 system had graphics and logo for the wrong computer
 
 ## Version 1.2.5
 
