@@ -407,8 +407,9 @@
         <name>easyrpg</name>
         <fullname>EasyRPG Game Engine</fullname>
         <path>%ROMPATH%/easyrpg</path>
-        <extension>.easyrpg</extension>
-        <command label="EasyRPG Player">%STARTDIR%=%GAMEDIR% %EMULATOR_EASYRPG% %INJECT%=%BASENAME%.easycfg</command>
+        <extension>.easyrpg .zip .ZIP</extension>
+        <command label="EasyRPG">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/easyrpg_libretro.so %ROM%</command>
+        <command label="EasyRPG Player (Standalone)">%STARTDIR%=%GAMEENTRYDIR% %EMULATOR_EASYRPG%</command>
         <platform>easyrpg</platform>
         <theme>easyrpg</theme>
     </system>
