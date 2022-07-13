@@ -91,6 +91,7 @@ namespace
         {NINTENDO_SATELLAVIEW, 107},
         {NINTENDO_SWITCH, 225},
         {BANDAI_SUFAMI_TURBO, 108},
+        {DRAGON32, 91},
         {DOS, 135},
         {PC, 135},
         {PC_WINDOWS, 138},

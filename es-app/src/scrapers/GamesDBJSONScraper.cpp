@@ -95,6 +95,7 @@ namespace
         {NINTENDO_SATELLAVIEW, "6"},
         {NINTENDO_SWITCH, "4971"},
         {BANDAI_SUFAMI_TURBO, "6"},
+        {DRAGON32, "4952"},
         {DOS, "1"},
         {TANGERINE_ORIC, "4986"},
         {GAMEENGINE_SCUMMVM, "1"},
