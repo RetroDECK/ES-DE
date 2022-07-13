@@ -306,8 +306,9 @@
         <name>coco</name>
         <fullname>Tandy Color Computer</fullname>
         <path>%ROMPATH%/coco</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
+        <command label="XRoar CoCo 2 NTSC (Standalone)">%EMULATOR_XROAR% -fs -default-machine coco2bus %ROM%</command>
+        <command label="XRoar CoCo 2 PAL (Standalone)">%EMULATOR_XROAR% -fs -default-machine coco2b %ROM%</command>
         <platform>coco</platform>
         <theme>coco</theme>
     </system>
@@ -385,8 +386,9 @@
         <name>dragon32</name>
         <fullname>Dragon 32</fullname>
         <path>%ROMPATH%/dragon32</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
+        <command label="XRoar Dragon 32 (Standalone)">%EMULATOR_XROAR% -fs -default-machine dragon32 %ROM%</command>
+        <command label="XRoar Dragon 64 (Standalone)">%EMULATOR_XROAR% -fs -default-machine dragon64 %ROM%</command>
         <platform>dragon32</platform>
         <theme>dragon32</theme>
     </system>
@@ -1387,8 +1389,8 @@
         <name>tanodragon</name>
         <fullname>Tano Dragon</fullname>
         <path>%ROMPATH%/tanodragon</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
+        <command label="XRoar (Standalone)">%EMULATOR_XROAR% -fs -default-machine tano %ROM%</command>
         <platform>dragon32</platform>
         <theme>tanodragon</theme>
     </system>

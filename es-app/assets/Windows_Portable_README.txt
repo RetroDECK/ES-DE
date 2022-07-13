@@ -72,4 +72,5 @@ Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\Vita3K\Vita3K.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
+Emulators\xroar\xroar.exe
 Emulators\yuzu\yuzu-windows-msvc\yuzu.exe

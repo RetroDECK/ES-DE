@@ -415,6 +415,14 @@
             <entry>%ESPATH%\..\xenia\xenia.exe</entry>
         </rule>
     </emulator>
+    <emulator name="XROAR">
+        <!-- Dragon and Tandy 8-bit computer emulator XRoar -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\xroar\xroar.exe</entry>
+            <entry>%ESPATH%\xroar\xroar.exe</entry>
+            <entry>%ESPATH%\..\xroar\xroar.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="staticpath">

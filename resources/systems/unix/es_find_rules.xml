@@ -513,6 +513,17 @@
             <entry>~/bin/Xemu*.AppImage</entry>
         </rule>
     </emulator>
+    <emulator name="XROAR">
+        <!-- Dragon and Tandy 8-bit computer emulator XRoar -->
+        <rule type="systempath">
+            <entry>xroar</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/xroar/xroar</entry>
+            <entry>~/.local/bin/xroar/xroar</entry>
+            <entry>~/bin/xroar/xroar</entry>
+        </rule>
+    </emulator>
     <emulator name="YUZU">
         <!-- Nintendo Switch emulator Yuzu -->
         <rule type="systempath">

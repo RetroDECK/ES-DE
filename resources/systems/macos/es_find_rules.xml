@@ -246,4 +246,10 @@
             <entry>/Applications/xemu.app/Contents/MacOS/xemu</entry>
         </rule>
     </emulator>
+    <emulator name="XROAR">
+        <!-- Dragon and Tandy 8-bit computer emulator XRoar -->
+        <rule type="staticpath">
+            <entry>/Applications/XRoar.app/Contents/MacOS/xroar</entry>
+        </rule>
+    </emulator>
 </ruleList>
