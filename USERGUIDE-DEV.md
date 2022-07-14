@@ -289,7 +289,7 @@ Lack of controller support is a bit of a problem on macOS, and in some instances
 
 ES-DE is available both as an Intel/x86 build and as a native M1/ARM build. If running on an M1 Mac it's possible to launch either M1 or Intel emulators from ES-DE and it's sometimes recommended to go for the Intel versions. The reason is that some emulators are not yet working properly on the M1 architecture, and for RetroArch some cores are only available for the x86 platform. So investigate what makes most sense for your setup. Over time this situation should improve as M1 support matures.
 
-One macOS-specific requirement is that the RetroArch setting _Start in Fullscreen mode_ is enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. This issue has not been observed with any other emulators. The standalone PlayStation 2 emulator PCSX2 seemingly has a similar issue but it's not the same symptoms and it's problematic also on other operating systems. If using this emulator you need to manually switch to the PCSX2 window using Command + Tab after launching a game. If using an M1 Mac then the AetherSX2 emulator is recommended instead of PCSX2 as it does not have this issue and it's also a lot faster.
+One macOS-specific requirement is that the RetroArch setting _Start in Fullscreen mode_ is enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. This issue has not been observed with any other emulators.
 
 At the time of writing there is an additional issue with the M1 release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when closing an app_ under the General entry in the macOS System Preferences has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the M1 architecture).
 
@@ -658,20 +658,21 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name  | Emulator      | Filename configuration          |
-| :----------- | :------------ | :------------------------------ |
-| apple2       | LinApple      | linapple/linapple               |
-| daphne       | Hypseus Singe | hypseus-singe/hypseus.bin       |
-| dreamcast    | Redream       | redream/redream                 |
-| easyrpg      | EasyRPG       | easyrpg/easyrpg-player          |
-| flash        | Ruffle        | ruffle/ruffle                   |
-| fmtowns      | Tsugaru       | tsugaru/Tsugaru_CUI             |
-| oric         | Oricutron     | oricutron/Oricutron             |
-| pico8        | PICO-8        | pico-8/pico8                    |
-| psvita       | Vita3K        | Vita3K/Vita3K                   |
-| samcoupe     | SimCoupé      | simcoupe/simcoupe               |
-| switch       | Ryujinx       | publish/Ryujinx                 |
-| trs-80       | sdl2trs       | sdl2trs/sdl2trs                 |
+| System name              | Emulator      | Filename configuration          |
+| :----------------------- | :------------ | :------------------------------ |
+| apple2                   | LinApple      | linapple/linapple               |
+| coco/dragon32/tanodragon | XRoar         | xroar/xroar                     |
+| daphne                   | Hypseus Singe | hypseus-singe/hypseus.bin       |
+| dreamcast                | Redream       | redream/redream                 |
+| easyrpg                  | EasyRPG       | easyrpg/easyrpg-player          |
+| flash                    | Ruffle        | ruffle/ruffle                   |
+| fmtowns                  | Tsugaru       | tsugaru/Tsugaru_CUI             |
+| oric                     | Oricutron     | oricutron/Oricutron             |
+| pico8                    | PICO-8        | pico-8/pico8                    |
+| psvita                   | Vita3K        | Vita3K/Vita3K                   |
+| samcoupe                 | SimCoupé      | simcoupe/simcoupe               |
+| switch                   | Ryujinx       | publish/Ryujinx                 |
+| trs-80                   | sdl2trs       | sdl2trs/sdl2trs                 |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -1631,6 +1632,32 @@ Here's what a complete setup could look like:
 ~/ROMs/trs-80/zork1.dsk
 ~/ROMs/trs-80/zork2.dsk
 ```
+
+#### Tandy Color Computer
+
+This computer (which is confusingly also known as _TRS-80 Color Computer_ even though it's a completely different machine than the _TRS-80_) is emulated using the [XRoar](http://www.6809.org.uk/xroar) emulator.
+
+This emulator is available for Unix/Linux, macOS and Windows, although on Linux you may need to build it from source code depending on which distribution you're using. Refer to the XRoar website for more information. If you manually download or build the emulator yourself then see the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where you need to install it.
+
+In order for XRoar to work correctly you need the ROM files `bas13.rom`, `disk11.rom` and `extbas11.rom`. Even without these files the emulator will probably start, but you will likely see random character on screen and few if any games will run correctly. On Unix/Linux these files need to be placed into the `~/.xroar/roms` directory and on macOS you need to place them in `~/Library/XRoar/roms`. Note that neither of these directories are automatically created by the emulator so you need to create them yourself. On Windows you simply place the ROM files into the emulator installation directory next to the xroar.exe binary.
+
+Following this setup there is not much to it, launching a cartridge or cassette image file will automatically run the game. If launching a diskette image you will probably need to manually run the game file from inside the emulated operating system. Such commands are beyond the scope of this document, but the following [quick reference PDF](https://colorcomputerarchive.com/repo/Documents/Manuals/Hardware/Color%20Computer%20Disk%20System%20-%20Quick%20Reference%20Guide%20(Tandy).pdf) provides a good command overview.
+
+There is also excellent emulator documentation available at the [XRoar website](http://www.6809.org.uk/xroar/doc/xroar.shtml).
+
+Two emulator entries are available for this system, _XRoar CoCo 2 NTSC (Standalone)_ and _XRoar CoCo 2 PAL (Standalone)_ which should hopefully be self-explanatory.
+
+#### Dragon 32 and Tano Dragon
+
+These computers as well as the Dragon 64 are slight varations of the Tandy Color Computer and as these machines are largely compatible with each other they're all emulated using the [XRoar](http://www.6809.org.uk/xroar) emulator.
+
+This emulator is available for Unix/Linux, macOS and Windows, although on Linux you may need to build it from source code depending on which distribution you're using. Refer to the XRoar website for more information. If you manually download or build the emulator yourself then see the [Using manually downloaded emulators on Linux](USERGUIDE-DEV.md#using-manually-downloaded-emulators-on-linux) section of this guide for more details on where you need to install it.
+
+In order to emulate the Dragon 32 you need the ROM file `d32.rom` and to emulate the Dragon 64 or Tano Dragon you need the `d64rom1.rom` and `d64rom2.rom` files. It's unclear whether `ddos10.rom` will also be needed for some games and applications. Even without these files the emulator will probably start, but you will likely see random character on screen and few if any games will run correctly. On Unix/Linux these files need to be placed into the `~/.xroar/roms` directory and on macOS you need to place them in `~/Library/XRoar/roms`. Note that neither of these directories are automatically created by the emulator so you need to create them yourself. On Windows you simply place the ROM files into the emulator installation directory next to the xroar.exe binary.
+
+Following this setup there is not much to it, launching a cartridge or cassette image file will automatically run the game.
+
+For the dragon32 system you can switch to emulating the Dragon 64 model by selecting the alternative emulator _XRoar Dragon 64 (Standalone)_.
 
 #### Tangerine Computer Systems Oric
 
@@ -2846,14 +2873,14 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
-| coco                  | Tandy Color Computer                           | _Placeholder_                     |                                   |              |                                      |
+| coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** [UMW*] | XRoar CoCo 2 PAL **(Standalone)** [UMW*] | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
 | colecovision          | ColecoVision                                   | blueMSX                           | Gearcoleco                        |              |                                      |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes (Daphne games) | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | See the specific _DOS / PC_ section elsewhere in this guide |
-| dragon32              | Dragon 32                                      | _Placeholder_                     |                                   |              |                                      |
+| dragon32              | Dragon 32                                      | XRoar Dragon 32 **(Standalone)**  | XRoar Dragon 64 **(Standalone)**  | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)** [UMW*],<br>Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** [UMW*] | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shortcut in root folder |
@@ -2920,13 +2947,13 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | PICO-8 Splore **(Standalone)**    | No           | See the specific _PICO-8_ section elsewhere in this guide |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | _Various_                         |                                   | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
-| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW],<br>PCSX2 Qt **(Standalone)** [UW*],<br>PCSX2 wxWidgets **(Standalone)** [W*],<br>Play! **(Standalone)** [UMW*],<br>AetherSX2 **(Standalone)** [M] | Yes (No for Play!) |                                      |
+| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW*],<br>PCSX2 Legacy **(Standalone)**,<br>Play! **(Standalone)** [UMW*],<br>AetherSX2 **(Standalone)** [M] | Yes (No for Play!) |                                      |
 | ps3                   | Sony PlayStation 3                             | RPCS3 Shortcut **(Standalone)** [UMW*] | RPCS3 Directory **(Standalone)** [UMW*] | Yes    | See the specific _Sony PlayStation 3_ section elsewhere in this guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |
 | psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)** [UW*]     |                                   | Yes          | See the specific _Sony PlayStation Vita_ section elsewhere in this guide |
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** [UMW*],<br>Mednafen **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
-| samcoupe              | SAM Coupé                                      | SimCoupé **(Standalone)** [UW]    |                                   | No           | Single archive or ROM file in root folder |
+| samcoupe              | SAM Coupé                                      | SimCoupé **(Standalone)**         |                                   | No           | Single archive or ROM file in root folder |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
@@ -2937,6 +2964,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive |              |                                      |
 | sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX | No           |                                      |
+| sgb                   | Nintendo Super Game Boy                        | Mesen-S                           | mGBA,<br>mGBA **(Standalone)**    |              |  Single archive or ROM file in root folder |
 | snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Beetle Supafaust [UW],<br>Mesen-S | No           | Single archive or ROM file in root folder |
 | solarus               | Solarus Game Engine                            | Solarus **(Standalone)** [UMW*]   |                                   | No           | Single .solarus game file in root folder |
@@ -2948,7 +2976,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file in root folder |
 | switch                | Nintendo Switch                                | Yuzu **(Standalone)** [UW]        | Ryujinx **(Standalone)** [UW*]    | Yes          |                                      |
 | symbian               | Symbian                                        | _Placeholder_                     |                                   |              |                                      |
-| tanodragon            | Tano Dragon                                    | _Placeholder_                     |                                   |              |                                      |
+| tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*] | Yes          |                                      |
 | ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)** [UW*]       |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |

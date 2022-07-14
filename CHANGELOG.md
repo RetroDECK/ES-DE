@@ -153,7 +153,7 @@
 
 ### Release overview
 
-v1.2 maintenance release.
+In this release a lot of systems have been enabled by adding new platforms altogether and by including emulator configuration for previous placeholder entries. A number of additional standalone emulators have been added as well. The newly released PCSX2 Qt standalone emulator has replaced the old PCSX2 release which has been designated a legacy emulator. Connection timeout support has also been added to the scraper which among other things makes it possible to continue scraping after resuming a computer that went to sleep when the scraper was running.
 
 ### Detailed list of changes
 
@@ -161,20 +161,26 @@ v1.2 maintenance release.
 * Added support for the Fujitsu FM Towns (fmtowns) game system on Unix and Windows
 * Added support for the Adobe Flash (flash) game system
 * Added support for the EasyRPG game engine (easyrpg) game system
+* Added support for the Nintendo Super Game Boy (sgb) game system
 * Added support for the Creatronic Mega Duck (megaduck) game system
 * Added support for the Watara Supervision (supervision) game system
 * Added support for the M.U.G.E.N Game Engine (mugen) game system on Windows
-* Renamed the ROM directory for the ColecoVision system from coleco to colecovision
 * Added emulator configuration for the apple2 system
 * Added emulator configuration for the apple2gs system
 * Added emulator configuration for the macintosh system
 * Added emulator configuration for the trs-80 system
+* Added emulator configuration for the coco system
+* Added emulator configuration for the dragon32 system
+* Added emulator configuration for the tanodragon system
 * Added emulator configuration for the solarus system
 * Added emulator configuration for the tic80 system
 * Added emulator configuration for the ags system
 * Replaced the invalid SimCoupé RetroArch core with SimCoupé standalone for the samcoupe system
 * Added Mednafen standalone as an alternative emulator for many systems
-* Added PCSX2 Qt standalone as an alternative emulator for the ps2 system on Unix and macOS
+* Changed the emulator PCSX2 standalone to PCSX2 Legacy standalone
+* Changed the emulator PCSX2 Qt standalone to PCSX2 standalone
+* (Windows) Removed the emulator PCSX2 wxWidgets standalone
+* Renamed the ROM directory for the ColecoVision system from coleco to colecovision
 * Added ScummVM standalone as an alternative emulator for the scummvm system
 * Added Cxbx-Reloaded standalone as an alternative emulator for the xbox system on Windows
 * Added Atari800 standalone as an alternative emulator for the a5200 system
@@ -186,8 +192,9 @@ v1.2 maintenance release.
 * Added the .32x file extension to the genesis and megadrive systems
 * Added the .json file extension to the gc and wii systems
 * Added find rule entries for Valve Steam to simplify the setup of the RetroArch Steam release
+* Added scraper support for the dragon32 platform
+* Added a %GAMEENTRYDIR% variable to be used with the %STARTDIR% variable (required by EasyRPG Player standalone)
 * Added connection and transfer timeout settings to the scraper (not configurable via the GUI)
-* Added a %GAMEENTRYDIR% variable to be used with the %STARTDIR% variable (required by the EasyRPG Player standalone)
 * Added an es_log.txt entry when the "Only show ROMs from gamelist.xml files" setting is enabled
 * Passing the --ignore-gamelist command line option now immediately disables the ParseGamelistOnly setting
 * (Windows) Added code signing to both the application binary and installer
@@ -923,5 +930,3 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * There is some screen tearing present on Unix/Linux which is especially visible during horizontal slide transitions. The problem exists on both x86 and ARM as well as on Intel, AMD and Nvidia GPUs and on the Broadcom VideoCore. The problem seems to be Xorg-related as tearing has not been observed when using Wayland, and it's not present on macOS or Windows either.
 
 * Sometimes when RetroArch has been upgraded to a newer version, it apparently requires a startup to get properly initialized. When ES-DE starts RetroArch it always does so by passing some specific emulator core parameters, which does not seem to initialize RetroArch after such an upgrade. What happens in this case is that the RetroArch loading screen will be shown and then it will quit right back to ES-DE. If confirmed to be the case, this is not an ES-DE issue but a RetroArch issue and starting RetroArch separately once should fix the problem (at least until the next upgrade).
-
-* There are problems with starting the standalone version of the PCSX2 PlayStation 2 emulator using some GPUs. What happens is that the emulator window does not get focused when launching a game which requires a manual Alt + Tab (or Command + Tab on macOS) to switch to the PCSX2 window. The RetroArch version of PCSX2 does not have this issue.
