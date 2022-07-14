@@ -61,6 +61,7 @@
 * ps4: Sony PlayStation 4 - consolegame.svg, console.svg, controller.svg, game.svg
 * samcoupe: SAM Coupé - consolegame.svg, console.svg, game.svg
 * satellaview: Nintendo Satellaview - consolegame.svg, console.svg, game.svg
+* sgb: Nintendo Super Game Boy - consolegame.svg, console.svg, game.svg
 * solarus: Solarus game engine - consolegame.svg, console.svg
 * spectravideo: Spectravideo - consolegame.svg, console.svg, controller.svg, game.svg
 * steam: Steam game distribution service - consolegame.svg, console.svg, controller.svg, game.svg

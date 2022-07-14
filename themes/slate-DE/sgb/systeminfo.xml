@@ -1,0 +1,31 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>Manufacturer:  Hori, Nintendo</text>
+        </text>
+        <text name="info2">
+            <text>Released:  1994</text>
+        </text>
+        <text name="info3">
+            <text>The Super Game Boy is a peripheral that allows</text>
+        </text>
+        <text name="info4">
+            <text>Game Boy cartridges to be played on a Super Nintendo</text>
+        </text>
+        <text name="info5">
+            <text>Entertainment System console. It adds the ability to</text>
+        </text>
+        <text name="info6">
+            <text>map the four shades of green to various colors on the</text>
+        </text>
+        <text name="info7">
+            <text>screen as well as providing enhancements like special</text>
+        </text>
+        <text name="info8">
+            <text>background sprites, additional colors and enhanced</text>
+        </text>
+        <text name="info9">
+            <text>sound by utilizing the SNES hardware.</text>
+        </text>
+    </view>
+</theme>
