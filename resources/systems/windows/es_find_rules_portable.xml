@@ -225,27 +225,19 @@
         </rule>
     </emulator>
     <emulator name="PCSX2">
-        <!-- Sony PlayStation 2 emulator PCSX2 (legacy) -->
-        <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
-            <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
-            <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
-        </rule>
-    </emulator>
-    <emulator name="PCSX2-QT">
-        <!-- Sony PlayStation 2 emulator PCSX2 (Qt) -->
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\PCSX2-Qt\pcsx2-qtx64*.exe</entry>
             <entry>%ESPATH%\PCSX2-Qt\pcsx2-qtx64*.exe</entry>
             <entry>%ESPATH%\..\PCSX2-Qt\pcsx2-qtx64*.exe</entry>
         </rule>
     </emulator>
-    <emulator name="PCSX2-WXWIDGETS">
-        <!-- Sony PlayStation 2 emulator PCSX2 (wxWidgets) -->
+    <emulator name="PCSX2-LEGACY">
+        <!-- Sony PlayStation 2 emulator PCSX2 (legacy) -->
         <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\PCSX2-wxWidgets\pcsx2x64*.exe</entry>
-            <entry>%ESPATH%\PCSX2-wxWidgets\pcsx2x64*.exe</entry>
-            <entry>%ESPATH%\..\PCSX2-wxWidgets\pcsx2x64*.exe</entry>
+            <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
         </rule>
     </emulator>
     <emulator name="PICO-8">

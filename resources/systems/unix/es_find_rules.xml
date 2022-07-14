@@ -288,6 +288,17 @@
         </rule>
     </emulator>
     <emulator name="PCSX2">
+        <!-- Sony PlayStation 2 emulator PCSX2 -->
+        <rule type="systempath">
+            <entry>pcsx2-qt</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
+            <entry>~/.local/bin/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
+            <entry>~/bin/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="PCSX2-LEGACY">
         <!-- Sony PlayStation 2 emulator PCSX2 (legacy) -->
         <rule type="systempath">
             <entry>PCSX2</entry>
@@ -297,17 +308,6 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.pcsx2.PCSX2</entry>
-        </rule>
-    </emulator>
-    <emulator name="PCSX2-QT">
-        <!-- Sony PlayStation 2 emulator PCSX2 (Qt) -->
-        <rule type="systempath">
-            <entry>pcsx2-qt</entry>
-        </rule>
-        <rule type="staticpath">
-            <entry>~/Applications/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
-            <entry>~/.local/bin/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
-            <entry>~/bin/pcsx2-*-linux-AppImage-64bit-Qt.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="PICO-8">
