@@ -221,6 +221,11 @@
         <!-- Arcade emulator MAME -->
         <rule type="systempath">
             <entry>mame</entry>
+            <entry>org.mamedev.MAME</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.mamedev.MAME</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.mamedev.MAME</entry>
         </rule>
     </emulator>
     <emulator name="MEDNAFEN">
