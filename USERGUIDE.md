@@ -2546,8 +2546,6 @@ There are also other MAME forks and derivates available such as MAME4ALL, Advanc
 
 In general .zip or .7z files are recommended for smaller-sized games like those from older systems (assuming the emulator supports it). But for CD-based systems it's not a good approach as uncompressing the larger CD images takes quite some time, leading to slow game launches. As explained above, converting CD images to CHD files is a better solution for achieving file compression while still enjoying fast game launches.
 
-Consider the table below a work in progress as it's obvioulsy not fully populated yet!
-
 Default emulator/Alternative emulators columns: \
 **[U]**: Unix, **[M]**: macOS, **[W]**: Windows, **[W\*]**: Windows, needs to have a Path environment variable entry (not applicable if using the portable ES-DE release)
 

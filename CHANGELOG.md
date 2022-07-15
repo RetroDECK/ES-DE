@@ -153,7 +153,7 @@
 
 ### Release overview
 
-In this release a lot of systems have been enabled by adding new platforms altogether and by including emulator configuration for previous placeholder entries. A number of additional standalone emulators have been added as well. The newly released PCSX2 Qt standalone emulator has replaced the old PCSX2 release which has been designated a legacy emulator. Connection timeout support has also been added to the scraper which among other things makes it possible to continue scraping after resuming a computer that went to sleep when the scraper was running.
+This release enables a lot of systems by adding new platforms altogether and by including emulator configuration for previous placeholder entries. A number of additional standalone emulators have been added as well. The newly released PCSX2 Qt standalone emulator has replaced the old PCSX2 release which has been designated a legacy emulator. Connection timeout support has also been added to the scraper which among other things makes it possible to continue scraping after resuming a computer that went to sleep when the scraper was running.
 
 ### Detailed list of changes
 
@@ -172,10 +172,12 @@ In this release a lot of systems have been enabled by adding new platforms altog
 * Added emulator configuration for the coco system
 * Added emulator configuration for the dragon32 system
 * Added emulator configuration for the tanodragon system
+* Added emulator configuration for the gx4000 system
 * Added emulator configuration for the solarus system
 * Added emulator configuration for the tic80 system
 * Added emulator configuration for the ags system
 * Replaced the invalid SimCoupé RetroArch core with SimCoupé standalone for the samcoupe system
+* Added a find rule for the upcoming Flatpak release of MAME
 * Added Mednafen standalone as an alternative emulator for many systems
 * Changed the emulator PCSX2 standalone to PCSX2 Legacy standalone
 * Changed the emulator PCSX2 Qt standalone to PCSX2 standalone
