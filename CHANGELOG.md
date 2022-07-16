@@ -196,6 +196,7 @@ This release enables a lot of systems by adding new platforms altogether and by 
 * Added find rule entries for Valve Steam to simplify the setup of the RetroArch Steam release
 * Added scraper support for the dragon32 platform
 * Added a %GAMEENTRYDIR% variable to be used with the %STARTDIR% variable (required by EasyRPG Player standalone)
+* Added a %FILENAME% variable to extract the filename including the extension when used in es_systems.xml
 * Added connection and transfer timeout settings to the scraper (not configurable via the GUI)
 * Added an es_log.txt entry when the "Only show ROMs from gamelist.xml files" setting is enabled
 * Passing the --ignore-gamelist command line option now immediately disables the ParseGamelistOnly setting
