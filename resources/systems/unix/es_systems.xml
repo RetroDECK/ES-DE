@@ -11,17 +11,6 @@
         <theme>3do</theme>
     </system>
     <system>
-        <name>64dd</name>
-        <fullname>Nintendo 64DD</fullname>
-        <path>%ROMPATH%/64dd</path>
-        <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
-        <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mupen64plus_next_libretro.so %ROM%</command>
-        <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% --nogui %ROM%</command>
-        <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.so %ROM%</command>
-        <platform>n64</platform>
-        <theme>64dd</theme>
-    </system>
-    <system>
         <name>ags</name>
         <fullname>Adventure Game Studio Game Engine</fullname>
         <path>%ROMPATH%/ags</path>
@@ -865,12 +854,22 @@
         <name>n64</name>
         <fullname>Nintendo 64</fullname>
         <path>%ROMPATH%/n64</path>
-        <extension>.n64 .N64 .v64 .V64 .z64 .Z64 .bin .BIN .u1 .U1 .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
         <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mupen64plus_next_libretro.so %ROM%</command>
         <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% --nogui %ROM%</command>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.so %ROM%</command>
         <platform>n64</platform>
         <theme>n64</theme>
+    </system>
+    <system>
+        <name>n64dd</name>
+        <fullname>Nintendo 64DD</fullname>
+        <path>%ROMPATH%/n64dd</path>
+        <extension>.bin .BIN .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
+        <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.so %ROM%</command>
+        <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mupen64plus_next_libretro.so %ROM%</command>
+        <platform>n64</platform>
+        <theme>n64dd</theme>
     </system>
     <system>
         <name>naomi</name>
