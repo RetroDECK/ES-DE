@@ -953,11 +953,11 @@ The setup is quite particular and works differently between the two supported em
 
 For ParaLLEl N64, place a file named `64DD_IPL.bin` in the root of the RetroArch system directory. Refer to the RetroArch documentation if you're uncertain where this directory is located.
 
-This file which is commonly referred to as _Nintendo 64DD IPL v1.2_ has to have an MD5 hash value of 8d3d9f294b6e174bc7b1d2fd1c727530 or it will not work.
+This file which is commonly referred to as _Nintendo 64DD IPL v1.2_ or similar has to have an MD5 hash value of 8d3d9f294b6e174bc7b1d2fd1c727530 or it will not work.
 
 The final step is to enable the option _64DD Hardware_ in the ParaLLEl N64 core options inside RetroArch. Following this you should be able to launch games with the .ndd file extension, or such files compressed into .zip or .7z archives.
 
-For Mupen64Plus-Next you should use the exact same IPL file as for ParaLLEl N64 but it has to be placed inside the Mupen64plus subdirectory inside the RetroArch system directory. The file also has to be named `IPL.n64` instead of 64DD_IPL.bin.
+For Mupen64Plus-Next you should use the exact same IPL file as for ParaLLEl N64 but it has to be placed inside the Mupen64plus subdirectory in the RetroArch system directory. The file also has to be named `IPL.n64` instead of 64DD_IPL.bin.
 
 For this emulator you can't launch .ndd files directly, instead you have to place the non-disk version of the game next to the disk version and launch the non-disk version.
 
@@ -1037,9 +1037,19 @@ Game launching and scraping should now work fine in ES-DE.
 
 #### Fujitsu FM Towns
 
-The Tsugaru emulator is still somehow experimental and although there are builds available for Windows, macOS and Linux on the Tsugaru [GitHub](https://github.com/captainys/TOWNSEMU) page, only the Windows release seems to be functioning entirely correctly. The Linux build has controller/input issues as described later below. It's also made specifically for Ubuntu and there is no AppImage release available, so if you run some other Linux distribution then it may not run at all. The macOS release does not seem to include the command line binary for the emulator which makes it unusable with ES-DE.
+The Tsugaru emulator is still somehow experimental and although there are builds available for Windows, macOS and Linux on the Tsugaru [GitHub](https://github.com/captainys/TOWNSEMU) page, only the Windows release seems to be functioning entirely correctly. The Linux build has controller/input issues as described later below. It's also made specifically for Ubuntu and there is no AppImage release available, so if you run some other Linux distribution then it may not run at all. Extracting the binary from the Debian package has however been reported to work on SteamOS at least. The macOS release does not seem to include the command line binary for the emulator which makes it unusable with ES-DE.
 
-For both the Windows and Linux release you need to create a `roms` subdirectory inside the emulator directory where the system BIOS/ROM files need to be located. The directory structure should look like the following on Windows:
+For both the Windows and Linux release you need to create a `roms` subdirectory inside the emulator directory where the system BIOS/ROM files need to be located. These are the required files, and they have to be named in uppercase:
+
+```
+FMT_DIC.ROM
+FMT_DOS.ROM
+FMT_F20.ROM
+FMT_FNT.ROM
+FMT_SYS.ROM
+```
+
+The directory structure should look like the following on Windows:
 ```
 tsugaru\roms\
 tsugaru\Tsugaru_CUI.exe
