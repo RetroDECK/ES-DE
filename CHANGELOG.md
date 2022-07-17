@@ -176,6 +176,7 @@ This release enables a lot of systems by adding new platforms altogether and by 
 * Added emulator configuration for the solarus system
 * Added emulator configuration for the tic80 system
 * Added emulator configuration for the ags system
+* Renamed the Nintendo 64DD system from 64dd to n64dd and removed the Mupen64Plus standalone emulator
 * Replaced the invalid SimCoupé RetroArch core with SimCoupé standalone for the samcoupe system
 * Added a find rule for the upcoming Flatpak release of MAME
 * Added Mednafen standalone as an alternative emulator for many systems
@@ -193,6 +194,7 @@ This release enables a lot of systems by adding new platforms altogether and by 
 * Added the .fds file extension to the famicom and nes systems
 * Added the .32x file extension to the genesis and megadrive systems
 * Added the .json file extension to the gc and wii systems
+* Added the .ndd file extension to the n64 and n64dd systems
 * Added find rule entries for Valve Steam to simplify the setup of the RetroArch Steam release
 * Added scraper support for the dragon32 platform
 * Added a %GAMEENTRYDIR% variable to be used with the %STARTDIR% variable (required by EasyRPG Player standalone)

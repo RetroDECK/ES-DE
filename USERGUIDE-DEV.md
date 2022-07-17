@@ -945,6 +945,30 @@ C:\Users\myusername\ROMs\wiiu\Super Mario 3D World\meta
 
 Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U system. The actual game file with the extension .rpx is stored inside the _code_ directory, and does not normally match the name of the game. For this example it's named `RedCarpet.rpx`. When scraping the .rpx file you therefore need to refine the search and manually enter the game name. ES-DE fully supports scraping of directories, so you can scrape the _Super Mario 3D World_ folder as well.
 
+#### Nintendo 64DD
+
+The Japan-only 64DD floppy disk addon for the Nintendo 64 is of limited use since there were almost no games released for it, but ES-DE still supports it.
+
+The setup is quite particular and works differently between the two supported emulators ParaLLEl N64 and Mupen64Plus-Next.
+
+For ParaLLEl N64, place a file named `64DD_IPL.bin` in the root of the RetroArch system directory. Refer to the RetroArch documentation if you're uncertain where this directory is located.
+
+This file which is commonly referred to as _Nintendo 64DD IPL v1.2_ has to have an MD5 hash value of 8d3d9f294b6e174bc7b1d2fd1c727530 or it will not work.
+
+The final step is to enable the option _64DD Hardware_ in the ParaLLEl N64 core options inside RetroArch. Following this you should be able to launch games with the .ndd file extension, or such files compressed into .zip or .7z archives.
+
+For Mupen64Plus-Next you should use the exact same IPL file as for ParaLLEl N64 but it has to be placed inside the Mupen64plus subdirectory inside the RetroArch system directory. The file also has to be named `IPL.n64` instead of 64DD_IPL.bin.
+
+For this emulator you can't launch .ndd files directly, instead you have to place the non-disk version of the game next to the disk version and launch the non-disk version.
+
+This is such an example setup for Super Mario 64:
+```
+~/ROMs/n64dd/Super Mario 64.v64
+~/ROMs/n64dd/Super Mario 64.v64.ndd
+```
+
+So to clarify it's `Super Mario 64.v64` that has to be launched. Compressing this file into a .zip or .7z file will not work, the game has to be uncompresssed. If using Mupen64Plus-Next it's probably also a good idea to hide the .ndd files from the gamelist (using the _Hidden_ option in the metadata editor) for a more tidy setup.
+
 #### Sony PlayStation 3
 
 There are two ways to add PS3 games to ES-DE; by using shortcuts or by adding game directories directly to the ~/ROMs/ps3 folder and interpreting these as files. Shortcuts is generally the way to go as it's easier to setup and for HDD/pkg games it's the only way to make it work unless you manually create symlinks to the internal RPCS3 directory structure. So another benefit with shortcuts is consistency as both HDD/pkg games and disc-based games will be setup in the same manner. This also means that the same RPCS3 emulator entry can be used to launch every game. The drawback to using shortcuts is that they're not portable, if you change the location of RPCS3 or your games, you need to manually update the shortcuts as well.
@@ -2858,7 +2882,6 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
 | 3do                   | 3DO                                            | Opera                             |                                   | Yes          |                                      |
-| 64dd                  | Nintendo 64DD                                  | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] |              |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Native game binaries_            |                                   | No           | Shortcut (.desktop/.app/.lnk) file in root folder  |
 | amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
 | amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
@@ -2941,6 +2964,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | ParaLLEl N64 [UW],<br>Mupen64Plus **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
+| n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** [UMW*] | No           |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
