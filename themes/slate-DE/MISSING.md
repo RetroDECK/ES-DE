@@ -1,6 +1,5 @@
 # EmulationStation Desktop Edition (ES-DE) - Missing slate-DE theme set data
 
-* 64dd : Nintendo 64DD - consolegame.svg, console.svg, game.svg
 * ags: Adventure Game Studio - consolegame.svg, console.svg, controller.svg
 * amigacd32: Amiga CD32 - consolegame.svg, console.svg, controller.svg, game.svg
 * android: Google Android - consolegame.svg, console.svg, controller.svg, game.svg
@@ -45,6 +44,7 @@
 * msxturbor: MSX Turbo R - consolegame.svg, console.svg, controller.svg, game.svg
 * mugen: M.U.G.E.N Game Engine - consolegame.svg, console.svg, controller.svg, game.svg
 * multivision: Othello Multivision - consolegame.svg, console.svg, controller.svg, game.svg
+* n64dd : Nintendo 64DD - consolegame.svg, console.svg, game.svg
 * naomi: Sega NAOMI - consolegame.svg, console.svg, game.svg
 * naomigd: Sega NAOMI GD-ROM - consolegame.svg, console.svg, game.svg
 * neogeocd: SNK Neo Geo CD - consolegame.svg, console.svg, controller.svg, game.svg
