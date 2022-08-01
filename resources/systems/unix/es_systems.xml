@@ -23,37 +23,37 @@
         <name>amiga</name>
         <fullname>Commodore Amiga</fullname>
         <path>%ROMPATH%/amiga</path>
-        <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga</theme>
     </system>
     <system>
-        <name>amiga600</name>
-        <fullname>Commodore Amiga 600</fullname>
-        <path>%ROMPATH%/amiga600</path>
-        <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
-        <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
-        <platform>amiga</platform>
-        <theme>amiga600</theme>
-    </system>
-    <system>
         <name>amiga1200</name>
         <fullname>Commodore Amiga 1200</fullname>
         <path>%ROMPATH%/amiga1200</path>
-        <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <platform>amiga</platform>
         <theme>amiga1200</theme>
     </system>
     <system>
+        <name>amiga600</name>
+        <fullname>Commodore Amiga 600</fullname>
+        <path>%ROMPATH%/amiga600</path>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
+        <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
+        <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
+        <platform>amiga</platform>
+        <theme>amiga600</theme>
+    </system>
+    <system>
         <name>amigacd32</name>
         <fullname>Commodore Amiga CD32</fullname>
         <path>%ROMPATH%/amigacd32</path>
-        <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <platform>amigacd32</platform>
@@ -269,7 +269,7 @@
         <name>cdtv</name>
         <fullname>Commodore CDTV</fullname>
         <path>%ROMPATH%/cdtv</path>
-        <extension>.cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.ccd .CCD .chd .CHD .cue .CUE .iso .ISO .m3u .M3U .mds .MDS .nrg .NRG .rp9 .RP9 .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae_libretro.so %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/puae2021_libretro.so %ROM%</command>
         <platform>cdtv</platform>
