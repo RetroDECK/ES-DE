@@ -372,6 +372,8 @@ The game systems configuration file `es_systems.xml` is located in the ES-DE res
 
 On Unix this means /home/\<username\>/.emulationstation/custom_systems/es_systems.xml, on macOS /Users/\<username\>/.emulationstation/custom_systems/es_systems.xml and on Windows C:\Users\\<username\>\\.emulationstation\custom_systems\es_systems.xml
 
+If you're using the AppImage release of ES-DE then the bundled es_systems.xml file is embedded in the AppImage together with the rest of the resources. You can extract it if you need it as a reference when creating your customized entries, or you can find it [here](https://gitlab.com/es-de/emulationstation-de/-/tree/master/resources/systems/unix).
+
 Although it's possible to make a copy of the bundled configuration file, to modify it and then place it in this directory, that is not how the system customization is designed to be done. Instead the intention is that the file in `custom_systems` complements the bundled configuration, meaning only systems that are to be customized should be included.
 
 For example you may want to replace the emulator launch command, modify the full name or change the supported file extensions for a single system. In this case it wouldn't make sense to copy the complete bundled file and just apply these minor modifications, instead an es_systems.xml file only containing the configuration for that single system should be placed in the custom_systems directory.
@@ -623,21 +625,21 @@ chmod +x ./rpcs3-v0.0.19-13103-cc21d1b3_linux64.AppImage
 
 The following emulators are supported in AppImage format when using the bundled configuration:
 
-| System name  | Emulator    | Filename configuration                   |
-| :----------- | :---------- | :--------------------------------------- |
-| _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage          |
-| gba          | mGBA        | mGBA*.AppImage                           |
-| gc           | Dolphin     | Dolphin_Emulator*.AppImage               |
-| macintosh    | Basilisk II | BasiliskII-x86_64.AppImage               |
-| macintosh    | SheepShaver | SheepShaver-x86_64.AppImage              |
-| ps2          | PCSX2       | pcsx2-*-linux-AppImage-64bit-Qt.AppImage |
-| ps2          | Play!       | Play!*.AppImage                          |
-| ps3          | RPCS3       | rpcs3*.AppImage                          |
-| psx          | DuckStation | duckstation-nogui-x64.AppImage           |
-| psx          | DuckStation | duckstation-qt-x64.AppImage              |
-| switch       | Yuzu        | yuzu*.AppImage                           |
-| xbox         | xemu        | Xemu*.AppImage                           |
-| wii          | Dolphin     | Dolphin_Emulator*.AppImage               |
+| System name  | Emulator    | Filename configuration          |
+| :----------- | :---------- | :------------------------------ |
+| _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage |
+| gba          | mGBA        | mGBA*.AppImage                  |
+| gc           | Dolphin     | Dolphin_Emulator*.AppImage      |
+| macintosh    | Basilisk II | BasiliskII-x86_64.AppImage      |
+| macintosh    | SheepShaver | SheepShaver-x86_64.AppImage     |
+| ps2          | PCSX2       | pcsx2*-Qt.AppImage              |
+| ps2          | Play!       | Play!*.AppImage                 |
+| ps3          | RPCS3       | rpcs3*.AppImage                 |
+| psx          | DuckStation | duckstation-nogui-x64.AppImage  |
+| psx          | DuckStation | duckstation-qt-x64.AppImage     |
+| switch       | Yuzu        | yuzu*.AppImage                  |
+| xbox         | xemu        | Xemu*.AppImage                  |
+| wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
 
 RetroArch does not embed any version information into the filename so no wildcard is required.
 
@@ -665,6 +667,7 @@ The following manually downloaded emulators are supported when using the bundled
 | daphne                   | Hypseus Singe | hypseus-singe/hypseus.bin       |
 | dreamcast                | Redream       | redream/redream                 |
 | easyrpg                  | EasyRPG       | easyrpg/easyrpg-player          |
+| flash                    | Lightspark    | lightspark/lightspark           |
 | flash                    | Ruffle        | ruffle/ruffle                   |
 | fmtowns                  | Tsugaru       | tsugaru/Tsugaru_CUI             |
 | oric                     | Oricutron     | oricutron/Oricutron             |
@@ -1826,6 +1829,8 @@ If you already have a library of game media (images and videos) you can manually
 
 The default media directory is `~/.emulationstation/downloaded_media/<system name>/<media type>`
 
+This directory can however be changed using the _Game media directory_ setting in the _Other settings_ menu so make sure to check this setting before attempting to follow the instructions below. If the setting is blank, then the default directory is in use.
+
 See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for a list of all system names.
 
 An example on Unix:
@@ -2894,8 +2899,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | 3do                   | 3DO                                            | Opera                             |                                   | Yes          |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Native game binaries_            |                                   | No           | Shortcut (.desktop/.app/.lnk) file in root folder  |
 | amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
-| amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
 | amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
+| amiga600              | Commodore Amiga 600                            | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
 | amigacd32             | Commodore Amiga CD32                           | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | amstradcpc            | Amstrad CPC                                    | Caprice32                         | CrocoDS                           | No           |                                      |
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file in root folder  |
@@ -2935,7 +2940,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
-| flash                 | Adobe Flash                                    | Ruffle **(Standalone)** [UMW*]    | ArcadeFlashWeb **(Standalone)** [W*] | No        | Single .swf file in root folder      |
+| flash                 | Adobe Flash                                    | Ruffle **(Standalone)** [UMW*]    | Lightspark **(Standalone)** [U],<br>ArcadeFlashWeb **(Standalone)** [W*] | No        | Single .swf file in root folder      |
 | fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW*]    |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | gameandwatch          | Nintendo Game and Watch                        | GW                                |                                   |              |                                      |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>Mednafen **(Standalone)** [UMW*] |              |                                      |

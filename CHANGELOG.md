@@ -118,6 +118,7 @@
 * Removed the deprecated VideoVlcComponent
 * Removed the deprecated tools/update_theme_formatversion.sh script
 * Lots of general code cleanup and refactoring
+* (Windows) Added error handling to StringUtil::stringToWideString() and StringUtil::wideStringToString() to avoid crashes caused by invalid characters
 * Changed tools/create_AppImage.sh to not include version information in the AppImage filename
 * Updated and improved the theming documentation
 
@@ -191,6 +192,7 @@ This release enables a lot of systems by adding new platforms altogether and by 
 * Added KEmulator standalone as an alternative emulator for the j2me system on Windows
 * Added Model 2 Emulator [Suspend ES-DE] as an alternative emulator for the arcade, mame and model2 systems on Windows
 * Added support for the repository-installed PPSSPP standalone (SDL and Qt) on Unix
+* Added the .chd and .rp9 file extensions to the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
 * Added the .fds file extension to the famicom and nes systems
 * Added the .32x file extension to the genesis and megadrive systems
 * Added the .json file extension to the gc and wii systems

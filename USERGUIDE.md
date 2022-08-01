@@ -370,6 +370,8 @@ The game systems configuration file `es_systems.xml` is located in the ES-DE res
 
 On Unix this means /home/\<username\>/.emulationstation/custom_systems/es_systems.xml, on macOS /Users/\<username\>/.emulationstation/custom_systems/es_systems.xml and on Windows C:\Users\\<username\>\\.emulationstation\custom_systems\es_systems.xml
 
+If you're using the AppImage release of ES-DE then the bundled es_systems.xml file is embedded in the AppImage together with the rest of the resources. You can extract it if you need it as a reference when creating your customized entries, or you can find it [here](https://gitlab.com/es-de/emulationstation-de/-/tree/stable-1.2/resources/systems/unix).
+
 Although it's possible to make a copy of the bundled configuration file, to modify it and then place it in this directory, that is not how the system customization is designed to be done. Instead the intention is that the file in `custom_systems` complements the bundled configuration, meaning only systems that are to be customized should be included.
 
 For example you may want to replace the emulator launch command, modify the full name or change the supported file extensions for a single system. In this case it wouldn't make sense to copy the complete bundled file and just apply these minor modifications, instead an es_systems.xml file only containing the configuration for that single system should be placed in the custom_systems directory.
@@ -1503,6 +1505,8 @@ Apart from this, hopefully the scraping process should be self-explanatory.
 If you already have a library of game media (images and videos) you can manually copy these files into ES-DE.
 
 The default media directory is `~/.emulationstation/downloaded_media/<system name>/<media type>`
+
+This directory can however be changed using the _Game media directory_ setting in the _Other settings_ menu so make sure to check this setting before attempting to follow the instructions below. If the setting is blank, then the default directory is in use.
 
 See the [Supported game systems](USERGUIDE.md#supported-game-systems) table at the bottom of this guide for a list of all system names.
 

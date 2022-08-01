@@ -100,6 +100,10 @@ Yes to a certain extent this is supported and at least [Skraper](https://www.skr
 
 If the controller works in other applications and games but not in ES-DE, then you may be able to get it to run in ES-DE as well. The required setup is described in detail in the _Adding custom controller profiles_ section of the [Building and advanced configuration](INSTALL.md#adding-custom-controller-profiles) document.
 
+## Every controller button press is registered twice in ES-DE, should I file a bug report?
+
+Although this is for sure a bug it's not caused by ES-DE, rather some wireless controllers have buggy drivers and will register itself as two separate devices. And as ES-DE auto-configures all devices, every button press will in practice be received twice. The easiest solution to this problem is to enable the option _Only accept input from first controller_ in the _Input device settings_ menu, but the drawback of this is that all other attached controllers will also be ignored. A more proper workaround is to blacklist the redundant controller device, see the previous question above as blacklisting is essentially a custom controller profile entry.
+
 ## I'm missing a feature, how can I make a request to have it added?
 
 First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](CONTRIBUTING.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/).
