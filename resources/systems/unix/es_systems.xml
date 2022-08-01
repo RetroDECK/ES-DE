@@ -468,6 +468,7 @@
         <path>%ROMPATH%/flash</path>
         <extension>.swf .SWF</extension>
         <command label="Ruffle (Standalone)">%EMULATOR_RUFFLE% --fullscreen %ROM%</command>
+        <command label="Lightspark (Standalone)">%EMULATOR_LIGHTSPARK% %ROM%</command>
         <platform>flash</platform>
         <theme>flash</theme>
     </system>

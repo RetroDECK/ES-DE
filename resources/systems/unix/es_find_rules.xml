@@ -206,6 +206,17 @@
             <entry>~/bin/hypseus-singe/hypseus.bin</entry>
         </rule>
     </emulator>
+    <emulator name="LIGHTSPARK">
+        <!-- Adobe Flash player Lightspark -->
+        <rule type="systempath">
+            <entry>lightspark</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/lightspark/lightspark</entry>
+            <entry>~/.local/bin/lightspark/lightspark</entry>
+            <entry>~/bin/lightspark/lightspark</entry>
+        </rule>
+    </emulator>
     <emulator name="LINAPPLE">
         <!-- Apple II emulator LinApple -->
         <rule type="systempath">
