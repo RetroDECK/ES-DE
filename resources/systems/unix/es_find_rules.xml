@@ -299,7 +299,7 @@
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/pcsx2*-Qt.AppImage</entry>
-            <entry>~/.local/bin/pcsx2*-Qt.AppImagee</entry>
+            <entry>~/.local/bin/pcsx2*-Qt.AppImage</entry>
             <entry>~/bin/pcsx2*-Qt.AppImage</entry>
         </rule>
     </emulator>
