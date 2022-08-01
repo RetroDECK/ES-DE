@@ -12,6 +12,7 @@
 #endif
 
 #include "utils/StringUtil.h"
+#include "Log.h"
 
 #include <algorithm>
 #include <locale>
@@ -617,13 +618,27 @@ namespace Utils
         std::wstring stringToWideString(const std::string& stringArg)
         {
             std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> stringConverter;
-            return stringConverter.from_bytes(stringArg);
+            try {
+                return stringConverter.from_bytes(stringArg);
+            }
+            catch (...) {
+                LOG(LogError) << "StringUtil::stringToWideString(): Conversion failed, invalid "
+                                 "characters in source string?";
+                return L"";
+            }
         }
 
         std::string wideStringToString(const std::wstring& stringArg)
         {
             std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> stringConverter;
-            return stringConverter.to_bytes(stringArg);
+            try {
+                return stringConverter.to_bytes(stringArg);
+            }
+            catch (...) {
+                LOG(LogError) << "StringUtil::wideStringToString(): Conversion failed, invalid "
+                                 "characters in source string?";
+                return "";
+            }
         }
 
         bool startsWith(const std::string& stringArg, const std::string& start)
