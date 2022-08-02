@@ -1723,13 +1723,6 @@ Once the emulator is up and running there is not really much else to consider, s
 
 Place the ROMs in the `~/ROMs/astrocde` directory, the files must have the short MAME names such as _astrobat.zip_ and _conan.zip_. If using MAME standalone then no further setup is required and the games should just launch.
 
-The exception to this is the Flatpak release of MAME on Linux which is currently a bit broken and does not set the hashpath setting to point to the correct hash directory. To work around this issue you need to create a file named `~/.mame/mame.ini` with the following contents:
-```
-hashpath /app/share/mame/hash
-```
-
-Hopefully this issue will be resolved in a future update to the MAME Flatpak so that no workaround will be required.
-
 If instead using the _MAME - Current_ RetroArch core, then a hash file must be added inside the RetroArch system directory at this location:
 
 ```
@@ -1746,13 +1739,6 @@ The TI-99 is emulated via MAME, and only the standalone release of this emulator
 Emulating the TI-99 can be quite confusing as games are available in various incompatible formats, and most emulators are particular when it comes to what file types they support. In ES-DE only cartridge-based games are supported, so you can't for instance play games distributed as floppy disk images. And only games packaged for MAME using the MAME short name standard can be used. This includes .7z and .zip files as well as .rpk cartridge images. It's strongly recommended to go for the MAME TI-99 ROM set that consists only of .zip files as these have the highest chance of working correctly.
 
 In addition to the game files you need the `ti99_4a.zip` archive which contains the TI-99 system ROMs. This file has to be placed in the root of the `~/ROMs/ti99` directory.
-
-If using the Flatpak release of MAME on Linux you also need to implement a workaround as this release is currently a bit broken and does not set the hashpath setting to point to the correct hash directory. You will need to create a file named `~/.mame/mame.ini` with the following contents:
-```
-hashpath /app/share/mame/hash
-```
-
-Hopefully this issue will be resolved in a future update to the MAME Flatpak so that no workaround will be required.
 
 Note that you may also need to reconfigure your exit key in MAME as the default _escape_ key is masked as it's used by the emulated TI-99 computer.
 
@@ -2930,7 +2916,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes (Daphne games) | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | See the specific _Ports and desktop applications_ section elsewhere in this guide |
-| doom                  | Doom                                           | PrBoom                            |                                   |              |                                      |
+| doom                  | Doom                                           | PrBoom                            | Boom 3 [UW],<br>Boom 3 xp [UW],<br>_Shortcut or script_ | No           |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | See the specific _DOS / PC_ section elsewhere in this guide |
 | dragon32              | Dragon 32                                      | XRoar Dragon 32 **(Standalone)**  | XRoar Dragon 64 **(Standalone)**  | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)** [UMW*],<br>Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |

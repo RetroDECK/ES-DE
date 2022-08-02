@@ -191,6 +191,8 @@ This release enables a lot of systems by adding new platforms altogether and by 
 * Added the Kronos RetroArch core as an alternative emulator for the arcade and mame systems
 * Added KEmulator standalone as an alternative emulator for the j2me system on Windows
 * Added Model 2 Emulator [Suspend ES-DE] as an alternative emulator for the arcade, mame and model2 systems on Windows
+* Added "Shortcut or script" as an alternative emulator for the doom system
+* Added the Boom 3 and Boom 3 xp RetroArch cores as alternative emulators for the doom system on Unix and Windows
 * Added support for the repository-installed PPSSPP standalone (SDL and Qt) on Unix
 * Added the .chd and .rp9 file extensions to the amiga, amiga1200, amiga600, amigacd32 and cdtv systems
 * Added the .fds file extension to the famicom and nes systems
