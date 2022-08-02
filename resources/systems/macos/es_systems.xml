@@ -353,9 +353,10 @@
         <name>doom</name>
         <fullname>Doom</fullname>
         <path>%ROMPATH%/doom</path>
-        <extension>.wad .WAD .iwad .IWAD .pwad .PWAD</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/prboom_libretro.dylib %ROM%</command>
-        <platform>pc</platform>
+        <extension>.app .iwad .IWAD .pwad .PWAD .sh .wad .WAD</extension>
+        <command label="PrBoom">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/prboom_libretro.dylib %ROM%</command>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>pc, pcwindows</platform>
         <theme>doom</theme>
     </system>
     <system>
