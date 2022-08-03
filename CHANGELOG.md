@@ -148,9 +148,9 @@
 * (Windows) File paths would get escaped with quotation marks even if they did not contain any spaces
 * (Windows) The emulator binary path would sometimes not get escaped correctly in es_log.txt on game launch
 
-## Version 1.2.6 (in development)
+## Version 1.2.6
 
-**Release date:** TBD
+**Release date:** 2022-08-03
 
 ### Release overview
 
@@ -179,7 +179,7 @@ This release enables a lot of systems by adding new platforms altogether and by 
 * Added emulator configuration for the ags system
 * Renamed the Nintendo 64DD system from 64dd to n64dd and removed the Mupen64Plus standalone emulator
 * Replaced the invalid SimCoupé RetroArch core with SimCoupé standalone for the samcoupe system
-* Added a find rule for the upcoming Flatpak release of MAME
+* Added a find rule for the Flatpak release of MAME
 * Added Mednafen standalone as an alternative emulator for many systems
 * Changed the emulator PCSX2 standalone to PCSX2 Legacy standalone
 * Changed the emulator PCSX2 Qt standalone to PCSX2 standalone

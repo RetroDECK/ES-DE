@@ -1379,10 +1379,14 @@ For the following options, the es_settings.xml file is immediately updated/saved
 ```
 --display
 --max-vram
+--gamelist-only
 --show-hidden-files
 --show-hidden-games
 ```
 
+As well, passing the option --ignore-gamelist will disable the ParseGamelistOnly setting controlled by --gamelist-only and immediately save the es_settings.xml file. If passing both the --ignore-gamelist and --gamelist-only parameters then --ignore-gamelist will take precedence and --gamelist-only will be ignored.
+
+The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show ROMs from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
 
 ## es_systems.xml
 
@@ -1534,9 +1538,11 @@ The following variables are expanded for the `command` tag:
 
 `%ROMPATH%` - Replaced with the path defined in the setting ROMDirectory in es_settings.xml. If combined with a path that contains blankspaces, then it must be surrounded by quotation marks, for example `%ROMPATH%"\Arcade Games"`. Note that the quotation mark must be located before the directory separator in this case.
 
-`%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example, a path of `/foo/bar.rom`, this tag would be `bar`. This tag is useful for setting up AdvanceMAME.
+`%BASENAME%` - Replaced with the "base" name of the path to the selected ROM. For example the path `/foo/bar.rom` would end up as the value `bar`
 
-`%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators and game engines like standalone MAME and OpenBOR will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used with this variable, such as `%STARTDIR%=C:\Games\mame` or the `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%` or the `%GAMEDIR%` variable can be used to start in the directory where the game file is located, i.e. `%STARTDIR%=%GAMEDIR%`. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch. The variable can be placed anywhere in the launch command if the %EMULATOR_ variable is used, otherwise it has to be placed after the emulator binary.
+`%FILENAME%` - Replaced with the filename of the selected ROM. For example the path `/foo/bar.rom` would end up as the value `bar.rom`
+
+`%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators and game engines like standalone MAME and OpenBOR will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used, such as `%STARTDIR%=C:\Games\mame` or some variables are available that provide various functions. The `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%`, the `%GAMEDIR%` variable can be used to start in the directory where the game file is located, i.e. `%STARTDIR%=%GAMEDIR%` and the `%GAMEENTRYDIR%` variable can be used which works identically to `%GAMEDIR%` with the exception that it will interpret the actual game entry as the start directory. This is useful in very rare situations like for the EasyRPG Player where the game directories are interpreted as files but where the game engine must still be started from inside the game directory. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch. The variable can be placed anywhere in the launch command if the %EMULATOR_ variable is used, otherwise it has to be placed after the emulator binary.
 
 `%INJECT%` - This allows the injection of launch arguments stored in a text file on the filesystem. This is for example required by the Hypseus Singe (arcade LaserDisc) emulator. The variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands`. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the tilde ~ symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"` The variable can be placed anywhere in the launch command and the arguments will be injected at that position. The specified file is optional, if it does not exist or if there are insufficient permissions to read the file content, then it will simply be skipped. For safety reasons the arguments file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped.
 

@@ -574,7 +574,7 @@ As this release of RetroArch is executed via the Steam application it's behaving
 
 As well, adding support for the Steam release of RetroArch for all systems that ES-DE supports requires hundreds of additional alternative emulator entries. For all these reasons there will be no official support for this release of RetroArch. If you insist on still using it, it's however quite easy to make [custom system configuration](USERGUIDE-DEV.md#game-system-customizations) entries as the setup has been partly prepared in the bundled configuration.
 
-Simply add alternative emulator entries such as the following example which enables support for the Nestopia UE core for the nes system:
+Simply add alternative emulator entries such as the following example (which enables support for the Nestopia UE core for the nes system):
 ```
 <command label="Nestopia UE (Steam)">%RUNINBACKGROUND% %EMULATOR_STEAM% -applaunch 1118310 -L nestopia_libretro %ROM%</command>
 ```
@@ -1174,6 +1174,8 @@ In this case the two entries _sky_ and _queen_ will show up inside ES-DE and the
 The only drawback of this approach is that when scraping using TheGamesDB you will get very inaccurate results as this scraper service does not support ScummVM short names. It can however be worked around by refining the searches. ScreenScraper does natively support ScummVM short names and you should get very accurate results with this scraper service.
 
 A final alternative is to use _folder links_ to keep the directory structure intact while still being able to launch the game file directly without having to enter the directory, but for ScummVM specifically that is not really recommended.
+
+If you're using the Flatpak release of ScummVM on Linux then you need to manually grant the application the necessary permissions using Flatseal or similar, otherwise you won't be able to launch any games.
 
 #### Ports and desktop applications
 
