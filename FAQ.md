@@ -72,6 +72,10 @@ The .emulationstation directory is normally located in your home directory, but 
 
 Yes it's possible to both customize existing systems that are part of the bundled configuration as well as to add more systems than those shipped with ES-DE. Almost nothing is hardcoded in the application so there is a huge flexibility when it comes to such configuration. How this is done is covered in the _Game system customizations_ section of the [User guide](USERGUIDE.md#game-system-customizations). Just make sure to never modify the es_systems.xml and es_find_rules.xml files included in the application installation directory as these will be overwritten when upgrading ES-DE in the future. Always place your customizations in ~/.emulationstation/custom_systems/ as is also described in the user guide.
 
+## Can I use the Steam release of RetroArch?
+
+This release of RetroArch has multiple technical issues so it's not officially supported and its use is not recommended. If you still insist on using it you can make custom configuration entries for your game systems which is pretty straightforward as it's partly prepared for in the bundled configuration. Refer to the _Using the Steam release of RetroArch_ section of the [User guide](USERGUIDE.md#using-the-steam-release-of-retroarch) for how to accomplish this. There you can also read about the technical issues you can expect to experience when using this release of RetroArch.
+
 ## How do I add more themes?
 
 Most RetroPie EmulationStation theme sets will work with ES-DE, and there are numerous resources online on where to find these. How to install them is described in the _Themes_ section of the [User guide](USERGUIDE.md#themes). Just be aware that some of these themes do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme is written.

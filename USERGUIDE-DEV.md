@@ -1152,7 +1152,7 @@ ScummVM overlaps a bit with DOS when it comes to the logic of setting it up. It'
 
 Although ScummVM supports launching of .exe files, ES-DE is currently not configured as such and it's instead recommended to create a .scummvm file in each game directory and launch that. This makes for a cleaner setup as you don't need to run game configuration utilities like INSTALL.EXE or SETUP.EXE directly as you would with DOSBox. Rather the game configuration is done within the ScummVM emulator.
 
-The .scummvm files should simply contain a single word which is referred to as the _Game Short Name_. You can find the complete list of supported ScummVM games with their corresponding short names here:\
+The .scummvm file must be named using the correct _Game Short Name_ and it must also contain this short name as a single string/word. You can find the complete list of supported ScummVM games with their corresponding short names here:\
 [https://www.scummvm.org/compatibility](https://www.scummvm.org/compatibility)
 
 An example setup could look like the following:
