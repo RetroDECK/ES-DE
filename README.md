@@ -43,7 +43,7 @@ The latest version is 1.2.6 (released 2022-08-03)
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
 | Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download)|
-| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239238/download)|
+| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/48508109/download)|
 | macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239145/download)|
 | macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.6-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239039/download)|
 | Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.6-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239111/download)|
