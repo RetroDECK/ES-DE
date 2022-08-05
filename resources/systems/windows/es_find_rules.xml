@@ -564,8 +564,8 @@
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\Vita3K\Vita3K.exe</entry>
-            <entry>%ESPATH%\Vita3K\Vita3K.ex</entry>
-            <entry>%ESPATH%\..\Vita3K\Vita3K.ex</entry>
+            <entry>%ESPATH%\Vita3K\Vita3K.exe</entry>
+            <entry>%ESPATH%\..\Vita3K\Vita3K.exe</entry>
         </rule>
     </emulator>
     <emulator name="XEMU">
