@@ -53,7 +53,7 @@
         <name>amigacd32</name>
         <fullname>Commodore Amiga CD32</fullname>
         <path>%ROMPATH%\amigacd32</path>
-        <extension>.adf .ADF .adz .ADZ .dms .DMS .fdi .FDI .ipf .IPF .hdf .HDF .hdz .HDZ .lha .LHA .cue .CUE .ccd .CCD .nrg .NRG .mds .MDS .iso .ISO .uae .UAE .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.adf .ADF .adz .ADZ .ccd .CCD .chd .CHD .cue .CUE .dms .DMS .fdi .FDI .hdf .HDF .hdz .HDZ .ipf .IPF .rp9 .RP9 .iso .ISO .lha .LHA .m3u .M3U .mds .MDS .nrg .NRG .uae .UAE .7z .7Z .zip .ZIP</extension>
         <command label="PUAE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\puae_libretro.dll %ROM%</command>
         <command label="PUAE 2021">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\puae2021_libretro.dll %ROM%</command>
         <platform>amigacd32</platform>
