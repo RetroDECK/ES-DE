@@ -309,6 +309,7 @@
         <extension>.bin .BIN .cas .CAS .col .COL .cv .CV .dsk .DSK .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ri .RI .rom .ROM .sc .SC .sg .SG .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="Gearcoleco">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearcoleco_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "ColecoVision" %ROM%</command>
         <platform>colecovision</platform>
         <theme>colecovision</theme>
     </system>
@@ -700,6 +701,7 @@
         <command label="Genesis Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.dylib %ROM%</command>
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.dylib %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega CD" %ROM%</command>
         <platform>segacd</platform>
         <theme>megacd</theme>
     </system>
@@ -711,6 +713,7 @@
         <command label="Genesis Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.dylib %ROM%</command>
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.dylib %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega CD" %ROM%</command>
         <platform>segacd</platform>
         <theme>megacdjp</theme>
     </system>
@@ -789,6 +792,7 @@
         <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "MSX" %ROM%</command>
         <platform>msx</platform>
         <theme>msx</theme>
     </system>
@@ -799,6 +803,7 @@
         <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "MSX" %ROM%</command>
         <platform>msx</platform>
         <theme>msx1</theme>
     </system>
@@ -809,6 +814,7 @@
         <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "MSX2" %ROM%</command>
         <platform>msx2</platform>
         <theme>msx2</theme>
     </system>
@@ -855,6 +861,7 @@
         <extension>.bin .BIN .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
         <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Nintendo 64" %ROM%</command>
         <command label="sixtyforce (Standalone)">%EMULATOR_SIXTYFORCE% %ROM%</command>
         <platform>n64</platform>
         <theme>n64</theme>
@@ -1252,6 +1259,7 @@
         <command label="Genesis Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_libretro.dylib %ROM%</command>
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.dylib %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Mega CD" %ROM%</command>
         <platform>segacd</platform>
         <theme>segacd</theme>
     </system>
@@ -1279,6 +1287,7 @@
         <command label="Genesis Plus GX Wide">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/genesis_plus_gx_wide_libretro.dylib %ROM%</command>
         <command label="Gearsystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearsystem_libretro.dylib %ROM%</command>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "SG-1000" %ROM%</command>
         <platform>sg-1000</platform>
         <theme>sg-1000</theme>
     </system>
@@ -1380,6 +1389,7 @@
         <extension>.pce .PCE .sgx .SGX .cue .CUE .ccd .CCD .chd .CHD .7z .7Z .zip .ZIP</extension>
         <command label="Beetle SuperGrafx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_supergrafx_libretro.dylib %ROM%</command>
         <command label="Beetle PCE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_pce_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "SuperGrafx" %ROM%</command>
         <platform>supergrafx</platform>
         <theme>supergrafx</theme>
     </system>
