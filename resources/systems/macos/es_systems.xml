@@ -957,6 +957,7 @@
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ngp %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Neo Geo Pocket" %ROM%</command>
         <platform>ngp</platform>
         <theme>ngp</theme>
     </system>
@@ -968,6 +969,7 @@
         <command label="Beetle NeoPop">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_ngp_libretro.dylib %ROM%</command>
         <command label="RACE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/race_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ngp %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Neo Geo Pocket Color" %ROM%</command>
         <platform>ngpc</platform>
         <theme>ngpc</theme>
     </system>
@@ -1561,6 +1563,7 @@
         <extension>.ws .WS .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "WonderSwan" %ROM%</command>
         <platform>wonderswan</platform>
         <theme>wonderswan</theme>
     </system>
@@ -1571,6 +1574,7 @@
         <extension>.ws .WS .wsc .WSC .pc2 .PC2 .7z .7Z .zip .ZIP</extension>
         <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mednafen_wswan_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "WonderSwan Color" %ROM%</command>
         <platform>wonderswancolor</platform>
         <theme>wonderswancolor</theme>
     </system>
