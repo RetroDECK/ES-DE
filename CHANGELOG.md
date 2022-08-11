@@ -16,6 +16,7 @@
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
+* Added ares standalone as an alternative emulator for many systems
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
@@ -147,6 +148,7 @@
 * The selector bar was not aligned correctly during menu scale-up animations
 * (Windows) File paths would get escaped with quotation marks even if they did not contain any spaces
 * (Windows) The emulator binary path would sometimes not get escaped correctly in es_log.txt on game launch
+* The .chd and .rp9 file extensions were missing for the amigacd32 system on macOS and Windows
 
 ## Version 1.2.6
 
