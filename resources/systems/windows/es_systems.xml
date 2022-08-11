@@ -1301,6 +1301,8 @@
         <command label="bsnes (Standalone)">%EMULATOR_BSNES% --fullscreen %ROM%</command>
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_supafaust_libretro.dll %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen-s_libretro.dll %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module snes %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Super Famicom" %ROM%</command>
         <platform>snes</platform>
         <theme>sfc</theme>
     </system>
@@ -1342,6 +1344,8 @@
         <command label="bsnes (Standalone)">%EMULATOR_BSNES% --fullscreen %ROM%</command>
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_supafaust_libretro.dll %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen-s_libretro.dll %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module snes %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Super Famicom" %ROM%</command>
         <platform>snes</platform>
         <theme>snes</theme>
     </system>
@@ -1359,6 +1363,8 @@
         <command label="bsnes (Standalone)">%EMULATOR_BSNES% --fullscreen %ROM%</command>
         <command label="Beetle Supafaust">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_supafaust_libretro.dll %ROM%</command>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen-s_libretro.dll %ROM%</command>
+        <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module snes %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Super Famicom" %ROM%</command>
         <platform>snes</platform>
         <theme>snesna</theme>
     </system>
@@ -1410,6 +1416,7 @@
         <command label="bsnes-hd">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\bsnes_hd_beta_libretro.dll %ROM%</command>
         <command label="bsnes-mercury Accuracy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\bsnes_mercury_accuracy_libretro.dll %ROM%</command>
         <command label="bsnes (Standalone)">%EMULATOR_BSNES% --fullscreen %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Super Famicom" %ROM%</command>
         <platform>sufami</platform>
         <theme>sufami</theme>
     </system>
