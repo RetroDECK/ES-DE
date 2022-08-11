@@ -66,6 +66,17 @@
             <entry>%ESPATH%\..\ArcadeFlashWeb\ArcadeFlashWeb.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ARES">
+        <!-- Multi-system emulator ares -->
+        <rule type="systempath">
+            <entry>ares.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ares\ares.exe</entry>
+            <entry>%ESPATH%\ares\ares.exe</entry>
+            <entry>%ESPATH%\..\ares\ares.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="systempath">

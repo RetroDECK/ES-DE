@@ -2,7 +2,7 @@ EmulationStation Desktop Edition (ES-DE) - Portable installation on Windows
 ---------------------------------------------------------------------------
 
 ES-DE release:
-1.2.6
+2.0.0
 
 Instructions:
 
@@ -27,6 +27,7 @@ Emulators\RetroArch-Win64\retroarch.exe
 Emulators\RetroArch\retroarch.exe
 Emulators\AppleWin\AppleWin.exe
 Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
+Emulators\ares\ares.exe
 Emulators\atari800\atari800.exe
 Emulators\BasiliskII\BasiliskII.exe
 Emulators\bsnes\bsnes.exe

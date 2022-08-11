@@ -42,6 +42,17 @@
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
+    <emulator name="ARES">
+        <!-- Multi-system emulator ares -->
+        <rule type="systempath">
+            <entry>ares</entry>
+            <entry>dev.ares.ares</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/dev.ares.ares</entry>
+            <entry>~/.local/share/flatpak/exports/bin/dev.ares.ares</entry>
+        </rule>
+    </emulator>
     <emulator name="ATARI800">
         <!-- Atari 8-bit computer emulator Atari800 -->
         <rule type="systempath">

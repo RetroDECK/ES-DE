@@ -136,6 +136,7 @@
         <extension>.a26 .A26 .bin .BIN .7z .7Z .zip .ZIP</extension>
         <command label="Stella">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\stella_libretro.dll %ROM%</command>
         <command label="Stella 2014">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\stella2014_libretro.dll %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% %ROM% --system "Atari 2600" --fullscreen</command>
         <platform>atari2600</platform>
         <theme>atari2600</theme>
     </system>
@@ -429,6 +430,8 @@
         <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fceumm_libretro.dll %ROM%</command>
         <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\quicknes_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% %ROM% --system "Famicom" --fullscreen</command>
+        <command label="ares FDS (Standalone)">%EMULATOR_ARES% %ROM% --system "Famicom Disk System" --fullscreen</command>
         <platform>famicom</platform>
         <theme>famicom</theme>
     </system>
@@ -463,6 +466,7 @@
         <command label="Nestopia UE">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\nestopia_libretro.dll %ROM%</command>
         <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fceumm_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% %ROM% --system "Famicom Disk System" --fullscreen</command>
         <platform>fds</platform>
         <theme>fds</theme>
     </system>
@@ -577,6 +581,7 @@
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\blastem_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% %ROM% --system "Mega Drive" --fullscreen</command>
         <platform>genesis</platform>
         <theme>genesis</theme>
     </system>
@@ -731,6 +736,7 @@
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\picodrive_libretro.dll %ROM%</command>
         <command label="BlastEm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\blastem_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module md %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% %ROM% --system "Mega Drive" --fullscreen</command>
         <platform>megadrive</platform>
         <theme>megadrive</theme>
     </system>
@@ -947,6 +953,8 @@
         <command label="FCEUmm">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fceumm_libretro.dll %ROM%</command>
         <command label="QuickNES">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\quicknes_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module nes %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% %ROM% --system "Famicom" --fullscreen</command>
+        <command label="ares FDS (Standalone)">%EMULATOR_ARES% %ROM% --system "Famicom Disk System" --fullscreen</command>
         <platform>nes</platform>
         <theme>nes</theme>
     </system>
