@@ -72,6 +72,8 @@ Emulators\tsugaru\Tsugaru_CUI.exe
 Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\VICE\x64sc.exe
 Emulators\VICE\bin\x64sc.exe
+Emulators\VICE\xvic.exe
+Emulators\VICE\bin\xvic.exe
 Emulators\Vita3K\Vita3K.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe

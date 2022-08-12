@@ -253,6 +253,13 @@
             <entry>/usr/local/bin/x64sc</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-XVIC">
+        <!-- Commodore 8-bit computer emulator VICE (xvic VIC-20) -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/xvic</entry>
+            <entry>/usr/local/bin/xvic</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="staticpath">

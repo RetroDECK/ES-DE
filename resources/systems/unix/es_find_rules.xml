@@ -530,6 +530,17 @@
             <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-XVIC">
+        <!-- Commodore 8-bit computer emulator VICE (xvic VIC-20) -->
+        <rule type="systempath">
+            <entry>xvic</entry>
+            <entry>vice-jz.xvic</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE|flatpak run --command=xvic net.sf.VICE</entry>
+        </rule>
+    </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="systempath">

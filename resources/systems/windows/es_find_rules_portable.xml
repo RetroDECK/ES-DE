@@ -400,6 +400,17 @@
             <entry>%ESPATH%\..\VICE\bin\x64sc.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-XVIC">
+        <!-- Commodore 8-bit computer emulator VICE (xvic VIC-20) -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\VICE\xvic.exe</entry>
+            <entry>%ESPATH%\VICE\xvic.exe</entry>
+            <entry>%ESPATH%\..\VICE\xvic.exe</entry>
+            <entry>%ESPATH%\Emulators\VICE\bin\xvic.exe</entry>
+            <entry>%ESPATH%\VICE\bin\xvic.exe</entry>
+            <entry>%ESPATH%\..\VICE\bin\xvic.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="staticpath">
