@@ -246,6 +246,13 @@
             <entry>/Applications/visualboyadvance-m.app/Contents/MacOS/visualboyadvance-m</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-X64SC">
+        <!-- Commodore 8-bit computer emulator VICE (x64sc accurate) -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/x64sc</entry>
+            <entry>/usr/local/bin/x64sc</entry>
+        </rule>
+    </emulator>
     <emulator name="XEMU">
         <!-- Microsoft Xbox emulator xemu -->
         <rule type="staticpath">

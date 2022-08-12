@@ -389,6 +389,17 @@
             <entry>%ESPATH%\..\VBA-M\visualboyadvance-m.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-X64SC">
+        <!-- Commodore 8-bit computer emulator VICE (x64sc accurate) -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\VICE\x64sc.exe</entry>
+            <entry>%ESPATH%\VICE\x64sc.exe</entry>
+            <entry>%ESPATH%\..\VICE\x64sc.exe</entry>
+            <entry>%ESPATH%\Emulators\VICE\bin\x64sc.exe</entry>
+            <entry>%ESPATH%\VICE\bin\x64sc.exe</entry>
+            <entry>%ESPATH%\..\VICE\bin\x64sc.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="staticpath">

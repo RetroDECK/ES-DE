@@ -514,6 +514,18 @@
             <entry>visualboyadvance-m</entry>
         </rule>
     </emulator>
+    <emulator name="VICE-X64SC">
+        <!-- Commodore 8-bit computer emulator VICE (x64sc accurate) -->
+        <rule type="systempath">
+            <entry>x64sc</entry>
+            <entry>vice-jz.x64sc</entry>
+            <entry>net.sf.VICE</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.sf.VICE</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.sf.VICE</entry>
+        </rule>
+    </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="systempath">
