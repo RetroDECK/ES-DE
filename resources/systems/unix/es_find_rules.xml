@@ -497,6 +497,10 @@
             <entry>solarus-run</entry>
             <entry>solarus.run</entry>
         </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.solarus_games.solarus.Launcher|flatpak run --command=solarus-run org.solarus_games.solarus.Launcher</entry>
+        </rule>
     </emulator>
     <emulator name="STEAM">
         <!-- Valve Steam -->
