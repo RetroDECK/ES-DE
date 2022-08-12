@@ -17,6 +17,9 @@
 * Renamed the default theme set from rbsimple-DE to slate-DE
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * Added ares standalone as an alternative emulator for many systems
+* Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
+* (Linux) Added Flatpak support for Mednafen using the Mednaffe package
+* (Linux) Added Flatpak support for Solarus using the Solarus Launcher package
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
@@ -25,6 +28,7 @@
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
+* Added support for substituting the emulator binary in staticpath rules with an explicit command (useful for launching specific binaries in Flatpaks)
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
 * Removed the "Preload gamelists on startup" setting

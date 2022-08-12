@@ -1521,6 +1521,17 @@ The other rules are probably self-explanatory with `systempath` searching the PA
 </rule>
 ```
 
+There is also support for substituting the emulator binary in a staticpath rule with an explicit command. To accomplish this add a pipe (|) character after the emulator entry followed by the command to execute. This is for example useful for Flatpaks when you want to check the presence of a package while still launching a specific command inside the package using the --command option. For example:
+
+``` xml
+<rule type="staticpath">
+    <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+    <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+</rule>
+```
+
+This will execute the regular logic of checking if the Mednaffe Flatpak is installed but will actually run the command after the pipe character when launching the game. Note that no checks or controls are in place for the explicitly defined command, it's just blindly executed.
+
 The winregistrypath rules are always processed first, followed by winregistryvalue, then systempath and finally staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
 
 As for `corepath` this rule is simply a path to search for the emulator core.
