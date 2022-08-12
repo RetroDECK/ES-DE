@@ -1840,6 +1840,16 @@ const std::string FileData::findEmulatorPath(std::string& command)
     }
 
     for (std::string path : emulatorStaticPaths) {
+        // If a pipe character is present in the staticpath entry it means we should substitute
+        // the emulator binary with whatever is defined after the pipe character.
+        std::string replaceCommand;
+        size_t pipePos {path.find('|')};
+
+        if (pipePos != std::string::npos) {
+            replaceCommand = path.substr(pipePos + 1);
+            path = path.substr(0, pipePos);
+        }
+
         path = Utils::FileSystem::expandHomePath(path);
         // If %ESPATH% is used for the rule, then expand it to the binary directory of ES-DE.
         path = Utils::String::replace(path, "%ESPATH%", Utils::FileSystem::getExePath());
@@ -1861,7 +1871,14 @@ const std::string FileData::findEmulatorPath(std::string& command)
         }
 
         if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
-            exePath = Utils::FileSystem::getEscapedPath(path);
+            if (replaceCommand == "") {
+                exePath = Utils::FileSystem::getEscapedPath(path);
+            }
+            else {
+                LOG(LogDebug) << "FileData::findEmulatorPath(): Replacing emulator binary in "
+                                 "staticpath rule with explicitly defined command";
+                exePath = replaceCommand;
+            }
             command.replace(startPos, endPos - startPos + 1, exePath);
             return exePath;
         }
