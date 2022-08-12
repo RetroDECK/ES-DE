@@ -57,6 +57,7 @@ Emulators\PCSX2-Qt\pcsx2-qtx64-avx2.exe
 Emulators\PICO-8\pico8.exe
 Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
+Emulators\PrimeHack\Dolphin.exe
 Emulators\redream\redream.exe
 Emulators\RPCS3\rpcs3.exe
 Emulators\ruffle\ruffle.exe

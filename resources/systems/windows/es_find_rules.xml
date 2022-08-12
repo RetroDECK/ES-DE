@@ -406,6 +406,18 @@
             <entry>%ESPATH%\..\PPSSPP\PPSSPPWindows64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PRIMEHACK">
+        <!-- PrimeHack, fork of Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="systempath">
+            <!-- Must be renamed from Dolphin.exe to avoid a potential Path/name conflict -->
+            <entry>PrimeHack.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\PrimeHack\Dolphin.exe</entry>
+            <entry>%ESPATH%\PrimeHack\Dolphin.exe</entry>
+            <entry>%ESPATH%\..\PrimeHack\Dolphin.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="systempath">
