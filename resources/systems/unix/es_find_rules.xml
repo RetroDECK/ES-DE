@@ -255,6 +255,10 @@
         <rule type="systempath">
             <entry>mednafen</entry>
         </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+        </rule>
     </emulator>
     <emulator name="MELONDS">
         <!-- Nintendo DS and DSi emulator melonDS -->
