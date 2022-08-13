@@ -13,6 +13,7 @@
 
 #include "utils/StringUtil.h"
 #include "Log.h"
+#include "utils/PlatformUtil.h"
 
 #include <algorithm>
 #include <locale>
@@ -624,6 +625,8 @@ namespace Utils
             catch (...) {
                 LOG(LogError) << "StringUtil::stringToWideString(): Conversion failed, invalid "
                                  "characters in source string?";
+                LOG(LogError) << stringArg;
+                Utils::Platform::emergencyShutdown();
                 return L"";
             }
         }
@@ -637,6 +640,7 @@ namespace Utils
             catch (...) {
                 LOG(LogError) << "StringUtil::wideStringToString(): Conversion failed, invalid "
                                  "characters in source string?";
+                Utils::Platform::emergencyShutdown();
                 return "";
             }
         }
