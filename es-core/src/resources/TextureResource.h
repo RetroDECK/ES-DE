@@ -35,6 +35,7 @@ public:
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
     static void manualUnload(std::string path, bool tile);
+    static void manualUnloadAll() { sTextureMap.clear(); }
 
     // Returns the raw pixel values.
     std::vector<unsigned char> getRawRGBAData();
@@ -79,7 +80,7 @@ private:
     std::shared_ptr<TextureData> mTextureData;
 
     // The texture data manager manages loading and unloading of filesystem based textures.
-    static TextureDataManager sTextureDataManager;
+    static inline TextureDataManager sTextureDataManager;
 
     glm::ivec2 mSize;
     glm::vec2 mSourceSize;
@@ -87,9 +88,9 @@ private:
 
     using TextureKeyType = std::pair<std::string, bool>;
     // Map of textures, used to prevent duplicate textures.
-    static std::map<TextureKeyType, std::weak_ptr<TextureResource>> sTextureMap;
+    static inline std::map<TextureKeyType, std::weak_ptr<TextureResource>> sTextureMap;
     // Set of all textures, used for memory management.
-    static std::set<TextureResource*> sAllTextures;
+    static inline std::set<TextureResource*> sAllTextures;
 };
 
 #endif // ES_CORE_RESOURCES_TEXTURE_RESOURCE_H

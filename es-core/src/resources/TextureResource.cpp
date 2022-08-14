@@ -11,11 +11,6 @@
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 
-TextureDataManager TextureResource::sTextureDataManager;
-std::map<TextureResource::TextureKeyType, std::weak_ptr<TextureResource>>
-    TextureResource::sTextureMap;
-std::set<TextureResource*> TextureResource::sAllTextures;
-
 TextureResource::TextureResource(
     const std::string& path, bool tile, bool dynamic, bool linearMagnify, bool forceRasterization)
     : mTextureData {nullptr}
@@ -157,7 +152,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
         return tex;
     }
 
-    TextureKeyType key(canonicalPath, tile);
+    TextureKeyType key {canonicalPath, tile};
     auto foundTexture = sTextureMap.find(key);
 
     if (foundTexture != sTextureMap.cend()) {
