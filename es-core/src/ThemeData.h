@@ -252,7 +252,8 @@ private:
     void parseView(const pugi::xml_node& viewNode, ThemeView& view);
     void parseElement(const pugi::xml_node& elementNode,
                       const std::map<std::string, ElementPropertyType>& typeMap,
-                      ThemeElement& element);
+                      ThemeElement& element,
+                      bool dateTimeWorkaround = false);
 
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sLegacySupportedViews;

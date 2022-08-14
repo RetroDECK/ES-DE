@@ -1104,14 +1104,29 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
             off = nameAttr.find_first_of(delim, prevOff);
 
             // Add the element type as a prefix to avoid name collisions between different
-            // component types.
+            // component types. Also include a workaround for legacy theme sets if the
+            // md_releasedate and md_lastplayed element types are incorrectly defined as
+            // text instead of datetime.
             const std::string elementType {node.name()};
-            elemKey = std::string(node.name()) + "_" + elemKey;
+            bool dateTimeWorkaround {false};
+
+            if (mLegacyTheme && elementType == "text" &&
+                (elemKey == "md_releasedate" || elemKey == "md_lastplayed")) {
+                LOG(LogDebug) << "ThemeData::parseView(): Element type for \"" << elemKey
+                              << "\" incorrectly set to \"text\" "
+                                 "instead of \"datetime\", applying workaround";
+                dateTimeWorkaround = true;
+                elemKey = "datetime_" + elemKey;
+            }
+            else {
+                elemKey = elementType + "_" + elemKey;
+            }
 
             parseElement(
                 node, elemTypeIt->second,
                 view.elements.insert(std::pair<std::string, ThemeElement>(elemKey, ThemeElement()))
-                    .first->second);
+                    .first->second,
+                dateTimeWorkaround);
 
             if (mLegacyTheme &&
                 std::find(view.legacyOrderedKeys.cbegin(), view.legacyOrderedKeys.cend(),
@@ -1123,13 +1138,17 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
 
 void ThemeData::parseElement(const pugi::xml_node& root,
                              const std::map<std::string, ElementPropertyType>& typeMap,
-                             ThemeElement& element)
+                             ThemeElement& element,
+                             bool dateTimeWorkaround)
 {
     ThemeException error;
     error << "ThemeData::parseElement(): ";
     error.setFiles(mPaths);
 
-    element.type = root.name();
+    if (dateTimeWorkaround)
+        element.type = "datetime";
+    else
+        element.type = root.name();
 
     element.extra = root.attribute("extra").as_bool(false);
     if (mLegacyTheme)
