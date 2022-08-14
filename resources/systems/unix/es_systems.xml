@@ -592,9 +592,10 @@
         <name>gx4000</name>
         <fullname>Amstrad GX4000</fullname>
         <path>%ROMPATH%/gx4000</path>
-        <extension>.cdt .CDT .cpr .CPR .dsk .DSK .kcr .KCR .m3u .M3U .sna .SNA .tap .TAR .voc .VOC .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .cdt .CDT .cpr .CPR .dsk .DSK .kcr .KCR .m3u .M3U .sna .SNA .tap .TAR .voc .VOC .7z .7Z .zip .ZIP</extension>
         <command label="Caprice32">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/cap32_libretro.so %ROM%</command>
         <command label="CrocoDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/crocods_libretro.so %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %ROMPATH%/gx4000 gx4000 -cart %ROM%</command>
         <platform>gx4000</platform>
         <theme>gx4000</theme>
     </system>
