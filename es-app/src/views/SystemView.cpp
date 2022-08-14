@@ -94,6 +94,7 @@ bool SystemView::input(InputConfig* config, Input input)
         if (config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_r &&
             SDL_GetModState() & KMOD_LCTRL && Settings::getInstance()->getBool("Debug")) {
             LOG(LogDebug) << "SystemView::input(): Reloading all";
+            TextureResource::manualUnloadAll();
             ViewController::getInstance()->reloadAll();
             return true;
         }
