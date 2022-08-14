@@ -18,6 +18,10 @@
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * Added ares standalone as an alternative emulator for many systems
 * Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
+* (Windows) Added PrimeHack as an alternative emulator for the gc and wii systems
+* Added CPCemu standalone as an alternative emulator for the amstradcpc system
+* Added MAME standalone as an alternative emulator for the gx4000 system
+* Added the .bin file extension to the gx4000 system
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package
 * (Linux) Added Flatpak support for Solarus using the Solarus Launcher package
 * Added support for folder links, used for launching game files inside folders without having to enter them
@@ -123,7 +127,7 @@
 * Removed the deprecated VideoVlcComponent
 * Removed the deprecated tools/update_theme_formatversion.sh script
 * Lots of general code cleanup and refactoring
-* (Windows) Added error handling to StringUtil::stringToWideString() and StringUtil::wideStringToString() to avoid crashes caused by invalid characters
+* (Windows) Added error handling to StringUtil::stringToWideString() and StringUtil::wideStringToString() to perform an emergency shutdown if needed
 * Changed tools/create_AppImage.sh to not include version information in the AppImage filename
 * Updated and improved the theming documentation
 
