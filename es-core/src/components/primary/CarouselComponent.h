@@ -915,9 +915,10 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("maxLogoCount")) {
+            // For legacy themes we allow a maxLogoCount (maxItemCount) of 0.
             if (theme->isLegacyTheme())
                 mMaxItemCount =
-                    std::ceil(glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f));
+                    std::ceil(glm::clamp(elem->get<float>("maxLogoCount"), 0.0f, 30.0f));
             else
                 mMaxItemCount = glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f);
         }
