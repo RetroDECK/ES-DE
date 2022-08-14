@@ -715,6 +715,8 @@ int main(int argc, char* argv[])
     // This makes for no delays when accessing content, but a longer startup time.
     ViewController::getInstance()->preload();
 
+    LOG(LogInfo) << "Finished loading theme set \"" << ThemeData::getCurrentThemeSetName() << "\"";
+
     if (splashScreen && splashScreenProgress)
         window->renderLoadingScreen("Done");
 

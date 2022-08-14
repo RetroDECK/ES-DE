@@ -221,6 +221,7 @@ public:
     }
     const static std::string getThemeFromCurrentSet(const std::string& system);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
+    const static std::string getCurrentThemeSetName() { return mCurrentThemeSet->first; }
 
     const bool isLegacyTheme() { return mLegacyTheme; }
 
@@ -265,7 +266,7 @@ private:
     static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
 
     static inline std::map<std::string, ThemeSet, StringComparator> mThemeSets;
-    std::map<std::string, ThemeSet, StringComparator>::iterator mCurrentThemeSet;
+    static inline std::map<std::string, ThemeSet, StringComparator>::iterator mCurrentThemeSet {};
 
     std::map<std::string, ThemeView> mViews;
     std::deque<std::string> mPaths;

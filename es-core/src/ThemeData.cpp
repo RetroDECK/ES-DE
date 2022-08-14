@@ -374,9 +374,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
 // clang-format on
 
 ThemeData::ThemeData()
-    : mCurrentThemeSet {}
-    , mLegacyTheme {false}
+    : mLegacyTheme {false}
 {
+    mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
 }
 
 void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
@@ -409,7 +409,6 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     if (!root)
         throw error << ": Missing <theme> tag";
 
-    mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
     if (mCurrentThemeSet != mThemeSets.cend())
         mLegacyTheme = mCurrentThemeSet->second.capabilities.legacyTheme;
 
@@ -596,6 +595,7 @@ void ThemeData::populateThemeSets()
         LOG(LogWarning) << "Couldn't find any theme sets, creating dummy entry";
         ThemeSet set {"no-theme-sets", ThemeCapability()};
         mThemeSets[set.getName()] = set;
+        mCurrentThemeSet = mThemeSets.begin();
     }
 }
 
@@ -628,6 +628,7 @@ const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
                         << "theme set \"" << set->first << "\" instead";
 
         Settings::getInstance()->setString("ThemeSet", set->first);
+        mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
     }
 
     return set->second.getThemePath(system);
