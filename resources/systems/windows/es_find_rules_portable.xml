@@ -90,6 +90,14 @@
             <entry>%ESPATH%\..\Citra\canary-mingw\citra.exe</entry>
         </rule>
     </emulator>
+    <emulator name="CPCEMU">
+        <!-- Amstrad CPC emulator CPCemu -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\cpcemu\cpcemu.exe</entry>
+            <entry>%ESPATH%\cpcemu\cpcemu.exe</entry>
+            <entry>%ESPATH%\..\cpcemu\cpcemu.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="CXBX-RELOADED">
         <!-- Microsoft Xbox emulator Cxbx-Reloaded -->
         <rule type="staticpath">

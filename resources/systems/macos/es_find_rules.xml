@@ -54,6 +54,12 @@
             <entry>/Applications/Citra/canary/citra-qt.app/Contents/MacOS/citra-qt</entry>
         </rule>
     </emulator>
+    <emulator name="CPCEMU">
+        <!-- Amstrad CPC emulator CPCemu -->
+        <rule type="staticpath">
+            <entry>/Applications/CPCemuMacOS.app/Contents/MacOS/CPCemuMacOS</entry>
+        </rule>
+    </emulator>
     <emulator name="DOLPHIN">
         <!-- Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="staticpath">

@@ -66,6 +66,7 @@
         <extension>.cdt .CDT .cpr .CPR .dsk .DSK .kcr .KCR .m3u .M3U .sna .SNA .tap .TAR .voc .VOC .7z .7Z .zip .ZIP</extension>
         <command label="Caprice32">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\cap32_libretro.dll %ROM%</command>
         <command label="CrocoDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\crocods_libretro.dll %ROM%</command>
+        <command label="CPCemu (Standalone)">%EMULATOR_CPCEMU% %ROM%</command>
         <platform>amstradcpc</platform>
         <theme>amstradcpc</theme>
     </system>

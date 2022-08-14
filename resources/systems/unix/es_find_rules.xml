@@ -107,6 +107,17 @@
             <entry>~/.local/share/flatpak/exports/bin/org.citra_emu.citra</entry>
         </rule>
     </emulator>
+    <emulator name="CPCEMU">
+        <!-- Amstrad CPC emulator CPCemu -->
+        <rule type="systempath">
+            <entry>cpcemu</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/cpcemu/cpcemu</entry>
+            <entry>~/.local/bin/cpcemu/cpcemu</entry>
+            <entry>~/bin/cpcemu/cpcemu</entry>
+        </rule>
+    </emulator>
     <emulator name="DESMUME">
         <!-- Nintendo DS emulator DeSmuME -->
         <rule type="systempath">
