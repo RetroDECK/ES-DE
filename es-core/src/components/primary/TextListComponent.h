@@ -204,8 +204,8 @@ TextListComponent<T>::TextListComponent()
     , mLineSpacing {1.5f}
     , mSelectorHeight {mFont->getSize() * 1.5f}
     , mSelectorOffsetY {0.0f}
-    , mSelectorColor {0x000000FF}
-    , mSelectorColorEnd {0x000000FF}
+    , mSelectorColor {0x333333FF}
+    , mSelectorColorEnd {0x333333FF}
     , mSelectorColorGradientHorizontal {true}
     , mSelectedColor {0}
     , mColors {0x0000FFFF, 0x00FF00FF}
