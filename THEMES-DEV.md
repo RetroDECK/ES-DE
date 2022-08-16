@@ -1434,6 +1434,10 @@ Properties:
 * `itemSize` - type: NORMALIZED_PAIR
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
+* `itemInterpolation` - type: STRING
+    - Interpolation method to use when scaling items. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
+    - Valid values are `nearest` or `linear`
+    - Default is `linear`
 * `itemScale` - type: FLOAT.
     - Selected item is increased in size by this scale
     - Minimum value is `0.5` and maximum value is `3`
@@ -1519,7 +1523,9 @@ Instances per view:
 
 Properties:
 * `pos` - type: NORMALIZED_PAIR
+    - Default is `0 0.2`
 * `size` - type: NORMALIZED_PAIR
+    - Default is `1 0.8`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -1529,10 +1535,10 @@ Properties:
     - Allows moving of the "selector bar" up or down from its computed position. Useful for fine tuning the position of the "selector bar" relative to the text.
 * `selectorColor` - type: COLOR
     - Color of the selector bar.
-    - Default is `000000FF`
+    - Default is `333333FF`
 * `selectorColorEnd` - type: COLOR
     - Setting this to something other than what is defined for `selectorColor` creates a color gradient.
-    - Default is `000000FF`
+    - Default is `333333FF`
 * `selectorGradientType` - type: STRING
     - The direction to apply the color gradient if both `selectorColor` and `selectorColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
@@ -1555,6 +1561,7 @@ Properties:
     - Default is `left`
 * `horizontalMargin` - type: FLOAT
     - Horizontal offset for text from the alignment point. If `horizontalAlignment` is "left", offsets the text to the right. If `horizontalAlignment` is "right", offsets text to the left. No effect if `horizontalAlignment` is "center". Given as a percentage of the element's parent's width (same unit as `size`'s X value).
+    - Default is `0`
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
