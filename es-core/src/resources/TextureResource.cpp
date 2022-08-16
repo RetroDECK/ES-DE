@@ -200,7 +200,9 @@ void TextureResource::rasterizeAt(float width, float height)
         data = mTextureData;
     else
         data = sTextureDataManager.get(this);
-    mSourceSize = glm::vec2 {static_cast<float>(width), static_cast<float>(height)};
+
+    if (mTextureData && mTextureData.get()->getScalable())
+        mSourceSize = glm::vec2 {static_cast<float>(width), static_cast<float>(height)};
     data->setSourceSize(static_cast<float>(width), static_cast<float>(height));
     if (mForceLoad || mTextureData != nullptr)
         data->load();
