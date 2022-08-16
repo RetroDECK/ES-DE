@@ -231,7 +231,7 @@ void VideoComponent::update(int deltaTime)
     }
 
     // Hack to prevent the video from starting to play if the static image was shown when paused.
-    if (mPaused)
+    if (mConfig.showSnapshotDelay && mPaused)
         mStartTime = SDL_GetTicks() + mConfig.startDelay;
 
     if (mWindow->getGameLaunchedState())
