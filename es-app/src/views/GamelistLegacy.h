@@ -228,6 +228,13 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mImageComponents[LOGO]->applyTheme(theme, getName(), "image_logo", ALL);
     mImageComponents[BACKGROUND]->applyTheme(theme, getName(), "image_background", ALL);
 
+    auto themeView = theme->getViewElements(getName());
+    if (themeView.elements.find("text_logoText") == themeView.elements.end())
+        mTextComponents[LOGOTEXT]->setVisible(false);
+
+    if (getName() == "basic")
+        mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_CENTER);
+
     // Make sure we don't display both the logo image and logo text.
     if (mImageComponents[LOGO]->hasImage())
         mTextComponents[LOGOTEXT]->setVisible(false);
