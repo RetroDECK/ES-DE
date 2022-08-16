@@ -74,6 +74,7 @@ void GamelistView::legacyPopulateFields()
     mImageComponents.back()->setMaxSize(mSize.x * (0.50f - 2.0f * padding), mSize.y * 0.4f);
     mImageComponents.back()->setDefaultZIndex(30.0f);
     mImageComponents.back()->setScrollFadeIn(true);
+    mImageComponents.back()->setVisible(false);
     addChild(mImageComponents.back().get());
 
     if (mViewStyle == ViewController::VIDEO) {
@@ -243,8 +244,8 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     for (auto extra : mThemeExtras)
         addChild(extra);
 
+    mPrimary->setPosition(0.0f, mSize.y * 0.1f);
     mPrimary->setSize(mSize.x, mSize.y * 0.8f);
-    mPrimary->setPosition(0.0f, mSize.y * 0.2f);
     mPrimary->setDefaultZIndex(50.0f);
     mPrimary->applyTheme(theme, getName(), "textlist_gamelist", ALL);
     addChild(mPrimary);
@@ -709,8 +710,7 @@ void GamelistView::legacyInitMDValues()
     const float colSize {(mSize.x * 0.48f) / 2.0f};
     for (unsigned int i = 0; i < labels.size(); ++i) {
         const float heightDiff = (labels[i]->getSize().y - values[i]->getSize().y) / 2.0f;
-        values[i]->setPosition(labels[i]->getPosition() +
-                               glm::vec3 {labels[i]->getSize().x, heightDiff, 0.0f});
+        values[i]->setPosition(mSize.x + glm::vec3 {labels[i]->getSize().x, heightDiff, 0.0f});
         values[i]->setSize(colSize - labels[i]->getSize().x, values[i]->getSize().y);
         values[i]->setDefaultZIndex(40.0f);
 
