@@ -89,11 +89,22 @@ void TextureResource::manualUnload(std::string path, bool tile)
 {
     const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(path);
 
-    TextureKeyType key(canonicalPath, tile);
-    auto foundTexture = sTextureMap.find(key);
+    // TODO: We always attempt to unload both the linear and nearest interpolation entries
+    // which is a bit of a hack. Rewrite this to only unload the requested image.
+    {
+        TextureKeyType key {canonicalPath, tile, false};
+        auto foundTexture = sTextureMap.find(key);
 
-    if (foundTexture != sTextureMap.cend()) {
-        sTextureMap.erase(foundTexture);
+        if (foundTexture != sTextureMap.cend())
+            sTextureMap.erase(foundTexture);
+    }
+
+    {
+        TextureKeyType key {canonicalPath, tile, true};
+        auto foundTexture = sTextureMap.find(key);
+
+        if (foundTexture != sTextureMap.cend())
+            sTextureMap.erase(foundTexture);
     }
 }
 
@@ -152,7 +163,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
         return tex;
     }
 
-    TextureKeyType key {canonicalPath, tile};
+    TextureKeyType key {canonicalPath, tile, linearMagnify};
     auto foundTexture = sTextureMap.find(key);
 
     if (foundTexture != sTextureMap.cend()) {
@@ -163,12 +174,12 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     // Need to create it.
     std::shared_ptr<TextureResource> tex;
     tex = std::shared_ptr<TextureResource>(
-        new TextureResource(key.first, tile, dynamic, linearMagnify, forceRasterization));
+        new TextureResource(std::get<0>(key), tile, dynamic, linearMagnify, forceRasterization));
     std::shared_ptr<TextureData> data = sTextureDataManager.get(tex.get());
 
     // Is it an SVG?
-    if (Utils::String::toLower(key.first.substr(key.first.size() - 4, std::string::npos)) !=
-        ".svg") {
+    if (Utils::String::toLower(
+            std::get<0>(key).substr(std::get<0>(key).size() - 4, std::string::npos)) != ".svg") {
         // Probably not. Add it to our map. We don't add SVGs because 2 SVGs might be
         // rasterized at different sizes.
         sTextureMap[key] = std::weak_ptr<TextureResource>(tex);
