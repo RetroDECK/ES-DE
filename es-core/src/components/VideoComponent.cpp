@@ -273,7 +273,7 @@ void VideoComponent::startVideoPlayer()
     if (mIsPlaying)
         stopVideoPlayer();
 
-    if (mConfig.startDelay != 0 && mStaticImagePath != "") {
+    if (mConfig.showSnapshotDelay && mConfig.startDelay != 0 && mStaticImagePath != "") {
         mStartTime = SDL_GetTicks() + mConfig.startDelay;
         setImage(mStaticImagePath);
     }
