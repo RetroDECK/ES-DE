@@ -129,6 +129,7 @@ private:
     float mUnfocusedItemOpacity;
     float mMaxItemCount;
     glm::vec2 mItemSize;
+    bool mLinearInterpolation;
     float mItemScale;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
@@ -165,6 +166,7 @@ CarouselComponent<T>::CarouselComponent()
     , mUnfocusedItemOpacity {0.5f}
     , mMaxItemCount {3.0f}
     , mItemSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
+    , mLinearInterpolation {false}
     , mItemScale {1.2f}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
@@ -201,7 +203,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             if ((!path.empty() && ResourceManager::getInstance().fileExists(path)) ||
                 (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
                 auto item = std::make_shared<ImageComponent>(false, dynamic);
-                item->setLinearInterpolation(true);
+                item->setLinearInterpolation(mLinearInterpolation);
                 item->setMaxSize(mItemSize * mItemScale);
                 item->applyTheme(theme, "system", "image_logo",
                                  ThemeFlags::PATH | ThemeFlags::COLOR);
@@ -214,7 +216,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         if (entry.data.itemPath != "" &&
             ResourceManager::getInstance().fileExists(entry.data.itemPath)) {
             auto item = std::make_shared<ImageComponent>(false, dynamic);
-            item->setLinearInterpolation(true);
+            item->setLinearInterpolation(mLinearInterpolation);
             item->setImage(entry.data.itemPath);
             item->setMaxSize(mItemSize * mItemScale);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
@@ -224,7 +226,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         else if (entry.data.defaultItemPath != "" &&
                  ResourceManager::getInstance().fileExists(entry.data.defaultItemPath)) {
             auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
-            defaultItem->setLinearInterpolation(true);
+            defaultItem->setLinearInterpolation(mLinearInterpolation);
             defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->setMaxSize(mItemSize * mItemScale);
             defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
@@ -285,7 +287,7 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
 {
     if (entry.data.itemPath != "") {
         auto item = std::make_shared<ImageComponent>(false, true);
-        item->setLinearInterpolation(true);
+        item->setLinearInterpolation(mLinearInterpolation);
         item->setImage(entry.data.itemPath);
         item->setMaxSize(mItemSize * mItemScale);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
@@ -782,8 +784,27 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (!mLegacyMode) {
+        mLinearInterpolation = true;
+
         if (elem->has("itemScale"))
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 3.0f);
+
+        if (elem->has("itemInterpolation")) {
+            const std::string itemInterpolation {elem->get<std::string>("itemInterpolation")};
+            if (itemInterpolation == "linear") {
+                mLinearInterpolation = true;
+            }
+            else if (itemInterpolation == "nearest") {
+                mLinearInterpolation = false;
+            }
+            else {
+                mLinearInterpolation = true;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "<itemInterpolation> defined as \""
+                                << itemInterpolation << "\"";
+            }
+        }
+
         if (elem->has("itemSize")) {
             // Keep size within a 0.05 and 1.0 multiple of the screen size.
             glm::vec2 itemSize {elem->get<glm::vec2>("itemSize")};
@@ -916,11 +937,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("maxLogoCount")) {
             // For legacy themes we allow a maxLogoCount (maxItemCount) of 0.
-            if (theme->isLegacyTheme())
-                mMaxItemCount =
-                    std::ceil(glm::clamp(elem->get<float>("maxLogoCount"), 0.0f, 30.0f));
-            else
-                mMaxItemCount = glm::clamp(elem->get<float>("maxLogoCount"), 0.5f, 30.0f);
+            mMaxItemCount = std::ceil(glm::clamp(elem->get<float>("maxLogoCount"), 0.0f, 30.0f));
         }
 
         if (elem->has("logoRotation"))

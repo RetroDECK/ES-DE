@@ -257,6 +257,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemType", STRING},
        {"defaultItem", PATH},
        {"itemSize", NORMALIZED_PAIR},
+       {"itemInterpolation", STRING},
        {"itemScale", FLOAT},
        {"itemRotation", FLOAT},
        {"itemRotationOrigin", NORMALIZED_PAIR},
