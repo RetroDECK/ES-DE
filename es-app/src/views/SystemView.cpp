@@ -556,6 +556,8 @@ void SystemView::populate()
                         elements.ratingComponents.back()->applyTheme(theme, "system", element.first,
                                                                      ThemeFlags::ALL);
                         elements.ratingComponents.back()->setVisible(false);
+                        elements.ratingComponents.back()->setOpacity(
+                            elements.ratingComponents.back()->getOpacity());
                         elements.children.emplace_back(elements.ratingComponents.back().get());
                     }
                 }

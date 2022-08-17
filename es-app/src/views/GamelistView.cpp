@@ -263,6 +263,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mRatingComponents.back()->setDefaultZIndex(45.0f);
                 mRatingComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
                 mRatingComponents.back()->setScrollHide(true);
+                mRatingComponents.back()->setOpacity(mRatingComponents.back()->getOpacity());
                 addChild(mRatingComponents.back().get());
             }
         }
