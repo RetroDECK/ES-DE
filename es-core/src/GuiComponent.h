@@ -193,6 +193,7 @@ public:
     virtual bool isListScrolling() { return false; }
     virtual void stopListScrolling() {}
     virtual const float getOpacity() const { return mOpacity; }
+    virtual const float getColorOpacity() const { return 1.0f; }
     virtual void setOpacity(float opacity);
     virtual float getSaturation() const { return static_cast<float>(mColor); }
     virtual void setSaturation(float saturation) { mSaturation = saturation; }

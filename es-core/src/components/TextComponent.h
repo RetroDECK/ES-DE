@@ -61,6 +61,8 @@ public:
     {
         return static_cast<float>((mColor & 0x000000FF) / 255.0f);
     }
+    float const getColorOpacity() const override { return mColorOpacity; }
+
     void setOpacity(float opacity) override;
     void setDimming(float dimming) override;
 

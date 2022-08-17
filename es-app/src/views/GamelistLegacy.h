@@ -626,10 +626,9 @@ void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
 
     for (auto it = comps.cbegin(); it != comps.cend(); ++it) {
         GuiComponent* comp {*it};
-        // An animation is playing, then animate if reverse != fadingOut.
-        // An animation is not playing, then animate if opacity != our target opacity.
         if ((comp->isAnimationPlaying(0) && comp->isAnimationReversed(0) != fadingOut) ||
-            (!comp->isAnimationPlaying(0) && comp->getOpacity() != (fadingOut ? 0.0f : 1.0f))) {
+            (!comp->isAnimationPlaying(0) &&
+             comp->getOpacity() != (fadingOut ? 0.0f : comp->getColorOpacity()))) {
             auto func = [comp](float t) { comp->setOpacity(glm::mix(0.0f, 1.0f, t)); };
             comp->setAnimation(new LambdaAnimation(func, 150), 0, nullptr, fadingOut);
         }
