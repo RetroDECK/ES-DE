@@ -102,6 +102,7 @@
             <size>0.06 0.04</size>
             <color>FFEE00</color>
             <gameselector>selector_random</gameselector>
+            <opacity>0.5</opacity>
         </rating>
         <rating name="recent_game_rating">
             <pos>0.889 0.042</pos>

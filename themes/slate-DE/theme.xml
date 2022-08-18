@@ -34,6 +34,7 @@ based on: recalbox-multi by the Recalbox community
             <carousel name="system_carousel">
                 <staticItem>./${system.theme}/images/logo.svg</staticItem>
                 <itemScale>1.23</itemScale>
+                <itemInterpolation>linear</itemInterpolation>
                 <itemSize>0.25 0.125</itemSize>
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.070</fontSize>
@@ -239,7 +240,8 @@ based on: recalbox-multi by the Recalbox community
             <size>0.14 0.023</size>
         </text>
         <text name="md_lbl_releasedate">
-            <metadata>Released:</metadata>
+            <text>Released:</text>
+            <metadataElement>true</metadataElement>
             <pos>0.815 0.2755</pos>
         </text>
         <datetime name="md_releasedate">
@@ -250,7 +252,8 @@ based on: recalbox-multi by the Recalbox community
             <pos>0.815 0.3355</pos>
         </text>
         <text name="md_lbl_developer">
-            <metadata>Developer:</metadata>
+            <text>Developer:</text>
+            <metadataElement>true</metadataElement>
             <pos>0.815 0.3355</pos>
         </text>
         <text name="md_developer">
@@ -258,7 +261,8 @@ based on: recalbox-multi by the Recalbox community
             <pos>0.83 0.3605</pos>
         </text>
         <text name="md_lbl_publisher">
-            <metadata>Publisher:</metadata>
+            <text>Publisher:</text>
+            <metadataElement>true</metadataElement>
             <pos>0.815 0.3955</pos>
         </text>
         <text name="md_publisher">
@@ -266,7 +270,8 @@ based on: recalbox-multi by the Recalbox community
             <pos>0.83 0.4205</pos>
         </text>
         <text name="md_lbl_genre">
-            <metadata>Genre:</metadata>
+            <text>Genre:</text>
+            <metadataElement>true</metadataElement>
             <pos>0.815 0.4555</pos>
         </text>
         <text name="md_genre">
@@ -274,7 +279,8 @@ based on: recalbox-multi by the Recalbox community
             <pos>0.83 0.4805</pos>
         </text>
         <text name="md_lbl_players">
-            <metadata>Players:</metadata>
+            <text>Players:</text>
+            <metadataElement>true</metadataElement>
             <pos>0.815 0.5155</pos>
         </text>
         <text name="md_players">
@@ -282,7 +288,8 @@ based on: recalbox-multi by the Recalbox community
             <pos>0.83 0.5405</pos>
         </text>
         <text name="md_lbl_lastplayed">
-            <metadata>Last played:</metadata>
+            <text>Last played:</text>
+            <metadataElement>true</metadataElement>
             <pos>0.815 0.5755</pos>
         </text>
         <datetime name="md_lastplayed">
