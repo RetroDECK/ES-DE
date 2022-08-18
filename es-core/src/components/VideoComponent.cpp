@@ -233,6 +233,9 @@ void VideoComponent::update(int deltaTime)
         return;
     }
 
+    if (mVideoPath == "")
+        return;
+
     // Hack to prevent the video from starting to play if the static image was shown when paused.
     if (mConfig.showSnapshotDelay && mPaused)
         mStartTime = SDL_GetTicks() + mConfig.startDelay;
