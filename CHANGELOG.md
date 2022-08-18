@@ -66,6 +66,7 @@
 * Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
 * Changed the helpsystem properties entrySpacing and iconTextSpacing from fixed pixel values to relative values
 * Added support for using unsigned integers for theme properties
+* Added a metadataElement theme property to the image, video, animation and text element types to control fading and hiding of arbitrary elements
 * Added the rendering of a green rectangle around the CarouselComponent when pressing Ctrl+i in debug mode
 * Changed the color of the rectangle from blue to green for TextListComponent when pressing Ctrl+t in debug mode
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
@@ -151,6 +152,7 @@
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
+* Text elements that had an opacity set to lower than FF via the color tag were faded in during gamelist scrolling
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase in theme names)
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations

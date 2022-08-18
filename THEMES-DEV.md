@@ -804,6 +804,8 @@ Properties:
     - `3dbox` - This will look for a 3D box image.
     - `physicalmedia` - This will look for a physical media image.
     - `fanart` - This will look for a fan art image.
+* `metadataElement` - type: BOOLEAN
+    - By default game metadata and media is faded out during gamelist view textlist fast scrolling and hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define additional image elements that should be treated as if they were game media files. This is for example useful for hiding and fading out image elements that are used as indicator icons for the various metadata types like genre, publisher, players etc. It's however not possible to do the opposite, i.e. to disable this functionality for the default game media types as that would break basic application behavior.
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
 * `tile` - type: BOOLEAN
@@ -861,6 +863,8 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `metadataElement` - type: BOOLEAN
+    - By default game metadata and media is faded out during gamelist view textlist fast scrolling and hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define static video elements that should be treated as if they were game media files. This property is ignored if `path` is not set.
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not (this also applies to the `system` view if you have a `gameselector` element defined). If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
 * `default` - type: PATH
@@ -946,6 +950,8 @@ Properties:
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the animation will be rotated.
     - Default is `0.5 0.5`
+* `metadataElement` - type: BOOLEAN
+    - By default game metadata and media is faded out during gamelist view textlist fast scrolling and hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define animation elements that should be treated as if they were game media files. This is for example useful for hiding and fading out animations that are used as indicators for the various metadata types like genre, publisher, players etc.
 * `path` - type: PATH
     - Path to the animation file. Only the .json extension is supported.
 * `speed` - type: FLOAT.
@@ -1130,7 +1136,7 @@ Properties:
 * `text` - type: STRING
     - A string literal to display.
 * `systemdata` - type: STRING
-    - This translates to some system data including values defined in es_systems.xml as well as some statistics. If an invalid systemdata field is defined, it will be printed as a string literal. This property can only be used in the `system` view.
+    - This translates to some system data including values defined in es_systems.xml as well as some statistics. This property can only be used in the `system` view and you can only define a single value per element.
     - Valid values:
     - `name` - Short system name as defined in es_systems.xml.
     - `fullname` - Full system name as defined in es_systems.xml.
@@ -1138,7 +1144,7 @@ Properties:
     - `gamecount_games` - Number of games available for the system. Does not print the favorites count.
     - `gamecount_favorites` - Number of favorite games for the system, may be blank if favorites are not applicable.
 * `metadata` - type: STRING
-    - This translates to the metadata values that are available for the game. If an invalid metadata field is defined, it will be printed as a string literal. To use this property from the `system` view, you will first need to add a `gameselector` element.
+    - This translates to the metadata values that are available for the game. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per text element.
      - Valid values:
     - `name` - Game name.
     - `description` - Game description. Should be combined with the `container` property in most cases.
@@ -1154,6 +1160,8 @@ Properties:
     - `playcount` - How many times the game has been played.
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
+* `metadataElement` - type: BOOLEAN
+    - By default game metadata and media is faded out during gamelist view textlist fast scrolling and hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define additional text elements that should be treated as if they were game metadata entries. This is for example useful for hiding and fading out text labels for the various metadata types like genre, publisher, players etc. Note that it's not possible to disable the metadata hiding functionality for the default metadata fields as that would break basic application behavior. Also note that there is a slight exception to the hiding logic for text containers with the metadata value set to `description`. In this case the element is by default not hidden when enabling the _Hide metadata fields_ setting. To also hide such containers, set this property to true.
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `container` - type: BOOLEAN
@@ -1231,7 +1239,7 @@ Properties:
     - Point around which the text will be rotated.
     - Default is `0.5 0.5`.
 * `metadata` - type: STRING
-    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element.
+    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per datetime element.
     - Valid values:
     - `releasedate` - The release date of the game.
     - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
