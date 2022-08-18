@@ -450,11 +450,37 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & TEXT && elem->has("text"))
         setText(elem->get<std::string>("text"));
 
-    if (properties & METADATA && elem->has("systemdata"))
-        mThemeSystemdata = elem->get<std::string>("systemdata");
+    if (properties & METADATA && elem->has("systemdata")) {
+        mThemeSystemdata = "";
+        const std::string systemdata {elem->get<std::string>("systemdata")};
+        for (auto& type : systemdataTypes) {
+            if (type == systemdata) {
+                mThemeSystemdata = type;
+                break;
+            }
+        }
+        if (mThemeSystemdata == "") {
+            LOG(LogWarning)
+                << "TextComponent: Invalid theme configuration, property <systemdata> defined as \""
+                << systemdata << "\"";
+        }
+    }
 
-    if (properties & METADATA && elem->has("metadata"))
-        mThemeMetadata = elem->get<std::string>("metadata");
+    if (properties & METADATA && elem->has("metadata")) {
+        mThemeMetadata = "";
+        const std::string metadata {elem->get<std::string>("metadata")};
+        for (auto& type : metadataTypes) {
+            if (type == metadata) {
+                mThemeMetadata = type;
+                break;
+            }
+        }
+        if (mThemeMetadata == "") {
+            LOG(LogWarning)
+                << "TextComponent: Invalid theme configuration, property <metadata> defined as \""
+                << metadata << "\"";
+        }
+    }
 
     if (properties & LETTER_CASE && elem->has("letterCase")) {
         std::string letterCase {elem->get<std::string>("letterCase")};

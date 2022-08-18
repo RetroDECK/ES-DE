@@ -91,6 +91,14 @@ private:
     void calculateExtent();
     void onColorChanged();
 
+    static inline std::vector<std::string> systemdataTypes {
+        "name", "fullname", "gamecount", "gamecount_games", "gamecount_favorites"};
+
+    static inline std::vector<std::string> metadataTypes {
+        "name",   "description", "rating",     "developer",  "publisher",
+        "genre",  "players",     "favorite",   "completed",  "kidgame",
+        "broken", "playcount",   "controller", "altemulator"};
+
     Renderer* mRenderer;
     unsigned int mColor;
     unsigned int mBgColor;

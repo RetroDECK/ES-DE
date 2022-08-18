@@ -172,8 +172,18 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << str << "\"";
     }
 
-    if (properties & METADATA && elem->has("metadata"))
-        mThemeMetadata = elem->get<std::string>("metadata");
+    if (properties & METADATA && elem->has("metadata")) {
+        mThemeMetadata = "";
+        const std::string metadata {elem->get<std::string>("metadata")};
+        if (metadata == "releasedate" || metadata == "lastplayed") {
+            mThemeMetadata = metadata;
+        }
+        else {
+            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
+                               "<metadata> defined as \""
+                            << metadata << "\"";
+        }
+    }
 
     if (mThemeMetadata == "lastplayed")
         setDisplayRelative(true);
