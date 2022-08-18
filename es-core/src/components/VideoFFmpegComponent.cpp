@@ -125,7 +125,7 @@ void VideoFFmpegComponent::resize()
 
 void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 {
-    if (!mVisible || mThemeOpacity == 0.0f)
+    if (!mVisible || mOpacity == 0.0f || mThemeOpacity == 0.0f)
         return;
 
     if (!mHasVideo && mStaticImagePath == "")
@@ -141,7 +141,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         unsigned int rectColor {0x000000FF};
 
         if (mThemeOpacity != 1.0f)
-            rectColor = static_cast<int>(mThemeOpacity * mFadeIn * 255.0f);
+            rectColor = static_cast<int>(mFadeIn * mOpacity * mThemeOpacity * 255.0f);
 
         // Render the black rectangle behind the video.
         if (mVideoRectangleCoords.size() == 4) {
@@ -214,7 +214,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         // or the video screensaver, then skip this as the scanline rendering is then handled
         // in those modules as a post-processing step.
         if (!mScreensaverMode && !mMediaViewerMode) {
-            vertices[0].opacity = mFadeIn * mThemeOpacity;
+            vertices[0].opacity = mFadeIn * mOpacity * mThemeOpacity;
             if ((mLegacyTheme && Settings::getInstance()->getBool("GamelistVideoScanlines")) ||
                 (!mLegacyTheme && mRenderScanlines)) {
                 vertices[0].shaders = Renderer::Shader::SCANLINES;
