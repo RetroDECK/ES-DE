@@ -114,8 +114,9 @@ public:
 
     // clang-format off
     enum ComponentThemeFlags : unsigned int {
-        SCROLL_HIDE    = 0x00000001,
-        SCROLL_FADE_IN = 0x00000002
+        SCROLL_HIDE      = 0x00000001,
+        SCROLL_FADE_IN   = 0x00000002,
+        METADATA_ELEMENT = 0x00000004
     };
     // clang-format on
 
@@ -137,6 +138,17 @@ public:
             mComponentThemeFlags |= ComponentThemeFlags::SCROLL_FADE_IN;
         else
             mComponentThemeFlags ^= ComponentThemeFlags::SCROLL_FADE_IN;
+    }
+    const bool getMetadataElement()
+    {
+        return mComponentThemeFlags & ComponentThemeFlags::METADATA_ELEMENT;
+    }
+    void setMetadataElement(bool state)
+    {
+        if (state)
+            mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
+        else
+            mComponentThemeFlags ^= ComponentThemeFlags::METADATA_ELEMENT;
     }
 
     // Returns the center point of the image (takes origin into account).

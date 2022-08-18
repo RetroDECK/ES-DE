@@ -61,12 +61,14 @@ void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
 
 void GamelistView::onShow()
 {
-    // Reset any GIF and Lottie animations.
     for (auto& animation : mLottieAnimComponents)
         animation->resetFileAnimation();
 
     for (auto& animation : mGIFAnimComponents)
         animation->resetFileAnimation();
+
+    for (auto& video : mStaticVideoComponents)
+        video->stopVideoPlayer();
 
     mLastUpdated = nullptr;
     GuiComponent::onShow();
@@ -172,15 +174,28 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mImageComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
                 if (mImageComponents.back()->getThemeImageTypes().size() != 0)
                     mImageComponents.back()->setScrollHide(true);
+                else if (mImageComponents.back()->getMetadataElement())
+                    mImageComponents.back()->setScrollHide(true);
                 addChild(mImageComponents.back().get());
             }
             else if (element.second.type == "video") {
-                mVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
-                mVideoComponents.back()->setDefaultZIndex(30.0f);
-                addChild(mVideoComponents.back().get());
-                mVideoComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mVideoComponents.back()->getThemeImageTypes().size() != 0)
-                    mVideoComponents.back()->setScrollHide(true);
+                if (element.second.has("path")) {
+                    mStaticVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
+                    mStaticVideoComponents.back()->setDefaultZIndex(30.0f);
+                    addChild(mStaticVideoComponents.back().get());
+                    mStaticVideoComponents.back()->applyTheme(theme, "gamelist", element.first,
+                                                              ALL);
+                    if (mStaticVideoComponents.back()->getMetadataElement())
+                        mStaticVideoComponents.back()->setScrollHide(true);
+                }
+                else {
+                    mVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
+                    mVideoComponents.back()->setDefaultZIndex(30.0f);
+                    addChild(mVideoComponents.back().get());
+                    mVideoComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+                    if (mVideoComponents.back()->getThemeImageTypes().size() != 0)
+                        mVideoComponents.back()->setScrollHide(true);
+                }
             }
             else if (element.second.type == "animation" && element.second.has("path")) {
                 const std::string extension {
@@ -189,12 +204,16 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mLottieAnimComponents.push_back(std::make_unique<LottieAnimComponent>());
                     mLottieAnimComponents.back()->setDefaultZIndex(35.0f);
                     mLottieAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+                    if (mLottieAnimComponents.back()->getMetadataElement())
+                        mLottieAnimComponents.back()->setScrollHide(true);
                     addChild(mLottieAnimComponents.back().get());
                 }
                 else if (extension == ".gif") {
                     mGIFAnimComponents.push_back(std::make_unique<GIFAnimComponent>());
                     mGIFAnimComponents.back()->setDefaultZIndex(35.0f);
                     mGIFAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
+                    if (mGIFAnimComponents.back()->getMetadataElement())
+                        mGIFAnimComponents.back()->setScrollHide(true);
                     addChild(mGIFAnimComponents.back().get());
                 }
                 else if (extension == ".") {
@@ -233,14 +252,21 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mContainerTextComponents.back()->applyTheme(
                         theme, "gamelist", element.first,
                         ALL ^ POSITION ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION);
-                    mContainerComponents.back()->setScrollHide(true);
+                    if (mContainerTextComponents.back()->getThemeMetadata() != "")
+                        mContainerComponents.back()->setScrollHide(true);
+                    else if (mContainerTextComponents.back()->getMetadataElement())
+                        mContainerComponents.back()->setScrollHide(true);
                 }
                 else {
                     mTextComponents.push_back(std::make_unique<TextComponent>());
                     mTextComponents.back()->setDefaultZIndex(40.0f);
                     mTextComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                    if (mTextComponents.back()->getThemeMetadata() != "")
+                    if (mTextComponents.back()->getThemeMetadata() != "") {
                         mTextComponents.back()->setScrollHide(true);
+                    }
+                    else if (mTextComponents.back()->getMetadataElement()) {
+                        mTextComponents.back()->setScrollHide(true);
+                    }
                     addChild(mTextComponents.back().get());
                 }
             }
@@ -294,6 +320,11 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             mLeftRightAvailable = false;
     }
 
+    for (auto& video : mStaticVideoComponents) {
+        if (video->hasStaticVideo())
+            video->setStaticVideo();
+    }
+
     sortChildren();
 }
 
@@ -309,6 +340,17 @@ void GamelistView::update(int deltaTime)
             if (image->isAnimationPlaying(0))
                 image->finishAnimation(0);
         }
+    }
+
+    // We need to manually advance fade-in and fade-out animations since they will not get updated
+    // via GuiComponent as these components override the update() function.
+    for (auto& anim : mLottieAnimComponents) {
+        if (anim->isAnimationPlaying(0))
+            anim->advanceAnimation(0, deltaTime);
+    }
+    for (auto& anim : mGIFAnimComponents) {
+        if (anim->isAnimationPlaying(0))
+            anim->advanceAnimation(0, deltaTime);
     }
 
     updateChildren(deltaTime);
@@ -392,7 +434,8 @@ void GamelistView::updateInfoPanel(const CursorState& state)
     if (mCarousel != nullptr)
         mCarousel->onDemandTextureLoad();
 
-    // If the game data has already been rendered to the info panel, then skip it this time.
+    // If the game data has already been rendered to the view, then skip it this time.
+    // This also happens when fast-scrolling.
     if (file == mLastUpdated)
         return;
 
@@ -427,24 +470,56 @@ void GamelistView::updateInfoPanel(const CursorState& state)
 
     if (hideMetaDataFields) {
         for (auto& text : mTextComponents) {
-            if (text->getThemeMetadata() != "")
+            if (text->getMetadataElement() || text->getThemeMetadata() != "")
                 text->setVisible(false);
         }
         for (auto& date : mDateTimeComponents)
             date->setVisible(false);
+        for (auto& image : mImageComponents) {
+            if (image->getMetadataElement())
+                image->setVisible(false);
+        }
+        for (auto& video : mStaticVideoComponents) {
+            if (video->getMetadataElement())
+                video->setVisible(false);
+        }
+        for (auto& anim : mLottieAnimComponents) {
+            if (anim->getMetadataElement())
+                anim->setVisible(false);
+        }
+        for (auto& anim : mGIFAnimComponents) {
+            if (anim->getMetadataElement())
+                anim->setVisible(false);
+        }
         for (auto& badge : mBadgeComponents)
             badge->setVisible(false);
         for (auto& rating : mRatingComponents)
             rating->setVisible(false);
         for (auto& cText : mContainerTextComponents) {
-            if (cText->getThemeMetadata() != "description")
+            if (cText->getThemeMetadata() != "description" || cText->getMetadataElement())
                 cText->setVisible(false);
         }
     }
     else {
         for (auto& text : mTextComponents) {
-            if (text->getThemeMetadata() != "")
+            if (text->getMetadataElement() || text->getThemeMetadata() != "")
                 text->setVisible(true);
+        }
+        for (auto& image : mImageComponents) {
+            if (image->getMetadataElement())
+                image->setVisible(true);
+        }
+        for (auto& video : mStaticVideoComponents) {
+            if (video->getMetadataElement())
+                video->setVisible(true);
+        }
+        for (auto& anim : mLottieAnimComponents) {
+            if (anim->getMetadataElement())
+                anim->setVisible(true);
+        }
+        for (auto& anim : mGIFAnimComponents) {
+            if (anim->getMetadataElement())
+                anim->setVisible(true);
         }
         for (auto& date : mDateTimeComponents)
             date->setVisible(true);
@@ -453,7 +528,7 @@ void GamelistView::updateInfoPanel(const CursorState& state)
         for (auto& rating : mRatingComponents)
             rating->setVisible(true);
         for (auto& cText : mContainerTextComponents) {
-            if (cText->getThemeMetadata() != "description")
+            if (cText->getThemeMetadata() != "description" || cText->getMetadataElement())
                 cText->setVisible(true);
         }
     }
@@ -763,9 +838,21 @@ void GamelistView::updateInfoPanel(const CursorState& state)
         if (image->getScrollHide())
             comps.emplace_back(image.get());
     }
+    for (auto& video : mStaticVideoComponents) {
+        if (video->getScrollHide())
+            comps.emplace_back(video.get());
+    }
     for (auto& video : mVideoComponents) {
         if (video->getScrollHide())
             comps.emplace_back(video.get());
+    }
+    for (auto& anim : mLottieAnimComponents) {
+        if (anim->getScrollHide())
+            comps.emplace_back(anim.get());
+    }
+    for (auto& anim : mGIFAnimComponents) {
+        if (anim->getScrollHide())
+            comps.emplace_back(anim.get());
     }
     for (auto& badge : mBadgeComponents) {
         if (badge->getScrollHide())

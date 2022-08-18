@@ -389,6 +389,9 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
+    if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
+        mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
+
     if (properties & COLOR && elem->has("color"))
         setColor(elem->get<unsigned int>("color"));
 

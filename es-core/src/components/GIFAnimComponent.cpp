@@ -267,6 +267,9 @@ void GIFAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
+        mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
+
     if (elem->has("speed")) {
         const float speed {elem->get<float>("speed")};
         if (speed < 0.2f || speed > 3.0f) {

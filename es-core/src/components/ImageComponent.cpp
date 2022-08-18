@@ -557,6 +557,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
     }
 
+    if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
+        mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
+
     if (properties & COLOR) {
         if (elem->has("color"))
             setColorShift(elem->get<unsigned int>("color"));

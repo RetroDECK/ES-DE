@@ -44,21 +44,28 @@ public:
     {
         for (auto& video : mVideoComponents)
             video->startVideoPlayer();
+        for (auto& video : mStaticVideoComponents)
+            video->startVideoPlayer();
     }
     void stopViewVideos() override
     {
         for (auto& video : mVideoComponents)
             video->stopVideoPlayer();
+        for (auto& video : mStaticVideoComponents)
+            video->stopVideoPlayer();
     }
     void pauseViewVideos() override
     {
-        for (auto& video : mVideoComponents) {
+        for (auto& video : mVideoComponents)
             video->pauseVideoPlayer();
-        }
+        for (auto& video : mStaticVideoComponents)
+            video->pauseVideoPlayer();
     }
     void muteViewVideos() override
     {
         for (auto& video : mVideoComponents)
+            video->muteVideoPlayer();
+        for (auto& video : mStaticVideoComponents)
             video->muteVideoPlayer();
     }
 
@@ -111,6 +118,7 @@ private:
     std::vector<std::unique_ptr<TextComponent>> mTextComponents;
     std::vector<std::unique_ptr<DateTimeComponent>> mDateTimeComponents;
     std::vector<std::unique_ptr<ImageComponent>> mImageComponents;
+    std::vector<std::unique_ptr<VideoFFmpegComponent>> mStaticVideoComponents;
     std::vector<std::unique_ptr<VideoFFmpegComponent>> mVideoComponents;
     std::vector<std::unique_ptr<LottieAnimComponent>> mLottieAnimComponents;
     std::vector<std::unique_ptr<GIFAnimComponent>> mGIFAnimComponents;

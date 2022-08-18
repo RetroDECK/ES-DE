@@ -147,6 +147,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mVideoAreaPos = elem->get<glm::vec2>("pos") * scale;
     }
 
+    if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
+        mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
+
     if (elem->has("audio"))
         mPlayAudio = elem->get<bool>("audio");
 
