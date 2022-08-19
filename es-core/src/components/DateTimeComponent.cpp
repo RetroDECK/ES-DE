@@ -179,9 +179,9 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mThemeMetadata = metadata;
         }
         else {
-            LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
-                               "<metadata> defined as \""
-                            << metadata << "\"";
+            LOG(LogError) << "DateTimeComponent: Invalid theme configuration, property "
+                             "<metadata> defined as \""
+                          << metadata << "\"";
         }
     }
 

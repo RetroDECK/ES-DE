@@ -453,14 +453,14 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & METADATA && elem->has("systemdata")) {
         mThemeSystemdata = "";
         const std::string systemdata {elem->get<std::string>("systemdata")};
-        for (auto& type : systemdataTypes) {
+        for (auto& type : supportedSystemdataTypes) {
             if (type == systemdata) {
                 mThemeSystemdata = type;
                 break;
             }
         }
         if (mThemeSystemdata == "") {
-            LOG(LogWarning)
+            LOG(LogError)
                 << "TextComponent: Invalid theme configuration, property <systemdata> defined as \""
                 << systemdata << "\"";
         }
@@ -469,14 +469,15 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & METADATA && elem->has("metadata")) {
         mThemeMetadata = "";
         const std::string metadata {elem->get<std::string>("metadata")};
-        for (auto& type : metadataTypes) {
+
+        for (auto& type : supportedMetadataTypes) {
             if (type == metadata) {
                 mThemeMetadata = type;
                 break;
             }
         }
         if (mThemeMetadata == "") {
-            LOG(LogWarning)
+            LOG(LogError)
                 << "TextComponent: Invalid theme configuration, property <metadata> defined as \""
                 << metadata << "\"";
         }
