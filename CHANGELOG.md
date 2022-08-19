@@ -157,6 +157,7 @@
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 * Doing a manual reload using Ctrl+r in debug mode would sometimes not update modified image files
+* StringUtil::delimitedStringToVector could return empty elements
 * (Windows) File paths would get escaped with quotation marks even if they did not contain any spaces
 * (Windows) The emulator binary path would sometimes not get escaped correctly in es_log.txt on game launch
 * The .chd and .rp9 file extensions were missing for the amigacd32 system on macOS and Windows
