@@ -706,6 +706,10 @@ namespace Utils
                     std::sort(vectorResult.begin(), vectorResult.end());
             }
 
+            // Remove any empty elements.
+            vectorResult.erase(remove(vectorResult.begin(), vectorResult.end(), ""),
+                               vectorResult.end());
+
             return vectorResult;
         }
 
