@@ -282,7 +282,7 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
 {
     List::listUpdate(deltaTime);
 
-    if (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling())
+    if (isScrolling() && (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling()))
         List::stopScrolling();
 
     if (!isScrolling() && size() > 0) {
