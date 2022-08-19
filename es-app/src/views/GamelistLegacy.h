@@ -94,8 +94,7 @@ void GamelistView::legacyPopulateFields()
     mPrimary->setPosition(mSize.x * (0.50f + padding), mPrimary->getPosition().y);
     mPrimary->setSize(mSize.x * (0.50f - padding), mPrimary->getSize().y);
     mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
-    mPrimary->setCursorChangedCallback(
-        [&](const CursorState& state) { legacyUpdateInfoPanel(state); });
+    mPrimary->setCursorChangedCallback([&](const CursorState& state) { legacyUpdateView(state); });
 
     // Metadata labels + values.
     mTextComponents.push_back(std::make_unique<TextComponent>());
@@ -338,7 +337,7 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
     mHelpStyle.applyTheme(mTheme, getName());
 }
 
-void GamelistView::legacyUpdateInfoPanel(const CursorState& state)
+void GamelistView::legacyUpdateView(const CursorState& state)
 {
     FileData* file {(mPrimary->size() > 0 && state == CursorState::CURSOR_STOPPED) ?
                         mPrimary->getSelected() :

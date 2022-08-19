@@ -74,9 +74,9 @@ void GamelistView::onShow()
     GuiComponent::onShow();
 
     if (mLegacyMode)
-        legacyUpdateInfoPanel(CursorState::CURSOR_STOPPED);
+        legacyUpdateView(CursorState::CURSOR_STOPPED);
     else
-        updateInfoPanel(CursorState::CURSOR_STOPPED);
+        updateView(CursorState::CURSOR_STOPPED);
 
     mPrimary->finishAnimation(0);
 }
@@ -129,7 +129,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mPrimary->setSize(mSize.x, mSize.y * 0.8f);
                 mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
                 mPrimary->setCursorChangedCallback(
-                    [&](const CursorState& state) { updateInfoPanel(state); });
+                    [&](const CursorState& state) { updateView(state); });
                 mPrimary->setDefaultZIndex(50.0f);
                 mPrimary->setZIndex(50.0f);
                 mPrimary->applyTheme(theme, "gamelist", element.first, ALL);
@@ -163,7 +163,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mPrimary = mCarousel.get();
                 }
                 mPrimary->setCursorChangedCallback(
-                    [&](const CursorState& state) { updateInfoPanel(state); });
+                    [&](const CursorState& state) { updateView(state); });
                 mPrimary->setDefaultZIndex(50.0f);
                 mPrimary->applyTheme(theme, "gamelist", element.first, ALL);
                 addChild(mPrimary);
@@ -303,8 +303,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         mPrimary->setPosition(0.0f, mSize.y * 0.1f);
         mPrimary->setSize(mSize.x, mSize.y * 0.8f);
         mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
-        mPrimary->setCursorChangedCallback(
-            [&](const CursorState& state) { updateInfoPanel(state); });
+        mPrimary->setCursorChangedCallback([&](const CursorState& state) { updateView(state); });
         mPrimary->setDefaultZIndex(50.0f);
         mPrimary->setZIndex(50.0f);
         mPrimary->applyTheme(theme, "gamelist", "", ALL);
@@ -420,10 +419,10 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
     return prompts;
 }
 
-void GamelistView::updateInfoPanel(const CursorState& state)
+void GamelistView::updateView(const CursorState& state)
 {
     if (mLegacyMode) {
-        legacyUpdateInfoPanel(state);
+        legacyUpdateView(state);
         return;
     }
 
