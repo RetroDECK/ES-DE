@@ -128,6 +128,10 @@ private:
 
     std::string mDefaultPath;
 
+    static inline std::vector<std::string> supportedImageTypes {
+        "image", "miximage",  "marquee", "screenshot",    "titlescreen",
+        "cover", "backcover", "3dbox",   "physicalmedia", "fanart"};
+
     std::shared_ptr<TextureResource> mTexture;
     float mFadeOpacity;
     float mReflectionsFalloff;

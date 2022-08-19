@@ -206,6 +206,32 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         imageTypes = Utils::String::replace(imageTypes, ",,", ",");
         mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
+
+        if (mThemeImageTypes.empty()) {
+            LOG(LogError) << "VideoComponent: Invalid theme configuration, property <imageType> "
+                             "contains no values";
+        }
+
+        for (std::string& type : mThemeImageTypes) {
+            if (std::find(supportedImageTypes.cbegin(), supportedImageTypes.cend(), type) ==
+                supportedImageTypes.cend()) {
+                LOG(LogError)
+                    << "VideoComponent: Invalid theme configuration, property <imageType> "
+                       "defined as \""
+                    << type << "\"";
+                mThemeImageTypes.clear();
+                break;
+            }
+        }
+
+        std::vector<std::string> sortedTypes {mThemeImageTypes};
+        std::stable_sort(sortedTypes.begin(), sortedTypes.end());
+
+        if (std::adjacent_find(sortedTypes.begin(), sortedTypes.end()) != sortedTypes.end()) {
+            LOG(LogError) << "VideoComponent: Invalid theme configuration, property <imageType> "
+                             "contains duplicate values";
+            mThemeImageTypes.clear();
+        }
     }
 
     if (elem->has("pillarboxes"))

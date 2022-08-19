@@ -113,6 +113,10 @@ protected:
     std::string mStaticImagePath;
     std::string mDefaultImagePath;
 
+    static inline std::vector<std::string> supportedImageTypes {
+        "image", "miximage",  "marquee", "screenshot",    "titlescreen",
+        "cover", "backcover", "3dbox",   "physicalmedia", "fanart"};
+
     std::string mVideoPath;
     unsigned mStartTime;
     std::atomic<bool> mIsPlaying;
