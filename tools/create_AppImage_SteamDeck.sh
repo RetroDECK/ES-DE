@@ -34,7 +34,7 @@ rm -rf ./AppDir
 mkdir AppDir
 
 rm -f CMakeCache.txt
-cmake -DSTEAM_DECK=on .
+cmake -DAPPIMAGE_BUILD=on -DSTEAM_DECK=on .
 make clean
 make -j8
 make install DESTDIR=AppDir

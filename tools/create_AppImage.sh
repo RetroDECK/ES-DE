@@ -38,7 +38,7 @@ rm -rf ./AppDir
 mkdir AppDir
 
 rm -f CMakeCache.txt
-cmake -DBUNDLED_CERTS=on .
+cmake -DAPPIMAGE_BUILD=on -DBUNDLED_CERTS=on .
 make clean
 make -j8
 make install DESTDIR=AppDir
