@@ -545,15 +545,19 @@ void ThemeData::populateThemeSets()
     // directory (Unix only) and last under the ES-DE binary directory.
 
 #if defined(__unix__) || defined(__APPLE__)
-    static const size_t pathCount = 3;
+#if defined(APPIMAGE_BUILD)
+    static const size_t pathCount {2};
 #else
-    static const size_t pathCount = 2;
+    static const size_t pathCount {3};
+#endif
+#else
+    static const size_t pathCount {2};
 #endif
     std::string paths[pathCount] = {
         Utils::FileSystem::getExePath() + "/themes",
 #if defined(__APPLE__)
         Utils::FileSystem::getExePath() + "/../Resources/themes",
-#elif defined(__unix__)
+#elif defined(__unix__) && !defined(APPIMAGE_BUILD)
         Utils::FileSystem::getProgramDataPath() + "/themes",
 #endif
         Utils::FileSystem::getHomePath() + "/.emulationstation/themes"

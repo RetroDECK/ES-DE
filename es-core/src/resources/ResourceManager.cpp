@@ -44,7 +44,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
             return applePackagePath;
         }
 
-#elif defined(__unix__)
+#elif defined(__unix__) && !defined(APPIMAGE_BUILD)
         // Check under the data installation directory (Unix only).
         std::string testDataPath;
 
@@ -71,7 +71,7 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
                 LOG(LogError) << testHome;
 #if defined(__APPLE__)
                 LOG(LogError) << applePackagePath;
-#elif defined(__unix__)
+#elif defined(__unix__) && !defined(APPIMAGE_BUILD)
                 LOG(LogError) << testDataPath;
 #endif
                 LOG(LogError) << testExePath;
