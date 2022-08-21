@@ -564,6 +564,8 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     if (mCarousel != nullptr) {
         carouselItemType = mCarousel->getItemType();
         carouselDefaultItem = mCarousel->getDefaultItem();
+        if (!ResourceManager::getInstance().fileExists(carouselDefaultItem))
+            carouselDefaultItem = "";
     }
 
     if (files.size() > 0) {
