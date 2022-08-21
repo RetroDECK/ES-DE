@@ -1141,6 +1141,8 @@ This custom file functionality is designed to be complementary to the bundled es
 
 The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
 
+If you're using the AppImage release of ES-DE then the bundled es_systems.xml file is embedded in the AppImage together with the rest of the resources.
+
 It doesn't matter in which order you define the systems as they will be sorted by the `<fullname>` tag or by the optional `<systemsortname>` tag when displayed inside the application. But it's still a good idea to add the systems in alphabetical order to make the configuration file easier to maintain.
 
 Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011.

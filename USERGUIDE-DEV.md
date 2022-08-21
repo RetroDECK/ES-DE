@@ -2825,6 +2825,8 @@ We now have four entries in the Theme set selector in the UI settings menu, i.e.
 
 Although you place additional themes in your ES-DE home directory, the default slate-DE and modern-DE themes are located in the installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
 
+Note that if using the AppImage release on Linux, then there is no installation folder as all files are contained inside the AppImage file.
+
 So if you would like to customize the slate-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
 
 Here is a good resource with a list of themes (although you will have to search online for the download location for each theme set):

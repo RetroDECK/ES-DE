@@ -60,6 +60,7 @@
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Added support for nesting of theme variables
 * Prevented loading of theme sets using the "resolution" tag introduced by RetroPie in 2020 as it's a very bad idea to use this logic
+* Added support for vertical abbreviations of multiline text entries
 * Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
@@ -96,6 +97,7 @@
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
+* When building as an AppImage the "data" directory (e.g. /usr/share/emulationstation) is now excluded when looking for resources and themes
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Made the logging thread safe
 * (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
@@ -149,6 +151,7 @@
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
+* The tile property for the image element did not work correctly with SVG images
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
@@ -157,6 +160,8 @@
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 * Doing a manual reload using Ctrl+r in debug mode would sometimes not update modified image files
+* Abbreviations of long words in multiline text entries sometimes exceeded the designated text area
+* The text debug overlay had the wrong size for scrollable containers
 * StringUtil::delimitedStringToVector could return empty elements
 * (Windows) File paths would get escaped with quotation marks even if they did not contain any spaces
 * (Windows) The emulator binary path would sometimes not get escaped correctly in es_log.txt on game launch

@@ -1429,7 +1429,7 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `staticItem` - type: PATH
-    - Path to a static image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
+    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
 * `itemType` - type: STRING
     - This displays a game image of a certain media type, and can only be used in the `gamelist` view.
     - Valid values:
@@ -1444,7 +1444,7 @@ Properties:
     - `fanart` - This will look for a fan art image.
     - Default is `marquee`
 * `defaultItem` - type: PATH
-    - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .jpg, .png, and unanimated .gif).
+    - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `itemSize` - type: NORMALIZED_PAIR
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
@@ -1503,7 +1503,7 @@ Properties:
     - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
 * `text` - type: STRING
-    - A string literal to display if there is no `staticItem` / `itemType` or `defaultItem` properties defined or if no images were found.
+    - A string literal to display if there is no `staticItem` or `defaultItem` property defined and if no image is found. This property can only be used in the system view as for the gamelist view the text fallback will always be set to the game name.
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
