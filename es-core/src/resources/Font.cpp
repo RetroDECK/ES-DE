@@ -529,7 +529,7 @@ std::string Font::wrapText(std::string text, float maxLength, float maxHeight, f
             // If the word is too long to fit within maxLength then abbreviate it.
             if (sizeText(word).x > maxLength) {
 
-                if (line != "") {
+                if (line != "" && line.back() != '\n') {
                     if (restrictHeight) {
                         if (accumHeight + lineHeight > maxHeight)
                             continue;
