@@ -71,6 +71,11 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     bool rasterize {true};
 
+    if (mTile) {
+        mSourceWidth = svgImage->width;
+        mSourceHeight = svgImage->height;
+    }
+
     // If there is no image size defined yet, then don't rasterize unless mForceRasterization has
     // been set.
     if (mSourceWidth == 0.0f && mSourceHeight == 0.0f) {
