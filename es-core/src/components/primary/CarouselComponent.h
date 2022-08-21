@@ -113,6 +113,9 @@ private:
     int mPreviousScrollVelocity;
     bool mTriggerJump;
     bool mGamelistView;
+    bool mUppercase;
+    bool mLowercase;
+    bool mCapitalize;
 
     CarouselType mType;
     std::string mItemType;
@@ -154,6 +157,9 @@ CarouselComponent<T>::CarouselComponent()
     , mPreviousScrollVelocity {0}
     , mTriggerJump {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
+    , mUppercase {false}
+    , mLowercase {false}
+    , mCapitalize {false}
     , mType {CarouselType::HORIZONTAL}
     , mLegacyMode {false}
     , mFont {Font::get(FONT_SIZE_LARGE)}
@@ -237,7 +243,19 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
 
     if (!entry.data.item) {
         // If no item image is present, add item text as fallback.
-        auto text = std::make_shared<TextComponent>(entry.name, mFont, 0x000000FF, ALIGN_CENTER);
+        std::string nameEntry;
+        if (!mGamelistView)
+            nameEntry = entry.name;
+        else if (mUppercase)
+            nameEntry = Utils::String::toUpper(entry.name);
+        else if (mLowercase)
+            nameEntry = Utils::String::toLower(entry.name);
+        else if (mCapitalize)
+            nameEntry = Utils::String::toCapitalized(entry.name);
+        else
+            nameEntry = entry.name;
+
+        auto text = std::make_shared<TextComponent>(nameEntry, mFont, 0x000000FF, ALIGN_CENTER);
         text->setSize(mItemSize * mItemScale);
         if (legacyMode) {
             text->applyTheme(theme, "system", "text_logoText",
@@ -732,6 +750,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mCarouselColorEnd = 0xFFFFFFD8;
     mZIndex = mDefaultZIndex;
     mText = "";
+    mUppercase = false;
+    mLowercase = false;
+    mCapitalize = false;
 
     if (!elem)
         return;
@@ -988,28 +1009,35 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
 
     std::string letterCase;
+    bool hasText {!mGamelistView && elem->has("text")};
 
-    if (elem->has("letterCase"))
+    if (elem->has("letterCase")) {
         letterCase = elem->get<std::string>("letterCase");
 
-    if (elem->has("text")) {
         if (letterCase == "uppercase") {
-            mText = Utils::String::toUpper(elem->get<std::string>("text"));
+            mUppercase = true;
+            if (hasText)
+                mText = Utils::String::toUpper(elem->get<std::string>("text"));
         }
         else if (letterCase == "lowercase") {
-            mText = Utils::String::toLower(elem->get<std::string>("text"));
+            mLowercase = true;
+            if (hasText)
+                mText = Utils::String::toLower(elem->get<std::string>("text"));
         }
         else if (letterCase == "capitalize") {
-            mText = Utils::String::toCapitalized(elem->get<std::string>("text"));
+            mCapitalize = true;
+            if (hasText)
+                mText = Utils::String::toCapitalized(elem->get<std::string>("text"));
         }
-        else if (letterCase == "none") {
+        else if (hasText && letterCase == "none") {
             mText = elem->get<std::string>("text");
         }
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
                                "<letterCase> defined as \""
                             << letterCase << "\"";
-            mText = elem->get<std::string>("text");
+            if (hasText)
+                mText = elem->get<std::string>("text");
         }
     }
 
