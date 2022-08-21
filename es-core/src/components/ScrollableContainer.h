@@ -28,6 +28,8 @@ public:
     glm::vec2 getScrollPos() const { return mScrollPos; }
     void setScrollPos(const glm::vec2& pos) { mScrollPos = pos; }
 
+    const bool isScrollable() const override { return true; }
+
     void setAutoScroll(bool autoScroll);
     void setScrollParameters(float autoScrollDelayConstant,
                              float autoScrollResetDelayConstant,

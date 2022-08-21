@@ -159,7 +159,7 @@ void TextComponent::setCapitalize(bool capitalize)
 
 void TextComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mThemeOpacity == 0.0f)
+    if (!isVisible() || mThemeOpacity == 0.0f || mSize.x == 0.0f || mSize.y == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
@@ -197,9 +197,12 @@ void TextComponent::render(const glm::mat4& parentTrans)
             yOff = (getSize().y - textSize.y) / 2.0f;
         }
 
-        // Draw the "textbox" area, what we are aligned within.
-        if (Settings::getInstance()->getBool("DebugText"))
-            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
+        // Draw the overall textbox area. If we're inside a scrollable container then this
+        // area is rendered inside that component instead of here.
+        if (Settings::getInstance()->getBool("DebugText")) {
+            if (!mParent || !mParent->isScrollable())
+                mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
+        }
 
         trans = glm::translate(trans, glm::vec3 {0.0f, std::round(yOff), 0.0f});
 
@@ -279,7 +282,7 @@ void TextComponent::onTextChanged()
 {
     calculateExtent();
 
-    if (!mFont || mText.empty()) {
+    if (!mFont || mText.empty() || mSize.x == 0.0f || mSize.y == 0.0f) {
         mTextCache.reset();
         return;
     }
@@ -295,25 +298,27 @@ void TextComponent::onTextChanged()
     else
         text = mText; // Original case.
 
-    std::shared_ptr<Font> f = mFont;
-    const bool isMultiline = (mSize.y == 0.0f || mSize.y > f->getHeight() * 1.2f);
+    std::shared_ptr<Font> f {mFont};
+    const float lineHeight {f->getHeight(mLineSpacing)};
+    const bool isMultiline {mSize.y > lineHeight};
+    const bool isScrollable {mParent && mParent->isScrollable()};
 
-    bool addAbbrev = false;
+    bool addAbbrev {false};
     if (!isMultiline) {
-        size_t newline = text.find('\n');
+        size_t newline {text.find('\n')};
         // Single line of text - stop at the first newline since it'll mess everything up.
         text = text.substr(0, newline);
         addAbbrev = newline != std::string::npos;
     }
 
     glm::vec2 size {f->sizeText(text)};
-    if (!isMultiline && mSize.x > 0.0f && text.size() && (size.x > mSize.x || addAbbrev)) {
+    if (!isMultiline && text.size() && (size.x > mSize.x || addAbbrev)) {
         // Abbreviate text.
-        const std::string abbrev = "...";
-        glm::vec2 abbrevSize {f->sizeText(abbrev)};
+        const std::string abbrev {"..."};
+        float abbrevSize {f->sizeText(abbrev).x};
 
-        while (text.size() && size.x + abbrevSize.x > mSize.x) {
-            size_t newSize = Utils::String::prevCursor(text, text.size());
+        while (text.size() && size.x + abbrevSize > mSize.x) {
+            size_t newSize {Utils::String::prevCursor(text, text.size())};
             text.erase(newSize, text.size() - newSize);
             if (!text.empty() && text.back() == ' ')
                 text.pop_back();
@@ -323,6 +328,13 @@ void TextComponent::onTextChanged()
         text.append(abbrev);
         mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
             text, glm::vec2 {}, mColor, mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+    }
+    else if (isMultiline && text.size() && !isScrollable) {
+        const std::string wrappedText {
+            f->wrapText(text, mSize.x, mSize.y - lineHeight, mLineSpacing)};
+        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(wrappedText, glm::vec2 {}, mColor,
+                                                                  mSize.x, mHorizontalAlignment,
+                                                                  mLineSpacing, mNoTopMargin));
     }
     else {
         mTextCache = std::shared_ptr<TextCache>(

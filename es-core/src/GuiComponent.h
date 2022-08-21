@@ -253,6 +253,7 @@ public:
 
     // Used to set the parameters for ScrollableContainer.
     virtual void setScrollParameters(float, float, float) {}
+    virtual const bool isScrollable() const { return false; }
 
     virtual void onFocusGained() {}
     virtual void onFocusLost() {}

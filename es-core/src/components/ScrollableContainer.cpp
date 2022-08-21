@@ -239,6 +239,9 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
     trans = glm::translate(trans, -glm::vec3 {mScrollPos.x, mScrollPos.y, 0.0f});
     mRenderer->setMatrix(trans);
 
+    if (Settings::getInstance()->getBool("DebugText"))
+        mRenderer->drawRect(0.0f, mScrollPos.y, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
+
     GuiComponent::renderChildren(trans);
     mRenderer->popClipRect();
 }
