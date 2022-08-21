@@ -76,7 +76,10 @@ public:
     void renderTextCache(TextCache* cache);
 
     // Inserts newlines into text to make it wrap properly.
-    std::string wrapText(std::string text, float xLen);
+    std::string wrapText(std::string text,
+                         float maxLength,
+                         float maxHeight = 0.0f,
+                         float lineSpacing = 1.5f);
 
     // Returns the expected size of a string after wrapping is applied.
     glm::vec2 sizeWrappedText(std::string text, float xLen, float lineSpacing = 1.5f);

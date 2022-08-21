@@ -480,8 +480,10 @@ float Font::getLetterHeight()
     return glyph->texSize.y * glyph->texture->textureSize.y;
 }
 
-std::string Font::wrapText(std::string text, float xLen)
+std::string Font::wrapText(std::string text, float maxLength, float maxHeight, float lineSpacing)
 {
+    assert(maxLength != 0.0f);
+
     std::string out;
     std::string line;
     std::string word;
@@ -490,13 +492,26 @@ std::string Font::wrapText(std::string text, float xLen)
 
     size_t space {0};
     glm::vec2 textSize {0.0f, 0.0f};
-    float dotsSize {sizeText("...").x};
+    const float dotsSize {sizeText("...").x};
+    const float lineHeight {getHeight(lineSpacing)};
+    float accumHeight {0.0f};
+    const bool restrictHeight {maxHeight > 0.0f};
+    bool skipLastLine {false};
 
     // While there's text or we still have text to render.
     while (text.length() > 0) {
+        if (restrictHeight && accumHeight > maxHeight)
+            break;
+
         space = text.find_first_of(" \t\n");
-        if (space == std::string::npos)
+
+        if (space == std::string::npos) {
             space = text.length() - 1;
+        }
+        else if (restrictHeight) {
+            if (text.at(space) == '\n')
+                accumHeight += lineHeight;
+        }
 
         word = text.substr(0, space + 1);
         text.erase(0, space + 1);
@@ -505,33 +520,71 @@ std::string Font::wrapText(std::string text, float xLen)
 
         textSize = sizeText(temp);
 
-        // If the word will fit on the line, add it to our line, and continue.
-        if (textSize.x <= xLen) {
+        // If the word will fit on the line, add it to our line and continue.
+        if (textSize.x <= maxLength) {
             line = temp;
             continue;
         }
         else {
-            // The next word won't fit, so break here.
+            // If the word is too long to fit within maxLength then abbreviate it.
+            if (sizeText(word).x > maxLength) {
 
-            // If the word is too long to fit within xLen, then abbreviate it.
-            if (xLen > 0 && sizeText(word).x > xLen) {
-                float length {xLen - dotsSize};
-                if (length < 0)
-                    length = 0;
-                abbreviatedWord = getTextMaxWidth(word, length);
-                abbreviatedWord += "...";
-                word = abbreviatedWord;
-                out += line;
+                if (line != "") {
+                    if (restrictHeight) {
+                        if (accumHeight + lineHeight > maxHeight)
+                            continue;
+                        accumHeight += lineHeight;
+                    }
+                    line.append("\n");
+                }
+
+                float lineLength {sizeText(word).x};
+                float cutTarget {lineLength - maxLength + dotsSize};
+                float cutSize {0.0f};
+
+                while (word != "" && cutSize < cutTarget) {
+                    cutSize += sizeText(word.substr(word.size() - 1)).x;
+                    word.pop_back();
+                }
+
+                word.append("...");
+                line = line + word;
+                continue;
             }
             else {
                 out += line + '\n';
+                if (restrictHeight)
+                    accumHeight += lineHeight;
+
+                if (restrictHeight && accumHeight > maxHeight) {
+                    out.pop_back();
+                    skipLastLine = true;
+                    break;
+                }
             }
             line = word;
         }
     }
 
     // Whatever's left should fit.
-    out += line;
+    if (!skipLastLine)
+        out.append(line);
+
+    if (restrictHeight && out.back() == '\n')
+        out.pop_back();
+
+    // If the text has been abbreviated vertically then add "..." at the end of the string.
+    if (restrictHeight && accumHeight > maxHeight) {
+        if (out.back() != '\n') {
+            float cutSize {0.0f};
+            float cutTarget {sizeText(line).x - maxLength + dotsSize};
+            while (cutSize < cutTarget) {
+                cutSize += sizeText(out.substr(out.size() - 1)).x;
+                out.pop_back();
+            }
+        }
+        out.append("...");
+    }
 
     return out;
 }
