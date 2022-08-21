@@ -154,9 +154,10 @@
             <itemVerticalAlignment>center</itemVerticalAlignment>
             <itemScale>1.53</itemScale>
             <itemSize>0.105 0.235</itemSize>
+            <itemInterpolation>linear</itemInterpolation>
             <unfocusedItemOpacity>1</unfocusedItemOpacity>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.070</fontSize>
+            <fontSize>0.050</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
             <reflections>true</reflections>

@@ -37,7 +37,7 @@ based on: recalbox-multi by the Recalbox community
                 <itemInterpolation>linear</itemInterpolation>
                 <itemSize>0.25 0.125</itemSize>
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-                <fontSize>0.070</fontSize>
+                <fontSize>0.055</fontSize>
                 <letterCase>uppercase</letterCase>
                 <unfocusedItemOpacity>0.5</unfocusedItemOpacity>
                 <lineSpacing>1.2</lineSpacing>
