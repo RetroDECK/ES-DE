@@ -447,8 +447,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                         setCursor(getFirstEntry());
                         view->setCursor(view->getFirstEntry());
                     }
-                    else if (selectLastEntry && mPrimary->size() > 0) {
-                        setCursor(getLastEntry());
+                    else if (selectLastEntry && view->getPrimary()->size() > 0) {
                         view->setCursor(view->getLastEntry());
                     }
                     // Display the indication icons which show what games are part of the

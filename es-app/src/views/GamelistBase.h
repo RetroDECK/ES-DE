@@ -65,6 +65,8 @@ public:
 protected:
     GamelistBase(FileData* root);
 
+    PrimaryComponent<FileData*>* getPrimary() { return mPrimary; }
+
     // Called when a FileData* is added, has its metadata changed, or is removed.
     virtual void onFileChanged(FileData* file, bool reloadGamelist) = 0;
 
