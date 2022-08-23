@@ -238,15 +238,17 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else if (mSize.x == 0.0f)
         mSize.x = mSize.y * NUM_RATING_STARS;
 
+    const size_t sizeY {static_cast<size_t>(mSize.y)};
+
     bool imgChanged {false};
     if (properties & PATH && elem->has("filledPath")) {
         mFilledTexture = TextureResource::get(elem->get<std::string>("filledPath"), true, false,
-                                              true, false, false, mSize.y, mSize.y);
+                                              true, false, false, sizeY, sizeY);
         imgChanged = true;
     }
     if (properties & PATH && elem->has("unfilledPath")) {
         mUnfilledTexture = TextureResource::get(elem->get<std::string>("unfilledPath"), true, false,
-                                                true, false, false, mSize.y, mSize.y);
+                                                true, false, false, sizeY, sizeY);
         imgChanged = true;
     }
 

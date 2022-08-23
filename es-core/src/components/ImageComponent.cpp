@@ -169,8 +169,9 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         if (isScalable) {
             resize(false);
             mTexture.reset();
-            mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
-                                            false, mSize.x, mSize.y);
+            mTexture =
+                TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation, false,
+                                     static_cast<size_t>(mSize.x), static_cast<size_t>(mSize.y));
             mTexture->rasterizeAt(mSize.x, mSize.y);
             onSizeChanged();
         }
