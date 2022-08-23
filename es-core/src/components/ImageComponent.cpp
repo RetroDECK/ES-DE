@@ -52,13 +52,13 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     updateColors();
 }
 
-void ImageComponent::resize()
+void ImageComponent::resize(bool rasterize)
 {
     if (!mTexture)
         return;
 
     const glm::vec2 textureSize {mTexture->getSourceImageSize()};
-    if (textureSize == glm::vec2 {})
+    if (textureSize == glm::vec2 {0.0f, 0.0f})
         return;
 
     if (mTexture->isTiled()) {
@@ -95,14 +95,14 @@ void ImageComponent::resize()
                 mSize.x *= resizeScale.x;
                 mSize.y *= resizeScale.x;
 
-                float cropPercent = (mSize.y - mTargetSize.y) / (mSize.y * 2.0f);
+                float cropPercent {(mSize.y - mTargetSize.y) / (mSize.y * 2.0f)};
                 crop(0.0f, cropPercent, 0.0f, cropPercent);
             }
             else {
                 mSize.x *= resizeScale.y;
                 mSize.y *= resizeScale.y;
 
-                float cropPercent = (mSize.x - mTargetSize.x) / (mSize.x * 2.0f);
+                float cropPercent {(mSize.x - mTargetSize.x) / (mSize.x * 2.0f)};
                 crop(cropPercent, 0.0f, cropPercent, 0.0f);
             }
             mSize.y = std::max(mSize.y, mTargetSize.y);
@@ -111,7 +111,7 @@ void ImageComponent::resize()
         else {
             // If both components are set, we just stretch.
             // If no components are set, we don't resize at all.
-            mSize = mTargetSize == glm::vec2 {} ? textureSize : mTargetSize;
+            mSize = mTargetSize == glm::vec2 {0.0f, 0.0f} ? textureSize : mTargetSize;
 
             // If only one component is set, we resize in a way that maintains aspect ratio.
             if (!mTargetSize.x && mTargetSize.y) {
@@ -130,9 +130,10 @@ void ImageComponent::resize()
     mSize.x = glm::clamp(mSize.x, 1.0f, mRenderer->getScreenWidth() * 2.0f);
     mSize.y = glm::clamp(mSize.y, 1.0f, mRenderer->getScreenHeight() * 2.0f);
 
-    mTexture->rasterizeAt(mSize.x, mSize.y);
-
-    onSizeChanged();
+    if (rasterize) {
+        mTexture->rasterizeAt(mSize.x, mSize.y);
+        onSizeChanged();
+    }
 }
 
 void ImageComponent::setImage(const std::string& path, bool tile)
@@ -143,18 +144,40 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         mDynamic = false;
     }
 
+    const bool isScalable {path != "" ? Utils::String::toLower(path.substr(
+                                            path.size() - 4, std::string::npos)) == ".svg" :
+                                        false};
+
+    // Create an initial blank texture if needed.
     if (path.empty() || !ResourceManager::getInstance().fileExists(path)) {
         if (mDefaultPath.empty() || !ResourceManager::getInstance().fileExists(mDefaultPath))
             mTexture.reset();
         else
             mTexture = TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic,
                                             mLinearInterpolation);
+        resize(true);
     }
     else {
+        // For raster images we just load and resize but for SVG images we first need to resize
+        // without rasterizing in order to calculate the correct image size. Then we delete and
+        // reload the texture at the requested size in order to add a valid cache entry. Finally
+        // we perform the actual rasterization to have the cache entry updated with the proper
+        // texture. For SVG images this requires that every call to setImage is made only after
+        // a call to setResize or setMaxSize (so the requested size is known upfront).
         mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation);
-    }
 
-    resize();
+        if (isScalable) {
+            resize(false);
+            mTexture.reset();
+            mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
+                                            false, mSize.x, mSize.y);
+            mTexture->rasterizeAt(mSize.x, mSize.y);
+            onSizeChanged();
+        }
+        else {
+            resize(true);
+        }
+    }
 }
 
 void ImageComponent::setImage(const char* data, size_t length, bool tile)
@@ -187,14 +210,6 @@ void ImageComponent::setMaxSize(const float width, const float height)
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = true;
     mTargetIsMin = false;
-    resize();
-}
-
-void ImageComponent::setMinSize(const float width, const float height)
-{
-    mTargetSize = glm::vec2 {width, height};
-    mTargetIsMax = false;
-    mTargetIsMin = true;
     resize();
 }
 
@@ -238,10 +253,10 @@ void ImageComponent::uncrop()
 
 void ImageComponent::cropTransparentPadding(const float maxSizeX, const float maxSizeY)
 {
-    if (mSize == glm::vec2 {})
+    if (mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
-    std::vector<unsigned char> imageRGBA = mTexture.get()->getRawRGBAData();
+    std::vector<unsigned char> imageRGBA {mTexture.get()->getRawRGBAData()};
 
     if (imageRGBA.size() == 0)
         return;
@@ -273,7 +288,7 @@ void ImageComponent::cropTransparentPadding(const float maxSizeX, const float ma
     mSize.x -= mSize.x * (cropLeft + cropRight);
     mSize.y -= mSize.y * (cropTop + cropBottom);
 
-    float scaleFactor = originalSize.y / mSize.y;
+    float scaleFactor {originalSize.y / mSize.y};
 
     if (scaleFactor * mSize.x < maxSizeX)
         scaleFactor = maxSizeX / mSize.x;
@@ -347,7 +362,7 @@ void ImageComponent::updateVertices()
 
     // We go through this mess to make sure everything is properly rounded.
     // If we just round vertices at the end, edge cases occur near sizes of 0.5.
-    const glm::vec2 topLeft {};
+    const glm::vec2 topLeft {0.0f, 0.0f};
     const glm::vec2 bottomRight {mSize};
     const float px {mTexture->isTiled() ? mSize.x / getTextureSize().x : 1.0f};
     const float py {mTexture->isTiled() ? mSize.y / getTextureSize().y : 1.0f};
@@ -492,7 +507,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                              (properties ^ ThemeFlags::SIZE) |
                                  ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "image");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "image")};
     if (!elem)
         return;
 
@@ -543,7 +558,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setDefaultImage(elem->get<std::string>("default"));
 
     if (properties & PATH && elem->has("path")) {
-        bool tile = (elem->has("tile") && elem->get<bool>("tile"));
+        bool tile {elem->has("tile") && elem->get<bool>("tile")};
         setImage(elem->get<std::string>("path"), tile);
     }
 

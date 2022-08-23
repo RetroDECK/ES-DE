@@ -36,7 +36,7 @@ TextureDataManager::~TextureDataManager()
 std::shared_ptr<TextureData> TextureDataManager::add(const TextureResource* key, bool tiled)
 {
     remove(key);
-    std::shared_ptr<TextureData> data = std::make_shared<TextureData>(tiled);
+    std::shared_ptr<TextureData> data {std::make_shared<TextureData>(tiled)};
     mTextures.push_front(data);
     mTextureLookup[key] = mTextures.cbegin();
     return data;
@@ -114,8 +114,8 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
     if (tex->isLoaded())
         return;
     // Not loaded. Make sure there is room.
-    size_t size = TextureResource::getTotalMemUsage();
-    size_t settingVRAM = static_cast<size_t>(Settings::getInstance()->getInt("MaxVRAM"));
+    size_t size {TextureResource::getTotalMemUsage()};
+    size_t settingVRAM {static_cast<size_t>(Settings::getInstance()->getInt("MaxVRAM"))};
 
     if (settingVRAM < 80) {
         LOG(LogWarning) << "MaxVRAM is too low at " << settingVRAM

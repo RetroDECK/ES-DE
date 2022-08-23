@@ -223,17 +223,30 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                  unsigned int properties)
 {
     using namespace ThemeFlags;
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "rating");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "rating")};
+
     if (!elem)
         return;
 
-    bool imgChanged = false;
+    // Make sure the size is not unreasonably large (which may be caused by a mistake in
+    // the theme configuration).
+    mSize.x = glm::clamp(mSize.x, 0.0f, mRenderer->getScreenWidth() / 2.0f);
+    mSize.y = glm::clamp(mSize.y, 0.0f, mRenderer->getScreenHeight() / 2.0f);
+
+    if (mSize.y == 0.0f)
+        mSize.y = mSize.x / NUM_RATING_STARS;
+    else if (mSize.x == 0.0f)
+        mSize.x = mSize.y * NUM_RATING_STARS;
+
+    bool imgChanged {false};
     if (properties & PATH && elem->has("filledPath")) {
-        mFilledTexture = TextureResource::get(elem->get<std::string>("filledPath"), true);
+        mFilledTexture = TextureResource::get(elem->get<std::string>("filledPath"), true, false,
+                                              true, false, false, mSize.y, mSize.y);
         imgChanged = true;
     }
     if (properties & PATH && elem->has("unfilledPath")) {
-        mUnfilledTexture = TextureResource::get(elem->get<std::string>("unfilledPath"), true);
+        mUnfilledTexture = TextureResource::get(elem->get<std::string>("unfilledPath"), true, false,
+                                                true, false, false, mSize.y, mSize.y);
         imgChanged = true;
     }
 

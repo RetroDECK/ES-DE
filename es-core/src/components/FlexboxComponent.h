@@ -23,7 +23,7 @@ public:
         ImageComponent baseImage;
 
         // Optional overlay image that can be sized and positioned relative to the base image.
-        ImageComponent overlayImage;
+        ImageComponent overlayImage {false, false};
         glm::vec2 overlayPosition {0.5f, 0.5f};
         float overlaySize {0.5f};
 

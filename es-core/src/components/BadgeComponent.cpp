@@ -313,7 +313,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 ImageComponent badgeImage {false, false};
                 badgeImage.setImage(mBadgeIcons[slot]);
                 item.baseImage = badgeImage;
-                item.overlayImage = ImageComponent {};
+                item.overlayImage = ImageComponent {false, false};
 
                 if (slot == "folder") {
                     if (elem->has("customFolderLinkIcon"))

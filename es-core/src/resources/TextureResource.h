@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  TextureResource.h
 //
-//  Handles OpenGL textures.
+//  Handles textures including loading, unloading and cache management.
 //
 
 #ifndef ES_CORE_RESOURCES_TEXTURE_RESOURCE_H
@@ -31,10 +31,12 @@ public:
                                                 bool forceLoad = false,
                                                 bool dynamic = true,
                                                 bool linearMagnify = false,
-                                                bool forceRasterization = false);
+                                                bool forceRasterization = false,
+                                                size_t width = 0,
+                                                size_t height = 0);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
-    static void manualUnload(std::string path, bool tile);
+    static void manualUnload(const std::string& path, bool tile);
     static void manualUnloadAll() { sTextureMap.clear(); }
 
     // Returns the raw pixel values.
@@ -91,7 +93,8 @@ private:
     glm::vec2 mSourceSize;
     bool mForceLoad;
 
-    using TextureKeyType = std::tuple<std::string, bool, bool>;
+    // File path, tile, linear interpolation, scalable/SVG, width, height.
+    using TextureKeyType = std::tuple<std::string, bool, bool, bool, size_t, size_t>;
     // Map of textures, used to prevent duplicate textures.
     static inline std::map<TextureKeyType, std::weak_ptr<TextureResource>> sTextureMap;
     // Set of all textures, used for memory management.

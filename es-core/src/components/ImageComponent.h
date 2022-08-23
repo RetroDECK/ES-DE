@@ -46,9 +46,6 @@ public:
     void setMaxSize(const float width, const float height);
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
 
-    void setMinSize(const float width, const float height);
-    void setMinSize(const glm::vec2& size) { setMinSize(size.x, size.y); }
-
     glm::vec2 getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
 
     // Applied AFTER image positioning and sizing.
@@ -113,8 +110,8 @@ private:
 
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
     // Used internally whenever the resizing parameters or texture change. This function also
-    // initiates the SVG rasterization.
-    void resize();
+    // initiates the SVG rasterization unless explicitly told not to.
+    void resize(bool rasterize = true);
 
     Renderer::Vertex mVertices[4];
 

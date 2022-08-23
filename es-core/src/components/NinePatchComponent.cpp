@@ -51,7 +51,7 @@ void NinePatchComponent::buildVertices()
     if (mVertices != nullptr)
         delete[] mVertices;
 
-    glm::vec2 relCornerSize {};
+    glm::vec2 relCornerSize {0.0f, 0.0f};
 
     // Don't scale the rasterized version of the frame as it would look bad.
     if (mPath.substr(mPath.size() - 4, std::string::npos) == ".png") {
@@ -65,8 +65,9 @@ void NinePatchComponent::buildVertices()
                                       (mSharpCorners == true ? 0.0568f : 0.09f) / 2.0f));
     }
 
-    mTexture = TextureResource::get(mPath, false, false, false);
-    glm::vec2 texSize = relCornerSize * 3.0f;
+    glm::vec2 texSize {relCornerSize * 3.0f};
+    mTexture = TextureResource::get(mPath, false, false, false, false, false,
+                                    static_cast<size_t>(texSize.x), static_cast<size_t>(texSize.y));
 
     mTexture->rasterizeAt(texSize.x, texSize.y);
 
@@ -86,11 +87,11 @@ void NinePatchComponent::buildVertices()
     // The "1 +" in posY and "-" in sizeY is to deal with texture coordinates having a bottom
     // left corner origin vs. verticies having a top left origin.
     // clang-format off
-    const float texSizeX[3]{relCornerSize.x / texSize.x,  (texSize.x - relCornerSize.x * 2.0f) / texSize.x,  relCornerSize.x / texSize.x};
-    const float texSizeY[3]{-relCornerSize.y / texSize.y, -(texSize.y - relCornerSize.y * 2.0f) / texSize.y, -relCornerSize.y / texSize.y};
+    const float texSizeX[3] {relCornerSize.x / texSize.x,  (texSize.x - relCornerSize.x * 2.0f) / texSize.x,  relCornerSize.x / texSize.x};
+    const float texSizeY[3] {-relCornerSize.y / texSize.y, -(texSize.y - relCornerSize.y * 2.0f) / texSize.y, -relCornerSize.y / texSize.y};
 
-    const float texPosX[3]{0.0f,        texSizeX[0],        texSizeX[0] + texSizeX[1]};
-    const float texPosY[3]{1.0f, 1.0f + texSizeY[0], 1.0f + texSizeY[0] + texSizeY[1]};
+    const float texPosX[3] {0.0f,        texSizeX[0],        texSizeX[0] + texSizeX[1]};
+    const float texPosY[3] {1.0f, 1.0f + texSizeY[0], 1.0f + texSizeY[0] + texSizeY[1]};
     // clang-format on
 
     int v = 0;
@@ -178,7 +179,7 @@ void NinePatchComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::applyTheme(theme, view, element, properties);
 
     using namespace ThemeFlags;
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "ninepatch");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "ninepatch")};
 
     if (!elem)
         return;

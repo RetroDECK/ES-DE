@@ -223,8 +223,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             ResourceManager::getInstance().fileExists(entry.data.itemPath)) {
             auto item = std::make_shared<ImageComponent>(false, dynamic);
             item->setLinearInterpolation(mLinearInterpolation);
-            item->setImage(entry.data.itemPath);
             item->setMaxSize(mItemSize * mItemScale);
+            item->setImage(entry.data.itemPath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
             item->setRotateByTargetSize(true);
             entry.data.item = item;
@@ -233,8 +233,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                  ResourceManager::getInstance().fileExists(entry.data.defaultItemPath)) {
             auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
             defaultItem->setLinearInterpolation(mLinearInterpolation);
-            defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->setMaxSize(mItemSize * mItemScale);
+            defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
             defaultItem->setRotateByTargetSize(true);
             entry.data.item = defaultItem;
