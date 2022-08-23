@@ -153,6 +153,7 @@ private:
     Renderer* mRenderer;
     HelpComponent* mHelp;
     ImageComponent* mBackgroundOverlay;
+    ImageComponent* mSplash;
     float mBackgroundOverlayOpacity;
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;

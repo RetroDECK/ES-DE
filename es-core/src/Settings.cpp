@@ -49,7 +49,6 @@ namespace
         "DebugGrid",
         "DebugText",
         "DebugImage",
-        "SplashScreenProgress",
         "ScraperFilter"
         // clang-format on
     };
@@ -296,7 +295,6 @@ void Settings::setDefaults()
     mBoolMap["DebugGrid"] = {false, false};
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};
-    mBoolMap["SplashScreenProgress"] = {true, true};
     mIntMap["ScraperFilter"] = {0, 0};
 }
 

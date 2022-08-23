@@ -945,8 +945,7 @@ void ViewController::preload()
 
     for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
          ++it) {
-        if (Settings::getInstance()->getBool("SplashScreen") &&
-            Settings::getInstance()->getBool("SplashScreenProgress")) {
+        if (Settings::getInstance()->getBool("SplashScreen")) {
             mWindow->renderLoadingScreen(
                 "Loading '" + (*it)->getFullName() + "' (" +
                 std::to_string(std::distance(SystemData::sSystemVector.cbegin(), it) + 1) + "/" +

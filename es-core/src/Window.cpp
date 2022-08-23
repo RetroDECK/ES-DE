@@ -54,6 +54,7 @@ Window::Window() noexcept
 Window::~Window()
 {
     delete mBackgroundOverlay;
+    delete mSplash;
 
     // Delete all our GUIs.
     while (peekGui())
@@ -112,6 +113,8 @@ bool Window::init()
     ResourceManager::getInstance().reloadAll();
 
     mHelp = new HelpComponent;
+    mSplash = new ImageComponent;
+
     mBackgroundOverlay = new ImageComponent;
     mBackgroundOverlayOpacity = 0.0f;
 
@@ -121,6 +124,11 @@ bool Window::init()
         mDefaultFonts.push_back(Font::get(FONT_SIZE_MEDIUM));
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
     }
+
+    mSplash->setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);
+    mSplash->setImage(":/graphics/splash.svg");
+    mSplash->setPosition((Renderer::getScreenWidth() - mSplash->getSize().x) / 2.0f,
+                         (Renderer::getScreenHeight() - mSplash->getSize().y) / 2.0f * 0.6f);
 
     mBackgroundOverlay->setImage(":/graphics/frame.png");
     mBackgroundOverlay->setResize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
@@ -598,13 +606,7 @@ void Window::renderLoadingScreen(std::string text)
     mRenderer->setMatrix(trans);
     mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                         0x000000FF, 0x000000FF);
-
-    ImageComponent splash(true);
-    splash.setImage(":/graphics/splash.svg");
-    splash.setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);
-    splash.setPosition((Renderer::getScreenWidth() - splash.getSize().x) / 2.0f,
-                       (Renderer::getScreenHeight() - splash.getSize().y) / 2.0f * 0.6f);
-    splash.render(trans);
+    mSplash->render(trans);
 
     auto& font = mDefaultFonts.at(1);
     TextCache* cache = font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF);

@@ -648,8 +648,7 @@ int main(int argc, char* argv[])
 
     window->pushGui(ViewController::getInstance());
 
-    bool splashScreen = Settings::getInstance()->getBool("SplashScreen");
-    bool splashScreenProgress = Settings::getInstance()->getBool("SplashScreenProgress");
+    bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
 
     InputManager::getInstance().parseEvent(event);
     if (event.type == SDL_QUIT)
@@ -674,9 +673,7 @@ int main(int argc, char* argv[])
 #endif
 
     if (splashScreen) {
-        std::string progressText = "Loading...";
-        if (splashScreenProgress)
-            progressText = "Loading system config...";
+        std::string progressText {"Loading system config..."};
         window->renderLoadingScreen(progressText);
     }
 
@@ -720,7 +717,7 @@ int main(int argc, char* argv[])
                      << "\"";
     }
 
-    if (splashScreen && splashScreenProgress)
+    if (splashScreen)
         window->renderLoadingScreen("Done");
 
     // Open the input configuration GUI if the flag to force this was passed from the command line.
