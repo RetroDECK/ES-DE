@@ -38,7 +38,11 @@ On Windows ES-DE is shipped as a portable installation and as a regular installe
 
 ## I'm on Windows and ES-DE refuses to start, is the application broken?
 
-You're probably missing the OpenGL drivers required to run ES-DE. Try to download and install the latest drivers for your graphics card. If you have a really old GPU this may not work though, and you may have to go for OpenGL software rendering instead. How this is setup is described in the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows).
+You're probably missing the OpenGL drivers required to run ES-DE. Try to download and install the latest drivers for your graphics card. If you have a really old GPU this may not work though, and you may have to go for OpenGL software rendering instead. How this is setup is described in the _Specific notes for Windows_ section of the [User guide](USERGUIDE.md#specific-notes-for-windows). There have also been a few reports of ES-DE refusing to start or displaying excessive graphics corruption when using Intel Iris Xe GPUs. This is seemingly caused by driver bugs and will have to be resolved by Intel. Running the same hardware on Linux seems to work fine.
+
+## I'm on Windows and there is only a black screen shown on startup or when launching a game, is there a way to fix this?
+
+This behavior has been observed for some specific AMD GPUs, in some instances there is only a black screen on startup and in some instances the application starts and runs correctly but launching a game only shows a black screen. The issue is seemingly caused by GPU driver bugs and it only affects Windows as Linux works fine with the same hardware. The workaround is to make ES-DE run in windowed mode. You accomplish this by using the --resolution flag and setting the width to one pixel wider than your screen resolution. So if for instance running at a 1280x800 display resolution, run ES-DE such as this: `EmulationStation.exe --resolution 1281 800`
 
 ## The emulators don't seem to be properly configured?
 
