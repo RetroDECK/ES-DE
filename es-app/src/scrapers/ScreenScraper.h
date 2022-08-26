@@ -102,12 +102,12 @@ protected:
 
     void processList(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
     void processGame(const pugi::xml_document& xmldoc, std::vector<ScraperSearchResult>& results);
-    void processMedia(ScraperSearchResult& result,
+    bool processMedia(ScraperSearchResult& result,
                       const pugi::xml_node& media_list,
-                      std::string mediaType,
+                      std::string& mediaType,
                       std::string& fileURL,
                       std::string& fileFormat,
-                      std::string region);
+                      const std::string& region);
     bool isGameRequest() { return !mRequestQueue; }
 
     std::queue<std::unique_ptr<ScraperRequest>>* mRequestQueue;

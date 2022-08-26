@@ -561,6 +561,7 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
 
         // Media super-node.
         pugi::xml_node media_list = game.child("medias");
+        bool regionFallback {false};
 
         if (media_list) {
             // 3D box.
@@ -576,12 +577,20 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             processMedia(result, media_list, ssConfig.media_fanart, result.fanartUrl,
                          result.fanartFormat, region);
             // Marquee (wheel).
-            processMedia(result, media_list, ssConfig.media_marquee, result.marqueeUrl,
-                         result.marqueeFormat, region);
-            // Marquee HD (wheel-hd) fallback if no regular wheel image was found.
-            if (result.marqueeUrl == "")
-                processMedia(result, media_list, ssConfig.media_marquee_hd, result.marqueeUrl,
-                             result.marqueeFormat, region);
+            regionFallback = processMedia(result, media_list, ssConfig.media_marquee,
+                                          result.marqueeUrl, result.marqueeFormat, region);
+            // Marquee HD (wheel-hd) fallback if no regular wheel image was found or if the
+            // image found was a fallback to another region than the one requested. If it was
+            // a fallback to another region then it will only get replaced with the wheel-hd
+            // image if that is matching the requested region.
+            if (regionFallback || result.marqueeUrl == "") {
+                std::string marqueeUrlTemp {result.marqueeUrl};
+                if (processMedia(result, media_list, ssConfig.media_marquee_hd, result.marqueeUrl,
+                                 result.marqueeFormat, region) &&
+                    marqueeUrlTemp != "") {
+                    result.marqueeUrl = marqueeUrlTemp;
+                }
+            }
             // Physical media.
             processMedia(result, media_list, ssConfig.media_physicalmedia, result.physicalmediaUrl,
                          result.physicalmediaFormat, region);
@@ -608,14 +617,15 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
     }
 }
 
-void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
+bool ScreenScraperRequest::processMedia(ScraperSearchResult& result,
                                         const pugi::xml_node& media_list,
-                                        std::string mediaType,
+                                        std::string& mediaType,
                                         std::string& fileURL,
                                         std::string& fileFormat,
-                                        std::string region)
+                                        const std::string& region)
 {
     pugi::xml_node art {pugi::xml_node(nullptr)};
+    bool regionFallback {false};
 
     // Do an XPath query for media[type='$media_type'], then filter by region.
     // We need to do this because any child of 'medias' has the form
@@ -649,6 +659,8 @@ void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
                 for (auto node : results) {
                     if (node.node().attribute("region").value() == regionEntry) {
                         art = node.node();
+                        if (region != regionEntry)
+                            regionFallback = true;
                         break;
                     }
                 }
@@ -671,6 +683,8 @@ void ScreenScraperRequest::processMedia(ScraperSearchResult& result,
                          "Failed to find media XML node with name '"
                       << mediaType << "'";
     }
+
+    return regionFallback;
 }
 
 // Currently not used in this module.
