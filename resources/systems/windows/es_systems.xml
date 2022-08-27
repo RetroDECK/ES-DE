@@ -572,6 +572,7 @@
         <command label="Dolphin">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dolphin_libretro.dll %ROM%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% -b -e %ROM%</command>
         <command label="PrimeHack (Standalone)">%EMULATOR_PRIMEHACK% -b -e %ROM%</command>
+        <command label="Triforce (Standalone)">%EMULATOR_TRIFORCE% -b -e %ROM%</command>
         <platform>gc</platform>
         <theme>gc</theme>
     </system>

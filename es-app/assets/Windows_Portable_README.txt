@@ -71,6 +71,7 @@ Emulators\SimCoupe\SimCoupe.exe
 Emulators\snes9x\snes9x-x64.exe
 Emulators\solarus\solarus-run.exe
 Emulators\Supermodel\Supermodel.exe
+Emulators\Triforce\DolphinWX.exe
 Emulators\tsugaru\Tsugaru_CUI.exe
 Emulators\VBA-M\visualboyadvance-m.exe
 Emulators\VICE\x64sc.exe

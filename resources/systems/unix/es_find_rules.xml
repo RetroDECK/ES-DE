@@ -532,6 +532,17 @@
             <entry>steam</entry>
         </rule>
     </emulator>
+    <emulator name="TRIFORCE">
+        <!-- Triforce, fork of Nintendo GameCube and Wii emulator Dolphin -->
+        <rule type="systempath">
+            <entry>dolphin-emu-triforce</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/dolphin-emu-triforce*.AppImage</entry>
+            <entry>~/.local/bin/dolphin-emu-triforce*.AppImage</entry>
+            <entry>~/bin/dolphin-emu-triforce*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="TSUGARU">
         <!-- Fujitsu FM Towns emulator Tsugaru -->
         <rule type="staticpath">
