@@ -5,7 +5,7 @@
         <name>3do</name>
         <fullname>3DO</fullname>
         <path>%ROMPATH%\3do</path>
-        <extension>.iso .ISO .bin .BIN .chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
         <command label="Opera">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\opera_libretro.dll %ROM%</command>
         <platform>3do</platform>
         <theme>3do</theme>
@@ -145,7 +145,7 @@
         <name>atari5200</name>
         <fullname>Atari 5200</fullname>
         <path>%ROMPATH%\atari5200</path>
-        <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
+        <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .cas .CAS .cdm .CDM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
         <command label="a5200">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\a5200_libretro.dll %ROM%</command>
         <command label="Atari800">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
         <command label="Atari800 (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ATARI800% %ROM%</command>
@@ -165,7 +165,7 @@
         <name>atari800</name>
         <fullname>Atari 800</fullname>
         <path>%ROMPATH%\atari800</path>
-        <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .cas .CAS .cdm .CDM .rom .ROM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
         <command label="Atari800">%STARTDIR%=%EMUDIR% %EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
         <command label="Atari800 (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ATARI800% %ROM%</command>
         <platform>atari800</platform>
@@ -213,7 +213,7 @@
         <name>atarixe</name>
         <fullname>Atari XE</fullname>
         <path>%ROMPATH%\atarixe</path>
-        <extension>.xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .bin .BIN .a52 .A52 .xex .XEX .7z .7Z .zip .ZIP</extension>
+        <extension>.a52 .A52 .atr .ATR .atx .ATX .bin .BIN .cas .CAS .cdm .CDM .xex .XEX .xfd .XFD .7z .7Z .zip .ZIP</extension>
         <command label="Atari800">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\atari800_libretro.dll %ROM%</command>
         <command label="Atari800 (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ATARI800% %ROM%</command>
         <platform>atarixe</platform>
@@ -223,7 +223,7 @@
         <name>atomiswave</name>
         <fullname>Atomiswave</fullname>
         <path>%ROMPATH%\atomiswave</path>
-        <extension>.cdi .CDI .iso .ISO .elf .ELF .bin .BIN .cue .CUE .gdi .GDI .lst .LST .dat .DAT .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .cdi .CDI .cue .CUE .dat .DAT .elf .ELF .gdi .GDI .iso .ISO .lst .LST .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
         <platform>arcade</platform>
@@ -568,7 +568,7 @@
         <name>gc</name>
         <fullname>Nintendo GameCube</fullname>
         <path>%ROMPATH%\gc</path>
-        <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .wia .WIA .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .json .JSON .rvz .RVZ .tgc .TGC .wad .WAD .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dolphin_libretro.dll %ROM%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% -b -e %ROM%</command>
         <command label="PrimeHack (Standalone)">%EMULATOR_PRIMEHACK% -b -e %ROM%</command>
@@ -1586,7 +1586,7 @@
         <name>wii</name>
         <fullname>Nintendo Wii</fullname>
         <path>%ROMPATH%\wii</path>
-        <extension>.gcm .GCM .iso .ISO .wbfs .WBFS .wia .WIA .ciso .CISO .gcz .GCZ .elf .ELF .dol .DOL .dff .DFF .json .JSON .rvz .RVZ .tgc .TGC .wad .WAD .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\dolphin_libretro.dll %ROM%</command>
         <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% -b -e %ROM%</command>
         <command label="PrimeHack (Standalone)">%EMULATOR_PRIMEHACK% -b -e %ROM%</command>
