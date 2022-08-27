@@ -882,6 +882,7 @@
         <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mupen64plus_next_libretro.dll %ROM%</command>
         <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% --fullscreen %ROM%</command>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\parallel_n64_libretro.dll %ROM%</command>
+        <command label="Project64 (Standalone)">%EMULATOR_PROJECT64% %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Nintendo 64" %ROM%</command>
         <platform>n64</platform>
         <theme>n64</theme>

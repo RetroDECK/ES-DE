@@ -432,6 +432,17 @@
             <entry>%ESPATH%\..\PrimeHack\Dolphin.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PROJECT64">
+        <!-- Nintendo 64 emulator Project64 -->
+        <rule type="systempath">
+            <entry>Project64.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Project64\Project64.exe</entry>
+            <entry>%ESPATH%\Project64\Project64.exe</entry>
+            <entry>%ESPATH%\..\Project64\Project64.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="systempath">
