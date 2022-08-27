@@ -32,8 +32,8 @@ Emulators\atari800\atari800.exe
 Emulators\BasiliskII\BasiliskII.exe
 Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe
-Emulators\Citra\canary-mingw\citra.exe
-Emulators\Citra\nightly-mingw\citra.exe
+Emulators\Citra\canary-mingw\citra-qt.exe
+Emulators\Citra\nightly-mingw\citra-qt.exe
 Emulators\cpcemu\cpcemu.exe
 Emulators\Cxbx-Reloaded\cxbx.exe
 Emulators\Dolphin-x64\Dolphin.exe

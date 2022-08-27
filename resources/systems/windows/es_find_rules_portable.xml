@@ -82,12 +82,12 @@
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\Citra\nightly-mingw\citra.exe</entry>
-            <entry>%ESPATH%\Emulators\Citra\canary-mingw\citra.exe</entry>
-            <entry>%ESPATH%\Citra\nightly-mingw\citra.exe</entry>
-            <entry>%ESPATH%\Citra\canary-mingw\citra.exe</entry>
-            <entry>%ESPATH%\..\Citra\nightly-mingw\citra.exe</entry>
-            <entry>%ESPATH%\..\Citra\canary-mingw\citra.exe</entry>
+            <entry>%ESPATH%\Emulators\Citra\nightly-mingw\citra-qt.exe</entry>
+            <entry>%ESPATH%\Emulators\Citra\canary-mingw\citra-qt.exe</entry>
+            <entry>%ESPATH%\Citra\nightly-mingw\citra-qt.exe</entry>
+            <entry>%ESPATH%\Citra\canary-mingw\citra-qt.exe</entry>
+            <entry>%ESPATH%\..\Citra\nightly-mingw\citra-qt.exe</entry>
+            <entry>%ESPATH%\..\Citra\canary-mingw\citra-qt.exe</entry>
         </rule>
     </emulator>
     <emulator name="CPCEMU">
