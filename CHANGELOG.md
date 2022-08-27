@@ -18,8 +18,12 @@
 * Added support for caching of SVG images
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * Added ares standalone as an alternative emulator for many systems
+* (Linux) Added support for the Nintendo Wii U (wiiu) game system
+* Added Triforce (Dolphin fork) standalone as an alternative emulator for the gc system on Linux and Windows
 * Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
 * (Windows) Added PrimeHack as an alternative emulator for the gc and wii systems
+* (Windows) Added Project64 as an alternative emulator for the n64 system
+* (Windows) Changed the binary for emulator Citra from citra.exe to citra-qt.exe as the command line binary is broken on this OS
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
 * Added the .bin file extension to the gx4000 system
@@ -75,6 +79,7 @@
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
+* If a wheel (marquee) image on ScreenScraper falls back to another region, then the wheel-hd image is now used instead if it matches the set region
 * Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result

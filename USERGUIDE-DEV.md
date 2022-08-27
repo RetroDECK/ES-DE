@@ -632,6 +632,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | _Multiple_   | RetroArch   | RetroArch-Linux-x86_64.AppImage |
 | gba          | mGBA        | mGBA*.AppImage                  |
 | gc           | Dolphin     | Dolphin_Emulator*.AppImage      |
+| gc           | Triforce    | dolphin-emu-triforce*.AppImage  |
 | macintosh    | Basilisk II | BasiliskII-x86_64.AppImage      |
 | macintosh    | SheepShaver | SheepShaver-x86_64.AppImage     |
 | ps2          | PCSX2       | pcsx2*-Qt.AppImage              |
@@ -679,6 +680,7 @@ The following manually downloaded emulators are supported when using the bundled
 | samcoupe                 | SimCoupé      | simcoupe/simcoupe               |
 | switch                   | Ryujinx       | publish/Ryujinx                 |
 | trs-80                   | sdl2trs       | sdl2trs/sdl2trs                 |
+| wiiu                     | Cemu          | Cemu/Cemu                       |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -690,6 +692,12 @@ The same is true for Vita3K:
 ```
 cd ~/Applications/Vita3K
 chmod +x ./Vita3K
+```
+
+And also for Cemu:
+```
+cd ~/Applications/Cemu
+chmod +x ./Cemu
 ```
 
 ## Running emulators in fullscreen mode
@@ -915,7 +923,7 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 #### Nintendo Wii U
 
-This section is specific to Windows as Cemu is currently only supported on this operating system.
+Cemu is available for Windows and in somewhat experimental form on Linux.
 
 Recently Cemu added support for the .wua archive format which is much easier to use than the unpacked game format. Therefore this is now the recommended approach. But both this and the traditional method of adding unpacked games are covered here.
 
@@ -2940,7 +2948,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** [UMW*],<br>VBA Next,<br>gpSP       | No           | Single archive or ROM file in root folder |
 | gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
-| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*], PrimeHack **(Standalone)** [UW*] | No           | Single .iso file in root folder       |
+| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*], PrimeHack **(Standalone)** [UW*],<br>Triforce **(Standalone)** [UW*] | No           | Single .iso file in root folder       |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 | Caprice32                         | CrocoDS,<br>MAME **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |
@@ -2971,7 +2979,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** [UMW*] | No           |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
@@ -3035,7 +3043,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)** [UMW*]  | No           |                                      |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)** [UMW*],<br>PrimeHack **(Standalone)** [UW*] | No           |                                      |
-| wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)** [W*]        |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
+| wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)** [UW*]       |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           |                                      |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file in root folder |
