@@ -66,8 +66,6 @@ public:
 
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool setting) { mLinearMagnify = setting; }
-    // Whether to rasterize the image even if a size has not been set yet.
-    void setForceRasterization(bool setting) { mForceRasterization = setting; }
 
     // Has the image been loaded but not yet been rasterized as the size was not known?
     const bool getPendingRasterization() { return mPendingRasterization; }
@@ -96,7 +94,6 @@ private:
     std::atomic<bool> mPendingRasterization;
     bool mLinearMagnify;
     bool mReloadable;
-    bool mForceRasterization;
 };
 
 #endif // ES_CORE_RESOURCES_TEXTURE_DATA_H

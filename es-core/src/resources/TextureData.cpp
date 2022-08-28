@@ -38,7 +38,6 @@ TextureData::TextureData(bool tile)
     , mHasRGBAData {false}
     , mPendingRasterization {false}
     , mLinearMagnify {false}
-    , mForceRasterization {false}
 {
 }
 
@@ -84,11 +83,9 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         }
     }
 
-    // If there is no image size defined yet, then don't rasterize unless mForceRasterization has
-    // been set.
+    // If there is no image size defined yet, then don't rasterize.
     if (mSourceWidth == 0.0f && mSourceHeight == 0.0f) {
-        if (!mForceRasterization)
-            rasterize = false;
+        rasterize = false;
         // Set a small temporary size that maintains the image aspect ratio.
         mSourceWidth = 64.0f;
         mSourceHeight = 64.0f * (svgImage->height / svgImage->width);

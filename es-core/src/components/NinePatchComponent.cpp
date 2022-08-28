@@ -66,7 +66,7 @@ void NinePatchComponent::buildVertices()
     }
 
     glm::vec2 texSize {relCornerSize * 3.0f};
-    mTexture = TextureResource::get(mPath, false, false, false, false, false,
+    mTexture = TextureResource::get(mPath, false, false, false, false,
                                     static_cast<size_t>(texSize.x), static_cast<size_t>(texSize.y));
 
     mTexture->rasterizeAt(texSize.x, texSize.y);

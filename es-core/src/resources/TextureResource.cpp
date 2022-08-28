@@ -20,8 +20,7 @@ TextureResource::TextureResource(const std::string& path,
                                  bool tile,
                                  bool dynamic,
                                  bool linearMagnify,
-                                 bool scalable,
-                                 bool forceRasterization)
+                                 bool scalable)
     : mTextureData {nullptr}
     , mForceLoad {false}
 {
@@ -35,7 +34,6 @@ TextureResource::TextureResource(const std::string& path,
             data->initFromPath(path);
             data->setTileSize(tileWidth, tileHeight);
             data->setLinearMagnify(linearMagnify);
-            data->setForceRasterization(forceRasterization);
             // Force the texture manager to load it using a blocking load.
             sTextureDataManager.load(data, true);
         }
@@ -45,7 +43,6 @@ TextureResource::TextureResource(const std::string& path,
             data->initFromPath(path);
             data->setTileSize(tileWidth, tileHeight);
             data->setLinearMagnify(linearMagnify);
-            data->setForceRasterization(forceRasterization);
             // Load it so we can read the width/height.
             data->load();
         }
@@ -156,7 +153,6 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
                                                       bool forceLoad,
                                                       bool dynamic,
                                                       bool linearMagnify,
-                                                      bool forceRasterization,
                                                       size_t width,
                                                       size_t height,
                                                       float tileWidth,
@@ -164,8 +160,8 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
 {
     const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
     if (canonicalPath.empty()) {
-        std::shared_ptr<TextureResource> tex(new TextureResource(
-            "", tileWidth, tileHeight, tile, false, linearMagnify, false, forceRasterization));
+        std::shared_ptr<TextureResource> tex(
+            new TextureResource("", tileWidth, tileHeight, tile, false, linearMagnify, false));
         // Make sure we get properly deinitialized even though we do nothing on reinitialization.
         ResourceManager::getInstance().addReloadable(tex);
         return tex;
@@ -210,9 +206,8 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     }
 
     // Need to create it.
-    std::shared_ptr<TextureResource> tex {std::shared_ptr<TextureResource>(
-        new TextureResource(std::get<0>(key), tileWidth, tileHeight, tile, dynamic, linearMagnify,
-                            isScalable, forceRasterization))};
+    std::shared_ptr<TextureResource> tex {std::shared_ptr<TextureResource>(new TextureResource(
+        std::get<0>(key), tileWidth, tileHeight, tile, dynamic, linearMagnify, isScalable))};
     std::shared_ptr<TextureData> data {sTextureDataManager.get(tex.get())};
 
     if (!isScalable || (isScalable && width != 0.0f && height != 0.0f)) {

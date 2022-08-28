@@ -166,14 +166,14 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         // we perform the actual rasterization to have the cache entry updated with the proper
         // texture. For SVG images this requires that every call to setImage is made only after
         // a call to setResize or setMaxSize (so the requested size is known upfront).
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
-                                        false, 0, 0, mTileWidth, mTileHeight);
+        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation, 0,
+                                        0, mTileWidth, mTileHeight);
 
         if (isScalable) {
             resize(false);
             mTexture.reset();
             mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
-                                            false, static_cast<size_t>(mSize.x),
+                                            static_cast<size_t>(mSize.x),
                                             static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
             mTexture->rasterizeAt(mSize.x, mSize.y);
             onSizeChanged();
