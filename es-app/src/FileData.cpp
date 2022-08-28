@@ -1448,6 +1448,13 @@ void FileData::launchGame()
             std::ifstream desktopFileStream;
             desktopFileStream.open(Utils::String::replace(romPath, "\\", ""));
             for (std::string line; getline(desktopFileStream, line);) {
+                // Some non-standard .desktop files add a leading line such as
+                // "#!/usr/bin/env xdg-open" and some lines may also be indented by
+                // whitespace characters. So we need to handle such oddities in order
+                // to parse and run these files.
+                line = Utils::String::trim(line);
+                if (line.substr(0, 2) == "#!")
+                    continue;
                 if (line.find("[Desktop Entry]") != std::string::npos)
                     validFile = true;
                 if (line.substr(0, 5) == "Exec=") {
