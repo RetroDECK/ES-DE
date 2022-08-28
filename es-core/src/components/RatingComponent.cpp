@@ -181,7 +181,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogWarning) << "RatingComponent: Invalid theme configuration, property <size> "
                                "for element \""
                             << element.substr(7) << "\" is set to zero";
-            ratingSize.y = 0.01;
+            ratingSize.y = 0.01f;
         }
         if (ratingSize.x > 0.0f)
             ratingSize.x = glm::clamp(ratingSize.x, 0.01f, 1.0f);
@@ -194,11 +194,32 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mSize.x = mSize.y * NUM_RATING_STARS;
     }
 
+    bool linearInterpolation {false};
+
+    if (elem->has("interpolation")) {
+        const std::string interpolation {elem->get<std::string>("interpolation")};
+        if (interpolation == "linear") {
+            linearInterpolation = true;
+        }
+        else if (interpolation == "nearest") {
+            linearInterpolation = false;
+        }
+        else {
+            linearInterpolation = false;
+
+            LOG(LogWarning)
+                << "RatingComponent: Invalid theme configuration, property <interpolation> "
+                   "for element \""
+                << element.substr(7) << "\" defined as \"" << interpolation << "\"";
+        }
+    }
+
     mIconFilled.setTileSize(mSize.y, mSize.y);
     mIconFilled.setResize(glm::vec2 {mSize}, false);
 
     if (properties & PATH && elem->has("filledPath")) {
         mIconFilled.setDynamic(true);
+        mIconFilled.setLinearInterpolation(linearInterpolation);
         mIconFilled.setImage(std::string(elem->get<std::string>("filledPath")), true);
         mIconFilled.getTexture()->setSize(mSize.y, mSize.y);
         if (!mIconFilled.getTexture()->getScalable())
@@ -213,6 +234,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & PATH && elem->has("unfilledPath")) {
         mIconUnfilled.setDynamic(true);
+        mIconUnfilled.setLinearInterpolation(linearInterpolation);
         mIconUnfilled.setImage(std::string(elem->get<std::string>("unfilledPath")), true);
         mIconUnfilled.getTexture()->setSize(mSize.y, mSize.y);
         if (!mIconUnfilled.getTexture()->getScalable())
