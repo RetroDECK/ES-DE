@@ -30,6 +30,8 @@ TextureData::TextureData(bool tile)
     , mDataRGBA {}
     , mWidth {0}
     , mHeight {0}
+    , mTileWidth {0.0f}
+    , mTileHeight {0.0f}
     , mSourceWidth {0.0f}
     , mSourceHeight {0.0f}
     , mScalable {false}
@@ -72,8 +74,14 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     bool rasterize {true};
 
     if (mTile) {
-        mSourceWidth = svgImage->width;
-        mSourceHeight = svgImage->height;
+        if (mTileWidth == 0.0f && mTileHeight == 0.0f) {
+            mSourceWidth = svgImage->width;
+            mSourceHeight = svgImage->height;
+        }
+        else {
+            mSourceWidth = static_cast<float>(mTileWidth);
+            mSourceHeight = static_cast<float>(mTileHeight);
+        }
     }
 
     // If there is no image size defined yet, then don't rasterize unless mForceRasterization has

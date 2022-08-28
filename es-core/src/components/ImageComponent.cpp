@@ -36,6 +36,8 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mFlipY {false}
     , mTargetIsMax {false}
     , mTargetIsMin {false}
+    , mTileWidth {0.0f}
+    , mTileHeight {0.0f}
     , mColorShift {0xFFFFFFFF}
     , mColorShiftEnd {0xFFFFFFFF}
     , mColorGradientHorizontal {true}
@@ -164,14 +166,15 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         // we perform the actual rasterization to have the cache entry updated with the proper
         // texture. For SVG images this requires that every call to setImage is made only after
         // a call to setResize or setMaxSize (so the requested size is known upfront).
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation);
+        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
+                                        false, 0, 0, mTileWidth, mTileHeight);
 
         if (isScalable) {
             resize(false);
             mTexture.reset();
-            mTexture =
-                TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation, false,
-                                     static_cast<size_t>(mSize.x), static_cast<size_t>(mSize.y));
+            mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
+                                            false, static_cast<size_t>(mSize.x),
+                                            static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
             mTexture->rasterizeAt(mSize.x, mSize.y);
             onSizeChanged();
         }
@@ -204,6 +207,14 @@ void ImageComponent::setResize(float width, float height)
     mTargetIsMax = false;
     mTargetIsMin = false;
     resize();
+}
+
+void ImageComponent::setResize(float width, float height, bool rasterize)
+{
+    mTargetSize = glm::vec2 {width, height};
+    mTargetIsMax = false;
+    mTargetIsMin = false;
+    resize(rasterize);
 }
 
 void ImageComponent::setMaxSize(const float width, const float height)

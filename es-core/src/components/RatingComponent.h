@@ -11,11 +11,12 @@
 #define ES_APP_COMPONENTS_RATING_COMPONENT_H
 
 #include "GuiComponent.h"
+#include "components/ImageComponent.h"
 #include "renderers/Renderer.h"
 
 class TextureResource;
 
-#define NUM_RATING_STARS 5
+#define NUM_RATING_STARS 5.0f
 
 class RatingComponent : public GuiComponent
 {
@@ -32,13 +33,7 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
     void onSizeChanged() override;
-
-    void setOpacity(float opacity) override;
     void setDimming(float dimming) override;
-
-    // Multiply all pixels in the image by this color when rendering.
-    void setColorShift(unsigned int color) override;
-    unsigned int getColorShift() const override { return mColorShift; }
 
     void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; }
     void setChangedColor(unsigned int color) override { mColorChangedValue = color; }
@@ -51,23 +46,17 @@ public:
     std::vector<HelpPrompt> getHelpPrompts() override;
 
 private:
-    void updateVertices();
-    void updateColors();
-
     Renderer* mRenderer;
+    ImageComponent mIconFilled;
+    ImageComponent mIconUnfilled;
+
     float mValue;
     int mOriginalValue;
+
     unsigned int mColorOriginalValue;
     unsigned int mColorChangedValue;
-
-    Renderer::Vertex mVertices[8];
-
     unsigned int mColorShift;
     unsigned int mColorShiftEnd;
-    unsigned int mUnfilledColor;
-
-    std::shared_ptr<TextureResource> mFilledTexture;
-    std::shared_ptr<TextureResource> mUnfilledTexture;
 
     bool mColorizeChanges;
 };

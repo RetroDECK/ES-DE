@@ -19,15 +19,21 @@ RatingComponent::RatingComponent(bool colorizeChanges)
     , mColorChangedValue {DEFAULT_COLORSHIFT}
     , mColorShift {DEFAULT_COLORSHIFT}
     , mColorShiftEnd {DEFAULT_COLORSHIFT}
-    , mUnfilledColor {DEFAULT_COLORSHIFT}
     , mColorizeChanges {colorizeChanges}
 {
-    mFilledTexture = TextureResource::get(":/graphics/star_filled.svg", true);
-    mUnfilledTexture = TextureResource::get(":/graphics/star_unfilled.svg", true);
+    mSize = glm::vec2 {mRenderer->getScreenHeight() * 0.06f * NUM_RATING_STARS,
+                       mRenderer->getScreenHeight() * 0.06f};
+
+    mIconFilled.setResize(mSize, false);
+    mIconFilled.setTileSize(mSize.y, mSize.y);
+
+    mIconUnfilled.setResize(mSize, false);
+    mIconUnfilled.setTileSize(mSize.y, mSize.y);
+
+    mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
+    mIconUnfilled.setImage(std::string(":/graphics/star_unfilled.svg"), true);
+
     mValue = 0.5f;
-    mSize = glm::vec2 {64.0f * NUM_RATING_STARS, 64.0f};
-    updateVertices();
-    updateColors();
 }
 
 void RatingComponent::setValue(const std::string& value)
@@ -44,9 +50,9 @@ void RatingComponent::setValue(const std::string& value)
         // color shift accordingly.
         if (mColorizeChanges) {
             if (static_cast<int>(mValue * 10.0f) == mOriginalValue)
-                setColorShift(mColorOriginalValue);
+                mIconFilled.setColorShift(mColorOriginalValue);
             else
-                setColorShift(mColorChangedValue);
+                mIconFilled.setColorShift(mColorChangedValue);
         }
 
         // For the special situation where there is a fractional rating in the gamelist.xml
@@ -55,7 +61,7 @@ void RatingComponent::setValue(const std::string& value)
         // been manually edited.
         if (mColorizeChanges && mValue != stof(value)) {
             mOriginalValue = ICONCOLOR_USERMARKED;
-            setColorShift(0x449944FF);
+            mIconFilled.setColorShift(0x449944FF);
         }
 
         if (mValue > 1.0f)
@@ -63,8 +69,6 @@ void RatingComponent::setValue(const std::string& value)
         else if (mValue < 0.0f)
             mValue = 0.0f;
     }
-
-    updateVertices();
 }
 
 std::string RatingComponent::getValue() const
@@ -83,117 +87,55 @@ std::string RatingComponent::getRatingValue(const std::string& rating)
     return ss.str();
 }
 
-void RatingComponent::setOpacity(float opacity)
-{
-    mOpacity = opacity;
-    mColorShift =
-        (mColorShift >> 8 << 8) | static_cast<unsigned char>(mOpacity * mThemeOpacity * 255.0f);
-    updateColors();
-}
-
 void RatingComponent::setDimming(float dimming)
 {
     mDimming = dimming;
-    mVertices[0].dimming = mDimming;
-    mVertices[4].dimming = mDimming;
-}
-
-void RatingComponent::setColorShift(unsigned int color)
-{
-    mColorShift = color;
-    mColorShiftEnd = color;
-
-    // Grab the opacity from the color shift because we may need
-    // to apply it if fading in textures.
-    mOpacity = static_cast<float>(color & 0xff) / 255.0f;
-    updateColors();
+    mIconFilled.setDimming(dimming);
+    mIconUnfilled.setDimming(dimming);
 }
 
 void RatingComponent::onSizeChanged()
 {
-    // Make sure the size is not unreasonably large (which may be caused by a mistake in
-    // the theme configuration).
-    mSize.x = glm::clamp(mSize.x, 0.0f, mRenderer->getScreenWidth() / 2.0f);
-    mSize.y = glm::clamp(mSize.y, 0.0f, mRenderer->getScreenHeight() / 2.0f);
+    mSize = glm::round(mSize);
 
-    if (mSize.y == 0.0f)
-        mSize.y = mSize.x / NUM_RATING_STARS;
-    else if (mSize.x == 0.0f)
+    if (mSize.x == 0.0f)
         mSize.x = mSize.y * NUM_RATING_STARS;
 
-    if (mSize.y > 0.0f) {
-        if (mFilledTexture)
-            mFilledTexture->rasterizeAt(mSize.y, mSize.y);
-        if (mUnfilledTexture)
-            mUnfilledTexture->rasterizeAt(mSize.y, mSize.y);
-    }
+    mIconFilled.getTexture()->setSize(mSize.y, mSize.y);
+    mIconFilled.setResize(glm::vec2 {mSize.y * NUM_RATING_STARS, mSize.y}, true);
 
-    updateVertices();
-}
-
-void RatingComponent::updateVertices()
-{
-    const float numStars {NUM_RATING_STARS};
-    const float h {getSize().y}; // Ss the same as a single star's width.
-    const float w {getSize().y * mValue * numStars};
-    const float fw {getSize().y * numStars};
-
-    // clang-format off
-    mVertices[0] = {{0.0f, 0.0f}, {0.0f,              1.0f}, mColorShift};
-    mVertices[1] = {{0.0f, h   }, {0.0f,              0.0f}, mColorShift};
-    mVertices[2] = {{w,    0.0f}, {mValue * numStars, 1.0f}, mColorShift};
-    mVertices[3] = {{w,    h   }, {mValue * numStars, 0.0f}, mColorShift};
-
-    mVertices[4] = {{0.0f, 0.0f}, {0.0f,              1.0f}, mColorShift};
-    mVertices[5] = {{0.0f, h   }, {0.0f,              0.0f}, mColorShift};
-    mVertices[6] = {{fw,   0.0f}, {numStars,          1.0f}, mColorShift};
-    mVertices[7] = {{fw,   h   }, {numStars,          0.0f}, mColorShift};
-    // clang-format on
-}
-
-void RatingComponent::updateColors()
-{
-    for (int i = 0; i < 8; ++i)
-        mVertices[i].color = mColorShift;
+    mIconUnfilled.getTexture()->setSize(mSize.y, mSize.y);
+    mIconUnfilled.setResize(glm::vec2 {mSize.y * NUM_RATING_STARS, mSize.y}, true);
 }
 
 void RatingComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mFilledTexture == nullptr || mUnfilledTexture == nullptr ||
-        mThemeOpacity == 0.0f)
+    if (!isVisible() || mThemeOpacity == 0.0f || mOpacity == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
-
     mRenderer->setMatrix(trans);
 
-    if (mOpacity > 0.0f) {
-        if (Settings::getInstance()->getBool("DebugImage")) {
-            mRenderer->drawRect(0.0f, 0.0f, mSize.y * NUM_RATING_STARS, mSize.y, 0xFF000033,
-                                0xFF000033);
-        }
+    mIconUnfilled.setOpacity(mOpacity * mThemeOpacity);
+    mIconUnfilled.render(trans);
 
-        if (mUnfilledTexture->bind()) {
-            if (mUnfilledColor != mColorShift) {
-                for (int i = 0; i < 8; ++i)
-                    mVertices[i].color =
-                        (mUnfilledColor & 0xFFFFFF00) + (mVertices[i].color & 0x000000FF);
-            }
+    // No need to render the filled texture if the value is zero.
+    if (mValue == 0.0f)
+        return;
 
-            mRenderer->drawTriangleStrips(&mVertices[4], 4);
-            mRenderer->bindTexture(0);
+    glm::ivec2 clipPos {static_cast<int>(std::round(trans[3].x)),
+                        static_cast<int>(std::round(trans[3].y))};
+    glm::vec3 dimScaled {};
+    dimScaled.x = std::fabs(trans[3].x + mIconUnfilled.getSize().x);
+    dimScaled.y = std::fabs(trans[3].y + mIconUnfilled.getSize().y);
 
-            if (mUnfilledColor != mColorShift)
-                updateColors();
-        }
+    glm::ivec2 clipDim {static_cast<int>(std::round(dimScaled.x - std::round(trans[3].x)) * mValue),
+                        static_cast<int>(std::round(dimScaled.y - trans[3].y))};
 
-        if (mFilledTexture->bind()) {
-            mRenderer->drawTriangleStrips(&mVertices[0], 4);
-            mRenderer->bindTexture(0);
-        }
-    }
-
-    renderChildren(trans);
+    mIconFilled.setOpacity(mOpacity * mThemeOpacity);
+    mRenderer->pushClipRect(clipPos, clipDim);
+    mIconFilled.render(trans);
+    mRenderer->popClipRect();
 }
 
 bool RatingComponent::input(InputConfig* config, Input input)
@@ -207,11 +149,10 @@ bool RatingComponent::input(InputConfig* config, Input input)
         // set the color shift accordingly.
         if (mColorizeChanges) {
             if (static_cast<int>(mValue * 10.0f) == mOriginalValue)
-                setColorShift(mColorOriginalValue);
+                mIconFilled.setColorShift(mColorOriginalValue);
             else
-                setColorShift(mColorChangedValue);
+                mIconFilled.setColorShift(mColorChangedValue);
         }
-        updateVertices();
     }
 
     return GuiComponent::input(config, input);
@@ -228,44 +169,65 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    // Make sure the size is not unreasonably large (which may be caused by a mistake in
-    // the theme configuration).
-    mSize.x = glm::clamp(mSize.x, 0.0f, mRenderer->getScreenWidth() / 2.0f);
-    mSize.y = glm::clamp(mSize.y, 0.0f, mRenderer->getScreenHeight() / 2.0f);
+    GuiComponent::applyTheme(theme, view, element, properties ^ ThemeFlags::SIZE);
 
-    if (mSize.y == 0.0f)
-        mSize.y = mSize.x / NUM_RATING_STARS;
-    else if (mSize.x == 0.0f)
-        mSize.x = mSize.y * NUM_RATING_STARS;
+    glm::vec2 scale {getParent() ?
+                         getParent()->getSize() :
+                         glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
-    const size_t sizeY {static_cast<size_t>(mSize.y)};
-
-    bool imgChanged {false};
-    if (properties & PATH && elem->has("filledPath")) {
-        mFilledTexture = TextureResource::get(elem->get<std::string>("filledPath"), true, false,
-                                              true, false, false, sizeY, sizeY);
-        imgChanged = true;
+    if (elem->has("size")) {
+        glm::vec2 ratingSize {elem->get<glm::vec2>("size")};
+        if (ratingSize == glm::vec2 {0.0f, 0.0f}) {
+            LOG(LogWarning) << "RatingComponent: Invalid theme configuration, property <size> "
+                               "for element \""
+                            << element.substr(7) << "\" is set to zero";
+            ratingSize.y = 0.01;
+        }
+        if (ratingSize.x > 0.0f)
+            ratingSize.x = glm::clamp(ratingSize.x, 0.01f, 1.0f);
+        if (ratingSize.y > 0.0f)
+            ratingSize.y = glm::clamp(ratingSize.y, 0.01f, 0.5f);
+        mSize = ratingSize * scale;
+        if (mSize.y == 0.0f)
+            mSize.y = mSize.x / NUM_RATING_STARS;
+        else
+            mSize.x = mSize.y * NUM_RATING_STARS;
     }
+
+    mIconFilled.setTileSize(mSize.y, mSize.y);
+    mIconFilled.setResize(glm::vec2 {mSize}, false);
+
+    if (properties & PATH && elem->has("filledPath")) {
+        mIconFilled.setDynamic(true);
+        mIconFilled.setImage(std::string(elem->get<std::string>("filledPath")), true);
+        mIconFilled.getTexture()->setSize(mSize.y, mSize.y);
+        if (!mIconFilled.getTexture()->getScalable())
+            mIconFilled.onSizeChanged();
+    }
+    else {
+        mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
+    }
+
+    mIconUnfilled.setTileSize(mSize.y, mSize.y);
+    mIconUnfilled.setResize(glm::vec2 {mSize}, false);
+
     if (properties & PATH && elem->has("unfilledPath")) {
-        mUnfilledTexture = TextureResource::get(elem->get<std::string>("unfilledPath"), true, false,
-                                                true, false, false, sizeY, sizeY);
-        imgChanged = true;
+        mIconUnfilled.setDynamic(true);
+        mIconUnfilled.setImage(std::string(elem->get<std::string>("unfilledPath")), true);
+        mIconUnfilled.getTexture()->setSize(mSize.y, mSize.y);
+        if (!mIconUnfilled.getTexture()->getScalable())
+            mIconUnfilled.onSizeChanged();
+    }
+    else {
+        mIconUnfilled.setImage(std::string(":/graphics/star_unfilled.svg"), true);
     }
 
     if (properties & COLOR) {
-        if (elem->has("color"))
-            setColorShift(elem->get<unsigned int>("color"));
-
-        if (elem->has("unfilledColor"))
-            mUnfilledColor = elem->get<unsigned int>("unfilledColor");
-        else
-            mUnfilledColor = mColorShift;
+        if (elem->has("color")) {
+            mIconFilled.setColorShift(elem->get<unsigned int>("color"));
+            mIconUnfilled.setColorShift(elem->get<unsigned int>("color"));
+        }
     }
-
-    GuiComponent::applyTheme(theme, view, element, properties);
-
-    if (imgChanged)
-        onSizeChanged();
 }
 
 std::vector<HelpPrompt> RatingComponent::getHelpPrompts()

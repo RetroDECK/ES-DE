@@ -90,6 +90,7 @@ public:
     void setSize(const glm::vec2& size) { setSize(size.x, size.y); }
     void setSize(const float w, const float h);
     virtual void setResize(float width, float height) {}
+    virtual void setResize(float width, float height, bool rasterize) {}
     virtual void onSizeChanged() {}
 
     virtual glm::vec2 getRotationSize() const { return getSize(); }

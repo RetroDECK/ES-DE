@@ -30,6 +30,7 @@ public:
     // Use an already existing texture.
     void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
 
+    void setDynamic(bool state) { mDynamic = state; }
     void onSizeChanged() override { updateVertices(); }
 
     // Resize the image to fit this size. If one axis is zero, scale that axis to maintain
@@ -38,13 +39,23 @@ public:
     // Can be set before or after an image is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     void setResize(const float width, const float height) override;
-    void setResize(const glm::vec2& size) { setResize(size.x, size.y); }
+    void setResize(const glm::vec2& size, bool rasterize = true)
+    {
+        setResize(size.x, size.y, rasterize);
+    }
+    void setResize(const float width, const float height, bool rasterize) override;
 
     // Resize the image to be as large as possible but fit within a box of this size.
     // Can be set before or after an image is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(const float width, const float height);
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
+
+    void setTileSize(const float width, const float height)
+    {
+        mTileWidth = width;
+        mTileHeight = height;
+    }
 
     glm::vec2 getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
 
@@ -107,6 +118,9 @@ private:
     bool mFlipY;
     bool mTargetIsMax;
     bool mTargetIsMin;
+
+    float mTileWidth;
+    float mTileHeight;
 
     // Calculates the correct mSize from our resizing information (set by setResize/setMaxSize).
     // Used internally whenever the resizing parameters or texture change. This function also

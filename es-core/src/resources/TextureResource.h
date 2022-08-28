@@ -33,7 +33,9 @@ public:
                                                 bool linearMagnify = false,
                                                 bool forceRasterization = false,
                                                 size_t width = 0,
-                                                size_t height = 0);
+                                                size_t height = 0,
+                                                float tileWidth = 0.0f,
+                                                float tileHeight = 0.0f);
     void initFromPixels(const unsigned char* dataRGBA, size_t width, size_t height);
     virtual void initFromMemory(const char* data, size_t length);
     static void manualUnload(const std::string& path, bool tile);
@@ -63,6 +65,11 @@ public:
     virtual ~TextureResource();
 
     bool isTiled() const;
+    void setSize(float width, float height)
+    {
+        mSize.x = static_cast<int>(std::round(width));
+        mSize.y = static_cast<int>(std::round(height));
+    }
 
     const glm::ivec2 getSize() const { return mSize; }
     bool bind();
@@ -74,9 +81,12 @@ public:
 
 protected:
     TextureResource(const std::string& path,
+                    float tileWidth,
+                    float tileHeight,
                     bool tile,
                     bool dynamic,
                     bool linearMagnify,
+                    bool scalable,
                     bool forceRasterization);
     virtual void unload(ResourceManager& rm);
     virtual void reload(ResourceManager& rm);

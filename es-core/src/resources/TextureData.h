@@ -57,6 +57,11 @@ public:
     float sourceWidth();
     float sourceHeight();
     void setSourceSize(float width, float height);
+    void setTileSize(float tileWidth, float tileHeight)
+    {
+        mTileWidth = tileWidth;
+        mTileHeight = tileHeight;
+    }
     glm::vec2 getSize() { return glm::vec2 {static_cast<int>(mWidth), static_cast<int>(mHeight)}; }
 
     // Whether to use linear filtering when magnifying the texture.
@@ -82,6 +87,8 @@ private:
     std::vector<unsigned char> mDataRGBA;
     std::atomic<int> mWidth;
     std::atomic<int> mHeight;
+    std::atomic<float> mTileWidth;
+    std::atomic<float> mTileHeight;
     std::atomic<float> mSourceWidth;
     std::atomic<float> mSourceHeight;
     std::atomic<bool> mScalable;
