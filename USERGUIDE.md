@@ -1088,7 +1088,7 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 
 There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf`, `.hdz` or `.lha` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
-An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described earlier.
+An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described [here](USERGUIDE.md#multiple-game-files-installation).
 
 Here's an example of what the file structure could look like:
 

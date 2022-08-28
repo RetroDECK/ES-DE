@@ -1361,7 +1361,9 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - Only one value is actually used. The other value should be zero (e.g. specify width OR height, but not both. This is done to maintain the aspect ratio.)
+    - These values are mutually exclusive, if an X axis value is defined then the element will be sized based on this, and if an Y axis value is defined then the element will be sized based on that. If both the X and Y axis values are defined then the Y axis value will take precedence and the X axis value will be ignored. This makes sure that the image aspect ratio is always maintained.
+  - Minimum value per axis is `0.01` and maximum value for the X axis is `1` and maximum value for the Y axis is `0.5`
+  - Default is `0 0.06`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -1374,6 +1376,10 @@ Properties:
     - Default is `0.5 0.5`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
+* `interpolation` - type: STRING
+    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect if the rating element uses scalable vector graphics (SVG) images.
+    - Valid values are `nearest` or `linear`
+    - Default is `nearest`
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `filledPath` - type: PATH

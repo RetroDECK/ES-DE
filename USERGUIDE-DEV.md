@@ -1101,7 +1101,7 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 
 There are multiple ways to run Amiga games, but the recommended approach is to use WHDLoad. The best way is to use hard disk images in `.hdf`, `.hdz` or `.lha` format, meaning there will be a single file per game. This makes it just as easy to play Amiga games as any console with game ROMs.
 
-An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described earlier.
+An alternative would be to use `.adf` images as not all games may be available with WHDLoad support. For this, you can either put single-disc images in the root folder or in a dedicated adf directory, or multiple-disk games in separate folders. It's highly recommended to create `.m3u` playlist files for multi-disc images as described [here](USERGUIDE-DEV.md#multiple-game-files-installation).
 
 Here's an example of what the file structure could look like:
 
@@ -2948,7 +2948,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** [UMW*],<br>VBA Next,<br>gpSP       | No           | Single archive or ROM file in root folder |
 | gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
-| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*], PrimeHack **(Standalone)** [UW*],<br>Triforce **(Standalone)** [UW*] | No           | Single .iso file in root folder       |
+| gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*],<br>PrimeHack **(Standalone)** [UW*],<br>Triforce **(Standalone)** [UW*] | No           | Single .iso file in root folder       |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 | Caprice32                         | CrocoDS,<br>MAME **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | intellivision         | Mattel Electronics Intellivision               | FreeIntv                          |                                   |              |                                      |

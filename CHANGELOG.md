@@ -129,6 +129,7 @@
 * Renamed Gamelist.cpp to GamelistFileParser.cpp and moved it to its own namespace instead of using the global namespace
 * Renamed GuiGameScraper.cpp to GuiScraperSingle.cpp
 * Renamed SystemScreensaver.cpp to Screensaver.cpp
+* Refactored RatingComponent to improve rendering accuracy and performance
 * Moved UIModeController.cpp from the es-app/views directory to es-app
 * Set the clang-format option SpaceBeforeCpp11BracedList to true and reformatted the codebase
 * Added the clang-format option AllowShortEnumsOnASingleLine and set it to false
