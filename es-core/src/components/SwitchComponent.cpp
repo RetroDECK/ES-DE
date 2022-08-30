@@ -16,8 +16,8 @@ SwitchComponent::SwitchComponent(bool state)
     , mColorOriginalValue {DEFAULT_COLORSHIFT}
     , mColorChangedValue {DEFAULT_COLORSHIFT}
 {
-    mImage.setImage(":/graphics/off.svg");
     mImage.setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
+    mImage.setImage(":/graphics/off.svg");
     mSize = mImage.getSize();
 }
 
@@ -68,8 +68,8 @@ void SwitchComponent::setValue(const std::string& statestring)
 
 void SwitchComponent::onStateChanged()
 {
-    mImage.setImage(mState ? ":/graphics/on.svg" : ":/graphics/off.svg");
     mImage.setResize(mSize);
+    mImage.setImage(mState ? ":/graphics/on.svg" : ":/graphics/off.svg");
 
     // Change the color of the switch to reflect the changes.
     if (mState == mOriginalValue)

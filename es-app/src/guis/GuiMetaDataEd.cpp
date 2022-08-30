@@ -197,8 +197,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
-                bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setImage(":/graphics/arrow.svg");
                 row.addElement(bracket, false);
 
                 const std::string title {it->displayPrompt};
@@ -279,8 +279,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
-                bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setImage(":/graphics/arrow.svg");
                 row.addElement(bracket, false);
 
                 const std::string title {it->displayPrompt};
@@ -415,8 +415,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
-                bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setImage(":/graphics/arrow.svg");
                 row.addElement(bracket, false);
 
                 const std::string title {it->displayPrompt};
@@ -521,8 +521,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
-                bracket->setImage(":/graphics/arrow.svg");
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+                bracket->setImage(":/graphics/arrow.svg");
                 row.addElement(bracket, false);
 
                 bool multiLine {it->type == MD_MULTILINE_STRING};

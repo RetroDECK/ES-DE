@@ -278,9 +278,9 @@ void MediaViewer::showImage(int index)
 
     if (!mImageFiles.empty() && static_cast<int>(mImageFiles.size()) >= index) {
         mImage = new ImageComponent(false, false);
-        mImage->setImage(mImageFiles[index]);
         mImage->setOrigin(0.5f, 0.5f);
         mImage->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
         mImage->setMaxSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        mImage->setImage(mImageFiles[index]);
     }
 }

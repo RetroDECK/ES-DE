@@ -306,8 +306,8 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
     if (entry.data.itemPath != "") {
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mLinearInterpolation);
-        item->setImage(entry.data.itemPath);
         item->setMaxSize(mItemSize * mItemScale);
+        item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         item->setRotateByTargetSize(true);
         entry.data.item = item;

@@ -165,9 +165,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
         auto themeCollection = std::make_shared<TextComponent>(
             "CREATE NEW CUSTOM COLLECTION FROM THEME", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
         auto bracketThemeCollection = std::make_shared<ImageComponent>();
-        bracketThemeCollection->setImage(":/graphics/arrow.svg");
         bracketThemeCollection->setResize(
             glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+        bracketThemeCollection->setImage(":/graphics/arrow.svg");
         row.addElement(themeCollection, true);
         row.addElement(bracketThemeCollection, false);
         row.makeAcceptInputHandler([this, unusedFolders] {
@@ -198,9 +198,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     auto newCollection = std::make_shared<TextComponent>("CREATE NEW CUSTOM COLLECTION",
                                                          Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     auto bracketNewCollection = std::make_shared<ImageComponent>();
-    bracketNewCollection->setImage(":/graphics/arrow.svg");
     bracketNewCollection->setResize(
         glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+    bracketNewCollection->setImage(":/graphics/arrow.svg");
     row.addElement(newCollection, true);
     row.addElement(bracketNewCollection, false);
     auto createCollectionCall = [this](const std::string& newVal) {
@@ -234,9 +234,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     auto deleteCollection = std::make_shared<TextComponent>(
         "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
     auto bracketDeleteCollection = std::make_shared<ImageComponent>();
-    bracketDeleteCollection->setImage(":/graphics/arrow.svg");
     bracketDeleteCollection->setResize(
         glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
+    bracketDeleteCollection->setImage(":/graphics/arrow.svg");
     row.addElement(deleteCollection, true);
     row.addElement(bracketDeleteCollection, false);
     row.makeAcceptInputHandler([this, customSystems] {

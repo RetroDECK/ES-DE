@@ -169,8 +169,8 @@ void GuiSettings::addEditableTextComponent(const std::string label,
     row.addElement(spacer, false);
 
     auto bracket = std::make_shared<ImageComponent>();
-    bracket->setImage(":/graphics/arrow.svg");
     bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
+    bracket->setImage(":/graphics/arrow.svg");
     row.addElement(bracket, false);
 
     // OK callback (apply new value to ed).

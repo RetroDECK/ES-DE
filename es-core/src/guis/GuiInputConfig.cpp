@@ -84,9 +84,9 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
 
         // Icon.
         auto icon = std::make_shared<ImageComponent>();
+        icon->setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 1.25f);
         icon->setImage(sGuiInputConfigList[i].icon);
         icon->setColorShift(0x777777FF);
-        icon->setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 1.25f);
         row.addElement(icon, false);
 
         // Spacer between icon and text.

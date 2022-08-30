@@ -186,7 +186,7 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(
 std::shared_ptr<ImageComponent> makeArrow()
 {
     auto bracket = std::make_shared<ImageComponent>();
-    bracket->setImage(":/graphics/arrow.svg");
     bracket->setResize(0, std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    bracket->setImage(":/graphics/arrow.svg");
     return bracket;
 }

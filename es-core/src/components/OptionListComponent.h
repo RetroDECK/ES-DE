@@ -460,8 +460,8 @@ private:
                 if (mParent->mMultiSelect) {
                     // Add checkbox.
                     auto checkbox = std::make_shared<ImageComponent>();
-                    checkbox->setImage(it->selected ? CHECKED_PATH : UNCHECKED_PATH);
                     checkbox->setResize(0, font->getLetterHeight());
+                    checkbox->setImage(it->selected ? CHECKED_PATH : UNCHECKED_PATH);
                     row.addElement(checkbox, false);
 
                     if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected)
