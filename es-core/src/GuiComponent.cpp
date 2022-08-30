@@ -361,7 +361,7 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("rotation"))
             setRotationDegrees(elem->get<float>("rotation"));
         if (elem->has("rotationOrigin"))
-            setRotationOrigin(elem->get<glm::vec2>("rotationOrigin"));
+            setRotationOrigin(glm::clamp(elem->get<glm::vec2>("rotationOrigin"), 0.0f, 1.0f));
     }
 
     if (properties & ThemeFlags::Z_INDEX && elem->has("zIndex"))
