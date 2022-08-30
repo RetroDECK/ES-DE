@@ -50,6 +50,7 @@ class Font : public IReloadable
 public:
     virtual ~Font();
     static void initLibrary();
+    std::vector<std::string> getFallbackFontPaths();
     static std::shared_ptr<Font> get(int size, const std::string& path = getDefaultPath());
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
@@ -149,8 +150,6 @@ private:
     void rebuildTextures();
     void unloadTextures();
 
-    std::vector<FontTexture> mTextures;
-
     void getTextureForNewGlyph(const glm::ivec2& glyphSize,
                                FontTexture*& tex_out,
                                glm::ivec2& cursor_out);
@@ -169,13 +168,12 @@ private:
         glm::vec2 bearing;
     };
 
+    std::vector<FontTexture> mTextures;
     std::map<unsigned int, Glyph> mGlyphMap;
-
     Glyph* getGlyph(const unsigned int id);
 
-    int mMaxGlyphHeight;
-
     int mSize;
+    int mMaxGlyphHeight;
     const std::string mPath;
 
     float getNewlineStartOffset(const std::string& text,
@@ -194,16 +192,6 @@ private:
 // Font holds the OpenGL texture), and if a Font changes your TextCache may become invalid.
 class TextCache
 {
-protected:
-    struct VertexList {
-        std::vector<Renderer::Vertex> verts;
-        // This is a pointer because the texture ID can change during
-        // deinit/reinit (when launching a game).
-        unsigned int* textureIdPtr;
-    };
-
-    std::vector<VertexList> vertexLists;
-
 public:
     struct CacheMetrics {
         glm::vec2 size;
@@ -214,6 +202,16 @@ public:
     void setDimming(float dimming);
 
     friend Font;
+
+protected:
+    struct VertexList {
+        std::vector<Renderer::Vertex> verts;
+        // This is a pointer because the texture ID can change during
+        // deinit/reinit (when launching a game).
+        unsigned int* textureIdPtr;
+    };
+
+    std::vector<VertexList> vertexLists;
 };
 
 #endif // ES_CORE_RESOURCES_FONT_H
