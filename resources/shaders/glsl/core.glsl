@@ -4,7 +4,7 @@
 //  core.glsl
 //
 //  Core shader functionality:
-//  opacity, saturation, dimming and BGRA to RGBA conversion.
+//  clipping, opacity, saturation, dimming and BGRA to RGBA conversion.
 //
 
 // Vertex section of code:
@@ -15,12 +15,14 @@ in vec2 positionVertex;
 in vec2 texCoordVertex;
 in vec4 colorVertex;
 
-out vec4 color;
+out vec2 position;
 out vec2 texCoord;
+out vec4 color;
 
 void main(void)
 {
     gl_Position = MVPMatrix * vec4(positionVertex.xy, 0.0, 1.0);
+    position = positionVertex;
     texCoord = texCoordVertex;
     color.rgba = colorVertex.abgr;
 }
@@ -32,8 +34,11 @@ void main(void)
 precision mediump float;
 #endif
 
-in vec4 color;
+in vec2 position;
 in vec2 texCoord;
+in vec4 color;
+
+uniform vec4 clipRegion;
 uniform float opacity;
 uniform float saturation;
 uniform float dimming;
@@ -47,9 +52,22 @@ out vec4 FragColor;
 // 0x00000001 - BGRA to RGBA conversion
 // 0x00000002 - Font texture
 // 0x00000004 - Post processing
+// 0x00000008 - Clipping
 
 void main()
 {
+    // Discard any pixels outside the clipping region.
+    if (0u != (shaderFlags & 8u)) {
+        if (position.x < clipRegion.x)
+            discard;
+        else if (position.y < clipRegion.y)
+            discard;
+        else if (position.x > clipRegion.z)
+            discard;
+        else if (position.y > clipRegion.w)
+            discard;
+    }
+
     vec4 sampledColor = texture(textureSampler, texCoord);
 
     // For fonts the alpha information is stored in the red channel.

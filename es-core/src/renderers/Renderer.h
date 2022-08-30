@@ -51,7 +51,8 @@ public:
     enum ShaderFlags {
         BGRA_TO_RGBA =    0x00000001,
         FONT_TEXTURE =    0x00000002,
-        POST_PROCESSING = 0x00000004
+        POST_PROCESSING = 0x00000004,
+        CLIPPING        = 0x00000008
     };
     // clang-format on
 
@@ -59,6 +60,7 @@ public:
         glm::vec2 position;
         glm::vec2 texcoord;
         unsigned int color;
+        glm::vec4 clipregion;
         float opacity;
         float saturation;
         float dimming;
@@ -76,10 +78,14 @@ public:
         {
         }
 
-        Vertex(const glm::vec2& position, const glm::vec2& textureCoord, const unsigned int color)
+        Vertex(const glm::vec2& position,
+               const glm::vec2& textureCoord,
+               const unsigned int color,
+               const glm::vec4& clipRegion = glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f})
             : position(position)
             , texcoord(textureCoord)
             , color(color)
+            , clipregion(clipRegion)
             , opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}

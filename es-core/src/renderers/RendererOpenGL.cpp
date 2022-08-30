@@ -420,6 +420,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
                 mCoreShader->setAttribPointers();
             GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
                                         GL_DYNAMIC_DRAW));
+            mCoreShader->setClipRegion(vertices->clipregion);
             mCoreShader->setOpacity(vertices->opacity);
             mCoreShader->setSaturation(vertices->saturation);
             mCoreShader->setDimming(vertices->dimming);

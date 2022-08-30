@@ -82,6 +82,7 @@ public:
     void setOpacity(float opacity) override;
     void setSaturation(float saturation) override;
     void setDimming(float dimming) override;
+    void setClipRegion(const glm::vec4& clipRegion);
 
     void setReflectionsFalloff(float falloff) override { mReflectionsFalloff = falloff; }
     void setFlipX(bool flip) override; // Mirror on the X axis.
@@ -154,6 +155,7 @@ private:
 
     glm::vec2 mTopLeftCrop;
     glm::vec2 mBottomRightCrop;
+    glm::vec4 mClipRegion;
 };
 
 #endif // ES_CORE_COMPONENTS_IMAGE_COMPONENT_H

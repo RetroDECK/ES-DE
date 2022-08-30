@@ -121,6 +121,7 @@ void ShaderOpenGL::getVariableLocations(GLuint programID)
     mShaderTextureCoord = glGetAttribLocation(mProgramID, "texCoordVertex");
     mShaderColor = glGetAttribLocation(mProgramID, "colorVertex");
     mShaderTextureSize = glGetUniformLocation(mProgramID, "textureSize");
+    mShaderClipRegion = glGetUniformLocation(mProgramID, "clipRegion");
     mShaderOpacity = glGetUniformLocation(mProgramID, "opacity");
     mShaderSaturation = glGetUniformLocation(mProgramID, "saturation");
     mShaderDimming = glGetUniformLocation(mProgramID, "dimming");
@@ -156,6 +157,13 @@ void ShaderOpenGL::setTextureSize(std::array<GLfloat, 2> shaderVec2)
 {
     if (mShaderTextureSize != -1)
         GL_CHECK_ERROR(glUniform2f(mShaderTextureSize, shaderVec2[0], shaderVec2[1]));
+}
+
+void ShaderOpenGL::setClipRegion(glm::vec4 clipRegion)
+{
+    if (mShaderClipRegion != -1)
+        GL_CHECK_ERROR(glUniform4f(mShaderClipRegion, clipRegion[0], clipRegion[1], clipRegion[2],
+                                   clipRegion[3]));
 }
 
 void ShaderOpenGL::setOpacity(GLfloat opacity)

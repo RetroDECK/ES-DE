@@ -50,6 +50,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mLinearInterpolation {false}
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
+    , mClipRegion {0.0f, 0.0f, 0.0f, 0.0f}
 {
     updateColors();
 }
@@ -367,6 +368,34 @@ void ImageComponent::setDimming(float dimming)
     mDimming = dimming;
 }
 
+void ImageComponent::setClipRegion(const glm::vec4& clipRegion)
+{
+    if (mVertices[0].clipregion == clipRegion)
+        return;
+
+    mClipRegion = clipRegion;
+
+    if (mClipRegion == glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f}) {
+        if (mVertices[0].shaderFlags & Renderer::ShaderFlags::CLIPPING) {
+            mVertices[0].shaderFlags ^= Renderer::ShaderFlags::CLIPPING;
+            mVertices[1].shaderFlags ^= Renderer::ShaderFlags::CLIPPING;
+            mVertices[2].shaderFlags ^= Renderer::ShaderFlags::CLIPPING;
+            mVertices[3].shaderFlags ^= Renderer::ShaderFlags::CLIPPING;
+        }
+    }
+    else {
+        mVertices[0].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
+        mVertices[1].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
+        mVertices[2].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
+        mVertices[3].shaderFlags |= Renderer::ShaderFlags::CLIPPING;
+    }
+
+    mVertices[0].clipregion = clipRegion;
+    mVertices[1].clipregion = clipRegion;
+    mVertices[2].clipregion = clipRegion;
+    mVertices[3].clipregion = clipRegion;
+}
+
 void ImageComponent::updateVertices()
 {
     if (!mTexture)
@@ -401,6 +430,8 @@ void ImageComponent::updateVertices()
         for (int i = 0; i < 4; ++i)
             mVertices[i].texcoord[1] = py - mVertices[i].texcoord[1];
     }
+
+    setClipRegion(mClipRegion);
 }
 
 void ImageComponent::updateColors()
@@ -436,7 +467,11 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             glm::vec2 targetSizePos {(mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f}};
             mRenderer->drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
                                 0xFF000033, 0xFF000033);
-            mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+            if (mClipRegion == glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f})
+                mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+            else
+                mRenderer->drawRect(mClipRegion.x, mClipRegion.y, mClipRegion.z - mClipRegion.x,
+                                    mClipRegion.w - mClipRegion.y, 0xFF000033, 0xFF000033);
         }
         // An image with zero size would normally indicate a corrupt image file.
         if (mTexture->getSize() != glm::ivec2 {}) {
