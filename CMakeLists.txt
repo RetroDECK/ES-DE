@@ -32,8 +32,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
                               ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages)
 
 # Define the options.
-option(GL "Set to ON if targeting Desktop OpenGL 3.3" ${GL})
-option(GLES "Set to ON if targeting OpenGL ES 3.0" ${GLES})
+option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
+option(GLES "Set to ON if targeting OpenGL ES" ${GLES})
 option(APPIMAGE_BUILD "Set to ON when building as an AppImage" ${APPIMAGE_BUILD})
 option(FLATPAK_BUILD "Set to ON when building as a Flatpak" ${FLATPAK_BUILD})
 option(STEAM_DECK "Set to ON to enable Valve Steam Deck specific build" ${STEAM_DECK})
@@ -283,6 +283,7 @@ endif()
 
 if(GLES)
     add_compile_definitions(USE_OPENGLES)
+    message("-- Building with OpenGL ES renderer")
 endif()
 
 if (APPIMAGE_BUILD AND FLATPAK_BUILD)
