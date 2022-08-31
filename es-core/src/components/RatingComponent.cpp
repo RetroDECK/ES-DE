@@ -21,8 +21,8 @@ RatingComponent::RatingComponent(bool colorizeChanges)
     , mColorShiftEnd {DEFAULT_COLORSHIFT}
     , mColorizeChanges {colorizeChanges}
 {
-    mSize = glm::vec2 {mRenderer->getScreenHeight() * 0.06f * NUM_RATING_STARS,
-                       mRenderer->getScreenHeight() * 0.06f};
+    mSize = glm::vec2 {std::round(mRenderer->getScreenHeight() * 0.06f) * NUM_RATING_STARS,
+                       std::round(mRenderer->getScreenHeight() * 0.06f)};
 
     mIconFilled.setResize(mSize, false);
     mIconFilled.setTileSize(mSize.y, mSize.y);
@@ -171,7 +171,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogWarning) << "RatingComponent: Invalid theme configuration, property <size> "
                                "for element \""
                             << element.substr(7) << "\" is set to zero";
-            ratingSize.y = 0.01f;
+            ratingSize.y = 0.06f;
         }
         if (ratingSize.x > 0.0f)
             ratingSize.x = glm::clamp(ratingSize.x, 0.01f, 1.0f);
