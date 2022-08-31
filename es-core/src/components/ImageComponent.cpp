@@ -168,7 +168,7 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         // texture. For SVG images this requires that every call to setImage is made only after
         // a call to setResize or setMaxSize (so the requested size is known upfront).
         mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation, 0,
-                                        0, mTileWidth, mTileHeight);
+                                        0, 0.0f, 0.0f);
 
         if (isScalable) {
             resize(false);

@@ -69,6 +69,9 @@ void RatingComponent::setValue(const std::string& value)
         else if (mValue < 0.0f)
             mValue = 0.0f;
     }
+
+    mIconFilled.setClipRegion(
+        glm::vec4 {0.0f, 0.0f, std::round(mIconFilled.getSize().x * mValue), mSize.y});
 }
 
 std::string RatingComponent::getValue() const
@@ -114,28 +117,12 @@ void RatingComponent::render(const glm::mat4& parentTrans)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
-    mRenderer->setMatrix(trans);
 
     mIconUnfilled.setOpacity(mOpacity * mThemeOpacity);
-    mIconUnfilled.render(trans);
-
-    // No need to render the filled texture if the value is zero.
-    if (mValue == 0.0f)
-        return;
-
-    glm::ivec2 clipPos {static_cast<int>(std::round(trans[3].x)),
-                        static_cast<int>(std::round(trans[3].y))};
-    glm::vec3 dimScaled {};
-    dimScaled.x = std::fabs(trans[3].x + mIconUnfilled.getSize().x);
-    dimScaled.y = std::fabs(trans[3].y + mIconUnfilled.getSize().y);
-
-    glm::ivec2 clipDim {static_cast<int>(std::round(dimScaled.x - std::round(trans[3].x)) * mValue),
-                        static_cast<int>(std::round(dimScaled.y - trans[3].y))};
-
     mIconFilled.setOpacity(mOpacity * mThemeOpacity);
-    mRenderer->pushClipRect(clipPos, clipDim);
+
+    mIconUnfilled.render(trans);
     mIconFilled.render(trans);
-    mRenderer->popClipRect();
 }
 
 bool RatingComponent::input(InputConfig* config, Input input)
@@ -153,6 +140,9 @@ bool RatingComponent::input(InputConfig* config, Input input)
             else
                 mIconFilled.setColorShift(mColorChangedValue);
         }
+
+        mIconFilled.setClipRegion(
+            glm::vec4 {0.0f, 0.0f, std::round(mIconFilled.getSize().x * mValue), mSize.y});
     }
 
     return GuiComponent::input(config, input);
@@ -187,7 +177,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             ratingSize.x = glm::clamp(ratingSize.x, 0.01f, 1.0f);
         if (ratingSize.y > 0.0f)
             ratingSize.y = glm::clamp(ratingSize.y, 0.01f, 0.5f);
-        mSize = ratingSize * scale;
+        mSize = glm::round(ratingSize * scale);
         if (mSize.y == 0.0f)
             mSize.y = mSize.x / NUM_RATING_STARS;
         else
