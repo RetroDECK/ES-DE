@@ -74,6 +74,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     if (mTile) {
         if (mTileWidth == 0.0f && mTileHeight == 0.0f) {
+            rasterize = false;
             mSourceWidth = svgImage->width;
             mSourceHeight = svgImage->height;
         }
@@ -109,10 +110,14 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         std::vector<unsigned char> tempVector;
         tempVector.reserve(mWidth * mHeight * 4);
 
-        NSVGrasterizer* rast = nsvgCreateRasterizer();
+        NSVGrasterizer* rast {nsvgCreateRasterizer()};
 
-        nsvgRasterize(rast, svgImage, 0, 0, mHeight / svgImage->height, tempVector.data(), mWidth,
-                      mHeight, mWidth * 4);
+        // Compensate for rounding losses for a slightly more accurate rasterization.
+        const float compScale {(static_cast<float>(mHeight) / svgImage->height) *
+                               (mSourceHeight / static_cast<float>(mHeight))};
+
+        nsvgRasterize(rast, svgImage, 0.0f, 0.0f, compScale, tempVector.data(), mWidth, mHeight,
+                      mWidth * 4);
 
         nsvgDeleteRasterizer(rast);
 
