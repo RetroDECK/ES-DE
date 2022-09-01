@@ -146,10 +146,15 @@ void ImageComponent::setImage(const std::string& path, bool tile)
     if (!mForceLoad && (path[0] == ':') && (path[1] == '/')) {
         mDynamic = false;
     }
+    else if (Utils::FileSystem::isDirectory(path)) {
+        LOG(LogError) << "ImageComponent: Path is a directory and not a file: \"" << path << "\"";
+        return;
+    }
 
-    const bool isScalable {path != "" ? Utils::String::toLower(path.substr(
-                                            path.size() - 4, std::string::npos)) == ".svg" :
-                                        false};
+    const bool isScalable {
+        (path != "" && path.length() > 4) ?
+            Utils::String::toLower(path.substr(path.size() - 4, std::string::npos)) == ".svg" :
+            false};
 
     // Create an initial blank texture if needed.
     if (path.empty() || !ResourceManager::getInstance().fileExists(path)) {
