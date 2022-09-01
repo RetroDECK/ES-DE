@@ -51,6 +51,7 @@ private:
     ImageComponent mIconUnfilled;
 
     float mValue;
+    float mImageRatio;
     int mOriginalValue;
 
     unsigned int mColorOriginalValue;
@@ -59,6 +60,7 @@ private:
     unsigned int mColorShiftEnd;
 
     bool mColorizeChanges;
+    bool mOverlay;
 };
 
 #endif // ES_APP_COMPONENTS_RATING_COMPONENT_H

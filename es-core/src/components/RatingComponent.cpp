@@ -15,11 +15,14 @@
 
 RatingComponent::RatingComponent(bool colorizeChanges)
     : mRenderer {Renderer::getInstance()}
+    , mValue {0.5f}
+    , mImageRatio {1.0f}
     , mColorOriginalValue {DEFAULT_COLORSHIFT}
     , mColorChangedValue {DEFAULT_COLORSHIFT}
     , mColorShift {DEFAULT_COLORSHIFT}
     , mColorShiftEnd {DEFAULT_COLORSHIFT}
     , mColorizeChanges {colorizeChanges}
+    , mOverlay {true}
 {
     mSize = glm::vec2 {std::round(mRenderer->getScreenHeight() * 0.06f) * NUM_RATING_STARS,
                        std::round(mRenderer->getScreenHeight() * 0.06f)};
@@ -32,8 +35,6 @@ RatingComponent::RatingComponent(bool colorizeChanges)
 
     mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
     mIconUnfilled.setImage(std::string(":/graphics/star_unfilled.svg"), true);
-
-    mValue = 0.5f;
 }
 
 void RatingComponent::setValue(const std::string& value)
@@ -70,8 +71,10 @@ void RatingComponent::setValue(const std::string& value)
             mValue = 0.0f;
     }
 
-    mIconFilled.setClipRegion(
-        glm::vec4 {0.0f, 0.0f, std::round(mIconFilled.getSize().x * mValue), mSize.y});
+    const float clipValue {std::round(mIconUnfilled.getSize().x * mValue)};
+    if (!mOverlay)
+        mIconUnfilled.setClipRegion(glm::vec4 {clipValue, 0.0f, mSize.x, mSize.y});
+    mIconFilled.setClipRegion(glm::vec4 {0.0f, 0.0f, clipValue, mSize.y});
 }
 
 std::string RatingComponent::getValue() const
@@ -105,10 +108,12 @@ void RatingComponent::onSizeChanged()
         mSize.x = mSize.y * NUM_RATING_STARS;
 
     mIconFilled.getTexture()->setSize(mSize.y, mSize.y);
-    mIconFilled.setResize(glm::vec2 {mSize.y * NUM_RATING_STARS, mSize.y}, true);
+    mIconFilled.setResize(glm::vec2 {std::round(mSize.y * mImageRatio) * NUM_RATING_STARS, mSize.y},
+                          true);
 
     mIconUnfilled.getTexture()->setSize(mSize.y, mSize.y);
-    mIconUnfilled.setResize(glm::vec2 {mSize.y * NUM_RATING_STARS, mSize.y}, true);
+    mIconUnfilled.setResize(
+        glm::vec2 {std::round(mSize.y * mImageRatio) * NUM_RATING_STARS, mSize.y}, true);
 }
 
 void RatingComponent::render(const glm::mat4& parentTrans)
@@ -141,8 +146,10 @@ bool RatingComponent::input(InputConfig* config, Input input)
                 mIconFilled.setColorShift(mColorChangedValue);
         }
 
-        mIconFilled.setClipRegion(
-            glm::vec4 {0.0f, 0.0f, std::round(mIconFilled.getSize().x * mValue), mSize.y});
+        const float clipValue {std::round(mIconUnfilled.getSize().x * mValue)};
+        if (!mOverlay)
+            mIconUnfilled.setClipRegion(glm::vec4 {clipValue, 0.0f, mSize.x, mSize.y});
+        mIconFilled.setClipRegion(glm::vec4 {0.0f, 0.0f, clipValue, mSize.y});
     }
 
     return GuiComponent::input(config, input);
@@ -165,6 +172,20 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                          getParent()->getSize() :
                          glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
+    {
+        // Read the image file in order to retrieve the image dimensions needed to calculate
+        // the aspect ratio constant.
+        if (properties & PATH && elem->has("filledPath")) {
+            std::string path {std::string(elem->get<std::string>("filledPath"))};
+            if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
+                auto tempImage =
+                    TextureResource::get(path, false, false, false, false, 0, 0, 0.0f, 0.0f);
+                mImageRatio = static_cast<float>(tempImage->getSize().x) /
+                              static_cast<float>(tempImage->getSize().y);
+            }
+        }
+    }
+
     if (elem->has("size")) {
         glm::vec2 ratingSize {elem->get<glm::vec2>("size")};
         if (ratingSize == glm::vec2 {0.0f, 0.0f}) {
@@ -179,9 +200,9 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             ratingSize.y = glm::clamp(ratingSize.y, 0.01f, 0.5f);
         mSize = glm::round(ratingSize * scale);
         if (mSize.y == 0.0f)
-            mSize.y = mSize.x / NUM_RATING_STARS;
+            mSize.y = std::round(mSize.x / mImageRatio) / NUM_RATING_STARS;
         else
-            mSize.x = mSize.y * NUM_RATING_STARS;
+            mSize.x = std::round(mSize.y * mImageRatio) * NUM_RATING_STARS;
     }
 
     bool linearInterpolation {false};
@@ -204,35 +225,40 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    mIconFilled.setTileSize(mSize.y, mSize.y);
+    mIconFilled.setTileSize(mSize.y * mImageRatio, mSize.y);
     mIconFilled.setResize(glm::vec2 {mSize}, false);
 
-    if (properties & PATH && elem->has("filledPath")) {
+    if (properties & PATH && elem->has("filledPath") &&
+        (Utils::FileSystem::isRegularFile(elem->get<std::string>("filledPath")) ||
+         Utils::FileSystem::isSymlink(elem->get<std::string>("filledPath")))) {
         mIconFilled.setDynamic(true);
         mIconFilled.setLinearInterpolation(linearInterpolation);
         mIconFilled.setImage(std::string(elem->get<std::string>("filledPath")), true);
-        mIconFilled.getTexture()->setSize(mSize.y, mSize.y);
-        if (!mIconFilled.getTexture()->getScalable())
-            mIconFilled.onSizeChanged();
+        mIconFilled.getTexture()->setSize(std::round(mSize.y * mImageRatio), mSize.y);
+        mIconFilled.onSizeChanged();
     }
     else {
         mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
     }
 
-    mIconUnfilled.setTileSize(mSize.y, mSize.y);
+    mIconUnfilled.setTileSize(mSize.y * mImageRatio, mSize.y);
     mIconUnfilled.setResize(glm::vec2 {mSize}, false);
 
-    if (properties & PATH && elem->has("unfilledPath")) {
+    if (properties & PATH && elem->has("unfilledPath") &&
+        (Utils::FileSystem::isRegularFile(elem->get<std::string>("unfilledPath")) ||
+         Utils::FileSystem::isSymlink(elem->get<std::string>("unfilledPath")))) {
         mIconUnfilled.setDynamic(true);
         mIconUnfilled.setLinearInterpolation(linearInterpolation);
         mIconUnfilled.setImage(std::string(elem->get<std::string>("unfilledPath")), true);
-        mIconUnfilled.getTexture()->setSize(mSize.y, mSize.y);
-        if (!mIconUnfilled.getTexture()->getScalable())
-            mIconUnfilled.onSizeChanged();
+        mIconUnfilled.getTexture()->setSize(std::round(mSize.y * mImageRatio), mSize.y);
+        mIconUnfilled.onSizeChanged();
     }
     else {
         mIconUnfilled.setImage(std::string(":/graphics/star_unfilled.svg"), true);
     }
+
+    if (elem->has("overlay") && !elem->get<bool>("overlay"))
+        mOverlay = false;
 
     if (properties & COLOR) {
         if (elem->has("color")) {

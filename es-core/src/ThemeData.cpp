@@ -247,6 +247,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"color", COLOR},
        {"filledPath", PATH},
        {"unfilledPath", PATH},
+       {"overlay", BOOLEAN},
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
