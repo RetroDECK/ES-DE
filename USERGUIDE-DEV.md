@@ -401,7 +401,19 @@ It's however recommended to move all such files to the ~/.emulationstation/gamel
 
 It's also strongly adviced to not rename an old es_settings.cfg file to es_settings.xml for use in ES-DE. Although this has been tested to some extent, it may cause undefined behavior.
 
-If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for most game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. All RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
+If migrating from Batocera or Recalbox, be aware that ES-DE follows the RetroPie naming conventions for most game systems. This means that your game files may not be found unless the folders are renamed accordingly. Such an example is the Sega SG-1000 system which in Batocera and Recalbox has the _sg1000_ system name, but is _sg-1000_ in RetroPie and ES-DE. See the [Supported game systems](USERGUIDE-DEV.md#supported-game-systems) table at the bottom of this guide for the correct system names in ES-DE. This issue also means that theme sets that were written or adapted specifically for Batocera or Recalbox may display unthemed systems in ES-DE. Most RetroPie theme sets should however work fine (of course assuming that all your systems are actually supported by the theme set).
+
+Another potential issue when migrating from Recalbox (and possibly Batocera) is that the path tag requires a leading ./ in ES-DE while that's not present in those other forks. If you don't see any metadata for your games inside ES-DE, then simply add the ./ characters to each path tag and it should hopefully work.
+
+Example of an unreadable path tag:
+```
+<path>Another World.hdf</path>
+```
+
+Example of a correct path tag readable by ES-DE:
+```
+<path>./Another World.hdf</path>
+```
 
 ## Running on high resolution displays
 

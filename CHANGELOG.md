@@ -58,6 +58,7 @@
 * Changed the badges default lines property value from 2 to 3
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
+* Added support for arbitrary aspect ratios for RatingComponent images and also added an overlay property
 * Added theme support for defining the opacity for most element types
 * Added theme support for defining color saturation for images, videos and animations
 * Added theme support for defining the video fade-in time

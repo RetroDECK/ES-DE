@@ -83,6 +83,7 @@ The following are the most important changes compared to the legacy theme struct
 * The ambiguous `alignment` property has been replaced with the `horizontalAlignment` and `verticalAlignment` properties (the same is true for `logoAlignment` for the `carousel` element)
 * The `forceUppercase` property has been replaced with the more versatile `letterCase` property
 * Many property names for the carousel have been renamed, with _logo_ being replaced by _item_ as this element can now be used in both the gamelist and system views. As well, setting the alignment will not automatically add any margins as is the case for legacy themes. These can still be set manually using the `horizontalOffset` and `verticalOffset` properties if needed. The way that alignment works in general for both carousel items and the overall carousel has also changed
+* The rating elements were previously not sized and overlaid consistently, this has now been fixed and rating images should now be centered on the image canvas in order for this element to render correctly rather than being left-adjusted as has previously been done by some theme authors (likely as a workaround for the previous buggy implementation). Images of any aspect ratios are now also supported where previously only square images could be used
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
 * The carousel property maxItemCount (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine
 * The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
@@ -792,6 +793,7 @@ Properties:
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the image will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `path` - type: PATH
     - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
@@ -955,6 +957,7 @@ Properties:
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the animation will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define animation elements that should be treated as if they were game media files. This is for example useful for hiding and fading out animations that are used as indicators for the various metadata types like genre, publisher, players etc.
@@ -1015,6 +1018,7 @@ Properties:
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the image will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
 * `horizontalAlignment` - type: STRING.
     - Valid values are `left` or `right`
@@ -1138,6 +1142,7 @@ Properties:
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the text will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `text` - type: STRING
     - A string literal to display.
@@ -1243,6 +1248,7 @@ Properties:
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the text will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
 * `metadata` - type: STRING
     - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per datetime element.
@@ -1319,6 +1325,7 @@ Properties:
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the element will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
@@ -1373,19 +1380,23 @@ Properties:
     - Default is `0`
 * `rotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the rating will be rotated.
+    - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect if the rating element uses scalable vector graphics (SVG) images.
+    - Interpolation method to use when scaling the images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images, and even more so if rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
 * `filledPath` - type: PATH
-    - Path to the "filled" rating image. Image must be square (width equals height).
+    - Path to the "filled" rating image. Any aspect ratio is supported. Note that there is no explicit padding property, so to add spaces between each icon simply make the image content smaller on the canvas. The images should always be centered on the canvas or otherwise the filledPath and unfilledPath textures will not align properly for all rating values. Most common file extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `unfilledPath` - type: PATH
-    - Path to the "unfilled" rating image. Image must be square (width equals height).
+    - Path to the "unfilled" rating image. Any aspect ratio is supported. Note that there is no explicit padding property, so to add spaces between each icon simply make the image content smaller on the canvas. The images should always be centered on the canvas or otherwise the filledPath and unfilledPath textures will not align properly for all rating values. Most common file extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `overlay` - type: BOOLEAN
+    - Whether to overlay the filledPath image on top of the unfilledPath image. If this property is set to false, then the unfilledPath image will only be rendered to the right of the rating value cut position. This property is useful for avoiding image aliasing artifacts that could otherwise occur when combining some rating images. It can also help with avoiding some inconsistent fade-out animations.
+    - Default is `true`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
