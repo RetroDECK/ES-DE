@@ -21,6 +21,7 @@ std::map<std::pair<std::string, int>, std::weak_ptr<Font>> Font::sFontMap;
 Font::Font(int size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
     , mSize(size)
+    , mMaxGlyphHeight {0}
     , mPath(path)
 {
     if (mSize < 9) {
@@ -31,8 +32,6 @@ Font::Font(int size, const std::string& path)
         mSize = static_cast<int>(Renderer::getScreenHeight());
         LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
     }
-
-    mMaxGlyphHeight = 0;
 
     if (!sLibrary)
         initLibrary();
@@ -592,7 +591,7 @@ void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
     textureId = Renderer::getInstance()->createTexture(
-        Renderer::TextureType::RED, false, false, false, textureSize.x, textureSize.y, nullptr);
+        Renderer::TextureType::RED, true, false, false, textureSize.x, textureSize.y, nullptr);
 }
 
 void Font::FontTexture::deinitTexture()
