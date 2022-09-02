@@ -66,6 +66,10 @@ void Font::initLibrary()
         sLibrary = nullptr;
         LOG(LogError) << "Couldn't initialize FreeType";
     }
+
+    // Whether to enable linear interpolation for font texture magnification (a size of 90
+    // means approximately 1920x1080).
+    mHighResolution = FONT_SIZE_LARGE > 90;
 }
 
 std::vector<std::string> Font::getFallbackFontPaths()
@@ -590,8 +594,9 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
-    textureId = Renderer::getInstance()->createTexture(
-        Renderer::TextureType::RED, true, false, false, textureSize.x, textureSize.y, nullptr);
+    textureId =
+        Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true, mHighResolution,
+                                               false, textureSize.x, textureSize.y, nullptr);
 }
 
 void Font::FontTexture::deinitTexture()
