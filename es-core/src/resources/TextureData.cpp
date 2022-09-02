@@ -35,6 +35,7 @@ TextureData::TextureData(bool tile)
     , mSourceWidth {0.0f}
     , mSourceHeight {0.0f}
     , mScalable {false}
+    , mScalableNonAspect {false}
     , mHasRGBAData {false}
     , mPendingRasterization {false}
     , mLinearMagnify {false}
@@ -107,17 +108,31 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     }
 
     if (rasterize) {
+        float height {static_cast<float>(mHeight)};
+        const float aspectW {svgImage->width / static_cast<float>(mWidth)};
+        const float aspectH {svgImage->height / static_cast<float>(mHeight)};
+
+        if (mScalableNonAspect && aspectW != aspectH) {
+            // If the size property has been used to override the aspect ratio of the SVG image,
+            // then we need to rasterize at a lower resolution and let the GPU scale the texture.
+            // This is necessary as the rasterization always maintains the image aspect ratio.
+            mWidth = static_cast<int>(std::round(svgImage->width / aspectH));
+        }
+        else {
+            // For very wide and short images we need to check that the target width is enough
+            // to fit the rasterized image, if not we'll decrease the height as needed.
+            const float requiredWidth {height * (svgImage->width / svgImage->height)};
+            if (std::round(requiredWidth) > static_cast<float>(mWidth))
+                height = std::floor(height * (static_cast<float>(mWidth) / requiredWidth));
+        }
+
         std::vector<unsigned char> tempVector;
         tempVector.reserve(mWidth * mHeight * 4);
 
         NSVGrasterizer* rast {nsvgCreateRasterizer()};
 
-        // Compensate for rounding losses for a slightly more accurate rasterization.
-        const float compScale {(static_cast<float>(mHeight) / svgImage->height) *
-                               (mSourceHeight / static_cast<float>(mHeight))};
-
-        nsvgRasterize(rast, svgImage, 0.0f, 0.0f, compScale, tempVector.data(), mWidth, mHeight,
-                      mWidth * 4);
+        nsvgRasterize(rast, svgImage, 0, 0, height / svgImage->height, tempVector.data(), mWidth,
+                      mHeight, mWidth * 4);
 
         nsvgDeleteRasterizer(rast);
 

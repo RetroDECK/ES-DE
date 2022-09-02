@@ -118,7 +118,7 @@ private:
     bool mFlipX;
     bool mFlipY;
     bool mTargetIsMax;
-    bool mTargetIsMin;
+    bool mScalableNonAspect;
 
     float mTileWidth;
     float mTileHeight;
