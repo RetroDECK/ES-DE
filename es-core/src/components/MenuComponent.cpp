@@ -91,15 +91,15 @@ float MenuComponent::getButtonGridHeight() const
 
 void MenuComponent::updateSize()
 {
-    const float maxHeight = Renderer::getScreenHeight() * 0.80f;
-    float height = TITLE_HEIGHT + mList->getTotalRowHeight() + getButtonGridHeight() +
-                   (2.0f * Renderer::getScreenHeightModifier());
+    const float maxHeight {Renderer::getScreenHeight() * 0.80f};
+    float height {TITLE_HEIGHT + mList->getTotalRowHeight() + getButtonGridHeight() +
+                  (2.0f * Renderer::getScreenHeightModifier())};
     if (height > maxHeight) {
         height = TITLE_HEIGHT + getButtonGridHeight();
-        int i = 0;
+        int i {0};
         while (i < mList->size()) {
             // Add the separator height to the row height so that it also gets properly rendered.
-            float rowHeight = mList->getRowHeight(i) + (1.0f * Renderer::getScreenHeightModifier());
+            float rowHeight {mList->getRowHeight(i) + (1.0f * Renderer::getScreenHeightModifier())};
             if (height + rowHeight < maxHeight)
                 height += rowHeight;
             else
@@ -161,11 +161,11 @@ void MenuComponent::updateGrid()
 std::shared_ptr<ComponentGrid> makeButtonGrid(
     const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
 {
-    std::shared_ptr<ComponentGrid> buttonGrid =
-        std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(buttons.size()), 2});
+    std::shared_ptr<ComponentGrid> buttonGrid {
+        std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(buttons.size()), 2})};
 
     // Initialize to padding.
-    float buttonGridWidth = BUTTON_GRID_HORIZ_PADDING * buttons.size();
+    float buttonGridWidth {BUTTON_GRID_HORIZ_PADDING * buttons.size()};
 
     for (int i = 0; i < static_cast<int>(buttons.size()); ++i) {
         buttonGrid->setEntry(buttons.at(i), glm::ivec2 {i, 0}, true, false);

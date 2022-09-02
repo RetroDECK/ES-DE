@@ -698,7 +698,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
 void GuiMetaDataEd::onSizeChanged()
 {
-    const float titleSubtitleSpacing = mSize.y * 0.03f;
+    const float titleSubtitleSpacing {mSize.y * 0.03f};
 
     mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y / 2.0f);
     mGrid.setRowHeightPerc(1, TITLE_HEIGHT / mSize.y / 2.0f);
@@ -715,7 +715,7 @@ void GuiMetaDataEd::onSizeChanged()
                 (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 
     // Add some extra margins to the file/folder name.
-    const float newSizeX = mSize.x * 0.96f;
+    const float newSizeX {mSize.x * 0.96f};
     mSubtitle->setSize(newSizeX, mSubtitle->getSize().y);
     mSubtitle->setPosition((mSize.x - newSizeX) / 2.0f, mSubtitle->getPosition().y);
 }

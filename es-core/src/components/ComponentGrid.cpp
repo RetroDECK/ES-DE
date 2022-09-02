@@ -63,8 +63,8 @@ float ComponentGrid::getRowHeight(int row)
         return mRowHeights[row] * mSize.y;
 
     // Calculate automatic height.
-    float freeHeightPerc = 1;
-    int between = 0;
+    float freeHeightPerc {1.0f};
+    int between {0};
     for (int y = 0; y < mGridSize.y; ++y) {
         freeHeightPerc -= mRowHeights[y]; // If it's 0 it won't do anything.
         if (mRowHeights[y] == 0)
@@ -105,7 +105,7 @@ void ComponentGrid::setEntry(const std::shared_ptr<GuiComponent>& comp,
     assert(comp != nullptr);
     assert(comp->getParent() == nullptr);
 
-    GridEntry entry(pos, size, comp, canFocus, resize, updateType, border);
+    GridEntry entry {pos, size, comp, canFocus, resize, updateType, border};
     mCells.push_back(entry);
 
     addChild(comp.get());
@@ -163,7 +163,7 @@ void ComponentGrid::updateSeparators()
 {
     mSeparators.clear();
 
-    bool drawAll = Settings::getInstance()->getBool("DebugGrid");
+    bool drawAll {Settings::getInstance()->getBool("DebugGrid")};
 
     glm::vec2 pos;
     glm::vec2 size;
@@ -173,8 +173,8 @@ void ComponentGrid::updateSeparators()
             continue;
 
         // Find component position + size.
-        pos = glm::vec2 {};
-        size = glm::vec2 {};
+        pos = glm::vec2 {0.0f, 0.0f};
+        size = glm::vec2 {0.0f, 0.0f};
         for (int x = 0; x < it->pos.x; ++x)
             pos[0] += getColWidth(x);
         for (int y = 0; y < it->pos.y; ++y)
@@ -184,7 +184,7 @@ void ComponentGrid::updateSeparators()
         for (int y = it->pos.y; y < it->pos.y + it->dim.y; ++y)
             size[1] += getRowHeight(y);
 
-        if (size == glm::vec2 {})
+        if (size == glm::vec2 {0.0f, 0.0f})
             return;
 
         if (it->border & BORDER_TOP || drawAll) {
@@ -235,10 +235,10 @@ const ComponentGrid::GridEntry* ComponentGrid::getCellAt(int x, int y) const
     assert(x >= 0 && x < mGridSize.x && y >= 0 && y < mGridSize.y);
 
     for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
-        int xmin = it->pos.x;
-        int xmax = xmin + it->dim.x;
-        int ymin = it->pos.y;
-        int ymax = ymin + it->dim.y;
+        int xmin {it->pos.x};
+        int xmax {xmin + it->dim.x};
+        int ymin {it->pos.y};
+        int ymax {ymin + it->dim.y};
 
         if (x >= xmin && y >= ymin && x < xmax && y < ymax)
             return &(*it);
@@ -249,14 +249,14 @@ const ComponentGrid::GridEntry* ComponentGrid::getCellAt(int x, int y) const
 
 bool ComponentGrid::input(InputConfig* config, Input input)
 {
-    const GridEntry* cursorEntry = getCellAt(mCursor);
+    const GridEntry* cursorEntry {getCellAt(mCursor)};
     if (cursorEntry && cursorEntry->component->input(config, input))
         return true;
 
     if (!input.value)
         return false;
 
-    bool withinBoundary = false;
+    bool withinBoundary {false};
 
     if (config->isMappedLike("down", input))
         withinBoundary = moveCursor(glm::ivec2 {0, 1});
@@ -283,7 +283,7 @@ void ComponentGrid::resetCursor()
 
     for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         if (it->canFocus) {
-            glm::ivec2 origCursor = mCursor;
+            glm::ivec2 origCursor {mCursor};
             mCursor = it->pos;
             onCursorMoved(origCursor, mCursor);
             break;
@@ -296,8 +296,8 @@ bool ComponentGrid::moveCursor(glm::ivec2 dir)
     assert(dir.x || dir.y);
 
     const glm::ivec2 origCursor {mCursor};
-    const GridEntry* currentCursorEntry = getCellAt(mCursor);
-    glm::ivec2 searchAxis(dir.x == 0, dir.y == 0);
+    const GridEntry* currentCursorEntry {getCellAt(mCursor)};
+    glm::ivec2 searchAxis {dir.x == 0, dir.y == 0};
 
     // Logic to handle entries that span several cells.
     if (currentCursorEntry->dim.x > 1) {
@@ -392,28 +392,28 @@ void ComponentGrid::moveCursorTo(int xPos, int yPos, bool selectLeftCell)
 
 void ComponentGrid::onFocusLost()
 {
-    const GridEntry* cursorEntry = getCellAt(mCursor);
+    const GridEntry* cursorEntry {getCellAt(mCursor)};
     if (cursorEntry)
         cursorEntry->component->onFocusLost();
 }
 
 void ComponentGrid::onFocusGained()
 {
-    const GridEntry* cursorEntry = getCellAt(mCursor);
+    const GridEntry* cursorEntry {getCellAt(mCursor)};
     if (cursorEntry)
         cursorEntry->component->onFocusGained();
 }
 
 bool ComponentGrid::cursorValid()
 {
-    const GridEntry* e = getCellAt(mCursor);
+    const GridEntry* e {getCellAt(mCursor)};
     return (e != nullptr && e->canFocus);
 }
 
 void ComponentGrid::update(int deltaTime)
 {
     // Update everything.
-    const GridEntry* cursorEntry = getCellAt(mCursor);
+    const GridEntry* cursorEntry {getCellAt(mCursor)};
     for (auto it = mCells.cbegin(); it != mCells.cend(); ++it) {
         if (it->updateType == UPDATE_ALWAYS ||
             (it->updateType == UPDATE_WHEN_SELECTED && cursorEntry == &(*it))) {
@@ -438,14 +438,14 @@ void ComponentGrid::render(const glm::mat4& parentTrans)
 
 void ComponentGrid::textInput(const std::string& text)
 {
-    const GridEntry* selectedEntry = getCellAt(mCursor);
+    const GridEntry* selectedEntry {getCellAt(mCursor)};
     if (selectedEntry != nullptr && selectedEntry->canFocus)
         selectedEntry->component->textInput(text);
 }
 
 void ComponentGrid::onCursorMoved(glm::ivec2 from, glm::ivec2 to)
 {
-    const GridEntry* cell = getCellAt(from);
+    const GridEntry* cell {getCellAt(from)};
     if (cell)
         cell->component->onFocusLost();
 
@@ -474,22 +474,22 @@ void ComponentGrid::setCursorTo(const std::shared_ptr<GuiComponent>& comp)
 std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
-    const GridEntry* e = getCellAt(mCursor);
+    const GridEntry* e {getCellAt(mCursor)};
     if (e)
         prompts = e->component->getHelpPrompts();
 
-    bool canScrollVert = false;
+    bool canScrollVert {false};
 
     // If the currently selected cell does not fill the entire Y axis, then check if the cells
     // above or below are actually focusable as otherwise they should not affect the help prompts.
     if (mGridSize.y > 1 && e->dim.y < mGridSize.y) {
         if (e->pos.y - e->dim.y >= 0) {
-            const GridEntry* cell = getCellAt(glm::ivec2 {e->pos.x, e->pos.y - e->dim.y});
+            const GridEntry* cell {getCellAt(glm::ivec2 {e->pos.x, e->pos.y - e->dim.y})};
             if (cell != nullptr && cell->canFocus)
                 canScrollVert = true;
         }
         if (e->pos.y + e->dim.y < mGridSize.y) {
-            const GridEntry* cell = getCellAt(glm::ivec2 {e->pos.x, e->pos.y + e->dim.y});
+            const GridEntry* cell {getCellAt(glm::ivec2 {e->pos.x, e->pos.y + e->dim.y})};
             if (cell != nullptr && cell->canFocus)
                 canScrollVert = true;
         }
@@ -498,7 +498,7 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
     // There is currently no situation in the application where unfocusable cells are located
     // next to each other horizontally, so this code is good enough. If this changes in the
     // future, code similar to the the vertical cell handling above needs to be added.
-    bool canScrollHoriz = (mGridSize.x > 1 && e->dim.x < mGridSize.x);
+    bool canScrollHoriz {mGridSize.x > 1 && e->dim.x < mGridSize.x};
 
     // Check existing capabilities as indicated by the help prompts, and if the prompts should
     // be combined into "up/down/left/right" then also remove the single-axis prompts.
