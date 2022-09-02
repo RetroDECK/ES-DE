@@ -430,7 +430,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
-    mRenderer->setMatrix(trans, false);
+    mRenderer->setMatrix(trans);
 
     if (mTexture && mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {

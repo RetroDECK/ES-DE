@@ -202,7 +202,7 @@ public:
         const unsigned int numVertices,
         const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,
         const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA) = 0;
-    virtual void setMatrix(const glm::mat4& matrix, bool roundVertices = true) = 0;
+    virtual void setMatrix(const glm::mat4& matrix) = 0;
     virtual void setScissor(const Rect& scissor) = 0;
     virtual void setSwapInterval() = 0;
     virtual void swapBuffers() = 0;

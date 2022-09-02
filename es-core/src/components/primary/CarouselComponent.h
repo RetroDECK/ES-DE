@@ -615,9 +615,6 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         yOff += mSize.y * mVerticalOffset;
     }
 
-    xOff = std::round(xOff);
-    yOff = std::round(yOff);
-
     int center {static_cast<int>(mEntryCamOffset)};
     int itemInclusion {static_cast<int>(std::ceil(mMaxItemCount / 2.0f))};
     bool singleEntry {numEntries == 1};

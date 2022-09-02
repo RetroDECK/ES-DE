@@ -38,7 +38,7 @@ public:
     bool createContext() override;
     void destroyContext() override;
 
-    void setMatrix(const glm::mat4& matrix, bool roundVertices = true) override;
+    void setMatrix(const glm::mat4& matrix) override;
     void setScissor(const Rect& scissor) override;
     void setSwapInterval() override;
     void swapBuffers() override;
