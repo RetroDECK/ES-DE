@@ -22,8 +22,8 @@ public:
 private:
     void createCustomCollection(std::string inName);
 
-    std::shared_ptr<OptionListComponent<std::string>> collection_systems_auto;
-    std::shared_ptr<OptionListComponent<std::string>> collection_systems_custom;
+    std::shared_ptr<OptionListComponent<std::string>> mCollectionSystemsAuto;
+    std::shared_ptr<OptionListComponent<std::string>> mCollectionSystemsCustom;
 
     bool mAddedCustomCollection;
     bool mDeletedCustomCollection;

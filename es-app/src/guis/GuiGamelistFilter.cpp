@@ -69,8 +69,8 @@ void GuiGamelistFilter::initializeMenu()
                   std::shared_ptr<OptionListComponent<std::string>>>::const_iterator it =
              mFilterOptions.cbegin();
          it != mFilterOptions.cend(); ++it) {
-        std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
-        std::vector<std::string> filters = optionList->getSelectedObjects();
+        std::shared_ptr<OptionListComponent<std::string>> optionList {it->second};
+        std::vector<std::string> filters {optionList->getSelectedObjects()};
         mInitialFilters.push_back(filters);
     }
 }
@@ -82,7 +82,7 @@ void GuiGamelistFilter::resetAllFilters()
                   std::shared_ptr<OptionListComponent<std::string>>>::const_iterator it =
              mFilterOptions.cbegin();
          it != mFilterOptions.cend(); ++it) {
-        std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
+        std::shared_ptr<OptionListComponent<std::string>> optionList {it->second};
         optionList->selectNone();
     }
 
@@ -142,20 +142,20 @@ void GuiGamelistFilter::addFiltersToMenu()
 
     mMenu.addRow(row);
 
-    std::vector<FilterDataDecl> decls = mFilterIndex->getFilterDataDecls();
+    std::vector<FilterDataDecl> decls {mFilterIndex->getFilterDataDecls()};
 
     for (std::vector<FilterDataDecl>::const_iterator it = decls.cbegin(); // Line break.
          it != decls.cend(); ++it) {
-        FilterIndexType type = (*it).type; // Type of filter.
+        FilterIndexType type {(*it).type}; // Type of filter.
 
         // Don't include the alternative emulators if the corresponding setting has been disabled.
         if (type == ALTEMULATOR_FILTER &&
             !Settings::getInstance()->getBool("AlternativeEmulatorPerGame"))
             continue;
 
-        std::map<std::string, int>* allKeys = (*it).allIndexKeys;
+        std::map<std::string, int>* allKeys {(*it).allIndexKeys};
 
-        bool exclusiveSelect = false;
+        bool exclusiveSelect {false};
 
         if (type == FAVORITES_FILTER || type == KIDGAME_FILTER || type == COMPLETED_FILTER ||
             type == BROKEN_FILTER)
@@ -169,7 +169,7 @@ void GuiGamelistFilter::addFiltersToMenu()
                 continue;
         }
 
-        std::string menuLabel = (*it).menuLabel; // Text to show in menu.
+        std::string menuLabel {(*it).menuLabel}; // Text to show in menu.
         std::shared_ptr<OptionListComponent<std::string>> optionList;
 
         // For bool values, make the selection exclusive so that both True and False can't be
@@ -191,8 +191,8 @@ void GuiGamelistFilter::addFiltersToMenu()
 
         if (type == CONTROLLER_FILTER) {
             for (auto it : *allKeys) {
-                std::string displayName =
-                    BadgeComponent::getDisplayName(Utils::String::toLower(it.first));
+                std::string displayName {
+                    BadgeComponent::getDisplayName(Utils::String::toLower(it.first))};
                 if (displayName == "unknown")
                     displayName = it.first;
                 optionList->add(displayName, it.first,
@@ -219,13 +219,13 @@ void GuiGamelistFilter::applyFilters()
     if (mInitialTextFilter != mTextFilterField->getValue())
         mFiltersChanged = true;
 
-    std::vector<FilterDataDecl> decls = mFilterIndex->getFilterDataDecls();
+    std::vector<FilterDataDecl> decls {mFilterIndex->getFilterDataDecls()};
     for (std::map<FilterIndexType,
                   std::shared_ptr<OptionListComponent<std::string>>>::const_iterator it =
              mFilterOptions.cbegin();
          it != mFilterOptions.cend(); ++it) {
-        std::shared_ptr<OptionListComponent<std::string>> optionList = it->second;
-        std::vector<std::string> filters = optionList->getSelectedObjects();
+        std::shared_ptr<OptionListComponent<std::string>> optionList {it->second};
+        std::vector<std::string> filters {optionList->getSelectedObjects()};
         auto iteratorDistance = std::distance(mFilterOptions.cbegin(), it);
         if (mInitialFilters[iteratorDistance] != filters)
             mFiltersChanged = true;
@@ -238,7 +238,7 @@ void GuiGamelistFilter::applyFilters()
 
 bool GuiGamelistFilter::input(InputConfig* config, Input input)
 {
-    bool consumed = GuiComponent::input(config, input);
+    bool consumed {GuiComponent::input(config, input)};
     if (consumed)
         return true;
 
@@ -250,7 +250,7 @@ bool GuiGamelistFilter::input(InputConfig* config, Input input)
 
 std::vector<HelpPrompt> GuiGamelistFilter::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
     prompts.push_back(HelpPrompt("b", "back"));
     prompts.push_back(HelpPrompt("a", "select"));
     return prompts;

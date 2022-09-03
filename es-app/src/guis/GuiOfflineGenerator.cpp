@@ -254,7 +254,7 @@ void GuiOfflineGenerator::update(int deltaTime)
                 }
             }
             else {
-                std::string errorMessage = mResultMessage + " (" + mGameName + ")";
+                std::string errorMessage {mResultMessage + " (" + mGameName + ")"};
                 mLastErrorVal->setText(errorMessage);
                 LOG(LogInfo) << "GuiOfflineGenerator: " << errorMessage;
                 ++mGamesFailed;
@@ -323,6 +323,6 @@ void GuiOfflineGenerator::update(int deltaTime)
 
 std::vector<HelpPrompt> GuiOfflineGenerator::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
     return prompts;
 }

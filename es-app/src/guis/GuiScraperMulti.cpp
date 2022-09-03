@@ -147,13 +147,13 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth();
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth()};
 
-    float height = (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) +
-                   mSystem->getFont()->getLetterHeight() +
-                   mSubtitle->getFont()->getHeight() * 1.75f + mButtonGrid->getSize().y +
-                   Font::get(FONT_SIZE_MEDIUM)->getHeight() * 7.0f;
+    float height {(mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) +
+                  mSystem->getFont()->getLetterHeight() +
+                  mSubtitle->getFont()->getHeight() * 1.75f + mButtonGrid->getSize().y +
+                  Font::get(FONT_SIZE_MEDIUM)->getHeight() * 7.0f};
 
     // TODO: Temporary hack, see below.
     height -= 7.0f * Renderer::getScreenHeightModifier();
@@ -308,6 +308,6 @@ void GuiScraperMulti::finish()
 
 std::vector<HelpPrompt> GuiScraperMulti::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
     return prompts;
 }

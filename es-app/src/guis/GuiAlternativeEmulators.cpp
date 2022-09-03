@@ -109,9 +109,9 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
     // es_systems.xml.
     if (!mHasSystems) {
         ComponentListRow row;
-        std::shared_ptr<TextComponent> systemText = std::make_shared<TextComponent>(
+        std::shared_ptr<TextComponent> systemText {std::make_shared<TextComponent>(
             ViewController::EXCLAMATION_CHAR + " NO ALTERNATIVE EMULATORS DEFINED",
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER);
+            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER)};
         row.addElement(systemText, true);
         mMenu.addRow(row);
     }
@@ -142,7 +142,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
 {
     auto s = new GuiSettings(system->getFullName());
 
-    std::string selectedLabel = system->getAlternativeEmulator();
+    std::string selectedLabel {system->getAlternativeEmulator()};
     std::string label;
 
     for (auto entry : system->getSystemEnvData()->mLaunchCommands) {
@@ -253,7 +253,7 @@ bool GuiAlternativeEmulators::input(InputConfig* config, Input input)
 
 std::vector<HelpPrompt> GuiAlternativeEmulators::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
     prompts.push_back(HelpPrompt("b", "back"));
     if (mHasSystems)
         prompts.push_back(HelpPrompt("a", "select"));

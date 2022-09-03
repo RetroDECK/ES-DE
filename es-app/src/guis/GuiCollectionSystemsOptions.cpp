@@ -44,7 +44,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     }
 
     // Automatic collections.
-    collection_systems_auto = std::make_shared<OptionListComponent<std::string>>(
+    mCollectionSystemsAuto = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "SELECT COLLECTIONS", true);
     std::map<std::string, CollectionSystemData, StringComparator> autoSystems {
         CollectionSystemsManager::getInstance()->getAutoCollectionSystems()};
@@ -52,13 +52,13 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
              autoSystems.cbegin();
          it != autoSystems.cend(); ++it)
-        collection_systems_auto->add(it->second.decl.fullName, it->second.decl.name,
-                                     it->second.isEnabled);
-    addWithLabel("AUTOMATIC GAME COLLECTIONS", collection_systems_auto);
+        mCollectionSystemsAuto->add(it->second.decl.fullName, it->second.decl.name,
+                                    it->second.isEnabled);
+    addWithLabel("AUTOMATIC GAME COLLECTIONS", mCollectionSystemsAuto);
     addSaveFunc([this, autoSystems] {
         std::string autoSystemsSelected {Utils::String::vectorToDelimitedString(
-            collection_systems_auto->getSelectedObjects(), ",", true)};
-        std::string autoSystemsConfig = Settings::getInstance()->getString("CollectionSystemsAuto");
+            mCollectionSystemsAuto->getSelectedObjects(), ",", true)};
+        std::string autoSystemsConfig {Settings::getInstance()->getString("CollectionSystemsAuto")};
         if (autoSystemsSelected != autoSystemsConfig) {
             if (CollectionSystemsManager::getInstance()->isEditing())
                 CollectionSystemsManager::getInstance()->exitEditMode();
@@ -93,7 +93,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     });
 
     // Custom collections.
-    collection_systems_custom = std::make_shared<OptionListComponent<std::string>>(
+    mCollectionSystemsCustom = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "SELECT COLLECTIONS", true);
     std::map<std::string, CollectionSystemData, StringComparator> customSystems {
         CollectionSystemsManager::getInstance()->getCustomCollectionSystems()};
@@ -101,14 +101,14 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
              customSystems.cbegin();
          it != customSystems.cend(); ++it)
-        collection_systems_custom->add(it->second.decl.fullName, it->second.decl.name,
-                                       it->second.isEnabled);
+        mCollectionSystemsCustom->add(it->second.decl.fullName, it->second.decl.name,
+                                      it->second.isEnabled);
 
-    addWithLabel("CUSTOM GAME COLLECTIONS", collection_systems_custom);
+    addWithLabel("CUSTOM GAME COLLECTIONS", mCollectionSystemsCustom);
     addSaveFunc([this, customSystems] {
         if (!mDeletedCustomCollection) {
             std::string customSystemsSelected {Utils::String::vectorToDelimitedString(
-                collection_systems_custom->getSelectedObjects(), ",", true)};
+                mCollectionSystemsCustom->getSelectedObjects(), ",", true)};
             std::string customSystemsConfig {
                 Settings::getInstance()->getString("CollectionSystemsCustom")};
             if (customSystemsSelected != customSystemsConfig) {
@@ -150,10 +150,10 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
 
     // If there are no custom collections, then gray out this menu entry.
     if (customSystems.empty()) {
-        collection_systems_custom->setEnabled(false);
-        collection_systems_custom->setOpacity(DISABLED_OPACITY);
-        collection_systems_custom->getParent()
-            ->getChild(collection_systems_custom->getChildIndex() - 1)
+        mCollectionSystemsCustom->setEnabled(false);
+        mCollectionSystemsCustom->setOpacity(DISABLED_OPACITY);
+        mCollectionSystemsCustom->getParent()
+            ->getChild(mCollectionSystemsCustom->getChildIndex() - 1)
             ->setOpacity(DISABLED_OPACITY);
     }
 
@@ -261,7 +261,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                             CollectionSystemsManager::getInstance()->exitEditMode();
                         mDeletedCustomCollection = true;
                         std::vector<std::string> selectedCustomCollections {
-                            collection_systems_custom->getSelectedObjects()};
+                            mCollectionSystemsCustom->getSelectedObjects()};
                         std::string collectionsConfigEntry;
                         // Create the configuration file entry. If the collection to be
                         // deleted was activated, then exclude it.
@@ -387,7 +387,7 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
         CollectionSystemsManager::getInstance()->addNewCustomCollection(collectionName)};
 
     CollectionSystemsManager::getInstance()->saveCustomCollection(newCollection);
-    collection_systems_custom->add(collectionName, collectionName, true);
+    mCollectionSystemsCustom->add(collectionName, collectionName, true);
 
     mAddedCustomCollection = true;
     setNeedsGoToStart();

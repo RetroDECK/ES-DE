@@ -687,11 +687,11 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     mGrid.setEntry(mButtons, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Resize + center.
-    float width = std::min(Renderer::getScreenHeight() * 1.05f, Renderer::getScreenWidth() * 0.90f);
+    float width {std::min(Renderer::getScreenHeight() * 1.05f, Renderer::getScreenWidth() * 0.90f)};
 
     // Set height explicitly to ten rows for the component list.
-    float height = mList->getRowHeight(0) * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
-                   mButtons->getSize().y;
+    float height {mList->getRowHeight(0) * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
+                  mButtons->getSize().y};
 
     setSize(width, height);
 }
@@ -848,9 +848,9 @@ void GuiMetaDataEd::save()
 
 void GuiMetaDataEd::fetch()
 {
-    GuiScraperSingle* scr = new GuiScraperSingle(
+    GuiScraperSingle* scr {new GuiScraperSingle(
         mScraperParams, std::bind(&GuiMetaDataEd::fetchDone, this, std::placeholders::_1),
-        mSavedMediaAndAborted);
+        mSavedMediaAndAborted)};
     mWindow->pushGui(scr);
 }
 
@@ -994,7 +994,7 @@ bool GuiMetaDataEd::input(InputConfig* config, Input input)
 
 std::vector<HelpPrompt> GuiMetaDataEd::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
     prompts.push_back(HelpPrompt("y", "scrape"));
     prompts.push_back(HelpPrompt("b", "back"));
     return prompts;

@@ -86,7 +86,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         }
         else {
             // Check if the currently selected game is a favorite.
-            bool isFavorite = false;
+            bool isFavorite {false};
             if (mFirstLetterIndex.size() == 1 &&
                 mFirstLetterIndex.front() == ViewController::FAVORITE_CHAR)
                 isFavorite = true;
@@ -128,14 +128,14 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
             else
                 root = mSystem->getRootFolder();
 
-            std::string sortType = root->getSortTypeString();
+            std::string sortType {root->getSortTypeString()};
             unsigned int numSortTypes = static_cast<unsigned int>(FileSorts::SortTypes.size());
             // If it's not a collection, then hide the System sort options.
             if (!root->getSystem()->isCollection())
                 numSortTypes -= 2;
 
             for (unsigned int i = 0; i < numSortTypes; ++i) {
-                const FileData::SortType& sort = FileSorts::SortTypes.at(i);
+                const FileData::SortType& sort {FileSorts::SortTypes.at(i)};
                 if (sort.description == sortType)
                     mListSort->add(sort.description, &sort, true);
                 else
@@ -391,7 +391,7 @@ void GuiGamelistOptions::openMetaDataEd()
 {
     // Open metadata editor.
     // Get the FileData that holds the original metadata.
-    FileData* file = getGamelist()->getCursor()->getSourceFileData();
+    FileData* file {getGamelist()->getCursor()->getSourceFileData()};
     ScraperSearchParams p;
     p.game = file;
     p.system = file->getSystem();
@@ -541,8 +541,8 @@ void GuiGamelistOptions::jumpToFirstRow()
 {
     if (mFoldersOnTop && mJumpToLetterList->getSelected() == ViewController::FAVORITE_CHAR) {
         // Get the gamelist.
-        const std::vector<FileData*>& files =
-            getGamelist()->getCursor()->getParent()->getChildrenListToDisplay();
+        const std::vector<FileData*>& files {
+            getGamelist()->getCursor()->getParent()->getChildrenListToDisplay()};
         // Select the first game that is not a folder, unless it's a folder-only list in
         // which case the first line overall is selected.
         for (auto it = files.cbegin(); it != files.cend(); ++it) {

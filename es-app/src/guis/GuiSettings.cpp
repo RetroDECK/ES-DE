@@ -76,7 +76,7 @@ void GuiSettings::save()
                 (*it)->sortSystem(true);
 
             // Jump to the first row of the gamelist.
-            GamelistView* gameList = ViewController::getInstance()->getGamelistView((*it)).get();
+            GamelistView* gameList {ViewController::getInstance()->getGamelistView((*it)).get()};
             gameList->setCursor(gameList->getFirstEntry());
         }
     }
@@ -102,7 +102,7 @@ void GuiSettings::save()
         ViewController::getInstance()->goToSystem(mGoToSystem, false);
 
     if (mNeedsGoToGroupedCollections) {
-        bool groupedSystemExists = false;
+        bool groupedSystemExists {false};
         for (SystemData* system : SystemData::sSystemVector) {
             if (system->getThemeFolder() == "custom-collections") {
                 ViewController::getInstance()->goToSystem(system, false);
@@ -234,7 +234,7 @@ bool GuiSettings::input(InputConfig* config, Input input)
 
 std::vector<HelpPrompt> GuiSettings::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mMenu.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
     prompts.push_back(HelpPrompt("b", "back"));
     return prompts;
 }

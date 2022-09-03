@@ -153,7 +153,7 @@ void GuiScraperSingle::onSizeChanged()
     mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
 
     // Add some extra margins to the game name.
-    const float newSizeX = mSize.x * 0.96f;
+    const float newSizeX {mSize.x * 0.96f};
     mGameName->setSize(newSizeX, mGameName->getSize().y);
     mGameName->setPosition((mSize.x - newSizeX) / 2.0f, 0.0f);
 }
@@ -185,7 +185,7 @@ void GuiScraperSingle::update(int deltaTime)
 
 std::vector<HelpPrompt> GuiScraperSingle::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
     prompts.push_back(HelpPrompt("b", "back (cancel)"));
 
     return prompts;

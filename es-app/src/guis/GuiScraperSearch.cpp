@@ -80,8 +80,8 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
 
     // Metadata.
     auto font = Font::get(FONT_SIZE_SMALL); // Placeholder, gets replaced in onSizeChanged().
-    const unsigned int mdColor = 0x777777FF;
-    const unsigned int mdLblColor = 0x666666FF;
+    const unsigned int mdColor {0x777777FF};
+    const unsigned int mdLblColor {0x666666FF};
     mMD_Rating = std::make_shared<RatingComponent>();
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>();
     mMD_ReleaseDate->setColor(mdColor);
@@ -118,7 +118,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
 
     mMD_Grid =
         std::make_shared<ComponentGrid>(glm::ivec2 {2, static_cast<int>(mMD_Pairs.size() * 2 - 1)});
-    unsigned int i = 0;
+    unsigned int i {0};
     for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
         mMD_Grid->setEntry(it->first, glm::ivec2 {0, i}, false, true);
         mMD_Grid->setEntry(it->second, glm::ivec2 {1, i}, false, it->resize);
@@ -202,7 +202,7 @@ void GuiScraperSearch::onSizeChanged()
     else
         mGrid.setRowHeightPerc(1, 0.505f);
 
-    const float thumbnailCellScale = 0.93f;
+    const float thumbnailCellScale {0.93f};
 
     // Limit thumbnail size using setMaxHeight - we do this instead of letting mGrid
     // call setSize because it maintains the aspect ratio.
@@ -236,12 +236,12 @@ void GuiScraperSearch::resizeMetadata()
 {
     mMD_Grid->setSize(mGrid.getColWidth(2), mGrid.getRowHeight(1));
     if (mMD_Grid->getSize().y > mMD_Pairs.size()) {
-        const int fontHeight = static_cast<int>(mMD_Grid->getSize().y / mMD_Pairs.size() * 0.8f);
+        const int fontHeight {static_cast<int>(mMD_Grid->getSize().y / mMD_Pairs.size() * 0.8f)};
         auto fontLbl = Font::get(fontHeight, FONT_PATH_REGULAR);
         auto fontComp = Font::get(fontHeight, FONT_PATH_LIGHT);
 
         // Update label fonts.
-        float maxLblWidth = 0;
+        float maxLblWidth {0.0f};
         for (auto it = mMD_Pairs.cbegin(); it != mMD_Pairs.cend(); ++it) {
             it->first->setFont(fontLbl);
             it->first->setSize(0, 0);
@@ -364,7 +364,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
     mResultList->setLoopRows(true);
 
     auto font = Font::get(FONT_SIZE_MEDIUM);
-    unsigned int color = 0x777777FF;
+    unsigned int color {0x777777FF};
     if (results.empty()) {
         // Check if the scraper used is still valid.
         if (!isValidConfiguredScraper()) {
@@ -393,7 +393,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
             // If the platform IDs returned by the scraper do not match the platform IDs of the
             // scraped game, then add the additional platform information to the end of the game
             // name (within square brackets).
-            std::string gameName = results.at(i).mdl.get("name");
+            std::string gameName {results.at(i).mdl.get("name")};
             std::string otherPlatforms;
 
             // As the platform names are found via reverse lookup there could be multiple entries.
@@ -530,20 +530,20 @@ void GuiScraperSearch::updateInfoPane()
         i = 0;
 
     if (i != -1 && static_cast<int>(mScraperResults.size()) > i) {
-        ScraperSearchResult& res = mScraperResults.at(i);
+        ScraperSearchResult& res {mScraperResults.at(i)};
 
         mResultName->setText(Utils::String::toUpper(res.mdl.get("name")));
         mResultDesc->setText(Utils::String::toUpper(res.mdl.get("desc")));
         mDescContainer->reset();
 
         mResultThumbnail->setImage("");
-        const std::string& thumb = res.screenshotUrl.empty() ? res.coverUrl : res.screenshotUrl;
+        const std::string& thumb {res.screenshotUrl.empty() ? res.coverUrl : res.screenshotUrl};
         mScraperResults[i].thumbnailImageUrl = thumb;
 
         // Cache the thumbnail image in mScraperResults so that we don't need to download
         // it every time the list is scrolled back and forth.
         if (mScraperResults[i].thumbnailImageData.size() > 0) {
-            std::string content = mScraperResults[i].thumbnailImageData;
+            std::string content {mScraperResults[i].thumbnailImageData};
             mResultThumbnail->setImage(content.data(), content.length());
             mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
         }
@@ -606,7 +606,7 @@ bool GuiScraperSearch::input(InputConfig* config, Input input)
 
     // Check whether we should allow a refine of the game name.
     if (!mAcceptedResult && config->isMappedTo("y", input) && input.value != 0) {
-        bool allowRefine = false;
+        bool allowRefine {false};
 
         // Previously refined.
         if (mRefinedSearch)
@@ -824,7 +824,7 @@ void GuiScraperSearch::updateThumbnail()
             mScraperResults[mResultList->getCursorId()].thumbnailDownloadStatus = COMPLETED;
         }
         // Activate the thumbnail in the GUI.
-        std::string content = mScraperResults[mResultList->getCursorId()].thumbnailImageData;
+        std::string content {mScraperResults[mResultList->getCursorId()].thumbnailImageData};
         if (content.size() > 0) {
             mResultThumbnail->setImage(content.data(), content.length());
             mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
@@ -920,9 +920,9 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
                                     MetaDataList& metadata,
                                     FileData* scrapedGame)
 {
-    bool metadataUpdated = false;
-    bool hasDefaultName = false;
-    std::vector<MetaDataDecl> mMetaDataDecl = metadata.getMDD();
+    bool metadataUpdated {false};
+    bool hasDefaultName {false};
+    std::vector<MetaDataDecl> mMetaDataDecl {metadata.getMDD()};
     std::string defaultName;
 
     // Get the default name, which is either the MAME name or the name of the physical file
@@ -942,7 +942,7 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
         if (!mMetaDataDecl.at(i).shouldScrape)
             continue;
 
-        const std::string& key = mMetaDataDecl.at(i).key;
+        const std::string& key {mMetaDataDecl.at(i).key};
 
         // Skip element if the setting to not scrape metadata has been set,
         // unless its type is rating, controller or name.

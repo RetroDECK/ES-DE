@@ -45,8 +45,8 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     }
 
     mScaleUp = 0.5f;
-    const float titleFontSize = 0.060f;
-    const float gameNameFontSize = 0.073f;
+    const float titleFontSize {0.060f};
+    const float gameNameFontSize {0.073f};
 
     // Spacer row.
     mGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {1, 0}, false, false,
@@ -145,7 +145,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 
     mGrid->setSize(mSize);
 
-    float totalRowHeight = 0.0f;
+    float totalRowHeight {0.0f};
 
     // Hack to adjust the window height to the row boundary.
     for (int i = 0; i < 7; ++i)
