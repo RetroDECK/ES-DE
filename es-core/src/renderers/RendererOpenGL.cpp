@@ -239,7 +239,7 @@ bool RendererOpenGL::createContext()
     GL_CHECK_ERROR(glGenVertexArrays(1, &mVertexBuffer2));
     GL_CHECK_ERROR(glBindVertexArray(mVertexBuffer2));
 
-    uint8_t data[4] = {255, 255, 255, 255};
+    uint8_t data[4] {255, 255, 255, 255};
     mWhiteTexture = createTexture(TextureType::RGBA, false, false, true, 1, 1, data);
 
     mPostProcTexture1 = createTexture(TextureType::RGBA, false, false, false,
@@ -277,8 +277,9 @@ void RendererOpenGL::destroyContext()
 
 void RendererOpenGL::setMatrix(const glm::mat4& matrix)
 {
-    // Calculate the project matrix.
-    mTrans = getProjectionMatrix() * matrix;
+    mTrans = matrix;
+    mTrans[3] = glm::round(mTrans[3]);
+    mTrans = getProjectionMatrix() * mTrans;
 }
 
 void RendererOpenGL::setScissor(const Rect& scissor)
