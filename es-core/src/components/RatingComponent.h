@@ -21,7 +21,7 @@ class TextureResource;
 class RatingComponent : public GuiComponent
 {
 public:
-    RatingComponent(bool colorizeChanges = false);
+    RatingComponent(bool colorizeChanges = false, bool linearInterpolation = false);
 
     std::string getValue() const override;
     // Returns a rating value between 0 and 5 as a string.

@@ -161,7 +161,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0.0f);
                 row.addElement(spacer, false);
 
-                ed = std::make_shared<RatingComponent>(true);
+                ed = std::make_shared<RatingComponent>(true, true);
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
                 const float height {lbl->getSize().y * 0.71f};
                 ed->setSize(0.0f, height);

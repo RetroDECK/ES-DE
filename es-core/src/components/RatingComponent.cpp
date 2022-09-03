@@ -13,7 +13,7 @@
 #include "ThemeData.h"
 #include "resources/TextureResource.h"
 
-RatingComponent::RatingComponent(bool colorizeChanges)
+RatingComponent::RatingComponent(bool colorizeChanges, bool linearInterpolation)
     : mRenderer {Renderer::getInstance()}
     , mValue {0.5f}
     , mImageRatio {1.0f}
@@ -27,9 +27,11 @@ RatingComponent::RatingComponent(bool colorizeChanges)
 
     mIconFilled.setResize(mSize, false);
     mIconFilled.setTileSize(mSize.y, mSize.y);
+    mIconFilled.setLinearInterpolation(linearInterpolation);
 
     mIconUnfilled.setResize(mSize, false);
     mIconUnfilled.setTileSize(mSize.y, mSize.y);
+    mIconUnfilled.setLinearInterpolation(linearInterpolation);
 
     mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
     mIconUnfilled.setImage(std::string(":/graphics/star_unfilled.svg"), true);

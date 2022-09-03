@@ -82,7 +82,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     auto font = Font::get(FONT_SIZE_SMALL); // Placeholder, gets replaced in onSizeChanged().
     const unsigned int mdColor {0x777777FF};
     const unsigned int mdLblColor {0x666666FF};
-    mMD_Rating = std::make_shared<RatingComponent>();
+    mMD_Rating = std::make_shared<RatingComponent>(false, true);
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>();
     mMD_ReleaseDate->setColor(mdColor);
     mMD_ReleaseDate->setUppercase(true);
