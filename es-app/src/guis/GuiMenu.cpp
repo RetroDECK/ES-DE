@@ -712,10 +712,10 @@ void GuiMenu::openUIOptions()
                 ->setOpacity(DISABLED_OPACITY);
             // TEMPORARY
             // transitionStyle->setEnabled(false);
-            transitionStyle->setOpacity(DISABLED_OPACITY);
-            transitionStyle->getParent()
-                ->getChild(transitionStyle->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
+            // transitionStyle->setOpacity(DISABLED_OPACITY);
+            // transitionStyle->getParent()
+            //    ->getChild(transitionStyle->getChildIndex() - 1)
+            //    ->setOpacity(DISABLED_OPACITY);
 
             // Pillarboxes are theme-controlled for newer themes.
             gamelistVideoPillarbox->setEnabled(false);
