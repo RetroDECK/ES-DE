@@ -130,7 +130,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 videoSize.x = glm::clamp(videoSize.x, 0.01f, 2.0f);
             if (videoSize.y > 0.0f)
                 videoSize.y = glm::clamp(videoSize.y, 0.01f, 2.0f);
-            setResize(videoSize * scale);
+            setResize(videoSize.x * scale.x, videoSize.y * scale.y);
             mVideoAreaSize = videoSize * scale;
         }
         else if (elem->has("maxSize")) {

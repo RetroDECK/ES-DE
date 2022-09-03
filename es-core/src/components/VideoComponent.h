@@ -79,7 +79,6 @@ public:
     // zero, no resizing. This can be set before or after a video is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     virtual void setResize(float width, float height) override = 0;
-    void setResize(const glm::vec2& size) { setResize(size.x, size.y); }
 
     // Resize the video to be as large as possible but fit within a box of this size.
     // This can be set before or after a video is loaded.

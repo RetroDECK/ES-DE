@@ -56,8 +56,6 @@ private:
 
     unsigned int mColorOriginalValue;
     unsigned int mColorChangedValue;
-    unsigned int mColorShift;
-    unsigned int mColorShiftEnd;
 
     bool mColorizeChanges;
     bool mOverlay;

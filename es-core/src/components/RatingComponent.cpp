@@ -19,8 +19,6 @@ RatingComponent::RatingComponent(bool colorizeChanges)
     , mImageRatio {1.0f}
     , mColorOriginalValue {DEFAULT_COLORSHIFT}
     , mColorChangedValue {DEFAULT_COLORSHIFT}
-    , mColorShift {DEFAULT_COLORSHIFT}
-    , mColorShiftEnd {DEFAULT_COLORSHIFT}
     , mColorizeChanges {colorizeChanges}
     , mOverlay {true}
 {
