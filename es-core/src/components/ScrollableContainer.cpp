@@ -236,7 +236,7 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
 
     mRenderer->pushClipRect(clipPos, clipDim);
 
-    trans = glm::translate(trans, -glm::vec3 {mScrollPos.x, mScrollPos.y, 0.0f});
+    trans = glm::translate(trans, glm::round(-glm::vec3 {mScrollPos.x, mScrollPos.y, 0.0f}));
     mRenderer->setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugText"))
