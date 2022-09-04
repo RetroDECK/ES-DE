@@ -569,7 +569,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         }
     }
     else if (mType == CarouselType::VERTICAL) {
-        itemSpacing.y = ((mSize.y - (mItemSize.y * mMaxItemCount)) / (mMaxItemCount)) + mItemSize.y;
+        itemSpacing.y = ((mSize.y - (mItemSize.y * mMaxItemCount)) / mMaxItemCount) + mItemSize.y;
         yOff = (mSize.y - mItemSize.y) / 2.0f - (mEntryCamOffset * itemSpacing.y);
         if (mItemHorizontalAlignment == ALIGN_LEFT) {
             if (mLegacyMode)
@@ -588,7 +588,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         }
     }
     else { // HORIZONTAL.
-        itemSpacing.x = ((mSize.x - (mItemSize.x * mMaxItemCount)) / (mMaxItemCount)) + mItemSize.x;
+        itemSpacing.x = ((mSize.x - (mItemSize.x * mMaxItemCount)) / mMaxItemCount) + mItemSize.x;
         xOff = (mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.x);
         if (mItemVerticalAlignment == ALIGN_TOP) {
             if (mLegacyMode)
@@ -1040,10 +1040,16 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     GuiComponent::applyTheme(theme, view, element, ALL);
 
+    // Some legacy themes use an excessively large carousel and although this is clearly an
+    // error we need to allow it so these themes render correctly.
+    float maxSize {1.5f};
+    if (mLegacyMode)
+        maxSize = 2.0f;
+
     mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
-                         mRenderer->getScreenWidth() * 1.5f);
+                         mRenderer->getScreenWidth() * maxSize);
     mSize.y = glm::clamp(mSize.y, mRenderer->getScreenHeight() * 0.05f,
-                         mRenderer->getScreenHeight() * 1.5f);
+                         mRenderer->getScreenHeight() * maxSize);
 }
 
 template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorState& state)
