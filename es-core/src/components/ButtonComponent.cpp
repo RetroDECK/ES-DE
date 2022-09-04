@@ -132,7 +132,7 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
     if (mTextCache) {
         glm::vec3 centerOffset {(mSize.x - mTextCache->metrics.size.x) / 2.0f,
                                 (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
-        trans = glm::translate(trans, centerOffset);
+        trans = glm::translate(trans, glm::round(centerOffset));
 
         if (Settings::getInstance()->getBool("DebugText")) {
             mRenderer->drawRect(centerOffset.x, 0.0f, mTextCache->metrics.size.x, mSize.y,
@@ -145,7 +145,7 @@ void ButtonComponent::render(const glm::mat4& parentTrans)
 
         mTextCache->setColor(getCurTextColor());
         mFont->renderTextCache(mTextCache.get());
-        trans = glm::translate(trans, -centerOffset);
+        trans = glm::translate(trans, glm::round(-centerOffset));
     }
 
     renderChildren(trans);
