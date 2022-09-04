@@ -460,11 +460,14 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         glm::mat4 drawTrans {trans};
 
         // Currently selected item text might be looping.
-        if (mCursor == i && mLoopOffset > 0)
+        if (mCursor == i && mLoopOffset > 0) {
             drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset), 0.0f, 0.0f});
-        else
-            drawTrans = glm::translate(drawTrans, offset);
+                drawTrans,
+                glm::round(offset - glm::vec3 {static_cast<float>(mLoopOffset), 0.0f, 0.0f}));
+        }
+        else {
+            drawTrans = glm::translate(drawTrans, glm::round(offset));
+        }
 
         // Needed to avoid flickering when returning to the start position.
         if (mLoopOffset == 0 && mLoopOffset2 == 0)
@@ -478,7 +481,8 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             mLoopScroll = true;
             drawTrans = trans;
             drawTrans = glm::translate(
-                drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f});
+                drawTrans,
+                glm::round(offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f}));
             mRenderer->setMatrix(drawTrans);
             font->renderTextCache(entry.data.textCache.get());
         }
