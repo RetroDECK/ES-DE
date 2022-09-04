@@ -175,7 +175,6 @@ private:
     int mSize;
     int mMaxGlyphHeight;
     const std::string mPath;
-    static inline bool mHighResolution {false};
 
     float getNewlineStartOffset(const std::string& text,
                                 const unsigned int& charStart,
