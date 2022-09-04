@@ -278,7 +278,6 @@ void RendererOpenGL::destroyContext()
 void RendererOpenGL::setMatrix(const glm::mat4& matrix)
 {
     mTrans = matrix;
-    mTrans[3] = glm::round(mTrans[3]);
     mTrans = getProjectionMatrix() * mTrans;
 }
 
