@@ -290,16 +290,16 @@ void ComponentList::render(const glm::mat4& parentTrans)
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
-    const int clipRectPosX {static_cast<int>(std::round(trans[3].x))};
-    const int clipRectPosY {static_cast<int>(std::round(trans[3].y))};
-    const int clipRectSizeX {static_cast<int>(std::round(dim.x))};
-    const int clipRectSizeY {static_cast<int>(std::round(dim.y))};
+    const int clipRectPosX {static_cast<int>(std::ceil(trans[3].x))};
+    const int clipRectPosY {static_cast<int>(std::ceil(trans[3].y))};
+    const int clipRectSizeX {static_cast<int>(std::ceil(dim.x))};
+    const int clipRectSizeY {static_cast<int>(std::ceil(dim.y))};
 
     mRenderer->pushClipRect(glm::ivec2 {clipRectPosX, clipRectPosY},
                             glm::ivec2 {clipRectSizeX, clipRectSizeY});
 
     // Scroll the camera.
-    trans = glm::translate(trans, glm::vec3 {0.0f, -mCameraOffset, 0.0f});
+    trans = glm::translate(trans, glm::vec3 {0.0f, std::round(-mCameraOffset), 0.0f});
 
     glm::mat4 loopTrans {trans};
 
@@ -382,12 +382,12 @@ void ComponentList::render(const glm::mat4& parentTrans)
         const float selectedRowHeight = getRowHeight(mEntries.at(mCursor).data);
 
         if (mOpacity == 1.0f) {
-            mRenderer->drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
+            mRenderer->drawRect(0.0f, mSelectorBarOffset, std::round(mSize.x), selectedRowHeight,
                                 0xFFFFFFFF, 0xFFFFFFFF, false, mOpacity, mDimming,
                                 Renderer::BlendFactor::ONE_MINUS_DST_COLOR,
                                 Renderer::BlendFactor::ZERO);
 
-            mRenderer->drawRect(0.0f, mSelectorBarOffset, std::ceil(mSize.x), selectedRowHeight,
+            mRenderer->drawRect(0.0f, mSelectorBarOffset, std::round(mSize.x), selectedRowHeight,
                                 0x777777FF, 0x777777FF, false, mOpacity, mDimming,
                                 Renderer::BlendFactor::ONE, Renderer::BlendFactor::ONE);
         }
@@ -403,12 +403,13 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw separators.
     float y = 0;
     for (unsigned int i = 0; i < mEntries.size(); ++i) {
-        mRenderer->drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
-                            0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
+        mRenderer->drawRect(0.0f, y, std::round(mSize.x),
+                            1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF, 0xC6C7C6FF,
+                            false, mOpacity, mDimming);
         y += getRowHeight(mEntries.at(i).data);
     }
 
-    mRenderer->drawRect(0.0f, y, std::ceil(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
+    mRenderer->drawRect(0.0f, y, std::round(mSize.x), 1.0f * Renderer::getScreenHeightModifier(),
                         0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
     mRenderer->popClipRect();
 }
@@ -448,7 +449,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.
-        comp->setPosition(x, (rowHeight - std::round(comp->getSize().y)) / 2.0f + yOffset);
+        comp->setPosition(x, (rowHeight - std::floor(comp->getSize().y)) / 2.0f + yOffset);
         x += comp->getSize().x;
     }
 }
