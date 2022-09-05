@@ -354,7 +354,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
     // Application startup animation.
     if (applicationStartup) {
-        mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
+        mCamera = glm::translate(mCamera, glm::round(-mCurrentView->getPosition()));
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
             if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::CAROUSEL) {
                 if (getSystemListView()->getCarouselType() ==
@@ -540,7 +540,7 @@ void ViewController::goToGamelist(SystemData* system)
 
     // Application startup animation, if starting in a gamelist rather than in the system view.
     if (mState.viewing == NOTHING) {
-        mCamera = glm::translate(mCamera, -mCurrentView->getPosition());
+        mCamera = glm::translate(mCamera, glm::round(-mCurrentView->getPosition()));
         if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
             mCamera[3].y -= Renderer::getScreenHeight();
             updateHelpPrompts();

@@ -229,9 +229,9 @@ const glm::mat4& GuiComponent::getTransform()
             mTransform = glm::translate(mTransform, glm::vec3 {xOff, yOff, 0.0f});
     }
 
-    mTransform =
-        glm::translate(mTransform, glm::vec3 {std::round(mOrigin.x * mSize.x * -1.0f),
-                                              std::round(mOrigin.y * mSize.y * -1.0f), 0.0f});
+    mTransform = glm::translate(
+        mTransform,
+        glm::round(glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f}));
 
     return mTransform;
 }

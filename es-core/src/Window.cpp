@@ -613,7 +613,7 @@ void Window::renderLoadingScreen(std::string text)
 
     float x {std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f)};
     float y {std::round(Renderer::getScreenHeight() * 0.835f)};
-    trans = glm::translate(trans, glm::vec3 {x, y, 0.0f});
+    trans = glm::translate(trans, glm::round(glm::vec3 {x, y, 0.0f}));
     mRenderer->setMatrix(trans);
     font->renderTextCache(cache);
     delete cache;

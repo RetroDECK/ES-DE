@@ -295,7 +295,8 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
 
     // Text + cursor rendering.
     // Offset into our "text area" (padding).
-    trans = glm::translate(trans, glm::vec3 {getTextAreaPos().x, getTextAreaPos().y, 0.0f});
+    trans =
+        glm::translate(trans, glm::round(glm::vec3 {getTextAreaPos().x, getTextAreaPos().y, 0.0f}));
 
     glm::ivec2 clipPos {static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)};
     // Use "text area" size for clipping.
@@ -307,7 +308,7 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
                         static_cast<int>(dimScaled.y - trans[3].y)};
     mRenderer->pushClipRect(clipPos, clipDim);
 
-    trans = glm::translate(trans, glm::vec3 {-mScrollOffset.x, -mScrollOffset.y, 0.0f});
+    trans = glm::translate(trans, glm::round(glm::vec3 {-mScrollOffset.x, -mScrollOffset.y, 0.0f}));
     mRenderer->setMatrix(trans);
 
     if (mTextCache)

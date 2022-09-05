@@ -1194,14 +1194,16 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     mCarousel->getType() ==
                         CarouselComponent<SystemData*>::CarouselType::HORIZONTAL_WHEEL)
                     elementTrans = glm::translate(
-                        elementTrans, glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f});
+                        elementTrans,
+                        glm::round(glm::vec3 {(i - mCamOffset) * mSize.x, 0.0f, 0.0f}));
                 else
                     elementTrans = glm::translate(
-                        elementTrans, glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
+                        elementTrans,
+                        glm::round(glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f}));
             }
             else if (mTextList != nullptr) {
-                elementTrans = glm::translate(elementTrans,
-                                              glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f});
+                elementTrans = glm::translate(
+                    elementTrans, glm::round(glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f}));
             }
 
             mRenderer->pushClipRect(
