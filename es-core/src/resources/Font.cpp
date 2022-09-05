@@ -587,12 +587,12 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
     return true;
 }
 
-void Font::FontTexture::initTexture(bool linearMagnification)
+void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
-    textureId = Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true,
-                                                       linearMagnification, false, false,
-                                                       textureSize.x, textureSize.y, nullptr);
+    textureId =
+        Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true, false, false,
+                                               false, textureSize.x, textureSize.y, nullptr);
 }
 
 void Font::FontTexture::deinitTexture()
@@ -624,7 +624,7 @@ void Font::rebuildTextures()
 {
     // Recreate OpenGL textures.
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
-        it->initTexture(mSize > MIN_SIZE_LINEAR_MAGNIFICATION);
+        it->initTexture();
 
     // Re-upload the texture data.
     for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); ++it) {
@@ -679,7 +679,7 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
 
     mTextures.push_back(FontTexture(mSize));
     tex_out = &mTextures.back();
-    tex_out->initTexture(mSize > MIN_SIZE_LINEAR_MAGNIFICATION);
+    tex_out->initTexture();
 
     bool ok = tex_out->findEmpty(glyphSize, cursor_out);
     if (!ok) {

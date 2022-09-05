@@ -31,8 +31,6 @@ class TextCache;
         std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
 // clang-format on
 
-#define MIN_SIZE_LINEAR_MAGNIFICATION 30
-
 #define FONT_PATH_LIGHT ":/fonts/Akrobat-Regular.ttf"
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
 #define FONT_PATH_BOLD ":/fonts/Akrobat-Bold.ttf"
@@ -133,7 +131,7 @@ private:
         // You must call initTexture() after creating a FontTexture to get a textureId.
         // Initializes the OpenGL texture according to this FontTexture's settings,
         // updating textureId.
-        void initTexture(bool linearMagnification);
+        void initTexture();
 
         // Deinitializes the OpenGL texture if any exists, is automatically called
         // in the destructor.
