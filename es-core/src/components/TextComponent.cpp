@@ -204,7 +204,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
                 mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
         }
 
-        trans = glm::translate(trans, glm::vec3 {0.0f, std::round(yOff), 0.0f});
+        trans = glm::translate(trans, glm::vec3 {0.0f, yOff, 0.0f});
         mRenderer->setMatrix(trans);
 
         // Draw the text area, where the text actually is located.
