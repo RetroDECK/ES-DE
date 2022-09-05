@@ -39,6 +39,7 @@ TextureData::TextureData(bool tile)
     , mHasRGBAData {false}
     , mPendingRasterization {false}
     , mLinearMagnify {false}
+    , mMipmapping {false}
 {
 }
 
@@ -240,8 +241,8 @@ bool TextureData::uploadAndBind()
 
         // Upload texture.
         mTextureID =
-            mRenderer->createTexture(Renderer::TextureType::RGBA, true, mLinearMagnify, mTile,
-                                     static_cast<const unsigned int>(mWidth),
+            mRenderer->createTexture(Renderer::TextureType::RGBA, true, mLinearMagnify, mMipmapping,
+                                     mTile, static_cast<const unsigned int>(mWidth),
                                      static_cast<const unsigned int>(mHeight), mDataRGBA.data());
     }
     return true;

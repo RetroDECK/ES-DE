@@ -179,7 +179,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             std::string path {std::string(elem->get<std::string>("filledPath"))};
             if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
                 auto tempImage =
-                    TextureResource::get(path, false, false, false, false, 0, 0, 0.0f, 0.0f);
+                    TextureResource::get(path, false, false, false, false, false, 0, 0, 0.0f, 0.0f);
                 mImageRatio = static_cast<float>(tempImage->getSize().x) /
                               static_cast<float>(tempImage->getSize().y);
             }

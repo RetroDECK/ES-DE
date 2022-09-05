@@ -31,6 +31,7 @@ public:
                                                 bool forceLoad = false,
                                                 bool dynamic = true,
                                                 bool linearMagnify = false,
+                                                bool mipmapping = false,
                                                 size_t width = 0,
                                                 size_t height = 0,
                                                 float tileWidth = 0.0f,
@@ -86,6 +87,7 @@ protected:
                     bool tile,
                     bool dynamic,
                     bool linearMagnify,
+                    bool mipmapping,
                     bool scalable);
     virtual void unload(ResourceManager& rm);
     virtual void reload(ResourceManager& rm);

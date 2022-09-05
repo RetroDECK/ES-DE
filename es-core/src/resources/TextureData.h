@@ -70,6 +70,8 @@ public:
     void setScalableNonAspect(bool state) { mScalableNonAspect = state; }
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool state) { mLinearMagnify = state; }
+    // Whether to use mipmapping and trilinear filtering.
+    void setMipmapping(bool state) { mMipmapping = state; }
 
     // Has the image been loaded but not yet been rasterized as the size was not known?
     const bool getPendingRasterization() { return mPendingRasterization; }
@@ -98,6 +100,7 @@ private:
     std::atomic<bool> mHasRGBAData;
     std::atomic<bool> mPendingRasterization;
     bool mLinearMagnify;
+    bool mMipmapping;
     bool mReloadable;
 };
 

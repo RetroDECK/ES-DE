@@ -210,6 +210,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
                 auto item = std::make_shared<ImageComponent>(false, dynamic);
                 item->setLinearInterpolation(mLinearInterpolation);
+                item->setMipmapping(true);
                 item->setMaxSize(mItemSize * mItemScale);
                 item->applyTheme(theme, "system", "image_logo",
                                  ThemeFlags::PATH | ThemeFlags::COLOR);
@@ -223,6 +224,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             ResourceManager::getInstance().fileExists(entry.data.itemPath)) {
             auto item = std::make_shared<ImageComponent>(false, dynamic);
             item->setLinearInterpolation(mLinearInterpolation);
+            item->setMipmapping(true);
             item->setMaxSize(mItemSize * mItemScale);
             item->setImage(entry.data.itemPath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
@@ -233,6 +235,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                  ResourceManager::getInstance().fileExists(entry.data.defaultItemPath)) {
             auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
             defaultItem->setLinearInterpolation(mLinearInterpolation);
+            defaultItem->setMipmapping(true);
             defaultItem->setMaxSize(mItemSize * mItemScale);
             defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
@@ -306,6 +309,7 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
     if (entry.data.itemPath != "") {
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mLinearInterpolation);
+        item->setMipmapping(true);
         item->setMaxSize(mItemSize * mItemScale);
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);

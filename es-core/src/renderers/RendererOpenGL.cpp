@@ -240,13 +240,13 @@ bool RendererOpenGL::createContext()
     GL_CHECK_ERROR(glBindVertexArray(mVertexBuffer2));
 
     uint8_t data[4] {255, 255, 255, 255};
-    mWhiteTexture = createTexture(TextureType::RGBA, false, false, true, 1, 1, data);
+    mWhiteTexture = createTexture(TextureType::RGBA, false, false, false, true, 1, 1, data);
 
-    mPostProcTexture1 = createTexture(TextureType::RGBA, false, false, false,
+    mPostProcTexture1 = createTexture(TextureType::RGBA, false, false, false, false,
                                       static_cast<unsigned int>(getScreenWidth()),
                                       static_cast<unsigned int>(getScreenHeight()), nullptr);
 
-    mPostProcTexture2 = createTexture(TextureType::RGBA, false, false, false,
+    mPostProcTexture2 = createTexture(TextureType::RGBA, false, false, false, false,
                                       static_cast<unsigned int>(getScreenWidth()),
                                       static_cast<unsigned int>(getScreenHeight()), nullptr);
 
@@ -277,8 +277,8 @@ void RendererOpenGL::destroyContext()
 
 void RendererOpenGL::setMatrix(const glm::mat4& matrix)
 {
-    mTrans = matrix;
-    mTrans = getProjectionMatrix() * mTrans;
+    // Calculate the projection matrix.
+    mTrans = getProjectionMatrix() * matrix;
 }
 
 void RendererOpenGL::setScissor(const Rect& scissor)
@@ -337,6 +337,7 @@ void RendererOpenGL::swapBuffers()
 unsigned int RendererOpenGL::createTexture(const TextureType type,
                                            const bool linearMinify,
                                            const bool linearMagnify,
+                                           const bool mipmapping,
                                            const bool repeat,
                                            const unsigned int width,
                                            const unsigned int height,
@@ -354,15 +355,25 @@ unsigned int RendererOpenGL::createTexture(const TextureType type,
     GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
                                    repeat ? static_cast<GLfloat>(GL_REPEAT) :
                                             static_cast<GLfloat>(GL_CLAMP_TO_EDGE)));
-    GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
-                                   linearMinify ? static_cast<GLfloat>(GL_LINEAR) :
-                                                  static_cast<GLfloat>(GL_NEAREST)));
+    if (mipmapping) {
+        GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                                       static_cast<GLfloat>(GL_LINEAR_MIPMAP_LINEAR)));
+    }
+    else {
+        GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                                       linearMinify ? static_cast<GLfloat>(GL_LINEAR) :
+                                                      static_cast<GLfloat>(GL_NEAREST)));
+    }
     GL_CHECK_ERROR(glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
                                    linearMagnify ? static_cast<GLfloat>(GL_LINEAR) :
                                                    static_cast<GLfloat>(GL_NEAREST)));
 
     GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
                                 GL_UNSIGNED_BYTE, data));
+
+    if (mipmapping)
+        GL_CHECK_ERROR(glGenerateMipmap(GL_TEXTURE_2D));
+
     return texture;
 }
 

@@ -92,6 +92,8 @@ public:
     void setRotateByTargetSize(bool rotate) { mRotateByTargetSize = rotate; }
     // Whether to use smooth texture magnification by utilizing linear interpolation.
     void setLinearInterpolation(bool state) { mLinearInterpolation = state; }
+    // Whether to use mipmapping and trilinear filtering.
+    void setMipmapping(bool state) { mMipmapping = state; }
 
     // Returns the size of the current texture, or (0, 0) if none is loaded.
     // May be different than drawn size (use getSize() for that).
@@ -152,6 +154,7 @@ private:
     bool mDynamic;
     bool mRotateByTargetSize;
     bool mLinearInterpolation;
+    bool mMipmapping;
 
     glm::vec2 mTopLeftCrop;
     glm::vec2 mBottomRightCrop;

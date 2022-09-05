@@ -48,6 +48,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mDynamic {dynamic}
     , mRotateByTargetSize {false}
     , mLinearInterpolation {false}
+    , mMipmapping {false}
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
     , mClipRegion {0.0f, 0.0f, 0.0f, 0.0f}
@@ -137,7 +138,7 @@ void ImageComponent::setImage(const std::string& path, bool tile)
             mTexture.reset();
         else
             mTexture = TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic,
-                                            mLinearInterpolation);
+                                            mLinearInterpolation, mMipmapping);
         resize(true);
     }
     else {
@@ -147,14 +148,14 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         // we perform the actual rasterization to have the cache entry updated with the proper
         // texture. For SVG images this requires that every call to setImage is made only after
         // a call to setResize or setMaxSize (so the requested size is known upfront).
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation, 0,
-                                        0, 0.0f, 0.0f);
+        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
+                                        mMipmapping, 0, 0, 0.0f, 0.0f);
 
         if (isScalable) {
             resize(false);
             mTexture.reset();
             mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
-                                            static_cast<size_t>(mSize.x),
+                                            mMipmapping, static_cast<size_t>(mSize.x),
                                             static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
             mTexture->setScalableNonAspect(mScalableNonAspect);
             mTexture->rasterizeAt(mSize.x, mSize.y);

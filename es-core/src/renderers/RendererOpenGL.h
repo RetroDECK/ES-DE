@@ -46,6 +46,7 @@ public:
     unsigned int createTexture(const TextureType type,
                                const bool linearMinify,
                                const bool linearMagnify,
+                               const bool mipmapping,
                                const bool repeat,
                                const unsigned int width,
                                const unsigned int height,
