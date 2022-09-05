@@ -74,9 +74,12 @@ void ImageComponent::resize(bool rasterize)
             glm::vec2 resizeScale {mTargetSize.x / mSize.x, mTargetSize.y / mSize.y};
 
             if (resizeScale.x < resizeScale.y) {
-                // This will be mTargetSize.x. We can't exceed it, nor be lower than it.
+                // SVG rasterization is determined by height and rasterization is done in terms of
+                // pixels. If rounding is off enough in the rasterization step (for images with
+                // extreme aspect ratios), it can cause cutoff when the aspect ratio breaks.
+                // So we always make sure to round accordingly to avoid such issues.
                 mSize.x *= resizeScale.x;
-                mSize.y = std::min(mSize.y * resizeScale.x, mTargetSize.y);
+                mSize.y = floorf(std::min(mSize.y * resizeScale.x, mTargetSize.y));
             }
             else {
                 // This will be mTargetSize.y(). We can't exceed it.
