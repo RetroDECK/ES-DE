@@ -79,7 +79,7 @@ public:
     const bool getScalable() { return mScalable; }
     std::vector<unsigned char>& getRawRGBAData() { return mDataRGBA; }
     std::string getTextureFilePath() { return mPath; }
-    bool tiled() { return mTile; }
+    bool getTiled() { return mTile; }
 
 private:
     Renderer* mRenderer;

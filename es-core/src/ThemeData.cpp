@@ -97,6 +97,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"metadataElement", BOOLEAN},
        {"gameselector", STRING},
        {"tile", BOOLEAN},
+       {"tileSize", NORMALIZED_PAIR},
        {"interpolation", STRING},
        {"color", COLOR},
        {"colorEnd", COLOR},

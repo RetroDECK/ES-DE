@@ -96,9 +96,8 @@ public:
     void setMipmapping(bool state) { mMipmapping = state; }
 
     // Returns the size of the current texture, or (0, 0) if none is loaded.
-    // May be different than drawn size (use getSize() for that).
+    // This may be different than the rendered size so use getSize() for that.
     glm::ivec2 getTextureSize() const;
-
     glm::vec2 getSize() const override;
 
     bool hasImage() { return static_cast<bool>(mTexture); }
@@ -129,6 +128,8 @@ private:
     // Used internally whenever the resizing parameters or texture change. This function also
     // initiates the SVG rasterization unless explicitly told not to.
     void resize(bool rasterize = true);
+    // Set the axis values if it's a tiled image and either or both of the axes are set to zero.
+    void setTileAxes();
 
     Renderer::Vertex mVertices[4];
 

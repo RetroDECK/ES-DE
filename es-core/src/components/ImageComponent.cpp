@@ -21,7 +21,7 @@ glm::ivec2 ImageComponent::getTextureSize() const
     if (mTexture)
         return mTexture->getSize();
     else
-        return glm::ivec2 {};
+        return glm::ivec2 {0, 0};
 }
 
 glm::vec2 ImageComponent::getSize() const
@@ -106,13 +106,28 @@ void ImageComponent::resize(bool rasterize)
 
     // Make sure sub-pixel values are not rounded to zero and that the size is not unreasonably
     // large (which may be caused by a mistake in the theme configuration).
-    mSize.x = glm::clamp(mSize.x, 1.0f, mRenderer->getScreenWidth() * 2.0f);
-    mSize.y = glm::clamp(mSize.y, 1.0f, mRenderer->getScreenHeight() * 2.0f);
+    mSize.x = glm::clamp(mSize.x, 1.0f, mRenderer->getScreenWidth() * 3.0f);
+    mSize.y = glm::clamp(mSize.y, 1.0f, mRenderer->getScreenHeight() * 3.0f);
 
     if (rasterize) {
         mTexture->rasterizeAt(mSize.x, mSize.y);
         onSizeChanged();
     }
+}
+
+void ImageComponent::setTileAxes()
+{
+    if (mTileWidth == 0.0f && mTileHeight == 0.0f) {
+        mTileWidth = mTexture->getSize().x;
+        mTileHeight = mTexture->getSize().y;
+        return;
+    }
+
+    const float ratio {mTexture->getSourceImageSize().x / mTexture->getSourceImageSize().y};
+    if (mTileWidth == 0.0f)
+        mTileWidth = std::round(mTileHeight * ratio);
+    else if (mTileHeight == 0.0f)
+        mTileHeight = std::round(mTileWidth / ratio);
 }
 
 void ImageComponent::setImage(const std::string& path, bool tile)
@@ -148,10 +163,11 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         // we perform the actual rasterization to have the cache entry updated with the proper
         // texture. For SVG images this requires that every call to setImage is made only after
         // a call to setResize or setMaxSize (so the requested size is known upfront).
-        mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
-                                        mMipmapping, 0, 0, 0.0f, 0.0f);
-
         if (isScalable) {
+            mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
+                                            mMipmapping, 0, 0, 0.0f, 0.0f);
+            if (tile && (mTileWidth == 0.0f || mTileHeight == 0.0f))
+                setTileAxes();
             resize(false);
             mTexture.reset();
             mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
@@ -162,6 +178,10 @@ void ImageComponent::setImage(const std::string& path, bool tile)
             onSizeChanged();
         }
         else {
+            mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
+                                            mMipmapping, 0, 0, mTileWidth, mTileHeight);
+            if (tile && (mTileWidth == 0.0f || mTileHeight == 0.0f))
+                setTileAxes();
             resize(true);
         }
     }
@@ -380,23 +400,35 @@ void ImageComponent::updateVertices()
     if (!mTexture)
         return;
 
-    // We go through this mess to make sure everything is properly rounded.
-    // If we just round vertices at the end, edge cases occur near sizes of 0.5.
     const glm::vec2 topLeft {0.0f, 0.0f};
     const glm::vec2 bottomRight {mSize};
-    const float px {mTexture->isTiled() ? mSize.x / getTextureSize().x : 1.0f};
-    const float py {mTexture->isTiled() ? mSize.y / getTextureSize().y : 1.0f};
+    float px {1.0f};
+    float py {1.0f};
 
-    // clang-format off
-    mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
-    mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
-    mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
-    mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
-    // clang-format on
+    if (mTileHeight == 0.0f) {
+        // clang-format off
+        mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
+        mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
+        mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
+        mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
+        // clang-format on
+    }
+    else {
+        // Adjust the texture size as needed for tiled textures.
+        px = mSize.x / mTileWidth;
+        py = mSize.y / mTileHeight;
+        // clang-format off
+        mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
+        mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
+        mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
+        mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
+        // clang-format on
+    }
 
     updateColors();
 
-    // Round vertices.
+    // We round the vertices already here in this component as we may otherwise end up with edge
+    // cases at sizes near 0.5.
     for (int i = 0; i < 4; ++i)
         mVertices[i].position = glm::round(mVertices[i].position);
 
@@ -548,17 +580,17 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 imageSize = {0.001f, 0.001f};
             }
             if (imageSize.x > 0.0f)
-                imageSize.x = glm::clamp(imageSize.x, 0.001f, 2.0f);
+                imageSize.x = glm::clamp(imageSize.x, 0.001f, 3.0f);
             if (imageSize.y > 0.0f)
-                imageSize.y = glm::clamp(imageSize.y, 0.001f, 2.0f);
+                imageSize.y = glm::clamp(imageSize.y, 0.001f, 3.0f);
             setResize(imageSize * scale);
             if (imageSize.x != 0.0f && imageSize.y != 0.0f)
                 noMax = true;
         }
         else if (elem->has("maxSize")) {
             glm::vec2 imageMaxSize {elem->get<glm::vec2>("maxSize")};
-            imageMaxSize.x = glm::clamp(imageMaxSize.x, 0.001f, 2.0f);
-            imageMaxSize.y = glm::clamp(imageMaxSize.y, 0.001f, 2.0f);
+            imageMaxSize.x = glm::clamp(imageMaxSize.x, 0.001f, 3.0f);
+            imageMaxSize.y = glm::clamp(imageMaxSize.y, 0.001f, 3.0f);
             setMaxSize(imageMaxSize * scale);
         }
     }
@@ -583,12 +615,31 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setDefaultImage(elem->get<std::string>("default"));
 
     if (properties & PATH && elem->has("path")) {
-        const bool tile {elem->has("tile") && elem->get<bool>("tile")};
+        bool tile {elem->has("tile") && elem->get<bool>("tile")};
         const std::string path {elem->get<std::string>("path")};
 
-        if (!theme->isLegacyTheme() && noMax && path.length() > 4 &&
+        if (!tile && !theme->isLegacyTheme() && noMax && path.length() > 4 &&
             Utils::String::toLower(path.substr(path.size() - 4, std::string::npos)) == ".svg") {
             mScalableNonAspect = true;
+        }
+
+        if (tile && elem->has("tileSize")) {
+            glm::vec2 tileSize {elem->get<glm::vec2>("tileSize")};
+            if (tileSize.x == 0.0f && tileSize.y == 0.0f) {
+                LOG(LogWarning)
+                    << "ImageComponent: Invalid theme configuration, property <tileSize> "
+                       "for element \""
+                    << element.substr(6) << "\" is set to zero";
+                tile = false;
+            }
+            else {
+                tileSize.x = glm::clamp(tileSize.x, 0.0f, 1.0f);
+                tileSize.y = glm::clamp(tileSize.y, 0.0f, 1.0f);
+                mTileWidth = tileSize.x * scale.x;
+                mTileHeight = tileSize.y * scale.y;
+                if (mTileWidth != 0.0f && mTileHeight != 0.0f)
+                    mScalableNonAspect = true;
+            }
         }
 
         setImage(path, tile);

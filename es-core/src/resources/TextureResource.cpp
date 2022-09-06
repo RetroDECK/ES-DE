@@ -136,9 +136,9 @@ std::string TextureResource::getTextureFilePath()
 bool TextureResource::isTiled() const
 {
     if (mTextureData != nullptr)
-        return mTextureData->tiled();
+        return mTextureData->getTiled();
     std::shared_ptr<TextureData> data {sTextureDataManager.get(this)};
-    return data->tiled();
+    return data->getTiled();
 }
 
 bool TextureResource::bind()
