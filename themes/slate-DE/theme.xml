@@ -33,6 +33,8 @@ based on: recalbox-multi by the Recalbox community
         <view name="system">
             <carousel name="system_carousel">
                 <staticItem>./${system.theme}/images/logo.svg</staticItem>
+                <size>1 0.232407</size>
+                <pos>0 0.383796</pos>
                 <itemScale>1.23</itemScale>
                 <itemInterpolation>linear</itemInterpolation>
                 <itemSize>0.25 0.125</itemSize>
@@ -302,9 +304,11 @@ based on: recalbox-multi by the Recalbox community
         </text>
         <rating name="md_rating">
             <pos>0.453 0.203</pos>
+            <size>0 0.03</size>
+            <interpolation>nearest</interpolation>
             <filledPath>./core/images/rating_filled.svg</filledPath>
             <unfilledPath>./core/images/rating_empty.svg</unfilledPath>
-            <size>0.04 0.03</size>
+            <overlay>false</overlay>
         </rating>
         <text name="md_description">
             <lineSpacing>1.2</lineSpacing>

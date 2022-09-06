@@ -150,6 +150,7 @@
             <type>vertical</type>
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
+            <itemInterpolation>linear</itemInterpolation>
             <itemType>marquee</itemType>
             <itemHorizontalAlignment>center</itemHorizontalAlignment>
             <itemScale>1.23</itemScale>
