@@ -118,8 +118,8 @@ void ImageComponent::resize(bool rasterize)
 void ImageComponent::setTileAxes()
 {
     if (mTileWidth == 0.0f && mTileHeight == 0.0f) {
-        mTileWidth = mTexture->getSize().x;
-        mTileHeight = mTexture->getSize().y;
+        mTileWidth = static_cast<float>(mTexture->getSize().x);
+        mTileHeight = static_cast<float>(mTexture->getSize().y);
         return;
     }
 
