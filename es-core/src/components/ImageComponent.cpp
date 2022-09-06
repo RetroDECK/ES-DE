@@ -402,8 +402,8 @@ void ImageComponent::updateVertices()
 
     const glm::vec2 topLeft {0.0f, 0.0f};
     const glm::vec2 bottomRight {mSize};
-    float px {1.0f};
-    float py {1.0f};
+    const float px {mTexture->isTiled() ? mSize.x / getTextureSize().x : 1.0f};
+    const float py {mTexture->isTiled() ? mSize.y / getTextureSize().y : 1.0f};
 
     if (mTileHeight == 0.0f) {
         // clang-format off
@@ -415,8 +415,8 @@ void ImageComponent::updateVertices()
     }
     else {
         // Adjust the texture size as needed for tiled textures.
-        px = mSize.x / mTileWidth;
-        py = mSize.y / mTileHeight;
+        float px {mSize.x / mTileWidth};
+        float py {mSize.y / mTileHeight};
         // clang-format off
         mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
         mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
