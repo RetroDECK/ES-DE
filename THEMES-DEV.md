@@ -779,11 +779,11 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), then the other will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case.
-    - Minimum value per axis is `0.001` and maximum value per axis is `2`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
+    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case. If scaling SVG images to non-standard aspect ratios, then be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images.
+    - Minimum value per axis is `0.001` and maximum value per axis is `3`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
-    - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata).
-    - Minimum value per axis is `0.001` and maximum value per axis is `2`
+    - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata). Although this property is possible to combine with the `tile` property that does not make a whole lot of sense, instead use the `size` property for tiled images.
+    - Minimum value per axis is `0.001` and maximum value per axis is `3`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -818,8 +818,11 @@ Properties:
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
+* `tileSize` - type: NORMALIZED_PAIR
+    - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If scaling SVG images to non-standard aspect ratios, then be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file. Be aware that tiles are built from the bottom left corner rather than from the upper left corner so make sure to set this property accordingly so the texture alignment is correct.
+    - Minimum value per axis is `0` and maximum value per axis is `1`.
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on scalable vector graphics (SVG) images.
+    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless the image is stretched or squashed using the `size` property.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR
@@ -1428,9 +1431,9 @@ Properties:
     - Default is `horizontal`
 * `size` - type: NORMALIZED_PAIR
     - Minimum value per axis is `0.05` and maximum value per axis is `1.5`
-    - Default is `1 0.2325`
+    - Default is `1 0.2324`
 * `pos` - type: NORMALIZED_PAIR
-    - Default is `0 0.38375`
+    - Default is `0 0.38378`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the carousel `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`

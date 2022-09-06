@@ -16,6 +16,7 @@
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
 * Added support for caching of SVG images
+* Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * Added ares standalone as an alternative emulator for many systems
 * (Linux) Added support for the Nintendo Wii U (wiiu) game system
@@ -27,6 +28,7 @@
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
 * Added the .bin file extension to the gx4000 system
+* Removed the .7z and .zip file extensions from the 3do system
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package
 * (Linux) Added Flatpak support for Solarus using the Solarus Launcher package
 * Added support for folder links, used for launching game files inside folders without having to enter them
@@ -38,6 +40,9 @@
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
+* Added support for texture mipmapping with trilinear filtering
+* Improved the renderer scaling accuracy
+* Added a tileSize property to the image element so that the size of each individual image in tiled textures can be defined
 * Added support for substituting the emulator binary in staticpath rules with an explicit command (useful for launching specific binaries in Flatpaks)
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
@@ -145,7 +150,6 @@
 
 ### Bug fixes
 
-* A vertex rounding heisenbug caused single-pixel alignment issues at multiple places throughout the application
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
@@ -168,6 +172,7 @@
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase letters in theme names)
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
+* The bottom menu selector bar was not getting rendered when running at really low resolutions like 320x240
 * Doing a manual reload using Ctrl+r in debug mode would sometimes not update modified image files
 * Abbreviations of long words in multiline text entries sometimes exceeded the designated text area
 * The text debug overlay had the wrong size for scrollable containers
