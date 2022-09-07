@@ -34,6 +34,14 @@ class InputConfig;
 class ThemeData;
 class Window;
 
+enum Alignment {
+    ALIGN_LEFT,
+    ALIGN_CENTER, // Used for both horizontal and vertical alignments.
+    ALIGN_RIGHT,
+    ALIGN_TOP,
+    ALIGN_BOTTOM
+};
+
 class GuiComponent
 {
 public:

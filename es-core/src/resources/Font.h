@@ -10,6 +10,7 @@
 #ifndef ES_CORE_RESOURCES_FONT_H
 #define ES_CORE_RESOURCES_FONT_H
 
+#include "GuiComponent.h"
 #include "ThemeData.h"
 #include "renderers/Renderer.h"
 #include "resources/ResourceManager.h"
@@ -34,14 +35,6 @@ class TextCache;
 #define FONT_PATH_LIGHT ":/fonts/Akrobat-Regular.ttf"
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
 #define FONT_PATH_BOLD ":/fonts/Akrobat-Bold.ttf"
-
-enum Alignment {
-    ALIGN_LEFT,
-    ALIGN_CENTER, // Used for both horizontal and vertical alignments.
-    ALIGN_RIGHT,
-    ALIGN_TOP,
-    ALIGN_BOTTOM
-};
 
 // A TrueType Font renderer that uses FreeType and OpenGL.
 // The library is automatically initialized when it's needed.
