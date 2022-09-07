@@ -241,7 +241,7 @@ For more serious issues where it does not make sense to assign a default value o
 Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property <imageType> defined as "covr"
 ```
 
-### Variants
+## Variants
 
 A core concept of ES-DE is the use of theme set _variants_ to provide different theme profiles. These are not fixed presets and a theme author can instead name and define whatever variants he wants for his theme (or possibly use no variants at all as they are optional).
 
@@ -314,7 +314,7 @@ Here are some example uses of the `<variant>` functionality:
 </theme>
 ```
 
-### Aspect ratios
+## Aspect ratios
 
 The aspect ratio support works almost identically to the variants support with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme set can still decide which of the aspect ratios to support (or none at all in which cast the theme aspect ratios is left undefined) but it can't create entirely new aspect ratios.
 
@@ -376,7 +376,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 </theme>
 ```
 
-### capabilities.xml
+## capabilities.xml
 
 Variant and aspect ratio values need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
 ```
@@ -429,7 +429,7 @@ The declared aspect ratios will always get displayed in the _UI settings_ menu i
 
 The use of variants and aspect ratios is optional, i.e. a theme set does not need to provide either of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to it to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants and aspect ratios will be grayed out.
 
-### The \<include\> tag
+## The \<include\> tag
 
 You can include theme files within theme files, for example:
 
@@ -536,7 +536,7 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside either
 </theme>
 ```
 
-### Theming the system and gamelist views simultaneously
+## Theming the system and gamelist views simultaneously
 
 Sometimes you may want to apply the same elements and properties to both the system and gamelist views, for instance defining a common background image. For these situations both views can simply be defined in the `name` attribute. The values can be separated by a comma, or by a whitespace character (tab, space or line break).
 
@@ -577,7 +577,7 @@ The above is equivalent to:
 </view>
 ```
 
-### Theming multiple elements simultaneously
+## Theming multiple elements simultaneously
 
 You can theme multiple elements of the same type simultaneously, which can lead to a more compact and easier to understand theme configuration. To accomplish this you simply define multiple entries inside a single `name` attribute, separated by commas or whitespace characters (tabs, spaces or line breaks).
 
@@ -631,7 +631,7 @@ The above is equivalent to:
 Just remember, _this only works if the elements have the same type._
 
 
-### Navigation sounds
+## Navigation sounds
 
 Navigation sounds are configured globally per theme set, so it needs to be defined using the special `all` view.
 It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sounds are provided by the theme, ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
@@ -675,7 +675,7 @@ Example `navigationsounds.xml` file:
 </theme>
 ```
 
-### Element rendering order using zIndex
+## Element rendering order using zIndex
 
 You can change the order in which elements are rendered by setting their `zIndex` values. All elements have a default value so you only need to define it for the ones you wish to explicitly change. Elements will be rendered in order from smallest to largest values. A complete description of each element including all supported properties can be found in the [Reference](THEMES-DEV.md#reference) section.
 
@@ -696,13 +696,13 @@ These are the default zIndex values per element type:
 
 The `helpsystem` element does not really have a zIndex value and is always rendered on top of all other elements.
 
-### Theme variables
+## Theme variables
 
 Theme variables can be used to simplify theme construction. There are 2 types of variables available.
 * System variables
 * Theme defined variables
 
-#### System variables
+### System variables
 
 System variables are system specific and are derived from the values in es_systems.xml (except for collections).
 * `system.name`
@@ -715,7 +715,7 @@ System variables are system specific and are derived from the values in es_syste
 * `system.theme.collections`
 * `system.theme.noCollections`
 
-#### Theme defined variables
+### Theme defined variables
 Variables can also be defined in the theme.
 ```
 <variables>
@@ -723,7 +723,7 @@ Variables can also be defined in the theme.
 </variables>
 ```
 
-#### Usage in themes
+### Usage in themes
 Variables can be used to specify the value of a theme property:
 ```
 <color>${themeColor}</color>
@@ -779,7 +779,7 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case. If scaling SVG images to non-standard aspect ratios, then be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images.
+    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case. If scaling SVG images to non-standard aspect ratios, be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
     - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata). Although this property is possible to combine with the `tile` property that does not make a whole lot of sense, instead use the `size` property for tiled images.
@@ -819,10 +819,18 @@ Properties:
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
 * `tileSize` - type: NORMALIZED_PAIR
-    - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If scaling SVG images to non-standard aspect ratios, then be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file. Be aware that tiles are built from the bottom left corner rather than from the upper left corner so make sure to set this property accordingly so the texture alignment is correct.
+    - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If scaling SVG images to non-standard aspect ratios, be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file.
     - Minimum value per axis is `0` and maximum value per axis is `1`.
+* `tileHorizontalAlignment` - type: STRING
+    - If the images making up the tiled texture do not match precisely with the edges of the overall element, then this property can be used to define the alignment on the horizontal axis.
+    - Valid values are `left` or `right`
+    - Default is `left`
+* `tileVerticalAlignment` - type: STRING
+    - If the images making up the tiled texture do not match precisely with the edges of the overall element, then this property can be used to define the alignment on the vertical axis.
+    - Valid values are `top` or `bottom`
+    - Default is `top`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless the image is stretched or squashed using the `size` property.
+    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless the image is stretched or squashed using the `size` property, or if rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR

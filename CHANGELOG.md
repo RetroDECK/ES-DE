@@ -42,7 +42,7 @@
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
 * Added support for texture mipmapping with trilinear filtering
 * Improved the renderer scaling accuracy
-* Added a tileSize property to the image element so that the size of each individual image in tiled textures can be defined
+* Added new tileSize, tileHorizontalAlignment and tileVerticalAlignment properties to the image element for better tiling support
 * Added support for substituting the emulator binary in staticpath rules with an explicit command (useful for launching specific binaries in Flatpaks)
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
