@@ -99,8 +99,8 @@ private:
     std::atomic<bool> mScalableNonAspect;
     std::atomic<bool> mHasRGBAData;
     std::atomic<bool> mPendingRasterization;
+    std::atomic<bool> mMipmapping;
     bool mLinearMagnify;
-    bool mMipmapping;
     bool mReloadable;
 };
 

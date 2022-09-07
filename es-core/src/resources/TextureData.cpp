@@ -38,8 +38,8 @@ TextureData::TextureData(bool tile)
     , mScalableNonAspect {false}
     , mHasRGBAData {false}
     , mPendingRasterization {false}
-    , mLinearMagnify {false}
     , mMipmapping {false}
+    , mLinearMagnify {false}
 {
 }
 
@@ -314,8 +314,14 @@ void TextureData::setSourceSize(float width, float height)
 
 size_t TextureData::getVRAMUsage()
 {
-    if (mHasRGBAData || mTextureID != 0)
-        return mWidth * mHeight * 4;
-    else
+    if (mHasRGBAData || mTextureID != 0) {
+        // The estimated increase in VRAM usage with mipmapping enabled is 33%
+        if (mMipmapping)
+            return {static_cast<size_t>(static_cast<float>(mWidth * mHeight * 4) * 1.33f)};
+        else
+            return mWidth * mHeight * 4;
+    }
+    else {
         return 0;
+    }
 }
