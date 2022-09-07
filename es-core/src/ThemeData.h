@@ -41,26 +41,26 @@ namespace ThemeFlags
     // These are only the most common flags shared accross multiple components, in addition
     // to these there are many component-specific options.
     enum PropertyFlags : unsigned int {
-        PATH =            0x00000001,
-        POSITION =        0x00000002,
-        SIZE =            0x00000004,
-        ORIGIN =          0x00000008,
-        COLOR =           0x00000010,
-        FONT_PATH =       0x00000020,
-        FONT_SIZE =       0x00000040,
-        ALIGNMENT =       0x00000080,
-        TEXT =            0x00000100,
-        METADATA =        0x00000200,
-        LETTER_CASE =     0x00000400,
+        PATH            = 0x00000001,
+        POSITION        = 0x00000002,
+        SIZE            = 0x00000004,
+        ORIGIN          = 0x00000008,
+        COLOR           = 0x00000010,
+        FONT_PATH       = 0x00000020,
+        FONT_SIZE       = 0x00000040,
+        ALIGNMENT       = 0x00000080,
+        TEXT            = 0x00000100,
+        METADATA        = 0x00000200,
+        LETTER_CASE     = 0x00000400,
         FORCE_UPPERCASE = 0x00000800, // For backward compatibility with legacy themes.
-        LINE_SPACING =    0x00001000,
-        DELAY =           0x00002000,
-        Z_INDEX =         0x00004000,
-        ROTATION =        0x00008000,
-        OPACITY =         0x00010000,
-        SATURATION =      0x00020000,
-        VISIBLE =         0x00040000,
-        ALL = 0xFFFFFFFF
+        LINE_SPACING    = 0x00001000,
+        DELAY           = 0x00002000,
+        Z_INDEX         = 0x00004000,
+        ROTATION        = 0x00008000,
+        OPACITY         = 0x00010000,
+        SATURATION      = 0x00020000,
+        VISIBLE         = 0x00040000,
+        ALL             = 0xFFFFFFFF
     };
     // clang-format on
 } // namespace ThemeFlags

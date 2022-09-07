@@ -55,7 +55,7 @@ namespace
 
     void ensureScrapersResourcesDir()
     {
-        std::string path = getScrapersResouceDir();
+        std::string path {getScrapersResouceDir()};
         if (!Utils::FileSystem::exists(path))
             Utils::FileSystem::createDirectory(path);
     }
@@ -146,7 +146,7 @@ bool TheGamesDBJSONRequestResources::saveResource(HttpReq* req,
 
     ensureScrapersResourcesDir();
 
-    std::ofstream fout(file_name);
+    std::ofstream fout {file_name};
     fout << req->getContent();
     fout.close();
     loadResource(resource, resource_name, file_name);
@@ -155,9 +155,8 @@ bool TheGamesDBJSONRequestResources::saveResource(HttpReq* req,
 
 std::unique_ptr<HttpReq> TheGamesDBJSONRequestResources::fetchResource(const std::string& endpoint)
 {
-    std::string path = "https://api.thegamesdb.net/v1";
-    path += endpoint;
-    path += "?apikey=" + getApiKey();
+    std::string path {"https://api.thegamesdb.net/v1"};
+    path.append(endpoint).append("?apikey=").append(getApiKey());
 
     return std::unique_ptr<HttpReq>(new HttpReq(path));
 }
@@ -166,7 +165,7 @@ int TheGamesDBJSONRequestResources::loadResource(std::unordered_map<int, std::st
                                                  const std::string& resource_name,
                                                  const std::string& file_name)
 {
-    std::ifstream fin(file_name);
+    std::ifstream fin {file_name};
     if (!fin.good())
         return 1;
 

@@ -101,7 +101,7 @@ void FlexboxComponent::computeLayout()
         mItemsPerLine = static_cast<unsigned int>(mItems.size());
     }
 
-    glm::vec2 grid {};
+    glm::vec2 grid {0.0f, 0.0f};
 
     if (mDirection == "row")
         grid = {mItemsPerLine, mLines};

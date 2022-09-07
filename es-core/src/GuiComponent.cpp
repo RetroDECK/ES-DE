@@ -174,8 +174,8 @@ void GuiComponent::sortChildren()
 
 const int GuiComponent::getChildIndex() const
 {
-    std::vector<GuiComponent*>::iterator it =
-        std::find(getParent()->mChildren.begin(), getParent()->mChildren.end(), this);
+    std::vector<GuiComponent*>::iterator it {
+        std::find(getParent()->mChildren.begin(), getParent()->mChildren.end(), this)};
 
     if (it != getParent()->mChildren.end())
         return static_cast<int>(std::distance(getParent()->mChildren.begin(), it));
@@ -250,7 +250,7 @@ void GuiComponent::setAnimation(Animation* anim,
 {
     assert(slot < MAX_ANIMATIONS);
 
-    AnimationController* oldAnim = mAnimationMap[slot];
+    AnimationController* oldAnim {mAnimationMap[slot]};
     mAnimationMap[slot] = new AnimationController(anim, delay, finishedCallback, reverse);
 
     if (oldAnim)
@@ -340,7 +340,7 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                          getParent()->getSize() :
                          glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()}};
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "")};
     if (!elem)
         return;
 

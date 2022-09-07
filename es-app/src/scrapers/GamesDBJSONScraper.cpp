@@ -208,7 +208,7 @@ void thegamesdb_generate_json_scraper_requests(
         std::string platformQueryParam;
         auto& platforms = params.system->getPlatformIds();
         if (!platforms.empty()) {
-            bool first = true;
+            bool first {true};
             platformQueryParam += "&filter%5Bplatform%5D=";
             for (auto platformIt = platforms.cbegin(); // Line break.
                  platformIt != platforms.cend(); ++platformIt) {
@@ -243,7 +243,7 @@ void thegamesdb_generate_json_scraper_requests(
 {
     resources.prepare();
     std::string path = "https://api.thegamesdb.net/v1";
-    const std::string apiKey = std::string("apikey=") + resources.getApiKey();
+    const std::string apiKey {std::string("apikey=") + resources.getApiKey()};
 
     path += "/Games/Images/GamesImages?" + apiKey + "&games_id=" + gameIDs;
 
@@ -285,7 +285,7 @@ namespace
             return "";
 
         std::string out = "";
-        bool first = true;
+        bool first {true};
         for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
 
@@ -306,8 +306,8 @@ namespace
         if (!v.IsArray())
             return "";
 
-        std::string out = "";
-        bool first = true;
+        std::string out;
+        bool first {true};
         for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
 
@@ -328,8 +328,8 @@ namespace
         if (!v.IsArray())
             return "";
 
-        std::string out = "";
-        bool first = true;
+        std::string out;
+        bool first {true};
         for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
 
@@ -416,7 +416,7 @@ void processMediaURLs(const Value& images,
     // Step through each game ID in the JSON server response.
     for (auto it = images.MemberBegin(); it != images.MemberEnd(); ++it) {
         result.gameID = it->name.GetString();
-        const Value& gameMedia = images[it->name];
+        const Value& gameMedia {images[it->name]};
         result.coverUrl = "";
         result.fanartUrl = "";
         result.marqueeUrl = "";
@@ -469,8 +469,8 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     doc.Parse(req->getContent().c_str());
 
     if (doc.HasParseError()) {
-        std::string err = std::string("TheGamesDBJSONRequest - Error parsing JSON \n\t") +
-                          GetParseError_En(doc.GetParseError());
+        std::string err {std::string("TheGamesDBJSONRequest - Error parsing JSON \n\t") +
+                         GetParseError_En(doc.GetParseError())};
         setError(err);
         LOG(LogError) << err;
         return;
@@ -480,8 +480,8 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     if (doc.HasMember("data") && doc["data"].HasMember("images") &&
         doc["data"]["images"].IsObject()) {
 
-        const Value& images = doc["data"]["images"];
-        const Value& base_url = doc["data"]["base_url"];
+        const Value& images {doc["data"]["images"]};
+        const Value& base_url {doc["data"]["base_url"]};
         std::string baseImageUrlLarge;
 
         if (base_url.HasMember("large") && base_url["large"].IsString()) {
@@ -520,7 +520,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         return;
     }
 
-    const Value& games = doc["data"]["games"];
+    const Value& games {doc["data"]["games"]};
     resources.ensureResources();
 
     for (int i = 0; i < static_cast<int>(games.Size()); ++i) {

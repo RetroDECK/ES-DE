@@ -46,8 +46,8 @@ LottieAnimComponent::LottieAnimComponent()
         glm::clamp(Settings::getInstance()->getInt("LottieMaxFileCache"), 0, 1024) * 1024 * 1024);
 
     // Keep total cache size within 0 to 4096 MiB.
-    int maxTotalCache =
-        glm::clamp(Settings::getInstance()->getInt("LottieMaxTotalCache"), 0, 4096) * 1024 * 1024;
+    int maxTotalCache {glm::clamp(Settings::getInstance()->getInt("LottieMaxTotalCache"), 0, 4096) *
+                       1024 * 1024};
 
     if (mMaxTotalFrameCache != static_cast<size_t>(maxTotalCache))
         mMaxTotalFrameCache = static_cast<size_t>(maxTotalCache);
@@ -161,7 +161,7 @@ void LottieAnimComponent::setAnimation(const std::string& path)
     }
 
     // Some statistics for the file.
-    double duration = mAnimation->duration();
+    double duration {mAnimation->duration()};
     mTotalFrames = mAnimation->totalFrame();
     mFrameRate = mAnimation->frameRate();
     mFrameSize = width * height * 4;
@@ -229,7 +229,7 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "animation")};
 
     if (elem->has("size")) {
-        glm::vec2 size = elem->get<glm::vec2>("size");
+        glm::vec2 size {elem->get<glm::vec2>("size")};
         if (size.x == 0.0f && size.y == 0.0f) {
             LOG(LogWarning)
                 << "LottieAnimComponent: Invalid theme configuration, <size> defined as \""
@@ -411,7 +411,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
                 // to the texture caching used for images.
                 if (mCacheFrames && mLastRenderedFrame != -1 &&
                     mFrameCache.find(mLastRenderedFrame) == mFrameCache.end()) {
-                    size_t newCacheSize = mCacheSize + mFrameSize;
+                    size_t newCacheSize {mCacheSize + mFrameSize};
                     if (newCacheSize < mMaxCacheSize &&
                         mTotalFrameCache + mFrameSize < mMaxTotalFrameCache) {
                         mFrameCache[mLastRenderedFrame] = mPictureRGBA;

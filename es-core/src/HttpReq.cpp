@@ -82,7 +82,7 @@ HttpReq::HttpReq(const std::string& url)
     }
 
     // Set the url.
-    CURLcode err = curl_easy_setopt(mHandle, CURLOPT_URL, url.c_str());
+    CURLcode err {curl_easy_setopt(mHandle, CURLOPT_URL, url.c_str())};
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
         onError(curl_easy_strerror(err));
@@ -176,7 +176,7 @@ HttpReq::~HttpReq()
     if (mHandle) {
         s_requests.erase(mHandle);
 
-        CURLMcode merr = curl_multi_remove_handle(s_multi_handle, mHandle);
+        CURLMcode merr {curl_multi_remove_handle(s_multi_handle, mHandle)};
 
         if (merr != CURLM_OK) {
             LOG(LogError) << "Error removing curl_easy handle from curl_multi: "
@@ -191,7 +191,7 @@ HttpReq::Status HttpReq::status()
 {
     if (mStatus == REQ_IN_PROGRESS) {
         int handle_count;
-        CURLMcode merr = curl_multi_perform(s_multi_handle, &handle_count);
+        CURLMcode merr {curl_multi_perform(s_multi_handle, &handle_count)};
         if (merr != CURLM_OK && merr != CURLM_CALL_MULTI_PERFORM) {
             mStatus = REQ_IO_ERROR;
             onError(curl_multi_strerror(merr));
@@ -238,7 +238,7 @@ std::string HttpReq::getContent() const
 // Return value is number of elements successfully read.
 size_t HttpReq::write_content(void* buff, size_t size, size_t nmemb, void* req_ptr)
 {
-    std::stringstream& ss = (static_cast<HttpReq*>(req_ptr))->mContent;
+    std::stringstream& ss {static_cast<HttpReq*>(req_ptr)->mContent};
     ss.write(static_cast<char*>(buff), size * nmemb);
 
     return nmemb;
