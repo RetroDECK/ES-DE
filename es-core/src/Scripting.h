@@ -24,6 +24,6 @@ namespace Scripting
                    const std::string& arg2 = "",
                    const std::string& arg3 = "",
                    const std::string& arg4 = "");
-} // namespace Scripting
+}
 
 #endif // ES_CORE_SCRIPTING_H

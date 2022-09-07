@@ -18,6 +18,9 @@
 #include "Settings.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/PlatformUtil.h"
+#include "utils/StringUtil.h"
+
+#include <algorithm>
 
 namespace Scripting
 {
@@ -42,7 +45,16 @@ namespace Scripting
             scriptDirList.push_back(scriptDir);
 
         for (auto dirIt = scriptDirList.cbegin(); dirIt != scriptDirList.cend(); ++dirIt) {
-            std::list<std::string> scripts = Utils::FileSystem::getDirContent(*dirIt);
+            std::list<std::string> scripts {Utils::FileSystem::getDirContent(*dirIt)};
+            // Sort the scripts in case-sensitive order on Unix/Linux and in case-insensitive order
+            // on macOS and Windows.
+#if defined(__unix__)
+            scripts.sort([](std::string a, std::string b) { return a.compare(b) < 0; });
+#else
+            scripts.sort([](std::string a, std::string b) {
+                return Utils::String::toUpper(a).compare(Utils::String::toUpper(b)) < 0;
+            });
+#endif
             for (auto it = scripts.cbegin(); it != scripts.cend(); ++it) {
                 std::string arg1Quotation;
                 std::string arg2Quotation;
