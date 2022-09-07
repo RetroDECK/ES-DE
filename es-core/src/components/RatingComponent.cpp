@@ -108,10 +108,12 @@ void RatingComponent::onSizeChanged()
         mSize.x = mSize.y * NUM_RATING_STARS;
 
     mIconFilled.getTexture()->setSize(mSize.y, mSize.y);
+    mIconFilled.setTileSize(mSize.y, mSize.y);
     mIconFilled.setResize(glm::vec2 {std::round(mSize.y * mImageRatio) * NUM_RATING_STARS, mSize.y},
                           true);
 
     mIconUnfilled.getTexture()->setSize(mSize.y, mSize.y);
+    mIconUnfilled.setTileSize(mSize.y, mSize.y);
     mIconUnfilled.setResize(
         glm::vec2 {std::round(mSize.y * mImageRatio) * NUM_RATING_STARS, mSize.y}, true);
 }
@@ -225,7 +227,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    mIconFilled.setTileSize(mSize.y * mImageRatio, mSize.y);
+    mIconFilled.setTileSize(std::round(mSize.y * mImageRatio), mSize.y);
     mIconFilled.setResize(glm::vec2 {mSize}, false);
 
     if (properties & PATH && elem->has("filledPath") &&
@@ -241,7 +243,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
     }
 
-    mIconUnfilled.setTileSize(mSize.y * mImageRatio, mSize.y);
+    mIconUnfilled.setTileSize(std::round(mSize.y * mImageRatio), mSize.y);
     mIconUnfilled.setResize(glm::vec2 {mSize}, false);
 
     if (properties & PATH && elem->has("unfilledPath") &&
