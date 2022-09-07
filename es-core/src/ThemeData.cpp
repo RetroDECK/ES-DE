@@ -98,6 +98,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"gameselector", STRING},
        {"tile", BOOLEAN},
        {"tileSize", NORMALIZED_PAIR},
+       {"tileHorizontalAlignment", STRING},
+       {"tileVerticalAlignment", STRING},
        {"interpolation", STRING},
        {"color", COLOR},
        {"colorEnd", COLOR},

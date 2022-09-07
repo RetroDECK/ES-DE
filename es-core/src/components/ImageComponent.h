@@ -157,6 +157,9 @@ private:
     bool mLinearInterpolation;
     bool mMipmapping;
 
+    Alignment mTileHorizontalAlignment;
+    Alignment mTileVerticalAlignment;
+
     glm::vec2 mTopLeftCrop;
     glm::vec2 mBottomRightCrop;
     glm::vec4 mClipRegion;

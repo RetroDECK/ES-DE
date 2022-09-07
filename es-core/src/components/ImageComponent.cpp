@@ -49,6 +49,8 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mRotateByTargetSize {false}
     , mLinearInterpolation {false}
     , mMipmapping {false}
+    , mTileHorizontalAlignment {ALIGN_LEFT}
+    , mTileVerticalAlignment {ALIGN_TOP}
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
     , mClipRegion {0.0f, 0.0f, 0.0f, 0.0f}
@@ -414,14 +416,35 @@ void ImageComponent::updateVertices()
         // clang-format on
     }
     else {
-        // Adjust the texture size as needed for tiled textures.
-        float px {mSize.x / mTileWidth};
-        float py {mSize.y / mTileHeight};
+        // Resize and align tiled textures.
+        glm::vec2 topLeftAlign {mTopLeftCrop};
+        glm::vec2 bottomRightAlign {mBottomRightCrop};
+        const float pxA {mSize.x / mTileWidth};
+        const float pyA {mSize.y / mTileHeight};
+
+        if (mTileHorizontalAlignment == Alignment::ALIGN_RIGHT) {
+            float offsetX {pxA - std::floor(pxA)};
+            if (offsetX != 0.0f) {
+                const float moveX {(mTileWidth * offsetX) / mSize.x};
+                topLeftAlign.x -= moveX * pxA;
+                bottomRightAlign.x -= moveX;
+            }
+        }
+
+        if (mTileVerticalAlignment == Alignment::ALIGN_TOP) {
+            float offsetY {pyA - std::floor(pyA)};
+            if (offsetY != 0.0f) {
+                const float moveY {(mTileHeight * offsetY) / mSize.y};
+                topLeftAlign.y += moveY * pyA;
+                bottomRightAlign.y += moveY * pyA;
+            }
+        }
+
         // clang-format off
-        mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
-        mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
-        mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
-        mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
+        mVertices[0] = {{topLeft.x,     topLeft.y    }, {topLeftAlign.x,           pyA  - topLeftAlign.y    }, 0};
+        mVertices[1] = {{topLeft.x,     bottomRight.y}, {topLeftAlign.x,           1.0f - bottomRightAlign.y}, 0};
+        mVertices[2] = {{bottomRight.x, topLeft.y    }, {bottomRightAlign.x * pxA, pyA  - topLeftAlign.y    }, 0};
+        mVertices[3] = {{bottomRight.x, bottomRight.y}, {bottomRightAlign.x * pxA, 1.0f - bottomRightAlign.y}, 0};
         // clang-format on
     }
 
@@ -614,8 +637,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("default"))
         setDefaultImage(elem->get<std::string>("default"));
 
+    bool tile {elem->has("tile") && elem->get<bool>("tile")};
+
     if (properties & PATH && elem->has("path")) {
-        bool tile {elem->has("tile") && elem->get<bool>("tile")};
         const std::string path {elem->get<std::string>("path")};
 
         if (!tile && !theme->isLegacyTheme() && noMax && path.length() > 4 &&
@@ -644,6 +668,45 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         setImage(path, tile);
     }
+
+    bool updateAlignment {false};
+
+    if (elem->has("tileHorizontalAlignment")) {
+        const std::string alignment {elem->get<std::string>("tileHorizontalAlignment")};
+        updateAlignment = true;
+        if (alignment == "left") {
+            mTileHorizontalAlignment = ALIGN_LEFT;
+        }
+        else if (alignment == "right") {
+            mTileHorizontalAlignment = ALIGN_RIGHT;
+        }
+        else {
+            LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                               "<tileHorizontalAlignment> for element \""
+                            << element.substr(6) << "\" defined as \"" << alignment << "\"";
+            mTileHorizontalAlignment = ALIGN_LEFT;
+        }
+    }
+
+    if (elem->has("tileVerticalAlignment")) {
+        const std::string alignment {elem->get<std::string>("tileVerticalAlignment")};
+        updateAlignment = true;
+        if (alignment == "top") {
+            mTileVerticalAlignment = ALIGN_TOP;
+        }
+        else if (alignment == "bottom") {
+            mTileVerticalAlignment = ALIGN_BOTTOM;
+        }
+        else {
+            LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
+                               "<tileVerticalAlignment> for element \""
+                            << element.substr(6) << "\" defined as \"" << alignment << "\"";
+            mTileVerticalAlignment = ALIGN_TOP;
+        }
+    }
+
+    if (tile && updateAlignment)
+        updateVertices();
 
     if (properties && elem->has("imageType")) {
         std::string imageTypes {elem->get<std::string>("imageType")};
