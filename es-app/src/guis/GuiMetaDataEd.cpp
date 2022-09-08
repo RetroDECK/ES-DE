@@ -437,6 +437,16 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     }
                 }
 
+#if defined(__unix__)
+                std::sort(std::begin(children), std::end(children),
+                          [](FileData* a, FileData* b) { return a->getPath() < b->getPath(); });
+#else
+                std::sort(std::begin(children), std::end(children), [](FileData* a, FileData* b) {
+                    return Utils::String::toUpper(a->getPath()) <
+                           Utils::String::toUpper(b->getPath());
+                });
+#endif
+
                 // OK callback (apply new value to ed).
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
                     mInvalidFolderLinkEntry = false;
