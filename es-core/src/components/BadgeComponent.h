@@ -54,6 +54,9 @@ public:
 private:
     static inline std::vector<GameControllers> sGameControllers;
 
+    // Used to keep the overlay texture cache entries from expiring.
+    std::map<std::string, std::unique_ptr<ImageComponent>> mOverlayMap;
+
     std::vector<FlexboxComponent::FlexboxItem> mFlexboxItems;
     FlexboxComponent mFlexboxComponent;
 

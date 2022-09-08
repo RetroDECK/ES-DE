@@ -137,6 +137,9 @@ void BadgeComponent::setBadges(const std::vector<BadgeInfo>& badges)
 
                 if (it2 != sGameControllers.cend()) {
                     it->overlayImage.setImage((*it2).fileName);
+                    // This is done to keep the texture cache entry from expiring.
+                    mOverlayMap[it2->shortName] =
+                        std::make_unique<ImageComponent>(it->overlayImage);
                 }
                 else if (badge.gameController != "")
                     it->overlayImage.setImage(sGameControllers.back().fileName);
