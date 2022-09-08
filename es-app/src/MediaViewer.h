@@ -18,7 +18,6 @@ class MediaViewer : public Window::MediaViewer
 {
 public:
     MediaViewer();
-    virtual ~MediaViewer();
 
     bool startMediaViewer(FileData* game) override;
     void stopMediaViewer() override;
@@ -29,9 +28,9 @@ public:
 private:
     void initiateViewer();
     void findMedia();
+    void loadImages();
 
     void playVideo();
-    void showImage(int index);
 
     void showNext() override;
     void showPrevious() override;
@@ -48,10 +47,9 @@ private:
     int mTitleScreenIndex;
 
     std::string mVideoFile;
+    std::unique_ptr<VideoComponent> mVideo;
     std::vector<std::string> mImageFiles;
-
-    VideoComponent* mVideo;
-    ImageComponent* mImage;
+    std::vector<std::unique_ptr<ImageComponent>> mImages;
 };
 
 #endif // ES_APP_MEDIA_VIEWER_H

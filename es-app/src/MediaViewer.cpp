@@ -14,22 +14,8 @@
 
 MediaViewer::MediaViewer()
     : mRenderer {Renderer::getInstance()}
-    , mVideo {nullptr}
-    , mImage {nullptr}
 {
     Window::getInstance()->setMediaViewer(this);
-}
-
-MediaViewer::~MediaViewer()
-{
-    if (mVideo) {
-        delete mVideo;
-        mVideo = nullptr;
-    }
-    if (mImage) {
-        delete mImage;
-        mImage = nullptr;
-    }
 }
 
 bool MediaViewer::startMediaViewer(FileData* game)
@@ -55,18 +41,10 @@ void MediaViewer::stopMediaViewer()
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     ViewController::getInstance()->stopViewVideos();
 
-    if (mVideo) {
-        delete mVideo;
-        mVideo = nullptr;
-    }
-
-    if (mImage) {
-        delete mImage;
-        mImage = nullptr;
-    }
-
     mVideoFile = "";
+    mVideo.reset();
     mImageFiles.clear();
+    mImages.clear();
 }
 
 void MediaViewer::update(int deltaTime)
@@ -115,8 +93,9 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
         if (shaders != 0)
             mRenderer->shaderPostprocessing(shaders, videoParameters);
     }
-    else if (mImage && mImage->hasImage() && mImage->getSize() != glm::vec2 {}) {
-        mImage->render(trans);
+    else if (mImages[mCurrentImageIndex]->hasImage() &&
+             mImages[mCurrentImageIndex]->getSize() != glm::vec2 {0.0f, 0.0f}) {
+        mImages[mCurrentImageIndex]->render(trans);
 
         if (mCurrentImageIndex == mScreenshotIndex &&
             Settings::getInstance()->getBool("MediaViewerScreenshotScanlines"))
@@ -138,14 +117,13 @@ void MediaViewer::initiateViewer()
         return;
 
     findMedia();
+    loadImages();
 
     if (!mHasVideo && !mHasImages)
         return;
 
     if (mHasVideo)
         playVideo();
-    else
-        showImage(0);
 }
 
 void MediaViewer::findMedia()
@@ -188,63 +166,16 @@ void MediaViewer::findMedia()
         mHasImages = true;
 }
 
-void MediaViewer::showNext()
+void MediaViewer::loadImages()
 {
-    if (mHasImages && mCurrentImageIndex != static_cast<int>(mImageFiles.size()) - 1)
-        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-
-    bool showedVideo = false;
-
-    if (mVideo && !mHasImages) {
-        return;
+    for (auto& file : mImageFiles) {
+        mImages.emplace_back(std::make_unique<ImageComponent>(false, false));
+        mImages.back()->setOrigin(0.5f, 0.5f);
+        mImages.back()->setPosition(Renderer::getScreenWidth() / 2.0f,
+                                    Renderer::getScreenHeight() / 2.0f);
+        mImages.back()->setMaxSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        mImages.back()->setImage(file);
     }
-    else if (mVideo && !Settings::getInstance()->getBool("MediaViewerKeepVideoRunning")) {
-        delete mVideo;
-        mVideo = nullptr;
-        showedVideo = true;
-    }
-
-    if (mImage) {
-        delete mImage;
-        mImage = nullptr;
-    }
-
-    if ((mVideo || showedVideo) && !mDisplayingImage)
-        mCurrentImageIndex = 0;
-    else if (static_cast<int>(mImageFiles.size()) > mCurrentImageIndex + 1)
-        ++mCurrentImageIndex;
-
-    if (mVideo)
-        mDisplayingImage = true;
-
-    showImage(mCurrentImageIndex);
-}
-
-void MediaViewer::showPrevious()
-{
-    if ((mHasVideo && mDisplayingImage) || (!mHasVideo && mCurrentImageIndex != 0))
-        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-
-    if (mCurrentImageIndex == 0 && !mHasVideo) {
-        return;
-    }
-    else if (mCurrentImageIndex == 0 && mHasVideo) {
-        if (mImage) {
-            delete mImage;
-            mImage = nullptr;
-        }
-        mDisplayingImage = false;
-        playVideo();
-        return;
-    }
-
-    if (mImage) {
-        delete mImage;
-        mImage = nullptr;
-    }
-
-    --mCurrentImageIndex;
-    showImage(mCurrentImageIndex);
 }
 
 void MediaViewer::playVideo()
@@ -255,7 +186,7 @@ void MediaViewer::playVideo()
     mDisplayingImage = false;
     ViewController::getInstance()->pauseViewVideos();
 
-    mVideo = new VideoFFmpegComponent;
+    mVideo = std::make_unique<VideoFFmpegComponent>();
     mVideo->setOrigin(0.5f, 0.5f);
     mVideo->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
 
@@ -269,18 +200,43 @@ void MediaViewer::playVideo()
     mVideo->startVideoPlayer();
 }
 
-void MediaViewer::showImage(int index)
+void MediaViewer::showNext()
 {
-    if (mImage)
+    if (mHasImages && ((mCurrentImageIndex != static_cast<int>(mImageFiles.size()) - 1) ||
+                       (!mDisplayingImage && mCurrentImageIndex == 0 && mImageFiles.size() == 1)))
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+
+    bool showedVideo {false};
+
+    if (mVideo && !mHasImages) {
         return;
+    }
+    else if (mVideo && !Settings::getInstance()->getBool("MediaViewerKeepVideoRunning")) {
+        mVideo.reset();
+        showedVideo = true;
+    }
+
+    if ((mVideo || showedVideo) && !mDisplayingImage)
+        mCurrentImageIndex = 0;
+    else if (static_cast<int>(mImageFiles.size()) > mCurrentImageIndex + 1)
+        ++mCurrentImageIndex;
 
     mDisplayingImage = true;
+}
 
-    if (!mImageFiles.empty() && static_cast<int>(mImageFiles.size()) >= index) {
-        mImage = new ImageComponent(false, false);
-        mImage->setOrigin(0.5f, 0.5f);
-        mImage->setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.0f);
-        mImage->setMaxSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
-        mImage->setImage(mImageFiles[index]);
+void MediaViewer::showPrevious()
+{
+    if ((mHasVideo && mDisplayingImage) || (!mHasVideo && mCurrentImageIndex != 0))
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+
+    if (mCurrentImageIndex == 0 && !mHasVideo) {
+        return;
     }
+    else if (mCurrentImageIndex == 0 && mHasVideo) {
+        mDisplayingImage = false;
+        playVideo();
+        return;
+    }
+
+    --mCurrentImageIndex;
 }
