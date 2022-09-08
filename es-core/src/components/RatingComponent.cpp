@@ -27,10 +27,12 @@ RatingComponent::RatingComponent(bool colorizeChanges, bool linearInterpolation)
 
     mIconFilled.setResize(mSize, false);
     mIconFilled.setTileSize(mSize.y, mSize.y);
+    mIconFilled.setDynamic(false);
     mIconFilled.setLinearInterpolation(linearInterpolation);
 
     mIconUnfilled.setResize(mSize, false);
     mIconUnfilled.setTileSize(mSize.y, mSize.y);
+    mIconUnfilled.setDynamic(false);
     mIconUnfilled.setLinearInterpolation(linearInterpolation);
 
     mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
@@ -233,7 +235,6 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & PATH && elem->has("filledPath") &&
         (Utils::FileSystem::isRegularFile(elem->get<std::string>("filledPath")) ||
          Utils::FileSystem::isSymlink(elem->get<std::string>("filledPath")))) {
-        mIconFilled.setDynamic(true);
         mIconFilled.setLinearInterpolation(linearInterpolation);
         mIconFilled.setImage(std::string(elem->get<std::string>("filledPath")), true);
         mIconFilled.getTexture()->setSize(std::round(mSize.y * mImageRatio), mSize.y);
@@ -249,7 +250,6 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & PATH && elem->has("unfilledPath") &&
         (Utils::FileSystem::isRegularFile(elem->get<std::string>("unfilledPath")) ||
          Utils::FileSystem::isSymlink(elem->get<std::string>("unfilledPath")))) {
-        mIconUnfilled.setDynamic(true);
         mIconUnfilled.setLinearInterpolation(linearInterpolation);
         mIconUnfilled.setImage(std::string(elem->get<std::string>("unfilledPath")), true);
         mIconUnfilled.getTexture()->setSize(std::round(mSize.y * mImageRatio), mSize.y);

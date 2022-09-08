@@ -123,6 +123,10 @@ private:
     PrimaryComponent<SystemData*>* mPrimary;
     PrimaryType mPrimaryType;
 
+    // Dummy entry to keep the default SVG rating images in the texture cache so they don't
+    // need to be re-rasterized for each gamelist that is loaded.
+    RatingComponent mRatingDummy;
+
     float mCamOffset;
     float mFadeOpacity;
     int mPreviousScrollVelocity;
