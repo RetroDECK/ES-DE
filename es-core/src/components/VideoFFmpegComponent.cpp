@@ -765,6 +765,14 @@ void VideoFFmpegComponent::outputFrames()
     // Process the audio frames that have a PTS value below mAccumulatedTime (plus a small
     // buffer to avoid underflows).
     while (!mAudioFrameQueue.empty()) {
+        // In very rare instances video files are broken and start with a high PTS value for
+        // the first frame. In this case set the accumulated time value to this PTS value if
+        // the audio frame queue is filled, otherwise the stream will never start playing.
+        if (mAudioFrameCount == 0 &&
+            mAudioFrameQueue.size() == static_cast<size_t>(mAudioTargetQueueSize) &&
+            mAccumulatedTime < mAudioFrameQueue.front().pts) {
+            mAccumulatedTime = mAudioFrameQueue.front().pts;
+        }
         if (mAudioFrameQueue.front().pts < mAccumulatedTime + AUDIO_BUFFER) {
             // Enable only when needed, as this generates a lot of debug output.
             if (DEBUG_VIDEO) {
@@ -808,6 +816,14 @@ void VideoFFmpegComponent::outputFrames()
     // But if more than one frame is processed here, it means that the computer can't
     // keep up for some reason.
     while (mIsActuallyPlaying && !mVideoFrameQueue.empty()) {
+        // This workaround for broken files with a high PTS value for the first frame is only
+        // applied if there are no audio streams available.
+        if (!mAudioCodecContext && !mDecodedFrame &&
+            mVideoFrameQueue.size() == static_cast<size_t>(mVideoTargetQueueSize) &&
+            mAccumulatedTime < mVideoFrameQueue.front().pts) {
+            mAccumulatedTime = mVideoFrameQueue.front().pts;
+        }
+
         if (mVideoFrameQueue.front().pts < mAccumulatedTime) {
             // Enable only when needed, as this generates a lot of debug output.
             if (DEBUG_VIDEO) {
