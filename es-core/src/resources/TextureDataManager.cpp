@@ -77,8 +77,8 @@ std::shared_ptr<TextureData> TextureDataManager::get(const TextureResource* key)
 
 bool TextureDataManager::bind(const TextureResource* key)
 {
-    std::shared_ptr<TextureData> tex = get(key);
-    bool bound = false;
+    std::shared_ptr<TextureData> tex {get(key)};
+    bool bound {false};
     if (tex != nullptr)
         bound = tex->uploadAndBind();
     if (!bound)
@@ -88,7 +88,7 @@ bool TextureDataManager::bind(const TextureResource* key)
 
 size_t TextureDataManager::getTotalSize()
 {
-    size_t total = 0;
+    size_t total {0};
     for (auto tex : mTextures)
         total += tex->width() * tex->height() * 4;
     return total;
@@ -96,7 +96,7 @@ size_t TextureDataManager::getTotalSize()
 
 size_t TextureDataManager::getCommittedSize()
 {
-    size_t total = 0;
+    size_t total {0};
     for (auto tex : mTextures)
         total += tex->getVRAMUsage();
     return total;
@@ -130,7 +130,7 @@ void TextureDataManager::load(std::shared_ptr<TextureData> tex, bool block)
         settingVRAM = 1024;
     }
 
-    size_t max_texture = settingVRAM * 1024 * 1024;
+    size_t max_texture {settingVRAM * 1024 * 1024};
 
     for (auto it = mTextures.crbegin(); it != mTextures.crend(); ++it) {
         if (size < max_texture)
@@ -177,7 +177,7 @@ void TextureLoader::threadProc()
         std::shared_ptr<TextureData> textureData;
         {
             // Wait for an event to say there is something in the queue.
-            std::unique_lock<std::mutex> lock(mMutex);
+            std::unique_lock<std::mutex> lock {mMutex};
             mEvent.wait(lock);
             if (!mTextureDataQ.empty()) {
                 textureData = mTextureDataQ.front();
@@ -191,7 +191,7 @@ void TextureLoader::threadProc()
 
             // See if there is another item in the queue.
             textureData = nullptr;
-            std::unique_lock<std::mutex> lock(mMutex);
+            std::unique_lock<std::mutex> lock {mMutex};
             if (!mTextureDataQ.empty()) {
                 textureData = mTextureDataQ.front();
                 mTextureDataQ.pop_front();
@@ -205,7 +205,7 @@ void TextureLoader::load(std::shared_ptr<TextureData> textureData)
 {
     // Make sure it's not already loaded.
     if (!textureData->isLoaded()) {
-        std::unique_lock<std::mutex> lock(mMutex);
+        std::unique_lock<std::mutex> lock {mMutex};
         // Remove it from the queue if it is already there.
         auto td = mTextureDataLookup.find(textureData.get());
         if (td != mTextureDataLookup.cend()) {
@@ -223,7 +223,7 @@ void TextureLoader::load(std::shared_ptr<TextureData> textureData)
 void TextureLoader::remove(std::shared_ptr<TextureData> textureData)
 {
     // Just remove it from the queue so we don't attempt to load it.
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock {mMutex};
     auto td = mTextureDataLookup.find(textureData.get());
     if (td != mTextureDataLookup.cend()) {
         mTextureDataQ.erase((*td).second);
@@ -235,8 +235,8 @@ size_t TextureLoader::getQueueSize()
 {
     // Get the amount of video memory that will be used once all textures in
     // the queue are loaded.
-    size_t mem = 0;
-    std::unique_lock<std::mutex> lock(mMutex);
+    size_t mem {0};
+    std::unique_lock<std::mutex> lock {mMutex};
     for (auto tex : mTextureDataQ)
         mem += tex->width() * tex->height() * 4;
 

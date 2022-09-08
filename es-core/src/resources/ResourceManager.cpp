@@ -16,8 +16,6 @@
 
 #include <fstream>
 
-auto array_deleter = [](unsigned char* p) { delete[] p; };
-
 ResourceManager& ResourceManager::getInstance()
 {
     static ResourceManager instance;
@@ -30,33 +28,30 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
     if ((path[0] == ':') && (path[1] == '/')) {
 
         // Check under the home directory.
-        std::string testHome =
-            Utils::FileSystem::getHomePath() + "/.emulationstation/resources/" + &path[2];
+        std::string testHome {Utils::FileSystem::getHomePath() + "/.emulationstation/resources/" +
+                              &path[2]};
         if (Utils::FileSystem::exists(testHome))
             return testHome;
 
 #if defined(__APPLE__)
         // For macOS, check in the ../Resources directory relative to the executable directory.
-        std::string applePackagePath =
-            Utils::FileSystem::getExePath() + "/../Resources/resources/" + &path[2];
+        std::string applePackagePath {Utils::FileSystem::getExePath() + "/../Resources/resources/" +
+                                      &path[2]};
 
         if (Utils::FileSystem::exists(applePackagePath)) {
             return applePackagePath;
         }
-
 #elif defined(__unix__) && !defined(APPIMAGE_BUILD)
         // Check under the data installation directory (Unix only).
-        std::string testDataPath;
-
-        testDataPath = Utils::FileSystem::getProgramDataPath() + "/resources/" + &path[2];
+        std::string testDataPath {Utils::FileSystem::getProgramDataPath() + "/resources/" +
+                                  &path[2]};
 
         if (Utils::FileSystem::exists(testDataPath)) {
             return testDataPath;
         }
 #endif
-
         // Check under the ES executable directory.
-        std::string testExePath = Utils::FileSystem::getExePath() + "/resources/" + &path[2];
+        std::string testExePath {Utils::FileSystem::getExePath() + "/resources/" + &path[2]};
 
         if (Utils::FileSystem::exists(testExePath)) {
             return testExePath;
@@ -91,36 +86,37 @@ std::string ResourceManager::getResourcePath(const std::string& path, bool termi
 const ResourceData ResourceManager::getFileData(const std::string& path) const
 {
     // Check if its a resource.
-    const std::string respath = getResourcePath(path);
+    const std::string respath {getResourcePath(path)};
 
     if (Utils::FileSystem::exists(respath)) {
-        ResourceData data = loadFile(respath);
+        ResourceData data {loadFile(respath)};
         return data;
     }
 
     // If the file doesn't exist, return an "empty" ResourceData.
-    ResourceData data = {nullptr, 0};
+    ResourceData data {nullptr, 0};
     return data;
 }
 
 ResourceData ResourceManager::loadFile(const std::string& path) const
 {
 #if defined(_WIN64)
-    std::ifstream stream(Utils::String::stringToWideString(path).c_str(), std::ios::binary);
+    std::ifstream stream {Utils::String::stringToWideString(path).c_str(), std::ios::binary};
 #else
-    std::ifstream stream(path, std::ios::binary);
+    std::ifstream stream {path, std::ios::binary};
 #endif
 
     stream.seekg(0, stream.end);
-    size_t size = static_cast<size_t>(stream.tellg());
+    size_t size {static_cast<size_t>(stream.tellg())};
     stream.seekg(0, stream.beg);
 
     // Supply custom deleter to properly free array.
-    std::shared_ptr<unsigned char> data(new unsigned char[size], array_deleter);
+    std::shared_ptr<unsigned char> data {new unsigned char[size],
+                                         [](unsigned char* p) { delete[] p; }};
     stream.read(reinterpret_cast<char*>(data.get()), size);
     stream.close();
 
-    ResourceData ret = {data, size};
+    ResourceData ret {data, size};
     return ret;
 }
 

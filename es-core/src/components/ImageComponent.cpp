@@ -16,19 +16,6 @@
 #include "utils/CImgUtil.h"
 #include "utils/StringUtil.h"
 
-glm::ivec2 ImageComponent::getTextureSize() const
-{
-    if (mTexture)
-        return mTexture->getSize();
-    else
-        return glm::ivec2 {0, 0};
-}
-
-glm::vec2 ImageComponent::getSize() const
-{
-    return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
-}
-
 ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     : mRenderer {Renderer::getInstance()}
     , mTargetSize {0, 0}
@@ -56,80 +43,6 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mClipRegion {0.0f, 0.0f, 0.0f, 0.0f}
 {
     updateColors();
-}
-
-void ImageComponent::resize(bool rasterize)
-{
-    if (!mTexture)
-        return;
-
-    const glm::vec2 textureSize {mTexture->getSourceImageSize()};
-    if (textureSize == glm::vec2 {0.0f, 0.0f})
-        return;
-
-    if (mTexture->isTiled()) {
-        mSize = mTargetSize;
-    }
-    else {
-        if (mTargetIsMax) {
-            // Maintain image aspect ratio.
-            mSize = textureSize;
-            glm::vec2 resizeScale {mTargetSize.x / mSize.x, mTargetSize.y / mSize.y};
-
-            if (resizeScale.x < resizeScale.y) {
-                // SVG rasterization is determined by height and rasterization is done in terms of
-                // pixels. If rounding is off enough in the rasterization step (for images with
-                // extreme aspect ratios), it can cause cutoff when the aspect ratio breaks.
-                // So we always make sure to round accordingly to avoid such issues.
-                mSize.x *= resizeScale.x;
-                mSize.y = floorf(std::min(mSize.y * resizeScale.x, mTargetSize.y));
-            }
-            else {
-                // This will be mTargetSize.y(). We can't exceed it.
-                mSize.y *= resizeScale.y;
-                mSize.x = std::min((mSize.y / textureSize.y) * textureSize.x, mTargetSize.x);
-            }
-        }
-        else {
-            // If both axes are set we just stretch or squash, if no axes are set we do nothing.
-            mSize = mTargetSize == glm::vec2 {0.0f, 0.0f} ? textureSize : mTargetSize;
-
-            // If only one axis is set, we resize in a way that maintains aspect ratio.
-            if (!mTargetSize.x && mTargetSize.y) {
-                mSize.y = mTargetSize.y;
-                mSize.x = (mSize.y / textureSize.y) * textureSize.x;
-            }
-            else if (mTargetSize.x && !mTargetSize.y) {
-                mSize.y = (mTargetSize.x / textureSize.x) * textureSize.y;
-                mSize.x = (mSize.y / textureSize.y) * textureSize.x;
-            }
-        }
-    }
-
-    // Make sure sub-pixel values are not rounded to zero and that the size is not unreasonably
-    // large (which may be caused by a mistake in the theme configuration).
-    mSize.x = glm::clamp(mSize.x, 1.0f, mRenderer->getScreenWidth() * 3.0f);
-    mSize.y = glm::clamp(mSize.y, 1.0f, mRenderer->getScreenHeight() * 3.0f);
-
-    if (rasterize) {
-        mTexture->rasterizeAt(mSize.x, mSize.y);
-        onSizeChanged();
-    }
-}
-
-void ImageComponent::setTileAxes()
-{
-    if (mTileWidth == 0.0f && mTileHeight == 0.0f) {
-        mTileWidth = static_cast<float>(mTexture->getSize().x);
-        mTileHeight = static_cast<float>(mTexture->getSize().y);
-        return;
-    }
-
-    const float ratio {mTexture->getSourceImageSize().x / mTexture->getSourceImageSize().y};
-    if (mTileWidth == 0.0f)
-        mTileWidth = std::round(mTileHeight * ratio);
-    else if (mTileHeight == 0.0f)
-        mTileHeight = std::round(mTileWidth / ratio);
 }
 
 void ImageComponent::setImage(const std::string& path, bool tile)
@@ -320,18 +233,6 @@ void ImageComponent::cropTransparentPadding(const float maxSizeX, const float ma
     updateVertices();
 }
 
-void ImageComponent::setFlipX(bool flip)
-{
-    mFlipX = flip;
-    updateVertices();
-}
-
-void ImageComponent::setFlipY(bool flip)
-{
-    mFlipY = flip;
-    updateVertices();
-}
-
 void ImageComponent::setColorShift(unsigned int color)
 {
     mColorShift = color;
@@ -397,89 +298,29 @@ void ImageComponent::setClipRegion(const glm::vec4& clipRegion)
     mVertices[3].clipregion = clipRegion;
 }
 
-void ImageComponent::updateVertices()
+void ImageComponent::setFlipX(bool state)
 {
-    if (!mTexture)
-        return;
-
-    const glm::vec2 topLeft {0.0f, 0.0f};
-    const glm::vec2 bottomRight {mSize};
-    const float px {mTexture->isTiled() ? mSize.x / getTextureSize().x : 1.0f};
-    const float py {mTexture->isTiled() ? mSize.y / getTextureSize().y : 1.0f};
-
-    if (mTileHeight == 0.0f) {
-        // clang-format off
-        mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
-        mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
-        mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
-        mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
-        // clang-format on
-    }
-    else {
-        // Resize and align tiled textures.
-        glm::vec2 topLeftAlign {mTopLeftCrop};
-        glm::vec2 bottomRightAlign {mBottomRightCrop};
-        const float pxA {mSize.x / mTileWidth};
-        const float pyA {mSize.y / mTileHeight};
-
-        if (mTileHorizontalAlignment == Alignment::ALIGN_RIGHT) {
-            float offsetX {pxA - std::floor(pxA)};
-            if (offsetX != 0.0f) {
-                const float moveX {(mTileWidth * offsetX) / mSize.x};
-                topLeftAlign.x -= moveX * pxA;
-                bottomRightAlign.x -= moveX;
-            }
-        }
-
-        if (mTileVerticalAlignment == Alignment::ALIGN_TOP) {
-            float offsetY {pyA - std::floor(pyA)};
-            if (offsetY != 0.0f) {
-                const float moveY {(mTileHeight * offsetY) / mSize.y};
-                topLeftAlign.y += moveY * pyA;
-                bottomRightAlign.y += moveY * pyA;
-            }
-        }
-
-        // clang-format off
-        mVertices[0] = {{topLeft.x,     topLeft.y    }, {topLeftAlign.x,           pyA  - topLeftAlign.y    }, 0};
-        mVertices[1] = {{topLeft.x,     bottomRight.y}, {topLeftAlign.x,           1.0f - bottomRightAlign.y}, 0};
-        mVertices[2] = {{bottomRight.x, topLeft.y    }, {bottomRightAlign.x * pxA, pyA  - topLeftAlign.y    }, 0};
-        mVertices[3] = {{bottomRight.x, bottomRight.y}, {bottomRightAlign.x * pxA, 1.0f - bottomRightAlign.y}, 0};
-        // clang-format on
-    }
-
-    updateColors();
-
-    // We round the vertices already here in this component as we may otherwise end up with edge
-    // cases at sizes near 0.5.
-    for (int i = 0; i < 4; ++i)
-        mVertices[i].position = glm::round(mVertices[i].position);
-
-    if (mFlipX) {
-        for (int i = 0; i < 4; ++i)
-            mVertices[i].texcoord[0] = px - mVertices[i].texcoord[0];
-    }
-
-    if (mFlipY) {
-        for (int i = 0; i < 4; ++i)
-            mVertices[i].texcoord[1] = py - mVertices[i].texcoord[1];
-    }
-
-    setClipRegion(mClipRegion);
+    mFlipX = state;
+    updateVertices();
 }
 
-void ImageComponent::updateColors()
+void ImageComponent::setFlipY(bool state)
 {
-    const float opacity {mOpacity * (mFading ? mFadeOpacity : 1.0f)};
-    const unsigned int color {(mColorShift & 0xFFFFFF00) |
-                              static_cast<unsigned char>((mColorShift & 0xFF) * opacity)};
-    const unsigned int colorEnd {(mColorShiftEnd & 0xFFFFFF00) |
-                                 static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity)};
+    mFlipY = state;
+    updateVertices();
+}
 
-    mVertices[0].color = color;
-    mVertices[1].color = mColorGradientHorizontal ? color : colorEnd;
-    mVertices[2].color = mColorGradientHorizontal ? colorEnd : color;
-    mVertices[3].color = colorEnd;
+glm::ivec2 ImageComponent::getTextureSize() const
+{
+    if (mTexture)
+        return mTexture->getSize();
+    else
+        return glm::ivec2 {0, 0};
+}
+
+glm::vec2 ImageComponent::getSize() const
+{
+    return GuiComponent::getSize() * (mBottomRightCrop - mTopLeftCrop);
 }
 
 void ImageComponent::render(const glm::mat4& parentTrans)
@@ -541,36 +382,6 @@ void ImageComponent::render(const glm::mat4& parentTrans)
     }
 
     GuiComponent::renderChildren(trans);
-}
-
-void ImageComponent::fadeIn(bool textureLoaded)
-{
-    if (!mForceLoad) {
-        if (!textureLoaded) {
-            // Start the fade if this is the first time we've encountered the unloaded texture.
-            if (!mFading) {
-                // Start with a zero opacity and flag it as fading.
-                mFadeOpacity = 0.0f;
-                mFading = true;
-                updateColors();
-            }
-        }
-        else if (mFading) {
-            // The texture is loaded and we need to fade it in. The fade is based on the frame
-            // rate and is 1/4 second if running at 60 frames per second although the actual
-            // value is not that important.
-            float opacity {mFadeOpacity + 1.0f / 15.0f};
-            // See if we've finished fading.
-            if (opacity >= 1.0f) {
-                mFadeOpacity = 1.0f;
-                mFading = false;
-            }
-            else {
-                mFadeOpacity = opacity;
-            }
-            updateColors();
-        }
-    }
 }
 
 void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -778,4 +589,193 @@ std::vector<HelpPrompt> ImageComponent::getHelpPrompts()
     std::vector<HelpPrompt> ret;
     ret.push_back(HelpPrompt("a", "select"));
     return ret;
+}
+
+void ImageComponent::resize(bool rasterize)
+{
+    if (!mTexture)
+        return;
+
+    const glm::vec2 textureSize {mTexture->getSourceImageSize()};
+    if (textureSize == glm::vec2 {0.0f, 0.0f})
+        return;
+
+    if (mTexture->isTiled()) {
+        mSize = mTargetSize;
+    }
+    else {
+        if (mTargetIsMax) {
+            // Maintain image aspect ratio.
+            mSize = textureSize;
+            glm::vec2 resizeScale {mTargetSize.x / mSize.x, mTargetSize.y / mSize.y};
+
+            if (resizeScale.x < resizeScale.y) {
+                // SVG rasterization is determined by height and rasterization is done in terms of
+                // pixels. If rounding is off enough in the rasterization step (for images with
+                // extreme aspect ratios), it can cause cutoff when the aspect ratio breaks.
+                // So we always make sure to round accordingly to avoid such issues.
+                mSize.x *= resizeScale.x;
+                mSize.y = floorf(std::min(mSize.y * resizeScale.x, mTargetSize.y));
+            }
+            else {
+                // This will be mTargetSize.y(). We can't exceed it.
+                mSize.y *= resizeScale.y;
+                mSize.x = std::min((mSize.y / textureSize.y) * textureSize.x, mTargetSize.x);
+            }
+        }
+        else {
+            // If both axes are set we just stretch or squash, if no axes are set we do nothing.
+            mSize = mTargetSize == glm::vec2 {0.0f, 0.0f} ? textureSize : mTargetSize;
+
+            // If only one axis is set, we resize in a way that maintains aspect ratio.
+            if (!mTargetSize.x && mTargetSize.y) {
+                mSize.y = mTargetSize.y;
+                mSize.x = (mSize.y / textureSize.y) * textureSize.x;
+            }
+            else if (mTargetSize.x && !mTargetSize.y) {
+                mSize.y = (mTargetSize.x / textureSize.x) * textureSize.y;
+                mSize.x = (mSize.y / textureSize.y) * textureSize.x;
+            }
+        }
+    }
+
+    // Make sure sub-pixel values are not rounded to zero and that the size is not unreasonably
+    // large (which may be caused by a mistake in the theme configuration).
+    mSize.x = glm::clamp(mSize.x, 1.0f, mRenderer->getScreenWidth() * 3.0f);
+    mSize.y = glm::clamp(mSize.y, 1.0f, mRenderer->getScreenHeight() * 3.0f);
+
+    if (rasterize) {
+        mTexture->rasterizeAt(mSize.x, mSize.y);
+        onSizeChanged();
+    }
+}
+
+void ImageComponent::setTileAxes()
+{
+    if (mTileWidth == 0.0f && mTileHeight == 0.0f) {
+        mTileWidth = static_cast<float>(mTexture->getSize().x);
+        mTileHeight = static_cast<float>(mTexture->getSize().y);
+        return;
+    }
+
+    const float ratio {mTexture->getSourceImageSize().x / mTexture->getSourceImageSize().y};
+    if (mTileWidth == 0.0f)
+        mTileWidth = std::round(mTileHeight * ratio);
+    else if (mTileHeight == 0.0f)
+        mTileHeight = std::round(mTileWidth / ratio);
+}
+
+void ImageComponent::updateVertices()
+{
+    if (!mTexture)
+        return;
+
+    const glm::vec2 topLeft {0.0f, 0.0f};
+    const glm::vec2 bottomRight {mSize};
+    const float px {mTexture->isTiled() ? mSize.x / getTextureSize().x : 1.0f};
+    const float py {mTexture->isTiled() ? mSize.y / getTextureSize().y : 1.0f};
+
+    if (mTileHeight == 0.0f) {
+        // clang-format off
+        mVertices[0] = {{topLeft.x,     topLeft.y    }, {mTopLeftCrop.x,          py   - mTopLeftCrop.y    }, 0};
+        mVertices[1] = {{topLeft.x,     bottomRight.y}, {mTopLeftCrop.x,          1.0f - mBottomRightCrop.y}, 0};
+        mVertices[2] = {{bottomRight.x, topLeft.y    }, {mBottomRightCrop.x * px, py   - mTopLeftCrop.y    }, 0};
+        mVertices[3] = {{bottomRight.x, bottomRight.y}, {mBottomRightCrop.x * px, 1.0f - mBottomRightCrop.y}, 0};
+        // clang-format on
+    }
+    else {
+        // Resize and align tiled textures.
+        glm::vec2 topLeftAlign {mTopLeftCrop};
+        glm::vec2 bottomRightAlign {mBottomRightCrop};
+        const float pxA {mSize.x / mTileWidth};
+        const float pyA {mSize.y / mTileHeight};
+
+        if (mTileHorizontalAlignment == Alignment::ALIGN_RIGHT) {
+            float offsetX {pxA - std::floor(pxA)};
+            if (offsetX != 0.0f) {
+                const float moveX {(mTileWidth * offsetX) / mSize.x};
+                topLeftAlign.x -= moveX * pxA;
+                bottomRightAlign.x -= moveX;
+            }
+        }
+
+        if (mTileVerticalAlignment == Alignment::ALIGN_TOP) {
+            float offsetY {pyA - std::floor(pyA)};
+            if (offsetY != 0.0f) {
+                const float moveY {(mTileHeight * offsetY) / mSize.y};
+                topLeftAlign.y += moveY * pyA;
+                bottomRightAlign.y += moveY * pyA;
+            }
+        }
+
+        // clang-format off
+        mVertices[0] = {{topLeft.x,     topLeft.y    }, {topLeftAlign.x,           pyA  - topLeftAlign.y    }, 0};
+        mVertices[1] = {{topLeft.x,     bottomRight.y}, {topLeftAlign.x,           1.0f - bottomRightAlign.y}, 0};
+        mVertices[2] = {{bottomRight.x, topLeft.y    }, {bottomRightAlign.x * pxA, pyA  - topLeftAlign.y    }, 0};
+        mVertices[3] = {{bottomRight.x, bottomRight.y}, {bottomRightAlign.x * pxA, 1.0f - bottomRightAlign.y}, 0};
+        // clang-format on
+    }
+
+    updateColors();
+
+    // We round the vertices already here in this component as we may otherwise end up with edge
+    // cases at sizes near 0.5.
+    for (int i = 0; i < 4; ++i)
+        mVertices[i].position = glm::round(mVertices[i].position);
+
+    if (mFlipX) {
+        for (int i = 0; i < 4; ++i)
+            mVertices[i].texcoord[0] = px - mVertices[i].texcoord[0];
+    }
+
+    if (mFlipY) {
+        for (int i = 0; i < 4; ++i)
+            mVertices[i].texcoord[1] = py - mVertices[i].texcoord[1];
+    }
+
+    setClipRegion(mClipRegion);
+}
+
+void ImageComponent::updateColors()
+{
+    const float opacity {mOpacity * (mFading ? mFadeOpacity : 1.0f)};
+    const unsigned int color {(mColorShift & 0xFFFFFF00) |
+                              static_cast<unsigned char>((mColorShift & 0xFF) * opacity)};
+    const unsigned int colorEnd {(mColorShiftEnd & 0xFFFFFF00) |
+                                 static_cast<unsigned char>((mColorShiftEnd & 0xFF) * opacity)};
+
+    mVertices[0].color = color;
+    mVertices[1].color = mColorGradientHorizontal ? color : colorEnd;
+    mVertices[2].color = mColorGradientHorizontal ? colorEnd : color;
+    mVertices[3].color = colorEnd;
+}
+
+void ImageComponent::fadeIn(bool textureLoaded)
+{
+    if (!mForceLoad) {
+        if (!textureLoaded) {
+            // Start the fade if this is the first time we've encountered the unloaded texture.
+            if (!mFading) {
+                // Start with a zero opacity and flag it as fading.
+                mFadeOpacity = 0.0f;
+                mFading = true;
+                updateColors();
+            }
+        }
+        else if (mFading) {
+            // The texture is loaded and we need to fade it in. The fade is based on the frame
+            // rate and is 1/4 second if running at 60 frames per second although the actual
+            // value is not that important.
+            float opacity {mFadeOpacity + 1.0f / 15.0f};
+            // See if we've finished fading.
+            if (opacity >= 1.0f) {
+                mFadeOpacity = 1.0f;
+                mFading = false;
+            }
+            else {
+                mFadeOpacity = opacity;
+            }
+            updateColors();
+        }
+    }
 }

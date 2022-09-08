@@ -27,7 +27,6 @@ TextureData::TextureData(bool tile)
     : mRenderer {Renderer::getInstance()}
     , mTile {tile}
     , mTextureID {0}
-    , mDataRGBA {}
     , mWidth {0}
     , mHeight {0}
     , mTileWidth {0.0f}
@@ -159,8 +158,8 @@ bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t leng
     size_t width;
     size_t height;
 
-    std::vector<unsigned char> imageRGBA = ImageIO::loadFromMemoryRGBA32(
-        static_cast<const unsigned char*>(fileData), length, width, height);
+    std::vector<unsigned char> imageRGBA {ImageIO::loadFromMemoryRGBA32(
+        static_cast<const unsigned char*>(fileData), length, width, height)};
 
     if (imageRGBA.size() == 0) {
         LOG(LogError) << "Couldn't initialize texture from memory, invalid data ("
@@ -180,7 +179,7 @@ bool TextureData::initImageFromMemory(const unsigned char* fileData, size_t leng
 bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size_t height)
 {
     // If already initialized then don't process it again.
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock {mMutex};
     if (!mDataRGBA.empty())
         return true;
 
@@ -197,7 +196,7 @@ bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size
 
 bool TextureData::load()
 {
-    bool retval = false;
+    bool retval {false};
 
     // Need to load. See if there is a file.
     if (!mPath.empty()) {
@@ -219,7 +218,7 @@ bool TextureData::load()
 
 bool TextureData::isLoaded()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock {mMutex};
     if (!mDataRGBA.empty() || mTextureID != 0)
         if (mHasRGBAData || mPendingRasterization || mTextureID != 0)
             return true;
@@ -230,7 +229,7 @@ bool TextureData::isLoaded()
 bool TextureData::uploadAndBind()
 {
     // Check if it has already been uploaded.
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock {mMutex};
     if (mTextureID != 0) {
         mRenderer->bindTexture(mTextureID);
     }
@@ -250,7 +249,7 @@ bool TextureData::uploadAndBind()
 
 void TextureData::releaseVRAM()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
+    std::unique_lock<std::mutex> lock {mMutex};
     if (mTextureID != 0) {
         mRenderer->destroyTexture(mTextureID);
         mTextureID = 0;
@@ -259,9 +258,9 @@ void TextureData::releaseVRAM()
 
 void TextureData::releaseRAM()
 {
-    std::unique_lock<std::mutex> lock(mMutex);
-    std::vector<unsigned char> swapVector;
+    std::unique_lock<std::mutex> lock {mMutex};
     if (!mDataRGBA.empty()) {
+        std::vector<unsigned char> swapVector;
         mDataRGBA.clear();
         mDataRGBA.swap(swapVector);
         mHasRGBAData = false;
@@ -317,7 +316,7 @@ size_t TextureData::getVRAMUsage()
     if (mHasRGBAData || mTextureID != 0) {
         // The estimated increase in VRAM usage with mipmapping enabled is 33%
         if (mMipmapping)
-            return {static_cast<size_t>(static_cast<float>(mWidth * mHeight * 4) * 1.33f)};
+            return static_cast<size_t>(static_cast<float>(mWidth * mHeight * 4) * 1.33f);
         else
             return mWidth * mHeight * 4;
     }

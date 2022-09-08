@@ -85,8 +85,8 @@ public:
     void setClipRegion(const glm::vec4& clipRegion);
 
     void setReflectionsFalloff(float falloff) override { mReflectionsFalloff = falloff; }
-    void setFlipX(bool flip) override; // Mirror on the X axis.
-    void setFlipY(bool flip) override; // Mirror on the Y axis.
+    void setFlipX(bool state) override; // Mirror on the X axis.
+    void setFlipY(bool state) override; // Mirror on the Y axis.
 
     // Flag indicating if rotation should be based on target size vs. actual size.
     void setRotateByTargetSize(bool rotate) { mRotateByTargetSize = rotate; }
