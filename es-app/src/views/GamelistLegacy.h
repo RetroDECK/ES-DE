@@ -696,8 +696,10 @@ void GamelistView::legacyInitMDValues()
     for (size_t i = LegacyText::MD_LBL_RATING; i < LegacyText::MD_DEVELOPER; ++i) {
         labels.emplace_back(&*mTextComponents[i]);
         mTextComponents[i]->setFont(defaultFont);
-        //        mTextComponents[i]->setColor(0xFFFFFFFF);
     }
+
+    for (size_t i = LegacyText::MD_DEVELOPER; i < LegacyText::MD_DESCRIPTION; ++i)
+        mTextComponents[i]->setFont(defaultFont);
 
     mDateTimeComponents[LegacyDateTime::MD_RELEASEDATE]->setFont(defaultFont);
     mDateTimeComponents[LegacyDateTime::MD_LASTPLAYED]->setFont(defaultFont);
