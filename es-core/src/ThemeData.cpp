@@ -1119,19 +1119,33 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
             off = nameAttr.find_first_of(delim, prevOff);
 
             // Add the element type as a prefix to avoid name collisions between different
-            // component types. Also include a workaround for legacy theme sets if the
-            // md_releasedate and md_lastplayed element types are incorrectly defined as
-            // text instead of datetime.
+            // component types. Also include workarounds for legacy theme sets for when the
+            // fixed labels have been defined with the wrong element type.
             const std::string elementType {node.name()};
-            bool dateTimeWorkaround {false};
+            LegacyWorkaround legacyWorkaround {LegacyWorkaround::NONE};
 
             if (mLegacyTheme && elementType == "text" &&
                 (elemKey == "md_releasedate" || elemKey == "md_lastplayed")) {
                 LOG(LogDebug) << "ThemeData::parseView(): Element type for \"" << elemKey
                               << "\" incorrectly set to \"text\" "
                                  "instead of \"datetime\", applying workaround";
-                dateTimeWorkaround = true;
+                legacyWorkaround = LegacyWorkaround::DATETIME;
                 elemKey = "datetime_" + elemKey;
+            }
+            else if (mLegacyTheme && elementType == "datetime" &&
+                     (elemKey == "md_lbl_releasedate" || elemKey == "md_lbl_lastplayed")) {
+                LOG(LogDebug) << "ThemeData::parseView(): Element type for \"" << elemKey
+                              << "\" incorrectly set to \"datetime\" "
+                                 "instead of \"text\", applying workaround";
+                legacyWorkaround = LegacyWorkaround::TEXT;
+                elemKey = "text_" + elemKey;
+            }
+            else if (mLegacyTheme && elementType == "text" && elemKey == "md_rating") {
+                LOG(LogDebug) << "ThemeData::parseView(): Element type for \"" << elemKey
+                              << "\" incorrectly set to \"text\" "
+                                 "instead of \"rating\", applying workaround";
+                legacyWorkaround = LegacyWorkaround::RATING;
+                elemKey = "rating_" + elemKey;
             }
             else {
                 elemKey = elementType + "_" + elemKey;
@@ -1141,7 +1155,7 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
                 node, elemTypeIt->second,
                 view.elements.insert(std::pair<std::string, ThemeElement>(elemKey, ThemeElement()))
                     .first->second,
-                dateTimeWorkaround);
+                legacyWorkaround);
 
             if (mLegacyTheme &&
                 std::find(view.legacyOrderedKeys.cbegin(), view.legacyOrderedKeys.cend(),
@@ -1154,14 +1168,18 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
 void ThemeData::parseElement(const pugi::xml_node& root,
                              const std::map<std::string, ElementPropertyType>& typeMap,
                              ThemeElement& element,
-                             bool dateTimeWorkaround)
+                             const LegacyWorkaround legacyWorkaround)
 {
     ThemeException error;
     error << "ThemeData::parseElement(): ";
     error.setFiles(mPaths);
 
-    if (dateTimeWorkaround)
+    if (legacyWorkaround == LegacyWorkaround::DATETIME)
         element.type = "datetime";
+    if (legacyWorkaround == LegacyWorkaround::TEXT)
+        element.type = "text";
+    else if (legacyWorkaround == LegacyWorkaround::RATING)
+        element.type = "rating";
     else
         element.type = root.name();
 

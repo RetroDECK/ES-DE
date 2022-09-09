@@ -239,6 +239,13 @@ public:
     std::map<std::string, std::string> mVariables;
 
 private:
+    enum class LegacyWorkaround {
+        NONE = 0x00000000,
+        TEXT = 0x00000001,
+        DATETIME = 0x00000002,
+        RATING = 0x00000004
+    };
+
     unsigned int getHexColor(const std::string& str);
     std::string resolvePlaceholders(const std::string& in);
 
@@ -254,7 +261,7 @@ private:
     void parseElement(const pugi::xml_node& elementNode,
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element,
-                      bool dateTimeWorkaround = false);
+                      const LegacyWorkaround legacyWorkaround);
 
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sLegacySupportedViews;
