@@ -72,6 +72,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 pauseViewVideos();
                 ViewController::getInstance()->cancelViewTransitions();
                 stopListScrolling();
+                stopGamelistFadeAnimations();
                 launch(cursor);
             }
             else {
@@ -93,6 +94,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                                 pauseViewVideos();
                                 ViewController::getInstance()->cancelViewTransitions();
                                 stopListScrolling();
+                                stopGamelistFadeAnimations();
                                 launch(child);
                                 return true;
                             }
@@ -142,6 +144,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                              mCursorStack.top()->getParent());
                 setCursor(mCursorStack.top());
                 stopListScrolling();
+                stopGamelistFadeAnimations();
                 if (mCursorStack.size() > 0)
                     mCursorStack.pop();
                 if (mRoot->getSystem()->getThemeFolder() == "custom-collections")
@@ -152,6 +155,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
+                stopGamelistFadeAnimations();
                 SystemData* systemToView = getCursor()->getSystem();
                 if (systemToView->isCustomCollection() &&
                     systemToView->getRootFolder()->getParent())
@@ -184,6 +188,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
             else if (mRoot->getSystem()->isGameSystem()) {
                 stopListScrolling();
+                stopGamelistFadeAnimations();
                 ViewController::getInstance()->cancelViewTransitions();
                 NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
                 mWindow->startMediaViewer(getCursor());
@@ -196,6 +201,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
+                stopGamelistFadeAnimations();
                 ViewController::getInstance()->goToNextGamelist();
                 return true;
             }
@@ -206,6 +212,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
+                stopGamelistFadeAnimations();
                 ViewController::getInstance()->goToPrevGamelist();
                 return true;
             }
@@ -476,7 +483,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
         ViewController::getInstance()->cancelViewTransitions();
         stopListScrolling();
         pauseViewVideos();
-        stopScrollFadeIn();
+        stopGamelistFadeAnimations();
         mWindow->pushGui(new GuiGamelistOptions(this->mRoot->getSystem()));
         return true;
     }

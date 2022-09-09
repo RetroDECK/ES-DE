@@ -69,16 +69,32 @@ public:
             video->muteVideoPlayer();
     }
 
-    void stopScrollFadeIn() override
+    void stopGamelistFadeAnimations() override
     {
-        for (auto& image : mImageComponents) {
-            if (image->getScrollFadeIn())
-                image->finishAnimation(0);
-        }
-        for (auto& video : mVideoComponents) {
-            if (video->getScrollFadeIn())
-                video->finishAnimation(0);
-        }
+        for (auto& comp : mTextComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mDateTimeComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mImageComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mStaticVideoComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mVideoComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mLottieAnimComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mGIFAnimComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mBadgeComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mRatingComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mContainerComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mContainerTextComponents)
+            comp->finishAnimation(0);
+        for (auto& comp : mGamelistInfoComponents)
+            comp->finishAnimation(0);
     }
 
     const std::shared_ptr<ThemeData> getTheme() const { return mTheme; }
