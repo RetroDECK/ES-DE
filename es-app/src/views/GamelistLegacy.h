@@ -470,33 +470,41 @@ void GamelistView::legacyUpdateView(const CursorState& state)
         // the game counter.
         for (auto& gamelistInfo : mGamelistInfoComponents) {
             std::string gamelistInfoString;
-            Alignment infoAlign = gamelistInfo->getHorizontalAlignment();
+            Alignment infoAlign {gamelistInfo->getHorizontalAlignment()};
 
             if (mIsFolder && infoAlign == ALIGN_RIGHT)
                 gamelistInfoString = ViewController::FOLDER_CHAR + "  ";
 
             if (mIsFiltered) {
                 if (mFilteredGameCountAll == mFilteredGameCount)
-                    gamelistInfoString += ViewController::FILTER_CHAR + " " +
-                                          std::to_string(mFilteredGameCount) + " / " +
-                                          std::to_string(mGameCount);
+                    gamelistInfoString.append(ViewController::FILTER_CHAR)
+                        .append(" ")
+                        .append(std::to_string(mFilteredGameCount))
+                        .append(" / ")
+                        .append(std::to_string(mGameCount));
                 else
-                    gamelistInfoString +=
-                        ViewController::FILTER_CHAR + " " + std::to_string(mFilteredGameCount) +
-                        " + " + std::to_string(mFilteredGameCountAll - mFilteredGameCount) + " / " +
-                        std::to_string(mGameCount);
+                    gamelistInfoString.append(ViewController::FILTER_CHAR)
+                        .append(" ")
+                        .append(std::to_string(mFilteredGameCount))
+                        .append(" + ")
+                        .append(std::to_string(mFilteredGameCountAll - mFilteredGameCount))
+                        .append(" / ")
+                        .append(std::to_string(mGameCount));
             }
             else {
-                gamelistInfoString +=
-                    ViewController::CONTROLLER_CHAR + " " + std::to_string(mGameCount);
+                gamelistInfoString.append(ViewController::CONTROLLER_CHAR)
+                    .append(" ")
+                    .append(std::to_string(mGameCount));
                 if (!(file->getSystem()->isCollection() &&
                       file->getSystem()->getFullName() == "favorites"))
-                    gamelistInfoString += "  " + ViewController::FAVORITE_CHAR + " " +
-                                          std::to_string(mFavoritesGameCount);
+                    gamelistInfoString.append("  ")
+                        .append(ViewController::FAVORITE_CHAR)
+                        .append(" ")
+                        .append(std::to_string(mFavoritesGameCount));
             }
 
             if (mIsFolder && infoAlign != ALIGN_RIGHT)
-                gamelistInfoString += "  " + ViewController::FOLDER_CHAR;
+                gamelistInfoString.append("  ").append(ViewController::FOLDER_CHAR);
 
             gamelistInfo->setValue(gamelistInfoString);
         }
@@ -668,8 +676,8 @@ void GamelistView::legacyInitMDLabels()
     const float rowPadding {0.01f * mSize.y};
 
     for (unsigned int i = 0; i < components.size(); ++i) {
-        const unsigned int row = i % rowCount;
-        glm::vec3 pos {};
+        const unsigned int row {i % rowCount};
+        glm::vec3 pos {0.0f, 0.0f, 0.0f};
         if (row == 0) {
             pos = start + glm::vec3 {colSize * (i / rowCount), 0.0f, 0.0f};
         }
@@ -681,7 +689,6 @@ void GamelistView::legacyInitMDLabels()
 
         components[i]->setFont(Font::get(FONT_SIZE_SMALL));
         components[i]->setPosition(pos);
-        //        components[i]->setColor(0xFFFFFFFF);
         components[i]->setDefaultZIndex(40.0f);
     }
 }
@@ -716,12 +723,12 @@ void GamelistView::legacyInitMDValues()
     float bottom {0.0f};
     const float colSize {(mSize.x * 0.48f) / 2.0f};
     for (unsigned int i = 0; i < labels.size(); ++i) {
-        const float heightDiff = (labels[i]->getSize().y - values[i]->getSize().y) / 2.0f;
+        const float heightDiff {(labels[i]->getSize().y - values[i]->getSize().y) / 2.0f};
         values[i]->setPosition(mSize.x + glm::vec3 {labels[i]->getSize().x, heightDiff, 0.0f});
         values[i]->setSize(colSize - labels[i]->getSize().x, values[i]->getSize().y);
         values[i]->setDefaultZIndex(40.0f);
 
-        float testBot = values[i]->getPosition().y + values[i]->getSize().y;
+        float testBot {values[i]->getPosition().y + values[i]->getSize().y};
 
         if (testBot > bottom)
             bottom = testBot;

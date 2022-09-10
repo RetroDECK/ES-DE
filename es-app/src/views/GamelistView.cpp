@@ -615,38 +615,45 @@ void GamelistView::updateView(const CursorState& state)
         // the game counter.
         for (auto& gamelistInfo : mGamelistInfoComponents) {
             std::string gamelistInfoString;
-            Alignment infoAlign = gamelistInfo->getHorizontalAlignment();
+            Alignment infoAlign {gamelistInfo->getHorizontalAlignment()};
 
             if (mIsFolder && infoAlign == ALIGN_RIGHT)
                 gamelistInfoString = ViewController::FOLDER_CHAR + "  ";
 
             if (mIsFiltered) {
                 if (mFilteredGameCountAll == mFilteredGameCount)
-                    gamelistInfoString += ViewController::FILTER_CHAR + " " +
-                                          std::to_string(mFilteredGameCount) + " / " +
-                                          std::to_string(mGameCount);
+                    gamelistInfoString.append(ViewController::FILTER_CHAR)
+                        .append(" ")
+                        .append(std::to_string(mFilteredGameCount))
+                        .append(" / ")
+                        .append(std::to_string(mGameCount));
                 else
-                    gamelistInfoString +=
-                        ViewController::FILTER_CHAR + " " + std::to_string(mFilteredGameCount) +
-                        " + " + std::to_string(mFilteredGameCountAll - mFilteredGameCount) + " / " +
-                        std::to_string(mGameCount);
+                    gamelistInfoString.append(ViewController::FILTER_CHAR)
+                        .append(" ")
+                        .append(std::to_string(mFilteredGameCount))
+                        .append(" + ")
+                        .append(std::to_string(mFilteredGameCountAll - mFilteredGameCount))
+                        .append(" / ")
+                        .append(std::to_string(mGameCount));
             }
             else {
-                gamelistInfoString +=
-                    ViewController::CONTROLLER_CHAR + " " + std::to_string(mGameCount);
+                gamelistInfoString.append(ViewController::CONTROLLER_CHAR)
+                    .append(" ")
+                    .append(std::to_string(mGameCount));
                 if (!(file->getSystem()->isCollection() &&
                       file->getSystem()->getFullName() == "favorites"))
-                    gamelistInfoString += "  " + ViewController::FAVORITE_CHAR + " " +
-                                          std::to_string(mFavoritesGameCount);
+                    gamelistInfoString.append("  ")
+                        .append(ViewController::FAVORITE_CHAR)
+                        .append(" ")
+                        .append(std::to_string(mFavoritesGameCount));
             }
 
             if (mIsFolder && infoAlign != ALIGN_RIGHT)
-                gamelistInfoString += "  " + ViewController::FOLDER_CHAR;
+                gamelistInfoString.append("  ").append(ViewController::FOLDER_CHAR);
 
             gamelistInfo->setValue(gamelistInfoString);
         }
 
-        // Fade in the game image.
         for (auto& image : mImageComponents) {
             if (image->getScrollFadeIn()) {
                 auto func = [&image](float t) {
@@ -656,7 +663,6 @@ void GamelistView::updateView(const CursorState& state)
             }
         }
 
-        // Fade in the static image.
         for (auto& video : mVideoComponents) {
             if (video->getScrollFadeIn()) {
                 auto func = [&video](float t) {
@@ -807,7 +813,7 @@ void GamelistView::updateView(const CursorState& state)
         }
 
         for (auto& date : mDateTimeComponents) {
-            std::string metadata = date->getThemeMetadata();
+            std::string metadata {date->getThemeMetadata()};
             if (metadata == "")
                 continue;
 
