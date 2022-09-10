@@ -472,7 +472,15 @@ void SystemView::populate()
                         }
                     }
                     else if (element.second.type == "image") {
-                        elements.imageComponents.emplace_back(std::make_unique<ImageComponent>());
+                        // If this is the first system, then forceload the images to avoid texture
+                        // pop-in.
+                        if (it == SystemData::sSystemVector.front())
+                            elements.imageComponents.emplace_back(
+                                std::make_unique<ImageComponent>(true));
+                        else
+                            elements.imageComponents.emplace_back(
+                                std::make_unique<ImageComponent>());
+
                         elements.imageComponents.back()->setDefaultZIndex(30.0f);
                         elements.imageComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);

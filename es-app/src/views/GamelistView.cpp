@@ -104,6 +104,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         return;
     }
 
+    const bool isStartupSystem {Settings::getInstance()->getString("StartupSystem") ==
+                                mRoot->getSystem()->getName()};
+
     using namespace ThemeFlags;
 
     if (mTheme->hasView("gamelist")) {
@@ -169,7 +172,11 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 addChild(mPrimary);
             }
             if (element.second.type == "image") {
-                mImageComponents.push_back(std::make_unique<ImageComponent>());
+                // If this is the startup system, then forceload the images to avoid texture pop-in.
+                if (isStartupSystem)
+                    mImageComponents.push_back(std::make_unique<ImageComponent>(true));
+                else
+                    mImageComponents.push_back(std::make_unique<ImageComponent>());
                 mImageComponents.back()->setDefaultZIndex(30.0f);
                 mImageComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
                 if (mImageComponents.back()->getThemeImageTypes().size() != 0)
