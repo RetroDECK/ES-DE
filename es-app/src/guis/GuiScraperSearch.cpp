@@ -264,9 +264,17 @@ void GuiScraperSearch::resizeMetadata()
         mMD_Grid->setColWidthPerc(0, maxLblWidth / mMD_Grid->getSize().x);
 
         if (mScrapeRatings) {
-            // Rating is manually sized.
-            mMD_Rating->setSize(mMD_Grid->getColWidth(1), fontLbl->getHeight() * 0.65f);
+            // Make sure the rating component fits inside the column width regardless of screen
+            // aspect ratio. Also move the component slightly to the left to compensate for the
+            // padding baked into the actual SVG file.
+            float ratingWidth {mMD_Grid->getRowHeight(4) * 5.0f * 1.23f};
+            ratingWidth =
+                std::round(glm::clamp(ratingWidth, 0.0f, mMD_Developer->getSize().x * 0.98f));
+            mMD_Rating->setSize(0, std::round(ratingWidth / 5.0f));
             mMD_Grid->onSizeChanged();
+            mMD_Rating->setPosition(
+                std::round(maxLblWidth - std::round(mMD_Rating->getSize().y / 10.0f)),
+                mMD_Rating->getPosition().y);
         }
 
         // Make result font follow label font.
