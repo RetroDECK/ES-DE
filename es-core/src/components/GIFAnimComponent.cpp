@@ -52,7 +52,6 @@ GIFAnimComponent::GIFAnimComponent()
     mAnimIO.tell_proc = tellProc;
 
     // Set component defaults.
-    setOrigin(0.5f, 0.5f);
     setSize(Renderer::getScreenWidth() * 0.2f, Renderer::getScreenHeight() * 0.2f);
     setPosition(Renderer::getScreenWidth() * 0.3f, Renderer::getScreenHeight() * 0.3f);
     setDefaultZIndex(10.0f);

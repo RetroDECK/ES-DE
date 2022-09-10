@@ -53,7 +53,6 @@ LottieAnimComponent::LottieAnimComponent()
         mMaxTotalFrameCache = static_cast<size_t>(maxTotalCache);
 
     // Set component defaults.
-    setOrigin(0.5f, 0.5f);
     setSize(mRenderer->getScreenWidth() * 0.2f, mRenderer->getScreenHeight() * 0.2f);
     setPosition(mRenderer->getScreenWidth() * 0.3f, mRenderer->getScreenHeight() * 0.3f);
     setDefaultZIndex(10.0f);
