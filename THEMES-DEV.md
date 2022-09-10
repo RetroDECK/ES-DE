@@ -787,7 +787,7 @@ Properties:
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
-    - Default is `0.5 0.5`
+    - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the image should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
@@ -881,7 +881,7 @@ Properties:
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
-    - Default is `0.5 0.5`
+    - Default is `0 0`
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define static video elements that should be treated as if they were game media files. This property is ignored if `path` is not set.
 * `path` - type: PATH
@@ -962,7 +962,7 @@ Properties:
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
-    - Default is `0.5 0.5`
+    - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the animation should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
@@ -1023,7 +1023,7 @@ Properties:
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
-    - Default is `0.5 0.5`
+    - Default is `0 0`
 * `rotation` - type: FLOAT
     - Angle in degrees that the badges should be rotated. Positive values will rotate clockwise, negative values will rotate counterclockwise.
     - Default is `0`
@@ -1443,7 +1443,7 @@ Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0 0.38378`
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the carousel `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `color` - type: COLOR
@@ -1569,8 +1569,9 @@ Properties:
 * `size` - type: NORMALIZED_PAIR
     - Default is `1 0.8`
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the textlist exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is `0 0`
 * `selectorHeight` - type: FLOAT
     - Height of the "selector bar".
 * `selectorOffsetY` - type: FLOAT
@@ -1726,55 +1727,3 @@ Properties:
       `button_start_XBOX`,
       `button_back_XBOX360`,
       `button_start_XBOX360`
-
-#### imagegrid
-
-Deprecated.
-
-* `pos` - type: NORMALIZED_PAIR.
-* `size` - type: NORMALIZED_PAIR.
-    - The size of the grid. Take care the selected tile can go out of the grid size, so don't position the grid too close to another element or the screen border.
-* `margin` - type: NORMALIZED_PAIR. Margin between tiles.
-* `padding` - type: NORMALIZED_RECT.
-    - NEW : Padding for displaying tiles.
-* `autoLayout` - type: NORMALIZED_PAIR.
-    - NEW : Number of column and rows in the grid (integer values).
-* `autoLayoutSelectedZoom` - type: FLOAT.
-    - NEW : Zoom factor to apply when a tile is selected.
-* `gameImage` - type: PATH.
-    - The default image used for games which doesn't have an image.
-* `folderImage` - type: PATH.
-    - The default image used for folders which doesn't have an image.
-* `imageSource` - type: STRING.
-    - Selects the image to display. `thumbnail` by default, can also be set to `image`, `miximage`, `screenshot`, `cover`, `marquee` or `3dbox`. If selecting `image`, the media type `miximage` will be tried first, with fallback to `screenshot` and then `cover`.
-* `scrollDirection` - type: STRING.
-    - `vertical` by default, can also be set to `horizontal`. Not that in `horizontal` mod, the tiles are ordered from top to bottom, then from left to right.
-* `centerSelection` - type: BOOLEAN.
-    - `false` by default, when `true` the selected tile will be locked to the center of the grid.
-* `scrollLoop` - type: BOOLEAN.
-    - `false` by default, when `true` the grid will seamlessly loop around when scrolling reaches the end of the list. Only works when `centerSelection` is `true`.
-* `animate` - type : BOOLEAN.
-    - `true` by default, when  `false` the grid scrolling will not be animated.
-* `zIndex` - type: FLOAT.
-    - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
-
-#### gridtile
-
-Deprecated.
-
-* `size` - type: NORMALIZED_PAIR.
-    - The size of the default gridtile is used to calculate how many tiles can fit in the imagegrid. If not explicitly set, the size of the selected gridtile is equal the size of the default gridtile * 1.2
-* `padding` - type: NORMALIZED_PAIR.
-    - The padding around the gridtile content. Default `16 16`. If not explicitly set, the selected tile padding will be equal to the default tile padding.
-* `imageColor` - type: COLOR.
-    - The default tile image color and selected tile image color have no influence on each others.
-* `backgroundImage` - type: PATH.
-    - If not explicitly set, the selected tile background image will be the same as the default tile background image.
-* `backgroundCornerSize` - type: NORMALIZED_PAIR.
-    - The corner size of the ninepatch used for the tile background. Default is `16 16`.
-* `backgroundColor` - type: COLOR.
-    - A shortcut to define both the center color and edge color at the same time. The default tile background color and selected tile background color have no influence on each others.
-* `backgroundCenterColor` - type: COLOR.
-    - Sets the color of the center part of the ninepatch. The default tile background center color and selected tile background center color have no influence on each others.
-* `backgroundEdgeColor` - type: COLOR.
-    - Sets the color of the edge parts of the ninepatch. The default tile background edge color and selected tile background edge color have no influence on each others.

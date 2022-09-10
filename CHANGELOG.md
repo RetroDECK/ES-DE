@@ -49,6 +49,7 @@
 * Removed the "Preload gamelists on startup" setting
 * Removed the "Play videos immediately (override theme)" setting
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
+* The media viewer now always loads all images upfront to avoid audio stutter when browsing the files
 * Added support for defining which types of game media to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
 * Added theme support for Lottie animations (vector graphics)
@@ -105,6 +106,7 @@
 * Added the rlottie library as a Git subtree
 * Updated to build correctly with FFmpeg 5.0
 * Updated FFmpeg to 5.0 and SDL to 2.0.20 on Windows and macOS
+* Added a workaround for playing broken video files with invalid PTS values
 * Refactored the rendering code from a shared namespace into proper classes
 * Removed the deprecated OpenGL ES 1.0 renderer
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
@@ -150,6 +152,7 @@
 
 ### Bug fixes
 
+* Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
@@ -160,6 +163,7 @@
 * Horizontal and vertical gradients were mixed up (showing the opposite gradient type if set in a theme)
 * The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling
 * Rating icon outlines would not fade out correctly when fast-scrolling in a gamelist
+* The rating icons would not fit into the designated space in the scraper GUI when running at some vertically oriented screen resolutions
 * If setting an origin other than 0.5 for a video with pillarboxes enabled, the video would not get centered on the black rectangle
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
@@ -175,6 +179,7 @@
 * The bottom menu selector bar was not getting rendered when running at really low resolutions like 320x240
 * Doing a manual reload using Ctrl+r in debug mode would sometimes not update modified image files
 * Abbreviations of long words in multiline text entries sometimes exceeded the designated text area
+* Navigation sounds would sometimes not play when browsing game media in the media viewer
 * The text debug overlay had the wrong size for scrollable containers
 * StringUtil::delimitedStringToVector could return empty elements
 * (Windows) File paths would get escaped with quotation marks even if they did not contain any spaces

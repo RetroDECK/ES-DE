@@ -67,7 +67,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 #### v2.0 (in progress)
 
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
-* Multiple new gamelist components (wheels, wall/grid etc.)
+* Multiple new gamelist components (more carousel modes, grid component etc.)
 * Lottie animation (vector graphics) and GIF animation support
 * OpenGL ES 3.0 renderer for use on the Raspberry Pi
 * Replace the OpenGL fixed function pipeline with a shader-based renderer
@@ -75,8 +75,8 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.1
 
-* Animated menu elements like switches, tick boxes, smooth scrolling etc.
-* New texture/cache manager with support for SVG images and Lottie animations
+* New texture/cache manager with improved memory management and support for GIF and Lottie animations
+* Reduced amount of gamelist reloading to retain cached textures and improve overall performance
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
 * Support for additional scraper services (if feasible?)
 * Web proxy support for the scraper
@@ -85,6 +85,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.2
 
+* Animated menu elements like switches and tick boxes
 * Simple file browsing component
 * Scrollbar component for the gamelist view which can be used by the themes
 * Background music
