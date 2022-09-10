@@ -347,20 +347,23 @@ bool SystemData::populateFolder(FileData* folder)
             // Make sure that it's not a recursive symlink pointing to a location higher in the
             // hierarchy as the application would run forever trying to resolve the link.
             if (Utils::FileSystem::isSymlink(filePath)) {
-                const std::string canonicalPath = Utils::FileSystem::getCanonicalPath(filePath);
-                const std::string canonicalStartPath =
-                    Utils::FileSystem::getCanonicalPath(mEnvData->mStartPath);
-                const std::string combinedPath =
-                    mEnvData->mStartPath +
-                    canonicalPath.substr(canonicalStartPath.size(),
-                                         canonicalStartPath.size() - canonicalPath.size());
-                if (filePath.find(combinedPath) == 0) {
-                    LOG(LogWarning) << "Skipped \"" << filePath << "\" as it's a recursive symlink";
-                    continue;
+                const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(filePath)};
+                const std::string canonicalStartPath {
+                    Utils::FileSystem::getCanonicalPath(mEnvData->mStartPath)};
+                if (canonicalPath.size() >= canonicalStartPath.size()) {
+                    const std::string combinedPath {
+                        mEnvData->mStartPath +
+                        canonicalPath.substr(canonicalStartPath.size(),
+                                             canonicalStartPath.size() - canonicalPath.size())};
+                    if (filePath.find(combinedPath) == 0) {
+                        LOG(LogWarning)
+                            << "Skipped \"" << filePath << "\" as it's a recursive symlink";
+                        continue;
+                    }
                 }
             }
 
-            FileData* newFolder = new FileData(FOLDER, filePath, mEnvData, this);
+            FileData* newFolder {new FileData(FOLDER, filePath, mEnvData, this)};
             populateFolder(newFolder);
 
             if (mFlattenFolders) {
