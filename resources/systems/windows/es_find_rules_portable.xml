@@ -360,6 +360,14 @@
             <entry>%ESPATH%\..\SimCoupe\SimCoupe.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SIMPLE64">
+        <!-- Nintendo 64 emulator simple64 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\simple64\simple64-gui.exe</entry>
+            <entry>%ESPATH%\simple64\simple64-gui.exe</entry>
+            <entry>%ESPATH%\..\simple64\simple64-gui.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SNES9X">
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="staticpath">

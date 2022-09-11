@@ -68,6 +68,7 @@ Emulators\scummvm\scummvm.exe
 Emulators\sdl2trs\sdl2trs64.exe
 Emulators\SheepShaver\SheepShaver.exe
 Emulators\SimCoupe\SimCoupe.exe
+Emulators\simple64\simple64-gui.exe
 Emulators\snes9x\snes9x-x64.exe
 Emulators\solarus\solarus-run.exe
 Emulators\Supermodel\Supermodel.exe
