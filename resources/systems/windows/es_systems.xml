@@ -497,7 +497,9 @@
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%\gameandwatch</path>
         <extension>.mgw .MGW .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gw_libretro.dll %ROM%</command>
+        <command label="Handheld Electronic (GW)">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\gw_libretro.dll %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %ROMPATH%\gameandwatch %BASENAME%</command>
+        <command label="MAME Local Artwork (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -artpath %ROMPATH%\gameandwatch\artwork -rompath %ROMPATH%\gameandwatch %BASENAME%</command>
         <platform>gameandwatch</platform>
         <theme>gameandwatch</theme>
     </system>
