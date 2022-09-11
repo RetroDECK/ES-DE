@@ -6,24 +6,6 @@ Theme capabilities for rbsimple-DE.
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
 
-    <variant name="lightMode">
-        <label>Light mode</label>
-        <selectable>true</selectable>
-        <override>
-            <trigger>no_game_media</trigger>
-            <useVariant>noMedia</useVariant>
-        </override>
-    </variant>
-
-    <variant name="lightModeNoVideos">
-        <label>Light mode (no videos)</label>
-        <selectable>true</selectable>
-        <override>
-            <trigger>no_game_media</trigger>
-            <useVariant>noMedia</useVariant>
-        </override>
-    </variant>
-
     <variant name="darkMode">
         <label>Dark mode</label>
         <selectable>true</selectable>
@@ -35,6 +17,24 @@ Theme capabilities for rbsimple-DE.
 
     <variant name="darkModeNoVideos">
         <label>Dark mode (no videos)</label>
+        <selectable>true</selectable>
+        <override>
+            <trigger>no_game_media</trigger>
+            <useVariant>noMedia</useVariant>
+        </override>
+    </variant>
+
+    <variant name="lightMode">
+        <label>Light mode</label>
+        <selectable>true</selectable>
+        <override>
+            <trigger>no_game_media</trigger>
+            <useVariant>noMedia</useVariant>
+        </override>
+    </variant>
+
+    <variant name="lightModeNoVideos">
+        <label>Light mode (no videos)</label>
         <selectable>true</selectable>
         <override>
             <trigger>no_game_media</trigger>
