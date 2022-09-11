@@ -421,6 +421,17 @@
             <entry>~/bin/redream/redream</entry>
         </rule>
     </emulator>
+    <emulator name="ROSALIES-MUPEN-GUI">
+        <!-- Nintendo 64 emulator Rosalie's Mupen GUI -->
+        <rule type="systempath">
+            <entry>RMG</entry>
+            <entry>com.github.Rosalie241.RMG</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
+            <entry>~/.local/share/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
+        </rule>
+    </emulator>
     <emulator name="RPCS3">
         <!-- Sony PlayStation 3 emulator RPCS3 -->
         <rule type="systempath">
