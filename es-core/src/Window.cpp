@@ -125,13 +125,18 @@ bool Window::init()
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
     }
 
-    mSplash->setResize(Renderer::getScreenWidth() * 0.6f, 0.0f);
+    if (mRenderer->getScreenWidth() > mRenderer->getScreenHeight())
+        mSplash->setResize(0.0f, glm::clamp(mRenderer->getScreenHeight() * 0.64f, 0.0f,
+                                            mRenderer->getScreenWidth() * 0.44f));
+    else
+        mSplash->setResize(mRenderer->getScreenWidth() * 0.8f, 0.0f);
+
     mSplash->setImage(":/graphics/splash.svg");
-    mSplash->setPosition((Renderer::getScreenWidth() - mSplash->getSize().x) / 2.0f,
-                         (Renderer::getScreenHeight() - mSplash->getSize().y) / 2.0f * 0.6f);
+    mSplash->setPosition((mRenderer->getScreenWidth() - mSplash->getSize().x) / 2.0f,
+                         (mRenderer->getScreenHeight() - mSplash->getSize().y) / 2.0f * 0.6f);
 
     mBackgroundOverlay->setImage(":/graphics/frame.png");
-    mBackgroundOverlay->setResize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+    mBackgroundOverlay->setResize(mRenderer->getScreenWidth(), mRenderer->getScreenHeight());
 
     mPostprocessedBackground = TextureResource::get("");
 
