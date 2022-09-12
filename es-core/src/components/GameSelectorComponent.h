@@ -49,6 +49,12 @@ public:
     {
         if (!mNeedsRefresh)
             return;
+
+        FileData* lastGame {nullptr};
+
+        if (mGameCount == 1 && !mGames.empty())
+            lastGame = mGames.front();
+
         mGames.clear();
         mNeedsRefresh = false;
 
@@ -59,7 +65,14 @@ public:
             for (int i = 0; i < mGameCount; ++i) {
                 if (mSystem->getRootFolder()->getGameCount().first == 0)
                     break;
-                FileData* randomGame {mSystem->getRandomGame(nullptr, true)};
+                FileData* randomGame {nullptr};
+
+                if (mGameCount > 1 || lastGame == nullptr ||
+                    mSystem->getRootFolder()->getGameCount().first == 1)
+                    randomGame = mSystem->getRandomGame(nullptr, true);
+                else
+                    randomGame = mSystem->getRandomGame(lastGame, true);
+
                 if (randomGame != nullptr)
                     mGames.emplace_back(randomGame);
             }
