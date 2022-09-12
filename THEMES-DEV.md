@@ -744,11 +744,7 @@ Nesting of variables is supported, so the following could be done:
 </variables>
 ```
 
-## Reference
-
-This section describes each element and their properties in detail and also contains example configuration snippets.
-
-### Property data types
+## Property data types
 
 * NORMALIZED_PAIR - two decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5`. Most commonly used for position (x and y coordinates) and size (width and height).
 * NORMALIZED_RECT - four decimals, in the range [0..1], delimited by a space. For example, `0.25 0.5 0.10 0.30`. Most commonly used for padding to store top, left, bottom and right coordinates.
@@ -759,13 +755,13 @@ This section describes each element and their properties in detail and also cont
 * FLOAT - a decimal.
 * STRING - a string of text.
 
-### Element types and their properties
+## Element types and their properties
 
 Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type. They are normalized in terms of their "parent" object's size; 99% of the time this is just the size of the screen. In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down). You can also use numbers outside of the [0..1] range if you want to place an element partially or completely off-screen.
 
 The order in which you define properties does not matter and you only need to define the ones where you want to override the default value.
 
-#### image
+### image
 
 Displays a raster image or a scalable vector graphics (SVG) image.
 
@@ -859,7 +855,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `30`
 
-#### video
+### video
 
 Plays a video and provides support for displaying a static image for a defined time period before starting the video player. Although an unlimited number of videos could in theory be defined per view it's recommended to keep it at a single instance as playing videos takes a lot of CPU resources. But if still going for multiple videos, make sure to use the `audio` property to disable audio on all but one video as ES-DE currently has no audio mixing capabilities so the sound would not play correctly. To use videos in the `system` view, you either need to set a static video using the `path` property, or you need to create a `gameselector` element so game videos can be used.
 
@@ -944,7 +940,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `30`
 
-#### animation
+### animation
 
 GIF and Lottie (vector graphics) animations. The type of animation is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of them to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or high-resolution.
 
@@ -1003,7 +999,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `35`
 
-#### badges
+### badges
 
 Displays graphical symbols representing a number of metadata fields for the currently selected game. It's strongly recommended to use the same image dimensions for all badges as varying aspect ratios will lead to alignment issues. For the controller images it's recommended to keep to the square canvas size used by the default bundled graphics as otherwise sizing and placement will be inconsistent (unless all controller graphic files are customized of course).
 
@@ -1126,7 +1122,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `35`
 
-#### text
+### text
 
 Displays text. This can be literal strings or values based on game metadata or system variables, as described below. For the `gamelist` view it's also possible to place the text inside a scrollable container which is for example useful for longer texts like the game descriptions.
 
@@ -1232,7 +1228,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `40`
 
-#### datetime
+### datetime
 
 Displays a date and time as a text string. The format is ISO 8601 (YYYY-MM-DD) by default, but this can be changed using the `format` property. The text _unknown_ will be shown by default if there is no time stamp available. If the property `displayRelative` has been set, the text will be shown as _never_ in case of no time stamp.
 
@@ -1310,7 +1306,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `40`
 
-#### gamelistinfo
+### gamelistinfo
 
 Displays the game count (all games as well as favorites), any applied filters, and a folder icon if a folder has been entered. If this text is left aligned or center aligned, the folder icon will be placed to the right of the other information, and if it's right aligned, the folder icon will be placed to the left.
 
@@ -1363,7 +1359,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `45`
 
-#### rating
+### rating
 
 Displays a graphical representation of the game rating, from 0 to 5.
 
@@ -1419,7 +1415,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `45`
 
-#### carousel
+### carousel
 
 A carousel for navigating and selecting games or systems.
 
@@ -1552,7 +1548,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
 
-#### textlist
+### textlist
 
 A text list for navigating and selecting games or systems.
 
@@ -1624,7 +1620,7 @@ Properties:
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
 
-#### gameselector
+### gameselector
 
 Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image`, `video`, `text`, `datetime` and `rating` elements.
 
@@ -1644,7 +1640,7 @@ Properties:
     - Minimum value is `1` and maximum value is `30`
     - Default is `1`
 
-#### helpsystem
+### helpsystem
 
 The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
 

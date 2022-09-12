@@ -19,8 +19,12 @@
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * Added ares standalone as an alternative emulator for many systems
+* Added MAME standalone as an alternative emulator for the gameandwatch system
+* Added openMSX standalone as an alternative emulator for the msx, msx1, msx2 and msxturbor systems
 * (Linux) Added support for the Nintendo Wii U (wiiu) game system
 * Added Triforce (Dolphin fork) standalone as an alternative emulator for the gc system on Linux and Windows
+* Added simple64 standalone as an alternative emulator for the n64 system on Linux and Windows
+* (Linux) Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 system
 * Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
 * (Windows) Added PrimeHack as an alternative emulator for the gc and wii systems
 * (Windows) Added Project64 as an alternative emulator for the n64 system
@@ -34,6 +38,7 @@
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
+* Adjusted the splash screen sizing to be more consistent across various screen aspect ratios
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (as default) and OpenGL ES 3.0 respectively
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)

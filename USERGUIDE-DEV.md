@@ -921,6 +921,35 @@ The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
 
+#### Nintendo Game and Watch
+
+There are two ways to play these games, either via simulation or via emulation.
+
+**Method 1, simulation:**
+
+Simulation is done via the Handheld Electronic (GW) RetroArch core, in which case games come with the .mgw file extension. You simply place these files in the `gameandwatch` directory and they can be launched and played. The filenames will probably be verbose and include the complete game name, for example `Donkey Kong (Nintendo, Multi Screen).mgw` so both ScreenScraper and TheGamesDB should be able to find the game entries when scraping. Here's an example:
+
+```
+~/ROMs/gameandwatch/Donkey Kong (Nintendo, Multi Screen).mgw
+```
+
+**Method 2, emulation:**
+
+Proper emulation is done via the MAME standalone emulator. The games need to be in the MAME format and follow the MAME naming conventions, i.e. it will not be possible to run .mgw games with this emulator. The example game _Donkey Kong_ would have the filename `gnw_dkong.zip` and you'll place this file in the `gameandwatch` directory.
+
+However the game is only half of what's needed to properly emulate these games as you'll also need the artwork to see an image of the actual physical device when running the game. The artwork would also come in a .zip file with the same name as the game itself, e.g. `gnw_dkong.zip` and it must be located in the MAME artwork directory so it can be found by MAME.
+
+For the artwork there are two options. There are two MAME alternative emulator entries available, _MAME (Standalone)_ and _MAME Local Artwork (Standalone)_. The former will require the artwork files to be placed in the default MAME artwork directory. This location differs between operating systems and distributions so refer to the MAME documentation on where to find this folder. The _MAME Local Artwork (Standalone)_ emulator entry will however let you place the artwork inside the `gameandwatch` directory tree which can be quite convenient as it's then bundled with the game files. Simply create an `artwork` subdirectory and place the files there. Here's an example of what _Donkey Kong_ would look like when going for the latter option:
+
+```
+~/ROMs/gameandwatch/gnw_dkong.zip
+~/ROMs/gameandwatch/artwork/gnw_dkong.zip
+```
+
+As the artwork files also come with the .zip file extension they will show up inside ES-DE as if they were game files, so it's recommended to hide the entire artwork directory using the _Hidden_ option in the metadata editor.
+
+Be aware that neither ScreenScraper or TheGamesDB currently support these MAME short names natively so you'll need to refine the searches or the scraper services are unlikely to return any results at all (or very inaccurate results at best).
+
 #### Nintendo Switch
 
 The Nintendo Switch emulator Yuzu is distributed as a Snap package, Flatpak package or AppImage on Linux and as a regular installer on Windows. At the moment there is unfortunately no macOS release of this emulator and it's unclear if it can run on BSD Unix.
@@ -2955,7 +2984,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
 | flash                 | Adobe Flash                                    | Ruffle **(Standalone)** [UMW*]    | Lightspark **(Standalone)** [U],<br>ArcadeFlashWeb **(Standalone)** [W*] | No        | Single .swf file in root folder      |
 | fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW*]    |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
-| gameandwatch          | Nintendo Game and Watch                        | GW                                |                                   |              |                                      |
+| gameandwatch          | Nintendo Game and Watch                        | Handheld Electronic (GW)          | MAME **(Standalone)** [UMW*],<br>MAME Local Artwork **(Standalone)** [UMW*] | No           | See the specific _Nintendo Game and Watch_ section elsewhere in this guide |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>Mednafen **(Standalone)** [UMW*] |              |                                      |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** [UMW*],<br>VBA Next,<br>gpSP       | No           | Single archive or ROM file in root folder |
@@ -2982,16 +3011,16 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | model3                | Sega Model 3                                   | Supermodel **(Standalone)** [W*]  |                                   |              | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | moonlight             | Moonlight Game Streaming                       | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
-| msx                   | MSX                                            | blueMSX                           | fMSX,<br>ares **(Standalone)** [UMW*] |              |                                      |
-| msx1                  | MSX1                                           | blueMSX                           | fMSX,<br>ares **(Standalone)** [UMW*] |              |                                      |
-| msx2                  | MSX2                                           | blueMSX                           | fMSX,<br>ares **(Standalone)** [UMW*] |              |                                      |
-| msxturbor             | MSX Turbo R                                    | blueMSX                           |                                   |              |                                      |
+| msx                   | MSX                                            | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
+| msx1                  | MSX1                                           | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
+| msx2                  | MSX2                                           | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
+| msxturbor             | MSX Turbo R                                    | blueMSX                           | openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*] | Yes          |                                      |
 | mugen                 | M.U.G.E.N Game Engine                          | M.U.G.E.N **(Standalone)** [W]    |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW*],<br>Rosalie's Mupen GUI **(Standalone)**,<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** [UMW*] | No           |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
