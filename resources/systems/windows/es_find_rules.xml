@@ -339,6 +339,17 @@
             <entry>%ESPATH%\..\mupen64plus\mupen64plus-ui-console.exe</entry>
         </rule>
     </emulator>
+    <emulator name="OPENMSX">
+        <!-- MSX home computer emulator openMSX -->
+        <rule type="systempath">
+            <entry>openmsx.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\openMSX\openmsx.exe</entry>
+            <entry>%ESPATH%\openMSX\openmsx.exe</entry>
+            <entry>%ESPATH%\..\openMSX\openmsx.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="ORICUTRON">
         <!-- Tangerine Computer Systems emulator Oricutron -->
         <rule type="systempath">

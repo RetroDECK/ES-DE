@@ -331,6 +331,16 @@
             <entry>~/.local/share/flatpak/exports/bin/ca._0ldsk00l.Nestopia</entry>
         </rule>
     </emulator>
+    <emulator name="OPENMSX">
+        <!-- MSX home computer emulator openMSX -->
+        <rule type="systempath">
+            <entry>openmsx</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.openmsx.openMSX</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.openmsx.openMSX</entry>
+        </rule>
+    </emulator>
     <emulator name="ORICUTRON">
         <!-- Tangerine Computer Systems emulator Oricutron -->
         <rule type="systempath">

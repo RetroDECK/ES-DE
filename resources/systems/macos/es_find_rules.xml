@@ -151,6 +151,14 @@
             <entry>/usr/local/bin/mupen64plus</entry>
         </rule>
     </emulator>
+    <emulator name="OPENMSX">
+        <!-- MSX home computer emulator openMSX -->
+        <rule type="staticpath">
+            <entry>/Applications/openMSX.app/Contents/MacOS/openmsx</entry>
+            <entry>/opt/homebrew/bin/openmsx</entry>
+            <entry>/usr/local/bin/openmsx</entry>
+        </rule>
+    </emulator>
     <emulator name="ORICUTRON">
         <!-- Tangerine Computer Systems emulator Oricutron -->
         <rule type="staticpath">

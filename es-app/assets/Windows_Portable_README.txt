@@ -51,6 +51,7 @@ Emulators\mednafen\mednafen.exe
 Emulators\melonDS\melonDS.exe
 Emulators\mGBA\mGBA.exe
 Emulators\mupen64plus\mupen64plus-ui-console.exe
+Emulators\openMSX\openmsx.exe
 Emulators\Oricutron\oricutron.exe
 Emulators\PCSX2\pcsx2.exe
 Emulators\PCSX2-Qt\pcsx2-qtx64.exe

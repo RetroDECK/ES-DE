@@ -794,9 +794,11 @@
         <name>msx</name>
         <fullname>MSX</fullname>
         <path>%ROMPATH%/msx</path>
-        <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
+        <command label="openMSX (Standalone)">%EMULATOR_OPENMSX% -machine National_CF-3300 %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="openMSX No Machine (Standalone)">%EMULATOR_OPENMSX% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "MSX" %ROM%</command>
         <platform>msx</platform>
         <theme>msx</theme>
@@ -805,9 +807,11 @@
         <name>msx1</name>
         <fullname>MSX1</fullname>
         <path>%ROMPATH%/msx1</path>
-        <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
+        <command label="openMSX (Standalone)">%EMULATOR_OPENMSX% -machine National_CF-3300 %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="openMSX No Machine (Standalone)">%EMULATOR_OPENMSX% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "MSX" %ROM%</command>
         <platform>msx</platform>
         <theme>msx1</theme>
@@ -816,9 +820,11 @@
         <name>msx2</name>
         <fullname>MSX2</fullname>
         <path>%ROMPATH%/msx2</path>
-        <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
+        <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
         <command label="fMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fmsx_libretro.dylib %ROM%</command>
+        <command label="openMSX (Standalone)">%EMULATOR_OPENMSX% -machine Panasonic_FS-A1WSX %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="openMSX No Machine (Standalone)">%EMULATOR_OPENMSX% %INJECT%=%BASENAME%.commands %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "MSX2" %ROM%</command>
         <platform>msx2</platform>
         <theme>msx2</theme>
@@ -827,8 +833,10 @@
         <name>msxturbor</name>
         <fullname>MSX Turbo R</fullname>
         <path>%ROMPATH%/msxturbor</path>
-        <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <extension>.cas .CAS .col .COL .di1 .DI1 .di2 .DI2 .dmk .DMK .dsk .DSK .fd1 .FD1 .fd2 .FD2 .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ogv .OGV .ri .RI .rom .ROM .sc .SC .sg .SG .wav .WAV .xsa .XSA .7z .7Z .zip .ZIP</extension>
+        <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
+        <command label="openMSX (Standalone)">%EMULATOR_OPENMSX% -machine Panasonic_FS-A1GT %INJECT%=%BASENAME%.commands %ROM%</command>
+        <command label="openMSX No Machine (Standalone)">%EMULATOR_OPENMSX% %INJECT%=%BASENAME%.commands %ROM%</command>
         <platform>msxturbor</platform>
         <theme>msxturbor</theme>
     </system>
