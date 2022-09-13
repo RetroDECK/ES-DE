@@ -117,6 +117,13 @@
             <maxItemCount>5</maxItemCount>
             <zIndex>60</zIndex>
         </carousel>
+        <image name="backframe2">
+            <pos>0.5 0.19</pos>
+            <size>0.96 0.735</size>
+            <origin>0.5 0</origin>
+            <path>./core/images/frame.png</path>
+            <zIndex>10</zIndex>
+        </image>
         <text name="game_name">
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
@@ -147,24 +154,12 @@
             <itemsPerLine>10</itemsPerLine>
         </badges>
         <!-- Hide some unwanted elements -->
-        <image name="backframe2">
-            <pos>0.5 0.19</pos>
-            <size>0.96 0.735</size>
-            <origin>0.5 0</origin>
-            <path>./core/images/frame.png</path>
-            <zIndex>10</zIndex>
-        </image>
         <image name="backframe3">
             <visible>false</visible>
         </image>
         <text name="md_lbl_publisher, md_lbl_releasedate, md_lbl_developer, md_lbl_genre,
             md_lbl_players, md_lbl_lastplayed, md_developer, md_publisher, md_genre,
             md_players, md_description">
-            <visible>false</visible>
-        </text>
-        <text name="md_lbl_publisher, md_lbl_genre, md_lbl_players,
-            md_lbl_lastplayed, md_publisher, md_genre, md_players,
-            md_description">
             <visible>false</visible>
         </text>
         <datetime name="md_releasedate md_lastplayed">
