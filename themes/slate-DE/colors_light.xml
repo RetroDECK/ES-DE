@@ -1,31 +1,6 @@
 <theme>
-    <view name="system">
-        <carousel name="system_carousel">
-            <textColor>262626</textColor>
-        </carousel>
-        <text name="game_counter">
-            <color>202020</color>
-            <backgroundColor>DDDDDDD8</backgroundColor>
-        </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <color>262626</color>
-        </text>
-        <image name="background">
-            <color>707070</color>
-        </image>
-        <text name="logoText">
-            <color>262626</color>
-        </text>
-        <helpsystem name="help">
-            <textColor>C6C6C6</textColor>
-            <iconColor>C6C6C6</iconColor>
-            <textColorDimmed>B6B6B6</textColorDimmed>
-            <iconColorDimmed>B6B6B6</iconColorDimmed>
-        </helpsystem>
-    </view>
-
-    <!-- Default band colors (used if a system is unthemed). -->
     <view name="system, gamelist">
+        <!-- Default band colors (used if a system is unthemed) -->
         <image name="band1">
             <color>F6DD08</color>
         </image>
@@ -40,25 +15,52 @@
         </image>
     </view>
 
+    <view name="system">
+        <image name="background">
+            <color>707070</color>
+        </image>
+        <text name="game_counter">
+            <color>202020</color>
+            <backgroundColor>DDDDDDD8</backgroundColor>
+        </text>
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+            <color>262626</color>
+        </text>
+        <helpsystem name="help">
+            <textColor>C6C6C6</textColor>
+            <iconColor>C6C6C6</iconColor>
+            <textColorDimmed>B6B6B6</textColorDimmed>
+            <iconColorDimmed>B6B6B6</iconColorDimmed>
+        </helpsystem>
+    </view>
+
     <view name="gamelist">
+        <image name="background">
+            <color>707070</color>
+        </image>
+        <image name="backframe2">
+            <color>9F9F9F</color>
+        </image>
+        <image name="backframe3">
+            <color>9F9F9F</color>
+        </image>
+        <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre,
+                    md_lbl_players, md_lbl_lastplayed, md_developer, md_publisher,
+                    md_genre, md_players, md_description">
+            <color>262626</color>
+        </text>
+        <datetime name="md_releasedate, md_lastplayed">
+            <color>262626</color>
+        </datetime>
+        <gamelistinfo name="gamelistInfo">
+            <color>505050</color>
+        </gamelistinfo>
         <helpsystem name="help">
             <textColor>262626</textColor>
             <iconColor>262626</iconColor>
             <textColorDimmed>B6B6B6</textColorDimmed>
             <iconColorDimmed>B6B6B6</iconColorDimmed>
         </helpsystem>
-        <image name="background">
-            <color>707070</color>
-        </image>
-        <textlist name="textlist_gamelist">
-            <selectorColor>262626</selectorColor>
-            <selectedColor>9F9F9F</selectedColor>
-            <primaryColor>262626</primaryColor>
-            <secondaryColor>4D4D4D</secondaryColor>
-        </textlist>
-        <gamelistinfo name="gamelistInfo">
-            <color>505050</color>
-        </gamelistinfo>
     </view>
 
     <variant name="noMedia">
@@ -68,23 +70,4 @@
             </image>
         </view>
     </variant>
-
-    <view name="gamelist">
-        <image name="backframe2">
-            <color>9F9F9F</color>
-        </image>
-        <image name="backframe3">
-            <color>9F9F9F</color>
-        </image>
-        <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
-                    md_lbl_publisher, md_lbl_genre, md_lbl_players,
-                    md_lbl_lastplayed, md_lbl_playcount, md_developer,
-                    md_publisher, md_genre, md_players, md_playcount,
-                    md_description">
-            <color>262626</color>
-        </text>
-        <datetime name="md_releasedate, md_lastplayed">
-            <color>262626</color>
-        </datetime>
-    </view>
 </theme>

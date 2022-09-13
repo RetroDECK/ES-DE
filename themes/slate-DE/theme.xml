@@ -1,35 +1,57 @@
 <!--
-Theme: Slate for EmulationStation Desktop Edition (slate-DE)
-version: 2.0
-author: Leon Styhre
-license: creative commons CC-BY-NC-SA
-based on: recalbox-multi by the Recalbox community
+    Slate for EmulationStation Desktop Edition (slate-DE)
+    Author: Leon Styhre
+    License: Creative Commons CC-BY-NC-SA
+    Based on: recalbox-multi by the Recalbox community
 -->
 
 <theme>
     <include>./navigationsounds.xml</include>
 
-    <variant name="themeEngineTest_1">
-        <include>./theme_engine_test_1.xml</include>
-    </variant>
-
-    <variant name="themeEngineTest_2">
-        <include>./theme_engine_test_2.xml</include>
-    </variant>
-
-    <variant name="themeEngineTest_3">
-        <include>./theme_engine_test_3.xml</include>
+    <variant name="darkMode, darkModeNoVideos">
+        <include>./colors_dark.xml</include>
     </variant>
 
     <variant name="lightMode, lightModeNoVideos">
         <include>./colors_light.xml</include>
     </variant>
 
+    <!-- Temporary location during theme engine testing, should be moved to colors_dark.xml -->
     <variant name="darkMode, darkModeNoVideos">
-        <include>./colors_dark.xml</include>
+        <view name="system">
+            <carousel name="system_carousel">
+                <color>747474D8</color>
+                <textColor>F0F0F0</textColor>
+            </carousel>
+        </view>
+        <view name="gamelist">
+            <textlist name="gamelist_textlist">
+                <selectorColor>161616</selectorColor>
+                <selectedColor>AFAFAF</selectedColor>
+                <primaryColor>000000</primaryColor>
+                <secondaryColor>333333</secondaryColor>
+            </textlist>
+        </view>
     </variant>
 
-    <variant name="lightMode, lightModeNoVideos, darkMode, darkModeNoVideos">
+    <!-- Temporary location during theme engine testing, should be moved to colors_light.xml -->
+    <variant name="lightMode, lightModeNoVideos">
+        <view name="system">
+            <carousel name="system_carousel">
+                <textColor>262626</textColor>
+            </carousel>
+        </view>
+        <view name="gamelist">
+            <textlist name="gamelist_textlist">
+                <selectorColor>262626</selectorColor>
+                <selectedColor>9F9F9F</selectedColor>
+                <primaryColor>262626</primaryColor>
+                <secondaryColor>4D4D4D</secondaryColor>
+            </textlist>
+        </view>
+    </variant>
+
+    <variant name="darkMode, darkModeNoVideos, lightMode, lightModeNoVideos">
         <view name="system">
             <carousel name="system_carousel">
                 <staticItem>./${system.theme}/images/logo.svg</staticItem>
@@ -58,56 +80,20 @@ based on: recalbox-multi by the Recalbox community
                 <zIndex>50</zIndex>
             </text>
         </view>
+        <view name="gamelist">
+            <textlist name="gamelist_textlist">
+                <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+                <fontSize>0.025</fontSize>
+                <letterCase>uppercase</letterCase>
+                <pos>0.025 0.201</pos>
+                <size>0.39 0.711</size>
+                <horizontalAlignment>left</horizontalAlignment>
+                <horizontalMargin>0.01</horizontalMargin>
+                <indicators>symbols</indicators>
+                <collectionIndicators>symbols</collectionIndicators>
+            </textlist>
+        </view>
     </variant>
-
-    <view name="system">
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <horizontalAlignment>left</horizontalAlignment>
-            <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
-            <fontSize>0.021</fontSize>
-            <size>0.4 0.03</size>
-        </text>
-        <image name="consolegame">
-            <pos>0.02 0.327</pos>
-            <maxSize>0.4 0.28</maxSize>
-            <origin>0 1</origin>
-        </image>
-        <image name="controller">
-            <pos>0.78 0.327</pos>
-            <maxSize>0.12 0.28</maxSize>
-            <origin>1 1</origin>
-        </image>
-        <text name="info1">
-            <pos>0.38 0.695</pos>
-        </text>
-        <text name="info2">
-            <pos>0.38 0.716</pos>
-        </text>
-        <text name="info3">
-            <pos>0.38 0.737</pos>
-        </text>
-        <text name="info4">
-            <pos>0.38 0.758</pos>
-        </text>
-        <text name="info5">
-            <pos>0.38 0.799</pos>
-        </text>
-        <text name="info6">
-            <pos>0.38 0.820</pos>
-        </text>
-        <text name="info7">
-            <pos>0.38 0.841</pos>
-        </text>
-        <text name="info8">
-            <pos>0.38 0.862</pos>
-        </text>
-        <text name="info9">
-            <pos>0.38 0.883</pos>
-        </text>
-        <text name="info10">
-            <pos>0.38 0.904</pos>
-        </text>
-    </view>
 
     <view name="system, gamelist">
         <image name="background">
@@ -148,19 +134,54 @@ based on: recalbox-multi by the Recalbox community
         </image>
     </view>
 
-    <aspectRatio name="4:3">
-        <view name="gamelist">
-            <text name="4:3_temporary">
-                <letterCase>uppercase</letterCase>
-                <text>4:3 not implemented</text>
-                <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
-                <fontSize>0.03</fontSize>
-                <size>0.2 0.04</size>
-                <pos>0.84 0.01</pos>
-                <color>FFFFFF</color>
-            </text>
-        </view>
-    </aspectRatio>
+    <view name="system">
+        <image name="consolegame">
+            <pos>0.02 0.327</pos>
+            <maxSize>0.4 0.28</maxSize>
+            <origin>0 1</origin>
+        </image>
+        <image name="controller">
+            <pos>0.78 0.327</pos>
+            <maxSize>0.12 0.28</maxSize>
+            <origin>1 1</origin>
+        </image>
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+            <horizontalAlignment>left</horizontalAlignment>
+            <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
+            <fontSize>0.021</fontSize>
+            <size>0.4 0.03</size>
+        </text>
+        <text name="info1">
+            <pos>0.38 0.695</pos>
+        </text>
+        <text name="info2">
+            <pos>0.38 0.716</pos>
+        </text>
+        <text name="info3">
+            <pos>0.38 0.737</pos>
+        </text>
+        <text name="info4">
+            <pos>0.38 0.758</pos>
+        </text>
+        <text name="info5">
+            <pos>0.38 0.799</pos>
+        </text>
+        <text name="info6">
+            <pos>0.38 0.820</pos>
+        </text>
+        <text name="info7">
+            <pos>0.38 0.841</pos>
+        </text>
+        <text name="info8">
+            <pos>0.38 0.862</pos>
+        </text>
+        <text name="info9">
+            <pos>0.38 0.883</pos>
+        </text>
+        <text name="info10">
+            <pos>0.38 0.904</pos>
+        </text>
+    </view>
 
     <view name="gamelist">
         <image name="consolegame">
@@ -173,21 +194,32 @@ based on: recalbox-multi by the Recalbox community
             <maxSize>0.32 0.13</maxSize>
             <origin>1 1</origin>
         </image>
-        <text name="md_lbl_playcount, md_playcount">
-            <pos>1 1</pos>
-        </text>
-        <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer,
-                    md_lbl_publisher, md_lbl_genre, md_lbl_players,
-                    md_lbl_lastplayed">
+        <image name="backframe2">
+            <pos>0.02 0.19</pos>
+            <size>0.4 0.735</size>
+            <origin>0 0</origin>
+            <path>./core/images/frame.png</path>
+            <zIndex>10</zIndex>
+        </image>
+        <image name="backframe3">
+            <pos>0.44 0.19</pos>
+            <size>0.54 0.735</size>
+            <origin>0 0</origin>
+            <path>./core/images/frame.png</path>
+            <zIndex>10</zIndex>
+        </image>
+        <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
+                    md_lbl_genre, md_lbl_players, md_lbl_lastplayed ">
             <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
-            <size>0.144 0.02</size>
+            <size>0.14 0.02</size>
         </text>
         <text name="md_developer, md_publisher, md_genre, md_players">
             <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
+            <size>0.14 0.02</size>
         </text>
         <text name="md_description">
             <container>true</container>
@@ -203,44 +235,8 @@ based on: recalbox-multi by the Recalbox community
             <letterCase>uppercase</letterCase>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.02</fontSize>
-            <size>0.144 0.02</size>
+            <size>0.14 0.02</size>
         </datetime>
-    </view>
-
-    <variant name="lightMode, lightModeNoVideos, darkMode, darkModeNoVideos">
-        <view name="gamelist">
-            <textlist name="textlist_gamelist">
-                <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-                <fontSize>0.025</fontSize>
-                <letterCase>uppercase</letterCase>
-                <pos>0.025 0.201</pos>
-                <size>0.39 0.711</size>
-                <horizontalAlignment>left</horizontalAlignment>
-                <horizontalMargin>0.01</horizontalMargin>
-                <indicators>symbols</indicators>
-                <collectionIndicators>symbols</collectionIndicators>
-            </textlist>
-        </view>
-    </variant>
-
-    <view name="gamelist">
-        <image name="backframe2">
-            <pos>0.02 0.19</pos>
-            <size>0.4 0.735</size>
-            <origin>0 0</origin>
-            <path>./core/images/frame.png</path>
-            <zIndex>10</zIndex>
-        </image>
-        <image name="backframe3">
-            <pos>0.44 0.19</pos>
-            <size>0.54 0.735</size>
-            <origin>0 0</origin>
-            <path>./core/images/frame.png</path>
-            <zIndex>10</zIndex>
-        </image>
-        <text name="md_players, md_genre, md_developer, md_publisher">
-            <size>0.14 0.023</size>
-        </text>
         <text name="md_lbl_releasedate">
             <text>Released:</text>
             <metadataElement>true</metadataElement>
@@ -250,9 +246,6 @@ based on: recalbox-multi by the Recalbox community
             <metadata>releasedate</metadata>
             <pos>0.83 0.3005</pos>
         </datetime>
-        <text name="md_lbl_rating">
-            <pos>0.815 0.3355</pos>
-        </text>
         <text name="md_lbl_developer">
             <text>Developer:</text>
             <metadataElement>true</metadataElement>
@@ -298,10 +291,6 @@ based on: recalbox-multi by the Recalbox community
             <metadata>lastplayed</metadata>
             <pos>0.83 0.6005</pos>
         </datetime>
-        <text name="md_lbl_rating">
-            <pos>1 1</pos>
-            <fontPath>./core/fonts/blank.ttf</fontPath>
-        </text>
         <rating name="md_rating">
             <pos>0.453 0.203</pos>
             <size>0 0.03</size>
@@ -326,7 +315,6 @@ based on: recalbox-multi by the Recalbox community
         <badges name="md_badges">
             <pos>0.815 0.675</pos>
             <size>0.13 0.235</size>
-            <origin>0 0</origin>
             <horizontalAlignment>left</horizontalAlignment>
             <direction>row</direction>
             <lines>3</lines>
@@ -340,56 +328,21 @@ based on: recalbox-multi by the Recalbox community
         </badges>
     </view>
 
-    <variant name="themeEngineTest_3">
+    <variant name="darkMode, lightMode">
         <view name="gamelist">
-            <image name="backframe2">
-                <pos>0.02 0.19</pos>
-                <size>0.96 0.735</size>
-                <origin>0 0</origin>
-                <path>./core/images/frame.png</path>
-                <zIndex>10</zIndex>
-            </image>
-            <image name="backframe3">
-                <visible>false</visible>
-            </image>
-            <text name="md_description">
-                <lineSpacing>1.2</lineSpacing>
-                <pos>0.025 0.205</pos>
-                <size>0.446 0.185</size>
-                <fontSize>0.02</fontSize>
-            </text>
-            <rating name="md_rating">
-                <pos>0.815 0.203</pos>
-                <size>0.04 0.03</size>
-                <color>FFEE00</color>
-            </rating>
-            <badges name="md_badges">
-                <pos>0.03 0.205</pos>
-                <size>0.38 0.08</size>
-                <lines>1</lines>
-                <itemsPerLine>10</itemsPerLine>
-            </badges>
+            <video name="md_video">
+                <origin>0.5 0.5</origin>
+                <pos>0.63 0.45</pos>
+                <imageType>image</imageType>
+                <interpolation>nearest</interpolation>
+                <maxSize>0.356 0.424</maxSize>
+                <delay>1.7</delay>
+                <scrollFadeIn>true</scrollFadeIn>
+            </video>
         </view>
     </variant>
 
-    <variant name="noMedia">
-        <view name="gamelist">
-            <image name="backframe1">
-                <pos>0.02 0.19</pos>
-                <size>0.96 0.735</size>
-                <origin>0 0</origin>
-                <path>./core/images/frame.png</path>
-            </image>
-            <textlist name="textlist_gamelist">
-                <pos>0.04 0.201</pos>
-                <size>0.92 0.71</size>
-                <horizontalAlignment>center</horizontalAlignment>
-                <horizontalMargin>0.01</horizontalMargin>
-            </textlist>
-        </view>
-    </variant>
-
-    <variant name="lightModeNoVideos, darkModeNoVideos">
+    <variant name="darkModeNoVideos, lightModeNoVideos">
         <view name="gamelist">
             <image name="md_image">
                 <origin>0.5 0.5</origin>
@@ -402,17 +355,46 @@ based on: recalbox-multi by the Recalbox community
         </view>
     </variant>
 
-    <variant name="lightMode darkMode">
+    <variant name="noMedia">
         <view name="gamelist">
-            <video name="md_video">
-                <origin>0.5 0.5</origin>
-                <pos>0.63 0.45</pos>
-                <imageType>image</imageType>
-                <interpolation>nearest</interpolation>
-                <maxSize>0.356 0.424</maxSize>
-                <delay>1.7</delay>
-                <scrollFadeIn>true</scrollFadeIn>
-            </video>
+            <image name="backframe1">
+                <pos>0.02 0.19</pos>
+                <size>0.96 0.735</size>
+                <origin>0 0</origin>
+                <path>./core/images/frame.png</path>
+            </image>
+            <textlist name="gamelist_textlist">
+                <pos>0.04 0.201</pos>
+                <size>0.92 0.71</size>
+                <horizontalAlignment>center</horizontalAlignment>
+                <horizontalMargin>0.01</horizontalMargin>
+            </textlist>
         </view>
+    </variant>
+
+    <aspectRatio name="4:3">
+        <view name="gamelist">
+            <text name="4:3_temporary">
+                <letterCase>uppercase</letterCase>
+                <text>4:3 not implemented yet</text>
+                <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
+                <fontSize>0.03</fontSize>
+                <size>0.2 0.04</size>
+                <pos>0.8 0.01</pos>
+                <color>FFFFFF</color>
+            </text>
+        </view>
+    </aspectRatio>
+
+    <variant name="themeEngineTest_1">
+        <include>./theme_engine_test_1.xml</include>
+    </variant>
+
+    <variant name="themeEngineTest_2">
+        <include>./theme_engine_test_2.xml</include>
+    </variant>
+
+    <variant name="themeEngineTest_3">
+        <include>./theme_engine_test_3.xml</include>
     </variant>
 </theme>
