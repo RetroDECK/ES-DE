@@ -581,6 +581,17 @@
             <entry>%ESPATH%\..\solarus\solarus-run.exe</entry>
         </rule>
     </emulator>
+    <emulator name="SSF">
+        <!-- Sega Saturn emulator SSF -->
+        <rule type="systempath">
+            <entry>SSF.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\SSF\SSF.exe</entry>
+            <entry>%ESPATH%\SSF\SSF.exe</entry>
+            <entry>%ESPATH%\..\SSF\SSF.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="STEAM">
         <!-- Valve Steam -->
         <rule type="winregistryvalue">

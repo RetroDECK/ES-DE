@@ -1236,6 +1236,7 @@
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabasanshiro_libretro.dll %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabause_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
+        <command label="SSF (Standalone)">%EMULATOR_SSF% %ROM%</command>
         <platform>saturn</platform>
         <theme>saturn</theme>
     </system>
@@ -1249,6 +1250,7 @@
         <command label="YabaSanshiro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabasanshiro_libretro.dll %ROM%</command>
         <command label="Yabause">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\yabause_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module ss %ROM%</command>
+        <command label="SSF (Standalone)">%EMULATOR_SSF% %ROM%</command>
         <platform>saturn</platform>
         <theme>saturnjp</theme>
     </system>
