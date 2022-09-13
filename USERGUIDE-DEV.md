@@ -925,7 +925,7 @@ Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will 
 
 There are two ways to play these games, either via simulation or via emulation.
 
-**Method 1, simulation:**
+**Method 1, simulation**
 
 Simulation is done via the Handheld Electronic (GW) RetroArch core, in which case games come with the .mgw file extension. You simply place these files in the `gameandwatch` directory and they can be launched and played. The filenames will probably be verbose and include the complete game name, for example `Donkey Kong (Nintendo, Multi Screen).mgw` so both ScreenScraper and TheGamesDB should be able to find the game entries when scraping. Here's an example:
 
@@ -933,7 +933,7 @@ Simulation is done via the Handheld Electronic (GW) RetroArch core, in which cas
 ~/ROMs/gameandwatch/Donkey Kong (Nintendo, Multi Screen).mgw
 ```
 
-**Method 2, emulation:**
+**Method 2, emulation**
 
 Proper emulation is done via the MAME standalone emulator. The games need to be in the MAME format and follow the MAME naming conventions, i.e. it will not be possible to run .mgw games with this emulator. The example game _Donkey Kong_ would have the filename `gnw_dkong.zip` and you'll place this file in the `gameandwatch` directory.
 
@@ -970,13 +970,13 @@ Recently Cemu added support for the .wua archive format which is much easier to 
 
 .wud and .wux files are also supported, but these two formats are not discussed here as the .wua format is clearly the way to go in the future.
 
-**Method 1, using .wua files:**
+**Method 1, using .wua files**
 
 Start Cemu and install the game, any updates as well as optional DLCs to the Cemu NAND. After the installation is completed, open the _Title Manager_ from the _Tools_ menu, select your game, right click and select _Convert to compressed Wii U archive (.wua)_ and select your `wiiu` ROMs directory as the target. You can modify the file name if you want to, or keep it at its default value. Press the _Save_ button and the game will be automatically packaged as a .wua file.
 
 Following this just start ES-DE and the game should be shown as a single entry that can be launched using Cemu.
 
-**Method 2, unpacked games:**
+**Method 2, unpacked games**
 
 Using this unpacked approach, the content of each game is divided into the three directories _code, content_ and _meta_.
 
@@ -3020,7 +3020,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW*],<br>Rosalie's Mupen GUI **(Standalone)**,<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW*],<br>Rosalie's Mupen GUI **(Standalone)** [U],<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** [UMW*] | No           |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
@@ -3050,8 +3050,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)** [UMW*],<br>Mednafen **(Standalone)** [UMW*] | Yes          | .chd file in root folder for single-disc games, .m3u playlist in root folder for multi-disc games |
 | samcoupe              | SAM Coupé                                      | SimCoupé **(Standalone)**         |                                   | No           | Single archive or ROM file in root folder |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>Mesen-S |              |                                      |
-| saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
-| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
+| saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*],<br>SSF **(Standalone)** [W*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
+| saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)** [UMW*],<br>SSF **(Standalone)** [W*] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           | ScummVM **(Standalone)**          | No           | See the specific _ScummVM_ section elsewhere in this guide |
 | sega32x               | Sega Mega Drive 32X                            | PicoDrive                         | ares **(Standalone)** [UMW*]      | No           | Single archive or ROM file in root folder |
 | sega32xjp             | Sega Super 32X [Japan]                         | PicoDrive                         | ares **(Standalone)** [UMW*]      | No           | Single archive or ROM file in root folder |

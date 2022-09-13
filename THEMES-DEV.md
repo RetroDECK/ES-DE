@@ -757,9 +757,9 @@ Nesting of variables is supported, so the following could be done:
 
 ## Element types and their properties
 
-Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type. They are normalized in terms of their "parent" object's size; 99% of the time this is just the size of the screen. In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down). You can also use numbers outside of the [0..1] range if you want to place an element partially or completely off-screen.
+Common to almost all elements is a `pos` and `size` property of the NORMALIZED_PAIR type. They are normalized in terms of their "parent" object's size; 99% of the time this is just the size of the screen. In this case, `<pos>0 0</pos>` would correspond to the top left corner, and `<pos>1 1</pos>` the bottom right corner (a positive Y value points further down). You can also use numbers outside of the [0..1] range if you want to place an element partially off-screen.
 
-The order in which you define properties does not matter and you only need to define the ones where you want to override the default value.
+The order in which you define properties does not matter and you only need to define the ones where you want to override the default values.
 
 ### image
 

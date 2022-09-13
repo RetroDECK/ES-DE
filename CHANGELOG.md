@@ -28,6 +28,7 @@
 * Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
 * (Windows) Added PrimeHack as an alternative emulator for the gc and wii systems
 * (Windows) Added Project64 as an alternative emulator for the n64 system
+* (Windows) Added SSF as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Changed the binary for emulator Citra from citra.exe to citra-qt.exe as the command line binary is broken on this OS
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
