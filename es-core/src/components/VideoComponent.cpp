@@ -121,7 +121,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("size")) {
             glm::vec2 videoSize {elem->get<glm::vec2>("size")};
             if (videoSize == glm::vec2 {0.0f, 0.0f}) {
-                LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property <size> "
+                LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property \"size\" "
                                    "for element \""
                                 << element.substr(6) << "\" is set to zero";
                 videoSize = {0.01f, 0.01f};
@@ -163,14 +163,23 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             mStaticImage.setLinearInterpolation(false);
-            LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                               "<interpolation> defined as \""
-                            << interpolation << "\"";
+            LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property "
+                               "\"interpolation\" for element \""
+                            << element.substr(6) << "\" defined as \"" << interpolation << "\"";
         }
     }
 
-    if (elem->has("default"))
-        mConfig.defaultVideoPath = elem->get<std::string>("default");
+    if (elem->has("default")) {
+        const std::string defaultVideo {elem->get<std::string>("default")};
+        if (ResourceManager::getInstance().fileExists(defaultVideo)) {
+            mConfig.defaultVideoPath = defaultVideo;
+        }
+        else {
+            LOG(LogWarning)
+                << "VideoComponent: File defined for property \"default\" for element \""
+                << element.substr(6) << "\" does not exist: \"" << defaultVideo << "\"";
+        }
+    }
 
     if (elem->has("defaultImage")) {
         mStaticImage.setDefaultImage(elem->get<std::string>("defaultImage"));
@@ -178,8 +187,16 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mDefaultImagePath = elem->get<std::string>("defaultImage");
     }
 
-    if (elem->has("path"))
-        mConfig.staticVideoPath = elem->get<std::string>("path");
+    if (elem->has("path")) {
+        const std::string staticPath {elem->get<std::string>("path")};
+        if (ResourceManager::getInstance().fileExists(staticPath)) {
+            mConfig.staticVideoPath = staticPath;
+        }
+        else {
+            LOG(LogWarning) << "VideoComponent: File defined for property \"path\" for element \""
+                            << element.substr(6) << "\" does not exist: \"" << staticPath << "\"";
+        }
+    }
 
     if ((properties & ThemeFlags::DELAY) && elem->has("delay"))
         mConfig.startDelay =
@@ -208,17 +225,18 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
 
         if (mThemeImageTypes.empty()) {
-            LOG(LogError) << "VideoComponent: Invalid theme configuration, property <imageType> "
-                             "contains no values";
+            LOG(LogError) << "VideoComponent: Invalid theme configuration, property \"imageType\" "
+                             "for element \""
+                          << element.substr(6) << "\" contains no values";
         }
 
         for (std::string& type : mThemeImageTypes) {
             if (std::find(supportedImageTypes.cbegin(), supportedImageTypes.cend(), type) ==
                 supportedImageTypes.cend()) {
                 LOG(LogError)
-                    << "VideoComponent: Invalid theme configuration, property <imageType> "
-                       "defined as \""
-                    << type << "\"";
+                    << "VideoComponent: Invalid theme configuration, property \"imageType\" "
+                       "for element \""
+                    << element.substr(6) << "\" defined as \"" << type << "\"";
                 mThemeImageTypes.clear();
                 break;
             }
@@ -228,8 +246,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         std::stable_sort(sortedTypes.begin(), sortedTypes.end());
 
         if (std::adjacent_find(sortedTypes.begin(), sortedTypes.end()) != sortedTypes.end()) {
-            LOG(LogError) << "VideoComponent: Invalid theme configuration, property <imageType> "
-                             "contains duplicate values";
+            LOG(LogError) << "VideoComponent: Invalid theme configuration, property \"imageType\" "
+                             "for element \""
+                          << element.substr(6) << "\" contains duplicate values";
             mThemeImageTypes.clear();
         }
     }
