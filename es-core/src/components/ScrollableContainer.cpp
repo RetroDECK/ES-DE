@@ -108,7 +108,7 @@ void ScrollableContainer::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 void ScrollableContainer::update(int deltaTime)
 {
-    if (mSize == glm::vec2 {0.0f, 0.0f})
+    if (!isVisible() || mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
     // Don't scroll if the media viewer or screensaver is active or if text scrolling is disabled;

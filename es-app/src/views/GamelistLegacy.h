@@ -192,9 +192,8 @@ void GamelistView::legacyPopulateFields()
     // Scrollable container (game description).
     mContainerComponents.push_back(std::make_unique<ScrollableContainer>());
     mContainerComponents.back()->setThemeMetadata("text_md_description");
-    mContainerComponents.back()->setSize(mSize.x * (0.50f - 2.0f * padding),
-                                         mSize.y - mContainerComponents.back()->getPosition().y);
     mContainerComponents.back()->setAutoScroll(true);
+    mContainerComponents.back()->setVisible(false);
     mContainerComponents.back()->setDefaultZIndex(40.0f);
     addChild(mContainerComponents.back().get());
 
@@ -743,7 +742,7 @@ void GamelistView::legacyInitMDValues()
 
     for (auto& container : mContainerComponents) {
         container->setPosition(container->getPosition().x, bottom + mSize.y * 0.01f);
-        container->setSize(container->getSize().x, mSize.y - container->getPosition().y);
+        container->setSize(mSize.x * 0.2f, mSize.y * 0.2f);
     }
 }
 
