@@ -883,7 +883,7 @@ void SystemView::updateGameSelectors()
     }
 
     for (auto& video : mSystemElements[cursor].videoComponents) {
-        if (video->getThemeImageTypes().size() == 0)
+        if (video->hasStaticVideo() || video->getThemeImageTypes().size() == 0)
             continue;
         GameSelectorComponent* gameSelector {nullptr};
         if (multipleSelectors) {
