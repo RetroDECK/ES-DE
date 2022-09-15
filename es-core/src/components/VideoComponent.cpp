@@ -71,8 +71,7 @@ bool VideoComponent::setVideo(std::string path)
         return true;
     }
 
-    if (!mVideoPath.empty() || !mConfig.defaultVideoPath.empty() ||
-        !mConfig.staticVideoPath.empty())
+    if (!mVideoPath.empty() || !mConfig.staticVideoPath.empty())
         mHasVideo = true;
     else
         mHasVideo = false;
