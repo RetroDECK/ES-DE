@@ -37,7 +37,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mLinearInterpolation {false}
     , mMipmapping {false}
     , mTileHorizontalAlignment {ALIGN_LEFT}
-    , mTileVerticalAlignment {ALIGN_TOP}
+    , mTileVerticalAlignment {ALIGN_BOTTOM}
     , mTopLeftCrop {0.0f, 0.0f}
     , mBottomRightCrop {1.0f, 1.0f}
     , mClipRegion {0.0f, 0.0f, 0.0f, 0.0f}
