@@ -397,7 +397,7 @@ void GamelistView::legacyUpdateView(const CursorState& state)
             rating->setVisible(true);
     }
 
-    bool fadingOut = false;
+    bool fadingOut {false};
     if (file == nullptr) {
         if (mViewStyle == ViewController::VIDEO) {
             mVideoComponents.front()->stopVideoPlayer();

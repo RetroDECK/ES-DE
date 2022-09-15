@@ -105,7 +105,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                              (properties ^ ThemeFlags::SIZE) |
                                  ((properties & (ThemeFlags::SIZE | POSITION)) ? ORIGIN : 0));
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "video");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "video")};
 
     mLegacyTheme = theme->isLegacyTheme();
 

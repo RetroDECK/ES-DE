@@ -72,8 +72,8 @@ std::string DateTimeComponent::getDisplayString() const
         if (mTime.getTime() < 82800)
             return "never";
 
-        Utils::Time::DateTime now(Utils::Time::now());
-        Utils::Time::Duration dur(now.getTime() - mTime.getTime());
+        Utils::Time::DateTime now {Utils::Time::now()};
+        Utils::Time::Duration dur {now.getTime() - mTime.getTime()};
 
         std::string buf;
 
@@ -113,7 +113,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::applyTheme(theme, view, element, properties);
     using namespace ThemeFlags;
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "datetime");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "datetime")};
     if (!elem)
         return;
 
