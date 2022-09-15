@@ -410,7 +410,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("size")) {
             glm::vec2 imageSize {elem->get<glm::vec2>("size")};
             if (imageSize == glm::vec2 {0.0f, 0.0f}) {
-                LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property <size> "
+                LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property \"size\" "
                                    "for element \""
                                 << element.substr(6) << "\" is set to zero";
                 imageSize = {0.001f, 0.001f};
@@ -442,8 +442,8 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             mLinearInterpolation = false;
             LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                               "<interpolation> defined as \""
-                            << interpolation << "\"";
+                               "\"interpolation\" for element \""
+                            << element.substr(6) << "\" defined as \"" << interpolation << "\"";
         }
     }
 
@@ -464,7 +464,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             glm::vec2 tileSize {elem->get<glm::vec2>("tileSize")};
             if (tileSize.x == 0.0f && tileSize.y == 0.0f) {
                 LOG(LogWarning)
-                    << "ImageComponent: Invalid theme configuration, property <tileSize> "
+                    << "ImageComponent: Invalid theme configuration, property \"tileSize\" "
                        "for element \""
                     << element.substr(6) << "\" is set to zero";
                 tile = false;
@@ -495,7 +495,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                               "<tileHorizontalAlignment> for element \""
+                               "\"tileHorizontalAlignment\" for element \""
                             << element.substr(6) << "\" defined as \"" << alignment << "\"";
             mTileHorizontalAlignment = ALIGN_LEFT;
         }
@@ -512,7 +512,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                               "<tileVerticalAlignment> for element \""
+                               "\"tileVerticalAlignment\" for element \""
                             << element.substr(6) << "\" defined as \"" << alignment << "\"";
             mTileVerticalAlignment = ALIGN_TOP;
         }
@@ -531,17 +531,18 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
 
         if (mThemeImageTypes.empty()) {
-            LOG(LogError) << "ImageComponent: Invalid theme configuration, property <imageType> "
-                             "contains no values";
+            LOG(LogError) << "ImageComponent: Invalid theme configuration, property \"imageType\" "
+                             "for element \""
+                          << element.substr(6) << "\" contains no values";
         }
 
         for (std::string& type : mThemeImageTypes) {
             if (std::find(supportedImageTypes.cbegin(), supportedImageTypes.cend(), type) ==
                 supportedImageTypes.cend()) {
                 LOG(LogError)
-                    << "ImageComponent: Invalid theme configuration, property <imageType> "
-                       "defined as \""
-                    << type << "\"";
+                    << "ImageComponent: Invalid theme configuration, property \"imageType\" "
+                       "for element \""
+                    << element.substr(6) << "\" defined as \"" << type << "\"";
                 mThemeImageTypes.clear();
                 break;
             }
@@ -551,8 +552,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         std::stable_sort(sortedTypes.begin(), sortedTypes.end());
 
         if (std::adjacent_find(sortedTypes.begin(), sortedTypes.end()) != sortedTypes.end()) {
-            LOG(LogError) << "ImageComponent: Invalid theme configuration, property <imageType> "
-                             "contains duplicate values";
+            LOG(LogError) << "ImageComponent: Invalid theme configuration, property \"imageType\" "
+                             "for element \""
+                          << element.substr(6) << "\" contains duplicate values";
             mThemeImageTypes.clear();
         }
     }
@@ -576,8 +578,8 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             else {
                 setColorGradientHorizontal(true);
                 LOG(LogWarning) << "ImageComponent: Invalid theme configuration, property "
-                                   "<gradientType> defined as \""
-                                << gradientType << "\"";
+                                   "\"gradientType\" for element \""
+                                << element.substr(6) << "\" defined as \"" << gradientType << "\"";
             }
         }
     }
