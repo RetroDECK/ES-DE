@@ -531,9 +531,9 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
 
     // If expectedType is an empty string, then skip type checking.
     if (elemIt->second.type != expectedType && !expectedType.empty()) {
-        LOG(LogWarning) << " requested mismatched theme type for [" << view << "." << element
-                        << "] - expected \"" << expectedType << "\", got \"" << elemIt->second.type
-                        << "\"";
+        LOG(LogWarning) << "ThemeData::getElement(): Requested element \"" << view << "." << element
+                        << "\" has the wrong type, expected \"" << expectedType << "\", got \""
+                        << elemIt->second.type << "\"";
         return nullptr;
     }
 
@@ -1176,7 +1176,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
     if (legacyWorkaround == LegacyWorkaround::DATETIME)
         element.type = "datetime";
-    if (legacyWorkaround == LegacyWorkaround::TEXT)
+    else if (legacyWorkaround == LegacyWorkaround::TEXT)
         element.type = "text";
     else if (legacyWorkaround == LegacyWorkaround::RATING)
         element.type = "rating";
