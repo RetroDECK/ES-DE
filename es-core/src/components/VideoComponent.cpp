@@ -287,7 +287,7 @@ void VideoComponent::update(int deltaTime)
     if (mWindow->getGameLaunchedState())
         return;
 
-    if (!mIsPlaying && mConfig.startDelay == 0) {
+    if (!mIsPlaying && (mConfig.startDelay == 0 || mStaticImagePath == "")) {
         startVideoStream();
     }
     else if (mStartTime == 0 || SDL_GetTicks() > mStartTime) {
