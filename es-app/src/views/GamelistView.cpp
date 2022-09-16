@@ -258,7 +258,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                         mContainerComponents.back()->getSize().x, 0.0f);
                     mContainerTextComponents.back()->applyTheme(
                         theme, "gamelist", element.first,
-                        ALL ^ POSITION ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION);
+                        ALL ^ POSITION ^ ORIGIN ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION);
                     if (mContainerTextComponents.back()->getThemeMetadata() != "")
                         mContainerComponents.back()->setScrollHide(true);
                     else if (mContainerTextComponents.back()->getMetadataElement())
