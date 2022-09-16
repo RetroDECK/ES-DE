@@ -183,7 +183,7 @@ const std::string BadgeComponent::getDisplayName(const std::string& shortName)
 
 void BadgeComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mThemeOpacity == 0.0f)
+    if (!isVisible() || mFlexboxItems.empty() || mOpacity == 0.0f || mThemeOpacity == 0.0f)
         return;
 
     if (mOpacity * mThemeOpacity == 1.0f) {

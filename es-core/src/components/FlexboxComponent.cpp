@@ -34,7 +34,7 @@ FlexboxComponent::FlexboxComponent(std::vector<FlexboxItem>& items)
 
 void FlexboxComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible())
+    if (!isVisible() || mOpacity == 0.0f || mThemeOpacity == 0.0f)
         return;
 
     if (!mLayoutValid)
