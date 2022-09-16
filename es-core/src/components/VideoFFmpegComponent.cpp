@@ -136,7 +136,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
     if (mIsPlaying && mFormatContext) {
         Renderer::Vertex vertices[4];
-        mRenderer->setMatrix(parentTrans);
+        mRenderer->setMatrix(trans);
 
         unsigned int rectColor {0x000000FF};
 
@@ -221,8 +221,6 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             }
         }
 
-        // Render it.
-        mRenderer->setMatrix(trans);
         mRenderer->drawTriangleStrips(&vertices[0], 4);
     }
     else {
@@ -887,7 +885,7 @@ void VideoFFmpegComponent::calculateBlackRectangle()
 {
     // Calculate the position and size for the black rectangle that will be rendered behind
     // videos. If the option to display pillarboxes (and letterboxes) is enabled, then this
-    // would extend to the entire md_video area (if above the threshold as defined below) or
+    // would extend to the entire video area (if above the threshold as defined below) or
     // otherwise it will exactly match the video size. The reason to add a black rectangle
     // behind videos in this second instance is that the scanline rendering will make the
     // video partially transparent so this may avoid some unforseen issues with some themes.
@@ -923,27 +921,28 @@ void VideoFFmpegComponent::calculateBlackRectangle()
                 rectWidth = mVideoAreaSize.x;
                 rectHeight = mSize.y;
             }
-            // Populate the rectangle coordinates to be used in render().
-            mVideoRectangleCoords.emplace_back(std::round(mVideoAreaPos.x - rectWidth * mOrigin.x));
-            mVideoRectangleCoords.emplace_back(
-                std::round(mVideoAreaPos.y - rectHeight * mOrigin.y));
-            mVideoRectangleCoords.emplace_back(std::round(rectWidth));
-            mVideoRectangleCoords.emplace_back(std::round(rectHeight));
-
             // If an origin value other than 0.5 is used, then create an offset for centering
-            // the video inside the rectangle.
+            // the video correctly.
             if (mOrigin != glm::vec2 {0.5f, 0.5f}) {
                 if (rectWidth > mSize.x)
                     mRectangleOffset.x -= (rectWidth - mSize.x) * (mOrigin.x - 0.5f);
                 else if (rectHeight > mSize.y)
                     mRectangleOffset.y -= (rectHeight - mSize.y) * (mOrigin.y - 0.5f);
             }
+
+            // Populate the rectangle coordinates to be used in render().
+            const float offsetX {rectWidth - mSize.x};
+            const float offsetY {rectHeight - mSize.y};
+            mVideoRectangleCoords.emplace_back(std::round((-offsetX / 2.0f) + mRectangleOffset.x));
+            mVideoRectangleCoords.emplace_back(std::round((-offsetY / 2.0f) + mRectangleOffset.y));
+            mVideoRectangleCoords.emplace_back(std::round(rectWidth));
+            mVideoRectangleCoords.emplace_back(std::round(rectHeight));
         }
         // If the option to display pillarboxes is disabled, then make the rectangle equivalent
         // to the size of the video.
         else {
-            mVideoRectangleCoords.emplace_back(std::round(mPosition.x - mSize.x * mOrigin.x));
-            mVideoRectangleCoords.emplace_back(std::round(mPosition.y - mSize.y * mOrigin.y));
+            mVideoRectangleCoords.emplace_back(0.0f);
+            mVideoRectangleCoords.emplace_back(0.0f);
             mVideoRectangleCoords.emplace_back(std::round(mSize.x));
             mVideoRectangleCoords.emplace_back(std::round(mSize.y));
         }
