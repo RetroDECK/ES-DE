@@ -122,6 +122,7 @@ public:
     const std::string& getCollectionIndicators() const { return mCollectionIndicators; }
 
 protected:
+    void onShow() override { mLoopTime = 0; }
     void onScroll() override
     {
         if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
@@ -151,7 +152,7 @@ private:
     float mCamOffset;
     int mPreviousScrollVelocity;
 
-    int mLoopOffset;
+    int mLoopOffset1;
     int mLoopOffset2;
     int mLoopTime;
     bool mLoopScroll;
@@ -188,7 +189,7 @@ TextListComponent<T>::TextListComponent()
     , mRenderer {Renderer::getInstance()}
     , mCamOffset {0.0f}
     , mPreviousScrollVelocity {0}
-    , mLoopOffset {0}
+    , mLoopOffset1 {0}
     , mLoopOffset2 {0}
     , mLoopTime {0}
     , mLoopScroll {false}
@@ -282,12 +283,13 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
 {
     List::listUpdate(deltaTime);
 
-    if (isScrolling() && (mWindow->isScreensaverActive() || !mWindow->getAllowTextScrolling()))
-        List::stopScrolling();
-
-    if (!isScrolling() && size() > 0) {
+    if ((mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
+         !mWindow->getAllowTextScrolling())) {
+        mLoopTime = 0;
+    }
+    else {
         // Always reset the loop offsets.
-        mLoopOffset = 0;
+        mLoopOffset1 = 0;
         mLoopOffset2 = 0;
 
         // If we're not scrolling and this object's text exceeds our size, then loop it.
@@ -311,12 +313,12 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
             while (mLoopTime > maxTime)
                 mLoopTime -= maxTime;
 
-            mLoopOffset = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
-                                                             static_cast<float>(mLoopTime),
-                                                             scrollLength + returnLength));
+            mLoopOffset1 = static_cast<int>(Utils::Math::loop(delay, scrollTime + returnTime,
+                                                              static_cast<float>(mLoopTime),
+                                                              scrollLength + returnLength));
 
-            if (mLoopOffset > (scrollLength - (limit - returnLength)))
-                mLoopOffset2 = static_cast<int>(mLoopOffset - (scrollLength + returnLength));
+            if (mLoopOffset1 > (scrollLength - (limit - returnLength)))
+                mLoopOffset2 = static_cast<int>(mLoopOffset1 - (scrollLength + returnLength));
         }
     }
 
@@ -325,6 +327,12 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
 
 template <typename T> void TextListComponent<T>::render(const glm::mat4& parentTrans)
 {
+    if ((mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
+         !mWindow->getAllowTextScrolling())) {
+        mLoopOffset1 = 0;
+        mLoopOffset2 = 0;
+    }
+
     if (size() == 0)
         return;
 
@@ -460,17 +468,17 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         glm::mat4 drawTrans {trans};
 
         // Currently selected item text might be looping.
-        if (mCursor == i && mLoopOffset > 0) {
+        if (mCursor == i && mLoopOffset1 > 0) {
             drawTrans = glm::translate(
                 drawTrans,
-                glm::round(offset - glm::vec3 {static_cast<float>(mLoopOffset), 0.0f, 0.0f}));
+                glm::round(offset - glm::vec3 {static_cast<float>(mLoopOffset1), 0.0f, 0.0f}));
         }
         else {
             drawTrans = glm::translate(drawTrans, glm::round(offset));
         }
 
         // Needed to avoid flickering when returning to the start position.
-        if (mLoopOffset == 0 && mLoopOffset2 == 0)
+        if (mLoopOffset1 == 0 && mLoopOffset2 == 0)
             mLoopScroll = false;
 
         mRenderer->setMatrix(drawTrans);
@@ -658,8 +666,6 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)
 {
-    mLoopOffset = 0;
-    mLoopOffset2 = 0;
     mLoopTime = 0;
 
     if constexpr (std::is_same_v<T, SystemData*>) {

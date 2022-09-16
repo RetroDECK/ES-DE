@@ -857,12 +857,18 @@ bool ViewController::input(InputConfig* config, Input input)
         mCurrentView->pauseViewVideos();
         mCurrentView->stopGamelistFadeAnimations();
 
+        mWindow->setAllowTextScrolling(false);
+        mWindow->setAllowFileAnimation(false);
+
         // Finally, if the camera is currently moving, reset its position.
         cancelViewTransitions();
 
         mWindow->pushGui(new GuiMenu);
         return true;
     }
+
+    mWindow->setAllowTextScrolling(true);
+    mWindow->setAllowFileAnimation(true);
 
     // Check if UI mode has changed due to passphrase completion.
     if (UIModeController::getInstance()->listen(config, input))
