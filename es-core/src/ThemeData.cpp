@@ -184,6 +184,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"metadataElement", BOOLEAN},
        {"gameselector", STRING},
        {"container", BOOLEAN},
+       {"containerVerticalSnap", BOOLEAN},
        {"containerScrollSpeed", FLOAT},
        {"containerStartDelay", FLOAT},
        {"containerResetDelay", FLOAT},
@@ -255,19 +256,18 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"carousel",
-      {{"type", STRING},
+      {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
-       {"pos", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
-       {"color", COLOR},
-       {"colorEnd", COLOR},
-       {"gradientType", STRING},
+       {"type", STRING},
        {"staticItem", PATH},
        {"itemType", STRING},
        {"defaultItem", PATH},
+       {"maxItemCount", FLOAT},
+       {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
        {"itemSize", NORMALIZED_PAIR},
-       {"itemInterpolation", STRING},
        {"itemScale", FLOAT},
+       {"itemInterpolation", STRING},
        {"itemRotation", FLOAT},
        {"itemRotationOrigin", NORMALIZED_PAIR},
        {"itemHorizontalAlignment", STRING},
@@ -279,20 +279,21 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"reflectionsOpacity", FLOAT},
        {"reflectionsFalloff", FLOAT},
        {"unfocusedItemOpacity", FLOAT},
-       {"maxItemCount", FLOAT},
        {"defaultLogo", PATH},                      // For backward compatibility with legacy themes.
        {"logoSize", NORMALIZED_PAIR},              // For backward compatibility with legacy themes.
        {"logoScale", FLOAT},                       // For backward compatibility with legacy themes.
        {"logoRotation", FLOAT},                    // For backward compatibility with legacy themes.
        {"logoRotationOrigin", NORMALIZED_PAIR},    // For backward compatibility with legacy themes.
        {"logoAlignment", STRING},                  // For backward compatibility with legacy themes.
-       {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
+       {"color", COLOR},
+       {"colorEnd", COLOR},
+       {"gradientType", STRING},
        {"text", STRING},
        {"textColor", COLOR},
        {"textBackgroundColor", COLOR},
-       {"letterCase", STRING},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
+       {"letterCase", STRING},
        {"lineSpacing", FLOAT},
        {"zIndex", FLOAT},
        {"legacyZIndexMode", STRING}}},             // For backward compatibility with legacy themes.
