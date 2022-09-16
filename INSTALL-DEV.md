@@ -1230,7 +1230,7 @@ Below is an overview of the file layout with various examples. For the command t
 
         <!-- Another example for Windows. As can be seen here, the absolute path to the emulator has been defined, and there are spaces
         in the directory name, so it needs to be surrounded by quotation marks. Quotation marks around the %EMUPATH% entry are optional
-        but in this example they're added. -->
+        but for this example they're added. -->
         <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
 
         <!-- An example for use in a portable Windows emulator installation, for instance on a USB memory stick. The %ESPATH% variable is

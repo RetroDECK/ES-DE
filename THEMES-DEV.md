@@ -824,7 +824,7 @@ Properties:
 * `tileVerticalAlignment` - type: STRING
     - If the images making up the tiled texture do not match precisely with the edges of the overall element, then this property can be used to define the alignment on the vertical axis.
     - Valid values are `top` or `bottom`
-    - Default is `top`
+    - Default is `bottom`
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless the image is stretched or squashed using the `size` property, or if rotation is applied.
     - Valid values are `nearest` or `linear`
@@ -881,7 +881,7 @@ Properties:
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define static video elements that should be treated as if they were game media files. This property is ignored if `path` is not set.
 * `path` - type: PATH
-    - Path to a video file. Setting a value for this property will make the video static, i.e. it will only play this video regardless of whether there is a game video available or not (this also applies to the `system` view if you have a `gameselector` element defined). If the `default` property has also been set, it will be overridden as the `path` property takes precedence.
+    - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored.
 * `default` - type: PATH
     - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `defaultImage` - type: PATH
@@ -1184,6 +1184,9 @@ Properties:
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
+* `containerVerticalSnap` - type: BOOLEAN
+    - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
+    - Default is `true`
 * `containerScrollSpeed` - type: FLOAT
     - A base speed is automatically calculated based on the container and font sizes, so this property applies relative to the auto-calculated value.
     - Minimum value is `0.1` and maximum value is `10`
@@ -1429,28 +1432,18 @@ Instances per view:
 * `single`
 
 Properties:
-* `type` - type: STRING
-    - Sets the carousel type and scroll direction.
-    - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
-    - Default is `horizontal`
+* `pos` - type: NORMALIZED_PAIR
+    - Default is `0 0.38378`
 * `size` - type: NORMALIZED_PAIR
     - Minimum value per axis is `0.05` and maximum value per axis is `1.5`
     - Default is `1 0.2324`
-* `pos` - type: NORMALIZED_PAIR
-    - Default is `0 0.38378`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the carousel exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
-* `color` - type: COLOR
-    - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.
-    - Default is `FFFFFFD8`
-* `colorEnd` - type: COLOR
-    - Setting this to something other than what is defined for `color` creates a color gradient on the background panel.
-    - Default is `FFFFFFD8`
-* `gradientType` - type: STRING
-    - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
-    - Valid values are `horizontal` or `vertical`
+* `type` - type: STRING
+    - Sets the carousel type and scroll direction.
+    - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
     - Default is `horizontal`
 * `staticItem` - type: PATH
     - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
@@ -1469,17 +1462,21 @@ Properties:
     - Default is `marquee`
 * `defaultItem` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `maxItemCount` - type: FLOAT
+    - Sets the number of items to display in the carousel.
+    - Minimum value is `0.5` and maximum value is `30`
+    - Default is `3`
 * `itemSize` - type: NORMALIZED_PAIR
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
-* `itemInterpolation` - type: STRING
-    - Interpolation method to use when scaling items. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
-    - Valid values are `nearest` or `linear`
-    - Default is `linear`
 * `itemScale` - type: FLOAT.
     - Selected item is increased in size by this scale
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.2`
+* `itemInterpolation` - type: STRING
+    - Interpolation method to use when scaling items. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
+    - Valid values are `nearest` or `linear`
+    - Default is `linear`
 * `itemRotation` - type: FLOAT
     - Angle in degrees that the item should be rotated. Value should be positive.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
@@ -1522,24 +1519,30 @@ Properties:
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
-* `maxItemCount` - type: FLOAT
-    - Sets the number of items to display in the carousel.
-    - Minimum value is `0.5` and maximum value is `30`
-    - Default is `3`
+* `color` - type: COLOR
+    - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.
+    - Default is `FFFFFFD8`
+* `colorEnd` - type: COLOR
+    - Setting this to something other than what is defined for `color` creates a color gradient on the background panel.
+    - Default is `FFFFFFD8`
+* `gradientType` - type: STRING
+    - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
 * `text` - type: STRING
     - A string literal to display if there is no `staticItem` or `defaultItem` property defined and if no image is found. This property can only be used in the system view as for the gamelist view the text fallback will always be set to the game name.
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
     - Default is `FFFFFF00`
-* `letterCase` - type: STRING
-    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
-    - Default is `none` (original letter case is retained)
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticItem` / `itemType` image defined or found, and if `defaultItem` has not been defined.
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
     - Default is `0.085`
+* `letterCase` - type: STRING
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of font height).
     - Minimum value is `0.5` and maximum value is `3`
