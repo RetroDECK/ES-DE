@@ -140,7 +140,9 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
 
         unsigned int rectColor {0x000000FF};
 
-        if (mThemeOpacity != 1.0f)
+        if (!mGeneralFade && mThemeOpacity != 1.0f)
+            rectColor = static_cast<int>(mThemeOpacity * 255.0f);
+        if (mGeneralFade && (mOpacity != 1.0f || mThemeOpacity != 1.0f))
             rectColor = static_cast<int>(mFadeIn * mOpacity * mThemeOpacity * 255.0f);
 
         // Render the black rectangle behind the video.

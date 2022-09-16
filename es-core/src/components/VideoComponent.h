@@ -49,6 +49,8 @@ public:
     void setOpacity(float opacity) override { mOpacity = opacity; }
     // Set whether to draw black pillarboxes/letterboxes behind videos.
     void setDrawPillarboxes(bool state) { mDrawPillarboxes = state; }
+    // Whether to fade out the entire video surface including the black rectangle.
+    void setGeneralFade(bool state) { mGeneralFade = state; }
 
     bool hasStaticVideo() { return !mConfig.staticVideoPath.empty(); }
     bool hasStaticImage() { return mStaticImage.getTextureSize() != glm::ivec2 {0, 0}; }
@@ -129,6 +131,7 @@ protected:
     bool mRenderScanlines;
     bool mLegacyTheme;
     bool mHasVideo;
+    bool mGeneralFade;
     float mFadeIn;
     float mFadeInTime;
 

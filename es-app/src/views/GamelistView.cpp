@@ -194,6 +194,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                                                               ALL);
                     if (mStaticVideoComponents.back()->getMetadataElement())
                         mStaticVideoComponents.back()->setScrollHide(true);
+                    mStaticVideoComponents.back()->setGeneralFade(true);
                 }
                 else {
                     mVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());

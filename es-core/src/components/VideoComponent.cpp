@@ -37,6 +37,7 @@ VideoComponent::VideoComponent()
     , mRenderScanlines {false}
     , mLegacyTheme {false}
     , mHasVideo {false}
+    , mGeneralFade {false}
     , mFadeIn {1.0f}
     , mFadeInTime {1000.0f}
 {
