@@ -52,19 +52,17 @@ Screensaver::Screensaver()
     mWindow->setScreensaver(this);
 }
 
-Screensaver::~Screensaver()
-{
-    mCurrentGame = nullptr;
-    delete mVideoScreensaver;
-    delete mImageScreensaver;
-}
-
 void Screensaver::startScreensaver(bool generateMediaList)
 {
     ViewController::getInstance()->pauseViewVideos();
 
-    std::string path = "";
-    std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
+    mScreensaverType = Settings::getInstance()->getString("ScreensaverType");
+    // In case there is an invalid entry in the es_settings.xml file.
+    if (mScreensaverType != "dim" && mScreensaverType != "black" &&
+        mScreensaverType != "slideshow" && mScreensaverType != "video") {
+        mScreensaverType = "dim";
+    }
+    std::string path;
     mHasMediaFiles = false;
     mFallbackScreensaver = false;
     mOpacity = 0.0f;
@@ -78,10 +76,10 @@ void Screensaver::startScreensaver(bool generateMediaList)
 
     // Set mPreviousGame which will be used to avoid showing the same game again during
     // the random selection.
-    if ((screensaverType == "slideshow" || screensaverType == "video") && mCurrentGame != nullptr)
+    if ((mScreensaverType == "slideshow" || mScreensaverType == "video") && mCurrentGame != nullptr)
         mPreviousGame = mCurrentGame;
 
-    if (screensaverType == "slideshow") {
+    if (mScreensaverType == "slideshow") {
         if (generateMediaList) {
             mImageFiles.clear();
             mImageCustomFiles.clear();
@@ -120,7 +118,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
                 generateOverlayInfo();
 
             if (!mImageScreensaver)
-                mImageScreensaver = new ImageComponent(false, false);
+                mImageScreensaver = std::make_unique<ImageComponent>(false, false);
 
             mTimer = 0;
 
@@ -139,7 +137,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
         mTimer = 0;
         return;
     }
-    else if (!mVideoScreensaver && (screensaverType == "video")) {
+    else if (!mVideoScreensaver && (mScreensaverType == "video")) {
         if (generateMediaList)
             mVideoFiles.clear();
 
@@ -160,7 +158,7 @@ void Screensaver::startScreensaver(bool generateMediaList)
             if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo"))
                 generateOverlayInfo();
 
-            mVideoScreensaver = new VideoFFmpegComponent;
+            mVideoScreensaver = std::make_unique<VideoFFmpegComponent>();
             mVideoScreensaver->setOrigin(0.5f, 0.5f);
             mVideoScreensaver->setPosition(Renderer::getScreenWidth() / 2.0f,
                                            Renderer::getScreenHeight() / 2.0f);
@@ -186,13 +184,10 @@ void Screensaver::startScreensaver(bool generateMediaList)
 
 void Screensaver::stopScreensaver()
 {
-    delete mVideoScreensaver;
-    mVideoScreensaver = nullptr;
-    delete mImageScreensaver;
-    mImageScreensaver = nullptr;
+    mImageScreensaver.reset();
+    mVideoScreensaver.reset();
 
     mState = STATE_INACTIVE;
-
     mDimValue = 1.0f;
     mRectangleFadeIn = 50;
     mTextFadeIn = 0;
@@ -268,11 +263,10 @@ void Screensaver::goToGame()
 
 void Screensaver::renderScreensaver()
 {
-    std::string screensaverType = Settings::getInstance()->getString("ScreensaverType");
     glm::mat4 trans {Renderer::getIdentity()};
     mRenderer->setMatrix(trans);
 
-    if (mVideoScreensaver && screensaverType == "video") {
+    if (mVideoScreensaver && mScreensaverType == "video") {
         // Render a black background below the video.
         mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                             0x000000FF, 0x000000FF);
@@ -281,7 +275,7 @@ void Screensaver::renderScreensaver()
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO)
             mVideoScreensaver->render(trans);
     }
-    else if (mImageScreensaver && screensaverType == "slideshow") {
+    else if (mImageScreensaver && mScreensaverType == "slideshow") {
         // Render a black background below the image.
         mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                             0x000000FF, 0x000000FF);
@@ -297,7 +291,7 @@ void Screensaver::renderScreensaver()
     }
 
     if (isScreensaverActive()) {
-        if (Settings::getInstance()->getString("ScreensaverType") == "slideshow") {
+        if (mScreensaverType == "slideshow") {
             if (mHasMediaFiles) {
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowScanlines"))
                     mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
@@ -323,7 +317,7 @@ void Screensaver::renderScreensaver()
                 mFallbackScreensaver = true;
             }
         }
-        else if (Settings::getInstance()->getString("ScreensaverType") == "video") {
+        else if (mScreensaverType == "video") {
             if (mHasMediaFiles) {
                 Renderer::postProcessingParams videoParameters;
                 unsigned int shaders {0};
@@ -374,8 +368,7 @@ void Screensaver::renderScreensaver()
                 mFallbackScreensaver = true;
             }
         }
-        if (mFallbackScreensaver ||
-            Settings::getInstance()->getString("ScreensaverType") == "dim") {
+        if (mFallbackScreensaver || mScreensaverType == "dim") {
             Renderer::postProcessingParams dimParameters;
             dimParameters.dimming = mDimValue;
             dimParameters.saturation = mSaturationAmount;
@@ -385,7 +378,7 @@ void Screensaver::renderScreensaver()
             if (mSaturationAmount > 0.0)
                 mSaturationAmount = glm::clamp(mSaturationAmount - 0.035f, 0.0f, 1.0f);
         }
-        else if (Settings::getInstance()->getString("ScreensaverType") == "black") {
+        else if (mScreensaverType == "black") {
             Renderer::postProcessingParams blackParameters;
             blackParameters.dimming = mDimValue;
             mRenderer->shaderPostprocessing(Renderer::Shader::CORE, blackParameters);
@@ -451,7 +444,7 @@ void Screensaver::generateImageList()
             if (UIModeController::getInstance()->isUIModeKid() &&
                 (*it2)->metadata.get("kidgame") != "true")
                 continue;
-            std::string imagePath = (*it2)->getImagePath();
+            std::string imagePath {(*it2)->getImagePath()};
             if (imagePath != "")
                 mImageFiles.push_back((*it2));
         }
@@ -472,7 +465,7 @@ void Screensaver::generateVideoList()
             if (UIModeController::getInstance()->isUIModeKid() &&
                 (*it2)->metadata.get("kidgame") != "true")
                 continue;
-            std::string videoPath = (*it2)->getVideoPath();
+            std::string videoPath {(*it2)->getVideoPath()};
             if (videoPath != "")
                 mVideoFiles.push_back((*it2));
         }
@@ -490,7 +483,7 @@ void Screensaver::generateCustomImageList()
     imageDir = Utils::String::replace(imageDir, "%ROMPATH%", FileData::getROMDirectory());
 
     if (imageDir != "" && Utils::FileSystem::isDirectory(imageDir)) {
-        std::string imageFilter = ".jpg, .JPG, .png, .PNG";
+        std::string imageFilter {".jpg, .JPG, .png, .PNG"};
         Utils::FileSystem::StringList dirContent = Utils::FileSystem::getDirContent(
             imageDir, Settings::getInstance()->getBool("ScreensaverSlideshowRecurse"));
 
@@ -529,8 +522,8 @@ void Screensaver::pickRandomImage(std::string& path)
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
         std::mt19937 engine {randDev()};
-        std::uniform_int_distribution<int> uniform_dist(0,
-                                                        static_cast<int>(mImageFiles.size()) - 1);
+        std::uniform_int_distribution<int> uniform_dist {0,
+                                                         static_cast<int>(mImageFiles.size()) - 1};
         index = uniform_dist(engine);
     } while (mPreviousGame && mImageFiles.at(index) == mPreviousGame);
 
@@ -563,8 +556,8 @@ void Screensaver::pickRandomVideo(std::string& path)
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
         std::mt19937 engine {randDev()};
-        std::uniform_int_distribution<int> uniform_dist(0,
-                                                        static_cast<int>(mVideoFiles.size()) - 1);
+        std::uniform_int_distribution<int> uniform_dist {0,
+                                                         static_cast<int>(mVideoFiles.size()) - 1};
         index = uniform_dist(engine);
     } while (mPreviousGame && mVideoFiles.at(index) == mPreviousGame);
 
@@ -591,8 +584,8 @@ void Screensaver::pickRandomCustomImage(std::string& path)
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
         std::mt19937 engine {randDev()};
-        std::uniform_int_distribution<int> uniform_dist(
-            0, static_cast<int>(mImageCustomFiles.size()) - 1);
+        std::uniform_int_distribution<int> uniform_dist {
+            0, static_cast<int>(mImageCustomFiles.size()) - 1};
         index = uniform_dist(engine);
     } while (mPreviousCustomImage != "" && mImageCustomFiles.at(index) == mPreviousCustomImage);
 
@@ -612,17 +605,17 @@ void Screensaver::generateOverlayInfo()
 
     std::string favoriteChar;
     if (mCurrentGame && mCurrentGame->getFavorite())
-        favoriteChar = "  " + ViewController::FAVORITE_CHAR;
+        favoriteChar.append("  ").append(ViewController::FAVORITE_CHAR);
 
-    const std::string gameName = Utils::String::toUpper(mGameName) + favoriteChar;
-    const std::string systemName = Utils::String::toUpper(mSystemName);
-    const std::string overlayText = gameName + "\n" + systemName;
+    const std::string gameName {Utils::String::toUpper(mGameName) + favoriteChar};
+    const std::string systemName {Utils::String::toUpper(mSystemName)};
+    const std::string overlayText {gameName + "\n" + systemName};
 
     mGameOverlay = std::unique_ptr<TextCache>(
         mGameOverlayFont.at(0)->buildTextCache(overlayText, posX, posY, 0xFFFFFFFF));
 
-    float textSizeX;
-    float textSizeY = mGameOverlayFont[0].get()->sizeText(overlayText).y;
+    float textSizeX {0.0f};
+    float textSizeY {mGameOverlayFont[0].get()->sizeText(overlayText).y};
 
     // There is a weird issue with sizeText() where the X size value is returned
     // as too large if there are two rows in a string and the second row is longer

@@ -21,7 +21,6 @@ class Screensaver : public Window::Screensaver
 {
 public:
     Screensaver();
-    virtual ~Screensaver();
 
     virtual bool isScreensaverActive() { return (mState != STATE_INACTIVE); }
     virtual bool isFallbackScreensaver() { return mFallbackScreensaver; }
@@ -61,11 +60,12 @@ private:
     std::vector<FileData*> mImageFiles;
     std::vector<FileData*> mVideoFiles;
     std::vector<std::string> mImageCustomFiles;
-    ImageComponent* mImageScreensaver;
-    VideoComponent* mVideoScreensaver;
+    std::unique_ptr<ImageComponent> mImageScreensaver;
+    std::unique_ptr<VideoComponent> mVideoScreensaver;
 
     FileData* mCurrentGame;
     FileData* mPreviousGame;
+    std::string mScreensaverType;
     std::string mPreviousCustomImage;
     std::string mGameName;
     std::string mSystemName;

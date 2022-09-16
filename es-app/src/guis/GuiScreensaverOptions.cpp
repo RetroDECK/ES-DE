@@ -37,14 +37,15 @@ GuiScreensaverOptions::GuiScreensaverOptions(const std::string& title)
     // Screensaver type.
     auto screensaverType = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "SCREENSAVER TYPE", false);
-    std::vector<std::string> screensavers;
-    screensavers.push_back("dim");
-    screensavers.push_back("black");
-    screensavers.push_back("slideshow");
-    screensavers.push_back("video");
-    for (auto it = screensavers.cbegin(); it != screensavers.cend(); ++it)
-        screensaverType->add(*it, *it,
-                             Settings::getInstance()->getString("ScreensaverType") == *it);
+    std::string selectedScreensaver {Settings::getInstance()->getString("ScreensaverType")};
+    screensaverType->add("DIM", "dim", selectedScreensaver == "dim");
+    screensaverType->add("BLACK", "black", selectedScreensaver == "black");
+    screensaverType->add("SLIDESHOW", "slideshow", selectedScreensaver == "slideshow");
+    screensaverType->add("VIDEO", "video", selectedScreensaver == "video");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the screensaver type to "dim" in this case.
+    if (screensaverType->getSelectedObjects().size() == 0)
+        screensaverType->selectEntry(0);
     addWithLabel("SCREENSAVER TYPE", screensaverType);
     addSaveFunc([screensaverType, this] {
         if (screensaverType->getSelected() !=
