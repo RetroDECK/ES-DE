@@ -5,10 +5,11 @@
 
     <view name="system">
         <carousel name="system_carousel">
-            <type>vertical_wheel</type>
-            <size>0.23 1.0</size>
             <pos>0 0</pos>
+            <size>0.23 1.0</size>
+            <type>vertical_wheel</type>
             <staticItem>./${system.theme}/images/logo.svg</staticItem>
+            <maxItemCount>10</maxItemCount>
             <itemSize>0.15 0.125</itemSize>
             <itemScale>1.23</itemScale>
             <itemRotation>6.5</itemRotation>
@@ -16,12 +17,11 @@
             <itemHorizontalAlignment>left</itemHorizontalAlignment>
             <wheelHorizontalAlignment>right</wheelHorizontalAlignment>
             <horizontalOffset>-0.05</horizontalOffset>
+            <text>${system.fullName}</text>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.070</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
-            <text>${system.fullName}</text>
-            <maxItemCount>10</maxItemCount>
         </carousel>
         <gameselector name="selector_recent">
             <selection>lastplayed</selection>
@@ -32,110 +32,100 @@
             <gameCount>1</gameCount>
         </gameselector>
         <image name="random_background_image">
-            <origin>0 0</origin>
             <pos>0 0</pos>
             <size>1 1</size>
-            <gameselector>selector_random</gameselector>
             <imageType>fanart, titlescreen</imageType>
+            <gameselector>selector_random</gameselector>
             <interpolation>nearest</interpolation>
             <scrollFadeIn>true</scrollFadeIn>
-            <zIndex>3</zIndex>
             <opacity>0.6</opacity>
             <saturation>0.6</saturation>
+            <zIndex>3</zIndex>
         </image>
         <image name="recent_game_image">
-            <origin>0 0</origin>
             <pos>0.775 0.08</pos>
             <size>0.2 0</size>
-            <gameselector>selector_recent</gameselector>
             <imageType>cover</imageType>
+            <gameselector>selector_recent</gameselector>
             <interpolation>nearest</interpolation>
             <scrollFadeIn>true</scrollFadeIn>
             <zIndex>3</zIndex>
-            <opacity>1</opacity>
         </image>
         <video name="random_game_video">
-            <origin>0 0</origin>
             <pos>0.26 0.22</pos>
-            <interpolation>linear</interpolation>
             <maxSize>0.3 0.424</maxSize>
             <imageType>marquee, titlescreen</imageType>
             <gameselector>selector_random</gameselector>
+            <audio>true</audio>
+            <interpolation>linear</interpolation>
             <pillarboxes>false</pillarboxes>
             <scanlines>false</scanlines>
-            <fadeInTime>1.2</fadeInTime>
-            <opacity>1</opacity>
-            <audio>true</audio>
             <delay>1.7</delay>
+            <fadeInTime>1.2</fadeInTime>
         </video>
         <text name="game_counter">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.048</fontSize>
             <pos>0.26 0.09</pos>
             <size>0.35 0.1</size>
-            <origin>0 0</origin>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
             <systemdata>gamecount</systemdata>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.048</fontSize>
+            <horizontalAlignment>left</horizontalAlignment>
+            <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
         <text name="game_counter2">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.035</fontSize>
             <pos>0.42 0.5437</pos>
             <size>0.25 0.056</size>
             <origin>0.5 0.5</origin>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>center</horizontalAlignment>
             <systemdata>gamecount_favorites</systemdata>
-            <zIndex>50</zIndex>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <horizontalAlignment>center</horizontalAlignment>
+            <letterCase>uppercase</letterCase>
             <visible>false</visible>
+            <zIndex>50</zIndex>
         </text>
         <text name="system_name">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.085</fontSize>
             <pos>0.26 0.01</pos>
             <size>0.5 0.1</size>
-            <origin>0 0</origin>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
             <systemdata>fullname</systemdata>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.085</fontSize>
+            <horizontalAlignment>left</horizontalAlignment>
+            <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
         <text name="game_name">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.045</fontSize>
             <pos>0.775 0.59</pos>
             <size>0.2 0.05</size>
-            <origin>0 0</origin>
-            <letterCase>none</letterCase>
-            <gameselector>selector_recent</gameselector>
-            <horizontalAlignment>right</horizontalAlignment>
             <metadata>name</metadata>
+            <gameselector>selector_recent</gameselector>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.045</fontSize>
+            <horizontalAlignment>right</horizontalAlignment>
+            <letterCase>none</letterCase>
             <zIndex>50</zIndex>
         </text>
         <datetime name="game_release_date">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.045</fontSize>
             <pos>0.775 0.64</pos>
             <size>0.2 0.05</size>
-            <origin>0 0</origin>
-            <letterCase>capitalize</letterCase>
-            <gameselector>selector_recent</gameselector>
-            <displayRelative>true</displayRelative>
-            <horizontalAlignment>right</horizontalAlignment>
             <metadata>lastplayed</metadata>
+            <gameselector>selector_recent</gameselector>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.045</fontSize>
+            <horizontalAlignment>right</horizontalAlignment>
+            <letterCase>capitalize</letterCase>
+            <displayRelative>true</displayRelative>
             <zIndex>50</zIndex>
         </datetime>
         <text name="recently_played_text">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.035</fontSize>
             <pos>0.775 0.03</pos>
             <size>0.2 0</size>
-            <origin>0 0</origin>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
             <text>Last played</text>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <horizontalAlignment>left</horizontalAlignment>
+            <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
         <text name="info1">
@@ -219,20 +209,20 @@
 
     <view name="gamelist">
         <textlist name="gamelist_textlist">
-            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.025</fontSize>
-            <letterCase>uppercase</letterCase>
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
+            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+            <fontSize>0.025</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
             <horizontalMargin>0.01</horizontalMargin>
+            <letterCase>uppercase</letterCase>
         </textlist>
         <video name="md_video">
-            <origin>0.5 0.5</origin>
             <pos>0.63 0.45</pos>
+            <maxSize>0.356 0.424</maxSize>
+            <origin>0.5 0.5</origin>
             <imageType>image</imageType>
             <interpolation>nearest</interpolation>
-            <maxSize>0.356 0.424</maxSize>
             <delay>1.7</delay>
             <scrollFadeIn>true</scrollFadeIn>
         </video>

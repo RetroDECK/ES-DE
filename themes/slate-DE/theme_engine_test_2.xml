@@ -26,14 +26,12 @@
         <image name="backframe2">
             <pos>0.02 0.19</pos>
             <size>0.4 0.735</size>
-            <origin>0 0</origin>
             <path>./core/images/frame.png</path>
             <zIndex>10</zIndex>
         </image>
         <image name="backframe3">
             <pos>0.44 0.19</pos>
             <size>0.54 0.735</size>
-            <origin>0 0</origin>
             <path>./core/images/frame.png</path>
             <zIndex>10</zIndex>
         </image>
@@ -43,14 +41,14 @@
             <origin>0 1</origin>
         </image>
         <text name="game_counter">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.035</fontSize>
             <pos>0.45 0.225</pos>
             <size>0.4 0.056</size>
             <origin>0 0.5</origin>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
             <systemdata>gamecount</systemdata>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <horizontalAlignment>left</horizontalAlignment>
+            <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
         <text name="info1">
@@ -97,27 +95,27 @@
 
     <view name="gamelist">
         <carousel name="gamelist_carousel">
-            <type>vertical</type>
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
-            <itemInterpolation>linear</itemInterpolation>
+            <type>vertical</type>
             <itemType>marquee</itemType>
-            <itemHorizontalAlignment>center</itemHorizontalAlignment>
-            <itemScale>1.23</itemScale>
+            <maxItemCount>5</maxItemCount>
             <itemSize>0.20 0.105</itemSize>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.070</fontSize>
+            <itemScale>1.23</itemScale>
+            <itemInterpolation>linear</itemInterpolation>
+            <itemHorizontalAlignment>center</itemHorizontalAlignment>
             <horizontalOffset>0</horizontalOffset>
             <verticalOffset>0</verticalOffset>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.070</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
-            <maxItemCount>5</maxItemCount>
             <zIndex>80</zIndex>
         </carousel>
         <image name="md_image">
-            <origin>0.5 0.5</origin>
             <pos>0.63 0.45</pos>
             <maxSize>0.360 0.424</maxSize>
+            <origin>0.5 0.5</origin>
             <imageType>image</imageType>
             <interpolation>nearest</interpolation>
             <scrollFadeIn>true</scrollFadeIn>

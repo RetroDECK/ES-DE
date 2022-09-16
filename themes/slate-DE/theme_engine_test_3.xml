@@ -7,10 +7,10 @@
         <textlist name="gamelist_textlist">
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
-            <horizontalAlignment>left</horizontalAlignment>
-            <horizontalMargin>0.01</horizontalMargin>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
+            <horizontalAlignment>left</horizontalAlignment>
+            <horizontalMargin>0.01</horizontalMargin>
             <letterCase>uppercase</letterCase>
         </textlist>
         <image name="consolegame">
@@ -26,14 +26,12 @@
         <image name="backframe2">
             <pos>0.02 0.19</pos>
             <size>0.4 0.735</size>
-            <origin>0 0</origin>
             <path>./core/images/frame.png</path>
             <zIndex>10</zIndex>
         </image>
         <image name="backframe3">
             <pos>0.44 0.19</pos>
             <size>0.54 0.735</size>
-            <origin>0 0</origin>
             <path>./core/images/frame.png</path>
             <zIndex>10</zIndex>
         </image>
@@ -43,14 +41,14 @@
             <origin>0 1</origin>
         </image>
         <text name="game_counter">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.035</fontSize>
             <pos>0.45 0.225</pos>
             <size>0.4 0.056</size>
             <origin>0 0.5</origin>
-            <letterCase>uppercase</letterCase>
-            <horizontalAlignment>left</horizontalAlignment>
             <systemdata>gamecount</systemdata>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <horizontalAlignment>left</horizontalAlignment>
+            <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
         <text name="info1">
@@ -97,24 +95,24 @@
 
     <view name="gamelist">
         <carousel name="gamelist_carousel">
-            <type>horizontal</type>
             <pos>0.025 0.231</pos>
             <size>0.95 0.692</size>
+            <type>horizontal</type>
             <itemType>cover</itemType>
-            <itemVerticalAlignment>center</itemVerticalAlignment>
-            <itemScale>1.53</itemScale>
+            <maxItemCount>5</maxItemCount>
             <itemSize>0.105 0.235</itemSize>
+            <itemScale>1.53</itemScale>
             <itemInterpolation>linear</itemInterpolation>
+            <itemVerticalAlignment>center</itemVerticalAlignment>
+            <verticalOffset>0.1</verticalOffset>
+            <reflections>true</reflections>
+            <reflectionsOpacity>0.3</reflectionsOpacity>
+            <reflectionsFalloff>1.05</reflectionsFalloff>
             <unfocusedItemOpacity>1</unfocusedItemOpacity>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.050</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
-            <reflections>true</reflections>
-            <reflectionsOpacity>0.3</reflectionsOpacity>
-            <reflectionsFalloff>1.05</reflectionsFalloff>
-            <verticalOffset>0.1</verticalOffset>
-            <maxItemCount>5</maxItemCount>
             <zIndex>60</zIndex>
         </carousel>
         <image name="backframe2">
@@ -125,23 +123,23 @@
             <zIndex>10</zIndex>
         </image>
         <text name="game_name">
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.045</fontSize>
             <pos>0.5 0.77</pos>
             <size>0.95 0.08</size>
             <origin>0.5 0</origin>
-            <letterCase>none</letterCase>
+            <metadata>name</metadata>
             <gameselector>selector_recent</gameselector>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.045</fontSize>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
-            <metadata>name</metadata>
+            <letterCase>none</letterCase>
             <zIndex>80</zIndex>
         </text>
         <text name="md_description">
-            <lineSpacing>1.2</lineSpacing>
             <pos>0.025 0.205</pos>
             <size>0.446 0.185</size>
             <fontSize>0.02</fontSize>
+            <lineSpacing>1.2</lineSpacing>
         </text>
         <rating name="md_rating">
             <pos>0.815 0.203</pos>
