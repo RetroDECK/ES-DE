@@ -18,12 +18,14 @@ ScrollableContainer::ScrollableContainer()
     : mRenderer {Renderer::getInstance()}
     , mScrollPos {0.0f, 0.0f}
     , mScrollDir {0.0f, 0.0f}
+    , mAdjustedHeight {0.0f}
     , mClipSpacing {0.0f}
     , mAutoScrollDelay {0}
     , mAutoScrollSpeed {0}
     , mAutoScrollAccumulator {0}
     , mAutoScrollResetAccumulator {0}
     , mAdjustedAutoScrollSpeed {0}
+    , mVerticalSnap {true}
     , mUpdatedSize {false}
 {
     // Set the modifier to get equivalent scrolling speed regardless of screen resolution.
@@ -64,18 +66,6 @@ void ScrollableContainer::reset()
     mAutoScrollResetAccumulator = 0;
     mAutoScrollAccumulator = -mAutoScrollDelay + mAutoScrollSpeed;
     mAtEnd = false;
-    // This is needed to resize to the font height boundary when we keep running in the background
-    // while launching games.
-    if (!mChildren.empty()) {
-        float combinedHeight {
-            mChildren.front()->getFont()->getHeight(mChildren.front()->getLineSpacing())};
-        if (mChildren.front()->getSize().y > mSize.y) {
-            float numLines {mSize.y / combinedHeight};
-            mSize.y = floorf(numLines) * combinedHeight;
-            if (mSize.y == 0.0f)
-                mSize.y = combinedHeight;
-        }
-    }
 }
 
 void ScrollableContainer::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -89,6 +79,9 @@ void ScrollableContainer::applyTheme(const std::shared_ptr<ThemeData>& theme,
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "text")};
     if (!elem || !elem->has("container"))
         return;
+
+    if (elem->has("containerVerticalSnap"))
+        mVerticalSnap = elem->get<bool>("containerVerticalSnap");
 
     if (elem->has("containerScrollSpeed")) {
         mAutoScrollSpeedConstant =
@@ -111,14 +104,6 @@ void ScrollableContainer::update(int deltaTime)
     if (!isVisible() || mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
-    // Don't scroll if the media viewer or screensaver is active or if text scrolling is disabled;
-    if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
-        !mWindow->getAllowTextScrolling()) {
-        if (mScrollPos != glm::vec2 {} && !mWindow->isLaunchScreenDisplayed())
-            reset();
-        return;
-    }
-
     const glm::vec2 contentSize {mChildren.front()->getSize()};
     float rowModifier {1.0f};
 
@@ -133,16 +118,23 @@ void ScrollableContainer::update(int deltaTime)
     }
 
     // Resize container to font height boundary to avoid rendering a fraction of the last line.
-    if (!mUpdatedSize && contentSize.y > mSize.y) {
-        float numLines {mSize.y / combinedHeight};
-        mSize.y = floorf(numLines) * combinedHeight;
+    if (!mUpdatedSize) {
+        if (mVerticalSnap) {
+            float numLines {std::floor(mSize.y / combinedHeight)};
+            mAdjustedHeight = std::round(numLines * combinedHeight);
+        }
+        else {
+            mAdjustedHeight = mSize.y;
+        }
         mUpdatedSize = true;
     }
-    else if (mUpdatedSize) {
-        // If there are less than 8 lines of text, accelerate the scrolling further.
-        float lines {mSize.y / combinedHeight};
-        if (lines < 8.0f)
-            rowModifier = lines / 8.0f;
+
+    // Don't scroll if the media viewer or screensaver is active or if text scrolling is disabled;
+    if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
+        !mWindow->getAllowTextScrolling()) {
+        if (mScrollPos != glm::vec2 {} && !mWindow->isLaunchScreenDisplayed())
+            reset();
+        return;
     }
 
     if (!mAdjustedAutoScrollSpeed) {
@@ -164,7 +156,7 @@ void ScrollableContainer::update(int deltaTime)
         mAutoScrollAccumulator += deltaTime;
         while (mAutoScrollAccumulator >=
                static_cast<int>(rowModifier * static_cast<float>(mAdjustedAutoScrollSpeed))) {
-            if (contentSize.y > mSize.y)
+            if (contentSize.y > mAdjustedHeight)
                 mScrollPos += mScrollDir;
             mAutoScrollAccumulator -=
                 static_cast<int>(rowModifier * static_cast<float>(mAdjustedAutoScrollSpeed));
@@ -177,16 +169,16 @@ void ScrollableContainer::update(int deltaTime)
     if (mScrollPos.y < 0.0f)
         mScrollPos.y = 0.0f;
 
-    if (mScrollPos.x + getSize().x > contentSize.x) {
-        mScrollPos.x = contentSize.x - getSize().x;
+    if (mScrollPos.x + mSize.x > contentSize.x) {
+        mScrollPos.x = contentSize.x - mSize.x;
         mAtEnd = true;
     }
 
-    if (contentSize.y < getSize().y) {
+    if (contentSize.y < mAdjustedHeight) {
         mScrollPos.y = 0.0f;
     }
-    else if (mScrollPos.y + getSize().y > contentSize.y) {
-        mScrollPos.y = contentSize.y - getSize().y;
+    else if (mScrollPos.y + mAdjustedHeight > contentSize.y) {
+        mScrollPos.y = contentSize.y - mAdjustedHeight;
         mAtEnd = true;
     }
 
@@ -224,7 +216,7 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
 
     glm::vec3 dimScaled {};
     dimScaled.x = std::fabs(trans[3].x + mSize.x);
-    dimScaled.y = std::fabs(trans[3].y + mSize.y);
+    dimScaled.y = std::fabs(trans[3].y + mAdjustedHeight);
 
     glm::ivec2 clipDim {static_cast<int>(ceilf(dimScaled.x - trans[3].x)),
                         static_cast<int>(ceilf(dimScaled.y - trans[3].y))};
@@ -240,7 +232,7 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
     mRenderer->setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugText"))
-        mRenderer->drawRect(0.0f, mScrollPos.y, mSize.x, mSize.y, 0x0000FF33, 0x0000FF33);
+        mRenderer->drawRect(0.0f, mScrollPos.y, mSize.x, mAdjustedHeight, 0x0000FF33, 0x0000FF33);
 
     GuiComponent::renderChildren(trans);
     mRenderer->popClipRect();

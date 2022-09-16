@@ -49,6 +49,7 @@ private:
     glm::vec2 mScrollPos;
     glm::vec2 mScrollDir;
 
+    float mAdjustedHeight;
     float mAutoScrollResetDelayConstant;
     float mAutoScrollDelayConstant;
     float mAutoScrollSpeedConstant;
@@ -61,6 +62,7 @@ private:
     int mAutoScrollResetAccumulator;
     int mAdjustedAutoScrollSpeed;
 
+    bool mVerticalSnap;
     bool mAtEnd;
     bool mUpdatedSize;
 };
