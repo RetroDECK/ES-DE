@@ -113,6 +113,7 @@ private:
 
     float mEntryCamOffset;
     int mPreviousScrollVelocity;
+    bool mPositiveDirection;
     bool mTriggerJump;
     bool mGamelistView;
     bool mUppercase;
@@ -157,6 +158,7 @@ CarouselComponent<T>::CarouselComponent()
     , mRenderer {Renderer::getInstance()}
     , mEntryCamOffset {0.0f}
     , mPreviousScrollVelocity {0}
+    , mPositiveDirection {false}
     , mTriggerJump {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mUppercase {false}
@@ -621,7 +623,13 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         yOff += mSize.y * mVerticalOffset;
     }
 
-    int center {static_cast<int>(mEntryCamOffset)};
+    int center {0};
+    // Needed to make sure that overlapping items are renderered correctly.
+    if (mPositiveDirection)
+        center = static_cast<int>(std::floor(mEntryCamOffset));
+    else
+        center = static_cast<int>(std::ceil(mEntryCamOffset));
+
     int itemInclusion {static_cast<int>(std::ceil(mMaxItemCount / 2.0f))};
     bool singleEntry {numEntries == 1};
 
@@ -1098,6 +1106,12 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
     // No need to animate transition, we're not going anywhere.
     if (endPos == mEntryCamOffset)
         return;
+
+    // Needed to make sure that overlapping items are renderered correctly.
+    if (startPos > endPos)
+        mPositiveDirection = true;
+    else
+        mPositiveDirection = false;
 
     Animation* anim {new LambdaAnimation(
         [this, startPos, endPos, posMax](float t) {
