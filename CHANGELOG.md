@@ -131,6 +131,7 @@
 * Added a wheelHorizontalAlignment property for aligning the carousel within the overall element area (horizontal/vertical wheel only)
 * Added reflections support to the carousel
 * Added carousel theme support for setting the opacity for unfocused entries
+* Added carousel theme support for setting item transitions to "slide" or "instant"
 * Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase

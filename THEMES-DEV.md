@@ -878,8 +878,6 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
-* `metadataElement` - type: BOOLEAN
-    - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define static video elements that should be treated as if they were game media files. This property is ignored if `path` is not set.
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored.
 * `default` - type: PATH
@@ -899,6 +897,8 @@ Properties:
     - `3dbox` - This will look for a 3D box image.
     - `physicalmedia` - This will look for a physical media image.
     - `fanart` - This will look for a fan art image.
+* `metadataElement` - type: BOOLEAN
+    - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define static video elements that should be treated as if they were game media files. This property is ignored if `path` is not set.
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
 * `audio` - type: BOOLEAN
@@ -1473,6 +1473,10 @@ Properties:
     - Selected item is increased in size by this scale
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.2`
+* `itemTransitions` - type: STRING
+    - How to render item transitions when navigating the carousel. By default a slide animation will be played when moving between items but if this property is set to `instant` instead then the transitions will be immediate.
+    - Valid values are `slide` or `instant`
+    - Default is `slide`
 * `itemInterpolation` - type: STRING
     - Interpolation method to use when scaling items. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
