@@ -290,6 +290,8 @@ void Screensaver::renderScreensaver()
         }
     }
 
+    mRenderer->setMatrix(trans);
+
     if (isScreensaverActive()) {
         if (mScreensaverType == "slideshow") {
             if (mHasMediaFiles) {
@@ -325,7 +327,7 @@ void Screensaver::renderScreensaver()
                     shaders = Renderer::Shader::SCANLINES;
                 if (Settings::getInstance()->getBool("ScreensaverVideoBlur")) {
                     shaders |= Renderer::Shader::BLUR_HORIZONTAL;
-                    float heightModifier = Renderer::getScreenHeightModifier();
+                    float heightModifier {Renderer::getScreenHeightModifier()};
                     // clang-format off
                     if (heightModifier < 1)
                         videoParameters.blurPasses = 2;        // Below 1080
