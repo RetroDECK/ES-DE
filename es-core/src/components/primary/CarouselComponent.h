@@ -34,8 +34,6 @@ protected:
     using List::mWindow;
 
     using GuiComponent::mDefaultZIndex;
-    using GuiComponent::mOrigin;
-    using GuiComponent::mPosition;
     using GuiComponent::mZIndex;
 
 public:
@@ -507,11 +505,12 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         return;
 
     glm::mat4 carouselTrans {parentTrans};
-    carouselTrans =
-        glm::translate(carouselTrans, glm::round(glm::vec3 {mPosition.x, mPosition.y, 0.0f}));
     carouselTrans = glm::translate(
         carouselTrans,
-        glm::round(glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f}));
+        glm::round(glm::vec3 {GuiComponent::mPosition.x, GuiComponent::mPosition.y, 0.0f}));
+    carouselTrans = glm::translate(
+        carouselTrans, glm::round(glm::vec3 {GuiComponent::mOrigin.x * mSize.x * -1.0f,
+                                             GuiComponent::mOrigin.y * mSize.y * -1.0f, 0.0f}));
 
     mRenderer->pushClipRect(
         glm::ivec2 {static_cast<int>(glm::clamp(std::round(carouselTrans[3].x), 0.0f,
@@ -756,8 +755,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     mSize.x = Renderer::getScreenWidth();
     mSize.y = Renderer::getScreenHeight() * 0.23240f;
-    mPosition.x = 0.0f;
-    mPosition.y = Renderer::getScreenHeight() * 0.38378f;
+    GuiComponent::mPosition.x = 0.0f;
+    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.38378f;
     mCarouselColor = 0xFFFFFFD8;
     mCarouselColorEnd = 0xFFFFFFD8;
     mZIndex = mDefaultZIndex;
