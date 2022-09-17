@@ -695,7 +695,6 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
     int belowCenter {static_cast<int>(std::ceil(renderItems.size() / 2)) - 1};
 
-    // TODO: Fix glitches when navigating to the right.
     // The following sorting makes sure that overlapping items are rendered in the correct order.
     for (int i = 0; i < belowCenter - 0; ++i)
         renderItemsSorted.emplace_back(renderItems[i]);
@@ -787,9 +786,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mType = CarouselType::VERTICAL_WHEEL;
         }
         else {
-            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<type> defined as \""
-                            << type << "\"";
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property \"type\" "
+                               "for element \""
+                            << element.substr(9) << "\" defined as \"" << type << "\"";
             mType = CarouselType::HORIZONTAL;
         }
     }
@@ -812,8 +811,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             mColorGradientHorizontal = true;
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<gradientType> defined as \""
-                            << gradientType << "\"";
+                               "\"gradientType\" for element \""
+                            << element.substr(9) << "\" defined as \"" << gradientType << "\"";
         }
     }
 
@@ -834,8 +833,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             else {
                 mLinearInterpolation = true;
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "<itemInterpolation> defined as \""
-                                << itemInterpolation << "\"";
+                                   "\"itemInterpolation\" for element \""
+                                << element.substr(9) << "\" defined as \"" << itemInterpolation
+                                << "\"";
             }
         }
 
@@ -894,8 +894,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
             else {
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "<itemHorizontalAlignment> defined as \""
-                                << alignment << "\"";
+                                   "\"itemHorizontalAlignment\" for element \""
+                                << element.substr(9) << "\" defined as \"" << alignment << "\"";
                 mItemHorizontalAlignment = ALIGN_CENTER;
             }
         }
@@ -913,8 +913,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
             else {
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "<itemVerticalAlignment> defined as \""
-                                << alignment << "\"";
+                                   "\"itemVerticalAlignment\" for element \""
+                                << element.substr(9) << "\" defined as \"" << alignment << "\"";
                 mItemVerticalAlignment = ALIGN_CENTER;
             }
         }
@@ -932,8 +932,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
             else {
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "<wheelHorizontalAlignment> defined as \""
-                                << alignment << "\"";
+                                   "\"wheelHorizontalAlignment\" for element \""
+                                << element.substr(9) << "\" defined as \"" << alignment << "\"";
                 mWheelHorizontalAlignment = ALIGN_CENTER;
             }
         }
@@ -950,7 +950,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
             else {
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "<reflections> only supported for horizontal carousel type";
+                                   "\"reflections\" for element \""
+                                << element.substr(9)
+                                << "\" only supported for horizontal carousel type";
             }
         }
 
@@ -1020,8 +1022,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
             else {
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "<logoAlignment> defined as \""
-                                << alignment << "\"";
+                                   "\"logoAlignment\" for element \""
+                                << element.substr(9) << "\" defined as \"" << alignment << "\"";
                 mItemHorizontalAlignment = ALIGN_CENTER;
                 mItemVerticalAlignment = ALIGN_CENTER;
             }
@@ -1064,8 +1066,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                               "<letterCase> defined as \""
-                            << letterCase << "\"";
+                               "\"letterCase\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
             if (hasText)
                 mText = elem->get<std::string>("text");
         }
