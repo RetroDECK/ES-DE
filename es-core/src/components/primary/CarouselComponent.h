@@ -1123,30 +1123,28 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
     if (mScrollVelocity != 0)
         mPreviousScrollVelocity = mScrollVelocity;
 
-    // No need to animate transition, we're not going anywhere.
-    if (endPos == mEntryCamOffset)
-        return;
+    if (endPos != mEntryCamOffset) {
+        // Needed to make sure that overlapping items are renderered correctly.
+        if (startPos > endPos)
+            mPositiveDirection = true;
+        else
+            mPositiveDirection = false;
 
-    // Needed to make sure that overlapping items are renderered correctly.
-    if (startPos > endPos)
-        mPositiveDirection = true;
-    else
-        mPositiveDirection = false;
+        Animation* anim {new LambdaAnimation(
+            [this, startPos, endPos, posMax](float t) {
+                t -= 1;
+                float f {glm::mix(startPos, endPos, t * t * t + 1)};
+                if (f < 0)
+                    f += posMax;
+                if (f >= posMax)
+                    f -= posMax;
 
-    Animation* anim {new LambdaAnimation(
-        [this, startPos, endPos, posMax](float t) {
-            t -= 1;
-            float f {glm::mix(startPos, endPos, t * t * t + 1)};
-            if (f < 0)
-                f += posMax;
-            if (f >= posMax)
-                f -= posMax;
+                mEntryCamOffset = f;
+            },
+            mTransitionsAnimTime)};
 
-            mEntryCamOffset = f;
-        },
-        mTransitionsAnimTime)};
-
-    GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
+        GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
+    }
 
     if (mCursorChangedCallback && !mEntries.empty())
         mCursorChangedCallback(state);
