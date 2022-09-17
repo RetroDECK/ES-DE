@@ -272,6 +272,11 @@ std::vector<HelpPrompt> VideoComponent::getHelpPrompts()
 
 void VideoComponent::update(int deltaTime)
 {
+    // A deltaTime value of 0 would lead to mFadeIn being an invalid number which would prevent
+    // the video from being rendered. This can happen on application startup in some instances.
+    if (deltaTime == 0)
+        deltaTime = 1;
+
     if (!mHasVideo) {
         // We need this update so the static image gets updated (e.g. used for fade animations).
         GuiComponent::update(deltaTime);
