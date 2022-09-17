@@ -139,6 +139,7 @@ private:
     float mItemScale;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
+    int mTransitionsAnimTime;
     unsigned int mCarouselColor;
     unsigned int mCarouselColorEnd;
     bool mColorGradientHorizontal;
@@ -180,6 +181,7 @@ CarouselComponent<T>::CarouselComponent()
     , mItemScale {1.2f}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
+    , mTransitionsAnimTime {500}
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
@@ -837,6 +839,23 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
         }
 
+        if (elem->has("itemTransitions")) {
+            const std::string itemTransitions {elem->get<std::string>("itemTransitions")};
+            if (itemTransitions == "slide") {
+                mTransitionsAnimTime = 500;
+            }
+            else if (itemTransitions == "instant") {
+                mTransitionsAnimTime = 0;
+            }
+            else {
+                mTransitionsAnimTime = 500;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"itemTransitions\" for element \""
+                                << element.substr(9) << "\" defined as \"" << itemTransitions
+                                << "\"";
+            }
+        }
+
         if (elem->has("itemSize")) {
             // Keep size within a 0.05 and 1.0 multiple of the screen size.
             glm::vec2 itemSize {elem->get<glm::vec2>("itemSize")};
@@ -1124,7 +1143,7 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
 
             mEntryCamOffset = f;
         },
-        500)};
+        mTransitionsAnimTime)};
 
     GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
 
