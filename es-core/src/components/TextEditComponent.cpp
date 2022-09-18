@@ -155,11 +155,16 @@ bool TextEditComponent::input(InputConfig* config, Input input)
     if (mEditing) {
         if (config->getDeviceId() == DEVICE_KEYBOARD) {
             // Special handling for keyboard input as the "A" and "B" buttons are overridden.
-            if (input.id == SDLK_RETURN) {
-                if (isMultiline())
+            if (input.id == SDLK_RETURN || input.id == SDLK_KP_ENTER) {
+                if (isMultiline()) {
+                    const bool maskValue {mMaskInput};
+                    mMaskInput = false;
                     textInput("\n");
-                else
+                    mMaskInput = maskValue;
+                }
+                else {
                     stopEditing();
+                }
 
                 return true;
             }
