@@ -126,8 +126,8 @@ bool Window::init()
     }
 
     if (mRenderer->getScreenWidth() > mRenderer->getScreenHeight())
-        mSplash->setResize(0.0f, glm::clamp(mRenderer->getScreenHeight() * 0.64f, 0.0f,
-                                            mRenderer->getScreenWidth() * 0.44f));
+        mSplash->setResize(0.0f, glm::clamp(mRenderer->getScreenHeight() * 0.62f, 0.0f,
+                                            mRenderer->getScreenWidth() * 0.42f));
     else
         mSplash->setResize(mRenderer->getScreenWidth() * 0.8f, 0.0f);
 
