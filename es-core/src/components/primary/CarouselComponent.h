@@ -110,6 +110,7 @@ private:
     std::function<void()> mCancelTransitionsCallback;
 
     float mEntryCamOffset;
+    float mEntryCamTarget;
     int mPreviousScrollVelocity;
     bool mPositiveDirection;
     bool mTriggerJump;
@@ -136,10 +137,10 @@ private:
     int mItemsAfterCenter;
     glm::vec2 mItemSize;
     bool mLinearInterpolation;
+    bool mInstantItemTransitions;
     float mItemScale;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
-    int mTransitionsAnimTime;
     unsigned int mCarouselColor;
     unsigned int mCarouselColorEnd;
     bool mColorGradientHorizontal;
@@ -158,6 +159,7 @@ CarouselComponent<T>::CarouselComponent()
                                     ListLoopType::LIST_PAUSE_AT_END_ON_JUMP)}
     , mRenderer {Renderer::getInstance()}
     , mEntryCamOffset {0.0f}
+    , mEntryCamTarget {0.0f}
     , mPreviousScrollVelocity {0}
     , mPositiveDirection {false}
     , mTriggerJump {false}
@@ -180,10 +182,10 @@ CarouselComponent<T>::CarouselComponent()
     , mItemsAfterCenter {8}
     , mItemSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
     , mLinearInterpolation {false}
+    , mInstantItemTransitions {false}
     , mItemScale {1.2f}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
-    , mTransitionsAnimTime {500}
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
@@ -503,8 +505,9 @@ template <typename T> void CarouselComponent<T>::update(int deltaTime)
 
 template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentTrans)
 {
-    int numEntries {static_cast<int>(mEntries.size())};
+    const float camOffset {mInstantItemTransitions ? mEntryCamTarget : mEntryCamOffset};
 
+    int numEntries {static_cast<int>(mEntries.size())};
     if (numEntries == 0)
         return;
 
@@ -542,7 +545,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     float scaleSize {mItemSize.x * mItemScale - mItemSize.x};
 
     if (mType == CarouselType::HORIZONTAL_WHEEL || mType == CarouselType::VERTICAL_WHEEL) {
-        xOff = (mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.y);
+        xOff = (mSize.x - mItemSize.x) / 2.0f - (camOffset * itemSpacing.y);
         yOff = (mSize.y - mItemSize.y) / 2.0f;
         // Alignment of the actual carousel inside to the overall component area.
         if (mLegacyMode) {
@@ -583,7 +586,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     }
     else if (mType == CarouselType::VERTICAL) {
         itemSpacing.y = ((mSize.y - (mItemSize.y * mMaxItemCount)) / mMaxItemCount) + mItemSize.y;
-        yOff = (mSize.y - mItemSize.y) / 2.0f - (mEntryCamOffset * itemSpacing.y);
+        yOff = (mSize.y - mItemSize.y) / 2.0f - (camOffset * itemSpacing.y);
         if (mItemHorizontalAlignment == ALIGN_LEFT) {
             if (mLegacyMode)
                 xOff = mItemSize.x / 10.0f;
@@ -602,7 +605,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     }
     else { // HORIZONTAL.
         itemSpacing.x = ((mSize.x - (mItemSize.x * mMaxItemCount)) / mMaxItemCount) + mItemSize.x;
-        xOff = (mSize.x - mItemSize.x) / 2.0f - (mEntryCamOffset * itemSpacing.x);
+        xOff = (mSize.x - mItemSize.x) / 2.0f - (camOffset * itemSpacing.x);
         if (mItemVerticalAlignment == ALIGN_TOP) {
             if (mLegacyMode)
                 yOff = mItemSize.y / 10.0f;
@@ -631,9 +634,9 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     int center {0};
     // Needed to make sure that overlapping items are renderered correctly.
     if (mPositiveDirection)
-        center = static_cast<int>(std::floor(mEntryCamOffset));
+        center = static_cast<int>(std::floor(camOffset));
     else
-        center = static_cast<int>(std::ceil(mEntryCamOffset));
+        center = static_cast<int>(std::ceil(camOffset));
 
     int itemInclusion {0};
     int itemInclusionBefore {0};
@@ -672,7 +675,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         while (index >= numEntries)
             index -= numEntries;
 
-        float distance {i - mEntryCamOffset};
+        float distance {i - camOffset};
 
         if (singleEntry)
             distance = 0.0f;
@@ -865,13 +868,13 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("itemTransitions")) {
             const std::string itemTransitions {elem->get<std::string>("itemTransitions")};
             if (itemTransitions == "slide") {
-                mTransitionsAnimTime = 500;
+                mInstantItemTransitions = false;
             }
             else if (itemTransitions == "instant") {
-                mTransitionsAnimTime = 0;
+                mInstantItemTransitions = true;
             }
             else {
-                mTransitionsAnimTime = 500;
+                mInstantItemTransitions = false;
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
                                    "\"itemTransitions\" for element \""
                                 << element.substr(9) << "\" defined as \"" << itemTransitions
@@ -1161,6 +1164,8 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
         else
             mPositiveDirection = false;
 
+        mEntryCamTarget = endPos;
+
         Animation* anim {new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
                 t -= 1;
@@ -1172,7 +1177,7 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
 
                 mEntryCamOffset = f;
             },
-            mTransitionsAnimTime)};
+            500)};
 
         GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
     }
