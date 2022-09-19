@@ -20,7 +20,7 @@
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as an alternative emulator for the gameandwatch system
-* Added openMSX standalone as an alternative emulator for the msx, msx1, msx2 and msxturbor systems
+* Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
 * (Linux) Added support for the Nintendo Wii U (wiiu) game system
 * Added Triforce (Dolphin fork) standalone as an alternative emulator for the gc system on Linux and Windows
 * Added simple64 standalone as an alternative emulator for the n64 system on Linux and Windows
@@ -55,6 +55,7 @@
 * Removed the "Preload gamelists on startup" setting
 * Removed the "Play videos immediately (override theme)" setting
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
+* Added an "Ignore keyboard input" option to the input device settings menu
 * The media viewer now always loads all images upfront to avoid audio stutter when browsing the files
 * Added support for defining which types of game media to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
@@ -128,6 +129,7 @@
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed the carousel properties to be more generic by renaming "logo" to "item", e.g. itemSize, maxItemCount etc.
+* Added the properties "itemsBeforeCenter" and "itemsAfterCenter" to define entries for carousels of the wheel type
 * Added a wheelHorizontalAlignment property for aligning the carousel within the overall element area (horizontal/vertical wheel only)
 * Added reflections support to the carousel
 * Added carousel theme support for setting the opacity for unfocused entries
@@ -188,6 +190,7 @@
 * Abbreviations of long words in multiline text entries sometimes exceeded the designated text area
 * Navigation sounds would sometimes not play when browsing game media in the media viewer
 * The text debug overlay had the wrong size for scrollable containers
+* The textlist debug overlay would sometimes get positioned incorrectly
 * StringUtil::delimitedStringToVector could return empty elements
 * (Windows) File paths would get escaped with quotation marks even if they did not contain any spaces
 * (Windows) The emulator binary path would sometimes not get escaped correctly in es_log.txt on game launch

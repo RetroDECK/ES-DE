@@ -85,7 +85,7 @@ The following are the most important changes compared to the legacy theme struct
 * Many property names for the carousel have been renamed, with _logo_ being replaced by _item_ as this element can now be used in both the gamelist and system views. As well, setting the alignment will not automatically add any margins as is the case for legacy themes. These can still be set manually using the `horizontalOffset` and `verticalOffset` properties if needed. The way that alignment works in general for both carousel items and the overall carousel has also changed
 * The rating elements were previously not sized and overlaid consistently, this has now been fixed and rating images should now be centered on the image canvas in order for this element to render correctly rather than being left-adjusted as has previously been done by some theme authors (likely as a workaround for the previous buggy implementation). Images of any aspect ratios are now also supported where previously only square images could be used
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
-* The carousel property maxItemCount (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine
+* The carousel property maxItemCount (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine. As well carousels of the wheel type now have the amount of entries controlled by the two new properties `itemsBeforeCenter` and `itemsAfterCenter`. This provides more exact control, including the ability to setup assymetric wheels.
 * The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
 * Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
@@ -1463,10 +1463,19 @@ Properties:
 * `defaultItem` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `maxItemCount` - type: FLOAT
-    - Sets the number of items to display in the carousel.
+    - Sets the number of items to display in the carousel when the `type` property has been set to "horizontal" or "vertical". Has no effect if the `type` has been set to "horizontal_wheel" or "vertical_wheel".
     - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
+* `itemsBeforeCenter` - type: UNSIGNED_INTEGER
+    - Sets the number of items above the center position (the currently selected entry) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsAfterCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - Minimum value is `0` and maximum value is `20`
+    - Default is `8`
+* `itemsAfterCenter` - type: UNSIGNED_INTEGER
+    - Sets the number of items below the center position (the currently selected entry) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - Minimum value is `0` and maximum value is `20`
+    - Default is `8`
 * `itemSize` - type: NORMALIZED_PAIR
+    - Both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
 * `itemScale` - type: FLOAT.

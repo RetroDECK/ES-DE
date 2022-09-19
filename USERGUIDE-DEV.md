@@ -4,7 +4,7 @@ This document is intended as a quick start guide and as a reference for the appl
 
 This version of the user guide is only relevant for the current ES-DE development version, if you are using the latest stable release, refer to [USERGUIDE.md](USERGUIDE.md) instead.
 
-It's generally recommended to read the [Frequently Asked Questions](FAQ.md) document prior to diving into the information in this guide.
+It's generally recommended to read the [Frequently Asked Questions (FAQ)](FAQ.md) document prior to diving into the information in this guide.
 
 Table of contents:
 
@@ -2398,6 +2398,10 @@ This setting gives the ability to choose between the controller types _Xbox, Xbo
 
 If enabling this option, only the first controller detected during startup will send its input to ES-DE (the keyboard input is unaffected by this setting and will be enabled regardless). This is a good way to limit potential chaos with multiple persons fighting over which games to play. Note that disconnecting and reconnecting controllers while ES-DE is running may change what is considered the first controller. This setting does not affect the emulators in any way, it's only applied to ES-DE. Another issue is that some wireless controllers have buggy drivers and will register as two devices, meaning all button presses will be registered twice inside ES-DE. Using this option is one solution to the problem, although it's also possible to blacklist the extra controller entry, as described [here](INSTALL-DEV.md#adding-custom-controller-profiles).
 
+**Ignore keyboard input**
+
+If this setting is enabled then all keyboard input will be ignored, except the quit shortcut used to shut down the application. The main reason for ignoring keyboard input is if running Steam in parallel to ES-DE and you need to use the Steam Controller _Desktop Configuration_ functionality to send keyboard input using the controller. In this case double or conflicting input will be sent to ES-DE as both the controller and keyboard events are read by the application. It's however generally a better idea to disable this functionality altogether in Steam and leave the ES-DE setting untouched. If you accidentally enable this setting when using a keyboard as input device, then you'll either need to plug in a controller to disable it again, or you'll need to modify the _InputIgnoreKeyboard_ entry in the ~/.emulationstation/es_settings.xml configuration file.
+
 **Configure keyboard and controllers**
 
 This tool provides configuration of button mappings for the keyboard and controllers, as explained [here](USERGUIDE-DEV.md#input-device-configuration). Normally this is not required as ES-DE automatically configures all input devices, but button customizations may be useful in some special situations. You may also need to run this tool if you have an unusual controller which could not be automatically configured. Be aware that custom button mappings will not change the help icons or help text.
@@ -2968,7 +2972,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |
 | coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** [UMW*] | XRoar CoCo 2 PAL **(Standalone)** [UMW*] | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
-| colecovision          | ColecoVision                                   | blueMSX                           | Gearcoleco,<br>ares **(Standalone)** [UMW*] |              |                                      |
+| colecovision          | ColecoVision                                   | blueMSX                           | Gearcoleco,<br>openMSX **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes (Daphne games) | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | See the specific _Ports and desktop applications_ section elsewhere in this guide |
