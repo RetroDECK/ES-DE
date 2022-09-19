@@ -640,7 +640,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     int itemInclusionAfter {0};
 
     if (mLegacyMode || mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL) {
-        itemInclusion = static_cast<int>(std::ceil(mMaxItemCount / 2.0f));
+        itemInclusion = static_cast<int>(std::ceil(mMaxItemCount / 2.0f)) + 1;
         itemInclusionAfter = 2;
     }
     else {
@@ -880,18 +880,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("itemSize")) {
-            // Keep size within a 0.05 and 1.0 multiple of the screen size.
-            glm::vec2 itemSize {elem->get<glm::vec2>("itemSize")};
-            if (std::max(itemSize.x, itemSize.y) > 1.0f) {
-                itemSize /= std::max(itemSize.x, itemSize.y);
-            }
-            else if (std::min(itemSize.x, itemSize.y) < 0.005f) {
-                float ratio {std::min(itemSize.x, itemSize.y) / 0.005f};
-                itemSize /= ratio;
-                // Just an extra precaution if a crazy ratio was used.
-                itemSize.x = glm::clamp(itemSize.x, 0.005f, 1.0f);
-                itemSize.y = glm::clamp(itemSize.y, 0.005f, 1.0f);
-            }
+            const glm::vec2 itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
             mItemSize =
                 itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
         }
