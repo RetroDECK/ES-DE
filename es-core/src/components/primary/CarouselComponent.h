@@ -1108,16 +1108,10 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     GuiComponent::applyTheme(theme, view, element, ALL);
 
-    // Some legacy themes use an excessively large carousel and although this is clearly an
-    // error we need to allow it so these themes render correctly.
-    float maxSize {1.5f};
-    if (mLegacyMode)
-        maxSize = 2.0f;
-
     mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
-                         mRenderer->getScreenWidth() * maxSize);
+                         mRenderer->getScreenWidth() * 2.0f);
     mSize.y = glm::clamp(mSize.y, mRenderer->getScreenHeight() * 0.05f,
-                         mRenderer->getScreenHeight() * maxSize);
+                         mRenderer->getScreenHeight() * 2.0f);
 }
 
 template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorState& state)
