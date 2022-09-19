@@ -132,6 +132,8 @@ private:
     Alignment mWheelHorizontalAlignment;
     float mUnfocusedItemOpacity;
     float mMaxItemCount;
+    int mItemsBeforeCenter;
+    int mItemsAfterCenter;
     glm::vec2 mItemSize;
     bool mLinearInterpolation;
     float mItemScale;
@@ -174,6 +176,8 @@ CarouselComponent<T>::CarouselComponent()
     , mWheelHorizontalAlignment {ALIGN_CENTER}
     , mUnfocusedItemOpacity {0.5f}
     , mMaxItemCount {3.0f}
+    , mItemsBeforeCenter {8}
+    , mItemsAfterCenter {8}
     , mItemSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
     , mLinearInterpolation {false}
     , mItemScale {1.2f}
@@ -631,7 +635,21 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     else
         center = static_cast<int>(std::ceil(mEntryCamOffset));
 
-    int itemInclusion {static_cast<int>(std::ceil(mMaxItemCount / 2.0f))};
+    int itemInclusion {0};
+    int itemInclusionBefore {0};
+    int itemInclusionAfter {0};
+
+    if (mLegacyMode || mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL) {
+        itemInclusion = static_cast<int>(std::ceil(mMaxItemCount / 2.0f));
+        itemInclusionAfter = 2;
+    }
+    else {
+        // For the wheel types.
+        itemInclusion = 1;
+        itemInclusionBefore = mItemsBeforeCenter - 1;
+        itemInclusionAfter = mItemsAfterCenter;
+    }
+
     bool singleEntry {numEntries == 1};
 
     struct renderStruct {
@@ -645,7 +663,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     std::vector<renderStruct> renderItems;
     std::vector<renderStruct> renderItemsSorted;
 
-    for (int i = center - itemInclusion; i < center + itemInclusion + 2; ++i) {
+    for (int i = center - itemInclusion - itemInclusionBefore;
+         i < center + itemInclusion + itemInclusionAfter; ++i) {
         int index {i};
 
         while (index < 0)
@@ -694,12 +713,17 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
     int belowCenter {static_cast<int>(std::ceil(renderItems.size() / 2)) - 1};
 
-    // The following sorting makes sure that overlapping items are rendered in the correct order.
-    for (int i = 0; i < belowCenter - 0; ++i)
-        renderItemsSorted.emplace_back(renderItems[i]);
+    if (renderItems.size() == 1) {
+        renderItemsSorted.emplace_back(renderItems.front());
+    }
+    else {
+        // Make sure that overlapping items are rendered in the correct order.
+        for (int i = 0; i < belowCenter - 0; ++i)
+            renderItemsSorted.emplace_back(renderItems[i]);
 
-    for (int i = static_cast<int>(renderItems.size()) - 1; i > belowCenter - 1; --i)
-        renderItemsSorted.emplace_back(renderItems[i]);
+        for (int i = static_cast<int>(renderItems.size()) - 1; i > belowCenter - 1; --i)
+            renderItemsSorted.emplace_back(renderItems[i]);
+    }
 
     for (auto& renderItem : renderItemsSorted) {
         const std::shared_ptr<GuiComponent>& comp {mEntries.at(renderItem.index).data.item};
@@ -872,8 +896,26 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
         }
 
-        if (elem->has("maxItemCount"))
+        if (elem->has("maxItemCount")) {
             mMaxItemCount = glm::clamp(elem->get<float>("maxItemCount"), 0.5f, 30.0f);
+            if (mType == CarouselType::HORIZONTAL_WHEEL || mType == CarouselType::VERTICAL_WHEEL) {
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"maxItemCount\" for element \""
+                                << element.substr(9) << "\" not applicable to the "
+                                << (mType == CarouselType::HORIZONTAL_WHEEL ?
+                                        "\"horizontal_wheel\"" :
+                                        "\"vertical_wheel\"")
+                                << " type";
+            }
+        }
+
+        if (elem->has("itemsBeforeCenter"))
+            mItemsBeforeCenter =
+                glm::clamp(static_cast<int>(elem->get<unsigned int>("itemsBeforeCenter")), 0, 20);
+
+        if (elem->has("itemsAfterCenter"))
+            mItemsAfterCenter =
+                glm::clamp(static_cast<int>(elem->get<unsigned int>("itemsAfterCenter")), 0, 20);
 
         if (elem->has("itemRotation"))
             mItemRotation = elem->get<float>("itemRotation");
