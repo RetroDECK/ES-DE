@@ -395,6 +395,7 @@ void GuiGamelistOptions::openMetaDataEd()
     ScraperSearchParams p;
     p.game = file;
     p.system = file->getSystem();
+    p.automaticMode = false;
 
     std::function<void()> clearGameBtnFunc;
     std::function<void()> deleteGameBtnFunc;
