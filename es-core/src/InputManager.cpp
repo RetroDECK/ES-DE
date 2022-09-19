@@ -450,11 +450,17 @@ bool InputManager::parseEvent(const SDL_Event& event)
                 }
             }
 
+            if (Settings::getInstance()->getBool("InputIgnoreKeyboard"))
+                return true;
+
             mWindow->input(getInputConfigByDevice(DEVICE_KEYBOARD),
                            Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 1, false));
             return true;
         }
         case SDL_KEYUP: {
+            if (Settings::getInstance()->getBool("InputIgnoreKeyboard"))
+                return true;
+
             mWindow->input(getInputConfigByDevice(DEVICE_KEYBOARD),
                            Input(DEVICE_KEYBOARD, TYPE_KEY, event.key.keysym.sym, 0, false));
             return true;

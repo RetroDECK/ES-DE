@@ -918,6 +918,19 @@ void GuiMenu::openInputDeviceOptions()
         }
     });
 
+    // Whether to ignore keyboard input (except the quit shortcut).
+    auto inputIgnoreKeyboard = std::make_shared<SwitchComponent>();
+    inputIgnoreKeyboard->setState(Settings::getInstance()->getBool("InputIgnoreKeyboard"));
+    s->addWithLabel("IGNORE KEYBOARD INPUT", inputIgnoreKeyboard);
+    s->addSaveFunc([inputIgnoreKeyboard, s] {
+        if (Settings::getInstance()->getBool("InputIgnoreKeyboard") !=
+            inputIgnoreKeyboard->getState()) {
+            Settings::getInstance()->setBool("InputIgnoreKeyboard",
+                                             inputIgnoreKeyboard->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Configure keyboard and controllers.
     ComponentListRow configureInputRow;
     configureInputRow.elements.clear();

@@ -202,6 +202,7 @@ void Settings::setDefaults()
     // Input device settings.
     mStringMap["InputControllerType"] = {"xbox", "xbox"};
     mBoolMap["InputOnlyFirstController"] = {false, false};
+    mBoolMap["InputIgnoreKeyboard"] = {false, false};
 
     // Game collection settings.
     mStringMap["CollectionSystemsAuto"] = {"", ""};
