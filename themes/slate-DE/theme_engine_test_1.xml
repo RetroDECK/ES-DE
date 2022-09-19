@@ -9,7 +9,8 @@
             <size>0.23 1.0</size>
             <type>vertical_wheel</type>
             <staticItem>./${system.theme}/images/logo.svg</staticItem>
-            <maxItemCount>10</maxItemCount>
+            <itemsBeforeCenter>4</itemsBeforeCenter>
+            <itemsAfterCenter>4</itemsAfterCenter>
             <itemSize>0.15 0.125</itemSize>
             <itemScale>1.23</itemScale>
             <itemRotation>6.5</itemRotation>
