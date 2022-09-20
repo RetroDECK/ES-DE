@@ -2146,6 +2146,10 @@ If this setting is enabled and a folder has its flag set to be excluded from the
 
 With this option enabled underscores _ in game names are converted to spaces when performing scraper searches. This affects both the single-game scraper and the multi-scraper and it will also be applied automatically to the _Refine search_ dialog.
 
+**Remove dots from searches when auto-scraping** _(ScreenScraper only)_
+
+ScreenScraper has issues with some game names containing dots, such as _Super Mario Bros._ and _Super Mario Bros. 2_ which will both be identified as _Super Mario Bros._ during automatic scraping. By enabling this option all dots are stripped from game names when searching which will result in higher accuracy in such instances. It may however cause unforeseen problems for some other games so experiment with disabling this option as needed. Note that this setting only affects the fully automatic multi-scraper, if running the multi-scraper in interactive mode or if using the single-game scraper via the metadata editor, then the dots will always be retained.
+
 **Enable fallback to additional regions** _(ScreenScraper only)_
 
 When a certain game media file does not exist for the selected region, ES-DE automatically performs a fallback to the regions _world_, _USA_, _Japan_, _EU_, and _custom_ in this specific order. If this setting is enabled then an additional fallback is performed to all other country-specific regions. This makes it possible to scrape media for some games only released in specific countries like Brazil or South Korea. It may also make it possible to scrape some game media that have been uploaded to ScreenScraper using the wrong region. The special _ss/ScreenScraper_ region is also enabled via this option, and among other things it contains media for games that never had official releases. This is relevant for instance for OpenBOR and PICO-8 games where 3D boxes and other images may become available. The drawback of this setting is that you may get inaccurate data such as box art in the wrong language or unofficial box art for arcade games, so you may want to experiment with this option on a per-system basis.

@@ -33,6 +33,7 @@
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
 * Added the .bin file extension to the gx4000 system
+* Added the .m3u file extension to the pcfx system
 * Removed the .7z and .zip file extensions from the 3do system
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package
 * (Linux) Added Flatpak support for Solarus using the Solarus Launcher package
@@ -94,6 +95,7 @@
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
 * If a wheel (marquee) image on ScreenScraper falls back to another region, then the wheel-hd image is now used instead if it matches the set region
+* Added a ScreenScraper-specific option to remove dots from game name searches when using the multi-scraper in automatic mode
 * Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
 * When scraping in semi-automatic mode, horizontal scrolling of long game names are no longer reset when automatically selecting the result
@@ -132,6 +134,7 @@
 * Added the properties "itemsBeforeCenter" and "itemsAfterCenter" to define entries for carousels of the wheel type
 * Added a wheelHorizontalAlignment property for aligning the carousel within the overall element area (horizontal/vertical wheel only)
 * Added reflections support to the carousel
+* Added a new "itemAxisHorizontal" property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
 * Added carousel theme support for setting item transitions to "slide" or "instant"
 * Removed support for the thumbnail game media type
@@ -175,6 +178,7 @@
 * The rating icons would not fit into the designated space in the scraper GUI when running at some vertically oriented screen resolutions
 * If setting an origin other than 0.5 for a video with pillarboxes enabled, the video would not get centered on the black rectangle
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
+* The gamelist quick list scrolling overlay would not disappear as intended under some circumstances
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The tile property for the image element did not work correctly with SVG images

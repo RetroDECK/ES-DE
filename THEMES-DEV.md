@@ -1498,6 +1498,9 @@ Properties:
     - Point around which the item will be rotated.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `-3 0.5`
+* `itemAxisHorizontal` - type: BOOLEAN
+    - If `type` has been set to "horizontal_wheel" or "vertical_wheel" then the items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel.
+    - Default is `false`
 * `itemHorizontalAlignment` - type: STRING
     - Sets `staticItem` / `itemType` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
     - Valid values are `left`, `center` or `right`
