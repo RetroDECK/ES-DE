@@ -88,6 +88,8 @@ void GamelistView::onTransition()
 
     for (auto& animation : mGIFAnimComponents)
         animation->setPauseAnimation(true);
+
+    mWindow->renderListScrollOverlay(0.0f, "");
 }
 
 void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
