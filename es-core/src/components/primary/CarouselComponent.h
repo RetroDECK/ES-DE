@@ -491,8 +491,11 @@ template <typename T> bool CarouselComponent<T>::input(InputConfig* config, Inpu
         }
         else {
             if (config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
-                config->isMappedLike("left", input) || config->isMappedLike("right", input))
+                config->isMappedLike("left", input) || config->isMappedLike("right", input)) {
+                if (isScrolling())
+                    onCursorChanged(CursorState::CURSOR_STOPPED);
                 List::listInput(0);
+            }
         }
     }
 

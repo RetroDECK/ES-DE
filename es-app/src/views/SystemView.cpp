@@ -25,6 +25,7 @@ SystemView::SystemView()
     : mRenderer {Renderer::getInstance()}
     , mPrimary {nullptr}
     , mPrimaryType {PrimaryType::CAROUSEL}
+    , mLastCursor {-1}
     , mCamOffset {0.0f}
     , mFadeOpacity {0.0f}
     , mPreviousScrollVelocity {0}
@@ -137,8 +138,10 @@ void SystemView::update(int deltaTime)
 
     mPrimary->update(deltaTime);
 
-    for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents)
-        video->update(deltaTime);
+    for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents) {
+        if (!isScrolling())
+            video->update(deltaTime);
+    }
 
     for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
         anim->update(deltaTime);
@@ -212,6 +215,12 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 void SystemView::onCursorChanged(const CursorState& state)
 {
     int cursor {mPrimary->getCursor()};
+
+    // Avoid double updates.
+    if (cursor == mLastCursor)
+        return;
+
+    mLastCursor = cursor;
 
     for (auto& selector : mSystemElements[cursor].gameSelectors) {
         if (selector->getGameSelection() == GameSelectorComponent::GameSelection::RANDOM)

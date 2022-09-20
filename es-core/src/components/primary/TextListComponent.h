@@ -268,10 +268,14 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
                 config->isMappedLike("rightshoulder", input) ||
                 config->isMappedLike("lefttrigger", input) ||
                 config->isMappedLike("righttrigger", input)) {
-                if constexpr (std::is_same_v<T, SystemData*>)
+                if constexpr (std::is_same_v<T, SystemData*>) {
+                    if (isScrolling())
+                        onCursorChanged(CursorState::CURSOR_STOPPED);
                     List::listInput(0);
-                else
+                }
+                else {
                     List::stopScrolling();
+                }
             }
         }
     }
