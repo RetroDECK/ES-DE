@@ -125,6 +125,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperRespectExclusions"] = {true, true};
     mBoolMap["ScraperExcludeRecursively"] = {true, true};
     mBoolMap["ScraperConvertUnderscores"] = {true, true};
+    mBoolMap["ScraperAutomaticRemoveDots"] = {true, true};
     mBoolMap["ScraperRegionFallback"] = {true, true};
     mBoolMap["ScraperRetryPeerVerification"] = {false, false};
 

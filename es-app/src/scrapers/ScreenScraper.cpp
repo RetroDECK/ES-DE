@@ -726,8 +726,8 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
     const std::string gameName) const
 {
     std::string screenScraperURL;
-    std::string searchName = gameName;
-    bool singleSearch = false;
+    std::string searchName {gameName};
+    bool singleSearch {false};
 
     // Trim leading and trailing whitespaces.
     searchName = Utils::String::trim(searchName);
@@ -771,8 +771,8 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
     // Another issue is that ScreenScraper removes the word "the" from the search string, which
     // could also lead to an error for short game names.
     if (!singleSearch) {
-        std::string removeThe =
-            Utils::String::replace(Utils::String::toUpper(searchName), "THE ", "");
+        std::string removeThe {
+            Utils::String::replace(Utils::String::toUpper(searchName), "THE ", "")};
         // Any additional spaces must also be removed.
         removeThe.erase(removeThe.begin(),
                         std::find_if(removeThe.begin(), removeThe.end(), [](char c) {
@@ -788,6 +788,8 @@ std::string ScreenScraperRequest::ScreenScraperConfig::getGameSearchUrl(
     }
 
     if (automaticMode || singleSearch) {
+        if (Settings::getInstance()->getBool("ScraperAutomaticRemoveDots"))
+            searchName = Utils::String::replace(searchName, ".", "");
         screenScraperURL = API_URL_BASE + "/jeuInfos.php?devid=" +
                            Utils::String::scramble(API_DEV_U, API_DEV_KEY) +
                            "&devpassword=" + Utils::String::scramble(API_DEV_P, API_DEV_KEY) +

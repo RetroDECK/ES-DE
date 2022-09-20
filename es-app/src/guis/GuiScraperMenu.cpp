@@ -896,6 +896,29 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
+    // Whether to remove dots from game names when searching using the automatic scraper.
+    auto scraperAutomaticRemoveDots = std::make_shared<SwitchComponent>();
+    scraperAutomaticRemoveDots->setState(
+        Settings::getInstance()->getBool("ScraperAutomaticRemoveDots"));
+    s->addWithLabel("REMOVE DOTS FROM SEARCHES WHEN AUTO-SCRAPING", scraperAutomaticRemoveDots);
+    s->addSaveFunc([scraperAutomaticRemoveDots, s] {
+        if (scraperAutomaticRemoveDots->getState() !=
+            Settings::getInstance()->getBool("ScraperAutomaticRemoveDots")) {
+            Settings::getInstance()->setBool("ScraperAutomaticRemoveDots",
+                                             scraperAutomaticRemoveDots->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // This is not needed for TheGamesDB, so gray out the option if this scraper is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scraperAutomaticRemoveDots->setEnabled(false);
+        scraperAutomaticRemoveDots->setOpacity(DISABLED_OPACITY);
+        scraperAutomaticRemoveDots->getParent()
+            ->getChild(scraperAutomaticRemoveDots->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Whether to fallback to additional regions.
     auto scraperRegionFallback = std::make_shared<SwitchComponent>(mWindow);
     scraperRegionFallback->setState(Settings::getInstance()->getBool("ScraperRegionFallback"));
