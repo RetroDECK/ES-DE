@@ -273,6 +273,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemInterpolation", STRING},
        {"itemRotation", FLOAT},
        {"itemRotationOrigin", NORMALIZED_PAIR},
+       {"itemAxisHorizontal", BOOLEAN},
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},
        {"wheelHorizontalAlignment", STRING},

@@ -138,6 +138,7 @@ private:
     glm::vec2 mItemSize;
     bool mLinearInterpolation;
     bool mInstantItemTransitions;
+    bool mItemAxisHorizontal;
     float mItemScale;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
@@ -183,6 +184,7 @@ CarouselComponent<T>::CarouselComponent()
     , mItemSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
     , mLinearInterpolation {false}
     , mInstantItemTransitions {false}
+    , mItemAxisHorizontal {false}
     , mItemScale {1.2f}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
@@ -519,14 +521,20 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         carouselTrans, glm::round(glm::vec3 {GuiComponent::mOrigin.x * mSize.x * -1.0f,
                                              GuiComponent::mOrigin.y * mSize.y * -1.0f, 0.0f}));
 
-    mRenderer->pushClipRect(
-        glm::ivec2 {static_cast<int>(glm::clamp(std::round(carouselTrans[3].x), 0.0f,
-                                                mRenderer->getScreenWidth())),
-                    static_cast<int>(glm::clamp(std::round(carouselTrans[3].y), 0.0f,
-                                                mRenderer->getScreenHeight()))},
-        glm::ivec2 {static_cast<int>(std::min(std::round(mSize.x), mRenderer->getScreenWidth())),
-                    static_cast<int>(std::min(std::round(mSize.y), mRenderer->getScreenHeight()))});
+    if (carouselTrans[3].x + mSize.x <= 0.0f || carouselTrans[3].y + mSize.y <= 0.0f)
+        return;
 
+    const float sizeY {carouselTrans[3].y < 0.0f ? mSize.y + carouselTrans[3].y : mSize.y};
+
+    glm::ivec2 clipPos {static_cast<int>(glm::clamp(std::round(carouselTrans[3].x), 0.0f,
+                                                    mRenderer->getScreenWidth())),
+                        static_cast<int>(glm::clamp(std::round(carouselTrans[3].y), 0.0f,
+                                                    mRenderer->getScreenHeight()))};
+    glm::ivec2 clipDim {
+        static_cast<int>(std::min(std::round(mSize.x), mRenderer->getScreenWidth())),
+        static_cast<int>(std::min(std::round(sizeY), mRenderer->getScreenHeight()))};
+
+    mRenderer->pushClipRect(clipPos, clipDim);
     mRenderer->setMatrix(carouselTrans);
 
     // In image debug mode, draw a green rectangle covering the entire carousel area.
@@ -735,8 +743,36 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             continue;
 
         if (mType == CarouselType::VERTICAL_WHEEL || mType == CarouselType::HORIZONTAL_WHEEL) {
-            comp->setRotationDegrees(mItemRotation * renderItem.distance);
-            comp->setRotationOrigin(mItemRotationOrigin);
+            if (mItemAxisHorizontal) {
+                glm::mat4 positionCalc {renderItem.trans};
+                const glm::vec2 rotationSize {comp->getSize()};
+                const float xOff {(GuiComponent::mOrigin.x - mItemRotationOrigin.x) *
+                                  rotationSize.x};
+                const float yOff {(GuiComponent::mOrigin.y - mItemRotationOrigin.y) *
+                                  rotationSize.y};
+
+                // Transform to offset point.
+                if (xOff != 0.0f || yOff != 0.0f)
+                    positionCalc =
+                        glm::translate(positionCalc, glm::vec3 {xOff * -1.0f, yOff * -1.0f, 0.0f});
+
+                // Apply rotation transform.
+                positionCalc =
+                    glm::rotate(positionCalc, glm::radians(mItemRotation * renderItem.distance),
+                                glm::vec3 {0.0f, 0.0f, 1.0f});
+
+                // Transform back to original point.
+                if (xOff != 0.0f || yOff != 0.0f)
+                    positionCalc = glm::translate(positionCalc, glm::vec3 {xOff, yOff, 0.0f});
+
+                // Only keep position and discard the rotation data.
+                renderItem.trans[3].x = positionCalc[3].x;
+                renderItem.trans[3].y = positionCalc[3].y;
+            }
+            else {
+                comp->setRotationDegrees(mItemRotation * renderItem.distance);
+                comp->setRotationOrigin(mItemRotationOrigin);
+            }
         }
 
         comp->setScale(renderItem.scale);
@@ -845,49 +881,6 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!mLegacyMode) {
         mLinearInterpolation = true;
 
-        if (elem->has("itemScale"))
-            mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 3.0f);
-
-        if (elem->has("itemInterpolation")) {
-            const std::string itemInterpolation {elem->get<std::string>("itemInterpolation")};
-            if (itemInterpolation == "linear") {
-                mLinearInterpolation = true;
-            }
-            else if (itemInterpolation == "nearest") {
-                mLinearInterpolation = false;
-            }
-            else {
-                mLinearInterpolation = true;
-                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "\"itemInterpolation\" for element \""
-                                << element.substr(9) << "\" defined as \"" << itemInterpolation
-                                << "\"";
-            }
-        }
-
-        if (elem->has("itemTransitions")) {
-            const std::string itemTransitions {elem->get<std::string>("itemTransitions")};
-            if (itemTransitions == "slide") {
-                mInstantItemTransitions = false;
-            }
-            else if (itemTransitions == "instant") {
-                mInstantItemTransitions = true;
-            }
-            else {
-                mInstantItemTransitions = false;
-                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "\"itemTransitions\" for element \""
-                                << element.substr(9) << "\" defined as \"" << itemTransitions
-                                << "\"";
-            }
-        }
-
-        if (elem->has("itemSize")) {
-            const glm::vec2 itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
-            mItemSize =
-                itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
-        }
-
         if (elem->has("maxItemCount")) {
             mMaxItemCount = glm::clamp(elem->get<float>("maxItemCount"), 0.5f, 30.0f);
             if (mType == CarouselType::HORIZONTAL_WHEEL || mType == CarouselType::VERTICAL_WHEEL) {
@@ -909,10 +902,57 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mItemsAfterCenter =
                 glm::clamp(static_cast<int>(elem->get<unsigned int>("itemsAfterCenter")), 0, 20);
 
+        if (elem->has("itemSize")) {
+            const glm::vec2 itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
+            mItemSize =
+                itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        }
+
+        if (elem->has("itemScale"))
+            mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 3.0f);
+
+        if (elem->has("itemTransitions")) {
+            const std::string itemTransitions {elem->get<std::string>("itemTransitions")};
+            if (itemTransitions == "slide") {
+                mInstantItemTransitions = false;
+            }
+            else if (itemTransitions == "instant") {
+                mInstantItemTransitions = true;
+            }
+            else {
+                mInstantItemTransitions = false;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"itemTransitions\" for element \""
+                                << element.substr(9) << "\" defined as \"" << itemTransitions
+                                << "\"";
+            }
+        }
+
+        if (elem->has("itemInterpolation")) {
+            const std::string itemInterpolation {elem->get<std::string>("itemInterpolation")};
+            if (itemInterpolation == "linear") {
+                mLinearInterpolation = true;
+            }
+            else if (itemInterpolation == "nearest") {
+                mLinearInterpolation = false;
+            }
+            else {
+                mLinearInterpolation = true;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"itemInterpolation\" for element \""
+                                << element.substr(9) << "\" defined as \"" << itemInterpolation
+                                << "\"";
+            }
+        }
+
         if (elem->has("itemRotation"))
             mItemRotation = elem->get<float>("itemRotation");
+
         if (elem->has("itemRotationOrigin"))
             mItemRotationOrigin = elem->get<glm::vec2>("itemRotationOrigin");
+
+        mItemAxisHorizontal =
+            (elem->has("itemAxisHorizontal") && elem->get<bool>("itemAxisHorizontal"));
 
         if (elem->has("itemHorizontalAlignment")) {
             const std::string alignment {elem->get<std::string>("itemHorizontalAlignment")};
