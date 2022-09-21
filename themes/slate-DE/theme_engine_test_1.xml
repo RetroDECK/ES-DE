@@ -13,13 +13,13 @@
             <itemsAfterCenter>4</itemsAfterCenter>
             <itemSize>0.15 0.125</itemSize>
             <itemScale>1.23</itemScale>
-            <itemRotation>11.5</itemRotation>
-            <itemRotationOrigin>-2.35 0.4</itemRotationOrigin>
+            <itemRotation>11</itemRotation>
+            <itemRotationOrigin>-3.03 0.5</itemRotationOrigin>
             <itemAxisHorizontal>true</itemAxisHorizontal>
-            <itemHorizontalAlignment>left</itemHorizontalAlignment>
+            <itemHorizontalAlignment>center</itemHorizontalAlignment>
+            <itemVerticalAlignment>center</itemVerticalAlignment>
             <wheelHorizontalAlignment>right</wheelHorizontalAlignment>
             <horizontalOffset>-0.05</horizontalOffset>
-            <verticalOffset>-0.004</verticalOffset>
             <text>${system.fullName}</text>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.070</fontSize>
