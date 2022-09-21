@@ -134,7 +134,7 @@
 * Added the properties "itemsBeforeCenter" and "itemsAfterCenter" to define entries for carousels of the wheel type
 * Added a wheelHorizontalAlignment property for aligning the carousel within the overall element area (horizontal/vertical wheel only)
 * Added reflections support to the carousel
-* Added a new "itemAxisHorizontal" property to the carousel to keep wheel items horizontal at all times
+* Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
 * Added carousel theme support for setting item transitions to "slide" or "instant"
 * Removed support for the thumbnail game media type

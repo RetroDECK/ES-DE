@@ -1467,11 +1467,11 @@ Properties:
     - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
 * `itemsBeforeCenter` - type: UNSIGNED_INTEGER
-    - Sets the number of items above the center position (the currently selected entry) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsAfterCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - Sets the number of items above the center position (the currently selected item) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsAfterCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
 * `itemsAfterCenter` - type: UNSIGNED_INTEGER
-    - Sets the number of items below the center position (the currently selected entry) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - Sets the number of items below the center position (the currently selected item) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
 * `itemSize` - type: NORMALIZED_PAIR
@@ -1479,7 +1479,7 @@ Properties:
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
 * `itemScale` - type: FLOAT.
-    - Selected item is increased in size by this scale
+    - Selected item is increased in size by this scale.
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.2`
 * `itemTransitions` - type: STRING
@@ -1491,15 +1491,15 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `linear`
 * `itemRotation` - type: FLOAT
-    - Angle in degrees that the item should be rotated. Value should be positive.
+    - Angle in degrees that the item should be rotated. This value should be positive if the `itemRotationOrigin` X axis has a negative value, and it should be negative if the `itemRotationOrigin` X axis has a positive value, otherwise the wheel will rotate in the wrong direction.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `7.5`
 * `itemRotationOrigin` - type: NORMALIZED_PAIR
-    - Point around which the item will be rotated.
+    - Point around which the item will be rotated. The X axis of this property is the distance from the left side of the item to the center of the wheel in multiples of the size defined by the `itemSize` X axis. So if for instance the itemSize X axis is set to 0.2 and itemRotationOrigin is set to -2, then the center of the wheel will be at a -0.4 distance from the left side of the item. In other words, if specifying a negative number the item will be located on the right side of the carousel, i.e. the wheel will be to the left and if specifying a positive number the wheel will be to the right. Note again that this is calculated from the left side of the item, so to get an identically sized wheel as the -2 wheel just mentioned you need to define 3 as the value rather than 2 if you want the wheel to the right side of the item. This is not an error but due to the way that the coordinates are calculated. The Y axis should normally be left at `0.5` or you may get some weird results. It is however possible to use this axis value creatively if you know what you are doing.
     - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
     - Default is `-3 0.5`
 * `itemAxisHorizontal` - type: BOOLEAN
-    - If `type` has been set to "horizontal_wheel" or "vertical_wheel" then the items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel.
+    - If `type` has been set to "horizontal_wheel" or "vertical_wheel" then the items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel. Make sure that `itemVerticalAlignment` is set to `center` when using this attribute or you'll get some strange alignment issues.
     - Default is `false`
 * `itemHorizontalAlignment` - type: STRING
     - Sets `staticItem` / `itemType` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
@@ -1514,11 +1514,11 @@ Properties:
     - Valid values are `left`, `center` or `right`
     - Default is `center`
 * `horizontalOffset` - type: FLOAT
-    - Offsets the carousel horizontally inside its designated area, as defined by the `size` property. The value of this property is relative to the width of the carousel (with `1` being equivalent to its entire width). This property can be used to add a margin if using `itemHorizontalAlignment`.
+    - Offsets the carousel horizontally inside its designated area, as defined by the `size` property. The value of this property is relative to the width of the carousel (with `1` being equivalent to its entire width). This property can for example be used to add a margin if using `itemHorizontalAlignment` or to offset the selected item of horizontal carousels to a non-centered position.
     - Minimum value is `-1.0` and maximum value is `1`
     - Default is `0`
 * `verticalOffset` - type: FLOAT
-    - Offsets the carousel vertically inside its designated area, as defined by the `size` property. The value of this property is relative to the height of the carousel (with `1` being equivalent to its entire height). This can be used to add a margin if using `itemVerticalAlignment` but is even more useful if `reflections` has been set as it allows the control of how much of the reflections to display by relocating the carousel inside its clipping area.
+    - Offsets the carousel vertically inside its designated area, as defined by the `size` property. The value of this property is relative to the height of the carousel (with `1` being equivalent to its entire height). This can be used to add a margin if using `itemVerticalAlignment` but is even more useful if `reflections` has been set as it allows the control of how much of the reflections to display by relocating the carousel inside its clipping area. It can also be used to offset the selected item of vertical carousels to a non-centered position.
     - Minimum value is `-1.0` and maximum value is `1`
     - Default is `0`
 * `reflections` - type: BOOLEAN
