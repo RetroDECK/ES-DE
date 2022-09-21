@@ -748,16 +748,13 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         if (mType == CarouselType::VERTICAL_WHEEL || mType == CarouselType::HORIZONTAL_WHEEL) {
             if (mItemAxisHorizontal) {
                 glm::mat4 positionCalc {renderItem.trans};
-                const glm::vec2 rotationSize {comp->getSize()};
-                const float xOff {(GuiComponent::mOrigin.x - mItemRotationOrigin.x) *
-                                  rotationSize.x};
-                const float yOff {(GuiComponent::mOrigin.y - mItemRotationOrigin.y) *
-                                  rotationSize.y};
+                const float xOff {(GuiComponent::mOrigin.x - mItemRotationOrigin.x) * mItemSize.x};
+                const float yOff {(GuiComponent::mOrigin.y - mItemRotationOrigin.y) * mItemSize.y};
 
                 // Transform to offset point.
                 if (xOff != 0.0f || yOff != 0.0f)
                     positionCalc =
-                        glm::translate(positionCalc, glm::vec3 {xOff * -1.0f, yOff * -1.0f, 0.0f});
+                        glm::translate(positionCalc, glm::vec3 {xOff * -1.0f, 0.0f * -1.0f, 0.0f});
 
                 // Apply rotation transform.
                 positionCalc =
@@ -766,8 +763,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
                 // Transform back to original point.
                 if (xOff != 0.0f || yOff != 0.0f)
-                    positionCalc = glm::translate(positionCalc, glm::vec3 {xOff, yOff, 0.0f});
-
+                    positionCalc = glm::translate(positionCalc, glm::vec3 {xOff, 0.0f, 0.0f});
                 // Only keep position and discard the rotation data.
                 renderItem.trans[3].x = positionCalc[3].x;
                 renderItem.trans[3].y = positionCalc[3].y;
