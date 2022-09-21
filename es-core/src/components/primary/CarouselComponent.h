@@ -548,6 +548,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mCarouselColor, mCarouselColorEnd,
                         mColorGradientHorizontal);
 
+    bool isWheel {mType == CarouselType::VERTICAL_WHEEL || mType == CarouselType::HORIZONTAL_WHEEL};
+
     // Draw the items.
     // itemSpacing will also include the size of the item itself.
     glm::vec2 itemSpacing {0.0f, 0.0f};
@@ -555,7 +557,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     float yOff {0.0f};
     float scaleSize {mItemSize.x * mItemScale - mItemSize.x};
 
-    if (mType == CarouselType::HORIZONTAL_WHEEL || mType == CarouselType::VERTICAL_WHEEL) {
+    if (isWheel) {
         xOff = (mSize.x - mItemSize.x) / 2.0f - (camOffset * itemSpacing.y);
         yOff = (mSize.y - mItemSize.y) / 2.0f;
         // Alignment of the actual carousel inside to the overall component area.
@@ -732,11 +734,22 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     }
     else {
         // Make sure that overlapping items are rendered in the correct order.
-        for (int i = 0; i < belowCenter - 0; ++i)
+        size_t zeroDistanceEntry {0};
+
+        for (int i = 0; i < belowCenter; ++i)
             renderItemsSorted.emplace_back(renderItems[i]);
 
-        for (int i = static_cast<int>(renderItems.size()) - 1; i > belowCenter - 1; --i)
+        for (int i = static_cast<int>(renderItems.size()) - 1; i > belowCenter - 1; --i) {
+            if (isWheel && (mPositiveDirection ? std::ceil(renderItems[i].distance) :
+                                                 std::floor(renderItems[i].distance)) == 0) {
+                zeroDistanceEntry = i;
+                continue;
+            }
             renderItemsSorted.emplace_back(renderItems[i]);
+        }
+
+        if (isWheel)
+            renderItemsSorted.emplace_back(renderItems[zeroDistanceEntry]);
     }
 
     for (auto& renderItem : renderItemsSorted) {
@@ -745,7 +758,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         if (comp == nullptr)
             continue;
 
-        if (mType == CarouselType::VERTICAL_WHEEL || mType == CarouselType::HORIZONTAL_WHEEL) {
+        if (isWheel) {
             if (mItemAxisHorizontal) {
                 glm::mat4 positionCalc {renderItem.trans};
                 const float xOff {(GuiComponent::mOrigin.x - mItemRotationOrigin.x) * mItemSize.x};
