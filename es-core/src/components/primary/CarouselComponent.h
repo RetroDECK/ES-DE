@@ -548,7 +548,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mCarouselColor, mCarouselColorEnd,
                         mColorGradientHorizontal);
 
-    bool isWheel {mType == CarouselType::VERTICAL_WHEEL || mType == CarouselType::HORIZONTAL_WHEEL};
+    const bool isWheel {mType == CarouselType::VERTICAL_WHEEL ||
+                        mType == CarouselType::HORIZONTAL_WHEEL};
 
     // Draw the items.
     // itemSpacing will also include the size of the item itself.
