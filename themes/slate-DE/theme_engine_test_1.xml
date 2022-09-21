@@ -6,7 +6,7 @@
     <view name="system">
         <carousel name="system_carousel">
             <pos>0 0</pos>
-            <size>0.30 1.0</size>
+            <size>0.28 1.0</size>
             <type>vertical_wheel</type>
             <staticItem>./${system.theme}/images/logo.svg</staticItem>
             <itemsBeforeCenter>4</itemsBeforeCenter>
@@ -55,7 +55,7 @@
             <zIndex>3</zIndex>
         </image>
         <video name="random_game_video">
-            <pos>0.31 0.23</pos>
+            <pos>0.30 0.23</pos>
             <maxSize>0.3 0.424</maxSize>
             <imageType>marquee, titlescreen</imageType>
             <gameselector>selector_random</gameselector>
@@ -67,7 +67,7 @@
             <fadeInTime>1.2</fadeInTime>
         </video>
         <text name="game_counter">
-            <pos>0.31 0.082</pos>
+            <pos>0.30 0.082</pos>
             <size>0.35 0.1</size>
             <systemdata>gamecount</systemdata>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
@@ -89,7 +89,7 @@
             <zIndex>50</zIndex>
         </text>
         <text name="system_name">
-            <pos>0.31 0.01</pos>
+            <pos>0.30 0.01</pos>
             <size>0.46 0.1</size>
             <systemdata>fullname</systemdata>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
@@ -172,7 +172,7 @@
             <horizontalAlignment>right</horizontalAlignment>
         </text>
         <rating name="random_game_rating">
-            <pos>0.31 0.167</pos>
+            <pos>0.30 0.167</pos>
             <size>0.06 0.04</size>
             <gameselector>selector_random</gameselector>
             <opacity>0.9</opacity>
