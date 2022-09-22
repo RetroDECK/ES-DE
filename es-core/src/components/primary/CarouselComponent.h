@@ -58,6 +58,7 @@ public:
     void setItemType(std::string itemType) { mItemType = itemType; }
     const std::string& getDefaultItem() { return mDefaultItem; }
     void setDefaultItem(std::string defaultItem) { mDefaultItem = defaultItem; }
+    bool isScrolling() const override { return List::isScrolling(); }
 
     void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
     {
@@ -83,7 +84,6 @@ private:
         NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
     }
 
-    bool isScrolling() const override { return List::isScrolling(); }
     void stopScrolling() override
     {
         List::stopScrolling();

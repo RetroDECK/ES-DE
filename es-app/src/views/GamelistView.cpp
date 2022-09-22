@@ -433,17 +433,24 @@ void GamelistView::updateView(const CursorState& state)
         return;
     }
 
+    bool loadedTexture {false};
+
+    if (mCarousel != nullptr && mCarousel->isScrolling()) {
+        mCarousel->onDemandTextureLoad();
+        loadedTexture = true;
+    }
+
     FileData* file {(mPrimary->size() > 0 && state == CursorState::CURSOR_STOPPED) ?
                         mPrimary->getSelected() :
                         nullptr};
-
-    if (mCarousel != nullptr)
-        mCarousel->onDemandTextureLoad();
 
     // If the game data has already been rendered to the view, then skip it this time.
     // This also happens when fast-scrolling.
     if (file == mLastUpdated)
         return;
+
+    if (mCarousel != nullptr && !loadedTexture)
+        mCarousel->onDemandTextureLoad();
 
     if (state == CursorState::CURSOR_STOPPED)
         mLastUpdated = file;
