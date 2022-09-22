@@ -354,11 +354,57 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
 template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
 {
     if constexpr (std::is_same_v<T, FileData*>) {
-        int numEntries {static_cast<int>(mEntries.size())};
-        int center {getCursor()};
-        int itemInclusion {static_cast<int>(std::ceil((mMaxItemCount + 1) / 2.0f))};
+        const int numEntries {static_cast<int>(mEntries.size())};
+        const int center {getCursor()};
+        const bool isWheel {mType == CarouselType::VERTICAL_WHEEL ||
+                            mType == CarouselType::HORIZONTAL_WHEEL};
+        int centerOffset {0};
+        int itemInclusion {0};
+        int itemInclusionBefore {0};
+        int itemInclusionAfter {0};
 
-        for (int i = center - itemInclusion + 1; i < center + itemInclusion; ++i) {
+        if (isWheel) {
+            itemInclusion = 1;
+            itemInclusionBefore = mItemsBeforeCenter - 1;
+            itemInclusionAfter = mItemsAfterCenter;
+        }
+        else {
+            itemInclusion = static_cast<int>(std::ceil((mMaxItemCount + 1) / 2.0f));
+            itemInclusionBefore = -1;
+            // If the carousel is offset we need to load additional textures to fully populate
+            // the visible entries.
+            if (mType == CarouselType::HORIZONTAL && mHorizontalOffset != 0.0f) {
+                const float itemSpacing {
+                    ((mSize.x - (mItemSize.x * mMaxItemCount)) / mMaxItemCount) + mItemSize.x};
+
+                centerOffset = static_cast<int>(std::ceil(mSize.x * std::fabs(mHorizontalOffset) /
+                                                          std::min(mItemSize.x, itemSpacing)));
+                if (mHorizontalOffset < 0.0f)
+                    itemInclusionAfter += centerOffset;
+                else
+                    itemInclusionBefore += centerOffset;
+
+                if (mHorizontalOffset > 0.0f)
+                    centerOffset = -centerOffset;
+            }
+            else if (mType == CarouselType::VERTICAL && mVerticalOffset != 0.0f) {
+                const float itemSpacing {
+                    ((mSize.y - (mItemSize.y * mMaxItemCount)) / mMaxItemCount) + mItemSize.y};
+
+                centerOffset = static_cast<int>(std::ceil(mSize.y * std::fabs(mVerticalOffset) /
+                                                          std::min(mItemSize.y, itemSpacing)));
+                if (mVerticalOffset < 0.0f)
+                    itemInclusionAfter += centerOffset;
+                else
+                    itemInclusionBefore += centerOffset;
+
+                if (mVerticalOffset > 0.0f)
+                    centerOffset = -centerOffset;
+            }
+        }
+
+        for (int i = center - itemInclusion - itemInclusionBefore;
+             i < center + itemInclusion + itemInclusionAfter; ++i) {
             int cursor {i};
 
             while (cursor < 0)
@@ -527,6 +573,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     if (carouselTrans[3].x + mSize.x <= 0.0f || carouselTrans[3].y + mSize.y <= 0.0f)
         return;
 
+    const float sizeX {carouselTrans[3].x < 0.0f ? mSize.x + carouselTrans[3].x : mSize.x};
     const float sizeY {carouselTrans[3].y < 0.0f ? mSize.y + carouselTrans[3].y : mSize.y};
 
     glm::ivec2 clipPos {static_cast<int>(glm::clamp(std::round(carouselTrans[3].x), 0.0f,
@@ -534,7 +581,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                         static_cast<int>(glm::clamp(std::round(carouselTrans[3].y), 0.0f,
                                                     mRenderer->getScreenHeight()))};
     glm::ivec2 clipDim {
-        static_cast<int>(std::min(std::round(mSize.x), mRenderer->getScreenWidth())),
+        static_cast<int>(std::min(std::round(sizeX), mRenderer->getScreenWidth())),
         static_cast<int>(std::min(std::round(sizeY), mRenderer->getScreenHeight()))};
 
     mRenderer->pushClipRect(clipPos, clipDim);
@@ -646,6 +693,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     }
 
     int center {0};
+    int centerOffset {0};
     // Needed to make sure that overlapping items are renderered correctly.
     if (mPositiveDirection)
         center = static_cast<int>(std::floor(camOffset));
@@ -659,6 +707,30 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     if (mLegacyMode || mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL) {
         itemInclusion = static_cast<int>(std::ceil(mMaxItemCount / 2.0f)) + 1;
         itemInclusionAfter = 2;
+        // If the carousel is offset we need to calculate the center offset so the items are
+        // rendered in the correct order (as seen when overlapping).
+        if (mType == CarouselType::HORIZONTAL && mHorizontalOffset != 0.0f) {
+            centerOffset = static_cast<int>(std::ceil(mSize.x * std::fabs(mHorizontalOffset) /
+                                                      std::min(mItemSize.x, itemSpacing.x)));
+            if (mHorizontalOffset < 0.0f)
+                itemInclusionAfter += centerOffset;
+            else
+                itemInclusionBefore += centerOffset;
+
+            if (mHorizontalOffset > 0.0f)
+                centerOffset = -centerOffset;
+        }
+        else if (mType == CarouselType::VERTICAL && mVerticalOffset != 0.0f) {
+            centerOffset = static_cast<int>(std::ceil(mSize.y * std::fabs(mVerticalOffset) /
+                                                      std::min(mItemSize.y, itemSpacing.y)));
+            if (mVerticalOffset < 0.0f)
+                itemInclusionAfter += centerOffset;
+            else
+                itemInclusionBefore += centerOffset;
+
+            if (mVerticalOffset > 0.0f)
+                centerOffset = -centerOffset;
+        }
     }
     else {
         // For the wheel types.
@@ -667,7 +739,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         itemInclusionAfter = mItemsAfterCenter;
     }
 
-    bool singleEntry {numEntries == 1};
+    const bool singleEntry {numEntries == 1};
 
     struct renderStruct {
         int index;
@@ -728,8 +800,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         renderItems.emplace_back(renderItem);
     }
 
-    int belowCenter {static_cast<int>(std::ceil(renderItems.size() / 2)) - 1};
-
+    int belowCenter {static_cast<int>(std::round((renderItems.size() - centerOffset - 1) / 2))};
     if (renderItems.size() == 1) {
         renderItemsSorted.emplace_back(renderItems.front());
     }
@@ -760,31 +831,33 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             continue;
 
         if (isWheel) {
+            glm::mat4 positionCalc {renderItem.trans};
+            const float xOffTrans {(GuiComponent::mOrigin.x - mItemRotationOrigin.x) * mItemSize.x};
+            const float yOffTrans {mItemAxisHorizontal ?
+                                       0.0f :
+                                       (GuiComponent::mOrigin.y - mItemRotationOrigin.y) *
+                                           mItemSize.y};
+
+            // Transform to offset point.
+            positionCalc = glm::translate(positionCalc,
+                                          glm::vec3 {xOffTrans * -1.0f, yOffTrans * -1.0f, 0.0f});
+
+            // Apply rotation transform.
+            positionCalc =
+                glm::rotate(positionCalc, glm::radians(mItemRotation * renderItem.distance),
+                            glm::vec3 {0.0f, 0.0f, 1.0f});
+
+            // Transform back to original point.
+            positionCalc = glm::translate(positionCalc, glm::vec3 {xOffTrans, yOffTrans, 0.0f});
+
             if (mItemAxisHorizontal) {
-                glm::mat4 positionCalc {renderItem.trans};
-                const float xOff {(GuiComponent::mOrigin.x - mItemRotationOrigin.x) * mItemSize.x};
-                const float yOff {(GuiComponent::mOrigin.y - mItemRotationOrigin.y) * mItemSize.y};
-
-                // Transform to offset point.
-                if (xOff != 0.0f || yOff != 0.0f)
-                    positionCalc =
-                        glm::translate(positionCalc, glm::vec3 {xOff * -1.0f, 0.0f * -1.0f, 0.0f});
-
-                // Apply rotation transform.
-                positionCalc =
-                    glm::rotate(positionCalc, glm::radians(mItemRotation * renderItem.distance),
-                                glm::vec3 {0.0f, 0.0f, 1.0f});
-
-                // Transform back to original point.
-                if (xOff != 0.0f || yOff != 0.0f)
-                    positionCalc = glm::translate(positionCalc, glm::vec3 {xOff, 0.0f, 0.0f});
                 // Only keep position and discard the rotation data.
                 renderItem.trans[3].x = positionCalc[3].x;
                 renderItem.trans[3].y = positionCalc[3].y;
             }
             else {
-                comp->setRotationDegrees(mItemRotation * renderItem.distance);
-                comp->setRotationOrigin(mItemRotationOrigin);
+                renderItem.trans = positionCalc;
+                renderItem.trans = positionCalc;
             }
         }
 
