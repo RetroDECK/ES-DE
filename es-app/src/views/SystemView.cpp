@@ -52,6 +52,12 @@ SystemView::~SystemView()
     }
 }
 
+void SystemView::onShow()
+{
+    if (mFadeTransitions)
+        finishAnimation(0);
+}
+
 void SystemView::onTransition()
 {
     for (auto& anim : mSystemElements[mPrimary->getCursor()].lottieAnimComponents)
@@ -112,6 +118,7 @@ bool SystemView::input(InputConfig* config, Input input)
              config->isMappedTo("rightthumbstickclick", input))) {
             // Get a random system and jump to it.
             NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
+            mPrimary->stopScrolling();
             mPrimary->setCursor(SystemData::getRandomSystem(mPrimary->getSelected()));
             return true;
         }
@@ -217,15 +224,14 @@ void SystemView::onCursorChanged(const CursorState& state)
     int cursor {mPrimary->getCursor()};
 
     // Avoid double updates.
-    if (cursor == mLastCursor)
-        return;
+    if (cursor != mLastCursor) {
+        for (auto& selector : mSystemElements[cursor].gameSelectors) {
+            if (selector->getGameSelection() == GameSelectorComponent::GameSelection::RANDOM)
+                selector->setNeedsRefresh();
+        }
+    }
 
     mLastCursor = cursor;
-
-    for (auto& selector : mSystemElements[cursor].gameSelectors) {
-        if (selector->getGameSelection() == GameSelectorComponent::GameSelection::RANDOM)
-            selector->setNeedsRefresh();
-    }
 
     for (auto& video : mSystemElements[cursor].videoComponents)
         video->setStaticVideo();
@@ -397,7 +403,8 @@ void SystemView::populate()
             if (mCarousel == nullptr) {
                 mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
                 mPrimary = mCarousel.get();
-                mPrimary->setDefaultZIndex(50.0f);
+                // For legacy themes the carousel has a zIndex value of 40 instead of 50.
+                mPrimary->setDefaultZIndex(40.0f);
                 mPrimary->setCursorChangedCallback(
                     [&](const CursorState& state) { onCursorChanged(state); });
                 mPrimary->setCancelTransitionsCallback([&] {
@@ -1180,8 +1187,8 @@ void SystemView::legacyApplyTheme(const std::shared_ptr<ThemeData>& theme)
         Font::get(static_cast<int>(0.035f * mSize.y), Font::getDefaultPath()));
     mLegacySystemInfo->setColor(0x000000FF);
     mLegacySystemInfo->setUppercase(true);
-    mLegacySystemInfo->setZIndex(49.0f);
-    mLegacySystemInfo->setDefaultZIndex(49.0f);
+    mLegacySystemInfo->setZIndex(50.0f);
+    mLegacySystemInfo->setDefaultZIndex(50.0f);
 
     const ThemeData::ThemeElement* sysInfoElem {
         theme->getElement("system", "text_systemInfo", "text")};
@@ -1244,6 +1251,12 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     if ((mFadeTransitions || element->getDimming() != 1.0f) &&
                         element->getZIndex() < primaryZIndex)
                         element->setDimming(1.0f - mFadeOpacity);
+                    if (mFadeTransitions && isAnimationPlaying(0))
+                        element->setOpacity(mMaxFade ? 1.0f - mFadeOpacity : 0.0f);
+                    else
+                        element->setOpacity(1.0f);
+                    if (mNavigated && mMaxFade)
+                        continue;
                     element->render(elementTrans);
                 }
             }
@@ -1262,10 +1275,16 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                 }
             }
 
-            if (mLegacyMode && !abovePrimary) {
-                if (mFadeTransitions)
-                    mLegacySystemInfo->setDimming(1.0f - mFadeOpacity);
-                mLegacySystemInfo->render(elementTrans);
+            if (mLegacyMode) {
+                if (mFadeTransitions && !abovePrimary) {
+                    if (mFadeTransitions && isAnimationPlaying(0))
+                        mLegacySystemInfo->setOpacity(mMaxFade ? 1.0f - mFadeOpacity : 0.0f);
+                    else
+                        mLegacySystemInfo->setOpacity(1.0f);
+                }
+                if ((abovePrimary && mLegacySystemInfo->getZIndex() > 40.0f) ||
+                    (!abovePrimary && mLegacySystemInfo->getZIndex() <= 40.0f))
+                    mLegacySystemInfo->render(elementTrans);
             }
 
             mRenderer->popClipRect();

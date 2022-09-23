@@ -36,6 +36,7 @@ public:
     SystemView();
     ~SystemView();
 
+    void onShow() override;
     void onTransition() override;
     void goToSystem(SystemData* system, bool animate);
 
@@ -48,8 +49,13 @@ public:
     bool isSystemAnimationPlaying(unsigned char slot) { return mPrimary->isAnimationPlaying(slot); }
     void finishSystemAnimation(unsigned char slot)
     {
-        finishAnimation(slot);
-        mPrimary->finishAnimation(slot);
+        if (mFadeTransitions) {
+            mPrimary->finishAnimation(slot);
+        }
+        else {
+            finishAnimation(slot);
+            mPrimary->finishAnimation(slot);
+        }
     }
 
     PrimaryComponent<SystemData*>::PrimaryType getPrimaryType() { return mPrimaryType; }
