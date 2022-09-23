@@ -29,6 +29,7 @@ TextComponent::TextComponent()
     , mLineSpacing {1.5f}
     , mNoTopMargin {false}
     , mSelectable {false}
+    , mVerticalAutoSizing {false}
 {
 }
 
@@ -55,6 +56,7 @@ TextComponent::TextComponent(const std::string& text,
     , mLineSpacing {1.5f}
     , mNoTopMargin {false}
     , mSelectable {false}
+    , mVerticalAutoSizing {false}
 {
     setFont(font);
     setColor(color);
@@ -275,6 +277,9 @@ void TextComponent::calculateExtent()
 
 void TextComponent::onTextChanged()
 {
+    if (!mVerticalAutoSizing)
+        mVerticalAutoSizing = (mSize.x != 0.0f && mSize.y == 0.0f);
+
     calculateExtent();
 
     if (!mFont || mText.empty() || mSize.x == 0.0f || mSize.y == 0.0f) {
@@ -325,15 +330,15 @@ void TextComponent::onTextChanged()
             text, glm::vec2 {}, mColor, mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else if (isMultiline && text.size() && !isScrollable) {
-        const std::string wrappedText {
-            f->wrapText(text, mSize.x, mSize.y - lineHeight, mLineSpacing)};
+        const std::string wrappedText {f->wrapText(
+            text, mSize.x, (mVerticalAutoSizing ? 0.0f : mSize.y - lineHeight), mLineSpacing)};
         mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(wrappedText, glm::vec2 {}, mColor,
                                                                   mSize.x, mHorizontalAlignment,
                                                                   mLineSpacing, mNoTopMargin));
     }
     else {
         mTextCache = std::shared_ptr<TextCache>(
-            f->buildTextCache(f->wrapText(text, mSize.x), glm::vec2 {}, mColor, mSize.x,
+            f->buildTextCache(f->wrapText(text, mSize.x), glm::vec2 {0.0f, 0.0f}, mColor, mSize.x,
                               mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
 
