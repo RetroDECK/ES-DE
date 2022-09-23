@@ -49,12 +49,14 @@ public:
     bool isSystemAnimationPlaying(unsigned char slot) { return mPrimary->isAnimationPlaying(slot); }
     void finishSystemAnimation(unsigned char slot)
     {
-        if (mFadeTransitions) {
+        if (mFadeTransitions && mTransitionAnim) {
             mPrimary->finishAnimation(slot);
+            mTransitionAnim = false;
         }
         else {
             finishAnimation(slot);
             mPrimary->finishAnimation(slot);
+            mMaxFade = false;
         }
     }
 
@@ -144,6 +146,7 @@ private:
     bool mNavigated;
     bool mMaxFade;
     bool mFadeTransitions;
+    bool mTransitionAnim;
 };
 
 #endif // ES_APP_VIEWS_SYSTEM_VIEW_H

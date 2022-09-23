@@ -35,6 +35,7 @@ SystemView::SystemView()
     , mNavigated {false}
     , mMaxFade {false}
     , mFadeTransitions {false}
+    , mTransitionAnim {false}
 {
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     populate();
@@ -54,8 +55,10 @@ SystemView::~SystemView()
 
 void SystemView::onShow()
 {
-    if (mFadeTransitions)
+    if (mFadeTransitions) {
         finishAnimation(0);
+        mTransitionAnim = false;
+    }
 }
 
 void SystemView::onTransition()
@@ -65,6 +68,9 @@ void SystemView::onTransition()
 
     for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
         anim->setPauseAnimation(true);
+
+    if (mFadeTransitions)
+        mTransitionAnim = true;
 }
 
 void SystemView::goToSystem(SystemData* system, bool animate)
@@ -283,6 +289,9 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     std::string transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
     mFadeTransitions = transitionStyle == "fade";
+
+    if (startPos == endPos)
+        return;
 
     Animation* anim;
 
@@ -1252,10 +1261,10 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                         element->getZIndex() < primaryZIndex)
                         element->setDimming(1.0f - mFadeOpacity);
                     if (mFadeTransitions && isAnimationPlaying(0))
-                        element->setOpacity(mMaxFade ? 1.0f - mFadeOpacity : 0.0f);
+                        element->setOpacity(1.0f - mFadeOpacity);
                     else
                         element->setOpacity(1.0f);
-                    if (mNavigated && mMaxFade)
+                    if (mFadeTransitions && mNavigated && mMaxFade)
                         continue;
                     element->render(elementTrans);
                 }
@@ -1278,7 +1287,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
             if (mLegacyMode) {
                 if (mFadeTransitions && !abovePrimary) {
                     if (mFadeTransitions && isAnimationPlaying(0))
-                        mLegacySystemInfo->setOpacity(mMaxFade ? 1.0f - mFadeOpacity : 0.0f);
+                        mLegacySystemInfo->setOpacity(1.0f - mFadeOpacity);
                     else
                         mLegacySystemInfo->setOpacity(1.0f);
                 }
