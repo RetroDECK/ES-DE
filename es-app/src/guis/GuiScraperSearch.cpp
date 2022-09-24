@@ -70,7 +70,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     mDescContainer = std::make_shared<ScrollableContainer>();
 
     // Adjust the game description text scrolling parameters depending on the search type.
-    if (mSearchType == NEVER_AUTO_ACCEPT)
+    if (mSearchType == NEVER_AUTO_ACCEPT || mSearchType == ACCEPT_SINGLE_MATCHES)
         mDescContainer->setScrollParameters(3000.0f, 3000.0f, 0.8f);
     else
         mDescContainer->setScrollParameters(6000.0f, 3000.0f, 0.8f);
