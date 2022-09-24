@@ -35,6 +35,8 @@
 * Added the .bin file extension to the gx4000 system
 * Added the .m3u file extension to the pcfx system
 * Removed the .7z and .zip file extensions from the 3do system
+* Set DOSBox-X and DOSBox Staging to start in the game directory so per-game dosbox.conf files can be used
+* (macOS) Added an additional find rule entry for DOSBox-X as the binary name has been changed
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package
 * (Linux) Added Flatpak support for Solarus using the Solarus Launcher package
 * Added support for folder links, used for launching game files inside folders without having to enter them
@@ -48,6 +50,7 @@
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
 * Added support for texture mipmapping with trilinear filtering
+* Added on-demand texture loading to the carousel
 * Improved the renderer scaling accuracy
 * Added new tileSize, tileHorizontalAlignment and tileVerticalAlignment properties to the image element for better tiling support
 * Added support for substituting the emulator binary in staticpath rules with an explicit command (useful for launching specific binaries in Flatpaks)

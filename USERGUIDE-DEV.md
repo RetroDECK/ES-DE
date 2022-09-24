@@ -1198,6 +1198,8 @@ The second approach for DOS games is to keep the directory structure intact for 
 
 When going for this approach the game folders can be scraped so that it looks nice when browsing the gamelist, but make sure to also scrape the files used to launch the games or otherwise their entries in the collections _All games, Favorites_ and _Last played_ as well as any custom collections will miss the game metadata and game media. If you don't have these collections activated, then this can of course be skipped.
 
+Regardless of game setup method, per-game settings can be applied. If using the DOSBox RetroArch cores this is done via the RetroArch GUI and for DOSBox-X and DOSBox Staging it's accomplished by placing a custom dosbox.conf in the game directory.
+
 #### ScummVM
 
 ScummVM overlaps a bit with DOS when it comes to the logic of setting it up. It's recommended to keep games in separate folders, so if you have a game distributed as a ZIP file, uncompress it to its own directory.
@@ -1865,7 +1867,7 @@ Apart from this, hopefully the scraping process should be self-explanatory.
 
 ### Manually copying game media files
 
-If you already have a library of game media (images and videos) you can manually copy these files into ES-DE.
+If you already have a library of game media (images and videos) you can manually copy these files into ES-DE. The same procedure applies if you want to add media for individual games, for instance when the scraper did not return any results or if you didn't like the media it provided.
 
 The default media directory is `~/.emulationstation/downloaded_media/<system name>/<media type>`
 
@@ -1884,10 +1886,16 @@ An example on macOS:
 /Users/myusername/.emulationstation/downloaded_media/c64/screenshots/
 ```
 
-An example on Windows:
+An example on Windows (installer release):
 
 ```
 C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\
+```
+
+An example on Windows (portable release):
+
+```
+EmulationStation-DE\.emulationstation\downloaded_media\c64\screenshots\
 ```
 
 The media directories per game system are:

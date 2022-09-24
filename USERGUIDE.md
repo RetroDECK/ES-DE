@@ -1818,7 +1818,7 @@ Apart from this, hopefully the scraping process should be self-explanatory.
 
 ### Manually copying game media files
 
-If you already have a library of game media (images and videos) you can manually copy these files into ES-DE.
+If you already have a library of game media (images and videos) you can manually copy these files into ES-DE. The same procedure applies if you want to add media for individual games, for instance when the scraper did not return any results or if you didn't like the media it provided.
 
 The default media directory is `~/.emulationstation/downloaded_media/<system name>/<media type>`
 
@@ -1837,7 +1837,17 @@ An example on macOS:
 /Users/myusername/.emulationstation/downloaded_media/c64/screenshots/
 ```
 
-An example on Windows:
+An example on Windows (installer release):
+
+```
+C:\Users\Myusername\.emulationstation\downloaded_media\c64\screenshots\
+```
+
+An example on Windows (portable release):
+
+```
+EmulationStation-DE\.emulationstation\downloaded_media\c64\screenshots\
+```
 
 The media directories per game system are:
 
