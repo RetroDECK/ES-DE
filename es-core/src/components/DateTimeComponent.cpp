@@ -24,11 +24,11 @@ DateTimeComponent::DateTimeComponent()
 DateTimeComponent::DateTimeComponent(const std::string& text,
                                      const std::shared_ptr<Font>& font,
                                      unsigned int color,
-                                     Alignment align,
+                                     Alignment horizontalAlignment,
                                      glm::vec3 pos,
                                      glm::vec2 size,
                                      unsigned int bgcolor)
-    : TextComponent {text, font, color, align, pos, size, bgcolor}
+    : TextComponent {text, font, color, horizontalAlignment, ALIGN_CENTER, pos, size, bgcolor}
     , mDisplayRelative {false}
 {
     // ISO 8601 date format.

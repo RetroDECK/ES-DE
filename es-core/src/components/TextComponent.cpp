@@ -37,10 +37,10 @@ TextComponent::TextComponent(const std::string& text,
                              const std::shared_ptr<Font>& font,
                              unsigned int color,
                              Alignment horizontalAlignment,
+                             Alignment verticalAlignment,
                              glm::vec3 pos,
                              glm::vec2 size,
-                             unsigned int bgcolor,
-                             Alignment verticalAlignment)
+                             unsigned int bgcolor)
     : mFont {nullptr}
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}

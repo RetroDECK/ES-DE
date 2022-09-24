@@ -88,7 +88,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     mMD_ReleaseDate->setUppercase(true);
     mMD_Developer = std::make_shared<TextComponent>("", font, mdColor, ALIGN_LEFT);
     mMD_Publisher = std::make_shared<TextComponent>("", font, mdColor, ALIGN_LEFT);
-    mMD_Genre = std::make_shared<TextComponent>("", font, mdColor, ALIGN_LEFT, glm::vec3 {});
+    mMD_Genre = std::make_shared<TextComponent>("", font, mdColor, ALIGN_LEFT);
     mMD_Players = std::make_shared<TextComponent>("", font, mdColor, ALIGN_LEFT);
     mMD_Filler = std::make_shared<TextComponent>("", font, mdColor);
 

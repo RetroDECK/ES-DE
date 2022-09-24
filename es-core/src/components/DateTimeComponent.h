@@ -24,9 +24,9 @@ public:
     DateTimeComponent(const std::string& text,
                       const std::shared_ptr<Font>& font,
                       unsigned int color = 0x000000FF,
-                      Alignment align = ALIGN_LEFT,
-                      glm::vec3 pos = {},
-                      glm::vec2 size = {},
+                      Alignment horizontalAlignment = ALIGN_LEFT,
+                      glm::vec3 pos = {0.0f, 0.0f, 0.0f},
+                      glm::vec2 size = {0.0f, 0.0f},
                       unsigned int bgcolor = 0x00000000);
 
     void render(const glm::mat4& parentTrans) override;

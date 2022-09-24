@@ -271,8 +271,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             nameEntry = entry.name;
 
         auto text = std::make_shared<TextComponent>(
-            nameEntry, mFont, 0x000000FF, mItemHorizontalAlignment, glm::vec3 {0.0f, 0.0f, 0.0f},
-            mItemSize * mItemScale, 0x00000000, mItemVerticalAlignment);
+            nameEntry, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
+            glm::vec3 {0.0f, 0.0f, 0.0f}, mItemSize * mItemScale, 0x00000000);
         if (legacyMode) {
             text->applyTheme(theme, "system", "text_logoText",
                              ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
