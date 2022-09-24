@@ -52,6 +52,8 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     mRetrySearch = false;
     mRetryCount = 0;
 
+    mWindow->setAllowTextScrolling(true);
+
     // Left spacer (empty component, needed for borders).
     mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 0}, false, false,
                    glm::ivec2 {1, 3}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
@@ -168,6 +170,8 @@ GuiScraperSearch::~GuiScraperSearch()
         TextureResource::manualUnload(mLastSearch.game->getMiximagePath(), false);
         ViewController::getInstance()->onFileChanged(mLastSearch.game, true);
     }
+
+    mWindow->setAllowTextScrolling(false);
 }
 
 void GuiScraperSearch::onSizeChanged()
