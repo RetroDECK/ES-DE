@@ -298,8 +298,8 @@
             <overlay>false</overlay>
         </rating>
         <gamelistinfo name="gamelistInfo">
-            <pos>0.773 0.193</pos>
-            <size>0.2 0.05</size>
+            <pos>0.773 0.192</pos>
+            <size>0.2 0.042</size>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
             <horizontalAlignment>right</horizontalAlignment>
