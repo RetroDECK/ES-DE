@@ -36,10 +36,11 @@ TextComponent::TextComponent()
 TextComponent::TextComponent(const std::string& text,
                              const std::shared_ptr<Font>& font,
                              unsigned int color,
-                             Alignment align,
+                             Alignment horizontalAlignment,
                              glm::vec3 pos,
                              glm::vec2 size,
-                             unsigned int bgcolor)
+                             unsigned int bgcolor,
+                             Alignment verticalAlignment)
     : mFont {nullptr}
     , mRenderer {Renderer::getInstance()}
     , mColor {0x000000FF}
@@ -51,8 +52,8 @@ TextComponent::TextComponent(const std::string& text,
     , mLowercase {false}
     , mCapitalize {false}
     , mAutoCalcExtent {1, 1}
-    , mHorizontalAlignment {align}
-    , mVerticalAlignment {ALIGN_CENTER}
+    , mHorizontalAlignment {horizontalAlignment}
+    , mVerticalAlignment {verticalAlignment}
     , mLineSpacing {1.5f}
     , mNoTopMargin {false}
     , mSelectable {false}

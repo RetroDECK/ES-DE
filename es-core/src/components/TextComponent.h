@@ -28,10 +28,11 @@ public:
     TextComponent(const std::string& text,
                   const std::shared_ptr<Font>& font,
                   unsigned int color = 0x000000FF,
-                  Alignment align = ALIGN_LEFT,
+                  Alignment horizontalAlignment = ALIGN_LEFT,
                   glm::vec3 pos = {0.0f, 0.0f, 0.0f},
                   glm::vec2 size = {0.0f, 0.0f},
-                  unsigned int bgcolor = 0x00000000);
+                  unsigned int bgcolor = 0x00000000,
+                  Alignment verticalAlignment = ALIGN_CENTER);
 
     void setFont(const std::shared_ptr<Font>& font);
     void setUppercase(bool uppercase);

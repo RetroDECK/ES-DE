@@ -270,8 +270,9 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         else
             nameEntry = entry.name;
 
-        auto text = std::make_shared<TextComponent>(nameEntry, mFont, 0x000000FF, ALIGN_CENTER);
-        text->setSize(mItemSize * mItemScale);
+        auto text = std::make_shared<TextComponent>(
+            nameEntry, mFont, 0x000000FF, mItemHorizontalAlignment, glm::vec3 {0.0f, 0.0f, 0.0f},
+            mItemSize * mItemScale, 0x00000000, mItemVerticalAlignment);
         if (legacyMode) {
             text->applyTheme(theme, "system", "text_logoText",
                              ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
@@ -289,9 +290,6 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             text->setRenderBackground(true);
         }
         entry.data.item = text;
-
-        text->setHorizontalAlignment(mItemHorizontalAlignment);
-        text->setVerticalAlignment(mItemVerticalAlignment);
     }
 
     // Set origin for the items based on their alignment so they line up properly.
