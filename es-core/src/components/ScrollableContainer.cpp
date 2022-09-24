@@ -132,7 +132,7 @@ void ScrollableContainer::update(int deltaTime)
     // Don't scroll if the media viewer or screensaver is active or if text scrolling is disabled;
     if (mWindow->isMediaViewerActive() || mWindow->isScreensaverActive() ||
         !mWindow->getAllowTextScrolling()) {
-        if (mScrollPos != glm::vec2 {} && !mWindow->isLaunchScreenDisplayed())
+        if (mScrollPos != glm::vec2 {0.0f, 0.0f} && !mWindow->isLaunchScreenDisplayed())
             reset();
         return;
     }
@@ -148,6 +148,11 @@ void ScrollableContainer::update(int deltaTime)
         speedModifier /= mResolutionModifier;
         mAdjustedAutoScrollSpeed = static_cast<int>(speedModifier);
     }
+
+    // If there are less than 8 lines of text, accelerate the scrolling further.
+    const float lines {mAdjustedHeight / combinedHeight};
+    if (lines < 8.0f)
+        rowModifier = lines / 8.0f;
 
     if (mAdjustedAutoScrollSpeed < 0)
         mAdjustedAutoScrollSpeed = 1;
