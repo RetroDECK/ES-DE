@@ -55,10 +55,9 @@ SystemView::~SystemView()
 
 void SystemView::onShow()
 {
-    if (mFadeTransitions) {
-        finishAnimation(0);
-        mTransitionAnim = false;
-    }
+    finishAnimation(0);
+    mFadeOpacity = 0.0f;
+    mTransitionAnim = false;
 }
 
 void SystemView::onTransition()
