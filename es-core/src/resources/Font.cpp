@@ -304,6 +304,7 @@ std::string Font::wrapText(std::string text, float maxLength, float maxHeight, f
     float accumHeight {0.0f};
     const bool restrictHeight {maxHeight > 0.0f};
     bool skipLastLine {false};
+    float currLineLength {0.0f};
 
     // While there's text or we still have text to render.
     while (text.length() > 0) {
@@ -330,11 +331,32 @@ std::string Font::wrapText(std::string text, float maxLength, float maxHeight, f
         // If the word will fit on the line, add it to our line and continue.
         if (textSize.x <= maxLength) {
             line = temp;
+            currLineLength = textSize.x;
             continue;
         }
         else {
             // If the word is too long to fit within maxLength then abbreviate it.
-            if (sizeText(word).x > maxLength) {
+            float wordSize {sizeText(word).x};
+            if (restrictHeight && currLineLength != 0.0f && maxHeight < lineHeight &&
+                wordSize > maxLength - textSize.x) {
+                // Multi-word lines.
+                if (maxLength - currLineLength + dotsSize < wordSize) {
+                    while (sizeText(line).x + dotsSize > maxLength)
+                        line.pop_back();
+                }
+                else {
+                    while (word != "" && wordSize + dotsSize > maxLength - currLineLength) {
+                        word.pop_back();
+                        wordSize = sizeText(word).x;
+                    }
+
+                    line = line + word;
+                }
+
+                line.append("...");
+                break;
+            }
+            if (wordSize > maxLength) {
 
                 if (line != "" && line.back() != '\n') {
                     if (restrictHeight) {
@@ -345,8 +367,7 @@ std::string Font::wrapText(std::string text, float maxLength, float maxHeight, f
                     line.append("\n");
                 }
 
-                float lineLength {sizeText(word).x};
-                float cutTarget {lineLength - maxLength + dotsSize};
+                const float cutTarget {wordSize - maxLength + dotsSize};
                 float cutSize {0.0f};
 
                 while (word != "" && cutSize < cutTarget) {
