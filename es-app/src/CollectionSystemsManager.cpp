@@ -386,7 +386,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             }
         }
         else {
-            bool addGame = false;
+            bool addGame {false};
             // We didn't find the entry in the collection, so we need to check if we should add it.
             if ((name == "recent" && file->metadata.get("playcount") > "0" &&
                  file->getCountAsGame() && includeFileInAutoCollections(file)) ||
@@ -503,7 +503,7 @@ void CollectionSystemsManager::deleteCollectionFiles(FileData* file)
 const bool CollectionSystemsManager::isThemeGenericCollectionCompatible(
     bool genericCustomCollections)
 {
-    std::vector<std::string> cfgSys = getCollectionThemeFolders(genericCustomCollections);
+    std::vector<std::string> cfgSys {getCollectionThemeFolders(genericCustomCollections)};
     for (auto sysIt = cfgSys.cbegin(); sysIt != cfgSys.cend(); ++sysIt) {
         if (!themeFolderExists(*sysIt))
             return false;
@@ -542,7 +542,7 @@ std::string CollectionSystemsManager::getValidNewCollectionName(const std::strin
     name = Utils::String::trim(name);
 
     if (index == 0) {
-        size_t remove = std::string::npos;
+        size_t remove {std::string::npos};
         // Get valid name.
         while ((remove = name.find_first_not_of(
                     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-[]()' ")) !=
@@ -637,8 +637,8 @@ const bool CollectionSystemsManager::inCustomCollection(const std::string& colle
     auto collectionEntry = mCustomCollectionSystemsData.find(collectionName);
 
     if (collectionEntry != mCustomCollectionSystemsData.end()) {
-        const std::unordered_map<std::string, FileData*>& children =
-            collectionEntry->second.system->getRootFolder()->getChildrenByFilename();
+        const std::unordered_map<std::string, FileData*>& children {
+            collectionEntry->second.system->getRootFolder()->getChildrenByFilename()};
         return children.find(gameFile->getFullPath()) != children.cend();
     }
     return false;
@@ -647,7 +647,7 @@ const bool CollectionSystemsManager::inCustomCollection(const std::string& colle
 const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
 {
     if (file->getType() == GAME) {
-        bool adding = true;
+        bool adding {true};
         std::string name {file->getName()};
         std::string sysName {mEditingCollection};
         if (mIsEditingCustom) {
@@ -660,7 +660,7 @@ const bool CollectionSystemsManager::toggleGameInCollection(FileData* file)
             FileData* rootFolder {sysData->getRootFolder()};
             const std::unordered_map<std::string, FileData*>& children {
                 rootFolder->getChildrenByFilename()};
-            bool found = children.find(key) != children.cend();
+            bool found {children.find(key) != children.cend()};
             FileFilterIndex* fileIndex {sysData->getIndex()};
 
             SystemData* systemViewToUpdate {getSystemToView(sysData)};
@@ -772,17 +772,17 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         gamesList = rootFolder->getChildrenListToDisplay();
     }
 
-    unsigned int gameCount {static_cast<unsigned int>(gamesList.size())};
+    int gameCount {static_cast<int>(gamesList.size())};
 
     // If there is more than 1 game in the collection, then randomize the example game names.
     if (gameCount > 1) {
         std::random_device randDev;
         //  Mersenne Twister pseudorandom number generator.
         std::mt19937 engine {randDev()};
-        unsigned int target;
+        int target;
 
-        for (unsigned int i = 0; i < 3; ++i) {
-            std::uniform_int_distribution<int> uniform_dist(0, gameCount - 1 - i);
+        for (int i = 0; i < 3; ++i) {
+            std::uniform_int_distribution<int> uniform_dist {0, gameCount - 1 - i};
             target = uniform_dist(engine);
             gamesListRandom.push_back(gamesList[target]);
             std::vector<FileData*>::iterator it {(gamesList.begin() + target)};
@@ -939,8 +939,8 @@ void CollectionSystemsManager::deleteCustomCollection(const std::string& collect
 
 void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
 {
-    std::string gamePath = Utils::FileSystem::getFileName(game->getFullPath());
-    gamePath = "%ROMPATH%/" + game->getSystemName() + "/" + gamePath;
+    std::string gamePath {
+        Utils::String::replace(game->getFullPath(), FileData::getROMDirectory(), "%ROMPATH%/")};
 
     // Try to read from all custom collection configuration files to see if there are any
     // matching entries for the game passed as the parameter. If so, then enable it in each
@@ -949,6 +949,8 @@ void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
     for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
              mCustomCollectionSystemsData.cbegin();
          it != mCustomCollectionSystemsData.cend(); ++it) {
+        if (!it->second.isEnabled)
+            continue;
         std::string path {getCustomCollectionConfigPath(it->first)};
         if (Utils::FileSystem::exists(path)) {
 #if defined(_WIN64)
@@ -1220,8 +1222,16 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
         std::unordered_map<std::string, FileData*>::const_iterator it = allFilesMap.find(gameKey);
         if (it != allFilesMap.cend()) {
             CollectionFileData* newGame = new CollectionFileData(it->second, newSys);
-            rootFolder->addChild(newGame);
-            index->addToIndex(newGame);
+            if (!newGame->getCountAsGame()) {
+                LOG(LogWarning)
+                    << "File \"" << gameKey
+                    << "\" does not exist, is hidden, or is not counted as a game, ignoring entry";
+                delete newGame;
+            }
+            else {
+                rootFolder->addChild(newGame);
+                index->addToIndex(newGame);
+            }
         }
         else {
             LOG(LogWarning)
@@ -1286,8 +1296,8 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
                         rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
                     // Jump to the first row of the game list, assuming it's not empty.
-                    GamelistView* gameList =
-                        ViewController::getInstance()->getGamelistView((it->second.system)).get();
+                    GamelistView* gameList {
+                        ViewController::getInstance()->getGamelistView((it->second.system)).get()};
                     if (!gameList->getCursor()->isPlaceHolder()) {
                         gameList->setCursor(gameList->getFirstEntry());
                     }
@@ -1319,9 +1329,9 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig()
 
         pugi::xml_document doc;
 #if defined(_WIN64)
-        pugi::xml_parse_result res = doc.load_file(Utils::String::stringToWideString(path).c_str());
+        pugi::xml_parse_result res {doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-        pugi::xml_parse_result res = doc.load_file(path.c_str());
+        pugi::xml_parse_result res {doc.load_file(path.c_str())};
 #endif
 
         if (!res)
@@ -1333,7 +1343,7 @@ std::vector<std::string> CollectionSystemsManager::getSystemsFromConfig()
         if (!systemList)
             return systems;
 
-        for (pugi::xml_node system = systemList.child("system"); system;
+        for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
             // Theme folder.
             std::string themeFolder {system.child("theme").text().get()};
@@ -1437,8 +1447,8 @@ void CollectionSystemsManager::trimCollectionCount(FileData* rootFolder, int lim
 {
     SystemData* curSys {rootFolder->getSystem()};
     while (static_cast<int>(rootFolder->getChildrenListToDisplay().size()) > limit) {
-        CollectionFileData* gameToRemove =
-            (CollectionFileData*)rootFolder->getChildrenListToDisplay().back();
+        CollectionFileData* gameToRemove {
+            (CollectionFileData*)rootFolder->getChildrenListToDisplay().back()};
         ViewController::getInstance()->getGamelistView(curSys).get()->remove(gameToRemove, false);
     }
     // Also update the lists of last played and most played games as these could otherwise
