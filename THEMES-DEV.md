@@ -1423,7 +1423,7 @@ Properties:
 
 A carousel for navigating and selecting games or systems.
 
-On the system view when using fade transitions, any elements placed below or at the same zIndex value as the carousel will be faded to black during transitions, and any elements with a higher zIndex value than the carousel will be faded to transparent.
+On the system view when using fade transitions, any elements placed below or at the same zIndex value as the carousel will be faded to black during transitions, and any elements with a higher zIndex value than the carousel will be faded to transparent. These two fading methods do not mix well, so if you for example want to overlay some elements with a semi-transparent mask or similar, make sure to keep this in mind. As long as the elements are all above or below the carousel everything will look fine.
 
 Supported views:
 * `system`

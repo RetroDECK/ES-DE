@@ -171,6 +171,8 @@
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
+* Games located in subdirectories were not added back to custom collections when disabling the "Exclude from game counter" metadata option
+* Enabling and then disabling the "Exclude from game counter" metadata option would remove a game from all currently disabled custom collections
 * Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
@@ -179,6 +181,7 @@
 * The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling
 * Rating icon outlines would not fade out correctly when fast-scrolling in a gamelist
 * The rating icons would not fit into the designated space in the scraper GUI when running at some vertically oriented screen resolutions
+* The game description would start to scroll too late when running the multi-scraper in semi-automatic mode
 * If setting an origin other than 0.5 for a video with pillarboxes enabled, the video would not get centered on the black rectangle
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
 * The gamelist quick list scrolling overlay would not disappear as intended under some circumstances
