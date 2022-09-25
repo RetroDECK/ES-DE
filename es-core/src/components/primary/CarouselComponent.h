@@ -859,8 +859,19 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             }
         }
 
+        float metadataOpacity {1.0f};
+
+        if constexpr (std::is_same_v<T, FileData*>) {
+            // If a game is marked as hidden, lower the opacity a lot.
+            // If a game is marked to not be counted, lower the opacity a moderate amount.
+            if (mEntries.at(renderItem.index).object->getHidden())
+                metadataOpacity = 0.4f;
+            else if (!mEntries.at(renderItem.index).object->getCountAsGame())
+                metadataOpacity = 0.7f;
+        }
+
         comp->setScale(renderItem.scale);
-        comp->setOpacity(renderItem.opacity);
+        comp->setOpacity(renderItem.opacity * metadataOpacity);
         comp->render(renderItem.trans);
 
         // TODO: Rewrite to use "real" reflections instead of this hack.
