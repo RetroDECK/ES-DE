@@ -178,7 +178,7 @@ void SystemView::render(const glm::mat4& parentTrans)
         renderElements(parentTrans, false);
     glm::mat4 trans {getTransform() * parentTrans};
 
-    // Make sure nothing renders outside our designated area.
+    // Make sure that the primary component doesn't render outside our designated area.
     mRenderer->pushClipRect(
         glm::ivec2 {static_cast<int>(std::round(trans[3].x)),
                     static_cast<int>(std::round(trans[3].y))},

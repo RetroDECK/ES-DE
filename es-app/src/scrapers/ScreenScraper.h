@@ -51,8 +51,26 @@ public:
         const std::string API_DEV_KEY = {67, 112, 72, 120, 121, 77, 119, 74,  84,  56,
                                          75, 122, 78, 98,  69,  86, 56,  120, 120, 49};
         const std::string API_URL_BASE = "https://www.screenscraper.fr/api2";
-        const std::string API_SOFT_NAME =
-            "EmulationStation-DE " + static_cast<std::string>(PROGRAM_VERSION_STRING);
+#if defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
+        const std::string platformIdentifier {" B"};
+#elif defined(STEAM_DECK)
+        const std::string platformIdentifier {" S"};
+#elif defined(RETRODECK)
+        const std::string platformIdentifier {" R"};
+#elif defined(__linux__) && defined(RASPBERRY_PI)
+        const std::string platformIdentifier {" P"};
+#elif defined(__linux__)
+        const std::string platformIdentifier {" L"};
+#elif defined(__APPLE__)
+        const std::string platformIdentifier {" M"};
+#elif defined(_WIN64)
+        const std::string platformIdentifier {" W"};
+#else
+        const std::string platformIdentifier {" O"};
+#endif
+        const std::string API_SOFT_NAME = "EmulationStation-DE " +
+                                          static_cast<std::string>(PROGRAM_VERSION_STRING) +
+                                          platformIdentifier;
 
         // Which type of image artwork we need. Possible values (not a comprehensive list):
         // - ss: in-game screenshot
