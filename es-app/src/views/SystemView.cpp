@@ -185,11 +185,10 @@ void SystemView::render(const glm::mat4& parentTrans)
         glm::ivec2 {static_cast<int>(std::round(mSize.x)), static_cast<int>(std::round(mSize.y))});
 
     mPrimary->render(trans);
+    mRenderer->popClipRect();
 
     if (!fade || mLegacyMode)
         renderElements(parentTrans, true);
-
-    mRenderer->popClipRect();
 }
 
 void SystemView::onThemeChanged(const std::shared_ptr<ThemeData>& /*theme*/)
