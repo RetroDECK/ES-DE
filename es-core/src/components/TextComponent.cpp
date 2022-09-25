@@ -102,9 +102,6 @@ void TextComponent::setOpacity(float opacity)
     float textOpacity {opacity * mColorOpacity};
     mColor = (mColor & 0xFFFFFF00) | static_cast<unsigned char>(textOpacity * 255.0f);
 
-    float textBackgroundOpacity {opacity * mBgColorOpacity};
-    mBgColor = (mBgColor & 0xFFFFFF00) | static_cast<unsigned char>(textBackgroundOpacity * 255.0f);
-
     onColorChanged();
     GuiComponent::setOpacity(opacity);
 
