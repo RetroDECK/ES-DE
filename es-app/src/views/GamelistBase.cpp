@@ -387,7 +387,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
                         mWindow->queueInfoPopup("CAN'T ADD FOLDERS TO CUSTOM COLLECTIONS", 4000);
                     }
                     else {
-                        MetaDataList* md = &entryToUpdate->getSourceFileData()->metadata;
+                        MetaDataList* md {&entryToUpdate->getSourceFileData()->metadata};
                         if (md->get("favorite") == "false") {
                             md->set("favorite", "true");
                             mWindow->queueInfoPopup(

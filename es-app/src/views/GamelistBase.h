@@ -42,6 +42,12 @@ public:
     FileData* getLastEntry() { return mPrimary->getLast(); }
     FileData* getFirstGameEntry() { return mFirstGameEntry; }
 
+    void onDemandTextureLoad()
+    {
+        if (mPrimary != nullptr)
+            mPrimary->onDemandTextureLoad();
+    }
+
     // These functions are used to retain the folder cursor history, for instance
     // during a view reload. The calling function stores the history temporarily.
     void copyCursorHistory(std::vector<FileData*>& cursorHistory)

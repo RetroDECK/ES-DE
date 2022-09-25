@@ -44,7 +44,8 @@ public:
     virtual const size_t getNumEntries() = 0;
 
     // Functions used by some primary components.
-    virtual void setAlignment(PrimaryAlignment align) {};
+    virtual void onDemandTextureLoad() {}
+    virtual void setAlignment(PrimaryAlignment align) {}
 };
 
 #endif // ES_CORE_COMPONENTS_PRIMARY_COMPONENT_H

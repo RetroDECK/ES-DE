@@ -742,7 +742,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     bool themeHasVideoView {system->getTheme()->hasView("video")};
 
     // Decide which view style to use.
-    GamelistViewStyle selectedViewStyle = AUTOMATIC;
+    GamelistViewStyle selectedViewStyle {AUTOMATIC};
 
     std::string viewPreference {Settings::getInstance()->getString("GamelistViewStyle")};
     if (viewPreference == "basic")
@@ -995,7 +995,7 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
             if (reloadTheme)
                 system->loadTheme();
             system->getIndex()->setKidModeFilters();
-            std::shared_ptr<GamelistView> newView = getGamelistView(system);
+            std::shared_ptr<GamelistView> newView {getGamelistView(system)};
 
             // To counter having come from a placeholder.
             if (!cursor->isPlaceHolder()) {

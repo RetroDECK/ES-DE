@@ -57,6 +57,8 @@ void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
         populateList(mRoot->getChildrenListToDisplay(), mRoot);
         setCursor(cursor);
     }
+
+    onDemandTextureLoad();
 }
 
 void GamelistView::onShow()
@@ -435,8 +437,8 @@ void GamelistView::updateView(const CursorState& state)
 
     bool loadedTexture {false};
 
-    if (mCarousel != nullptr && mCarousel->isScrolling()) {
-        mCarousel->onDemandTextureLoad();
+    if (mPrimary->isScrolling()) {
+        onDemandTextureLoad();
         loadedTexture = true;
     }
 
@@ -449,8 +451,8 @@ void GamelistView::updateView(const CursorState& state)
     if (file == mLastUpdated)
         return;
 
-    if (mCarousel != nullptr && !loadedTexture)
-        mCarousel->onDemandTextureLoad();
+    if (!loadedTexture)
+        onDemandTextureLoad();
 
     if (state == CursorState::CURSOR_STOPPED)
         mLastUpdated = file;

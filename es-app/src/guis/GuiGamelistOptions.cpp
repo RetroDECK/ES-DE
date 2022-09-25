@@ -356,7 +356,7 @@ void GuiGamelistOptions::startEditMode()
     // as we will want to edit the selected collection within.
     if (editingSystem ==
         CollectionSystemsManager::getInstance()->getCustomCollectionsBundle()->getName()) {
-        FileData* file = getGamelist()->getCursor();
+        FileData* file {getGamelist()->getCursor()};
         // Do we have the cursor on a specific collection?.
         if (file->getType() == FOLDER)
             editingSystem = file->getName();

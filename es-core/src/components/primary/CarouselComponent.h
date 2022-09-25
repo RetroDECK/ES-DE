@@ -52,7 +52,7 @@ public:
     void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
     void updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
     Entry& getEntry(int index) { return mEntries.at(index); }
-    void onDemandTextureLoad();
+    void onDemandTextureLoad() override;
     const CarouselType getType() { return mType; }
     const std::string& getItemType() { return mItemType; }
     void setItemType(std::string itemType) { mItemType = itemType; }
@@ -796,6 +796,9 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         renderItem.trans = itemTrans;
 
         renderItems.emplace_back(renderItem);
+
+        if (singleEntry)
+            break;
     }
 
     int belowCenter {static_cast<int>(std::round((renderItems.size() - centerOffset - 1) / 2))};
@@ -1286,30 +1289,28 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
     if (mScrollVelocity != 0)
         mPreviousScrollVelocity = mScrollVelocity;
 
-    if (endPos != mEntryCamOffset) {
-        // Needed to make sure that overlapping items are renderered correctly.
-        if (startPos > endPos)
-            mPositiveDirection = true;
-        else
-            mPositiveDirection = false;
+    // Needed to make sure that overlapping items are renderered correctly.
+    if (startPos > endPos)
+        mPositiveDirection = true;
+    else
+        mPositiveDirection = false;
 
-        mEntryCamTarget = endPos;
+    mEntryCamTarget = endPos;
 
-        Animation* anim {new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1)};
-                if (f < 0)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
+    Animation* anim {new LambdaAnimation(
+        [this, startPos, endPos, posMax](float t) {
+            t -= 1;
+            float f {glm::mix(startPos, endPos, t * t * t + 1)};
+            if (f < 0)
+                f += posMax;
+            if (f >= posMax)
+                f -= posMax;
 
-                mEntryCamOffset = f;
-            },
-            500)};
+            mEntryCamOffset = f;
+        },
+        500)};
 
-        GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
-    }
+    GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
 
     if (mCursorChangedCallback && !mEntries.empty())
         mCursorChangedCallback(state);
