@@ -811,10 +811,12 @@ Properties:
     - `fanart` - This will look for a fan art image.
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define additional image elements that should be treated as if they were game media files. This is for example useful for hiding and fading out image elements that are used as indicator icons for the various metadata types like genre, publisher, players etc. It's however not possible to do the opposite, i.e. to disable this functionality for the default game media types as that would break basic application behavior.
+    - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
+    - Default is `false`
 * `tileSize` - type: NORMALIZED_PAIR
     - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If scaling SVG images to non-standard aspect ratios, be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file.
     - Minimum value per axis is `0` and maximum value per axis is `1`.
@@ -900,6 +902,7 @@ Properties:
     - `fanart` - This will look for a fan art image.
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define static video elements that should be treated as if they were game media files. This property is ignored if `path` is not set.
+    - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
 * `audio` - type: BOOLEAN
@@ -969,6 +972,7 @@ Properties:
     - Default is `0.5 0.5`
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define animation elements that should be treated as if they were game media files. This is for example useful for hiding and fading out animations that are used as indicators for the various metadata types like genre, publisher, players etc.
+    - Default is `false`
 * `path` - type: PATH
     - Path to the animation file. Only the .json extension is supported.
 * `speed` - type: FLOAT.
@@ -1181,10 +1185,12 @@ Properties:
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define additional text elements that should be treated as if they were game metadata entries. This is for example useful for hiding and fading out text labels for the various metadata types like genre, publisher, players etc. Note that it's not possible to disable the metadata hiding functionality for the default metadata fields as that would break basic application behavior. Also note that there is a slight exception to the hiding logic for text containers with the metadata value set to `description`. In this case the element is by default not hidden when enabling the _Hide metadata fields_ setting. To also hide such containers, set this property to true.
+    - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
+    - Default is `false`
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`
@@ -1299,6 +1305,7 @@ Properties:
     - %S: The second [00,59]
 * `displayRelative` - type: BOOLEAN.
     - Renders the datetime as a relative string (e.g. 'x days ago').
+    - Default is `false`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -1423,8 +1430,6 @@ Properties:
 
 A carousel for navigating and selecting games or systems.
 
-On the system view when using fade transitions, any elements placed below or at the same zIndex value as the carousel will be faded to black during transitions, and any elements with a higher zIndex value than the carousel will be faded to transparent. These two fading methods do not mix well, so if you for example want to overlay some elements with a semi-transparent mask or similar, make sure to keep this in mind. As long as the elements are all above or below the carousel everything will look fine.
-
 Supported views:
 * `system`
 * `gamelist`
@@ -1524,6 +1529,7 @@ Properties:
     - Default is `0`
 * `reflections` - type: BOOLEAN
     - Enables reflections beneath the carousel items. This is only available for the `horizontal` carousel type. It's probably a good idea to combine this with the `verticalOffset` property to define how much of the reflections should be visible.
+    - Default is `false`
 * `reflectionsOpacity` - type: FLOAT
     - Defines the base opacity for the reflections.
     - Minimum value is `0.1` and maximum value is `1`
@@ -1564,6 +1570,9 @@ Properties:
     - Controls the space between lines (as a multiple of font height).
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
+* `fadeAbovePrimary` - type: BOOLEAN
+    - When using fade transitions, all elements in the `system` view with a zIndex value higher than the carousel are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the carousel will be dimmed to black and elements above the carousel will be faded to transparent.
+    - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
@@ -1606,6 +1615,7 @@ Properties:
     - Path to image to render in place of "selector bar."
 * `selectorImageTile` - type: BOOLEAN
     - If true, the selector image will be tiled instead of stretched to fit its size.
+    - Default is `false`
 * `selectedColor` - type: COLOR
     - Color of the highlighted entry text.
 * `primaryColor` - type: COLOR
@@ -1636,6 +1646,9 @@ Properties:
     - Controls the style of the indicators which get displayed when editing a custom collection. This property can't be disabled as it's crucial for getting a visual overview when editing collections. When set to `ascii`, the indicator is displayed as a `!`
     - Valid values are `ascii` and `symbols`
     - Default is `symbols`
+* `fadeAbovePrimary` - type: BOOLEAN
+    - When using fade transitions, all elements in the `system` view with a zIndex value higher than the textlist are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the textlist will be dimmed to black and elements above the textlist will be faded to transparent.
+    - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`

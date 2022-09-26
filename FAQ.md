@@ -18,7 +18,11 @@ ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distribut
 
 ## What is the relationship between ES-DE and EmuDeck?
 
-ES-DE and EmuDeck are completely separate projects, but we collaborate to give the best possible user experience. EmuDeck is an installation script that downloads emulators and applies configuration to these, and it can also download and install ES-DE. EmuDeck is not needed to run ES-DE, but on the Steam Deck it provides a convenient way of setting up an emulator environment for people not experienced with making this type of installation and configuration on their own. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed using EmuDeck.
+ES-DE and [EmuDeck](http://www.emudeck.com) are completely separate projects, but we collaborate to give the best possible user experience. EmuDeck is an installer that downloads emulators and applies configuration to these, and it can also download and install ES-DE. EmuDeck is not needed to run ES-DE, but on the Steam Deck it provides a convenient way of setting up an emulator environment for people not experienced with making this type of installation and configuration on their own. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed using EmuDeck.
+
+## What is the relationship between ES-DE and RetroDECK?
+
+ES-DE and [RetroDECK](http://retrodeck.net) are completely separate projects, but we collaborate to give the best possible user experience. RetroDECK bundles ES-DE with all emulators in the same Flatpak so you don't need to update emulators separately or set Flatpak permissions manually. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed via RetroDECK.
 
 ## What systems/platforms and emulators are supported by ES-DE?
 

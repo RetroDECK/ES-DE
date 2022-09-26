@@ -140,6 +140,7 @@
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
 * Added carousel theme support for setting item transitions to "slide" or "instant"
+* Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
 * Removed a huge amount of unnecessary Window* function parameters throughout the codebase
