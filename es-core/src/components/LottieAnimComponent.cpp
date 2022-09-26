@@ -32,7 +32,7 @@ LottieAnimComponent::LottieAnimComponent()
     , mTimeAccumulator {0}
     , mLastRenderedFrame {-1}
     , mSkippedFrames {0}
-    , mHoldFrame {false}
+    , mHoldFrame {true}
     , mPause {false}
     , mExternalPause {false}
     , mAlternate {false}
@@ -298,7 +298,7 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 void LottieAnimComponent::update(int deltaTime)
 {
-    if (mAnimation == nullptr)
+    if (mAnimation == nullptr || !isVisible() || mOpacity == 0.0f || mThemeOpacity == 0.0f)
         return;
 
     if (mWindow->getAllowFileAnimation()) {
@@ -309,6 +309,9 @@ void LottieAnimComponent::update(int deltaTime)
         mTimeAccumulator = 0;
         return;
     }
+
+    // Make sure no frames are advanced unless update() has been called.
+    mHoldFrame = false;
 
     // If the time accumulator value is really high something must have happened such as the
     // application having been suspended. Reset it to zero in this case as it would otherwise
@@ -346,7 +349,7 @@ void LottieAnimComponent::update(int deltaTime)
 
 void LottieAnimComponent::render(const glm::mat4& parentTrans)
 {
-    if (!isVisible() || mThemeOpacity == 0.0f || mAnimation == nullptr)
+    if (mAnimation == nullptr || !isVisible() || mOpacity == 0.0f || mThemeOpacity == 0.0f)
         return;
 
     glm::mat4 trans {parentTrans * getTransform()};
@@ -489,4 +492,6 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         // Render it.
         mRenderer->drawTriangleStrips(&vertices[0], 4);
     }
+
+    mHoldFrame = true;
 }
