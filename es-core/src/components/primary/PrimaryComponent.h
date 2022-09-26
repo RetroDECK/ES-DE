@@ -42,6 +42,7 @@ public:
     virtual void setCursorChangedCallback(const std::function<void(CursorState state)>& func) = 0;
     virtual int getCursor() = 0;
     virtual const size_t getNumEntries() = 0;
+    virtual const bool getFadeAbovePrimary() const = 0;
 
     // Functions used by some primary components.
     virtual void onDemandTextureLoad() {}

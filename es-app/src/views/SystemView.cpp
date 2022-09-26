@@ -169,12 +169,12 @@ void SystemView::render(const glm::mat4& parentTrans)
     if (mPrimary == nullptr)
         return; // Nothing to render.
 
-    bool fade {false};
+    bool transitionFade {false};
 
     if (mNavigated && mMaxFade)
-        fade = true;
+        transitionFade = true;
 
-    if (!fade)
+    if (!transitionFade)
         renderElements(parentTrans, false);
     glm::mat4 trans {getTransform() * parentTrans};
 
@@ -187,7 +187,7 @@ void SystemView::render(const glm::mat4& parentTrans)
     mPrimary->render(trans);
     mRenderer->popClipRect();
 
-    if (!fade || mLegacyMode)
+    if (!mPrimary->getFadeAbovePrimary() || !transitionFade)
         renderElements(parentTrans, true);
 }
 
@@ -1258,22 +1258,29 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     if ((mFadeTransitions || element->getDimming() != 1.0f) &&
                         element->getZIndex() < primaryZIndex)
                         element->setDimming(1.0f - mFadeOpacity);
-                    if (mFadeTransitions && isAnimationPlaying(0))
-                        element->setOpacity(1.0f - mFadeOpacity);
-                    else
-                        element->setOpacity(1.0f);
-                    if (mFadeTransitions && mNavigated && mMaxFade)
-                        continue;
+                    if (mFadeTransitions && mPrimary->getFadeAbovePrimary()) {
+                        if (mFadeTransitions && isAnimationPlaying(0))
+                            element->setOpacity(1.0f - mFadeOpacity);
+                        else
+                            element->setOpacity(1.0f);
+                    }
+
                     element->render(elementTrans);
                 }
             }
             else if (!mLegacyMode && mSystemElements.size() > static_cast<size_t>(index)) {
                 for (auto child : mSystemElements[index].children) {
-                    if (abovePrimary && child->getZIndex() > primaryZIndex) {
-                        if (mFadeTransitions || child->getOpacity() != 1.0f)
-                            child->setOpacity(1.0f - mFadeOpacity);
+                    if (abovePrimary && (child->getZIndex() > primaryZIndex)) {
+                        if (mFadeTransitions && mPrimary->getFadeAbovePrimary()) {
+                            if (mFadeTransitions || child->getOpacity() != 1.0f)
+                                child->setOpacity(1.0f - mFadeOpacity);
+                        }
+                        else {
+                            child->setOpacity(1.0f);
+                        }
                         child->render(elementTrans);
                     }
+
                     else if (!abovePrimary && child->getZIndex() <= primaryZIndex) {
                         if (mFadeTransitions || child->getDimming() != 1.0f)
                             child->setDimming(1.0f - mFadeOpacity);

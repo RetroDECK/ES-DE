@@ -146,6 +146,7 @@ private:
 
     int getCursor() override { return mCursor; }
     const size_t getNumEntries() override { return mEntries.size(); }
+    const bool getFadeAbovePrimary() const override { return mFadeAbovePrimary; }
 
     Renderer* mRenderer;
     std::function<void()> mCancelTransitionsCallback;
@@ -167,6 +168,7 @@ private:
     std::string mIndicators;
     std::string mCollectionIndicators;
     bool mLegacyMode;
+    bool mFadeAbovePrimary;
     bool mUppercase;
     bool mLowercase;
     bool mCapitalize;
@@ -199,6 +201,7 @@ TextListComponent<T>::TextListComponent()
     , mIndicators {"symbols"}
     , mCollectionIndicators {"symbols"}
     , mLegacyMode {false}
+    , mFadeAbovePrimary {false}
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
@@ -657,7 +660,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("selectorImagePath")) {
         std::string path {elem->get<std::string>("selectorImagePath")};
-        bool tile = elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile");
+        bool tile {elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile")};
         mSelectorImage.setImage(path, tile);
         mSelectorImage.setSize(mSize.x, mSelectorHeight);
         mSelectorImage.setResize(mSize.x, mSelectorHeight);
@@ -667,6 +670,9 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     else {
         mSelectorImage.setImage("");
     }
+
+    if (elem->has("fadeAbovePrimary"))
+        mFadeAbovePrimary = elem->get<bool>("fadeAbovePrimary");
 }
 
 template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)

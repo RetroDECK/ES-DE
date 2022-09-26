@@ -299,6 +299,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontSize", FLOAT},
        {"letterCase", STRING},
        {"lineSpacing", FLOAT},
+       {"fadeAbovePrimary", BOOLEAN},
        {"zIndex", FLOAT},
        {"legacyZIndexMode", STRING}}},             // For backward compatibility with legacy themes.
      {"textlist",
@@ -326,6 +327,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"lineSpacing", FLOAT},
        {"indicators", STRING},
        {"collectionIndicators", STRING},
+       {"fadeAbovePrimary", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"gameselector",
       {{"selection", STRING},

@@ -104,6 +104,7 @@ private:
 
     int getCursor() override { return mCursor; }
     const size_t getNumEntries() override { return mEntries.size(); }
+    const bool getFadeAbovePrimary() const override { return mFadeAbovePrimary; }
 
     Renderer* mRenderer;
     std::function<void(CursorState state)> mCursorChangedCallback;
@@ -139,6 +140,7 @@ private:
     bool mLinearInterpolation;
     bool mInstantItemTransitions;
     bool mItemAxisHorizontal;
+    bool mFadeAbovePrimary;
     float mItemScale;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
@@ -185,6 +187,7 @@ CarouselComponent<T>::CarouselComponent()
     , mLinearInterpolation {false}
     , mInstantItemTransitions {false}
     , mItemAxisHorizontal {false}
+    , mFadeAbovePrimary {false}
     , mItemScale {1.2f}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
@@ -1243,6 +1246,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 mText = elem->get<std::string>("text");
         }
     }
+
+    if (elem->has("fadeAbovePrimary"))
+        mFadeAbovePrimary = elem->get<bool>("fadeAbovePrimary");
 
     GuiComponent::applyTheme(theme, view, element, ALL);
 
