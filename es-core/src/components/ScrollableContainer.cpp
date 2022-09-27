@@ -62,10 +62,24 @@ void ScrollableContainer::setScrollParameters(float autoScrollDelayConstant,
 
 void ScrollableContainer::reset()
 {
-    mScrollPos = glm::vec2 {};
+    mScrollPos = glm::vec2 {0.0f, 0.0f};
     mAutoScrollResetAccumulator = 0;
     mAutoScrollAccumulator = -mAutoScrollDelay + mAutoScrollSpeed;
     mAtEnd = false;
+    // This is needed to resize to the designated area when the backgrund image gets invalidated.
+    if (!mChildren.empty()) {
+        float combinedHeight {
+            mChildren.front()->getFont()->getHeight(mChildren.front()->getLineSpacing())};
+        if (mChildren.front()->getSize().y > mSize.y) {
+            if (mVerticalSnap) {
+                float numLines {std::floor(mSize.y / combinedHeight)};
+                mAdjustedHeight = std::round(numLines * combinedHeight);
+            }
+            else {
+                mAdjustedHeight = mSize.y;
+            }
+        }
+    }
 }
 
 void ScrollableContainer::applyTheme(const std::shared_ptr<ThemeData>& theme,
@@ -112,8 +126,8 @@ void ScrollableContainer::update(int deltaTime)
 
     // Calculate the spacing which will be used to clip the container.
     if (lineSpacing > 1.2f && mClipSpacing == 0.0f) {
-        const float minimumSpacing = mChildren.front()->getFont()->getHeight(1.2f);
-        const float currentSpacing = mChildren.front()->getFont()->getHeight(lineSpacing);
+        const float minimumSpacing {mChildren.front()->getFont()->getHeight(1.2f)};
+        const float currentSpacing {mChildren.front()->getFont()->getHeight(lineSpacing)};
         mClipSpacing = std::round((currentSpacing - minimumSpacing) / 2.0f);
     }
 
@@ -219,7 +233,7 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
 
     glm::ivec2 clipPos {static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)};
 
-    glm::vec3 dimScaled {};
+    glm::vec3 dimScaled {0.0f, 0.0f, 0.0f};
     dimScaled.x = std::fabs(trans[3].x + mSize.x);
     dimScaled.y = std::fabs(trans[3].y + mAdjustedHeight);
 
