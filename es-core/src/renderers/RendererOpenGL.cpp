@@ -154,7 +154,11 @@ void RendererOpenGL::setup()
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
 #else
+#if defined(STEAM_DECK) || defined(RETRODECK)
+    if (glVersion == "3.3") {
+#else
     if (glVersion == "" || glVersion == "3.3") {
+#endif
         mMajorGLVersion = 3;
         mMinorGLVersion = 3;
     }
@@ -162,15 +166,25 @@ void RendererOpenGL::setup()
         mMajorGLVersion = 4;
         mMinorGLVersion = 2;
     }
+#if defined(STEAM_DECK) || defined(RETRODECK)
+    else if (glVersion == "" || glVersion == "4.6") {
+#else
     else if (glVersion == "4.6") {
+#endif
         mMajorGLVersion = 4;
         mMinorGLVersion = 6;
     }
     else {
         LOG(LogWarning) << "Unsupported OpenGL version \"" << glVersion
+#if defined(STEAM_DECK) || defined(RETRODECK)
+                        << "\" requested, defaulting to 4.6 (valid versions are 3.3, 4.2 and 4.6)";
+        mMajorGLVersion = 4;
+        mMinorGLVersion = 6;
+#else
                         << "\" requested, defaulting to 3.3 (valid versions are 3.3, 4.2 and 4.6)";
         mMajorGLVersion = 3;
         mMinorGLVersion = 3;
+#endif
     }
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
