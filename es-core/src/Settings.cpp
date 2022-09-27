@@ -215,12 +215,12 @@ void Settings::setDefaults()
 
     // Other settings.
     mStringMap["MediaDirectory"] = {"", ""};
-#if defined(STEAM_DECK)
+#if defined(STEAM_DECK) || defined(RETRODECK)
     mIntMap["MaxVRAM"] = {512, 512};
 #elif defined(RASPBERRY_PI)
     mIntMap["MaxVRAM"] = {184, 184};
 #else
-    mIntMap["MaxVRAM"] = {256, 256};
+    mIntMap["MaxVRAM"] = {384, 384};
 #endif
     mIntMap["DisplayIndex"] = {1, 1};
 #if defined(__APPLE__)
@@ -236,7 +236,11 @@ void Settings::setDefaults()
 #if defined(VIDEO_HW_DECODING)
     mBoolMap["VideoHardwareDecoding"] = {false, false};
 #endif
+#if defined(STEAM_DECK) || defined(RETRODECK)
+    mBoolMap["VideoUpscaleFrameRate"] = {true, true};
+#else
     mBoolMap["VideoUpscaleFrameRate"] = {false, false};
+#endif
     mBoolMap["AlternativeEmulatorPerGame"] = {true, true};
     mBoolMap["ShowHiddenFiles"] = {true, true};
     mBoolMap["ShowHiddenGames"] = {true, true};
