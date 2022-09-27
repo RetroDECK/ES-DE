@@ -59,26 +59,28 @@ cd ..
 echo -e "\nSetting up SDL"
 rm -rf SDL2-*
 
-curl -O https://www.libsdl.org/release/SDL2-devel-2.0.20-mingw.tar.gz
-tar xvzf SDL2-devel-2.0.20-mingw.tar.gz
+curl -O https://libsdl.org/release/SDL2-devel-2.24.0-mingw.tar.gz
+
+tar xvzf SDL2-devel-2.24.0-mingw.tar.gz
 # Needed due to some kind of file system race condition that sometimes occurs on Windows.
 sleep 1
-mv SDL2-2.0.20/x86_64-w64-mingw32/include/SDL2 SDL2-2.0.20/
-cp -p SDL2-2.0.20/x86_64-w64-mingw32/lib/libSDL2main.a ..
-cp -p SDL2-2.0.20/x86_64-w64-mingw32/bin/SDL2.dll ..
+mv SDL2-2.24.0/x86_64-w64-mingw32/include/SDL2 SDL2-2.24.0/
+cp -p SDL2-2.24.0/x86_64-w64-mingw32/lib/libSDL2main.a ..
+cp -p SDL2-2.24.0/x86_64-w64-mingw32/bin/SDL2.dll ..
 
 echo -e "\nSetting up FFmpeg"
 rm -rf ffmpeg-*
 
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-n5.0-latest-win64-gpl-shared-5.0.zip
-unzip ffmpeg-n5.0-latest-win64-gpl-shared-5.0.zip
-cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avcodec-59.dll ..
-cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avfilter-8.dll ..
-cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avformat-59.dll ..
-cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/avutil-57.dll ..
-cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/postproc-56.dll ..
-cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/swresample-4.dll ..
-cp -p ffmpeg-n5.0-latest-win64-gpl-shared-5.0/bin/swscale-6.dll ..
+# This package should be available for download for two years.
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-04-30-14-59/ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0.zip
+unzip ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0.zip
+cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avcodec-59.dll ..
+cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avfilter-8.dll ..
+cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avformat-59.dll ..
+cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avutil-57.dll ..
+cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/postproc-56.dll ..
+cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/swresample-4.dll ..
+cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/swscale-6.dll ..
 
 echo -e "\nSetting up OpenSSL"
 
