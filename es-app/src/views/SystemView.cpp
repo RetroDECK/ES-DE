@@ -288,9 +288,6 @@ void SystemView::onCursorChanged(const CursorState& state)
     std::string transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
     mFadeTransitions = transitionStyle == "fade";
 
-    if (startPos == endPos)
-        return;
-
     Animation* anim;
 
     if (transitionStyle == "fade") {
