@@ -395,11 +395,11 @@ elseif(WIN32)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/curl-7.80.0-win64-mingw/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/glew-2.1.0/include
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-n5.0-latest-win64-gpl-shared-5.0/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.0.20)
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.24.0)
 elseif(EMSCRIPTEN)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
