@@ -44,7 +44,7 @@
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
 * Adjusted the splash screen sizing to be more consistent across various screen aspect ratios
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
-* Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (as default) and OpenGL ES 3.0 respectively
+* Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (4.6 on the Steam Deck) and OpenGL ES 3.0 respectively
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
@@ -117,13 +117,16 @@
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
 * Updated to build correctly with FFmpeg 5.0
-* Updated FFmpeg to 5.0 and SDL to 2.0.20 on Windows and macOS
+* Updated FFmpeg to 5.0 and SDL to 2.24.0 on Windows and macOS
 * Added a workaround for playing broken video files with invalid PTS values
 * Refactored the rendering code from a shared namespace into proper classes
 * Removed the deprecated OpenGL ES 1.0 renderer
+* Increased the default VRAM limit from 256 MiB to 384 MiB
+* Increased the minimum VRAM limit from 80 MiB to 128 MiB
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
+* When building as an AppImage a current SDL library release is now built and bundled instead of including the OS-supplied version
 * When building as an AppImage the "data" directory (e.g. /usr/share/emulationstation) is now excluded when looking for resources and themes
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Made the logging thread safe

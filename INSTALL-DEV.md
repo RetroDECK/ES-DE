@@ -1115,7 +1115,7 @@ Sets the maximum total animation cache for Lottie animations. Minimum value is 0
 
 **OpenGLVersion**
 
-If using the regular desktop OpenGL renderer, the allowed values are 3.3 (the default), 4.2 and 4.6. If using the OpenGL ES renderer, the allowed values are 3.0 (the default), 3.1 and 3.2.
+If using the regular desktop OpenGL renderer, the allowed values are 3.3 (default on all builds except the Steam Deck), 4.2 and 4.6 (default on the Steam Deck). If using the OpenGL ES renderer, the allowed values are 3.0 (default), 3.1 and 3.2.
 
 **ScraperConnectionTimeout**
 
