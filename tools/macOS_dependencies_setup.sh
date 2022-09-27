@@ -157,7 +157,7 @@ echo "\nSetting up SDL"
 rm -rf SDL
 git clone https://github.com/libsdl-org/SDL.git
 cd SDL
-git checkout release-2.0.20
+git checkout release-2.24.0
 ln -s include SDL2
 mkdir build
 cd ..

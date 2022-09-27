@@ -74,7 +74,7 @@ cd ..
 echo "\nBuilding SDL"
 cd SDL/build
 rm -f CMakeCache.txt
-cmake -S .. -B .
+cmake -DCMAKE_BUILD_TYPE=Release -S .. -B .
 make clean
 make -j${JOBS}
 cp libSDL2-2.0.dylib ../../..
