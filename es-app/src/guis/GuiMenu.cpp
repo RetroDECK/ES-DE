@@ -780,7 +780,7 @@ void GuiMenu::openSoundOptions()
     VolumeControl volumeControl;
     int currentVolume {volumeControl.getVolume()};
 
-    auto systemVolume = std::make_shared<SliderComponent>(0.f, 100.f, 1.f, "%");
+    auto systemVolume = std::make_shared<SliderComponent>(0.0f, 100.0f, 1.0f, "%");
     systemVolume->setValue(static_cast<float>(currentVolume));
     s->addWithLabel("SYSTEM VOLUME", systemVolume);
     s->addSaveFunc([systemVolume, currentVolume] {
@@ -793,7 +793,7 @@ void GuiMenu::openSoundOptions()
 #endif
 
     // Volume for navigation sounds.
-    auto soundVolumeNavigation = std::make_shared<SliderComponent>(0.f, 100.f, 1.f, "%");
+    auto soundVolumeNavigation = std::make_shared<SliderComponent>(0.0f, 100.0f, 1.0f, "%");
     soundVolumeNavigation->setValue(
         static_cast<float>(Settings::getInstance()->getInt("SoundVolumeNavigation")));
     s->addWithLabel("NAVIGATION SOUNDS VOLUME", soundVolumeNavigation);
@@ -807,7 +807,7 @@ void GuiMenu::openSoundOptions()
     });
 
     // Volume for videos.
-    auto soundVolumeVideos = std::make_shared<SliderComponent>(0.f, 100.f, 1.f, "%");
+    auto soundVolumeVideos = std::make_shared<SliderComponent>(0.0f, 100.0f, 1.0f, "%");
     soundVolumeVideos->setValue(
         static_cast<float>(Settings::getInstance()->getInt("SoundVolumeVideos")));
     s->addWithLabel("VIDEO PLAYER VOLUME", soundVolumeVideos);
@@ -1023,7 +1023,7 @@ void GuiMenu::openOtherOptions()
     s->addRow(rowMediaDir);
 
     // Maximum VRAM.
-    auto maxVram = std::make_shared<SliderComponent>(80.f, 1024.f, 8.f, "MiB");
+    auto maxVram = std::make_shared<SliderComponent>(128.0f, 1024.0f, 8.0f, "MiB");
     maxVram->setValue(static_cast<float>(Settings::getInstance()->getInt("MaxVRAM")));
     s->addWithLabel("VRAM LIMIT", maxVram);
     s->addSaveFunc([maxVram, s] {
