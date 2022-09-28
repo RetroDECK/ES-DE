@@ -90,16 +90,19 @@ void SliderComponent::render(const glm::mat4& parentTrans)
 
     float width {mSize.x - mKnob.getSize().x -
                  (mTextCache ?
-                      mTextCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
+                      mTextCache->metrics.size.x + (4.0f * mRenderer->getScreenWidthModifier()) :
                       0.0f)};
 
     // Render suffix.
     if (mTextCache)
         mFont->renderTextCache(mTextCache.get());
 
+    const float barPosY {mBarHeight == 1.0f ? std::floor(mSize.y / 2.0f - mBarHeight / 2.0f) :
+                                              std::round(mSize.y / 2.0f - mBarHeight / 2.0f)};
+
     // Render bar.
-    mRenderer->drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f - mBarHeight / 2.0f, width,
-                        mBarHeight, 0x777777FF, 0x777777FF);
+    mRenderer->drawRect(mKnob.getSize().x / 2.0f, barPosY, width, mBarHeight, 0x777777FF,
+                        0x777777FF);
 
     // Render knob.
     mKnob.render(trans);
@@ -135,7 +138,7 @@ void SliderComponent::onValueChanged()
         ss.precision(0);
         ss << mValue;
         ss << mSuffix;
-        const std::string val = ss.str();
+        const std::string val {ss.str()};
 
         ss.str("");
         ss.clear();
@@ -143,9 +146,9 @@ void SliderComponent::onValueChanged()
         ss.precision(0);
         ss << mMax;
         ss << mSuffix;
-        const std::string max = ss.str();
+        const std::string max {ss.str()};
 
-        glm::vec2 textSize = mFont->sizeText(max);
+        glm::vec2 textSize {mFont->sizeText(max)};
         mTextCache = std::shared_ptr<TextCache>(mFont->buildTextCache(
             val, mSize.x - textSize.x, (mSize.y - textSize.y) / 2.0f, 0x777777FF));
         mTextCache->metrics.size.x = textSize.x; // Fudge the width.
@@ -153,12 +156,19 @@ void SliderComponent::onValueChanged()
 
     mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
 
-    float barLength =
+    float barLength {
         mSize.x - mKnob.getSize().x -
-        (mTextCache ? mTextCache->metrics.size.x + (4.0f * Renderer::getScreenWidthModifier()) :
-                      0.0f);
+        (mTextCache ? mTextCache->metrics.size.x + (4.0f * mRenderer->getScreenWidthModifier()) :
+                      0.0f)};
 
-    int barHeight = static_cast<int>(std::round(2.0f * Renderer::getScreenHeightModifier()));
+    int barHeight {0};
+    if (mRenderer->getScreenWidth() > mRenderer->getScreenHeight()) {
+        barHeight = static_cast<int>(std::round(2.0f * mRenderer->getScreenHeightModifier()));
+    }
+    else {
+        barHeight =
+            static_cast<int>(std::round(2.0f * std::round(mRenderer->getScreenWidthModifier())));
+    }
 
     // For very low resolutions, make sure the bar height is not rounded to zero.
     if (barHeight == 0)
@@ -175,9 +185,11 @@ void SliderComponent::onValueChanged()
     }
 
     mBarHeight = static_cast<float>(barHeight);
+    const float val {(mValue - mMin) / (mMax - mMin)};
+    // For smooth outer boundaries.
+    // const float val {glm::smoothstep(mMin, mMax, mValue)};
 
-    mKnob.setPosition(((mValue - mMin / 2.0f) / mMax) * barLength + mKnob.getSize().x / 2.0f,
-                      mSize.y / 2.0f);
+    mKnob.setPosition(val * barLength + mKnob.getSize().x / 2.0f, mSize.y / 2.0f);
 }
 
 std::vector<HelpPrompt> SliderComponent::getHelpPrompts()
