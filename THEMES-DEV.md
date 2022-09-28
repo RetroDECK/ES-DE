@@ -1465,6 +1465,7 @@ Properties:
     - `titlescreen` - This will look for a title screen image.
     - `miximage` - This will look for a miximage.
     - `fanart` - This will look for a fan art image.
+    - `none` - No image will be used, instead the game name will be displayed as text
     - Default is `marquee`
 * `defaultItem` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).

@@ -197,6 +197,7 @@
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
 * Text elements that had an opacity set to lower than FF via the color tag were faded in during gamelist scrolling
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase letters in theme names)
+* The SliderComponent knob was not consistently positioned
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
 * The bottom menu selector bar was not getting rendered when running at really low resolutions like 320x240
