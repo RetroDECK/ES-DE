@@ -340,7 +340,8 @@ std::string Font::wrapText(std::string text, float maxLength, float maxHeight, f
             if (restrictHeight && currLineLength != 0.0f && maxHeight < lineHeight &&
                 wordSize > maxLength - textSize.x) {
                 // Multi-word lines.
-                if (maxLength - currLineLength + dotsSize < wordSize) {
+                if (maxLength - currLineLength + dotsSize < wordSize &&
+                    sizeText(line).x + dotsSize > maxLength) {
                     while (sizeText(line).x + dotsSize > maxLength)
                         line.pop_back();
                 }
@@ -352,6 +353,9 @@ std::string Font::wrapText(std::string text, float maxLength, float maxHeight, f
 
                     line = line + word;
                 }
+
+                if (line.back() == ' ')
+                    line.pop_back();
 
                 line.append("...");
                 break;
@@ -411,6 +415,8 @@ std::string Font::wrapText(std::string text, float maxLength, float maxHeight, f
                 out.pop_back();
             }
         }
+        if (out.back() == ' ')
+            out.pop_back();
         out.append("...");
     }
 
