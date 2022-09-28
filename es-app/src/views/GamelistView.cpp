@@ -151,7 +151,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                             itemType == "backcover" || itemType == "3dbox" ||
                             itemType == "physicalmedia" || itemType == "screenshot" ||
                             itemType == "titlescreen" || itemType == "miximage" ||
-                            itemType == "fanart") {
+                            itemType == "fanart" || itemType == "none") {
                             mCarousel->setItemType(itemType);
                         }
                         else {

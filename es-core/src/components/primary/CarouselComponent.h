@@ -436,6 +436,8 @@ template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
                     entry.data.itemPath = game->getMiximagePath();
                 else if (mItemType == "fanart")
                     entry.data.itemPath = game->getFanArtPath();
+                else if (mItemType == "none") // Display the game name as text.
+                    return;
 
                 auto theme = game->getSystem()->getTheme();
                 updateEntry(entry, theme);
