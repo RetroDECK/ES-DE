@@ -85,10 +85,13 @@ private:
     bool decoderInitHW();
 
     Renderer* mRenderer;
-    static enum AVHWDeviceType sDeviceType;
-    static enum AVPixelFormat sPixelFormat;
-    static std::vector<std::string> sSWDecodedVideos;
-    static std::vector<std::string> sHWDecodedVideos;
+
+    // clang-format off
+    static inline enum AVHWDeviceType sDeviceType {AV_HWDEVICE_TYPE_NONE};
+    static inline enum AVPixelFormat sPixelFormat {AV_PIX_FMT_NONE};
+    // clang-format on
+    static inline std::vector<std::string> sSWDecodedVideos;
+    static inline std::vector<std::string> sHWDecodedVideos;
 
     std::shared_ptr<TextureResource> mTexture;
     std::vector<float> mVideoRectangleCoords;

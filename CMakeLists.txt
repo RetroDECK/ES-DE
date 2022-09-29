@@ -336,6 +336,7 @@ endif()
 
 if(VIDEO_HW_DECODING)
     add_compile_definitions(VIDEO_HW_DECODING)
+    message("-- Building with FFmpeg HW decoding")
 endif()
 
 if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
