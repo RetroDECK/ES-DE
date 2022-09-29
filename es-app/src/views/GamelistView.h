@@ -127,6 +127,7 @@ private:
     HelpStyle mHelpStyle;
     ViewController::GamelistViewStyle mViewStyle;
     bool mLegacyMode;
+    bool mStaticVideoAudio;
 
     std::shared_ptr<ThemeData> mTheme;
     std::vector<GuiComponent*> mThemeExtras;

@@ -47,7 +47,7 @@ public:
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(float width, float height) override;
     // Basic video controls.
-    void stopVideoPlayer() override;
+    void stopVideoPlayer(bool muteAudio = true) override;
     void pauseVideoPlayer() override;
     // Handle looping of the video. Must be called periodically.
     void handleLooping() override;

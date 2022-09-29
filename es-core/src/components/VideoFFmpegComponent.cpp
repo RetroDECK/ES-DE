@@ -1441,9 +1441,10 @@ void VideoFFmpegComponent::startVideoStream()
     }
 }
 
-void VideoFFmpegComponent::stopVideoPlayer()
+void VideoFFmpegComponent::stopVideoPlayer(bool muteAudio)
 {
-    muteVideoPlayer();
+    if (muteAudio)
+        muteVideoPlayer();
 
     mIsPlaying = false;
     mIsActuallyPlaying = false;

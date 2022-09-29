@@ -90,7 +90,7 @@ public:
 
     // Basic video controls.
     void startVideoPlayer();
-    virtual void stopVideoPlayer() {}
+    virtual void stopVideoPlayer(bool muteAudio = true) {}
     virtual void pauseVideoPlayer() {}
 
     // Handle looping of the video. Must be called periodically.

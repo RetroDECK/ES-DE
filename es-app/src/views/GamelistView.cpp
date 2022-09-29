@@ -21,11 +21,9 @@ GamelistView::GamelistView(FileData* root)
     , mRenderer {Renderer::getInstance()}
     , mViewStyle {ViewController::BASIC}
     , mLegacyMode {false}
+    , mStaticVideoAudio {false}
 {
     mViewStyle = ViewController::getInstance()->getState().viewstyle;
-
-    if (mLegacyMode)
-        return;
 }
 
 GamelistView::~GamelistView()
@@ -108,6 +106,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         return;
     }
 
+    mStaticVideoAudio = false;
     const bool isStartupSystem {Settings::getInstance()->getString("StartupSystem") ==
                                 mRoot->getSystem()->getName()};
 
@@ -199,6 +198,8 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     if (mStaticVideoComponents.back()->getMetadataElement())
                         mStaticVideoComponents.back()->setScrollHide(true);
                     mStaticVideoComponents.back()->setGeneralFade(true);
+                    if (element.second.has("audio"))
+                        mStaticVideoAudio = element.second.get<bool>("audio");
                 }
                 else {
                     mVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
@@ -552,7 +553,7 @@ void GamelistView::updateView(const CursorState& state)
     if (file == nullptr) {
         if (mVideoPlaying) {
             for (auto& video : mVideoComponents) {
-                video->stopVideoPlayer();
+                video->stopVideoPlayer(!mStaticVideoAudio);
                 video->setVideo("");
                 if (!video->hasStartDelay())
                     video->setImage("");
@@ -576,7 +577,7 @@ void GamelistView::updateView(const CursorState& state)
                 for (auto& video : mVideoComponents) {
                     setGameImage(mRandomGame, video.get());
 
-                    video->stopVideoPlayer();
+                    video->stopVideoPlayer(!mStaticVideoAudio);
 
                     if (video->hasStaticVideo())
                         video->setStaticVideo();
@@ -593,7 +594,7 @@ void GamelistView::updateView(const CursorState& state)
                 }
 
                 for (auto& video : mVideoComponents) {
-                    video->stopVideoPlayer();
+                    video->stopVideoPlayer(!mStaticVideoAudio);
                     video->setImage("");
                     video->setVideo("");
                     if (video->hasStaticVideo()) {
@@ -612,7 +613,7 @@ void GamelistView::updateView(const CursorState& state)
 
             for (auto& video : mVideoComponents) {
                 setGameImage(file, video.get());
-                video->stopVideoPlayer();
+                video->stopVideoPlayer(!mStaticVideoAudio);
 
                 if (video->hasStaticVideo())
                     video->setStaticVideo();
