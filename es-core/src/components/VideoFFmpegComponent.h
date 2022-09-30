@@ -10,7 +10,7 @@
 #define ES_CORE_COMPONENTS_VIDEO_FFMPEG_COMPONENT_H
 
 // Audio buffer in seconds.
-#define AUDIO_BUFFER 0.1l
+#define AUDIO_BUFFER 0.1
 
 #include "VideoComponent.h"
 

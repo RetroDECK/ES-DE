@@ -20,6 +20,13 @@
 #include <algorithm>
 #include <iomanip>
 
+#if LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28
+// FFmpeg 5.1 and above.
+#define CHANNELS ch_layout.nb_channels
+#else
+#define CHANNELS channels
+#endif
+
 VideoFFmpegComponent::VideoFFmpegComponent()
     : mRenderer {Renderer::getInstance()}
     , mRectangleOffset {0.0f, 0.0f}
@@ -488,9 +495,18 @@ bool VideoFFmpegComponent::setupAudioFilters()
         return false;
     }
 
-    char channelLayout[512];
-    av_get_channel_layout_string(channelLayout, sizeof(channelLayout), mAudioCodecContext->channels,
-                                 mAudioCodecContext->channel_layout);
+    std::string channelLayout(128, '\0');
+
+#if LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28
+    // FFmpeg 5.1 and above.
+    AVChannelLayout chLayout {};
+    av_channel_layout_from_mask(&chLayout, mAudioCodecContext->ch_layout.u.mask);
+    av_channel_layout_describe(&chLayout, &channelLayout[0], 128);
+    av_channel_layout_uninit(&chLayout);
+#else
+    av_get_channel_layout_string(&channelLayout[0], sizeof(channelLayout),
+                                 mAudioCodecContext->CHANNELS, mAudioCodecContext->channel_layout);
+#endif
 
     std::string filterArguments;
     filterArguments.append("time_base=")
@@ -757,7 +773,7 @@ void VideoFFmpegComponent::getProcessedFrames()
         double pts {mAudioFrameResampled->pts * av_q2d(timeBase)};
         currFrame.pts = pts;
 
-        int bufferSize {mAudioFrameResampled->nb_samples * mAudioFrameResampled->channels *
+        int bufferSize {mAudioFrameResampled->nb_samples * mAudioFrameResampled->CHANNELS *
                         av_get_bytes_per_sample(AV_SAMPLE_FMT_FLT)};
 
         currFrame.resampledData.insert(currFrame.resampledData.begin(),
@@ -1440,7 +1456,7 @@ void VideoFFmpegComponent::startVideoStream()
         // Set some reasonable target queue sizes (buffers).
         mVideoTargetQueueSize = static_cast<int>(av_q2d(mVideoStream->avg_frame_rate) / 2.0l);
         if (mAudioStreamIndex >= 0)
-            mAudioTargetQueueSize = mAudioStream->codecpar->channels * 15;
+            mAudioTargetQueueSize = mAudioStream->codecpar->CHANNELS * 15;
         else
             mAudioTargetQueueSize = 30;
 
