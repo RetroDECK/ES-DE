@@ -72,15 +72,15 @@ echo -e "\nSetting up FFmpeg"
 rm -rf ffmpeg-*
 
 # This package should be available for download for two years.
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-04-30-14-59/ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0.zip
-unzip ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0.zip
-cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avcodec-59.dll ..
-cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avfilter-8.dll ..
-cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avformat-59.dll ..
-cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/avutil-57.dll ..
-cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/postproc-56.dll ..
-cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/swresample-4.dll ..
-cp -p ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0/bin/swscale-6.dll ..
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-09-30-12-41/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+unzip ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avcodec-59.dll ..
+cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avfilter-8.dll ..
+cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avformat-59.dll ..
+cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avutil-57.dll ..
+cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/postproc-56.dll ..
+cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/swresample-4.dll ..
+cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/swscale-6.dll ..
 
 echo -e "\nSetting up OpenSSL"
 

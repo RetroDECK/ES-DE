@@ -122,26 +122,26 @@ copy /Y SDL2-2.24.0\lib\x64\SDL2main.lib ..
 echo:
 echo Setting up FFmpeg
 
-if exist ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\ (
-  rmdir /S /Q ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0
+if exist ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\ (
+  rmdir /S /Q ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1
 )
 
 :: This package should be available for download for two years.
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-04-30-14-59/ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0.zip
-7z x ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0.zip
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\bin\avcodec-59.dll ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\bin\avfilter-8.dll ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\bin\avformat-59.dll ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\bin\avutil-57.dll ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\bin\postproc-56.dll ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\bin\swresample-4.dll ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\bin\swscale-6.dll ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\lib\avcodec.lib ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\lib\avfilter.lib ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\lib\avformat.lib ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\lib\avutil.lib ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\lib\swresample.lib ..
-copy /Y ffmpeg-n5.0.1-4-ga5ebb3d25e-win64-gpl-shared-5.0\lib\swscale.lib ..
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-09-30-12-41/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+7z x ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avcodec-59.dll ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avfilter-8.dll ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avformat-59.dll ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avutil-57.dll ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\postproc-56.dll ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\swresample-4.dll ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\swscale-6.dll ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avcodec.lib ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avfilter.lib ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avformat.lib ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avutil.lib ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\swresample.lib ..
+copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\swscale.lib ..
 
 echo:
 echo Setting up OpenSSL
