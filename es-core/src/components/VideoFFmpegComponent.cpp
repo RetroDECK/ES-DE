@@ -319,8 +319,7 @@ void VideoFFmpegComponent::frameProcessing()
 bool VideoFFmpegComponent::setupVideoFilters()
 {
     int returnValue {0};
-    char errorMessage[512];
-    const enum AVPixelFormat outPixFormats[] {AV_PIX_FMT_RGBA, AV_PIX_FMT_NONE};
+    std::string errorMessage(512, '\0');
 
     mVFilterInputs = avfilter_inout_alloc();
     mVFilterOutputs = avfilter_inout_alloc();
@@ -380,7 +379,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
                          "Couldn't create filter instance for buffer source: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -390,7 +389,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
                          "Couldn't create filter instance for buffer sink: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -437,7 +436,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     }
 
     filterDescription.append("format=pix_fmts=")
-        .append(std::string(av_get_pix_fmt_name(outPixFormats[0])));
+        .append(std::string(av_get_pix_fmt_name(AV_PIX_FMT_RGBA)));
 
     returnValue = avfilter_graph_parse_ptr(mVFilterGraph, filterDescription.c_str(),
                                            &mVFilterInputs, &mVFilterOutputs, nullptr);
@@ -445,7 +444,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
                          "Couldn't add graph filter: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -454,7 +453,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupVideoFilters(): "
                          "Couldn't configure graph: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -464,7 +463,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
 bool VideoFFmpegComponent::setupAudioFilters()
 {
     int returnValue {0};
-    char errorMessage[512];
+    std::string errorMessage(512, '\0');
     const int outSampleRates[] {AudioManager::getInstance().sAudioFormat.freq, -1};
     const enum AVSampleFormat outSampleFormats[] {AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_NONE};
 
@@ -501,7 +500,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     // FFmpeg 5.1 and above.
     AVChannelLayout chLayout {};
     av_channel_layout_from_mask(&chLayout, mAudioCodecContext->ch_layout.u.mask);
-    av_channel_layout_describe(&chLayout, &channelLayout[0], 128);
+    av_channel_layout_describe(&chLayout, &channelLayout[0], sizeof(channelLayout));
     av_channel_layout_uninit(&chLayout);
 #else
     av_get_channel_layout_string(&channelLayout[0], sizeof(channelLayout),
@@ -526,7 +525,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
                          "Couldn't create filter instance for buffer source: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -536,7 +535,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
                          "Couldn't create filter instance for buffer sink: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -565,7 +564,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
                          "Couldn't add graph filter: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -574,7 +573,7 @@ bool VideoFFmpegComponent::setupAudioFilters()
     if (returnValue < 0) {
         LOG(LogError) << "VideoFFmpegComponent::setupAudioFilters(): "
                          "Couldn't configure graph: "
-                      << av_make_error_string(errorMessage, sizeof(errorMessage), returnValue);
+                      << av_make_error_string(&errorMessage[0], sizeof(errorMessage), returnValue);
         return false;
     }
 
@@ -724,10 +723,16 @@ void VideoFFmpegComponent::getProcessedFrames()
     // Video frames.
     while (av_buffersink_get_frame(mVBufferSinkContext, mVideoFrameResampled) >= 0) {
 
-        // Save the frame into the queue for later processing.
+        // Save frame into the queue for later processing.
         VideoFrame currFrame;
 
-        currFrame.width = mVideoFrameResampled->width;
+        // This is likely unnecessary as AV_PIX_FMT_RGBA always uses 4 bytes per pixel.
+        // const int bytesPerPixel {
+        //    av_get_padded_bits_per_pixel(av_pix_fmt_desc_get(AV_PIX_FMT_RGBA)) / 8};
+        const int bytesPerPixel {4};
+        const int width {mVideoFrameResampled->linesize[0] / bytesPerPixel};
+
+        currFrame.width = width;
         currFrame.height = mVideoFrameResampled->height;
 
         mVideoFrameResampled->best_effort_timestamp = mVideoFrameResampled->pkt_dts;
@@ -736,17 +741,17 @@ void VideoFFmpegComponent::getProcessedFrames()
         // (picture) should be displayed. The packet DTS value is used for the basis of
         // the calculation as per the recommendation in the FFmpeg documentation for
         // the av_read_frame function.
-        double pts {static_cast<double>(mVideoFrameResampled->pkt_dts) *
-                    av_q2d(mVideoStream->time_base)};
+        const double pts {static_cast<double>(mVideoFrameResampled->pkt_dts) *
+                          av_q2d(mVideoStream->time_base)};
 
         // Needs to be adjusted if changing the rate?
-        double frameDuration {static_cast<double>(mVideoFrameResampled->pkt_duration) *
-                              av_q2d(mVideoStream->time_base)};
+        const double frameDuration {static_cast<double>(mVideoFrameResampled->pkt_duration) *
+                                    av_q2d(mVideoStream->time_base)};
 
         currFrame.pts = pts;
         currFrame.frameDuration = frameDuration;
 
-        int bufferSize {mVideoFrameResampled->width * mVideoFrameResampled->height * 4};
+        const int bufferSize {width * mVideoFrameResampled->height * 4};
 
         currFrame.frameRGBA.insert(
             currFrame.frameRGBA.begin(), std::make_move_iterator(&mVideoFrameResampled->data[0][0]),
