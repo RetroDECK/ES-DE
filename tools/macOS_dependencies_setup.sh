@@ -194,4 +194,4 @@ echo "\nSetting up FFmpeg"
 rm -rf FFmpeg
 git clone https://github.com/FFmpeg/FFmpeg.git
 cd FFmpeg
-git checkout n5.0.1
+git checkout n5.1.2
