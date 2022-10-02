@@ -85,9 +85,9 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.2
 
-* Animated menu elements like switches and tick boxes
-* Simple file browsing component
+* Theme downloader
 * Scrollbar component for the gamelist view which can be used by the themes
+* Reorganize the menus, possibly adding basic/advanced modes
 * Background music
 * Proper audio mixer
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
@@ -100,12 +100,13 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Localization/multi-language support
 * Dependency on MoltenVK to get Metal support on macOS
 * Better and more accurate GPU and memory usage statistics overlay
+* Simple file browsing component
 * Bulk metadata editor
 * Improve multi-threading
 
 #### v2.4
 
-* Reorganize the menus, possibly adding basic/advanced modes
+* Animated menu elements like switches and tick boxes
 * Migration tools for importing game metadata and media from other frontend applications
 * Audit tools to clean up orphaned gamelist entries, media files etc.
 * Auto-import tools for Steam, Lutris etc.

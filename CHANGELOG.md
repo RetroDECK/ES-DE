@@ -34,7 +34,13 @@
 * Added MAME standalone as an alternative emulator for the gx4000 system
 * Added the .bin file extension to the gx4000 system
 * Added the .m3u file extension to the pcfx system
-* Removed the .7z and .zip file extensions from the 3do system
+* Removed the .7z and .zip file extensions from the 3do, neogeocd and neogeocdjp systems
+* Removed the .ccd and .cue file extensions from the fbneo system
+* Removed the .ccd, .cue and .iso file extensions from the neogeo system
+* Added the FinalBurn Neo RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems
+* Added MAME standalone as an alternative emulator for the neogeo, neogeocd and neogeocdjp systems
+* Added FinalBurn Neo standalone as an alternative emulator for the fbneo, neogeo, neogeocd and neogeocdjp systems on Unix
+* Added FinalBurn Neo standalone as an alternative emulator for the fbneo and neogeo system on Windows
 * Set DOSBox-X and DOSBox Staging to start in the game directory so per-game dosbox.conf files can be used
 * (macOS) Added an additional find rule entry for DOSBox-X as the binary name has been changed
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package
@@ -116,8 +122,8 @@
 * Added shader support for performing BGRA to RGBA color conversion
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
-* Updated to build correctly with FFmpeg 5.0
-* Updated FFmpeg to 5.0 and SDL to 2.24.0 on Windows and macOS
+* Updated to build correctly with FFmpeg 5.1
+* Updated FFmpeg to 5.1.2 and SDL to 2.24.0 on Windows and macOS
 * Added a workaround for playing broken video files with invalid PTS values
 * Refactored the rendering code from a shared namespace into proper classes
 * Removed the deprecated OpenGL ES 1.0 renderer
@@ -187,6 +193,7 @@
 * The rating icons would not fit into the designated space in the scraper GUI when running at some vertically oriented screen resolutions
 * The game description would start to scroll too late when running the multi-scraper in semi-automatic mode
 * If setting an origin other than 0.5 for a video with pillarboxes enabled, the video would not get centered on the black rectangle
+* The video player output frame width was not set correctly which made some videos render as garbled when using FFmpeg 5.1 and later
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
 * The gamelist quick list scrolling overlay would not disappear as intended under some circumstances
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)

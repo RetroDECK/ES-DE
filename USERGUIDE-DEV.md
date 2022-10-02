@@ -164,6 +164,8 @@ _This is the dialog shown if no game files were found. It lets you configure the
 
 **Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/.emulationstation/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your .emulationstation directory.
 
+It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed, so you may want to recreate the ROMs directory tree after you've completed the installation. The easiest way to do that is to start ES-DE once with the _--create-system-dirs_ command line option which will create any missing system directories and also update the systems.txt and systeminfo.txt files. Note that this is a safe operation as it will not overwrite or delete your game files. Alternatively you can rename your ROMs directory to ROMs_TEMP or similar which will display the missing games dialog on application startup, and from there you can create the directories and update the info files. But this approach is a bit more cumbersome as you then need to manually move back your games from ROMs_TEMP to your newly created ROMs directory tree. If you have installed ES-DE using EmuDeck then the upgrade process will be handled by their installer so this overall section of the user guide does not apply.
+
 **Linux .deb and .rpm packages**
 
 Upgrading ES-DE using these packages is very straightforward, just run them through the package manager of your operating system and the process should be entirely automatic. Note that you need to manually download the packages from [https://es-de.org](https://es-de.org) as ES-DE is not currently included in any operating system repositories.
@@ -677,24 +679,25 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name              | Emulator      | Filename configuration          |
-| :----------------------- | :------------ | :------------------------------ |
-| amstradcpc               | CPCemu        | cpcemu/cpcemu                   |
-| apple2                   | LinApple      | linapple/linapple               |
-| coco/dragon32/tanodragon | XRoar         | xroar/xroar                     |
-| daphne                   | Hypseus Singe | hypseus-singe/hypseus.bin       |
-| dreamcast                | Redream       | redream/redream                 |
-| easyrpg                  | EasyRPG       | easyrpg/easyrpg-player          |
-| flash                    | Lightspark    | lightspark/lightspark           |
-| flash                    | Ruffle        | ruffle/ruffle                   |
-| fmtowns                  | Tsugaru       | tsugaru/Tsugaru_CUI             |
-| oric                     | Oricutron     | oricutron/Oricutron             |
-| pico8                    | PICO-8        | pico-8/pico8                    |
-| psvita                   | Vita3K        | Vita3K/Vita3K                   |
-| samcoupe                 | SimCoupé      | simcoupe/simcoupe               |
-| switch                   | Ryujinx       | publish/Ryujinx                 |
-| trs-80                   | sdl2trs       | sdl2trs/sdl2trs                 |
-| wiiu                     | Cemu          | Cemu/Cemu                       |
+| System name                      | Emulator      | Filename configuration          |
+| :------------------------------- | :------------ | :------------------------------ |
+| amstradcpc                       | CPCemu        | cpcemu/cpcemu                   |
+| apple2                           | LinApple      | linapple/linapple               |
+| coco/dragon32/tanodragon         | XRoar         | xroar/xroar                     |
+| daphne                           | Hypseus Singe | hypseus-singe/hypseus.bin       |
+| dreamcast                        | Redream       | redream/redream                 |
+| easyrpg                          | EasyRPG       | easyrpg/easyrpg-player          |
+| fbneo/neogeo/neogeocd/neogeocdjp | FinalBurn Neo | fbneo/fbneo                     |
+| flash                            | Lightspark    | lightspark/lightspark           |
+| flash                            | Ruffle        | ruffle/ruffle                   |
+| fmtowns                          | Tsugaru       | tsugaru/Tsugaru_CUI             |
+| oric                             | Oricutron     | oricutron/Oricutron             |
+| pico8                            | PICO-8        | pico-8/pico8                    |
+| psvita                           | Vita3K        | Vita3K/Vita3K                   |
+| samcoupe                         | SimCoupé      | simcoupe/simcoupe               |
+| switch                           | Ryujinx       | publish/Ryujinx                 |
+| trs-80                           | sdl2trs       | sdl2trs/sdl2trs                 |
+| wiiu                             | Cemu          | Cemu/Cemu                       |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -922,6 +925,8 @@ Dir1=..\..\ROMs\arcade\Sega Model 2
 The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
+
+Likewise, if using the standalone release of FinalBurn Neo you also need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch.
 
 #### Nintendo Game and Watch
 
@@ -2997,8 +3002,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** [UMW*] | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shortcut in root folder |
 | famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*],<br>ares FDS **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
-| fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | Single archive file following MAME name standard in root folder |
-| fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     |                                   | Yes          | Single archive file following MAME name standard in root folder |
+| fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW*] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
 | flash                 | Adobe Flash                                    | Ruffle **(Standalone)** [UMW*]    | Lightspark **(Standalone)** [U],<br>ArcadeFlashWeb **(Standalone)** [W*] | No        | Single .swf file in root folder      |
 | fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW*]    |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
@@ -3041,9 +3046,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW*],<br>Rosalie's Mupen GUI **(Standalone)** [U],<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** [UMW*] | No           |                                      |
-| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     |                                   | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
-| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
-| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             |                                   | Yes          | Single archive in root folder (which includes the CD image and ripped audio) |
+| neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** [UMW*] | Yes          | .chd (NeoCD and MAME only) or .cue file in root folder |
+| neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** [UMW*] | Yes          | .chd (NeoCD and MAME only) or .cue file in root folder |
 | nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*],<br>ares FDS **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] |              |                                      |

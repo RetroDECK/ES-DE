@@ -906,7 +906,7 @@ Properties:
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
 * `audio` - type: BOOLEAN
-    - Whether to enable or disable audio playback for the video.
+    - Whether to enable or disable audio playback for the video. For static videos in the gamelist view it's strongly recommended to set this to `false` if there is also a separate video element playing game videos.
     - Default is `true`
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
@@ -1465,7 +1465,7 @@ Properties:
     - `titlescreen` - This will look for a title screen image.
     - `miximage` - This will look for a miximage.
     - `fanart` - This will look for a fan art image.
-    - `none` - No image will be used, instead the game name will be displayed as text
+    - `none` - No image will be used, instead the game name will be displayed as text.
     - Default is `marquee`
 * `defaultItem` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
