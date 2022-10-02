@@ -42,6 +42,8 @@ Emulators\DOSBox-X\dosbox-x.exe
 Emulators\duckstation\duckstation-nogui-x64-ReleaseLTCG.exe
 Emulators\duckstation\duckstation-qt-x64-ReleaseLTCG.exe
 Emulators\EasyRPG\Player.exe
+Emulators\fbneo\fbneo64.exe
+Emulators\fbneo\fbneo.exe
 Emulators\flycast\flycast.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\KEmulator\KEmulator.exe

@@ -149,6 +149,17 @@
             <entry>%ESPATH%\..\EasyRPG\Player.exe</entry>
         </rule>
     </emulator>
+    <emulator name="FINALBURN-NEO">
+        <!-- Arcade emulator FinalBurn Neo -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\fbneo\fbneo64.exe</entry>
+            <entry>%ESPATH%\fbneo\fbneo64.exe</entry>
+            <entry>%ESPATH%\..\fbneo\fbneo64.exe</entry>
+            <entry>%ESPATH%\Emulators\fbneo\fbneo.exe</entry>
+            <entry>%ESPATH%\fbneo\fbneo.exe</entry>
+            <entry>%ESPATH%\..\fbneo\fbneo.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="FLYCAST">
         <!-- Sega Dreamcast emulator Flycast -->
         <rule type="staticpath">

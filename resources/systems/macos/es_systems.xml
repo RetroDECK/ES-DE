@@ -449,8 +449,8 @@
         <name>fbneo</name>
         <fullname>FinalBurn Neo</fullname>
         <path>%ROMPATH%/fbneo</path>
-        <extension>.ccd .CCD .cue .CUE .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbneo_libretro.dylib %ROM%</command>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbneo_libretro.dylib %ROM%</command>
         <platform>arcade</platform>
         <theme>fbneo</theme>
     </system>
@@ -925,8 +925,9 @@
         <name>neogeo</name>
         <fullname>SNK Neo Geo</fullname>
         <path>%ROMPATH%/neogeo</path>
-        <extension>.chd .CHD .cue .CUE .iso .ISO .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbneo_libretro.dylib %ROM%</command>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fbneo_libretro.dylib %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %ROMPATH%/neogeo %BASENAME%</command>
         <platform>neogeo</platform>
         <theme>neogeo</theme>
     </system>
@@ -934,8 +935,10 @@
         <name>neogeocd</name>
         <fullname>SNK Neo Geo CD</fullname>
         <path>%ROMPATH%/neogeocd</path>
-        <extension>.chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/neocd_libretro.dylib %ROM%</command>
+        <extension>.chd .CHD .cue .CUE</extension>
+        <command label="NeoCD">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/neocd_libretro.dylib %ROM%</command>
+        <command label="FinalBurn Neo">%EMULATOR_RETROARCH% --subsystem neocd -L %CORE_RETROARCH%/fbneo_libretro.dylib %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %ROMPATH%/neogeocd neocdz -cdrm %ROM%</command>
         <platform>neogeocd</platform>
         <theme>neogeocd</theme>
     </system>
@@ -943,8 +946,10 @@
         <name>neogeocdjp</name>
         <fullname>SNK Neo Geo CD</fullname>
         <path>%ROMPATH%/neogeocdjp</path>
-        <extension>.chd .CHD .cue .CUE .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/neocd_libretro.dylib %ROM%</command>
+        <extension>.chd .CHD .cue .CUE</extension>
+        <command label="NeoCD">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/neocd_libretro.dylib %ROM%</command>
+        <command label="FinalBurn Neo">%EMULATOR_RETROARCH% --subsystem neocd -L %CORE_RETROARCH%/fbneo_libretro.dylib %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %ROMPATH%/neogeocdjp neocdz -cdrm %ROM%</command>
         <platform>neogeocd</platform>
         <theme>neogeocdjp</theme>
     </system>
