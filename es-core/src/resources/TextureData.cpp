@@ -105,11 +105,6 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     }
 
     if (rasterize) {
-        // For very short and wide images, make a slight scale adjustment to prevent pixels
-        // to the right of the image from being cut off.
-        if (svgWidth / svgHeight > 4.0f)
-            svgImage->scale(0.998, 1.0);
-
         auto bitmap = svgImage->renderToBitmap(mWidth, mHeight);
         bitmap.convertToRGBA();
         mDataRGBA.insert(mDataRGBA.begin(), std::move(bitmap.data()),
