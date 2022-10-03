@@ -22,7 +22,6 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mFlipX {false}
     , mFlipY {false}
     , mTargetIsMax {false}
-    , mScalableNonAspect {false}
     , mTileWidth {0.0f}
     , mTileHeight {0.0f}
     , mColorShift {0xFFFFFFFF}
@@ -88,7 +87,6 @@ void ImageComponent::setImage(const std::string& path, bool tile)
             mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
                                             mMipmapping, static_cast<size_t>(mSize.x),
                                             static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
-            mTexture->setScalableNonAspect(mScalableNonAspect);
             mTexture->rasterizeAt(mSize.x, mSize.y);
             onSizeChanged();
         }
@@ -404,8 +402,6 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                          getParent()->getSize() :
                          glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
-    bool noMax {false};
-
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
             glm::vec2 imageSize {elem->get<glm::vec2>("size")};
@@ -420,8 +416,6 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             if (imageSize.y > 0.0f)
                 imageSize.y = glm::clamp(imageSize.y, 0.001f, 3.0f);
             setResize(imageSize * scale);
-            if (imageSize.x != 0.0f && imageSize.y != 0.0f)
-                noMax = true;
         }
         else if (elem->has("maxSize")) {
             glm::vec2 imageMaxSize {elem->get<glm::vec2>("maxSize")};
@@ -455,11 +449,6 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & PATH && elem->has("path")) {
         const std::string path {elem->get<std::string>("path")};
 
-        if (!tile && !theme->isLegacyTheme() && noMax && path.length() > 4 &&
-            Utils::String::toLower(path.substr(path.size() - 4, std::string::npos)) == ".svg") {
-            mScalableNonAspect = true;
-        }
-
         if (tile && elem->has("tileSize")) {
             glm::vec2 tileSize {elem->get<glm::vec2>("tileSize")};
             if (tileSize.x == 0.0f && tileSize.y == 0.0f) {
@@ -474,8 +463,6 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 tileSize.y = glm::clamp(tileSize.y, 0.0f, 1.0f);
                 mTileWidth = tileSize.x * scale.x;
                 mTileHeight = tileSize.y * scale.y;
-                if (mTileWidth != 0.0f && mTileHeight != 0.0f)
-                    mScalableNonAspect = true;
             }
         }
 
@@ -614,12 +601,8 @@ void ImageComponent::resize(bool rasterize)
             glm::vec2 resizeScale {mTargetSize.x / mSize.x, mTargetSize.y / mSize.y};
 
             if (resizeScale.x < resizeScale.y) {
-                // SVG rasterization is determined by height and rasterization is done in terms of
-                // pixels. If rounding is off enough in the rasterization step (for images with
-                // extreme aspect ratios), it can cause cutoff when the aspect ratio breaks.
-                // So we always make sure to round accordingly to avoid such issues.
                 mSize.x *= resizeScale.x;
-                mSize.y = floorf(std::min(mSize.y * resizeScale.x, mTargetSize.y));
+                mSize.y = std::min(mSize.y * resizeScale.x, mTargetSize.y);
             }
             else {
                 // This will be mTargetSize.y(). We can't exceed it.

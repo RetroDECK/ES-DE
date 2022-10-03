@@ -24,7 +24,6 @@ TextureResource::TextureResource(const std::string& path,
                                  bool scalable)
     : mTextureData {nullptr}
     , mForceLoad {false}
-    , mScalableNonAspect {false}
 {
     // Create a texture data object for this texture.
     if (!path.empty()) {
@@ -250,8 +249,6 @@ void TextureResource::rasterizeAt(float width, float height)
         data = mTextureData;
     else
         data = sTextureDataManager.get(this);
-
-    data->setScalableNonAspect(mScalableNonAspect);
 
     if (mTextureData && mTextureData.get()->getScalable())
         mSourceSize = glm::vec2 {static_cast<float>(width), static_cast<float>(height)};

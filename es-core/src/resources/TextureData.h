@@ -64,10 +64,6 @@ public:
     }
     glm::vec2 getSize() { return glm::vec2 {static_cast<int>(mWidth), static_cast<int>(mHeight)}; }
 
-    // Whether to stretch or squash SVG images if the size property has been used to override
-    // the aspect ratio (accomplished by rasterizing at a lower resolution and letting the GPU
-    // scale the texture).
-    void setScalableNonAspect(bool state) { mScalableNonAspect = state; }
     // Whether to use linear filtering when magnifying the texture.
     void setLinearMagnify(bool state) { mLinearMagnify = state; }
     // Whether to use mipmapping and trilinear filtering.
@@ -96,10 +92,10 @@ private:
     std::atomic<float> mSourceWidth;
     std::atomic<float> mSourceHeight;
     std::atomic<bool> mScalable;
-    std::atomic<bool> mScalableNonAspect;
     std::atomic<bool> mHasRGBAData;
     std::atomic<bool> mPendingRasterization;
     std::atomic<bool> mMipmapping;
+    std::atomic<bool> mInvalidSVGFile;
     bool mLinearMagnify;
     bool mReloadable;
 };

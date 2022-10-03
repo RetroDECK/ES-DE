@@ -55,7 +55,6 @@ public:
         return (mTextureData != nullptr ? mTextureData->getScalable() : false);
     }
 
-    void setScalableNonAspect(bool state) { mScalableNonAspect = state; }
     void setLinearMagnify(bool state) { mTextureData->setLinearMagnify(state); }
 
     std::string getTextureFilePath();
@@ -103,7 +102,6 @@ private:
     glm::ivec2 mSize;
     glm::vec2 mSourceSize;
     bool mForceLoad;
-    bool mScalableNonAspect;
 
     // File path, tile, linear interpolation, scalable/SVG, width, height.
     using TextureKeyType = std::tuple<std::string, bool, bool, bool, size_t, size_t>;

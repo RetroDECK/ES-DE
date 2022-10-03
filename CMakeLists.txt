@@ -380,6 +380,7 @@ endif()
 set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/glm
+                        ${CMAKE_CURRENT_SOURCE_DIR}/external/lunasvg/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rlottie/inc
@@ -462,6 +463,7 @@ elseif(WIN32)
                              ${PROJECT_SOURCE_DIR}/glew32.lib
                              ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
                              ${PROJECT_SOURCE_DIR}/freetype.lib
+                             ${PROJECT_SOURCE_DIR}/lunasvg.lib
                              ${PROJECT_SOURCE_DIR}/pugixml.lib
                              ${PROJECT_SOURCE_DIR}/rlottie.lib
                              ${PROJECT_SOURCE_DIR}/SDL2main.lib
@@ -478,6 +480,7 @@ elseif(WIN32)
                              ${PROJECT_SOURCE_DIR}/glew32.dll
                              ${PROJECT_SOURCE_DIR}/libcurl-x64.dll
                              ${PROJECT_SOURCE_DIR}/libfreetype.dll
+                             ${PROJECT_SOURCE_DIR}/liblunasvg.a
                              ${PROJECT_SOURCE_DIR}/libpugixml.dll
                              ${PROJECT_SOURCE_DIR}/libSDL2main.a
                              ${PROJECT_SOURCE_DIR}/librlottie.dll
@@ -527,8 +530,10 @@ else()
                          ${SDL2_LIBRARY})
 endif()
 
-# Lottie animation library rlottie.
 if(NOT WIN32)
+    # SVG rendering library LunaSVG.
+    set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/liblunasvg.a)
+    # Lottie animation library rlottie.
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES} ${PROJECT_SOURCE_DIR}/librlottie.a)
 endif()
 

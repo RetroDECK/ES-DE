@@ -6,9 +6,6 @@
 //  Low-level texture data functions.
 //
 
-#define NANOSVG_IMPLEMENTATION
-#define NANOSVGRAST_IMPLEMENTATION
-
 #include "resources/TextureData.h"
 
 #include "ImageIO.h"
@@ -16,12 +13,9 @@
 #include "resources/ResourceManager.h"
 #include "utils/StringUtil.h"
 
-#include "nanosvg.h"
-#include "nanosvgrast.h"
+#include "lunasvg.h"
 
 #include <string.h>
-
-#define DPI 96
 
 TextureData::TextureData(bool tile)
     : mRenderer {Renderer::getInstance()}
@@ -34,10 +28,10 @@ TextureData::TextureData(bool tile)
     , mSourceWidth {0.0f}
     , mSourceHeight {0.0f}
     , mScalable {false}
-    , mScalableNonAspect {false}
     , mHasRGBAData {false}
     , mPendingRasterization {false}
     , mMipmapping {false}
+    , mInvalidSVGFile {false}
     , mLinearMagnify {false}
 {
 }
@@ -64,20 +58,23 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     if (!mDataRGBA.empty() && !mPendingRasterization)
         return true;
 
-    NSVGimage* svgImage {nsvgParse(const_cast<char*>(fileData.c_str()), "px", DPI)};
+    auto svgImage = lunasvg::Document::loadFromData(fileData);
 
-    if (!svgImage || svgImage->width == 0 || svgImage->height == 0) {
-        LOG(LogError) << "Couldn't parse SVG image";
+    if (svgImage == nullptr) {
+        // LOG(LogError) << "Couldn't parse SVG image:" << mPath;
+        mInvalidSVGFile = true;
         return false;
     }
 
+    float svgWidth {static_cast<float>(svgImage->width())};
+    float svgHeight {static_cast<float>(svgImage->height())};
     bool rasterize {true};
 
     if (mTile) {
         if (mTileWidth == 0.0f && mTileHeight == 0.0f) {
             rasterize = false;
-            mSourceWidth = svgImage->width;
-            mSourceHeight = svgImage->height;
+            mSourceWidth = svgWidth;
+            mSourceHeight = svgHeight;
         }
         else {
             mSourceWidth = static_cast<float>(mTileWidth);
@@ -90,7 +87,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         rasterize = false;
         // Set a small temporary size that maintains the image aspect ratio.
         mSourceWidth = 64.0f;
-        mSourceHeight = 64.0f * (svgImage->height / svgImage->width);
+        mSourceHeight = 64.0f * (svgHeight / svgWidth);
     }
 
     mWidth = static_cast<int>(std::round(mSourceWidth));
@@ -98,38 +95,25 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     if (mWidth == 0) {
         // Auto scale width to keep aspect ratio.
-        mWidth = static_cast<size_t>(
-            std::round((static_cast<float>(mHeight) / svgImage->height) * svgImage->width));
+        mWidth =
+            static_cast<size_t>(std::round((static_cast<float>(mHeight) / svgHeight) * svgWidth));
     }
     else if (mHeight == 0) {
         // Auto scale height to keep aspect ratio.
-        mHeight = static_cast<size_t>(
-            std::round((static_cast<float>(mWidth) / svgImage->width) * svgImage->height));
+        mHeight =
+            static_cast<size_t>(std::round((static_cast<float>(mWidth) / svgWidth) * svgHeight));
     }
 
     if (rasterize) {
-        const float aspectW {svgImage->width / static_cast<float>(mWidth)};
-        const float aspectH {svgImage->height / static_cast<float>(mHeight)};
+        // For very short and wide images, make a slight scale adjustment to prevent pixels
+        // to the right of the image from being cut off.
+        if (svgWidth / svgHeight > 4.0f)
+            svgImage->scale(0.998, 1.0);
 
-        // If the size property has been used to override the aspect ratio of the SVG image,
-        // then we need to rasterize at a lower resolution and let the GPU scale the texture.
-        // This is necessary as the rasterization always maintains the image aspect ratio.
-        if (mScalableNonAspect && aspectW != aspectH)
-            mWidth = static_cast<int>(std::round(svgImage->width / aspectH));
-
-        std::vector<unsigned char> tempVector;
-        tempVector.reserve(mWidth * mHeight * 4);
-
-        NSVGrasterizer* rast {nsvgCreateRasterizer()};
-
-        nsvgRasterize(rast, svgImage, 0, 0, static_cast<float>(mHeight) / svgImage->height,
-                      tempVector.data(), mWidth, mHeight, mWidth * 4);
-
-        nsvgDeleteRasterizer(rast);
-
-        mDataRGBA.insert(mDataRGBA.begin(), std::make_move_iterator(tempVector.data()),
-                         std::make_move_iterator(tempVector.data() + (mWidth * mHeight * 4)));
-        tempVector.erase(tempVector.begin(), tempVector.end());
+        auto bitmap = svgImage->renderToBitmap(mWidth, mHeight);
+        bitmap.convertToRGBA();
+        mDataRGBA.insert(mDataRGBA.begin(), std::move(bitmap.data()),
+                         std::move(bitmap.data() + mWidth * mHeight * 4));
 
         ImageIO::flipPixelsVert(mDataRGBA.data(), mWidth, mHeight);
         mPendingRasterization = false;
@@ -140,8 +124,6 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
         mDataRGBA.push_back(0);
         mPendingRasterization = true;
     }
-
-    nsvgDelete(svgImage);
 
     return true;
 }
@@ -196,6 +178,9 @@ bool TextureData::initFromRGBA(const unsigned char* dataRGBA, size_t width, size
 
 bool TextureData::load()
 {
+    if (mInvalidSVGFile)
+        return false;
+
     bool retval {false};
 
     // Need to load. See if there is a file.
