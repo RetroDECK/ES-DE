@@ -6,8 +6,11 @@
 #  CMake configuration for bundled dependencies built in-tree.
 #
 
-# Always build the external libraries with optimizations enabled and without debug info.
-set (CMAKE_BUILD_TYPE "Release")
+if (CMAKE_BUILD_TYPE MATCHES Profiling)
+    set (CMAKE_BUILD_TYPE Debug)
+elseif(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+    set (CMAKE_BUILD_TYPE Release)
+endif()
 
 # Disabled threading support for rlottie as this functionality actually leads to far worse
 # performance. As well there is a bug on Windows that makes rlottie hang forever on application
