@@ -26,7 +26,9 @@ unset(CMAKE_EXE_LINKER_FLAGS)
 add_subdirectory(lunasvg)
 
 # On Windows, rlottie is built as a DLL file.
-if(NOT WIN32)
+if (WIN32)
+    set(BUILD_SHARED_LIBS ON)
+else()
     set(BUILD_SHARED_LIBS OFF)
 endif()
 
