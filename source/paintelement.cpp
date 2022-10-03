@@ -7,37 +7,37 @@
 
 namespace lunasvg {
 
-PaintElement::PaintElement(ElementID id)
+PaintElement::PaintElement(ElementId id)
     : StyledElement(id)
 {
 }
 
-GradientElement::GradientElement(ElementID id)
+GradientElement::GradientElement(ElementId id)
     : PaintElement(id)
 {
 }
 
 Transform GradientElement::gradientTransform() const
 {
-    auto& value = get(PropertyID::GradientTransform);
+    auto& value = get(PropertyId::GradientTransform);
     return Parser::parseTransform(value);
 }
 
 SpreadMethod GradientElement::spreadMethod() const
 {
-    auto& value = get(PropertyID::SpreadMethod);
+    auto& value = get(PropertyId::SpreadMethod);
     return Parser::parseSpreadMethod(value);
 }
 
 Units GradientElement::gradientUnits() const
 {
-    auto& value = get(PropertyID::GradientUnits);
+    auto& value = get(PropertyId::GradientUnits);
     return Parser::parseUnits(value, Units::ObjectBoundingBox);
 }
 
 std::string GradientElement::href() const
 {
-    auto& value = get(PropertyID::Href);
+    auto& value = get(PropertyId::Href);
     return Parser::parseHref(value);
 }
 
@@ -50,7 +50,7 @@ GradientStops GradientElement::buildGradientStops() const
         if(child->isText())
             continue;
         auto element = static_cast<Element*>(child.get());
-        if(element->id != ElementID::Stop)
+        if(element->id != ElementId::Stop)
             continue;
         auto stop = static_cast<StopElement*>(element);
         auto offset = std::max(prevOffset, stop->offset());
@@ -62,31 +62,31 @@ GradientStops GradientElement::buildGradientStops() const
 }
 
 LinearGradientElement::LinearGradientElement()
-    : GradientElement(ElementID::LinearGradient)
+    : GradientElement(ElementId::LinearGradient)
 {
 }
 
 Length LinearGradientElement::x1() const
 {
-    auto& value = get(PropertyID::X1);
+    auto& value = get(PropertyId::X1);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length LinearGradientElement::y1() const
 {
-    auto& value = get(PropertyID::Y1);
+    auto& value = get(PropertyId::Y1);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length LinearGradientElement::x2() const
 {
-    auto& value = get(PropertyID::X2);
+    auto& value = get(PropertyId::X2);
     return Parser::parseLength(value, AllowNegativeLengths, Length::HundredPercent);
 }
 
 Length LinearGradientElement::y2() const
 {
-    auto& value = get(PropertyID::Y2);
+    auto& value = get(PropertyId::Y2);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
@@ -98,30 +98,30 @@ std::unique_ptr<LayoutObject> LinearGradientElement::getPainter(LayoutContext* c
 
     while(true)
     {
-        if(!attributes.hasGradientTransform() && current->has(PropertyID::GradientTransform))
+        if(!attributes.hasGradientTransform() && current->has(PropertyId::GradientTransform))
             attributes.setGradientTransform(current->gradientTransform());
-        if(!attributes.hasSpreadMethod() && current->has(PropertyID::SpreadMethod))
+        if(!attributes.hasSpreadMethod() && current->has(PropertyId::SpreadMethod))
             attributes.setSpreadMethod(current->spreadMethod());
-        if(!attributes.hasGradientUnits() && current->has(PropertyID::GradientUnits))
+        if(!attributes.hasGradientUnits() && current->has(PropertyId::GradientUnits))
             attributes.setGradientUnits(current->gradientUnits());
         if(!attributes.hasGradientStops())
             attributes.setGradientStops(current->buildGradientStops());
 
-        if(current->id == ElementID::LinearGradient)
+        if(current->id == ElementId::LinearGradient)
         {
             auto element = static_cast<const LinearGradientElement*>(current);
-            if(!attributes.hasX1() && element->has(PropertyID::X1))
+            if(!attributes.hasX1() && element->has(PropertyId::X1))
                 attributes.setX1(element->x1());
-            if(!attributes.hasY1() && element->has(PropertyID::Y1))
+            if(!attributes.hasY1() && element->has(PropertyId::Y1))
                 attributes.setY1(element->y1());
-            if(!attributes.hasX2() && element->has(PropertyID::X2))
+            if(!attributes.hasX2() && element->has(PropertyId::X2))
                 attributes.setX2(element->x2());
-            if(!attributes.hasY2() && element->has(PropertyID::Y2))
+            if(!attributes.hasY2() && element->has(PropertyId::Y2))
                 attributes.setY2(element->y2());
         }
 
         auto ref = context->getElementById(current->href());
-        if(!ref || !(ref->id == ElementID::LinearGradient || ref->id == ElementID::RadialGradient))
+        if(!ref || !(ref->id == ElementId::LinearGradient || ref->id == ElementId::RadialGradient))
             break;
 
         processedGradients.insert(current);
@@ -164,37 +164,37 @@ std::unique_ptr<Node> LinearGradientElement::clone() const
 }
 
 RadialGradientElement::RadialGradientElement()
-    : GradientElement(ElementID::RadialGradient)
+    : GradientElement(ElementId::RadialGradient)
 {
 }
 
 Length RadialGradientElement::cx() const
 {
-    auto& value = get(PropertyID::Cx);
+    auto& value = get(PropertyId::Cx);
     return Parser::parseLength(value, AllowNegativeLengths, Length::FiftyPercent);
 }
 
 Length RadialGradientElement::cy() const
 {
-    auto& value = get(PropertyID::Cy);
+    auto& value = get(PropertyId::Cy);
     return Parser::parseLength(value, AllowNegativeLengths, Length::FiftyPercent);
 }
 
 Length RadialGradientElement::r() const
 {
-    auto& value = get(PropertyID::R);
+    auto& value = get(PropertyId::R);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::FiftyPercent);
 }
 
 Length RadialGradientElement::fx() const
 {
-    auto& value = get(PropertyID::Fx);
+    auto& value = get(PropertyId::Fx);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length RadialGradientElement::fy() const
 {
-    auto& value = get(PropertyID::Fy);
+    auto& value = get(PropertyId::Fy);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
@@ -206,32 +206,32 @@ std::unique_ptr<LayoutObject> RadialGradientElement::getPainter(LayoutContext* c
 
     while(true)
     {
-        if(!attributes.hasGradientTransform() && current->has(PropertyID::GradientTransform))
+        if(!attributes.hasGradientTransform() && current->has(PropertyId::GradientTransform))
             attributes.setGradientTransform(current->gradientTransform());
-        if(!attributes.hasSpreadMethod() && current->has(PropertyID::SpreadMethod))
+        if(!attributes.hasSpreadMethod() && current->has(PropertyId::SpreadMethod))
             attributes.setSpreadMethod(current->spreadMethod());
-        if(!attributes.hasGradientUnits() && current->has(PropertyID::GradientUnits))
+        if(!attributes.hasGradientUnits() && current->has(PropertyId::GradientUnits))
             attributes.setGradientUnits(current->gradientUnits());
         if(!attributes.hasGradientStops())
             attributes.setGradientStops(current->buildGradientStops());
 
-        if(current->id == ElementID::RadialGradient)
+        if(current->id == ElementId::RadialGradient)
         {
             auto element = static_cast<const RadialGradientElement*>(current);
-            if(!attributes.hasCx() && element->has(PropertyID::Cx))
+            if(!attributes.hasCx() && element->has(PropertyId::Cx))
                 attributes.setCx(element->cx());
-            if(!attributes.hasCy() && element->has(PropertyID::Cy))
+            if(!attributes.hasCy() && element->has(PropertyId::Cy))
                 attributes.setCy(element->cy());
-            if(!attributes.hasR() && element->has(PropertyID::R))
+            if(!attributes.hasR() && element->has(PropertyId::R))
                 attributes.setR(element->r());
-            if(!attributes.hasFx() && element->has(PropertyID::Fx))
+            if(!attributes.hasFx() && element->has(PropertyId::Fx))
                 attributes.setFx(element->fx());
-            if(!attributes.hasFy() && element->has(PropertyID::Fy))
+            if(!attributes.hasFy() && element->has(PropertyId::Fy))
                 attributes.setFy(element->fy());
         }
 
         auto ref = context->getElementById(current->href());
-        if(!ref || !(ref->id == ElementID::LinearGradient || ref->id == ElementID::RadialGradient))
+        if(!ref || !(ref->id == ElementId::LinearGradient || ref->id == ElementId::RadialGradient))
             break;
 
         processedGradients.insert(current);
@@ -278,67 +278,67 @@ std::unique_ptr<Node> RadialGradientElement::clone() const
 }
 
 PatternElement::PatternElement()
-    : PaintElement(ElementID::Pattern)
+    : PaintElement(ElementId::Pattern)
 {
 }
 
 Length PatternElement::x() const
 {
-    auto& value = get(PropertyID::X);
+    auto& value = get(PropertyId::X);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length PatternElement::y() const
 {
-    auto& value = get(PropertyID::Y);
+    auto& value = get(PropertyId::Y);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length PatternElement::width() const
 {
-    auto& value = get(PropertyID::Width);
+    auto& value = get(PropertyId::Width);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::Zero);
 }
 
 Length PatternElement::height() const
 {
-    auto& value = get(PropertyID::Height);
+    auto& value = get(PropertyId::Height);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::Zero);
 }
 
 Transform PatternElement::patternTransform() const
 {
-    auto& value = get(PropertyID::PatternTransform);
+    auto& value = get(PropertyId::PatternTransform);
     return Parser::parseTransform(value);
 }
 
 Units PatternElement::patternUnits() const
 {
-    auto& value = get(PropertyID::PatternUnits);
+    auto& value = get(PropertyId::PatternUnits);
     return Parser::parseUnits(value, Units::ObjectBoundingBox);
 }
 
 Units PatternElement::patternContentUnits() const
 {
-    auto& value = get(PropertyID::PatternContentUnits);
+    auto& value = get(PropertyId::PatternContentUnits);
     return Parser::parseUnits(value, Units::UserSpaceOnUse);
 }
 
 Rect PatternElement::viewBox() const
 {
-    auto& value = get(PropertyID::ViewBox);
+    auto& value = get(PropertyId::ViewBox);
     return Parser::parseViewBox(value);
 }
 
 PreserveAspectRatio PatternElement::preserveAspectRatio() const
 {
-    auto& value = get(PropertyID::PreserveAspectRatio);
+    auto& value = get(PropertyId::PreserveAspectRatio);
     return Parser::parsePreserveAspectRatio(value);
 }
 
 std::string PatternElement::href() const
 {
-    auto& value = get(PropertyID::Href);
+    auto& value = get(PropertyId::Href);
     return Parser::parseHref(value);
 }
 
@@ -353,29 +353,29 @@ std::unique_ptr<LayoutObject> PatternElement::getPainter(LayoutContext* context)
 
     while(true)
     {
-        if(!attributes.hasX() && current->has(PropertyID::X))
+        if(!attributes.hasX() && current->has(PropertyId::X))
             attributes.setX(current->x());
-        if(!attributes.hasY() && current->has(PropertyID::Y))
+        if(!attributes.hasY() && current->has(PropertyId::Y))
             attributes.setY(current->y());
-        if(!attributes.hasWidth() && current->has(PropertyID::Width))
+        if(!attributes.hasWidth() && current->has(PropertyId::Width))
             attributes.setWidth(current->width());
-        if(!attributes.hasHeight() && current->has(PropertyID::Height))
+        if(!attributes.hasHeight() && current->has(PropertyId::Height))
             attributes.setHeight(current->height());
-        if(!attributes.hasPatternTransform() && current->has(PropertyID::PatternTransform))
+        if(!attributes.hasPatternTransform() && current->has(PropertyId::PatternTransform))
             attributes.setPatternTransform(current->patternTransform());
-        if(!attributes.hasPatternUnits() && current->has(PropertyID::PatternUnits))
+        if(!attributes.hasPatternUnits() && current->has(PropertyId::PatternUnits))
             attributes.setPatternUnits(current->patternUnits());
-        if(!attributes.hasPatternContentUnits() && current->has(PropertyID::PatternContentUnits))
+        if(!attributes.hasPatternContentUnits() && current->has(PropertyId::PatternContentUnits))
             attributes.setPatternContentUnits(current->patternContentUnits());
-        if(!attributes.hasViewBox() && current->has(PropertyID::ViewBox))
+        if(!attributes.hasViewBox() && current->has(PropertyId::ViewBox))
             attributes.setViewBox(current->viewBox());
-        if(!attributes.hasPreserveAspectRatio() && current->has(PropertyID::PreserveAspectRatio))
+        if(!attributes.hasPreserveAspectRatio() && current->has(PropertyId::PreserveAspectRatio))
             attributes.setPreserveAspectRatio(current->preserveAspectRatio());
         if(!attributes.hasPatternContentElement() && current->children.size())
             attributes.setPatternContentElement(current);
 
         auto ref = context->getElementById(current->href());
-        if(!ref || ref->id != ElementID::Pattern)
+        if(!ref || ref->id != ElementId::Pattern)
             break;
 
         processedPatterns.insert(current);
@@ -413,7 +413,7 @@ std::unique_ptr<Node> PatternElement::clone() const
 }
 
 SolidColorElement::SolidColorElement()
-    : PaintElement(ElementID::SolidColor)
+    : PaintElement(ElementId::SolidColor)
 {
 }
 

@@ -4,7 +4,7 @@
 namespace lunasvg {
 
 GElement::GElement()
-    : GraphicsElement(ElementID::G)
+    : GraphicsElement(ElementId::G)
 {
 }
 

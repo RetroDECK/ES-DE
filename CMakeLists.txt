@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.3)
 
 project(lunasvg VERSION 2.3.2 LANGUAGES CXX C)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_C_STANDARD 11)
 
 option(BUILD_SHARED_LIBS "Builds as shared library" OFF)

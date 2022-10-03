@@ -5,55 +5,55 @@
 namespace lunasvg {
 
 MarkerElement::MarkerElement()
-    : StyledElement(ElementID::Marker)
+    : StyledElement(ElementId::Marker)
 {
 }
 
 Length MarkerElement::refX() const
 {
-    auto& value = get(PropertyID::RefX);
+    auto& value = get(PropertyId::RefX);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length MarkerElement::refY() const
 {
-    auto& value = get(PropertyID::RefY);
+    auto& value = get(PropertyId::RefY);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length MarkerElement::markerWidth() const
 {
-    auto& value = get(PropertyID::MarkerWidth);
+    auto& value = get(PropertyId::MarkerWidth);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::ThreePercent);
 }
 
 Length MarkerElement::markerHeight() const
 {
-    auto& value = get(PropertyID::MarkerHeight);
+    auto& value = get(PropertyId::MarkerHeight);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::ThreePercent);
 }
 
 Angle MarkerElement::orient() const
 {
-    auto& value = get(PropertyID::Orient);
+    auto& value = get(PropertyId::Orient);
     return Parser::parseAngle(value);
 }
 
 MarkerUnits MarkerElement::markerUnits() const
 {
-    auto& value = get(PropertyID::MarkerUnits);
+    auto& value = get(PropertyId::MarkerUnits);
     return Parser::parseMarkerUnits(value);
 }
 
 Rect MarkerElement::viewBox() const
 {
-    auto& value = get(PropertyID::ViewBox);
+    auto& value = get(PropertyId::ViewBox);
     return Parser::parseViewBox(value);
 }
 
 PreserveAspectRatio MarkerElement::preserveAspectRatio() const
 {
-    auto& value = get(PropertyID::PreserveAspectRatio);
+    auto& value = get(PropertyId::PreserveAspectRatio);
     return Parser::parsePreserveAspectRatio(value);
 }
 

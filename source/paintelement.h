@@ -11,7 +11,7 @@ class LayoutObject;
 class PaintElement : public StyledElement
 {
 public:
-    PaintElement(ElementID id);
+    PaintElement(ElementId id);
 
     bool isPaint() const { return true; }
     virtual std::unique_ptr<LayoutObject> getPainter(LayoutContext* context) const = 0;
@@ -20,7 +20,7 @@ public:
 class GradientElement : public PaintElement
 {
 public:
-    GradientElement(ElementID id);
+    GradientElement(ElementId id);
 
     Transform gradientTransform() const;
     SpreadMethod spreadMethod() const;

@@ -8,7 +8,7 @@ namespace lunasvg {
 class StyledElement : public Element
 {
 public:
-    StyledElement(ElementID id);
+    StyledElement(ElementId id);
 
     Paint fill() const;
     Paint stroke() const;
