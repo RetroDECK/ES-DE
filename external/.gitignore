@@ -4,6 +4,10 @@
 !CImg/*
 !glm
 !glm/*
+!lunasvg
+!lunasvg/*
+lunasvg/*.cmake
+lunasvg/Makefile
 !nanosvg
 !nanosvg/*
 !rapidjson
