@@ -39,6 +39,7 @@
 namespace lunasvg {
 
 class Rect;
+class Matrix;
 
 class LUNASVG_API Box
 {
@@ -46,6 +47,9 @@ public:
     Box() = default;
     Box(double x, double y, double w, double h);
     Box(const Rect& rect);
+
+    Box& transform(const Matrix& matrix);
+    Box transformed(const Matrix& matrix) const;
 
 public:
     double x{0};
@@ -78,7 +82,6 @@ public:
 
     Matrix inverted() const;
     Matrix operator*(const Matrix& matrix) const;
-    Box map(const Box& box) const;
 
     static Matrix rotated(double angle);
     static Matrix rotated(double angle, double cx, double cy);
@@ -159,63 +162,9 @@ public:
     static std::unique_ptr<Document> loadFromData(const char* data);
 
     /**
-     * @brief Pre-Rotates the document matrix clockwise around the current origin
-     * @param angle - rotation angle, in degrees
-     * @return this
+     * @brief Sets the current transformation matrix of the document
+     * @param matrix - current transformation matrix
      */
-    Document* rotate(double angle);
-
-    /**
-     * @brief Pre-Rotates the document matrix clockwise around the given point
-     * @param angle - rotation angle, in degrees
-     * @param cx - horizontal translation
-     * @param cy - vertical translation
-     * @return this
-     */
-    Document* rotate(double angle, double cx, double cy);
-
-    /**
-     * @brief Pre-Scales the document matrix by sx horizontally and sy vertically
-     * @param sx - horizontal scale factor
-     * @param sy - vertical scale factor
-     * @return this
-     */
-    Document* scale(double sx, double sy);
-
-    /**
-     * @brief Pre-Shears the document matrix by shx horizontally and shy vertically
-     * @param shx - horizontal skew factor, in degree
-     * @param shy - vertical skew factor, in degree
-     * @return this
-     */
-    Document* shear(double shx, double shy);
-
-    /**
-     * @brief Pre-Translates the document matrix by tx horizontally and ty vertically
-     * @param tx - horizontal translation
-     * @param ty - vertical translation
-     * @return this
-     */
-    Document* translate(double tx, double ty);
-
-    /**
-     * @brief Pre-Multiplies the document matrix by Matrix(a, b, c, d, e, f)
-     * @param a - horizontal scale factor
-     * @param b - horizontal skew factor
-     * @param c - vertical skew factor
-     * @param d - vertical scale factor
-     * @param e - horizontal translation
-     * @param f - vertical translation
-     * @return this
-     */
-    Document* transform(double a, double b, double c, double d, double e, double f);
-
-    /**
-     * @brief Resets the document matrix to identity
-     * @return this
-     */
-    Document* identity();
-
     void setMatrix(const Matrix& matrix);
 
     /**

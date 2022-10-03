@@ -141,15 +141,29 @@ void Bitmap::convert(int ri, int gi, int bi, int ai, bool unpremultiply)
 
 Box::Box(double x, double y, double w, double h)
     : x(x), y(y), w(w), h(h)
-{}
+{
+}
 
 Box::Box(const Rect& rect)
     : x(rect.x), y(rect.y), w(rect.w), h(rect.h)
-{}
+{
+}
+
+Box& Box::transform(const Matrix &matrix)
+{
+    *this = transformed(matrix);
+    return *this;
+}
+
+Box Box::transformed(const Matrix& matrix) const
+{
+    return Transform(matrix).map(*this);
+}
 
 Matrix::Matrix(double a, double b, double c, double d, double e, double f)
     : a(a), b(b), c(c), d(d), e(e), f(f)
-{}
+{
+}
 
 Matrix::Matrix(const Transform& transform)
     : a(transform.m00), b(transform.m10), c(transform.m01), d(transform.m11), e(transform.m02), f(transform.m12)
@@ -232,11 +246,6 @@ Matrix Matrix::operator*(const Matrix& matrix) const
     return Transform(*this) * Transform(matrix);
 }
 
-Box Matrix::map(const Box& box) const
-{
-    return Transform(*this).map(box);
-}
-
 Matrix Matrix::rotated(double angle)
 {
     return Transform::rotated(angle);
@@ -283,11 +292,11 @@ std::unique_ptr<Document> Document::loadFromData(const std::string& string)
 
 std::unique_ptr<Document> Document::loadFromData(const char* data, std::size_t size)
 {
-    ParseDocument parser;
-    if(!parser.parse(data, size))
+    TreeBuilder builder;
+    if(!builder.parse(data, size))
         return nullptr;
 
-    auto root = parser.layout();
+    auto root = builder.build();
     if(!root || root->children.empty())
         return nullptr;
 
@@ -299,48 +308,6 @@ std::unique_ptr<Document> Document::loadFromData(const char* data, std::size_t s
 std::unique_ptr<Document> Document::loadFromData(const char* data)
 {
     return loadFromData(data, std::strlen(data));
-}
-
-Document* Document::rotate(double angle)
-{
-    root->transform.rotate(angle);
-    return this;
-}
-
-Document* Document::rotate(double angle, double cx, double cy)
-{
-    root->transform.rotate(angle, cx, cy);
-    return this;
-}
-
-Document* Document::scale(double sx, double sy)
-{
-    root->transform.scale(sx, sy);
-    return this;
-}
-
-Document* Document::shear(double shx, double shy)
-{
-    root->transform.shear(shx, shy);
-    return this;
-}
-
-Document* Document::translate(double tx, double ty)
-{
-    root->transform.translate(tx, ty);
-    return this;
-}
-
-Document* Document::transform(double a, double b, double c, double d, double e, double f)
-{
-    root->transform.transform(a, b, c, d, e, f);
-    return this;
-}
-
-Document* Document::identity()
-{
-    root->transform.identity();
-    return this;
 }
 
 void Document::setMatrix(const Matrix& matrix)

@@ -4,13 +4,13 @@
 namespace lunasvg {
 
 StopElement::StopElement()
-    : StyledElement(ElementId::Stop)
+    : StyledElement(ElementID::Stop)
 {
 }
 
 double StopElement::offset() const
 {
-    auto& value = get(PropertyId::Offset);
+    auto& value = get(PropertyID::Offset);
     return Parser::parseNumberPercentage(value, 0.0);
 }
 
