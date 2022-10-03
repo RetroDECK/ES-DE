@@ -10,7 +10,7 @@ class LayoutShape;
 class GeometryElement : public GraphicsElement
 {
 public:
-    GeometryElement(ElementID id);
+    GeometryElement(ElementId id);
 
     bool isGeometry() const { return true; }
     virtual void layout(LayoutContext* context, LayoutContainer* current) const;
@@ -31,7 +31,7 @@ public:
 class PolyElement : public GeometryElement
 {
 public:
-    PolyElement(ElementID id);
+    PolyElement(ElementId id);
 
     PointList points() const;
 };

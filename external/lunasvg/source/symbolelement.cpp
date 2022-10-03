@@ -4,43 +4,43 @@
 namespace lunasvg {
 
 SymbolElement::SymbolElement()
-    : StyledElement(ElementID::Symbol)
+    : StyledElement(ElementId::Symbol)
 {
 }
 
 Length SymbolElement::x() const
 {
-    auto& value = get(PropertyID::X);
+    auto& value = get(PropertyId::X);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length SymbolElement::y() const
 {
-    auto& value = get(PropertyID::Y);
+    auto& value = get(PropertyId::Y);
     return Parser::parseLength(value, AllowNegativeLengths, Length::Zero);
 }
 
 Length SymbolElement::width() const
 {
-    auto& value = get(PropertyID::Width);
+    auto& value = get(PropertyId::Width);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::HundredPercent);
 }
 
 Length SymbolElement::height() const
 {
-    auto& value = get(PropertyID::Height);
+    auto& value = get(PropertyId::Height);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::HundredPercent);
 }
 
 Rect SymbolElement::viewBox() const
 {
-    auto& value = get(PropertyID::ViewBox);
+    auto& value = get(PropertyId::ViewBox);
     return Parser::parseViewBox(value);
 }
 
 PreserveAspectRatio SymbolElement::preserveAspectRatio() const
 {
-    auto& value = get(PropertyID::PreserveAspectRatio);
+    auto& value = get(PropertyId::PreserveAspectRatio);
     return Parser::parsePreserveAspectRatio(value);
 }
 

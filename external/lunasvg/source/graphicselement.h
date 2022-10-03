@@ -8,7 +8,7 @@ namespace lunasvg {
 class GraphicsElement : public StyledElement
 {
 public:
-    GraphicsElement(ElementID id);
+    GraphicsElement(ElementId id);
 
     Transform transform() const;
 };

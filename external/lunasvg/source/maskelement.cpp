@@ -5,43 +5,43 @@
 namespace lunasvg {
 
 MaskElement::MaskElement()
-    : StyledElement(ElementID::Mask)
+    : StyledElement(ElementId::Mask)
 {
 }
 
 Length MaskElement::x() const
 {
-    auto& value = get(PropertyID::X);
+    auto& value = get(PropertyId::X);
     return Parser::parseLength(value, AllowNegativeLengths, Length::MinusTenPercent);
 }
 
 Length MaskElement::y() const
 {
-    auto& value = get(PropertyID::Y);
+    auto& value = get(PropertyId::Y);
     return Parser::parseLength(value, AllowNegativeLengths, Length::MinusTenPercent);
 }
 
 Length MaskElement::width() const
 {
-    auto& value = get(PropertyID::Width);
+    auto& value = get(PropertyId::Width);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::OneTwentyPercent);
 }
 
 Length MaskElement::height() const
 {
-    auto& value = get(PropertyID::Height);
+    auto& value = get(PropertyId::Height);
     return Parser::parseLength(value, ForbidNegativeLengths, Length::OneTwentyPercent);
 }
 
 Units MaskElement::maskUnits() const
 {
-    auto& value = get(PropertyID::MaskUnits);
+    auto& value = get(PropertyId::MaskUnits);
     return Parser::parseUnits(value, Units::ObjectBoundingBox);
 }
 
 Units MaskElement::maskContentUnits() const
 {
-    auto& value = get(PropertyID::MaskContentUnits);
+    auto& value = get(PropertyId::MaskContentUnits);
     return Parser::parseUnits(value, Units::UserSpaceOnUse);
 }
 

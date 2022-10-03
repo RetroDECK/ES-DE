@@ -8,16 +8,15 @@
 
 namespace lunasvg {
 
-enum class ElementID {
+enum class ElementId
+{
     Unknown = 0,
     Star,
-    A,
     Circle,
     ClipPath,
     Defs,
     Ellipse,
     G,
-    Image,
     Line,
     LinearGradient,
     Marker,
@@ -32,16 +31,12 @@ enum class ElementID {
     Stop,
     Style,
     Svg,
-    Switch,
     Symbol,
-    Text,
-    TextPath,
-    Tref,
-    Tspan,
     Use
 };
 
-enum class PropertyID {
+enum class PropertyId
+{
     Unknown = 0,
     Class,
     Clip_Path,
@@ -51,17 +46,10 @@ enum class PropertyID {
     Cx,
     Cy,
     D,
-    Dx,
-    Dy,
     Display,
     Fill,
     Fill_Opacity,
     Fill_Rule,
-    Font_Family,
-    Font_Size,
-    Font_Style,
-    Font_Variant,
-    Font_Weight,
     Fx,
     Fy,
     GradientTransform,
@@ -69,7 +57,6 @@ enum class PropertyID {
     Height,
     Href,
     Id,
-    Letter_Spacing,
     Marker_End,
     Marker_Mid,
     Marker_Start,
@@ -91,13 +78,11 @@ enum class PropertyID {
     R,
     RefX,
     RefY,
-    Rotate,
     Rx,
     Ry,
     Solid_Color,
     Solid_Opacity,
     SpreadMethod,
-    StartOffset,
     Stop_Color,
     Stop_Opacity,
     Stroke,
@@ -109,13 +94,10 @@ enum class PropertyID {
     Stroke_Opacity,
     Stroke_Width,
     Style,
-    Text_Anchor,
-    Text_Decoration,
     Transform,
     ViewBox,
     Visibility,
     Width,
-    Word_Spacing,
     X,
     X1,
     X2,
@@ -124,12 +106,9 @@ enum class PropertyID {
     Y2
 };
 
-ElementID elementid(const std::string_view& name);
-PropertyID propertyid(const std::string_view& name);
-
 struct Property
 {
-    PropertyID id;
+    PropertyId id;
     std::string value;
     int specificity;
 };
@@ -139,11 +118,10 @@ class PropertyList
 public:
     PropertyList() = default;
 
-    void set(PropertyID id, const std::string& value, int specificity);
-    Property* get(PropertyID id) const;
+    void set(PropertyId id, const std::string& value, int specificity);
+    Property* get(PropertyId id) const;
     void add(const Property& property);
     void add(const PropertyList& properties);
-    void clear() { m_properties.clear(); }
 
 private:
     std::vector<Property> m_properties;
@@ -181,22 +159,20 @@ public:
     std::string text;
 };
 
-using Attribute = std::pair<PropertyID, std::string>;
-using AttributeList = std::vector<Attribute>;
 using NodeList = std::list<std::unique_ptr<Node>>;
 
 class Element : public Node
 {
 public:
-    Element(ElementID id);
+    Element(ElementId id);
 
-    void set(PropertyID id, const std::string& value, int specificity);
-    const std::string& get(PropertyID id) const;
-    const std::string& find(PropertyID id) const;
-    bool has(PropertyID id) const;
+    void set(PropertyId id, const std::string& value, int specificity);
+    const std::string& get(PropertyId id) const;
+    const std::string& find(PropertyId id) const;
+    bool has(PropertyId id) const;
 
-    Element* previousElement() const;
-    Element* nextElement() const;
+    Element* previousSibling() const;
+    Element* nextSibling() const;
     Node* addChild(std::unique_ptr<Node> child);
     void layoutChildren(LayoutContext* context, LayoutContainer* current) const;
     Rect currentViewport() const;
@@ -232,7 +208,7 @@ public:
     }
 
 public:
-    ElementID id;
+    ElementId id;
     NodeList children;
     PropertyList properties;
 };

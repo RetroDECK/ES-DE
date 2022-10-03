@@ -346,13 +346,14 @@ private:
     RenderMode m_mode;
 };
 
-class TreeBuilder;
+class ParseDocument;
 class StyledElement;
 class GeometryElement;
 
-class LayoutContext {
+class LayoutContext
+{
 public:
-    LayoutContext(const TreeBuilder* builder, LayoutSymbol* root);
+    LayoutContext(const ParseDocument* document, LayoutSymbol* root);
 
     Element* getElementById(const std::string& id) const;
     LayoutObject* getResourcesById(const std::string& id) const;
@@ -372,7 +373,7 @@ public:
     bool hasReference(const Element* element) const;
 
 private:
-    const TreeBuilder* m_builder;
+    const ParseDocument* m_document;
     LayoutSymbol* m_root;
     std::map<std::string, LayoutObject*> m_resourcesCache;
     std::set<const Element*> m_references;
