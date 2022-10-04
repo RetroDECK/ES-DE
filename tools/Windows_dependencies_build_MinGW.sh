@@ -42,6 +42,7 @@ rm -f CMakeCache.txt
 cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
 make clean
 make -j${JOBS}
+strip libfreetype.dll
 cp libfreetype.dll ../../..
 cd ../..
 
@@ -51,5 +52,6 @@ rm -f CMakeCache.txt
 cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON .
 make clean
 make -j${JOBS}
+strip libpugixml.dll
 cp libpugixml.dll ../..
 cd ..
