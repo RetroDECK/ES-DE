@@ -8,8 +8,6 @@
 !lunasvg/*
 lunasvg/*.cmake
 lunasvg/Makefile
-!nanosvg
-!nanosvg/*
 !rapidjson
 !rapidjson/*
 !rlottie
