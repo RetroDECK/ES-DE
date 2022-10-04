@@ -76,9 +76,12 @@ TODO.md
 # MSVC
 EmulationStation.ilk
 EmulationStation.pdb
+lunasvg.exp
+lunasvg.ilk
+lunasvg.pdb
+rlottie.exp
 rlottie.ilk
 rlottie.pdb
-rlottie.exp
 
 # Eclipse
 .cproject
