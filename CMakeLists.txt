@@ -480,7 +480,7 @@ elseif(WIN32)
                              ${PROJECT_SOURCE_DIR}/glew32.dll
                              ${PROJECT_SOURCE_DIR}/libcurl-x64.dll
                              ${PROJECT_SOURCE_DIR}/libfreetype.dll
-                             ${PROJECT_SOURCE_DIR}/liblunasvg.a
+                             ${PROJECT_SOURCE_DIR}/liblunasvg.dll
                              ${PROJECT_SOURCE_DIR}/libpugixml.dll
                              ${PROJECT_SOURCE_DIR}/libSDL2main.a
                              ${PROJECT_SOURCE_DIR}/librlottie.dll

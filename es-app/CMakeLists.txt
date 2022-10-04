@@ -139,6 +139,7 @@ if(WIN32)
                       ../libcrypto-1_1-x64.dll
                       ../libcurl-x64.dll
                       ../libssl-1_1-x64.dll
+                      ../lunasvg.dll
                       ../MSVCP140.dll
                       ../pugixml.dll
                       ../rlottie.dll
@@ -160,6 +161,7 @@ if(WIN32)
                       ../libcrypto-1_1-x64.dll
                       ../libcurl-x64.dll
                       ../libfreetype.dll
+                      ../liblunasvg.dll
                       ../libpugixml.dll
                       ../librlottie.dll
                       ../libssl-1_1-x64.dll

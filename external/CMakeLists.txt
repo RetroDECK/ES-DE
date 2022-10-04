@@ -6,31 +6,47 @@
 #  CMake configuration for bundled dependencies built in-tree.
 #
 
-if (CMAKE_BUILD_TYPE MATCHES Profiling)
-    set (CMAKE_BUILD_TYPE Debug)
-elseif(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+# This makes it possible to set options in subprojects.
+set (CMAKE_POLICY_DEFAULT_CMP0077 NEW)
+
+if (WIN32)
+    # On Windows the build type needs to match the main binary.
+    if (CMAKE_BUILD_TYPE MATCHES Profiling)
+        set (CMAKE_BUILD_TYPE Release)
+    elseif(NOT CMAKE_BUILD_TYPE MATCHES Debug)
+        set (CMAKE_BUILD_TYPE Release)
+    endif()
+else()
+    # Always build with optimizations enabled and without debug info.
     set (CMAKE_BUILD_TYPE Release)
 endif()
 
-# Disabled threading support for rlottie as this functionality actually leads to far worse
+unset(CMAKE_CXX_FLAGS)
+unset(CMAKE_EXE_LINKER_FLAGS)
+
+if(WIN32)
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+        # Disable DLL interface warnings for LunaSVG.
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251")
+    else()
+        # Strip the DLL files when building with MinGW.
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
+    endif()
+    if (WIN32)
+        set(BUILD_SHARED_LIBS ON)
+    else()
+        set(BUILD_SHARED_LIBS OFF)
+    endif()
+endif()
+
+add_subdirectory(lunasvg EXCLUDE_FROM_ALL)
+
+# Disable threading support for rlottie as this functionality actually leads to far worse
 # performance. As well there is a bug on Windows that makes rlottie hang forever on application
 # shutdown if compiled using MinGW with threading support enabled.
 option(LOTTIE_THREAD OFF)
 
 option(LOTTIE_MODULE OFF)
-
-# Only use the compiler and linker flags defined by LunaSVG and rlottie.
-unset(CMAKE_CXX_FLAGS)
-unset(CMAKE_EXE_LINKER_FLAGS)
-
-add_subdirectory(lunasvg)
-
-# On Windows, rlottie is built as a DLL file.
-if (WIN32)
-    set(BUILD_SHARED_LIBS ON)
-else()
-    set(BUILD_SHARED_LIBS OFF)
-endif()
 
 if(EMSCRIPTEN)
     set(CMAKE_CXX_FLAGS -pthread)
@@ -38,9 +54,9 @@ endif()
 
 # rlottie generates a lot of annoying compiler warnings that we don't need to show.
 if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-    set(CMAKE_CXX_FLAGS "/wd4244 /wd4251 /wd4267 /wd4530 /wd4996")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4244 /wd4267 /wd4530 /wd4996")
 else()
-    set(CMAKE_CXX_FLAGS "-w")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -w")
 endif()
 
 add_subdirectory(rlottie EXCLUDE_FROM_ALL)
