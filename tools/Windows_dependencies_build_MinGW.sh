@@ -39,7 +39,7 @@ echo -e "\nBuilding FreeType"
 
 cd freetype/build
 rm -f CMakeCache.txt
-cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON ..
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
 make clean
 make -j${JOBS}
 cp libfreetype.dll ../../..
@@ -48,7 +48,7 @@ cd ../..
 echo -e "\nBuilding pugixml"
 cd pugixml
 rm -f CMakeCache.txt
-cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON .
 make clean
 make -j${JOBS}
 cp libpugixml.dll ../..

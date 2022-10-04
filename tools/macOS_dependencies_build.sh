@@ -37,9 +37,9 @@ echo "Building libpng"
 cd libpng
 rm -f CMakeCache.txt
 if [ $(uname -m) == "arm64" ]; then
-  cmake -DPNG_SHARED=off -DPNG_ARM_NEON=off -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
+  cmake -DCMAKE_BUILD_TYPE=Release -DPNG_SHARED=off -DPNG_ARM_NEON=off -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 else
-  cmake -DPNG_SHARED=off -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
+  cmake -DCMAKE_BUILD_TYPE=Release -DPNG_SHARED=off -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 fi
 make clean
 make -j${JOBS}
@@ -49,7 +49,7 @@ cd ..
 echo "\nBuilding FreeType"
 cd freetype/build
 rm -f CMakeCache.txt
-cmake -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=on -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../../local_install -S .. -B .
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=on -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../../local_install -S .. -B .
 make clean
 make -j${JOBS}
 cp libfreetype.6.18.0.dylib ../../../libfreetype.6.dylib
@@ -65,7 +65,7 @@ cd ../..
 echo "\nBuilding pugixml"
 cd pugixml
 rm -f CMakeCache.txt
-cmake .
+cmake -DCMAKE_BUILD_TYPE=Release .
 make clean
 make -j${JOBS}
 cp libpugixml.a ../..
@@ -91,7 +91,7 @@ cd ..
 echo "\nBuilding Ogg"
 cd ogg
 rm -f CMakeCache.txt
-cmake -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 make clean
 make -j${JOBS}
 make install
@@ -100,7 +100,7 @@ cd ..
 echo "\nBuilding Vorbis"
 cd vorbis
 rm -f CMakeCache.txt
-cmake -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 make clean
 make -j${JOBS}
 make install
@@ -111,7 +111,7 @@ cd ..
 echo "\nBuilding Opus"
 cd opus
 rm -f CMakeCache.txt
-cmake -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$(pwd)/../local_install .
 make clean
 make -j${JOBS}
 make install
