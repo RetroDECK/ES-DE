@@ -80,15 +80,21 @@ void ImageComponent::setImage(const std::string& path, bool tile)
         if (isScalable) {
             mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
                                             mMipmapping, 0, 0, 0.0f, 0.0f);
-            if (tile && (mTileWidth == 0.0f || mTileHeight == 0.0f))
-                setTileAxes();
-            resize(false);
-            mTexture.reset();
-            mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
-                                            mMipmapping, static_cast<size_t>(mSize.x),
-                                            static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
-            mTexture->rasterizeAt(mSize.x, mSize.y);
-            onSizeChanged();
+            if (mTexture->getIsInvalidSVGFile()) {
+                mTexture.reset();
+            }
+            else {
+                if (tile && (mTileWidth == 0.0f || mTileHeight == 0.0f))
+                    setTileAxes();
+                resize(false);
+                mTexture.reset();
+                mTexture =
+                    TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,
+                                         mMipmapping, static_cast<size_t>(mSize.x),
+                                         static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
+                mTexture->rasterizeAt(mSize.x, mSize.y);
+                onSizeChanged();
+            }
         }
         else {
             mTexture = TextureResource::get(path, tile, mForceLoad, mDynamic, mLinearInterpolation,

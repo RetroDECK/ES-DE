@@ -73,9 +73,10 @@ public:
     const bool getPendingRasterization() { return mPendingRasterization; }
 
     const bool getScalable() { return mScalable; }
-    std::vector<unsigned char>& getRawRGBAData() { return mDataRGBA; }
-    std::string getTextureFilePath() { return mPath; }
-    bool getTiled() { return mTile; }
+    const std::vector<unsigned char>& getRawRGBAData() { return mDataRGBA; }
+    const std::string& getTextureFilePath() { return mPath; }
+    const bool getTiled() { return mTile; }
+    const bool getIsInvalidSVGFile() { return mInvalidSVGFile; }
 
 private:
     Renderer* mRenderer;

@@ -61,7 +61,8 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     auto svgImage = lunasvg::Document::loadFromData(fileData);
 
     if (svgImage == nullptr) {
-        // LOG(LogError) << "Couldn't parse SVG image:" << mPath;
+        LOG(LogDebug) << "TextureData::initSVGFromMemory(): Couldn't parse SVG image \"" << mPath
+                      << "\"";
         mInvalidSVGFile = true;
         return false;
     }

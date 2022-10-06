@@ -61,6 +61,7 @@ public:
 
     void rasterizeAt(float width, float height);
     glm::vec2 getSourceImageSize() const { return mSourceSize; }
+    const bool getIsInvalidSVGFile() const { return mInvalidSVGFile; }
 
     virtual ~TextureResource();
 
@@ -101,6 +102,7 @@ private:
 
     glm::ivec2 mSize;
     glm::vec2 mSourceSize;
+    bool mInvalidSVGFile;
     bool mForceLoad;
 
     // File path, tile, linear interpolation, scalable/SVG, width, height.

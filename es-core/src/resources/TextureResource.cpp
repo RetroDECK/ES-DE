@@ -23,6 +23,7 @@ TextureResource::TextureResource(const std::string& path,
                                  bool mipmapping,
                                  bool scalable)
     : mTextureData {nullptr}
+    , mInvalidSVGFile {false}
     , mForceLoad {false}
 {
     // Create a texture data object for this texture.
@@ -38,6 +39,8 @@ TextureResource::TextureResource(const std::string& path,
             data->setMipmapping(mipmapping);
             // Force the texture manager to load it using a blocking load.
             sTextureDataManager.load(data, true);
+            if (scalable)
+                mInvalidSVGFile = data->getIsInvalidSVGFile();
         }
         else {
             mTextureData = std::shared_ptr<TextureData>(new TextureData(tile));
@@ -48,6 +51,8 @@ TextureResource::TextureResource(const std::string& path,
             data->setMipmapping(mipmapping);
             // Load it so we can read the width/height.
             data->load();
+            if (scalable)
+                mInvalidSVGFile = data->getIsInvalidSVGFile();
         }
 
         mSize = glm::ivec2 {static_cast<int>(data->width()), static_cast<int>(data->height())};
