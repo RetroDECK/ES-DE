@@ -47,8 +47,8 @@ https://github.com/g-truc/glm
 libvpx \
 https://github.com/webmproject/libvpx
 
-nanosvg \
-https://github.com/memononen/nanosvg
+LunaSVG \
+https://github.com/sammycage/lunasvg
 
 Ogg \
 https://github.com/xiph/ogg

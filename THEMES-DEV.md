@@ -776,7 +776,7 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case. If scaling SVG images to non-standard aspect ratios, be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images.
+    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
     - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata). Although this property is possible to combine with the `tile` property that does not make a whole lot of sense, instead use the `size` property for tiled images.
@@ -818,7 +818,7 @@ Properties:
     - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
     - Default is `false`
 * `tileSize` - type: NORMALIZED_PAIR
-    - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If scaling SVG images to non-standard aspect ratios, be aware that rasterization is always done while maintaining aspect ratio and the stretching or squashing is done using the GPU. This means that the image quality will not be that good if excessive stretching is done to such images. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file.
+    - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file.
     - Minimum value per axis is `0` and maximum value per axis is `1`.
 * `tileHorizontalAlignment` - type: STRING
     - If the images making up the tiled texture do not match precisely with the edges of the overall element, then this property can be used to define the alignment on the horizontal axis.

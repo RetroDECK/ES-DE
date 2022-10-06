@@ -71,6 +71,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Lottie animation (vector graphics) and GIF animation support
 * OpenGL ES 3.0 renderer for use on the Raspberry Pi
 * Replace the OpenGL fixed function pipeline with a shader-based renderer
+* Replace NanoSVG with a more capable SVG rendering library
 * Improve the performance of the GLSL shader post-processing
 
 #### v2.1
@@ -110,7 +111,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Migration tools for importing game metadata and media from other frontend applications
 * Audit tools to clean up orphaned gamelist entries, media files etc.
 * Auto-import tools for Steam, Lutris etc.
-* Replacements for the abandoned NanoSVG and FreeImage libraries
+* Replace the abandoned FreeImage library
 
 To see which features have been implemented in previous versions, please refer to [CHANGELOG.md](CHANGELOG.md).
 
