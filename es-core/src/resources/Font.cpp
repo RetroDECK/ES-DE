@@ -313,6 +313,10 @@ std::string Font::wrapText(const std::string& text,
 
     for (size_t i = 0; i < text.length(); ++i) {
         if (text[i] == '\n') {
+            if (!multiLine) {
+                addDots = true;
+                break;
+            }
             wrappedText.append("\n");
             accumHeight += lineHeight;
             lineWidth = 0.0f;
