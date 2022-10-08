@@ -308,7 +308,7 @@ std::string Font::wrapText(const std::string& text,
     size_t byteCount {0};
     std::string wrappedText;
     std::string charEntry;
-    std::vector<std::pair<int, float>> dotsSection;
+    std::vector<std::pair<size_t, float>> dotsSection;
     bool addDots {false};
 
     for (size_t i = 0; i < text.length(); ++i) {
