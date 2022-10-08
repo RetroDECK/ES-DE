@@ -59,6 +59,7 @@ private:
 
     Renderer* mRenderer;
     std::string mText;
+    std::string mWrappedText;
     std::string mTextOrig;
     bool mFocused;
     bool mEditing;
@@ -70,6 +71,7 @@ private:
     int mCursorRepeatDir;
 
     glm::vec2 mScrollOffset;
+    glm::vec2 mCursorPos;
 
     NinePatchComponent mBox;
 

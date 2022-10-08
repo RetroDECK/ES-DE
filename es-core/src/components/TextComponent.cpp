@@ -236,109 +236,51 @@ void TextComponent::render(const glm::mat4& parentTrans)
     }
 }
 
-void TextComponent::calculateExtent()
-{
-    if (mAutoCalcExtent.x) {
-        if (mUppercase)
-            mSize = mFont->sizeText(Utils::String::toUpper(mText), mLineSpacing);
-        else if (mLowercase)
-            mSize = mFont->sizeText(Utils::String::toLower(mText), mLineSpacing);
-        else if (mCapitalize)
-            mSize = mFont->sizeText(Utils::String::toCapitalized(mText), mLineSpacing);
-        else
-            mSize = mFont->sizeText(mText, mLineSpacing); // Original case.
-    }
-    else {
-        if (mAutoCalcExtent.y) {
-            if (mUppercase) {
-                mSize.y =
-                    mFont->sizeWrappedText(Utils::String::toUpper(mText), getSize().x, mLineSpacing)
-                        .y;
-            }
-            else if (mLowercase) {
-                mSize.y =
-                    mFont->sizeWrappedText(Utils::String::toLower(mText), getSize().x, mLineSpacing)
-                        .y;
-            }
-            else if (mCapitalize) {
-                mSize.y = mFont
-                              ->sizeWrappedText(Utils::String::toCapitalized(mText), getSize().x,
-                                                mLineSpacing)
-                              .y;
-            }
-            else {
-                mSize.y = mFont->sizeWrappedText(mText, getSize().x, mLineSpacing).y;
-            }
-        }
-    }
-}
-
 void TextComponent::onTextChanged()
 {
     if (!mVerticalAutoSizing)
         mVerticalAutoSizing = (mSize.x != 0.0f && mSize.y == 0.0f);
 
-    calculateExtent();
-
-    if (!mFont || mText.empty() || mSize.x == 0.0f || mSize.y == 0.0f) {
-        mTextCache.reset();
-        return;
-    }
-
     std::string text;
 
-    if (mUppercase)
-        text = Utils::String::toUpper(mText);
-    else if (mLowercase)
-        text = Utils::String::toLower(mText);
-    else if (mCapitalize)
-        text = Utils::String::toCapitalized(mText);
-    else
-        text = mText; // Original case.
+    if (mText != "") {
+        if (mUppercase)
+            text = Utils::String::toUpper(mText);
+        else if (mLowercase)
+            text = Utils::String::toLower(mText);
+        else if (mCapitalize)
+            text = Utils::String::toCapitalized(mText);
+        else
+            text = mText; // Original case.
+    }
 
-    std::shared_ptr<Font> f {mFont};
-    const float lineHeight {f->getHeight(mLineSpacing)};
-    const bool isMultiline {mSize.y > lineHeight};
+    if (mFont && mAutoCalcExtent.x)
+        mSize = mFont->sizeText(text, mLineSpacing);
+
+    if (!mFont || text.empty() || mSize.x < 0.0f)
+        return;
+
+    std::shared_ptr<Font> font {mFont};
+    const float lineHeight {font->getHeight(mLineSpacing)};
+    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
     const bool isScrollable {mParent && mParent->isScrollable()};
 
-    bool addAbbrev {false};
-    if (!isMultiline) {
-        size_t newline {text.find('\n')};
-        // Single line of text - stop at the first newline since it'll mess everything up.
-        text = text.substr(0, newline);
-        addAbbrev = newline != std::string::npos;
-    }
-
-    glm::vec2 size {f->sizeText(text)};
-    if (!isMultiline && text.size() && (size.x > mSize.x || addAbbrev)) {
-        // Abbreviate text.
-        const std::string abbrev {"..."};
-        float abbrevSize {f->sizeText(abbrev).x};
-
-        while (text.size() && size.x + abbrevSize > mSize.x) {
-            size_t newSize {Utils::String::prevCursor(text, text.size())};
-            text.erase(newSize, text.size() - newSize);
-            if (!text.empty() && text.back() == ' ')
-                text.pop_back();
-            size = f->sizeText(text);
-        }
-
-        text.append(abbrev);
-        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(
-            text, glm::vec2 {}, mColor, mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
-    }
-    else if (isMultiline && text.size() && !isScrollable) {
-        const std::string wrappedText {f->wrapText(
-            text, mSize.x, (mVerticalAutoSizing ? 0.0f : mSize.y - lineHeight), mLineSpacing)};
-        mTextCache = std::shared_ptr<TextCache>(f->buildTextCache(wrappedText, glm::vec2 {}, mColor,
-                                                                  mSize.x, mHorizontalAlignment,
-                                                                  mLineSpacing, mNoTopMargin));
+    if (isMultiline && text.size() && !isScrollable) {
+        const std::string wrappedText {
+            font->wrapText(text, mSize.x, (mVerticalAutoSizing ? 0.0f : mSize.y - lineHeight),
+                           mLineSpacing, isMultiline)};
+        mTextCache = std::shared_ptr<TextCache>(
+            font->buildTextCache(wrappedText, glm::vec2 {0.0f, 0.0f}, mColor, mSize.x,
+                                 mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
     else {
-        mTextCache = std::shared_ptr<TextCache>(
-            f->buildTextCache(f->wrapText(text, mSize.x), glm::vec2 {0.0f, 0.0f}, mColor, mSize.x,
-                              mHorizontalAlignment, mLineSpacing, mNoTopMargin));
+        mTextCache = std::shared_ptr<TextCache>(font->buildTextCache(
+            font->wrapText(text, mSize.x, 0.0f, mLineSpacing, isMultiline), glm::vec2 {0.0f, 0.0f},
+            mColor, mSize.x, mHorizontalAlignment, mLineSpacing, mNoTopMargin));
     }
+
+    if (mAutoCalcExtent.y)
+        mSize.y = font->getTextSize().y;
 
     if (mOpacity != 1.0f || mThemeOpacity != 1.0f)
         setOpacity(mOpacity);

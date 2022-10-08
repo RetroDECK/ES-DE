@@ -52,6 +52,9 @@ public:
     // Returns the portion of a string that fits within the passed argument maxWidth.
     std::string getTextMaxWidth(std::string text, float maxWidth);
 
+    // Returns the size of the overall text area.
+    const glm::vec2 getTextSize() { return mTextSize; }
+
     TextCache* buildTextCache(const std::string& text,
                               float offsetX,
                               float offsetY,
@@ -69,20 +72,17 @@ public:
 
     void renderTextCache(TextCache* cache);
 
-    // Inserts newlines into text to make it wrap properly.
-    std::string wrapText(std::string text,
-                         float maxLength,
-                         float maxHeight = 0.0f,
-                         float lineSpacing = 1.5f);
+    // Inserts newlines to make text wrap properly and also abbreviates single-line text.
+    std::string wrapText(const std::string& text,
+                         const float maxLength,
+                         const float maxHeight = 0.0f,
+                         const float lineSpacing = 1.5f,
+                         const bool multiLine = false);
 
-    // Returns the expected size of a string after wrapping is applied.
-    glm::vec2 sizeWrappedText(std::string text, float xLen, float lineSpacing = 1.5f);
-
-    // Returns the position of the cursor after moving a "cursor" amount of characters.
-    glm::vec2 getWrappedTextCursorOffset(std::string text,
-                                         float xLen,
-                                         size_t cursor,
-                                         float lineSpacing = 1.5f);
+    // Returns the position of the cursor after moving it to the stop position.
+    glm::vec2 getWrappedTextCursorOffset(const std::string& wrappedText,
+                                         const size_t stop,
+                                         const float lineSpacing = 1.5f);
 
     float getHeight(float lineSpacing = 1.5f) const;
     float getLetterHeight();
@@ -90,7 +90,7 @@ public:
     void reload(ResourceManager& rm) override { rebuildTextures(); }
     void unload(ResourceManager& rm) override { unloadTextures(); }
 
-    int getSize() const { return mSize; }
+    int getSize() const { return mFontSize; }
     const std::string& getPath() const { return mPath; }
     static std::string getDefaultPath() { return FONT_PATH_REGULAR; }
 
@@ -117,7 +117,7 @@ private:
         glm::ivec2 writePos;
         int rowHeight;
 
-        FontTexture(const int mSize);
+        FontTexture(const int mFontSize);
         ~FontTexture();
         bool findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out);
 
@@ -165,8 +165,9 @@ private:
     std::map<unsigned int, Glyph> mGlyphMap;
     Glyph* getGlyph(const unsigned int id);
 
-    int mSize;
+    int mFontSize;
     int mMaxGlyphHeight;
+    glm::vec2 mTextSize;
     const std::string mPath;
 
     float getNewlineStartOffset(const std::string& text,

@@ -20,16 +20,17 @@ std::map<std::pair<std::string, int>, std::weak_ptr<Font>> Font::sFontMap;
 
 Font::Font(int size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
-    , mSize(size)
+    , mFontSize(size)
     , mMaxGlyphHeight {0}
+    , mTextSize {0.0f, 0.0f}
     , mPath(path)
 {
-    if (mSize < 9) {
-        mSize = 9;
+    if (mFontSize < 9) {
+        mFontSize = 9;
         LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
     }
-    else if (mSize > Renderer::getScreenHeight()) {
-        mSize = static_cast<int>(Renderer::getScreenHeight());
+    else if (mFontSize > Renderer::getScreenHeight()) {
+        mFontSize = static_cast<int>(Renderer::getScreenHeight());
         LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
     }
 
@@ -47,7 +48,7 @@ Font::~Font()
 {
     unload(ResourceManager::getInstance());
 
-    auto fontEntry = sFontMap.find(std::pair<std::string, int>(mPath, mSize));
+    auto fontEntry = sFontMap.find(std::pair<std::string, int>(mPath, mFontSize));
 
     if (fontEntry != sFontMap.cend())
         sFontMap.erase(fontEntry);
@@ -287,186 +288,157 @@ void Font::renderTextCache(TextCache* cache)
     }
 }
 
-std::string Font::wrapText(std::string text, float maxLength, float maxHeight, float lineSpacing)
+std::string Font::wrapText(const std::string& text,
+                           const float maxLength,
+                           const float maxHeight,
+                           const float lineSpacing,
+                           const bool multiLine)
 {
-    assert(maxLength != 0.0f);
-
-    std::string out;
-    std::string line;
-    std::string word;
-    std::string abbreviatedWord;
-    std::string temp;
-
-    size_t space {0};
-    glm::vec2 textSize {0.0f, 0.0f};
-    const float dotsSize {sizeText("...").x};
+    assert(maxLength > 0.0f);
     const float lineHeight {getHeight(lineSpacing)};
-    float accumHeight {0.0f};
-    const bool restrictHeight {maxHeight > 0.0f};
-    bool skipLastLine {false};
-    float currLineLength {0.0f};
+    const float dotsWidth {sizeText("...").x};
+    float accumHeight {lineHeight};
+    float lineWidth {0.0f};
+    float charWidth {0.0f};
+    float lastSpacePos {0.0f};
+    unsigned int charID {0};
+    size_t cursor {0};
+    size_t lastSpace {0};
+    size_t spaceAccum {0};
+    size_t byteCount {0};
+    std::string wrappedText;
+    std::string charEntry;
+    std::vector<std::pair<int, float>> dotsSection;
+    bool addDots {false};
 
-    // While there's text or we still have text to render.
-    while (text.length() > 0) {
-        if (restrictHeight && accumHeight > maxHeight)
-            break;
-
-        space = text.find_first_of(" \t\n");
-
-        if (space == std::string::npos) {
-            space = text.length() - 1;
-        }
-        else if (restrictHeight) {
-            if (text.at(space) == '\n')
-                accumHeight += lineHeight;
-        }
-
-        word = text.substr(0, space + 1);
-        text.erase(0, space + 1);
-
-        temp = line + word;
-
-        textSize = sizeText(temp);
-
-        // If the word will fit on the line, add it to our line and continue.
-        if (textSize.x <= maxLength) {
-            line = temp;
-            currLineLength = textSize.x;
+    for (size_t i = 0; i < text.length(); ++i) {
+        if (text[i] == '\n') {
+            wrappedText.append("\n");
+            accumHeight += lineHeight;
+            lineWidth = 0.0f;
+            lastSpace = 0;
             continue;
+        }
+
+        charWidth = 0.0f;
+        byteCount = 0;
+        cursor = i;
+
+        // Needed to handle multi-byte Unicode characters.
+        charID = Utils::String::chars2Unicode(text, cursor);
+        charEntry = text.substr(i, cursor - i);
+
+        Glyph* glyph {getGlyph(charID)};
+        if (glyph != nullptr) {
+            charWidth = glyph->advance.x;
+            byteCount = cursor - i;
         }
         else {
-            // If the word is too long to fit within maxLength then abbreviate it.
-            float wordSize {sizeText(word).x};
-            if (restrictHeight && currLineLength != 0.0f && maxHeight < lineHeight &&
-                wordSize > maxLength - textSize.x) {
-                // Multi-word lines.
-                if (maxLength - currLineLength + dotsSize < wordSize &&
-                    sizeText(line).x + dotsSize > maxLength) {
-                    while (sizeText(line).x + dotsSize > maxLength)
-                        line.pop_back();
+            // Missing glyph.
+            continue;
+        }
+
+        if (multiLine && (charEntry == " " || charEntry == "\t")) {
+            lastSpace = i;
+            lastSpacePos = lineWidth;
+        }
+
+        if (lineWidth + charWidth <= maxLength) {
+            if (lineWidth + charWidth + dotsWidth > maxLength)
+                dotsSection.emplace_back(std::make_pair(byteCount, charWidth));
+            lineWidth += charWidth;
+            wrappedText.append(charEntry);
+        }
+        else if (!multiLine) {
+            addDots = true;
+            break;
+        }
+        else {
+            if (maxHeight == 0.0f || accumHeight < maxHeight) {
+                // New row.
+                float spaceOffset {0.0f};
+                if (lastSpace == wrappedText.size()) {
+                    wrappedText.append("\n");
+                }
+                else if (lastSpace != 0) {
+                    if (lastSpace + spaceAccum == wrappedText.size())
+                        wrappedText.append("\n");
+                    else
+                        wrappedText[lastSpace + spaceAccum] = '\n';
+                    spaceOffset = lineWidth - lastSpacePos;
                 }
                 else {
-                    while (word != "" && wordSize + dotsSize > maxLength - currLineLength) {
-                        word.pop_back();
-                        wordSize = sizeText(word).x;
-                    }
-
-                    line = line + word;
+                    if (lastSpace == 0)
+                        ++spaceAccum;
+                    wrappedText.append("\n");
                 }
-
-                if (line.back() == ' ')
-                    line.pop_back();
-
-                line.append("...");
-                break;
-            }
-            if (wordSize > maxLength) {
-
-                if (line != "" && line.back() != '\n') {
-                    if (restrictHeight) {
-                        if (accumHeight + lineHeight > maxHeight)
-                            continue;
-                        accumHeight += lineHeight;
-                    }
-                    line.append("\n");
+                if (charEntry != " " && charEntry != "\t") {
+                    wrappedText.append(charEntry);
+                    lineWidth = charWidth;
                 }
-
-                const float cutTarget {wordSize - maxLength + dotsSize};
-                float cutSize {0.0f};
-
-                while (word != "" && cutSize < cutTarget) {
-                    cutSize += sizeText(word.substr(word.size() - 1)).x;
-                    word.pop_back();
+                else {
+                    lineWidth = 0.0f;
                 }
-
-                word.append("...");
-                line = line + word;
-                continue;
+                accumHeight += lineHeight;
+                lineWidth += spaceOffset;
+                lastSpacePos = 0.0f;
+                lastSpace = 0;
             }
             else {
-                out += line + '\n';
-                if (restrictHeight)
-                    accumHeight += lineHeight;
-
-                if (restrictHeight && accumHeight > maxHeight) {
-                    out.pop_back();
-                    skipLastLine = true;
-                    break;
-                }
-            }
-            line = word;
-        }
-    }
-
-    // Whatever's left should fit.
-    if (!skipLastLine)
-        out.append(line);
-
-    if (restrictHeight && out.back() == '\n')
-        out.pop_back();
-
-    // If the text has been abbreviated vertically then add "..." at the end of the string.
-    if (restrictHeight && accumHeight > maxHeight) {
-        if (out.back() != '\n') {
-            float cutSize {0.0f};
-            float cutTarget {sizeText(line).x - maxLength + dotsSize};
-            while (cutSize < cutTarget) {
-                cutSize += sizeText(out.substr(out.size() - 1)).x;
-                out.pop_back();
+                if (multiLine)
+                    addDots = true;
+                break;
             }
         }
-        if (out.back() == ' ')
-            out.pop_back();
-        out.append("...");
+
+        i = cursor - 1;
     }
 
-    return out;
+    if (addDots) {
+        if (wrappedText.back() == ' ') {
+            lineWidth -= sizeText(" ").x;
+            wrappedText.pop_back();
+        }
+        else if (wrappedText.back() == '\t') {
+            lineWidth -= sizeText("\t").x;
+            wrappedText.pop_back();
+        }
+        while (!dotsSection.empty() && lineWidth + dotsWidth > maxLength) {
+            lineWidth -= dotsSection.back().second;
+            wrappedText.erase(wrappedText.length() - dotsSection.back().first);
+            dotsSection.pop_back();
+        }
+        if (!wrappedText.empty() && wrappedText.back() == ' ')
+            wrappedText.pop_back();
+        wrappedText.append("...");
+    }
+
+    mTextSize = {maxLength, accumHeight};
+    return wrappedText;
 }
 
-glm::vec2 Font::sizeWrappedText(std::string text, float xLen, float lineSpacing)
+glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
+                                           const size_t stop,
+                                           const float lineSpacing)
 {
-    text = wrapText(text, xLen);
-    return sizeText(text, lineSpacing);
-}
-
-glm::vec2 Font::getWrappedTextCursorOffset(std::string text,
-                                           float xLen,
-                                           size_t stop,
-                                           float lineSpacing)
-{
-    std::string wrappedText {wrapText(text, xLen)};
-
     float lineWidth {0.0f};
-    float y {0.0f};
-
-    size_t wrapCursor {0};
+    float yPos {0.0f};
     size_t cursor {0};
+
     while (cursor < stop) {
-        unsigned int wrappedCharacter {Utils::String::chars2Unicode(wrappedText, wrapCursor)};
-        unsigned int character {Utils::String::chars2Unicode(text, cursor)};
-
-        if (wrappedCharacter == '\n' && character != '\n') {
-            // This is where the wordwrap inserted a newline
-            // Reset lineWidth and increment y, but don't consume .a cursor character.
-            lineWidth = 0.0f;
-            y += getHeight(lineSpacing);
-
-            cursor = Utils::String::prevCursor(text, cursor); // Unconsume.
-            continue;
-        }
-
+        unsigned int character {Utils::String::chars2Unicode(wrappedText, cursor)};
         if (character == '\n') {
             lineWidth = 0.0f;
-            y += getHeight(lineSpacing);
+            yPos += getHeight(lineSpacing);
             continue;
         }
 
-        Glyph* glyph = getGlyph(character);
+        Glyph* glyph {getGlyph(character)};
         if (glyph)
             lineWidth += glyph->advance.x;
     }
 
-    return glm::vec2 {lineWidth, y};
+    return glm::vec2 {lineWidth, yPos};
 }
 
 float Font::getHeight(float lineSpacing) const
@@ -491,7 +463,7 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
         return orig;
 
     std::shared_ptr<Font> font;
-    int size {static_cast<int>(orig ? orig->mSize : FONT_SIZE_MEDIUM)};
+    int size {static_cast<int>(orig ? orig->mFontSize : FONT_SIZE_MEDIUM)};
     std::string path {orig ? orig->mPath : getDefaultPath()};
 
     float sh {static_cast<float>(Renderer::getScreenHeight())};
@@ -546,7 +518,7 @@ size_t Font::getTotalMemUsage()
     return total;
 }
 
-Font::FontTexture::FontTexture(const int mSize)
+Font::FontTexture::FontTexture(const int mFontSize)
 {
     textureId = 0;
 
@@ -562,10 +534,11 @@ Font::FontTexture::FontTexture(const int mSize)
     if (screenSizeModifier < 0.45f)
         extraTextureSize += 4;
 
-    // It's not entirely clear if the 20 and 16 constants are correct, but they seem to provide
+    // It's not entirely clear if the 20 and 22 constants are correct, but they seem to provide
     // a texture buffer large enough to hold the fonts. This logic is obviously a hack though
     // and needs to be properly reviewed and improved.
-    textureSize = glm::ivec2 {mSize * (20 + extraTextureSize), mSize * (16 + extraTextureSize / 2)};
+    textureSize =
+        glm::ivec2 {mFontSize * (20 + extraTextureSize), mFontSize * (22 + extraTextureSize / 2)};
 
     // Make sure the size is not unreasonably large (which may be caused by a mistake in the
     // theme configuration).
@@ -704,7 +677,7 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
         return;
     }
 
-    mTextures.push_back(FontTexture(mSize));
+    mTextures.push_back(FontTexture(mFontSize));
     tex_out = &mTextures.back();
     tex_out->initTexture();
 
@@ -731,7 +704,7 @@ FT_Face Font::getFaceForChar(unsigned int id)
             // Otherwise, take from fallbackFonts.
             const std::string& path {i == 0 ? mPath : fallbackFonts.at(i - 1)};
             ResourceData data {ResourceManager::getInstance().getFileData(path)};
-            mFaceCache[i] = std::unique_ptr<FontFace>(new FontFace(std::move(data), mSize));
+            mFaceCache[i] = std::unique_ptr<FontFace>(new FontFace(std::move(data), mFontSize));
             fit = mFaceCache.find(i);
         }
 
@@ -762,7 +735,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
 
     if (FT_Load_Char(face, id, FT_LOAD_RENDER)) {
         LOG(LogError) << "Couldn't find glyph for character " << id << " for font " << mPath
-                      << ", size " << mSize;
+                      << ", size " << mFontSize;
         return nullptr;
     }
 
@@ -776,7 +749,7 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     // size (absurdly large font size).
     if (tex == nullptr) {
         LOG(LogError) << "Couldn't create glyph for character " << id << " for font " << mPath
-                      << ", size " << mSize << " (no suitable texture found)";
+                      << ", size " << mFontSize << " (no suitable texture found)";
         return nullptr;
     }
 
