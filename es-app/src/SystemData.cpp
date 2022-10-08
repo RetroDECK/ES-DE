@@ -490,8 +490,8 @@ bool SystemData::loadConfig()
             std::string path;
             std::string themeFolder;
 
-            name = system.child("name").text().get();
-            fullname = system.child("fullname").text().get();
+            name = Utils::String::replace(system.child("name").text().get(), "\n", "");
+            fullname = Utils::String::replace(system.child("fullname").text().get(), "\n", "");
             sortName = system.child("systemsortname").text().get();
             path = system.child("path").text().get();
 
