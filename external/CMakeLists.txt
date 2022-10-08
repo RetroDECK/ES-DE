@@ -32,11 +32,12 @@ if(WIN32)
         # Strip the DLL files when building with MinGW.
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
     endif()
-    if (WIN32)
-        set(BUILD_SHARED_LIBS ON)
-    else()
-        set(BUILD_SHARED_LIBS OFF)
-    endif()
+endif()
+
+if (WIN32)
+    set(BUILD_SHARED_LIBS ON)
+else()
+    set(BUILD_SHARED_LIBS OFF)
 endif()
 
 # Disable threading support for rlottie as this functionality actually leads to far worse
