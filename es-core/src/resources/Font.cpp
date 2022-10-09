@@ -17,10 +17,10 @@
 
 Font::Font(int size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
+    , mPath(path)
+    , mTextSize {0.0f, 0.0f}
     , mFontSize(size)
     , mMaxGlyphHeight {0}
-    , mTextSize {0.0f, 0.0f}
-    , mPath(path)
 {
     if (mFontSize < 9) {
         mFontSize = 9;
@@ -56,45 +56,6 @@ Font::~Font()
     }
 }
 
-void Font::initLibrary()
-{
-    assert(sLibrary == nullptr);
-
-    if (FT_Init_FreeType(&sLibrary)) {
-        sLibrary = nullptr;
-        LOG(LogError) << "Couldn't initialize FreeType";
-    }
-}
-
-std::vector<std::string> Font::getFallbackFontPaths()
-{
-    std::vector<std::string> fontPaths;
-
-    // Standard fonts, let's include them here for exception handling purposes even though that's
-    // not really the correct location. (The application will crash if they are missing.)
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
-
-    // Vera sans Unicode.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/DejaVuSans.ttf"));
-    // GNU FreeFont monospaced.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/FreeMono.ttf"));
-    // Various languages, such as Japanese and Chinese.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
-    // Korean.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/NanumMyeongjo.ttf"));
-    // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/fontawesome-webfont.ttf"));
-    // This is only needed for some really rare special characters.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/Ubuntu-C.ttf"));
-
-    return fontPaths;
-}
-
 std::shared_ptr<Font> Font::get(int size, const std::string& path)
 {
     const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
@@ -107,7 +68,7 @@ std::shared_ptr<Font> Font::get(int size, const std::string& path)
             return foundFont->second.lock();
     }
 
-    std::shared_ptr<Font> font {std::shared_ptr<Font>(new Font(def.second, def.first))};
+    std::shared_ptr<Font> font {new Font(def.second, def.first)};
     sFontMap[def] = std::weak_ptr<Font>(font);
     ResourceManager::getInstance().addReloadable(font);
     return font;
@@ -143,16 +104,6 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
         highestWidth = lineWidth;
 
     return glm::vec2 {highestWidth, y};
-}
-
-std::string Font::getTextMaxWidth(std::string text, float maxWidth)
-{
-    float width {sizeText(text).x};
-    while (width > maxWidth) {
-        text.pop_back();
-        width = sizeText(text).x;
-    }
-    return text;
 }
 
 TextCache* Font::buildTextCache(const std::string& text,
@@ -442,12 +393,6 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
     return glm::vec2 {lineWidth, yPos};
 }
 
-float Font::getHeight(float lineSpacing) const
-{
-    // Return overall height including line spacing.
-    return mMaxGlyphHeight * lineSpacing;
-}
-
 float Font::getLetterHeight()
 {
     Glyph* glyph {getGlyph('S')};
@@ -517,6 +462,34 @@ size_t Font::getTotalMemUsage()
     }
 
     return total;
+}
+
+std::vector<std::string> Font::getFallbackFontPaths()
+{
+    std::vector<std::string> fontPaths;
+
+    // Default application fonts.
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
+
+    // Vera sans Unicode.
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/DejaVuSans.ttf"));
+    // GNU FreeFont monospaced.
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/FreeMono.ttf"));
+    // Various languages, such as Japanese and Chinese.
+    fontPaths.push_back(
+        ResourceManager::getInstance().getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
+    // Korean.
+    fontPaths.push_back(
+        ResourceManager::getInstance().getResourcePath(":/fonts/NanumMyeongjo.ttf"));
+    // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
+    fontPaths.push_back(
+        ResourceManager::getInstance().getResourcePath(":/fonts/fontawesome-webfont.ttf"));
+    // This is only needed for some really rare special characters.
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/Ubuntu-C.ttf"));
+
+    return fontPaths;
 }
 
 Font::FontTexture::FontTexture(const int mFontSize)
@@ -619,6 +592,16 @@ Font::FontFace::~FontFace()
 {
     if (face)
         FT_Done_Face(face);
+}
+
+void Font::initLibrary()
+{
+    assert(sLibrary == nullptr);
+
+    if (FT_Init_FreeType(&sLibrary)) {
+        sLibrary = nullptr;
+        LOG(LogError) << "Couldn't initialize FreeType";
+    }
 }
 
 void Font::rebuildTextures()

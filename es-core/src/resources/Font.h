@@ -42,15 +42,10 @@ class Font : public IReloadable
 {
 public:
     virtual ~Font();
-    static void initLibrary();
-    std::vector<std::string> getFallbackFontPaths();
     static std::shared_ptr<Font> get(int size, const std::string& path = getDefaultPath());
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
-
-    // Returns the portion of a string that fits within the passed argument maxWidth.
-    std::string getTextMaxWidth(std::string text, float maxWidth);
 
     // Returns the size of the overall text area.
     const glm::vec2 getTextSize() { return mTextSize; }
@@ -84,7 +79,8 @@ public:
                                          const size_t stop,
                                          const float lineSpacing = 1.5f);
 
-    float getHeight(float lineSpacing = 1.5f) const;
+    // Return overall height including line spacing.
+    float getHeight(float lineSpacing = 1.5f) const { return mMaxGlyphHeight * lineSpacing; }
     float getLetterHeight();
 
     void reload(ResourceManager& rm) override { rebuildTextures(); }
@@ -104,16 +100,12 @@ public:
     static size_t getTotalMemUsage();
 
 private:
-    Renderer* mRenderer;
-    static inline FT_Library sLibrary {nullptr};
-    static inline std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
-
     Font(int size, const std::string& path);
+    static void initLibrary();
 
     struct FontTexture {
         unsigned int textureId;
         glm::ivec2 textureSize;
-
         glm::ivec2 writePos;
         int rowHeight;
 
@@ -126,8 +118,7 @@ private:
         // updating textureId.
         void initTexture();
 
-        // Deinitializes the OpenGL texture if any exists, is automatically called
-        // in the destructor.
+        // Deinitializes any existing OpenGL textures, is automatically called in destructor.
         void deinitTexture();
     };
 
@@ -139,6 +130,14 @@ private:
         virtual ~FontFace();
     };
 
+    struct Glyph {
+        FontTexture* texture;
+        glm::vec2 texPos;
+        glm::vec2 texSize; // In texels.
+        glm::vec2 advance;
+        glm::vec2 bearing;
+    };
+
     // Completely recreate the texture data for all textures based on mGlyphs information.
     void rebuildTextures();
     void unloadTextures();
@@ -147,35 +146,30 @@ private:
                                FontTexture*& tex_out,
                                glm::ivec2& cursor_out);
 
-    std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
+    std::vector<std::string> getFallbackFontPaths();
     FT_Face getFaceForChar(unsigned int id);
-    void clearFaceCache() { mFaceCache.clear(); }
-
-    struct Glyph {
-        FontTexture* texture;
-
-        glm::vec2 texPos;
-        glm::vec2 texSize; // In texels.
-
-        glm::vec2 advance;
-        glm::vec2 bearing;
-    };
-
-    std::vector<FontTexture> mTextures;
-    std::map<unsigned int, Glyph> mGlyphMap;
     Glyph* getGlyph(const unsigned int id);
-
-    int mFontSize;
-    int mMaxGlyphHeight;
-    glm::vec2 mTextSize;
-    const std::string mPath;
 
     float getNewlineStartOffset(const std::string& text,
                                 const unsigned int& charStart,
                                 const float& xLen,
                                 const Alignment& alignment);
 
-    friend TextCache;
+    void clearFaceCache() { mFaceCache.clear(); }
+
+    static inline FT_Library sLibrary {nullptr};
+    static inline std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
+    static inline std::vector<std::string> mFallbackFonts;
+
+    Renderer* mRenderer;
+    std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
+    std::vector<FontTexture> mTextures;
+    std::map<unsigned int, Glyph> mGlyphMap;
+
+    const std::string mPath;
+    glm::vec2 mTextSize;
+    int mFontSize;
+    int mMaxGlyphHeight;
 };
 
 // Used to store a sort of "pre-rendered" string.
@@ -200,8 +194,6 @@ public:
 protected:
     struct VertexList {
         std::vector<Renderer::Vertex> verts;
-        // This is a pointer because the texture ID can change during
-        // deinit/reinit (when launching a game).
         unsigned int* textureIdPtr;
     };
 
