@@ -134,7 +134,7 @@ void ComponentList::update(int deltaTime)
         mLoopTime = 0;
     }
 
-    const float totalHeight = getTotalRowHeight();
+    const float totalHeight {getTotalRowHeight()};
 
     // Scroll indicator logic, used by ScrollIndicatorComponent.
     bool scrollIndicatorChanged = false;
@@ -236,17 +236,17 @@ void ComponentList::onCursorChanged(const CursorState& state)
 
 void ComponentList::updateCameraOffset()
 {
-    float oldCameraOffset = mCameraOffset;
+    float oldCameraOffset {mCameraOffset};
 
     // Move the camera to scroll.
-    const float totalHeight = getTotalRowHeight();
+    const float totalHeight {getTotalRowHeight()};
     if (totalHeight > mSize.y) {
-        float target =
-            mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f - (mSize.y / 2.0f);
+        float target {mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f -
+                      (mSize.y / 2.0f)};
 
         // Clamp the camera to prevent a fraction of a row from being displayed.
         mCameraOffset = 0.0f;
-        unsigned int i = 0;
+        unsigned int i {0};
         while (mCameraOffset < target && i < mEntries.size()) {
             mCameraOffset += getRowHeight(mEntries.at(i).data);
             if (mCameraOffset > totalHeight - mSize.y) {
@@ -305,7 +305,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
-    bool drawAll;
+    bool drawAll {false};
     for (size_t i = 0; i < mEntries.size(); ++i) {
 
         if (mLoopRows && mFocused && mLoopOffset > 0) {
@@ -337,16 +337,16 @@ void ComponentList::render(const glm::mat4& parentTrans)
                 if (mFocused && i == static_cast<size_t>(mCursor) &&
                     it->component->getValue() != "") {
                     // Check if we're dealing with text or an image component.
-                    bool isTextComponent = true;
-                    unsigned int origColor = it->component->getColor();
+                    bool isTextComponent {true};
+                    unsigned int origColor {it->component->getColor()};
                     if (origColor == 0) {
                         origColor = it->component->getColorShift();
                         isTextComponent = false;
                     }
                     // Check if the color is neutral.
-                    unsigned char byteRed = origColor >> 24 & 0xFF;
-                    unsigned char byteGreen = origColor >> 16 & 0xFF;
-                    unsigned char byteBlue = origColor >> 8 & 0xFF;
+                    unsigned char byteRed {static_cast<unsigned char>(origColor >> 24 & 0xFF)};
+                    unsigned char byteGreen {static_cast<unsigned char>(origColor >> 16 & 0xFF)};
+                    unsigned char byteBlue {static_cast<unsigned char>(origColor >> 8 & 0xFF)};
                     // If it's neutral, just proceed with normal rendering.
                     if (byteRed == byteGreen && byteGreen == byteBlue) {
                         renderLoopFunc();
@@ -379,7 +379,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     // Draw selector bar.
     if (mFocused) {
-        const float selectedRowHeight = getRowHeight(mEntries.at(mCursor).data);
+        const float selectedRowHeight {getRowHeight(mEntries.at(mCursor).data)};
 
         if (mOpacity == 1.0f) {
             mRenderer->drawRect(0.0f, mSelectorBarOffset, std::round(mSize.x), selectedRowHeight,
@@ -401,7 +401,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     }
 
     // Draw separators.
-    float y = 0;
+    float y {0.0f};
     for (unsigned int i = 0; i < mEntries.size(); ++i) {
         mRenderer->drawRect(0.0f, y, std::round(mSize.x),
                             1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF, 0xC6C7C6FF,
@@ -417,7 +417,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
 float ComponentList::getRowHeight(const ComponentListRow& row) const
 {
     // Returns the highest component height found in the row.
-    float height = 0;
+    float height {0.0f};
     for (unsigned int i = 0; i < row.elements.size(); ++i) {
         if (row.elements.at(i).component->getSize().y > height)
             height = row.elements.at(i).component->getSize().y;
@@ -428,7 +428,7 @@ float ComponentList::getRowHeight(const ComponentListRow& row) const
 
 float ComponentList::getTotalRowHeight() const
 {
-    float height = 0;
+    float height {0.0f};
     for (auto it = mEntries.cbegin(); it != mEntries.cend(); ++it)
         height += getRowHeight(it->data);
 
@@ -437,13 +437,13 @@ float ComponentList::getTotalRowHeight() const
 
 void ComponentList::updateElementPosition(const ComponentListRow& row)
 {
-    float yOffset = 0;
+    float yOffset {0.0f};
     for (auto it = mEntries.cbegin(); it != mEntries.cend() && &it->data != &row; ++it)
         yOffset += getRowHeight(it->data);
 
     // Assumes updateElementSize has already been called.
-    float rowHeight = getRowHeight(row);
-    float x = mHorizontalPadding / 2.0f;
+    float rowHeight {getRowHeight(row)};
+    float x {mHorizontalPadding / 2.0f};
 
     for (unsigned int i = 0; i < row.elements.size(); ++i) {
         const auto comp = row.elements.at(i).component;
@@ -456,7 +456,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
 
 void ComponentList::updateElementSize(const ComponentListRow& row)
 {
-    float width = mSize.x - mHorizontalPadding;
+    float width {mSize.x - mHorizontalPadding};
     std::vector<std::shared_ptr<GuiComponent>> resizeVec;
 
     for (auto it = row.elements.cbegin(); it != row.elements.cend(); ++it) {
@@ -485,11 +485,11 @@ std::vector<HelpPrompt> ComponentList::getHelpPrompts()
     if (!size())
         return std::vector<HelpPrompt>();
 
-    std::vector<HelpPrompt> prompts =
-        mEntries.at(mCursor).data.elements.back().component->getHelpPrompts();
+    std::vector<HelpPrompt> prompts {
+        mEntries.at(mCursor).data.elements.back().component->getHelpPrompts()};
 
     if (size() > 1) {
-        bool addMovePrompt = true;
+        bool addMovePrompt {true};
         for (auto it = prompts.cbegin(); it != prompts.cend(); ++it) {
             if (it->first == "up/down" || it->first == "up/down/left/right") {
                 addMovePrompt = false;
@@ -505,7 +505,7 @@ std::vector<HelpPrompt> ComponentList::getHelpPrompts()
 
 bool ComponentList::moveCursor(int amt)
 {
-    bool ret = listInput(amt);
+    bool ret {listInput(amt)};
     listInput(0);
     return ret;
 }

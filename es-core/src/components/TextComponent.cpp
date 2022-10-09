@@ -265,7 +265,7 @@ void TextComponent::onTextChanged()
     const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
     const bool isScrollable {mParent && mParent->isScrollable()};
 
-    if (isMultiline && text.size() && !isScrollable) {
+    if (isMultiline && !isScrollable) {
         const std::string wrappedText {
             font->wrapText(text, mSize.x, (mVerticalAutoSizing ? 0.0f : mSize.y - lineHeight),
                            mLineSpacing, isMultiline)};
@@ -337,7 +337,7 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         componentName = "gamelistInfoComponent";
     }
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, elementType);
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, elementType)};
     if (!elem)
         return;
 
