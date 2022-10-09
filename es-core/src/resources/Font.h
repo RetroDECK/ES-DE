@@ -4,7 +4,7 @@
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.
-//  Also functions for word wrapping and similar.
+//  Also functions for text wrapping and similar.
 //
 
 #ifndef ES_CORE_RESOURCES_FONT_H
@@ -105,8 +105,8 @@ public:
 
 private:
     Renderer* mRenderer;
-    static FT_Library sLibrary;
-    static std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
+    static inline FT_Library sLibrary {nullptr};
+    static inline std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
 
     Font(int size, const std::string& path);
 
@@ -135,7 +135,7 @@ private:
         const ResourceData data;
         FT_Face face;
 
-        FontFace(ResourceData&& d, int size);
+        FontFace(ResourceData&& d, int size, const std::string& path);
         virtual ~FontFace();
     };
 

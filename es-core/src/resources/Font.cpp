@@ -4,7 +4,7 @@
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.
-//  Also functions for word wrapping and similar.
+//  Also functions for text wrapping and similar.
 //
 
 #include "resources/Font.h"
@@ -12,11 +12,8 @@
 #include "Log.h"
 #include "renderers/Renderer.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
-
-FT_Library Font::sLibrary {nullptr};
-
-std::map<std::pair<std::string, int>, std::weak_ptr<Font>> Font::sFontMap;
 
 Font::Font(int size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
@@ -607,15 +604,15 @@ void Font::FontTexture::deinitTexture()
     }
 }
 
-Font::FontFace::FontFace(ResourceData&& d, int size)
+Font::FontFace::FontFace(ResourceData&& d, int size, const std::string& path)
     : data {d}
 {
-    int err {
-        FT_New_Memory_Face(sLibrary, data.ptr.get(), static_cast<FT_Long>(data.length), 0, &face)};
-    assert(!err);
+    if (FT_New_Memory_Face(sLibrary, d.ptr.get(), static_cast<FT_Long>(d.length), 0, &face) != 0) {
+        LOG(LogError) << "Couldn't load font file \"" << path << "\"";
+        Utils::Platform::emergencyShutdown();
+    }
 
-    if (!err)
-        FT_Set_Pixel_Sizes(face, 0, size);
+    FT_Set_Pixel_Sizes(face, 0, size);
 }
 
 Font::FontFace::~FontFace()
@@ -708,7 +705,8 @@ FT_Face Font::getFaceForChar(unsigned int id)
             // Otherwise, take from fallbackFonts.
             const std::string& path {i == 0 ? mPath : fallbackFonts.at(i - 1)};
             ResourceData data {ResourceManager::getInstance().getFileData(path)};
-            mFaceCache[i] = std::unique_ptr<FontFace>(new FontFace(std::move(data), mFontSize));
+            mFaceCache[i] =
+                std::unique_ptr<FontFace>(new FontFace(std::move(data), mFontSize, mPath));
             fit = mFaceCache.find(i);
         }
 
