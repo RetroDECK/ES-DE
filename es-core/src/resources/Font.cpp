@@ -347,21 +347,22 @@ std::string Font::wrapText(const std::string& text,
     }
 
     if (addDots) {
-        if (wrappedText.back() == ' ') {
+        if (!wrappedText.empty() && wrappedText.back() == ' ') {
             lineWidth -= sizeText(" ").x;
             wrappedText.pop_back();
         }
-        else if (wrappedText.back() == '\t') {
+        else if (!wrappedText.empty() && wrappedText.back() == '\t') {
             lineWidth -= sizeText("\t").x;
             wrappedText.pop_back();
         }
-        while (!dotsSection.empty() && lineWidth + dotsWidth > maxLength) {
+        while (!wrappedText.empty() && !dotsSection.empty() && lineWidth + dotsWidth > maxLength) {
             lineWidth -= dotsSection.back().second;
             wrappedText.erase(wrappedText.length() - dotsSection.back().first);
             dotsSection.pop_back();
         }
         if (!wrappedText.empty() && wrappedText.back() == ' ')
             wrappedText.pop_back();
+
         wrappedText.append("...");
     }
 
