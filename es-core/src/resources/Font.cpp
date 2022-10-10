@@ -22,12 +22,12 @@ Font::Font(int size, const std::string& path)
     , mFontSize(size)
     , mMaxGlyphHeight {0}
 {
-    if (mFontSize < 9) {
-        mFontSize = 9;
+    if (mFontSize < 3) {
+        mFontSize = 3;
         LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
     }
-    else if (mFontSize > Renderer::getScreenHeight()) {
-        mFontSize = static_cast<int>(Renderer::getScreenHeight());
+    else if (mFontSize > Renderer::getScreenHeight() * 1.5f) {
+        mFontSize = static_cast<int>(Renderer::getScreenHeight() * 1.5f);
         LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
     }
 
@@ -205,12 +205,12 @@ TextCache* Font::buildTextCache(const std::string& text,
     cache->vertexLists.resize(vertMap.size());
     cache->metrics = {sizeText(text, lineSpacing)};
 
-    unsigned int i {0};
+    size_t i {0};
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
         TextCache::VertexList& vertList = cache->vertexLists.at(i);
-
         vertList.textureIdPtr = &it->first->textureId;
         vertList.verts = it->second;
+        ++i;
     }
 
     clearFaceCache();
@@ -402,23 +402,24 @@ float Font::getLetterHeight()
 
 std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          unsigned int properties,
-                                         const std::shared_ptr<Font>& orig)
+                                         const std::shared_ptr<Font>& orig,
+                                         const float maxHeight)
 {
     using namespace ThemeFlags;
     if (!(properties & FONT_PATH) && !(properties & FONT_SIZE))
         return orig;
 
-    std::shared_ptr<Font> font;
     int size {static_cast<int>(orig ? orig->mFontSize : FONT_SIZE_MEDIUM)};
     std::string path {orig ? orig->mPath : getDefaultPath()};
 
-    float sh {static_cast<float>(Renderer::getScreenHeight())};
+    float screenHeight {static_cast<float>(Renderer::getScreenHeight())};
 
-    // Make sure the size is not unreasonably large (which may be caused by a mistake in the
-    // theme configuration).
     if (properties & FONT_SIZE && elem->has("fontSize"))
-        size = glm::clamp(static_cast<int>(sh * elem->get<float>("fontSize")), 0,
-                          static_cast<int>(Renderer::getInstance()->getScreenHeight()));
+        size = static_cast<int>(glm::clamp(screenHeight * elem->get<float>("fontSize"),
+                                           screenHeight * 0.001f, screenHeight * 1.5f));
+
+    if (maxHeight != 0.0f && static_cast<float>(size) > maxHeight)
+        size = static_cast<int>(maxHeight);
 
     if (properties & FONT_PATH && elem->has("fontPath"))
         path = elem->get<std::string>("fontPath");
@@ -438,7 +439,7 @@ size_t Font::getMemUsage() const
 {
     size_t memUsage {0};
     for (auto it = mTextures.cbegin(); it != mTextures.cend(); ++it)
-        memUsage += it->textureSize.x * it->textureSize.y * 4;
+        memUsage += (*it)->textureSize.x * (*it)->textureSize.y * 4;
 
     for (auto it = mFaceCache.cbegin(); it != mFaceCache.cend(); ++it)
         memUsage += it->second->data.length;
@@ -495,36 +496,12 @@ std::vector<std::string> Font::getFallbackFontPaths()
 Font::FontTexture::FontTexture(const int mFontSize)
 {
     textureId = 0;
-
-    // This is a hack to add some extra texture size when running at very low resolutions. If not
-    // doing this, the use of fallback fonts (such as Japanese characters) could result in the
-    // texture not fitting the glyphs.
-    int extraTextureSize {0};
-    const float screenSizeModifier {
-        std::min(Renderer::getScreenWidthModifier(), Renderer::getScreenHeightModifier())};
-
-    if (screenSizeModifier < 0.2f)
-        extraTextureSize += 6;
-    if (screenSizeModifier < 0.45f)
-        extraTextureSize += 4;
-
-    // It's not entirely clear if the 20 and 22 constants are correct, but they seem to provide
-    // a texture buffer large enough to hold the fonts. This logic is obviously a hack though
-    // and needs to be properly reviewed and improved.
-    textureSize =
-        glm::ivec2 {mFontSize * (20 + extraTextureSize), mFontSize * (22 + extraTextureSize / 2)};
-
-    // Make sure the size is not unreasonably large (which may be caused by a mistake in the
-    // theme configuration).
-    if (textureSize.x > static_cast<int>(Renderer::getScreenWidth()) * 10)
-        textureSize.x =
-            glm::clamp(textureSize.x, 0, static_cast<int>(Renderer::getScreenWidth()) * 10);
-    if (textureSize.y > static_cast<int>(Renderer::getScreenHeight()) * 10)
-        textureSize.y =
-            glm::clamp(textureSize.y, 0, static_cast<int>(Renderer::getScreenHeight()) * 10);
-
-    writePos = glm::ivec2 {0, 0};
     rowHeight = 0;
+    writePos = glm::ivec2 {0, 0};
+
+    // Set the texture to a reasonable size, if we run out of space for adding glyphs then
+    // more textures will be created dynamically.
+    textureSize = glm::ivec2 {mFontSize * 6, mFontSize * 6};
 }
 
 Font::FontTexture::~FontTexture()
@@ -540,16 +517,14 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 
     if (writePos.x + size.x >= textureSize.x &&
         writePos.y + rowHeight + size.y + 1 < textureSize.y) {
-        // Row full, but it should fit on the next row so move the cursor there.
+        // Row is full, but the glyph should fit on the next row so move the cursor there.
         // Leave 1px of space between glyphs.
         writePos = glm::ivec2 {0, writePos.y + rowHeight + 1};
         rowHeight = 0;
     }
 
-    if (writePos.x + size.x >= textureSize.x || writePos.y + size.y >= textureSize.y) {
-        // Nope, still won't fit.
-        return false;
-    }
+    if (writePos.x + size.x >= textureSize.x || writePos.y + size.y >= textureSize.y)
+        return false; // No it still won't fit.
 
     cursor_out = writePos;
     // Leave 1px of space between glyphs.
@@ -608,7 +583,7 @@ void Font::rebuildTextures()
 {
     // Recreate OpenGL textures.
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
-        it->initTexture();
+        (*it)->initTexture();
 
     // Re-upload the texture data.
     for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); ++it) {
@@ -635,7 +610,7 @@ void Font::rebuildTextures()
 void Font::unloadTextures()
 {
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
-        it->deinitTexture();
+        (*it)->deinitTexture();
 }
 
 void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
@@ -643,29 +618,19 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
                                  glm::ivec2& cursor_out)
 {
     if (mTextures.size()) {
-        // Check if the most recent texture has space.
-        tex_out = &mTextures.back();
+        // Check if the most recent texture has space available for the glyph.
+        tex_out = mTextures.back().get();
 
         // Will this one work?
         if (tex_out->findEmpty(glyphSize, cursor_out))
             return; // Yes.
     }
 
-    // This should never happen, assuming the texture size is large enough to fit the font,
-    // as set in the FontTexture constructor. In the unlikely situation that it still happens,
-    // setting the texture to nullptr makes sure the application doesn't crash and that the
-    // user is clearly notified of the problem by the fact that the glyph/character will be
-    // completely missing.
-    if (mGlyphMap.size() > 0) {
-        tex_out = nullptr;
-        return;
-    }
-
-    mTextures.push_back(FontTexture(mFontSize));
-    tex_out = &mTextures.back();
+    mTextures.emplace_back(std::make_unique<FontTexture>(mFontSize));
+    tex_out = mTextures.back().get();
     tex_out->initTexture();
 
-    bool ok = tex_out->findEmpty(glyphSize, cursor_out);
+    bool ok {tex_out->findEmpty(glyphSize, cursor_out)};
     if (!ok) {
         LOG(LogError) << "Glyph too big to fit on a new texture (glyph size > "
                       << tex_out->textureSize.x << ", " << tex_out->textureSize.y << ")";
@@ -677,15 +642,11 @@ FT_Face Font::getFaceForChar(unsigned int id)
 {
     static const std::vector<std::string> fallbackFonts {getFallbackFontPaths()};
 
-    // Look through our current font + fallback fonts to see if any have the
-    // glyph we're looking for.
+    // Look for the glyph in our current font and then in the fallback fonts if needed.
     for (unsigned int i = 0; i < fallbackFonts.size() + 1; ++i) {
         auto fit = mFaceCache.find(i);
 
-        // Doesn't exist yet.
         if (fit == mFaceCache.cend()) {
-            // i == 0 -> mPath
-            // Otherwise, take from fallbackFonts.
             const std::string& path {i == 0 ? mPath : fallbackFonts.at(i - 1)};
             ResourceData data {ResourceManager::getInstance().getFileData(path)};
             mFaceCache[i] =
@@ -697,18 +658,18 @@ FT_Face Font::getFaceForChar(unsigned int id)
             return fit->second->face;
     }
 
-    // Nothing has a valid glyph - return the "real" face so we get a "missing" character.
+    // Couldn't find a valid glyph, return the "real" face so we get a "missing" character.
     return mFaceCache.cbegin()->second->face;
 }
 
 Font::Glyph* Font::getGlyph(const unsigned int id)
 {
-    // Is it already loaded?
+    // Check if the glyph has already been loaded.
     auto it = mGlyphMap.find(id);
     if (it != mGlyphMap.cend())
         return &it->second;
 
-    // Nope, need to make a glyph.
+    // We need to create a new entry.
     FT_Face face {getFaceForChar(id)};
     if (!face) {
         LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
@@ -716,22 +677,29 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
         return nullptr;
     }
 
-    FT_GlyphSlot g {face->glyph};
+    const FT_GlyphSlot glyphSlot {face->glyph};
 
-    if (FT_Load_Char(face, id, FT_LOAD_RENDER)) {
+    // TODO: Evaluate/test hinting when HarfBuzz has been added.
+    // If the font does not contain hinting information then force the use of the automatic
+    // hinter that is built into FreeType.
+    // const bool hasHinting {static_cast<bool>(glyphSlot->face->face_flags & FT_FACE_FLAG_HINTER)};
+    const bool hasHinting {true};
+
+    if (FT_Load_Char(face, id,
+                     (hasHinting ?
+                          FT_LOAD_RENDER :
+                          FT_LOAD_RENDER | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT))) {
         LOG(LogError) << "Couldn't find glyph for character " << id << " for font " << mPath
                       << ", size " << mFontSize;
         return nullptr;
     }
 
-    glm::ivec2 glyphSize {g->bitmap.width, g->bitmap.rows};
-
     FontTexture* tex {nullptr};
     glm::ivec2 cursor {0, 0};
+    const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
     getTextureForNewGlyph(glyphSize, tex, cursor);
 
-    // getTextureForNewGlyph can fail if the glyph is bigger than the max texture
-    // size (absurdly large font size).
+    // This should (hopefully) never occur as size constraints are enforced earlier on.
     if (tex == nullptr) {
         LOG(LogError) << "Couldn't create glyph for character " << id << " for font " << mPath
                       << ", size " << mFontSize << " (no suitable texture found)";
@@ -747,20 +715,18 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     glyph.texSize = glm::vec2 {glyphSize.x / static_cast<float>(tex->textureSize.x),
                                glyphSize.y / static_cast<float>(tex->textureSize.y)};
 
-    glyph.advance = glm::vec2 {static_cast<float>(g->metrics.horiAdvance) / 64.0f,
-                               static_cast<float>(g->metrics.vertAdvance) / 64.0f};
-    glyph.bearing = glm::vec2 {static_cast<float>(g->metrics.horiBearingX) / 64.0f,
-                               static_cast<float>(g->metrics.horiBearingY) / 64.0f};
+    glyph.advance = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiAdvance) / 64.0f,
+                               static_cast<float>(glyphSlot->metrics.vertAdvance) / 64.0f};
+    glyph.bearing = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiBearingX) / 64.0f,
+                               static_cast<float>(glyphSlot->metrics.horiBearingY) / 64.0f};
 
     // Upload glyph bitmap to texture.
     mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
-                             glyphSize.x, glyphSize.y, g->bitmap.buffer);
+                             glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
 
-    // Update max glyph height.
     if (glyphSize.y > mMaxGlyphHeight)
         mMaxGlyphHeight = glyphSize.y;
 
-    // Done.
     return &glyph;
 }
 

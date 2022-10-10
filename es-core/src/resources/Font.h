@@ -92,7 +92,8 @@ public:
 
     static std::shared_ptr<Font> getFromTheme(const ThemeData::ThemeElement* elem,
                                               unsigned int properties,
-                                              const std::shared_ptr<Font>& orig);
+                                              const std::shared_ptr<Font>& orig,
+                                              const float maxHeight = 0.0f);
 
     // Returns an approximation of VRAM used by this font's texture (in bytes).
     size_t getMemUsage() const;
@@ -159,11 +160,10 @@ private:
 
     static inline FT_Library sLibrary {nullptr};
     static inline std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
-    static inline std::vector<std::string> mFallbackFonts;
 
     Renderer* mRenderer;
+    std::vector<std::unique_ptr<FontTexture>> mTextures;
     std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
-    std::vector<FontTexture> mTextures;
     std::map<unsigned int, Glyph> mGlyphMap;
 
     const std::string mPath;
