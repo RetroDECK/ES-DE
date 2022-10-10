@@ -1209,7 +1209,9 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the font's bounding box, the actual glyphs (characters) don't normally fill this entire area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value can get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
+    - Default is `0.045`
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1277,7 +1279,9 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the font's bounding box, the actual glyphs (characters) don't normally fill this entire area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value can get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
+    - Default is `0.045`
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1348,7 +1352,9 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the font's bounding box, the actual glyphs (characters) don't normally fill this entire area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value can get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
+    - Default is `0.045`
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
 * `horizontalAlignment` - type: STRING
@@ -1562,7 +1568,7 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticItem` / `itemType` image defined or found, and if `defaultItem` has not been defined.
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the font's bounding box, the actual glyphs (characters) don't normally fill this entire area.
     - Default is `0.085`
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
@@ -1625,6 +1631,8 @@ Properties:
     - Secondary color; what this means depends on the text list. For example, for game lists, it is the color of a folder.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the font's bounding box, the actual glyphs (characters) don't normally fill this entire area.
+    - Default is `0.045`
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1706,7 +1714,8 @@ Properties:
     - Default is the same value as iconColor.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
-    - This property also implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element.
+    - This property implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element.  This calculation is based on the font's bounding box, the actual glyphs (characters) don't normally fill this entire area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value can get clamped to a larger relative size.
     - Default is `0.035`
 * `entrySpacing` - type: FLOAT
     - Spacing between the help element pairs.

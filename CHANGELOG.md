@@ -55,6 +55,8 @@
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
+* Implemented dynamic texture allocation to the font code to reduce memory usage and avoid missing glyphs
+* Large optimizations to the text wrapping code (generallly 300-400% faster)
 * Added support for texture mipmapping with trilinear filtering
 * Added on-demand texture loading to the carousel
 * Improved the renderer scaling accuracy
@@ -179,6 +181,7 @@
 
 * Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
+* Text wrapping did not work correctly for text that typically does not contain spaces, like Japanese
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
 * Games located in subdirectories were not added back to custom collections when disabling the "Exclude from game counter" metadata option
@@ -203,6 +206,7 @@
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
 * Text elements that had an opacity set to lower than FF via the color tag were faded in during gamelist scrolling
+* The help system was rendered on top of menus if placed at such a location on the screen
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase letters in theme names)
 * The SliderComponent knob was not consistently positioned
 * The device text flickered in GuiDetectDevice when configuring a controller
