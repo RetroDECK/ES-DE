@@ -211,7 +211,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     float maxHeight {0.0f};
 
-    if (!theme->isLegacyTheme() && properties & elem->has("size")) {
+    if (!theme->isLegacyTheme() && elem->has("size")) {
         const glm::vec2 size {elem->get<glm::vec2>("size")};
         if (size.x != 0.0f && size.y != 0.0f)
             maxHeight = mSize.y * 2.0f;
