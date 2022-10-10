@@ -69,7 +69,7 @@ TextComponent::TextComponent(const std::string& text,
 
 void TextComponent::onSizeChanged()
 {
-    mAutoCalcExtent = glm::ivec2 {(getSize().x == 0), (getSize().y == 0)};
+    mAutoCalcExtent = glm::ivec2 {getSize().x == 0, getSize().y == 0};
     onTextChanged();
 }
 
@@ -254,8 +254,12 @@ void TextComponent::onTextChanged()
             text = mText; // Original case.
     }
 
-    if (mFont && mAutoCalcExtent.x)
+    if (mFont && mAutoCalcExtent.x) {
         mSize = mFont->sizeText(text, mLineSpacing);
+        // This can happen under special circumstances like when a blank/dummy font is used.
+        if (mSize.x == 0.0f)
+            return;
+    }
 
     if (!mFont || text.empty() || mSize.x < 0.0f)
         return;
@@ -453,6 +457,14 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    float maxHeight {0.0f};
+
+    if (!theme->isLegacyTheme() && properties & elem->has("size")) {
+        const glm::vec2 size {elem->get<glm::vec2>("size")};
+        if (size.x != 0.0f && size.y != 0.0f)
+            maxHeight = mSize.y * 2.0f;
+    }
+
     // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
@@ -460,5 +472,5 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
-    setFont(Font::getFromTheme(elem, properties, mFont));
+    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight));
 }
