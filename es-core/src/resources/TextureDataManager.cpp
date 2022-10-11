@@ -24,13 +24,7 @@ TextureDataManager::TextureDataManager()
         data[i * 4 + 3] = 0;
     }
     mBlank->initFromRGBA(data, 5, 5);
-    mLoader = new TextureLoader;
-}
-
-TextureDataManager::~TextureDataManager()
-{
-    // Delete TextureLoader object when destroyed.
-    delete mLoader;
+    mLoader = std::make_unique<TextureLoader>();
 }
 
 std::shared_ptr<TextureData> TextureDataManager::add(const TextureResource* key, bool tiled)

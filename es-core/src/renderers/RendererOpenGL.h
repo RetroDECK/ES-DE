@@ -20,15 +20,14 @@
 #include <SDL2/SDL_opengl.h>
 #endif
 
+#include <memory>
+
 class RendererOpenGL : public Renderer
 {
 public:
-    RendererOpenGL() noexcept;
-    ~RendererOpenGL();
-
     static RendererOpenGL* getInstance();
 
-    ShaderOpenGL* getShaderProgram(unsigned int shaderID);
+    std::shared_ptr<ShaderOpenGL> getShaderProgram(unsigned int shaderID);
     bool loadShaders() override;
 
     GLenum convertBlendFactor(const BlendFactor BlendFactor);
@@ -73,7 +72,9 @@ public:
         unsigned char* textureRGBA = nullptr) override;
 
 private:
-    std::vector<ShaderOpenGL*> mShaderProgramVector;
+    RendererOpenGL() noexcept;
+
+    std::vector<std::shared_ptr<ShaderOpenGL>> mShaderProgramVector;
     GLuint mShaderFBO1;
     GLuint mShaderFBO2;
     GLuint mVertexBuffer1;
@@ -83,14 +84,16 @@ private:
     GLuint mWhiteTexture;
     GLuint mPostProcTexture1;
     GLuint mPostProcTexture2;
-    ShaderOpenGL* mCoreShader;
-    ShaderOpenGL* mBlurHorizontalShader;
-    ShaderOpenGL* mBlurVerticalShader;
-    ShaderOpenGL* mScanlinelShader;
-    ShaderOpenGL* mLastShader;
+    std::shared_ptr<ShaderOpenGL> mCoreShader;
+    std::shared_ptr<ShaderOpenGL> mBlurHorizontalShader;
+    std::shared_ptr<ShaderOpenGL> mBlurVerticalShader;
+    std::shared_ptr<ShaderOpenGL> mScanlinelShader;
+    std::shared_ptr<ShaderOpenGL> mLastShader;
 
     int mMajorGLVersion;
     int mMinorGLVersion;
+
+    friend Renderer;
 };
 
 #endif // ES_CORE_RENDERER_RENDERER_OPENGL_H

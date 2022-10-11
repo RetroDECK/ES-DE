@@ -33,19 +33,13 @@ RendererOpenGL::RendererOpenGL() noexcept
 {
 }
 
-RendererOpenGL::~RendererOpenGL()
-{
-    for (auto it = mShaderProgramVector.cbegin(); it != mShaderProgramVector.cend(); ++it)
-        delete *it;
-}
-
 RendererOpenGL* RendererOpenGL::getInstance()
 {
     static RendererOpenGL instance;
     return &instance;
 }
 
-ShaderOpenGL* RendererOpenGL::getShaderProgram(unsigned int shaderID)
+std::shared_ptr<ShaderOpenGL> RendererOpenGL::getShaderProgram(unsigned int shaderID)
 {
     unsigned int index {0};
 
@@ -67,13 +61,13 @@ bool RendererOpenGL::loadShaders()
     LOG(LogInfo) << "Loading shaders...";
 
     std::vector<std::string> shaderFiles;
-    shaderFiles.push_back(":/shaders/glsl/core.glsl");
-    shaderFiles.push_back(":/shaders/glsl/blur_horizontal.glsl");
-    shaderFiles.push_back(":/shaders/glsl/blur_vertical.glsl");
-    shaderFiles.push_back(":/shaders/glsl/scanlines.glsl");
+    shaderFiles.emplace_back(":/shaders/glsl/core.glsl");
+    shaderFiles.emplace_back(":/shaders/glsl/blur_horizontal.glsl");
+    shaderFiles.emplace_back(":/shaders/glsl/blur_vertical.glsl");
+    shaderFiles.emplace_back(":/shaders/glsl/scanlines.glsl");
 
     for (auto it = shaderFiles.cbegin(); it != shaderFiles.cend(); ++it) {
-        ShaderOpenGL* loadShader = new ShaderOpenGL();
+        auto loadShader = std::make_shared<ShaderOpenGL>();
 
         loadShader->loadShaderFile(*it, GL_VERTEX_SHADER);
         loadShader->loadShaderFile(*it, GL_FRAGMENT_SHADER);
@@ -83,7 +77,7 @@ bool RendererOpenGL::loadShaders()
             return false;
         }
 
-        mShaderProgramVector.push_back(loadShader);
+        mShaderProgramVector.emplace_back(std::move(loadShader));
     }
 
     return true;
@@ -576,7 +570,7 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
 
     for (size_t i = 0; i < shaderList.size(); ++i) {
         vertices->shaders = shaderList[i];
-        int shaderPasses = 1;
+        int shaderPasses {1};
         // For the blur shaders there is an optional variable to set the number of passes
         // to execute, which proportionally affects the blur amount.
         if (shaderList[i] == Renderer::Shader::BLUR_HORIZONTAL ||
