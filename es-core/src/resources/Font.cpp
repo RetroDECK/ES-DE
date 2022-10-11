@@ -519,7 +519,8 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
     if (writePos.x + size.x >= textureSize.x &&
         writePos.y + rowHeight + size.y + 1 < textureSize.y) {
         // Row is full, but the glyph should fit on the next row so move the cursor there.
-        // Leave 1px of space between glyphs.
+        // Leave 1 pixel of space between glyphs so that pixels from adjacent glyphs will
+        // not get sampled during scaling which would lead to edge artifacts.
         writePos = glm::ivec2 {0, writePos.y + rowHeight + 1};
         rowHeight = 0;
     }
@@ -528,7 +529,7 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
         return false; // No it still won't fit.
 
     cursor_out = writePos;
-    // Leave 1px of space between glyphs.
+    // Leave 1 pixel of space between glyphs.
     writePos.x += size.x + 1;
 
     if (size.y > rowHeight)
@@ -540,9 +541,13 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
+    // Create a black texture with zero alpha value so that the single-pixel spaces between the
+    // glyphs will not be visible. That would otherwise lead to edge artifacts as these pixels
+    // would get sampled during scaling.
+    std::vector<uint8_t> texture(textureSize.x * textureSize.y * 4, 0);
     textureId =
         Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true, false, false,
-                                               false, textureSize.x, textureSize.y, nullptr);
+                                               false, textureSize.x, textureSize.y, &texture[0]);
 }
 
 void Font::FontTexture::deinitTexture()
