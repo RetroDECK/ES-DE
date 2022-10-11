@@ -695,6 +695,10 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         yOff += mSize.y * mVerticalOffset;
     }
 
+    // This is necessary to avoid single-pixel horizontal jumps at the end positions.
+    if (mType != CarouselType::HORIZONTAL)
+        xOff = std::round(xOff);
+
     int center {0};
     int centerOffset {0};
     // Needed to make sure that overlapping items are renderered correctly.
