@@ -576,6 +576,17 @@
             <entry>steam</entry>
         </rule>
     </emulator>
+    <emulator name="SUPERMODEL">
+        <!-- Sega Model 3 emulator Supermodel -->
+        <rule type="systempath">
+            <entry>supermodel</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/Supermodel/supermodel</entry>
+            <entry>~/.local/bin/Supermodel/supermodel</entry>
+            <entry>~/bin/Supermodel/supermodel</entry>
+        </rule>
+    </emulator>
     <emulator name="TRIFORCE">
         <!-- Triforce, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">
