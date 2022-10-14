@@ -184,7 +184,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
                     break;
                 }
                 case ALIGN_CENTER: {
-                    yOff = std::round(getSize().y - textSize.y) / 2.0f;
+                    yOff = std::round((getSize().y - textSize.y) / 2.0f);
                     break;
                 }
                 default: {
@@ -194,7 +194,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
         }
         else {
             // If height is smaller than the font height, then always center vertically.
-            yOff = std::round(getSize().y - textSize.y) / 2.0f;
+            yOff = std::round((getSize().y - textSize.y) / 2.0f);
         }
 
         // Draw the overall textbox area. If we're inside a scrollable container then this
