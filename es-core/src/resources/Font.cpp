@@ -207,7 +207,7 @@ TextCache* Font::buildTextCache(const std::string& text,
 
     size_t i {0};
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
-        TextCache::VertexList& vertList = cache->vertexLists.at(i);
+        TextCache::VertexList& vertList {cache->vertexLists.at(i)};
         vertList.textureIdPtr = &it->first->textureId;
         vertList.verts = it->second;
         ++i;
