@@ -76,6 +76,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.1
 
+* Add element transition animations to the theme engine
 * New texture/cache manager with improved memory management and support for GIF and Lottie animations
 * Reduced amount of gamelist reloading to retain cached textures and improve overall performance
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
