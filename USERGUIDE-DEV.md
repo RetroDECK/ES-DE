@@ -664,7 +664,7 @@ RetroArch does not embed any version information into the filename so no wildcar
 
 ## Using manually downloaded emulators on Linux
 
-Normally on Linux you would install emulators using either one of the established package formats, i.e. Flatpak, AppImage or Snap, or you would install them using the operating system repository. Less likely would be to build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS), you don't even have the choice to install them to a standard system directory.
+Normally on Linux you would install emulators using either one of the established cross-distribution package formats, i.e. AppImage, Snap or Flatpak, or you would install them using the operating system repository (including the AUR if available on your OS). Less likely would be to manually build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS or Fedora Silverblue), you don't even have the choice to install them to a standard system directory.
 
 For these situations ES-DE looks for emulators in the same directories where it looks for AppImages (as explained in the section above), meaning:
 ```
@@ -909,13 +909,19 @@ Not all systems are as simple as described above, or there may be multiple ways 
 
 #### Arcade and Neo Geo
 
+**General**
+
 For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. But these should retain the MAME names as filenames since ES-DE ships with MAME lookup tables, meaning the MAME names are expanded to the full game names.
 
 For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is required by the TheGamesDB scraper where the expanded filenames are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
-By default ES-DE will filter out BIOSes and devices that can't be launched directly, meaning these will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file and BIOSes and devices for systems like MESS and Model 2 will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
+By default ES-DE will filter out BIOSes and devices that can't be launched directly, meaning these will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file and BIOSes and devices for systems like MESS will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
+
+If using the standalone release of FinalBurn Neo you also need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch (see the comments about Model 2 Emulator below for more details).
+
+**Sega Model 2**
 
 If emulating Sega Model 2 games using _Model 2 Emulator_ on Windows, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. If you're using a portable ES-DE installation, then you can set the ROM directory path to be relative, for example:
 ```
@@ -927,13 +933,20 @@ The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
 
-Likewise, if using the standalone release of FinalBurn Neo you also need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch.
+On Unix/Linux and macOS, the only available emulator for Sega Model 2 is MAME, either the RetroArch - Current core or MAME standalone. Compatibility is still quite poor with only a handful of games working correctly, but this is likely to improve going forward as almost all games for this platform can already start and run to a certain degree. Some games flagged as not working by MAME are still playable with only minor glitches to audio and graphics, just make sure to use a recent ROM set for maximum compatibility.
 
-On Unix/Linux and macOS, the only available emulator for Sega Model 2 is MAME, either the RetroArch - Current core or MAME standalone. Compatibility is still quite poor with only a handful of games working correctly, but this is likely to improve going forward as almost all games for this platform can already start and run to a certain degree. Some games flagged as not working by MAME are still playable with only minor glitches to audio and graphics, but make sure to use a recent ROM set for maximum compatibility.
+**Sega Model 3**
 
-For Sega Model 3 emulation on Linux download the custom [Supermodel_2022-10-07.tar.gz](https://gitlab.com/es-de/emulationstation-de/-/package_files/55835402/download) package for ES-DE and follow the instructions in the Readme.txt file. In summary you need to place the `supermodel` binary into `~/Applications/Supermodel/` and you need to place the `Config` and `NVRAM` directories into `~/ROMs/model3/`. Note that this build does not include network support as that would make it incompatible with SteamOS. Apart from that it runs really well. If you're using a Linux OS with access to the AUR, then you can use that release of Supermodel instead. But if you do, you still need to place your Config and NVRAM directories into ~/ROMs/model3/ so it's a good idea to download the custom build and read the Readme.txt file to fully understand the required setup.
+For Sega Model 3 emulation on Linux download the custom [Supermodel_2022-10-07.tar.gz](https://gitlab.com/es-de/emulationstation-de/-/package_files/55835402/download) package for ES-DE and follow the instructions in the Readme.txt file. In summary you need to place the `supermodel` binary into `~/Applications/Supermodel/` and you need to place the `Config` and `NVRAM` directories into `~/ROMs/model3/`. Note that this build does not include network support as that would make it incompatible with SteamOS. Apart from that it runs really well. If you're using a Linux OS with access to the AUR, then you can use that release of Supermodel instead. But if you do, you still need to place your Config and NVRAM directories into ~/ROMs/model3/ so it's a good idea to download the custom package linked above and read the Readme.txt file to fully understand the required setup.
 
 Although there is a Homebrew release of Supermodel for macOS this seems to be quite old and is apparently not working correctly so for the time being the model3 system is unsupported on this operating system.
+
+It's possible to add per-game command line parameters that will be passed to Supermodel on launch. To accomplish this, create a file named _\<game\>.commands_ in the same directory as the game file, for example `daytona2.commands` and add the options to this file. Here is an example of what the file contents could look like:
+```
+-legacy3d -show-fps
+```
+
+**MAME standalone on macOS**
 
 If using the Homebrew release of MAME standalone on macOS and emulating MESS systems like astrocde and ti99, then you need to configure the path to the MAME hash files in the mame.ini file. Alternatively you can symlink the installed hash directory to `~/.mame/` like the following (you will of course need to modify the command depending on which MAME version you have installed):
 ```
