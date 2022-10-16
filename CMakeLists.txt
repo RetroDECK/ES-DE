@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.3)
 
-project(lunasvg VERSION 2.3.2 LANGUAGES CXX C)
+project(lunasvg VERSION 2.3.4 LANGUAGES CXX C)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
 option(BUILD_SHARED_LIBS "Builds as shared library" OFF)
@@ -12,7 +12,6 @@ add_library(lunasvg)
 
 add_subdirectory(include)
 add_subdirectory(source)
-add_subdirectory(3rdparty/software)
 add_subdirectory(3rdparty/plutovg)
 
 if(BUILD_SHARED_LIBS)
