@@ -188,8 +188,8 @@ void ScrollableContainer::update(int deltaTime)
     if (mScrollPos.y < 0.0f)
         mScrollPos.y = 0.0f;
 
-    if (mScrollPos.x + mSize.x > contentSize.x) {
-        mScrollPos.x = contentSize.x - mSize.x;
+    if (mScrollPos.x + std::round(mSize.x) > contentSize.x) {
+        mScrollPos.x = contentSize.x - std::round(mSize.x);
         mAtEnd = true;
     }
 
