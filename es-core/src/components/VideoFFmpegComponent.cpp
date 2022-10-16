@@ -103,7 +103,6 @@ void VideoFFmpegComponent::resize()
             mSize.y *= resizeScale.y;
         }
 
-        mSize.y = std::round(mSize.y);
         mSize.x = (mSize.y / textureSize.y) * textureSize.x;
     }
     else {
@@ -113,11 +112,11 @@ void VideoFFmpegComponent::resize()
 
         // If only one component is set, we resize in a way that maintains aspect ratio.
         if (!mTargetSize.x && mTargetSize.y) {
-            mSize.y = std::round(mTargetSize.y);
+            mSize.y = mTargetSize.y;
             mSize.x = (mSize.y / textureSize.y) * textureSize.x;
         }
         else if (mTargetSize.x && !mTargetSize.y) {
-            mSize.y = std::round((mTargetSize.x / textureSize.x) * textureSize.y);
+            mSize.y = (mTargetSize.x / textureSize.x) * textureSize.y;
             mSize.x = (mSize.y / textureSize.y) * textureSize.x;
         }
     }
@@ -933,6 +932,11 @@ void VideoFFmpegComponent::calculateBlackRectangle()
     // otherwise it will exactly match the video size. The reason to add a black rectangle
     // behind videos in this second instance is that the scanline rendering will make the
     // video partially transparent so this may avoid some unforseen issues with some themes.
+    // In general, adding very narrow pillarboxes or letterboxes doesn't look good, so by
+    // default this is not done unless the size of the video vs the overall video area is
+    // above the threshold defined by mPillarboxThreshold. By default this is set to 0.85
+    // for the X axis and 0.90 for the Y axis, but this is theme-controllable via the
+    // pillarboxThreshold property.
     if (mVideoAreaPos != glm::vec2 {0.0f, 0.0f} && mVideoAreaSize != glm::vec2 {0.0f, 0.0f}) {
         mVideoRectangleCoords.clear();
         mRectangleOffset = {0.0f, 0.0f};
@@ -949,20 +953,24 @@ void VideoFFmpegComponent::calculateBlackRectangle()
                 // and then scaled, there could be rounding errors that make the video height
                 // slightly higher than allowed. It's only a single pixel or a few pixels, but
                 // it's still visible for some videos.
-                if (mSize.y < mVideoAreaSize.y && mSize.y / mVideoAreaSize.y < 0.90f)
+                if (mSize.y < mVideoAreaSize.y &&
+                    mSize.y / mVideoAreaSize.y < mPillarboxThreshold.y)
                     rectHeight = mVideoAreaSize.y;
                 else
                     rectHeight = mSize.y;
-                // Don't add a black border that is too narrow, that's what the 0.85 constant
-                // takes care of.
-                if (mSize.x < mVideoAreaSize.x && mSize.x / mVideoAreaSize.x < 0.85f)
+                if (mSize.x < mVideoAreaSize.x &&
+                    mSize.x / mVideoAreaSize.x < mPillarboxThreshold.x)
                     rectWidth = mVideoAreaSize.x;
                 else
                     rectWidth = mSize.x;
             }
             // Video is in portrait orientation (or completely square).
             else {
-                rectWidth = mVideoAreaSize.x;
+                if (mSize.x <= mVideoAreaSize.x &&
+                    mSize.x / mVideoAreaSize.x < mPillarboxThreshold.x)
+                    rectWidth = mVideoAreaSize.x;
+                else
+                    rectWidth = mSize.x;
                 rectHeight = mSize.y;
             }
             // If an origin value other than 0.5 is used, then create an offset for centering

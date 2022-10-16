@@ -123,6 +123,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"audio", BOOLEAN},
        {"interpolation", STRING},
        {"pillarboxes", BOOLEAN},
+       {"pillarboxThreshold", NORMALIZED_PAIR},
        {"scanlines", BOOLEAN},
        {"delay", FLOAT},
        {"fadeInTime", FLOAT},

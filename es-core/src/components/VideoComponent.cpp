@@ -25,6 +25,7 @@ VideoComponent::VideoComponent()
     , mTargetSize {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}
     , mVideoAreaSize {0.0f, 0.0f}
+    , mPillarboxThreshold {0.85f, 0.90f}
     , mStartTime {0}
     , mIsPlaying {false}
     , mIsActuallyPlaying {false}
@@ -255,6 +256,12 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("pillarboxes"))
         mDrawPillarboxes = elem->get<bool>("pillarboxes");
+
+    if (elem->has("pillarboxThreshold")) {
+        const glm::vec2 pillarboxThreshold {elem->get<glm::vec2>("pillarboxThreshold")};
+        mPillarboxThreshold.x = glm::clamp(pillarboxThreshold.x, 0.2f, 1.0f);
+        mPillarboxThreshold.y = glm::clamp(pillarboxThreshold.y, 0.2f, 1.0f);
+    }
 
     if (elem->has("scanlines"))
         mRenderScanlines = elem->get<bool>("scanlines");

@@ -110,6 +110,7 @@ protected:
     glm::vec2 mTargetSize;
     glm::vec2 mVideoAreaPos;
     glm::vec2 mVideoAreaSize;
+    glm::vec2 mPillarboxThreshold;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
     std::string mDefaultImagePath;
