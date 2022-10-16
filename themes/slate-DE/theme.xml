@@ -328,6 +328,8 @@
                 <origin>0.5 0.5</origin>
                 <imageType>image</imageType>
                 <interpolation>nearest</interpolation>
+                <pillarboxes>true</pillarboxes>
+                <pillarboxThreshold>0.85 0.90</pillarboxThreshold>
                 <delay>1.7</delay>
                 <scrollFadeIn>true</scrollFadeIn>
             </video>
