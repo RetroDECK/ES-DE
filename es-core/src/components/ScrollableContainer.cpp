@@ -118,7 +118,7 @@ void ScrollableContainer::update(int deltaTime)
     if (!isVisible() || mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
-    const glm::vec2 contentSize {mChildren.front()->getSize()};
+    const glm::vec2 contentSize {glm::round(mChildren.front()->getSize())};
     float rowModifier {1.0f};
 
     float lineSpacing {mChildren.front()->getLineSpacing()};
