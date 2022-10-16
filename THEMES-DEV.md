@@ -915,6 +915,10 @@ Properties:
 * `pillarboxes` - type: BOOLEAN
     - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
     - Default is `true`
+* `pillarboxThreshold` - type: NORMALIZED_PAIR
+    - Normally it doesn't look very good to add really narrow pillarboxes or letterboxes, so by default they are skipped if the actual video size is not reaching a threshold value as compared to the overall defined video area size. By modifying this property it's possible to control that threshold, as for some theme designs it will look better with the consistency of always rendering the pillarboxes/letterboxes even if they are narrow. To clarify, the default X axis value of 0.85 means that if the video width is 85% or less as compared to the X axis defined by the `size` property, then pillarboxes will be rendered. So setting the `pillarboxThreshold` value to `1 1` will always apply pillarboxes/letterboxes regardless of the video file dimension.
+    - Minimum value per axis is `0.2` and maximum value per axis is `1`
+    - Default is `0.85 0.90`
 * `scanlines` - type: BOOLEAN
     - Whether to use a shader to render scanlines.
     - Default is `false`

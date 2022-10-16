@@ -95,6 +95,7 @@
 * Added theme support for defining color saturation for images, videos and animations
 * Added theme support for defining the video fade-in time
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
+* Added theme support for defining the threshold for when pillarboxes should be applied to a video
 * Added theme support for enabling or disabling audio playback for videos
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Added support for nesting of theme variables
