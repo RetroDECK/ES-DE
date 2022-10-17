@@ -1205,6 +1205,14 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         std::string str {resolvePlaceholders(node.text().as_string())};
 
+        // Handle the special case with mutually exclusive system variables, for example
+        // system.fullName.collections and system.fullName.noCollections which can never
+        // exist at the same time. A backspace is assigned in SystemData to flag the
+        // variables that do not apply and if it's encountered here we simply skip the
+        // property.
+        if (!mLegacyTheme && str == "\b")
+            continue;
+
         // Skip this check for legacy themes to not break backward compatibility with some
         // themes sets that include empty property values.
         if (!mLegacyTheme && str == "")

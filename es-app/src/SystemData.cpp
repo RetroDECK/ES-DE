@@ -1303,7 +1303,9 @@ void SystemData::loadTheme()
     }
 
     try {
-        // Build map with system variables for theme to use.
+        // Build a map with system variables for the theme to use. Assign a backspace character
+        // to the variables that are not applicable. This will be used in ThemeData to make sure
+        // unpopulated system variables do not lead to theme loading errors.
         std::map<std::string, std::string> sysData;
         sysData.insert(std::pair<std::string, std::string>("system.name", getName()));
         sysData.insert(std::pair<std::string, std::string>("system.theme", getThemeFolder()));
@@ -1315,6 +1317,10 @@ void SystemData::loadTheme()
                 std::pair<std::string, std::string>("system.fullName.collections", getFullName()));
             sysData.insert(
                 std::pair<std::string, std::string>("system.theme.collections", getThemeFolder()));
+            sysData.insert(std::pair<std::string, std::string>("system.name.noCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.noCollections", "\b"));
+            sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections", "\b"));
         }
         else {
             sysData.insert(
@@ -1323,6 +1329,10 @@ void SystemData::loadTheme()
                                                                getFullName()));
             sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections",
                                                                getThemeFolder()));
+            sysData.insert(std::pair<std::string, std::string>("system.name.collections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.collections", "\b"));
+            sysData.insert(std::pair<std::string, std::string>("system.theme.collections", "\b"));
         }
 
         mTheme->loadFile(sysData, path);
