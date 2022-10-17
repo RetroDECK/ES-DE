@@ -699,13 +699,14 @@ The `helpsystem` element does not really have a zIndex value and is always rende
 
 ## Theme variables
 
-Theme variables can be used to simplify theme construction. There are 2 types of variables available.
+Theme variables can be used to simplify theme construction and there are two types available:
+
 * System variables
 * Theme defined variables
 
 ### System variables
 
-System variables are system specific and are derived from the values in es_systems.xml (except for collections).
+System variables are system specific and are derived from the values defined in es_systems.xml (except for collections which are derived from hardcoded application-internal values).
 * `system.name`
 * `system.name.collections`
 * `system.name.noCollections`
@@ -716,9 +717,35 @@ System variables are system specific and are derived from the values in es_syste
 * `system.theme.collections`
 * `system.theme.noCollections`
 
+`system.name` expands to the short name of the system as defined by the `name` tag in es_systems.xml\
+`system.fullName` expands to the full system name as defined by the `fullname` tag in es_systems.xml\
+`system.theme` expands to the theme directory as defined by the `theme` tag in es_systems.xml
+
+The `.collections` and `.noCollections` versions of these variables make it possible to differentiate between regular systems and collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems. The below example capitalizes the names of the collections while leaving the regular systems at their default formatting (as they are defined in es_systems.xml). The reason this works is that the .collections and .noCollections variables are mutually exclusive, i.e. they can never both hold a value at the same time as a system is either a real system or a collection and never both.
+
+```xml
+<view name="system">
+    <text name="system_name, collection_name">
+        <pos>0.05 0.83</pos>
+        <size>0.9 0.06</size>
+        <fontSize>0.06</fontSize>
+        <fontPath>./core/font.ttf</fontPath>
+    </text>
+    <text name="collection_name">
+        <letterCase>capitalize</letterCase>
+    </text>
+    <text name="system_name">
+        <text>${system.fullName.noCollections}</text>
+    </text>
+    <text name="collection_name">
+        <text>${system.fullName.collections}</text>
+    </text>
+</view>
+```
+
 ### Theme defined variables
 Variables can also be defined in the theme.
-```
+```xml
 <variables>
     <themeColor>8B0000</themeColor>
 </variables>
@@ -726,19 +753,19 @@ Variables can also be defined in the theme.
 
 ### Usage in themes
 Variables can be used to specify the value of a theme property:
-```
+```xml
 <color>${themeColor}</color>
 ```
 
 It can also be used to specify only a portion of the value of a theme property:
 
-```
+```xml
 <color>${themeColor}C0</color>
 <path>./core/images/${system.theme}.svg</path>
 ````
 
 Nesting of variables is supported, so the following could be done:
-```
+```xml
 <variables>
     <colorRed>8b0000</colorRed>
     <themeColor>${colorRed}</themeColor>

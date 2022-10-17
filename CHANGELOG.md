@@ -39,6 +39,8 @@
 * (Windows) Changed the binary for emulator Citra from citra.exe to citra-qt.exe as the command line binary is broken on this OS
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
+* Added the .car and .rom file extensions to the a5200 system
+* Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
 * Added the .m3u file extension to the pcfx system
 * Removed the .7z and .zip file extensions from the 3do, neogeocd and neogeocdjp systems
