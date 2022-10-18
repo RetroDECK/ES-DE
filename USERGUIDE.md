@@ -2817,29 +2817,33 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ## Themes
 
-ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
+ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well. Note that most Batocera and Recalbox themes are not compatible as these forks use a different theme engine than ES-DE.
 
-As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in this guide.
+As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in the ES-DE documentation.
 
 
-Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu.
+Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes/`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the .emulationstation folder can be found in the root of the EmulationStation-DE directory.
 
-For this example, we've downloaded the [Carbon](https://github.com/RetroPie/es-theme-carbon) and [Fundamental](https://github.com/G-rila/es-theme-fundamental) themes and uncompressed them to the ES-DE home directory:
+To download a theme from its GitHub page, press the green _Code_ button in the upper right corner and choose _Download ZIP_. The process is identical on GitLab, but this site uses a button with a download symbol instead of a green button. You then simply unpack the file into `~/.emulationstation/themes/` and restart ES-DE.
+
+For this example, we've downloaded the [alekfull-nx-retropie](https://github.com/anthonycaccese/alekfull-nx-retropie) and [es-theme-carbon](https://github.com/RetroPie/es-theme-carbon) themes and uncompressed them to the themes directory:
 
 ```
+~/.emulationstation/themes/alekfull-nx-retropie
 ~/.emulationstation/themes/es-theme-carbon
-~/.emulationstation/themes/es-theme-fundamental
 ```
 
-We now have four entries in the Theme set selector in the UI settings menu, i.e. _rbsimple-DE, modern-DE, es-theme-carbon_ and _es-theme-fundamental_.
+We now have four entries in the _Theme set_ selector in the UI settings menu, i.e. _alekfull-nx-retropie, es-theme-carbon, modern-DE and rbsimple-DE_.
 
-Although you place additional themes in your ES-DE home directory, the default rbsimple-DE and modern-DE themes are located in the installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
+Although you should place additional themes in your ES-DE home directory, the default rbsimple-DE and modern-DE themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/emulationstation/themes/` or `/usr/local/share/emulationstation/themes/` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/` on macOS or `C:\Program Files\EmulationStation-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the EmulationStation-DE directory.
 
-So if you would like to customize the rbsimple-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
+Note that if using the AppImage release on Linux, then there is no installation folder as all files are contained inside the AppImage file.
 
-Here is a good resource with a list of themes (although you will have to search online for the download location for each theme set):
+If you would like to customize the rbsimple-DE or modern-DE theme sets, simply make a copy of their directories to `~/.emulationstation/themes/` and then those copies will take precedence over the ones in the application installation directory.
 
-https://retropie.org.uk/docs/Themes
+Refer to the official list of recommended theme sets for a selection of high-quality themes:
+
+https://gitlab.com/es-de/themes/themes-list
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default rbsimple-DE theme)._

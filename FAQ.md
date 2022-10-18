@@ -86,11 +86,11 @@ This release of RetroArch has multiple technical issues so it's not officially s
 
 ## How do I add more themes?
 
-Most RetroPie EmulationStation theme sets will work with ES-DE, and there are numerous resources online on where to find these. How to install them is described in the _Themes_ section of the [User guide](USERGUIDE.md#themes). Just be aware that some of these themes do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme is written.
+Refer to the official list of [recommended theme sets](https://gitlab.com/es-de/themes/themes-list) for a selection of high-quality themes. There are also some brief instructions there on how to download and install them. More comprehensive documentation is available in the _Themes_ section of the [User guide](USERGUIDE.md#themes). In addition to the recommended theme sets you'll be able to find a lot of additional themes if doing a web search as almost all RetroPie-compatible themes can be used with ES-DE. Just be aware that many of these do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme has been written.
 
 ## The themes I've added don't seem to work?
 
-Only RetroPie EmulationStation themes are supported, you can't use themes that were specifically developed for Batocera or Recalbox EmulationStation. A very few RetroPie themes like es-theme-carbon-2021 will not work either due to technical reasons.
+Only RetroPie EmulationStation themes are supported, you can't use themes that were specifically developed for Batocera or Recalbox EmulationStation. A very few RetroPie themes like es-theme-carbon-2021 will not work either due to technical reasons. Refer to the official list of [recommended theme sets](https://gitlab.com/es-de/themes/themes-list) for a selection of high-quality themes that have been thoroughly tested with ES-DE.
 
 ## I used to be a Batocera/Recalbox user and ES-DE can't seem to find some of my games?
 
