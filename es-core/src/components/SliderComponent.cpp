@@ -97,11 +97,8 @@ void SliderComponent::render(const glm::mat4& parentTrans)
     if (mTextCache)
         mFont->renderTextCache(mTextCache.get());
 
-    const float barPosY {mBarHeight == 1.0f ? std::floor(mSize.y / 2.0f - mBarHeight / 2.0f) :
-                                              std::round(mSize.y / 2.0f - mBarHeight / 2.0f)};
-
     // Render bar.
-    mRenderer->drawRect(mKnob.getSize().x / 2.0f, barPosY, width, mBarHeight, 0x777777FF,
+    mRenderer->drawRect(mKnob.getSize().x / 2.0f, mSize.y / 2.0f, width, mBarHeight, 0x777777FF,
                         0x777777FF);
 
     // Render knob.
@@ -154,7 +151,7 @@ void SliderComponent::onValueChanged()
         mTextCache->metrics.size.x = textSize.x; // Fudge the width.
     }
 
-    mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
+    mKnob.setResize(0.0f, mSize.y * 0.7f);
 
     float barLength {
         mSize.x - mKnob.getSize().x -
@@ -175,11 +172,11 @@ void SliderComponent::onValueChanged()
         barHeight = 1;
 
     // Resize the knob one pixel if necessary to keep the bar centered.
-    if (barHeight % 2 == 0 && static_cast<int>(mKnob.getSize().y) % 2 != 0) {
+    if (barHeight % 2 == 0 && static_cast<int>(std::round(mKnob.getSize().y)) % 2 != 0) {
         mKnob.setResize(mKnob.getSize().x - 1.0f, mKnob.getSize().y - 1.0f);
         setSize(getSize().x, getSize().y - 1.0f);
     }
-    else if (barHeight == 1 && static_cast<int>(mKnob.getSize().y) % 2 == 0) {
+    else if (barHeight == 1 && static_cast<int>(std::round(mKnob.getSize().y)) % 2 == 0) {
         mKnob.setResize(mKnob.getSize().x - 1.0f, mKnob.getSize().y - 1);
         setSize(getSize().x, getSize().y - 1.0f);
     }

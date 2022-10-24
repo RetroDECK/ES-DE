@@ -11,9 +11,8 @@
 #include "Settings.h"
 #include "components/ButtonComponent.h"
 
-#define BUTTON_GRID_VERT_PADDING std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.915f)
-#define BUTTON_GRID_HORIZ_PADDING                                                                  \
-    std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.283f)
+#define BUTTON_GRID_VERT_PADDING Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.915f
+#define BUTTON_GRID_HORIZ_PADDING Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.283f
 
 #define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f)
 
@@ -86,7 +85,7 @@ void MenuComponent::setTitle(std::string title, const std::shared_ptr<Font>& fon
 float MenuComponent::getButtonGridHeight() const
 {
     return (mButtonGrid ? mButtonGrid->getSize().y :
-                          Font::get(FONT_SIZE_MEDIUM)->getHeight() + BUTTON_GRID_VERT_PADDING);
+                          Font::get(FONT_SIZE_MEDIUM)->getSize() * 1.5f + BUTTON_GRID_VERT_PADDING);
 }
 
 void MenuComponent::updateSize()
@@ -186,7 +185,7 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(
 std::shared_ptr<ImageComponent> makeArrow()
 {
     auto bracket = std::make_shared<ImageComponent>();
-    bracket->setResize(0, std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()));
+    bracket->setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
     bracket->setImage(":/graphics/arrow.svg");
     return bracket;
 }

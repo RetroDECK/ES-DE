@@ -86,11 +86,11 @@ public:
                       mText.getFont()->getHeight());
 
         // Position.
-        mLeftArrow.setPosition(0.0f, std::round((mSize.y - mLeftArrow.getSize().y) / 2.0f));
+        mLeftArrow.setPosition(0.0f, (mSize.y - mLeftArrow.getSize().y) / 2.0f);
         mText.setPosition(mLeftArrow.getPosition().x + mLeftArrow.getSize().x,
                           (mSize.y - mText.getSize().y) / 2.0f);
         mRightArrow.setPosition(mText.getPosition().x + mText.getSize().x,
-                                std::round((mSize.y - mRightArrow.getSize().y) / 2.0f));
+                                (mSize.y - mRightArrow.getSize().y) / 2.0f);
     }
 
     bool input(InputConfig* config, Input input) override
