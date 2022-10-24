@@ -15,19 +15,20 @@
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
-Font::Font(int size, const std::string& path)
+Font::Font(float size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
     , mPath(path)
-    , mTextSize {0.0f, 0.0f}
-    , mFontSize(size)
-    , mMaxGlyphHeight {0}
+    , mFontSize {size}
+    , mLetterHeight {0.0f}
+    , mMaxGlyphHeight {static_cast<int>(std::round(size))}
+    , mLegacyMaxGlyphHeight {0}
 {
-    if (mFontSize < 3) {
-        mFontSize = 3;
+    if (mFontSize < 3.0f) {
+        mFontSize = 3.0f;
         LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
     }
     else if (mFontSize > Renderer::getScreenHeight() * 1.5f) {
-        mFontSize = static_cast<int>(Renderer::getScreenHeight() * 1.5f);
+        mFontSize = Renderer::getScreenHeight() * 1.5f;
         LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
     }
 
@@ -35,7 +36,7 @@ Font::Font(int size, const std::string& path)
         initLibrary();
 
     // Always initialize ASCII characters.
-    for (unsigned int i = 32; i < 128; ++i)
+    for (unsigned int i = 32; i < 127; ++i)
         getGlyph(i);
 
     clearFaceCache();
@@ -45,7 +46,7 @@ Font::~Font()
 {
     unload(ResourceManager::getInstance());
 
-    auto fontEntry = sFontMap.find(std::pair<std::string, int>(mPath, mFontSize));
+    auto fontEntry = sFontMap.find(std::pair<std::string, float>(mPath, mFontSize));
 
     if (fontEntry != sFontMap.cend())
         sFontMap.erase(fontEntry);
@@ -56,11 +57,11 @@ Font::~Font()
     }
 }
 
-std::shared_ptr<Font> Font::get(int size, const std::string& path)
+std::shared_ptr<Font> Font::get(float size, const std::string& path)
 {
     const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
-    std::pair<std::string, int> def {canonicalPath.empty() ? getDefaultPath() : canonicalPath,
-                                     size};
+    const std::pair<std::string, float> def {
+        canonicalPath.empty() ? getDefaultPath() : canonicalPath, size};
 
     auto foundFont = sFontMap.find(def);
     if (foundFont != sFontMap.cend()) {
@@ -76,11 +77,9 @@ std::shared_ptr<Font> Font::get(int size, const std::string& path)
 
 glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 {
+    const float lineHeight {getHeight(lineSpacing)};
     float lineWidth {0.0f};
     float highestWidth {0.0f};
-
-    const float lineHeight {getHeight(lineSpacing)};
-
     float y {lineHeight};
 
     size_t i {0};
@@ -104,6 +103,20 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
         highestWidth = lineWidth;
 
     return glm::vec2 {highestWidth, y};
+}
+
+int Font::loadGlyphs(const std::string& text)
+{
+    mMaxGlyphHeight = static_cast<int>(std::round(mFontSize));
+
+    for (size_t i = 0; i < text.length();) {
+        unsigned int character {Utils::String::chars2Unicode(text, i)}; // Advances i.
+        Glyph* glyph {getGlyph(character)};
+
+        if (glyph->rows > mMaxGlyphHeight)
+            mMaxGlyphHeight = glyph->rows;
+    }
+    return mMaxGlyphHeight;
 }
 
 TextCache* Font::buildTextCache(const std::string& text,
@@ -134,6 +147,9 @@ TextCache* Font::buildTextCache(const std::string& text,
         yBot = getHeight(1.5);
     }
     else {
+        // TODO: This is lacking some precision which is especially visible at higher resolutions
+        // like 4K where the text is not always placed entirely correctly vertically. Try to find
+        // a way to improve on this.
         yTop = getGlyph('S')->bearing.y;
         yBot = getHeight(lineSpacing);
     }
@@ -203,7 +219,8 @@ TextCache* Font::buildTextCache(const std::string& text,
 
     TextCache* cache {new TextCache()};
     cache->vertexLists.resize(vertMap.size());
-    cache->metrics = {sizeText(text, lineSpacing)};
+    cache->metrics.size = {sizeText(text, lineSpacing)};
+    cache->metrics.maxGlyphHeight = mMaxGlyphHeight;
 
     size_t i {0};
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
@@ -366,7 +383,6 @@ std::string Font::wrapText(const std::string& text,
         wrappedText.append("...");
     }
 
-    mTextSize = {maxLength, accumHeight};
     return wrappedText;
 }
 
@@ -396,31 +412,36 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
 
 float Font::getLetterHeight()
 {
-    Glyph* glyph {getGlyph('S')};
-    assert(glyph);
-    return glyph->texSize.y * glyph->texture->textureSize.y;
+    if (mLetterHeight == 0.0f)
+        return mFontSize * 0.737; // Only needed if face does not contain the letter 'S'.
+    else
+        return mLetterHeight;
 }
 
 std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          unsigned int properties,
                                          const std::shared_ptr<Font>& orig,
-                                         const float maxHeight)
+                                         const float maxHeight,
+                                         const bool legacyTheme)
 {
+    mLegacyTheme = legacyTheme;
+
     using namespace ThemeFlags;
     if (!(properties & FONT_PATH) && !(properties & FONT_SIZE))
         return orig;
 
-    int size {static_cast<int>(orig ? orig->mFontSize : FONT_SIZE_MEDIUM)};
+    float size {static_cast<float>(orig ? orig->mFontSize : FONT_SIZE_MEDIUM)};
     std::string path {orig ? orig->mPath : getDefaultPath()};
 
     float screenHeight {static_cast<float>(Renderer::getScreenHeight())};
 
-    if (properties & FONT_SIZE && elem->has("fontSize"))
-        size = static_cast<int>(glm::clamp(screenHeight * elem->get<float>("fontSize"),
-                                           screenHeight * 0.001f, screenHeight * 1.5f));
+    if (properties & FONT_SIZE && elem->has("fontSize")) {
+        size = glm::clamp(screenHeight * elem->get<float>("fontSize"), screenHeight * 0.001f,
+                          screenHeight * 1.5f);
+    }
 
-    if (maxHeight != 0.0f && static_cast<float>(size) > maxHeight)
-        size = static_cast<int>(maxHeight);
+    if (maxHeight != 0.0f && size > maxHeight)
+        size = maxHeight;
 
     if (properties & FONT_PATH && elem->has("fontPath"))
         path = elem->get<std::string>("fontPath");
@@ -433,7 +454,10 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
         path = getDefaultPath();
     }
 
-    return get(size, path);
+    if (mLegacyTheme)
+        return get(std::floor(size), path);
+    else
+        return get(size, path);
 }
 
 size_t Font::getMemUsage() const
@@ -558,7 +582,7 @@ void Font::FontTexture::deinitTexture()
     }
 }
 
-Font::FontFace::FontFace(ResourceData&& d, int size, const std::string& path)
+Font::FontFace::FontFace(ResourceData&& d, float size, const std::string& path)
     : data {d}
 {
     if (FT_New_Memory_Face(sLibrary, d.ptr.get(), static_cast<FT_Long>(d.length), 0, &face) != 0) {
@@ -566,7 +590,10 @@ Font::FontFace::FontFace(ResourceData&& d, int size, const std::string& path)
         Utils::Platform::emergencyShutdown();
     }
 
-    FT_Set_Pixel_Sizes(face, 0, size);
+    // Even though a fractional font size can be requested, the glyphs will always be rounded
+    // to integers. It's not useless to call FT_Set_Char_Size() instead of FT_Set_Pixel_Sizes()
+    // though as the glyphs will still be much more evenely sized across different resolutions.
+    FT_Set_Char_Size(face, 0.0f, size * 64.0f, 0, 0);
 }
 
 Font::FontFace::~FontFace()
@@ -712,6 +739,12 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
         return nullptr;
     }
 
+    // Use the letter 'S' as a size reference.
+    if (mLetterHeight == 0 && id == 'S') {
+        const float ratio {static_cast<float>(glyphSize.y) / std::round(mFontSize)};
+        mLetterHeight = mFontSize * ratio;
+    }
+
     // Create glyph.
     Glyph& glyph {mGlyphMap[id]};
 
@@ -720,18 +753,18 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
                               cursor.y / static_cast<float>(tex->textureSize.y)};
     glyph.texSize = glm::vec2 {glyphSize.x / static_cast<float>(tex->textureSize.x),
                                glyphSize.y / static_cast<float>(tex->textureSize.y)};
-
     glyph.advance = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiAdvance) / 64.0f,
                                static_cast<float>(glyphSlot->metrics.vertAdvance) / 64.0f};
     glyph.bearing = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiBearingX) / 64.0f,
                                static_cast<float>(glyphSlot->metrics.horiBearingY) / 64.0f};
+    glyph.rows = glyphSlot->bitmap.rows;
 
     // Upload glyph bitmap to texture.
     mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
                              glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
 
-    if (glyphSize.y > mMaxGlyphHeight)
-        mMaxGlyphHeight = glyphSize.y;
+    if (glyphSize.y > mLegacyMaxGlyphHeight)
+        mLegacyMaxGlyphHeight = glyphSize.y;
 
     return &glyph;
 }

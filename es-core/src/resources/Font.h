@@ -21,16 +21,10 @@
 
 class TextCache;
 
-// clang-format off
-#define FONT_SIZE_MINI (static_cast<unsigned int>(0.030f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-#define FONT_SIZE_SMALL (static_cast<unsigned int>(0.035f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-#define FONT_SIZE_MEDIUM (static_cast<unsigned int>(0.045f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-#define FONT_SIZE_LARGE (static_cast<unsigned int>(0.085f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-// clang-format on
+#define FONT_SIZE_MINI 0.030f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
+#define FONT_SIZE_SMALL 0.035f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
+#define FONT_SIZE_MEDIUM 0.045f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
+#define FONT_SIZE_LARGE 0.085f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
 
 #define FONT_PATH_LIGHT ":/fonts/Akrobat-Regular.ttf"
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
@@ -42,13 +36,19 @@ class Font : public IReloadable
 {
 public:
     virtual ~Font();
-    static std::shared_ptr<Font> get(int size, const std::string& path = getDefaultPath());
+    static std::shared_ptr<Font> get(float size, const std::string& path = getDefaultPath());
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
 
-    // Returns the size of the overall text area.
-    const glm::vec2 getTextSize() { return mTextSize; }
+    // Used to determine mMaxGlyphHeight upfront which is needed for accurate text sizing by
+    // wrapText and buildTextCache. This is required as the requested font height is not
+    // guaranteed and can be exceeded by a few pixels for some glyphs.
+    int loadGlyphs(const std::string& text);
+
+    // This is needed to retain a bug from the legacy theme engine where lineSpacing is not
+    // sized correctly when using automatic text element sizing.
+    void useLegacyMaxGlyphHeight() { mMaxGlyphHeight = mLegacyMaxGlyphHeight; }
 
     TextCache* buildTextCache(const std::string& text,
                               float offsetX,
@@ -86,14 +86,15 @@ public:
     void reload(ResourceManager& rm) override { rebuildTextures(); }
     void unload(ResourceManager& rm) override { unloadTextures(); }
 
-    int getSize() const { return mFontSize; }
+    const float getSize() const { return mFontSize; }
     const std::string& getPath() const { return mPath; }
     static std::string getDefaultPath() { return FONT_PATH_REGULAR; }
 
     static std::shared_ptr<Font> getFromTheme(const ThemeData::ThemeElement* elem,
                                               unsigned int properties,
                                               const std::shared_ptr<Font>& orig,
-                                              const float maxHeight = 0.0f);
+                                              const float maxHeight = 0.0f,
+                                              const bool legacyTheme = false);
 
     // Returns an approximation of VRAM used by this font's texture (in bytes).
     size_t getMemUsage() const;
@@ -101,7 +102,7 @@ public:
     static size_t getTotalMemUsage();
 
 private:
-    Font(int size, const std::string& path);
+    Font(float size, const std::string& path);
     static void initLibrary();
 
     struct FontTexture {
@@ -127,7 +128,7 @@ private:
         const ResourceData data;
         FT_Face face;
 
-        FontFace(ResourceData&& d, int size, const std::string& path);
+        FontFace(ResourceData&& d, float size, const std::string& path);
         virtual ~FontFace();
     };
 
@@ -137,6 +138,7 @@ private:
         glm::vec2 texSize; // In texels.
         glm::vec2 advance;
         glm::vec2 bearing;
+        int rows;
     };
 
     // Completely recreate the texture data for all textures based on mGlyphs information.
@@ -159,7 +161,8 @@ private:
     void clearFaceCache() { mFaceCache.clear(); }
 
     static inline FT_Library sLibrary {nullptr};
-    static inline std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
+    static inline std::map<std::pair<std::string, float>, std::weak_ptr<Font>> sFontMap;
+    static inline bool mLegacyTheme {false};
 
     Renderer* mRenderer;
     std::vector<std::unique_ptr<FontTexture>> mTextures;
@@ -167,9 +170,10 @@ private:
     std::map<unsigned int, Glyph> mGlyphMap;
 
     const std::string mPath;
-    glm::vec2 mTextSize;
-    int mFontSize;
+    float mFontSize;
+    float mLetterHeight;
     int mMaxGlyphHeight;
+    int mLegacyMaxGlyphHeight;
 };
 
 // Used to store a sort of "pre-rendered" string.
@@ -183,6 +187,7 @@ class TextCache
 public:
     struct CacheMetrics {
         glm::vec2 size;
+        int maxGlyphHeight;
     } metrics;
 
     void setColor(unsigned int color);

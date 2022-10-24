@@ -183,8 +183,8 @@ CarouselComponent<T>::CarouselComponent()
     , mMaxItemCount {3.0f}
     , mItemsBeforeCenter {8}
     , mItemsAfterCenter {8}
-    , mItemSize {glm::round(
-          glm::vec2 {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f})}
+    , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.25f,
+                            Renderer::getScreenHeight() * 0.155f}}
     , mLinearInterpolation {false}
     , mInstantItemTransitions {false}
     , mItemAxisHorizontal {false}
@@ -568,11 +568,10 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
     glm::mat4 carouselTrans {parentTrans};
     carouselTrans = glm::translate(
-        carouselTrans,
-        glm::round(glm::vec3 {GuiComponent::mPosition.x, GuiComponent::mPosition.y, 0.0f}));
-    carouselTrans = glm::translate(
-        carouselTrans, glm::round(glm::vec3 {GuiComponent::mOrigin.x * mSize.x * -1.0f,
-                                             GuiComponent::mOrigin.y * mSize.y * -1.0f, 0.0f}));
+        carouselTrans, glm::vec3 {GuiComponent::mPosition.x, GuiComponent::mPosition.y, 0.0f});
+    carouselTrans =
+        glm::translate(carouselTrans, glm::vec3 {GuiComponent::mOrigin.x * mSize.x * -1.0f,
+                                                 GuiComponent::mOrigin.y * mSize.y * -1.0f, 0.0f});
 
     if (carouselTrans[3].x + mSize.x <= 0.0f || carouselTrans[3].y + mSize.y <= 0.0f)
         return;
@@ -650,8 +649,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         }
     }
     else if (mType == CarouselType::VERTICAL) {
-        itemSpacing.y =
-            std::round(((mSize.y - (mItemSize.y * mMaxItemCount)) / mMaxItemCount) + mItemSize.y);
+        itemSpacing.y = ((mSize.y - (mItemSize.y * mMaxItemCount)) / mMaxItemCount) + mItemSize.y;
         yOff = (mSize.y - mItemSize.y) / 2.0f - (camOffset * itemSpacing.y);
         if (mItemHorizontalAlignment == ALIGN_LEFT) {
             if (mLegacyMode)
@@ -670,8 +668,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         }
     }
     else { // HORIZONTAL.
-        itemSpacing.x =
-            std::round(((mSize.x - (mItemSize.x * mMaxItemCount)) / mMaxItemCount) + mItemSize.x);
+        itemSpacing.x = ((mSize.x - (mItemSize.x * mMaxItemCount)) / mMaxItemCount) + mItemSize.x;
         xOff = (mSize.x - mItemSize.x) / 2.0f - (camOffset * itemSpacing.x);
         if (mItemVerticalAlignment == ALIGN_TOP) {
             if (mLegacyMode)
@@ -780,9 +777,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         if (singleEntry)
             itemTrans = glm::translate(carouselTrans, glm::vec3 {xOff, yOff, 0.0f});
         else
-            itemTrans =
-                glm::translate(itemTrans, glm::vec3 {std::round(i * itemSpacing.x + xOff),
-                                                     std::round(i * itemSpacing.y + yOff), 0.0f});
+            itemTrans = glm::translate(itemTrans, glm::vec3 {(i * itemSpacing.x) + xOff,
+                                                             (i * itemSpacing.y) + yOff, 0.0f});
 
         float opacity {0.0f};
 
@@ -1011,8 +1007,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("itemSize")) {
             const glm::vec2 itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
-            mItemSize = glm::round(
-                itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight()));
+            mItemSize =
+                itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
         }
 
         if (elem->has("itemScale"))
@@ -1164,8 +1160,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 itemSize.x = glm::clamp(itemSize.x, 0.005f, 1.0f);
                 itemSize.y = glm::clamp(itemSize.y, 0.005f, 1.0f);
             }
-            mItemSize = glm::round(
-                itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight()));
+            mItemSize =
+                itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
         }
 
         if (elem->has("maxLogoCount")) {
@@ -1210,7 +1206,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    mFont = Font::getFromTheme(elem, properties, mFont);
+    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode);
 
     if (elem->has("textColor"))
         mTextColor = elem->get<unsigned int>("textColor");

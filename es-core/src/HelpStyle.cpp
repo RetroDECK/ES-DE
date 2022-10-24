@@ -24,7 +24,6 @@ HelpStyle::HelpStyle()
     , opacity {1.0f}
     , letterCase {"uppercase"}
 {
-
     if (FONT_SIZE_SMALL != 0)
         font = Font::get(FONT_SIZE_SMALL);
     else
@@ -61,7 +60,7 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         iconColorDimmed = iconColor;
 
     if (elem->has("fontPath") || elem->has("fontSize"))
-        font = Font::getFromTheme(elem, ThemeFlags::ALL, font);
+        font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, theme->isLegacyTheme());
 
     if (elem->has("entrySpacing"))
         entrySpacing = glm::clamp(elem->get<float>("entrySpacing"), 0.0f, 0.04f);

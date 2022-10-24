@@ -350,10 +350,19 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     int screenCount {0};
     float y {0.0f};
 
-    const float entrySize {
-        std::max(floorf(font->getHeight(1.0f)), floorf(static_cast<float>(font->getSize()))) *
-        mLineSpacing};
-    const float lineSpacingHeight {floorf(font->getHeight(mLineSpacing) - font->getHeight(1.0f))};
+    float entrySize {0.0f};
+    float lineSpacingHeight {0.0f};
+
+    // The vertical spacing between rows for legacy themes is very inaccurate and will look
+    // different depending on the resolution, but it's done for maximum backward compatibility.
+    if (mLegacyMode) {
+        entrySize = std::floor(font->getSize()) * mLineSpacing;
+        lineSpacingHeight = std::floor(font->getSize()) * mLineSpacing - font->getSize() * 1.0f;
+    }
+    else {
+        entrySize = font->getSize() * mLineSpacing;
+        lineSpacingHeight = font->getSize() * mLineSpacing - font->getSize() * 1.0f;
+    }
 
     if (mLegacyMode) {
         // This extra vertical margin is technically incorrect, but it adds a little extra leeway
@@ -366,7 +375,9 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             floorf((mSize.y + lineSpacingHeight / 2.0f + extraMargin) / entrySize));
     }
     else {
-        screenCount = static_cast<int>(floorf((mSize.y + lineSpacingHeight / 2.0f) / entrySize));
+        // Number of entries that can fit on the screen simultaneously.
+        screenCount =
+            static_cast<int>(std::floor((mSize.y + lineSpacingHeight / 2.0f) / entrySize));
     }
 
     if (size() >= screenCount) {
@@ -555,9 +566,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setColor(1, elem->get<unsigned int>("secondaryColor"));
     }
 
-    setFont(Font::getFromTheme(elem, properties, mFont));
-    const float selectorHeight {
-        std::max(mFont->getHeight(1.0), static_cast<float>(mFont->getSize())) * mLineSpacing};
+    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode));
+    const float selectorHeight {mFont->getSize() * mLineSpacing};
     setSelectorHeight(selectorHeight);
 
     if (properties & ALIGNMENT) {

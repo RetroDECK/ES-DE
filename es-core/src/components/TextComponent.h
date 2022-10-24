@@ -78,6 +78,11 @@ public:
     Alignment getHorizontalAlignment() { return mHorizontalAlignment; }
     Alignment getVerticalAlignment() { return mVerticalAlignment; }
 
+    int getTextCacheGlyphHeight() override
+    {
+        return (mTextCache == nullptr ? 0 : mTextCache->metrics.maxGlyphHeight);
+    }
+
 protected:
     virtual void onTextChanged();
 
@@ -114,6 +119,7 @@ private:
     bool mNoTopMargin;
     bool mSelectable;
     bool mVerticalAutoSizing;
+    bool mLegacyTheme;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H

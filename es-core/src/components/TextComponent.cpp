@@ -30,6 +30,7 @@ TextComponent::TextComponent()
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
+    , mLegacyTheme {false}
 {
 }
 
@@ -58,6 +59,7 @@ TextComponent::TextComponent(const std::string& text,
     , mNoTopMargin {false}
     , mSelectable {false}
     , mVerticalAutoSizing {false}
+    , mLegacyTheme {false}
 {
     setFont(font);
     setColor(color);
@@ -180,11 +182,11 @@ void TextComponent::render(const glm::mat4& parentTrans)
                     break;
                 }
                 case ALIGN_BOTTOM: {
-                    yOff = (getSize().y - textSize.y);
+                    yOff = mSize.y - textSize.y;
                     break;
                 }
                 case ALIGN_CENTER: {
-                    yOff = std::round((getSize().y - textSize.y) / 2.0f);
+                    yOff = (mSize.y - textSize.y) / 2.0f;
                     break;
                 }
                 default: {
@@ -194,7 +196,7 @@ void TextComponent::render(const glm::mat4& parentTrans)
         }
         else {
             // If height is smaller than the font height, then always center vertically.
-            yOff = std::round((getSize().y - textSize.y) / 2.0f);
+            yOff = (mSize.y - textSize.y) / 2.0f;
         }
 
         // Draw the overall textbox area. If we're inside a scrollable container then this
@@ -264,10 +266,23 @@ void TextComponent::onTextChanged()
     if (!mFont || text.empty() || mSize.x < 0.0f)
         return;
 
-    std::shared_ptr<Font> font {mFont};
-    const float lineHeight {font->getHeight(mLineSpacing)};
-    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
+    float lineHeight {0.0f};
     const bool isScrollable {mParent && mParent->isScrollable()};
+    std::shared_ptr<Font> font {mFont};
+
+    if (mLegacyTheme && !isScrollable && (mVerticalAutoSizing || mAutoCalcExtent.x)) {
+        // This is needed to retain a bug from the legacy theme engine where lineSpacing
+        // is not sized correctly when using automatic text element sizing. This is only
+        // applied to legacy themes for backward compatibility reasons.
+        font->useLegacyMaxGlyphHeight();
+        lineHeight = font->getHeight(mLineSpacing);
+    }
+    else {
+        // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
+        lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
+    }
+
+    const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
 
     if (isMultiline && !isScrollable) {
         const std::string wrappedText {
@@ -284,7 +299,7 @@ void TextComponent::onTextChanged()
     }
 
     if (mAutoCalcExtent.y)
-        mSize.y = font->getTextSize().y;
+        mSize.y = mTextCache->metrics.size.y;
 
     if (mOpacity != 1.0f || mThemeOpacity != 1.0f)
         setOpacity(mOpacity);
@@ -332,6 +347,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 {
     using namespace ThemeFlags;
     GuiComponent::applyTheme(theme, view, element, properties);
+
+    mLegacyTheme = theme->isLegacyTheme();
 
     std::string elementType {"text"};
     std::string componentName {"TextComponent"};
@@ -472,5 +489,5 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
-    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight));
+    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, theme->isLegacyTheme()));
 }

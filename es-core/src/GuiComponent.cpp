@@ -206,7 +206,7 @@ void GuiComponent::setDimming(float dimming)
 const glm::mat4& GuiComponent::getTransform()
 {
     mTransform = Renderer::getIdentity();
-    mTransform = glm::translate(mTransform, glm::round(mPosition));
+    mTransform = glm::translate(mTransform, mPosition);
 
     if (mScale != 1.0f)
         mTransform = glm::scale(mTransform, glm::vec3 {mScale});
