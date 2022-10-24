@@ -206,13 +206,13 @@
                     md_lbl_genre, md_lbl_players, md_lbl_lastplayed ">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.02</fontSize>
+            <fontSize>0.0195</fontSize>
             <letterCase>uppercase</letterCase>
         </text>
         <text name="md_developer, md_publisher, md_genre, md_players">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.02</fontSize>
+            <fontSize>0.0195</fontSize>
             <letterCase>uppercase</letterCase>
         </text>
         <text name="md_description">
@@ -225,14 +225,14 @@
             <containerResetDelay>7</containerResetDelay>
             <metadata>description</metadata>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
-            <fontSize>0.02</fontSize>
+            <fontSize>0.0195</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
         </text>
         <datetime name="md_releasedate, md_lastplayed">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.02</fontSize>
+            <fontSize>0.0195</fontSize>
             <letterCase>uppercase</letterCase>
         </datetime>
         <text name="md_lbl_releasedate">
