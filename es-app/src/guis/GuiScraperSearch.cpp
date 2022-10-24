@@ -554,7 +554,7 @@ void GuiScraperSearch::updateInfoPane()
 
         // Cache the thumbnail image in mScraperResults so that we don't need to download
         // it every time the list is scrolled back and forth.
-        if (mScraperResults[i].thumbnailImageData.size() > 0) {
+        if (mScraperResults[i].thumbnailImageData.size() > 350) {
             std::string content {mScraperResults[i].thumbnailImageData};
             mResultThumbnail->setImage(content.data(), content.length());
             mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
@@ -837,7 +837,7 @@ void GuiScraperSearch::updateThumbnail()
         }
         // Activate the thumbnail in the GUI.
         std::string content {mScraperResults[mResultList->getCursorId()].thumbnailImageData};
-        if (content.size() > 0) {
+        if (content.size() > 350) {
             mResultThumbnail->setImage(content.data(), content.length());
             mGrid.onSizeChanged(); // A hack to fix the thumbnail position since its size changed.
         }

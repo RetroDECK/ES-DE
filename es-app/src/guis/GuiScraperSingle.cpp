@@ -150,7 +150,7 @@ void GuiScraperSingle::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.04f);
 
     mGrid.setSize(glm::round(mSize));
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
 
     // Add some extra margins to the game name.
     const float newSizeX {mSize.x * 0.96f};
