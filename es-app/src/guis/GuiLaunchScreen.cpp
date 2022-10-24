@@ -55,8 +55,8 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // Title.
     mTitle = std::make_shared<TextComponent>(
         "LAUNCHING GAME",
-        Font::get(static_cast<int>(
-            titleFontSize * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))),
+        Font::get(titleFontSize *
+                  std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())),
         0x666666FF, ALIGN_CENTER);
     mGrid->setEntry(mTitle, glm::ivec2 {1, 1}, false, true, glm::ivec2 {1, 1});
 
@@ -75,8 +75,8 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // Game name.
     mGameName = std::make_shared<TextComponent>(
         "GAME NAME",
-        Font::get(static_cast<int>(
-            gameNameFontSize * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))),
+        Font::get(gameNameFontSize *
+                  std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())),
         0x444444FF, ALIGN_CENTER);
     mGrid->setEntry(mGameName, glm::ivec2 {1, 5}, false, true, glm::ivec2 {1, 1});
 
@@ -108,11 +108,10 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
     float minWidth {Renderer::getScreenWidth() * minWidthModifier};
 
-    float fontWidth {
-        Font::get(static_cast<int>(gameNameFontSize * std::min(Renderer::getScreenHeight(),
-                                                               Renderer::getScreenWidth())))
-            ->sizeText(Utils::String::toUpper(game->getName()))
-            .x};
+    float fontWidth {Font::get(gameNameFontSize *
+                               std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))
+                         ->sizeText(Utils::String::toUpper(game->getName()))
+                         .x};
 
     // Add a bit of width to compensate for the left and right spacers.
     fontWidth += Renderer::getScreenWidth() * 0.05f;

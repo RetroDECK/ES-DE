@@ -240,7 +240,7 @@ void GuiScraperSearch::resizeMetadata()
 {
     mMD_Grid->setSize(mGrid.getColWidth(2), mGrid.getRowHeight(1));
     if (mMD_Grid->getSize().y > mMD_Pairs.size()) {
-        const int fontHeight {static_cast<int>(mMD_Grid->getSize().y / mMD_Pairs.size() * 0.8f)};
+        const float fontHeight {mMD_Grid->getSize().y / mMD_Pairs.size() * 0.8f};
         auto fontLbl = Font::get(fontHeight, FONT_PATH_REGULAR);
         auto fontComp = Font::get(fontHeight, FONT_PATH_LIGHT);
 
