@@ -413,7 +413,7 @@ glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
 float Font::getLetterHeight()
 {
     if (mLetterHeight == 0.0f)
-        return mFontSize * 0.737; // Only needed if face does not contain the letter 'S'.
+        return mFontSize * 0.737f; // Only needed if face does not contain the letter 'S'.
     else
         return mLetterHeight;
 }
@@ -593,7 +593,8 @@ Font::FontFace::FontFace(ResourceData&& d, float size, const std::string& path)
     // Even though a fractional font size can be requested, the glyphs will always be rounded
     // to integers. It's not useless to call FT_Set_Char_Size() instead of FT_Set_Pixel_Sizes()
     // though as the glyphs will still be much more evenely sized across different resolutions.
-    FT_Set_Char_Size(face, 0.0f, size * 64.0f, 0, 0);
+    FT_Set_Char_Size(face, static_cast<FT_F26Dot6>(0.0f), static_cast<FT_F26Dot6>(size * 64.0f), 0,
+                     0);
 }
 
 Font::FontFace::~FontFace()
@@ -659,7 +660,7 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
             return; // Yes.
     }
 
-    mTextures.emplace_back(std::make_unique<FontTexture>(mFontSize));
+    mTextures.emplace_back(std::make_unique<FontTexture>(static_cast<int>(std::round(mFontSize))));
     tex_out = mTextures.back().get();
     tex_out->initTexture();
 
