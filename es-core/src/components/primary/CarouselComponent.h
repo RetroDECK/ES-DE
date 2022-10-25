@@ -1155,8 +1155,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     // Legacy themes.
     if (mLegacyMode) {
+        // Don't allow logoScale below 1.0 for legacy themes as it introduces compatibility issues.
         if (elem->has("logoScale"))
-            mItemScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
+            mItemScale = glm::clamp(elem->get<float>("logoScale"), 1.0f, 3.0f);
         if (elem->has("logoSize")) {
             // Keep size within a 0.05 and 1.0 multiple of the screen size.
             glm::vec2 itemSize {elem->get<glm::vec2>("logoSize")};
