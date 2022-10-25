@@ -327,7 +327,7 @@ private:
             mText.setText(ss.str());
             mText.setSize(0, mText.getSize().y);
             setSize(mText.getSize().x + mRightArrow.getSize().x +
-                        std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f),
+                        Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
                     mText.getSize().y);
             if (mParent) // Hack since there's no "on child size changed" callback.
                 mParent->onSizeChanged();
@@ -351,7 +351,7 @@ private:
 
                     mText.setSize(0.0f, mText.getSize().y);
                     setSize(mText.getSize().x + mLeftArrow.getSize().x + mRightArrow.getSize().x +
-                                std::round(Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f),
+                                Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.68f,
                             mText.getSize().y);
                     if (mParent) // Hack since there's no "on child size changed" callback.
                         mParent->onSizeChanged();
