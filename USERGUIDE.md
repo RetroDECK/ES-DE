@@ -2833,7 +2833,7 @@ For this example, we've downloaded the [alekfull-nx-retropie](https://github.com
 ~/.emulationstation/themes/es-theme-carbon
 ```
 
-We now have four entries in the _Theme set_ selector in the UI settings menu, i.e. _alekfull-nx-retropie, es-theme-carbon, modern-DE and rbsimple-DE_.
+We now have four entries in the _Theme set_ selector in the UI settings menu, i.e. _alekfull-nx-retropie, es-theme-carbon, modern-DE_ and _rbsimple-DE_.
 
 Although you should place additional themes in your ES-DE home directory, the default rbsimple-DE and modern-DE themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/emulationstation/themes/` or `/usr/local/share/emulationstation/themes/` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/` on macOS or `C:\Program Files\EmulationStation-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the EmulationStation-DE directory.
 

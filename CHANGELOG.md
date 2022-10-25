@@ -213,6 +213,8 @@
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The tile property for the image element did not work correctly with SVG images
+* Defining an itemScale (logoScale) property lower than 1.0 for the carousel did not work correctly
+* Carousel text did not get scaled/multiplied correctly with the itemScale property (bug retained for legacy themes for maximum backward compatibility)
 * Letters would sometimes get rendered with ugly edge artifacts, visible when scaling text on the carousel
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
