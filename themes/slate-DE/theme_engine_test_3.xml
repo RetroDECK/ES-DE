@@ -111,7 +111,7 @@
             <unfocusedItemOpacity>1</unfocusedItemOpacity>
             <textBackgroundColor>323232CC</textBackgroundColor>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.050</fontSize>
+            <fontSize>0.032</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
             <zIndex>60</zIndex>

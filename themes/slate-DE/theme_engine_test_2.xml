@@ -107,7 +107,7 @@
             <horizontalOffset>0</horizontalOffset>
             <verticalOffset>0</verticalOffset>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.070</fontSize>
+            <fontSize>0.056</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
             <zIndex>80</zIndex>
