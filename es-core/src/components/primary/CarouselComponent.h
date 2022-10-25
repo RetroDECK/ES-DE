@@ -227,7 +227,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 auto item = std::make_shared<ImageComponent>(false, dynamic);
                 item->setLinearInterpolation(mLinearInterpolation);
                 item->setMipmapping(true);
-                item->setMaxSize(glm::round(mItemSize * mItemScale));
+                item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
                 item->applyTheme(theme, "system", "image_logo",
                                  ThemeFlags::PATH | ThemeFlags::COLOR);
                 item->setRotateByTargetSize(true);
@@ -241,7 +241,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             auto item = std::make_shared<ImageComponent>(false, dynamic);
             item->setLinearInterpolation(mLinearInterpolation);
             item->setMipmapping(true);
-            item->setMaxSize(glm::round(mItemSize * mItemScale));
+            item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             item->setImage(entry.data.itemPath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
             item->setRotateByTargetSize(true);
@@ -252,7 +252,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
             defaultItem->setLinearInterpolation(mLinearInterpolation);
             defaultItem->setMipmapping(true);
-            defaultItem->setMaxSize(glm::round(mItemSize * mItemScale));
+            defaultItem->setMaxSize(
+                glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
             defaultItem->setRotateByTargetSize(true);
@@ -276,7 +277,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
 
         auto text = std::make_shared<TextComponent>(
             nameEntry, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
-            glm::vec3 {0.0f, 0.0f, 0.0f}, glm::round(mItemSize * mItemScale), 0x00000000);
+            glm::vec3 {0.0f, 0.0f, 0.0f},
+            glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)), 0x00000000);
         if (legacyMode) {
             text->applyTheme(theme, "system", "text_logoText",
                              ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
@@ -324,7 +326,7 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mLinearInterpolation);
         item->setMipmapping(true);
-        item->setMaxSize(glm::round(mItemSize * mItemScale));
+        item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         item->setRotateByTargetSize(true);
@@ -769,9 +771,17 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         if (singleEntry)
             distance = 0.0f;
 
-        float scale {1.0f + ((mItemScale - 1.0f) * (1.0f - fabsf(distance)))};
-        scale = std::min(mItemScale, std::max(1.0f, scale));
-        scale /= mItemScale;
+        float scale {0.0f};
+
+        if (mItemScale >= 1.0f) {
+            scale = 1.0f + ((mItemScale - 1.0f) * (1.0f - fabsf(distance)));
+            scale = std::min(mItemScale, std::max(1.0f, scale));
+            scale /= mItemScale;
+        }
+        else {
+            scale = 1.0f + ((1.0f - mItemScale) * (fabsf(distance) - 1.0f));
+            scale = std::max(mItemScale, std::min(1.0f, scale));
+        }
 
         glm::mat4 itemTrans {carouselTrans};
         if (singleEntry)
@@ -1012,7 +1022,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("itemScale"))
-            mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 3.0f);
+            mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
 
         if (elem->has("itemTransitions")) {
             const std::string itemTransitions {elem->get<std::string>("itemTransitions")};
@@ -1206,7 +1216,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode);
+    // For non-legacy themes, scale the font size with the itemScale property value.
+    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode,
+                               (mLegacyMode ? 1.0f : (mItemScale >= 1.0f ? mItemScale : 1.0f)));
 
     if (elem->has("textColor"))
         mTextColor = elem->get<unsigned int>("textColor");

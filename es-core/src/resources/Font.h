@@ -94,7 +94,8 @@ public:
                                               unsigned int properties,
                                               const std::shared_ptr<Font>& orig,
                                               const float maxHeight = 0.0f,
-                                              const bool legacyTheme = false);
+                                              const bool legacyTheme = false,
+                                              const float sizeMultiplier = 1.0f);
 
     // Returns an approximation of VRAM used by this font's texture (in bytes).
     size_t getMemUsage() const;

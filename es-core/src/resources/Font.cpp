@@ -422,7 +422,8 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          unsigned int properties,
                                          const std::shared_ptr<Font>& orig,
                                          const float maxHeight,
-                                         const bool legacyTheme)
+                                         const bool legacyTheme,
+                                         const float sizeMultiplier)
 {
     mLegacyTheme = legacyTheme;
 
@@ -438,6 +439,8 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
     if (properties & FONT_SIZE && elem->has("fontSize")) {
         size = glm::clamp(screenHeight * elem->get<float>("fontSize"), screenHeight * 0.001f,
                           screenHeight * 1.5f);
+        // This is used by the carousel where the itemScale property also scales the font size.
+        size *= sizeMultiplier;
     }
 
     if (maxHeight != 0.0f && size > maxHeight)
@@ -741,10 +744,8 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
     }
 
     // Use the letter 'S' as a size reference.
-    if (mLetterHeight == 0 && id == 'S') {
-        const float ratio {static_cast<float>(glyphSize.y) / std::round(mFontSize)};
-        mLetterHeight = mFontSize * ratio;
-    }
+    if (mLetterHeight == 0 && id == 'S')
+        mLetterHeight = static_cast<float>(glyphSize.y);
 
     // Create glyph.
     Glyph& glyph {mGlyphMap[id]};
