@@ -489,11 +489,10 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         // Currently selected item text might be looping.
         if (mCursor == i && mLoopOffset1 > 0) {
             drawTrans = glm::translate(
-                drawTrans,
-                glm::round(offset - glm::vec3 {static_cast<float>(mLoopOffset1), 0.0f, 0.0f}));
+                drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset1), 0.0f, 0.0f});
         }
         else {
-            drawTrans = glm::translate(drawTrans, glm::round(offset));
+            drawTrans = glm::translate(drawTrans, offset);
         }
 
         // Needed to avoid flickering when returning to the start position.
@@ -508,8 +507,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             mLoopScroll = true;
             drawTrans = trans;
             drawTrans = glm::translate(
-                drawTrans,
-                glm::round(offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f}));
+                drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f});
             mRenderer->setMatrix(drawTrans);
             font->renderTextCache(entry.data.textCache.get());
         }
@@ -567,7 +565,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode));
-    const float selectorHeight {mFont->getSize() * mLineSpacing};
+    const float selectorHeight {mFont->getHeight(mLineSpacing)};
     setSelectorHeight(selectorHeight);
 
     if (properties & ALIGNMENT) {
