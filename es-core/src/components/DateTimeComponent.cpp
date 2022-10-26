@@ -209,6 +209,14 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    float maxHeight {0.0f};
+
+    if (!theme->isLegacyTheme() && elem->has("size")) {
+        const glm::vec2 size {elem->get<glm::vec2>("size")};
+        if (size.x != 0.0f && size.y != 0.0f)
+            maxHeight = mSize.y * 2.0f;
+    }
+
     // Legacy themes only.
     if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
         setUppercase(elem->get<bool>("forceUppercase"));
@@ -216,5 +224,5 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
-    setFont(Font::getFromTheme(elem, properties, mFont));
+    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, theme->isLegacyTheme()));
 }

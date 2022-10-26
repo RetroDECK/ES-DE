@@ -211,7 +211,11 @@ void HelpComponent::updateGrid()
     std::vector<std::shared_ptr<TextComponent>> labels;
 
     float width {0.0f};
-    const float height {std::round(font->getLetterHeight() * 1.25f)};
+    float height {std::round(font->getLetterHeight() * 1.25f)};
+
+    // Make sure both text and icons have either odd or equal sizes to avoid alignment issues.
+    if (static_cast<int>(font->getHeight()) % 2 != static_cast<int>(height) % 2)
+        --height;
 
     // State variable indicating whether the GUI is dimmed.
     bool isDimmed {mWindow->isBackgroundDimmed()};
@@ -244,8 +248,8 @@ void HelpComponent::updateGrid()
 
     mGrid->setSize(width, height);
 
-    for (unsigned int i = 0; i < icons.size(); ++i) {
-        const int col = i * 4;
+    for (int i = 0; i < static_cast<int>(icons.size()); ++i) {
+        const int col {i * 4};
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(col + 1,
                                (mStyle.iconTextSpacing * mRenderer->getScreenWidth()) / width);
@@ -256,7 +260,6 @@ void HelpComponent::updateGrid()
     }
 
     mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
-
     mGrid->setOrigin(mStyle.origin);
 }
 

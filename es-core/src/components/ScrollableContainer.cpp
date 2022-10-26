@@ -66,10 +66,15 @@ void ScrollableContainer::reset()
     mAutoScrollResetAccumulator = 0;
     mAutoScrollAccumulator = -mAutoScrollDelay + mAutoScrollSpeed;
     mAtEnd = false;
-    // This is needed to resize to the designated area when the backgrund image gets invalidated.
+    // This is needed to resize to the designated area when the background image gets invalidated.
     if (!mChildren.empty()) {
-        float combinedHeight {
-            mChildren.front()->getFont()->getHeight(mChildren.front()->getLineSpacing())};
+        float combinedHeight {0.0f};
+        const float cacheGlyphHeight {
+            static_cast<float>(mChildren.front()->getTextCacheGlyphHeight())};
+        if (cacheGlyphHeight > 0.0f)
+            combinedHeight = cacheGlyphHeight * mChildren.front()->getLineSpacing();
+        else
+            return;
         if (mChildren.front()->getSize().y > mSize.y) {
             if (mVerticalSnap) {
                 float numLines {std::floor(mSize.y / combinedHeight)};
@@ -118,11 +123,16 @@ void ScrollableContainer::update(int deltaTime)
     if (!isVisible() || mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
-    const glm::vec2 contentSize {mChildren.front()->getSize()};
+    const glm::vec2 contentSize {glm::round(mChildren.front()->getSize())};
     float rowModifier {1.0f};
 
-    float lineSpacing {mChildren.front()->getLineSpacing()};
-    float combinedHeight {mChildren.front()->getFont()->getHeight(lineSpacing)};
+    const float lineSpacing {mChildren.front()->getLineSpacing()};
+    float combinedHeight {0.0f};
+    const float cacheGlyphHeight {static_cast<float>(mChildren.front()->getTextCacheGlyphHeight())};
+    if (cacheGlyphHeight > 0.0f)
+        combinedHeight = cacheGlyphHeight * lineSpacing;
+    else
+        return;
 
     // Calculate the spacing which will be used to clip the container.
     if (lineSpacing > 1.2f && mClipSpacing == 0.0f) {
@@ -175,7 +185,7 @@ void ScrollableContainer::update(int deltaTime)
         mAutoScrollAccumulator += deltaTime;
         while (mAutoScrollAccumulator >=
                static_cast<int>(rowModifier * static_cast<float>(mAdjustedAutoScrollSpeed))) {
-            if (contentSize.y > mAdjustedHeight)
+            if (!mAtEnd && contentSize.y > mAdjustedHeight)
                 mScrollPos += mScrollDir;
             mAutoScrollAccumulator -=
                 static_cast<int>(rowModifier * static_cast<float>(mAdjustedAutoScrollSpeed));
@@ -188,18 +198,15 @@ void ScrollableContainer::update(int deltaTime)
     if (mScrollPos.y < 0.0f)
         mScrollPos.y = 0.0f;
 
-    if (mScrollPos.x + mSize.x > contentSize.x) {
-        mScrollPos.x = contentSize.x - mSize.x;
+    if (mScrollPos.x + std::round(mSize.x) > contentSize.x) {
+        mScrollPos.x = contentSize.x - std::round(mSize.x);
         mAtEnd = true;
     }
 
-    if (contentSize.y < mAdjustedHeight) {
+    if (contentSize.y < mAdjustedHeight)
         mScrollPos.y = 0.0f;
-    }
-    else if (mScrollPos.y + mAdjustedHeight > contentSize.y) {
-        mScrollPos.y = contentSize.y - mAdjustedHeight;
+    else if (mScrollPos.y + mAdjustedHeight > contentSize.y)
         mAtEnd = true;
-    }
 
     if (mAtEnd) {
         mAutoScrollResetAccumulator += deltaTime;
@@ -237,8 +244,8 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
     dimScaled.x = std::fabs(trans[3].x + mSize.x);
     dimScaled.y = std::fabs(trans[3].y + mAdjustedHeight);
 
-    glm::ivec2 clipDim {static_cast<int>(ceilf(dimScaled.x - trans[3].x)),
-                        static_cast<int>(ceilf(dimScaled.y - trans[3].y))};
+    glm::ivec2 clipDim {static_cast<int>(dimScaled.x - trans[3].x),
+                        static_cast<int>(dimScaled.y - trans[3].y)};
 
     // By effectively clipping the upper and lower boundaries of the container we mostly avoid
     // scrolling outside the vertical starting and ending positions.
@@ -247,7 +254,7 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
 
     mRenderer->pushClipRect(clipPos, clipDim);
 
-    trans = glm::translate(trans, glm::round(-glm::vec3 {mScrollPos.x, mScrollPos.y, 0.0f}));
+    trans = glm::translate(trans, -glm::vec3 {mScrollPos.x, mScrollPos.y, 0.0f});
     mRenderer->setMatrix(trans);
 
     if (Settings::getInstance()->getBool("DebugText"))

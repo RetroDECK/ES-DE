@@ -67,15 +67,17 @@ The roadmap is under constant review so expect it to change from time to time. S
 #### v2.0 (in progress)
 
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
-* Multiple new gamelist components (more carousel modes, grid component etc.)
+* Multiple new components (carousel support for the Gamelist view, grid component etc.)
 * Lottie animation (vector graphics) and GIF animation support
 * OpenGL ES 3.0 renderer for use on the Raspberry Pi
-* Replace the OpenGL fixed function pipeline with a shader-based renderer
+* Replace the OpenGL fixed function pipeline renderer with a shader-based renderer
 * Replace NanoSVG with a more capable SVG rendering library
+* Improve text and font functions, e.g. dynamic texture allocation and faster and cleaner text wrapping
 * Improve the performance of the GLSL shader post-processing
 
 #### v2.1
 
+* Add element transition animations to the theme engine
 * New texture/cache manager with improved memory management and support for GIF and Lottie animations
 * Reduced amount of gamelist reloading to retain cached textures and improve overall performance
 * Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
@@ -93,7 +95,8 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Proper audio mixer
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets
-* Improved text and font functions, e.g. faster and cleaner line wrapping and more exact sizing
+* Replace the built-in Unicode functions and lookup tables with those of the ICU library
+* Add text kerning support using the HarfBuzz library
 
 #### v2.3
 

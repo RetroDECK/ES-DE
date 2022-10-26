@@ -664,7 +664,7 @@ RetroArch does not embed any version information into the filename so no wildcar
 
 ## Using manually downloaded emulators on Linux
 
-Normally on Linux you would install emulators using either one of the established package formats, i.e. Flatpak, AppImage or Snap, or you would install them using the operating system repository. Less likely would be to build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS), you don't even have the choice to install them to a standard system directory.
+Normally on Linux you would install emulators using either one of the established cross-distribution package formats, i.e. AppImage, Snap or Flatpak, or you would install them using the operating system repository (including the AUR if available on your OS). Less likely would be to manually build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS or Fedora Silverblue), you don't even have the choice to install them to a standard system directory.
 
 For these situations ES-DE looks for emulators in the same directories where it looks for AppImages (as explained in the section above), meaning:
 ```
@@ -691,6 +691,7 @@ The following manually downloaded emulators are supported when using the bundled
 | flash                            | Lightspark    | lightspark/lightspark           |
 | flash                            | Ruffle        | ruffle/ruffle                   |
 | fmtowns                          | Tsugaru       | tsugaru/Tsugaru_CUI             |
+| model3                           | Supermodel    | Supermodel/supermodel           |
 | oric                             | Oricutron     | oricutron/Oricutron             |
 | pico8                            | PICO-8        | pico-8/pico8                    |
 | psvita                           | Vita3K        | Vita3K/Vita3K                   |
@@ -908,15 +909,21 @@ Not all systems are as simple as described above, or there may be multiple ways 
 
 #### Arcade and Neo Geo
 
+**General**
+
 For all the supported MAME variants as well as Final Burn Alpha/FinalBurn Neo and Neo Geo, single file archives should be used. But these should retain the MAME names as filenames since ES-DE ships with MAME lookup tables, meaning the MAME names are expanded to the full game names.
 
 For instance `topgunnr.7z` will be expanded to `Top Gunner`.
 
 This is required by the TheGamesDB scraper where the expanded filenames are used for game searches. (Screenscraper natively supports searches using the MAME names). It's also quite nice to have the gamelist populated with the expanded game names even before any scraping has taken place.
 
-By default ES-DE will filter out BIOSes and devices that can't be launched directly, meaning these will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file and BIOSes and devices for systems like MESS and Model 2 will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
+By default ES-DE will filter out BIOSes and devices that can't be launched directly, meaning these will never show up in the gamelist. But this only applies to files that are listed in the regular MAME driver file and BIOSes and devices for systems like MESS will not be filtered out. You'll instead need to manually hide these files using the _Hidden_ option in the metadata editor.
 
-If emulating Sega Model 2 games using _Model 2 Emulator_, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. If you're using a portable ES-DE installation, then you can set the ROM directory path to be relative, for example:
+If using the standalone release of FinalBurn Neo you also need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch (see the comments about Model 2 Emulator below for more details).
+
+**Sega Model 2**
+
+If emulating Sega Model 2 games using _Model 2 Emulator_ on Windows, then you need to change the ROM directory path in the EMULATOR.INI file to point to your Model 2 ROMs. If you're using a portable ES-DE installation, then you can set the ROM directory path to be relative, for example:
 ```
 [RomDirs]
 Dir1=..\..\ROMs\arcade\Sega Model 2
@@ -926,7 +933,26 @@ The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
 
-Likewise, if using the standalone release of FinalBurn Neo you also need to define the ROM directory in the fbneo.ini file or via the user interface as this emulator does not support passing the full path to the game ROM on game launch.
+On Unix/Linux and macOS, the only available emulator for Sega Model 2 is MAME, either the RetroArch - Current core or MAME standalone. Compatibility is still quite poor with only a handful of games working correctly, but this is likely to improve going forward as almost all games for this platform can already start and run to a certain degree. Some games flagged as not working by MAME are still playable with only minor glitches to audio and graphics, just make sure to use a recent ROM set for maximum compatibility.
+
+**Sega Model 3**
+
+For Sega Model 3 emulation on Linux download the custom [Supermodel_2022-10-07.tar.gz](https://gitlab.com/es-de/emulationstation-de/-/package_files/55835402/download) package for ES-DE and follow the instructions in the Readme.txt file. In summary you need to place the `supermodel` binary into `~/Applications/Supermodel/` and you need to place the `Config` and `NVRAM` directories into `~/ROMs/model3/`. Note that this build does not include network support as that would make it incompatible with SteamOS. Apart from that it runs really well. If you're using a Linux OS with access to the AUR, then you can use that release of Supermodel instead. But if you do, you still need to place your Config and NVRAM directories into ~/ROMs/model3/ so it's a good idea to download the custom package linked above and read the Readme.txt file to fully understand the required setup.
+
+Although there is a Homebrew release of Supermodel for macOS this seems to be quite old and is apparently not working correctly so for the time being the model3 system is unsupported on this operating system.
+
+It's possible to add per-game command line parameters that will be passed to Supermodel on launch. To accomplish this, create a file named _\<game\>.commands_ in the same directory as the game file, for example `daytona2.commands` and add the options to this file. Here is an example of what the file contents could look like:
+```
+-legacy3d -show-fps
+```
+
+**MAME standalone on macOS**
+
+If using the Homebrew release of MAME standalone on macOS and emulating MESS systems like astrocde and ti99, then you need to configure the path to the MAME hash files in the mame.ini file. Alternatively you can symlink the installed hash directory to `~/.mame/` like the following (you will of course need to modify the command depending on which MAME version you have installed):
+```
+ln -s /opt/homebrew/Cellar/mame/0.248/share/mame/hash ~/.mame/      # on ARM/Apple
+ln -s /usr/local/Cellar/mame/0.248/share/mame/hash ~/.mame/         # on x86/Intel
+```
 
 #### Nintendo Game and Watch
 
@@ -2881,31 +2907,33 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ## Themes
 
-ES-DE is fully themeable, and although the application ships with the comprehensive slate-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
+ES-DE is fully themeable, and although the application ships with the comprehensive slate-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well as any themes made specifically for the ES-DE 2.0 theme engine. Note that most Batocera and Recalbox themes are not compatible as these forks use a different theme engine than ES-DE.
 
-As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in this guide.
+As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in the ES-DE documentation.
 
 
-Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu.
+Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes/`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the .emulationstation folder can be found in the root of the EmulationStation-DE directory.
 
-For this example, we've downloaded the [Carbon](https://github.com/RetroPie/es-theme-carbon) and [Fundamental](https://github.com/G-rila/es-theme-fundamental) themes and uncompressed them to the ES-DE home directory:
+To download a theme from its GitHub page, press the green _Code_ button in the upper right corner and choose _Download ZIP_. The process is identical on GitLab, but this site uses a button with a download symbol instead of a green button. You then simply unpack the file into `~/.emulationstation/themes/` and restart ES-DE.
+
+For this example, we've downloaded the [alekfull-nx-es-de](https://github.com/anthonycaccese/alekfull-nx-es-de) and [es-theme-carbon](https://github.com/RetroPie/es-theme-carbon) themes and uncompressed them to the themes directory:
 
 ```
+~/.emulationstation/themes/alekfull-nx-es-de
 ~/.emulationstation/themes/es-theme-carbon
-~/.emulationstation/themes/es-theme-fundamental
 ```
 
-We now have four entries in the Theme set selector in the UI settings menu, i.e. _slate-DE, modern-DE, es-theme-carbon_ and _es-theme-fundamental_.
+We now have four entries in the _Theme set_ selector in the UI settings menu, i.e. _alekfull-nx-es-de, es-theme-carbon, modern-DE_ and _slate-DE_.
 
-Although you place additional themes in your ES-DE home directory, the default slate-DE and modern-DE themes are located in the installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
+Although you should place additional themes in your ES-DE home directory, the default slate-DE and modern-DE themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/emulationstation/themes/` or `/usr/local/share/emulationstation/themes/` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/` on macOS or `C:\Program Files\EmulationStation-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the EmulationStation-DE directory.
 
 Note that if using the AppImage release on Linux, then there is no installation folder as all files are contained inside the AppImage file.
 
-So if you would like to customize the slate-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
+If you would like to customize the slate-DE or modern-DE theme sets, simply make a copy of their directories to `~/.emulationstation/themes/` and then those copies will take precedence over the ones in the application installation directory.
 
-Here is a good resource with a list of themes (although you will have to search online for the download location for each theme set):
+Refer to the official list of recommended theme sets for a selection of high-quality themes:
 
-https://retropie.org.uk/docs/Themes
+https://gitlab.com/es-de/themes/themes-list
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default slate-DE theme)._
@@ -2971,7 +2999,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file in root folder  |
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W*] | Mednafen **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME **(Standalone)** [UMW*]      |                                   | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [UW*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)** [UMW*]      |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** [UMW*] | Yes          |                                      |
@@ -2993,7 +3021,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | coco                  | Tandy Color Computer                           | XRoar CoCo 2 NTSC **(Standalone)** [UMW*] | XRoar CoCo 2 PAL **(Standalone)** [UMW*] | Yes           | See the specific _Tandy Color Computer_ section elsewhere in this guide |
 | colecovision          | ColecoVision                                   | blueMSX                           | Gearcoleco,<br>openMSX **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
 | cps                   | Capcom Play System                             | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
-| daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes (Daphne games) | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
+| daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW*] | Hypseus [Singe] **(Standalone)** [UW*] | Yes for Daphne games | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | doom                  | Doom                                           | PrBoom                            | Boom 3 [UW],<br>Boom 3 xp [UW],<br>_Shortcut or script_ | No           |                                      |
 | dos                   | DOS (PC)                                       | DOSBox-Pure                       | DOSBox-Core,<br>DOSBox-SVN,<br>DOSBox-X **(Standalone)**,<br>DOSBox Staging **(Standalone)** [UMW*] | No           | See the specific _DOS / PC_ section elsewhere in this guide |
@@ -3021,7 +3049,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | Basilisk II **(Standalone)** [UMW*] | SheepShaver **(Standalone)** [UMW*] | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [W*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [UW*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      |                                      |
 | mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      |                                      |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
@@ -3030,8 +3058,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | megaduck              | Creatronic Mega Duck                           | SameDuck                          |                                   | No           | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
-| model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W*] | Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*] |              | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
-| model3                | Sega Model 3                                   | Supermodel **(Standalone)** [W*]  |                                   |              | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W*],<br>MAME - Current [UM] | Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>MAME - Current [W],<br>MAME **(Standalone)** [UMW*] | Yes for MAME | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| model3                | Sega Model 3                                   | Supermodel **(Standalone)** [UW*]  |                                   | No           | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | moonlight             | Moonlight Game Streaming                       | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
 | msx                   | MSX                                            | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
@@ -3065,7 +3093,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | PICO-8 Splore **(Standalone)**    | No           | See the specific _PICO-8_ section elsewhere in this guide |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | _Various_                         |                                   | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
-| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW*],<br>PCSX2 Legacy **(Standalone)**@,<br>Play! **(Standalone)** [UMW*],<br>AetherSX2 **(Standalone)** [M] | Yes (No for Play!) |                                      |
+| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW*],<br>PCSX2 Legacy **(Standalone)**@,<br>Play! **(Standalone)** [UMW*],<br>AetherSX2 **(Standalone)** [M] | Yes except for Play! |                                      |
 | ps3                   | Sony PlayStation 3                             | RPCS3 Shortcut **(Standalone)** [UMW*] | RPCS3 Directory **(Standalone)** [UMW*] | Yes    | See the specific _Sony PlayStation 3_ section elsewhere in this guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single .iso file in root folder       |
@@ -3097,7 +3125,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
-| ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)** [UW*]       |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |
+| ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)** [UMW*]      |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |
 | tic80                 | TIC-80 Game Engine                             | TIC-80                            |                                   | No           | Single .tic file in root folder      |
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |
 | trs-80                | Tandy TRS-80                                   | sdl2trs DOS Diskette **(Standalone)** [UW*] | sdl2trs Bootable Diskette **(Standalone)** [UW*],<br>sdl2trs CMD File **(Standalone)** [UW*] | Yes          | See the specific _Tandy TRS-80_ section elsewhere in this guide |

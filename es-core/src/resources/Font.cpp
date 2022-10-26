@@ -4,7 +4,7 @@
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.
-//  Also functions for word wrapping and similar.
+//  Also functions for text wrapping and similar.
 //
 
 #include "resources/Font.h"
@@ -12,24 +12,23 @@
 #include "Log.h"
 #include "renderers/Renderer.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
-FT_Library Font::sLibrary {nullptr};
-
-std::map<std::pair<std::string, int>, std::weak_ptr<Font>> Font::sFontMap;
-
-Font::Font(int size, const std::string& path)
+Font::Font(float size, const std::string& path)
     : mRenderer {Renderer::getInstance()}
-    , mSize(size)
-    , mMaxGlyphHeight {0}
     , mPath(path)
+    , mFontSize {size}
+    , mLetterHeight {0.0f}
+    , mMaxGlyphHeight {static_cast<int>(std::round(size))}
+    , mLegacyMaxGlyphHeight {0}
 {
-    if (mSize < 9) {
-        mSize = 9;
+    if (mFontSize < 3.0f) {
+        mFontSize = 3.0f;
         LOG(LogWarning) << "Requested font size too small, changing to minimum supported size";
     }
-    else if (mSize > Renderer::getScreenHeight()) {
-        mSize = static_cast<int>(Renderer::getScreenHeight());
+    else if (mFontSize > Renderer::getScreenHeight() * 1.5f) {
+        mFontSize = Renderer::getScreenHeight() * 1.5f;
         LOG(LogWarning) << "Requested font size too large, changing to maximum supported size";
     }
 
@@ -37,7 +36,7 @@ Font::Font(int size, const std::string& path)
         initLibrary();
 
     // Always initialize ASCII characters.
-    for (unsigned int i = 32; i < 128; ++i)
+    for (unsigned int i = 32; i < 127; ++i)
         getGlyph(i);
 
     clearFaceCache();
@@ -47,7 +46,7 @@ Font::~Font()
 {
     unload(ResourceManager::getInstance());
 
-    auto fontEntry = sFontMap.find(std::pair<std::string, int>(mPath, mSize));
+    auto fontEntry = sFontMap.find(std::pair<std::string, float>(mPath, mFontSize));
 
     if (fontEntry != sFontMap.cend())
         sFontMap.erase(fontEntry);
@@ -58,50 +57,11 @@ Font::~Font()
     }
 }
 
-void Font::initLibrary()
-{
-    assert(sLibrary == nullptr);
-
-    if (FT_Init_FreeType(&sLibrary)) {
-        sLibrary = nullptr;
-        LOG(LogError) << "Couldn't initialize FreeType";
-    }
-}
-
-std::vector<std::string> Font::getFallbackFontPaths()
-{
-    std::vector<std::string> fontPaths;
-
-    // Standard fonts, let's include them here for exception handling purposes even though that's
-    // not really the correct location. (The application will crash if they are missing.)
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
-    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
-
-    // Vera sans Unicode.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/DejaVuSans.ttf"));
-    // GNU FreeFont monospaced.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/FreeMono.ttf"));
-    // Various languages, such as Japanese and Chinese.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
-    // Korean.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/NanumMyeongjo.ttf"));
-    // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
-    fontPaths.push_back(
-        ResourceManager::getInstance().getResourcePath(":/fonts/fontawesome-webfont.ttf"));
-    // This is only needed for some really rare special characters.
-    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/Ubuntu-C.ttf"));
-
-    return fontPaths;
-}
-
-std::shared_ptr<Font> Font::get(int size, const std::string& path)
+std::shared_ptr<Font> Font::get(float size, const std::string& path)
 {
     const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
-    std::pair<std::string, int> def {canonicalPath.empty() ? getDefaultPath() : canonicalPath,
-                                     size};
+    const std::pair<std::string, float> def {
+        canonicalPath.empty() ? getDefaultPath() : canonicalPath, size};
 
     auto foundFont = sFontMap.find(def);
     if (foundFont != sFontMap.cend()) {
@@ -109,7 +69,7 @@ std::shared_ptr<Font> Font::get(int size, const std::string& path)
             return foundFont->second.lock();
     }
 
-    std::shared_ptr<Font> font {std::shared_ptr<Font>(new Font(def.second, def.first))};
+    std::shared_ptr<Font> font {new Font(def.second, def.first)};
     sFontMap[def] = std::weak_ptr<Font>(font);
     ResourceManager::getInstance().addReloadable(font);
     return font;
@@ -117,11 +77,9 @@ std::shared_ptr<Font> Font::get(int size, const std::string& path)
 
 glm::vec2 Font::sizeText(std::string text, float lineSpacing)
 {
+    const float lineHeight {getHeight(lineSpacing)};
     float lineWidth {0.0f};
     float highestWidth {0.0f};
-
-    const float lineHeight {getHeight(lineSpacing)};
-
     float y {lineHeight};
 
     size_t i {0};
@@ -147,14 +105,18 @@ glm::vec2 Font::sizeText(std::string text, float lineSpacing)
     return glm::vec2 {highestWidth, y};
 }
 
-std::string Font::getTextMaxWidth(std::string text, float maxWidth)
+int Font::loadGlyphs(const std::string& text)
 {
-    float width {sizeText(text).x};
-    while (width > maxWidth) {
-        text.pop_back();
-        width = sizeText(text).x;
+    mMaxGlyphHeight = static_cast<int>(std::round(mFontSize));
+
+    for (size_t i = 0; i < text.length();) {
+        unsigned int character {Utils::String::chars2Unicode(text, i)}; // Advances i.
+        Glyph* glyph {getGlyph(character)};
+
+        if (glyph->rows > mMaxGlyphHeight)
+            mMaxGlyphHeight = glyph->rows;
     }
-    return text;
+    return mMaxGlyphHeight;
 }
 
 TextCache* Font::buildTextCache(const std::string& text,
@@ -185,11 +147,14 @@ TextCache* Font::buildTextCache(const std::string& text,
         yBot = getHeight(1.5);
     }
     else {
+        // TODO: This is lacking some precision which is especially visible at higher resolutions
+        // like 4K where the text is not always placed entirely correctly vertically. Try to find
+        // a way to improve on this.
         yTop = getGlyph('S')->bearing.y;
         yBot = getHeight(lineSpacing);
     }
 
-    float y {offset[1] + (yBot + yTop) / 2.0f};
+    float y {std::round(offset[1] + (yBot + yTop) / 2.0f)};
 
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
@@ -254,14 +219,15 @@ TextCache* Font::buildTextCache(const std::string& text,
 
     TextCache* cache {new TextCache()};
     cache->vertexLists.resize(vertMap.size());
-    cache->metrics = {sizeText(text, lineSpacing)};
+    cache->metrics.size = {sizeText(text, lineSpacing)};
+    cache->metrics.maxGlyphHeight = mMaxGlyphHeight;
 
-    unsigned int i {0};
+    size_t i {0};
     for (auto it = vertMap.cbegin(); it != vertMap.cend(); ++it) {
-        TextCache::VertexList& vertList = cache->vertexLists.at(i);
-
+        TextCache::VertexList& vertList {cache->vertexLists.at(i)};
         vertList.textureIdPtr = &it->first->textureId;
         vertList.verts = it->second;
+        ++i;
     }
 
     clearFaceCache();
@@ -287,220 +253,198 @@ void Font::renderTextCache(TextCache* cache)
     }
 }
 
-std::string Font::wrapText(std::string text, float maxLength, float maxHeight, float lineSpacing)
+std::string Font::wrapText(const std::string& text,
+                           const float maxLength,
+                           const float maxHeight,
+                           const float lineSpacing,
+                           const bool multiLine)
 {
-    assert(maxLength != 0.0f);
-
-    std::string out;
-    std::string line;
-    std::string word;
-    std::string abbreviatedWord;
-    std::string temp;
-
-    size_t space {0};
-    glm::vec2 textSize {0.0f, 0.0f};
-    const float dotsSize {sizeText("...").x};
+    assert(maxLength > 0.0f);
     const float lineHeight {getHeight(lineSpacing)};
-    float accumHeight {0.0f};
-    const bool restrictHeight {maxHeight > 0.0f};
-    bool skipLastLine {false};
-    float currLineLength {0.0f};
+    const float dotsWidth {sizeText("...").x};
+    float accumHeight {lineHeight};
+    float lineWidth {0.0f};
+    float charWidth {0.0f};
+    float lastSpacePos {0.0f};
+    unsigned int charID {0};
+    size_t cursor {0};
+    size_t lastSpace {0};
+    size_t spaceAccum {0};
+    size_t byteCount {0};
+    std::string wrappedText;
+    std::string charEntry;
+    std::vector<std::pair<size_t, float>> dotsSection;
+    bool addDots {false};
 
-    // While there's text or we still have text to render.
-    while (text.length() > 0) {
-        if (restrictHeight && accumHeight > maxHeight)
-            break;
-
-        space = text.find_first_of(" \t\n");
-
-        if (space == std::string::npos) {
-            space = text.length() - 1;
-        }
-        else if (restrictHeight) {
-            if (text.at(space) == '\n')
-                accumHeight += lineHeight;
-        }
-
-        word = text.substr(0, space + 1);
-        text.erase(0, space + 1);
-
-        temp = line + word;
-
-        textSize = sizeText(temp);
-
-        // If the word will fit on the line, add it to our line and continue.
-        if (textSize.x <= maxLength) {
-            line = temp;
-            currLineLength = textSize.x;
-            continue;
-        }
-        else {
-            // If the word is too long to fit within maxLength then abbreviate it.
-            float wordSize {sizeText(word).x};
-            if (restrictHeight && currLineLength != 0.0f && maxHeight < lineHeight &&
-                wordSize > maxLength - textSize.x) {
-                // Multi-word lines.
-                if (maxLength - currLineLength + dotsSize < wordSize &&
-                    sizeText(line).x + dotsSize > maxLength) {
-                    while (sizeText(line).x + dotsSize > maxLength)
-                        line.pop_back();
-                }
-                else {
-                    while (word != "" && wordSize + dotsSize > maxLength - currLineLength) {
-                        word.pop_back();
-                        wordSize = sizeText(word).x;
-                    }
-
-                    line = line + word;
-                }
-
-                if (line.back() == ' ')
-                    line.pop_back();
-
-                line.append("...");
+    for (size_t i = 0; i < text.length(); ++i) {
+        if (text[i] == '\n') {
+            if (!multiLine) {
+                addDots = true;
                 break;
             }
-            if (wordSize > maxLength) {
+            wrappedText.append("\n");
+            accumHeight += lineHeight;
+            lineWidth = 0.0f;
+            lastSpace = 0;
+            continue;
+        }
 
-                if (line != "" && line.back() != '\n') {
-                    if (restrictHeight) {
-                        if (accumHeight + lineHeight > maxHeight)
-                            continue;
-                        accumHeight += lineHeight;
-                    }
-                    line.append("\n");
+        charWidth = 0.0f;
+        byteCount = 0;
+        cursor = i;
+
+        // Needed to handle multi-byte Unicode characters.
+        charID = Utils::String::chars2Unicode(text, cursor);
+        charEntry = text.substr(i, cursor - i);
+
+        Glyph* glyph {getGlyph(charID)};
+        if (glyph != nullptr) {
+            charWidth = glyph->advance.x;
+            byteCount = cursor - i;
+        }
+        else {
+            // Missing glyph.
+            continue;
+        }
+
+        if (multiLine && (charEntry == " " || charEntry == "\t")) {
+            lastSpace = i;
+            lastSpacePos = lineWidth;
+        }
+
+        if (lineWidth + charWidth <= maxLength) {
+            if (lineWidth + charWidth + dotsWidth > maxLength)
+                dotsSection.emplace_back(std::make_pair(byteCount, charWidth));
+            lineWidth += charWidth;
+            wrappedText.append(charEntry);
+        }
+        else if (!multiLine) {
+            addDots = true;
+            break;
+        }
+        else {
+            if (maxHeight == 0.0f || accumHeight < maxHeight) {
+                // New row.
+                float spaceOffset {0.0f};
+                if (lastSpace == wrappedText.size()) {
+                    wrappedText.append("\n");
                 }
-
-                const float cutTarget {wordSize - maxLength + dotsSize};
-                float cutSize {0.0f};
-
-                while (word != "" && cutSize < cutTarget) {
-                    cutSize += sizeText(word.substr(word.size() - 1)).x;
-                    word.pop_back();
+                else if (lastSpace != 0) {
+                    if (lastSpace + spaceAccum == wrappedText.size())
+                        wrappedText.append("\n");
+                    else
+                        wrappedText[lastSpace + spaceAccum] = '\n';
+                    spaceOffset = lineWidth - lastSpacePos;
                 }
-
-                word.append("...");
-                line = line + word;
-                continue;
+                else {
+                    if (lastSpace == 0)
+                        ++spaceAccum;
+                    wrappedText.append("\n");
+                }
+                if (charEntry != " " && charEntry != "\t") {
+                    wrappedText.append(charEntry);
+                    lineWidth = charWidth;
+                }
+                else {
+                    lineWidth = 0.0f;
+                }
+                accumHeight += lineHeight;
+                lineWidth += spaceOffset;
+                lastSpacePos = 0.0f;
+                lastSpace = 0;
             }
             else {
-                out += line + '\n';
-                if (restrictHeight)
-                    accumHeight += lineHeight;
-
-                if (restrictHeight && accumHeight > maxHeight) {
-                    out.pop_back();
-                    skipLastLine = true;
-                    break;
-                }
-            }
-            line = word;
-        }
-    }
-
-    // Whatever's left should fit.
-    if (!skipLastLine)
-        out.append(line);
-
-    if (restrictHeight && out.back() == '\n')
-        out.pop_back();
-
-    // If the text has been abbreviated vertically then add "..." at the end of the string.
-    if (restrictHeight && accumHeight > maxHeight) {
-        if (out.back() != '\n') {
-            float cutSize {0.0f};
-            float cutTarget {sizeText(line).x - maxLength + dotsSize};
-            while (cutSize < cutTarget) {
-                cutSize += sizeText(out.substr(out.size() - 1)).x;
-                out.pop_back();
+                if (multiLine)
+                    addDots = true;
+                break;
             }
         }
-        if (out.back() == ' ')
-            out.pop_back();
-        out.append("...");
+
+        i = cursor - 1;
     }
 
-    return out;
+    if (addDots) {
+        if (!wrappedText.empty() && wrappedText.back() == ' ') {
+            lineWidth -= sizeText(" ").x;
+            wrappedText.pop_back();
+        }
+        else if (!wrappedText.empty() && wrappedText.back() == '\t') {
+            lineWidth -= sizeText("\t").x;
+            wrappedText.pop_back();
+        }
+        while (!wrappedText.empty() && !dotsSection.empty() && lineWidth + dotsWidth > maxLength) {
+            lineWidth -= dotsSection.back().second;
+            wrappedText.erase(wrappedText.length() - dotsSection.back().first);
+            dotsSection.pop_back();
+        }
+        if (!wrappedText.empty() && wrappedText.back() == ' ')
+            wrappedText.pop_back();
+
+        wrappedText.append("...");
+    }
+
+    return wrappedText;
 }
 
-glm::vec2 Font::sizeWrappedText(std::string text, float xLen, float lineSpacing)
+glm::vec2 Font::getWrappedTextCursorOffset(const std::string& wrappedText,
+                                           const size_t stop,
+                                           const float lineSpacing)
 {
-    text = wrapText(text, xLen);
-    return sizeText(text, lineSpacing);
-}
-
-glm::vec2 Font::getWrappedTextCursorOffset(std::string text,
-                                           float xLen,
-                                           size_t stop,
-                                           float lineSpacing)
-{
-    std::string wrappedText {wrapText(text, xLen)};
-
     float lineWidth {0.0f};
-    float y {0.0f};
-
-    size_t wrapCursor {0};
+    float yPos {0.0f};
     size_t cursor {0};
+
     while (cursor < stop) {
-        unsigned int wrappedCharacter {Utils::String::chars2Unicode(wrappedText, wrapCursor)};
-        unsigned int character {Utils::String::chars2Unicode(text, cursor)};
-
-        if (wrappedCharacter == '\n' && character != '\n') {
-            // This is where the wordwrap inserted a newline
-            // Reset lineWidth and increment y, but don't consume .a cursor character.
-            lineWidth = 0.0f;
-            y += getHeight(lineSpacing);
-
-            cursor = Utils::String::prevCursor(text, cursor); // Unconsume.
-            continue;
-        }
-
+        unsigned int character {Utils::String::chars2Unicode(wrappedText, cursor)};
         if (character == '\n') {
             lineWidth = 0.0f;
-            y += getHeight(lineSpacing);
+            yPos += getHeight(lineSpacing);
             continue;
         }
 
-        Glyph* glyph = getGlyph(character);
+        Glyph* glyph {getGlyph(character)};
         if (glyph)
             lineWidth += glyph->advance.x;
     }
 
-    return glm::vec2 {lineWidth, y};
-}
-
-float Font::getHeight(float lineSpacing) const
-{
-    // Return overall height including line spacing.
-    return mMaxGlyphHeight * lineSpacing;
+    return glm::vec2 {lineWidth, yPos};
 }
 
 float Font::getLetterHeight()
 {
-    Glyph* glyph {getGlyph('S')};
-    assert(glyph);
-    return glyph->texSize.y * glyph->texture->textureSize.y;
+    if (mLetterHeight == 0.0f)
+        return mFontSize * 0.737f; // Only needed if face does not contain the letter 'S'.
+    else
+        return mLetterHeight;
 }
 
 std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          unsigned int properties,
-                                         const std::shared_ptr<Font>& orig)
+                                         const std::shared_ptr<Font>& orig,
+                                         const float maxHeight,
+                                         const bool legacyTheme,
+                                         const float sizeMultiplier)
 {
+    mLegacyTheme = legacyTheme;
+
     using namespace ThemeFlags;
     if (!(properties & FONT_PATH) && !(properties & FONT_SIZE))
         return orig;
 
-    std::shared_ptr<Font> font;
-    int size {static_cast<int>(orig ? orig->mSize : FONT_SIZE_MEDIUM)};
+    float size {static_cast<float>(orig ? orig->mFontSize : FONT_SIZE_MEDIUM)};
     std::string path {orig ? orig->mPath : getDefaultPath()};
 
-    float sh {static_cast<float>(Renderer::getScreenHeight())};
+    float screenHeight {static_cast<float>(Renderer::getScreenHeight())};
 
-    // Make sure the size is not unreasonably large (which may be caused by a mistake in the
-    // theme configuration).
-    if (properties & FONT_SIZE && elem->has("fontSize"))
-        size = glm::clamp(static_cast<int>(sh * elem->get<float>("fontSize")), 0,
-                          static_cast<int>(Renderer::getInstance()->getScreenHeight()));
+    if (properties & FONT_SIZE && elem->has("fontSize")) {
+        size = glm::clamp(screenHeight * elem->get<float>("fontSize"), screenHeight * 0.001f,
+                          screenHeight * 1.5f);
+        // This is used by the carousel where the itemScale property also scales the font size.
+        size *= sizeMultiplier;
+    }
+
+    if (maxHeight != 0.0f && size > maxHeight)
+        size = maxHeight;
 
     if (properties & FONT_PATH && elem->has("fontPath"))
         path = elem->get<std::string>("fontPath");
@@ -513,14 +457,17 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
         path = getDefaultPath();
     }
 
-    return get(size, path);
+    if (mLegacyTheme)
+        return get(std::floor(size), path);
+    else
+        return get(size, path);
 }
 
 size_t Font::getMemUsage() const
 {
     size_t memUsage {0};
     for (auto it = mTextures.cbegin(); it != mTextures.cend(); ++it)
-        memUsage += it->textureSize.x * it->textureSize.y * 4;
+        memUsage += (*it)->textureSize.x * (*it)->textureSize.y * 4;
 
     for (auto it = mFaceCache.cbegin(); it != mFaceCache.cend(); ++it)
         memUsage += it->second->data.length;
@@ -546,38 +493,43 @@ size_t Font::getTotalMemUsage()
     return total;
 }
 
-Font::FontTexture::FontTexture(const int mSize)
+std::vector<std::string> Font::getFallbackFontPaths()
+{
+    std::vector<std::string> fontPaths;
+
+    // Default application fonts.
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Regular.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-SemiBold.ttf");
+    ResourceManager::getInstance().getResourcePath(":/fonts/Akrobat-Bold.ttf");
+
+    // Vera sans Unicode.
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/DejaVuSans.ttf"));
+    // GNU FreeFont monospaced.
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/FreeMono.ttf"));
+    // Various languages, such as Japanese and Chinese.
+    fontPaths.push_back(
+        ResourceManager::getInstance().getResourcePath(":/fonts/DroidSansFallbackFull.ttf"));
+    // Korean.
+    fontPaths.push_back(
+        ResourceManager::getInstance().getResourcePath(":/fonts/NanumMyeongjo.ttf"));
+    // Font Awesome icon glyphs, used for various special symbols like stars, folders etc.
+    fontPaths.push_back(
+        ResourceManager::getInstance().getResourcePath(":/fonts/fontawesome-webfont.ttf"));
+    // This is only needed for some really rare special characters.
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/Ubuntu-C.ttf"));
+
+    return fontPaths;
+}
+
+Font::FontTexture::FontTexture(const int mFontSize)
 {
     textureId = 0;
-
-    // This is a hack to add some extra texture size when running at very low resolutions. If not
-    // doing this, the use of fallback fonts (such as Japanese characters) could result in the
-    // texture not fitting the glyphs.
-    int extraTextureSize {0};
-    const float screenSizeModifier {
-        std::min(Renderer::getScreenWidthModifier(), Renderer::getScreenHeightModifier())};
-
-    if (screenSizeModifier < 0.2f)
-        extraTextureSize += 6;
-    if (screenSizeModifier < 0.45f)
-        extraTextureSize += 4;
-
-    // It's not entirely clear if the 20 and 16 constants are correct, but they seem to provide
-    // a texture buffer large enough to hold the fonts. This logic is obviously a hack though
-    // and needs to be properly reviewed and improved.
-    textureSize = glm::ivec2 {mSize * (20 + extraTextureSize), mSize * (16 + extraTextureSize / 2)};
-
-    // Make sure the size is not unreasonably large (which may be caused by a mistake in the
-    // theme configuration).
-    if (textureSize.x > static_cast<int>(Renderer::getScreenWidth()) * 10)
-        textureSize.x =
-            glm::clamp(textureSize.x, 0, static_cast<int>(Renderer::getScreenWidth()) * 10);
-    if (textureSize.y > static_cast<int>(Renderer::getScreenHeight()) * 10)
-        textureSize.y =
-            glm::clamp(textureSize.y, 0, static_cast<int>(Renderer::getScreenHeight()) * 10);
-
-    writePos = glm::ivec2 {0, 0};
     rowHeight = 0;
+    writePos = glm::ivec2 {0, 0};
+
+    // Set the texture to a reasonable size, if we run out of space for adding glyphs then
+    // more textures will be created dynamically.
+    textureSize = glm::ivec2 {mFontSize * 6, mFontSize * 6};
 }
 
 Font::FontTexture::~FontTexture()
@@ -593,19 +545,18 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 
     if (writePos.x + size.x >= textureSize.x &&
         writePos.y + rowHeight + size.y + 1 < textureSize.y) {
-        // Row full, but it should fit on the next row so move the cursor there.
-        // Leave 1px of space between glyphs.
+        // Row is full, but the glyph should fit on the next row so move the cursor there.
+        // Leave 1 pixel of space between glyphs so that pixels from adjacent glyphs will
+        // not get sampled during scaling which would lead to edge artifacts.
         writePos = glm::ivec2 {0, writePos.y + rowHeight + 1};
         rowHeight = 0;
     }
 
-    if (writePos.x + size.x >= textureSize.x || writePos.y + size.y >= textureSize.y) {
-        // Nope, still won't fit.
-        return false;
-    }
+    if (writePos.x + size.x >= textureSize.x || writePos.y + size.y >= textureSize.y)
+        return false; // No it still won't fit.
 
     cursor_out = writePos;
-    // Leave 1px of space between glyphs.
+    // Leave 1 pixel of space between glyphs.
     writePos.x += size.x + 1;
 
     if (size.y > rowHeight)
@@ -617,9 +568,13 @@ bool Font::FontTexture::findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out
 void Font::FontTexture::initTexture()
 {
     assert(textureId == 0);
+    // Create a black texture with zero alpha value so that the single-pixel spaces between the
+    // glyphs will not be visible. That would otherwise lead to edge artifacts as these pixels
+    // would get sampled during scaling.
+    std::vector<uint8_t> texture(textureSize.x * textureSize.y * 4, 0);
     textureId =
         Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true, false, false,
-                                               false, textureSize.x, textureSize.y, nullptr);
+                                               false, textureSize.x, textureSize.y, &texture[0]);
 }
 
 void Font::FontTexture::deinitTexture()
@@ -630,15 +585,19 @@ void Font::FontTexture::deinitTexture()
     }
 }
 
-Font::FontFace::FontFace(ResourceData&& d, int size)
+Font::FontFace::FontFace(ResourceData&& d, float size, const std::string& path)
     : data {d}
 {
-    int err {
-        FT_New_Memory_Face(sLibrary, data.ptr.get(), static_cast<FT_Long>(data.length), 0, &face)};
-    assert(!err);
+    if (FT_New_Memory_Face(sLibrary, d.ptr.get(), static_cast<FT_Long>(d.length), 0, &face) != 0) {
+        LOG(LogError) << "Couldn't load font file \"" << path << "\"";
+        Utils::Platform::emergencyShutdown();
+    }
 
-    if (!err)
-        FT_Set_Pixel_Sizes(face, 0, size);
+    // Even though a fractional font size can be requested, the glyphs will always be rounded
+    // to integers. It's not useless to call FT_Set_Char_Size() instead of FT_Set_Pixel_Sizes()
+    // though as the glyphs will still be much more evenely sized across different resolutions.
+    FT_Set_Char_Size(face, static_cast<FT_F26Dot6>(0.0f), static_cast<FT_F26Dot6>(size * 64.0f), 0,
+                     0);
 }
 
 Font::FontFace::~FontFace()
@@ -647,11 +606,21 @@ Font::FontFace::~FontFace()
         FT_Done_Face(face);
 }
 
+void Font::initLibrary()
+{
+    assert(sLibrary == nullptr);
+
+    if (FT_Init_FreeType(&sLibrary)) {
+        sLibrary = nullptr;
+        LOG(LogError) << "Couldn't initialize FreeType";
+    }
+}
+
 void Font::rebuildTextures()
 {
     // Recreate OpenGL textures.
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
-        it->initTexture();
+        (*it)->initTexture();
 
     // Re-upload the texture data.
     for (auto it = mGlyphMap.cbegin(); it != mGlyphMap.cend(); ++it) {
@@ -678,7 +647,7 @@ void Font::rebuildTextures()
 void Font::unloadTextures()
 {
     for (auto it = mTextures.begin(); it != mTextures.end(); ++it)
-        it->deinitTexture();
+        (*it)->deinitTexture();
 }
 
 void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
@@ -686,29 +655,19 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
                                  glm::ivec2& cursor_out)
 {
     if (mTextures.size()) {
-        // Check if the most recent texture has space.
-        tex_out = &mTextures.back();
+        // Check if the most recent texture has space available for the glyph.
+        tex_out = mTextures.back().get();
 
         // Will this one work?
         if (tex_out->findEmpty(glyphSize, cursor_out))
             return; // Yes.
     }
 
-    // This should never happen, assuming the texture size is large enough to fit the font,
-    // as set in the FontTexture constructor. In the unlikely situation that it still happens,
-    // setting the texture to nullptr makes sure the application doesn't crash and that the
-    // user is clearly notified of the problem by the fact that the glyph/character will be
-    // completely missing.
-    if (mGlyphMap.size() > 0) {
-        tex_out = nullptr;
-        return;
-    }
-
-    mTextures.push_back(FontTexture(mSize));
-    tex_out = &mTextures.back();
+    mTextures.emplace_back(std::make_unique<FontTexture>(static_cast<int>(std::round(mFontSize))));
+    tex_out = mTextures.back().get();
     tex_out->initTexture();
 
-    bool ok = tex_out->findEmpty(glyphSize, cursor_out);
+    bool ok {tex_out->findEmpty(glyphSize, cursor_out)};
     if (!ok) {
         LOG(LogError) << "Glyph too big to fit on a new texture (glyph size > "
                       << tex_out->textureSize.x << ", " << tex_out->textureSize.y << ")";
@@ -720,18 +679,15 @@ FT_Face Font::getFaceForChar(unsigned int id)
 {
     static const std::vector<std::string> fallbackFonts {getFallbackFontPaths()};
 
-    // Look through our current font + fallback fonts to see if any have the
-    // glyph we're looking for.
+    // Look for the glyph in our current font and then in the fallback fonts if needed.
     for (unsigned int i = 0; i < fallbackFonts.size() + 1; ++i) {
         auto fit = mFaceCache.find(i);
 
-        // Doesn't exist yet.
         if (fit == mFaceCache.cend()) {
-            // i == 0 -> mPath
-            // Otherwise, take from fallbackFonts.
             const std::string& path {i == 0 ? mPath : fallbackFonts.at(i - 1)};
             ResourceData data {ResourceManager::getInstance().getFileData(path)};
-            mFaceCache[i] = std::unique_ptr<FontFace>(new FontFace(std::move(data), mSize));
+            mFaceCache[i] =
+                std::unique_ptr<FontFace>(new FontFace(std::move(data), mFontSize, mPath));
             fit = mFaceCache.find(i);
         }
 
@@ -739,18 +695,18 @@ FT_Face Font::getFaceForChar(unsigned int id)
             return fit->second->face;
     }
 
-    // Nothing has a valid glyph - return the "real" face so we get a "missing" character.
+    // Couldn't find a valid glyph, return the "real" face so we get a "missing" character.
     return mFaceCache.cbegin()->second->face;
 }
 
 Font::Glyph* Font::getGlyph(const unsigned int id)
 {
-    // Is it already loaded?
+    // Check if the glyph has already been loaded.
     auto it = mGlyphMap.find(id);
     if (it != mGlyphMap.cend())
         return &it->second;
 
-    // Nope, need to make a glyph.
+    // We need to create a new entry.
     FT_Face face {getFaceForChar(id)};
     if (!face) {
         LOG(LogError) << "Couldn't find appropriate font face for character " << id << " for font "
@@ -758,27 +714,38 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
         return nullptr;
     }
 
-    FT_GlyphSlot g {face->glyph};
+    const FT_GlyphSlot glyphSlot {face->glyph};
 
-    if (FT_Load_Char(face, id, FT_LOAD_RENDER)) {
+    // TODO: Evaluate/test hinting when HarfBuzz has been added.
+    // If the font does not contain hinting information then force the use of the automatic
+    // hinter that is built into FreeType.
+    // const bool hasHinting {static_cast<bool>(glyphSlot->face->face_flags & FT_FACE_FLAG_HINTER)};
+    const bool hasHinting {true};
+
+    if (FT_Load_Char(face, id,
+                     (hasHinting ?
+                          FT_LOAD_RENDER :
+                          FT_LOAD_RENDER | FT_LOAD_FORCE_AUTOHINT | FT_LOAD_TARGET_LIGHT))) {
         LOG(LogError) << "Couldn't find glyph for character " << id << " for font " << mPath
-                      << ", size " << mSize;
+                      << ", size " << mFontSize;
         return nullptr;
     }
-
-    glm::ivec2 glyphSize {g->bitmap.width, g->bitmap.rows};
 
     FontTexture* tex {nullptr};
     glm::ivec2 cursor {0, 0};
+    const glm::ivec2 glyphSize {glyphSlot->bitmap.width, glyphSlot->bitmap.rows};
     getTextureForNewGlyph(glyphSize, tex, cursor);
 
-    // getTextureForNewGlyph can fail if the glyph is bigger than the max texture
-    // size (absurdly large font size).
+    // This should (hopefully) never occur as size constraints are enforced earlier on.
     if (tex == nullptr) {
         LOG(LogError) << "Couldn't create glyph for character " << id << " for font " << mPath
-                      << ", size " << mSize << " (no suitable texture found)";
+                      << ", size " << mFontSize << " (no suitable texture found)";
         return nullptr;
     }
+
+    // Use the letter 'S' as a size reference.
+    if (mLetterHeight == 0 && id == 'S')
+        mLetterHeight = static_cast<float>(glyphSize.y);
 
     // Create glyph.
     Glyph& glyph {mGlyphMap[id]};
@@ -788,21 +755,19 @@ Font::Glyph* Font::getGlyph(const unsigned int id)
                               cursor.y / static_cast<float>(tex->textureSize.y)};
     glyph.texSize = glm::vec2 {glyphSize.x / static_cast<float>(tex->textureSize.x),
                                glyphSize.y / static_cast<float>(tex->textureSize.y)};
-
-    glyph.advance = glm::vec2 {static_cast<float>(g->metrics.horiAdvance) / 64.0f,
-                               static_cast<float>(g->metrics.vertAdvance) / 64.0f};
-    glyph.bearing = glm::vec2 {static_cast<float>(g->metrics.horiBearingX) / 64.0f,
-                               static_cast<float>(g->metrics.horiBearingY) / 64.0f};
+    glyph.advance = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiAdvance) / 64.0f,
+                               static_cast<float>(glyphSlot->metrics.vertAdvance) / 64.0f};
+    glyph.bearing = glm::vec2 {static_cast<float>(glyphSlot->metrics.horiBearingX) / 64.0f,
+                               static_cast<float>(glyphSlot->metrics.horiBearingY) / 64.0f};
+    glyph.rows = glyphSlot->bitmap.rows;
 
     // Upload glyph bitmap to texture.
     mRenderer->updateTexture(tex->textureId, Renderer::TextureType::RED, cursor.x, cursor.y,
-                             glyphSize.x, glyphSize.y, g->bitmap.buffer);
+                             glyphSize.x, glyphSize.y, glyphSlot->bitmap.buffer);
 
-    // Update max glyph height.
-    if (glyphSize.y > mMaxGlyphHeight)
-        mMaxGlyphHeight = glyphSize.y;
+    if (glyphSize.y > mLegacyMaxGlyphHeight)
+        mLegacyMaxGlyphHeight = glyphSize.y;
 
-    // Done.
     return &glyph;
 }
 

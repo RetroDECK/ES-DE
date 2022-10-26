@@ -296,7 +296,7 @@ void GuiMenu::openUIOptions()
          it != SystemData::sSystemVector.cend(); ++it) {
         if ((*it)->getName() != "retropie") {
             // If required, abbreviate the system name so it doesn't overlap the setting name.
-            float maxNameLength {mSize.x * 0.48f};
+            float maxNameLength {mSize.x * 0.51f};
             startupSystem->add((*it)->getFullName(), (*it)->getName(),
                                Settings::getInstance()->getString("StartupSystem") ==
                                    (*it)->getName(),

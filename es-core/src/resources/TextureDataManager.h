@@ -63,7 +63,6 @@ class TextureDataManager
 {
 public:
     TextureDataManager();
-    ~TextureDataManager();
 
     std::shared_ptr<TextureData> add(const TextureResource* key, bool tiled);
 
@@ -90,7 +89,7 @@ private:
     std::map<const TextureResource*, std::list<std::shared_ptr<TextureData>>::const_iterator>
         mTextureLookup;
     std::shared_ptr<TextureData> mBlank;
-    TextureLoader* mLoader;
+    std::unique_ptr<TextureLoader> mLoader;
 };
 
 #endif // ES_CORE_RESOURCES_TEXTURE_DATA_MANAGER_H

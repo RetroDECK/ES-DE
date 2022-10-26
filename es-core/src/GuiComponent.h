@@ -160,6 +160,8 @@ public:
             mComponentThemeFlags ^= ComponentThemeFlags::METADATA_ELEMENT;
     }
 
+    virtual int getTextCacheGlyphHeight() { return 0; }
+
     // Returns the center point of the image (takes origin into account).
     const glm::vec2 getCenter() const;
 

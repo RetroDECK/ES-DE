@@ -22,7 +22,7 @@
             <horizontalOffset>-0.05</horizontalOffset>
             <text>${system.fullName}</text>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.070</fontSize>
+            <fontSize>0.056</fontSize>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
         </carousel>

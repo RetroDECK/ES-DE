@@ -541,6 +541,9 @@ void Window::render()
                 }
             }
 
+            if (!mRenderedHelpPrompts)
+                mHelp->render(trans);
+
             if (!mRenderLaunchScreen)
                 top->render(trans);
         }
@@ -567,9 +570,6 @@ void Window::render()
         mListScrollFont->renderTextCache(cache);
         delete cache;
     }
-
-    if (!mRenderedHelpPrompts)
-        mHelp->render(trans);
 
     unsigned int screensaverTimer =
         static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"));

@@ -14,13 +14,10 @@
 
 class ThemeData;
 
-// Used to display text.
-// TextComponent::setSize(x, y) works a little differently than most components:
-//  * (0, 0)                    - Will automatically calculate a size that fits
-//                                the text on one line (expand horizontally).
-//  * (x != 0, 0)               - Wrap text so that it does not reach beyond x. Will
-//                                automatically calculate a vertical size (expand vertically).
-//  * (x != 0, y <= fontHeight) - Will truncate text so it fits within this box.
+// TextComponent sizing works in the following ways:
+// setSize(0.0f, 0.0f)      - Automatically sizes single-line text by expanding horizontally.
+// setSize(width, 0.0f)     - Limits size horizontally and automatically expands vertically.
+// setSize(width, height)   - Wraps and abbreviates text inside the width and height boundaries.
 class TextComponent : public GuiComponent
 {
 public:
@@ -81,6 +78,11 @@ public:
     Alignment getHorizontalAlignment() { return mHorizontalAlignment; }
     Alignment getVerticalAlignment() { return mVerticalAlignment; }
 
+    int getTextCacheGlyphHeight() override
+    {
+        return (mTextCache == nullptr ? 0 : mTextCache->metrics.maxGlyphHeight);
+    }
+
 protected:
     virtual void onTextChanged();
 
@@ -89,7 +91,6 @@ protected:
     std::shared_ptr<Font> mFont;
 
 private:
-    void calculateExtent();
     void onColorChanged();
 
     static inline std::vector<std::string> supportedSystemdataTypes {
@@ -118,6 +119,7 @@ private:
     bool mNoTopMargin;
     bool mSelectable;
     bool mVerticalAutoSizing;
+    bool mLegacyTheme;
 };
 
 #endif // ES_CORE_COMPONENTS_TEXT_COMPONENT_H

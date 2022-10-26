@@ -4,7 +4,7 @@
 //  Font.h
 //
 //  Loading, unloading, caching and rendering of fonts.
-//  Also functions for word wrapping and similar.
+//  Also functions for text wrapping and similar.
 //
 
 #ifndef ES_CORE_RESOURCES_FONT_H
@@ -21,16 +21,10 @@
 
 class TextCache;
 
-// clang-format off
-#define FONT_SIZE_MINI (static_cast<unsigned int>(0.030f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-#define FONT_SIZE_SMALL (static_cast<unsigned int>(0.035f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-#define FONT_SIZE_MEDIUM (static_cast<unsigned int>(0.045f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-#define FONT_SIZE_LARGE (static_cast<unsigned int>(0.085f * \
-        std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())))
-// clang-format on
+#define FONT_SIZE_MINI 0.030f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
+#define FONT_SIZE_SMALL 0.035f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
+#define FONT_SIZE_MEDIUM 0.045f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
+#define FONT_SIZE_LARGE 0.085f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
 
 #define FONT_PATH_LIGHT ":/fonts/Akrobat-Regular.ttf"
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
@@ -42,15 +36,19 @@ class Font : public IReloadable
 {
 public:
     virtual ~Font();
-    static void initLibrary();
-    std::vector<std::string> getFallbackFontPaths();
-    static std::shared_ptr<Font> get(int size, const std::string& path = getDefaultPath());
+    static std::shared_ptr<Font> get(float size, const std::string& path = getDefaultPath());
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
 
-    // Returns the portion of a string that fits within the passed argument maxWidth.
-    std::string getTextMaxWidth(std::string text, float maxWidth);
+    // Used to determine mMaxGlyphHeight upfront which is needed for accurate text sizing by
+    // wrapText and buildTextCache. This is required as the requested font height is not
+    // guaranteed and can be exceeded by a few pixels for some glyphs.
+    int loadGlyphs(const std::string& text);
+
+    // This is needed to retain a bug from the legacy theme engine where lineSpacing is not
+    // sized correctly when using automatic text element sizing.
+    void useLegacyMaxGlyphHeight() { mMaxGlyphHeight = mLegacyMaxGlyphHeight; }
 
     TextCache* buildTextCache(const std::string& text,
                               float offsetX,
@@ -69,34 +67,35 @@ public:
 
     void renderTextCache(TextCache* cache);
 
-    // Inserts newlines into text to make it wrap properly.
-    std::string wrapText(std::string text,
-                         float maxLength,
-                         float maxHeight = 0.0f,
-                         float lineSpacing = 1.5f);
+    // Inserts newlines to make text wrap properly and also abbreviates single-line text.
+    std::string wrapText(const std::string& text,
+                         const float maxLength,
+                         const float maxHeight = 0.0f,
+                         const float lineSpacing = 1.5f,
+                         const bool multiLine = false);
 
-    // Returns the expected size of a string after wrapping is applied.
-    glm::vec2 sizeWrappedText(std::string text, float xLen, float lineSpacing = 1.5f);
+    // Returns the position of the cursor after moving it to the stop position.
+    glm::vec2 getWrappedTextCursorOffset(const std::string& wrappedText,
+                                         const size_t stop,
+                                         const float lineSpacing = 1.5f);
 
-    // Returns the position of the cursor after moving a "cursor" amount of characters.
-    glm::vec2 getWrappedTextCursorOffset(std::string text,
-                                         float xLen,
-                                         size_t cursor,
-                                         float lineSpacing = 1.5f);
-
-    float getHeight(float lineSpacing = 1.5f) const;
+    // Return overall height including line spacing.
+    float getHeight(float lineSpacing = 1.5f) const { return mMaxGlyphHeight * lineSpacing; }
     float getLetterHeight();
 
     void reload(ResourceManager& rm) override { rebuildTextures(); }
     void unload(ResourceManager& rm) override { unloadTextures(); }
 
-    int getSize() const { return mSize; }
+    const float getSize() const { return mFontSize; }
     const std::string& getPath() const { return mPath; }
     static std::string getDefaultPath() { return FONT_PATH_REGULAR; }
 
     static std::shared_ptr<Font> getFromTheme(const ThemeData::ThemeElement* elem,
                                               unsigned int properties,
-                                              const std::shared_ptr<Font>& orig);
+                                              const std::shared_ptr<Font>& orig,
+                                              const float maxHeight = 0.0f,
+                                              const bool legacyTheme = false,
+                                              const float sizeMultiplier = 1.0f);
 
     // Returns an approximation of VRAM used by this font's texture (in bytes).
     size_t getMemUsage() const;
@@ -104,20 +103,16 @@ public:
     static size_t getTotalMemUsage();
 
 private:
-    Renderer* mRenderer;
-    static FT_Library sLibrary;
-    static std::map<std::pair<std::string, int>, std::weak_ptr<Font>> sFontMap;
-
-    Font(int size, const std::string& path);
+    Font(float size, const std::string& path);
+    static void initLibrary();
 
     struct FontTexture {
         unsigned int textureId;
         glm::ivec2 textureSize;
-
         glm::ivec2 writePos;
         int rowHeight;
 
-        FontTexture(const int mSize);
+        FontTexture(const int mFontSize);
         ~FontTexture();
         bool findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out);
 
@@ -126,8 +121,7 @@ private:
         // updating textureId.
         void initTexture();
 
-        // Deinitializes the OpenGL texture if any exists, is automatically called
-        // in the destructor.
+        // Deinitializes any existing OpenGL textures, is automatically called in destructor.
         void deinitTexture();
     };
 
@@ -135,8 +129,17 @@ private:
         const ResourceData data;
         FT_Face face;
 
-        FontFace(ResourceData&& d, int size);
+        FontFace(ResourceData&& d, float size, const std::string& path);
         virtual ~FontFace();
+    };
+
+    struct Glyph {
+        FontTexture* texture;
+        glm::vec2 texPos;
+        glm::vec2 texSize; // In texels.
+        glm::vec2 advance;
+        glm::vec2 bearing;
+        int rows;
     };
 
     // Completely recreate the texture data for all textures based on mGlyphs information.
@@ -147,34 +150,31 @@ private:
                                FontTexture*& tex_out,
                                glm::ivec2& cursor_out);
 
-    std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
+    std::vector<std::string> getFallbackFontPaths();
     FT_Face getFaceForChar(unsigned int id);
-    void clearFaceCache() { mFaceCache.clear(); }
-
-    struct Glyph {
-        FontTexture* texture;
-
-        glm::vec2 texPos;
-        glm::vec2 texSize; // In texels.
-
-        glm::vec2 advance;
-        glm::vec2 bearing;
-    };
-
-    std::vector<FontTexture> mTextures;
-    std::map<unsigned int, Glyph> mGlyphMap;
     Glyph* getGlyph(const unsigned int id);
-
-    int mSize;
-    int mMaxGlyphHeight;
-    const std::string mPath;
 
     float getNewlineStartOffset(const std::string& text,
                                 const unsigned int& charStart,
                                 const float& xLen,
                                 const Alignment& alignment);
 
-    friend TextCache;
+    void clearFaceCache() { mFaceCache.clear(); }
+
+    static inline FT_Library sLibrary {nullptr};
+    static inline std::map<std::pair<std::string, float>, std::weak_ptr<Font>> sFontMap;
+    static inline bool mLegacyTheme {false};
+
+    Renderer* mRenderer;
+    std::vector<std::unique_ptr<FontTexture>> mTextures;
+    std::map<unsigned int, std::unique_ptr<FontFace>> mFaceCache;
+    std::map<unsigned int, Glyph> mGlyphMap;
+
+    const std::string mPath;
+    float mFontSize;
+    float mLetterHeight;
+    int mMaxGlyphHeight;
+    int mLegacyMaxGlyphHeight;
 };
 
 // Used to store a sort of "pre-rendered" string.
@@ -188,6 +188,7 @@ class TextCache
 public:
     struct CacheMetrics {
         glm::vec2 size;
+        int maxGlyphHeight;
     } metrics;
 
     void setColor(unsigned int color);
@@ -199,8 +200,6 @@ public:
 protected:
     struct VertexList {
         std::vector<Renderer::Vertex> verts;
-        // This is a pointer because the texture ID can change during
-        // deinit/reinit (when launching a game).
         unsigned int* textureIdPtr;
     };
 

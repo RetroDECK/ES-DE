@@ -22,7 +22,14 @@
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as an alternative emulator for the gameandwatch system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
-* (Linux) Added support for the Nintendo Wii U (wiiu) game system
+* (Linux) Added support for the Nintendo Wii U (wiiu) game system by adding the Cemu standalone emulator
+* (Linux) Added support for the Sega Model 3 (model3) game system by adding the Supermodel standalone emulator
+* (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
+* Added support for the Sega Model 2 (model2) game system on Linux on macOS by adding the MAME - Current RetroArch core
+* Added MAME standalone as an alternative emulator for the model2 system
+* (Windows) Added the MAME - Current RetroArch core as an alternative emulator for the model2 system
+* (Windows) Added a -force-feedback option and an %INJECT% variable to the Supermodel emulator for the arcade, mame and model3 systems
+* Added a %GAMEDIR% variable to the -rompath option for all MAME standalone entries to allow launching games from subdirectories
 * Added Triforce (Dolphin fork) standalone as an alternative emulator for the gc system on Linux and Windows
 * Added simple64 standalone as an alternative emulator for the n64 system on Linux and Windows
 * (Linux) Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 system
@@ -33,6 +40,8 @@
 * (Windows) Changed the binary for emulator Citra from citra.exe to citra-qt.exe as the command line binary is broken on this OS
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
+* Added the .car and .rom file extensions to the a5200 system
+* Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
 * Added the .m3u file extension to the pcfx system
 * Removed the .7z and .zip file extensions from the 3do, neogeocd and neogeocdjp systems
@@ -40,7 +49,7 @@
 * Removed the .ccd, .cue and .iso file extensions from the neogeo system
 * Added the FinalBurn Neo RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems
 * Added MAME standalone as an alternative emulator for the neogeo, neogeocd and neogeocdjp systems
-* Added FinalBurn Neo standalone as an alternative emulator for the fbneo, neogeo, neogeocd and neogeocdjp systems on Unix
+* Added FinalBurn Neo standalone as an alternative emulator for the fbneo, neogeo, neogeocd and neogeocdjp systems on Linux
 * Added FinalBurn Neo standalone as an alternative emulator for the fbneo and neogeo system on Windows
 * Set DOSBox-X and DOSBox Staging to start in the game directory so per-game dosbox.conf files can be used
 * (macOS) Added an additional find rule entry for DOSBox-X as the binary name has been changed
@@ -56,6 +65,8 @@
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
+* Implemented dynamic texture allocation to the font code to reduce memory usage and avoid missing glyphs
+* Large optimizations to the text wrapping code (generallly 300-400% faster)
 * Added support for texture mipmapping with trilinear filtering
 * Added on-demand texture loading to the carousel
 * Improved the renderer scaling accuracy
@@ -87,6 +98,7 @@
 * Added theme support for defining color saturation for images, videos and animations
 * Added theme support for defining the video fade-in time
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
+* Added theme support for defining the threshold for when pillarboxes should be applied to a video
 * Added theme support for enabling or disabling audio playback for videos
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Added support for nesting of theme variables
@@ -179,7 +191,9 @@
 ### Bug fixes
 
 * Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
+* For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
+* Text wrapping did not work correctly for text that typically does not contain spaces, like Japanese
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
 * Games located in subdirectories were not added back to custom collections when disabling the "Exclude from game counter" metadata option
@@ -200,10 +214,14 @@
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The tile property for the image element did not work correctly with SVG images
+* Defining an itemScale (logoScale) property lower than 1.0 for the carousel did not work correctly
+* Carousel text did not get scaled/multiplied correctly with the itemScale property (bug retained for legacy themes for maximum backward compatibility)
+* Letters would sometimes get rendered with ugly edge artifacts, visible when scaling text on the carousel
 * Text opacity did not work correctly in some places, such as for the help prompts
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
 * Text elements that had an opacity set to lower than FF via the color tag were faded in during gamelist scrolling
+* The help system was rendered on top of menus if placed at such a location on the screen
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase letters in theme names)
 * The SliderComponent knob was not consistently positioned
 * The device text flickered in GuiDetectDevice when configuring a controller

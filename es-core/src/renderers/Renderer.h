@@ -146,7 +146,7 @@ public:
                   const float h,
                   const unsigned int color,
                   const unsigned int colorEnd,
-                  bool horizontalGradient = false,
+                  const bool horizontalGradient = false,
                   const float opacity = 1.0,
                   const float dimming = 1.0,
                   const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,

@@ -70,7 +70,7 @@ With the new theme engine the view presets were removed and the only views now a
 
 In addition to the variant support which provides an unlimited flexibility for creating custom theme profiles, support for specific aspect ratios was introduced. This makes it possible to define different theme configuration for different display aspect ratios and to provide the user with the option to choose between these from the _UI Settings_ menu. That could for example be choice between a 16:9 and a 4:3 layout, or perhaps also a vertical screen orientation layout in addition to these.
 
-As well new theming abilities like Lottie animations were added with the new theme engine.
+As well new theming abilities like GIF and Lottie animations were added with the new theme engine.
 
 The following are the most important changes compared to the legacy theme structure:
 
@@ -94,6 +94,13 @@ The following are the most important changes compared to the legacy theme struct
 Attempting to use any of the legacy logic in the new theme structure will make the theme loading fail, for example adding the _extra="true"_ attribute to any element.
 
 Except the points mentioned above, theme configuration looks pretty similar to the legacy theme structure, so anyone having experience with these older themes should hopefully feel quite at home with the new theme engine. Probably the most important thing to keep in mind is that as there are no longer any view presets available, some more effort is needed from the theme developer to define values for some elements. This is especially true for zIndex values as elements could now be hidden by other elements if care is not taken to explicitly set the zIndex for each of them. This additional work is however a small price to pay for the much more powerful and flexible theming functionality provided by the new theme engine.
+
+Note that the legacy theme engine had quite inaccurate text sizing and font rendering and while this has been greatly improved in the new engine, for legacy themes most old bugs are retained for maximum backward compatibility. This means that you may need to revise font sizes and text placements when porting a legacy theme to the new engine. Here are some examples:
+
+* Line spacing for the textlist element was not consistently applied across different screen resolutions
+* Carousel text entries did not multiply the font size by the itemScale (logoScale) property value
+* The defined line spacing was not always applied for automatically sized text elements
+* Font sizes were rounded to integers, leading to imprecise text sizing across different resolutions (the rounding was also done incorrectly)
 
 ## Simple example
 
@@ -699,13 +706,14 @@ The `helpsystem` element does not really have a zIndex value and is always rende
 
 ## Theme variables
 
-Theme variables can be used to simplify theme construction. There are 2 types of variables available.
+Theme variables can be used to simplify theme construction and there are two types available:
+
 * System variables
 * Theme defined variables
 
 ### System variables
 
-System variables are system specific and are derived from the values in es_systems.xml (except for collections).
+System variables are system specific and are derived from the values defined in es_systems.xml (except for collections which are derived from hardcoded application-internal values).
 * `system.name`
 * `system.name.collections`
 * `system.name.noCollections`
@@ -716,9 +724,35 @@ System variables are system specific and are derived from the values in es_syste
 * `system.theme.collections`
 * `system.theme.noCollections`
 
+`system.name` expands to the short name of the system as defined by the `name` tag in es_systems.xml\
+`system.fullName` expands to the full system name as defined by the `fullname` tag in es_systems.xml\
+`system.theme` expands to the theme directory as defined by the `theme` tag in es_systems.xml
+
+The `.collections` and `.noCollections` versions of these variables make it possible to differentiate between regular systems and collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems. The below example capitalizes the names of the collections while leaving the regular systems at their default formatting (as they are defined in es_systems.xml). The reason this works is that the .collections and .noCollections variables are mutually exclusive, i.e. they can never both hold a value at the same time as a system is either a real system or a collection and never both.
+
+```xml
+<view name="system">
+    <text name="system_name, collection_name">
+        <pos>0.05 0.83</pos>
+        <size>0.9 0.06</size>
+        <fontSize>0.06</fontSize>
+        <fontPath>./core/font.ttf</fontPath>
+    </text>
+    <text name="collection_name">
+        <letterCase>capitalize</letterCase>
+    </text>
+    <text name="system_name">
+        <text>${system.fullName.noCollections}</text>
+    </text>
+    <text name="collection_name">
+        <text>${system.fullName.collections}</text>
+    </text>
+</view>
+```
+
 ### Theme defined variables
 Variables can also be defined in the theme.
-```
+```xml
 <variables>
     <themeColor>8B0000</themeColor>
 </variables>
@@ -726,19 +760,19 @@ Variables can also be defined in the theme.
 
 ### Usage in themes
 Variables can be used to specify the value of a theme property:
-```
+```xml
 <color>${themeColor}</color>
 ```
 
 It can also be used to specify only a portion of the value of a theme property:
 
-```
+```xml
 <color>${themeColor}C0</color>
 <path>./core/images/${system.theme}.svg</path>
 ````
 
 Nesting of variables is supported, so the following could be done:
-```
+```xml
 <variables>
     <colorRed>8b0000</colorRed>
     <themeColor>${colorRed}</themeColor>
@@ -915,6 +949,10 @@ Properties:
 * `pillarboxes` - type: BOOLEAN
     - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
     - Default is `true`
+* `pillarboxThreshold` - type: NORMALIZED_PAIR
+    - Normally it doesn't look very good to add really narrow pillarboxes or letterboxes, so by default they are skipped if the actual video size is not reaching a threshold value as compared to the overall defined video area size. By modifying this property it's possible to control that threshold, as for some theme designs it will look better with the consistency of always rendering the pillarboxes/letterboxes even if they are narrow. To clarify, the default X axis value of 0.85 means that if the video width is 85% or less as compared to the X axis defined by the `size` property, then pillarboxes will be rendered. So setting the `pillarboxThreshold` value to `1 1` will always apply pillarboxes/letterboxes regardless of the video file dimension.
+    - Minimum value per axis is `0.2` and maximum value per axis is `1`
+    - Default is `0.85 0.90`
 * `scanlines` - type: BOOLEAN
     - Whether to use a shader to render scanlines.
     - Default is `false`
@@ -1209,7 +1247,9 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
+    - Default is `0.045`
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1224,7 +1264,7 @@ Properties:
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
-    - Controls the space between lines (as a multiple of font height).
+    - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher for multi-line text fields. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `opacity` - type: FLOAT
@@ -1277,7 +1317,9 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
+    - Default is `0.045`
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1348,7 +1390,9 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
+    - Default is `0.045`
 * `color` - type: COLOR
 * `backgroundColor` - type: COLOR
 * `horizontalAlignment` - type: STRING
@@ -1482,12 +1526,12 @@ Properties:
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
 * `itemSize` - type: NORMALIZED_PAIR
-    - Both axes need to be defined.
+    - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
 * `itemScale` - type: FLOAT.
     - Selected item is increased in size by this scale.
-    - Minimum value is `0.5` and maximum value is `3`
+    - Minimum value is `0.2` and maximum value is `3`
     - Default is `1.2`
 * `itemTransitions` - type: STRING
     - How to render item transitions when navigating the carousel. By default a slide animation will be played when moving between items but if this property is set to `instant` instead then the transitions will be immediate.
@@ -1562,13 +1606,14 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticItem` / `itemType` image defined or found, and if `defaultItem` has not been defined.
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height).
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area. This property value is effectively multiplied by the `itemScale` value for the currently selected item (but if this property is omitted then the default value will not get multiplied by `itemScale`).
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.085`
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
-    - Controls the space between lines (as a multiple of font height).
+    - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `fadeAbovePrimary` - type: BOOLEAN
@@ -1625,6 +1670,8 @@ Properties:
     - Secondary color; what this means depends on the text list. For example, for game lists, it is the color of a folder.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Default is `0.045`
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1636,7 +1683,7 @@ Properties:
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
 * `lineSpacing` - type: FLOAT
-    - Controls the space between lines (as a multiple of font height).
+    - Controls the space between lines (as a multiple of the font height).
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `indicators` - type: STRING
@@ -1706,7 +1753,8 @@ Properties:
     - Default is the same value as iconColor.
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
-    - This property also implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element.
+    - This property implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element. This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.035`
 * `entrySpacing` - type: FLOAT
     - Spacing between the help element pairs.

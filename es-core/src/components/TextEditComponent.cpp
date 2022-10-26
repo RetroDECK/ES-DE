@@ -27,6 +27,7 @@ TextEditComponent::TextEditComponent()
     , mBlinkTime {0}
     , mCursorRepeatDir {0}
     , mScrollOffset {0.0f, 0.0f}
+    , mCursorPos {0.0f, 0.0f}
     , mBox {":/graphics/textinput.svg"}
     , mFont {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)}
 {
@@ -51,6 +52,9 @@ void TextEditComponent::onFocusLost()
 
 void TextEditComponent::onSizeChanged()
 {
+    if (mSize.x == 0.0f || mSize.y == 0.0f)
+        return;
+
     mBox.fitTo(
         mSize, glm::vec3 {},
         glm::vec2 {-34.0f, -32.0f - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())});
@@ -263,9 +267,10 @@ void TextEditComponent::setCursor(size_t pos)
 
 void TextEditComponent::onTextChanged()
 {
-    std::string wrappedText = (isMultiline() ? mFont->wrapText(mText, getTextAreaSize().x) : mText);
+    mWrappedText =
+        (isMultiline() ? mFont->wrapText(mText, getTextAreaSize().x, 0.0f, 1.5f, true) : mText);
     mTextCache = std::unique_ptr<TextCache>(mFont->buildTextCache(
-        wrappedText, 0.0f, 0.0f, 0x77777700 | static_cast<unsigned char>(mOpacity * 255.0f)));
+        mWrappedText, 0.0f, 0.0f, 0x77777700 | static_cast<unsigned char>(mOpacity * 255.0f)));
 
     if (mCursor > static_cast<int>(mText.length()))
         mCursor = static_cast<int>(mText.length());
@@ -274,22 +279,23 @@ void TextEditComponent::onTextChanged()
 void TextEditComponent::onCursorChanged()
 {
     if (isMultiline()) {
-        glm::vec2 textSize {mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor)};
+        mCursorPos = mFont->getWrappedTextCursorOffset(mWrappedText, mCursor);
 
         // Need to scroll down?
-        if (mScrollOffset.y + getTextAreaSize().y < textSize.y + mFont->getHeight())
-            mScrollOffset.y = textSize.y - getTextAreaSize().y + mFont->getHeight();
+        if (mScrollOffset.y + getTextAreaSize().y < mCursorPos.y + mFont->getHeight())
+            mScrollOffset.y = mCursorPos.y - getTextAreaSize().y + mFont->getHeight();
         // Need to scroll up?
-        else if (mScrollOffset.y > textSize.y)
-            mScrollOffset.y = textSize.y;
+        else if (mScrollOffset.y > mCursorPos.y)
+            mScrollOffset.y = mCursorPos.y;
     }
     else {
-        glm::vec2 cursorPos {mFont->sizeText(mText.substr(0, mCursor))};
+        mCursorPos = mFont->sizeText(mText.substr(0, mCursor));
+        mCursorPos.y = 0.0f;
 
-        if (mScrollOffset.x + getTextAreaSize().x < cursorPos.x)
-            mScrollOffset.x = cursorPos.x - getTextAreaSize().x;
-        else if (mScrollOffset.x > cursorPos.x)
-            mScrollOffset.x = cursorPos.x;
+        if (mScrollOffset.x + getTextAreaSize().x < mCursorPos.x)
+            mScrollOffset.x = mCursorPos.x - getTextAreaSize().x;
+        else if (mScrollOffset.x > mCursorPos.x)
+            mScrollOffset.x = mCursorPos.x;
     }
 }
 
@@ -323,25 +329,16 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
     mRenderer->popClipRect();
 
     // Draw cursor.
-    glm::vec2 cursorPos;
-    if (isMultiline()) {
-        cursorPos = mFont->getWrappedTextCursorOffset(mText, getTextAreaSize().x, mCursor);
-    }
-    else {
-        cursorPos = mFont->sizeText(mText.substr(0, mCursor));
-        cursorPos[1] = 0;
-    }
-
-    float cursorHeight = mFont->getHeight() * 0.8f;
+    float cursorHeight {mFont->getHeight() * 0.8f};
 
     if (!mEditing) {
-        mRenderer->drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+        mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
                             2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0xC7C7C7FF,
                             0xC7C7C7FF);
     }
 
     if (mEditing && mBlinkTime < BLINKTIME / 2) {
-        mRenderer->drawRect(cursorPos.x, cursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
+        mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
                             2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x777777FF,
                             0x777777FF);
     }

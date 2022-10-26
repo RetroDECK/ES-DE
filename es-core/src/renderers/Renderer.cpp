@@ -52,7 +52,7 @@ void Renderer::setIcon()
         // Try creating SDL surface from logo data.
         SDL_Surface* logoSurface {SDL_CreateRGBSurfaceFrom(
             static_cast<void*>(rawData.data()), static_cast<int>(width), static_cast<int>(height),
-            32, static_cast<int>((width * 4)), rmask, gmask, bmask, amask)};
+            32, static_cast<int>(width * 4), rmask, gmask, bmask, amask)};
 
         if (logoSurface != nullptr) {
             SDL_SetWindowIcon(mSDLWindow, logoSurface);
@@ -147,7 +147,7 @@ bool Renderer::createWindow()
     if (mWindowWidth != displayMode.w || mWindowHeight != displayMode.h)
         userResolution = true;
 
-    unsigned int windowFlags;
+    unsigned int windowFlags {0};
     setup();
 
 #if defined(_WIN64)
@@ -201,7 +201,7 @@ bool Renderer::createWindow()
     // instead we simply indicate the physical pixel dimensions in parenthesis in the log
     // file and make sure to double the window and screen sizes in case of a high DPI
     // display so that the full application window is used for rendering.
-    int width = 0;
+    int width {0};
     SDL_GL_GetDrawableSize(mSDLWindow, &width, nullptr);
     int scaleFactor = static_cast<int>(width / mWindowWidth);
 
@@ -309,11 +309,11 @@ void Renderer::pushClipRect(const glm::ivec2& pos, const glm::ivec2& size)
         box.h = sScreenHeight - box.y;
 
     if (mScreenRotated) {
-        box = Rect(mWindowWidth - mScreenOffsetX - box.x - box.w,
-                   mWindowHeight - mScreenOffsetY - box.y - box.h, box.w, box.h);
+        box = Rect {mWindowWidth - mScreenOffsetX - box.x - box.w,
+                    mWindowHeight - mScreenOffsetY - box.y - box.h, box.w, box.h};
     }
     else {
-        box = Rect(mScreenOffsetX + box.x, mScreenOffsetY + box.y, box.w, box.h);
+        box = Rect {mScreenOffsetX + box.x, mScreenOffsetY + box.y, box.w, box.h};
     }
 
     // Make sure the box fits within mClipStack.top(), and clip further accordingly.
@@ -349,7 +349,7 @@ void Renderer::popClipRect()
     mClipStack.pop();
 
     if (mClipStack.empty())
-        setScissor(Rect(0, 0, 0, 0));
+        setScissor(Rect {0, 0, 0, 0});
     else
         setScissor(mClipStack.top());
 }
@@ -360,7 +360,7 @@ void Renderer::drawRect(const float x,
                         const float h,
                         const unsigned int color,
                         const unsigned int colorEnd,
-                        bool horizontalGradient,
+                        const bool horizontalGradient,
                         const float opacity,
                         const float dimming,
                         const BlendFactor srcBlendFactor,

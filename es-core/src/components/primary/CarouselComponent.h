@@ -183,7 +183,8 @@ CarouselComponent<T>::CarouselComponent()
     , mMaxItemCount {3.0f}
     , mItemsBeforeCenter {8}
     , mItemsAfterCenter {8}
-    , mItemSize {Renderer::getScreenWidth() * 0.25f, Renderer::getScreenHeight() * 0.155f}
+    , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.25f,
+                            Renderer::getScreenHeight() * 0.155f}}
     , mLinearInterpolation {false}
     , mInstantItemTransitions {false}
     , mItemAxisHorizontal {false}
@@ -226,7 +227,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 auto item = std::make_shared<ImageComponent>(false, dynamic);
                 item->setLinearInterpolation(mLinearInterpolation);
                 item->setMipmapping(true);
-                item->setMaxSize(mItemSize * mItemScale);
+                item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
                 item->applyTheme(theme, "system", "image_logo",
                                  ThemeFlags::PATH | ThemeFlags::COLOR);
                 item->setRotateByTargetSize(true);
@@ -240,7 +241,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             auto item = std::make_shared<ImageComponent>(false, dynamic);
             item->setLinearInterpolation(mLinearInterpolation);
             item->setMipmapping(true);
-            item->setMaxSize(mItemSize * mItemScale);
+            item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             item->setImage(entry.data.itemPath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
             item->setRotateByTargetSize(true);
@@ -251,7 +252,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
             defaultItem->setLinearInterpolation(mLinearInterpolation);
             defaultItem->setMipmapping(true);
-            defaultItem->setMaxSize(mItemSize * mItemScale);
+            defaultItem->setMaxSize(
+                glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
             defaultItem->setRotateByTargetSize(true);
@@ -275,7 +277,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
 
         auto text = std::make_shared<TextComponent>(
             nameEntry, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
-            glm::vec3 {0.0f, 0.0f, 0.0f}, mItemSize * mItemScale, 0x00000000);
+            glm::vec3 {0.0f, 0.0f, 0.0f},
+            glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)), 0x00000000);
         if (legacyMode) {
             text->applyTheme(theme, "system", "text_logoText",
                              ThemeFlags::FONT_PATH | ThemeFlags::FONT_SIZE | ThemeFlags::COLOR |
@@ -310,7 +313,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     else
         entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.5f);
 
-    glm::vec2 denormalized {mItemSize * entry.data.item->getOrigin()};
+    glm::vec2 denormalized {glm::round(mItemSize * entry.data.item->getOrigin())};
     entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
 
     List::add(entry);
@@ -323,7 +326,7 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mLinearInterpolation);
         item->setMipmapping(true);
-        item->setMaxSize(mItemSize * mItemScale);
+        item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         item->setRotateByTargetSize(true);
@@ -348,7 +351,7 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
     else
         entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.5f);
 
-    glm::vec2 denormalized {mItemSize * entry.data.item->getOrigin()};
+    glm::vec2 denormalized {glm::round(mItemSize * entry.data.item->getOrigin())};
     entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
 }
 
@@ -567,11 +570,10 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
     glm::mat4 carouselTrans {parentTrans};
     carouselTrans = glm::translate(
-        carouselTrans,
-        glm::round(glm::vec3 {GuiComponent::mPosition.x, GuiComponent::mPosition.y, 0.0f}));
-    carouselTrans = glm::translate(
-        carouselTrans, glm::round(glm::vec3 {GuiComponent::mOrigin.x * mSize.x * -1.0f,
-                                             GuiComponent::mOrigin.y * mSize.y * -1.0f, 0.0f}));
+        carouselTrans, glm::vec3 {GuiComponent::mPosition.x, GuiComponent::mPosition.y, 0.0f});
+    carouselTrans =
+        glm::translate(carouselTrans, glm::vec3 {GuiComponent::mOrigin.x * mSize.x * -1.0f,
+                                                 GuiComponent::mOrigin.y * mSize.y * -1.0f, 0.0f});
 
     if (carouselTrans[3].x + mSize.x <= 0.0f || carouselTrans[3].y + mSize.y <= 0.0f)
         return;
@@ -609,7 +611,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     float scaleSize {mItemSize.x * mItemScale - mItemSize.x};
 
     if (isWheel) {
-        xOff = (mSize.x - mItemSize.x) / 2.0f - (camOffset * itemSpacing.y);
+        xOff = (mSize.x - mItemSize.x) / 2.0f;
         yOff = (mSize.y - mItemSize.y) / 2.0f;
         // Alignment of the actual carousel inside to the overall component area.
         if (mLegacyMode) {
@@ -769,16 +771,24 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         if (singleEntry)
             distance = 0.0f;
 
-        float scale {1.0f + ((mItemScale - 1.0f) * (1.0f - fabsf(distance)))};
-        scale = std::min(mItemScale, std::max(1.0f, scale));
-        scale /= mItemScale;
+        float scale {0.0f};
+
+        if (mItemScale >= 1.0f) {
+            scale = 1.0f + ((mItemScale - 1.0f) * (1.0f - fabsf(distance)));
+            scale = std::min(mItemScale, std::max(1.0f, scale));
+            scale /= mItemScale;
+        }
+        else {
+            scale = 1.0f + ((1.0f - mItemScale) * (fabsf(distance) - 1.0f));
+            scale = std::max(mItemScale, std::min(1.0f, scale));
+        }
 
         glm::mat4 itemTrans {carouselTrans};
         if (singleEntry)
             itemTrans = glm::translate(carouselTrans, glm::vec3 {xOff, yOff, 0.0f});
         else
-            itemTrans = glm::translate(
-                itemTrans, glm::vec3 {i * itemSpacing.x + xOff, i * itemSpacing.y + yOff, 0.0f});
+            itemTrans = glm::translate(itemTrans, glm::vec3 {(i * itemSpacing.x) + xOff,
+                                                             (i * itemSpacing.y) + yOff, 0.0f});
 
         float opacity {0.0f};
 
@@ -1012,7 +1022,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("itemScale"))
-            mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 3.0f);
+            mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
 
         if (elem->has("itemTransitions")) {
             const std::string itemTransitions {elem->get<std::string>("itemTransitions")};
@@ -1145,8 +1155,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     // Legacy themes.
     if (mLegacyMode) {
+        // Don't allow logoScale below 1.0 for legacy themes as it introduces compatibility issues.
         if (elem->has("logoScale"))
-            mItemScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
+            mItemScale = glm::clamp(elem->get<float>("logoScale"), 1.0f, 3.0f);
         if (elem->has("logoSize")) {
             // Keep size within a 0.05 and 1.0 multiple of the screen size.
             glm::vec2 itemSize {elem->get<glm::vec2>("logoSize")};
@@ -1206,7 +1217,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    mFont = Font::getFromTheme(elem, properties, mFont);
+    // For non-legacy themes, scale the font size with the itemScale property value.
+    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode,
+                               (mLegacyMode ? 1.0f : (mItemScale >= 1.0f ? mItemScale : 1.0f)));
 
     if (elem->has("textColor"))
         mTextColor = elem->get<unsigned int>("textColor");

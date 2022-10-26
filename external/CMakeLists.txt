@@ -26,17 +26,18 @@ unset(CMAKE_EXE_LINKER_FLAGS)
 
 if(WIN32)
     if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-        # Disable DLL interface warnings for LunaSVG.
+        # Disable DLL interface warnings.
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4251")
     else()
         # Strip the DLL files when building with MinGW.
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s")
     endif()
-    if (WIN32)
-        set(BUILD_SHARED_LIBS ON)
-    else()
-        set(BUILD_SHARED_LIBS OFF)
-    endif()
+endif()
+
+if (WIN32)
+    set(BUILD_SHARED_LIBS ON)
+else()
+    set(BUILD_SHARED_LIBS OFF)
 endif()
 
 add_subdirectory(lunasvg EXCLUDE_FROM_ALL)

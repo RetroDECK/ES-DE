@@ -1183,12 +1183,11 @@ void SystemView::legacyApplyTheme(const std::shared_ptr<ThemeData>& theme)
         mPrimary->applyTheme(theme, "system", "textlist_gamelist", ThemeFlags::ALL);
 
     mLegacySystemInfo->setSize(mSize.x, mLegacySystemInfo->getFont()->getLetterHeight() * 2.2f);
-    mLegacySystemInfo->setPosition(0.0f, std::round(mPrimary->getPosition().y) +
-                                             std::round(mPrimary->getSize().y));
+    mLegacySystemInfo->setPosition(0.0f,
+                                   std::floor(mPrimary->getPosition().y) + mPrimary->getSize().y);
     mLegacySystemInfo->setBackgroundColor(0xDDDDDDD8);
     mLegacySystemInfo->setRenderBackground(true);
-    mLegacySystemInfo->setFont(
-        Font::get(static_cast<int>(0.035f * mSize.y), Font::getDefaultPath()));
+    mLegacySystemInfo->setFont(Font::get(0.035f * mSize.y, Font::getDefaultPath()));
     mLegacySystemInfo->setColor(0x000000FF);
     mLegacySystemInfo->setUppercase(true);
     mLegacySystemInfo->setZIndex(50.0f);

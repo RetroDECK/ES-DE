@@ -659,7 +659,7 @@ RetroArch does not embed any version information into the filename so no wildcar
 
 ## Using manually downloaded emulators on Linux
 
-Normally on Linux you would install emulators using either one of the established package formats, i.e. Flatpak, AppImage or Snap, or you would install them using the operating system repository. Less likely would be to build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS), you don't even have the choice to install them to a standard system directory.
+Normally on Linux you would install emulators using either one of the established cross-distribution package formats, i.e. AppImage, Snap or Flatpak, or you would install them using the operating system repository (including the AUR if available on your OS). Less likely would be to manually build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some rare cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS or Fedora Silverblue), you don't even have the choice to install them to a standard system directory.
 
 For these situations ES-DE looks for emulators in the same directories where it looks for AppImages (as explained in the section above), meaning:
 ```
@@ -911,6 +911,12 @@ Dir1=..\..\ROMs\arcade\Sega Model 2
 The EMULATOR.INI file is found in the _Model 2 Emulator_ installation directory.
 
 Also note that Model 2 Emulator is a bit broken and on most GPU drivers it will only work correctly if ES-DE keeps running in the background while the game is launched. However, for some GPU drivers the opposite is true and the emulator will only work if ES-DE is suspended. To use the latter setup, switch to the alternative emulator entry _Model 2 Emulator [Suspend ES-DE] (Standalone)_.
+
+If using the Homebrew release of MAME standalone on macOS and emulating MESS systems like astrocde and ti99, then you need to configure the path to the MAME hash files in the mame.ini file. Alternatively you can symlink the installed hash directory to `~/.mame/` like the following (you will of course need to modify the command depending on which MAME version you have installed):
+```
+ln -s /opt/homebrew/Cellar/mame/0.248/share/mame/hash ~/.mame/      # on ARM/Apple
+ln -s /usr/local/Cellar/mame/0.248/share/mame/hash ~/.mame/         # on x86/Intel
+```
 
 #### Nintendo Switch
 
@@ -2811,29 +2817,33 @@ If you're migrating from a previous version of EmulationStation that has absolut
 
 ## Themes
 
-ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well. Just be aware that ES-DE has added additional theme functionality compared to the RetroPie fork and more still will be added in future versions. This means that you may not get the full benefits of the application if you're using a theme set which has not been updated specifically for ES-DE. Some themes may also look slightly different as bugs that were present in the RetroPie fork have been fixed. Also note that most Batocera and Recalbox themes are not compatible as these forks are quite different.
+ES-DE is fully themeable, and although the application ships with the comprehensive rbsimple-DE and modern-DE theme sets, you can use most RetroPie-compatible EmulationStation themes as well. Note that most Batocera and Recalbox themes are not compatible as these forks use a different theme engine than ES-DE.
 
-As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in this guide.
+As a side comment, the terms _theme_ and _theme set_ are both used when talking about theming. The technically correct term for what you apply to the application to achieve a different look is a _theme set_ as it's a collection of a number of themes for a number of game systems. But in practice it doesn't matter as both terms refer to the same thing and the terms are used interchangeably in the ES-DE documentation.
 
 
-Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu.
+Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes/`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the .emulationstation folder can be found in the root of the EmulationStation-DE directory.
 
-For this example, we've downloaded the [Carbon](https://github.com/RetroPie/es-theme-carbon) and [Fundamental](https://github.com/G-rila/es-theme-fundamental) themes and uncompressed them to the ES-DE home directory:
+To download a theme from its GitHub page, press the green _Code_ button in the upper right corner and choose _Download ZIP_. The process is identical on GitLab, but this site uses a button with a download symbol instead of a green button. You then simply unpack the file into `~/.emulationstation/themes/` and restart ES-DE.
+
+For this example, we've downloaded the [alekfull-nx-retropie](https://github.com/anthonycaccese/alekfull-nx-retropie) and [es-theme-carbon](https://github.com/RetroPie/es-theme-carbon) themes and uncompressed them to the themes directory:
 
 ```
+~/.emulationstation/themes/alekfull-nx-retropie
 ~/.emulationstation/themes/es-theme-carbon
-~/.emulationstation/themes/es-theme-fundamental
 ```
 
-We now have four entries in the Theme set selector in the UI settings menu, i.e. _rbsimple-DE, modern-DE, es-theme-carbon_ and _es-theme-fundamental_.
+We now have four entries in the _Theme set_ selector in the UI settings menu, i.e. _alekfull-nx-retropie, es-theme-carbon, modern-DE_ and _rbsimple-DE_.
 
-Although you place additional themes in your ES-DE home directory, the default rbsimple-DE and modern-DE themes are located in the installation folder. For example this could be `/usr/share/emulationstation/themes` or `/usr/local/share/emulationstation/themes` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes` on macOS or `C:\Program Files\EmulationStation-DE\themes` on Windows.
+Although you should place additional themes in your ES-DE home directory, the default rbsimple-DE and modern-DE themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/emulationstation/themes/` or `/usr/local/share/emulationstation/themes/` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/` on macOS or `C:\Program Files\EmulationStation-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the EmulationStation-DE directory.
 
-So if you would like to customize the rbsimple-DE or modern-DE theme sets, simply make a copy of their directories to ~/.emulationstation/themes and then those copies will take precedence over the ones in the application installation directory.
+Note that if using the AppImage release on Linux, then there is no installation folder as all files are contained inside the AppImage file.
 
-Here is a good resource with a list of themes (although you will have to search online for the download location for each theme set):
+If you would like to customize the rbsimple-DE or modern-DE theme sets, simply make a copy of their directories to `~/.emulationstation/themes/` and then those copies will take precedence over the ones in the application installation directory.
 
-https://retropie.org.uk/docs/Themes
+Refer to the official list of recommended theme sets for a selection of high-quality themes:
+
+https://gitlab.com/es-de/themes/themes-list
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _This is a screenshot of the modern-DE theme that is bundled with ES-DE (in addition to the default rbsimple-DE theme)._
@@ -3025,7 +3035,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | tg-cd                 | NEC TurboGrafx-CD                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*] | Yes          |                                      |
-| ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)** [UW*]       |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |
+| ti99                  | Texas Instruments TI-99                        | MAME **(Standalone)** [UMW*]      |                                   | Yes          | See the specific _Texas Instruments TI-99_ section elsewhere in this guide |
 | tic80                 | TIC-80 Game Engine                             | TIC-80                            |                                   | No           | Single .tic file in root folder      |
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |
 | trs-80                | Tandy TRS-80                                   | sdl2trs DOS Diskette **(Standalone)** [UW*] | sdl2trs Bootable Diskette **(Standalone)** [UW*],<br>sdl2trs CMD File **(Standalone)** [UW*] | Yes          | See the specific _Tandy TRS-80_ section elsewhere in this guide |
