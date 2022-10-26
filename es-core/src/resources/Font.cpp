@@ -154,7 +154,7 @@ TextCache* Font::buildTextCache(const std::string& text,
         yBot = getHeight(lineSpacing);
     }
 
-    float y {offset[1] + (yBot + yTop) / 2.0f};
+    float y {std::round(offset[1] + (yBot + yTop) / 2.0f)};
 
     // Vertices by texture.
     std::map<FontTexture*, std::vector<Renderer::Vertex>> vertMap;
