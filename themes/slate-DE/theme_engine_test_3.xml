@@ -107,7 +107,7 @@
             <verticalOffset>0.1</verticalOffset>
             <reflections>true</reflections>
             <reflectionsOpacity>0.3</reflectionsOpacity>
-            <reflectionsFalloff>1.05</reflectionsFalloff>
+            <reflectionsFalloff>1.2</reflectionsFalloff>
             <unfocusedItemOpacity>1</unfocusedItemOpacity>
             <textBackgroundColor>323232CC</textBackgroundColor>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
