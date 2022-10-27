@@ -867,8 +867,10 @@ bool ViewController::input(InputConfig* config, Input input)
         return true;
     }
 
-    mWindow->setAllowTextScrolling(true);
-    mWindow->setAllowFileAnimation(true);
+    if (!mWindow->isScreensaverActive()) {
+        mWindow->setAllowTextScrolling(true);
+        mWindow->setAllowFileAnimation(true);
+    }
 
     // Check if UI mode has changed due to passphrase completion.
     if (UIModeController::getInstance()->listen(config, input))
