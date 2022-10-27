@@ -391,7 +391,7 @@ void DateTimeEditComponent::updateTextCache()
         return;
 
     // Year.
-    glm::vec2 start {};
+    glm::vec2 start {0.0f, 0.0f};
     glm::vec2 end {font->sizeText(dispString.substr(0, 4))};
     glm::vec2 diff {end - start};
     mCursorBoxes.push_back(glm::vec4 {start[0], start[1], diff[0], diff[1]});
