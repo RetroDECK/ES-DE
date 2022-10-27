@@ -169,18 +169,18 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     if (mTextCache) {
-        std::shared_ptr<Font> font = getFont();
+        std::shared_ptr<Font> font {getFont()};
         float referenceSize {0.0f};
 
         if (mAlignRight)
-            referenceSize = std::round(mParent->getSize().x * 0.1045f);
+            referenceSize = mParent->getSize().x * 0.1045f;
 
         // Vertically center.
         glm::vec3 off {0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
 
         if (mAlignRight)
             off.x += referenceSize - mTextCache->metrics.size.x;
-        trans = glm::translate(trans, glm::round(off));
+        trans = glm::translate(trans, off);
 
         mRenderer->setMatrix(trans);
 
@@ -276,8 +276,8 @@ std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
             if (mTime.getTime() == 0)
                 return "never";
 
-            Utils::Time::DateTime now(Utils::Time::now());
-            Utils::Time::Duration dur(now.getTime() - mTime.getTime());
+            Utils::Time::DateTime now {Utils::Time::now()};
+            Utils::Time::Duration dur {now.getTime() - mTime.getTime()};
 
             std::string buf;
 
@@ -295,7 +295,7 @@ std::string DateTimeEditComponent::getDisplayString(DisplayMode mode) const
                       " second" + (dur.getSeconds() > 1 || dur.getSeconds() == 0 ? "s" : "") +
                       " ago";
 
-            return std::string(buf);
+            return buf;
             break;
         }
     }
@@ -355,7 +355,7 @@ void DateTimeEditComponent::changeDate()
 
 void DateTimeEditComponent::updateTextCache()
 {
-    DisplayMode mode = getCurrentDisplayMode();
+    DisplayMode mode {getCurrentDisplayMode()};
 
     std::string dispString;
 
@@ -369,6 +369,8 @@ void DateTimeEditComponent::updateTextCache()
             mUppercase ? Utils::String::toUpper(getDisplayString(mode)) : getDisplayString(mode);
     }
     std::shared_ptr<Font> font = getFont();
+    // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
+    font->loadGlyphs(dispString + "\n");
     mTextCache = std::unique_ptr<TextCache>(font->buildTextCache(dispString, 0, 0, mColor));
 
     if (mAutoSize) {
