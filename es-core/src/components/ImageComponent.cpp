@@ -350,7 +350,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
                                     mClipRegion.w - mClipRegion.y, 0xFF000033, 0xFF000033);
         }
         // An image with zero size would normally indicate a corrupt image file.
-        if (mTexture->getSize() != glm::ivec2 {}) {
+        if (mTexture->getSize() != glm::ivec2 {0, 0}) {
             // Actually draw the image.
             // The bind() function returns false if the texture is not currently loaded. A blank
             // texture is bound in this case but we want to handle a fade so it doesn't just
@@ -367,6 +367,7 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             mVertices->dimming = mDimming;
             mVertices->reflectionsFalloff = mReflectionsFalloff;
 
+            mVertices->shaderFlags = mVertices->shaderFlags | Renderer::ShaderFlags::PREMULTIPLIED;
             mRenderer->drawTriangleStrips(&mVertices[0], 4);
         }
         else {

@@ -190,10 +190,11 @@ void GIFAnimComponent::setAnimation(const std::string& path)
     mSize.x = static_cast<float>(width);
     mSize.y = static_cast<float>(height);
 
+    FreeImage_PreMultiplyWithAlpha(mFrame);
     mPictureRGBA.resize(mFileWidth * mFileHeight * 4);
 
     FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&mPictureRGBA.at(0)), mFrame, filePitch, 32,
-                               FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
+                               FI_RGBA_BLUE, FI_RGBA_GREEN, FI_RGBA_RED, 1);
 
     mTexture->initFromPixels(&mPictureRGBA.at(0), mFileWidth, mFileHeight);
 
@@ -453,6 +454,7 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
                 FIF_GIF, &mAnimIO, static_cast<fi_handle>(mAnimFile), GIF_PLAYBACK);
 
             mFrame = FreeImage_LockPage(mAnimation, mFrameNum);
+            FreeImage_PreMultiplyWithAlpha(mFrame);
             mPictureRGBA.clear();
             mPictureRGBA.resize(mFrameSize);
 
@@ -496,7 +498,7 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         vertices->saturation = mSaturation * mThemeSaturation;
         vertices->opacity = mOpacity * mThemeOpacity;
         vertices->dimming = mDimming;
-        vertices->shaderFlags = Renderer::ShaderFlags::BGRA_TO_RGBA;
+        vertices->shaderFlags = Renderer::ShaderFlags::PREMULTIPLIED;
 
         // Render it.
         mRenderer->drawTriangleStrips(&vertices[0], 4);

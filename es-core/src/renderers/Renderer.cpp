@@ -37,22 +37,15 @@ void Renderer::setIcon()
     if (!rawData.empty()) {
         ImageIO::flipPixelsVert(rawData.data(), width, height);
 
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-        unsigned int rmask {0xFF000000};
-        unsigned int gmask {0x00FF0000};
-        unsigned int bmask {0x0000FF00};
-        unsigned int amask {0x000000FF};
-#else
-        unsigned int rmask {0x000000FF};
-        unsigned int gmask {0x0000FF00};
-        unsigned int bmask {0x00FF0000};
-        unsigned int amask {0xFF000000};
-#endif
+        constexpr unsigned int bmask {0x00FF0000};
+        constexpr unsigned int gmask {0x0000FF00};
+        constexpr unsigned int rmask {0x000000FF};
+        constexpr unsigned int amask {0xFF000000};
 
         // Try creating SDL surface from logo data.
         SDL_Surface* logoSurface {SDL_CreateRGBSurfaceFrom(
             static_cast<void*>(rawData.data()), static_cast<int>(width), static_cast<int>(height),
-            32, static_cast<int>(width * 4), rmask, gmask, bmask, amask)};
+            32, static_cast<int>(width * 4), bmask, gmask, rmask, amask)};
 
         if (logoSurface != nullptr) {
             SDL_SetWindowIcon(mSDLWindow, logoSurface);

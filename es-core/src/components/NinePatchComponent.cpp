@@ -134,6 +134,7 @@ void NinePatchComponent::render(const glm::mat4& parentTrans)
     if (mTexture && mVertices != nullptr) {
         mRenderer->setMatrix(trans);
         mVertices->opacity = mOpacity;
+        mVertices->shaderFlags = Renderer::ShaderFlags::PREMULTIPLIED;
         mTexture->bind();
         mRenderer->drawTriangleStrips(&mVertices[0], 6 * 9);
     }

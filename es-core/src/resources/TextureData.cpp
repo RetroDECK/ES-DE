@@ -61,7 +61,7 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
     auto svgImage = lunasvg::Document::loadFromData(fileData);
 
     if (svgImage == nullptr) {
-        LOG(LogDebug) << "TextureData::initSVGFromMemory(): Couldn't parse SVG image \"" << mPath
+        LOG(LogError) << "TextureData::initSVGFromMemory(): Couldn't parse SVG image \"" << mPath
                       << "\"";
         mInvalidSVGFile = true;
         return false;
@@ -107,7 +107,6 @@ bool TextureData::initSVGFromMemory(const std::string& fileData)
 
     if (rasterize) {
         auto bitmap = svgImage->renderToBitmap(mWidth, mHeight);
-        bitmap.convertToRGBA();
         mDataRGBA.insert(mDataRGBA.begin(), std::move(bitmap.data()),
                          std::move(bitmap.data() + mWidth * mHeight * 4));
 
@@ -221,7 +220,7 @@ bool TextureData::uploadAndBind()
 
         // Upload texture.
         mTextureID =
-            mRenderer->createTexture(Renderer::TextureType::RGBA, true, mLinearMagnify, mMipmapping,
+            mRenderer->createTexture(Renderer::TextureType::BGRA, true, mLinearMagnify, mMipmapping,
                                      mTile, static_cast<const unsigned int>(mWidth),
                                      static_cast<const unsigned int>(mHeight), mDataRGBA.data());
     }

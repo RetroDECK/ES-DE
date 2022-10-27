@@ -487,7 +487,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         vertices->saturation = mSaturation * mThemeSaturation;
         vertices->opacity = mOpacity * mThemeOpacity;
         vertices->dimming = mDimming;
-        vertices->shaderFlags = Renderer::ShaderFlags::BGRA_TO_RGBA;
+        vertices->shaderFlags = Renderer::ShaderFlags::PREMULTIPLIED;
 
         // Render it.
         mRenderer->drawTriangleStrips(&vertices[0], 4);

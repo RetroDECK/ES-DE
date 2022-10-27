@@ -248,8 +248,9 @@ void Font::renderTextCache(TextCache* cache)
         it->verts[0].shaderFlags = Renderer::ShaderFlags::FONT_TEXTURE;
 
         mRenderer->bindTexture(*it->textureIdPtr);
-        mRenderer->drawTriangleStrips(&it->verts[0],
-                                      static_cast<const unsigned int>(it->verts.size()));
+        mRenderer->drawTriangleStrips(
+            &it->verts[0], static_cast<const unsigned int>(it->verts.size()),
+            Renderer::BlendFactor::SRC_ALPHA, Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA);
     }
 }
 

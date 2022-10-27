@@ -248,13 +248,13 @@ bool RendererOpenGL::createContext()
     GL_CHECK_ERROR(glBindVertexArray(mVertexBuffer2));
 
     uint8_t data[4] {255, 255, 255, 255};
-    mWhiteTexture = createTexture(TextureType::RGBA, false, false, false, true, 1, 1, data);
+    mWhiteTexture = createTexture(TextureType::BGRA, false, false, false, true, 1, 1, data);
 
-    mPostProcTexture1 = createTexture(TextureType::RGBA, false, false, false, false,
+    mPostProcTexture1 = createTexture(TextureType::BGRA, false, false, false, false,
                                       static_cast<unsigned int>(getScreenWidth()),
                                       static_cast<unsigned int>(getScreenHeight()), nullptr);
 
-    mPostProcTexture2 = createTexture(TextureType::RGBA, false, false, false, false,
+    mPostProcTexture2 = createTexture(TextureType::BGRA, false, false, false, false,
                                       static_cast<unsigned int>(getScreenWidth()),
                                       static_cast<unsigned int>(getScreenHeight()), nullptr);
 
@@ -376,8 +376,13 @@ unsigned int RendererOpenGL::createTexture(const TextureType type,
                                    linearMagnify ? static_cast<GLfloat>(GL_LINEAR) :
                                                    static_cast<GLfloat>(GL_NEAREST)));
 
+#if defined(USE_OPENGLES)
     GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, textureType, width, height, 0, textureType,
                                 GL_UNSIGNED_BYTE, data));
+#else
+    GL_CHECK_ERROR(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, textureType,
+                                GL_UNSIGNED_BYTE, data));
+#endif
 
     if (mipmapping)
         GL_CHECK_ERROR(glGenerateMipmap(GL_TEXTURE_2D));
@@ -626,7 +631,12 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
         else
             GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, mShaderFBO2));
 
-        GL_CHECK_ERROR(glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, textureRGBA));
+#if defined(USE_OPENGLES)
+        GL_CHECK_ERROR(
+            glReadPixels(0, 0, width, height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, textureRGBA));
+#else
+        GL_CHECK_ERROR(glReadPixels(0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, textureRGBA));
+#endif
         GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
     }
 

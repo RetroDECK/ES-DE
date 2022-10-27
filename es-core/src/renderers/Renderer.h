@@ -49,7 +49,7 @@ public:
     };
 
     enum ShaderFlags {
-        BGRA_TO_RGBA    = 0x00000001,
+        PREMULTIPLIED   = 0x00000001,
         FONT_TEXTURE    = 0x00000002,
         POST_PROCESSING = 0x00000004,
         CLIPPING        = 0x00000008
@@ -201,7 +201,7 @@ public:
     virtual void drawTriangleStrips(
         const Vertex* vertices,
         const unsigned int numVertices,
-        const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,
+        const BlendFactor srcBlendFactor = BlendFactor::ONE,
         const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA) = 0;
     virtual void setMatrix(const glm::mat4& matrix) = 0;
     virtual void setScissor(const Rect& scissor) = 0;

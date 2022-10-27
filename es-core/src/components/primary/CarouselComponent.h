@@ -898,19 +898,14 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                              mEntries.at(renderItem.index).data.defaultItemPath != "")) {
             glm::mat4 reflectionTrans {glm::translate(
                 renderItem.trans, glm::vec3 {0.0f, comp->getSize().y * renderItem.scale, 0.0f})};
-            const unsigned int colorShift {comp->getColorShift()};
-            comp->setColorGradientHorizontal(false);
-            comp->setColorShift(0xFFFFFF00 | static_cast<int>(mReflectionsOpacity * 255.0f));
             float falloff {glm::clamp(mReflectionsFalloff, 0.0f, 1.0f)};
             falloff = mReflectionsOpacity * (1.0f - falloff);
-            comp->setColorShiftEnd(0xFFFFFF00 | static_cast<int>(falloff * 255.0f));
-            // "Extra" falloff as a value of 1.0 already fades the image completely.
-            if (mReflectionsFalloff > 1.0f)
-                comp->setReflectionsFalloff(mReflectionsFalloff - 1.0f);
+            comp->setOpacity(comp->getOpacity() * mReflectionsOpacity);
+            if (mReflectionsFalloff > 0.0f)
+                comp->setReflectionsFalloff(comp->getSize().y / mReflectionsFalloff);
             comp->setFlipY(true);
             comp->render(reflectionTrans);
             comp->setFlipY(false);
-            comp->setColorShift(colorShift);
             comp->setReflectionsFalloff(0.0f);
         }
 
@@ -1146,7 +1141,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mReflectionsOpacity = glm::clamp(elem->get<float>("reflectionsOpacity"), 0.1f, 1.0f);
 
         if (elem->has("reflectionsFalloff"))
-            mReflectionsFalloff = glm::clamp(elem->get<float>("reflectionsFalloff"), 0.0f, 5.0f);
+            mReflectionsFalloff = glm::clamp(elem->get<float>("reflectionsFalloff"), 0.0f, 10.0f);
 
         if (elem->has("unfocusedItemOpacity"))
             mUnfocusedItemOpacity =

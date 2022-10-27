@@ -39,6 +39,8 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
                         fiBitmap = fiConverted;
                     }
                 }
+                FreeImage_PreMultiplyWithAlpha(fiBitmap);
+
                 if (fiBitmap != nullptr) {
                     width = FreeImage_GetWidth(fiBitmap);
                     height = FreeImage_GetHeight(fiBitmap);
@@ -49,16 +51,7 @@ std::vector<unsigned char> ImageIO::loadFromMemoryRGBA32(const unsigned char* da
                         const BYTE* scanLine {FreeImage_GetScanLine(fiBitmap, static_cast<int>(i))};
                         memcpy(tempData + (i * width * 4), scanLine, width * 4);
                     }
-                    // Convert from BGRA to RGBA.
-                    for (size_t i = 0; i < width * height; ++i) {
-                        RGBQUAD bgra {reinterpret_cast<RGBQUAD*>(tempData)[i]};
-                        RGBQUAD rgba;
-                        rgba.rgbBlue = bgra.rgbRed;
-                        rgba.rgbGreen = bgra.rgbGreen;
-                        rgba.rgbRed = bgra.rgbBlue;
-                        rgba.rgbReserved = bgra.rgbReserved;
-                        reinterpret_cast<RGBQUAD*>(tempData)[i] = rgba;
-                    }
+
                     rawData = std::vector<unsigned char> {tempData, tempData + width * height * 4};
                     // Free bitmap data.
                     FreeImage_Unload(fiBitmap);

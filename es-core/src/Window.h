@@ -136,7 +136,7 @@ public:
     void setAllowTextScrolling(bool value) { mAllowTextScrolling = value; }
     bool getAllowTextScrolling() { return mAllowTextScrolling; }
 
-    // For Lottie animations.
+    // For GIF and Lottie animations.
     void setAllowFileAnimation(bool value) { mAllowFileAnimation = value; }
     bool getAllowFileAnimation() { return mAllowFileAnimation; }
 

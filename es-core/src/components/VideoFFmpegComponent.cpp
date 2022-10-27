@@ -224,7 +224,8 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             }
         }
 
-        mRenderer->drawTriangleStrips(&vertices[0], 4);
+        mRenderer->drawTriangleStrips(&vertices[0], 4, Renderer::BlendFactor::SRC_ALPHA,
+                                      Renderer::BlendFactor::ONE_MINUS_SRC_ALPHA);
     }
     else {
         if (mVisible)
@@ -435,7 +436,7 @@ bool VideoFFmpegComponent::setupVideoFilters()
     }
 
     filterDescription.append("format=pix_fmts=")
-        .append(std::string(av_get_pix_fmt_name(AV_PIX_FMT_RGBA)));
+        .append(std::string(av_get_pix_fmt_name(AV_PIX_FMT_BGRA)));
 
     returnValue = avfilter_graph_parse_ptr(mVFilterGraph, filterDescription.c_str(),
                                            &mVFilterInputs, &mVFilterOutputs, nullptr);

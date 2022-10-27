@@ -138,7 +138,7 @@ bool Window::init()
     mBackgroundOverlay->setImage(":/graphics/frame.png");
     mBackgroundOverlay->setResize(mRenderer->getScreenWidth(), mRenderer->getScreenHeight());
 
-    mPostprocessedBackground = TextureResource::get("");
+    mPostprocessedBackground = TextureResource::get("", false, false, false, false, false);
 
     mListScrollFont = Font::get(FONT_SIZE_LARGE);
 

@@ -63,7 +63,7 @@ public:
     void drawTriangleStrips(
         const Vertex* vertices,
         const unsigned int numVertices,
-        const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,
+        const BlendFactor srcBlendFactor = BlendFactor::ONE,
         const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA) override;
 
     void shaderPostprocessing(

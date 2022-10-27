@@ -4,7 +4,7 @@
 //  core.glsl
 //
 //  Core shader functionality:
-//  clipping, opacity, saturation, dimming and BGRA to RGBA conversion.
+//  Clipping, opacity, saturation, dimming and reflections falloff.
 //
 
 // Vertex section of code:
@@ -24,7 +24,7 @@ void main(void)
     gl_Position = MVPMatrix * vec4(positionVertex.xy, 0.0, 1.0);
     position = positionVertex;
     texCoord = texCoordVertex;
-    color.rgba = colorVertex.abgr;
+    color.abgr = colorVertex.rgba;
 }
 
 // Fragment section of code:
@@ -49,7 +49,7 @@ uniform sampler2D textureSampler;
 out vec4 FragColor;
 
 // shaderFlags:
-// 0x00000001 - BGRA to RGBA conversion
+// 0x00000001 - Premultiplied alpha (BGRA)
 // 0x00000002 - Font texture
 // 0x00000004 - Post processing
 // 0x00000008 - Clipping
@@ -57,7 +57,7 @@ out vec4 FragColor;
 void main()
 {
     // Discard any pixels outside the clipping region.
-    if (0u != (shaderFlags & 8u)) {
+    if (0x0u != (shaderFlags & 0x8u)) {
         if (position.x < clipRegion.x)
             discard;
         else if (position.y < clipRegion.y)
@@ -71,19 +71,31 @@ void main()
     vec4 sampledColor = texture(textureSampler, texCoord);
 
     // For fonts the alpha information is stored in the red channel.
-    if (0u != (shaderFlags & 2u))
+    if (0x0u != (shaderFlags & 0x2u))
         sampledColor = vec4(1.0, 1.0, 1.0, sampledColor.r);
 
-    sampledColor *= color;
+    // Different color calculations depending on whether the texture contains premultiplied
+    // alpha or straight alpha values.
+    if (0x0u != (shaderFlags & 0x01u)) {
+        sampledColor.rgb *= color.rgb;
+        sampledColor *= color.a;
+    }
+    else {
+        sampledColor *= color;
+    }
 
-    // When post-processing we drop the alpha channel to avoid strange issues
-    // with some graphics drivers.
-    if (0u != (shaderFlags & 4u))
+    // When post-processing we drop the alpha channel to avoid strange issues with some
+    // graphics drivers.
+    if (0x0u != (shaderFlags & 0x4u))
         sampledColor.a = 1.0;
 
     // Opacity.
-    if (opacity != 1.0)
-        sampledColor.a = sampledColor.a * opacity;
+    if (opacity != 1.0) {
+        if (0x0u == (shaderFlags & 0x01u))
+            sampledColor.a *= opacity;
+        else
+            sampledColor *= opacity;
+    }
 
     // Saturation.
     if (saturation != 1.0) {
@@ -98,13 +110,9 @@ void main()
         sampledColor *= dimColor;
     }
 
-    // BGRA to RGBA conversion.
-    if (0u != (shaderFlags & 1u))
-        sampledColor = sampledColor.bgra;
-
     // Reflections falloff.
     if (reflectionsFalloff > 0.0)
-        sampledColor.a = mix(sampledColor.a, sampledColor.a - reflectionsFalloff, texCoord.y);
+        sampledColor.argb *= mix(0.0, 1.0, reflectionsFalloff - position.y) / reflectionsFalloff;
 
     FragColor = sampledColor;
 }
