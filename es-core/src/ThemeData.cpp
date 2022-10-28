@@ -986,6 +986,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
             }
 
             if (mSelectedVariant == viewKey) {
+                parseVariables(node);
                 parseIncludes(node);
                 parseViews(node);
             }
@@ -1040,17 +1041,21 @@ void ThemeData::parseVariables(const pugi::xml_node& root)
     ThemeException error;
     error.setFiles(mPaths);
 
-    pugi::xml_node variables {root.child("variables")};
+    for (pugi::xml_node node = root.child("variables"); node;
+         node = node.next_sibling("variables")) {
 
-    if (!variables)
-        return;
+        for (pugi::xml_node_iterator it = node.begin(); it != node.end(); ++it) {
+            const std::string key {it->name()};
+            const std::string val {resolvePlaceholders(it->text().as_string())};
 
-    for (pugi::xml_node_iterator it = variables.begin(); it != variables.end(); ++it) {
-        std::string key {it->name()};
-        std::string val {resolvePlaceholders(it->text().as_string())};
-
-        if (!val.empty())
-            mVariables.insert(std::pair<std::string, std::string>(key, val));
+            if (!val.empty()) {
+                // Overriding existing variables is not allowed for legacy themes.
+                if (!mLegacyTheme && mVariables.find(key) != mVariables.end())
+                    mVariables[key] = val;
+                else
+                    mVariables.insert(std::pair<std::string, std::string>(key, val));
+            }
+        }
     }
 }
 
