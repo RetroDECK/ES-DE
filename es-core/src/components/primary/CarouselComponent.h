@@ -317,6 +317,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
 
     List::add(entry);
+
+    mText = "";
 }
 
 template <typename T>
