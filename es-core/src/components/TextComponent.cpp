@@ -263,8 +263,11 @@ void TextComponent::onTextChanged()
             return;
     }
 
-    if (!mFont || text.empty() || mSize.x < 0.0f)
+    if (!mFont || text.empty() || mSize.x < 0.0f) {
+        if (mTextCache != nullptr)
+            mTextCache.reset();
         return;
+    }
 
     float lineHeight {0.0f};
     const bool isScrollable {mParent && mParent->isScrollable()};
