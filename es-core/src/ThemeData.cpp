@@ -462,6 +462,8 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
                 mSelectedVariant = Settings::getInstance()->getString("ThemeVariant");
             else
                 mSelectedVariant = mVariants.front();
+            // Special shortcut variant to apply configuration to all defined variants.
+            mVariants.emplace_back("all");
         }
 
         if (mCurrentThemeSet->second.capabilities.aspectRatios.size() > 0) {
@@ -771,6 +773,11 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                     << "Found <variant> tag without name attribute, ignoring entry in \"" << capFile
                     << "\"";
             }
+            else if (name == "all") {
+                LOG(LogWarning)
+                    << "Found <variant> tag using reserved name \"all\", ignoring entry in \""
+                    << capFile << "\"";
+            }
             else {
                 readVariant.name = name;
             }
@@ -985,7 +992,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedVariant == viewKey) {
+            if (mSelectedVariant == viewKey || viewKey == "all") {
                 parseVariables(node);
                 parseIncludes(node);
                 parseViews(node);
