@@ -74,8 +74,8 @@ void main()
     if (0x0u != (shaderFlags & 0x2u))
         sampledColor = vec4(1.0, 1.0, 1.0, sampledColor.r);
 
-    // Different color calculations depending on whether the texture contains premultiplied
-    // alpha or straight alpha values.
+    // We need different color calculations depending on whether the texture contains
+    // premultiplied alpha or straight alpha values.
     if (0x0u != (shaderFlags & 0x01u)) {
         sampledColor.rgb *= color.rgb;
         sampledColor *= color.a;
@@ -104,7 +104,7 @@ void main()
         sampledColor = vec4(blendedColor, sampledColor.a);
     }
 
-    // Dimming
+    // Dimming.
     if (dimming != 1.0) {
         vec4 dimColor = vec4(dimming, dimming, dimming, 1.0);
         sampledColor *= dimColor;
