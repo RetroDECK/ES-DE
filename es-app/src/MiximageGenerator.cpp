@@ -111,14 +111,14 @@ void MiximageGenerator::startThread(std::promise<bool>* miximagePromise)
 bool MiximageGenerator::generateImage()
 {
     FREE_IMAGE_FORMAT fileFormat;
-    FIBITMAP* screenshotFile = nullptr;
-    FIBITMAP* marqueeFile = nullptr;
-    FIBITMAP* boxFile = nullptr;
-    FIBITMAP* physicalMediaFile = nullptr;
+    FIBITMAP* screenshotFile {nullptr};
+    FIBITMAP* marqueeFile {nullptr};
+    FIBITMAP* boxFile {nullptr};
+    FIBITMAP* physicalMediaFile {nullptr};
 
-    unsigned int fileWidth = 0;
-    unsigned int fileHeight = 0;
-    unsigned int filePitch = 0;
+    unsigned int fileWidth {0};
+    unsigned int fileHeight {0};
+    unsigned int filePitch {0};
 
 #if defined(_WIN64)
     fileFormat = FreeImage_GetFileTypeU(Utils::String::stringToWideString(mScreenshotPath).c_str());
@@ -336,19 +336,19 @@ bool MiximageGenerator::generateImage()
         resolutionMultiplier = 2;
     }
 
-    const unsigned int screenshotWidth = 530 * resolutionMultiplier;
-    const unsigned int screenshotOffset = 20 * resolutionMultiplier;
-    const unsigned int screenshotFrameWidth = 6 * resolutionMultiplier;
-    const unsigned int screenshotHeight = 400 * resolutionMultiplier;
+    const unsigned int screenshotWidth {530 * resolutionMultiplier};
+    const unsigned int screenshotOffset {20 * resolutionMultiplier};
+    const unsigned int screenshotFrameWidth {6 * resolutionMultiplier};
+    const unsigned int screenshotHeight {400 * resolutionMultiplier};
 
     // These sizes are increased slightly when adding the drop shadow.
-    const unsigned int marqueeTargetWidth = 310 * resolutionMultiplier;
-    const unsigned int marqueeTargetHeight = 230 * resolutionMultiplier;
-    unsigned int boxTargetWidth = 0;
-    unsigned int boxTargetHeight = 0;
-    unsigned int coverTargetWidth = 0;
-    unsigned int physicalMediaTargetWidth = 0;
-    unsigned int physicalMediaTargetHeight = 0;
+    const unsigned int marqueeTargetWidth {310 * resolutionMultiplier};
+    const unsigned int marqueeTargetHeight {230 * resolutionMultiplier};
+    unsigned int boxTargetWidth {0};
+    unsigned int boxTargetHeight {0};
+    unsigned int coverTargetWidth {0};
+    unsigned int physicalMediaTargetWidth {0};
+    unsigned int physicalMediaTargetHeight {0};
 
     if (Settings::getInstance()->getString("MiximageBoxSize") == "small") {
         boxTargetWidth = 264 * resolutionMultiplier;
@@ -379,12 +379,12 @@ bool MiximageGenerator::generateImage()
         physicalMediaTargetHeight = 120 * resolutionMultiplier;
     }
 
-    const unsigned int marqueeShadowSize = 6 * resolutionMultiplier;
-    const unsigned int boxShadowSize = 6 * resolutionMultiplier;
-    const unsigned int physicalMediaShadowSize = 6 * resolutionMultiplier;
+    const unsigned int marqueeShadowSize {6 * resolutionMultiplier};
+    const unsigned int boxShadowSize {6 * resolutionMultiplier};
+    const unsigned int physicalMediaShadowSize {6 * resolutionMultiplier};
 
     if (FreeImage_GetBPP(screenshotFile) != 32) {
-        FIBITMAP* screenshotTemp = FreeImage_ConvertTo32Bits(screenshotFile);
+        FIBITMAP* screenshotTemp {FreeImage_ConvertTo32Bits(screenshotFile)};
         FreeImage_Unload(screenshotFile);
         screenshotFile = screenshotTemp;
     }
@@ -396,12 +396,12 @@ bool MiximageGenerator::generateImage()
     std::vector<unsigned char> screenshotVector(fileWidth * fileHeight * 4);
 
     FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&screenshotVector.at(0)), screenshotFile,
-                               filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
+                               filePitch, 32, FI_RGBA_BLUE, FI_RGBA_GREEN, FI_RGBA_RED, 1);
 
     CImg<unsigned char> screenshotImage(fileWidth, fileHeight, 1, 4, 0);
 
     // Convert the RGBA image to CImg internal format.
-    Utils::CImg::convertRGBAToCImg(screenshotVector, screenshotImage);
+    Utils::CImg::convertBGRAToCImg(screenshotVector, screenshotImage);
     screenshotVector.clear();
 
     if (Settings::getInstance()->getBool("MiximageRemoveLetterboxes"))
@@ -426,17 +426,17 @@ bool MiximageGenerator::generateImage()
     // of the miximage.
     screenshotImage.get_shared_channel(3).fill(255);
 
-    int xPosScreenshot = 0;
-    int yPosScreenshot = 0;
+    int xPosScreenshot {0};
+    int yPosScreenshot {0};
 
-    int xPosMarquee = 0;
-    int yPosMarquee = 0;
+    int xPosMarquee {0};
+    int yPosMarquee {0};
 
-    int xPosBox = 0;
-    int yPosBox = 0;
+    int xPosBox {0};
+    int yPosBox {0};
 
-    int xPosPhysicalMedia = 0;
-    int yPosPhysicalMedia = 0;
+    int xPosPhysicalMedia {0};
+    int yPosPhysicalMedia {0};
 
     CImg<unsigned char> canvasImage(mWidth, mHeight, 1, 4, 0);
 
@@ -459,7 +459,7 @@ bool MiximageGenerator::generateImage()
 
     if (mMarquee) {
         if (FreeImage_GetBPP(marqueeFile) != 32) {
-            FIBITMAP* marqueeTemp = FreeImage_ConvertTo32Bits(marqueeFile);
+            FIBITMAP* marqueeTemp {FreeImage_ConvertTo32Bits(marqueeFile)};
             FreeImage_Unload(marqueeFile);
             marqueeFile = marqueeTemp;
         }
@@ -471,16 +471,16 @@ bool MiximageGenerator::generateImage()
         std::vector<unsigned char> marqueeVector(fileWidth * fileHeight * 4);
 
         FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&marqueeVector.at(0)), marqueeFile,
-                                   filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
+                                   filePitch, 32, FI_RGBA_BLUE, FI_RGBA_GREEN, FI_RGBA_RED, 1);
 
         marqueeImage = CImg<unsigned char>(FreeImage_GetWidth(marqueeFile),
                                            FreeImage_GetHeight(marqueeFile), 1, 4, 0);
 
-        Utils::CImg::convertRGBAToCImg(marqueeVector, marqueeImage);
+        Utils::CImg::convertBGRAToCImg(marqueeVector, marqueeImage);
         Utils::CImg::removeTransparentPadding(marqueeImage);
 
-        unsigned int marqueeWidth = static_cast<unsigned int>(marqueeImage.width());
-        unsigned int marqueeHeight = static_cast<unsigned int>(marqueeImage.height());
+        unsigned int marqueeWidth {static_cast<unsigned int>(marqueeImage.width())};
+        unsigned int marqueeHeight {static_cast<unsigned int>(marqueeImage.height())};
 
         calculateMarqueeSize(marqueeTargetWidth, marqueeTargetHeight, marqueeWidth, marqueeHeight);
 
@@ -501,7 +501,7 @@ bool MiximageGenerator::generateImage()
 
     if (mBox3D || mCover) {
         if (FreeImage_GetBPP(boxFile) != 32) {
-            FIBITMAP* boxTemp = FreeImage_ConvertTo32Bits(boxFile);
+            FIBITMAP* boxTemp {FreeImage_ConvertTo32Bits(boxFile)};
             FreeImage_Unload(boxFile);
             boxFile = boxTemp;
         }
@@ -513,24 +513,25 @@ bool MiximageGenerator::generateImage()
         std::vector<unsigned char> boxVector(fileWidth * fileHeight * 4);
 
         FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&boxVector.at(0)), boxFile, filePitch,
-                                   32, FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE, 1);
+                                   32, FI_RGBA_BLUE, FI_RGBA_GREEN, FI_RGBA_RED, 1);
 
         boxImage =
             CImg<unsigned char>(FreeImage_GetWidth(boxFile), FreeImage_GetHeight(boxFile), 1, 4);
 
-        Utils::CImg::convertRGBAToCImg(boxVector, boxImage);
+        Utils::CImg::convertBGRAToCImg(boxVector, boxImage);
         Utils::CImg::removeTransparentPadding(boxImage);
 
-        float sizeRatio =
-            static_cast<float>(boxImage.width()) / static_cast<float>(boxImage.height());
+        float sizeRatio {static_cast<float>(boxImage.width()) /
+                         static_cast<float>(boxImage.height())};
 
         if (sizeRatio > 1.14f && Settings::getInstance()->getBool("MiximageRotateHorizontalBoxes"))
             boxImage.rotate(90.0f);
 
-        float scaleFactor =
-            static_cast<float>(boxTargetHeight) / static_cast<float>(boxImage.height());
-        unsigned int width = static_cast<int>(static_cast<float>(boxImage.width()) * scaleFactor);
-        unsigned int targetWidth = 0;
+        float scaleFactor {static_cast<float>(boxTargetHeight) /
+                           static_cast<float>(boxImage.height())};
+        unsigned int width {
+            static_cast<unsigned int>(static_cast<float>(boxImage.width()) * scaleFactor)};
+        unsigned int targetWidth {0};
 
         // We make this distinction as some cover images are in square format and would cover
         // too much surface otherwise.
@@ -541,7 +542,7 @@ bool MiximageGenerator::generateImage()
 
         if (width > targetWidth) {
             scaleFactor = static_cast<float>(targetWidth) / static_cast<float>(boxImage.width());
-            int height = static_cast<int>(static_cast<float>(boxImage.height()) * scaleFactor);
+            int height {static_cast<int>(static_cast<float>(boxImage.height()) * scaleFactor)};
             // We use Lanczos3 which is the highest quality resampling method available.
             boxImage.resize(targetWidth, height, 1, 4, 6);
         }
@@ -562,7 +563,7 @@ bool MiximageGenerator::generateImage()
 
     if (mPhysicalMedia) {
         if (FreeImage_GetBPP(physicalMediaFile) != 32) {
-            FIBITMAP* physicalMediaTemp = FreeImage_ConvertTo32Bits(physicalMediaFile);
+            FIBITMAP* physicalMediaTemp {FreeImage_ConvertTo32Bits(physicalMediaFile)};
             FreeImage_Unload(physicalMediaFile);
             physicalMediaFile = physicalMediaTemp;
         }
@@ -574,26 +575,26 @@ bool MiximageGenerator::generateImage()
         std::vector<unsigned char> physicalMediaVector(fileWidth * fileHeight * 4);
 
         FreeImage_ConvertToRawBits(reinterpret_cast<BYTE*>(&physicalMediaVector.at(0)),
-                                   physicalMediaFile, filePitch, 32, FI_RGBA_RED, FI_RGBA_GREEN,
-                                   FI_RGBA_BLUE, 1);
+                                   physicalMediaFile, filePitch, 32, FI_RGBA_BLUE, FI_RGBA_GREEN,
+                                   FI_RGBA_RED, 1);
 
         physicalMediaImage = CImg<unsigned char>(FreeImage_GetWidth(physicalMediaFile),
                                                  FreeImage_GetHeight(physicalMediaFile), 1, 4, 0);
 
-        Utils::CImg::convertRGBAToCImg(physicalMediaVector, physicalMediaImage);
+        Utils::CImg::convertBGRAToCImg(physicalMediaVector, physicalMediaImage);
         Utils::CImg::removeTransparentPadding(physicalMediaImage);
 
         // Make sure the image size is not exceeding either the target width or height.
-        float scaleFactorX = static_cast<float>(physicalMediaTargetWidth) /
-                             static_cast<float>(physicalMediaImage.width());
-        float scaleFactorY = static_cast<float>(physicalMediaTargetHeight) /
-                             static_cast<float>(physicalMediaImage.height());
-        float scaleFactor = std::min(scaleFactorX, scaleFactorY);
+        float scaleFactorX {static_cast<float>(physicalMediaTargetWidth) /
+                            static_cast<float>(physicalMediaImage.width())};
+        float scaleFactorY {static_cast<float>(physicalMediaTargetHeight) /
+                            static_cast<float>(physicalMediaImage.height())};
+        float scaleFactor {std::min(scaleFactorX, scaleFactorY)};
 
-        unsigned int width =
-            static_cast<int>(static_cast<float>(physicalMediaImage.width()) * scaleFactor);
-        unsigned int height =
-            static_cast<int>(static_cast<float>(physicalMediaImage.height()) * scaleFactor);
+        unsigned int width {static_cast<unsigned int>(
+            static_cast<float>(physicalMediaImage.width()) * scaleFactor)};
+        unsigned int height {static_cast<unsigned int>(
+            static_cast<float>(physicalMediaImage.height()) * scaleFactor)};
 
         // We use Lanczos3 which is the highest quality resampling method available.
         physicalMediaImage.resize(width, height, 1, 4, 6);
@@ -632,8 +633,8 @@ bool MiximageGenerator::generateImage()
                               yPosScreenshot + screenshotHeight - 2, frameColor);
 
     // We draw circles in order to get rounded corners for the frame.
-    const unsigned int circleRadius = 8 * resolutionMultiplier;
-    const unsigned int circleOffset = 2 * resolutionMultiplier;
+    const unsigned int circleRadius {8 * resolutionMultiplier};
+    const unsigned int circleOffset {2 * resolutionMultiplier};
 
     // Upper left corner.
     frameImage.draw_circle(xPosScreenshot + circleOffset, yPosScreenshot + circleOffset,
@@ -668,19 +669,19 @@ bool MiximageGenerator::generateImage()
     std::vector<unsigned char> canvasVector;
 
     // Convert the image from CImg internal format.
-    Utils::CImg::convertCImgToRGBA(canvasImage, canvasVector);
+    Utils::CImg::convertCImgToBGRA(canvasImage, canvasVector);
 
-    FIBITMAP* mixImage = nullptr;
+    FIBITMAP* mixImage {nullptr};
     mixImage = FreeImage_ConvertFromRawBits(&canvasVector.at(0), canvasImage.width(),
                                             canvasImage.height(), canvasImage.width() * 4, 32,
-                                            FI_RGBA_RED, FI_RGBA_GREEN, FI_RGBA_BLUE);
+                                            FI_RGBA_BLUE, FI_RGBA_GREEN, FI_RGBA_RED);
 
 #if defined(_WIN64)
-    bool savedImage =
-        (FreeImage_SaveU(FIF_PNG, mixImage,
-                         Utils::String::stringToWideString(getSavePath()).c_str()) != 0);
+    bool savedImage {FreeImage_SaveU(FIF_PNG, mixImage,
+                                     Utils::String::stringToWideString(getSavePath()).c_str()) !=
+                     0};
 #else
-    bool savedImage = (FreeImage_Save(FIF_PNG, mixImage, getSavePath().c_str()) != 0);
+    bool savedImage {FreeImage_Save(FIF_PNG, mixImage, getSavePath().c_str()) != 0};
 #endif
 
     if (!savedImage) {
@@ -705,14 +706,14 @@ void MiximageGenerator::calculateMarqueeSize(const unsigned int& targetWidth,
                                              unsigned int& width,
                                              unsigned int& height)
 {
-    unsigned int adjustedTargetWidth = 0;
-    float widthModifier = 0.5f;
-    float scaleFactor = 0.0f;
+    unsigned int adjustedTargetWidth {0};
+    float widthModifier {0.5f};
+    float scaleFactor {0.0f};
 
     // The idea is to adjust the size of the marquee based on its surface area, so that
     // wider but shorter images get a larger width than taller images in order to use
     // an approximately equivalent amount of space on the miximage.
-    float widthRatio = static_cast<float>(width) / static_cast<float>(height);
+    float widthRatio {static_cast<float>(width) / static_cast<float>(height)};
 
     widthModifier = glm::clamp(widthModifier + widthRatio / 6.5f, 0.0f, 1.0f);
 
@@ -737,18 +738,18 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
                                          unsigned char (&frameColor)[4])
 {
     // Calculate the number of samples relative to the configured resolution so we get
-    // the same result regardless of miximage target size seting.
-    unsigned int samples = static_cast<int>(static_cast<float>(mWidth) * 0.03125f);
+    // the same result regardless of miximage target size setting.
+    unsigned int samples {static_cast<unsigned int>(static_cast<float>(mWidth) * 0.03125f)};
 
-    unsigned int red = 0;
-    unsigned int green = 0;
-    unsigned int blue = 0;
+    unsigned int red {0};
+    unsigned int green {0};
+    unsigned int blue {0};
 
-    unsigned int redLine = 0;
-    unsigned int greenLine = 0;
-    unsigned int blueLine = 0;
+    unsigned int redLine {0};
+    unsigned int greenLine {0};
+    unsigned int blueLine {0};
 
-    unsigned int counter = 0;
+    unsigned int counter {0};
 
     // This is a very simple method to get an average pixel value. It's limited in that it
     // does not consider dominant colors and such, so the result could possibly be a value
@@ -770,16 +771,19 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
         }
     }
 
-    unsigned char redC = glm::clamp(static_cast<int>(redLine / 255), 0, 255);
-    unsigned char greenC = glm::clamp(static_cast<int>(greenLine / 255), 0, 255);
-    unsigned char blueC = glm::clamp(static_cast<int>(blueLine / 255), 0, 255);
+    unsigned char redC {
+        static_cast<unsigned char>(glm::clamp(static_cast<int>(redLine / 255), 0, 255))};
+    unsigned char greenC {
+        static_cast<unsigned char>(glm::clamp(static_cast<int>(greenLine / 255), 0, 255))};
+    unsigned char blueC {
+        static_cast<unsigned char>(glm::clamp(static_cast<int>(blueLine / 255), 0, 255))};
 
     // Convert to the HSL color space to be able to modify saturation and lightness.
     CImg<float> colorHSL = CImg<>(1, 1, 1, 3).fill(redC, greenC, blueC).RGBtoHSL();
 
     // float hue = colorHSL(0, 0, 0, 0);
-    float saturation = colorHSL(0, 0, 0, 1);
-    float lightness = colorHSL(0, 0, 0, 2);
+    float saturation {colorHSL(0, 0, 0, 1)};
+    float lightness {colorHSL(0, 0, 0, 2)};
 
     // Decrease saturation slightly and increase lightness a bit, these adjustments
     // makes the end result look better than the raw average pixel value. Also clamp
@@ -798,7 +802,7 @@ void MiximageGenerator::sampleFrameColor(CImg<unsigned char>& screenshotImage,
 
 std::string MiximageGenerator::getSavePath() const
 {
-    const std::string name = Utils::FileSystem::getStem(mGame->getPath());
+    const std::string name {Utils::FileSystem::getStem(mGame->getPath())};
     std::string subFolders;
 
     // Extract possible subfolders from the path.
@@ -806,7 +810,7 @@ std::string MiximageGenerator::getSavePath() const
         subFolders = Utils::String::replace(Utils::FileSystem::getParent(mGame->getPath()),
                                             mGame->getSystemEnvData()->mStartPath, "");
 
-    std::string path = FileData::getMediaDirectory();
+    std::string path {FileData::getMediaDirectory()};
 
     if (!Utils::FileSystem::exists(path))
         Utils::FileSystem::createDirectory(path);

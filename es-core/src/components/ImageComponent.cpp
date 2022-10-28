@@ -187,9 +187,9 @@ void ImageComponent::cropTransparentPadding(const float maxSizeX, const float ma
     if (mSize == glm::vec2 {0.0f, 0.0f})
         return;
 
-    std::vector<unsigned char> imageRGBA {mTexture.get()->getRawRGBAData()};
+    std::vector<unsigned char> imageBGRA {mTexture.get()->getRawRGBAData()};
 
-    if (imageRGBA.size() == 0)
+    if (imageBGRA.size() == 0)
         return;
 
     glm::ivec2 imageSize {mTexture.get()->getSize()};
@@ -198,8 +198,8 @@ void ImageComponent::cropTransparentPadding(const float maxSizeX, const float ma
     int paddingCoords[4] {0, 0, 0, 0};
 
     // We need to convert our RGBA data to the CImg internal format as CImg does not interleave
-    // the pixels (as in RGBARGBARGBA).
-    Utils::CImg::convertRGBAToCImg(imageRGBA, imageCImg);
+    // the pixels (as in BGRABGRABGRA).
+    Utils::CImg::convertBGRAToCImg(imageBGRA, imageCImg);
 
     // This will give us the coordinates for the fully transparent areas.
     Utils::CImg::getTransparentPaddingCoords(imageCImg, paddingCoords);

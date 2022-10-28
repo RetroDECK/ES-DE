@@ -20,6 +20,10 @@ namespace Utils
 {
     namespace CImg
     {
+        void convertBGRAToCImg(const std::vector<unsigned char>& imageBGRA,
+                               cimg_library::CImg<unsigned char>& image);
+        void convertCImgToBGRA(const cimg_library::CImg<unsigned char>& image,
+                               std::vector<unsigned char>& imageBGRA);
         void convertRGBAToCImg(const std::vector<unsigned char>& imageRGBA,
                                cimg_library::CImg<unsigned char>& image);
         void convertCImgToRGBA(const cimg_library::CImg<unsigned char>& image,

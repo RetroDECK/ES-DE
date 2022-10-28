@@ -12,10 +12,39 @@ namespace Utils
 {
     namespace CImg
     {
+        void convertBGRAToCImg(const std::vector<unsigned char>& imageBGRA,
+                               cimg_library::CImg<unsigned char>& image)
+        {
+            // CImg does not interleave pixels as in BGRABGRABGRA so a conversion is required.
+            int counter = 0;
+            for (int r = 0; r < image.height(); ++r) {
+                for (int c = 0; c < image.width(); ++c) {
+                    image(c, r, 0, 0) = imageBGRA[counter + 0];
+                    image(c, r, 0, 1) = imageBGRA[counter + 1];
+                    image(c, r, 0, 2) = imageBGRA[counter + 2];
+                    image(c, r, 0, 3) = imageBGRA[counter + 3];
+                    counter += 4;
+                }
+            }
+        }
+
+        void convertCImgToBGRA(const cimg_library::CImg<unsigned char>& image,
+                               std::vector<unsigned char>& imageBGRA)
+        {
+            for (int r = image.height() - 1; r >= 0; --r) {
+                for (int c = 0; c < image.width(); ++c) {
+                    imageBGRA.emplace_back((unsigned char)image(c, r, 0, 0));
+                    imageBGRA.emplace_back((unsigned char)image(c, r, 0, 1));
+                    imageBGRA.emplace_back((unsigned char)image(c, r, 0, 2));
+                    imageBGRA.emplace_back((unsigned char)image(c, r, 0, 3));
+                }
+            }
+        }
+
         void convertRGBAToCImg(const std::vector<unsigned char>& imageRGBA,
                                cimg_library::CImg<unsigned char>& image)
         {
-            // CImg does not interleave the pixels as in RGBARGBARGBA so a conversion is required.
+            // CImg does not interleave pixels as in RGBARGBARGBA so a conversion is required.
             int counter = 0;
             for (int r = 0; r < image.height(); ++r) {
                 for (int c = 0; c < image.width(); ++c) {
