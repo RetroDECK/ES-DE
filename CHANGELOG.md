@@ -61,6 +61,8 @@
 * Adjusted the splash screen sizing to be more consistent across various screen aspect ratios
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (4.6 on the Steam Deck) and OpenGL ES 3.0 respectively
+* Changed the renderer pixel format from RGBA to BGRA
+* Changed to premultiplied alpha for images as well as for GIF and Lottie animations
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
@@ -102,6 +104,11 @@
 * Added theme support for enabling or disabling audio playback for videos
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Added support for nesting of theme variables
+* Added support for defining multiple theme "variables" tags in the same XML file
+* Added support for overriding/redefining variables
+* When encountering missing theme include files defined by variables, a debug message is now printed instead of throwing an error
+* When encountering missing theme files defined by element path properties, a debug message is now printed instead of a warning
+* Added two DebugSkipMissingThemeFiles and DebugSkipMissingThemeFilesCustomCollections settings which need to be manually set in es_settings.xml
 * Prevented loading of theme sets using the "resolution" tag introduced by RetroPie in 2020 as it's a very bad idea to use this logic
 * Added support for vertical abbreviations of multiline text entries
 * Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set

@@ -238,7 +238,7 @@ Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulations
 
 Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in many instances is that a warning log entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its horizontalAlignment property set to _leftr_ instead of _left_:
 ```
-Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, <horizontalAlignment> set to "leftr"
+Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, property "horizontalAlignment" for element "gamelist_badges" defined as "leftr"
 ```
 
 Note however that warnings are not printed for all invalid properties as that would lead to an excessive amount of logging code. This is especially true for numeric values which are commonly just clamped to the allowable range without notifying the theme author. So make sure to check the [Reference](THEMES-DEV.md#reference) section of this document for valid values for each property.
@@ -246,28 +246,45 @@ Note however that warnings are not printed for all invalid properties as that wo
 For more serious issues where it does not make sense to assign a default value or auto-adjust the configuration, an error log entry is generated and the element will in most instances not get rendered at all. Here's such an example where the imageType property for a video element was accidentally set to _covr_ instead of _cover_:
 
 ```
-Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property <imageType> defined as "covr"
+Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property "imageType" for element "gamelist_video" defined as "covr"
 ```
+
+Error handling for missing files is handled a bit differently depending on whether the paths have been defined explicitly or via a variable. For explicitly defined paths a warning will be logged for element properties and an error will be triggered for include files. Here's an example of the latter case:
+
+```
+Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mythemeset-DE/colors_dark.xml")
+```
+
+However, if a variable has been used to define the include file, only a debug message will be generated if the file is not found:
+```
+Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mythemeset-DE/amiga/colors.xml"
+```
+
+It works essentially the same way for element path properties as for include files. This distinction between explicit values and variables makes it possible to create a theme configuration where both include files and files for fonts, images, videos etc. will be used if found, and if not found a fallback configuration can still be applied so the system will be themed.
+
+By default all debug messages regarding missing files will be logged for regular systems and automatic collections and suppressed for custom collections. This behavior can be changed by modifying the _DebugSkipMissingThemeFiles_ and _DebugSkipMissingThemeFilesCustomCollections_ settings in es_settings.xml. You can read more about those settings [here](INSTALL-DEV.md#settings-not-configurable-via-the-gui).
 
 ## Variants
 
 A core concept of ES-DE is the use of theme set _variants_ to provide different theme profiles. These are not fixed presets and a theme author can instead name and define whatever variants he wants for his theme (or possibly use no variants at all as they are optional).
 
-The variants could be purely cosmetic, such as providing light and dark mode versions of the theme set, or they could provide different functionality by for instance using different primary elements such as a carousel or a text list.
+The variants could be purely cosmetic, such as providing different designs for a theme set, or they could provide distinctive functionality by for instance using different primary elements like a carousel or a text list.
 
-Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detailed later in this document.
+Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
 
 The use of variants is straightforward, a section of the configuration that should be included for a certain variant is enclosed inside the `<variant>` tag pair. This has to be placed inside the `<theme>` tag pair, and it can only be used on this level of the hierarchy and not inside a `<view>` tag pair for example.
 
-The mandatory _name_ attribute is used to specificy which variants to use, and multiple variants can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks).
+The mandatory _name_ attribute is used to specificy which variants to use, and multiple variants can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks). It's also possible to use the special _all_ variant that will apply the configuration to all defined variants (although this is only a convenient shortcut and you can explicitly define every variant individually if you prefer that). Note that _all_ is a reserved name and attempting to use it in the capabilities.xml file will trigger a warning on application startup.
 
-It could be a good idea to separate the various variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme set configuration.
+It could be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme set configuration.
+
+It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `info_text_01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. Alternatively you could use the special _all_ variant to define common configuration used by all variants in the theme set.
 
 Here are some example uses of the `<variant>` functionality:
 
 ```xml
-<!-- Implementing the variants by separate include files could be a good idea -->
 <theme>
+    <!-- Implementing the variants via separate include files could be a good idea -->
     <variant name="lightMode, lightModeNoVideo">
         <include>./../colors_light.xml</include>
     </variant>
@@ -275,6 +292,12 @@ Here are some example uses of the `<variant>` functionality:
         <include>./../colors_dark.xml</include>
     </variant>
 
+    <!-- The special "all" variant is a convenient shortcut for some situations -->
+    <variant name="all">
+        <include>./${system.theme}/systeminfo.xml</include>
+    </variant>
+
+    <!-- This will be parsed before the variant-specific configuration -->
     <view name="gamelist">
         <text name="info_text_01">
             <fontPath>./core/font.ttf</fontPath>
@@ -283,7 +306,9 @@ Here are some example uses of the `<variant>` functionality:
         </text>
     </view>
 </theme>
+```
 
+```xml
 <!-- In other instances it may make more sense to apply the variant configuration inline -->
 <theme>
     <variant name="lightModeNoVideo, darkModeNoVideo">
@@ -731,31 +756,35 @@ System variables are system specific and are derived from the values defined in 
 The `.collections` and `.noCollections` versions of these variables make it possible to differentiate between regular systems and collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems. The below example capitalizes the names of the collections while leaving the regular systems at their default formatting (as they are defined in es_systems.xml). The reason this works is that the .collections and .noCollections variables are mutually exclusive, i.e. they can never both hold a value at the same time as a system is either a real system or a collection and never both.
 
 ```xml
-<view name="system">
-    <text name="system_name, collection_name">
-        <pos>0.05 0.83</pos>
-        <size>0.9 0.06</size>
-        <fontSize>0.06</fontSize>
-        <fontPath>./core/font.ttf</fontPath>
-    </text>
-    <text name="collection_name">
-        <letterCase>capitalize</letterCase>
-    </text>
-    <text name="system_name">
-        <text>${system.fullName.noCollections}</text>
-    </text>
-    <text name="collection_name">
-        <text>${system.fullName.collections}</text>
-    </text>
-</view>
+<theme>
+    <view name="system">
+        <text name="system_name, collection_name">
+            <pos>0.05 0.83</pos>
+            <size>0.9 0.06</size>
+            <fontSize>0.06</fontSize>
+            <fontPath>./core/font.ttf</fontPath>
+        </text>
+        <text name="collection_name">
+            <letterCase>capitalize</letterCase>
+        </text>
+        <text name="system_name">
+            <text>${system.fullName.noCollections}</text>
+        </text>
+        <text name="collection_name">
+            <text>${system.fullName.collections}</text>
+        </text>
+    </view>
+</theme>
 ```
 
 ### Theme defined variables
 Variables can also be defined in the theme.
 ```xml
-<variables>
-    <themeColor>8B0000</themeColor>
-</variables>
+<theme>
+    <variables>
+        <themeColor>8B0000</themeColor>
+    </variables>
+</theme>
 ```
 
 ### Usage in themes
@@ -773,11 +802,64 @@ It can also be used to specify only a portion of the value of a theme property:
 
 Nesting of variables is supported, so the following could be done:
 ```xml
-<variables>
-    <colorRed>8b0000</colorRed>
-    <themeColor>${colorRed}</themeColor>
-</variables>
+<theme>
+    <variables>
+        <colorRed>8b0000</colorRed>
+        <themeColor>${colorRed}</themeColor>
+    </variables>
+</theme>
 ```
+
+Variables can also be declared inside the `<variant>` tags, but make sure to read the comments below for the implications and possibly unforeseen behavior when doing this:
+```xml
+<theme>
+    <variant name="lightMode, lightModeNoVideo">
+        <variables>
+            <colorRed>8b0000</colorRed>
+            <themeColor>${colorRed}</themeColor>
+        </variables>
+    </variant>
+</theme>
+```
+
+Variables live in the global namespace, i.e. they are reachable by all configuration entries regardless of whether variants are used or not. This means that if a variable is defined directly under the `<theme>` tag and then redefined inside a `<variants>` tag then the global variable will be modified rather than a copy specific to the variant. As well, since all general (non-variant) configuration is parsed prior to the variant configuration, any overriding of the variable will be done "too late" to apply to the general configuaration. Take this example:
+
+```xml
+<theme>
+    <!-- Set the value of variable themeColor to 8b0000 -->
+    <variables>
+        <colorRed>8b0000</colorRed>
+        <themeColor>${colorRed}</themeColor>
+    </variables>
+
+    <!-- Override the value of variable themeColor by defining it as 6533ff -->
+    <variant name="lightMode, lightModeNoVideo">
+        <variables>
+            <themeColor>6533ff</themeColor>
+        </variables>
+    </variant>
+
+    <!-- color will be set to 8b0000 as it's parsed before the variants configuration -->
+    <view name="gamelist">
+        <text name="info_text_01">
+            <pos>0.3 0.56</pos>
+            <color>${themeColor}</color>
+        </text>
+    </view>
+
+    <!-- color will be set to 6533ff -->
+    <variant name="lightMode, lightModeNoVideo">
+        <view name="gamelist">
+            <text name="game_name">
+                <pos>0.8 0.12</pos>
+                <color>${themeColor}</color>
+            </text>
+        </view>
+    </variant>
+</theme>
+```
+
+Due to the potential confusion caused by the above configuration it's recommended to never use the same variable names under the `<variants>` tag as have previously been declared directly under the `<theme>` tag.
 
 ## Property data types
 
@@ -1580,8 +1662,8 @@ Properties:
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
 * `reflectionsFalloff` - type: FLOAT
-    - Defines the opacity falloff for the reflections, starting from the base opacity value. Setting this property to `1` will fade the bottom of the reflection to complete transparency. Setting it above `1` will lead to a more aggressive falloff.
-    - Minimum value is `0` and maximum value is `5`
+    - Defines the reflections opacity falloff, starting from the item's base opacity and ending at complete transparency. The value is set relative to the item height, so `1` will fade the bottom of the item to full transparency, `2` will fade to full transparency at half the item height and `0.5` will place the full transparency point at twice the item height.
+    - Minimum value is `0` and maximum value is `10`
     - Default is `1`
 * `unfocusedItemOpacity` - type: FLOAT
     - Sets the opacity for the items that are not currently focused.

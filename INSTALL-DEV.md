@@ -1103,7 +1103,15 @@ There are some settings which are not configurable via the GUI as modifying thes
 
 **DebugSkipInputLogging**
 
-Enabling this will skip all input event logging (button and key presses).
+Enabling this will skip all input event logging (button and key presses). Default value is false.
+
+**DebugSkipMissingThemeFiles**
+
+Enabling this will skip all debug messages about missing files when loading a theme set. Default value is false.
+
+**DebugSkipMissingThemeFilesCustomCollections**
+
+Enabling this will skip all debug messages about missing files specifically for custom collections when loading a theme set. Note that DebugSkipMissingThemeFiles takes precedence, so if that setting is set to true then the DebugSkipMissingThemeFilesCustomCollections setting will be ignored. Default value is true.
 
 **LottieMaxFileCache**
 
