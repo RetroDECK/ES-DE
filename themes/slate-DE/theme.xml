@@ -8,12 +8,24 @@
 <theme>
     <include>./navigationsounds.xml</include>
 
+    <variables>
+        <systemConsoleImage>./${system.theme}/images/consolegame.svg</systemConsoleImage>
+        <systemControllerImage>./${system.theme}/images/controller.svg</systemControllerImage>
+        <systemLogo>./${system.theme}/images/logo.svg</systemLogo>
+    </variables>
+
     <variant name="darkMode, darkModeNoVideos">
         <include>./colors_dark.xml</include>
     </variant>
 
     <variant name="lightMode, lightModeNoVideos">
         <include>./colors_light.xml</include>
+    </variant>
+
+    <!-- Per-system band colors and platform info. -->
+    <variant name="all">
+        <include>./${system.theme}/colors.xml</include>
+        <include>./${system.theme}/systeminfo.xml</include>
     </variant>
 
     <!-- Temporary location during theme engine testing, should be moved to colors_dark.xml -->
@@ -135,11 +147,13 @@
             <pos>0.02 0.327</pos>
             <maxSize>0.4 0.28</maxSize>
             <origin>0 1</origin>
+            <path>${systemConsoleImage}</path>
         </image>
         <image name="controller">
             <pos>0.78 0.327</pos>
             <maxSize>0.12 0.28</maxSize>
             <origin>1 1</origin>
+            <path>${systemControllerImage}</path>
         </image>
         <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
             <size>0.4 0.03</size>
@@ -184,11 +198,13 @@
             <pos>0.02 0.17</pos>
             <maxSize>0.4 0.15</maxSize>
             <origin>0 1</origin>
+            <path>${systemConsoleImage}</path>
         </image>
         <image name="logo">
             <pos>0.78 0.17</pos>
             <maxSize>0.32 0.13</maxSize>
             <origin>1 1</origin>
+            <path>${systemLogo}</path>
         </image>
         <image name="backframe2">
             <pos>0.02 0.19</pos>
