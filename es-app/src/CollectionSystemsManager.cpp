@@ -1023,8 +1023,8 @@ void CollectionSystemsManager::repopulateCollection(SystemData* sysData)
          it != mCustomCollectionSystemsData.cend(); ++it) {
         if ((*it).second.system == sysData) {
             LOG(LogDebug) << "CollectionSystemsManager::repopulateCollection(): "
-                             "Repopulating custom collection '"
-                          << it->first << "'.";
+                             "Repopulating custom collection \""
+                          << it->first << "\"";
 
             CollectionSystemData* customSystem {&mCustomCollectionSystemsData[it->first]};
             std::vector<FileData*> systemEntries {
