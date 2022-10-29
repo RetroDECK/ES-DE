@@ -2,20 +2,20 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="256"
    height="256"
    viewBox="0 0 67.733333 67.733333"
    version="1.1"
    id="svg4925"
-   inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="keyboard_generic.svg">
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="keyboard_generic.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4919" />
   <sodipodi:namedview
@@ -25,9 +25,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="4.6444317"
-     inkscape:cx="-52.556182"
-     inkscape:cy="171.55721"
+     inkscape:zoom="6.5682183"
+     inkscape:cx="59.529081"
+     inkscape:cy="112.58761"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -37,7 +37,8 @@
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:snap-global="false" />
+     inkscape:snap-global="false"
+     inkscape:pagecheckerboard="0" />
   <metadata
      id="metadata4922">
     <rdf:RDF>
@@ -46,7 +47,6 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -118,20 +118,18 @@
          style="fill:#cecfce;fill-opacity:1;stroke-width:0.08643198" />
     </g>
     <g
-       id="XMLID_220_"
-       transform="matrix(0.14307478,0,0,0.09418071,-8.0948495,224.00756)"
-       style="opacity:0.85700001">
+       id="g4003">
       <path
          id="XMLID_223_"
-         d="m 326.7,414.5 h 19.4 c 0.8,0 1.4,0.6 1.4,1.4 v 19.8 c 0,0.8 -0.6,1.4 -1.4,1.4 h -19.4 c -0.8,0 -1.4,-0.6 -1.4,-1.4 v -19.8 c -0.1,-0.8 0.6,-1.4 1.4,-1.4 z"
+         d="m 38.647681,263.04546 h 2.775651 c 0.11446,0 0.200305,0.0565 0.200305,0.13186 v 1.86478 c 0,0.0753 -0.08584,0.13185 -0.200305,0.13185 h -2.775651 c -0.11446,0 -0.200305,-0.0565 -0.200305,-0.13185 v -1.86478 c -0.01431,-0.0754 0.08584,-0.13186 0.200305,-0.13186 z"
          inkscape:connector-curvature="0"
-         style="fill:#9b9a9a" />
-      <path
-         id="XMLID_221_"
-         d="m 329.6,416.7 h 13.5 c 0.8,0 1.4,0.6 1.4,1.4 v 13.5 c 0,0.8 -0.6,1.4 -1.4,1.4 h -13.5 c -0.8,0 -1.4,-0.6 -1.4,-1.4 v -13.5 c 0,-0.8 0.6,-1.4 1.4,-1.4 z"
-         inkscape:connector-curvature="0"
-         style="fill:#cfd0cf" />
+         style="opacity:0.857;fill:#a1a1a1;stroke-width:0.116081;fill-opacity:1" />
     </g>
+    <path
+       id="XMLID_221_"
+       d="m 39.062598,263.25266 h 1.93151 c 0.114459,0 0.200304,0.0565 0.200304,0.13185 v 1.27144 c 0,0.0753 -0.08584,0.13186 -0.200304,0.13186 h -1.93151 c -0.11446,0 -0.200305,-0.0565 -0.200305,-0.13186 v -1.27144 c 0,-0.0753 0.08584,-0.13185 0.200305,-0.13185 z"
+       inkscape:connector-curvature="0"
+       style="opacity:0.857;fill:#cecfce;stroke-width:0.116081;fill-opacity:1" />
     <g
        id="g8167"
        transform="matrix(0.9305773,0,0,0.96071617,1.7538853,10.310258)">
