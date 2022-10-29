@@ -227,7 +227,7 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 auto item = std::make_shared<ImageComponent>(false, dynamic);
                 item->setLinearInterpolation(mLinearInterpolation);
                 item->setMipmapping(true);
-                item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+                item->setMaxSize(glm::round(mItemSize * mItemScale));
                 item->applyTheme(theme, "system", "image_logo",
                                  ThemeFlags::PATH | ThemeFlags::COLOR);
                 item->setRotateByTargetSize(true);
@@ -775,7 +775,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
         float scale {0.0f};
 
-        if (mItemScale >= 1.0f) {
+        // Don't allow scaling below 1.0 for legacy themes as it introduces compatibility issues.
+        if (mLegacyMode || mItemScale >= 1.0f) {
             scale = 1.0f + ((mItemScale - 1.0f) * (1.0f - fabsf(distance)));
             scale = std::min(mItemScale, std::max(1.0f, scale));
             scale /= mItemScale;
@@ -1153,8 +1154,10 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     // Legacy themes.
     if (mLegacyMode) {
         // Don't allow logoScale below 1.0 for legacy themes as it introduces compatibility issues.
+        // But we still need to load the value as-is for proper item sizing calculations, scaling
+        // below 1.0 will be suppressed in render() instead.
         if (elem->has("logoScale"))
-            mItemScale = glm::clamp(elem->get<float>("logoScale"), 1.0f, 3.0f);
+            mItemScale = glm::clamp(elem->get<float>("logoScale"), 0.5f, 3.0f);
         if (elem->has("logoSize")) {
             // Keep size within a 0.05 and 1.0 multiple of the screen size.
             glm::vec2 itemSize {elem->get<glm::vec2>("logoSize")};
