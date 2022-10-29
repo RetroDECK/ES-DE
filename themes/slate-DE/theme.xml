@@ -22,7 +22,7 @@
         <include>./colors_light.xml</include>
     </variant>
 
-    <!-- Per-system band colors and platform info. -->
+    <!-- Per-system band colors and platform info -->
     <variant name="all">
         <include>./${system.theme}/colors.xml</include>
         <include>./${system.theme}/systeminfo.xml</include>

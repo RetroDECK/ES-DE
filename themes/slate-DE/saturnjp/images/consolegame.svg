@@ -1132,7 +1132,8 @@
        y1="23.008762"
        x2="161.61902"
        y2="33.30582"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0.02697009)" />
     <radialGradient
        spreadMethod="pad"
        gradientTransform="matrix(207.42525,-21.509659,-19.788208,-190.87936,415.48047,501.28809)"
@@ -1365,9 +1366,9 @@
      inkscape:window-height="2065"
      id="namedview4"
      showgrid="false"
-     inkscape:zoom="2.2336481"
-     inkscape:cx="148.85962"
-     inkscape:cy="21.26566"
+     inkscape:zoom="1.5794277"
+     inkscape:cx="424.52085"
+     inkscape:cy="72.494612"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -1379,7 +1380,7 @@
      id="g5164"
      transform="translate(-418.30707,4.4818614)" />
   <g
-     id="g19852">
+     id="g1674">
     <path
        sodipodi:nodetypes="ssscccssss"
        inkscape:connector-curvature="0"
@@ -1475,7 +1476,7 @@
        ry="4.5503669"
        rx="4.423203"
        y="24.699211"
-       x="117.45122"
+       x="117.47819"
        height="9.7024326"
        width="92.99691"
        id="rect5058-4"
