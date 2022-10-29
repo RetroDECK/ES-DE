@@ -393,13 +393,17 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
 
 ThemeData::ThemeData()
     : mLegacyTheme {false}
+    , mCustomCollection {false}
 {
     mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
 }
 
 void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
-                         const std::string& path)
+                         const std::string& path,
+                         const bool customCollection)
 {
+    mCustomCollection = customCollection;
+
     mPaths.push_back(path);
 
     ThemeException error;
@@ -903,8 +907,28 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
     for (pugi::xml_node node = root.child("include"); node; node = node.next_sibling("include")) {
         std::string relPath {resolvePlaceholders(node.text().as_string())};
         std::string path {Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true)};
-        if (!ResourceManager::getInstance().fileExists(path))
-            throw error << " -> \"" << relPath << "\" not found (resolved to \"" << path << "\")";
+
+        if (!ResourceManager::getInstance().fileExists(path)) {
+            // For explicit paths, throw an error if the file couldn't be found, but only
+            // print a debug message if it was set using a variable.
+            if (relPath == node.text().get()) {
+                throw error << " -> \"" << relPath << "\" not found (resolved to \"" << path
+                            << "\")";
+            }
+            else {
+                if (!(Settings::getInstance()->getBool("DebugSkipMissingThemeFiles") ||
+                      (mCustomCollection && Settings::getInstance()->getBool(
+                                                "DebugSkipMissingThemeFilesCustomCollections")))) {
+                    LOG(LogDebug) << error.message << ": Couldn't find file \"" << node.text().get()
+                                  << "\" "
+                                  << ((node.text().get() != path) ?
+                                          "which resolves to \"" + path + "\"" :
+                                          "");
+                }
+                return;
+            }
+        }
+
         error << " -> \"" << relPath << "\"";
 
         mPaths.push_back(path);
@@ -1312,21 +1336,30 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
                 if (!ResourceManager::getInstance().fileExists(path)) {
                     std::stringstream ss;
-                    // For explicits paths, print a warning if the file couldn't be found, but
+                    // For explicit paths, print a warning if the file couldn't be found, but
                     // only print a debug message if it was set using a variable.
                     if (str == node.text().as_string()) {
                         LOG(LogWarning)
                             << error.message << ": Couldn't find file \"" << node.text().get()
                             << "\" "
                             << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
-                                                              "");
+                                                              "")
+                            << "(element type \"" << element.type << "\", name \""
+                            << root.attribute("name").as_string() << "\", property \"" << nodeName
+                            << "\")";
                     }
-                    else {
+                    else if (!(Settings::getInstance()->getBool("DebugSkipMissingThemeFiles") ||
+                               (mCustomCollection &&
+                                Settings::getInstance()->getBool(
+                                    "DebugSkipMissingThemeFilesCustomCollections")))) {
                         LOG(LogDebug)
                             << error.message << ": Couldn't find file \"" << node.text().get()
                             << "\" "
                             << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
-                                                              "");
+                                                              "")
+                            << " (element type \"" << element.type << "\", name \""
+                            << root.attribute("name").as_string() << "\", property \"" << nodeName
+                            << "\")";
                     }
                 }
                 element.properties[nodeName] = path;

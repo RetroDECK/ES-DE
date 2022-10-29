@@ -203,7 +203,9 @@ public:
         }
     };
 
-    void loadFile(const std::map<std::string, std::string>& sysDataMap, const std::string& path);
+    void loadFile(const std::map<std::string, std::string>& sysDataMap,
+                  const std::string& path,
+                  const bool customCollection);
     bool hasView(const std::string& view);
     ThemeView& getViewElements(std::string view) { return mViews[view]; }
 
@@ -281,6 +283,7 @@ private:
     std::string mSelectedVariant;
     std::string mSelectedAspectRatio;
     bool mLegacyTheme;
+    bool mCustomCollection;
 };
 
 #endif // ES_CORE_THEME_DATA_H

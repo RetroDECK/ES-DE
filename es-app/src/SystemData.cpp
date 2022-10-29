@@ -1335,7 +1335,7 @@ void SystemData::loadTheme()
             sysData.insert(std::pair<std::string, std::string>("system.theme.collections", "\b"));
         }
 
-        mTheme->loadFile(sysData, path);
+        mTheme->loadFile(sysData, path, isCustomCollection());
     }
     catch (ThemeException& e) {
         LOG(LogError) << e.what();
