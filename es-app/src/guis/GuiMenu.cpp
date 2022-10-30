@@ -1023,7 +1023,7 @@ void GuiMenu::openOtherOptions()
     s->addRow(rowMediaDir);
 
     // Maximum VRAM.
-    auto maxVram = std::make_shared<SliderComponent>(128.0f, 1024.0f, 8.0f, "MiB");
+    auto maxVram = std::make_shared<SliderComponent>(128.0f, 2048.0f, 16.0f, "MiB");
     maxVram->setValue(static_cast<float>(Settings::getInstance()->getInt("MaxVRAM")));
     s->addWithLabel("VRAM LIMIT", maxVram);
     s->addSaveFunc([maxVram, s] {

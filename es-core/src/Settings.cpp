@@ -218,9 +218,9 @@ void Settings::setDefaults()
 #if defined(STEAM_DECK) || defined(RETRODECK)
     mIntMap["MaxVRAM"] = {512, 512};
 #elif defined(RASPBERRY_PI)
-    mIntMap["MaxVRAM"] = {184, 184};
+    mIntMap["MaxVRAM"] = {192, 192};
 #else
-    mIntMap["MaxVRAM"] = {384, 384};
+    mIntMap["MaxVRAM"] = {512, 512};
 #endif
     mIntMap["DisplayIndex"] = {1, 1};
 #if defined(__APPLE__)
