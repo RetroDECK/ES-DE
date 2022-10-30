@@ -83,20 +83,20 @@ cd ..
 echo -e "\nSetting up SDL"
 rm -rf SDL2-*
 
-curl -O https://libsdl.org/release/SDL2-devel-2.24.0-mingw.tar.gz
+curl -O https://libsdl.org/release/SDL2-devel-2.24.1-mingw.tar.gz
 
-tar xvzf SDL2-devel-2.24.0-mingw.tar.gz
+tar xvzf SDL2-devel-2.24.1-mingw.tar.gz
 # Needed due to some kind of file system race condition that sometimes occurs on Windows.
 sleep 1
 
-if [ ! -d SDL2-2.24.0 ]; then
+if [ ! -d SDL2-2.24.1 ]; then
   echo "SDL directory is missing, aborting."
   exit
 fi
 
-mv SDL2-2.24.0/x86_64-w64-mingw32/include/SDL2 SDL2-2.24.0/
-cp -p SDL2-2.24.0/x86_64-w64-mingw32/lib/libSDL2main.a ..
-cp -p SDL2-2.24.0/x86_64-w64-mingw32/bin/SDL2.dll ..
+mv SDL2-2.24.1/x86_64-w64-mingw32/include/SDL2 SDL2-2.24.1/
+cp -p SDL2-2.24.1/x86_64-w64-mingw32/lib/libSDL2main.a ..
+cp -p SDL2-2.24.1/x86_64-w64-mingw32/bin/SDL2.dll ..
 
 echo -e "\nSetting up FFmpeg"
 rm -rf ffmpeg-*
