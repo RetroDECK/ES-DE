@@ -947,7 +947,7 @@ Properties:
     - Valid values are `top` or `bottom`
     - Default is `bottom`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless the image is stretched or squashed using the `size` property, or if rotation is applied.
+    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has limited effect on scalable vector graphics (SVG) images unless rotation is applied.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR
