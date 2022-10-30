@@ -29,6 +29,12 @@ fi
 echo "Building all dependencies in the ./external directory..."
 
 echo -e "\nBuilding GLEW"
+
+if [ ! -d glew-2.1.0 ]; then
+  echo "GLEW directory is missing, aborting."
+  exit
+fi
+
 cd glew-2.1.0
 make clean
 make -j${JOBS} 2>/dev/null
@@ -36,6 +42,11 @@ cp lib/glew32.dll ../..
 cd ..
 
 echo -e "\nBuilding FreeType"
+
+if [ ! -d freetype/build ]; then
+  echo "FreeType directory is missing, aborting."
+  exit
+fi
 
 cd freetype/build
 rm -f CMakeCache.txt
@@ -47,6 +58,12 @@ cp libfreetype.dll ../../..
 cd ../..
 
 echo -e "\nBuilding pugixml"
+
+if [ ! -d pugixml ]; then
+  echo "pugixml directory is missing, aborting."
+  exit
+fi
+
 cd pugixml
 rm -f CMakeCache.txt
 cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON .
@@ -55,3 +72,6 @@ make -j${JOBS}
 strip libpugixml.dll
 cp libpugixml.dll ../..
 cd ..
+
+echo
+echo "Done building all dependencies."

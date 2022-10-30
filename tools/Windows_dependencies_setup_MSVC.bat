@@ -41,6 +41,13 @@ if exist curl-7.80.0-win64-mingw\ (
 
 curl -O https://curl.se/windows/dl-7.80.0_2/curl-7.80.0_2-win64-mingw.zip
 7z x curl-7.80.0_2-win64-mingw.zip
+
+if not exist curl-7.80.0-win64-mingw\bin\ (
+  echo curl directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 cd curl-7.80.0-win64-mingw\bin
 
 dumpbin /exports libcurl-x64.dll > exports.txt
@@ -62,6 +69,13 @@ if exist glew-2.1.0\ (
 
 curl -LO https://downloads.sourceforge.net/project/glew/glew/2.1.0/glew-2.1.0-win32.zip
 7z x glew-2.1.0-win32.zip
+
+if not exist glew-2.1.0\ (
+  echo GLEW directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 copy /Y glew-2.1.0\bin\Release\x64\glew32.dll ..
 copy /Y glew-2.1.0\lib\Release\x64\glew32.lib ..
 
@@ -73,6 +87,13 @@ if exist freetype\ (
 )
 
 git clone https://github.com/freetype/freetype.git
+
+if not exist freetype\ (
+  echo FreeType directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 cd freetype
 git checkout VER-2-11-1
 mkdir build
@@ -87,6 +108,13 @@ if exist FreeImage\ (
 
 curl -LO https://downloads.sourceforge.net/project/freeimage/Binary%%20Distribution/3.18.0/FreeImage3180Win32Win64.zip
 7z x FreeImage3180Win32Win64.zip
+
+if not exist FreeImage\ (
+  echo FreeImage directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 copy /Y FreeImage\Dist\x64\FreeImage.dll ..
 copy /Y FreeImage\Dist\x64\FreeImage.lib ..
 
@@ -98,6 +126,13 @@ if exist pugixml\ (
 )
 
 git clone https://github.com/zeux/pugixml.git
+
+if not exist pugixml\ (
+  echo pugixml directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 cd pugixml
 git checkout v1.10
 cd ..
@@ -112,6 +147,13 @@ if exist SDL2-2.24.0\ (
 curl -LO https://libsdl.org/release/SDL2-devel-2.24.0-VC.zip
 
 7z x SDL2-devel-2.24.0-VC.zip
+
+if not exist SDL2-2.24.0\ (
+  echo SDL directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 cd SDL2-2.24.0
 rename include SDL2
 cd ..
@@ -129,6 +171,13 @@ if exist ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\ (
 :: This package should be available for download for two years.
 curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-09-30-12-41/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
 7z x ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+
+if not exist ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\ (
+  echo FFmpeg directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avcodec-59.dll ..
 copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avfilter-8.dll ..
 copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avformat-59.dll ..
@@ -167,5 +216,8 @@ copy /Y C:\Windows\System32\MSVCP140.dll
 copy /Y C:\Windows\System32\VCOMP140.DLL
 copy /Y C:\Windows\System32\VCRUNTIME140.dll
 copy /Y C:\Windows\System32\VCRUNTIME140_1.dll
+
+echo:
+echo Done setting up all dependencies.
 
 :end

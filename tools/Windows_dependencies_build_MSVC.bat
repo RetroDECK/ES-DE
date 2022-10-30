@@ -28,6 +28,12 @@ cd external
 
 echo Building FreeType
 
+if not exist freetype\build\ (
+  echo FreeType directory is missing, aborting.
+  cd ..
+  goto end
+)
+
 cd freetype\build
 if exist CMakeCache.txt (
   nmake clean
@@ -43,8 +49,13 @@ cd ..\..
 echo:
 echo Building pugixml
 
-cd pugixml
+if not exist pugixml\ (
+  echo pugixml directory is missing, aborting.
+  cd ..
+  goto end
+)
 
+cd pugixml
 if exist CMakeCache.txt (
   nmake clean
   del CMakeCache.txt
@@ -58,5 +69,8 @@ cd..
 
 :: Return to the root of the repository.
 cd ..
+
+echo:
+echo Done building all dependencies.
 
 :end

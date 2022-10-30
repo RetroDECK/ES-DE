@@ -24,6 +24,12 @@ rm -rf curl-*
 
 curl -O https://curl.se/windows/dl-7.80.0_2/curl-7.80.0_2-win64-mingw.zip
 unzip curl-7.80.0_2-win64-mingw.zip
+
+if [ ! -d curl-7.80.0-win64-mingw ]; then
+  echo "curl directory is missing, aborting."
+  exit
+fi
+
 cp -p curl-7.80.0-win64-mingw/bin/libcurl-x64.dll ..
 
 echo -e "\nSetting up GLEW"
@@ -36,6 +42,12 @@ echo -e "\nSetting up FreeType"
 rm -rf freetype
 
 git clone https://github.com/freetype/freetype.git
+
+if [ ! -d freetype ]; then
+  echo "FreeType directory is missing, aborting."
+  exit
+fi
+
 cd freetype
 git checkout VER-2-11-1
 mkdir build
@@ -46,12 +58,24 @@ rm -rf FreeImage
 
 curl -LO https://downloads.sourceforge.net/project/freeimage/Binary%20Distribution/3.18.0/FreeImage3180Win32Win64.zip
 unzip FreeImage3180Win32Win64.zip
+
+if [ ! -d FreeImage ]; then
+  echo "FreeImage directory is missing, aborting."
+  exit
+fi
+
 cp -p FreeImage/Dist/x64/FreeImage.dll ..
 
 echo -e "\nSetting up pugixml"
 rm -rf pugixml
 
 git clone https://github.com/zeux/pugixml.git
+
+if [ ! -d pugixml ]; then
+  echo "pugixml directory is missing, aborting."
+  exit
+fi
+
 cd pugixml
 git checkout v1.11.4
 cd ..
@@ -64,6 +88,12 @@ curl -O https://libsdl.org/release/SDL2-devel-2.24.0-mingw.tar.gz
 tar xvzf SDL2-devel-2.24.0-mingw.tar.gz
 # Needed due to some kind of file system race condition that sometimes occurs on Windows.
 sleep 1
+
+if [ ! -d SDL2-2.24.0 ]; then
+  echo "SDL directory is missing, aborting."
+  exit
+fi
+
 mv SDL2-2.24.0/x86_64-w64-mingw32/include/SDL2 SDL2-2.24.0/
 cp -p SDL2-2.24.0/x86_64-w64-mingw32/lib/libSDL2main.a ..
 cp -p SDL2-2.24.0/x86_64-w64-mingw32/bin/SDL2.dll ..
@@ -74,6 +104,12 @@ rm -rf ffmpeg-*
 # This package should be available for download for two years.
 curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-09-30-12-41/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
 unzip ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+
+if [ ! -d ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1 ]; then
+  echo "FFmpeg directory is missing, aborting."
+  exit
+fi
+
 cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avcodec-59.dll ..
 cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avfilter-8.dll ..
 cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avformat-59.dll ..
@@ -99,3 +135,6 @@ cp -p /c/Program\ Files/OpenSSL-Win64/libssl-1_1-x64.dll .
 echo -e "\nCopying DLL files from Windows\System32"
 
 cp /c/Windows/System32/vcomp140.dll .
+
+echo
+echo "Done setting up all dependencies."
