@@ -15,15 +15,12 @@
 
 TextureDataManager::TextureDataManager()
 {
-    unsigned char data[5 * 5 * 4];
+    // This blank texture will be used temporarily when there is not yet any data loaded for
+    // the requested texture (i.e. it can't be uploaded to the GPU VRAM yet).
+    const std::vector<unsigned char> blank(5 * 5 * 4, 0);
     mBlank = std::make_shared<TextureData>(false);
-    for (int i = 0; i < (5 * 5); ++i) {
-        data[i * 4] = (i % 2) * 255;
-        data[i * 4 + 1] = (i % 2) * 255;
-        data[i * 4 + 2] = (i % 2) * 255;
-        data[i * 4 + 3] = 0;
-    }
-    mBlank->initFromRGBA(data, 5, 5);
+    mBlank->initFromRGBA(&blank[0], 5, 5);
+
     mLoader = std::make_unique<TextureLoader>();
 }
 
