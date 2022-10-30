@@ -64,7 +64,7 @@ rm -f CMakeCache.txt
 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_DISABLE_FIND_PACKAGE_HarfBuzz=on -DBUILD_SHARED_LIBS=on -DCMAKE_MACOSX_RPATH=on -DCMAKE_INSTALL_PREFIX=$(pwd)/../../local_install -S .. -B .
 make clean
 make -j${JOBS}
-cp libfreetype.6.18.0.dylib ../../../libfreetype.6.dylib
+cp libfreetype.6.18.3.dylib ../../../libfreetype.6.dylib
 cd ../..
 
 echo "\nBuilding FreeImage"
