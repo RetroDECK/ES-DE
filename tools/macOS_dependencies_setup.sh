@@ -22,8 +22,14 @@ rm -rf local_install
 mkdir local_install
 
 echo "Setting up libpng"
-rm -rf libpng
+rm -rf libpng code
 git clone https://git.code.sf.net/p/libpng/code.git
+
+if [ ! -d code ]; then
+  echo "libpng directory is missing, aborting."
+  exit
+fi
+
 mv code libpng
 cd libpng
 git checkout v1.6.37
@@ -32,6 +38,12 @@ cd ..
 echo "\nSetting up FreeType"
 rm -rf freetype
 git clone https://github.com/freetype/freetype.git
+
+if [ ! -d freetype ]; then
+  echo "FreeType directory is missing, aborting."
+  exit
+fi
+
 cd freetype
 git checkout VER-2-11-0
 mkdir build
@@ -43,6 +55,12 @@ mkdir freeimage
 cd freeimage
 curl -LO https://downloads.sourceforge.net/project/freeimage/Source%20Distribution/3.18.0/FreeImage3180.zip
 unzip FreeImage3180.zip
+
+if [ ! -d FreeImage ]; then
+  echo "FreeImage directory is missing, aborting."
+  exit
+fi
+
 cd FreeImage
 
 # We need to set the LC_CTYPE variable to C or we won't be able to strip out multi-byte characters using "tr".
@@ -149,6 +167,12 @@ cd ../..
 echo "\nSetting up pugixml"
 rm -rf pugixml
 git clone https://github.com/zeux/pugixml.git
+
+if [ ! -d pugixml ]; then
+  echo "pugixml directory is missing, aborting."
+  exit
+fi
+
 cd pugixml
 git checkout v1.11.4
 cd ..
@@ -156,6 +180,12 @@ cd ..
 echo "\nSetting up SDL"
 rm -rf SDL
 git clone https://github.com/libsdl-org/SDL.git
+
+if [ ! -d SDL ]; then
+  echo "SDL directory is missing, aborting."
+  exit
+fi
+
 cd SDL
 git checkout release-2.24.0
 ln -s include SDL2
@@ -165,6 +195,12 @@ cd ..
 echo "\nSetting up libvpx"
 rm -rf libvpx
 git clone https://github.com/webmproject/libvpx.git
+
+if [ ! -d libvpx ]; then
+  echo "libvpx directory is missing, aborting."
+  exit
+fi
+
 cd libvpx
 git checkout v1.11.0
 cd ..
@@ -172,6 +208,12 @@ cd ..
 echo "\nSetting up Ogg"
 rm -rf ogg
 git clone https://github.com/xiph/ogg.git
+
+if [ ! -d ogg ]; then
+  echo "Ogg directory is missing, aborting."
+  exit
+fi
+
 cd ogg
 git checkout v1.3.5
 cd ..
@@ -179,6 +221,12 @@ cd ..
 echo "\nSetting up Vorbis"
 rm -rf vorbis
 git clone https://gitlab.xiph.org/xiph/vorbis.git
+
+if [ ! -d vorbis ]; then
+  echo "Vorbis directory is missing, aborting."
+  exit
+fi
+
 cd vorbis
 git checkout v1.3.7
 cd ..
@@ -186,6 +234,12 @@ cd ..
 echo "\nSetting up Opus"
 rm -rf opus
 git clone https://gitlab.xiph.org/xiph/opus.git
+
+if [ ! -d opus ]; then
+  echo "Opus directory is missing, aborting."
+  exit
+fi
+
 cd opus
 git checkout v1.3.1
 cd ..
@@ -193,5 +247,14 @@ cd ..
 echo "\nSetting up FFmpeg"
 rm -rf FFmpeg
 git clone https://github.com/FFmpeg/FFmpeg.git
+
+if [ ! -d FFmpeg ]; then
+  echo "FFmpeg directory is missing, aborting."
+  exit
+fi
+
 cd FFmpeg
 git checkout n5.1.2
+
+echo
+echo "Done setting up all dependencies."
