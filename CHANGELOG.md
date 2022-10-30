@@ -147,8 +147,10 @@
 * Added a workaround for playing broken video files with invalid PTS values
 * Refactored the rendering code from a shared namespace into proper classes
 * Removed the deprecated OpenGL ES 1.0 renderer
-* Increased the default VRAM limit from 256 MiB to 384 MiB
+* Increased the maximum VRAM limit from 1024 MiB to 2048 MiB
 * Increased the minimum VRAM limit from 80 MiB to 128 MiB
+* Increased the default VRAM limit from 256 MiB to 512 MiB
+* Increased the default VRAM limit for the Raspberry Pi from 184 MiB to 192 MiB
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies

@@ -509,7 +509,9 @@ The above is equivalent to the following:
 
 As covered earlier in this document, as long as the name attributes are identical for the same element type, the properties are combined automatically. The potential issue with the current example is that the color tag is defined in both the fonts.xml and snes/theme.xml files. As parsing is done sequentially, the property value that is defined last will overwrite the earlier value. This may be used intentionally to override a general property value, so the configuration in the example above example is not necessarily a mistake.
 
-The paths defined for the `<include>` entry and `<fontPath>` property are set as relative to the theme file by adding "./" as a prefix. That is usually how paths would be defined as you commonly want to access files only within the theme set directory structure. This prefix works for all path properties. Windows-style backslashes are also supported as directory separators but their use is not recommended.
+The paths defined for the `<include>` entry and `<fontPath>` and similar properties are set as relative to the theme file by adding "./" as a prefix. That is usually how paths would be defined as you commonly want to access files only within the theme set directory structure. This prefix works for all path properties. Windows-style backslashes are also supported as directory separators but their use is not recommended.
+
+Explicitly defining a path will lead to an error (and the system getting unthemed) if the file is missing, but if instead using a variable to populate the `<include>` tag then a missing file will only generate a debug log entry. This makes it possible to use system variables to build flexible theme configurations where it's not guaranteed that every file exists. Such an example would be to implement default/fallback configuration for custom systems that may get added by a user.
 
 You can add `<include>` tags directly inside the `<theme>` tags or inside either the `<variant>` or `<aspectRatio>` tags, but not inside `<view>` tags:
 
