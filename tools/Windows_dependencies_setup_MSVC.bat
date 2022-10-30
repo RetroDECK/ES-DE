@@ -35,20 +35,20 @@ cd external
 
 echo Setting up curl
 
-if exist curl-7.80.0-win64-mingw\ (
-  rmdir /S /Q curl-7.80.0-win64-mingw
+if exist curl-7.86.0-win64-mingw\ (
+  rmdir /S /Q curl-7.86.0-win64-mingw
 )
 
-curl -O https://curl.se/windows/dl-7.80.0_2/curl-7.80.0_2-win64-mingw.zip
-7z x curl-7.80.0_2-win64-mingw.zip
+curl -O https://curl.se/windows/dl-7.86.0/curl-7.86.0-win64-mingw.zip
+7z x curl-7.86.0-win64-mingw.zip
 
-if not exist curl-7.80.0-win64-mingw\bin\ (
+if not exist curl-7.86.0-win64-mingw\bin\ (
   echo curl directory is missing, aborting.
   cd ..
   goto end
 )
 
-cd curl-7.80.0-win64-mingw\bin
+cd curl-7.86.0-win64-mingw\bin
 
 dumpbin /exports libcurl-x64.dll > exports.txt
 echo LIBRARY libcurl-x64 > libcurl-x64.def
@@ -95,7 +95,7 @@ if not exist freetype\ (
 )
 
 cd freetype
-git checkout VER-2-11-1
+git checkout VER-2-12-1
 mkdir build
 cd ..
 
@@ -134,7 +134,7 @@ if not exist pugixml\ (
 )
 
 cd pugixml
-git checkout v1.10
+git checkout v1.12.1
 cd ..
 
 echo:

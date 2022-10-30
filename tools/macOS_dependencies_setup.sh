@@ -32,7 +32,7 @@ fi
 
 mv code libpng
 cd libpng
-git checkout v1.6.37
+git checkout v1.6.38
 cd ..
 
 echo "\nSetting up FreeType"
@@ -45,7 +45,7 @@ if [ ! -d freetype ]; then
 fi
 
 cd freetype
-git checkout VER-2-11-0
+git checkout VER-2-12-1
 mkdir build
 cd ..
 
@@ -174,7 +174,7 @@ if [ ! -d pugixml ]; then
 fi
 
 cd pugixml
-git checkout v1.11.4
+git checkout v1.12.1
 cd ..
 
 echo "\nSetting up SDL"
@@ -202,7 +202,7 @@ if [ ! -d libvpx ]; then
 fi
 
 cd libvpx
-git checkout v1.11.0
+git checkout v1.12.0
 cd ..
 
 echo "\nSetting up Ogg"

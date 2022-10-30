@@ -22,15 +22,15 @@ cd external
 echo -e "\nSetting up curl"
 rm -rf curl-*
 
-curl -O https://curl.se/windows/dl-7.80.0_2/curl-7.80.0_2-win64-mingw.zip
-unzip curl-7.80.0_2-win64-mingw.zip
+curl -O https://curl.se/windows/dl-7.86.0/curl-7.86.0-win64-mingw.zip
+unzip curl-7.86.0-win64-mingw.zip
 
-if [ ! -d curl-7.80.0-win64-mingw ]; then
+if [ ! -d curl-7.86.0-win64-mingw ]; then
   echo "curl directory is missing, aborting."
   exit
 fi
 
-cp -p curl-7.80.0-win64-mingw/bin/libcurl-x64.dll ..
+cp -p curl-7.86.0-win64-mingw/bin/libcurl-x64.dll ..
 
 echo -e "\nSetting up GLEW"
 rm -rf glew-*
@@ -49,7 +49,7 @@ if [ ! -d freetype ]; then
 fi
 
 cd freetype
-git checkout VER-2-11-1
+git checkout VER-2-12-1
 mkdir build
 cd ..
 
@@ -77,7 +77,7 @@ if [ ! -d pugixml ]; then
 fi
 
 cd pugixml
-git checkout v1.11.4
+git checkout v1.12.1
 cd ..
 
 echo -e "\nSetting up SDL"
