@@ -99,7 +99,12 @@ void main()
 
     // Saturation.
     if (saturation != 1.0) {
-        vec3 grayscale = vec3(dot(sampledColor.rgb, vec3(0.34, 0.55, 0.11)));
+        vec3 grayscale;
+        // Premultiplied textures are all in BGRA format.
+        if (0x0u != (shaderFlags & 0x01u))
+            grayscale = vec3(dot(sampledColor.bgr, vec3(0.34, 0.55, 0.11)));
+        else
+            grayscale = vec3(dot(sampledColor.rgb, vec3(0.34, 0.55, 0.11)));
         vec3 blendedColor = mix(grayscale, sampledColor.rgb, saturation);
         sampledColor = vec4(blendedColor, sampledColor.a);
     }
