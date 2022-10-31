@@ -494,6 +494,9 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     }
 
     parseVariables(root);
+    if (!mLegacyTheme)
+        parseColorSchemes(root);
+
     parseIncludes(root);
     parseViews(root);
     // For non-legacy themes this will simply check for the presence of a feature tag and throw
@@ -501,7 +504,6 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     parseFeatures(root);
 
     if (!mLegacyTheme) {
-        parseColorSchemes(root);
         parseVariants(root);
         parseAspectRatios(root);
     }
@@ -1012,6 +1014,9 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
             throw error << ": Missing <theme> tag";
 
         parseVariables(theme);
+        if (!mLegacyTheme)
+            parseColorSchemes(theme);
+
         parseIncludes(theme);
         parseViews(theme);
         // For non-legacy themes this will simply check for the presence of a feature tag and throw
@@ -1019,7 +1024,6 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseFeatures(theme);
 
         if (!mLegacyTheme) {
-            parseColorSchemes(theme);
             parseVariants(theme);
             parseAspectRatios(theme);
         }
@@ -1123,9 +1127,8 @@ void ThemeData::parseColorSchemes(const pugi::xml_node& root)
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedColorScheme == viewKey) {
+            if (mSelectedColorScheme == viewKey)
                 parseVariables(node);
-            }
         }
     }
 }
