@@ -200,6 +200,55 @@ void GuiMenu::openUIOptions()
     themeVariantsFunc(Settings::getInstance()->getString("ThemeSet"),
                       Settings::getInstance()->getString("ThemeVariant"));
 
+    // Theme color schemes.
+    auto themeColorScheme = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "THEME COLOR SCHEME", false);
+    s->addWithLabel("THEME COLOR SCHEME", themeColorScheme);
+    s->addSaveFunc([themeColorScheme, s] {
+        if (themeColorScheme->getSelected() !=
+            Settings::getInstance()->getString("ThemeColorScheme")) {
+            Settings::getInstance()->setString("ThemeColorScheme", themeColorScheme->getSelected());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
+    auto themeColorSchemesFunc = [=](const std::string& selectedTheme,
+                                     const std::string& selectedColorScheme) {
+        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
+            currentSet {themeSets.find(selectedTheme)};
+        if (currentSet == themeSets.cend())
+            return;
+        // We need to recreate the OptionListComponent entries.
+        themeColorScheme->clearEntries();
+        if (currentSet->second.capabilities.colorSchemes.size() > 0) {
+            for (auto& colorScheme : currentSet->second.capabilities.colorSchemes) {
+                // If required, abbreviate the color scheme name so it doesn't overlap the
+                // setting name.
+                float maxNameLength {mSize.x * 0.52f};
+                themeColorScheme->add(colorScheme.label, colorScheme.name,
+                                      colorScheme.name == selectedColorScheme, maxNameLength);
+            }
+            if (themeColorScheme->getSelectedObjects().size() == 0)
+                themeColorScheme->selectEntry(0);
+        }
+        else {
+            if (currentSet->second.capabilities.legacyTheme)
+                themeColorScheme->add("Legacy theme set", "none", true);
+            else
+                themeColorScheme->add("None defined", "none", true);
+            themeColorScheme->setEnabled(false);
+            themeColorScheme->setOpacity(DISABLED_OPACITY);
+            themeColorScheme->getParent()
+                ->getChild(themeColorScheme->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+    };
+
+    themeColorSchemesFunc(Settings::getInstance()->getString("ThemeSet"),
+                          Settings::getInstance()->getString("ThemeColorScheme"));
+
     // Theme aspect ratios.
     auto themeAspectRatio = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "THEME ASPECT RATIO", false);
@@ -667,6 +716,7 @@ void GuiMenu::openUIOptions()
             return;
         if (!firstRun) {
             themeVariantsFunc(themeName, themeVariant->getSelected());
+            themeColorSchemesFunc(themeName, themeColorScheme->getSelected());
             themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
         }
         int selectableVariants {0};
@@ -688,7 +738,21 @@ void GuiMenu::openUIOptions()
                 ->getChild(themeVariant->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
         }
-
+        if (!selectedSet->second.capabilities.legacyTheme &&
+            selectedSet->second.capabilities.colorSchemes.size() > 0) {
+            themeColorScheme->setEnabled(true);
+            themeColorScheme->setOpacity(1.0f);
+            themeColorScheme->getParent()
+                ->getChild(themeColorScheme->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+        else {
+            themeColorScheme->setEnabled(false);
+            themeColorScheme->setOpacity(DISABLED_OPACITY);
+            themeColorScheme->getParent()
+                ->getChild(themeColorScheme->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
         if (!selectedSet->second.capabilities.legacyTheme &&
             selectedSet->second.capabilities.aspectRatios.size() > 0) {
             themeAspectRatio->setEnabled(true);

@@ -132,6 +132,7 @@ void Settings::setDefaults()
     // UI settings.
     mStringMap["ThemeSet"] = {"slate-DE", "slate-DE"};
     mStringMap["ThemeVariant"] = {"", ""};
+    mStringMap["ThemeColorScheme"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
     mStringMap["TransitionStyle"] = {"slide", "slide"};

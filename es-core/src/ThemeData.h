@@ -179,8 +179,14 @@ public:
         std::string overrideVariant;
     };
 
+    struct ThemeColorScheme {
+        std::string name;
+        std::string label;
+    };
+
     struct ThemeCapability {
         std::vector<ThemeVariant> variants;
+        std::vector<ThemeColorScheme> colorSchemes;
         std::vector<std::string> aspectRatios;
         bool legacyTheme;
     };
@@ -253,14 +259,15 @@ private:
 
     static ThemeCapability parseThemeCapabilities(const std::string& path);
 
-    void parseIncludes(const pugi::xml_node& themeRoot);
-    void parseFeatures(const pugi::xml_node& themeRoot);
-    void parseVariants(const pugi::xml_node& themeRoot);
-    void parseAspectRatios(const pugi::xml_node& themeRoot);
+    void parseIncludes(const pugi::xml_node& root);
+    void parseFeatures(const pugi::xml_node& root);
+    void parseVariants(const pugi::xml_node& root);
+    void parseColorSchemes(const pugi::xml_node& root);
+    void parseAspectRatios(const pugi::xml_node& root);
     void parseVariables(const pugi::xml_node& root);
-    void parseViews(const pugi::xml_node& themeRoot);
-    void parseView(const pugi::xml_node& viewNode, ThemeView& view);
-    void parseElement(const pugi::xml_node& elementNode,
+    void parseViews(const pugi::xml_node& root);
+    void parseView(const pugi::xml_node& root, ThemeView& view);
+    void parseElement(const pugi::xml_node& root,
                       const std::map<std::string, ElementPropertyType>& typeMap,
                       ThemeElement& element,
                       const LegacyWorkaround legacyWorkaround);
@@ -280,7 +287,9 @@ private:
     std::map<std::string, ThemeView> mViews;
     std::deque<std::string> mPaths;
     std::vector<std::string> mVariants;
+    std::vector<std::string> mColorSchemes;
     std::string mSelectedVariant;
+    std::string mSelectedColorScheme;
     std::string mSelectedAspectRatio;
     bool mLegacyTheme;
     bool mCustomCollection;

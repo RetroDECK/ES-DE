@@ -470,6 +470,18 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
             mVariants.emplace_back("all");
         }
 
+        if (mCurrentThemeSet->second.capabilities.colorSchemes.size() > 0) {
+            for (auto& colorScheme : mCurrentThemeSet->second.capabilities.colorSchemes)
+                mColorSchemes.emplace_back(colorScheme.name);
+
+            if (std::find(mColorSchemes.cbegin(), mColorSchemes.cend(),
+                          Settings::getInstance()->getString("ThemeColorScheme")) !=
+                mColorSchemes.cend())
+                mSelectedColorScheme = Settings::getInstance()->getString("ThemeColorScheme");
+            else
+                mSelectedColorScheme = mColorSchemes.front();
+        }
+
         if (mCurrentThemeSet->second.capabilities.aspectRatios.size() > 0) {
             if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
                           mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
@@ -490,6 +502,7 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
 
     if (!mLegacyTheme) {
         parseVariants(root);
+        parseColorSchemes(root);
         parseAspectRatios(root);
     }
 }
@@ -609,7 +622,9 @@ void ThemeData::populateThemeSets()
                 if (!capabilities.legacyTheme) {
                     LOG(LogDebug) << "Theme set includes support for "
                                   << capabilities.variants.size() << " variant"
-                                  << (capabilities.variants.size() != 1 ? "s" : "") << " and "
+                                  << (capabilities.variants.size() != 1 ? "s" : "") << ", "
+                                  << capabilities.colorSchemes.size() << " color scheme"
+                                  << (capabilities.colorSchemes.size() != 1 ? "s" : "") << " and "
                                   << capabilities.aspectRatios.size() << " aspect ratio"
                                   << (capabilities.aspectRatios.size() != 1 ? "s" : "");
                 }
@@ -727,10 +742,10 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 
         pugi::xml_document doc;
 #if defined(_WIN64)
-        pugi::xml_parse_result res =
-            doc.load_file(Utils::String::stringToWideString(capFile).c_str());
+        pugi::xml_parse_result res {
+            doc.load_file(Utils::String::stringToWideString(capFile).c_str())};
 #else
-        pugi::xml_parse_result res = doc.load_file(capFile.c_str());
+        pugi::xml_parse_result res {doc.load_file(capFile.c_str())};
 #endif
         if (res.status == pugi::status_no_document_element) {
             LOG(LogDebug) << "Found a capabilities.xml file with no configuration";
@@ -745,9 +760,9 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             return capabilities;
         }
 
-        for (pugi::xml_node aspectRatio = themeCapabilities.child("aspectRatio"); aspectRatio;
+        for (pugi::xml_node aspectRatio {themeCapabilities.child("aspectRatio")}; aspectRatio;
              aspectRatio = aspectRatio.next_sibling("aspectRatio")) {
-            std::string value = aspectRatio.text().get();
+            std::string value {aspectRatio.text().get()};
             if (std::find_if(sSupportedAspectRatios.cbegin(), sSupportedAspectRatios.cend(),
                              [&value](const std::pair<std::string, std::string>& entry) {
                                  return entry.first == value;
@@ -768,7 +783,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             }
         }
 
-        for (pugi::xml_node variant = themeCapabilities.child("variant"); variant;
+        for (pugi::xml_node variant {themeCapabilities.child("variant")}; variant;
              variant = variant.next_sibling("variant")) {
             ThemeVariant readVariant;
             std::string name {variant.attribute("name").as_string()};
@@ -873,6 +888,55 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                     capabilities.variants.emplace_back(readVariant);
             }
         }
+
+        for (pugi::xml_node colorScheme {themeCapabilities.child("colorScheme")}; colorScheme;
+             colorScheme = colorScheme.next_sibling("colorScheme")) {
+            ThemeColorScheme readColorScheme;
+            std::string name {colorScheme.attribute("name").as_string()};
+            if (name.empty()) {
+                LOG(LogWarning)
+                    << "Found <colorScheme> tag without name attribute, ignoring entry in \""
+                    << capFile << "\"";
+            }
+            else {
+                readColorScheme.name = name;
+            }
+
+            pugi::xml_node labelTag {colorScheme.child("label")};
+            if (labelTag == nullptr) {
+                LOG(LogDebug) << "No colorScheme <label> tag found, setting label value to the "
+                                 "color scheme name \""
+                              << name << "\" for \"" << capFile << "\"";
+                readColorScheme.label = name;
+            }
+            else {
+                std::string labelValue {labelTag.text().as_string()};
+                if (labelValue == "") {
+                    LOG(LogWarning) << "No colorScheme <label> value defined, setting value to "
+                                       "the color scheme name \""
+                                    << name << "\" for \"" << capFile << "\"";
+                    readColorScheme.label = name;
+                }
+                else {
+                    readColorScheme.label = labelValue;
+                }
+            }
+
+            if (readColorScheme.name != "") {
+                bool duplicate {false};
+                for (auto& colorScheme : capabilities.colorSchemes) {
+                    if (colorScheme.name == readColorScheme.name) {
+                        LOG(LogWarning) << "Color scheme \"" << readColorScheme.name
+                                        << "\" is declared multiple times, ignoring entry in \""
+                                        << capFile << "\"";
+                        duplicate = true;
+                        break;
+                    }
+                }
+                if (!duplicate)
+                    capabilities.colorSchemes.emplace_back(readColorScheme);
+            }
+        }
     }
     else {
         LOG(LogDebug) << "No capabilities.xml file found, flagging as legacy theme set";
@@ -904,7 +968,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
             throw error << ": Legacy <formatVersion> tag found for non-legacy theme set";
     }
 
-    for (pugi::xml_node node = root.child("include"); node; node = node.next_sibling("include")) {
+    for (pugi::xml_node node {root.child("include")}; node; node = node.next_sibling("include")) {
         std::string relPath {resolvePlaceholders(node.text().as_string())};
         std::string path {Utils::FileSystem::resolveRelativePath(relPath, mPaths.back(), true)};
 
@@ -956,6 +1020,7 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
 
         if (!mLegacyTheme) {
             parseVariants(theme);
+            parseColorSchemes(theme);
             parseAspectRatios(theme);
         }
 
@@ -972,7 +1037,7 @@ void ThemeData::parseFeatures(const pugi::xml_node& root)
     if (!mLegacyTheme && root.child("feature") != nullptr)
         throw error << ": Legacy <feature> tag found for non-legacy theme set";
 
-    for (pugi::xml_node node = root.child("feature"); node; node = node.next_sibling("feature")) {
+    for (pugi::xml_node node {root.child("feature")}; node; node = node.next_sibling("feature")) {
         if (!node.attribute("supported"))
             throw error << ": Feature missing \"supported\" attribute";
 
@@ -997,7 +1062,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
     error << "ThemeData::parseVariants(): ";
     error.setFiles(mPaths);
 
-    for (pugi::xml_node node = root.child("variant"); node; node = node.next_sibling("variant")) {
+    for (pugi::xml_node node {root.child("variant")}; node; node = node.next_sibling("variant")) {
         if (!node.attribute("name"))
             throw error << ": <variant> tag missing \"name\" attribute";
 
@@ -1025,6 +1090,46 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
     }
 }
 
+void ThemeData::parseColorSchemes(const pugi::xml_node& root)
+{
+    if (mCurrentThemeSet == mThemeSets.end())
+        return;
+
+    if (mSelectedColorScheme == "")
+        return;
+
+    ThemeException error;
+    error << "ThemeData::parseColorSchemes(): ";
+    error.setFiles(mPaths);
+
+    for (pugi::xml_node node {root.child("colorScheme")}; node;
+         node = node.next_sibling("colorScheme")) {
+        if (!node.attribute("name"))
+            throw error << ": <colorScheme> tag missing \"name\" attribute";
+
+        const std::string delim {" \t\r\n,"};
+        const std::string nameAttr {node.attribute("name").as_string()};
+        size_t prevOff {nameAttr.find_first_not_of(delim, 0)};
+        size_t off {nameAttr.find_first_of(delim, prevOff)};
+        std::string viewKey;
+        while (off != std::string::npos || prevOff != std::string::npos) {
+            viewKey = nameAttr.substr(prevOff, off - prevOff);
+            prevOff = nameAttr.find_first_not_of(delim, off);
+            off = nameAttr.find_first_of(delim, prevOff);
+
+            if (std::find(mColorSchemes.cbegin(), mColorSchemes.cend(), viewKey) ==
+                mColorSchemes.cend()) {
+                throw error << ": <colorScheme> value \"" << viewKey
+                            << "\" is not defined in capabilities.xml";
+            }
+
+            if (mSelectedColorScheme == viewKey) {
+                parseVariables(node);
+            }
+        }
+    }
+}
+
 void ThemeData::parseAspectRatios(const pugi::xml_node& root)
 {
     if (mCurrentThemeSet == mThemeSets.end())
@@ -1037,7 +1142,7 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
     error << "ThemeData::parseAspectRatios(): ";
     error.setFiles(mPaths);
 
-    for (pugi::xml_node node = root.child("aspectRatio"); node;
+    for (pugi::xml_node node {root.child("aspectRatio")}; node;
          node = node.next_sibling("aspectRatio")) {
         if (!node.attribute("name"))
             throw error << ": <aspectRatio> tag missing \"name\" attribute";
@@ -1055,7 +1160,7 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
             if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
                           mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
                           viewKey) == mCurrentThemeSet->second.capabilities.aspectRatios.cend()) {
-                throw error << ": aspectRatio value \"" << viewKey
+                throw error << ": <aspectRatio> value \"" << viewKey
                             << "\" is not defined in capabilities.xml";
             }
 
@@ -1072,7 +1177,7 @@ void ThemeData::parseVariables(const pugi::xml_node& root)
     ThemeException error;
     error.setFiles(mPaths);
 
-    for (pugi::xml_node node = root.child("variables"); node;
+    for (pugi::xml_node node {root.child("variables")}; node;
          node = node.next_sibling("variables")) {
 
         for (pugi::xml_node_iterator it = node.begin(); it != node.end(); ++it) {
@@ -1097,7 +1202,7 @@ void ThemeData::parseViews(const pugi::xml_node& root)
     error.setFiles(mPaths);
 
     // Parse views.
-    for (pugi::xml_node node = root.child("view"); node; node = node.next_sibling("view")) {
+    for (pugi::xml_node node {root.child("view")}; node; node = node.next_sibling("view")) {
         if (!node.attribute("name"))
             throw error << ": View missing \"name\" attribute";
 
@@ -1145,7 +1250,7 @@ void ThemeData::parseView(const pugi::xml_node& root, ThemeView& view)
     error << "ThemeData::parseView(): ";
     error.setFiles(mPaths);
 
-    for (pugi::xml_node node = root.first_child(); node; node = node.next_sibling()) {
+    for (pugi::xml_node node {root.first_child()}; node; node = node.next_sibling()) {
         if (!node.attribute("name"))
             throw error << ": Element of type \"" << node.name() << "\" missing \"name\" attribute";
 
@@ -1233,7 +1338,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
     else if (!mLegacyTheme && std::string(root.attribute("extra").as_string("")) != "")
         throw error << ": Legacy \"extra\" attribute found for non-legacy theme set";
 
-    for (pugi::xml_node node = root.first_child(); node; node = node.next_sibling()) {
+    for (pugi::xml_node node {root.first_child()}; node; node = node.next_sibling()) {
         auto typeIt = typeMap.find(node.name());
         if (typeIt == typeMap.cend())
             throw error << ": Unknown property type \"" << node.name()
