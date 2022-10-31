@@ -68,9 +68,9 @@ In the past EmulationStation basically had hardcoded view styles with certain el
 
 With the new theme engine the view presets were removed and the only views now available, _system_ and _gamelist_, were rewritten to be much more flexible. Essentially the element selection and placement is now unlimited; any number of elements of any type can be used, although with a few notable exceptions as explained throughout this document.
 
-In addition to the variant support which provides an unlimited flexibility for creating custom theme profiles, support for specific aspect ratios was introduced. This makes it possible to define different theme configuration for different display aspect ratios and to provide the user with the option to choose between these from the _UI Settings_ menu. That could for example be choice between a 16:9 and a 4:3 layout, or perhaps also a vertical screen orientation layout in addition to these.
+In addition to _variants_, support for _color schemes_ and _aspect ratios_ was introduced. The former makes it possible to provide different color profiles via variable declarations, and the latter makes it possible to define different theme configurations for different display aspect ratios. That could for example be a choice between a 16:9 and a 4:3 layout, and perhaps also a vertical screen orientation layout. All these options are selectable via the _UI Settings_ menu.
 
-As well new theming abilities like GIF and Lottie animations were added with the new theme engine.
+New theming abilities like GIF and Lottie animations were also added to the new theme engine.
 
 The following are the most important changes compared to the legacy theme structure:
 
@@ -285,11 +285,11 @@ Here are some example uses of the `<variant>` functionality:
 ```xml
 <theme>
     <!-- Implementing the variants via separate include files could be a good idea -->
-    <variant name="lightMode, lightModeNoVideo">
-        <include>./../colors_light.xml</include>
+    <variant name="gamelistTextlist">
+        <include>./gamelist_textlist.xml</include>
     </variant>
-    <variant name="darkMode, darkModeNoVideo">
-        <include>./../colors_dark.xml</include>
+    <variant name="gamelistCarousel">
+        <include>./gamelist_carousel.xml</include>
     </variant>
 
     <!-- The special "all" variant is a convenient shortcut for some situations -->
@@ -311,17 +311,7 @@ Here are some example uses of the `<variant>` functionality:
 ```xml
 <!-- In other instances it may make more sense to apply the variant configuration inline -->
 <theme>
-    <variant name="lightModeNoVideo, darkModeNoVideo">
-        <view name="gamelist">
-            <image name="game_image">
-                <imageType>titlescreen</imageType>
-                <scrollFadeIn>true</scrollFadeIn>
-                <zIndex>42</zIndex>
-            </image>
-        </view>
-    </variant>
-
-    <variant name="lightMode, darkMode">
+    <variant name="withVideos">
         <view name="gamelist">
             <video name="game_video">
                 <imageType>cover</imageType>
@@ -329,6 +319,15 @@ Here are some example uses of the `<variant>` functionality:
                 <scrollFadeIn>true</scrollFadeIn>
                 <zIndex>42</zIndex>
             </video>
+        </view>
+    </variant>
+    <variant name="withoutVideos">
+        <view name="gamelist">
+            <image name="game_image">
+                <imageType>titlescreen</imageType>
+                <scrollFadeIn>true</scrollFadeIn>
+                <zIndex>42</zIndex>
+            </image>
         </view>
     </variant>
 </theme>
@@ -346,16 +345,64 @@ Here are some example uses of the `<variant>` functionality:
     </view>
 </theme>
 ```
+## Color schemes
+
+Color schemes are essentially a collection of variables that can be selected between from the _UI Settings_ menu. This makes it possible to define different values that will be applied to the overall theme configuration based on this menu selection. Only variables can be used for the color schemes, but since variables can be used for almost everything this makes the functionality very flexible. In most cases you'll probably want to apply different color values to `<color>` properties and similar, but it's also possible to apply different images, animations, fonts etc. per color scheme.
+
+To understand the basics on how to use variables, make sure to read the _Theme variables_ section elsewhere in this document.
+
+Before a color scheme can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
+
+Each `<colorScheme>` tag pair must be placed inside the `<theme>` tag pair - it can only be used on this level of the hierarchy.
+
+The mandatory name attribute is used to specificy which color scheme to use, and multiple values can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks).
+
+Note that the use of color schemes for a theme set is entirely optional.
+
+Here's an example configuration:
+
+```xml
+<theme>
+    <colorScheme name="dark">
+        <variables>
+            <backgroundColor>404040</backgroundColor>
+            <defaultTextColor>F0F0F0</defaultTextColor>
+        </variables>
+    </colorScheme>
+
+    <colorScheme name="light">
+        <variables>
+            <backgroundColor>707070</backgroundColor>
+            <defaultTextColor>262626</defaultTextColor>
+        </variables>
+    </colorScheme>
+
+    <variant name="withVideos, withoutVideos">
+        <view name="system">
+            <image name="background">
+                <pos>0 0</pos>
+                <size>1 1</size>
+                <path>./core/images/background.png</path>
+                <tile>true</tile>
+                <color>${backgroundColor}</color>
+            </image>
+            <text name="game_counter">
+                <pos>0.5 0.6437</pos>
+                <size>1 0.056</size>
+                <color>${defaultTextColor}</color>
+            </text>
+        </view>
+    </variant>
+</theme>
+```
 
 ## Aspect ratios
 
-The aspect ratio support works almost identically to the variants support with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme set can still decide which of the aspect ratios to support (or none at all in which cast the theme aspect ratios is left undefined) but it can't create entirely new aspect ratios.
+The aspect ratio support works almost identically to the variants and color schemes with the main difference that the available aspect ratios are hardcoded into ES-DE. The theme set can still decide which of the aspect ratios to support (or none at all in which case the theme aspect ratio is left undefined) but it can't create entirely new aspect ratio entries.
 
-The reason for why aspect ratios were implemented at all instead of only using variants was that the amount of defined variants would have grown exponentially for all possible combinations, making the theme sets very hard to create and maintain.
+In the same manner as for the variants and color schemes, the aspect ratios that the theme set provides need to be declared in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detailed later in this document.
 
-In the same manner as for the variants, the aspect ratios that the theme set provides need to be declared in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detailed later in this document.
-
-Once the aspect ratios have been defined, they are applied to the theme configuration in exactly the same way as the variants:
+Once the aspect ratios have been defined, they are applied to the theme configuration like the following:
 
 ```xml
 <!-- Implementing the aspect ratios by separate include files could be a good idea -->
@@ -411,14 +458,14 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 
 ## capabilities.xml
 
-Variant and aspect ratio values need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
+Variants, color schemes and aspect ratios need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
 ```
 ~/.emulationstation/themes/mythemeset-DE/capabilities.xml
 ```
 
 This file type was introduced with the new ES-DE theme engine in v2.0 and is an indicator that the theme set is of the new generation instead of being of the legacy type (i.e. a theme set backward compatible with RetroPie EmulationStation). In other words, if the capabilities.xml file is absent, the theme will get loaded as a legacy set.
 
-The structure of the file is simple, it just contains the declarations for the variants and aspect ratios, such as in this example:
+The structure of the file is simple, it just contains declarations for the variants, color schemes and aspect ratios, such as in this example:
 
 ```xml
 <!-- Theme capabilities for mythemeset-DE -->
@@ -427,22 +474,30 @@ The structure of the file is simple, it just contains the declarations for the v
     <aspectRatio>4:3</aspectRatio>
     <aspectRatio>4:3_vertical</aspectRatio>
 
-    <variant name="lightMode">
+    <colorScheme name="dark">
+        <label>Dark mode</label>
+    </colorScheme>
+
+    <colorScheme name="light">
         <label>Light mode</label>
+    </colorScheme>
+
+    <variant name="withVideos">
+        <label>Textlist with videos</label>
         <selectable>true</selectable>
     </variant>
 
-    <variant name="darkMode">
-        <label>Dark mode</label>
+    <variant name="withoutVideos">
+        <label>Textlist without videos</label>
         <selectable>true</selectable>
     </variant>
 </themeCapabilities>
 ```
-The file format is hopefully mostly self-explanatory; this example provides three aspect ratios and two variants. The `<label>` tag for the variant is the text that will show up in the _UI Settings_ menu where the variants can be selected, assuming `<selectable>` has been set to true.
+The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes and two variants. The `<label>` tag for the variant is the text that will show up in the _UI Settings_ menu where the variants can be selected, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
-Both the variant name and its label can be set to an arbitrary value, but the name has to be unique. If two variant entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
+Both the variant and color scheme names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants and color schemes will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
-Unlike the variants, the aspectRatio entries can not be set to arbitrary values, instead they have to use a value from the _horizontal name_ or _vertical name_ columns in the following table:
+Unlike variants and color schemes, aspectRatio entries can not be set to arbitrary values, instead they have to use a value from the _horizontal name_ or _vertical name_ columns in the following table:
 
 | Horizontal name  | Vertical name  | Common resolutions                             |
 | :--------------- | :------------- | :--------------------------------------------- |
@@ -460,7 +515,7 @@ It's normally not necessary to define all or even most of these for a theme set,
 
 The declared aspect ratios will always get displayed in the _UI settings_ menu in the order listed in the table above, so they can be declared in any order in the capabilities.xml file. If an unsupported aspect ratio value is entered, a warning will be generated on startup and the entry will not get loaded.
 
-The use of variants and aspect ratios is optional, i.e. a theme set does not need to provide either of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to it to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants and aspect ratios will be grayed out.
+The use of variants, color schemes and aspect ratios is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
 ## The \<include\> tag
 
@@ -1477,8 +1532,6 @@ Properties:
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
     - Default is `0.045`
-* `color` - type: COLOR
-* `backgroundColor` - type: COLOR
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
     - Valid values are `left`, `center` or `right`
@@ -1487,6 +1540,8 @@ Properties:
     - Controls alignment on the Y axis.
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
+* `color` - type: COLOR
+* `backgroundColor` - type: COLOR
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -1536,6 +1591,7 @@ Properties:
     - Default is `nearest`
 * `color` - type: COLOR
     - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
+    - Default is `FFFFFFFF`
 * `filledPath` - type: PATH
     - Path to the "filled" rating image. Any aspect ratio is supported. Note that there is no explicit padding property, so to add spaces between each icon simply make the image content smaller on the canvas. The images should always be centered on the canvas or otherwise the filledPath and unfilledPath textures will not align properly for all rating values. Most common file extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `unfilledPath` - type: PATH

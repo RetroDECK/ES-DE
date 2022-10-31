@@ -12,6 +12,7 @@
 
 * Made fundamental changes to the application logic by removing most view styles and replacing them with a new theme variants concept
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
+* Added theme support for defining and applying different color schemes
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
