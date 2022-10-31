@@ -233,11 +233,11 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotationOrigin", NORMALIZED_PAIR},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
-       {"color", COLOR},
-       {"backgroundColor", COLOR},
        {"horizontalAlignment", STRING},
        {"verticalAlignment", STRING},
        {"alignment", STRING},                      // For backward compatibility with legacy themes.
+       {"color", COLOR},
+       {"backgroundColor", COLOR},
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
        {"zIndex", FLOAT}}},
