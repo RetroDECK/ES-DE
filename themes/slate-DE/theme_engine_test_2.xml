@@ -1,16 +1,18 @@
 <theme>
     <!-- Test of system textlist and vertical gamelist carousel -->
 
-    <include>./colors_light.xml</include>
-
     <view name="system">
-        <textlist name="gamelist_textlist">
+        <textlist name="system_textlist">
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
-            <horizontalAlignment>left</horizontalAlignment>
-            <horizontalMargin>0.01</horizontalMargin>
+            <selectorColor>${gamelistTextlistSelectorColor}</selectorColor>
+            <selectedColor>${gamelistTextlistSelectedColor}</selectedColor>
+            <primaryColor>${gamelistTextlistPrimaryColor}</primaryColor>
+            <secondaryColor>${gamelistTextlistSecondaryColor}</secondaryColor>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
+            <horizontalAlignment>left</horizontalAlignment>
+            <horizontalMargin>0.01</horizontalMargin>
             <letterCase>uppercase</letterCase>
         </textlist>
         <image name="consolegame">
@@ -27,12 +29,14 @@
             <pos>0.02 0.19</pos>
             <size>0.4 0.735</size>
             <path>./core/images/frame.png</path>
+            <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
         <image name="backframe3">
             <pos>0.44 0.19</pos>
             <size>0.54 0.735</size>
             <path>./core/images/frame.png</path>
+            <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
         <image name="logo">
@@ -48,6 +52,7 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
+            <backgroundColor>00000000</backgroundColor>
             <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
@@ -91,6 +96,12 @@
             <pos>0.45 0.874</pos>
             <horizontalAlignment>left</horizontalAlignment>
         </text>
+        <helpsystem name="help">
+            <textColor>${gamelistHelpColor}</textColor>
+            <iconColor>${gamelistHelpColor}</iconColor>
+            <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
+            <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+        </helpsystem>
     </view>
 
     <view name="gamelist">
@@ -106,6 +117,8 @@
             <itemHorizontalAlignment>center</itemHorizontalAlignment>
             <horizontalOffset>0</horizontalOffset>
             <verticalOffset>0</verticalOffset>
+            <color>00000000</color>
+            <textColor>${systemCarouselTextColor}</textColor>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.056</fontSize>
             <letterCase>uppercase</letterCase>
@@ -120,31 +133,11 @@
             <interpolation>nearest</interpolation>
             <scrollFadeIn>true</scrollFadeIn>
         </image>
-    </view>
-
-    <!-- Color customizations -->
-    <view name="system">
-        <textlist name="gamelist_textlist">
-            <selectorColor>161616</selectorColor>
-            <selectedColor>AFAFAF</selectedColor>
-            <primaryColor>262626</primaryColor>
-            <secondaryColor>333333</secondaryColor>
-        </textlist>
-        <image name="backframe2">
-            <color>9F9F9F</color>
-        </image>
-        <image name="backframe3">
-            <color>9F9F9F</color>
-        </image>
-        <text name="game_counter">
-            <backgroundColor>00000000</backgroundColor>
-        </text>
-    </view>
-
-    <view name="gamelist">
-        <carousel name="gamelist_carousel">
-            <color>74747400</color>
-            <textColor>262626</textColor>
-        </carousel>
+        <helpsystem name="help">
+            <textColor>${gamelistHelpColor}</textColor>
+            <iconColor>${gamelistHelpColor}</iconColor>
+            <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
+            <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+        </helpsystem>
     </view>
 </theme>

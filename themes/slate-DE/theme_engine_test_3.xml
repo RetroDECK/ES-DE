@@ -1,12 +1,14 @@
 <theme>
     <!-- Test of system textlist and horizontal gamelist carousel with reflections -->
 
-    <include>./colors_dark.xml</include>
-
     <view name="system">
-        <textlist name="gamelist_textlist">
+        <textlist name="system_textlist">
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
+            <selectorColor>${gamelistTextlistSelectorColor}</selectorColor>
+            <selectedColor>${gamelistTextlistSelectedColor}</selectedColor>
+            <primaryColor>${gamelistTextlistPrimaryColor}</primaryColor>
+            <secondaryColor>${gamelistTextlistSecondaryColor}</secondaryColor>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
@@ -27,12 +29,14 @@
             <pos>0.02 0.19</pos>
             <size>0.4 0.735</size>
             <path>./core/images/frame.png</path>
+            <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
         <image name="backframe3">
             <pos>0.44 0.19</pos>
             <size>0.54 0.735</size>
             <path>./core/images/frame.png</path>
+            <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
         <image name="logo">
@@ -48,6 +52,7 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
+            <backgroundColor>00000000</backgroundColor>
             <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
@@ -91,6 +96,12 @@
             <pos>0.45 0.874</pos>
             <horizontalAlignment>left</horizontalAlignment>
         </text>
+        <helpsystem name="help">
+            <textColor>${gamelistHelpColor}</textColor>
+            <iconColor>${gamelistHelpColor}</iconColor>
+            <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
+            <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+        </helpsystem>
     </view>
 
     <view name="gamelist">
@@ -109,6 +120,8 @@
             <reflectionsOpacity>0.3</reflectionsOpacity>
             <reflectionsFalloff>1.2</reflectionsFalloff>
             <unfocusedItemOpacity>1</unfocusedItemOpacity>
+            <color>00000000</color>
+            <textColor>949494</textColor>
             <textBackgroundColor>323232CC</textBackgroundColor>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.032</fontSize>
@@ -121,6 +134,7 @@
             <size>0.96 0.735</size>
             <origin>0.5 0</origin>
             <path>./core/images/frame.png</path>
+            <color>181818</color>
             <zIndex>10</zIndex>
         </image>
         <text name="game_name">
@@ -133,6 +147,7 @@
             <fontSize>0.045</fontSize>
             <horizontalAlignment>center</horizontalAlignment>
             <verticalAlignment>center</verticalAlignment>
+            <color>D6D6D6</color>
             <letterCase>none</letterCase>
             <zIndex>80</zIndex>
         </text>
@@ -146,12 +161,21 @@
             <pos>0.815 0.203</pos>
             <size>0.04 0.03</size>
         </rating>
+        <gamelistinfo name="gamelistInfo">
+            <color>888888</color>
+        </gamelistinfo>
         <badges name="md_badges">
             <pos>0.03 0.205</pos>
             <size>0.38 0.08</size>
             <lines>1</lines>
             <itemsPerLine>10</itemsPerLine>
         </badges>
+        <helpsystem name="help">
+            <textColor>${gamelistHelpColor}</textColor>
+            <iconColor>${gamelistHelpColor}</iconColor>
+            <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
+            <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+        </helpsystem>
         <!-- Hide some unwanted elements -->
         <image name="backframe3">
             <visible>false</visible>
@@ -167,50 +191,5 @@
         <rating name="md_rating">
             <visible>false</visible>
         </rating>
-    </view>
-
-    <!-- Color customizations -->
-    <view name="system">
-        <textlist name="gamelist_textlist">
-            <selectorColor>161616</selectorColor>
-            <selectedColor>AFAFAF</selectedColor>
-            <primaryColor>262626</primaryColor>
-            <secondaryColor>333333</secondaryColor>
-        </textlist>
-        <image name="backframe2">
-            <color>6F6F6F</color>
-        </image>
-        <image name="backframe3">
-            <color>6F6F6F</color>
-        </image>
-        <text name="game_counter">
-            <color>202020</color>
-            <backgroundColor>00000000</backgroundColor>
-        </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <color>262626</color>
-        </text>
-    </view>
-
-    <view name="gamelist">
-        <carousel name="gamelist_carousel">
-            <color>74747400</color>
-            <textColor>949494</textColor>
-        </carousel>
-        <image name="backframe2">
-            <color>181818</color>
-        </image>
-        <text name="game_name">
-            <color>D6D6D6</color>
-        </text>
-        <gamelistinfo name="gamelistInfo">
-            <color>888888</color>
-        </gamelistinfo>
-        <helpsystem name="help">
-            <textColor>A6A6A6</textColor>
-            <iconColor>A6A6A6</iconColor>
-            <textColorDimmed>969696</textColorDimmed>
-            <iconColorDimmed>969696</iconColorDimmed>
-        </helpsystem>
     </view>
 </theme>

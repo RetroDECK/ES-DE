@@ -1,31 +1,21 @@
 <!--
-Theme capabilities for rbsimple-DE.
+    Theme capabilities for slate-DE
 -->
 
 <themeCapabilities>
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
 
-    <variant name="darkMode">
+    <colorScheme name="dark">
         <label>Dark mode</label>
-        <selectable>true</selectable>
-        <override>
-            <trigger>no_game_media</trigger>
-            <useVariant>noMedia</useVariant>
-        </override>
-    </variant>
+    </colorScheme>
 
-    <variant name="darkModeNoVideos">
-        <label>Dark mode (no videos)</label>
-        <selectable>true</selectable>
-        <override>
-            <trigger>no_game_media</trigger>
-            <useVariant>noMedia</useVariant>
-        </override>
-    </variant>
-
-    <variant name="lightMode">
+    <colorScheme name="light">
         <label>Light mode</label>
+    </colorScheme>
+
+    <variant name="withVideos">
+        <label>Textlist with videos</label>
         <selectable>true</selectable>
         <override>
             <trigger>no_game_media</trigger>
@@ -33,8 +23,8 @@ Theme capabilities for rbsimple-DE.
         </override>
     </variant>
 
-    <variant name="lightModeNoVideos">
-        <label>Light mode (no videos)</label>
+    <variant name="withoutVideos">
+        <label>Textlist without videos</label>
         <selectable>true</selectable>
         <override>
             <trigger>no_game_media</trigger>

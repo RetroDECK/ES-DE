@@ -7,20 +7,7 @@
 
 <theme>
     <include>./navigationsounds.xml</include>
-
-    <variables>
-        <systemConsoleImage>./${system.theme}/images/consolegame.svg</systemConsoleImage>
-        <systemControllerImage>./${system.theme}/images/controller.svg</systemControllerImage>
-        <systemLogo>./${system.theme}/images/logo.svg</systemLogo>
-    </variables>
-
-    <variant name="darkMode, darkModeNoVideos">
-        <include>./colors_dark.xml</include>
-    </variant>
-
-    <variant name="lightMode, lightModeNoVideos">
-        <include>./colors_light.xml</include>
-    </variant>
+    <include>./colors.xml</include>
 
     <!-- Per-system band colors and platform info -->
     <variant name="all">
@@ -28,42 +15,13 @@
         <include>./${system.theme}/systeminfo.xml</include>
     </variant>
 
-    <!-- Temporary location during theme engine testing, should be moved to colors_dark.xml -->
-    <variant name="darkMode, darkModeNoVideos">
-        <view name="system">
-            <carousel name="system_carousel">
-                <color>747474D8</color>
-                <textColor>F0F0F0</textColor>
-            </carousel>
-        </view>
-        <view name="gamelist">
-            <textlist name="gamelist_textlist">
-                <selectorColor>161616</selectorColor>
-                <selectedColor>AFAFAF</selectedColor>
-                <primaryColor>000000</primaryColor>
-                <secondaryColor>333333</secondaryColor>
-            </textlist>
-        </view>
-    </variant>
+    <variables>
+        <systemConsoleImage>./${system.theme}/images/consolegame.svg</systemConsoleImage>
+        <systemControllerImage>./${system.theme}/images/controller.svg</systemControllerImage>
+        <systemLogo>./${system.theme}/images/logo.svg</systemLogo>
+    </variables>
 
-    <!-- Temporary location during theme engine testing, should be moved to colors_light.xml -->
-    <variant name="lightMode, lightModeNoVideos">
-        <view name="system">
-            <carousel name="system_carousel">
-                <textColor>262626</textColor>
-            </carousel>
-        </view>
-        <view name="gamelist">
-            <textlist name="gamelist_textlist">
-                <selectorColor>262626</selectorColor>
-                <selectedColor>9F9F9F</selectedColor>
-                <primaryColor>262626</primaryColor>
-                <secondaryColor>4D4D4D</secondaryColor>
-            </textlist>
-        </view>
-    </variant>
-
-    <variant name="darkMode, darkModeNoVideos, lightMode, lightModeNoVideos">
+    <variant name="withVideos, withoutVideos">
         <view name="system">
             <carousel name="system_carousel">
                 <pos>0 0.383796</pos>
@@ -75,7 +33,9 @@
                 <itemScale>1.23</itemScale>
                 <itemInterpolation>linear</itemInterpolation>
                 <unfocusedItemOpacity>0.5</unfocusedItemOpacity>
+                <color>${systemCarouselColor}</color>
                 <text>${system.fullName}</text>
+                <textColor>${systemCarouselTextColor}</textColor>
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.055</fontSize>
                 <letterCase>uppercase</letterCase>
@@ -89,14 +49,26 @@
                 <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
                 <fontSize>0.035</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
+                <color>${systemGameCounterColor}</color>
+                <backgroundColor>${systemGameCounterBackgroundColor}</backgroundColor>
                 <letterCase>uppercase</letterCase>
                 <zIndex>50</zIndex>
             </text>
+            <helpsystem name="help">
+                <textColor>${systemHelpColor}</textColor>
+                <iconColor>${systemHelpColor}</iconColor>
+                <textColorDimmed>${systemHelpColorDimmed}</textColorDimmed>
+                <iconColorDimmed>${systemHelpColorDimmed}</iconColorDimmed>
+            </helpsystem>
         </view>
         <view name="gamelist">
             <textlist name="gamelist_textlist">
                 <pos>0.025 0.201</pos>
                 <size>0.39 0.711</size>
+                <selectorColor>${gamelistTextlistSelectorColor}</selectorColor>
+                <selectedColor>${gamelistTextlistSelectedColor}</selectedColor>
+                <primaryColor>${gamelistTextlistPrimaryColor}</primaryColor>
+                <secondaryColor>${gamelistTextlistSecondaryColor}</secondaryColor>
                 <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
                 <fontSize>0.025</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
@@ -105,6 +77,12 @@
                 <indicators>symbols</indicators>
                 <collectionIndicators>symbols</collectionIndicators>
             </textlist>
+            <helpsystem name="help">
+                <textColor>${gamelistHelpColor}</textColor>
+                <iconColor>${gamelistHelpColor}</iconColor>
+                <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
+                <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+            </helpsystem>
         </view>
     </variant>
 
@@ -114,6 +92,7 @@
             <size>1 1</size>
             <path>./core/images/background.png</path>
             <tile>true</tile>
+            <color>${backgroundColor}</color>
             <zIndex>0</zIndex>
         </image>
         <image name="band1">
@@ -160,6 +139,7 @@
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.021</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
+            <color>${systemInfoTextColor}</color>
         </text>
         <text name="info1">
             <pos>0.38 0.695</pos>
@@ -210,12 +190,14 @@
             <pos>0.02 0.19</pos>
             <size>0.4 0.735</size>
             <path>./core/images/frame.png</path>
+            <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
         <image name="backframe3">
             <pos>0.44 0.19</pos>
             <size>0.54 0.735</size>
             <path>./core/images/frame.png</path>
+            <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
         <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
@@ -223,12 +205,14 @@
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
+            <color>${gamelistDefaultTextColor}</color>
             <letterCase>uppercase</letterCase>
         </text>
         <text name="md_developer, md_publisher, md_genre, md_players">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
+            <color>${gamelistDefaultTextColor}</color>
             <letterCase>uppercase</letterCase>
         </text>
         <text name="md_description">
@@ -242,6 +226,7 @@
             <metadata>description</metadata>
             <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
+            <color>${gamelistDefaultTextColor}</color>
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
         </text>
@@ -249,6 +234,7 @@
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
+            <color>${gamelistDefaultTextColor}</color>
             <letterCase>uppercase</letterCase>
         </datetime>
         <text name="md_lbl_releasedate">
@@ -309,6 +295,7 @@
             <pos>0.453 0.203</pos>
             <size>0 0.03</size>
             <interpolation>nearest</interpolation>
+            <color>${gamelistRatingColor}</color>
             <filledPath>./core/images/rating_filled.svg</filledPath>
             <unfilledPath>./core/images/rating_empty.svg</unfilledPath>
             <overlay>false</overlay>
@@ -319,6 +306,7 @@
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.025</fontSize>
             <horizontalAlignment>right</horizontalAlignment>
+            <color>${gamelistInfoColor}</color>
         </gamelistinfo>
         <badges name="md_badges">
             <pos>0.815 0.675</pos>
@@ -336,7 +324,7 @@
         </badges>
     </view>
 
-    <variant name="darkMode, lightMode">
+    <variant name="withVideos">
         <view name="gamelist">
             <video name="md_video">
                 <pos>0.63 0.45</pos>
@@ -352,7 +340,7 @@
         </view>
     </variant>
 
-    <variant name="darkModeNoVideos, lightModeNoVideos">
+    <variant name="withoutVideos">
         <view name="gamelist">
             <image name="md_image">
                 <pos>0.63 0.45</pos>
@@ -371,6 +359,7 @@
                 <pos>0.02 0.19</pos>
                 <size>0.96 0.735</size>
                 <path>./core/images/frame.png</path>
+                <color>${gamelistBackFrameColor}</color>
             </image>
             <textlist name="gamelist_textlist">
                 <pos>0.04 0.201</pos>
