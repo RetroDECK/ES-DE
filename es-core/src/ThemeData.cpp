@@ -501,8 +501,8 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     parseFeatures(root);
 
     if (!mLegacyTheme) {
-        parseVariants(root);
         parseColorSchemes(root);
+        parseVariants(root);
         parseAspectRatios(root);
     }
 }
@@ -1019,8 +1019,8 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         parseFeatures(theme);
 
         if (!mLegacyTheme) {
-            parseVariants(theme);
             parseColorSchemes(theme);
+            parseVariants(theme);
             parseAspectRatios(theme);
         }
 
