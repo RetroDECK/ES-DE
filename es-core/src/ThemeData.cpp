@@ -57,6 +57,7 @@ std::vector<std::string> ThemeData::sLegacyElements {
     {"maxLogoCount"}};
 
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
+    {"automatic", "automatic"},
     {"16:9", "16:9"},
     {"16:9_vertical", "16:9 vertical"},
     {"16:10", "16:10"},
@@ -71,6 +72,22 @@ std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRati
     {"21:9_vertical", "21:9 vertical"},
     {"32:9", "32:0"},
     {"32:9_vertical", "32:9 vertical"}};
+
+std::map<std::string, float> ThemeData::sAspectRatioMap {
+    {"16:9", 1.7777f},
+    {"16:9_vertical", 0.5625f},
+    {"16:10", 1.6f},
+    {"16:10_vertical", 0.625f},
+    {"3:2", 1.5f},
+    {"3:2_vertical", 0.6667f},
+    {"4:3", 1.3333f},
+    {"4:3_vertical", 0.75f},
+    {"5:4", 1.25f},
+    {"5:4_vertical", 0.8f},
+    {"21:9", 2.3703f},
+    {"21:9_vertical", 0.4219f},
+    {"32:9", 3.5555f},
+    {"32:9_vertical", 0.2813f}};
 
 std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAttributeMap
     // The data type is defined by the parent property.
@@ -490,6 +507,27 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
                 mSelectedAspectRatio = Settings::getInstance()->getString("ThemeAspectRatio");
             else
                 mSelectedAspectRatio = mCurrentThemeSet->second.capabilities.aspectRatios.front();
+
+            if (mSelectedAspectRatio == "automatic") {
+                // Auto-detect the closest aspect ratio based on what's available in the theme set.
+                mSelectedAspectRatio = "16:9";
+                const float screenAspectRatio {Renderer::getScreenAspectRatio()};
+                float diff {std::fabs(sAspectRatioMap["16:9"] - screenAspectRatio)};
+
+                for (auto& aspectRatio : mCurrentThemeSet->second.capabilities.aspectRatios) {
+                    if (aspectRatio == "automatic")
+                        continue;
+
+                    if (sAspectRatioMap.find(aspectRatio) != sAspectRatioMap.end()) {
+                        const float newDiff {
+                            std::fabs(sAspectRatioMap[aspectRatio] - screenAspectRatio)};
+                        if (newDiff < diff) {
+                            diff = newDiff;
+                            mSelectedAspectRatio = aspectRatio;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -948,6 +986,9 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     // Add the aspect ratios in the order they are defined in sSupportedAspectRatios so they
     // always show up in the same order in the UI Settings menu.
     if (!aspectRatiosTemp.empty()) {
+        // Add the "automatic" aspect ratio if there is more than one entry.
+        if (aspectRatiosTemp.size() > 1)
+            capabilities.aspectRatios.emplace_back(sSupportedAspectRatios.front().first);
         for (auto& aspectRatio : sSupportedAspectRatios) {
             if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), aspectRatio.first) !=
                 aspectRatiosTemp.cend()) {

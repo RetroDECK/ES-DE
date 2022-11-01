@@ -277,6 +277,7 @@ private:
     static std::vector<std::string> sLegacySupportedFeatures;
     static std::vector<std::string> sLegacyElements;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
+    static std::map<std::string, float> sAspectRatioMap;
 
     static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
     static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
