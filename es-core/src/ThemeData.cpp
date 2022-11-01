@@ -1128,8 +1128,10 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
 
             if (mSelectedVariant == viewKey || viewKey == "all") {
                 parseVariables(node);
+                parseColorSchemes(node);
                 parseIncludes(node);
                 parseViews(node);
+                parseAspectRatios(node);
             }
         }
     }
@@ -1209,6 +1211,8 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
             }
 
             if (mSelectedAspectRatio == viewKey) {
+                parseVariables(node);
+                parseColorSchemes(node);
                 parseIncludes(node);
                 parseViews(node);
             }
