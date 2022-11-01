@@ -1497,7 +1497,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                             << "\" "
                             << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
                                                               "")
-                            << "(element type \"" << element.type << "\", name \""
+                            << " (element type \"" << element.type << "\", name \""
                             << root.attribute("name").as_string() << "\", property \"" << nodeName
                             << "\")";
                     }
