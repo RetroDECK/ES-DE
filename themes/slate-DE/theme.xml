@@ -55,10 +55,12 @@
                 <zIndex>50</zIndex>
             </text>
             <helpsystem name="help">
+                <pos>0.012 0.955</pos>
                 <textColor>${systemHelpColor}</textColor>
                 <iconColor>${systemHelpColor}</iconColor>
                 <textColorDimmed>${systemHelpColorDimmed}</textColorDimmed>
                 <iconColorDimmed>${systemHelpColorDimmed}</iconColorDimmed>
+                <fontSize>0.035</fontSize>
             </helpsystem>
         </view>
         <view name="gamelist">
@@ -78,10 +80,12 @@
                 <collectionIndicators>symbols</collectionIndicators>
             </textlist>
             <helpsystem name="help">
+                <pos>0.012 0.955</pos>
                 <textColor>${gamelistHelpColor}</textColor>
                 <iconColor>${gamelistHelpColor}</iconColor>
                 <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
                 <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+                <fontSize>0.035</fontSize>
             </helpsystem>
         </view>
     </variant>
@@ -370,19 +374,51 @@
         </view>
     </variant>
 
-    <aspectRatio name="4:3">
-        <view name="gamelist">
-            <text name="4:3_temporary">
-                <pos>0.8 0.01</pos>
-                <size>0.2 0.04</size>
-                <text>4:3 not implemented yet</text>
-                <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
-                <fontSize>0.03</fontSize>
-                <color>FFFFFF</color>
-                <letterCase>uppercase</letterCase>
-            </text>
-        </view>
-    </aspectRatio>
+    <variant name="withVideos, withoutVideos">
+        <aspectRatio name="4:3">
+            <view name="system, gamelist">
+                <helpsystem name="help">
+                    <pos>0.012 0.955</pos>
+                    <fontSize>0.034</fontSize>
+                </helpsystem>
+            </view>
+            <view name="system">
+                <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+                    <size>0.44 0.03</size>
+                </text>
+                <text name="info1">
+                    <pos>0.34 0.695</pos>
+                </text>
+                <text name="info2">
+                    <pos>0.34 0.716</pos>
+                </text>
+                <text name="info3">
+                    <pos>0.34 0.737</pos>
+                </text>
+                <text name="info4">
+                    <pos>0.34 0.758</pos>
+                </text>
+                <text name="info5">
+                    <pos>0.34 0.799</pos>
+                </text>
+                <text name="info6">
+                    <pos>0.34 0.820</pos>
+                </text>
+                <text name="info7">
+                    <pos>0.34 0.841</pos>
+                </text>
+                <text name="info8">
+                    <pos>0.34 0.862</pos>
+                </text>
+                <text name="info9">
+                    <pos>0.34 0.883</pos>
+                </text>
+                <text name="info10">
+                    <pos>0.34 0.904</pos>
+                </text>
+            </view>
+        </aspectRatio>
+    </variant>
 
     <variant name="themeEngineTest_1">
         <include>./theme_engine_test_1.xml</include>

@@ -97,6 +97,7 @@
             <horizontalAlignment>left</horizontalAlignment>
         </text>
         <helpsystem name="help">
+            <pos>0.012 0.955</pos>
             <textColor>${gamelistHelpColor}</textColor>
             <iconColor>${gamelistHelpColor}</iconColor>
             <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
@@ -171,6 +172,7 @@
             <itemsPerLine>10</itemsPerLine>
         </badges>
         <helpsystem name="help">
+            <pos>0.012 0.955</pos>
             <textColor>${gamelistHelpColor}</textColor>
             <iconColor>${gamelistHelpColor}</iconColor>
             <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
@@ -192,4 +194,17 @@
             <visible>false</visible>
         </rating>
     </view>
+
+    <aspectRatio name="4:3">
+        <view name="system, gamelist">
+            <helpsystem name="help">
+                <fontSize>0.034</fontSize>
+            </helpsystem>
+        </view>
+        <view name="gamelist">
+            <carousel name="gamelist_carousel">
+                <itemSize>0.12 0.225</itemSize>
+            </carousel>
+        </view>
+    </aspectRatio>
 </theme>

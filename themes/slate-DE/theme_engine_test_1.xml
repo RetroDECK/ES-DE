@@ -18,7 +18,9 @@
             <itemVerticalAlignment>center</itemVerticalAlignment>
             <wheelHorizontalAlignment>right</wheelHorizontalAlignment>
             <horizontalOffset>-0.05</horizontalOffset>
+            <color>555555BB</color>
             <text>${system.fullName}</text>
+            <textColor>F0F0F0</textColor>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.056</fontSize>
             <letterCase>uppercase</letterCase>
@@ -44,7 +46,8 @@
             <zIndex>3</zIndex>
         </image>
         <image name="recent_game_image">
-            <pos>0.775 0.08</pos>
+            <pos>0.975 0.08</pos>
+            <origin>1 0</origin>
             <size>0.2 0</size>
             <imageType>cover</imageType>
             <gameselector>selector_recent</gameselector>
@@ -71,6 +74,8 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.048</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
+            <color>C6C6C6</color>
+            <backgroundColor>55555500</backgroundColor>
             <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
@@ -82,6 +87,8 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
             <horizontalAlignment>center</horizontalAlignment>
+            <color>D6D6D6</color>
+            <backgroundColor>555555D8</backgroundColor>
             <letterCase>uppercase</letterCase>
             <visible>false</visible>
             <zIndex>50</zIndex>
@@ -93,6 +100,8 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.075</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
             <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
@@ -104,6 +113,8 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
             <horizontalAlignment>right</horizontalAlignment>
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
             <letterCase>none</letterCase>
             <zIndex>50</zIndex>
         </text>
@@ -115,6 +126,8 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
             <horizontalAlignment>right</horizontalAlignment>
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
             <letterCase>capitalize</letterCase>
             <displayRelative>true</displayRelative>
             <zIndex>50</zIndex>
@@ -126,8 +139,13 @@
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
             <horizontalAlignment>left</horizontalAlignment>
+            <color>E6E6E6</color>
+            <backgroundColor>55555500</backgroundColor>
             <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
+        </text>
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+            <color>D6D6D6</color>
         </text>
         <text name="info1">
             <pos>0.58 0.695</pos>
@@ -173,15 +191,18 @@
             <pos>0.30 0.167</pos>
             <size>0.06 0.04</size>
             <gameselector>selector_random</gameselector>
+            <color>FFEE00</color>
             <opacity>0.9</opacity>
         </rating>
         <rating name="recent_game_rating">
-            <pos>0.889 0.042</pos>
+            <pos>0.975 0.042</pos>
+            <origin>1 0</origin>
             <size>0.03 0.03</size>
             <gameselector>selector_recent</gameselector>
+            <color>FFEE00</color>
         </rating>
         <helpsystem name="help">
-            <pos>0.9885 0.954</pos>
+            <pos>0.9885 0.955</pos>
             <origin>1 0</origin>
             <textColor>A6A6A6</textColor>
             <iconColor>A6A6A6</iconColor>
@@ -236,6 +257,7 @@
             <scrollFadeIn>true</scrollFadeIn>
         </video>
         <helpsystem name="help">
+            <pos>0.012 0.955</pos>
             <textColor>${gamelistHelpColor}</textColor>
             <iconColor>${gamelistHelpColor}</iconColor>
             <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
@@ -243,56 +265,27 @@
         </helpsystem>
     </view>
 
-    <!-- Color customizations -->
-    <view name="system">
-        <carousel name="system_carousel">
-            <color>555555BB</color>
-            <textColor>F0F0F0</textColor>
-        </carousel>
-        <text name="game_counter">
-            <color>C6C6C6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <text name="game_counter2">
-            <color>D6D6D6</color>
-            <backgroundColor>555555D8</backgroundColor>
-        </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <color>B6B6B6</color>
-        </text>
-        <text name="system_name">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <text name="game_name">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <datetime name="game_release_date">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </datetime>
-        <text name="recently_played_text">
-            <color>E6E6E6</color>
-            <backgroundColor>55555500</backgroundColor>
-        </text>
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <color>D6D6D6</color>
-        </text>
-        <rating name="random_game_rating">
-            <color>FFEE00</color>
-        </rating>
-        <rating name="recent_game_rating">
-            <color>FFEE00</color>
-        </rating>
-    </view>
-
-    <view name="gamelist">
-        <textlist name="gamelist_textlist">
-            <selectorColor>161616</selectorColor>
-            <selectedColor>AFAFAF</selectedColor>
-            <primaryColor>000000</primaryColor>
-            <secondaryColor>333333</secondaryColor>
-        </textlist>
-    </view>
+    <aspectRatio name="4:3">
+        <view name="system">
+            <helpsystem name="help">
+                <pos>0.9885 0.955</pos>
+                <fontSize>0.034</fontSize>
+            </helpsystem>
+        </view>
+        <view name="system">
+            <carousel name="system_carousel">
+                <itemRotationOrigin>-4.05 0.5</itemRotationOrigin>
+                <horizontalOffset>-0.03</horizontalOffset>
+            </carousel>
+            <text name="recently_played_text">
+                <pos>0.775 0.038</pos>
+                <size>0.2 0</size>
+                <fontSize>0.031</fontSize>
+            </text>
+            <rating name="recent_game_rating">
+                <pos>0.975 0.050</pos>
+                <size>0.022 0.022</size>
+            </rating>
+        </view>
+    </aspectRatio>
 </theme>

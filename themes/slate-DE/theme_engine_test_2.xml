@@ -97,6 +97,7 @@
             <horizontalAlignment>left</horizontalAlignment>
         </text>
         <helpsystem name="help">
+            <pos>0.012 0.955</pos>
             <textColor>${gamelistHelpColor}</textColor>
             <iconColor>${gamelistHelpColor}</iconColor>
             <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
@@ -111,7 +112,7 @@
             <type>vertical</type>
             <itemType>marquee</itemType>
             <maxItemCount>5</maxItemCount>
-            <itemSize>0.20 0.105</itemSize>
+            <itemSize>0.2 0.105</itemSize>
             <itemScale>1.23</itemScale>
             <itemInterpolation>linear</itemInterpolation>
             <itemHorizontalAlignment>center</itemHorizontalAlignment>
@@ -134,10 +135,24 @@
             <scrollFadeIn>true</scrollFadeIn>
         </image>
         <helpsystem name="help">
+            <pos>0.012 0.955</pos>
             <textColor>${gamelistHelpColor}</textColor>
             <iconColor>${gamelistHelpColor}</iconColor>
             <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
             <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
         </helpsystem>
     </view>
+
+    <aspectRatio name="4:3">
+        <view name="system, gamelist">
+            <helpsystem name="help">
+                <fontSize>0.034</fontSize>
+            </helpsystem>
+        </view>
+        <view name="gamelist">
+            <carousel name="gamelist_carousel">
+                <itemSize>0.25 0.105</itemSize>
+            </carousel>
+        </view>
+    </aspectRatio>
 </theme>
