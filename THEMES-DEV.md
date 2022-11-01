@@ -72,7 +72,9 @@ In addition to _variants_, support for _color schemes_ and _aspect ratios_ was i
 
 New theming abilities like GIF and Lottie animations were also added to the new theme engine.
 
-The following are the most important changes compared to the legacy theme structure:
+The NanoSVG rendering library has been replaced with [LunaSVG](https://github.com/sammycage/lunasvg) which greatly improves SVG file support as NanoSVG had issues with rendering quite some files. There might be some slight regressions with LunaSVG, but most of these are probably due to issues in NanoSVG that caused some non-conformant files to render seemingly correct. Make sure to compare any SVG files that don't seem to render correctly in ES-DE with what they look like if opened in for example Firefox or Chrome/Chromium.
+
+As for more specific changes, the following are the most important ones compared to legacy themes:
 
 * View styles are now limited to only _system_ and _gamelist_ (there is a special _all_ view style as well but that is only used for navigation sounds as explained later in this document)
 * The hardcoded metadata attributes like _md_image_ and _md_developer_ are gone, but a new `<metadata>` property is available for populating views with metadata information
@@ -272,11 +274,11 @@ The variants could be purely cosmetic, such as providing different designs for a
 
 Before a variant can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
 
-The use of variants is straightforward, a section of the configuration that should be included for a certain variant is enclosed inside the `<variant>` tag pair. This has to be placed inside the `<theme>` tag pair, and it can only be used on this level of the hierarchy and not inside a `<view>` tag pair for example.
+The use of variants is straightforward, a section of the configuration that should be included for a certain variant is enclosed inside the `<variant>` tag pair. This has to be placed inside the `<theme>` tag pair, and it can only be used at this level of the hierarchy and not inside a `<view>` tag pair for example.
 
 The mandatory _name_ attribute is used to specificy which variants to use, and multiple variants can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks). It's also possible to use the special _all_ variant that will apply the configuration to all defined variants (although this is only a convenient shortcut and you can explicitly define every variant individually if you prefer that). Note that _all_ is a reserved name and attempting to use it in the capabilities.xml file will trigger a warning on application startup.
 
-It could be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme set configuration.
+It could sometimes be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme set configuration.
 
 It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `info_text_01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. Alternatively you could use the special _all_ variant to define common configuration used by all variants in the theme set.
 
@@ -331,7 +333,9 @@ Here are some example uses of the `<variant>` functionality:
         </view>
     </variant>
 </theme>
+```
 
+```xml
 <!-- The following is NOT supported as <variant> tags can't be located inside <view> tag pairs -->
 <theme>
     <view name="gamelist">
@@ -353,7 +357,7 @@ To understand the basics on how to use variables, make sure to read the _Theme v
 
 Before a color scheme can be used it needs to be declared, which is done in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detail later in this document.
 
-Each `<colorScheme>` tag pair must be placed inside the `<theme>` tag pair - it can only be used on this level of the hierarchy.
+The `<colorScheme>` tag pair can be placed directly inside the `<theme>` tags, inside the `<variants>` tags or inside the `<aspectRatio>` tags.
 
 The mandatory name attribute is used to specificy which color scheme to use, and multiple values can be specified at the same time by separating them by commas or by whitespace characters (tabs, spaces or line breaks).
 
@@ -378,6 +382,9 @@ Here's an example configuration:
     </colorScheme>
 
     <variant name="withVideos, withoutVideos">
+        <colorScheme name="dark, light">
+            <panelColor>74747488</panelColor>
+        </colorScheme>
         <view name="system">
             <image name="background">
                 <pos>0 0</pos>
@@ -402,7 +409,9 @@ The aspect ratio support works almost identically to the variants and color sche
 
 In the same manner as for the variants and color schemes, the aspect ratios that the theme set provides need to be declared in the `capabilities.xml` file that must be stored in the root of the theme set directory tree. How to setup this file is described in detailed later in this document.
 
-Once the aspect ratios have been defined, they are applied to the theme configuration like the following:
+The `<aspectRatio>` tag pair can be placed directly inside the `<theme>` tags or inside the `<variants>` tags.
+
+Once the aspect ratios have been defined, they are applied to the theme configuration like the following examples:
 
 ```xml
 <!-- Implementing the aspect ratios by separate include files could be a good idea -->
@@ -424,7 +433,9 @@ Once the aspect ratios have been defined, they are applied to the theme configur
         </text>
     </view>
 </theme>
+```
 
+```xml
 <!-- In other instances it may make more sense to apply the aspect ratio configuration inline -->
 <theme>
     <aspectRatio name="4:3, 5:4">
@@ -443,7 +454,24 @@ Once the aspect ratios have been defined, they are applied to the theme configur
         </view>
     </aspectRatio>
 </theme>
+```
 
+```xml
+<!-- Placing aspectRatio tags inside the variants tags is also supported -->
+<theme>
+    <variant name="withVideos, withoutVideos">
+        <aspectRatio name="4:3, 5:4">
+            <view name="gamelist">
+                <image name="image_logo">
+                    <pos>0.3 0.56</pos>
+                </image>
+            </view>
+        </aspectRatio>
+    </variant>
+</theme>
+```
+
+```xml
 <!-- The following is NOT supported as <aspectRatio> tags can't be located inside <view> tag pairs -->
 <theme>
     <view name="gamelist">
@@ -517,6 +545,8 @@ The declared aspect ratios will always get displayed in the _UI settings_ menu i
 
 The use of variants, color schemes and aspect ratios is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
+Note that changes to the capabilities.xml file are not reloaded when using the Ctrl+r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
+
 ## The \<include\> tag
 
 You can include theme files within theme files, for example:
@@ -568,7 +598,9 @@ The paths defined for the `<include>` entry and `<fontPath>` and similar propert
 
 Explicitly defining a path will lead to an error (and the system getting unthemed) if the file is missing, but if instead using a variable to populate the `<include>` tag then a missing file will only generate a debug log entry. This makes it possible to use system variables to build flexible theme configurations where it's not guaranteed that every file exists. Such an example would be to implement default/fallback configuration for custom systems that may get added by a user.
 
-You can add `<include>` tags directly inside the `<theme>` tags or inside either the `<variant>` or `<aspectRatio>` tags, but not inside `<view>` tags:
+Note that include loops are not checked for, it's the responsibility of the theme developer to make sure no such loops exist. If you accidentally introduce a loop the application will hang indefinitely on startup.
+
+You can add `<include>` tags directly inside the `<theme>` tags or inside the `<variant>` and `<aspectRatio>` tags, but not inside the `<view>` tags:
 
 ```xml
 <!-- Adding <include> directly inside <theme> is supported -->
@@ -580,7 +612,9 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside either
         </text>
     </view>
 </theme>
+```
 
+```xml
 <!-- Adding <include> inside <variant> is supported -->
 <theme>
     <variant name="lightMode">
@@ -592,7 +626,9 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside either
         </text>
     </view>
 </theme>
+```
 
+```xml
 <!-- Adding <include> inside <aspectRatio> is supported -->
 <theme>
     <aspectRatio name="4:3">
@@ -604,7 +640,9 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside either
         </text>
     </view>
 </theme>
+```
 
+```xml
 <!-- Adding <include> inside <view> is NOT supported -->
 <theme>
     <view name="gamelist">
@@ -614,7 +652,9 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside either
         </text>
     </view>
 </theme>
+```
 
+```xml
 <!-- Adding <include> outside <theme> is NOT supported -->
 <include>./../colors.xml</include>
 <theme>
@@ -867,7 +907,7 @@ Nesting of variables is supported, so the following could be done:
 </theme>
 ```
 
-Variables can also be declared inside the `<variant>` tags, but make sure to read the comments below for the implications and possibly unforeseen behavior when doing this:
+Variables can also be declared inside the `<variant>` and `<aspectRatio>` tags, but make sure to read the comments below for the implications and possibly unforeseen behavior when doing this:
 ```xml
 <theme>
     <variant name="lightMode, lightModeNoVideo">
@@ -879,7 +919,7 @@ Variables can also be declared inside the `<variant>` tags, but make sure to rea
 </theme>
 ```
 
-Variables live in the global namespace, i.e. they are reachable by all configuration entries regardless of whether variants are used or not. This means that if a variable is defined directly under the `<theme>` tag and then redefined inside a `<variants>` tag then the global variable will be modified rather than a copy specific to the variant. As well, since all general (non-variant) configuration is parsed prior to the variant configuration, any overriding of the variable will be done "too late" to apply to the general configuaration. Take this example:
+Variables live in the global namespace, i.e. they are reachable by all configuration entries regardless of whether variants are used or not. This means that if a variable is defined directly under the `<theme>` tag and then redefined inside a `<variant>` or `<aspectRatio>` tag then the global variable will be modified rather than a copy specific to the variant. As well, since all general (non-variant) configuration is parsed prior to the variant configuration, any overriding of the variable will be done "too late" to apply to the general configuaration. Take this example:
 
 ```xml
 <theme>
@@ -916,7 +956,22 @@ Variables live in the global namespace, i.e. they are reachable by all configura
 </theme>
 ```
 
-Due to the potential confusion caused by the above configuration it's recommended to never use the same variable names under the `<variants>` tag as have previously been declared directly under the `<theme>` tag.
+Due to the potential confusion caused by the above configuration it's recommended to never use the same variable names under the `<variant>` or `<aspectRatio>` tags as have previously been declared directly under the `<theme>` tag.
+
+## Configuration parsing order
+
+It's important to understand how the theme configuration files are parsed in order to avoid potentially confusing issues that may appear to be bugs. The following order is always used:
+
+1) Variables
+2) Color schemes
+3) Included files
+4) "General" (non-variant) configuration
+5) Variants
+6) Aspect ratios
+
+When including a file using the `<include>` tag (i.e. step 3 above) then all steps listed above are executed for that included file prior to continuing to the next line after the `<include>` tag.
+
+For any given step, the configuration is parsed in the exact order that it's defined in the XML file. Be mindful of the logic described above as for instance defining variant-specific configuration above general configuration in the same XML file will still have that parsed afterwards.
 
 ## Property data types
 

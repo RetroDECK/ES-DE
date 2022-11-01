@@ -2209,11 +2209,15 @@ The theme set to use. Defaults to slate-DE which is shipped with the application
 
 **Theme variant**
 
-Non-legacy theme sets optionally support variants which are a type of theme profiles defined by the theme author. This could be things like light and dark color schemes or modes with or without the video player enabled for instance.
+Non-legacy theme sets optionally support variants which are a type of theme profiles defined by the theme author. This could be things like different designs or whether videos are enabled or not.
+
+**Theme color scheme**
+
+If the theme author has included multiple color schemes, then these can be selected between using this menu option.
 
 **Theme aspect ratio**
 
-Non-legacy theme sets could optionally be optimized for different screen aspect ratios. ES-DE supports 16:9, 16:10, 3:2, 4:3, 5:4, 21:9 and 32:9 in both horizontal and vertical orientation but it's completely up to the theme author which of these are supported by the theme set.
+Non-legacy theme sets could optionally be optimized for different screen aspect ratios. ES-DE supports 16:9, 16:10, 3:2, 4:3, 5:4, 21:9 and 32:9 in both horizontal and vertical orientation, but it's completely up to the theme author which of these are actually supported by the theme set. It's normally best to leave this setting at _Automatic_ in which case ES-DE will automatically select the aspect ratio that most closely matches the screen resolution. The _Automatic_ option is however only available if the theme set supports at least two aspect ratios.
 
 **Legacy gamelist view style**
 
