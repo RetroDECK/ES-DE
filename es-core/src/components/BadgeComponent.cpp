@@ -311,8 +311,18 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             if (std::find(mBadgeTypes.cbegin(), mBadgeTypes.cend(), slot) != mBadgeTypes.end()) {
                 // The "badge_" string is required as ThemeData adds this as a prefix to avoid
                 // name collisions when using XML attributes.
-                if (properties & PATH && elem->has("badge_" + slot))
-                    mBadgeIcons[slot] = elem->get<std::string>("badge_" + slot);
+                if (properties & PATH && elem->has("badge_" + slot)) {
+                    const std::string path {elem->get<std::string>("badge_" + slot)};
+                    if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
+                        mBadgeIcons[slot] = path;
+                    }
+                    else {
+                        LOG(LogWarning)
+                            << "BadgeComponent: Invalid theme configuration, property "
+                               "\"customBadgeIcon\" for element \""
+                            << element.substr(7) << "\", image does not exist: \"" << path << "\"";
+                    }
+                }
 
                 FlexboxComponent::FlexboxItem item;
                 item.label = slot;
@@ -323,10 +333,24 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 item.overlayImage = ImageComponent {false, false};
 
                 if (slot == "folder") {
-                    if (elem->has("customFolderLinkIcon"))
-                        item.overlayImage.setImage(elem->get<std::string>("customFolderLinkIcon"));
-                    else
-                        item.overlayImage.setImage(":/graphics/badge_folderlink_overlay.svg");
+                    std::string folderLinkPath {":/graphics/badge_folderlink_overlay.svg"};
+
+                    if (elem->has("customFolderLinkIcon")) {
+                        const std::string path {elem->get<std::string>("customFolderLinkIcon")};
+                        if (Utils::FileSystem::exists(path) &&
+                            !Utils::FileSystem::isDirectory(path)) {
+                            folderLinkPath = path;
+                        }
+                        else {
+                            LOG(LogWarning)
+                                << "BadgeComponent: Invalid theme configuration, property "
+                                   "\"customFolderLinkIcon\" for element \""
+                                << element.substr(7) << "\", image does not exist: \"" << path
+                                << "\"";
+                        }
+                    }
+
+                    item.overlayImage.setImage(folderLinkPath);
 
                     if (elem->has("folderLinkPos")) {
                         glm::vec2 folderLinkPos {elem->get<glm::vec2>("folderLinkPos")};
@@ -360,9 +384,19 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         for (auto& gameController : sGameControllers) {
-            if (properties & PATH && elem->has("controller_" + gameController.shortName))
-                gameController.fileName =
-                    elem->get<std::string>("controller_" + gameController.shortName);
+            if (properties & PATH && elem->has("controller_" + gameController.shortName)) {
+                const std::string path {
+                    elem->get<std::string>("controller_" + gameController.shortName)};
+                if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
+                    gameController.fileName = path;
+                }
+                else {
+                    LOG(LogWarning)
+                        << "BadgeComponent: Invalid theme configuration, property "
+                           "\"customControllerIcon\" for element \""
+                        << element.substr(7) << "\", image does not exist: \"" << path << "\"";
+                }
+            }
         }
 
         GuiComponent::applyTheme(theme, view, element, properties);
