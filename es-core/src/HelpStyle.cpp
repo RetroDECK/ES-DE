@@ -22,6 +22,7 @@ HelpStyle::HelpStyle()
     , entrySpacing {0.00833f}
     , iconTextSpacing {0.00416f}
     , opacity {1.0f}
+    , legacyTheme {false}
     , letterCase {"uppercase"}
 {
     if (FONT_SIZE_SMALL != 0)
@@ -35,6 +36,8 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
     auto elem = theme->getElement(view, "helpsystem_help", "helpsystem");
     if (!elem)
         return;
+
+    legacyTheme = theme->isLegacyTheme();
 
     if (elem->has("pos"))
         position = elem->get<glm::vec2>("pos") *

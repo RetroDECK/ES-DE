@@ -28,6 +28,7 @@ struct HelpStyle {
     float entrySpacing;
     float iconTextSpacing;
     float opacity;
+    bool legacyTheme;
     std::string letterCase;
 
     struct CustomButtonIcons {

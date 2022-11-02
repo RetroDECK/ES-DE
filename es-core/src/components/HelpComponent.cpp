@@ -202,22 +202,13 @@ void HelpComponent::updateGrid()
     }
 
     std::shared_ptr<Font>& font {mStyle.font};
-
-    mGrid = std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(mPrompts.size()) * 4, 1});
-
-    // [icon] [spacer1] [text] [spacer2]
+    mGrid = std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(mPrompts.size()) * 5, 1});
 
     std::vector<std::shared_ptr<ImageComponent>> icons;
     std::vector<std::shared_ptr<TextComponent>> labels;
 
     float width {0.0f};
-    float height {std::round(font->getLetterHeight() * 1.25f)};
-
-    // Make sure both text and icons have either odd or equal sizes to avoid alignment issues.
-    if (static_cast<int>(font->getHeight()) % 2 != static_cast<int>(height) % 2)
-        --height;
-
-    // State variable indicating whether the GUI is dimmed.
+    float height {font->getLetterHeight() * 1.25f};
     bool isDimmed {mWindow->isBackgroundDimmed()};
 
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); ++it) {
@@ -249,17 +240,31 @@ void HelpComponent::updateGrid()
     mGrid->setSize(width, height);
 
     for (int i = 0; i < static_cast<int>(icons.size()); ++i) {
-        const int col {i * 4};
+        const int col {i * 5};
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(col + 1,
                                (mStyle.iconTextSpacing * mRenderer->getScreenWidth()) / width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
+        mGrid->setColWidthPerc(col + 3,
+                               (mStyle.entrySpacing * mRenderer->getScreenWidth()) / width);
 
         mGrid->setEntry(icons.at(i), glm::ivec2 {col, 0}, false, false);
         mGrid->setEntry(labels.at(i), glm::ivec2 {col + 2, 0}, false, false);
     }
 
-    mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
+    // There is a bug for legacy themes where the entrySpacing width is added to the right of
+    // the grid when aligning to the right using an X origin value of 1. This issue is retained
+    // for legacy themes for backward compatibility reasons.
+    if (mStyle.legacyTheme) {
+        mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
+    }
+    else {
+        mGrid->setPosition(
+            {mStyle.position.x +
+                 ((mStyle.entrySpacing * mRenderer->getScreenWidth()) * mStyle.origin.x),
+             mStyle.position.y, 0.0f});
+    }
+
     mGrid->setOrigin(mStyle.origin);
 }
 
