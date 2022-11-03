@@ -1,0 +1,28 @@
+<!--
+    Theme capabilities for modern-DE
+-->
+
+<themeCapabilities>
+    <aspectRatio>16:9</aspectRatio>
+    <aspectRatio>16:10</aspectRatio>
+    <aspectRatio>4:3</aspectRatio>
+    <aspectRatio>21:9</aspectRatio>
+
+    <colorScheme name="dark">
+        <label>Dark mode</label>
+    </colorScheme>
+
+    <colorScheme name="light">
+        <label>Light mode</label>
+    </colorScheme>
+
+    <variant name="withVideos">
+        <label>Textlist with videos</label>
+        <selectable>true</selectable>
+    </variant>
+
+    <variant name="withoutVideos">
+        <label>Textlist without videos</label>
+        <selectable>true</selectable>
+    </variant>
+</themeCapabilities>

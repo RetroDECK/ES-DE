@@ -1,0 +1,47 @@
+<theme>
+    <view name="system, gamelist">
+        <helpsystem name="help">
+            <pos>0.96 0.935</pos>
+            <fontSize>0.035</fontSize>
+            <entrySpacing>0.024</entrySpacing>
+            <iconTextSpacing>0.00516</iconTextSpacing>
+        </helpsystem>
+        <image name="bottomline">
+            <pos>0.5 0.9</pos>
+        </image>
+    </view>
+
+    <view name="system">
+        <carousel name="system_carousel">
+            <maxItemCount>6</maxItemCount>
+            <itemSize>0.156 0.367</itemSize>
+        </carousel>
+        <image name="arrowblock">
+            <size>0.023 0.047</size>
+        </image>
+        <image name="selection_bottom">
+            <pos>0.5 0.689</pos>
+            <size>0.16078571 0.003</size>
+        </image>
+        <image name="selection_top">
+            <pos>0.5 0.311</pos>
+            <size>0.16078571 0.003</size>
+        </image>
+        <image name="selection_left">
+            <pos>0.420 0.5</pos>
+            <size>0.00128571 0.381</size>
+        </image>
+        <image name="selection_right">
+            <pos>0.58 0.5</pos>
+            <size>0.00128571 0.381</size>
+        </image>
+    </view>
+
+    <view name="gamelist">
+        <badges name="md_badges">
+            <lines>2</lines>
+            <itemsPerLine>4</itemsPerLine>
+            <itemMargin>0.0028125 0.005</itemMargin>
+        </badges>
+    </view>
+</theme>

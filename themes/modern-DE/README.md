@@ -1,42 +1,29 @@
-# Modern-DE Theme for Emulationstation Desktop Edition
+# modern-DE for EmulationStation Desktop Edition
 
-The modern theme is a new theme for ES-DE that supports most latest features such as badges and controllers. The theme
-is meant to offer a modern look for ES-DE. The theme is designed with theme variants in mind (v1.3).
+modern-DE is an official theme set for ES-DE that supports all systems as well as the latest application features.
 
-We support 8 variants:
+The theme includes the following configuration:
 
-- 4:3 dark
-- 4:3 light
-- 16:9 dark
-- 16:9 light
-- 16:10 dark
-- 16:10 light
-- 21:9 dark
-- 21:9 light
+2 variants:
 
-The variant that is to be used can be selected by changing line 14 of `theme.xml`. This will be made accessible through
-the user interface in future updates, specifically v1.3:
+- Textlist with videos
+- Textlist without videos
 
-```{xml}
-<include>./variants/dark21_9/default.xml</include>
-```
+2 color schemes:
 
-# Based on
+- Dark mode
+- Light mode
+
+4 aspect ratios:
+
+- 16:9
+- 16:10
+- 4:3
+- 21:9
+
+# Credits
 
 The theme is based on '[es-theme-switch](https://github.com/lilbud/es-theme-switch)' by lilbud.
-
-# Changes
-
-The following changes to the theme are made:
-
-- support for 4:3, 16:9, 21:9 resolutions
-- graphics for all ES-DE supported systems
-- placeholder styling for unknown systems
-- badges icons (broken, favorite, etc...)
-- controller icons
-- new font
-- restyled rightmost metadata panel
-- new rating icons
 
 # Pictures
 
