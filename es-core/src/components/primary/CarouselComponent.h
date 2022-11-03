@@ -931,7 +931,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mLegacyMode = theme->isLegacyTheme();
 
     if (elem->has("type")) {
-        const std::string type {elem->get<std::string>("type")};
+        const std::string& type {elem->get<std::string>("type")};
         if (type == "horizontal") {
             mType = CarouselType::HORIZONTAL;
         }
@@ -960,7 +960,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mCarouselColorEnd = elem->get<unsigned int>("colorEnd");
 
     if (elem->has("gradientType")) {
-        const std::string gradientType {elem->get<std::string>("gradientType")};
+        const std::string& gradientType {elem->get<std::string>("gradientType")};
         if (gradientType == "horizontal") {
             mColorGradientHorizontal = true;
         }
@@ -1009,7 +1009,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
 
         if (elem->has("itemTransitions")) {
-            const std::string itemTransitions {elem->get<std::string>("itemTransitions")};
+            const std::string& itemTransitions {elem->get<std::string>("itemTransitions")};
             if (itemTransitions == "slide") {
                 mInstantItemTransitions = false;
             }
@@ -1026,7 +1026,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("itemInterpolation")) {
-            const std::string itemInterpolation {elem->get<std::string>("itemInterpolation")};
+            const std::string& itemInterpolation {elem->get<std::string>("itemInterpolation")};
             if (itemInterpolation == "linear") {
                 mLinearInterpolation = true;
             }
@@ -1052,7 +1052,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             (elem->has("itemAxisHorizontal") && elem->get<bool>("itemAxisHorizontal"));
 
         if (elem->has("itemHorizontalAlignment")) {
-            const std::string alignment {elem->get<std::string>("itemHorizontalAlignment")};
+            const std::string& alignment {elem->get<std::string>("itemHorizontalAlignment")};
             if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
                 mItemHorizontalAlignment = ALIGN_LEFT;
             }
@@ -1071,7 +1071,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("itemVerticalAlignment")) {
-            const std::string alignment {elem->get<std::string>("itemVerticalAlignment")};
+            const std::string& alignment {elem->get<std::string>("itemVerticalAlignment")};
             if (alignment == "top" && mType != CarouselType::VERTICAL) {
                 mItemVerticalAlignment = ALIGN_TOP;
             }
@@ -1090,7 +1090,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         if (elem->has("wheelHorizontalAlignment")) {
-            const std::string alignment {elem->get<std::string>("wheelHorizontalAlignment")};
+            const std::string& alignment {elem->get<std::string>("wheelHorizontalAlignment")};
             if (alignment == "left") {
                 mWheelHorizontalAlignment = ALIGN_LEFT;
             }
@@ -1172,7 +1172,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mItemRotationOrigin = elem->get<glm::vec2>("logoRotationOrigin");
 
         if (elem->has("logoAlignment")) {
-            const std::string alignment {elem->get<std::string>("logoAlignment")};
+            const std::string& alignment {elem->get<std::string>("logoAlignment")};
             if (alignment == "left" && mType != CarouselType::HORIZONTAL) {
                 mItemHorizontalAlignment = ALIGN_LEFT;
                 mItemVerticalAlignment = ALIGN_CENTER;
@@ -1216,7 +1216,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
 
     if (elem->has("letterCase")) {
-        const std::string letterCase {elem->get<std::string>("letterCase")};
+        const std::string& letterCase {elem->get<std::string>("letterCase")};
 
         if (letterCase == "uppercase") {
             mLetterCase = LetterCase::UPPERCASE;
@@ -1235,7 +1235,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("letterCaseCollections")) {
-        const std::string letterCase {elem->get<std::string>("letterCaseCollections")};
+        const std::string& letterCase {elem->get<std::string>("letterCaseCollections")};
 
         if (letterCase == "uppercase") {
             mLetterCaseCollections = LetterCase::UPPERCASE;
@@ -1254,7 +1254,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("letterCaseGroupedCollections")) {
-        const std::string letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
+        const std::string& letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
 
         if (letterCase == "uppercase") {
             mLetterCaseGroupedCollections = LetterCase::UPPERCASE;

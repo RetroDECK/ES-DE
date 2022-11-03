@@ -499,7 +499,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("selectorColorEnd"))
             setSelectorColorEnd(elem->get<unsigned int>("selectorColorEnd"));
         if (elem->has("selectorGradientType")) {
-            const std::string gradientType {elem->get<std::string>("selectorGradientType")};
+            const std::string& gradientType {elem->get<std::string>("selectorGradientType")};
             if (gradientType == "horizontal") {
                 setSelectorColorGradientHorizontal(true);
             }
@@ -509,8 +509,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             else {
                 setSelectorColorGradientHorizontal(true);
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                                   "<selectorGradientType> defined as \""
-                                << gradientType << "\"";
+                                   "\"selectorGradientType\" for element \""
+                                << element.substr(9) << "\" defined as \"" << gradientType << "\"";
             }
         }
         if (elem->has("selectedColor"))
@@ -527,31 +527,40 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & ALIGNMENT) {
         if (elem->has("horizontalAlignment")) {
-            const std::string& str {elem->get<std::string>("horizontalAlignment")};
-            if (str == "left")
+            const std::string& horizontalAlignment {elem->get<std::string>("horizontalAlignment")};
+            if (horizontalAlignment == "left") {
                 setAlignment(PrimaryAlignment::ALIGN_LEFT);
-            else if (str == "center")
+            }
+            else if (horizontalAlignment == "center") {
                 setAlignment(PrimaryAlignment::ALIGN_CENTER);
-            else if (str == "right")
+            }
+            else if (horizontalAlignment == "right") {
                 setAlignment(PrimaryAlignment::ALIGN_RIGHT);
-            else
+            }
+            else {
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                                   "<horizontalAlignment> defined as \""
-                                << str << "\"";
+                                   "\"horizontalAlignment\" for element \""
+                                << element.substr(9) << "\" defined as \"" << horizontalAlignment
+                                << "\"";
+            }
         }
         // Legacy themes only.
         else if (elem->has("alignment")) {
-            const std::string& str {elem->get<std::string>("alignment")};
-            if (str == "left")
+            const std::string& alignment {elem->get<std::string>("alignment")};
+            if (alignment == "left") {
                 setAlignment(PrimaryAlignment::ALIGN_LEFT);
-            else if (str == "center")
+            }
+            else if (alignment == "center") {
                 setAlignment(PrimaryAlignment::ALIGN_CENTER);
-            else if (str == "right")
+            }
+            else if (alignment == "right") {
                 setAlignment(PrimaryAlignment::ALIGN_RIGHT);
-            else
+            }
+            else {
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                                   "<alignment> defined as \""
-                                << str << "\"";
+                                   "\"alignment\" for element \""
+                                << element.substr(9) << "\" defined as \"" << alignment << "\"";
+            }
         }
         if (elem->has("horizontalMargin")) {
             mHorizontalMargin =
@@ -561,7 +570,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (properties & LETTER_CASE && elem->has("letterCase")) {
-        const std::string letterCase {elem->get<std::string>("letterCase")};
+        const std::string& letterCase {elem->get<std::string>("letterCase")};
         if (letterCase == "uppercase") {
             mLetterCase = LetterCase::UPPERCASE;
         }
@@ -579,7 +588,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (properties & LETTER_CASE && elem->has("letterCaseCollections")) {
-        const std::string letterCase {elem->get<std::string>("letterCaseCollections")};
+        const std::string& letterCase {elem->get<std::string>("letterCaseCollections")};
         if (letterCase == "uppercase") {
             mLetterCaseCollections = LetterCase::UPPERCASE;
         }
@@ -597,7 +606,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (properties & LETTER_CASE && elem->has("letterCaseGroupedCollections")) {
-        const std::string letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
+        const std::string& letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
         if (letterCase == "uppercase") {
             mLetterCaseGroupedCollections = LetterCase::UPPERCASE;
         }
@@ -636,33 +645,34 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("indicators")) {
-        std::string indicators {elem->get<std::string>("indicators")};
+        const std::string& indicators {elem->get<std::string>("indicators")};
         if (indicators == "symbols" || indicators == "ascii" || indicators == "none") {
             mIndicators = indicators;
         }
         else {
             mIndicators = "symbols";
             LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                               "<indicators> defined as \""
-                            << indicators << "\"";
+                               "\"indicators\" for element \""
+                            << element.substr(9) << "\" defined as \"" << indicators << "\"";
         }
     }
 
     if (elem->has("collectionIndicators")) {
-        std::string collectionIndicators {elem->get<std::string>("collectionIndicators")};
+        const std::string& collectionIndicators {elem->get<std::string>("collectionIndicators")};
         if (collectionIndicators == "symbols" || collectionIndicators == "ascii") {
             mCollectionIndicators = collectionIndicators;
         }
         else {
             mCollectionIndicators = "symbols";
             LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                               "<collectionIndicators> defined as \""
-                            << collectionIndicators << "\"";
+                               "\"collectionIndicators\" for element \""
+                            << element.substr(9) << "\" defined as \"" << collectionIndicators
+                            << "\"";
         }
     }
 
     if (elem->has("selectorImagePath")) {
-        std::string path {elem->get<std::string>("selectorImagePath")};
+        const std::string& path {elem->get<std::string>("selectorImagePath")};
         bool tile {elem->has("selectorImageTile") && elem->get<bool>("selectorImageTile")};
         mSelectorImage.setImage(path, tile);
         mSelectorImage.setSize(mSize.x, mSelectorHeight);
