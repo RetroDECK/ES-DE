@@ -155,7 +155,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mPlayAudio = elem->get<bool>("audio");
 
     if (elem->has("interpolation")) {
-        const std::string interpolation {elem->get<std::string>("interpolation")};
+        const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
             mStaticImage.setLinearInterpolation(true);
         }
@@ -189,7 +189,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("path")) {
-        const std::string staticPath {elem->get<std::string>("path")};
+        const std::string& staticPath {elem->get<std::string>("path")};
         if (ResourceManager::getInstance().fileExists(staticPath)) {
             mConfig.staticVideoPath = staticPath;
         }

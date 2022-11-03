@@ -130,51 +130,51 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (properties & ALIGNMENT && elem->has("horizontalAlignment")) {
-        std::string str {elem->get<std::string>("horizontalAlignment")};
-        if (str == "left")
+        const std::string& horizontalAlignment {elem->get<std::string>("horizontalAlignment")};
+        if (horizontalAlignment == "left")
             setHorizontalAlignment(ALIGN_LEFT);
-        else if (str == "center")
+        else if (horizontalAlignment == "center")
             setHorizontalAlignment(ALIGN_CENTER);
-        else if (str == "right")
+        else if (horizontalAlignment == "right")
             setHorizontalAlignment(ALIGN_RIGHT);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
                                "<horizontalAlignment> defined as \""
-                            << str << "\"";
+                            << horizontalAlignment << "\"";
     }
 
     if (properties & ALIGNMENT && elem->has("verticalAlignment")) {
-        std::string str {elem->get<std::string>("verticalAlignment")};
-        if (str == "top")
+        const std::string& verticalAlignment {elem->get<std::string>("verticalAlignment")};
+        if (verticalAlignment == "top")
             setVerticalAlignment(ALIGN_TOP);
-        else if (str == "center")
+        else if (verticalAlignment == "center")
             setVerticalAlignment(ALIGN_CENTER);
-        else if (str == "bottom")
+        else if (verticalAlignment == "bottom")
             setVerticalAlignment(ALIGN_BOTTOM);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
                                "<verticalAlignment> defined as \""
-                            << str << "\"";
+                            << verticalAlignment << "\"";
     }
 
     // Legacy themes only.
     if (properties & ALIGNMENT && elem->has("alignment")) {
-        std::string str {elem->get<std::string>("alignment")};
-        if (str == "left")
+        const std::string& alignment {elem->get<std::string>("alignment")};
+        if (alignment == "left")
             setHorizontalAlignment(ALIGN_LEFT);
-        else if (str == "center")
+        else if (alignment == "center")
             setHorizontalAlignment(ALIGN_CENTER);
-        else if (str == "right")
+        else if (alignment == "right")
             setHorizontalAlignment(ALIGN_RIGHT);
         else
             LOG(LogWarning) << "DateTimeComponent: Invalid theme configuration, property "
                                "<alignment> defined as \""
-                            << str << "\"";
+                            << alignment << "\"";
     }
 
     if (properties & METADATA && elem->has("metadata")) {
         mThemeMetadata = "";
-        const std::string metadata {elem->get<std::string>("metadata")};
+        const std::string& metadata {elem->get<std::string>("metadata")};
         if (metadata == "releasedate" || metadata == "lastplayed") {
             mThemeMetadata = metadata;
         }
@@ -192,7 +192,7 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setDisplayRelative(elem->get<bool>("displayRelative"));
 
     if (properties & LETTER_CASE && elem->has("letterCase")) {
-        std::string letterCase {elem->get<std::string>("letterCase")};
+        const std::string& letterCase {elem->get<std::string>("letterCase")};
         if (letterCase == "uppercase") {
             setUppercase(true);
         }

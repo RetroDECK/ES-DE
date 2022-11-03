@@ -286,7 +286,7 @@ void GIFAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mKeepAspectRatio = elem->get<bool>("keepAspectRatio");
 
     if (elem->has("direction")) {
-        std::string direction = elem->get<std::string>("direction");
+        const std::string& direction {elem->get<std::string>("direction")};
         if (direction == "normal") {
             mStartDirection = "normal";
             mAlternate = false;
@@ -313,7 +313,7 @@ void GIFAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("interpolation")) {
-        const std::string interpolation {elem->get<std::string>("interpolation")};
+        const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
             mTexture->setLinearMagnify(true);
         }
@@ -332,7 +332,7 @@ void GIFAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::applyTheme(theme, view, element, properties);
 
     if (elem->has("path")) {
-        std::string path {elem->get<std::string>("path")};
+        const std::string& path {elem->get<std::string>("path")};
         if (path != "") {
             setAnimation(path);
         }

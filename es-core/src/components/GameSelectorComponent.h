@@ -123,7 +123,7 @@ public:
         mSelectorName = element.substr(13, std::string::npos);
 
         if (elem->has("selection")) {
-            const std::string selection {elem->get<std::string>("selection")};
+            const std::string& selection {elem->get<std::string>("selection")};
             if (selection == "random") {
                 mGameSelection = GameSelection::RANDOM;
             }
@@ -140,8 +140,8 @@ public:
             else {
                 mGameSelection = GameSelection::RANDOM;
                 LOG(LogWarning) << "GameSelectorComponent: Invalid theme configuration, property "
-                                   "<selection> defined as \""
-                                << selection << "\"";
+                                   "\"selection\" for element \""
+                                << element.substr(13) << "\" defined as \"" << selection << "\"";
             }
         }
 

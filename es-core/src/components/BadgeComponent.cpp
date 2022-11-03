@@ -291,7 +291,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("slots")) {
         // Replace possible whitespace separators with commas.
-        std::string slotsTag = Utils::String::toLower(elem->get<std::string>("slots"));
+        std::string slotsTag {Utils::String::toLower(elem->get<std::string>("slots"))};
         for (auto& character : slotsTag) {
             if (std::isspace(character))
                 character = ',';
@@ -312,7 +312,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 // The "badge_" string is required as ThemeData adds this as a prefix to avoid
                 // name collisions when using XML attributes.
                 if (properties & PATH && elem->has("badge_" + slot)) {
-                    const std::string path {elem->get<std::string>("badge_" + slot)};
+                    const std::string& path {elem->get<std::string>("badge_" + slot)};
                     if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
                         mBadgeIcons[slot] = path;
                     }
@@ -385,7 +385,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         for (auto& gameController : sGameControllers) {
             if (properties & PATH && elem->has("controller_" + gameController.shortName)) {
-                const std::string path {
+                const std::string& path {
                     elem->get<std::string>("controller_" + gameController.shortName)};
                 if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
                     gameController.fileName = path;

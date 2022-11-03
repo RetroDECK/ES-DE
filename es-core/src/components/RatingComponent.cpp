@@ -180,7 +180,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         // Read the image file in order to retrieve the image dimensions needed to calculate
         // the aspect ratio constant.
         if (properties & PATH && elem->has("filledPath")) {
-            std::string path {std::string(elem->get<std::string>("filledPath"))};
+            const std::string& path {std::string(elem->get<std::string>("filledPath"))};
             if (Utils::FileSystem::isRegularFile(path) || Utils::FileSystem::isSymlink(path)) {
                 auto tempImage =
                     TextureResource::get(path, false, false, false, false, false, 0, 0, 0.0f, 0.0f);
@@ -212,7 +212,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     bool linearInterpolation {false};
 
     if (elem->has("interpolation")) {
-        const std::string interpolation {elem->get<std::string>("interpolation")};
+        const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
             linearInterpolation = true;
         }

@@ -256,7 +256,7 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mKeepAspectRatio = elem->get<bool>("keepAspectRatio");
 
     if (elem->has("direction")) {
-        std::string direction = elem->get<std::string>("direction");
+        const std::string& direction {elem->get<std::string>("direction")};
         if (direction == "normal") {
             mStartDirection = "normal";
             mAlternate = false;

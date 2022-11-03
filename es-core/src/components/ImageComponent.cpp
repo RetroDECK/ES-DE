@@ -433,7 +433,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("interpolation")) {
-        const std::string interpolation {elem->get<std::string>("interpolation")};
+        const std::string& interpolation {elem->get<std::string>("interpolation")};
         if (interpolation == "linear") {
             mLinearInterpolation = true;
         }
@@ -454,7 +454,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     bool tile {elem->has("tile") && elem->get<bool>("tile")};
 
     if (properties & PATH && elem->has("path")) {
-        const std::string path {elem->get<std::string>("path")};
+        const std::string& path {elem->get<std::string>("path")};
 
         if (tile && elem->has("tileSize")) {
             glm::vec2 tileSize {elem->get<glm::vec2>("tileSize")};
@@ -479,7 +479,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     bool updateAlignment {false};
 
     if (elem->has("tileHorizontalAlignment")) {
-        const std::string alignment {elem->get<std::string>("tileHorizontalAlignment")};
+        const std::string& alignment {elem->get<std::string>("tileHorizontalAlignment")};
         updateAlignment = true;
         if (alignment == "left") {
             mTileHorizontalAlignment = ALIGN_LEFT;
@@ -496,7 +496,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (elem->has("tileVerticalAlignment")) {
-        const std::string alignment {elem->get<std::string>("tileVerticalAlignment")};
+        const std::string& alignment {elem->get<std::string>("tileVerticalAlignment")};
         updateAlignment = true;
         if (alignment == "top") {
             mTileVerticalAlignment = ALIGN_TOP;
