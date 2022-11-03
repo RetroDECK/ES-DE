@@ -43,6 +43,9 @@ public:
     virtual int getCursor() = 0;
     virtual const size_t getNumEntries() = 0;
     virtual const bool getFadeAbovePrimary() const = 0;
+    virtual const LetterCase getLetterCase() const = 0;
+    virtual const LetterCase getLetterCaseCollections() const = 0;
+    virtual const LetterCase getLetterCaseGroupedCollections() const = 0;
 
     // Functions used by some primary components.
     virtual void onDemandTextureLoad() {}

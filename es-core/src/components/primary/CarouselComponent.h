@@ -59,6 +59,12 @@ public:
     const std::string& getDefaultItem() { return mDefaultItem; }
     void setDefaultItem(std::string defaultItem) { mDefaultItem = defaultItem; }
     bool isScrolling() const override { return List::isScrolling(); }
+    const LetterCase getLetterCase() const override { return mLetterCase; }
+    const LetterCase getLetterCaseCollections() const override { return mLetterCaseCollections; }
+    const LetterCase getLetterCaseGroupedCollections() const override
+    {
+        return mLetterCaseGroupedCollections;
+    }
 
     void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
     {
@@ -116,9 +122,6 @@ private:
     bool mPositiveDirection;
     bool mTriggerJump;
     bool mGamelistView;
-    bool mUppercase;
-    bool mLowercase;
-    bool mCapitalize;
 
     CarouselType mType;
     std::string mItemType;
@@ -127,7 +130,6 @@ private:
     std::shared_ptr<Font> mFont;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
-    std::string mText;
     float mLineSpacing;
     Alignment mItemHorizontalAlignment;
     Alignment mItemVerticalAlignment;
@@ -141,6 +143,9 @@ private:
     bool mInstantItemTransitions;
     bool mItemAxisHorizontal;
     bool mFadeAbovePrimary;
+    LetterCase mLetterCase;
+    LetterCase mLetterCaseCollections;
+    LetterCase mLetterCaseGroupedCollections;
     float mItemScale;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
@@ -167,9 +172,6 @@ CarouselComponent<T>::CarouselComponent()
     , mPositiveDirection {false}
     , mTriggerJump {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
-    , mUppercase {false}
-    , mLowercase {false}
-    , mCapitalize {false}
     , mType {CarouselType::HORIZONTAL}
     , mLegacyMode {false}
     , mFont {Font::get(FONT_SIZE_LARGE)}
@@ -189,6 +191,9 @@ CarouselComponent<T>::CarouselComponent()
     , mInstantItemTransitions {false}
     , mItemAxisHorizontal {false}
     , mFadeAbovePrimary {false}
+    , mLetterCase {LetterCase::NONE}
+    , mLetterCaseCollections {LetterCase::NONE}
+    , mLetterCaseGroupedCollections {LetterCase::NONE}
     , mItemScale {1.2f}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
@@ -263,20 +268,9 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
 
     if (!entry.data.item) {
         // If no item image is present, add item text as fallback.
-        std::string nameEntry;
-        if (!mGamelistView)
-            nameEntry = entry.name;
-        else if (mUppercase)
-            nameEntry = Utils::String::toUpper(entry.name);
-        else if (mLowercase)
-            nameEntry = Utils::String::toLower(entry.name);
-        else if (mCapitalize)
-            nameEntry = Utils::String::toCapitalized(entry.name);
-        else
-            nameEntry = entry.name;
 
         auto text = std::make_shared<TextComponent>(
-            nameEntry, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
+            entry.name, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
             glm::vec3 {0.0f, 0.0f, 0.0f},
             glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)), 0x00000000);
         if (legacyMode) {
@@ -287,10 +281,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         }
         if (!legacyMode) {
             text->setLineSpacing(mLineSpacing);
-            if (!mGamelistView) {
-                if (mText != "")
-                    text->setValue(mText);
-            }
+            if (!mGamelistView)
+                text->setValue(entry.name);
             text->setColor(mTextColor);
             text->setBackgroundColor(mTextBackgroundColor);
             text->setRenderBackground(true);
@@ -317,8 +309,6 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
 
     List::add(entry);
-
-    mText = "";
 }
 
 template <typename T>
@@ -934,10 +924,6 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mCarouselColor = 0xFFFFFFD8;
     mCarouselColorEnd = 0xFFFFFFD8;
     mZIndex = mDefaultZIndex;
-    mText = "";
-    mUppercase = false;
-    mLowercase = false;
-    mCapitalize = false;
 
     if (!elem)
         return;
@@ -1229,36 +1215,60 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("lineSpacing"))
         mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
 
-    std::string letterCase;
-    bool hasText {!mGamelistView && elem->has("text")};
-
     if (elem->has("letterCase")) {
-        letterCase = elem->get<std::string>("letterCase");
+        const std::string letterCase {elem->get<std::string>("letterCase")};
 
         if (letterCase == "uppercase") {
-            mUppercase = true;
-            if (hasText)
-                mText = Utils::String::toUpper(elem->get<std::string>("text"));
+            mLetterCase = LetterCase::UPPERCASE;
         }
         else if (letterCase == "lowercase") {
-            mLowercase = true;
-            if (hasText)
-                mText = Utils::String::toLower(elem->get<std::string>("text"));
+            mLetterCase = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            mCapitalize = true;
-            if (hasText)
-                mText = Utils::String::toCapitalized(elem->get<std::string>("text"));
+            mLetterCase = LetterCase::CAPITALIZED;
         }
-        else if (hasText && letterCase == "none") {
-            mText = elem->get<std::string>("text");
-        }
-        else {
+        else if (letterCase != "none") {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
                                "\"letterCase\" for element \""
                             << element.substr(9) << "\" defined as \"" << letterCase << "\"";
-            if (hasText)
-                mText = elem->get<std::string>("text");
+        }
+    }
+
+    if (elem->has("letterCaseCollections")) {
+        const std::string letterCase {elem->get<std::string>("letterCaseCollections")};
+
+        if (letterCase == "uppercase") {
+            mLetterCaseCollections = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseCollections = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseCollections = LetterCase::CAPITALIZED;
+        }
+        else {
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "\"letterCaseCollections\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
+        }
+    }
+
+    if (elem->has("letterCaseGroupedCollections")) {
+        const std::string letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
+
+        if (letterCase == "uppercase") {
+            mLetterCaseGroupedCollections = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseGroupedCollections = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseGroupedCollections = LetterCase::CAPITALIZED;
+        }
+        else {
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "\"letterCaseGroupedCollections\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
     }
 

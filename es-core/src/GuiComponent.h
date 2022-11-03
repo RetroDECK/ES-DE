@@ -42,6 +42,13 @@ enum Alignment {
     ALIGN_BOTTOM
 };
 
+enum class LetterCase {
+    UPPERCASE,
+    LOWERCASE,
+    CAPITALIZED,
+    NONE
+};
+
 class GuiComponent
 {
 public:

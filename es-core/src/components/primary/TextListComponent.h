@@ -68,45 +68,6 @@ public:
             it->data.textCache.reset();
     }
 
-    void setUppercase(bool uppercase)
-    {
-        mUppercase = uppercase;
-
-        if (uppercase) {
-            mLowercase = false;
-            mCapitalize = false;
-        }
-
-        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
-            it->data.textCache.reset();
-    }
-
-    void setLowercase(bool lowercase)
-    {
-        mLowercase = lowercase;
-
-        if (lowercase) {
-            mUppercase = false;
-            mCapitalize = false;
-        }
-
-        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
-            it->data.textCache.reset();
-    }
-
-    void setCapitalize(bool capitalize)
-    {
-        mCapitalize = capitalize;
-
-        if (capitalize) {
-            mUppercase = false;
-            mLowercase = false;
-        }
-
-        for (auto it = mEntries.begin(); it != mEntries.end(); ++it)
-            it->data.textCache.reset();
-    }
-
     void setSelectorHeight(float selectorScale) { mSelectorHeight = selectorScale; }
     void setSelectorOffsetY(float selectorOffsetY) { mSelectorOffsetY = selectorOffsetY; }
     void setSelectorColor(unsigned int color) { mSelectorColor = color; }
@@ -120,6 +81,12 @@ public:
     void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
     const std::string& getIndicators() const { return mIndicators; }
     const std::string& getCollectionIndicators() const { return mCollectionIndicators; }
+    const LetterCase getLetterCase() const override { return mLetterCase; }
+    const LetterCase getLetterCaseCollections() const override { return mLetterCaseCollections; }
+    const LetterCase getLetterCaseGroupedCollections() const override
+    {
+        return mLetterCaseGroupedCollections;
+    }
 
 protected:
     void onShow() override { mLoopTime = 0; }
@@ -169,9 +136,9 @@ private:
     std::string mCollectionIndicators;
     bool mLegacyMode;
     bool mFadeAbovePrimary;
-    bool mUppercase;
-    bool mLowercase;
-    bool mCapitalize;
+    LetterCase mLetterCase;
+    LetterCase mLetterCaseCollections;
+    LetterCase mLetterCaseGroupedCollections;
     float mLineSpacing;
     float mSelectorHeight;
     float mSelectorOffsetY;
@@ -202,9 +169,9 @@ TextListComponent<T>::TextListComponent()
     , mCollectionIndicators {"symbols"}
     , mLegacyMode {false}
     , mFadeAbovePrimary {false}
-    , mUppercase {false}
-    , mLowercase {false}
-    , mCapitalize {false}
+    , mLetterCase {LetterCase::NONE}
+    , mLetterCaseCollections {LetterCase::NONE}
+    , mLetterCaseGroupedCollections {LetterCase::NONE}
     , mLineSpacing {1.5f}
     , mSelectorHeight {mFont->getSize() * 1.5f}
     , mSelectorOffsetY {0.0f}
@@ -435,18 +402,8 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             color = mColors[entry.data.colorId];
 
         if (!entry.data.textCache) {
-            if (mUppercase)
-                entry.data.textCache = std::unique_ptr<TextCache>(
-                    font->buildTextCache(Utils::String::toUpper(entry.name), 0, 0, 0x000000FF));
-            else if (mLowercase)
-                entry.data.textCache = std::unique_ptr<TextCache>(
-                    font->buildTextCache(Utils::String::toLower(entry.name), 0, 0, 0x000000FF));
-            else if (mCapitalize)
-                entry.data.textCache = std::unique_ptr<TextCache>(font->buildTextCache(
-                    Utils::String::toCapitalized(entry.name), 0, 0, 0x000000FF));
-            else
-                entry.data.textCache =
-                    std::unique_ptr<TextCache>(font->buildTextCache(entry.name, 0, 0, 0x000000FF));
+            entry.data.textCache =
+                std::unique_ptr<TextCache>(font->buildTextCache(entry.name, 0, 0, 0x000000FF));
         }
 
         if constexpr (std::is_same_v<T, FileData*>) {
@@ -604,26 +561,64 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     if (properties & LETTER_CASE && elem->has("letterCase")) {
-        std::string letterCase {elem->get<std::string>("letterCase")};
+        const std::string letterCase {elem->get<std::string>("letterCase")};
         if (letterCase == "uppercase") {
-            setUppercase(true);
+            mLetterCase = LetterCase::UPPERCASE;
         }
         else if (letterCase == "lowercase") {
-            setLowercase(true);
+            mLetterCase = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            setCapitalize(true);
+            mLetterCase = LetterCase::CAPITALIZED;
         }
         else if (letterCase != "none") {
             LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                               "<letterCase> defined as \""
-                            << letterCase << "\"";
+                               "\"letterCase\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
+        }
+    }
+
+    if (properties & LETTER_CASE && elem->has("letterCaseCollections")) {
+        const std::string letterCase {elem->get<std::string>("letterCaseCollections")};
+        if (letterCase == "uppercase") {
+            mLetterCaseCollections = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseCollections = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseCollections = LetterCase::CAPITALIZED;
+        }
+        else {
+            LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                               "\"letterCaseCollections\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
+        }
+    }
+
+    if (properties & LETTER_CASE && elem->has("letterCaseGroupedCollections")) {
+        const std::string letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
+        if (letterCase == "uppercase") {
+            mLetterCaseGroupedCollections = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseGroupedCollections = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseGroupedCollections = LetterCase::CAPITALIZED;
+        }
+        else {
+            LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                               "\"letterCaseGroupedCollections\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
     }
 
     // Legacy themes only.
-    if (properties & FORCE_UPPERCASE && elem->has("forceUppercase"))
-        setUppercase(elem->get<bool>("forceUppercase"));
+    if (properties & FORCE_UPPERCASE && elem->has("forceUppercase")) {
+        if (elem->get<bool>("forceUppercase"))
+            mLetterCase = LetterCase::UPPERCASE;
+    }
 
     if (properties & LINE_SPACING) {
         if (elem->has("lineSpacing"))

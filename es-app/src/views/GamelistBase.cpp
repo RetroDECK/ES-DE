@@ -543,18 +543,21 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     mFirstGameEntry = nullptr;
     bool favoriteStar {true};
     bool isEditing {false};
+    bool customCollection {false};
     std::string editingCollection;
     std::string inCollectionPrefix;
+    LetterCase letterCase {LetterCase::NONE};
 
     if (CollectionSystemsManager::getInstance()->isEditing()) {
         editingCollection = CollectionSystemsManager::getInstance()->getEditingCollection();
         isEditing = true;
     }
 
-    // Read the settings that control whether a unicode star character should be added
-    // as a prefix to the game name.
     if (files.size() > 0) {
-        if (files.front()->getSystem()->isCustomCollection())
+        customCollection = files.front()->getSystem()->isCustomCollection();
+        // Read the settings that control whether a unicode star character should be added
+        // as a prefix to the game name.
+        if (customCollection)
             favoriteStar = Settings::getInstance()->getBool("FavStarCustom");
         else
             favoriteStar = Settings::getInstance()->getBool("FavoritesStar");
@@ -575,12 +578,20 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
         if (!ResourceManager::getInstance().fileExists(carouselDefaultItem))
             carouselDefaultItem = "";
     }
-
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); ++it) {
 
             if (!mFirstGameEntry && (*it)->getType() == GAME)
                 mFirstGameEntry = (*it);
+
+            if (customCollection && (*it)->getType() == FOLDER) {
+                letterCase = mPrimary->getLetterCaseGroupedCollections();
+                if (letterCase == LetterCase::NONE)
+                    letterCase = mPrimary->getLetterCase();
+            }
+            else {
+                letterCase = mPrimary->getLetterCase();
+            }
 
             if (mCarousel != nullptr) {
                 assert(carouselItemType != "");
@@ -588,6 +599,13 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 CarouselComponent<FileData*>::Entry carouselEntry;
                 carouselEntry.name = (*it)->getName();
                 carouselEntry.object = *it;
+
+                if (letterCase == LetterCase::UPPERCASE)
+                    carouselEntry.name = Utils::String::toUpper(carouselEntry.name);
+                else if (letterCase == LetterCase::LOWERCASE)
+                    carouselEntry.name = Utils::String::toLower(carouselEntry.name);
+                else if (letterCase == LetterCase::CAPITALIZED)
+                    carouselEntry.name = Utils::String::toCapitalized(carouselEntry.name);
 
                 if (carouselDefaultItem != "")
                     carouselEntry.data.defaultItemPath = carouselDefaultItem;
@@ -646,6 +664,14 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                         name = inCollectionPrefix + (*it)->getName();
                     }
                 }
+
+                if (letterCase == LetterCase::UPPERCASE)
+                    name = Utils::String::toUpper(name);
+                else if (letterCase == LetterCase::LOWERCASE)
+                    name = Utils::String::toLower(name);
+                else if (letterCase == LetterCase::CAPITALIZED)
+                    name = Utils::String::toCapitalized(name);
+
                 color = (*it)->getType() == FOLDER;
                 textListEntry.name = name;
                 textListEntry.object = *it;

@@ -316,6 +316,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"letterCase", STRING},
+       {"letterCaseCollections", STRING},
+       {"letterCaseGroupedCollections", STRING},
        {"lineSpacing", FLOAT},
        {"fadeAbovePrimary", BOOLEAN},
        {"zIndex", FLOAT},
@@ -341,6 +343,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"alignment", STRING},                      // For backward compatibility with legacy themes.
        {"horizontalMargin", FLOAT},
        {"letterCase", STRING},
+       {"letterCaseCollections", STRING},
+       {"letterCaseGroupedCollections", STRING},
        {"forceUppercase", BOOLEAN},                // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"indicators", STRING},

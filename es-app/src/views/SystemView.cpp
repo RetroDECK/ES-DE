@@ -637,17 +637,43 @@ void SystemView::populate()
             });
         }
 
+        auto letterCaseFunc = [&it, this](std::string& name) {
+            LetterCase letterCase {LetterCase::NONE};
+            if (it->isCollection()) {
+                letterCase = mPrimary->getLetterCaseCollections();
+                if (letterCase == LetterCase::NONE)
+                    letterCase = mPrimary->getLetterCase();
+            }
+            else {
+                letterCase = mPrimary->getLetterCase();
+            }
+
+            if (letterCase == LetterCase::UPPERCASE)
+                name = Utils::String::toUpper(name);
+            else if (letterCase == LetterCase::LOWERCASE)
+                name = Utils::String::toLower(name);
+            else if (letterCase == LetterCase::CAPITALIZED)
+                name = Utils::String::toCapitalized(name);
+        };
+
         if (mCarousel != nullptr) {
             CarouselComponent<SystemData*>::Entry entry;
-            entry.name = it->getName();
+            // Keep showing only the short name for legacy themes to maintain maximum
+            // backward compatibility. This also applies to unreadable theme sets.
+            if (mLegacyMode)
+                entry.name = it->getName();
+            else
+                entry.name = it->getFullName();
+            letterCaseFunc(entry.name);
             entry.object = it;
             entry.data.itemPath = itemPath;
             entry.data.defaultItemPath = defaultItemPath;
             mCarousel->addEntry(entry, theme);
         }
-        if (mTextList != nullptr) {
+        else if (mTextList != nullptr) {
             TextListComponent<SystemData*>::Entry entry;
             entry.name = it->getFullName();
+            letterCaseFunc(entry.name);
             entry.object = it;
             entry.data.colorId = 0;
             mTextList->addEntry(entry);
