@@ -177,6 +177,12 @@ public:
         bool override;
         std::string overrideTrigger;
         std::string overrideVariant;
+
+        ThemeVariant()
+            : selectable {false}
+            , override {false}
+        {
+        }
     };
 
     struct ThemeColorScheme {
