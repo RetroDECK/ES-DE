@@ -235,6 +235,11 @@ void SystemView::onCursorChanged(const CursorState& state)
         }
     }
 
+    if (mLastCursor >= 0 && mLastCursor <= static_cast<int>(mSystemElements.size())) {
+        for (auto& video : mSystemElements[mLastCursor].videoComponents)
+            video->stopVideoPlayer();
+    }
+
     mLastCursor = cursor;
 
     for (auto& video : mSystemElements[cursor].videoComponents)
