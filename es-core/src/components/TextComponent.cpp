@@ -240,6 +240,8 @@ void TextComponent::render(const glm::mat4& parentTrans)
 
 void TextComponent::onTextChanged()
 {
+    mTextCache.reset();
+
     if (!mVerticalAutoSizing)
         mVerticalAutoSizing = (mSize.x != 0.0f && mSize.y == 0.0f);
 
@@ -264,8 +266,6 @@ void TextComponent::onTextChanged()
     }
 
     if (!mFont || text.empty() || mSize.x < 0.0f) {
-        if (mTextCache != nullptr)
-            mTextCache.reset();
         return;
     }
 
