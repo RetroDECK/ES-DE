@@ -68,17 +68,6 @@ public:
             it->data.textCache.reset();
     }
 
-    void setSelectorHeight(float selectorScale) { mSelectorHeight = selectorScale; }
-    void setSelectorOffsetY(float selectorOffsetY) { mSelectorOffsetY = selectorOffsetY; }
-    void setSelectorColor(unsigned int color) { mSelectorColor = color; }
-    void setSelectorColorEnd(unsigned int color) { mSelectorColorEnd = color; }
-    void setSelectorColorGradientHorizontal(bool horizontal)
-    {
-        mSelectorColorGradientHorizontal = horizontal;
-    }
-    void setSelectedColor(unsigned int color) { mSelectedColor = color; }
-    void setColor(unsigned int id, unsigned int color) { mColors[id] = color; }
-    void setLineSpacing(float lineSpacing) { mLineSpacing = lineSpacing; }
     const std::string& getIndicators() const { return mIndicators; }
     const std::string& getCollectionIndicators() const { return mCollectionIndicators; }
     const LetterCase getLetterCase() const override { return mLetterCase; }
@@ -483,47 +472,47 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                       unsigned int properties)
 {
     GuiComponent::applyTheme(theme, view, element, properties);
-
+    using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "textlist")};
+
     if (!elem)
         return;
 
     mLegacyMode = theme->isLegacyTheme();
 
-    using namespace ThemeFlags;
     if (properties & COLOR) {
         if (elem->has("selectorColor")) {
-            setSelectorColor(elem->get<unsigned int>("selectorColor"));
-            setSelectorColorEnd(elem->get<unsigned int>("selectorColor"));
+            mSelectorColor = elem->get<unsigned int>("selectorColor");
+            mSelectorColorEnd = mSelectorColor;
         }
         if (elem->has("selectorColorEnd"))
-            setSelectorColorEnd(elem->get<unsigned int>("selectorColorEnd"));
+            mSelectorColorEnd = elem->get<unsigned int>("selectorColorEnd");
         if (elem->has("selectorGradientType")) {
             const std::string& gradientType {elem->get<std::string>("selectorGradientType")};
             if (gradientType == "horizontal") {
-                setSelectorColorGradientHorizontal(true);
+                mSelectorColorGradientHorizontal = true;
             }
             else if (gradientType == "vertical") {
-                setSelectorColorGradientHorizontal(false);
+                mSelectorColorGradientHorizontal = false;
             }
             else {
-                setSelectorColorGradientHorizontal(true);
+                mSelectorColorGradientHorizontal = true;
                 LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
                                    "\"selectorGradientType\" for element \""
                                 << element.substr(9) << "\" defined as \"" << gradientType << "\"";
             }
         }
         if (elem->has("selectedColor"))
-            setSelectedColor(elem->get<unsigned int>("selectedColor"));
+            mSelectedColor = elem->get<unsigned int>("selectedColor");
         if (elem->has("primaryColor"))
-            setColor(0, elem->get<unsigned int>("primaryColor"));
+            mColors[0] = elem->get<unsigned int>("primaryColor");
         if (elem->has("secondaryColor"))
-            setColor(1, elem->get<unsigned int>("secondaryColor"));
+            mColors[1] = elem->get<unsigned int>("secondaryColor");
     }
 
     setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode));
     const float selectorHeight {mFont->getHeight(mLineSpacing)};
-    setSelectorHeight(selectorHeight);
+    mSelectorHeight = selectorHeight;
 
     if (properties & ALIGNMENT) {
         if (elem->has("horizontalAlignment")) {
@@ -631,16 +620,16 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & LINE_SPACING) {
         if (elem->has("lineSpacing"))
-            setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
+            mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
         if (elem->has("selectorHeight"))
-            setSelectorHeight(elem->get<float>("selectorHeight") * Renderer::getScreenHeight());
+            mSelectorHeight = elem->get<float>("selectorHeight") * Renderer::getScreenHeight();
         if (elem->has("selectorOffsetY")) {
-            float scale {this->mParent ? this->mParent->getSize().y :
-                                         static_cast<float>(Renderer::getScreenHeight())};
-            setSelectorOffsetY(elem->get<float>("selectorOffsetY") * scale);
+            const float scale {this->mParent ? this->mParent->getSize().y :
+                                               Renderer::getScreenHeight()};
+            mSelectorOffsetY = elem->get<float>("selectorOffsetY") * scale;
         }
         else {
-            setSelectorOffsetY(0.0);
+            mSelectorOffsetY = 0.0f;
         }
     }
 
