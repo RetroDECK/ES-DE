@@ -570,7 +570,6 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     std::string name;
     std::string carouselItemType;
     std::string carouselDefaultItem;
-    unsigned int color {0};
 
     if (mCarousel != nullptr) {
         carouselItemType = mCarousel->getItemType();
@@ -672,10 +671,12 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 else if (letterCase == LetterCase::CAPITALIZED)
                     name = Utils::String::toCapitalized(name);
 
-                color = (*it)->getType() == FOLDER;
                 textListEntry.name = name;
                 textListEntry.object = *it;
-                textListEntry.data.colorId = color;
+                if ((*it)->getType() == FOLDER)
+                    textListEntry.data.entryType = TextListEntryType::SECONDARY;
+                else
+                    textListEntry.data.entryType = TextListEntryType::PRIMARY;
                 mTextList->addEntry(textListEntry);
             }
         }
@@ -702,7 +703,7 @@ void GamelistBase::addPlaceholder(FileData* firstEntry)
         TextListComponent<FileData*>::Entry textListEntry;
         textListEntry.name = placeholder->getName();
         textListEntry.object = placeholder;
-        textListEntry.data.colorId = 1;
+        textListEntry.data.entryType = TextListEntryType::SECONDARY;
         mTextList->addEntry(textListEntry);
     }
     if (mCarousel != nullptr) {

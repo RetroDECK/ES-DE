@@ -680,7 +680,7 @@ void SystemView::populate()
             entry.name = it->getFullName();
             letterCaseFunc(entry.name);
             entry.object = it;
-            entry.data.colorId = 0;
+            entry.data.entryType = TextListEntryType::PRIMARY;
             mTextList->addEntry(entry);
         }
     }

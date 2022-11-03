@@ -15,8 +15,13 @@
 #include "components/primary/PrimaryComponent.h"
 #include "resources/Font.h"
 
+enum class TextListEntryType {
+    PRIMARY,
+    SECONDARY
+};
+
 struct TextListData {
-    unsigned int colorId;
+    TextListEntryType entryType;
     std::shared_ptr<TextCache> textCache;
 };
 
@@ -133,10 +138,11 @@ private:
     float mSelectorOffsetY;
     unsigned int mSelectorColor;
     unsigned int mSelectorColorEnd;
-    bool mSelectorColorGradientHorizontal = true;
+    bool mSelectorColorGradientHorizontal;
+    unsigned int mPrimaryColor;
+    unsigned int mSecondaryColor;
     unsigned int mSelectedColor;
-    static const unsigned int COLOR_ID_COUNT {2};
-    unsigned int mColors[COLOR_ID_COUNT];
+    unsigned int mSelectedSecondaryColor;
 };
 
 template <typename T>
@@ -167,8 +173,10 @@ TextListComponent<T>::TextListComponent()
     , mSelectorColor {0x333333FF}
     , mSelectorColorEnd {0x333333FF}
     , mSelectorColorGradientHorizontal {true}
-    , mSelectedColor {0}
-    , mColors {0x0000FFFF, 0x00FF00FF}
+    , mPrimaryColor {0x0000FFFF}
+    , mSecondaryColor {0x00FF00FF}
+    , mSelectedColor {0x0000FFFF}
+    , mSelectedSecondaryColor {0x00FF00FF}
 {
 }
 
@@ -383,12 +391,12 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
 
     for (int i = startEntry; i < listCutoff; ++i) {
         Entry& entry {mEntries.at(i)};
+        unsigned int color {0};
 
-        unsigned int color;
-        if (mCursor == i && mSelectedColor)
-            color = mSelectedColor;
+        if (entry.data.entryType == TextListEntryType::PRIMARY)
+            color = (mCursor == i ? mSelectedColor : mPrimaryColor);
         else
-            color = mColors[entry.data.colorId];
+            color = (mCursor == i ? mSelectedSecondaryColor : mSecondaryColor);
 
         if (!entry.data.textCache) {
             entry.data.textCache =
@@ -502,12 +510,18 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 << element.substr(9) << "\" defined as \"" << gradientType << "\"";
             }
         }
+        if (elem->has("primaryColor"))
+            mPrimaryColor = elem->get<unsigned int>("primaryColor");
+        if (elem->has("secondaryColor"))
+            mSecondaryColor = elem->get<unsigned int>("secondaryColor");
         if (elem->has("selectedColor"))
             mSelectedColor = elem->get<unsigned int>("selectedColor");
-        if (elem->has("primaryColor"))
-            mColors[0] = elem->get<unsigned int>("primaryColor");
-        if (elem->has("secondaryColor"))
-            mColors[1] = elem->get<unsigned int>("secondaryColor");
+        else
+            mSelectedColor = mPrimaryColor;
+        if (elem->has("selectedSecondaryColor"))
+            mSelectedSecondaryColor = elem->get<unsigned int>("selectedSecondaryColor");
+        else
+            mSelectedSecondaryColor = mSelectedColor;
     }
 
     setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode));

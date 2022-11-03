@@ -333,9 +333,10 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"selectorGradientType", STRING},
        {"selectorImagePath", PATH},
        {"selectorImageTile", BOOLEAN},
-       {"selectedColor", COLOR},
        {"primaryColor", COLOR},
        {"secondaryColor", COLOR},
+       {"selectedColor", COLOR},
+       {"selectedSecondaryColor", COLOR},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"scrollSound", PATH},                      // For backward compatibility with legacy themes.
