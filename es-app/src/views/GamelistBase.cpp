@@ -699,9 +699,20 @@ void GamelistBase::addPlaceholder(FileData* firstEntry)
     else
         placeholder = this->mRoot->getSystem()->getPlaceholder();
 
+    auto letterCaseFunc = [this](std::string& name) {
+        const LetterCase letterCase {mPrimary->getLetterCase()};
+        if (letterCase == LetterCase::UPPERCASE)
+            name = Utils::String::toUpper(name);
+        else if (letterCase == LetterCase::LOWERCASE)
+            name = Utils::String::toLower(name);
+        else if (letterCase == LetterCase::CAPITALIZED)
+            name = Utils::String::toCapitalized(name);
+    };
+
     if (mTextList != nullptr) {
         TextListComponent<FileData*>::Entry textListEntry;
         textListEntry.name = placeholder->getName();
+        letterCaseFunc(textListEntry.name);
         textListEntry.object = placeholder;
         textListEntry.data.entryType = TextListEntryType::SECONDARY;
         mTextList->addEntry(textListEntry);
@@ -709,6 +720,7 @@ void GamelistBase::addPlaceholder(FileData* firstEntry)
     if (mCarousel != nullptr) {
         CarouselComponent<FileData*>::Entry carouselEntry;
         carouselEntry.name = placeholder->getName();
+        letterCaseFunc(carouselEntry.name);
         carouselEntry.object = placeholder;
         mCarousel->addEntry(carouselEntry, mRoot->getSystem()->getTheme());
     }
