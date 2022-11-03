@@ -16,6 +16,7 @@
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
+* Ported modern-DE to the new theme engine
 * Replaced the NanoSVG library with LunaSVG for greatly improved SVG rendering capabilities
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
@@ -89,8 +90,10 @@
 * Added a GameSelectorComponent for displaying game media and metadata in the system view
 * Added support to the system view for displaying videos, Lottie animations, GIF animations, date/time components and game ratings
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
-* Added theme support for setting the TextListComponent indicators to symbols, ascii or none
-* Added theme support for setting the TextListComponent custom collection indicators to symbols or ascii
+* Added two letterCaseCollections and letterCaseGroupedCollections properties to control the letter case more specifically for the primary components
+* Added a selectedSecondaryColor property to the textlist to highlight folder entries in the gamelist view with a different color than file entries
+* Added theme support for setting the textlist indicators to symbols, ascii or none
+* Added theme support for setting the textlist custom collection indicators to symbols or ascii
 * Removed the "Use plain ASCII for special gamelist characters" menu option as it's now theme-controlled
 * Removed the "Enable menu scroll indicators" menu option
 * Changed the badges default lines property value from 2 to 3
@@ -232,6 +235,7 @@
 * ScrollableContainer faded semi-transparent text to fully opaque when resetting
 * ScrollableContainer faded in the background text color in addition to the text color when resetting
 * Text elements that had an opacity set to lower than FF via the color tag were faded in during gamelist scrolling
+* The help system was offset by the entrySpacing property width when right-aligned using an X origin value of 1
 * The help system was rendered on top of menus if placed at such a location on the screen
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase letters in theme names)
 * The SliderComponent knob was not consistently positioned

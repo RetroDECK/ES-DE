@@ -88,8 +88,10 @@ As for more specific changes, the following are the most important ones compared
 * The rating elements were previously not sized and overlaid consistently, this has now been fixed and rating images should now be centered on the image canvas in order for this element to render correctly rather than being left-adjusted as has previously been done by some theme authors (likely as a workaround for the previous buggy implementation). Images of any aspect ratios are now also supported where previously only square images could be used
 * The carousel text element hacks `systemInfo` and `logoText` have been removed and replaced with proper carousel properties
 * The carousel property `maxItemCount` (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine. As well carousels of the wheel type now have the amount of entries controlled by the two new properties `itemsBeforeCenter` and `itemsAfterCenter`. This provides more exact control, including the ability to setup asymmetric wheels.
+* The full names of unthemed systems (or systems where the defined itemType file is missing) will now be displayed in the system carousel instead of the short names shown for legacy themes. So for instance, instead of "cps" the full name "Capcom Play System" (as defined in es_systems.xml) will be displayed.
 * The carousel now has a zIndex value of 50 instead of 40. This means it's aligned with the textlist element which already had a zIndex value of 50.
 * The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
+* When right-aligning the helpsystem using an X origin value of 1, the element is now aligned correctly to the defined position instead of being offset by the entrySpacing width (in RetroPie ES the offset was instead the hardcoded element entry padding)
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
 * Many additional elements and properties have been added, refer to the [Reference](THEMES-DEV.md#reference) section for more information
 
@@ -1805,8 +1807,15 @@ Properties:
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.085`
 * `letterCase` - type: STRING
+    - Sets the letter case for all entries.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
+* `letterCaseCollections` - type: STRING
+    - For technical reasons both automatic collections and custom collections have their names spelled in lowercase characters. This property which can only be used in the `system` view will make it possible to change the letter case for all such collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all collections.
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+* `letterCaseGroupedCollections` - type: STRING
+    - For technical reasons custom collections have their names spelled in lowercase characters. This property which can only be used in the `gamelist` view will make it possible to change the letter case for all such grouped collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all grouped collections.
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
@@ -1857,12 +1866,18 @@ Properties:
 * `selectorImageTile` - type: BOOLEAN
     - If true, the selector image will be tiled instead of stretched to fit its size.
     - Default is `false`
-* `selectedColor` - type: COLOR
-    - Color of the highlighted entry text.
 * `primaryColor` - type: COLOR
-    - Primary color; what this means depends on the text list. For example, for game lists, it is the color of a game.
+    - Color of the primary entry type. For the `gamelist` view this means file entries and for the `system` view it means system entries.
+    - Default is `0000FFFF`
 * `secondaryColor` - type: COLOR
-    - Secondary color; what this means depends on the text list. For example, for game lists, it is the color of a folder.
+    - Color of the secondary entry type. For the `gamelist` view this means folder entries and for the `system` view this property is not used.
+    - Default is `00FF00FF`
+* `selectedColor` - type: COLOR
+    - Color of the highlighted entry of the primary entry type.
+    - Default is the same value as `primaryColor`
+* `selectedSecondaryColor` - type: COLOR
+    - Color of the highlighted entry of the secondary entry type.
+    - Default is the same value as `selectedColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
@@ -1875,8 +1890,15 @@ Properties:
     - Horizontal offset for text from the alignment point. If `horizontalAlignment` is "left", offsets the text to the right. If `horizontalAlignment` is "right", offsets text to the left. No effect if `horizontalAlignment` is "center". Given as a percentage of the element's parent's width (same unit as `size`'s X value).
     - Default is `0`
 * `letterCase` - type: STRING
+    - Sets the letter case for all entries.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
+* `letterCaseCollections` - type: STRING
+    - For technical reasons both automatic collections and custom collections have their names spelled in lowercase characters. This property which can only be used in the `system` view will make it possible to change the letter case for all such collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all collections.
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+* `letterCaseGroupedCollections` - type: STRING
+    - For technical reasons custom collections have their names spelled in lowercase characters. This property which can only be used in the `gamelist` view will make it possible to change the letter case for all such grouped collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all grouped collections.
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of the font height).
     - Minimum value is `0.5` and maximum value is `3`
@@ -1920,7 +1942,7 @@ Properties:
 
 The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
 
-It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>0.99 0.954</pos>` and `<origin>1 0</origin>` will place it in the lower right corner of the screen.
+It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>1 1</pos>` and `<origin>1 1</origin>` will place it in the lower right corner of the screen.
 
 Supported views:
 * `system`
