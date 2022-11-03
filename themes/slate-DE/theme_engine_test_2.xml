@@ -112,7 +112,7 @@
             <type>vertical</type>
             <itemType>marquee</itemType>
             <maxItemCount>5</maxItemCount>
-            <itemSize>0.2 0.105</itemSize>
+            <itemSize>0.26 0.105</itemSize>
             <itemScale>1.23</itemScale>
             <itemInterpolation>linear</itemInterpolation>
             <itemHorizontalAlignment>center</itemHorizontalAlignment>
