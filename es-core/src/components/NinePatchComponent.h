@@ -45,11 +45,6 @@ public:
     // Apply a color shift to the "center" part of the ninepatch.
     void setCenterColor(unsigned int centerColor);
 
-    virtual void applyTheme(const std::shared_ptr<ThemeData>& theme,
-                            const std::string& view,
-                            const std::string& element,
-                            unsigned int properties) override;
-
     const glm::vec2& getCornerSize() const { return mCornerSize; }
     void setCornerSize(const glm::vec2& size)
     {
