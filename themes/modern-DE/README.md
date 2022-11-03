@@ -2,7 +2,7 @@
 
 modern-DE is an official theme set for ES-DE that supports all systems as well as the latest application features.
 
-The theme includes the following configuration:
+The following options are included:
 
 2 variants:
 
@@ -23,7 +23,7 @@ The theme includes the following configuration:
 
 # Credits
 
-The theme is based on '[es-theme-switch](https://github.com/lilbud/es-theme-switch)' by lilbud.
+The theme is based on [es-theme-switch](https://github.com/lilbud/es-theme-switch) by lilbud.
 
 # Pictures
 
