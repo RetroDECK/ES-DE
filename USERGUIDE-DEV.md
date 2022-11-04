@@ -1613,7 +1613,7 @@ Doing this will make the game show up as if it was a single file inside ES-DE an
 
 #### M.U.G.E.N Game Engine
 
-M.U.G.E.N games can be played using the Ikemen GO game engine which is being actively developed and is available on Linux, macOS and Windows. The original M.U.G.E.N engine which only exists for Windows has not had any updates in years and is therefore considered obsolete and won't be covered here. But it's still possible to use it on Windows via the same approach described for Ikemon GO so if you really want to use it, then you can.
+M.U.G.E.N games can be played using the Ikemen GO game engine which is being actively developed and is available on Linux, macOS and Windows. The original M.U.G.E.N engine which only exists for Windows has not had any updates in years and is therefore considered obsolete and won't be covered here. But it's still possible to use it on Windows via the same approach described for Ikemen GO so if you really want to use it, then you can.
 
 **Basic setup**
 
@@ -1654,11 +1654,11 @@ And like this on Linux or macOS:
 
 **Configuring M.U.G.E.N games for use with Ikemen GO**
 
-This section is only included to provide some general understanding on how to convert M.U.G.E.N games to run with Ikemon GO, it's in no way a complete tutorial and the steps needed are likely slightly different for each game. Refer to the Ikemon GO support forums and documentation for more thorough information.
+This section is only included to provide some general understanding on how to convert M.U.G.E.N games to run with Ikemen GO, it's in no way a complete tutorial and the steps needed are likely slightly different for each game. Refer to the Ikemen GO support forums and documentation for more thorough information.
 
 We'll use the game _Ultimate Sonic Mugen_ for this example.
 
-Download Ikemon GO from https://github.com/ikemen-engine/Ikemen-GO/releases, the package you want is _Ikemen_GO_v0.98.2.zip_ or similar, depending on which version you're downloading. Unpack the file to a suitable location.
+Download Ikemen GO from https://github.com/ikemen-engine/Ikemen-GO/releases, the package you want is _Ikemen_GO_v0.98.2.zip_ or similar, depending on which version you're downloading. Unpack the file to a suitable location.
 
 Download the game _Ultimate Sonic Mugen_ and unpack it to a suitable location.
 
@@ -1673,7 +1673,7 @@ Copy the following directories from the downloaded game directory to the empty g
 
 If you're using an operating system with a case-sensitive file system like Linux, then you also need to rename every file inside the `data` directory to lowercase characters. This includes also the file extensions.
 
-Copy the following directories from the Ikemon GO directory to the game directory:
+Copy the following directories from the Ikemen GO directory to the game directory:
 
 * data
 * external
@@ -3135,7 +3135,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | msx1                  | MSX1                                           | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
 | msx2                  | MSX2                                           | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
 | msxturbor             | MSX Turbo R                                    | blueMSX                           | openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*] | Yes          |                                      |
-| mugen                 | M.U.G.E.N Game Engine                          | Ikemon GO **(Standalone)**        |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
+| mugen                 | M.U.G.E.N Game Engine                          | Ikemen GO **(Standalone)**        |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
