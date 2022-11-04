@@ -1613,9 +1613,74 @@ Doing this will make the game show up as if it was a single file inside ES-DE an
 
 #### M.U.G.E.N Game Engine
 
-This system is only available on Windows and these games are commonly shipped as self-contained units with both the game engine and game data. To add a M.U.G.E.N game to ES-DE, right click on the game's .exe file, select Create Shortcut_ followed by _Create Desktop Shortcut_. This will create a file with the .lnk extension which you should then move to the `~\ROMs\mugen` directory. Note that this setup is not portable, if you move your game files somewhere else you will need to manually update your shortcuts as these contain absolute paths.
+M.U.G.E.N games can be played using the Ikemen GO game engine which is being actively developed and is available on Linux, macOS and Windows. The original M.U.G.E.N engine which only exists for Windows has not had any updates in years and is therefore considered obsolete and won't be covered here. But it's still possible to use it on Windows via the same approach described for Ikemon GO so if you really want to use it, then you can.
 
-Neither ScreenScraper nor TheGamesDB support scraping of M.U.G.E.N games so you will need to manually enter metadata and add game media.
+**Basic setup**
+
+These games are shipped as self-contained units with the game engine binary included in the game directory structure. On Windows .lnk files are used to launch the games and on Linux and macOS files or symlinks with the .mugen extension are required.
+
+For this example we'll go with the game _Ultimate Sonic Mugen_.
+
+On Windows, go into the game directory, right click on the `Ikemen_GO.exe` file, select _Create Shortcut_ followed by _Create Desktop Shortcut_. This will create a file with the .lnk extension. Rename the file to `Ultimate Sonic Mugen.lnk` and try to run this file to make sure that the game starts and runs correctly. Note that this setup is not portable, if you move your game files somewhere else you will need to manually update your shortcuts as these contain absolute paths.
+
+On Linux and macOS, go into the game directory and rename the `Ikemen_GO_Linux` or `Ikemen_GO_MacOS` binary to the name of the game and add the .mugen extension to the filename, for example `Ultimate Sonic Mugen.mugen`. Try to run this file to make sure that the game starts and runs correctly.
+
+Starting ES-DE and launching the game should now work fine, but a further improvement is to use the _directories interpreted as files_ functionality to display the game as a single entry instead of a directory. To accomplish this, simply rename the game directory to the same name as the game file, which for this example would be `Ultimate Sonic Mugen.lnk` or `Ultimate Sonic Mugen.mugen` depending on which operating system you use.
+
+The setup should now look something like the following on Windows:
+```
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\chars\
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\data\
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\external\
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\font\
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\sound\
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\stages\
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\Ikemen_GO.exe
+~\ROMs\mugen\Ultimate Sonic Mugen.lnk\Ultimate Sonic Mugen.lnk
+```
+
+And like this on Linux or macOS:
+```
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/chars/
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/data/
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/external/
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/font/
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/sound/
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/stages/
+~/ROMs/mugen/Ultimate Sonic Mugen.mugen/Ultimate Sonic Mugen.mugen
+```
+
+**Configuring M.U.G.E.N games for use with Ikemen GO**
+
+This section is only included to provide some general understanding on how to convert M.U.G.E.N games to run with Ikemon GO, it's in no way a complete tutorial and the steps needed are likely slightly different for each game. Refer to the Ikemon GO support forums and documentation for more thorough information.
+
+We'll use the game _Ultimate Sonic Mugen_ for this example.
+
+Download Ikemon GO from https://github.com/ikemen-engine/Ikemen-GO/releases, the package you want is _Ikemen_GO_v0.98.2.zip_ or similar, depending on which version you're downloading. Unpack the file to a suitable location.
+
+Download the game _Ultimate Sonic Mugen_ and unpack it to a suitable location.
+
+Create a new game directory, for example `~/ROMs/mugen/Ultimate Sonic Mugen`
+
+Copy the following directories from the downloaded game directory to the empty game directory you just created:
+* chars
+* data
+* font
+* sound
+* stages
+
+If you're using an operating system with a case-sensitive file system like Linux, then you also need to rename every file inside the `data` directory to lowercase characters. This includes also the file extensions.
+
+Copy the following directories from the Ikemon GO directory to the game directory:
+
+* data
+* external
+* font
+* The game binary, either Ikemen_GO.exe, Ikemen_GO_Linux or Ikemen_GO_MacOS
+
+Do NOT overwrite any files when copying over the `data` and `font` directories, or the game will not work correctly.
 
 #### EasyRPG Game Engine
 
@@ -3070,7 +3135,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | msx1                  | MSX1                                           | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
 | msx2                  | MSX2                                           | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
 | msxturbor             | MSX Turbo R                                    | blueMSX                           | openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*] | Yes          |                                      |
-| mugen                 | M.U.G.E.N Game Engine                          | M.U.G.E.N **(Standalone)** [W]    |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
+| mugen                 | M.U.G.E.N Game Engine                          | Ikemon GO **(Standalone)**        |                                   | No           | See the specific _M.U.G.E.N Game Engine_ section elsewhere in this guide |
 | multivision           | Othello Multivision                            | Gearsystem                        |                                   |              |                                      |
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
