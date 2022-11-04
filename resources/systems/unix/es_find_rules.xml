@@ -104,6 +104,9 @@
             <entry>Cemu</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/Cemu*.AppImage</entry>
+            <entry>~/.local/bin/Cemu*.AppImage</entry>
+            <entry>~/bin/Cemu*.AppImage</entry>
             <entry>~/Applications/Cemu/Cemu</entry>
             <entry>~/.local/bin/Cemu/Cemu</entry>
             <entry>~/bin/Cemu/Cemu</entry>
