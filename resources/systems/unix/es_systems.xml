@@ -861,8 +861,8 @@
         <name>mugen</name>
         <fullname>M.U.G.E.N Game Engine</fullname>
         <path>%ROMPATH%/mugen</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.mugen</extension>
+        <command>%STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>mugen</platform>
         <theme>mugen</theme>
     </system>

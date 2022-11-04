@@ -865,7 +865,7 @@
         <fullname>M.U.G.E.N Game Engine</fullname>
         <path>%ROMPATH%\mugen</path>
         <extension>.lnk .LNK</extension>
-        <command label="M.U.G.E.N (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command>%HIDEWINDOW% %ESCAPESPECIALS% %STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>mugen</platform>
         <theme>mugen</theme>
     </system>
