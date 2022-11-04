@@ -40,7 +40,7 @@
 * (Windows) Added Project64 as an alternative emulator for the n64 system
 * (Windows) Added SSF as an alternative emulator for the saturn and saturnjp systems
 * (Windows) Changed the binary for emulator Citra from citra.exe to citra-qt.exe as the command line binary is broken on this OS
-* Added support for the mugen system on Linux and macOS using the Ikemon GO game engine
+* Added support for the mugen system on Linux and macOS using the Ikemen GO game engine
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
 * Added the .car and .rom file extensions to the a5200 system

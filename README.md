@@ -23,7 +23,7 @@ Two comprehensive theme sets, **slate-DE** (rbsimple-DE in the 1.x releases) and
 The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
 * Windows 11, 10 and 8.1
-* macOS 10.14 "Mojave" to 12 "Monterey" (M1 and Intel)
+* macOS 10.14 "Mojave" to 13 "Ventura" (M1 and Intel)
 * macOS 10.11 "El Capitan" (legacy release)
 * Ubuntu 20.04 to 22.04
 * Linux Mint 20
@@ -45,7 +45,7 @@ The latest version is 1.2.6 (released 2022-08-03)
 | Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download)|
 | Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/48555328/download)|
 | macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239145/download)|
-| macOS DMG installer  | macOS 11 "Big Sur" to 12 "Monterey"                     | arm64 (M1)   | [EmulationStation-DE-1.2.6-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239039/download)|
+| macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-1.2.6-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239039/download)|
 | Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.6-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239111/download)|
 | Fedora RPM package   | Fedora Workstation 36, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.6-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239313/download)|
 | Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
