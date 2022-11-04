@@ -11,35 +11,23 @@
 
 LogLevel Log::getReportingLevel()
 {
-    // Static Log functions need to grab the lock.
     std::unique_lock<std::mutex> lock {sLogMutex};
     return sReportingLevel;
 }
 
 void Log::setReportingLevel(LogLevel level)
 {
-    // Static Log functions need to grab the lock.
     std::unique_lock<std::mutex> lock {sLogMutex};
     sReportingLevel = level;
 }
 
 std::string Log::getLogPath()
 {
-    // No attempt is made to make this thread-safe.
-    // Currently getLogPath is public, and called in contexts with
-    // and without sLogMutex locked.
-
-    // getHomePath() currently does not generate any Log messages.
     return Utils::FileSystem::getHomePath() + "/.emulationstation/es_log.txt";
 }
 
 void Log::init()
 {
-    // No attempt is made to make this thread-safe.
-    // It is unlikely to be called across multiple threads.
-    // Both removeFile and renameFile might generate log messages,
-    // so they might try to grab the lock.
-
     Utils::FileSystem::removeFile(getLogPath() + ".bak");
     // Rename the previous log file.
     Utils::FileSystem::renameFile(getLogPath(), getLogPath() + ".bak", true);
@@ -48,7 +36,6 @@ void Log::init()
 
 void Log::open()
 {
-    // Static Log functions need to grab the lock.
     std::unique_lock<std::mutex> lock {sLogMutex};
 #if defined(_WIN64)
     sFile.open(Utils::String::stringToWideString(getLogPath()).c_str());
@@ -59,14 +46,12 @@ void Log::open()
 
 void Log::flush()
 {
-    // Flush file. Static Log functions need to grab the lock.
     std::unique_lock<std::mutex> lock {sLogMutex};
     sFile.flush();
 }
 
 void Log::close()
 {
-    // Static Log functions need to grab the lock.
     std::unique_lock<std::mutex> lock {sLogMutex};
     if (sFile.is_open())
         sFile.close();
@@ -74,8 +59,6 @@ void Log::close()
 
 std::ostringstream& Log::get(LogLevel level)
 {
-    // This function is not-static, but only touches instance member variables.
-    // The lock is not needed.
     time_t t {time(nullptr)};
     struct tm tm;
 #if defined(_WIN64)
@@ -95,14 +78,6 @@ std::ostringstream& Log::get(LogLevel level)
 Log::~Log()
 {
     mOutStringStream << std::endl;
-
-    // Log() constructor does not need the lock.
-    // Log::get() does not need the lock.
-    // get(..) << msg << msg also does not need the lock,
-    // since get() returns the instance member mOutStringStream.
-
-    // It is only now that we need the lock, to guard access to
-    // both std::cerr and sFile.
     std::unique_lock<std::mutex> lock {sLogMutex};
 
     if (!sFile.is_open()) {
