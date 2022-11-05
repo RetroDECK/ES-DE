@@ -105,8 +105,8 @@ private:
     bool mInvalidSVGFile;
     bool mForceLoad;
 
-    // File path, tile, linear interpolation, scalable/SVG, width, height.
-    using TextureKeyType = std::tuple<std::string, bool, bool, bool, size_t, size_t>;
+    // File path, tile, linear interpolation, mipmapping, scalable/SVG, width, height.
+    using TextureKeyType = std::tuple<std::string, bool, bool, bool, bool, size_t, size_t>;
     // Map of textures, used to prevent duplicate textures.
     static inline std::map<TextureKeyType, std::weak_ptr<TextureResource>> sTextureMap;
     // Set of all textures, used for memory management.

@@ -179,7 +179,7 @@ std::shared_ptr<TextureResource> TextureResource::get(const std::string& path,
     const bool isScalable {Utils::String::toLower(canonicalPath.substr(
                                canonicalPath.size() - 4, std::string::npos)) == ".svg"};
 
-    TextureKeyType key {canonicalPath, tile, linearMagnify, isScalable, width, height};
+    TextureKeyType key {canonicalPath, tile, linearMagnify, mipmapping, isScalable, width, height};
     auto foundTexture = sTextureMap.find(key);
 
     std::string resolutionInfo;
