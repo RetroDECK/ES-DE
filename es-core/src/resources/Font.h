@@ -46,8 +46,7 @@ public:
     // guaranteed and can be exceeded by a few pixels for some glyphs.
     int loadGlyphs(const std::string& text);
 
-    // This is needed to retain a bug from the legacy theme engine where lineSpacing is not
-    // sized correctly when using automatic text element sizing.
+    // This is needed to maintain maximum compatibility with legacy theme sets.
     void useLegacyMaxGlyphHeight() { mMaxGlyphHeight = mLegacyMaxGlyphHeight; }
 
     TextCache* buildTextCache(const std::string& text,

@@ -273,17 +273,11 @@ void TextComponent::onTextChanged()
     const bool isScrollable {mParent && mParent->isScrollable()};
     std::shared_ptr<Font> font {mFont};
 
-    if (mLegacyTheme && !isScrollable && (mVerticalAutoSizing || mAutoCalcExtent.x)) {
-        // This is needed to retain a bug from the legacy theme engine where lineSpacing
-        // is not sized correctly when using automatic text element sizing. This is only
-        // applied to legacy themes for backward compatibility reasons.
+    // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
+    lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
+
+    if (mLegacyTheme)
         font->useLegacyMaxGlyphHeight();
-        lineHeight = font->getHeight(mLineSpacing);
-    }
-    else {
-        // Used to initialize all glyphs, which is needed to populate mMaxGlyphHeight.
-        lineHeight = mFont->loadGlyphs(text + "\n") * mLineSpacing;
-    }
 
     const bool isMultiline {mAutoCalcExtent.y == 1 || mSize.y > lineHeight};
 

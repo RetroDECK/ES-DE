@@ -320,8 +320,9 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     // The vertical spacing between rows for legacy themes is very inaccurate and will look
     // different depending on the resolution, but it's done for maximum backward compatibility.
     if (mLegacyMode) {
-        entrySize = std::floor(font->getSize()) * mLineSpacing;
-        lineSpacingHeight = std::floor(font->getSize()) * mLineSpacing - font->getSize() * 1.0f;
+        font->useLegacyMaxGlyphHeight();
+        entrySize = std::max(font->getHeight(mLineSpacing), font->getSize() * mLineSpacing);
+        lineSpacingHeight = std::floor(font->getSize() * mLineSpacing - font->getSize());
     }
     else {
         entrySize = font->getSize() * mLineSpacing;
@@ -525,6 +526,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode));
+    if (mLegacyMode)
+        mFont->useLegacyMaxGlyphHeight();
     const float selectorHeight {mFont->getHeight(mLineSpacing)};
     mSelectorHeight = selectorHeight;
 
