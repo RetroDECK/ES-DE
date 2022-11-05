@@ -29,9 +29,8 @@ public:
     ~GameSelectorComponent()
     {
         if (std::find(SystemData::sSystemVector.cbegin(), SystemData::sSystemVector.cend(),
-                      mSystem) != SystemData::sSystemVector.cend())
-            mSystem->getRootFolder()->setUpdateListCallback(nullptr);
-        else if (SystemData::sSystemVector.size() != 0 && mSystem->isGroupedCustomCollection())
+                      mSystem) != SystemData::sSystemVector.cend() ||
+            (SystemData::sSystemVector.size() != 0 && mSystem->isGroupedCustomCollection()))
             mSystem->getRootFolder()->setUpdateListCallback(nullptr);
     }
 
