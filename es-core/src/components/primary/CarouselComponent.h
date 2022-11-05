@@ -231,7 +231,6 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 (!defaultPath.empty() && ResourceManager::getInstance().fileExists(defaultPath))) {
                 auto item = std::make_shared<ImageComponent>(false, dynamic);
                 item->setLinearInterpolation(mLinearInterpolation);
-                item->setMipmapping(true);
                 item->setMaxSize(glm::round(mItemSize * mItemScale));
                 item->applyTheme(theme, "system", "image_logo",
                                  ThemeFlags::PATH | ThemeFlags::COLOR);
