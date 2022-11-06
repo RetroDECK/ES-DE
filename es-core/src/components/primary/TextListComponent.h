@@ -57,13 +57,13 @@ public:
 
     void setAlignment(PrimaryAlignment align) override { mAlignment = align; }
 
-    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
-    {
-        mCursorChangedCallback = func;
-    }
     void setCancelTransitionsCallback(const std::function<void()>& func) override
     {
         mCancelTransitionsCallback = func;
+    }
+    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
+    {
+        mCursorChangedCallback = func;
     }
 
     void setFont(const std::shared_ptr<Font>& font)
@@ -111,6 +111,7 @@ private:
 
     Renderer* mRenderer;
     std::function<void()> mCancelTransitionsCallback;
+    std::function<void(CursorState state)> mCursorChangedCallback;
     float mCamOffset;
     int mPreviousScrollVelocity;
 
@@ -122,7 +123,6 @@ private:
     PrimaryAlignment mAlignment;
     float mHorizontalMargin;
 
-    std::function<void(CursorState state)> mCursorChangedCallback;
     ImageComponent mSelectorImage;
 
     std::shared_ptr<Font> mFont;

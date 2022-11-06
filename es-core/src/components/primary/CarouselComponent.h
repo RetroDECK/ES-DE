@@ -66,13 +66,13 @@ public:
         return mLetterCaseGroupedCollections;
     }
 
-    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
-    {
-        mCursorChangedCallback = func;
-    }
     void setCancelTransitionsCallback(const std::function<void()>& func) override
     {
         mCancelTransitionsCallback = func;
+    }
+    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
+    {
+        mCursorChangedCallback = func;
     }
 
     bool input(InputConfig* config, Input input) override;
