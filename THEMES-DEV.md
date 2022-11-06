@@ -1848,9 +1848,11 @@ Properties:
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `selectorHeight` - type: FLOAT
-    - Height of the "selector bar".
+    - Height of the selector bar. This is expanded downwards so you'll probably want to adjust its position using `selectorOffsetY` if making use of this property.
+    - Default is 1.5 times the value defined by `fontSize`
 * `selectorOffsetY` - type: FLOAT
-    - Allows moving of the "selector bar" up or down from its computed position. Useful for fine tuning the position of the "selector bar" relative to the text.
+    - Allows moving of the selector bar up or down from its calculated position. Useful for fine tuning the position of the selector bar relative to the text.
+    - Default is `0`
 * `selectorColor` - type: COLOR
     - Color of the selector bar.
     - Default is `333333FF`
@@ -1862,7 +1864,7 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `selectorImagePath` - type: PATH
-    - Path to image to render in place of "selector bar."
+    - Path to image to render in place of the selector bar.
 * `selectorImageTile` - type: BOOLEAN
     - If true, the selector image will be tiled instead of stretched to fit its size.
     - Default is `false`
@@ -1900,7 +1902,7 @@ Properties:
     - For technical reasons custom collections have their names spelled in lowercase characters. This property which can only be used in the `gamelist` view will make it possible to change the letter case for all such grouped collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all grouped collections.
     - Valid values are `uppercase`, `lowercase` or `capitalize`
 * `lineSpacing` - type: FLOAT
-    - Controls the space between lines (as a multiple of the font height).
+    - Controls the space between lines. This works a bit different for the textlist element compared to all other elements. In all other instances the line spacing is calculated in relation to the rasterized reference 'S' character. This will however not work for the textlist as there are no guarantees which sizes the rasterized characters may end up as. The nature of font rendering is simply not that static with glyphs being able to have any shape and size and linting/grid alignment being applied during font rasterization. Using the rasterized glyph size would be too imprecise and the spacing would be inconsistent across different display resolutions, possibly leading to a different number of textlist rows. Therefore this specific lineSpacing property is based on the defined font size regardless of what's actually being rasterized. This may seem confusing as some fonts greatly exceed the requested size, but if you simply adjust the spacing until the textlist looks correct it will look almost identical regardless of what display resolution is used.
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
 * `indicators` - type: STRING
