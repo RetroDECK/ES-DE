@@ -16,9 +16,13 @@ Reddit (r/EmulationStation_DE):\
 
 Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
-The software comes preconfigured for use primarily with [RetroArch](https://www.retroarch.com), although this can be changed as all emulator settings are fully configurable, even on a per-game basis.
+The software comes preconfigured for use with [RetroArch](https://www.retroarch.com) and a large selection of standalone emulators. It's also fully customizable so you can easily expand it to include emulators or applications not covered by the bundled configuration.
+
+You can find the complete list of supported systems and emulators [here](USERGUIDE.md#supported-game-systems).
 
 Two comprehensive theme sets, **slate-DE** (rbsimple-DE in the 1.x releases) and **modern-DE** are bundled with the application.
+
+See the [official list](https://gitlab.com/es-de/themes/themes-list) of recommended theme sets if you would like to install additional themes.
 
 The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
 
@@ -38,22 +42,35 @@ The following operating systems have been tested (all for the x86 architecture u
 
 ### Download
 
-The latest version is 1.2.6 (released 2022-08-03)
+The latest stable version is 1.2.6 (released 2022-08-03)
 
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
 | Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download)|
 | Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/48555328/download)|
-| macOS DMG installer  | macOS 10.14 "Mojave" to 12 "Monterey"                   | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239145/download)|
 | macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-1.2.6-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239039/download)|
+| macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239145/download)|
 | Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.6-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239111/download)|
 | Fedora RPM package   | Fedora Workstation 36, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.6-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239313/download)|
 | Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
 | Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239389/download)|
 | Linux AppImage       | Current Linux distributions with libc 2.35 or later     | x64 (x86)    | [EmulationStation-DE-x64_Current.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239574/download)|
-| Linux AppImage       | Steam Deck / SteamOS 3.0 specific                       | x64 (x86)    | [EmulationStation-DE-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239682/download)|
+| Linux AppImage       | Steam Deck / SteamOS 3.x specific                       | x64 (x86)    | [EmulationStation-DE-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239682/download)|
 | Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.6-armv7l.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239061/download)|
 | Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.6-aarch64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48238997/download)|
+
+The latest prerelease version is 2.0.0-alpha-2022-11-06
+
+| Package              | Operating systems                                       | Architecture | Download link  |
+| :------------------- | :------------------------------------------------------ | :----------- | :------------- |
+| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-11-06-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/58618949/download)|
+| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-11-06-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/58619024/download)|
+| macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-2.0.0-alpha-2022-11-06-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/58618830/download)|
+| macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-11-06-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/58618895/download)|
+| Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-2.0.0-alpha-2022-11-06-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/58618864/download)|
+| Fedora RPM package   | Fedora Workstation 36, possibly others                  | x64 (x86)    | [emulationstation-de-2.0.0-alpha-2022-11-06-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/58619068/download)|
+| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-11-06-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/58618844/download)|
+| Linux AppImage       | Steam Deck / SteamOS 3.x specific                       | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-11-06-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/58619101/download)|
 
 Version 1.2.0 (released 2021-12-28) will be the last legacy release for macOS
 
@@ -63,15 +80,9 @@ Version 1.2.0 (released 2021-12-28) will be the last legacy release for macOS
 
 All previous releases can be downloaded from [here](https://gitlab.com/es-de/emulationstation-de/-/packages).
 
-The _current_ version of the Linux AppImage ships with newer libraries and better controller support but requires distributions with libc 2.34 or later to work.
-
 If using FreeBSD, NetBSD or OpenBSD you will need to build ES-DE from source code for the time being, as explained in [INSTALL.md](INSTALL.md).
 
-Please refer to [CHANGELOG.md](CHANGELOG.md) for more information about the releases, including known issues.
-
-### Contributing
-
-If you would like to contribute to the development of ES-DE, then that's great! Please read how to participate [here](CONTRIBUTING.md) where you can also read about planned future releases and features.
+Prebuilt packages for the Raspberry Pi will be dropped as of ES-DE 2.0.0 but this platform will still be semi-officially supported as it's tested from time to time to make sure building doesn't fail.
 
 # Additional information
 
@@ -79,13 +90,21 @@ If you would like to contribute to the development of ES-DE, then that's great! 
 
 [USERGUIDE.md](USERGUIDE.md) is a comprehensive guide on how to use ES-DE and it also contains a complete reference to all application settings.
 
-[CHANGELOG.md](CHANGELOG.md) contains information about the current release as well as previous releases. This covers the features, improvements, bug fixes and known issues.
+[USERGUIDE-DEV.md](USERGUIDE-DEV.md) is the prerelease version of the above document, use this if you're running ES-DE 2.0.0.
 
 [INSTALL.md](INSTALL.md) provides details on how to build the application from source code, and also discusses some more advanced configuration topics.
 
-[CREDITS.md](CREDITS.md) is an attempt to credit the individuals and projects which made ES-DE possible.
+[INSTALL-DEV.md](INSTALL-DEV.md) is the prerelease version of the above document, use this if you're running ES-DE 2.0.0.
 
 [THEMES.md](THEMES.md) is a guide on how theming works which is useful for those who would like to develop a new theme, or perhaps customize an existing theme.
+
+[THEMES-DEV.md](THEMES-DEV.md) is the prerelease version of the above document, use this if you're interested in creating themes for the new theme engine in ES-DE 2.0.0.
+
+[CREDITS.md](CREDITS.md) is an attempt to credit the individuals and projects which made ES-DE possible.
+
+[CONTRIBUTING.md](CONTRIBUTING.md) contains information on how to contribute to ES-DE, and it also contains the roadmap for future releases.
+
+[CHANGELOG.md](CHANGELOG.md) contains detailed information about all releases. This covers features, improvements, bug fixes and known issues.
 
 # Some feature highlights
 
