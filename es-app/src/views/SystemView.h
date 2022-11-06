@@ -21,6 +21,7 @@
 #include "components/TextComponent.h"
 #include "components/VideoFFmpegComponent.h"
 #include "components/primary/CarouselComponent.h"
+#include "components/primary/GridComponent.h"
 #include "components/primary/TextListComponent.h"
 #include "resources/Font.h"
 
