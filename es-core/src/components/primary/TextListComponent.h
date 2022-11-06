@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  TextListComponent.h
 //
-//  Text list used for displaying and navigating the gamelist views.
+//  Text list, usable in both the system and gamelist views.
 //
 
 #ifndef ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H

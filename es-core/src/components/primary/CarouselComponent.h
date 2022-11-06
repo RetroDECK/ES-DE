@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  CarouselComponent.h
 //
-//  Carousel.
+//  Carousel, usable in both the system and gamelist views.
 //
 
 #ifndef ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
