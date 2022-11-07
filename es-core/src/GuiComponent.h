@@ -104,8 +104,8 @@ public:
     virtual glm::vec2 getSize() const { return mSize; }
     void setSize(const glm::vec2& size) { setSize(size.x, size.y); }
     void setSize(const float w, const float h);
-    virtual void setResize(float width, float height) {}
-    virtual void setResize(float width, float height, bool rasterize) {}
+    virtual void setResize(const float width, const float height) {}
+    virtual void setResize(const glm::vec2& size, bool rasterize = true) {}
     virtual void onSizeChanged() {}
 
     virtual glm::vec2 getRotationSize() const { return getSize(); }

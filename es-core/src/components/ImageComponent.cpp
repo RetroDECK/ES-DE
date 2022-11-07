@@ -123,16 +123,16 @@ void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture, b
         resize();
 }
 
-void ImageComponent::setResize(float width, float height)
+void ImageComponent::setResize(const float width, const float height)
 {
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = false;
     resize();
 }
 
-void ImageComponent::setResize(float width, float height, bool rasterize)
+void ImageComponent::setResize(const glm::vec2& size, bool rasterize)
 {
-    mTargetSize = glm::vec2 {width, height};
+    mTargetSize = size;
     mTargetIsMax = false;
     resize(rasterize);
 }

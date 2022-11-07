@@ -39,11 +39,7 @@ public:
     // Can be set before or after an image is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     void setResize(const float width, const float height) override;
-    void setResize(const glm::vec2& size, bool rasterize = true)
-    {
-        setResize(size.x, size.y, rasterize);
-    }
-    void setResize(const float width, const float height, bool rasterize) override;
+    void setResize(const glm::vec2& size, bool rasterize = true) override;
 
     // Resize the image to be as large as possible but fit within a box of this size.
     // Can be set before or after an image is loaded.

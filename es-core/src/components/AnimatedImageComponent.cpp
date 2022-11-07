@@ -32,7 +32,7 @@ void AnimatedImageComponent::load(const AnimationDef* def)
         }
 
         auto img = std::unique_ptr<ImageComponent>(new ImageComponent);
-        img->setResize(mSize.x, mSize.y);
+        img->setResize(mSize);
         img->setImage(std::string(def->frames[i].path), false);
 
         mFrames.push_back(ImageFrame(std::move(img), def->frames[i].time));
@@ -53,9 +53,8 @@ void AnimatedImageComponent::reset()
 
 void AnimatedImageComponent::onSizeChanged()
 {
-    for (auto it = mFrames.cbegin(); it != mFrames.cend(); ++it) {
-        it->first->setResize(mSize.x, mSize.y);
-    }
+    for (auto it = mFrames.cbegin(); it != mFrames.cend(); ++it)
+        it->first->setResize(mSize);
 }
 
 void AnimatedImageComponent::update(int deltaTime)

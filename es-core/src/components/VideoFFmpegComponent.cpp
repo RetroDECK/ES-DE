@@ -60,12 +60,12 @@ VideoFFmpegComponent::VideoFFmpegComponent()
 {
 }
 
-void VideoFFmpegComponent::setResize(float width, float height)
+void VideoFFmpegComponent::setResize(const float width, const float height)
 {
     // This resize function is used when stretching videos to full screen in the video screensaver.
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = false;
-    mStaticImage.setResize(width, height);
+    mStaticImage.setResize(mTargetSize);
     resize();
 }
 
