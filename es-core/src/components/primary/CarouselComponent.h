@@ -6,8 +6,8 @@
 //  Carousel, usable in both the system and gamelist views.
 //
 
-#ifndef ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
-#define ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_PRIMARY_CAROUSEL_COMPONENT_H
+#define ES_CORE_COMPONENTS_PRIMARY_CAROUSEL_COMPONENT_H
 
 #include "Sound.h"
 #include "animations/LambdaAnimation.h"
@@ -1346,4 +1346,4 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
         mCursorChangedCallback(state);
 }
 
-#endif // ES_CORE_COMPONENTS_CAROUSEL_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_PRIMARY_CAROUSEL_COMPONENT_H

@@ -6,8 +6,8 @@
 //  Base class for the primary components (carousel and textlist).
 //
 
-#ifndef ES_CORE_COMPONENTS_PRIMARY_COMPONENT_H
-#define ES_CORE_COMPONENTS_PRIMARY_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_PRIMARY_PRIMARY_COMPONENT_H
+#define ES_CORE_COMPONENTS_PRIMARY_PRIMARY_COMPONENT_H
 
 template <typename T> class PrimaryComponent : public virtual GuiComponent
 {
@@ -52,4 +52,4 @@ public:
     virtual void setAlignment(PrimaryAlignment align) {}
 };
 
-#endif // ES_CORE_COMPONENTS_PRIMARY_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_PRIMARY_PRIMARY_COMPONENT_H

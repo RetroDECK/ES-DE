@@ -6,8 +6,8 @@
 //  Text list, usable in both the system and gamelist views.
 //
 
-#ifndef ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
-#define ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_PRIMARY_TEXT_LIST_COMPONENT_H
+#define ES_CORE_COMPONENTS_PRIMARY_TEXT_LIST_COMPONENT_H
 
 #include "Log.h"
 #include "Sound.h"
@@ -723,4 +723,4 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
         mCursorChangedCallback(state);
 }
 
-#endif // ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_PRIMARY_TEXT_LIST_COMPONENT_H
