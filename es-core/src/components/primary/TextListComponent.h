@@ -241,7 +241,9 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
                     List::listInput(0);
                 }
                 else {
-                    List::stopScrolling();
+                    if (isScrolling())
+                        onCursorChanged(CursorState::CURSOR_STOPPED);
+                    List::listInput(0);
                 }
             }
         }
@@ -703,10 +705,25 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
         float posMax {static_cast<float>(mEntries.size())};
         float endPos {static_cast<float>(mCursor)};
 
+        float animTime {380};
+        float timeDiff {1.0f};
+
+        // If startPos is inbetween two positions then reduce the time slightly as the distance will
+        // be shorter meaning the animation would play for too long if not compensated for.
+        if (mScrollVelocity == 1)
+            timeDiff = endPos - startPos;
+        else if (mScrollVelocity == -1)
+            timeDiff = startPos - endPos;
+
+        if (timeDiff != 1.0f)
+            animTime =
+                glm::clamp(std::fabs(glm::mix(0.0f, 380.0f, timeDiff * 1.5f)), 200.0f, 380.0f);
+
         Animation* anim {new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1)};
+                // Non-linear interpolation.
+                t = 1.0f - (1.0f - t) * (1.0f - t);
+                float f {(endPos * t) + (startPos * (1.0f - t))};
                 if (f < 0)
                     f += posMax;
                 if (f >= posMax)
@@ -714,7 +731,7 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
 
                 mCamOffset = f;
             },
-            500)};
+            static_cast<int>(animTime))};
 
         GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
     }
