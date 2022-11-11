@@ -38,7 +38,7 @@ void FlexboxComponent::render(const glm::mat4& parentTrans)
         return;
 
     if (!mLayoutValid)
-        computeLayout();
+        calculateLayout();
 
     glm::mat4 trans {parentTrans * getTransform()};
     mRenderer->setMatrix(trans);
@@ -82,7 +82,7 @@ void FlexboxComponent::setItemMargin(glm::vec2 value)
     mLayoutValid = false;
 }
 
-void FlexboxComponent::computeLayout()
+void FlexboxComponent::calculateLayout()
 {
     // If we're not clamping itemMargin to a reasonable value, all kinds of weird rendering
     // issues could occur.
