@@ -9,6 +9,7 @@
 #include "animations/AnimationController.h"
 
 #include "animations/Animation.h"
+#include "utils/MathUtil.h"
 
 AnimationController::AnimationController(Animation* anim,
                                          int delay,
@@ -37,16 +38,10 @@ bool AnimationController::update(int deltaTime)
     if (mTime < 0) // Are we still in delay?
         return false;
 
-    float t = static_cast<float>(mTime) / mAnimation->getDuration();
+    float animTime {glm::clamp(static_cast<float>(mTime) / mAnimation->getDuration(), 0.0f, 1.0f)};
+    mAnimation->apply(mReverse ? 1.0f - animTime : animTime);
 
-    if (t > 1.0f)
-        t = 1.0f;
-    else if (t < 0.0f)
-        t = 0.0f;
-
-    mAnimation->apply(mReverse ? 1.0f - t : t);
-
-    if (t == 1.0f)
+    if (animTime == 1.0f)
         return true;
 
     return false;
