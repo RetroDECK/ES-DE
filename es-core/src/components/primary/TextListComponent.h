@@ -705,7 +705,7 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
         float posMax {static_cast<float>(mEntries.size())};
         float endPos {static_cast<float>(mCursor)};
 
-        float animTime {380};
+        float animTime {380.0f};
         float timeDiff {1.0f};
 
         // If startPos is inbetween two positions then reduce the time slightly as the distance will
@@ -717,7 +717,7 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
 
         if (timeDiff != 1.0f)
             animTime =
-                glm::clamp(std::fabs(glm::mix(0.0f, 380.0f, timeDiff * 1.5f)), 200.0f, 380.0f);
+                glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 200.0f, animTime);
 
         Animation* anim {new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {

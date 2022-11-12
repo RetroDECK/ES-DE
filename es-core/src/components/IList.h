@@ -73,6 +73,7 @@ protected:
     const ScrollTierList& mTierList;
     const ListLoopType mLoopType;
     int mCursor;
+    int mLastCursor;
     int mScrollTier;
     int mScrollVelocity;
     int mScrollTierAccumulator;
@@ -88,6 +89,7 @@ public:
         , mTierList {tierList}
         , mLoopType {loopType}
         , mCursor {0}
+        , mLastCursor {0}
         , mScrollTier {0}
         , mScrollVelocity {0}
         , mScrollTierAccumulator {0}
@@ -213,6 +215,7 @@ protected:
 
     bool listFirstRow()
     {
+        mLastCursor = mCursor;
         mCursor = 0;
         onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
@@ -221,6 +224,7 @@ protected:
 
     bool listLastRow()
     {
+        mLastCursor = mCursor;
         mCursor = static_cast<int>(mEntries.size()) - 1;
         onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
@@ -322,6 +326,8 @@ protected:
     {
         if (mScrollVelocity == 0 || size() < 2)
             return;
+
+        mLastCursor = mCursor;
 
         int cursor {mCursor + amt};
         int absAmt {amt < 0 ? -amt : amt};

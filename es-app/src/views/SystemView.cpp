@@ -145,9 +145,6 @@ bool SystemView::input(InputConfig* config, Input input)
 
 void SystemView::update(int deltaTime)
 {
-    if (!mPrimary->isAnimationPlaying(0))
-        mMaxFade = false;
-
     mPrimary->update(deltaTime);
 
     for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents) {
@@ -295,19 +292,24 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     Animation* anim;
 
+    float animTime {380.0f};
+    float timeDiff {1.0f};
+
+    // If startPos is inbetween two positions then reduce the time slightly as the distance will
+    // be shorter meaning the animation would play for too long if not compensated for.
+    if (scrollVelocity == 1)
+        timeDiff = endPos - startPos;
+    else if (scrollVelocity == -1)
+        timeDiff = startPos - endPos;
+
+    if (timeDiff != 1.0f)
+        animTime =
+            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 200.0f, animTime);
+
     if (transitionStyle == "fade") {
         float startFade {mFadeOpacity};
         anim = new LambdaAnimation(
             [this, startFade, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
-                if (f < 0.0f)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
-
-                t += 1;
-
                 if (t < 0.3f)
                     mFadeOpacity =
                         glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
@@ -319,7 +321,7 @@ void SystemView::onCursorChanged(const CursorState& state)
                 if (t > 0.5f)
                     mCamOffset = endPos;
 
-                if (t >= 0.7f && t != 1.0f)
+                if (mNavigated && t >= 0.7f && t != 1.0f)
                     mMaxFade = true;
 
                 // Update the game count when the entire animation has been completed.
@@ -328,15 +330,16 @@ void SystemView::onCursorChanged(const CursorState& state)
                     updateGameCount();
                 }
             },
-            500);
+            static_cast<int>(animTime * 1.3f));
     }
     else if (transitionStyle == "slide") {
         mUpdatedGameCount = false;
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
-                if (f < 0.0f)
+                // Non-linear interpolation.
+                t = 1.0f - (1.0f - t) * (1.0f - t);
+                float f {(endPos * t) + (startPos * (1.0f - t))};
+                if (f < 0)
                     f += posMax;
                 if (f >= posMax)
                     f -= posMax;
@@ -362,23 +365,13 @@ void SystemView::onCursorChanged(const CursorState& state)
                     updateGameCount();
                 }
             },
-            500);
+            static_cast<int>(animTime));
     }
     else {
         // Instant.
         updateGameCount();
         anim = new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
-                if (f < 0.0f)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
-
-                mCamOffset = endPos;
-            },
-            500);
+            [this, startPos, endPos, posMax](float t) { mCamOffset = endPos; }, animTime);
     }
 
     setAnimation(anim, 0, nullptr, false, 0);
@@ -458,23 +451,38 @@ void SystemView::populate()
                                                                   ThemeFlags::ALL);
                         elements.gameSelectors.back()->setNeedsRefresh();
                     }
-                    if (element.second.type == "textlist" || element.second.type == "carousel") {
-                        if (element.second.type == "carousel" && mTextList != nullptr) {
+                    if (element.second.type == "carousel" || element.second.type == "grid" ||
+                        element.second.type == "textlist") {
+                        if (element.second.type == "carousel" &&
+                            (mGrid != nullptr || mTextList != nullptr)) {
                             LOG(LogWarning)
                                 << "SystemView::populate(): Multiple primary components "
-                                << "defined, skipping <carousel> configuration entry";
+                                << "defined, skipping carousel configuration entry";
                             continue;
                         }
-                        if (element.second.type == "textlist" && mCarousel != nullptr) {
+                        if (element.second.type == "grid" &&
+                            (mCarousel != nullptr || mTextList != nullptr)) {
                             LOG(LogWarning)
                                 << "SystemView::populate(): Multiple primary components "
-                                << "defined, skipping <textlist> configuration entry";
+                                << "defined, skipping grid configuration entry";
+                            continue;
+                        }
+                        if (element.second.type == "textlist" &&
+                            (mCarousel != nullptr || mGrid != nullptr)) {
+                            LOG(LogWarning)
+                                << "SystemView::populate(): Multiple primary components "
+                                << "defined, skipping textlist configuration entry";
                             continue;
                         }
                         if (element.second.type == "carousel" && mCarousel == nullptr) {
                             mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
                             mPrimary = mCarousel.get();
                             mPrimaryType = PrimaryType::CAROUSEL;
+                        }
+                        else if (element.second.type == "grid" && mGrid == nullptr) {
+                            mGrid = std::make_unique<GridComponent<SystemData*>>();
+                            mPrimary = mGrid.get();
+                            mPrimaryType = PrimaryType::GRID;
                         }
                         else if (element.second.type == "textlist" && mTextList == nullptr) {
                             mTextList = std::make_unique<TextListComponent<SystemData*>>();
@@ -497,7 +505,7 @@ void SystemView::populate()
                                     anim->setPauseAnimation(true);
                             }
                         });
-                        if (mCarousel != nullptr) {
+                        if (mCarousel != nullptr || mGrid != nullptr) {
                             if (element.second.has("staticItem"))
                                 itemPath = element.second.get<std::string>("staticItem");
                             if (element.second.has("defaultItem"))
@@ -674,6 +682,15 @@ void SystemView::populate()
             entry.data.itemPath = itemPath;
             entry.data.defaultItemPath = defaultItemPath;
             mCarousel->addEntry(entry, theme);
+        }
+        else if (mGrid != nullptr) {
+            GridComponent<SystemData*>::Entry entry;
+            entry.name = it->getFullName();
+            letterCaseFunc(entry.name);
+            entry.object = it;
+            entry.data.itemPath = itemPath;
+            entry.data.defaultItemPath = defaultItemPath;
+            mGrid->addEntry(entry, theme);
         }
         else if (mTextList != nullptr) {
             TextListComponent<SystemData*>::Entry entry;
@@ -1267,6 +1284,10 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     elementTrans = glm::translate(
                         elementTrans,
                         glm::round(glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f}));
+            }
+            else if (mGrid != nullptr) {
+                elementTrans = glm::translate(
+                    elementTrans, glm::round(glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f}));
             }
             else if (mTextList != nullptr) {
                 elementTrans = glm::translate(

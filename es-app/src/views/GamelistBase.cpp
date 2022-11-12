@@ -568,15 +568,19 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 
     auto theme = mRoot->getSystem()->getTheme();
     std::string name;
-    std::string carouselItemType;
-    std::string carouselDefaultItem;
+    std::string defaultItem;
 
     if (mCarousel != nullptr) {
-        carouselItemType = mCarousel->getItemType();
-        carouselDefaultItem = mCarousel->getDefaultItem();
-        if (!ResourceManager::getInstance().fileExists(carouselDefaultItem))
-            carouselDefaultItem = "";
+        defaultItem = mCarousel->getDefaultItem();
+        if (!ResourceManager::getInstance().fileExists(defaultItem))
+            defaultItem = "";
     }
+    else if (mGrid != nullptr) {
+        defaultItem = mGrid->getDefaultItem();
+        if (!ResourceManager::getInstance().fileExists(defaultItem))
+            defaultItem = "";
+    }
+
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); ++it) {
 
@@ -593,8 +597,6 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
             }
 
             if (mCarousel != nullptr) {
-                assert(carouselItemType != "");
-
                 CarouselComponent<FileData*>::Entry carouselEntry;
                 carouselEntry.name = (*it)->getName();
                 carouselEntry.object = *it;
@@ -606,13 +608,29 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 else if (letterCase == LetterCase::CAPITALIZED)
                     carouselEntry.name = Utils::String::toCapitalized(carouselEntry.name);
 
-                if (carouselDefaultItem != "")
-                    carouselEntry.data.defaultItemPath = carouselDefaultItem;
+                if (defaultItem != "")
+                    carouselEntry.data.defaultItemPath = defaultItem;
 
                 mCarousel->addEntry(carouselEntry, theme);
             }
+            else if (mGrid != nullptr) {
+                GridComponent<FileData*>::Entry gridEntry;
+                gridEntry.name = (*it)->getName();
+                gridEntry.object = *it;
 
-            if (mTextList != nullptr) {
+                if (letterCase == LetterCase::UPPERCASE)
+                    gridEntry.name = Utils::String::toUpper(gridEntry.name);
+                else if (letterCase == LetterCase::LOWERCASE)
+                    gridEntry.name = Utils::String::toLower(gridEntry.name);
+                else if (letterCase == LetterCase::CAPITALIZED)
+                    gridEntry.name = Utils::String::toCapitalized(gridEntry.name);
+
+                if (defaultItem != "")
+                    gridEntry.data.defaultItemPath = defaultItem;
+
+                mGrid->addEntry(gridEntry, theme);
+            }
+            else if (mTextList != nullptr) {
                 TextListComponent<FileData*>::Entry textListEntry;
                 std::string indicators {mTextList->getIndicators()};
                 std::string collectionIndicators {mTextList->getCollectionIndicators()};
@@ -717,12 +735,19 @@ void GamelistBase::addPlaceholder(FileData* firstEntry)
         textListEntry.data.entryType = TextListEntryType::SECONDARY;
         mTextList->addEntry(textListEntry);
     }
-    if (mCarousel != nullptr) {
+    else if (mCarousel != nullptr) {
         CarouselComponent<FileData*>::Entry carouselEntry;
         carouselEntry.name = placeholder->getName();
         letterCaseFunc(carouselEntry.name);
         carouselEntry.object = placeholder;
         mCarousel->addEntry(carouselEntry, mRoot->getSystem()->getTheme());
+    }
+    else if (mGrid != nullptr) {
+        GridComponent<FileData*>::Entry gridEntry;
+        gridEntry.name = placeholder->getName();
+        letterCaseFunc(gridEntry.name);
+        gridEntry.object = placeholder;
+        mGrid->addEntry(gridEntry, mRoot->getSystem()->getTheme());
     }
 }
 

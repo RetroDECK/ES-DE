@@ -126,6 +126,7 @@ private:
 
     Renderer* mRenderer;
     std::unique_ptr<CarouselComponent<SystemData*>> mCarousel;
+    std::unique_ptr<GridComponent<SystemData*>> mGrid;
     std::unique_ptr<TextListComponent<SystemData*>> mTextList;
     std::unique_ptr<TextComponent> mLegacySystemInfo;
     std::vector<SystemViewElements> mSystemElements;

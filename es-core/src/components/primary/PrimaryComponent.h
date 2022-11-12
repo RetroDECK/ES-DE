@@ -14,6 +14,7 @@ template <typename T> class PrimaryComponent : public virtual GuiComponent
 public:
     enum class PrimaryType {
         CAROUSEL,
+        GRID,
         TEXTLIST
     };
 

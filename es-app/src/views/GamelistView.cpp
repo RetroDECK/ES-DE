@@ -114,15 +114,24 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
     if (mTheme->hasView("gamelist")) {
         for (auto& element : mTheme->getViewElements("gamelist").elements) {
-            if (element.second.type == "textlist" || element.second.type == "carousel") {
-                if (element.second.type == "carousel" && mTextList != nullptr) {
+            if (element.second.type == "carousel" || element.second.type == "grid" ||
+                element.second.type == "textlist") {
+                if (element.second.type == "carousel" &&
+                    (mGrid != nullptr || mTextList != nullptr)) {
                     LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
-                                    << "defined, skipping <carousel> configuration entry";
+                                    << "defined, skipping carousel configuration entry";
                     continue;
                 }
-                if (element.second.type == "textlist" && mCarousel != nullptr) {
+                if (element.second.type == "grid" &&
+                    (mCarousel != nullptr || mTextList != nullptr)) {
                     LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
-                                    << "defined, skipping <textlist> configuration entry";
+                                    << "defined, skipping grid configuration entry";
+                    continue;
+                }
+                if (element.second.type == "textlist" &&
+                    (mCarousel != nullptr || mGrid != nullptr)) {
+                    LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
+                                    << "defined, skipping textlist configuration entry";
                     continue;
                 }
             }
@@ -154,10 +163,11 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                             mCarousel->setItemType(itemType);
                         }
                         else {
-                            LOG(LogWarning)
-                                << "GamelistView::onThemeChanged(): Invalid theme configuration, "
-                                   "<itemType> property defined as \""
-                                << itemType << "\"";
+                            LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
+                                               "configuration, carousel property \"itemType\" "
+                                               "for element \""
+                                            << element.first.substr(9) << "\" defined as \""
+                                            << itemType << "\"";
                             mCarousel->setItemType("marquee");
                         }
                     }
@@ -167,6 +177,40 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     if (element.second.has("defaultItem"))
                         mCarousel->setDefaultItem(element.second.get<std::string>("defaultItem"));
                     mPrimary = mCarousel.get();
+                }
+                mPrimary->setCursorChangedCallback(
+                    [&](const CursorState& state) { updateView(state); });
+                mPrimary->setDefaultZIndex(50.0f);
+                mPrimary->applyTheme(theme, "gamelist", element.first, ALL);
+                addChild(mPrimary);
+            }
+            if (element.second.type == "grid") {
+                if (mGrid == nullptr) {
+                    mGrid = std::make_unique<GridComponent<FileData*>>();
+                    if (element.second.has("itemType")) {
+                        const std::string itemType {element.second.get<std::string>("itemType")};
+                        if (itemType == "marquee" || itemType == "cover" ||
+                            itemType == "backcover" || itemType == "3dbox" ||
+                            itemType == "physicalmedia" || itemType == "screenshot" ||
+                            itemType == "titlescreen" || itemType == "miximage" ||
+                            itemType == "fanart" || itemType == "none") {
+                            mGrid->setItemType(itemType);
+                        }
+                        else {
+                            LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
+                                               "configuration, grid property \"itemType\" "
+                                               "for element \""
+                                            << element.first.substr(5) << "\" defined as \""
+                                            << itemType << "\"";
+                            mGrid->setItemType("marquee");
+                        }
+                    }
+                    else {
+                        mGrid->setItemType("marquee");
+                    }
+                    if (element.second.has("defaultItem"))
+                        mGrid->setDefaultItem(element.second.get<std::string>("defaultItem"));
+                    mPrimary = mGrid.get();
                 }
                 mPrimary->setCursorChangedCallback(
                     [&](const CursorState& state) { updateView(state); });
@@ -330,6 +374,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         if (mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL ||
             mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL_WHEEL)
             mLeftRightAvailable = false;
+    }
+    else if (mGrid != nullptr) {
+        mLeftRightAvailable = false;
     }
 
     for (auto& video : mStaticVideoComponents) {

@@ -1327,7 +1327,7 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
         mPositiveDirection = false;
 
     mEntryCamTarget = endPos;
-    float animTime {380};
+    float animTime {380.0f};
     float timeDiff {1.0f};
 
     // If startPos is inbetween two positions then reduce the time slightly as the distance will
@@ -1338,7 +1338,8 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
         timeDiff = startPos - endPos;
 
     if (timeDiff != 1.0f)
-        animTime = glm::clamp(std::fabs(glm::mix(0.0f, 380.0f, timeDiff * 1.5f)), 200.0f, 380.0f);
+        animTime =
+            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 200.0f, animTime);
 
     Animation* anim {new LambdaAnimation(
         [this, startPos, endPos, posMax](float t) {
