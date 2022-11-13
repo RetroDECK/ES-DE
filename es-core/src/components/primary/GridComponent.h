@@ -434,7 +434,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         return;
 
     if (elem->has("columns"))
-        mColumns = glm::clamp(elem->get<unsigned int>("columns"), 0u, 100u);
+        mColumns = glm::clamp(elem->get<unsigned int>("columns"), 1u, 100u);
 
     if (elem->has("itemSize")) {
         const glm::vec2& itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
@@ -446,7 +446,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("itemTransitions")) {
         const std::string& itemTransitions {elem->get<std::string>("itemTransitions")};
-        if (itemTransitions == "scale") {
+        if (itemTransitions == "animate") {
             mInstantItemTransitions = false;
         }
         else if (itemTransitions == "instant") {

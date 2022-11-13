@@ -1010,7 +1010,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("itemTransitions")) {
             const std::string& itemTransitions {elem->get<std::string>("itemTransitions")};
-            if (itemTransitions == "slide") {
+            if (itemTransitions == "animate") {
                 mInstantItemTransitions = false;
             }
             else if (itemTransitions == "instant") {
