@@ -385,7 +385,13 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                   const std::string& element,
                                   unsigned int properties)
 {
+    mSize.x = Renderer::getScreenWidth();
+    mSize.y = Renderer::getScreenHeight() * 0.8;
+    GuiComponent::mPosition.x = 0.0f;
+    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1;
+
     GuiComponent::applyTheme(theme, view, element, properties);
+
     using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "grid")};
 
