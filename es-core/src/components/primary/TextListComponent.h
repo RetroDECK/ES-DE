@@ -482,7 +482,14 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                       const std::string& element,
                                       unsigned int properties)
 {
+    mSize.x = Renderer::getScreenWidth();
+    mSize.y = Renderer::getScreenHeight() * 0.8f;
+    GuiComponent::mPosition.x = 0.0f;
+    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1;
+    setAlignment(PrimaryAlignment::ALIGN_LEFT);
+
     GuiComponent::applyTheme(theme, view, element, properties);
+
     using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "textlist")};
 

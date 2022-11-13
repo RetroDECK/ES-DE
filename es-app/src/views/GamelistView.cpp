@@ -140,9 +140,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mTextList = std::make_unique<TextListComponent<FileData*>>();
                     mPrimary = mTextList.get();
                 }
-                mPrimary->setPosition(0.0f, mSize.y * 0.1f);
-                mPrimary->setSize(mSize.x, mSize.y * 0.8f);
-                mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
                 mPrimary->setCursorChangedCallback(
                     [&](const CursorState& state) { updateView(state); });
                 mPrimary->setDefaultZIndex(50.0f);
@@ -357,9 +354,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     if (mPrimary == nullptr) {
         mTextList = std::make_unique<TextListComponent<FileData*>>();
         mPrimary = mTextList.get();
-        mPrimary->setPosition(0.0f, mSize.y * 0.1f);
-        mPrimary->setSize(mSize.x, mSize.y * 0.8f);
-        mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
         mPrimary->setCursorChangedCallback([&](const CursorState& state) { updateView(state); });
         mPrimary->setDefaultZIndex(50.0f);
         mPrimary->setZIndex(50.0f);

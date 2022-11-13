@@ -914,9 +914,6 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                       const std::string& element,
                                       unsigned int properties)
 {
-    using namespace ThemeFlags;
-    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "carousel")};
-
     mSize.x = Renderer::getScreenWidth();
     mSize.y = Renderer::getScreenHeight() * 0.23240f;
     GuiComponent::mPosition.x = 0.0f;
@@ -924,6 +921,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mCarouselColor = 0xFFFFFFD8;
     mCarouselColorEnd = 0xFFFFFFD8;
     mZIndex = mDefaultZIndex;
+
+    using namespace ThemeFlags;
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "carousel")};
 
     if (!elem)
         return;
