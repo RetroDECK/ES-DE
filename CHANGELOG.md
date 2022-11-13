@@ -169,6 +169,7 @@
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
+* Made animations on the carousel better looking by using a new non-linear interpolation method
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed the carousel properties to be more generic by renaming "logo" to "item", e.g. itemSize, maxItemCount etc.
 * Added the properties "itemsBeforeCenter" and "itemsAfterCenter" to define entries for carousels of the wheel type
