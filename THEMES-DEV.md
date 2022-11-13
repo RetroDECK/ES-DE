@@ -997,7 +997,7 @@ The order in which you define properties for a given element does not matter and
 
 ### Primary elements
 
-Elements from this group can only occur once per view (for a certain variant) and they govern basic behavior and functionality like controller input and navigation.
+Elements from this group can only occur once per view (for a certain variant) and they handle basic functionality like controller input and navigation.
 
 #### carousel
 
@@ -1063,9 +1063,9 @@ Properties:
     - Minimum value is `0.2` and maximum value is `3`
     - Default is `1.2`
 * `itemTransitions` - type: STRING
-    - How to render item transitions when navigating the carousel. By default a slide animation will be played when moving between items but if this property is set to `instant` instead then the transitions will be immediate.
-    - Valid values are `slide` or `instant`
-    - Default is `slide`
+    - How to render item transitions when navigating the carousel. By default a slide and opacity fade animation will be played when moving between items but if this property is set to `instant` then the transitions will be immediate.
+    - Valid values are `animate` or `instant`
+    - Default is `animate`
 * `itemInterpolation` - type: STRING
     - Interpolation method to use when scaling items. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
@@ -1181,6 +1181,53 @@ Properties:
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the textlist exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `columns` - type: UNSIGNED_INTEGER
+    - The number of columns to add to the grid. The row count will be automatically calculated by dividing the overall number of items by the value of this property.
+    - Minimum value is `1` and maximum value is `100`
+    - Default is `5`
+* `staticItem` - type: PATH
+    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
+* `itemType` - type: STRING
+    - This displays a game image of a certain media type, and can only be used in the `gamelist` view.
+    - Valid values:
+    - `marquee` - This will look for a marquee (wheel) image.
+    - `cover` - This will look for a box front cover image.
+    - `backcover` - This will look for a box back cover image.
+    - `3dbox` - This will look for a 3D box image.
+    - `physicalmedia` - This will look for a physical media image.
+    - `screenshot` - This will look for a screenshot image.
+    - `titlescreen` - This will look for a title screen image.
+    - `miximage` - This will look for a miximage.
+    - `fanart` - This will look for a fan art image.
+    - `none` - No image will be used, instead the game name will be displayed as text.
+    - Default is `marquee`
+* `defaultItem` - type: PATH
+    - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `itemSize` - type: NORMALIZED_PAIR
+    - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
+    - Minimum value per axis is `0.05` and maximum value per axis is `1`
+    - Default is `0.15 0.25`
+* `itemScale` - type: FLOAT.
+    - Selected item is increased in size by this scale.
+    - Minimum value is `0.5` and maximum value is `2`
+    - Default is `1.05`
+* `itemTransitions` - type: STRING
+    - How to render item transitions when navigating the grid. By default a scaling and opacity fade animation will be played when moving between items (assuming `itemScale` and `unfocusedItemOpacity` have not been set to `1`) but if this property is set to `instant` then the transitions will be immediate.
+    - Valid values are `animate` or `instant`
+    - Default is `animate`
+* `itemSpacing` - type: NORMALIZED_PAIR
+    - The horizontal and vertical space between items. This value is added to the unscaled item size, i.e. `itemSize` before it's been multiplied by `itemScale`. This means that if an axis is set to `0` then unscaled items will be perfectly adjacent to each other on that axis but if `itemScale` has been set to higher than `1` then the currently selected item may overlap adjacent items. If this property is omitted then spacing will be automatically calculated so that no overlaps occur during scaling. However you'd normally want to define and adjust this property for an optimal layout. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis. Note that all spacing calculations are based on the value defined by `itemSize` which may or may not be the same as the actual image sizes, depending on their aspect ratios.
+    - Minimum value per axis is `0` and maximum value per axis is `0.1`
+* `horizontalOffset` - type: FLOAT
+    - Offsets the grid horizontally inside its designated area, as defined by the `size` property. The value is relative to the size of the grid with `1` being equivalent to its entire width. This property is primarily used to make sure scaled items are not clipped at grid boundaries, but if omitted the offset is automatically calculated so you normally don't need to define it unless you have a very specific need to fine-tune the layout.
+    - Minimum value is `-0.5` and maximum value is `0.5`
+* `verticalOffset` - type: FLOAT
+    - Offsets the grid vertically inside its designated area, as defined by the `size` property. The value is relative to the size of the grid with `1` being equivalent to its entire height. This property is primarily used to make sure scaled items are not clipped at grid boundaries, but if omitted the offset is automatically calculated so you normally don't need to define it unless you have a very specific need to fine-tune the layout.
+    - Minimum value is `-0.5` and maximum value is `0.5`
+* `unfocusedItemOpacity` - type: FLOAT
+    - Sets the opacity for the items that are not currently focused.
+    - Minimum value is `0.1` and maximum value is `1`
+    - Default is `1`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
@@ -1959,7 +2006,7 @@ Properties:
 
 ### Special elements
 
-Elements from this group offer special functionality not covered by the primary and secondary elements.
+Elements from this group provide special functionality not covered by the primary and secondary elements.
 
 #### gameselector
 
