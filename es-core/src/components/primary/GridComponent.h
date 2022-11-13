@@ -101,6 +101,8 @@ private:
     float mItemScale;
     glm::vec2 mItemSpacing;
     bool mInstantItemTransitions;
+    float mHorizontalOffset;
+    float mVerticalOffset;
     float mUnfocusedItemOpacity;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
@@ -126,12 +128,13 @@ GridComponent<T>::GridComponent()
     , mTransitionFactor {1.0f}
     , mFont {Font::get(FONT_SIZE_LARGE)}
     , mColumns {5}
-    , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.15f,
-                            Renderer::getScreenHeight() * 0.25f}}
+    , mItemSize {glm::vec2 {mRenderer->getScreenWidth() * 0.15f,
+                            mRenderer->getScreenHeight() * 0.25f}}
     , mItemScale {1.05f}
-    , mItemSpacing {glm::vec2 {Renderer::getScreenWidth() * 0.02f,
-                               Renderer::getScreenHeight() * 0.02f}}
+    , mItemSpacing {0.0f, 0.0f}
     , mInstantItemTransitions {false}
+    , mHorizontalOffset {0.0f}
+    , mVerticalOffset {0.0f}
     , mUnfocusedItemOpacity {1.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
@@ -358,6 +361,14 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     if (Settings::getInstance()->getBool("DebugImage"))
         mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00FF0033, 0x00FF0033);
 
+    // Clip to element boundaries.
+    glm::vec3 dim {mSize.x, mSize.y, 0.0f};
+    dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
+    dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
+
+    mRenderer->pushClipRect(glm::ivec2 {static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)},
+                            glm::ivec2 {static_cast<int>(dim.x), static_cast<int>(dim.y)});
+
     // We want to render the currently selected item last and before that the last selected
     // item to avoid incorrect overlapping in case the element has been configured with for
     // example large scaling or small or no margins between items.
@@ -393,6 +404,7 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
         mEntries.at(*it).data.item->setOpacity(1.0f);
     }
 
+    mRenderer->popClipRect();
     GuiComponent::renderChildren(trans);
 }
 
@@ -403,14 +415,20 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                   unsigned int properties)
 {
     mSize.x = Renderer::getScreenWidth();
-    mSize.y = Renderer::getScreenHeight() * 0.8;
+    mSize.y = Renderer::getScreenHeight() * 0.8f;
     GuiComponent::mPosition.x = 0.0f;
-    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1;
+    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1f;
+    mItemSpacing.x = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
+    mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
+    mHorizontalOffset = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
+    mVerticalOffset = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
 
     GuiComponent::applyTheme(theme, view, element, properties);
 
     using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "grid")};
+
+    mSize = glm::round(mSize);
 
     if (!elem)
         return;
@@ -419,7 +437,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mColumns = glm::clamp(elem->get<unsigned int>("columns"), 0u, 100u);
 
     if (elem->has("itemSize")) {
-        const glm::vec2 itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
+        const glm::vec2& itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
         mItemSize = itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
     }
 
@@ -442,11 +460,50 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    // If itemSpacing is not defined, then it's automatically calculated so that scaled items
+    // don't overlap. If the property is present but one axis is defined as -1 then set this
+    // axis to the same pixel value as the other axis.
     if (elem->has("itemSpacing")) {
-        const glm::vec2 itemSpacing {glm::clamp(elem->get<glm::vec2>("itemSpacing"), 0.0f, 0.1f)};
-        mItemSpacing =
-            itemSpacing * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        const glm::vec2& itemSpacing {elem->get<glm::vec2>("itemSpacing")};
+        if (itemSpacing.x == -1 && itemSpacing.y == -1) {
+            mItemSpacing = {0.0f, 0.0f};
+        }
+        else if (itemSpacing.x == -1) {
+            mItemSpacing.y = glm::clamp(itemSpacing.y, 0.0f, 0.1f) * mRenderer->getScreenHeight();
+            mItemSpacing.x = mItemSpacing.y;
+        }
+        else if (itemSpacing.y == -1) {
+            mItemSpacing.x = glm::clamp(itemSpacing.x, 0.0f, 0.1f) * mRenderer->getScreenWidth();
+            mItemSpacing.y = mItemSpacing.x;
+        }
+        else {
+            mItemSpacing = glm::clamp(itemSpacing, 0.0f, 0.1f) *
+                           glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        }
     }
+    else if (mItemScale < 1.0f) {
+        mItemSpacing = glm::vec2 {0.0f, 0.0f};
+    }
+    else {
+        mItemSpacing.x = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
+        mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
+    }
+
+    // If horizontalOffset or verticalOffset are not defined, then they are automatically
+    // calculated so that scaled items don't get clipped at grid boundaries.
+    if (elem->has("horizontalOffset"))
+        mHorizontalOffset = glm::clamp(elem->get<float>("horizontalOffset"), -0.5f, 0.5f) * mSize.x;
+    else if (mItemScale < 1.0f)
+        mHorizontalOffset = 0.0f;
+    else
+        mHorizontalOffset = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
+
+    if (elem->has("verticalOffset"))
+        mVerticalOffset = glm::clamp(elem->get<float>("verticalOffset"), -0.5f, 0.5f) * mSize.y;
+    else if (mItemScale < 1.0f)
+        mVerticalOffset = 0.0f;
+    else
+        mVerticalOffset = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
 
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
@@ -556,9 +613,12 @@ template <typename T> void GridComponent<T>::calculateLayout()
     unsigned int rowCount {0};
 
     for (auto& entry : mEntries) {
-        entry.data.item->setPosition(glm::vec3 {
-            (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) + mItemSpacing.x * columnCount,
-            (mItemSize.y * rowCount) + (mItemSize.y * 0.5f) + mItemSpacing.y * rowCount, 0.0f});
+        entry.data.item->setPosition(
+            glm::vec3 {mHorizontalOffset + (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) +
+                           mItemSpacing.x * columnCount,
+                       mVerticalOffset + (mItemSize.y * rowCount) + (mItemSize.y * 0.5f) +
+                           mItemSpacing.y * rowCount,
+                       0.0f});
         if (columnCount == mColumns - 1) {
             ++rowCount;
             columnCount = 0;

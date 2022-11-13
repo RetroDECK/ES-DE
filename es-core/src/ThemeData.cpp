@@ -164,8 +164,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemTransitions", STRING},
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},
-       {"horizontalMargin", FLOAT},
-       {"verticalMargin", FLOAT},
        {"horizontalOffset", FLOAT},
        {"verticalOffset", FLOAT},
        {"unfocusedItemOpacity", FLOAT},

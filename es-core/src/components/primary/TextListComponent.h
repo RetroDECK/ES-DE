@@ -485,7 +485,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mSize.x = Renderer::getScreenWidth();
     mSize.y = Renderer::getScreenHeight() * 0.8f;
     GuiComponent::mPosition.x = 0.0f;
-    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1;
+    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1f;
     setAlignment(PrimaryAlignment::ALIGN_LEFT);
 
     GuiComponent::applyTheme(theme, view, element, properties);
@@ -559,8 +559,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 << "\"";
             }
         }
-        // Legacy themes only.
         else if (elem->has("alignment")) {
+            // Legacy themes only.
             const std::string& alignment {elem->get<std::string>("alignment")};
             if (alignment == "left") {
                 setAlignment(PrimaryAlignment::ALIGN_LEFT);
