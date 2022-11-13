@@ -114,6 +114,7 @@ private:
     bool mGamelistView;
     bool mLayoutValid;
     bool mRowJump;
+    bool mWasScrolling;
 };
 
 template <typename T>
@@ -127,7 +128,7 @@ GridComponent<T>::GridComponent()
     , mColumns {5}
     , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.15f,
                             Renderer::getScreenHeight() * 0.25f}}
-    , mItemScale {1.2f}
+    , mItemScale {1.05f}
     , mItemSpacing {glm::vec2 {Renderer::getScreenWidth() * 0.02f,
                                Renderer::getScreenHeight() * 0.02f}}
     , mInstantItemTransitions {false}
@@ -144,6 +145,7 @@ GridComponent<T>::GridComponent()
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mLayoutValid {false}
     , mRowJump {false}
+    , mWasScrolling {false}
 {
 }
 
@@ -356,24 +358,39 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     if (Settings::getInstance()->getBool("DebugImage"))
         mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00FF0033, 0x00FF0033);
 
-    for (size_t i {0}; i < mEntries.size(); ++i) {
-        float opacity {mUnfocusedItemOpacity};
-        float scale {1.0f};
+    // We want to render the currently selected item last and before that the last selected
+    // item to avoid incorrect overlapping in case the element has been configured with for
+    // example large scaling or small or no margins between items.
+    std::vector<size_t> renderEntries;
 
-        if (i == static_cast<size_t>(mCursor)) {
+    for (size_t i {0}; i < mEntries.size(); ++i) {
+        if (i == static_cast<size_t>(mCursor) || i == static_cast<size_t>(mLastCursor))
+            continue;
+        renderEntries.emplace_back(i);
+    }
+
+    renderEntries.emplace_back(mLastCursor);
+    if (mLastCursor != mCursor)
+        renderEntries.emplace_back(mCursor);
+
+    float opacity {mUnfocusedItemOpacity};
+    float scale {1.0f};
+
+    for (auto it = renderEntries.cbegin(); it != renderEntries.cend(); ++it) {
+        if (*it == static_cast<size_t>(mCursor)) {
             scale = glm::mix(1.0f, mItemScale, mTransitionFactor);
-            opacity = 1.0f - glm::mix(mUnfocusedItemOpacity, 0.0f, mTransitionFactor);
+            opacity = glm::mix(mUnfocusedItemOpacity, 1.0f, mTransitionFactor);
         }
-        else if (i == static_cast<size_t>(mLastCursor)) {
+        else if (*it == static_cast<size_t>(mLastCursor)) {
             scale = glm::mix(mItemScale, 1.0f, mTransitionFactor);
             opacity = glm::mix(1.0f, mUnfocusedItemOpacity, mTransitionFactor);
         }
 
-        mEntries.at(i).data.item->setScale(scale);
-        mEntries.at(i).data.item->setOpacity(opacity);
-        mEntries.at(i).data.item->render(trans);
-        mEntries.at(i).data.item->setScale(1.0f);
-        mEntries.at(i).data.item->setOpacity(1.0f);
+        mEntries.at(*it).data.item->setScale(scale);
+        mEntries.at(*it).data.item->setOpacity(opacity);
+        mEntries.at(*it).data.item->render(trans);
+        mEntries.at(*it).data.item->setScale(1.0f);
+        mEntries.at(*it).data.item->setOpacity(1.0f);
     }
 
     GuiComponent::renderChildren(trans);
@@ -437,6 +454,16 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& state)
 {
+    if (mWasScrolling && state == CursorState::CURSOR_STOPPED) {
+        if (mCursorChangedCallback)
+            mCursorChangedCallback(state);
+        mWasScrolling = false;
+        return;
+    }
+
+    if (mCursor == mLastCursor)
+        return;
+
     float startPos {mEntryOffset};
     float posMax {static_cast<float>(mEntries.size())};
     float target {static_cast<float>(mCursor)};
@@ -517,6 +544,8 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
 
     if (mCursorChangedCallback)
         mCursorChangedCallback(state);
+
+    mWasScrolling = (state == CursorState::CURSOR_SCROLLING);
 }
 
 template <typename T> void GridComponent<T>::calculateLayout()

@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  PrimaryComponent.h
 //
-//  Base class for the primary components (carousel and textlist).
+//  Base class for the primary components (carousel, grid and textlist).
 //
 
 #ifndef ES_CORE_COMPONENTS_PRIMARY_PRIMARY_COMPONENT_H
