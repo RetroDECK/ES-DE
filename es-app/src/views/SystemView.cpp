@@ -222,7 +222,9 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 
 void SystemView::onCursorChanged(const CursorState& state)
 {
-    int cursor {mPrimary->getCursor()};
+    const int cursor {mPrimary->getCursor()};
+    const std::string& transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
+    mFadeTransitions = transitionStyle == "fade";
 
     // Avoid double updates.
     if (cursor != mLastCursor) {
@@ -235,6 +237,33 @@ void SystemView::onCursorChanged(const CursorState& state)
     if (mLastCursor >= 0 && mLastCursor <= static_cast<int>(mSystemElements.size())) {
         for (auto& video : mSystemElements[mLastCursor].videoComponents)
             video->stopVideoPlayer();
+    }
+
+    const int scrollVelocity {mPrimary->getScrollingVelocity()};
+
+    // This is needed to avoid erratic camera movements during extreme navigation input when using
+    // slide transitions. This should very rarely occur during normal application usage.
+    if (transitionStyle == "slide") {
+        bool resetCamOffset {false};
+
+        if (scrollVelocity == -1 && mPreviousScrollVelocity == 1) {
+            if (mLastCursor > cursor && mCamOffset > static_cast<float>(mLastCursor))
+                resetCamOffset = true;
+            else if (mLastCursor > cursor && mCamOffset < static_cast<float>(cursor))
+                resetCamOffset = true;
+            else if (mLastCursor < cursor && mCamOffset <= static_cast<float>(cursor) &&
+                     mCamOffset != static_cast<float>(mLastCursor))
+                resetCamOffset = true;
+        }
+        else if (scrollVelocity == 1 && mPreviousScrollVelocity == -1) {
+            if (mLastCursor > cursor && mCamOffset < static_cast<float>(mLastCursor))
+                resetCamOffset = true;
+            else if (mLastCursor < cursor && mCamOffset > static_cast<float>(cursor))
+                resetCamOffset = true;
+        }
+
+        if (resetCamOffset)
+            mCamOffset = static_cast<float>(cursor);
     }
 
     mLastCursor = cursor;
@@ -252,10 +281,9 @@ void SystemView::onCursorChanged(const CursorState& state)
     startViewVideos();
     updateHelpPrompts();
 
-    int scrollVelocity {mPrimary->getScrollingVelocity()};
+    const float posMax {static_cast<float>(mPrimary->getNumEntries())};
+    const float target {static_cast<float>(cursor)};
     float startPos {mCamOffset};
-    float posMax {static_cast<float>(mPrimary->getNumEntries())};
-    float target {static_cast<float>(cursor)};
     float endPos {target};
 
     if (mPreviousScrollVelocity > 0 && scrollVelocity == 0 && mCamOffset > posMax - 1.0f)
@@ -286,9 +314,6 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     if (scrollVelocity != 0)
         mPreviousScrollVelocity = scrollVelocity;
-
-    std::string transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
-    mFadeTransitions = transitionStyle == "fade";
 
     Animation* anim;
 
