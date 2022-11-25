@@ -92,8 +92,10 @@ private:
     std::string mItemType;
     std::string mDefaultItem;
     float mEntryOffset;
-    float mEntryCamTarget;
+    float mScrollPos;
     float mTransitionFactor;
+    float mVisibleRows;
+    int mRowCount;
     std::shared_ptr<Font> mFont;
 
     unsigned int mColumns;
@@ -101,8 +103,8 @@ private:
     float mItemScale;
     glm::vec2 mItemSpacing;
     bool mInstantItemTransitions;
-    float mHorizontalOffset;
-    float mVerticalOffset;
+    float mHorizontalMargin;
+    float mVerticalMargin;
     float mUnfocusedItemOpacity;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
@@ -124,8 +126,10 @@ GridComponent<T>::GridComponent()
     : IList<GridEntry, T> {LIST_SCROLL_STYLE_SLOW, ListLoopType::LIST_PAUSE_AT_END}
     , mRenderer {Renderer::getInstance()}
     , mEntryOffset {0.0f}
-    , mEntryCamTarget {0.0f}
+    , mScrollPos {0.0f}
     , mTransitionFactor {1.0f}
+    , mVisibleRows {1.0f}
+    , mRowCount {1}
     , mFont {Font::get(FONT_SIZE_LARGE)}
     , mColumns {5}
     , mItemSize {glm::vec2 {mRenderer->getScreenWidth() * 0.15f,
@@ -133,8 +137,8 @@ GridComponent<T>::GridComponent()
     , mItemScale {1.05f}
     , mItemSpacing {0.0f, 0.0f}
     , mInstantItemTransitions {false}
-    , mHorizontalOffset {0.0f}
-    , mVerticalOffset {0.0f}
+    , mHorizontalMargin {0.0f}
+    , mVerticalMargin {0.0f}
     , mUnfocusedItemOpacity {1.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
@@ -289,6 +293,8 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
                 return true;
             }
             if (config->isMappedLike("up", input)) {
+                if (static_cast<unsigned int>(mCursor) < mColumns)
+                    return true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
                 mRowJump = true;
@@ -296,6 +302,9 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
                 return true;
             }
             if (config->isMappedLike("down", input)) {
+                if (static_cast<unsigned int>(mCursor) >= (mColumns * mRowCount) - mColumns &&
+                    mEntries.size() - mCursor <= mColumns && mEntries.size() % mColumns == 0)
+                    return true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
                 mRowJump = true;
@@ -387,6 +396,9 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     float opacity {mUnfocusedItemOpacity};
     float scale {1.0f};
 
+    trans[3].y -= (mItemSize.y + mItemSpacing.y) * mScrollPos;
+    mRenderer->setMatrix(trans);
+
     for (auto it = renderEntries.cbegin(); it != renderEntries.cend(); ++it) {
         if (*it == static_cast<size_t>(mCursor)) {
             scale = glm::mix(1.0f, mItemScale, mTransitionFactor);
@@ -420,15 +432,13 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1f;
     mItemSpacing.x = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
     mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
-    mHorizontalOffset = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
-    mVerticalOffset = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
+    mHorizontalMargin = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
+    mVerticalMargin = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
 
     GuiComponent::applyTheme(theme, view, element, properties);
 
     using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "grid")};
-
-    mSize = glm::round(mSize);
 
     if (!elem)
         return;
@@ -489,21 +499,21 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
     }
 
-    // If horizontalOffset or verticalOffset are not defined, then they are automatically
+    // If horizontalMargin or verticalMargin are not defined, then they are automatically
     // calculated so that scaled items don't get clipped at grid boundaries.
-    if (elem->has("horizontalOffset"))
-        mHorizontalOffset = glm::clamp(elem->get<float>("horizontalOffset"), -0.5f, 0.5f) * mSize.x;
+    if (elem->has("horizontalMargin"))
+        mHorizontalMargin = glm::clamp(elem->get<float>("horizontalMargin"), -0.5f, 0.5f) * mSize.x;
     else if (mItemScale < 1.0f)
-        mHorizontalOffset = 0.0f;
+        mHorizontalMargin = 0.0f;
     else
-        mHorizontalOffset = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
+        mHorizontalMargin = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
 
-    if (elem->has("verticalOffset"))
-        mVerticalOffset = glm::clamp(elem->get<float>("verticalOffset"), -0.5f, 0.5f) * mSize.y;
+    if (elem->has("verticalMargin"))
+        mVerticalMargin = glm::clamp(elem->get<float>("verticalMargin"), -0.5f, 0.5f) * mSize.y;
     else if (mItemScale < 1.0f)
-        mVerticalOffset = 0.0f;
+        mVerticalMargin = 0.0f;
     else
-        mVerticalOffset = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
+        mVerticalMargin = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
 
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
@@ -558,25 +568,44 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
     else
         mPositiveDirection = false;
 
-    mEntryCamTarget = endPos;
     float animTime {250.0f};
-    float timeDiff {1.0f};
 
     // If startPos is inbetween two positions then reduce the time slightly as the distance will
     // be shorter meaning the animation would play for too long if not compensated for.
-    if (mScrollVelocity == 1)
-        timeDiff = endPos - startPos;
-    else if (mScrollVelocity == -1)
-        timeDiff = startPos - endPos;
+    //    float timeDiff {1.0f};
+    //    if (mScrollVelocity == 1)
+    //        timeDiff = endPos - startPos;
+    //    else if (mScrollVelocity == -1)
+    //        timeDiff = startPos - endPos;
+    //    if (timeDiff != 1.0f)
+    //        animTime =
+    //            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 180.0f,
+    //            animTime);
 
-    if (timeDiff != 1.0f)
-        animTime =
-            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 180.0f, animTime);
+    float visibleRows {mVisibleRows - 1.0f};
+    float startRow {static_cast<float>(mLastCursor / mColumns)};
+    float endRow {static_cast<float>(mCursor / mColumns)};
+
+    if (endRow <= visibleRows) {
+        if (startRow == endRow || startRow <= visibleRows)
+            startRow = 0.0f;
+        else if (startRow > visibleRows)
+            startRow -= visibleRows;
+        endRow = 0.0f;
+    }
+    else {
+        if (startRow <= visibleRows)
+            startRow = 0.0f;
+        else
+            startRow -= visibleRows;
+        endRow -= visibleRows;
+    }
 
     Animation* anim {new LambdaAnimation(
-        [this, startPos, endPos, posMax](float t) {
+        [this, startPos, endPos, posMax, startRow, endRow](float t) {
             // Non-linear interpolation.
             t = 1.0f - (1.0f - t) * (1.0f - t);
+
             float f {(endPos * t) + (startPos * (1.0f - t))};
             if (f < 0)
                 f += posMax;
@@ -584,6 +613,7 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
                 f -= posMax;
 
             mEntryOffset = f;
+            mScrollPos = {(endRow * t) + (startRow * (1.0f - t))};
 
             if (mInstantItemTransitions) {
                 mTransitionFactor = 1.0f;
@@ -610,23 +640,27 @@ template <typename T> void GridComponent<T>::calculateLayout()
     assert(!mEntries.empty());
 
     unsigned int columnCount {0};
-    unsigned int rowCount {0};
+    mRowCount = 0;
 
     for (auto& entry : mEntries) {
         entry.data.item->setPosition(
-            glm::vec3 {mHorizontalOffset + (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) +
+            glm::vec3 {mHorizontalMargin + (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) +
                            mItemSpacing.x * columnCount,
-                       mVerticalOffset + (mItemSize.y * rowCount) + (mItemSize.y * 0.5f) +
-                           mItemSpacing.y * rowCount,
+                       mVerticalMargin + (mItemSize.y * mRowCount) + (mItemSize.y * 0.5f) +
+                           mItemSpacing.y * mRowCount,
                        0.0f});
         if (columnCount == mColumns - 1) {
-            ++rowCount;
+            ++mRowCount;
             columnCount = 0;
             continue;
         }
 
         ++columnCount;
     }
+
+    mVisibleRows = mSize.y / (mItemSize.y + mItemSpacing.y);
+    mVisibleRows -= (mVerticalMargin / mSize.y) * mVisibleRows * 2.0f;
+    mVisibleRows += (mItemSpacing.y / mSize.y) * mVisibleRows;
 
     mLayoutValid = true;
 }
