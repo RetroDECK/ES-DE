@@ -727,6 +727,9 @@ void SystemView::populate()
         }
     }
 
+    if (mGrid != nullptr)
+        mGrid->calculateLayout();
+
     for (auto& elements : mSystemElements) {
         for (auto& text : elements.textComponents) {
             if (text->getThemeSystemdata() != "") {

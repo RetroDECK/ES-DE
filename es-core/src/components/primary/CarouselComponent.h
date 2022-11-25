@@ -349,7 +349,7 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
 template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
 {
     if constexpr (std::is_same_v<T, FileData*>) {
-        const int numEntries {static_cast<int>(mEntries.size())};
+        const int numEntries {size()};
         const int center {getCursor()};
         const bool isWheel {mType == CarouselType::VERTICAL_WHEEL ||
                             mType == CarouselType::HORIZONTAL_WHEEL};

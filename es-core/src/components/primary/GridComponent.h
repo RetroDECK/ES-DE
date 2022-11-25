@@ -38,6 +38,7 @@ public:
     void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
     void updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
     void onDemandTextureLoad() override;
+    void calculateLayout();
 
     void setCancelTransitionsCallback(const std::function<void()>& func) override
     {
@@ -69,8 +70,6 @@ public:
                     unsigned int properties) override;
 
 private:
-    void calculateLayout();
-
     void onCursorChanged(const CursorState& state) override;
     bool isScrolling() const override { return List::isScrolling(); }
     void stopScrolling() override { List::stopScrolling(); }
@@ -98,7 +97,7 @@ private:
     int mRowCount;
     std::shared_ptr<Font> mFont;
 
-    unsigned int mColumns;
+    int mColumns;
     glm::vec2 mItemSize;
     float mItemScale;
     glm::vec2 mItemSpacing;
@@ -119,6 +118,7 @@ private:
     bool mLayoutValid;
     bool mRowJump;
     bool mWasScrolling;
+    bool mJustCalculatedLayout;
 };
 
 template <typename T>
@@ -153,6 +153,7 @@ GridComponent<T>::GridComponent()
     , mLayoutValid {false}
     , mRowJump {false}
     , mWasScrolling {false}
+    , mJustCalculatedLayout {false}
 {
 }
 
@@ -212,6 +213,7 @@ template <typename T>
 void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
 {
     if (entry.data.itemPath != "") {
+        const glm::vec3& calculatedItemPos {entry.data.item->getPosition()};
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(true);
         item->setMipmapping(true);
@@ -221,6 +223,7 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
         item->setOrigin(0.5f, 0.5f);
         item->setRotateByTargetSize(true);
         entry.data.item = item;
+        entry.data.item->setPosition(calculatedItemPos);
     }
     else {
         return;
@@ -230,10 +233,22 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
 template <typename T> void GridComponent<T>::onDemandTextureLoad()
 {
     if constexpr (std::is_same_v<T, FileData*>) {
-        const int numEntries {static_cast<int>(mEntries.size())};
+        const int visibleRows {static_cast<int>(std::ceil(mVisibleRows))};
+        const int columnPos {mCursor % mColumns};
+        const int loadItems {mColumns * visibleRows};
+        const int numEntries {size()};
+        int startPos {mCursor};
+        int loadedItems {0};
 
-        // TODO: Currently loads every item every time.
-        for (int i {0}; i < size(); ++i) {
+        if (mCursor / mColumns <= visibleRows - 1)
+            startPos = 0;
+        else
+            startPos = mCursor - (mColumns * (mVisibleRows - 1)) - 1 - columnPos;
+
+        for (int i {startPos}; i < size(); ++i) {
+            if (loadedItems == loadItems)
+                break;
+            ++loadedItems;
             int cursor {i};
 
             while (cursor < 0)
@@ -274,6 +289,37 @@ template <typename T> void GridComponent<T>::onDemandTextureLoad()
     }
 }
 
+template <typename T> void GridComponent<T>::calculateLayout()
+{
+    assert(!mEntries.empty());
+
+    int columnCount {0};
+    mRowCount = 0;
+
+    for (auto& entry : mEntries) {
+        entry.data.item->setPosition(
+            glm::vec3 {mHorizontalMargin + (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) +
+                           mItemSpacing.x * columnCount,
+                       mVerticalMargin + (mItemSize.y * mRowCount) + (mItemSize.y * 0.5f) +
+                           mItemSpacing.y * mRowCount,
+                       0.0f});
+        if (columnCount == mColumns - 1) {
+            ++mRowCount;
+            columnCount = 0;
+            continue;
+        }
+
+        ++columnCount;
+    }
+
+    mVisibleRows = mSize.y / (mItemSize.y + mItemSpacing.y);
+    mVisibleRows -= (mVerticalMargin / mSize.y) * mVisibleRows * 2.0f;
+    mVisibleRows += (mItemSpacing.y / mSize.y) * mVisibleRows;
+
+    mLayoutValid = true;
+    mJustCalculatedLayout = true;
+}
+
 template <typename T> bool GridComponent<T>::input(InputConfig* config, Input input)
 {
     if (size() > 0) {
@@ -293,7 +339,7 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
                 return true;
             }
             if (config->isMappedLike("up", input)) {
-                if (static_cast<unsigned int>(mCursor) < mColumns)
+                if (mCursor < mColumns)
                     return true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
@@ -302,8 +348,9 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
                 return true;
             }
             if (config->isMappedLike("down", input)) {
-                if (static_cast<unsigned int>(mCursor) >= (mColumns * mRowCount) - mColumns &&
-                    mEntries.size() - mCursor <= mColumns && mEntries.size() % mColumns == 0)
+                if (mCursor >= (mColumns * mRowCount) - mColumns &&
+                    static_cast<int>(mEntries.size()) - mCursor <= mColumns &&
+                    mEntries.size() % mColumns == 0)
                     return true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
@@ -350,9 +397,6 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
 
 template <typename T> void GridComponent<T>::update(int deltaTime)
 {
-    if (!mLayoutValid)
-        calculateLayout();
-
     List::listUpdate(deltaTime);
     GuiComponent::update(deltaTime);
 }
@@ -528,8 +572,10 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
         return;
     }
 
-    if (mCursor == mLastCursor)
+    if (mCursor == mLastCursor && !mJustCalculatedLayout)
         return;
+    else
+        mJustCalculatedLayout = false;
 
     float startPos {mEntryOffset};
     float posMax {static_cast<float>(mEntries.size())};
@@ -633,36 +679,6 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
         mCursorChangedCallback(state);
 
     mWasScrolling = (state == CursorState::CURSOR_SCROLLING);
-}
-
-template <typename T> void GridComponent<T>::calculateLayout()
-{
-    assert(!mEntries.empty());
-
-    unsigned int columnCount {0};
-    mRowCount = 0;
-
-    for (auto& entry : mEntries) {
-        entry.data.item->setPosition(
-            glm::vec3 {mHorizontalMargin + (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) +
-                           mItemSpacing.x * columnCount,
-                       mVerticalMargin + (mItemSize.y * mRowCount) + (mItemSize.y * 0.5f) +
-                           mItemSpacing.y * mRowCount,
-                       0.0f});
-        if (columnCount == mColumns - 1) {
-            ++mRowCount;
-            columnCount = 0;
-            continue;
-        }
-
-        ++columnCount;
-    }
-
-    mVisibleRows = mSize.y / (mItemSize.y + mItemSpacing.y);
-    mVisibleRows -= (mVerticalMargin / mSize.y) * mVisibleRows * 2.0f;
-    mVisibleRows += (mItemSpacing.y / mSize.y) * mVisibleRows;
-
-    mLayoutValid = true;
 }
 
 #endif // ES_CORE_COMPONENTS_PRIMARY_GRID_COMPONENT_H

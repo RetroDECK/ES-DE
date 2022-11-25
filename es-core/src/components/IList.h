@@ -119,6 +119,7 @@ public:
     {
         mEntries.clear();
         mCursor = 0;
+        mLastCursor = 0;
         listInput(0);
         onCursorChanged(CursorState::CURSOR_STOPPED);
     }
