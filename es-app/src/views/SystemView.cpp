@@ -318,18 +318,24 @@ void SystemView::onCursorChanged(const CursorState& state)
     Animation* anim;
 
     float animTime {380.0f};
-    float timeDiff {1.0f};
 
-    // If startPos is inbetween two positions then reduce the time slightly as the distance will
-    // be shorter meaning the animation would play for too long if not compensated for.
-    if (scrollVelocity == 1)
-        timeDiff = endPos - startPos;
-    else if (scrollVelocity == -1)
-        timeDiff = startPos - endPos;
+    if (mGrid != nullptr) {
+        animTime = 250.0f;
+    }
+    else {
+        float timeDiff {1.0f};
 
-    if (timeDiff != 1.0f)
-        animTime =
-            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 200.0f, animTime);
+        // If startPos is inbetween two positions then reduce the time slightly as the distance will
+        // be shorter meaning the animation would play for too long if not compensated for.
+        if (scrollVelocity == 1)
+            timeDiff = endPos - startPos;
+        else if (scrollVelocity == -1)
+            timeDiff = startPos - endPos;
+
+        if (timeDiff != 1.0f)
+            animTime =
+                glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 200.0f, animTime);
+    }
 
     if (transitionStyle == "fade") {
         float startFade {mFadeOpacity};

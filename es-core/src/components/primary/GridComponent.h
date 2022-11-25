@@ -348,9 +348,10 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
                 return true;
             }
             if (config->isMappedLike("down", input)) {
-                if (mCursor >= (mColumns * mRowCount) - mColumns &&
-                    static_cast<int>(mEntries.size()) - mCursor <= mColumns &&
-                    mEntries.size() % mColumns == 0)
+                if (mCursor >= (mColumns * mRowCount) - mColumns && size() - mCursor <= mColumns &&
+                    size() % mColumns == 0)
+                    return true;
+                if (size() < mColumns)
                     return true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
