@@ -315,6 +315,7 @@
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="systempath">
             <entry>mgba</entry>
+            <entry>mgba-qt</entry>
             <entry>io.mgba.mGBA</entry>
         </rule>
         <rule type="staticpath">
@@ -323,6 +324,7 @@
             <entry>~/Applications/mGBA*.AppImage</entry>
             <entry>~/.local/bin/mGBA*.AppImage</entry>
             <entry>~/bin/mGBA*.AppImage</entry>
+            <entry>~/bin/mgba-qt</entry>
         </rule>
     </emulator>
     <emulator name="MUPEN64PLUS">
