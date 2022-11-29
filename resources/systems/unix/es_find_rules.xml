@@ -245,6 +245,17 @@
             <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE</entry>
         </rule>
     </emulator>
+    <emulator name="GEARBOY">
+        <!-- Nintendo Game Boy / Color emulator Gearboy -->
+        <rule type="systempath">
+            <entry>gearboy</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/gearboy</entry>
+            <entry>~/.local/bin/gearboy</entry>
+            <entry>~/bin/gearboy</entry>
+        </rule>
+    </emulator>
     <emulator name="HYPSEUS-SINGE">
         <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
         <rule type="systempath">
@@ -435,6 +446,17 @@
             <entry>~/.local/share/flatpak/exports/bin/io.github.shiiion.primehack</entry>
         </rule>
     </emulator>
+    <emulator name="PUNES">
+        <!-- NES/Famicom emulator puNES -->
+        <rule type="systempath">
+            <entry>punes</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/punes</entry>
+            <entry>~/.local/bin/punes</entry>
+            <entry>~/bin/punes</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="systempath">
@@ -495,6 +517,19 @@
             <entry>~/Applications/publish/Ryujinx</entry>
             <entry>~/.local/bin/publish/Ryujinx</entry>
             <entry>~/bin/publish/Ryujinx</entry>
+        </rule>
+    </emulator>
+    <emulator name="SAMEBOY">
+        <!-- Nintendo Game Boy / Color emulator SameBoy -->
+        <rule type="systempath">
+            <entry>sameboy</entry>
+            <entry>io.github.sameboy.SameBoy</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
+            <entry>~/.local/bin/sameboy</entry>
+            <entry>~/bin/sameboy</entry>
         </rule>
     </emulator>
     <emulator name="SCUMMVM">

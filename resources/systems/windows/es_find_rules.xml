@@ -261,6 +261,17 @@
             <entry>%ESPATH%\..\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
         </rule>
     </emulator>
+    <emulator name="GEARBOY">
+        <!-- Nintendo Game Boy / Color emulator Gearboy -->
+        <rule type="systempath">
+            <entry>sameboy.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\gearboy\gearboy.exe</entry>
+            <entry>%ESPATH%\gearboy\gearboy.exe</entry>
+            <entry>%ESPATH%\..\gearboy\gearboy.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="HYPSEUS-SINGE">
         <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
         <rule type="systempath">
@@ -469,6 +480,17 @@
             <entry>%ESPATH%\..\Project64\Project64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PUNES">
+        <!-- NES/Famicom emulator puNES -->
+        <rule type="systempath">
+            <entry>punes64.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\punes\punes64.exe</entry>
+            <entry>%ESPATH%\punes\punes64.exe</entry>
+            <entry>%ESPATH%\..\punes\punes64.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="systempath">
@@ -511,6 +533,17 @@
             <entry>%ESPATH%\Emulators\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="SAMEBOY">
+        <!-- Nintendo Game Boy / Color emulator SameBoy -->
+        <rule type="systempath">
+            <entry>sameboy.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\sameboy\sameboy.exe</entry>
+            <entry>%ESPATH%\sameboy\sameboy.exe</entry>
+            <entry>%ESPATH%\..\sameboy\sameboy.exe</entry>
         </rule>
     </emulator>
     <emulator name="SCUMMVM">
