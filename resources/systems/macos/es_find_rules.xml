@@ -111,6 +111,14 @@
             <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
+    <emulator name="GEARBOY">
+        <!-- Nintendo Game Boy / Color emulator Gearboy -->
+        <rule type="staticpath">
+            <entry>/Applications/gearboy</entry>
+            <entry>/opt/homebrew/bin/gearboy</entry>
+            <entry>/usr/local/bin/gearboy</entry>
+        </rule>
+    </emulator>
     <emulator name="HYPSEUS-SINGE">
         <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
         <rule type="systempath">
@@ -208,6 +216,14 @@
         <!-- Adobe Flash player Ruffle -->
         <rule type="staticpath">
             <entry>/Applications/Ruffle.app/Contents/MacOS/ruffle</entry>
+        </rule>
+    </emulator>
+    <emulator name="SAMEBOY">
+        <!-- Nintendo Game Boy / Color emulator SameBoy -->
+        <rule type="staticpath">
+            <entry>/Applications/sameboy</entry>
+            <entry>/opt/homebrew/bin/sameboy</entry>
+            <entry>/usr/local/bin/sameboy</entry>
         </rule>
     </emulator>
     <emulator name="SIMCOUPE">

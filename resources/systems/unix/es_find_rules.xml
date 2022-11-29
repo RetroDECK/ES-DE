@@ -446,7 +446,7 @@
             <entry>~/.local/share/flatpak/exports/bin/io.github.shiiion.primehack</entry>
         </rule>
     </emulator>
-        <emulator name="PUNES">
+    <emulator name="PUNES">
         <!-- NES/Famicom emulator puNES -->
         <rule type="systempath">
             <entry>punes</entry>
