@@ -24,9 +24,11 @@ class GridComponent : public PrimaryComponent<T>, protected IList<GridEntry, T>
     using List = IList<GridEntry, T>;
 
 protected:
+    using List::mColumns;
     using List::mCursor;
     using List::mEntries;
     using List::mLastCursor;
+    using List::mRows;
     using List::mScrollVelocity;
     using List::mSize;
 
@@ -94,10 +96,8 @@ private:
     float mScrollPos;
     float mTransitionFactor;
     float mVisibleRows;
-    int mRowCount;
     std::shared_ptr<Font> mFont;
 
-    int mColumns;
     glm::vec2 mItemSize;
     float mItemScale;
     glm::vec2 mItemSpacing;
@@ -115,6 +115,7 @@ private:
     int mPreviousScrollVelocity;
     bool mPositiveDirection;
     bool mGamelistView;
+    bool mFractionalRows;
     bool mLayoutValid;
     bool mRowJump;
     bool mWasScrolling;
@@ -129,9 +130,7 @@ GridComponent<T>::GridComponent()
     , mScrollPos {0.0f}
     , mTransitionFactor {1.0f}
     , mVisibleRows {1.0f}
-    , mRowCount {1}
     , mFont {Font::get(FONT_SIZE_LARGE)}
-    , mColumns {5}
     , mItemSize {glm::vec2 {mRenderer->getScreenWidth() * 0.15f,
                             mRenderer->getScreenHeight() * 0.25f}}
     , mItemScale {1.05f}
@@ -150,6 +149,7 @@ GridComponent<T>::GridComponent()
     , mPreviousScrollVelocity {0}
     , mPositiveDirection {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
+    , mFractionalRows {false}
     , mLayoutValid {false}
     , mRowJump {false}
     , mWasScrolling {false}
@@ -235,7 +235,8 @@ template <typename T> void GridComponent<T>::onDemandTextureLoad()
     if constexpr (std::is_same_v<T, FileData*>) {
         const int visibleRows {static_cast<int>(std::ceil(mVisibleRows))};
         const int columnPos {mCursor % mColumns};
-        const int loadItems {mColumns * visibleRows};
+        int loadItems {mColumns * visibleRows};
+
         const int numEntries {size()};
         int startPos {mCursor};
         int loadedItems {0};
@@ -243,7 +244,17 @@ template <typename T> void GridComponent<T>::onDemandTextureLoad()
         if (mCursor / mColumns <= visibleRows - 1)
             startPos = 0;
         else
-            startPos = mCursor - (mColumns * (mVisibleRows - 1)) - 1 - columnPos;
+            startPos = mCursor - (mColumns * (visibleRows - 1)) - columnPos;
+
+        if (mItemSpacing.y < mVerticalMargin) {
+            loadItems += mColumns;
+            if (!mFractionalRows) {
+                loadItems += mColumns;
+                startPos -= mColumns;
+                if (startPos < 0)
+                    startPos = 0;
+            }
+        }
 
         for (int i {startPos}; i < size(); ++i) {
             if (loadedItems == loadItems)
@@ -293,18 +304,41 @@ template <typename T> void GridComponent<T>::calculateLayout()
 {
     assert(!mEntries.empty());
 
+    if (mItemScale < 1.0f) {
+        mHorizontalMargin = 0.0f;
+        mVerticalMargin = 0.0f;
+    }
+    else {
+        mHorizontalMargin = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
+        mVerticalMargin = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
+    }
+
     int columnCount {0};
-    mRowCount = 0;
+    mColumns = 0;
+    mRows = 0;
+
+    float width {mHorizontalMargin * 2.0f};
+
+    while (1) {
+        width += mItemSize.x;
+        if (mColumns != 0)
+            width += mItemSpacing.x;
+        if (width > mSize.x)
+            break;
+        ++mColumns;
+    }
+
+    if (mColumns == 0)
+        ++mColumns;
 
     for (auto& entry : mEntries) {
-        entry.data.item->setPosition(
-            glm::vec3 {mHorizontalMargin + (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) +
-                           mItemSpacing.x * columnCount,
-                       mVerticalMargin + (mItemSize.y * mRowCount) + (mItemSize.y * 0.5f) +
-                           mItemSpacing.y * mRowCount,
-                       0.0f});
+        entry.data.item->setPosition(glm::vec3 {
+            mHorizontalMargin + (mItemSize.x * columnCount) + (mItemSize.x * 0.5f) +
+                mItemSpacing.x * columnCount,
+            mVerticalMargin + (mItemSize.y * mRows) + (mItemSize.y * 0.5f) + mItemSpacing.y * mRows,
+            0.0f});
         if (columnCount == mColumns - 1) {
-            ++mRowCount;
+            ++mRows;
             columnCount = 0;
             continue;
         }
@@ -315,6 +349,12 @@ template <typename T> void GridComponent<T>::calculateLayout()
     mVisibleRows = mSize.y / (mItemSize.y + mItemSpacing.y);
     mVisibleRows -= (mVerticalMargin / mSize.y) * mVisibleRows * 2.0f;
     mVisibleRows += (mItemSpacing.y / mSize.y) * mVisibleRows;
+
+    if (!mFractionalRows)
+        mVisibleRows = std::floor(mVisibleRows);
+
+    if (mVisibleRows == 0.0f)
+        ++mVisibleRows;
 
     mLayoutValid = true;
     mJustCalculatedLayout = true;
@@ -329,18 +369,20 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
             if (config->isMappedLike("left", input)) {
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
+                if (mCursor % mColumns == 0)
+                    mRowJump = true;
                 List::listInput(-1);
                 return true;
             }
             if (config->isMappedLike("right", input)) {
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
+                if (mCursor % mColumns == mColumns - 1)
+                    mRowJump = true;
                 List::listInput(1);
                 return true;
             }
             if (config->isMappedLike("up", input)) {
-                if (mCursor < mColumns)
-                    return true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
                 mRowJump = true;
@@ -348,11 +390,6 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
                 return true;
             }
             if (config->isMappedLike("down", input)) {
-                if (mCursor >= (mColumns * mRowCount) - mColumns && size() - mCursor <= mColumns &&
-                    size() % mColumns == 0)
-                    return true;
-                if (size() < mColumns)
-                    return true;
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
                 mRowJump = true;
@@ -404,8 +441,7 @@ template <typename T> void GridComponent<T>::update(int deltaTime)
 
 template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans)
 {
-    int numEntries {static_cast<int>(mEntries.size())};
-    if (numEntries == 0)
+    if (mEntries.empty())
         return;
 
     glm::mat4 trans {parentTrans * List::getTransform()};
@@ -417,6 +453,11 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
 
     // Clip to element boundaries.
     glm::vec3 dim {mSize.x, mSize.y, 0.0f};
+
+    if (!mFractionalRows && mSize.y > mItemSize.y)
+        dim.y = mVisibleRows * (mItemSize.y + mItemSpacing.y) + (mVerticalMargin * 2.0f) -
+                mItemSpacing.y;
+
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
@@ -428,13 +469,48 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     // example large scaling or small or no margins between items.
     std::vector<size_t> renderEntries;
 
-    for (size_t i {0}; i < mEntries.size(); ++i) {
-        if (i == static_cast<size_t>(mCursor) || i == static_cast<size_t>(mLastCursor))
+    const int currRow {static_cast<int>(std::ceil(mScrollPos))};
+    const int visibleRows {static_cast<int>(std::ceil(mVisibleRows))};
+    int startPos {0};
+    int loadItems {mColumns * visibleRows};
+    int loadedItems {0};
+
+    if (currRow > 0) {
+        if (GuiComponent::isAnimationPlaying(0) || mItemSpacing.y < mVerticalMargin) {
+            loadItems += mColumns;
+            startPos = (currRow - 1) * mColumns;
+        }
+        else {
+            if (mFractionalRows)
+                startPos = (currRow - 1) * mColumns;
+            else
+                startPos = currRow * mColumns;
+        }
+
+        if (mItemSpacing.y < mVerticalMargin) {
+            if (GuiComponent::isAnimationPlaying(0)) {
+                loadItems += mColumns;
+                startPos -= mColumns;
+                if (startPos < 0)
+                    startPos = 0;
+            }
+        }
+    }
+
+    if (!mFractionalRows && mItemSpacing.y < mVerticalMargin)
+        loadItems += mColumns;
+
+    for (int i {startPos}; i < size(); ++i) {
+        if (loadedItems == loadItems)
+            break;
+        ++loadedItems;
+        if (i == mCursor || i == mLastCursor)
             continue;
         renderEntries.emplace_back(i);
     }
 
-    renderEntries.emplace_back(mLastCursor);
+    if (mLastCursor >= startPos && mLastCursor < startPos + loadItems)
+        renderEntries.emplace_back(mLastCursor);
     if (mLastCursor != mCursor)
         renderEntries.emplace_back(mCursor);
 
@@ -488,8 +564,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    if (elem->has("columns"))
-        mColumns = glm::clamp(elem->get<unsigned int>("columns"), 1u, 100u);
+    mFractionalRows = (elem->has("fractionalRows") && elem->get<bool>("fractionalRows"));
 
     if (elem->has("itemSize")) {
         const glm::vec2& itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
@@ -544,29 +619,23 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
     }
 
-    // If horizontalMargin or verticalMargin are not defined, then they are automatically
-    // calculated so that scaled items don't get clipped at grid boundaries.
-    if (elem->has("horizontalMargin"))
-        mHorizontalMargin = glm::clamp(elem->get<float>("horizontalMargin"), -0.5f, 0.5f) * mSize.x;
-    else if (mItemScale < 1.0f)
-        mHorizontalMargin = 0.0f;
-    else
-        mHorizontalMargin = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
-
-    if (elem->has("verticalMargin"))
-        mVerticalMargin = glm::clamp(elem->get<float>("verticalMargin"), -0.5f, 0.5f) * mSize.y;
-    else if (mItemScale < 1.0f)
-        mVerticalMargin = 0.0f;
-    else
-        mVerticalMargin = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
-
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
+
+    mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
+                         mRenderer->getScreenWidth() * 1.0f);
+    mSize.y = glm::clamp(mSize.y, mRenderer->getScreenHeight() * 0.05f,
+                         mRenderer->getScreenHeight() * 1.0f);
 }
 
 template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& state)
 {
-    if (mWasScrolling && state == CursorState::CURSOR_STOPPED) {
+
+    if (mColumns != 0 && (mScrollVelocity == mColumns || mPreviousScrollVelocity == mColumns) &&
+        size() - mCursor <= size() % mColumns) {
+        mWasScrolling = false;
+    }
+    else if (mWasScrolling && state == CursorState::CURSOR_STOPPED) {
         if (mCursorChangedCallback)
             mCursorChangedCallback(state);
         mWasScrolling = false;
@@ -629,22 +698,32 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
     //            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 180.0f,
     //            animTime);
 
-    float visibleRows {mVisibleRows - 1.0f};
+    const float visibleRows {mVisibleRows - 1.0f};
     float startRow {static_cast<float>(mLastCursor / mColumns)};
     float endRow {static_cast<float>(mCursor / mColumns)};
 
     if (endRow <= visibleRows) {
-        if (startRow == endRow || startRow <= visibleRows)
-            startRow = 0.0f;
-        else if (startRow > visibleRows)
+        if (startRow == endRow || startRow <= visibleRows) {
+            startRow = mScrollPos;
+        }
+        else if (startRow > visibleRows) {
+            if (!mFractionalRows)
+                startRow = mScrollPos + 1.0f;
             startRow -= visibleRows;
+        }
         endRow = 0.0f;
     }
     else {
-        if (startRow <= visibleRows)
-            startRow = 0.0f;
-        else
+        if (startRow <= visibleRows) {
+            startRow = mScrollPos;
+        }
+        else {
+            if (mFractionalRows)
+                startRow = mScrollPos + visibleRows;
+            else
+                startRow = mScrollPos + 1.0f;
             startRow -= visibleRows;
+        }
         endRow -= visibleRows;
     }
 

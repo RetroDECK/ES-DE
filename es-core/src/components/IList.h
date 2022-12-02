@@ -74,6 +74,8 @@ protected:
     const ListLoopType mLoopType;
     int mCursor;
     int mLastCursor;
+    int mColumns;
+    int mRows;
     int mScrollTier;
     int mScrollVelocity;
     int mScrollTierAccumulator;
@@ -90,6 +92,8 @@ public:
         , mLoopType {loopType}
         , mCursor {0}
         , mLastCursor {0}
+        , mColumns {0}
+        , mRows {0}
         , mScrollTier {0}
         , mScrollVelocity {0}
         , mScrollTierAccumulator {0}
@@ -328,7 +332,26 @@ protected:
         if (mScrollVelocity == 0 || size() < 2)
             return;
 
+        bool doScroll {true};
+
+        // This is only needed for GridComponent.
+        if (mColumns != 0 && mScrollVelocity == -mColumns && mCursor < mColumns) {
+            doScroll = false;
+        }
+        else if (mColumns != 0 && mScrollVelocity == mColumns) {
+            if (size() - mCursor <= size() % mColumns)
+                doScroll = false;
+            else if (mCursor >= (mColumns * mRows) - mColumns && size() - mCursor <= mColumns &&
+                     size() % mColumns == 0)
+                doScroll = false;
+            else if (size() < mColumns)
+                doScroll = false;
+        }
+
         mLastCursor = mCursor;
+
+        if (!doScroll)
+            return;
 
         int cursor {mCursor + amt};
         int absAmt {amt < 0 ? -amt : amt};
