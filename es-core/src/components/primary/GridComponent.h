@@ -416,16 +416,9 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
                 config->isMappedLike("up", input) || config->isMappedLike("down", input) ||
                 config->isMappedLike("lefttrigger", input) ||
                 config->isMappedLike("righttrigger", input)) {
-                if constexpr (std::is_same_v<T, SystemData*>) {
-                    if (isScrolling())
-                        onCursorChanged(CursorState::CURSOR_STOPPED);
-                    List::listInput(0);
-                }
-                else {
-                    if (isScrolling())
-                        onCursorChanged(CursorState::CURSOR_STOPPED);
-                    List::listInput(0);
-                }
+                if (isScrolling())
+                    onCursorChanged(CursorState::CURSOR_STOPPED);
+                List::listInput(0);
             }
         }
     }
@@ -630,22 +623,25 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
 template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& state)
 {
+    if (mColumns == 0)
+        return;
 
-    if (mColumns != 0 && (mScrollVelocity == mColumns || mPreviousScrollVelocity == mColumns) &&
-        size() - mCursor <= size() % mColumns) {
+    if (mWasScrolling && state == CursorState::CURSOR_STOPPED && mScrollVelocity != 0) {
         mWasScrolling = false;
-    }
-    else if (mWasScrolling && state == CursorState::CURSOR_STOPPED) {
         if (mCursorChangedCallback)
             mCursorChangedCallback(state);
-        mWasScrolling = false;
         return;
     }
 
-    if (mCursor == mLastCursor && !mJustCalculatedLayout)
+    if (mCursor == mLastCursor && !mJustCalculatedLayout) {
+        mWasScrolling = false;
+        if (mCursorChangedCallback)
+            mCursorChangedCallback(state);
         return;
-    else
+    }
+    else {
         mJustCalculatedLayout = false;
+    }
 
     float startPos {mEntryOffset};
     float posMax {static_cast<float>(mEntries.size())};
@@ -699,61 +695,43 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
     //            animTime);
 
     const float visibleRows {mVisibleRows - 1.0f};
-    float startRow {static_cast<float>(mLastCursor / mColumns)};
+    const float startRow {static_cast<float>(mScrollPos)};
     float endRow {static_cast<float>(mCursor / mColumns)};
 
-    if (endRow <= visibleRows) {
-        if (startRow == endRow || startRow <= visibleRows) {
-            startRow = mScrollPos;
-        }
-        else if (startRow > visibleRows) {
-            if (!mFractionalRows)
-                startRow = mScrollPos + 1.0f;
-            startRow -= visibleRows;
-        }
+    if (endRow <= visibleRows)
         endRow = 0.0f;
-    }
-    else {
-        if (startRow <= visibleRows) {
-            startRow = mScrollPos;
-        }
-        else {
-            if (mFractionalRows)
-                startRow = mScrollPos + visibleRows;
-            else
-                startRow = mScrollPos + 1.0f;
-            startRow -= visibleRows;
-        }
+    else
         endRow -= visibleRows;
+
+    if (startPos != endPos) {
+        Animation* anim {new LambdaAnimation(
+            [this, startPos, endPos, posMax, startRow, endRow](float t) {
+                // Non-linear interpolation.
+                t = 1.0f - (1.0f - t) * (1.0f - t);
+
+                float f {(endPos * t) + (startPos * (1.0f - t))};
+                if (f < 0)
+                    f += posMax;
+                if (f >= posMax)
+                    f -= posMax;
+
+                mEntryOffset = f;
+                mScrollPos = {(endRow * t) + (startRow * (1.0f - t))};
+
+                if (mInstantItemTransitions) {
+                    mTransitionFactor = 1.0f;
+                }
+                else {
+                    // Linear interpolation.
+                    mTransitionFactor = t;
+                    // Non-linear interpolation doesn't seem to be a good match for this component.
+                    // mTransitionFactor = {(1.0f * t) + (0.0f * (1.0f - t))};
+                }
+            },
+            static_cast<int>(animTime))};
+
+        GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
     }
-
-    Animation* anim {new LambdaAnimation(
-        [this, startPos, endPos, posMax, startRow, endRow](float t) {
-            // Non-linear interpolation.
-            t = 1.0f - (1.0f - t) * (1.0f - t);
-
-            float f {(endPos * t) + (startPos * (1.0f - t))};
-            if (f < 0)
-                f += posMax;
-            if (f >= posMax)
-                f -= posMax;
-
-            mEntryOffset = f;
-            mScrollPos = {(endRow * t) + (startRow * (1.0f - t))};
-
-            if (mInstantItemTransitions) {
-                mTransitionFactor = 1.0f;
-            }
-            else {
-                // Linear interpolation.
-                mTransitionFactor = t;
-                // Non-linear interpolation doesn't seem to be a good match for this component.
-                // mTransitionFactor = {(1.0f * t) + (0.0f * (1.0f - t))};
-            }
-        },
-        static_cast<int>(animTime))};
-
-    GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
 
     if (mCursorChangedCallback)
         mCursorChangedCallback(state);

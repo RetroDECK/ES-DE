@@ -350,8 +350,10 @@ protected:
 
         mLastCursor = mCursor;
 
-        if (!doScroll)
+        if (!doScroll) {
+            onCursorChanged(CursorState::CURSOR_STOPPED);
             return;
+        }
 
         int cursor {mCursor + amt};
         int absAmt {amt < 0 ? -amt : amt};
