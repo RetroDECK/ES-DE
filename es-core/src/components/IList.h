@@ -222,6 +222,8 @@ protected:
     {
         mLastCursor = mCursor;
         mCursor = 0;
+        mScrollVelocity = 0;
+        mScrollTier = 0;
         onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
         return true;
@@ -231,6 +233,8 @@ protected:
     {
         mLastCursor = mCursor;
         mCursor = static_cast<int>(mEntries.size()) - 1;
+        mScrollVelocity = 0;
+        mScrollTier = 0;
         onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
         return true;
