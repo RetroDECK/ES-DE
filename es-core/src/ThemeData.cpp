@@ -161,6 +161,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
        {"itemTransitions", STRING},
+       {"rowTransitions", STRING},
        {"itemSpacing", NORMALIZED_PAIR},
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},

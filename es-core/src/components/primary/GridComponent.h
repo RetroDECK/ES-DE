@@ -102,6 +102,7 @@ private:
     float mItemScale;
     glm::vec2 mItemSpacing;
     bool mInstantItemTransitions;
+    bool mInstantRowTransitions;
     float mHorizontalMargin;
     float mVerticalMargin;
     float mUnfocusedItemOpacity;
@@ -136,6 +137,7 @@ GridComponent<T>::GridComponent()
     , mItemScale {1.05f}
     , mItemSpacing {0.0f, 0.0f}
     , mInstantItemTransitions {false}
+    , mInstantRowTransitions {false}
     , mHorizontalMargin {0.0f}
     , mVerticalMargin {0.0f}
     , mUnfocusedItemOpacity {1.0f}
@@ -583,6 +585,22 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (elem->has("rowTransitions")) {
+        const std::string& rowTransitions {elem->get<std::string>("rowTransitions")};
+        if (rowTransitions == "animate") {
+            mInstantRowTransitions = false;
+        }
+        else if (rowTransitions == "instant") {
+            mInstantRowTransitions = true;
+        }
+        else {
+            mInstantRowTransitions = false;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"rowTransitions\" for element \""
+                            << element.substr(5) << "\" defined as \"" << rowTransitions << "\"";
+        }
+    }
+
     // If itemSpacing is not defined, then it's automatically calculated so that scaled items
     // don't overlap. If the property is present but one axis is defined as -1 then set this
     // axis to the same pixel value as the other axis.
@@ -716,7 +734,11 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
                     f -= posMax;
 
                 mEntryOffset = f;
-                mScrollPos = {(endRow * t) + (startRow * (1.0f - t))};
+
+                if (mInstantRowTransitions)
+                    mScrollPos = endRow;
+                else
+                    mScrollPos = {(endRow * t) + (startRow * (1.0f - t))};
 
                 if (mInstantItemTransitions) {
                     mTransitionFactor = 1.0f;
