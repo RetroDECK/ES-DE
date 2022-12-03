@@ -72,6 +72,11 @@ public:
                     unsigned int properties) override;
 
 private:
+    void onScroll() override
+    {
+        if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+            NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+    }
     void onCursorChanged(const CursorState& state) override;
     bool isScrolling() const override { return List::isScrolling(); }
     void stopScrolling() override { List::stopScrolling(); }
