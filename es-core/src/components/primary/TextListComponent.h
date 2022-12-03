@@ -82,7 +82,7 @@ public:
         return mLetterCaseGroupedCollections;
     }
 
-protected:
+private:
     void onShow() override { mLoopTime = 0; }
     void onScroll() override
     {
@@ -90,8 +90,6 @@ protected:
             NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     }
     void onCursorChanged(const CursorState& state) override;
-
-private:
     bool isScrolling() const override { return List::isScrolling(); }
     void stopScrolling() override { List::stopScrolling(); }
     const int getScrollingVelocity() override { return List::getScrollingVelocity(); }
