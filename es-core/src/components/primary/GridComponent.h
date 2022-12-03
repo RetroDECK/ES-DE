@@ -79,7 +79,13 @@ private:
     }
     void onCursorChanged(const CursorState& state) override;
     bool isScrolling() const override { return List::isScrolling(); }
-    void stopScrolling() override { List::stopScrolling(); }
+    void stopScrolling() override
+    {
+        List::stopScrolling();
+        // Only finish the animation if we're in the gamelist view.
+        if (mGamelistView)
+            GuiComponent::finishAnimation(0);
+    }
     const int getScrollingVelocity() override { return List::getScrollingVelocity(); }
     void clear() override { List::clear(); }
     const T& getSelected() const override { return List::getSelected(); }
