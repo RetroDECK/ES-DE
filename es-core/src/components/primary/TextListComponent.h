@@ -201,15 +201,19 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
                 return true;
             }
             if (config->isMappedLike("leftshoulder", input)) {
-                if (mCancelTransitionsCallback)
-                    mCancelTransitionsCallback();
-                List::listInput(-10);
+                if (mCursor != 0) {
+                    if (mCancelTransitionsCallback)
+                        mCancelTransitionsCallback();
+                    List::listInput(-10);
+                }
                 return true;
             }
             if (config->isMappedLike("rightshoulder", input)) {
-                if (mCancelTransitionsCallback)
-                    mCancelTransitionsCallback();
-                List::listInput(10);
+                if (mCursor != size() - 1) {
+                    if (mCancelTransitionsCallback)
+                        mCancelTransitionsCallback();
+                    List::listInput(10);
+                }
                 return true;
             }
             if (config->isMappedLike("lefttrigger", input)) {
@@ -233,16 +237,9 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
                 config->isMappedLike("rightshoulder", input) ||
                 config->isMappedLike("lefttrigger", input) ||
                 config->isMappedLike("righttrigger", input)) {
-                if constexpr (std::is_same_v<T, SystemData*>) {
-                    if (isScrolling())
-                        onCursorChanged(CursorState::CURSOR_STOPPED);
-                    List::listInput(0);
-                }
-                else {
-                    if (isScrolling())
-                        onCursorChanged(CursorState::CURSOR_STOPPED);
-                    List::listInput(0);
-                }
+                if (isScrolling())
+                    onCursorChanged(CursorState::CURSOR_STOPPED);
+                List::listInput(0);
             }
         }
     }

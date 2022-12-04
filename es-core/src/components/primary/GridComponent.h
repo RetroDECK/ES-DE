@@ -41,6 +41,9 @@ public:
     void updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
     void onDemandTextureLoad() override;
     void calculateLayout();
+    const int getColumnCount() const { return mColumns; }
+    const int getRowCount() const { return mRows; }
+    void setScrollVelocity(int velocity) { mScrollVelocity = velocity; }
 
     void setCancelTransitionsCallback(const std::function<void()>& func) override
     {
@@ -93,7 +96,11 @@ private:
     const T& getPrevious() const override { return List::getPrevious(); }
     const T& getFirst() const override { return List::getFirst(); }
     const T& getLast() const override { return List::getLast(); }
-    bool setCursor(const T& obj) override { return List::setCursor(obj); }
+    bool setCursor(const T& obj) override
+    {
+        mLastCursor = mCursor;
+        return List::setCursor(obj);
+    }
     bool remove(const T& obj) override { return List::remove(obj); }
     int size() const override { return List::size(); }
 
@@ -129,7 +136,6 @@ private:
     bool mGamelistView;
     bool mFractionalRows;
     bool mLayoutValid;
-    bool mRowJump;
     bool mWasScrolling;
     bool mJustCalculatedLayout;
 };
@@ -164,7 +170,6 @@ GridComponent<T>::GridComponent()
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mFractionalRows {false}
     , mLayoutValid {false}
-    , mRowJump {false}
     , mWasScrolling {false}
     , mJustCalculatedLayout {false}
 {
@@ -377,36 +382,33 @@ template <typename T> bool GridComponent<T>::input(InputConfig* config, Input in
 {
     if (size() > 0) {
         if (input.value != 0) {
-            mRowJump = false;
-
             if (config->isMappedLike("left", input)) {
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
-                if (mCursor % mColumns == 0)
-                    mRowJump = true;
                 List::listInput(-1);
                 return true;
             }
             if (config->isMappedLike("right", input)) {
                 if (mCancelTransitionsCallback)
                     mCancelTransitionsCallback();
-                if (mCursor % mColumns == mColumns - 1)
-                    mRowJump = true;
                 List::listInput(1);
                 return true;
             }
             if (config->isMappedLike("up", input)) {
-                if (mCancelTransitionsCallback)
-                    mCancelTransitionsCallback();
-                mRowJump = true;
-                List::listInput(-mColumns);
+                if (mCursor >= mColumns) {
+                    if (mCancelTransitionsCallback)
+                        mCancelTransitionsCallback();
+                    List::listInput(-mColumns);
+                }
                 return true;
             }
             if (config->isMappedLike("down", input)) {
-                if (mCancelTransitionsCallback)
-                    mCancelTransitionsCallback();
-                mRowJump = true;
-                List::listInput(mColumns);
+                const int columnModulus {size() % mColumns};
+                if (mCursor < size() - (columnModulus == 0 ? mColumns : columnModulus)) {
+                    if (mCancelTransitionsCallback)
+                        mCancelTransitionsCallback();
+                    List::listInput(mColumns);
+                }
                 return true;
             }
             if (config->isMappedLike("lefttrigger", input)) {
@@ -732,39 +734,37 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
     else
         endRow -= visibleRows;
 
-    if (startPos != endPos) {
-        Animation* anim {new LambdaAnimation(
-            [this, startPos, endPos, posMax, startRow, endRow](float t) {
-                // Non-linear interpolation.
-                t = 1.0f - (1.0f - t) * (1.0f - t);
+    Animation* anim {new LambdaAnimation(
+        [this, startPos, endPos, posMax, startRow, endRow](float t) {
+            // Non-linear interpolation.
+            t = 1.0f - (1.0f - t) * (1.0f - t);
 
-                float f {(endPos * t) + (startPos * (1.0f - t))};
-                if (f < 0)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
+            float f {(endPos * t) + (startPos * (1.0f - t))};
+            if (f < 0)
+                f += posMax;
+            if (f >= posMax)
+                f -= posMax;
 
-                mEntryOffset = f;
+            mEntryOffset = f;
 
-                if (mInstantRowTransitions)
-                    mScrollPos = endRow;
-                else
-                    mScrollPos = {(endRow * t) + (startRow * (1.0f - t))};
+            if (mInstantRowTransitions)
+                mScrollPos = endRow;
+            else
+                mScrollPos = {(endRow * t) + (startRow * (1.0f - t))};
 
-                if (mInstantItemTransitions) {
-                    mTransitionFactor = 1.0f;
-                }
-                else {
-                    // Linear interpolation.
-                    mTransitionFactor = t;
-                    // Non-linear interpolation doesn't seem to be a good match for this component.
-                    // mTransitionFactor = {(1.0f * t) + (0.0f * (1.0f - t))};
-                }
-            },
-            static_cast<int>(animTime))};
+            if (mInstantItemTransitions) {
+                mTransitionFactor = 1.0f;
+            }
+            else {
+                // Linear interpolation.
+                mTransitionFactor = t;
+                // Non-linear interpolation doesn't seem to be a good match for this component.
+                // mTransitionFactor = {(1.0f * t) + (0.0f * (1.0f - t))};
+            }
+        },
+        static_cast<int>(animTime))};
 
-        GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
-    }
+    GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
 
     if (mCursorChangedCallback)
         mCursorChangedCallback(state);

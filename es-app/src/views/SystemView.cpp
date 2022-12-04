@@ -205,6 +205,9 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
         else
             prompts.push_back(HelpPrompt("left/right", "choose"));
     }
+    else if (mGrid != nullptr) {
+        prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
+    }
     else if (mTextList != nullptr) {
         prompts.push_back(HelpPrompt("up/down", "choose"));
     }
@@ -223,8 +226,42 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 void SystemView::onCursorChanged(const CursorState& state)
 {
     const int cursor {mPrimary->getCursor()};
+    const int scrollVelocity {mPrimary->getScrollingVelocity()};
     const std::string& transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
     mFadeTransitions = transitionStyle == "fade";
+
+    // Some logic needed to avoid various navigation glitches with GridComponent and
+    // TextListComponent.
+    if (state == CursorState::CURSOR_STOPPED && mCarousel == nullptr) {
+        const int numEntries {static_cast<int>(mPrimary->getNumEntries())};
+        bool doStop {false};
+
+        if (cursor == 0 && mLastCursor == numEntries - 1 && std::abs(scrollVelocity) == 1)
+            doStop = false;
+        else if (cursor == 0)
+            doStop = true;
+        else if (cursor == numEntries - 1 && mLastCursor == 0 && std::abs(scrollVelocity) == 1)
+            doStop = false;
+        else if (cursor == numEntries - 1)
+            doStop = true;
+
+        if (!doStop && mGrid != nullptr && std::abs(scrollVelocity) == mGrid->getColumnCount()) {
+            const int columns {mGrid->getColumnCount()};
+            const int columnModulus {numEntries % columns};
+
+            if (cursor < columns)
+                doStop = true;
+            else if (cursor >= numEntries - (columnModulus == 0 ? columns : columnModulus))
+                doStop = true;
+        }
+
+        if (doStop) {
+            if (mGrid != nullptr)
+                mGrid->setScrollVelocity(0);
+            mPrimary->stopScrolling();
+            mNavigated = false;
+        }
+    }
 
     // Avoid double updates.
     if (cursor != mLastCursor) {
@@ -238,8 +275,6 @@ void SystemView::onCursorChanged(const CursorState& state)
         for (auto& video : mSystemElements[mLastCursor].videoComponents)
             video->stopVideoPlayer();
     }
-
-    const int scrollVelocity {mPrimary->getScrollingVelocity()};
 
     // This is needed to avoid erratic camera movements during extreme navigation input when using
     // slide transitions. This should very rarely occur during normal application usage.
