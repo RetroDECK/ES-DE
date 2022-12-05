@@ -353,24 +353,24 @@ void SystemView::onCursorChanged(const CursorState& state)
     Animation* anim;
 
     float animTime {380.0f};
+    float timeMin {200.0f};
+    float timeDiff {1.0f};
 
     if (mGrid != nullptr) {
         animTime = 250.0f;
+        timeMin = 100.0f;
     }
-    else {
-        float timeDiff {1.0f};
 
-        // If startPos is inbetween two positions then reduce the time slightly as the distance will
-        // be shorter meaning the animation would play for too long if not compensated for.
-        if (scrollVelocity == 1)
-            timeDiff = endPos - startPos;
-        else if (scrollVelocity == -1)
-            timeDiff = startPos - endPos;
+    // If startPos is inbetween two positions then reduce the time slightly as the distance will
+    // be shorter meaning the animation would play for too long if not compensated for.
+    if (scrollVelocity == 1)
+        timeDiff = endPos - startPos;
+    else if (scrollVelocity == -1)
+        timeDiff = startPos - endPos;
 
-        if (timeDiff != 1.0f)
-            animTime =
-                glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 200.0f, animTime);
-    }
+    if (timeDiff != 1.0f)
+        animTime =
+            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), timeMin, animTime);
 
     if (transitionStyle == "fade") {
         float startFade {mFadeOpacity};
@@ -405,6 +405,7 @@ void SystemView::onCursorChanged(const CursorState& state)
                 // Non-linear interpolation.
                 t = 1.0f - (1.0f - t) * (1.0f - t);
                 float f {(endPos * t) + (startPos * (1.0f - t))};
+
                 if (f < 0)
                     f += posMax;
                 if (f >= posMax)
@@ -1327,7 +1328,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
     int renderAfter {static_cast<int>(mCamOffset)};
 
     // If we're transitioning then also render the previous and next systems.
-    if (mPrimary->isAnimationPlaying(0)) {
+    if (isAnimationPlaying(0)) {
         renderBefore -= 1;
         renderAfter += 1;
     }
@@ -1339,7 +1340,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
         while (index >= static_cast<int>(mPrimary->getNumEntries()))
             index -= static_cast<int>(mPrimary->getNumEntries());
 
-        if (mPrimary->isAnimationPlaying(0) || index == mPrimary->getCursor()) {
+        if (isAnimationPlaying(0) || index == mPrimary->getCursor()) {
             glm::mat4 elementTrans {trans};
             if (mCarousel != nullptr) {
                 if (mCarousel->getType() ==

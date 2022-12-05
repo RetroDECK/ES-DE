@@ -744,8 +744,8 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
         [this, startPos, endPos, posMax, startRow, endRow](float t) {
             // Non-linear interpolation.
             t = 1.0f - (1.0f - t) * (1.0f - t);
-
             float f {(endPos * t) + (startPos * (1.0f - t))};
+
             if (f < 0)
                 f += posMax;
             if (f >= posMax)
