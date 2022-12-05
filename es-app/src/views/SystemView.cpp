@@ -128,7 +128,7 @@ bool SystemView::input(InputConfig* config, Input input)
             return true;
         }
 
-        if (config->isMappedTo("back", input) &&
+        if (config->isMappedTo("x", input) &&
             Settings::getInstance()->getBool("ScreensaverControls")) {
             if (!mWindow->isScreensaverActive()) {
                 ViewController::getInstance()->stopScrolling();
@@ -218,7 +218,7 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (Settings::getInstance()->getBool("ScreensaverControls"))
-        prompts.push_back(HelpPrompt("back", "screensaver"));
+        prompts.push_back(HelpPrompt("x", "screensaver"));
 
     return prompts;
 }
