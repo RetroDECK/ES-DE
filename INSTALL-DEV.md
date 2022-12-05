@@ -1804,7 +1804,7 @@ In addition to this extra logging, a few key combinations are enabled when in de
 
 **Ctrl + i**
 
-This will draw a semi-transparent red frame behind all image and animation components. It will also draw a green frame around the carousel.
+This will draw a semi-transparent red frame behind all image and animation components. It will also draw a green frame around the carousel and grid.
 
 **Ctrl + t**
 

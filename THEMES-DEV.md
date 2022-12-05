@@ -1163,7 +1163,7 @@ Properties:
 
 **The grid component is currently in active development which means that properties and values may change without prior warning up until the final 2.0.0 release.**
 
-An X*Y grid for navigating and selecting games or systems using the left/right and up/down buttons.
+An X*Y grid for navigating and selecting games or systems using the left/right and up/down buttons. The layout including the amount of columns and rows is automatically calculated based on the relevant property values.
 
 Supported views:
 * `system`
@@ -1176,15 +1176,12 @@ Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0 0.1`
 * `size` - type: NORMALIZED_PAIR
+    - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `1 0.8`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the textlist exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
-* `columns` - type: UNSIGNED_INTEGER
-    - The number of columns to add to the grid. The row count will be automatically calculated by dividing the overall number of items by the value of this property.
-    - Minimum value is `1` and maximum value is `100`
-    - Default is `5`
 * `staticItem` - type: PATH
     - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
 * `itemType` - type: STRING
@@ -1203,6 +1200,9 @@ Properties:
     - Default is `marquee`
 * `defaultItem` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `fractionalRows` - type: BOOLEAN
+    - Whether to allow rendering of fractional rows of items. If set to false then the effective area of the overall element size will be snapped to the item height multiplied by `itemScale`. Note that if setting `itemScale` too high relative to the `itemSpacing` Y axis value then fractional rows may still be rendered even if the `fractionalRows` property is set to false.
+    - Default is `false`
 * `itemSize` - type: NORMALIZED_PAIR
     - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
@@ -1215,15 +1215,13 @@ Properties:
     - How to render item transitions when navigating the grid. By default a scaling and opacity fade animation will be played when moving between items (assuming `itemScale` and `unfocusedItemOpacity` have not been set to `1`) but if this property is set to `instant` then the transitions will be immediate.
     - Valid values are `animate` or `instant`
     - Default is `animate`
+* `rowTransitions` - type: STRING
+    - How to render row transitions when navigating the grid. By default a sliding animation will be rendered when moving between rows but if this property is set to `instant` then the transitions will be immediate.
+    - Valid values are `animate` or `instant`
+    - Default is `animate`
 * `itemSpacing` - type: NORMALIZED_PAIR
     - The horizontal and vertical space between items. This value is added to the unscaled item size, i.e. `itemSize` before it's been multiplied by `itemScale`. This means that if an axis is set to `0` then unscaled items will be perfectly adjacent to each other on that axis but if `itemScale` has been set to higher than `1` then the currently selected item may overlap adjacent items. If this property is omitted then spacing will be automatically calculated so that no overlaps occur during scaling. However you'd normally want to define and adjust this property for an optimal layout. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis. Note that all spacing calculations are based on the value defined by `itemSize` which may or may not be the same as the actual image sizes, depending on their aspect ratios.
     - Minimum value per axis is `0` and maximum value per axis is `0.1`
-* `horizontalOffset` - type: FLOAT
-    - Offsets the grid horizontally inside its designated area, as defined by the `size` property. The value is relative to the size of the grid with `1` being equivalent to its entire width. This property is primarily used to make sure scaled items are not clipped at grid boundaries, but if omitted the offset is automatically calculated so you normally don't need to define it unless you have a very specific need to fine-tune the layout.
-    - Minimum value is `-0.5` and maximum value is `0.5`
-* `verticalOffset` - type: FLOAT
-    - Offsets the grid vertically inside its designated area, as defined by the `size` property. The value is relative to the size of the grid with `1` being equivalent to its entire height. This property is primarily used to make sure scaled items are not clipped at grid boundaries, but if omitted the offset is automatically calculated so you normally don't need to define it unless you have a very specific need to fine-tune the layout.
-    - Minimum value is `-0.5` and maximum value is `0.5`
 * `unfocusedItemOpacity` - type: FLOAT
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`

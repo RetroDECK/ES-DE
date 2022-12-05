@@ -13,6 +13,7 @@
 * Made fundamental changes to the application logic by removing most view styles and replacing them with a new theme variants concept
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Added theme support for defining and applying different color schemes
+* Added a new grid component that is usable in both the system and gamelist views
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
@@ -21,10 +22,14 @@
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
+* Changed the order of the help system entries Y, X, B and A to instead be listed as A, B, X and Y
+* Changed the start button for the screensaver from "Back" to "X"
+* Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
+* Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
+* Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as an alternative emulator for the gameandwatch system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
-* (Linux) Added support for the Nintendo Wii U (wiiu) game system by adding the Cemu standalone emulator
 * (Linux) Added support for the Sega Model 3 (model3) game system by adding the Supermodel standalone emulator
 * (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
 * Added support for the Sega Model 2 (model2) game system on Linux on macOS by adding the MAME - Current RetroArch core
@@ -34,7 +39,7 @@
 * Added a %GAMEDIR% variable to the -rompath option for all MAME standalone entries to allow launching games from subdirectories
 * Added Triforce (Dolphin fork) standalone as an alternative emulator for the gc system on Linux and Windows
 * Added simple64 standalone as an alternative emulator for the n64 system on Linux and Windows
-* (Linux) Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 system
+* Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 system on Linux and Windows
 * Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
 * (Windows) Added PrimeHack as an alternative emulator for the gc and wii systems
 * (Windows) Added Project64 as an alternative emulator for the n64 system
@@ -212,6 +217,7 @@
 * Text wrapping did not work correctly for text that typically does not contain spaces, like Japanese
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
+* For gamelists which mixed files and folders, the folder sorting was sometimes incorrect
 * Games located in subdirectories were not added back to custom collections when disabling the "Exclude from game counter" metadata option
 * Enabling and then disabling the "Exclude from game counter" metadata option would remove a game from all currently disabled custom collections
 * Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists
@@ -227,6 +233,7 @@
 * The video player output frame width was not set correctly which made some videos render as garbled when using FFmpeg 5.1 and later
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
 * The gamelist quick list scrolling overlay would not disappear as intended under some circumstances
+* Using the trigger buttons to jump to the start or end of a gamelist did not reset any currently held navigation buttons
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The tile property for the image element did not work correctly with SVG images
