@@ -139,7 +139,7 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 
     addChild(&mMenu);
 
-    mMenu.addButton("START", "start", std::bind(&GuiScraperMenu::pressedStart, this));
+    mMenu.addButton("START", "start scraper", std::bind(&GuiScraperMenu::pressedStart, this));
     mMenu.addButton("BACK", "back", [&] { delete this; });
 
     setSize(mMenu.getSize());
@@ -1192,6 +1192,6 @@ std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
     prompts.push_back(HelpPrompt("b", "back"));
-    prompts.push_back(HelpPrompt("y", "start"));
+    prompts.push_back(HelpPrompt("y", "start scraper"));
     return prompts;
 }
