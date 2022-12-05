@@ -49,7 +49,12 @@ void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
     FileData* cursor {getCursor()};
     if (!cursor->isPlaceHolder()) {
         populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
+        // Needed to avoid some minor transition animation glitches.
+        if (mGrid != nullptr)
+            mGrid->setSuppressTransitions(true);
         setCursor(cursor);
+        if (mGrid != nullptr)
+            mGrid->setSuppressTransitions(false);
     }
     else {
         populateList(mRoot->getChildrenListToDisplay(), mRoot);

@@ -435,11 +435,18 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 }
                 else if (CollectionSystemsManager::getInstance()->toggleGameInCollection(
                              entryToUpdate)) {
+                    // Needed to avoid some minor transition animation glitches.
+                    auto grid =
+                        ViewController::getInstance()->getGamelistView(system).get()->mGrid.get();
+                    if (grid != nullptr)
+                        grid->setSuppressTransitions(true);
+
                     // As the toggling of the game destroyed this object, we need to get the view
                     // from ViewController instead of using the reference that existed before the
                     // destruction. Otherwise we get random crashes.
                     GamelistView* view {
                         ViewController::getInstance()->getGamelistView(system).get()};
+
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                         !entryToUpdate->getSystem()->isCustomCollection()) {
@@ -457,6 +464,10 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     else if (selectLastEntry && view->getPrimary()->size() > 0) {
                         view->setCursor(view->getLastEntry());
                     }
+
+                    if (grid != nullptr)
+                        grid->setSuppressTransitions(false);
+
                     // Display the indication icons which show what games are part of the
                     // custom collection currently being edited. This is done cheaply using
                     // onFileChanged() which will trigger populateList().

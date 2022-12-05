@@ -44,6 +44,7 @@ public:
     const int getColumnCount() const { return mColumns; }
     const int getRowCount() const { return mRows; }
     void setScrollVelocity(int velocity) { mScrollVelocity = velocity; }
+    void setSuppressTransitions(bool state) { mSuppressTransitions = state; }
 
     void setCancelTransitionsCallback(const std::function<void()>& func) override
     {
@@ -138,6 +139,7 @@ private:
     bool mLayoutValid;
     bool mWasScrolling;
     bool mJustCalculatedLayout;
+    bool mSuppressTransitions;
 };
 
 template <typename T>
@@ -172,6 +174,7 @@ GridComponent<T>::GridComponent()
     , mLayoutValid {false}
     , mWasScrolling {false}
     , mJustCalculatedLayout {false}
+    , mSuppressTransitions {false}
 {
 }
 
@@ -724,6 +727,9 @@ template <typename T> void GridComponent<T>::onCursorChanged(const CursorState& 
     //        animTime =
     //            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 180.0f,
     //            animTime);
+
+    if (mSuppressTransitions)
+        animTime = 0.0f;
 
     const float visibleRows {mVisibleRows - 1.0f};
     const float startRow {static_cast<float>(mScrollPos)};
