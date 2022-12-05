@@ -32,7 +32,7 @@
 #include <SDL2/SDL.h>
 
 GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
-    : mMenu {"OPTIONS"}
+    : mMenu {"GAMELIST OPTIONS"}
     , mSystem {system}
     , mFiltersChanged {false}
     , mCancelled {false}
