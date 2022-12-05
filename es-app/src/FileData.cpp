@@ -538,7 +538,7 @@ void FileData::sort(ComparisonFunction& comparator,
                              getSortTypeFromString("filename, ascending").comparisonFunction);
         }
 
-        if (foldersOnTop && mOnlyFolders)
+        if (foldersOnTop)
             std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
 
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
@@ -685,7 +685,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     }
 
     // Sort favorite games and the other games separately.
-    if (foldersOnTop && mOnlyFolders) {
+    if (foldersOnTop) {
         std::stable_sort(mChildrenFavoritesFolders.begin(), mChildrenFavoritesFolders.end(),
                          comparator);
         std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
