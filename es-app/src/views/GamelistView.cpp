@@ -438,9 +438,9 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::GAMELIST)
-        prompts.push_back(HelpPrompt("a", "enter"));
+        prompts.push_back(HelpPrompt("a", "select"));
     else
-        prompts.push_back(HelpPrompt("a", "launch"));
+        prompts.push_back(HelpPrompt("a", "select"));
 
     prompts.push_back(HelpPrompt("b", "back"));
     prompts.push_back(HelpPrompt("x", "view media"));
