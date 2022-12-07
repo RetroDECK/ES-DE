@@ -42,6 +42,7 @@ struct HelpStyle {
         std::string button_lr;
         std::string button_lt;
         std::string button_rt;
+        std::string button_ltrt;
 
         // SNES
         std::string button_a_SNES;
