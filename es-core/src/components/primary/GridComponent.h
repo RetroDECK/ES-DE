@@ -525,20 +525,35 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     if (mLastCursor != mCursor)
         renderEntries.emplace_back(mCursor);
 
-    float opacity {mUnfocusedItemOpacity};
     float scale {1.0f};
+    float opacity {1.0f};
 
     trans[3].y -= (mItemSize.y + mItemSpacing.y) * mScrollPos;
     mRenderer->setMatrix(trans);
 
     for (auto it = renderEntries.cbegin(); it != renderEntries.cend(); ++it) {
+        float metadataOpacity {1.0f};
+
+        if constexpr (std::is_same_v<T, FileData*>) {
+            // If a game is marked as hidden, lower the opacity a lot.
+            // If a game is marked to not be counted, lower the opacity a moderate amount.
+            if (mEntries.at(*it).object->getHidden())
+                metadataOpacity = 0.4f;
+            else if (!mEntries.at(*it).object->getCountAsGame())
+                metadataOpacity = 0.7f;
+        }
+
+        opacity = mUnfocusedItemOpacity * metadataOpacity;
+
         if (*it == static_cast<size_t>(mCursor)) {
             scale = glm::mix(1.0f, mItemScale, mTransitionFactor);
-            opacity = glm::mix(mUnfocusedItemOpacity, 1.0f, mTransitionFactor);
+            opacity = glm::mix(mUnfocusedItemOpacity * metadataOpacity, 1.0f * metadataOpacity,
+                               mTransitionFactor);
         }
         else if (*it == static_cast<size_t>(mLastCursor)) {
             scale = glm::mix(mItemScale, 1.0f, mTransitionFactor);
-            opacity = glm::mix(1.0f, mUnfocusedItemOpacity, mTransitionFactor);
+            opacity = glm::mix(1.0f * metadataOpacity, mUnfocusedItemOpacity * metadataOpacity,
+                               mTransitionFactor);
         }
 
         mEntries.at(*it).data.item->setScale(scale);
