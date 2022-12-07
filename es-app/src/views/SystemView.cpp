@@ -449,7 +449,7 @@ void SystemView::populate()
     if (SystemData::sSystemVector.size() == 0)
         return;
 
-    LOG(LogDebug) << "SystemView::populate(): Populating carousel";
+    LOG(LogDebug) << "SystemView::populate(): Populating primary element...";
 
     auto themeSets = ThemeData::getThemeSets();
     std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
@@ -467,6 +467,7 @@ void SystemView::populate()
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};
         std::string itemPath;
         std::string defaultItemPath;
+        std::string itemText;
 
         if (mLegacyMode && mViewNeedsReload) {
             if (mCarousel == nullptr) {
@@ -577,6 +578,8 @@ void SystemView::populate()
                                 itemPath = element.second.get<std::string>("staticItem");
                             if (element.second.has("defaultItem"))
                                 defaultItemPath = element.second.get<std::string>("defaultItem");
+                            if (element.second.has("text"))
+                                itemText = element.second.get<std::string>("text");
                         }
                     }
                     else if (element.second.type == "image") {
@@ -738,12 +741,17 @@ void SystemView::populate()
 
         if (mCarousel != nullptr) {
             CarouselComponent<SystemData*>::Entry entry;
-            // Keep showing only the short name for legacy themes to maintain maximum
-            // backward compatibility. This also applies to unreadable theme sets.
-            if (mLegacyMode)
+            if (mLegacyMode) {
+                // Keep showing only the short name for legacy themes to maintain maximum
+                // backward compatibility. This also applies to unreadable theme sets.
                 entry.name = it->getName();
-            else
-                entry.name = it->getFullName();
+            }
+            else {
+                if (itemText == "")
+                    entry.name = it->getFullName();
+                else
+                    entry.name = itemText;
+            }
             letterCaseFunc(entry.name);
             entry.object = it;
             entry.data.itemPath = itemPath;
@@ -752,7 +760,10 @@ void SystemView::populate()
         }
         else if (mGrid != nullptr) {
             GridComponent<SystemData*>::Entry entry;
-            entry.name = it->getFullName();
+            if (itemText == "")
+                entry.name = it->getFullName();
+            else
+                entry.name = itemText;
             letterCaseFunc(entry.name);
             entry.object = it;
             entry.data.itemPath = itemPath;
