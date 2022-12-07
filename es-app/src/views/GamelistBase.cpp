@@ -707,12 +707,13 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 mTextList->addEntry(textListEntry);
             }
         }
-        if (mGrid != nullptr)
-            mGrid->calculateLayout();
     }
     else {
         addPlaceholder(firstEntry);
     }
+
+    if (mGrid != nullptr)
+        mGrid->calculateLayout();
 
     generateGamelistInfo(getCursor(), firstEntry);
     generateFirstLetterIndex(files);
