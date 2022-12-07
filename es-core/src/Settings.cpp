@@ -136,6 +136,7 @@ void Settings::setDefaults()
     mStringMap["ThemeAspectRatio"] = {"", ""};
     mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
     mStringMap["TransitionStyle"] = {"slide", "slide"};
+    mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
     mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};
     mStringMap["MenuOpeningEffect"] = {"scale-up", "scale-up"};
@@ -190,7 +191,6 @@ void Settings::setDefaults()
     mBoolMap["FavoritesAddButton"] = {true, true};
     mBoolMap["RandomAddButton"] = {false, false};
     mBoolMap["GamelistFilters"] = {true, true};
-    mBoolMap["QuickSystemSelect"] = {true, true};
     mBoolMap["ShowHelpPrompts"] = {true, true};
 
     // Sound settings.

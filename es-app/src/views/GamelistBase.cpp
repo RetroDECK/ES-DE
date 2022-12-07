@@ -196,8 +196,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
-            if (mLeftRightAvailable && Settings::getInstance()->getBool("QuickSystemSelect") &&
-                SystemData::sSystemVector.size() > 1) {
+            if (SystemData::sSystemVector.size() > 1) {
                 muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
@@ -207,8 +206,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
-            if (mLeftRightAvailable && Settings::getInstance()->getBool("QuickSystemSelect") &&
-                SystemData::sSystemVector.size() > 1) {
+            if (SystemData::sSystemVector.size() > 1) {
                 muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
@@ -998,4 +996,80 @@ void GamelistBase::removeMedia(FileData* game)
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
+}
+
+std::string GamelistBase::getQuickSystemSelectLeftButton()
+{
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrightshoulders") {
+        if (mLeftRightAvailable)
+            return "left";
+        else
+            return "leftshoulder";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrighttriggers") {
+        if (mLeftRightAvailable)
+            return "left";
+        else
+            return "lefttrigger";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "shoulders")
+        return "leftshoulder";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "triggers")
+        return "lefttrigger";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftright") {
+        if (mLeftRightAvailable)
+            return "left";
+        else
+            return "";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "disabled")
+        return "";
+
+    // This should only happen if there is an invalid value in es_settings.xml.
+    if (mLeftRightAvailable)
+        return "left";
+    else
+        return "leftshoulder";
+}
+std::string GamelistBase::getQuickSystemSelectRightButton()
+{
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrightshoulders") {
+        if (mLeftRightAvailable)
+            return "right";
+        else
+            return "rightshoulder";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrighttriggers") {
+        if (mLeftRightAvailable)
+            return "right";
+        else
+            return "righttrigger";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "shoulders")
+        return "rightshoulder";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "triggers")
+        return "righttrigger";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftright") {
+        if (mLeftRightAvailable)
+            return "right";
+        else
+            return "";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "disabled")
+        return "";
+
+    if (mLeftRightAvailable)
+        return "right";
+    else
+        return "rightshoulder";
 }

@@ -368,7 +368,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
     populateList(mRoot->getChildrenListToDisplay(), mRoot);
 
-    // Disable quick system select if the primary component uses the left and right buttons.
+    // Check whether the primary component uses the left and right buttons for its navigation.
     if (mCarousel != nullptr) {
         if (mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL ||
             mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL_WHEEL)
@@ -432,9 +432,14 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
 
-    if (Settings::getInstance()->getBool("QuickSystemSelect") &&
-        SystemData::sSystemVector.size() > 1 && mLeftRightAvailable)
-        prompts.push_back(HelpPrompt("left/right", "system"));
+    if (Settings::getInstance()->getString("QuickSystemSelect") != "disabled") {
+        if (getQuickSystemSelectLeftButton() == "leftshoulder")
+            prompts.push_back(HelpPrompt("lr", "system"));
+        else if (getQuickSystemSelectLeftButton() == "lefttrigger")
+            prompts.push_back(HelpPrompt("ltrt", "system"));
+        else if (getQuickSystemSelectLeftButton() == "left")
+            prompts.push_back(HelpPrompt("left/right", "system"));
+    }
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::GAMELIST)

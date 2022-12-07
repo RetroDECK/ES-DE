@@ -86,8 +86,8 @@ protected:
 
     bool isListScrolling() override { return mPrimary->isScrolling(); }
 
-    std::string getQuickSystemSelectRightButton() { return "right"; }
-    std::string getQuickSystemSelectLeftButton() { return "left"; }
+    std::string getQuickSystemSelectLeftButton();
+    std::string getQuickSystemSelectRightButton();
 
     FileData* mRoot;
     std::unique_ptr<CarouselComponent<FileData*>> mCarousel;
