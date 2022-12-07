@@ -1127,7 +1127,8 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `text` - type: STRING
-    - A string literal to display if there is no `staticItem` or `defaultItem` property defined and if no image is found. This property can only be used in the system view as for the gamelist view the text fallback will always be set to the game name.
+    - A string literal to display if there is no `staticItem` or `defaultItem` property defined and if no image is found. This property can only be used in the system view as for the gamelist view the game name is always used as fallback.
+    - Default is the full system name.
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
@@ -1226,6 +1227,33 @@ Properties:
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `1`
+* `text` - type: STRING
+    - A string literal to display if there is no `staticItem` or `defaultItem` property defined and if no image is found. This property can only be used in the system view as for the gamelist view the game name is always used as fallback.
+    - Default is the full system name.
+* `textColor` - type: COLOR
+    - Default is `000000FF`
+* `textBackgroundColor` - type: COLOR
+    - Default is `FFFFFF00`
+* `fontPath` - type: PATH
+    - Path to a TrueType font (.ttf) used as fallback if there is no `staticItem` / `itemType` image defined or found, and if `defaultItem` has not been defined.
+* `fontSize` - type: FLOAT
+    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
+    - Default is `0.045`
+* `letterCase` - type: STRING
+    - Sets the letter case for all entries.
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained)
+* `letterCaseCollections` - type: STRING
+    - For technical reasons both automatic collections and custom collections have their names spelled in lowercase characters. This property which can only be used in the `system` view will make it possible to change the letter case for all such collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all collections.
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+* `letterCaseGroupedCollections` - type: STRING
+    - For technical reasons custom collections have their names spelled in lowercase characters. This property which can only be used in the `gamelist` view will make it possible to change the letter case for all such grouped collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all grouped collections.
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+* `lineSpacing` - type: FLOAT
+    - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
+    - Minimum value is `0.5` and maximum value is `3`
+    - Default is `1.5`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
@@ -2088,6 +2116,7 @@ Properties:
       `button_lr`,
       `button_lt`,
       `button_rt`,
+      `button_ltrt`,
       `button_a_SNES`,
       `button_b_SNES`,
       `button_x_SNES`,

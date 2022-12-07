@@ -506,12 +506,12 @@ Default keyboard mappings are shown in brackets.
 **Up and down**\
 _(Arrow up / Arrow down)_
 
-Navigate up and down in gamelists, between systems in the system view (if the theme has a vertical carousel) and in menus.
+Navigates between system and game entries where these buttons are applicable, such as for textlists and vertical carousels. Also used in menus for general navigation.
 
 **Left and right**\
 _(Arrow left / Arrow right)_
 
-Navigate between gamelists (if the _Quick system select_ option has been enabled), between systems in the system view (if the theme has a horizontal carousel) and between media files in the media viewer. If the _Enable screensaver controls_ option has been enabled, either button also randomly selects a new game when using the Video or Slideshow screensavers.
+Navigates between system and game entries where these buttons are applicable, such as for grids and horizontal carousels. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it. Navigates between media files in the media viewer and selects a random game when using the _Video_ or _Slideshow_ screensavers if the _Enable screensaver controls_ option has been enabled. Also used in menus for general navigation.
 
 **Start button**\
 _(Escape)_
@@ -526,12 +526,12 @@ Opens and closes the gamelist options menu in the gamelist view.
 **Left and right shoulder buttons**\
 _(Page up / Page down)_
 
-Provides quick jumping in gamelists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Also jumps forward in text edit dialogs.
+Provides quick jumping in textlists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it. Also used as back and blankspace keys in text edit dialogs.
 
 **Left and right trigger buttons**\
 _(Home / End)_
 
-Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
+Jumps to the first or last entries in carousels, grids and textlists as well as in menus and text edit dialogs. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it.
 
 **Left and right thumbstick click**\
 _(F2 / F3)_
@@ -2295,6 +2295,10 @@ Sets the view style to _Automatic, Basic, Detailed or Video_ for legacy themes. 
 
 Transition animation when navigating between gamelists, or between systems on the System view carousel. Can be set to _Slide, Fade_ or _Instant_. Only applicable for legacy themes as the newer type of theme sets lets the theme author define the transition animations in a more fine-grained manner. Therefore this option will be grayed out if a modern theme set has been selected.
 
+**Quick system select**
+
+The buttons to use to jump between systems in the gamelist view. The options are _Left/right or shoulders_, _Left/right or triggers_, _Shoulders_, _Triggers_, _Left/right_ or _Disabled_. The first two options will apply either left/right or shoulder/trigger buttons depending on the type of primary element used for the gamelist. For example a textlist or a vertical carousel will allow the use of the left and right buttons, but for horizontal carousels and grids these buttons are reserved for navigating the entries so instead the secondary buttons will be used, i.e. the shoulder or trigger buttons. Using these two options therefore leads to a slight inconsistency as different buttons will be used depending on the theme configuration. If instead using any of the single button pair options, i.e. _Shoulders_, _Triggers_ or _Left/right_, the navigation will be consistent regardless of theme configuration but you'll sacrifice the ability to use the selected buttons if the gamelist supports it, such as the ability to jump rows in a textlist using the shoulder and trigger buttons.
+
 **Gamelist on startup**
 
 If set to _None_, the system view will be displayed. Any other value will jump to that game system automatically on startup.
@@ -2366,10 +2370,6 @@ This enables or disables the ability to jump to a random system or game. It's ma
 **Enable gamelist filters**
 
 Activating or deactivating the ability to filter your gamelists. This can normally be left enabled.
-
-**Enable quick system select**
-
-If enabled, it's possible to navigate between gamelists using the _Left_ and _Right_ buttons without having to first go back to the System view.
 
 **Display on-screen help**
 
@@ -2823,7 +2823,7 @@ A flag to mark whether the game is suitable for children. This will be applied a
 
 **Hidden**
 
-A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts and unnecessary binaries or to hide the actual game files for multi-disc games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games has not been enabled, then the opacity of the text will be lowered significantly to make it clear that it's a hidden entry.
+A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch files and unnecessary binaries or to hide the actual game files for multi-disc games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games has not been enabled, then the opacity for the entry will be lowered significantly to make it clear that it's a hidden entry.
 
 **Broken/not working**
 

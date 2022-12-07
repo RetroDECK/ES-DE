@@ -8,7 +8,7 @@ Table of contents:
 
 [[_TOC_]]
 
-## Development Environment
+## Development environment
 
 ES-DE is developed and compiled using Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and MSVC and GCC (MinGW) on Windows.
 

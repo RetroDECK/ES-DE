@@ -22,6 +22,7 @@
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
+* Expanded the quick system select menu option from an on/off entry to a selection of different button combinations
 * Changed the order of the help system entries Y, X, B and A to instead be listed as A, B, X and Y
 * Changed the start button for the screensaver from "Back" to "X"
 * Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
@@ -77,6 +78,7 @@
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
 * Implemented dynamic texture allocation to the font code to reduce memory usage and avoid missing glyphs
 * Large optimizations to the text wrapping code (generallly 300-400% faster)
+* Added support for linear interpolation for font texture magnifications
 * Added support for texture mipmapping with trilinear filtering
 * Added on-demand texture loading to the carousel
 * Improved the renderer scaling accuracy
@@ -171,6 +173,7 @@
 * Made the logging thread safe
 * (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
 * Added the build date to to main menu for alpha and dev builds
+* Added a left trigger + right trigger help system icon and removed the deprecated hotkey icon
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
