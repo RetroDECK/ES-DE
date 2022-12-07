@@ -36,7 +36,9 @@ class Font : public IReloadable
 {
 public:
     virtual ~Font();
-    static std::shared_ptr<Font> get(float size, const std::string& path = getDefaultPath());
+    static std::shared_ptr<Font> get(float size,
+                                     const std::string& path = getDefaultPath(),
+                                     const bool linearMagnify = false);
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);
@@ -93,6 +95,7 @@ public:
                                               unsigned int properties,
                                               const std::shared_ptr<Font>& orig,
                                               const float maxHeight = 0.0f,
+                                              const bool linearMagnify = false,
                                               const bool legacyTheme = false,
                                               const float sizeMultiplier = 1.0f);
 
@@ -102,7 +105,7 @@ public:
     static size_t getTotalMemUsage();
 
 private:
-    Font(float size, const std::string& path);
+    Font(float size, const std::string& path, const bool linearMagnify);
     static void initLibrary();
 
     struct FontTexture {
@@ -110,8 +113,9 @@ private:
         glm::ivec2 textureSize;
         glm::ivec2 writePos;
         int rowHeight;
+        bool linearMagnify;
 
-        FontTexture(const int mFontSize);
+        FontTexture(const int mFontSize, const bool linearMagnifyArg);
         ~FontTexture();
         bool findEmpty(const glm::ivec2& size, glm::ivec2& cursor_out);
 
@@ -161,7 +165,7 @@ private:
     void clearFaceCache() { mFaceCache.clear(); }
 
     static inline FT_Library sLibrary {nullptr};
-    static inline std::map<std::pair<std::string, float>, std::weak_ptr<Font>> sFontMap;
+    static inline std::map<std::tuple<float, std::string, bool>, std::weak_ptr<Font>> sFontMap;
     static inline bool mLegacyTheme {false};
 
     Renderer* mRenderer;
@@ -171,6 +175,7 @@ private:
 
     const std::string mPath;
     float mFontSize;
+    const bool mLinearMagnify;
     float mLetterHeight;
     int mMaxGlyphHeight;
     int mLegacyMaxGlyphHeight;

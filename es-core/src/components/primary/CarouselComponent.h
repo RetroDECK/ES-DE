@@ -1204,7 +1204,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     }
 
     // For non-legacy themes, scale the font size with the itemScale property value.
-    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode,
+    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, false, mLegacyMode,
                                (mLegacyMode ? 1.0f : (mItemScale >= 1.0f ? mItemScale : 1.0f)));
 
     if (elem->has("textColor"))

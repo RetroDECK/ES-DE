@@ -529,7 +529,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mSelectedSecondaryColor = mSelectedColor;
     }
 
-    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode));
+    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, false, mLegacyMode));
     if (mLegacyMode)
         mFont->useLegacyMaxGlyphHeight();
     const float selectorHeight {mFont->getHeight(mLineSpacing)};

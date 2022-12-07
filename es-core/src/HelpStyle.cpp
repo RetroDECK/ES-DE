@@ -63,7 +63,7 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         iconColorDimmed = iconColor;
 
     if (elem->has("fontPath") || elem->has("fontSize"))
-        font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, theme->isLegacyTheme());
+        font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false, theme->isLegacyTheme());
 
     if (elem->has("entrySpacing"))
         entrySpacing = glm::clamp(elem->get<float>("entrySpacing"), 0.0f, 0.04f);
