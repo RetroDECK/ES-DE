@@ -150,7 +150,6 @@ GridComponent<T>::GridComponent()
     , mScrollPos {0.0f}
     , mTransitionFactor {1.0f}
     , mVisibleRows {1.0f}
-    , mFont {Font::get(FONT_SIZE_LARGE)}
     , mItemSize {glm::vec2 {mRenderer->getScreenWidth() * 0.15f,
                             mRenderer->getScreenHeight() * 0.25f}}
     , mItemScale {1.05f}
@@ -663,6 +662,73 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
+
+    mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, (mItemScale > 1.0f));
+
+    if (elem->has("textColor"))
+        mTextColor = elem->get<unsigned int>("textColor");
+    if (elem->has("textBackgroundColor"))
+        mTextBackgroundColor = elem->get<unsigned int>("textBackgroundColor");
+
+    if (elem->has("lineSpacing"))
+        mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
+
+    if (elem->has("letterCase")) {
+        const std::string& letterCase {elem->get<std::string>("letterCase")};
+
+        if (letterCase == "uppercase") {
+            mLetterCase = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCase = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCase = LetterCase::CAPITALIZED;
+        }
+        else if (letterCase != "none") {
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"letterCase\" for element \""
+                            << element.substr(5) << "\" defined as \"" << letterCase << "\"";
+        }
+    }
+
+    if (elem->has("letterCaseCollections")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseCollections")};
+
+        if (letterCase == "uppercase") {
+            mLetterCaseCollections = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseCollections = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseCollections = LetterCase::CAPITALIZED;
+        }
+        else {
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"letterCaseCollections\" for element \""
+                            << element.substr(5) << "\" defined as \"" << letterCase << "\"";
+        }
+    }
+
+    if (elem->has("letterCaseGroupedCollections")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
+
+        if (letterCase == "uppercase") {
+            mLetterCaseGroupedCollections = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseGroupedCollections = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseGroupedCollections = LetterCase::CAPITALIZED;
+        }
+        else {
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"letterCaseGroupedCollections\" for element \""
+                            << element.substr(5) << "\" defined as \"" << letterCase << "\"";
+        }
+    }
 
     mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
                          mRenderer->getScreenWidth() * 1.0f);
