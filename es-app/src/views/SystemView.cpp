@@ -437,8 +437,9 @@ void SystemView::onCursorChanged(const CursorState& state)
     else {
         // Instant.
         updateGameCount();
-        anim = new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) { mCamOffset = endPos; }, animTime);
+        anim =
+            new LambdaAnimation([this, startPos, endPos, posMax](float t) { mCamOffset = endPos; },
+                                static_cast<int>(animTime));
     }
 
     setAnimation(anim, 0, nullptr, false, 0);
