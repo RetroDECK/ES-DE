@@ -357,7 +357,7 @@ void SystemView::onCursorChanged(const CursorState& state)
     float timeDiff {1.0f};
 
     if (mGrid != nullptr) {
-        animTime = 250.0f;
+        animTime = 300.0f;
         timeMin = 100.0f;
     }
 
