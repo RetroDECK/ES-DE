@@ -21,9 +21,8 @@ struct GridEntry {
 template <typename T>
 class GridComponent : public PrimaryComponent<T>, protected IList<GridEntry, T>
 {
-    using List = IList<GridEntry, T>;
-
 protected:
+    using List = IList<GridEntry, T>;
     using List::mColumns;
     using List::mCursor;
     using List::mEntries;
@@ -105,41 +104,64 @@ private:
     bool remove(const T& obj) override { return List::remove(obj); }
     int size() const override { return List::size(); }
 
+    enum class SelectorLayer {
+        TOP,
+        MIDDLE,
+        BOTTOM
+    };
+
     Renderer* mRenderer;
     std::function<void()> mCancelTransitionsCallback;
     std::function<void(CursorState state)> mCursorChangedCallback;
-
-    std::string mItemType;
-    std::string mDefaultItem;
     float mEntryOffset;
     float mScrollPos;
     float mTransitionFactor;
     float mVisibleRows;
-    std::shared_ptr<Font> mFont;
+    int mPreviousScrollVelocity;
+    bool mPositiveDirection;
+    bool mGamelistView;
+    bool mLayoutValid;
+    bool mWasScrolling;
+    bool mJustCalculatedLayout;
+    bool mSuppressTransitions;
 
+    std::string mItemType;
+    std::string mDefaultItem;
+    std::unique_ptr<ImageComponent> mBackgroundImage;
+    float mBackgroundRelativeScale;
+    unsigned int mBackgroundColor;
+    unsigned int mBackgroundColorEnd;
+    bool mBackgroundColorGradientHorizontal;
+    bool mHasBackgroundColor;
+    std::unique_ptr<ImageComponent> mSelectorImage;
+    float mSelectorRelativeScale;
+    unsigned int mSelectorColor;
+    unsigned int mSelectorColorEnd;
+    bool mSelectorColorGradientHorizontal;
+    bool mHasSelectorColor;
+    SelectorLayer mSelectorLayer;
+    bool mFractionalRows;
     glm::vec2 mItemSize;
     float mItemScale;
+    float mItemRelativeScale;
     glm::vec2 mItemSpacing;
+    unsigned int mItemColor;
+    unsigned int mItemColorEnd;
+    bool mItemColorGradientHorizontal;
     bool mInstantItemTransitions;
     bool mInstantRowTransitions;
-    float mHorizontalMargin;
-    float mVerticalMargin;
     float mUnfocusedItemOpacity;
+    float mTextRelativeScale;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
+    std::shared_ptr<Font> mFont;
     LetterCase mLetterCase;
     LetterCase mLetterCaseCollections;
     LetterCase mLetterCaseGroupedCollections;
     float mLineSpacing;
     bool mFadeAbovePrimary;
-    int mPreviousScrollVelocity;
-    bool mPositiveDirection;
-    bool mGamelistView;
-    bool mFractionalRows;
-    bool mLayoutValid;
-    bool mWasScrolling;
-    bool mJustCalculatedLayout;
-    bool mSuppressTransitions;
+    float mHorizontalMargin;
+    float mVerticalMargin;
 };
 
 template <typename T>
@@ -150,15 +172,37 @@ GridComponent<T>::GridComponent()
     , mScrollPos {0.0f}
     , mTransitionFactor {1.0f}
     , mVisibleRows {1.0f}
+    , mPreviousScrollVelocity {0}
+    , mPositiveDirection {false}
+    , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
+    , mLayoutValid {false}
+    , mWasScrolling {false}
+    , mJustCalculatedLayout {false}
+    , mSuppressTransitions {false}
+    , mBackgroundRelativeScale {1.0f}
+    , mBackgroundColor {0xFFFFFFFF}
+    , mBackgroundColorEnd {0xFFFFFFFF}
+    , mBackgroundColorGradientHorizontal {true}
+    , mHasBackgroundColor {false}
+    , mSelectorRelativeScale {1.0f}
+    , mSelectorColor {0xFFFFFFFF}
+    , mSelectorColorEnd {0xFFFFFFFF}
+    , mSelectorColorGradientHorizontal {true}
+    , mHasSelectorColor {false}
+    , mSelectorLayer {SelectorLayer::TOP}
+    , mFractionalRows {false}
     , mItemSize {glm::vec2 {mRenderer->getScreenWidth() * 0.15f,
                             mRenderer->getScreenHeight() * 0.25f}}
     , mItemScale {1.05f}
+    , mItemRelativeScale {1.0f}
     , mItemSpacing {0.0f, 0.0f}
+    , mItemColor {0xFFFFFFFF}
+    , mItemColorEnd {0xFFFFFFFF}
+    , mItemColorGradientHorizontal {true}
     , mInstantItemTransitions {false}
     , mInstantRowTransitions {false}
-    , mHorizontalMargin {0.0f}
-    , mVerticalMargin {0.0f}
     , mUnfocusedItemOpacity {1.0f}
+    , mTextRelativeScale {1.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
     , mLetterCase {LetterCase::NONE}
@@ -166,33 +210,31 @@ GridComponent<T>::GridComponent()
     , mLetterCaseGroupedCollections {LetterCase::NONE}
     , mLineSpacing {1.5f}
     , mFadeAbovePrimary {false}
-    , mPreviousScrollVelocity {0}
-    , mPositiveDirection {false}
-    , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
-    , mFractionalRows {false}
-    , mLayoutValid {false}
-    , mWasScrolling {false}
-    , mJustCalculatedLayout {false}
-    , mSuppressTransitions {false}
+    , mHorizontalMargin {0.0f}
+    , mVerticalMargin {0.0f}
 {
 }
 
 template <typename T>
 void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
 {
-    bool dynamic {true};
-
-    if (!mGamelistView)
-        dynamic = false;
+    const bool dynamic {mGamelistView};
 
     if (entry.data.itemPath != "" &&
         ResourceManager::getInstance().fileExists(entry.data.itemPath)) {
         auto item = std::make_shared<ImageComponent>(false, dynamic);
         item->setLinearInterpolation(true);
         item->setMipmapping(true);
-        item->setMaxSize(mItemSize);
+        item->setMaxSize(mItemSize * mItemRelativeScale);
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mItemColor != 0xFFFFFFFF)
+            item->setColorShift(mItemColor);
+        if (mItemColorEnd != mItemColor) {
+            item->setColorShiftEnd(mItemColorEnd);
+            if (!mItemColorGradientHorizontal)
+                item->setColorGradientHorizontal(false);
+        }
         item->setOrigin(0.5f, 0.5f);
         item->setRotateByTargetSize(true);
         entry.data.item = item;
@@ -202,9 +244,16 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
         defaultItem->setLinearInterpolation(true);
         defaultItem->setMipmapping(true);
-        defaultItem->setMaxSize(mItemSize);
+        defaultItem->setMaxSize(mItemSize * mItemRelativeScale);
         defaultItem->setImage(entry.data.defaultItemPath);
         defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mItemColor != 0xFFFFFFFF)
+            defaultItem->setColorShift(mItemColor);
+        if (mItemColorEnd != mItemColor) {
+            defaultItem->setColorShiftEnd(mItemColorEnd);
+            if (!mItemColorGradientHorizontal)
+                defaultItem->setColorGradientHorizontal(false);
+        }
         defaultItem->setOrigin(0.5f, 0.5f);
         defaultItem->setRotateByTargetSize(true);
         entry.data.item = defaultItem;
@@ -214,7 +263,7 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         // If no item image is present, add item text as fallback.
         auto text = std::make_shared<TextComponent>(
             entry.name, mFont, 0x000000FF, Alignment::ALIGN_CENTER, Alignment::ALIGN_CENTER,
-            glm::vec3 {0.0f, 0.0f, 0.0f}, mItemSize, 0x00000000);
+            glm::vec3 {0.0f, 0.0f, 0.0f}, mItemSize * mTextRelativeScale, 0x00000000);
         text->setOrigin(0.5f, 0.5f);
         text->setLineSpacing(mLineSpacing);
         if (!mGamelistView)
@@ -237,9 +286,16 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(true);
         item->setMipmapping(true);
-        item->setMaxSize(mItemSize);
+        item->setMaxSize(mItemSize * mItemRelativeScale);
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mItemColor != 0xFFFFFFFF)
+            item->setColorShift(mItemColor);
+        if (mItemColorEnd != mItemColor) {
+            item->setColorShiftEnd(mItemColorEnd);
+            if (!mItemColorGradientHorizontal)
+                item->setColorGradientHorizontal(false);
+        }
         item->setOrigin(0.5f, 0.5f);
         item->setRotateByTargetSize(true);
         entry.data.item = item;
@@ -528,10 +584,44 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
     float opacity {1.0f};
 
     trans[3].y -= (mItemSize.y + mItemSpacing.y) * mScrollPos;
-    mRenderer->setMatrix(trans);
+
+    auto selectorRenderFunc = [this, &trans](std::vector<size_t>::const_iterator it,
+                                             const float scale, const float opacity,
+                                             const bool cursorEntry, const bool lastCursorEntry) {
+        if (mSelectorImage != nullptr) {
+            mSelectorImage->setPosition(mEntries.at(*it).data.item->getPosition());
+            mSelectorImage->setScale(scale);
+            mSelectorImage->setOpacity(opacity);
+            mSelectorImage->render(trans);
+        }
+        else if (mHasSelectorColor) {
+            // If a selector color is set but no selector image, then render a rectangle.
+            const float sizeX {mItemSize.x * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
+                               mSelectorRelativeScale};
+            const float sizeY {mItemSize.y * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
+                               mSelectorRelativeScale};
+            float posX {mEntries.at(*it).data.item->getPosition().x - mItemSize.x * 0.5f};
+            float posY {mEntries.at(*it).data.item->getPosition().y - mItemSize.y * 0.5f};
+
+            if (cursorEntry || lastCursorEntry) {
+                posX -= ((mItemSize.x * scale * mSelectorRelativeScale) - mItemSize.x) / 2.0f;
+                posY -= ((mItemSize.y * scale * mSelectorRelativeScale) - mItemSize.y) / 2.0f;
+            }
+            else {
+                posX -= ((mItemSize.x * mSelectorRelativeScale) - mItemSize.x) / 2.0f;
+                posY -= ((mItemSize.y * mSelectorRelativeScale) - mItemSize.y) / 2.0f;
+            }
+
+            mRenderer->setMatrix(trans);
+            mRenderer->drawRect(posX, posY, sizeX, sizeY, mSelectorColor, mSelectorColorEnd,
+                                mSelectorColorGradientHorizontal, opacity);
+        }
+    };
 
     for (auto it = renderEntries.cbegin(); it != renderEntries.cend(); ++it) {
         float metadataOpacity {1.0f};
+        bool cursorEntry {false};
+        bool lastCursorEntry {false};
 
         if constexpr (std::is_same_v<T, FileData*>) {
             // If a game is marked as hidden, lower the opacity a lot.
@@ -545,21 +635,61 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
         opacity = mUnfocusedItemOpacity * metadataOpacity;
 
         if (*it == static_cast<size_t>(mCursor)) {
+            cursorEntry = true;
             scale = glm::mix(1.0f, mItemScale, mTransitionFactor);
             opacity = glm::mix(mUnfocusedItemOpacity * metadataOpacity, 1.0f * metadataOpacity,
                                mTransitionFactor);
         }
         else if (*it == static_cast<size_t>(mLastCursor)) {
+            lastCursorEntry = true;
             scale = glm::mix(mItemScale, 1.0f, mTransitionFactor);
             opacity = glm::mix(1.0f * metadataOpacity, mUnfocusedItemOpacity * metadataOpacity,
                                mTransitionFactor);
         }
+
+        if (cursorEntry && mSelectorLayer == SelectorLayer::BOTTOM)
+            selectorRenderFunc(it, scale, opacity, cursorEntry, lastCursorEntry);
+
+        if (mBackgroundImage != nullptr) {
+            mBackgroundImage->setPosition(mEntries.at(*it).data.item->getPosition());
+            mBackgroundImage->setScale(scale);
+            mBackgroundImage->setOpacity(opacity);
+            mBackgroundImage->render(trans);
+        }
+        else if (mHasBackgroundColor) {
+            // If a background color is set but no background image, then render a rectangle.
+            const float sizeX {mItemSize.x * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
+                               mBackgroundRelativeScale};
+            const float sizeY {mItemSize.y * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
+                               mBackgroundRelativeScale};
+            float posX {mEntries.at(*it).data.item->getPosition().x - mItemSize.x * 0.5f};
+            float posY {mEntries.at(*it).data.item->getPosition().y - mItemSize.y * 0.5f};
+
+            if (cursorEntry || lastCursorEntry) {
+                posX -= ((mItemSize.x * scale * mBackgroundRelativeScale) - mItemSize.x) / 2.0f;
+                posY -= ((mItemSize.y * scale * mBackgroundRelativeScale) - mItemSize.y) / 2.0f;
+            }
+            else {
+                posX -= ((mItemSize.x * mBackgroundRelativeScale) - mItemSize.x) / 2.0f;
+                posY -= ((mItemSize.y * mBackgroundRelativeScale) - mItemSize.y) / 2.0f;
+            }
+
+            mRenderer->setMatrix(trans);
+            mRenderer->drawRect(posX, posY, sizeX, sizeY, mBackgroundColor, mBackgroundColorEnd,
+                                mBackgroundColorGradientHorizontal, opacity);
+        }
+
+        if (cursorEntry && mSelectorLayer == SelectorLayer::MIDDLE)
+            selectorRenderFunc(it, scale, opacity, cursorEntry, lastCursorEntry);
 
         mEntries.at(*it).data.item->setScale(scale);
         mEntries.at(*it).data.item->setOpacity(opacity);
         mEntries.at(*it).data.item->render(trans);
         mEntries.at(*it).data.item->setScale(1.0f);
         mEntries.at(*it).data.item->setOpacity(1.0f);
+
+        if (cursorEntry && mSelectorLayer == SelectorLayer::TOP)
+            selectorRenderFunc(it, scale, opacity, cursorEntry, lastCursorEntry);
     }
 
     mRenderer->popClipRect();
@@ -598,6 +728,135 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("itemScale"))
         mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 2.0f);
+
+    if (elem->has("itemRelativeScale"))
+        mItemRelativeScale = glm::clamp(elem->get<float>("itemRelativeScale"), 0.2f, 1.0f);
+
+    if (elem->has("backgroundRelativeScale"))
+        mBackgroundRelativeScale =
+            glm::clamp(elem->get<float>("backgroundRelativeScale"), 0.2f, 1.0f);
+
+    mHasBackgroundColor = false;
+
+    if (elem->has("backgroundColor")) {
+        mHasBackgroundColor = true;
+        mBackgroundColor = elem->get<unsigned int>("backgroundColor");
+        mBackgroundColorEnd = mBackgroundColor;
+    }
+    if (elem->has("backgroundColorEnd"))
+        mBackgroundColorEnd = elem->get<unsigned int>("backgroundColorEnd");
+
+    if (elem->has("backgroundGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("backgroundGradientType")};
+        if (gradientType == "horizontal") {
+            mBackgroundColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            mBackgroundColorGradientHorizontal = false;
+        }
+        else {
+            mBackgroundColorGradientHorizontal = true;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"backgroundGradientType\" for element \""
+                            << element.substr(5) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
+    if (elem->has("selectorRelativeScale"))
+        mSelectorRelativeScale = glm::clamp(elem->get<float>("selectorRelativeScale"), 0.2f, 1.0f);
+
+    mHasSelectorColor = false;
+
+    if (elem->has("selectorColor")) {
+        mHasSelectorColor = true;
+        mSelectorColor = elem->get<unsigned int>("selectorColor");
+        mSelectorColorEnd = mSelectorColor;
+    }
+    if (elem->has("selectorColorEnd"))
+        mSelectorColorEnd = elem->get<unsigned int>("selectorColorEnd");
+
+    if (elem->has("selectorGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("selectorGradientType")};
+        if (gradientType == "horizontal") {
+            mSelectorColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            mSelectorColorGradientHorizontal = false;
+        }
+        else {
+            mSelectorColorGradientHorizontal = true;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"selectorGradientType\" for element \""
+                            << element.substr(5) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
+    if (elem->has("backgroundImage")) {
+        const std::string& path {elem->get<std::string>("backgroundImage")};
+        if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
+            mBackgroundImage = std::make_unique<ImageComponent>(false, false);
+            mBackgroundImage->setLinearInterpolation(true);
+            mBackgroundImage->setResize(mItemSize * mBackgroundRelativeScale);
+            mBackgroundImage->setOrigin(0.5f, 0.5f);
+            if (mHasBackgroundColor) {
+                mBackgroundImage->setColorShift(mBackgroundColor);
+                if (mBackgroundColor != mBackgroundColorEnd) {
+                    mBackgroundImage->setColorShiftEnd(mBackgroundColorEnd);
+                    if (!mBackgroundColorGradientHorizontal)
+                        mBackgroundImage->setColorGradientHorizontal(false);
+                }
+            }
+            mBackgroundImage->setImage(elem->get<std::string>("backgroundImage"));
+        }
+        else {
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"backgroundImage\" for element \""
+                            << element.substr(5) << "\", image does not exist: \"" << path << "\"";
+        }
+    }
+
+    if (elem->has("selectorImage")) {
+        const std::string& path {elem->get<std::string>("selectorImage")};
+        if (Utils::FileSystem::exists(path) && !Utils::FileSystem::isDirectory(path)) {
+            mSelectorImage = std::make_unique<ImageComponent>(false, false);
+            mSelectorImage->setLinearInterpolation(true);
+            mSelectorImage->setResize(mItemSize * mSelectorRelativeScale);
+            mSelectorImage->setOrigin(0.5f, 0.5f);
+            if (mHasSelectorColor) {
+                mSelectorImage->setColorShift(mSelectorColor);
+                if (mBackgroundColor != mBackgroundColorEnd) {
+                    mSelectorImage->setColorShiftEnd(mSelectorColorEnd);
+                    if (!mSelectorColorGradientHorizontal)
+                        mSelectorImage->setColorGradientHorizontal(false);
+                }
+            }
+            mSelectorImage->setImage(elem->get<std::string>("selectorImage"));
+        }
+        else {
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"selectorImage\" for element \""
+                            << element.substr(5) << "\", image does not exist: \"" << path << "\"";
+        }
+    }
+
+    if (elem->has("selectorLayer")) {
+        const std::string& selectorLayer {elem->get<std::string>("selectorLayer")};
+        if (selectorLayer == "top") {
+            mSelectorLayer = SelectorLayer::TOP;
+        }
+        else if (selectorLayer == "middle") {
+            mSelectorLayer = SelectorLayer::MIDDLE;
+        }
+        else if (selectorLayer == "bottom") {
+            mSelectorLayer = SelectorLayer::BOTTOM;
+        }
+        else {
+            mSelectorLayer = SelectorLayer::TOP;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"selectorLayer\" for element \""
+                            << element.substr(5) << "\" defined as \"" << selectorLayer << "\"";
+        }
+    }
 
     if (elem->has("itemTransitions")) {
         const std::string& itemTransitions {elem->get<std::string>("itemTransitions")};
@@ -660,10 +919,36 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
     }
 
+    if (elem->has("itemColor")) {
+        mItemColor = elem->get<unsigned int>("itemColor");
+        mItemColorEnd = mItemColor;
+    }
+    if (elem->has("itemColorEnd"))
+        mItemColorEnd = elem->get<unsigned int>("itemColorEnd");
+
+    if (elem->has("itemGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("itemGradientType")};
+        if (gradientType == "horizontal") {
+            mItemColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            mItemColorGradientHorizontal = false;
+        }
+        else {
+            mItemColorGradientHorizontal = true;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"itemGradientType\" for element \""
+                            << element.substr(5) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
 
     mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, (mItemScale > 1.0f));
+
+    if (elem->has("textRelativeScale"))
+        mTextRelativeScale = glm::clamp(elem->get<float>("textRelativeScale"), 0.2f, 1.0f);
 
     if (elem->has("textColor"))
         mTextColor = elem->get<unsigned int>("textColor");
@@ -729,6 +1014,9 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(5) << "\" defined as \"" << letterCase << "\"";
         }
     }
+
+    if (elem->has("fadeAbovePrimary"))
+        mFadeAbovePrimary = elem->get<bool>("fadeAbovePrimary");
 
     mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
                          mRenderer->getScreenWidth() * 1.0f);
