@@ -24,9 +24,8 @@ struct CarouselEntry {
 template <typename T>
 class CarouselComponent : public PrimaryComponent<T>, protected IList<CarouselEntry, T>
 {
-    using List = IList<CarouselEntry, T>;
-
 protected:
+    using List = IList<CarouselEntry, T>;
     using List::mCursor;
     using List::mEntries;
     using List::mScrollVelocity;
@@ -122,41 +121,44 @@ private:
     bool mPositiveDirection;
     bool mTriggerJump;
     bool mGamelistView;
+    bool mLegacyMode;
 
     CarouselType mType;
     std::string mItemType;
     std::string mDefaultItem;
-    bool mLegacyMode;
-    std::shared_ptr<Font> mFont;
-    unsigned int mTextColor;
-    unsigned int mTextBackgroundColor;
-    float mLineSpacing;
-    Alignment mItemHorizontalAlignment;
-    Alignment mItemVerticalAlignment;
-    Alignment mWheelHorizontalAlignment;
-    float mUnfocusedItemOpacity;
     float mMaxItemCount;
     int mItemsBeforeCenter;
     int mItemsAfterCenter;
     glm::vec2 mItemSize;
-    bool mLinearInterpolation;
-    bool mInstantItemTransitions;
-    bool mItemAxisHorizontal;
-    bool mFadeAbovePrimary;
-    LetterCase mLetterCase;
-    LetterCase mLetterCaseCollections;
-    LetterCase mLetterCaseGroupedCollections;
     float mItemScale;
+    bool mLinearInterpolation;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
-    unsigned int mCarouselColor;
-    unsigned int mCarouselColorEnd;
-    bool mColorGradientHorizontal;
+    bool mItemAxisHorizontal;
+    unsigned int mItemColorShift;
+    unsigned int mItemColorShiftEnd;
+    bool mItemColorGradientHorizontal;
+    bool mInstantItemTransitions;
+    Alignment mItemHorizontalAlignment;
+    Alignment mItemVerticalAlignment;
+    Alignment mWheelHorizontalAlignment;
+    float mHorizontalOffset;
+    float mVerticalOffset;
     bool mReflections;
     float mReflectionsOpacity;
     float mReflectionsFalloff;
-    float mHorizontalOffset;
-    float mVerticalOffset;
+    float mUnfocusedItemOpacity;
+    unsigned int mCarouselColor;
+    unsigned int mCarouselColorEnd;
+    bool mColorGradientHorizontal;
+    unsigned int mTextColor;
+    unsigned int mTextBackgroundColor;
+    std::shared_ptr<Font> mFont;
+    LetterCase mLetterCase;
+    LetterCase mLetterCaseCollections;
+    LetterCase mLetterCaseGroupedCollections;
+    float mLineSpacing;
+    bool mFadeAbovePrimary;
 };
 
 template <typename T>
@@ -172,39 +174,42 @@ CarouselComponent<T>::CarouselComponent()
     , mPositiveDirection {false}
     , mTriggerJump {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
-    , mType {CarouselType::HORIZONTAL}
     , mLegacyMode {false}
-    , mFont {Font::get(FONT_SIZE_LARGE)}
-    , mTextColor {0x000000FF}
-    , mTextBackgroundColor {0xFFFFFF00}
-    , mLineSpacing {1.5f}
-    , mItemHorizontalAlignment {ALIGN_CENTER}
-    , mItemVerticalAlignment {ALIGN_CENTER}
-    , mWheelHorizontalAlignment {ALIGN_CENTER}
-    , mUnfocusedItemOpacity {0.5f}
+    , mType {CarouselType::HORIZONTAL}
     , mMaxItemCount {3.0f}
     , mItemsBeforeCenter {8}
     , mItemsAfterCenter {8}
     , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.25f,
                             Renderer::getScreenHeight() * 0.155f}}
-    , mLinearInterpolation {false}
-    , mInstantItemTransitions {false}
-    , mItemAxisHorizontal {false}
-    , mFadeAbovePrimary {false}
-    , mLetterCase {LetterCase::NONE}
-    , mLetterCaseCollections {LetterCase::NONE}
-    , mLetterCaseGroupedCollections {LetterCase::NONE}
     , mItemScale {1.2f}
+    , mLinearInterpolation {false}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
-    , mCarouselColor {0}
-    , mCarouselColorEnd {0}
-    , mColorGradientHorizontal {true}
+    , mItemAxisHorizontal {false}
+    , mItemColorShift {0xFFFFFFFF}
+    , mItemColorShiftEnd {0xFFFFFFFF}
+    , mItemColorGradientHorizontal {true}
+    , mInstantItemTransitions {false}
+    , mItemHorizontalAlignment {ALIGN_CENTER}
+    , mItemVerticalAlignment {ALIGN_CENTER}
+    , mWheelHorizontalAlignment {ALIGN_CENTER}
+    , mHorizontalOffset {0.0f}
+    , mVerticalOffset {0.0f}
     , mReflections {false}
     , mReflectionsOpacity {0.5f}
     , mReflectionsFalloff {1.0f}
-    , mHorizontalOffset {0.0f}
-    , mVerticalOffset {0.0f}
+    , mUnfocusedItemOpacity {0.5f}
+    , mCarouselColor {0}
+    , mCarouselColorEnd {0}
+    , mColorGradientHorizontal {true}
+    , mTextColor {0x000000FF}
+    , mTextBackgroundColor {0xFFFFFF00}
+    , mFont {Font::get(FONT_SIZE_LARGE)}
+    , mLetterCase {LetterCase::NONE}
+    , mLetterCaseCollections {LetterCase::NONE}
+    , mLetterCaseGroupedCollections {LetterCase::NONE}
+    , mLineSpacing {1.5f}
+    , mFadeAbovePrimary {false}
 {
 }
 
@@ -248,6 +253,12 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             item->setImage(entry.data.itemPath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            if (mItemColorShift != 0xFFFFFFFF)
+                item->setColorShift(mItemColorShift);
+            if (mItemColorShiftEnd != mItemColorShift)
+                item->setColorShiftEnd(mItemColorShiftEnd);
+            if (!mItemColorGradientHorizontal)
+                item->setColorGradientHorizontal(false);
             item->setRotateByTargetSize(true);
             entry.data.item = item;
         }
@@ -260,6 +271,12 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             defaultItem->setImage(entry.data.defaultItemPath);
             defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            if (mItemColorShift != 0xFFFFFFFF)
+                defaultItem->setColorShift(mItemColorShift);
+            if (mItemColorShiftEnd != mItemColorShift)
+                defaultItem->setColorShiftEnd(mItemColorShiftEnd);
+            if (!mItemColorGradientHorizontal)
+                defaultItem->setColorGradientHorizontal(false);
             defaultItem->setRotateByTargetSize(true);
             entry.data.item = defaultItem;
         }
@@ -320,6 +337,12 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
         item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mItemColorShift != 0xFFFFFFFF)
+            item->setColorShift(mItemColorShift);
+        if (mItemColorShiftEnd != mItemColorShift)
+            item->setColorShiftEnd(mItemColorShiftEnd);
+        if (!mItemColorGradientHorizontal)
+            item->setColorGradientHorizontal(false);
         item->setRotateByTargetSize(true);
         entry.data.item = item;
     }
@@ -1008,23 +1031,6 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("itemScale"))
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
 
-        if (elem->has("itemTransitions")) {
-            const std::string& itemTransitions {elem->get<std::string>("itemTransitions")};
-            if (itemTransitions == "animate") {
-                mInstantItemTransitions = false;
-            }
-            else if (itemTransitions == "instant") {
-                mInstantItemTransitions = true;
-            }
-            else {
-                mInstantItemTransitions = false;
-                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "\"itemTransitions\" for element \""
-                                << element.substr(9) << "\" defined as \"" << itemTransitions
-                                << "\"";
-            }
-        }
-
         if (elem->has("itemInterpolation")) {
             const std::string& itemInterpolation {elem->get<std::string>("itemInterpolation")};
             if (itemInterpolation == "linear") {
@@ -1042,6 +1048,23 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
         }
 
+        if (elem->has("itemTransitions")) {
+            const std::string& itemTransitions {elem->get<std::string>("itemTransitions")};
+            if (itemTransitions == "animate") {
+                mInstantItemTransitions = false;
+            }
+            else if (itemTransitions == "instant") {
+                mInstantItemTransitions = true;
+            }
+            else {
+                mInstantItemTransitions = false;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"itemTransitions\" for element \""
+                                << element.substr(9) << "\" defined as \"" << itemTransitions
+                                << "\"";
+            }
+        }
+
         if (elem->has("itemRotation"))
             mItemRotation = elem->get<float>("itemRotation");
 
@@ -1050,6 +1073,29 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         mItemAxisHorizontal =
             (elem->has("itemAxisHorizontal") && elem->get<bool>("itemAxisHorizontal"));
+
+        if (elem->has("itemColor")) {
+            mItemColorShift = elem->get<unsigned int>("itemColor");
+            mItemColorShiftEnd = mItemColorShift;
+        }
+        if (elem->has("itemColorEnd"))
+            mItemColorShiftEnd = elem->get<unsigned int>("itemColorEnd");
+
+        if (elem->has("itemGradientType")) {
+            const std::string& gradientType {elem->get<std::string>("itemGradientType")};
+            if (gradientType == "horizontal") {
+                mItemColorGradientHorizontal = true;
+            }
+            else if (gradientType == "vertical") {
+                mItemColorGradientHorizontal = false;
+            }
+            else {
+                mItemColorGradientHorizontal = true;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"gradientType\" for element \""
+                                << element.substr(9) << "\" defined as \"" << gradientType << "\"";
+            }
+        }
 
         if (elem->has("itemHorizontalAlignment")) {
             const std::string& alignment {elem->get<std::string>("itemHorizontalAlignment")};
