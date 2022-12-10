@@ -127,6 +127,7 @@
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
 * Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
+* Added support for resizing and cropping images to fill the entire defined area (cover fitting)
 * Changed the helpsystem properties entrySpacing and iconTextSpacing from fixed pixel values to relative values
 * Added support for using unsigned integers for theme properties
 * Added a metadataElement theme property to the image, video, animation and text element types to control fading and hiding of arbitrary elements
@@ -185,6 +186,7 @@
 * Added reflections support to the carousel
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
+* Added carousel theme support for applying item color shifts
 * Added carousel theme support for setting item transitions to "slide" or "instant"
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type

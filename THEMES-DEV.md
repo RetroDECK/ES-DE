@@ -1059,13 +1059,9 @@ Properties:
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.25 0.155`
 * `itemScale` - type: FLOAT.
-    - Selected item is increased in size by this scale.
+    - Selected item is scaled by the value defined by this property.
     - Minimum value is `0.2` and maximum value is `3`
     - Default is `1.2`
-* `itemTransitions` - type: STRING
-    - How to render item transitions when navigating the carousel. By default a slide and opacity fade animation will be played when moving between items but if this property is set to `instant` then the transitions will be immediate.
-    - Valid values are `animate` or `instant`
-    - Default is `animate`
 * `itemInterpolation` - type: STRING
     - Interpolation method to use when scaling items. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
@@ -1081,6 +1077,20 @@ Properties:
 * `itemAxisHorizontal` - type: BOOLEAN
     - If `type` has been set to "horizontal_wheel" or "vertical_wheel" then the items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel. Make sure that `itemVerticalAlignment` is set to `center` when using this attribute or you'll get some strange alignment issues.
     - Default is `false`
+* `itemColor` - type: COLOR
+    - Applies a color shift to the images defined by `staticItem`, `itemType` and `defaultItem` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Default is `FFFFFFFF` (no color shift applied)
+* `itemColorEnd` - type: COLOR
+    - Works in the exact same way as `itemColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `itemColor`
+* `itemGradientType` - type: STRING
+    - The direction to apply the color gradient if both `itemColor` and `itemColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `itemTransitions` - type: STRING
+    - How to render item transitions when navigating the carousel. By default a slide, scale and opacity fade animation will be played when moving between items (the latter two assuming `itemScale` and `unfocusedItemOpacity` have not been set to `1`) but if this property is set to `instant` then transitions will be immediate.
+    - Valid values are `animate` or `instant`
+    - Default is `animate`
 * `itemHorizontalAlignment` - type: STRING
     - Sets `staticItem` / `itemType` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
     - Valid values are `left`, `center` or `right`
@@ -1121,7 +1131,7 @@ Properties:
     - Default is `FFFFFFD8`
 * `colorEnd` - type: COLOR
     - Setting this to something other than what is defined for `color` creates a color gradient on the background panel.
-    - Default is `FFFFFFD8`
+    - Default is the same value as `color`
 * `gradientType` - type: STRING
     - The direction to apply the color gradient if both `color` and `colorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
@@ -1166,6 +1176,8 @@ Properties:
 
 An X*Y grid for navigating and selecting games or systems using the left/right and up/down buttons. The layout including the amount of columns and rows is automatically calculated based on the relevant property values.
 
+Property names for the grid element have been kept as similar as possible to those of the carousel. This does however introduce some potential confusion for a few properties due to the varying nature of these two elements. More specifically a grid `item` may refer to both the overall item in the same manner as it's used for the carousel but it may also refer to the primary image used for the item (e.g. a system logo, cover, marquee etc). Be aware of this when using the `itemRelativeScale`, `itemFit`, `itemColor`, `itemColorEnd` and `itemGradientType` properties as these will not apply to the overall item.
+
 Supported views:
 * `system`
 * `gamelist`
@@ -1180,7 +1192,7 @@ Properties:
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `1 0.8`
 * `origin` - type: NORMALIZED_PAIR
-    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the textlist exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
+    - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the grid exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `staticItem` - type: PATH
@@ -1201,28 +1213,79 @@ Properties:
     - Default is `marquee`
 * `defaultItem` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticItem` or `itemType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `backgroundImage` - type: PATH
+    - Path to an optional background image file which will be displayed behind the image defined by `staticItem`, `itemType` or `defaultItem`. The aspect ratio for this image will not be preserved, it will be stretched or squashed to the aspect ratio set by `itemSize`. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `backgroundRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the background relative to the overall item size. This is mostly useful when combined with the `selectorImage` property.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
+* `backgroundColor` - type: COLOR
+    - Applies a color shift or draws a colored rectangle. If an image has been defined using the `backgroundImage` property then each pixel of that image is multiplied by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. If no background image has been defined, then a colored rectangle will be drawn instead.
+* `backgroundColorEnd` - type: COLOR
+    - Works in the exact same way as `backgroundColor` but can be set as the end color to apply a color gradient.
+    - Default is the same value as `backgroundColor`
+* `backgroundGradientType` - type: STRING
+    - The direction to apply the color gradient if both `backgroundColor` and `backgroundColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `selectorImage` - type: PATH
+    - Path to an optional selector image file which will be displayed for the currently selected item. The aspect ratio for this image will not be preserved, it will be stretched or squashed to the aspect ratio set by `itemSize`. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `selectorRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the selector relative to the overall item size. This is mostly useful when combined with the `backgroundImage` property.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
+* `selectorColor` - type: COLOR
+    - Applies a color shift or draws a colored rectangle. If an image has been defined using the `selectorImage` property then each pixel of that image is multiplied by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. If no selector image has been defined, then a colored rectangle will be drawn instead.
+* `selectorColorEnd` - type: COLOR
+    - Works in the exact same way as `selectorColor` but can be set as the end color to apply a color gradient.
+    - Default is the same value as `selectorColor`
+* `selectorGradientType` - type: STRING
+    - The direction to apply the color gradient if both `selectorColor` and `selectorColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `selectorLayer` - type: STRING
+    - Defines at what layer position to place the selector. It can either be placed at the bottom, in the middle between the background and image/text or on top.
+    - Valid values are `bottom`, `middle` or `top`
+    - Default is `top`
 * `fractionalRows` - type: BOOLEAN
     - Whether to allow rendering of fractional rows of items. If set to false then the effective area of the overall element size will be snapped to the item height multiplied by `itemScale`. Note that if setting `itemScale` too high relative to the `itemSpacing` Y axis value then fractional rows may still be rendered even if the `fractionalRows` property is set to false.
     - Default is `false`
 * `itemSize` - type: NORMALIZED_PAIR
-    - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
+    - Size of the overall item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis, resulting in a perfectly square item. If not using this approach then both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `0.15 0.25`
 * `itemScale` - type: FLOAT.
-    - Selected item is increased in size by this scale.
+    - Selected overall item is scaled by the value defined by this property.
     - Minimum value is `0.5` and maximum value is `2`
     - Default is `1.05`
+* `itemRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the image defined by `staticItem`, `itemType` or `defaultItem` relative to the overall item size. This is mostly useful when combined with the `backgroundImage` and `selectorImage` properties.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
+* `itemFit` - type: STRING
+    - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
+    - Valid values are `contain`, `fill` or `cover`
+    - Default is `contain`
+* `itemSpacing` - type: NORMALIZED_PAIR
+    - The horizontal and vertical space between items. This value is added to the unscaled item size, i.e. `itemSize` before it's been multiplied by `itemScale`. This means that if an axis is set to `0` then unscaled items will be perfectly adjacent to each other on that axis but if `itemScale` has been set to higher than `1` then the currently selected item will overlap adjacent items. If this property is omitted then spacing will be automatically calculated so that no overlaps occur during scaling. However you'd normally want to define and adjust this property for an optimal layout. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis. Note that all spacing calculations are based on the value defined by `itemSize` which may or may not be the same as the actual image sizes, depending on their aspect ratios and if the `itemFit` property is used.
+    - Minimum value per axis is `0` and maximum value per axis is `0.1`
+* `itemColor` - type: COLOR
+    - Applies a color shift to the images defined by `staticItem`, `itemType` and `defaultItem` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+* `itemColorEnd` - type: COLOR
+    - Works in the exact same way as `itemColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `itemColor`
+* `itemGradientType` - type: STRING
+    - The direction to apply the color gradient if both `itemColor` and `itemColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
 * `itemTransitions` - type: STRING
-    - How to render item transitions when navigating the grid. By default a scaling and opacity fade animation will be played when moving between items (assuming `itemScale` and `unfocusedItemOpacity` have not been set to `1`) but if this property is set to `instant` then the transitions will be immediate.
+    - How to render item transitions when navigating the grid. By default a scaling and opacity fade animation will be played when moving between items (assuming `itemScale` and `unfocusedItemOpacity` have not been set to `1`) but if this property is set to `instant` then transitions will be immediate.
     - Valid values are `animate` or `instant`
     - Default is `animate`
 * `rowTransitions` - type: STRING
-    - How to render row transitions when navigating the grid. By default a sliding animation will be rendered when moving between rows but if this property is set to `instant` then the transitions will be immediate.
+    - How to render row transitions when navigating the grid. By default a sliding animation will be rendered when moving between rows but if this property is set to `instant` then transitions will be immediate.
     - Valid values are `animate` or `instant`
     - Default is `animate`
-* `itemSpacing` - type: NORMALIZED_PAIR
-    - The horizontal and vertical space between items. This value is added to the unscaled item size, i.e. `itemSize` before it's been multiplied by `itemScale`. This means that if an axis is set to `0` then unscaled items will be perfectly adjacent to each other on that axis but if `itemScale` has been set to higher than `1` then the currently selected item may overlap adjacent items. If this property is omitted then spacing will be automatically calculated so that no overlaps occur during scaling. However you'd normally want to define and adjust this property for an optimal layout. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis. Note that all spacing calculations are based on the value defined by `itemSize` which may or may not be the same as the actual image sizes, depending on their aspect ratios.
-    - Minimum value per axis is `0` and maximum value per axis is `0.1`
 * `unfocusedItemOpacity` - type: FLOAT
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
@@ -1254,6 +1317,9 @@ Properties:
     - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
+* `fadeAbovePrimary` - type: BOOLEAN
+    - When using fade transitions, all elements in the `system` view with a zIndex value higher than the grid are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the grid will be dimmed to black and elements above the grid will be faded to transparent.
+    - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
@@ -1426,9 +1492,11 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR
-    - Multiply each pixel's color by this color. For example, an all-white image with `<color>FF0000</color>` would become completely red. You can also control the transparency of an image with `<color>FFFFFFAA</color>` - keeping all the pixels their normal color and only affecting the alpha channel.
+    - Applies a color shift to the image by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Default is `FFFFFFFF` (no color shift applied)
 * `colorEnd` - type: COLOR
-    - Works exactly in the same way as `color` but can be set as the end color to apply a color shift gradient to the image.
+    - Works in the exact same way as `itemColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `color`
 * `gradientType` - type: STRING
     - The direction to apply the color shift gradient if both `color` and `colorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
