@@ -110,6 +110,12 @@ private:
         BOTTOM
     };
 
+    enum class ItemFit {
+        CONTAIN,
+        FILL,
+        COVER
+    };
+
     Renderer* mRenderer;
     std::function<void()> mCancelTransitionsCallback;
     std::function<void(CursorState state)> mCursorChangedCallback;
@@ -144,6 +150,7 @@ private:
     glm::vec2 mItemSize;
     float mItemScale;
     float mItemRelativeScale;
+    ItemFit mItemFit;
     glm::vec2 mItemSpacing;
     unsigned int mItemColor;
     unsigned int mItemColorEnd;
@@ -195,6 +202,7 @@ GridComponent<T>::GridComponent()
                             mRenderer->getScreenHeight() * 0.25f}}
     , mItemScale {1.05f}
     , mItemRelativeScale {1.0f}
+    , mItemFit {ItemFit::CONTAIN}
     , mItemSpacing {0.0f, 0.0f}
     , mItemColor {0xFFFFFFFF}
     , mItemColorEnd {0xFFFFFFFF}
@@ -225,7 +233,12 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         auto item = std::make_shared<ImageComponent>(false, dynamic);
         item->setLinearInterpolation(true);
         item->setMipmapping(true);
-        item->setMaxSize(mItemSize * mItemRelativeScale);
+        if (mItemFit == ItemFit::CONTAIN)
+            item->setMaxSize(mItemSize * mItemRelativeScale);
+        else if (mItemFit == ItemFit::FILL)
+            item->setResize(mItemSize * mItemRelativeScale);
+        else if (mItemFit == ItemFit::COVER)
+            item->setCroppedSize(mItemSize * mItemRelativeScale);
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mItemColor != 0xFFFFFFFF)
@@ -244,7 +257,12 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
         defaultItem->setLinearInterpolation(true);
         defaultItem->setMipmapping(true);
-        defaultItem->setMaxSize(mItemSize * mItemRelativeScale);
+        if (mItemFit == ItemFit::CONTAIN)
+            defaultItem->setMaxSize(mItemSize * mItemRelativeScale);
+        else if (mItemFit == ItemFit::FILL)
+            defaultItem->setResize(mItemSize * mItemRelativeScale);
+        else if (mItemFit == ItemFit::COVER)
+            defaultItem->setCroppedSize(mItemSize * mItemRelativeScale);
         defaultItem->setImage(entry.data.defaultItemPath);
         defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mItemColor != 0xFFFFFFFF)
@@ -286,7 +304,12 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(true);
         item->setMipmapping(true);
-        item->setMaxSize(mItemSize * mItemRelativeScale);
+        if (mItemFit == ItemFit::CONTAIN)
+            item->setMaxSize(mItemSize * mItemRelativeScale);
+        else if (mItemFit == ItemFit::FILL)
+            item->setResize(mItemSize * mItemRelativeScale);
+        else if (mItemFit == ItemFit::COVER)
+            item->setCroppedSize(mItemSize * mItemRelativeScale);
         item->setImage(entry.data.itemPath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mItemColor != 0xFFFFFFFF)
@@ -744,6 +767,25 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("itemRelativeScale"))
         mItemRelativeScale = glm::clamp(elem->get<float>("itemRelativeScale"), 0.2f, 1.0f);
+
+    if (elem->has("itemFit")) {
+        const std::string& itemFit {elem->get<std::string>("itemFit")};
+        if (itemFit == "contain") {
+            mItemFit = ItemFit::CONTAIN;
+        }
+        else if (itemFit == "fill") {
+            mItemFit = ItemFit::FILL;
+        }
+        else if (itemFit == "cover") {
+            mItemFit = ItemFit::COVER;
+        }
+        else {
+            mItemFit = ItemFit::CONTAIN;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"itemFit\" for element \""
+                            << element.substr(5) << "\" defined as \"" << itemFit << "\"";
+        }
+    }
 
     if (elem->has("backgroundRelativeScale"))
         mBackgroundRelativeScale =
