@@ -22,6 +22,7 @@ ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     , mFlipX {false}
     , mFlipY {false}
     , mTargetIsMax {false}
+    , mTargetIsCrop {false}
     , mTileWidth {0.0f}
     , mTileHeight {0.0f}
     , mColorShift {0xFFFFFFFF}
@@ -93,6 +94,8 @@ void ImageComponent::setImage(const std::string& path, bool tile)
                                          mMipmapping, static_cast<size_t>(mSize.x),
                                          static_cast<size_t>(mSize.y), mTileWidth, mTileHeight);
                 mTexture->rasterizeAt(mSize.x, mSize.y);
+                if (mTargetIsCrop)
+                    coverFitCrop();
                 onSizeChanged();
             }
         }
@@ -127,6 +130,7 @@ void ImageComponent::setResize(const float width, const float height)
 {
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = false;
+    mTargetIsCrop = false;
     resize();
 }
 
@@ -134,6 +138,7 @@ void ImageComponent::setResize(const glm::vec2& size, bool rasterize)
 {
     mTargetSize = size;
     mTargetIsMax = false;
+    mTargetIsCrop = false;
     resize(rasterize);
 }
 
@@ -141,45 +146,72 @@ void ImageComponent::setMaxSize(const float width, const float height)
 {
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = true;
+    mTargetIsCrop = false;
     resize();
 }
 
-void ImageComponent::cropLeft(const float percent)
+void ImageComponent::setCroppedSize(const glm::vec2& size)
 {
-    assert(percent >= 0.0f && percent <= 1.0f);
-    mTopLeftCrop.x = percent;
+    mTargetSize = size;
+    mTargetIsMax = false;
+    mTargetIsCrop = true;
+    resize();
 }
 
-void ImageComponent::cropTop(const float percent)
+void ImageComponent::cropLeft(const float value)
 {
-    assert(percent >= 0.0f && percent <= 1.0f);
-    mTopLeftCrop.y = percent;
+    assert(value >= 0.0f && value <= 1.0f);
+    mTopLeftCrop.x = value;
 }
 
-void ImageComponent::cropRight(const float percent)
+void ImageComponent::cropTop(const float value)
 {
-    assert(percent >= 0.0f && percent <= 1.0f);
-    mBottomRightCrop.x = 1.0f - percent;
+    assert(value >= 0.0f && value <= 1.0f);
+    mTopLeftCrop.y = value;
 }
 
-void ImageComponent::cropBot(const float percent)
+void ImageComponent::cropRight(const float value)
 {
-    assert(percent >= 0.0f && percent <= 1.0f);
-    mBottomRightCrop.y = 1.0f - percent;
+    assert(value >= 0.0f && value <= 1.0f);
+    mBottomRightCrop.x = 1.0f - value;
 }
 
-void ImageComponent::crop(const float left, const float top, const float right, const float bot)
+void ImageComponent::cropBottom(const float value)
+{
+    assert(value >= 0.0f && value <= 1.0f);
+    mBottomRightCrop.y = 1.0f - value;
+}
+
+void ImageComponent::crop(const float left, const float top, const float right, const float bottom)
 {
     cropLeft(left);
     cropTop(top);
     cropRight(right);
-    cropBot(bot);
+    cropBottom(bottom);
 }
 
 void ImageComponent::uncrop()
 {
     // Remove any applied crop.
     crop(0.0f, 0.0f, 0.0f, 0.0f);
+}
+
+void ImageComponent::coverFitCrop()
+{
+    assert(mTargetIsCrop);
+
+    if (std::round(mSize.y) > std::round(mTargetSize.y)) {
+        const float cropSize {1.0f - (mTargetSize.y / mSize.y)};
+        cropTop(cropSize / 2.0f);
+        cropBottom(cropSize / 2.0f);
+        mSize.y = mSize.y - (mSize.y * cropSize);
+    }
+    else {
+        const float cropSize {1.0f - (mTargetSize.x / mSize.x)};
+        cropLeft(cropSize / 2.0f);
+        cropRight(cropSize / 2.0f);
+        mSize.x = mSize.x - (mSize.x * cropSize);
+    }
 }
 
 void ImageComponent::cropTransparentPadding(const float maxSizeX, const float maxSizeY)
@@ -562,7 +594,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("colorEnd"))
             setColorShiftEnd(elem->get<unsigned int>("colorEnd"));
         if (elem->has("gradientType")) {
-            const std::string gradientType {elem->get<std::string>("gradientType")};
+            const std::string& gradientType {elem->get<std::string>("gradientType")};
             if (gradientType == "horizontal") {
                 setColorGradientHorizontal(true);
             }
@@ -617,6 +649,12 @@ void ImageComponent::resize(bool rasterize)
                 mSize.x = std::min((mSize.y / textureSize.y) * textureSize.x, mTargetSize.x);
             }
         }
+        else if (mTargetIsCrop) {
+            // Size texture to allow for cropped image to fill the entire area.
+            const float cropFactor {
+                std::max(mTargetSize.x / textureSize.x, mTargetSize.y / textureSize.y)};
+            mSize = textureSize * cropFactor;
+        }
         else {
             // If both axes are set we just stretch or squash, if no axes are set we do nothing.
             mSize = mTargetSize == glm::vec2 {0.0f, 0.0f} ? textureSize : mTargetSize;
@@ -640,6 +678,8 @@ void ImageComponent::resize(bool rasterize)
 
     if (rasterize) {
         mTexture->rasterizeAt(mSize.x, mSize.y);
+        if (mTargetIsCrop)
+            coverFitCrop();
         onSizeChanged();
     }
 }

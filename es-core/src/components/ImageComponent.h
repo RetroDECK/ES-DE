@@ -47,6 +47,9 @@ public:
     void setMaxSize(const float width, const float height);
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
 
+    // Resize and crop image so it fills the entire area defined by the size parameter.
+    void setCroppedSize(const glm::vec2& size);
+
     void setTileSize(const float width, const float height)
     {
         mTileWidth = width;
@@ -55,14 +58,16 @@ public:
 
     glm::vec2 getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
 
-    // Applied AFTER image positioning and sizing.
-    // cropTop(0.2) will crop 20% of the top of the image.
-    void cropLeft(const float percent);
-    void cropTop(const float percent);
-    void cropRight(const float percent);
-    void cropBot(const float percent);
-    void crop(const float left, const float top, const float right, const float bot);
+    // Applied after image positioning and sizing.
+    void cropLeft(const float value);
+    void cropTop(const float value);
+    void cropRight(const float value);
+    void cropBottom(const float value);
+    void crop(const float left, const float top, const float right, const float bottom);
     void uncrop();
+    // This essentially implements CSS "object-fit: cover" and has nothing to do with the
+    // cover image type (as the name may seem to imply).
+    void coverFitCrop();
 
     // This crops any entirely transparent areas around the actual image.
     // The arguments restrict how much the end result is allowed to be scaled.
@@ -115,6 +120,7 @@ private:
     bool mFlipX;
     bool mFlipY;
     bool mTargetIsMax;
+    bool mTargetIsCrop;
 
     float mTileWidth;
     float mTileHeight;
