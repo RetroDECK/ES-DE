@@ -175,6 +175,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
        {"itemRelativeScale", FLOAT},
+       {"itemFit", STRING},
        {"itemSpacing", NORMALIZED_PAIR},
        {"itemColor", COLOR},
        {"itemColorEnd", COLOR},
