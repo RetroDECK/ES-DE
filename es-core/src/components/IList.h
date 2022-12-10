@@ -339,14 +339,14 @@ protected:
         bool doScroll {true};
 
         // This is only needed for GridComponent.
-        if (mColumns != 0 && mScrollVelocity == -mColumns && mCursor < mColumns) {
+        if (mColumns > 1 && mScrollVelocity == -mColumns && mCursor < mColumns) {
             doScroll = false;
         }
         else if (mColumns != 0 && mScrollVelocity == mColumns) {
             if (size() - mCursor <= size() % mColumns)
                 doScroll = false;
-            else if (mCursor >= (mColumns * mRows) - mColumns && size() - mCursor <= mColumns &&
-                     size() % mColumns == 0)
+            else if (mColumns != 1 && mCursor >= (mColumns * mRows) - mColumns &&
+                     size() - mCursor <= mColumns && size() % mColumns == 0)
                 doScroll = false;
             else if (size() < mColumns)
                 doScroll = false;
