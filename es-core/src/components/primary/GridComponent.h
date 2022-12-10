@@ -722,8 +722,21 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mFractionalRows = (elem->has("fractionalRows") && elem->get<bool>("fractionalRows"));
 
     if (elem->has("itemSize")) {
-        const glm::vec2& itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
-        mItemSize = itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        const glm::vec2& itemSize {elem->get<glm::vec2>("itemSize")};
+        if (!(itemSize.x == -1 && itemSize.y == -1)) {
+            if (itemSize.x == -1) {
+                mItemSize.y = glm::clamp(itemSize.y, 0.05f, 1.0f) * mRenderer->getScreenHeight();
+                mItemSize.x = mItemSize.y;
+            }
+            else if (itemSize.y == -1) {
+                mItemSize.x = glm::clamp(itemSize.x, 0.05f, 1.0f) * mRenderer->getScreenWidth();
+                mItemSize.y = mItemSize.x;
+            }
+            else {
+                mItemSize = glm::clamp(itemSize, 0.05f, 1.0f) *
+                            glm::vec2(mRenderer->getScreenWidth(), mRenderer->getScreenHeight());
+            }
+        }
     }
 
     if (elem->has("itemScale"))
