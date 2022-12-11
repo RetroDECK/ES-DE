@@ -431,4 +431,8 @@
     <variant name="themeEngineTest_3">
         <include>./theme_engine_test_3.xml</include>
     </variant>
+
+    <variant name="themeEngineTest_4">
+        <include>./theme_engine_test_4.xml</include>
+    </variant>
 </theme>
