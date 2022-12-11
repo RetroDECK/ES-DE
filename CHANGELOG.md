@@ -186,7 +186,7 @@
 * Added reflections support to the carousel
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
-* Added carousel theme support for applying item color shifts
+* Added carousel theme support for applying image color shifts
 * Added carousel theme support for setting item transitions to "slide" or "instant"
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type
