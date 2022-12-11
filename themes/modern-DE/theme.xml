@@ -60,7 +60,7 @@
             <pos>0 0.3</pos>
             <size>1 0.4</size>
             <type>horizontal</type>
-            <staticItem>./art/${system.theme}.jpg</staticItem>
+            <staticImage>./art/${system.theme}.jpg</staticImage>
             <itemScale>1</itemScale>
             <itemVerticalAlignment>center</itemVerticalAlignment>
             <unfocusedItemOpacity>1</unfocusedItemOpacity>
