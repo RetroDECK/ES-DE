@@ -375,7 +375,7 @@ void SystemView::onCursorChanged(const CursorState& state)
     if (transitionStyle == "fade") {
         float startFade {mFadeOpacity};
         anim = new LambdaAnimation(
-            [this, startFade, startPos, endPos, posMax](float t) {
+            [this, startFade, endPos](float t) {
                 if (t < 0.3f)
                     mFadeOpacity =
                         glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
@@ -437,9 +437,8 @@ void SystemView::onCursorChanged(const CursorState& state)
     else {
         // Instant.
         updateGameCount();
-        anim =
-            new LambdaAnimation([this, startPos, endPos, posMax](float t) { mCamOffset = endPos; },
-                                static_cast<int>(animTime));
+        anim = new LambdaAnimation([this, endPos](float t) { mCamOffset = endPos; },
+                                   static_cast<int>(animTime));
     }
 
     setAnimation(anim, 0, nullptr, false, 0);
