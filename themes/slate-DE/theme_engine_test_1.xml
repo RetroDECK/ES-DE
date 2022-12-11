@@ -6,7 +6,7 @@
             <pos>0 0</pos>
             <size>0.28 1.0</size>
             <type>vertical_wheel</type>
-            <staticItem>./${system.theme}/images/logo.svg</staticItem>
+            <staticImage>./${system.theme}/images/logo.svg</staticImage>
             <itemsBeforeCenter>4</itemsBeforeCenter>
             <itemsAfterCenter>4</itemsAfterCenter>
             <itemSize>0.15 0.125</itemSize>

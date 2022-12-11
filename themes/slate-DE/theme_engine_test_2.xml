@@ -110,11 +110,11 @@
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
             <type>vertical</type>
-            <itemType>marquee</itemType>
+            <imageType>marquee</imageType>
             <maxItemCount>5</maxItemCount>
             <itemSize>0.26 0.105</itemSize>
             <itemScale>1.23</itemScale>
-            <itemInterpolation>linear</itemInterpolation>
+            <imageInterpolation>linear</imageInterpolation>
             <itemHorizontalAlignment>center</itemHorizontalAlignment>
             <horizontalOffset>0</horizontalOffset>
             <verticalOffset>0</verticalOffset>
