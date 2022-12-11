@@ -178,8 +178,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rowTransitions", STRING},
        {"unfocusedItemOpacity", FLOAT},
        {"edgeScaleInwards", BOOLEAN},              // TODO
-       {"imageRelativeScale", FLOAT},
        {"imageFit", STRING},
+       {"imageRelativeScale", FLOAT},
        {"imageColor", COLOR},
        {"imageColorEnd", COLOR},
        {"imageGradientType", STRING},

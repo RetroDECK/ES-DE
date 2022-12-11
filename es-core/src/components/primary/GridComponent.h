@@ -143,8 +143,8 @@ private:
     bool mInstantItemTransitions;
     bool mInstantRowTransitions;
     float mUnfocusedItemOpacity;
-    float mImageRelativeScale;
     ImageFit mImagefit;
+    float mImageRelativeScale;
     unsigned int mImageColor;
     unsigned int mImageColorEnd;
     bool mImageColorGradientHorizontal;
@@ -199,8 +199,8 @@ GridComponent<T>::GridComponent()
     , mInstantItemTransitions {false}
     , mInstantRowTransitions {false}
     , mUnfocusedItemOpacity {1.0f}
-    , mImageRelativeScale {1.0f}
     , mImagefit {ImageFit::CONTAIN}
+    , mImageRelativeScale {1.0f}
     , mImageColor {0xFFFFFFFF}
     , mImageColorEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
