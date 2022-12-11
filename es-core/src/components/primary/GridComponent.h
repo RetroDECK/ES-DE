@@ -35,6 +35,7 @@ public:
     using Entry = typename IList<GridEntry, T>::Entry;
 
     GridComponent();
+    ~GridComponent();
 
     void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
     void updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
@@ -148,12 +149,14 @@ private:
     unsigned int mImageColorEnd;
     bool mImageColorGradientHorizontal;
     std::unique_ptr<ImageComponent> mBackgroundImage;
+    std::string mBackgroundImagePath;
     float mBackgroundRelativeScale;
     unsigned int mBackgroundColor;
     unsigned int mBackgroundColorEnd;
     bool mBackgroundColorGradientHorizontal;
     bool mHasBackgroundColor;
     std::unique_ptr<ImageComponent> mSelectorImage;
+    std::string mSelectorImagePath;
     float mSelectorRelativeScale;
     SelectorLayer mSelectorLayer;
     unsigned int mSelectorColor;
@@ -221,6 +224,18 @@ GridComponent<T>::GridComponent()
     , mLineSpacing {1.5f}
     , mFadeAbovePrimary {false}
 {
+}
+
+template <typename T> GridComponent<T>::~GridComponent()
+{
+    // Manually flush the background and selector images from the texture cache on destruction
+    // when running in debug mode, otherwise a complete system view reload would be needed to
+    // get these images updated. This is useful during theme development when using the Ctrl-r
+    // keyboard combination to reload the theme configuration.
+    if (Settings::getInstance()->getBool("Debug")) {
+        TextureResource::manualUnload(mBackgroundImagePath, false);
+        TextureResource::manualUnload(mSelectorImagePath, false);
+    }
 }
 
 template <typename T>
@@ -867,6 +882,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 }
             }
             mBackgroundImage->setImage(elem->get<std::string>("backgroundImage"));
+            mBackgroundImagePath = path;
         }
         else {
             LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
@@ -891,6 +907,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 }
             }
             mSelectorImage->setImage(elem->get<std::string>("selectorImage"));
+            mSelectorImagePath = path;
         }
         else {
             LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
