@@ -281,7 +281,8 @@ private:
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sLegacySupportedViews;
     static std::vector<std::string> sLegacySupportedFeatures;
-    static std::vector<std::string> sLegacyElements;
+    static std::vector<std::string> sLegacyProperties;
+    static std::vector<std::string> sDeprecatedProperties;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
     static std::map<std::string, float> sAspectRatioMap;
 

@@ -577,17 +577,17 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 
     auto theme = mRoot->getSystem()->getTheme();
     std::string name;
-    std::string defaultItem;
+    std::string defaultImage;
 
     if (mCarousel != nullptr) {
-        defaultItem = mCarousel->getDefaultItem();
-        if (!ResourceManager::getInstance().fileExists(defaultItem))
-            defaultItem = "";
+        defaultImage = mCarousel->getDefaultImage();
+        if (!ResourceManager::getInstance().fileExists(defaultImage))
+            defaultImage = "";
     }
     else if (mGrid != nullptr) {
-        defaultItem = mGrid->getDefaultItem();
-        if (!ResourceManager::getInstance().fileExists(defaultItem))
-            defaultItem = "";
+        defaultImage = mGrid->getDefaultImage();
+        if (!ResourceManager::getInstance().fileExists(defaultImage))
+            defaultImage = "";
     }
 
     if (files.size() > 0) {
@@ -617,8 +617,8 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 else if (letterCase == LetterCase::CAPITALIZED)
                     carouselEntry.name = Utils::String::toCapitalized(carouselEntry.name);
 
-                if (defaultItem != "")
-                    carouselEntry.data.defaultItemPath = defaultItem;
+                if (defaultImage != "")
+                    carouselEntry.data.defaultImagePath = defaultImage;
 
                 mCarousel->addEntry(carouselEntry, theme);
             }
@@ -634,8 +634,8 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 else if (letterCase == LetterCase::CAPITALIZED)
                     gridEntry.name = Utils::String::toCapitalized(gridEntry.name);
 
-                if (defaultItem != "")
-                    gridEntry.data.defaultItemPath = defaultItem;
+                if (defaultImage != "")
+                    gridEntry.data.defaultImagePath = defaultImage;
 
                 mGrid->addEntry(gridEntry, theme);
             }

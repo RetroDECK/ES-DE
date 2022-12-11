@@ -155,14 +155,33 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             if (element.second.type == "carousel") {
                 if (mCarousel == nullptr) {
                     mCarousel = std::make_unique<CarouselComponent<FileData*>>();
-                    if (element.second.has("itemType")) {
+                    if (element.second.has("imageType")) {
+                        const std::string imageType {element.second.get<std::string>("imageType")};
+                        if (imageType == "marquee" || imageType == "cover" ||
+                            imageType == "backcover" || imageType == "3dbox" ||
+                            imageType == "physicalmedia" || imageType == "screenshot" ||
+                            imageType == "titlescreen" || imageType == "miximage" ||
+                            imageType == "fanart" || imageType == "none") {
+                            mCarousel->setImageType(imageType);
+                        }
+                        else {
+                            LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
+                                               "configuration, carousel property \"imageType\" "
+                                               "for element \""
+                                            << element.first.substr(9) << "\" defined as \""
+                                            << imageType << "\"";
+                            mCarousel->setImageType("marquee");
+                        }
+                    }
+                    else if (element.second.has("itemType")) {
+                        // TEMPORARY: Backward compatiblity due to property name changes.
                         const std::string itemType {element.second.get<std::string>("itemType")};
                         if (itemType == "marquee" || itemType == "cover" ||
                             itemType == "backcover" || itemType == "3dbox" ||
                             itemType == "physicalmedia" || itemType == "screenshot" ||
                             itemType == "titlescreen" || itemType == "miximage" ||
                             itemType == "fanart" || itemType == "none") {
-                            mCarousel->setItemType(itemType);
+                            mCarousel->setImageType(itemType);
                         }
                         else {
                             LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
@@ -170,14 +189,17 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                                                "for element \""
                                             << element.first.substr(9) << "\" defined as \""
                                             << itemType << "\"";
-                            mCarousel->setItemType("marquee");
+                            mCarousel->setImageType("marquee");
                         }
                     }
                     else {
-                        mCarousel->setItemType("marquee");
+                        mCarousel->setImageType("marquee");
                     }
+                    // TEMPORARY: Backward compatiblity due to property name changes.
                     if (element.second.has("defaultItem"))
-                        mCarousel->setDefaultItem(element.second.get<std::string>("defaultItem"));
+                        mCarousel->setDefaultImage(element.second.get<std::string>("defaultItem"));
+                    if (element.second.has("defaultImage"))
+                        mCarousel->setDefaultImage(element.second.get<std::string>("defaultImage"));
                     mPrimary = mCarousel.get();
                 }
                 mPrimary->setCursorChangedCallback(
@@ -189,29 +211,29 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             if (element.second.type == "grid") {
                 if (mGrid == nullptr) {
                     mGrid = std::make_unique<GridComponent<FileData*>>();
-                    if (element.second.has("itemType")) {
-                        const std::string itemType {element.second.get<std::string>("itemType")};
-                        if (itemType == "marquee" || itemType == "cover" ||
-                            itemType == "backcover" || itemType == "3dbox" ||
-                            itemType == "physicalmedia" || itemType == "screenshot" ||
-                            itemType == "titlescreen" || itemType == "miximage" ||
-                            itemType == "fanart" || itemType == "none") {
-                            mGrid->setItemType(itemType);
+                    if (element.second.has("imageType")) {
+                        const std::string imageType {element.second.get<std::string>("imageType")};
+                        if (imageType == "marquee" || imageType == "cover" ||
+                            imageType == "backcover" || imageType == "3dbox" ||
+                            imageType == "physicalmedia" || imageType == "screenshot" ||
+                            imageType == "titlescreen" || imageType == "miximage" ||
+                            imageType == "fanart" || imageType == "none") {
+                            mGrid->setImageType(imageType);
                         }
                         else {
                             LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
-                                               "configuration, grid property \"itemType\" "
+                                               "configuration, grid property \"imageType\" "
                                                "for element \""
                                             << element.first.substr(5) << "\" defined as \""
-                                            << itemType << "\"";
-                            mGrid->setItemType("marquee");
+                                            << imageType << "\"";
+                            mGrid->setImageType("marquee");
                         }
                     }
                     else {
-                        mGrid->setItemType("marquee");
+                        mGrid->setImageType("marquee");
                     }
-                    if (element.second.has("defaultItem"))
-                        mGrid->setDefaultItem(element.second.get<std::string>("defaultItem"));
+                    if (element.second.has("defaultImage"))
+                        mGrid->setDefaultImage(element.second.get<std::string>("defaultImage"));
                     mPrimary = mGrid.get();
                 }
                 mPrimary->setCursorChangedCallback(

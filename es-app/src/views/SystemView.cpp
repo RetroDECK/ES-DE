@@ -466,8 +466,8 @@ void SystemView::populate()
 
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};
-        std::string itemPath;
-        std::string defaultItemPath;
+        std::string imagePath;
+        std::string defaultImagePath;
         std::string itemText;
 
         if (mLegacyMode && mViewNeedsReload) {
@@ -575,10 +575,18 @@ void SystemView::populate()
                             }
                         });
                         if (mCarousel != nullptr || mGrid != nullptr) {
-                            if (element.second.has("staticItem"))
-                                itemPath = element.second.get<std::string>("staticItem");
-                            if (element.second.has("defaultItem"))
-                                defaultItemPath = element.second.get<std::string>("defaultItem");
+                            if (mCarousel != nullptr) {
+                                // TEMPORARY: Backward compatiblity due to property name changes.
+                                if (element.second.has("staticItem"))
+                                    imagePath = element.second.get<std::string>("staticItem");
+                                if (element.second.has("defaultItem"))
+                                    defaultImagePath =
+                                        element.second.get<std::string>("defaultItem");
+                            }
+                            if (element.second.has("staticImage"))
+                                imagePath = element.second.get<std::string>("staticImage");
+                            if (element.second.has("defaultImage"))
+                                defaultImagePath = element.second.get<std::string>("defaultImage");
                             if (element.second.has("text"))
                                 itemText = element.second.get<std::string>("text");
                         }
@@ -755,8 +763,8 @@ void SystemView::populate()
             }
             letterCaseFunc(entry.name);
             entry.object = it;
-            entry.data.itemPath = itemPath;
-            entry.data.defaultItemPath = defaultItemPath;
+            entry.data.imagePath = imagePath;
+            entry.data.defaultImagePath = defaultImagePath;
             mCarousel->addEntry(entry, theme);
         }
         else if (mGrid != nullptr) {
@@ -767,8 +775,8 @@ void SystemView::populate()
                 entry.name = itemText;
             letterCaseFunc(entry.name);
             entry.object = it;
-            entry.data.itemPath = itemPath;
-            entry.data.defaultItemPath = defaultItemPath;
+            entry.data.imagePath = imagePath;
+            entry.data.defaultImagePath = defaultImagePath;
             mGrid->addEntry(entry, theme);
         }
         else if (mTextList != nullptr) {

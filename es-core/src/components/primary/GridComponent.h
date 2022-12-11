@@ -14,8 +14,8 @@
 
 struct GridEntry {
     std::shared_ptr<GuiComponent> item;
-    std::string itemPath;
-    std::string defaultItemPath;
+    std::string imagePath;
+    std::string defaultImagePath;
 };
 
 template <typename T>
@@ -62,10 +62,10 @@ public:
     {
         return mLetterCaseGroupedCollections;
     }
-    const std::string& getItemType() { return mItemType; }
-    void setItemType(std::string itemType) { mItemType = itemType; }
-    const std::string& getDefaultItem() { return mDefaultItem; }
-    void setDefaultItem(std::string defaultItem) { mDefaultItem = defaultItem; }
+    const std::string& getImageType() { return mImageType; }
+    void setImageType(std::string imageType) { mImageType = imageType; }
+    const std::string& getDefaultImage() { return mDefaultImage; }
+    void setDefaultImage(std::string defaultItem) { mDefaultImage = defaultItem; }
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
@@ -110,7 +110,7 @@ private:
         BOTTOM
     };
 
-    enum class ItemFit {
+    enum class ImageFit {
         CONTAIN,
         FILL,
         COVER
@@ -130,9 +130,23 @@ private:
     bool mWasScrolling;
     bool mJustCalculatedLayout;
     bool mSuppressTransitions;
+    float mHorizontalMargin;
+    float mVerticalMargin;
 
-    std::string mItemType;
-    std::string mDefaultItem;
+    std::string mImageType;
+    std::string mDefaultImage;
+    glm::vec2 mItemSize;
+    float mItemScale;
+    glm::vec2 mItemSpacing;
+    bool mFractionalRows;
+    bool mInstantItemTransitions;
+    bool mInstantRowTransitions;
+    float mUnfocusedItemOpacity;
+    float mImageRelativeScale;
+    ImageFit mImagefit;
+    unsigned int mImageColor;
+    unsigned int mImageColorEnd;
+    bool mImageColorGradientHorizontal;
     std::unique_ptr<ImageComponent> mBackgroundImage;
     float mBackgroundRelativeScale;
     unsigned int mBackgroundColor;
@@ -146,18 +160,6 @@ private:
     bool mSelectorColorGradientHorizontal;
     bool mHasSelectorColor;
     SelectorLayer mSelectorLayer;
-    bool mFractionalRows;
-    glm::vec2 mItemSize;
-    float mItemScale;
-    float mItemRelativeScale;
-    ItemFit mItemFit;
-    glm::vec2 mItemSpacing;
-    unsigned int mItemColor;
-    unsigned int mItemColorEnd;
-    bool mItemColorGradientHorizontal;
-    bool mInstantItemTransitions;
-    bool mInstantRowTransitions;
-    float mUnfocusedItemOpacity;
     float mTextRelativeScale;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
@@ -167,8 +169,6 @@ private:
     LetterCase mLetterCaseGroupedCollections;
     float mLineSpacing;
     bool mFadeAbovePrimary;
-    float mHorizontalMargin;
-    float mVerticalMargin;
 };
 
 template <typename T>
@@ -186,6 +186,21 @@ GridComponent<T>::GridComponent()
     , mWasScrolling {false}
     , mJustCalculatedLayout {false}
     , mSuppressTransitions {false}
+    , mHorizontalMargin {0.0f}
+    , mVerticalMargin {0.0f}
+    , mItemSize {glm::vec2 {mRenderer->getScreenWidth() * 0.15f,
+                            mRenderer->getScreenHeight() * 0.25f}}
+    , mItemScale {1.05f}
+    , mItemSpacing {0.0f, 0.0f}
+    , mFractionalRows {false}
+    , mInstantItemTransitions {false}
+    , mInstantRowTransitions {false}
+    , mUnfocusedItemOpacity {1.0f}
+    , mImageRelativeScale {1.0f}
+    , mImagefit {ImageFit::CONTAIN}
+    , mImageColor {0xFFFFFFFF}
+    , mImageColorEnd {0xFFFFFFFF}
+    , mImageColorGradientHorizontal {true}
     , mBackgroundRelativeScale {1.0f}
     , mBackgroundColor {0xFFFFFFFF}
     , mBackgroundColorEnd {0xFFFFFFFF}
@@ -197,19 +212,6 @@ GridComponent<T>::GridComponent()
     , mSelectorColorGradientHorizontal {true}
     , mHasSelectorColor {false}
     , mSelectorLayer {SelectorLayer::TOP}
-    , mFractionalRows {false}
-    , mItemSize {glm::vec2 {mRenderer->getScreenWidth() * 0.15f,
-                            mRenderer->getScreenHeight() * 0.25f}}
-    , mItemScale {1.05f}
-    , mItemRelativeScale {1.0f}
-    , mItemFit {ItemFit::CONTAIN}
-    , mItemSpacing {0.0f, 0.0f}
-    , mItemColor {0xFFFFFFFF}
-    , mItemColorEnd {0xFFFFFFFF}
-    , mItemColorGradientHorizontal {true}
-    , mInstantItemTransitions {false}
-    , mInstantRowTransitions {false}
-    , mUnfocusedItemOpacity {1.0f}
     , mTextRelativeScale {1.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
@@ -218,8 +220,6 @@ GridComponent<T>::GridComponent()
     , mLetterCaseGroupedCollections {LetterCase::NONE}
     , mLineSpacing {1.5f}
     , mFadeAbovePrimary {false}
-    , mHorizontalMargin {0.0f}
-    , mVerticalMargin {0.0f}
 {
 }
 
@@ -228,48 +228,48 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
 {
     const bool dynamic {mGamelistView};
 
-    if (entry.data.itemPath != "" &&
-        ResourceManager::getInstance().fileExists(entry.data.itemPath)) {
+    if (entry.data.imagePath != "" &&
+        ResourceManager::getInstance().fileExists(entry.data.imagePath)) {
         auto item = std::make_shared<ImageComponent>(false, dynamic);
         item->setLinearInterpolation(true);
         item->setMipmapping(true);
-        if (mItemFit == ItemFit::CONTAIN)
-            item->setMaxSize(mItemSize * mItemRelativeScale);
-        else if (mItemFit == ItemFit::FILL)
-            item->setResize(mItemSize * mItemRelativeScale);
-        else if (mItemFit == ItemFit::COVER)
-            item->setCroppedSize(mItemSize * mItemRelativeScale);
-        item->setImage(entry.data.itemPath);
+        if (mImagefit == ImageFit::CONTAIN)
+            item->setMaxSize(mItemSize * mImageRelativeScale);
+        else if (mImagefit == ImageFit::FILL)
+            item->setResize(mItemSize * mImageRelativeScale);
+        else if (mImagefit == ImageFit::COVER)
+            item->setCroppedSize(mItemSize * mImageRelativeScale);
+        item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
-        if (mItemColor != 0xFFFFFFFF)
-            item->setColorShift(mItemColor);
-        if (mItemColorEnd != mItemColor) {
-            item->setColorShiftEnd(mItemColorEnd);
-            if (!mItemColorGradientHorizontal)
+        if (mImageColor != 0xFFFFFFFF)
+            item->setColorShift(mImageColor);
+        if (mImageColorEnd != mImageColor) {
+            item->setColorShiftEnd(mImageColorEnd);
+            if (!mImageColorGradientHorizontal)
                 item->setColorGradientHorizontal(false);
         }
         item->setOrigin(0.5f, 0.5f);
         item->setRotateByTargetSize(true);
         entry.data.item = item;
     }
-    else if (entry.data.defaultItemPath != "" &&
-             ResourceManager::getInstance().fileExists(entry.data.defaultItemPath)) {
+    else if (entry.data.defaultImagePath != "" &&
+             ResourceManager::getInstance().fileExists(entry.data.defaultImagePath)) {
         auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
         defaultItem->setLinearInterpolation(true);
         defaultItem->setMipmapping(true);
-        if (mItemFit == ItemFit::CONTAIN)
-            defaultItem->setMaxSize(mItemSize * mItemRelativeScale);
-        else if (mItemFit == ItemFit::FILL)
-            defaultItem->setResize(mItemSize * mItemRelativeScale);
-        else if (mItemFit == ItemFit::COVER)
-            defaultItem->setCroppedSize(mItemSize * mItemRelativeScale);
-        defaultItem->setImage(entry.data.defaultItemPath);
+        if (mImagefit == ImageFit::CONTAIN)
+            defaultItem->setMaxSize(mItemSize * mImageRelativeScale);
+        else if (mImagefit == ImageFit::FILL)
+            defaultItem->setResize(mItemSize * mImageRelativeScale);
+        else if (mImagefit == ImageFit::COVER)
+            defaultItem->setCroppedSize(mItemSize * mImageRelativeScale);
+        defaultItem->setImage(entry.data.defaultImagePath);
         defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
-        if (mItemColor != 0xFFFFFFFF)
-            defaultItem->setColorShift(mItemColor);
-        if (mItemColorEnd != mItemColor) {
-            defaultItem->setColorShiftEnd(mItemColorEnd);
-            if (!mItemColorGradientHorizontal)
+        if (mImageColor != 0xFFFFFFFF)
+            defaultItem->setColorShift(mImageColor);
+        if (mImageColorEnd != mImageColor) {
+            defaultItem->setColorShiftEnd(mImageColorEnd);
+            if (!mImageColorGradientHorizontal)
                 defaultItem->setColorGradientHorizontal(false);
         }
         defaultItem->setOrigin(0.5f, 0.5f);
@@ -299,24 +299,24 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
 template <typename T>
 void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
 {
-    if (entry.data.itemPath != "") {
+    if (entry.data.imagePath != "") {
         const glm::vec3& calculatedItemPos {entry.data.item->getPosition()};
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(true);
         item->setMipmapping(true);
-        if (mItemFit == ItemFit::CONTAIN)
-            item->setMaxSize(mItemSize * mItemRelativeScale);
-        else if (mItemFit == ItemFit::FILL)
-            item->setResize(mItemSize * mItemRelativeScale);
-        else if (mItemFit == ItemFit::COVER)
-            item->setCroppedSize(mItemSize * mItemRelativeScale);
-        item->setImage(entry.data.itemPath);
+        if (mImagefit == ImageFit::CONTAIN)
+            item->setMaxSize(mItemSize * mImageRelativeScale);
+        else if (mImagefit == ImageFit::FILL)
+            item->setResize(mItemSize * mImageRelativeScale);
+        else if (mImagefit == ImageFit::COVER)
+            item->setCroppedSize(mItemSize * mImageRelativeScale);
+        item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
-        if (mItemColor != 0xFFFFFFFF)
-            item->setColorShift(mItemColor);
-        if (mItemColorEnd != mItemColor) {
-            item->setColorShiftEnd(mItemColorEnd);
-            if (!mItemColorGradientHorizontal)
+        if (mImageColor != 0xFFFFFFFF)
+            item->setColorShift(mImageColor);
+        if (mImageColorEnd != mImageColor) {
+            item->setColorShiftEnd(mImageColorEnd);
+            if (!mImageColorGradientHorizontal)
                 item->setColorGradientHorizontal(false);
         }
         item->setOrigin(0.5f, 0.5f);
@@ -368,28 +368,28 @@ template <typename T> void GridComponent<T>::onDemandTextureLoad()
 
             auto& entry = mEntries.at(cursor);
 
-            if (entry.data.itemPath == "") {
+            if (entry.data.imagePath == "") {
                 FileData* game {entry.object};
 
-                if (mItemType == "" || mItemType == "marquee")
-                    entry.data.itemPath = game->getMarqueePath();
-                else if (mItemType == "cover")
-                    entry.data.itemPath = game->getCoverPath();
-                else if (mItemType == "backcover")
-                    entry.data.itemPath = game->getBackCoverPath();
-                else if (mItemType == "3dbox")
-                    entry.data.itemPath = game->get3DBoxPath();
-                else if (mItemType == "physicalmedia")
-                    entry.data.itemPath = game->getPhysicalMediaPath();
-                else if (mItemType == "screenshot")
-                    entry.data.itemPath = game->getScreenshotPath();
-                else if (mItemType == "titlescreen")
-                    entry.data.itemPath = game->getTitleScreenPath();
-                else if (mItemType == "miximage")
-                    entry.data.itemPath = game->getMiximagePath();
-                else if (mItemType == "fanart")
-                    entry.data.itemPath = game->getFanArtPath();
-                else if (mItemType == "none") // Display the game name as text.
+                if (mImageType == "" || mImageType == "marquee")
+                    entry.data.imagePath = game->getMarqueePath();
+                else if (mImageType == "cover")
+                    entry.data.imagePath = game->getCoverPath();
+                else if (mImageType == "backcover")
+                    entry.data.imagePath = game->getBackCoverPath();
+                else if (mImageType == "3dbox")
+                    entry.data.imagePath = game->get3DBoxPath();
+                else if (mImageType == "physicalmedia")
+                    entry.data.imagePath = game->getPhysicalMediaPath();
+                else if (mImageType == "screenshot")
+                    entry.data.imagePath = game->getScreenshotPath();
+                else if (mImageType == "titlescreen")
+                    entry.data.imagePath = game->getTitleScreenPath();
+                else if (mImageType == "miximage")
+                    entry.data.imagePath = game->getMiximagePath();
+                else if (mImageType == "fanart")
+                    entry.data.imagePath = game->getFanArtPath();
+                else if (mImageType == "none") // Display the game name as text.
                     return;
 
                 auto theme = game->getSystem()->getTheme();
@@ -765,25 +765,25 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("itemScale"))
         mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.5f, 2.0f);
 
-    if (elem->has("itemRelativeScale"))
-        mItemRelativeScale = glm::clamp(elem->get<float>("itemRelativeScale"), 0.2f, 1.0f);
+    if (elem->has("imageRelativeScale"))
+        mImageRelativeScale = glm::clamp(elem->get<float>("imageRelativeScale"), 0.2f, 1.0f);
 
-    if (elem->has("itemFit")) {
-        const std::string& itemFit {elem->get<std::string>("itemFit")};
-        if (itemFit == "contain") {
-            mItemFit = ItemFit::CONTAIN;
+    if (elem->has("imageFit")) {
+        const std::string& imageFit {elem->get<std::string>("imageFit")};
+        if (imageFit == "contain") {
+            mImagefit = ImageFit::CONTAIN;
         }
-        else if (itemFit == "fill") {
-            mItemFit = ItemFit::FILL;
+        else if (imageFit == "fill") {
+            mImagefit = ImageFit::FILL;
         }
-        else if (itemFit == "cover") {
-            mItemFit = ItemFit::COVER;
+        else if (imageFit == "cover") {
+            mImagefit = ImageFit::COVER;
         }
         else {
-            mItemFit = ItemFit::CONTAIN;
+            mImagefit = ImageFit::CONTAIN;
             LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
-                               "\"itemFit\" for element \""
-                            << element.substr(5) << "\" defined as \"" << itemFit << "\"";
+                               "\"imageFit\" for element \""
+                            << element.substr(5) << "\" defined as \"" << imageFit << "\"";
         }
     }
 
@@ -974,25 +974,25 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mItemSpacing.y = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
     }
 
-    if (elem->has("itemColor")) {
-        mItemColor = elem->get<unsigned int>("itemColor");
-        mItemColorEnd = mItemColor;
+    if (elem->has("imageColor")) {
+        mImageColor = elem->get<unsigned int>("imageColor");
+        mImageColorEnd = mImageColor;
     }
-    if (elem->has("itemColorEnd"))
-        mItemColorEnd = elem->get<unsigned int>("itemColorEnd");
+    if (elem->has("imageColorEnd"))
+        mImageColorEnd = elem->get<unsigned int>("imageColorEnd");
 
-    if (elem->has("itemGradientType")) {
-        const std::string& gradientType {elem->get<std::string>("itemGradientType")};
+    if (elem->has("imageGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("imageGradientType")};
         if (gradientType == "horizontal") {
-            mItemColorGradientHorizontal = true;
+            mImageColorGradientHorizontal = true;
         }
         else if (gradientType == "vertical") {
-            mItemColorGradientHorizontal = false;
+            mImageColorGradientHorizontal = false;
         }
         else {
-            mItemColorGradientHorizontal = true;
+            mImageColorGradientHorizontal = true;
             LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
-                               "\"itemGradientType\" for element \""
+                               "\"imageGradientType\" for element \""
                             << element.substr(5) << "\" defined as \"" << gradientType << "\"";
         }
     }

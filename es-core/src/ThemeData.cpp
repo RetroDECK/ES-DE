@@ -43,7 +43,7 @@ std::vector<std::string> ThemeData::sLegacySupportedFeatures {
     {"z-index"},
     {"visible"}};
 
-std::vector<std::string> ThemeData::sLegacyElements {
+std::vector<std::string> ThemeData::sLegacyProperties {
     {"showSnapshotNoVideo"},
     {"showSnapshotDelay"},
     {"forceUppercase"},
@@ -55,6 +55,12 @@ std::vector<std::string> ThemeData::sLegacyElements {
     {"logoRotationOrigin"},
     {"logoAlignment"},
     {"maxLogoCount"}};
+
+std::vector<std::string> ThemeData::sDeprecatedProperties {
+    {"staticItem"},
+    {"itemType"},
+    {"defaultItem"},
+    {"itemInterpolation"}};
 
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"automatic", "automatic"},
@@ -106,22 +112,26 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"size", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"type", STRING},
-       {"staticItem", PATH},
-       {"itemType", STRING},
-       {"defaultItem", PATH},
+       {"staticImage", PATH},
+       {"imageType", STRING},
+       {"defaultImage", PATH},
+       {"staticItem", PATH},                       // TEMPORARY: For backward compatibility.
+       {"itemType", STRING},                       // TEMPORARY: For backward compatibility.
+       {"defaultItem", PATH},                      // TEMPORARY: For backward compatibility.
        {"maxItemCount", FLOAT},
        {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
        {"itemsBeforeCenter", UNSIGNED_INTEGER},
        {"itemsAfterCenter", UNSIGNED_INTEGER},
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
-       {"itemInterpolation", STRING},
        {"itemRotation", FLOAT},
        {"itemRotationOrigin", NORMALIZED_PAIR},
        {"itemAxisHorizontal", BOOLEAN},
-       {"itemColor", COLOR},
-       {"itemColorEnd", COLOR},
-       {"itemGradientType", STRING},
+       {"itemInterpolation", STRING},              // TEMPORARY: For backward compatibility.
+       {"imageInterpolation", STRING},
+       {"imageColor", COLOR},
+       {"imageColorEnd", COLOR},
+       {"imageGradientType", STRING},
        {"itemTransitions", STRING},
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},
@@ -157,9 +167,22 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
-       {"staticItem", PATH},
-       {"itemType", STRING},
-       {"defaultItem", PATH},
+       {"staticImage", PATH},
+       {"imageType", STRING},
+       {"defaultImage", PATH},
+       {"itemSize", NORMALIZED_PAIR},
+       {"itemScale", FLOAT},
+       {"itemSpacing", NORMALIZED_PAIR},
+       {"fractionalRows", BOOLEAN},
+       {"itemTransitions", STRING},
+       {"rowTransitions", STRING},
+       {"unfocusedItemOpacity", FLOAT},
+       {"edgeScaleInwards", BOOLEAN},              // TODO
+       {"imageRelativeScale", FLOAT},
+       {"imageFit", STRING},
+       {"imageColor", COLOR},
+       {"imageColorEnd", COLOR},
+       {"imageGradientType", STRING},
        {"backgroundImage", PATH},
        {"backgroundRelativeScale", FLOAT},
        {"backgroundColor", COLOR},
@@ -171,19 +194,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"selectorColorEnd", COLOR},
        {"selectorGradientType", STRING},
        {"selectorLayer", STRING},
-       {"fractionalRows", BOOLEAN},
-       {"itemSize", NORMALIZED_PAIR},
-       {"itemScale", FLOAT},
-       {"itemRelativeScale", FLOAT},
-       {"itemFit", STRING},
-       {"itemSpacing", NORMALIZED_PAIR},
-       {"itemColor", COLOR},
-       {"itemColorEnd", COLOR},
-       {"itemGradientType", STRING},
-       {"itemTransitions", STRING},
-       {"rowTransitions", STRING},
-       {"unfocusedItemOpacity", FLOAT},
-       {"edgeScaleInwards", BOOLEAN},
        {"text", STRING},
        {"textRelativeScale", FLOAT},
        {"textColor", COLOR},
@@ -1461,13 +1471,25 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         std::string nodeName = node.name();
 
-        // Strictly enforce removal of legacy elements for non-legacy theme sets by creating
+        // Strictly enforce removal of legacy properties for non-legacy theme sets by creating
         // an unthemed system if they're present in the configuration.
         if (!mLegacyTheme) {
-            for (auto& legacyElement : sLegacyElements) {
-                if (nodeName == legacyElement) {
+            for (auto& legacyProperty : sLegacyProperties) {
+                if (nodeName == legacyProperty) {
                     throw error << ": Legacy <" << nodeName
                                 << "> property found for non-legacy theme set";
+                }
+            }
+        }
+
+        // Print a warning if a deprecated property is used for a non-legacy theme set.
+        if (!mLegacyTheme) {
+            for (auto& deprecatedProperty : sDeprecatedProperties) {
+                if (nodeName == deprecatedProperty) {
+                    LOG(LogWarning)
+                        << "ThemeData::parseElement(): Property \"" << deprecatedProperty
+                        << "\" is deprecated and support for it will be removed in a future "
+                           "version";
                 }
             }
         }

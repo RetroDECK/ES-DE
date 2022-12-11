@@ -17,8 +17,8 @@
 
 struct CarouselEntry {
     std::shared_ptr<GuiComponent> item;
-    std::string itemPath;
-    std::string defaultItemPath;
+    std::string imagePath;
+    std::string defaultImagePath;
 };
 
 template <typename T>
@@ -53,10 +53,10 @@ public:
     Entry& getEntry(int index) { return mEntries.at(index); }
     void onDemandTextureLoad() override;
     const CarouselType getType() { return mType; }
-    const std::string& getItemType() { return mItemType; }
-    void setItemType(std::string itemType) { mItemType = itemType; }
-    const std::string& getDefaultItem() { return mDefaultItem; }
-    void setDefaultItem(std::string defaultItem) { mDefaultItem = defaultItem; }
+    const std::string& getImageType() { return mImageType; }
+    void setImageType(std::string imageType) { mImageType = imageType; }
+    const std::string& getDefaultImage() { return mDefaultImage; }
+    void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
     bool isScrolling() const override { return List::isScrolling(); }
     const LetterCase getLetterCase() const override { return mLetterCase; }
     const LetterCase getLetterCaseCollections() const override { return mLetterCaseCollections; }
@@ -124,20 +124,20 @@ private:
     bool mLegacyMode;
 
     CarouselType mType;
-    std::string mItemType;
-    std::string mDefaultItem;
+    std::string mImageType;
+    std::string mDefaultImage;
     float mMaxItemCount;
     int mItemsBeforeCenter;
     int mItemsAfterCenter;
     glm::vec2 mItemSize;
     float mItemScale;
-    bool mLinearInterpolation;
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
     bool mItemAxisHorizontal;
-    unsigned int mItemColorShift;
-    unsigned int mItemColorShiftEnd;
-    bool mItemColorGradientHorizontal;
+    bool mLinearInterpolation;
+    unsigned int mImageColorShift;
+    unsigned int mImageColorShiftEnd;
+    bool mImageColorGradientHorizontal;
     bool mInstantItemTransitions;
     Alignment mItemHorizontalAlignment;
     Alignment mItemVerticalAlignment;
@@ -182,13 +182,13 @@ CarouselComponent<T>::CarouselComponent()
     , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.25f,
                             Renderer::getScreenHeight() * 0.155f}}
     , mItemScale {1.2f}
-    , mLinearInterpolation {false}
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
     , mItemAxisHorizontal {false}
-    , mItemColorShift {0xFFFFFFFF}
-    , mItemColorShiftEnd {0xFFFFFFFF}
-    , mItemColorGradientHorizontal {true}
+    , mLinearInterpolation {false}
+    , mImageColorShift {0xFFFFFFFF}
+    , mImageColorShiftEnd {0xFFFFFFFF}
+    , mImageColorGradientHorizontal {true}
     , mInstantItemTransitions {false}
     , mItemHorizontalAlignment {ALIGN_CENTER}
     , mItemVerticalAlignment {ALIGN_CENTER}
@@ -245,46 +245,45 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         }
     }
     else {
-        if (entry.data.itemPath != "" &&
-            ResourceManager::getInstance().fileExists(entry.data.itemPath)) {
+        if (entry.data.imagePath != "" &&
+            ResourceManager::getInstance().fileExists(entry.data.imagePath)) {
             auto item = std::make_shared<ImageComponent>(false, dynamic);
             item->setLinearInterpolation(mLinearInterpolation);
             item->setMipmapping(true);
             item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-            item->setImage(entry.data.itemPath);
+            item->setImage(entry.data.imagePath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
-            if (mItemColorShift != 0xFFFFFFFF)
-                item->setColorShift(mItemColorShift);
-            if (mItemColorShiftEnd != mItemColorShift)
-                item->setColorShiftEnd(mItemColorShiftEnd);
-            if (!mItemColorGradientHorizontal)
+            if (mImageColorShift != 0xFFFFFFFF)
+                item->setColorShift(mImageColorShift);
+            if (mImageColorShiftEnd != mImageColorShift)
+                item->setColorShiftEnd(mImageColorShiftEnd);
+            if (!mImageColorGradientHorizontal)
                 item->setColorGradientHorizontal(false);
             item->setRotateByTargetSize(true);
             entry.data.item = item;
         }
-        else if (entry.data.defaultItemPath != "" &&
-                 ResourceManager::getInstance().fileExists(entry.data.defaultItemPath)) {
-            auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
-            defaultItem->setLinearInterpolation(mLinearInterpolation);
-            defaultItem->setMipmapping(true);
-            defaultItem->setMaxSize(
+        else if (entry.data.defaultImagePath != "" &&
+                 ResourceManager::getInstance().fileExists(entry.data.defaultImagePath)) {
+            auto defaultImage = std::make_shared<ImageComponent>(false, dynamic);
+            defaultImage->setLinearInterpolation(mLinearInterpolation);
+            defaultImage->setMipmapping(true);
+            defaultImage->setMaxSize(
                 glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-            defaultItem->setImage(entry.data.defaultItemPath);
-            defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
-            if (mItemColorShift != 0xFFFFFFFF)
-                defaultItem->setColorShift(mItemColorShift);
-            if (mItemColorShiftEnd != mItemColorShift)
-                defaultItem->setColorShiftEnd(mItemColorShiftEnd);
-            if (!mItemColorGradientHorizontal)
-                defaultItem->setColorGradientHorizontal(false);
-            defaultItem->setRotateByTargetSize(true);
-            entry.data.item = defaultItem;
+            defaultImage->setImage(entry.data.defaultImagePath);
+            defaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            if (mImageColorShift != 0xFFFFFFFF)
+                defaultImage->setColorShift(mImageColorShift);
+            if (mImageColorShiftEnd != mImageColorShift)
+                defaultImage->setColorShiftEnd(mImageColorShiftEnd);
+            if (!mImageColorGradientHorizontal)
+                defaultImage->setColorGradientHorizontal(false);
+            defaultImage->setRotateByTargetSize(true);
+            entry.data.item = defaultImage;
         }
     }
 
     if (!entry.data.item) {
         // If no item image is present, add item text as fallback.
-
         auto text = std::make_shared<TextComponent>(
             entry.name, mFont, 0x000000FF, mItemHorizontalAlignment, mItemVerticalAlignment,
             glm::vec3 {0.0f, 0.0f, 0.0f},
@@ -330,18 +329,18 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
 template <typename T>
 void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme)
 {
-    if (entry.data.itemPath != "") {
+    if (entry.data.imagePath != "") {
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mLinearInterpolation);
         item->setMipmapping(true);
         item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-        item->setImage(entry.data.itemPath);
+        item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
-        if (mItemColorShift != 0xFFFFFFFF)
-            item->setColorShift(mItemColorShift);
-        if (mItemColorShiftEnd != mItemColorShift)
-            item->setColorShiftEnd(mItemColorShiftEnd);
-        if (!mItemColorGradientHorizontal)
+        if (mImageColorShift != 0xFFFFFFFF)
+            item->setColorShift(mImageColorShift);
+        if (mImageColorShiftEnd != mImageColorShift)
+            item->setColorShiftEnd(mImageColorShiftEnd);
+        if (!mImageColorGradientHorizontal)
             item->setColorGradientHorizontal(false);
         item->setRotateByTargetSize(true);
         entry.data.item = item;
@@ -432,28 +431,28 @@ template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
 
             auto& entry = mEntries.at(cursor);
 
-            if (entry.data.itemPath == "") {
+            if (entry.data.imagePath == "") {
                 FileData* game {entry.object};
 
-                if (mItemType == "" || mItemType == "marquee")
-                    entry.data.itemPath = game->getMarqueePath();
-                else if (mItemType == "cover")
-                    entry.data.itemPath = game->getCoverPath();
-                else if (mItemType == "backcover")
-                    entry.data.itemPath = game->getBackCoverPath();
-                else if (mItemType == "3dbox")
-                    entry.data.itemPath = game->get3DBoxPath();
-                else if (mItemType == "physicalmedia")
-                    entry.data.itemPath = game->getPhysicalMediaPath();
-                else if (mItemType == "screenshot")
-                    entry.data.itemPath = game->getScreenshotPath();
-                else if (mItemType == "titlescreen")
-                    entry.data.itemPath = game->getTitleScreenPath();
-                else if (mItemType == "miximage")
-                    entry.data.itemPath = game->getMiximagePath();
-                else if (mItemType == "fanart")
-                    entry.data.itemPath = game->getFanArtPath();
-                else if (mItemType == "none") // Display the game name as text.
+                if (mImageType == "" || mImageType == "marquee")
+                    entry.data.imagePath = game->getMarqueePath();
+                else if (mImageType == "cover")
+                    entry.data.imagePath = game->getCoverPath();
+                else if (mImageType == "backcover")
+                    entry.data.imagePath = game->getBackCoverPath();
+                else if (mImageType == "3dbox")
+                    entry.data.imagePath = game->get3DBoxPath();
+                else if (mImageType == "physicalmedia")
+                    entry.data.imagePath = game->getPhysicalMediaPath();
+                else if (mImageType == "screenshot")
+                    entry.data.imagePath = game->getScreenshotPath();
+                else if (mImageType == "titlescreen")
+                    entry.data.imagePath = game->getTitleScreenPath();
+                else if (mImageType == "miximage")
+                    entry.data.imagePath = game->getMiximagePath();
+                else if (mImageType == "fanart")
+                    entry.data.imagePath = game->getFanArtPath();
+                else if (mImageType == "none") // Display the game name as text.
                     return;
 
                 auto theme = game->getSystem()->getTheme();
@@ -910,8 +909,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
         // TODO: Rewrite to use "real" reflections instead of this hack.
         // Don't attempt to add reflections for text entries.
-        if (mReflections && (mEntries.at(renderItem.index).data.itemPath != "" ||
-                             mEntries.at(renderItem.index).data.defaultItemPath != "")) {
+        if (mReflections && (mEntries.at(renderItem.index).data.imagePath != "" ||
+                             mEntries.at(renderItem.index).data.defaultImagePath != "")) {
             glm::mat4 reflectionTrans {glm::translate(
                 renderItem.trans, glm::vec3 {0.0f, comp->getSize().y * renderItem.scale, 0.0f})};
             float falloff {glm::clamp(mReflectionsFalloff, 0.0f, 1.0f)};
@@ -1032,6 +1031,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
 
         if (elem->has("itemInterpolation")) {
+            // TEMPORARY: Backward compatiblity due to property name changes.
             const std::string& itemInterpolation {elem->get<std::string>("itemInterpolation")};
             if (itemInterpolation == "linear") {
                 mLinearInterpolation = true;
@@ -1044,6 +1044,23 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
                                    "\"itemInterpolation\" for element \""
                                 << element.substr(9) << "\" defined as \"" << itemInterpolation
+                                << "\"";
+            }
+        }
+
+        if (elem->has("imageInterpolation")) {
+            const std::string& imageInterpolation {elem->get<std::string>("imageInterpolation")};
+            if (imageInterpolation == "linear") {
+                mLinearInterpolation = true;
+            }
+            else if (imageInterpolation == "nearest") {
+                mLinearInterpolation = false;
+            }
+            else {
+                mLinearInterpolation = true;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"imageInterpolation\" for element \""
+                                << element.substr(9) << "\" defined as \"" << imageInterpolation
                                 << "\"";
             }
         }
@@ -1074,25 +1091,25 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mItemAxisHorizontal =
             (elem->has("itemAxisHorizontal") && elem->get<bool>("itemAxisHorizontal"));
 
-        if (elem->has("itemColor")) {
-            mItemColorShift = elem->get<unsigned int>("itemColor");
-            mItemColorShiftEnd = mItemColorShift;
+        if (elem->has("imageColor")) {
+            mImageColorShift = elem->get<unsigned int>("imageColor");
+            mImageColorShiftEnd = mImageColorShift;
         }
-        if (elem->has("itemColorEnd"))
-            mItemColorShiftEnd = elem->get<unsigned int>("itemColorEnd");
+        if (elem->has("imageColorEnd"))
+            mImageColorShiftEnd = elem->get<unsigned int>("imageColorEnd");
 
-        if (elem->has("itemGradientType")) {
-            const std::string& gradientType {elem->get<std::string>("itemGradientType")};
+        if (elem->has("imageGradientType")) {
+            const std::string& gradientType {elem->get<std::string>("imageGradientType")};
             if (gradientType == "horizontal") {
-                mItemColorGradientHorizontal = true;
+                mImageColorGradientHorizontal = true;
             }
             else if (gradientType == "vertical") {
-                mItemColorGradientHorizontal = false;
+                mImageColorGradientHorizontal = false;
             }
             else {
-                mItemColorGradientHorizontal = true;
+                mImageColorGradientHorizontal = true;
                 LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "\"gradientType\" for element \""
+                                   "\"imageGradientType\" for element \""
                                 << element.substr(9) << "\" defined as \"" << gradientType << "\"";
             }
         }
