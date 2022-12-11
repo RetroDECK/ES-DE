@@ -278,7 +278,9 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             if (!mImageColorGradientHorizontal)
                 defaultImage->setColorGradientHorizontal(false);
             defaultImage->setRotateByTargetSize(true);
-            entry.data.item = defaultImage;
+            // For the gamelist view the default image is applied in onDemandTextureLoad().
+            if (!mGamelistView)
+                entry.data.item = defaultImage;
         }
     }
 
@@ -454,6 +456,9 @@ template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
                     entry.data.imagePath = game->getFanArtPath();
                 else if (mImageType == "none") // Display the game name as text.
                     return;
+
+                if (entry.data.imagePath == "")
+                    entry.data.imagePath = entry.data.defaultImagePath;
 
                 auto theme = game->getSystem()->getTheme();
                 updateEntry(entry, theme);

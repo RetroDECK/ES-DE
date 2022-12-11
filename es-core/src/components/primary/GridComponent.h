@@ -65,7 +65,7 @@ public:
     const std::string& getImageType() { return mImageType; }
     void setImageType(std::string imageType) { mImageType = imageType; }
     const std::string& getDefaultImage() { return mDefaultImage; }
-    void setDefaultImage(std::string defaultItem) { mDefaultImage = defaultItem; }
+    void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
@@ -104,16 +104,16 @@ private:
     bool remove(const T& obj) override { return List::remove(obj); }
     int size() const override { return List::size(); }
 
-    enum class SelectorLayer {
-        TOP,
-        MIDDLE,
-        BOTTOM
-    };
-
     enum class ImageFit {
         CONTAIN,
         FILL,
         COVER
+    };
+
+    enum class SelectorLayer {
+        TOP,
+        MIDDLE,
+        BOTTOM
     };
 
     Renderer* mRenderer;
@@ -155,11 +155,11 @@ private:
     bool mHasBackgroundColor;
     std::unique_ptr<ImageComponent> mSelectorImage;
     float mSelectorRelativeScale;
+    SelectorLayer mSelectorLayer;
     unsigned int mSelectorColor;
     unsigned int mSelectorColorEnd;
     bool mSelectorColorGradientHorizontal;
     bool mHasSelectorColor;
-    SelectorLayer mSelectorLayer;
     float mTextRelativeScale;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
@@ -207,11 +207,11 @@ GridComponent<T>::GridComponent()
     , mBackgroundColorGradientHorizontal {true}
     , mHasBackgroundColor {false}
     , mSelectorRelativeScale {1.0f}
+    , mSelectorLayer {SelectorLayer::TOP}
     , mSelectorColor {0xFFFFFFFF}
     , mSelectorColorEnd {0xFFFFFFFF}
     , mSelectorColorGradientHorizontal {true}
     , mHasSelectorColor {false}
-    , mSelectorLayer {SelectorLayer::TOP}
     , mTextRelativeScale {1.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
@@ -254,27 +254,29 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
     }
     else if (entry.data.defaultImagePath != "" &&
              ResourceManager::getInstance().fileExists(entry.data.defaultImagePath)) {
-        auto defaultItem = std::make_shared<ImageComponent>(false, dynamic);
-        defaultItem->setLinearInterpolation(true);
-        defaultItem->setMipmapping(true);
+        auto defaultImage = std::make_shared<ImageComponent>(false, dynamic);
+        defaultImage->setLinearInterpolation(true);
+        defaultImage->setMipmapping(true);
         if (mImagefit == ImageFit::CONTAIN)
-            defaultItem->setMaxSize(mItemSize * mImageRelativeScale);
+            defaultImage->setMaxSize(mItemSize * mImageRelativeScale);
         else if (mImagefit == ImageFit::FILL)
-            defaultItem->setResize(mItemSize * mImageRelativeScale);
+            defaultImage->setResize(mItemSize * mImageRelativeScale);
         else if (mImagefit == ImageFit::COVER)
-            defaultItem->setCroppedSize(mItemSize * mImageRelativeScale);
-        defaultItem->setImage(entry.data.defaultImagePath);
-        defaultItem->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            defaultImage->setCroppedSize(mItemSize * mImageRelativeScale);
+        defaultImage->setImage(entry.data.defaultImagePath);
+        defaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageColor != 0xFFFFFFFF)
-            defaultItem->setColorShift(mImageColor);
+            defaultImage->setColorShift(mImageColor);
         if (mImageColorEnd != mImageColor) {
-            defaultItem->setColorShiftEnd(mImageColorEnd);
+            defaultImage->setColorShiftEnd(mImageColorEnd);
             if (!mImageColorGradientHorizontal)
-                defaultItem->setColorGradientHorizontal(false);
+                defaultImage->setColorGradientHorizontal(false);
         }
-        defaultItem->setOrigin(0.5f, 0.5f);
-        defaultItem->setRotateByTargetSize(true);
-        entry.data.item = defaultItem;
+        defaultImage->setOrigin(0.5f, 0.5f);
+        defaultImage->setRotateByTargetSize(true);
+        // For the gamelist view the default image is applied in onDemandTextureLoad().
+        if (!mGamelistView)
+            entry.data.item = defaultImage;
     }
 
     if (!entry.data.item) {
@@ -391,6 +393,9 @@ template <typename T> void GridComponent<T>::onDemandTextureLoad()
                     entry.data.imagePath = game->getFanArtPath();
                 else if (mImageType == "none") // Display the game name as text.
                     return;
+
+                if (entry.data.imagePath == "")
+                    entry.data.imagePath = entry.data.defaultImagePath;
 
                 auto theme = game->getSystem()->getTheme();
                 updateEntry(entry, theme);
