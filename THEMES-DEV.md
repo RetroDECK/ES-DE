@@ -1230,7 +1230,7 @@ Properties:
     - Valid values are `animate` or `instant`
     - Default is `animate`
 * `rowTransitions` - type: STRING
-    - How to render row transitions when navigating the grid. By default a sliding animation will be rendered when moving between rows but if this property is set to `instant` then transitions will be immediate.
+    - How to render row transitions when navigating the grid. By default a sliding animation will be rendered when moving between rows but if this property is set to `instant` then transitions will be immediate. If setting this to `instant` it's recommended to do the same for `itemTransitions` or otherwise the animations will look a bit ugly.
     - Valid values are `animate` or `instant`
     - Default is `animate`
 * `unfocusedItemOpacity` - type: FLOAT
@@ -1275,6 +1275,10 @@ Properties:
     - This property makes it possible to size the selector relative to the overall item size. This is mostly useful when combined with the `backgroundImage` property.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `selectorLayer` - type: STRING
+    - Defines at what layer position to place the selector. It can either be placed at the bottom, in the middle between the background and image/text or on top.
+    - Valid values are `bottom`, `middle` or `top`
+    - Default is `top`
 * `selectorColor` - type: COLOR
     - Applies a color shift or draws a colored rectangle. If an image has been defined using the `selectorImage` property then each pixel of that image is multiplied by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. If no selector image has been defined, then a colored rectangle will be drawn instead.
 * `selectorColorEnd` - type: COLOR
@@ -1284,10 +1288,6 @@ Properties:
     - The direction to apply the color gradient if both `selectorColor` and `selectorColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
-* `selectorLayer` - type: STRING
-    - Defines at what layer position to place the selector. It can either be placed at the bottom, in the middle between the background and image/text or on top.
-    - Valid values are `bottom`, `middle` or `top`
-    - Default is `top`
 * `text` - type: STRING
     - A string literal to display if there is no `staticImage` or `defaultImage` property defined or if no image is found. This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
     - Default is the full system name.
