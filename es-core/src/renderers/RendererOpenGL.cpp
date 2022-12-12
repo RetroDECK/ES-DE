@@ -548,7 +548,7 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     vertices->opacity = parameters.opacity;
     vertices->saturation = parameters.saturation;
     vertices->dimming = parameters.dimming;
-    vertices->shaderFlags = ShaderFlags::POST_PROCESSING;
+    vertices->shaderFlags = ShaderFlags::POST_PROCESSING | ShaderFlags::PREMULTIPLIED;
 
     if (shaders & Shader::CORE)
         shaderList.push_back(Shader::CORE);
