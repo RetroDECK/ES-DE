@@ -114,6 +114,7 @@
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
 * Added theme support for defining the threshold for when pillarboxes should be applied to a video
 * Added theme support for enabling or disabling audio playback for videos
+* Added theme support for color shifting videos (and the static image)
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Added support for nesting of theme variables
 * Added support for defining multiple theme "variables" tags in the same XML file
@@ -188,6 +189,7 @@
 * Added carousel theme support for setting the opacity for unfocused entries
 * Added carousel theme support for applying image color shifts
 * Added carousel theme support for setting item transitions to "slide" or "instant"
+* Added carousel theme support for controlling item stacking for overlapping items
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase

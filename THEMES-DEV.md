@@ -1054,6 +1054,10 @@ Properties:
     - Sets the number of items below the center position (the currently selected item) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
+* `itemStacking` - type: STRING
+    - Controls how to stack overlapping items when `type` has been set to "horizontal" or "vertical". It has no effect on wheel carousels or when items do not overlap. When set to `centered` the selected item will be raised and items further from the selected item (to the left/right or above/below depending on the carousel orientation) will be progressively rendered lower than the items closer to the center. If set to `ascending` then items will be rendered progressively higher from left to right or from top to bottom depending on the carousel orientation. If set to `descending` the opposite takes place with items being progressively rendered lower from left to right or top to bottom depending on the carousel orientation. Finally `ascendingRaised` and `descendingRaised` work identically to `ascending` and `descending` with the only difference that the currently selected item will be raised above the other items.
+    - Valid values are `centered`, `ascending`, `ascendingRaised`, `descending` or `descendingRaised`
+    - Default is `centered`
 * `itemSize` - type: NORMALIZED_PAIR
     - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
@@ -1237,14 +1241,14 @@ Properties:
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `1`
-* `imageRelativeScale` - type: FLOAT.
-    - This property makes it possible to size the image defined by `staticImage`, `imageType` or `defaultImage` relative to the overall item size. This is mostly useful when combined with the `backgroundImage` and `selectorImage` properties.
-    - Minimum value is `0.2` and maximum value is `1`
-    - Default is `1`
 * `imageFit` - type: STRING
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
     - Valid values are `contain`, `fill` or `cover`
     - Default is `contain`
+* `imageRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the image defined by `staticImage`, `imageType` or `defaultImage` relative to the overall item size. This is mostly useful when combined with the `backgroundImage` and `selectorImage` properties.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
 * `imageColor` - type: COLOR
     - Applies a color shift to the images defined by `staticImage`, `imageType` and `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
 * `imageColorEnd` - type: COLOR
@@ -1490,7 +1494,7 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR
-    - Applies a color shift to the image by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Applies a color shift to the image by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
 * `colorEnd` - type: COLOR
     - Works in the exact same way as `color` but can be set as the end color to apply a color shift gradient.
@@ -1571,6 +1575,16 @@ Properties:
     - Interpolation method to use when scaling raster images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. Note that this property only affects the static image, not the video scaling. This property also has no effect on scalable vector graphics (SVG) images.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
+* `color` - type: COLOR
+    - Applies a color shift to both the static image and video by multiplying each pixel's color by this color value. For example, an all-white image or video with `FF0000` applied would become completely red. You can also control the transparency of the image and video by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Default is `FFFFFFFF` (no color shift applied)
+* `colorEnd` - type: COLOR
+    - Works in the exact same way as `color` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `color`
+* `gradientType` - type: STRING
+    - The direction to apply the color shift gradient if both `color` and `colorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
 * `pillarboxes` - type: BOOLEAN
     - Whether to render black pillarboxes (and to a lesses extent letterboxes) for videos with aspect ratios where this is applicable. This is for instance useful for arcade game videos in vertical orientation.
     - Default is `true`
