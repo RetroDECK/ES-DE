@@ -164,6 +164,11 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
         // clang-format on
 
+        vertices[0].color = mColorShift;
+        vertices[1].color = mColorGradientHorizontal ? mColorShift : mColorShiftEnd;
+        vertices[2].color = mColorGradientHorizontal ? mColorShiftEnd : mColorShift;
+        vertices[3].color = mColorShiftEnd;
+
         // Round vertices.
         for (int i = 0; i < 4; ++i)
             vertices[i].position = glm::round(vertices[i].position);

@@ -30,10 +30,13 @@ precision mediump float;
 uniform mat4 MVPMatrix;
 in vec2 positionVertex;
 in vec2 texCoordVertex;
+in vec4 colorVertex;
 uniform vec2 textureSize;
+
 out vec2 texCoord;
 out vec2 onex;
 out vec2 oney;
+out vec4 colorShift;
 
 #define SourceSize vec4(textureSize, 1.0 / textureSize)
 
@@ -43,6 +46,7 @@ void main()
     texCoord = texCoordVertex;
     onex = vec2(SourceSize.z, 0.0);
     oney = vec2(0.0, SourceSize.w);
+    colorShift.abgr = colorVertex.rgba;
 }
 
 // Fragment section of code:
@@ -59,6 +63,7 @@ uniform sampler2D textureSampler;
 in vec2 texCoord;
 in vec2 onex;
 in vec2 oney;
+in vec4 colorShift;
 out vec4 FragColor;
 
 #define SourceSize vec4(textureSize, 1.0 / textureSize)
@@ -157,6 +162,10 @@ void main()
         vec3 blendedColor = mix(grayscale, colorTemp.rgb, saturation);
         colorTemp = vec4(blendedColor, colorTemp.a);
     }
+
+    // Color shift.
+    colorTemp.rgb *= colorShift.rgb;
+    colorTemp.a *= colorShift.a;
 
     FragColor = vec4(colorTemp.rgb, colorTemp.a * opacity);
 }

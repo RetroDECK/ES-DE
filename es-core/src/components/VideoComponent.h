@@ -101,6 +101,9 @@ protected:
 
     unsigned mVideoWidth;
     unsigned mVideoHeight;
+    unsigned int mColorShift;
+    unsigned int mColorShiftEnd;
+    bool mColorGradientHorizontal;
     glm::vec2 mTargetSize;
     glm::vec2 mVideoAreaPos;
     glm::vec2 mVideoAreaSize;
