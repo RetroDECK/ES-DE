@@ -101,13 +101,6 @@ void main()
     float h_weight_00 = dx / SPOT_WIDTH;
     WEIGHT(h_weight_00);
 
-    // Saturation.
-    if (saturation != 1.0) {
-        vec3 grayscale = vec3(dot(color.rgb, vec3(0.34, 0.55, 0.11)));
-        vec3 blendedColor = mix(grayscale, color.rgb, saturation);
-        color = vec4(blendedColor, color.a);
-    }
-
     color *= vec4(h_weight_00, h_weight_00, h_weight_00, h_weight_00);
 
     // Get closest horizontal neighbour to blend.
@@ -121,13 +114,6 @@ void main()
         dx = 1.0 + dx;
     }
     vec4 colorNB = TEX2D(texture_coords + coords01);
-
-    // Saturation.
-    if (saturation != 1.0) {
-        vec3 grayscale = vec3(dot(colorNB.rgb, vec3(0.34, 0.55, 0.11)));
-        vec3 blendedColor = mix(grayscale, colorNB.rgb, saturation);
-        colorNB = vec4(blendedColor, colorNB.a);
-    }
 
     float h_weight_01 = dx / SPOT_WIDTH;
     WEIGHT(h_weight_01);
@@ -152,13 +138,6 @@ void main()
     }
     colorNB = TEX2D(texture_coords + coords10);
 
-    // Saturation.
-    if (saturation != 1.0) {
-        vec3 grayscale = vec3(dot(colorNB.rgb, vec3(0.34, 0.55, 0.11)));
-        vec3 blendedColor = mix(grayscale, colorNB.rgb, saturation);
-        colorNB = vec4(blendedColor, colorNB.a);
-    }
-
     float v_weight_10 = dy / SPOT_HEIGHT;
     WEIGHT(v_weight_10);
 
@@ -170,6 +149,15 @@ void main()
     color *= vec4(COLOR_BOOST);
 
     vec4 colorTemp = clamp(GAMMA_OUT(color), 0.0, 1.0);
+
+    // Saturation.
+    if (saturation != 1.0) {
+        vec3 grayscale;
+        grayscale = vec3(dot(colorTemp.bgr, vec3(0.0721, 0.7154, 0.2125)));
+        vec3 blendedColor = mix(grayscale, colorTemp.rgb, saturation);
+        colorTemp = vec4(blendedColor, colorTemp.a);
+    }
+
     FragColor = vec4(colorTemp.rgb, colorTemp.a * opacity);
 }
 #endif
