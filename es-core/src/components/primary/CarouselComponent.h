@@ -46,6 +46,14 @@ public:
         NO_CAROUSEL
     };
 
+    enum class ItemStacking {
+        CENTERED,
+        ASCENDING,
+        ASCENDING_RAISED,
+        DESCENDING,
+        DESCENDING_RAISED
+    };
+
     CarouselComponent();
 
     void addEntry(Entry& entry, const std::shared_ptr<ThemeData>& theme);
@@ -129,6 +137,7 @@ private:
     float mMaxItemCount;
     int mItemsBeforeCenter;
     int mItemsAfterCenter;
+    ItemStacking mItemStacking;
     glm::vec2 mItemSize;
     float mItemScale;
     float mItemRotation;
@@ -179,6 +188,7 @@ CarouselComponent<T>::CarouselComponent()
     , mMaxItemCount {3.0f}
     , mItemsBeforeCenter {8}
     , mItemsAfterCenter {8}
+    , mItemStacking {ItemStacking::CENTERED}
     , mItemSize {glm::vec2 {Renderer::getScreenWidth() * 0.25f,
                             Renderer::getScreenHeight() * 0.155f}}
     , mItemScale {1.2f}
@@ -420,6 +430,7 @@ template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
                 if (mVerticalOffset > 0.0f)
                     centerOffset = -centerOffset;
             }
+            itemInclusion += 1;
         }
 
         for (int i = center - itemInclusion - itemInclusionBefore;
@@ -840,6 +851,33 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     if (renderItems.size() == 1) {
         renderItemsSorted.emplace_back(renderItems.front());
     }
+    else if (!isWheel && mItemStacking != ItemStacking::CENTERED) {
+        if (mItemStacking == ItemStacking::ASCENDING) {
+            renderItemsSorted.insert(renderItemsSorted.begin(),
+                                     std::make_move_iterator(renderItems.begin()),
+                                     std::make_move_iterator(renderItems.end()));
+        }
+        else if (mItemStacking == ItemStacking::ASCENDING_RAISED) {
+            for (size_t i {0}; i < renderItems.size(); ++i) {
+                if (i == static_cast<size_t>(belowCenter))
+                    continue;
+                renderItemsSorted.emplace_back(std::move(renderItems[i]));
+            }
+            renderItemsSorted.emplace_back(std::move(renderItems[belowCenter]));
+        }
+        else if (mItemStacking == ItemStacking::DESCENDING) {
+            for (size_t i {renderItems.size()}; i > 0; --i)
+                renderItemsSorted.emplace_back(std::move(renderItems[i - 1]));
+        }
+        else if (mItemStacking == ItemStacking::DESCENDING_RAISED) {
+            for (size_t i {renderItems.size()}; i > 0; --i) {
+                if (i - 1 == static_cast<size_t>(belowCenter))
+                    continue;
+                renderItemsSorted.emplace_back(std::move(renderItems[i - 1]));
+            }
+            renderItemsSorted.emplace_back(std::move(renderItems[belowCenter]));
+        }
+    }
     else {
         // Make sure that overlapping items are rendered in the correct order.
         size_t zeroDistanceEntry {0};
@@ -1030,6 +1068,31 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             const glm::vec2 itemSize {glm::clamp(elem->get<glm::vec2>("itemSize"), 0.05f, 1.0f)};
             mItemSize =
                 itemSize * glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight());
+        }
+
+        if (elem->has("itemStacking")) {
+            const std::string& itemStacking {elem->get<std::string>("itemStacking")};
+            if (itemStacking == "ascending") {
+                mItemStacking = ItemStacking::ASCENDING;
+            }
+            else if (itemStacking == "ascendingRaised") {
+                mItemStacking = ItemStacking::ASCENDING_RAISED;
+            }
+            else if (itemStacking == "descending") {
+                mItemStacking = ItemStacking::DESCENDING;
+            }
+            else if (itemStacking == "descendingRaised") {
+                mItemStacking = ItemStacking::DESCENDING_RAISED;
+            }
+            else if (itemStacking == "centered") {
+                mItemStacking = ItemStacking::CENTERED;
+            }
+            else {
+                mItemStacking = ItemStacking::CENTERED;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"itemStacking\" for element \""
+                                << element.substr(9) << "\" defined as \"" << itemStacking << "\"";
+            }
         }
 
         if (elem->has("itemScale"))

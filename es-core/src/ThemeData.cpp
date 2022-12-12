@@ -122,6 +122,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
        {"itemsBeforeCenter", UNSIGNED_INTEGER},
        {"itemsAfterCenter", UNSIGNED_INTEGER},
+       {"itemStacking", STRING},
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
        {"itemRotation", FLOAT},
