@@ -148,6 +148,7 @@ private:
     unsigned int mImageColor;
     unsigned int mImageColorEnd;
     bool mImageColorGradientHorizontal;
+    float mImageSaturation;
     std::unique_ptr<ImageComponent> mBackgroundImage;
     std::string mBackgroundImagePath;
     float mBackgroundRelativeScale;
@@ -204,6 +205,7 @@ GridComponent<T>::GridComponent()
     , mImageColor {0xFFFFFFFF}
     , mImageColorEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
+    , mImageSaturation {1.0f}
     , mBackgroundRelativeScale {1.0f}
     , mBackgroundColor {0xFFFFFFFF}
     , mBackgroundColorEnd {0xFFFFFFFF}
@@ -256,6 +258,8 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             item->setCroppedSize(mItemSize * mImageRelativeScale);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mImageSaturation != 1.0)
+            item->setSaturation(mImageSaturation);
         if (mImageColor != 0xFFFFFFFF)
             item->setColorShift(mImageColor);
         if (mImageColorEnd != mImageColor) {
@@ -280,6 +284,8 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             defaultImage->setCroppedSize(mItemSize * mImageRelativeScale);
         defaultImage->setImage(entry.data.defaultImagePath);
         defaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mImageSaturation != 1.0)
+            defaultImage->setSaturation(mImageSaturation);
         if (mImageColor != 0xFFFFFFFF)
             defaultImage->setColorShift(mImageColor);
         if (mImageColorEnd != mImageColor) {
@@ -329,6 +335,8 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
             item->setCroppedSize(mItemSize * mImageRelativeScale);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mImageSaturation != 1.0)
+            item->setSaturation(mImageSaturation);
         if (mImageColor != 0xFFFFFFFF)
             item->setColorShift(mImageColor);
         if (mImageColorEnd != mImageColor) {
@@ -1018,6 +1026,9 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(5) << "\" defined as \"" << gradientType << "\"";
         }
     }
+
+    if (elem->has("imageSaturation"))
+        mImageSaturation = glm::clamp(elem->get<float>("imageSaturation"), 0.0f, 1.0f);
 
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
