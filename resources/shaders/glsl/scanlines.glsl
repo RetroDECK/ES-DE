@@ -158,7 +158,7 @@ void main()
     // Saturation.
     if (saturation != 1.0) {
         vec3 grayscale;
-        grayscale = vec3(dot(colorTemp.bgr, vec3(0.0721, 0.7154, 0.2125)));
+        grayscale = vec3(dot(colorTemp.bgr, vec3(0.114, 0.587, 0.299)));
         vec3 blendedColor = mix(grayscale, colorTemp.rgb, saturation);
         colorTemp = vec4(blendedColor, colorTemp.a);
     }
