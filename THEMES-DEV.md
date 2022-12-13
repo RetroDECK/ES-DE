@@ -1082,7 +1082,7 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `linear`
 * `imageColor` - type: COLOR
-    - Applies a color shift to the images defined by `staticImage`, `imageType` and `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Applies a color shift to the images defined by `staticImage`, `imageType` and `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
 * `imageColorEnd` - type: COLOR
     - Works in the exact same way as `imageColor` but can be set as the end color to apply a color shift gradient.
@@ -1091,6 +1091,10 @@ Properties:
     - The direction to apply the color gradient if both `imageColor` and `imageColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
+* `imageSaturation` - type: FLOAT
+    - Controls the level of color saturation.
+    - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
+    - Default is `1`
 * `itemTransitions` - type: STRING
     - How to render item transitions when navigating the carousel. By default a slide, scale and opacity fade animation will be played when moving between items (the latter two assuming `itemScale` and `unfocusedItemOpacity` have not been set to `1`) but if this property is set to `instant` then transitions will be immediate.
     - Valid values are `animate` or `instant`
@@ -1250,7 +1254,7 @@ Properties:
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
 * `imageColor` - type: COLOR
-    - Applies a color shift to the images defined by `staticImage`, `imageType` and `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Applies a color shift to the images defined by `staticImage`, `imageType` and `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
 * `imageColorEnd` - type: COLOR
     - Works in the exact same way as `imageColor` but can be set as the end color to apply a color shift gradient.
     - Default is the same value as `imageColor`
@@ -1258,6 +1262,10 @@ Properties:
     - The direction to apply the color gradient if both `imageColor` and `imageColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
+* `imageSaturation` - type: FLOAT
+    - Controls the level of color saturation.
+    - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
+    - Default is `1`
 * `backgroundImage` - type: PATH
     - Path to an optional background image file which will be displayed behind the image defined by `staticImage`, `imageType` or `defaultImage`. The aspect ratio for this image will not be preserved, it will be stretched or squashed to the aspect ratio set by `itemSize`. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `backgroundRelativeScale` - type: FLOAT.
@@ -1576,7 +1584,7 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `color` - type: COLOR
-    - Applies a color shift to both the static image and video by multiplying each pixel's color by this color value. For example, an all-white image or video with `FF0000` applied would become completely red. You can also control the transparency of the image and video by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Applies a color shift to both the static image and video by multiplying each pixel's color by this color value. For example, an all-white image or video with `FF0000` applied would become completely red. It's however not recommended to use this property to control opacity as this will not look right for actual videos, instead use the `opacity` property if you want to render this element as semi-transparent. The `color` property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
 * `colorEnd` - type: COLOR
     - Works in the exact same way as `color` but can be set as the end color to apply a color shift gradient.
