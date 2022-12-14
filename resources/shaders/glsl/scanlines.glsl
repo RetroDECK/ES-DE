@@ -157,8 +157,10 @@ void main()
     vec4 colorTemp = clamp(GAMMA_OUT(color), 0.0, 1.0);
 
     // Brightness.
-    if (brightness != 0.0)
-        colorTemp.rgb = colorTemp.rgb * pow(2.0, brightness);
+    if (brightness != 0.0) {
+        colorTemp.rgb += 0.3 * brightness;
+        colorTemp.rgb *= colorTemp.a;
+    }
 
     // Saturation.
     if (saturation != 1.0) {

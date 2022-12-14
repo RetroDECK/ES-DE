@@ -72,8 +72,10 @@ void main()
     vec4 sampledColor = texture(textureSampler, texCoord);
 
     // Brightness.
-    if (brightness != 0.0)
-        sampledColor.rgb = sampledColor.rgb * pow(2.0, brightness);
+    if (brightness != 0.0) {
+        sampledColor.rgb += 0.3 * brightness;
+        sampledColor.rgb *= sampledColor.a;
+    }
 
     // Saturation.
     if (saturation != 1.0) {
