@@ -39,7 +39,7 @@ namespace GamelistFileParser
 
         while (path_it != pathList.end()) {
             // Workaround for an extremely rare issue that can basically only happen if a dot (.)
-            // has been defined as a valid extension for the system (meaning extension-less files
+            // has been defined as a valid extension for the system (meaning extensionless files
             // are loaded), in combination with the "Only show ROMs from gamelist.xml files" option
             // being enabled and a stale entry being present in the gamelist.xml file that perfectly
             // matches a folder which is actually in use. The workaround is not a perfect solution
@@ -47,7 +47,7 @@ namespace GamelistFileParser
             if (treeNode->getType() != FOLDER) {
                 LOG(LogWarning)
                     << "Invalid gamelist entry caused by folder having the same name as a stale "
-                    << "extension-less game file (this may cause undefined behavior):";
+                    << "extensionless game file (this may cause undefined behavior):";
                 return nullptr;
             }
 
