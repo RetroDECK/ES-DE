@@ -319,7 +319,8 @@ bool SystemData::populateFolder(FileData* folder)
         isGame = false;
 
         if (std::find(mEnvData->mSearchExtensions.cbegin(), mEnvData->mSearchExtensions.cend(),
-                      extension) != mEnvData->mSearchExtensions.cend()) {
+                      extension) != mEnvData->mSearchExtensions.cend() &&
+            !(isDirectory && extension == ".")) {
             FileData* newGame {new FileData(GAME, filePath, mEnvData, this)};
 
             // If adding a configured file extension to a directory it will get interpreted as
@@ -327,7 +328,7 @@ bool SystemData::populateFolder(FileData* folder)
             // entries or for emulators that can get directories passed to them as command line
             // parameters instead of regular files. In these instances we remove the extension
             // from the metadata name so it does not show up in the gamelists and similar.
-            if (isDirectory) {
+            if (isDirectory && extension != ".") {
                 const std::string& folderName {newGame->metadata.get("name")};
                 newGame->metadata.set(
                     "name", folderName.substr(0, folderName.length() - extension.length()));
