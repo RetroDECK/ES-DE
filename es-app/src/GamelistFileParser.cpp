@@ -87,9 +87,8 @@ namespace GamelistFileParser
 
                 if (!system->getFlattenFolders()) {
                     // Create missing folder.
-                    FileData* folder {new FileData(
-                        FOLDER, Utils::FileSystem::getStem(treeNode->getPath()) + "/" + *path_it,
-                        system->getSystemEnvData(), system)};
+                    FileData* folder {new FileData(FOLDER, treeNode->getPath() + "/" + *path_it,
+                                                   system->getSystemEnvData(), system)};
                     treeNode->addChild(folder);
                     treeNode = folder;
                 }
