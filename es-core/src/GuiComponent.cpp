@@ -29,6 +29,7 @@ GuiComponent::GuiComponent()
     , mOrigin {0.0f, 0.0f}
     , mRotationOrigin {0.5f, 0.5f}
     , mSize {0.0f, 0.0f}
+    , mBrightness {0.0f}
     , mOpacity {1.0f}
     , mSaturation {1.0f}
     , mDimming {1.0f}
@@ -181,6 +182,16 @@ const int GuiComponent::getChildIndex() const
         return static_cast<int>(std::distance(getParent()->mChildren.begin(), it));
     else
         return -1;
+}
+
+void GuiComponent::setBrightness(float brightness)
+{
+    if (mBrightness == brightness)
+        return;
+
+    mBrightness = brightness;
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
+        (*it)->setBrightness(brightness);
 }
 
 void GuiComponent::setOpacity(float opacity)
@@ -370,6 +381,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setZIndex(elem->get<float>("zIndex"));
     else
         setZIndex(getDefaultZIndex());
+
+    if (properties & ThemeFlags::BRIGHTNESS && elem->has("brightness"))
+        mBrightness = glm::clamp(elem->get<float>("brightness"), -2.0f, 2.0f);
 
     if (properties & ThemeFlags::OPACITY && elem->has("opacity"))
         mThemeOpacity = glm::clamp(elem->get<float>("opacity"), 0.0f, 1.0f);

@@ -222,8 +222,10 @@ public:
     virtual void stopGamelistFadeAnimations() {}
     virtual bool isListScrolling() { return false; }
     virtual void stopListScrolling() {}
+    virtual const float getBrightness() const { return mBrightness; }
     virtual const float getOpacity() const { return mOpacity; }
     virtual const float getColorOpacity() const { return 1.0f; }
+    virtual void setBrightness(float brightness);
     virtual void setOpacity(float opacity);
     virtual float getSaturation() const { return static_cast<float>(mColor); }
     virtual void setSaturation(float saturation) { mSaturation = saturation; }
@@ -336,6 +338,7 @@ protected:
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
 
+    float mBrightness;
     float mOpacity;
     float mSaturation;
     float mDimming;

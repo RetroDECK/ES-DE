@@ -176,6 +176,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         if (mFadeIn < 1.0f || mThemeOpacity < 1.0f)
             vertices->opacity = mFadeIn * mThemeOpacity;
 
+        vertices->brightness = mBrightness;
         vertices->saturation = mSaturation * mThemeSaturation;
         vertices->dimming = mDimming;
 

@@ -381,6 +381,8 @@ void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
     if (mStaticImagePath != "") {
         mStaticImage.setOpacity(mOpacity * mThemeOpacity);
         mStaticImage.setSaturation(mSaturation * mThemeSaturation);
+        if (mBrightness != 0.0f)
+            mStaticImage.setBrightness(mBrightness);
         if (mColorShift != 0xFFFFFFFF)
             mStaticImage.setColorShift(mColorShift);
         if (mColorShift != mColorShiftEnd)

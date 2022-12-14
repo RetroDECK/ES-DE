@@ -495,6 +495,7 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
         for (int i = 0; i < 4; ++i)
             vertices[i].position = glm::round(vertices[i].position);
 
+        vertices->brightness = mBrightness;
         vertices->saturation = mSaturation * mThemeSaturation;
         vertices->opacity = mOpacity * mThemeOpacity;
         vertices->dimming = mDimming;

@@ -394,8 +394,9 @@ void ImageComponent::render(const glm::mat4& parentTrans)
             else
                 fadeIn(mTexture->bind());
 
-            mVertices->saturation = mSaturation * mThemeSaturation;
+            mVertices->brightness = mBrightness;
             mVertices->opacity = mThemeOpacity;
+            mVertices->saturation = mSaturation * mThemeSaturation;
             mVertices->dimming = mDimming;
             mVertices->reflectionsFalloff = mReflectionsFalloff;
 

@@ -58,6 +58,7 @@ precision mediump float;
 
 uniform vec2 textureSize;
 uniform float opacity;
+uniform float brightness;
 uniform float saturation;
 uniform sampler2D textureSampler;
 in vec2 texCoord;
@@ -154,6 +155,10 @@ void main()
     color *= vec4(COLOR_BOOST);
 
     vec4 colorTemp = clamp(GAMMA_OUT(color), 0.0, 1.0);
+
+    // Brightness.
+    if (brightness != 0.0)
+        colorTemp.rgb = colorTemp.rgb * pow(2.0, brightness);
 
     // Saturation.
     if (saturation != 1.0) {

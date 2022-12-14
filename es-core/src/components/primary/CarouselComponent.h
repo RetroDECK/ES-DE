@@ -147,6 +147,7 @@ private:
     unsigned int mImageColorShift;
     unsigned int mImageColorShiftEnd;
     bool mImageColorGradientHorizontal;
+    float mImageBrightness;
     float mImageSaturation;
     bool mInstantItemTransitions;
     Alignment mItemHorizontalAlignment;
@@ -200,6 +201,7 @@ CarouselComponent<T>::CarouselComponent()
     , mImageColorShift {0xFFFFFFFF}
     , mImageColorShiftEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
+    , mImageBrightness {0.0f}
     , mImageSaturation {1.0f}
     , mInstantItemTransitions {false}
     , mItemHorizontalAlignment {ALIGN_CENTER}
@@ -265,6 +267,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             item->setImage(entry.data.imagePath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            if (mImageBrightness != 0.0)
+                item->setBrightness(mImageBrightness);
             if (mImageSaturation != 1.0)
                 item->setSaturation(mImageSaturation);
             if (mImageColorShift != 0xFFFFFFFF)
@@ -285,6 +289,8 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             defaultImage->setImage(entry.data.defaultImagePath);
             defaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
+            if (mImageBrightness != 0.0)
+                defaultImage->setBrightness(mImageBrightness);
             if (mImageSaturation != 1.0)
                 defaultImage->setSaturation(mImageSaturation);
             if (mImageColorShift != 0xFFFFFFFF)
@@ -354,6 +360,8 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
         item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mImageBrightness != 0.0)
+            item->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)
             item->setSaturation(mImageSaturation);
         if (mImageColorShift != 0xFFFFFFFF)
@@ -1123,6 +1131,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 << "\"";
             }
         }
+
+        if (elem->has("imageBrightness"))
+            mImageBrightness = glm::clamp(elem->get<float>("imageBrightness"), -2.0f, 2.0f);
 
         if (elem->has("imageSaturation"))
             mImageSaturation = glm::clamp(elem->get<float>("imageSaturation"), 0.0f, 1.0f);

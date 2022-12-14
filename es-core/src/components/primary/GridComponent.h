@@ -148,6 +148,7 @@ private:
     unsigned int mImageColor;
     unsigned int mImageColorEnd;
     bool mImageColorGradientHorizontal;
+    float mImageBrightness;
     float mImageSaturation;
     std::unique_ptr<ImageComponent> mBackgroundImage;
     std::string mBackgroundImagePath;
@@ -205,6 +206,7 @@ GridComponent<T>::GridComponent()
     , mImageColor {0xFFFFFFFF}
     , mImageColorEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
+    , mImageBrightness {0.0f}
     , mImageSaturation {1.0f}
     , mBackgroundRelativeScale {1.0f}
     , mBackgroundColor {0xFFFFFFFF}
@@ -258,6 +260,8 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             item->setCroppedSize(mItemSize * mImageRelativeScale);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mImageBrightness != 0.0)
+            item->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)
             item->setSaturation(mImageSaturation);
         if (mImageColor != 0xFFFFFFFF)
@@ -284,6 +288,8 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
             defaultImage->setCroppedSize(mItemSize * mImageRelativeScale);
         defaultImage->setImage(entry.data.defaultImagePath);
         defaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mImageBrightness != 0.0)
+            defaultImage->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)
             defaultImage->setSaturation(mImageSaturation);
         if (mImageColor != 0xFFFFFFFF)
@@ -335,6 +341,8 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
             item->setCroppedSize(mItemSize * mImageRelativeScale);
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
+        if (mImageBrightness != 0.0)
+            item->setBrightness(mImageBrightness);
         if (mImageSaturation != 1.0)
             item->setSaturation(mImageSaturation);
         if (mImageColor != 0xFFFFFFFF)
@@ -1026,6 +1034,9 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             << element.substr(5) << "\" defined as \"" << gradientType << "\"";
         }
     }
+
+    if (elem->has("imageBrightness"))
+        mImageBrightness = glm::clamp(elem->get<float>("imageBrightness"), -2.0f, 2.0f);
 
     if (elem->has("imageSaturation"))
         mImageSaturation = glm::clamp(elem->get<float>("imageSaturation"), 0.0f, 1.0f);

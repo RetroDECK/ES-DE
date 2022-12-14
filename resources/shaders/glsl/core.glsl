@@ -4,7 +4,7 @@
 //  core.glsl
 //
 //  Core shader functionality:
-//  Clipping, saturation, opacity, dimming and reflections falloff.
+//  Clipping, brightness, saturation, opacity, dimming and reflections falloff.
 //
 
 // Vertex section of code:
@@ -39,6 +39,7 @@ in vec2 texCoord;
 in vec4 color;
 
 uniform vec4 clipRegion;
+uniform float brightness;
 uniform float saturation;
 uniform float opacity;
 uniform float dimming;
@@ -69,6 +70,10 @@ void main()
     }
 
     vec4 sampledColor = texture(textureSampler, texCoord);
+
+    // Brightness.
+    if (brightness != 0.0)
+        sampledColor.rgb = sampledColor.rgb * pow(2.0, brightness);
 
     // Saturation.
     if (saturation != 1.0) {
