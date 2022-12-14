@@ -47,14 +47,14 @@
 // build environment is broken.
 #if defined(__unix__)
 #if defined(ES_INSTALL_PREFIX)
-std::string installPrefix = ES_INSTALL_PREFIX;
+const std::string installPrefix {ES_INSTALL_PREFIX};
 #else
 #if defined(__linux__)
-std::string installPrefix = "/usr";
+const std::string installPrefix {"/usr"};
 #elif defined(__NetBSD__)
-std::string installPrefix = "/usr/pkg";
+const std::string installPrefix {"/usr/pkg"};
 #else
-std::string installPrefix = "/usr/local";
+const std::string installPrefix {"/usr/local"};
 #endif
 #endif
 #endif
@@ -63,12 +63,12 @@ namespace Utils
 {
     namespace FileSystem
     {
-        static std::string homePath = "";
-        static std::string exePath = "";
+        static std::string homePath;
+        static std::string exePath;
 
         StringList getDirContent(const std::string& path, const bool recursive)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
             StringList contentList;
 
             // Only parse the directory, if it's a directory.
@@ -76,17 +76,19 @@ namespace Utils
 
 #if defined(_WIN64)
                 WIN32_FIND_DATAW findData;
-                std::wstring wildcard = Utils::String::stringToWideString(genericPath) + L"/*";
-                HANDLE hFind = FindFirstFileW(wildcard.c_str(), &findData);
+                const std::wstring& wildcard {Utils::String::stringToWideString(genericPath) +
+                                              L"/*"};
+                const HANDLE hFind {FindFirstFileW(wildcard.c_str(), &findData)};
 
                 if (hFind != INVALID_HANDLE_VALUE) {
                     // Loop over all files in the directory.
                     do {
-                        std::string name = Utils::String::wideStringToString(findData.cFileName);
+                        const std::string& name {
+                            Utils::String::wideStringToString(findData.cFileName)};
                         // Ignore "." and ".."
                         if ((name != ".") && (name != "..")) {
-                            std::string fullName(getGenericPath(genericPath + "/" + name));
-                            contentList.push_back(fullName);
+                            const std::string& fullName {getGenericPath(genericPath + "/" + name)};
+                            contentList.emplace_back(fullName);
 
                             if (recursive && isDirectory(fullName)) {
                                 contentList.sort();
@@ -97,18 +99,18 @@ namespace Utils
                     FindClose(hFind);
                 }
 #else
-                DIR* dir = opendir(genericPath.c_str());
+                DIR* dir {opendir(genericPath.c_str())};
 
                 if (dir != nullptr) {
                     struct dirent* entry;
                     // Loop over all files in the directory.
                     while ((entry = readdir(dir)) != nullptr) {
-                        std::string name(entry->d_name);
+                        const std::string& name(entry->d_name);
 
                         // Ignore "." and ".."
                         if ((name != ".") && (name != "..")) {
-                            std::string fullName(getGenericPath(genericPath + "/" + name));
-                            contentList.push_back(fullName);
+                            const std::string& fullName {getGenericPath(genericPath + "/" + name)};
+                            contentList.emplace_back(fullName);
 
                             if (recursive && isDirectory(fullName)) {
                                 contentList.sort();
@@ -132,13 +134,13 @@ namespace Utils
             if (entry == std::string::npos)
                 return files;
 
-            std::string parent {getParent(pattern)};
+            const std::string& parent {getParent(pattern)};
 
             // Don't allow wildcard matching for the parent directory.
             if (entry <= parent.size())
                 return files;
 
-            StringList dirContent {getDirContent(parent)};
+            const StringList& dirContent {getDirContent(parent)};
 
             if (dirContent.size() == 0)
                 return files;
@@ -172,19 +174,19 @@ namespace Utils
         StringList getPathList(const std::string& path)
         {
             StringList pathList;
-            std::string genericPath = getGenericPath(path);
-            size_t start = 0;
-            size_t end = 0;
+            const std::string& genericPath {getGenericPath(path)};
+            size_t start {0};
+            size_t end {0};
 
             // Split at '/'
             while ((end = genericPath.find("/", start)) != std::string::npos) {
                 if (end != start)
-                    pathList.push_back(std::string(genericPath, start, end - start));
+                    pathList.emplace_back(std::string {genericPath, start, end - start});
                 start = end + 1;
             }
             // Add last folder / file to pathList.
             if (start != genericPath.size())
-                pathList.push_back(std::string(genericPath, start, genericPath.size() - start));
+                pathList.emplace_back(std::string {genericPath, start, genericPath.size() - start});
 
             return pathList;
         }
@@ -223,7 +225,7 @@ namespace Utils
 #else
 
             if (!homePath.length()) {
-                std::string envHome = getenv("HOME");
+                const std::string& envHome {getenv("HOME")};
                 if (envHome.length())
                     homePath = getGenericPath(envHome);
             }
@@ -260,17 +262,18 @@ namespace Utils
             // Ugly hack to compensate for the Flatpak sandbox restrictions. We traverse
             // this hardcoded list of paths and use the "which" command to check outside the
             // sandbox if the emulator binary exists.
-            std::string pathVariable {"/var/lib/flatpak/exports/bin:/usr/bin:/usr/local/"
-                                      "bin:/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/"
-                                      "local/games:/snap/bin:/var/lib/snapd/snap/bin"};
+            const std::string& pathVariable {
+                "/var/lib/flatpak/exports/bin:/usr/bin:/usr/local/"
+                "bin:/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/"
+                "local/games:/snap/bin:/var/lib/snapd/snap/bin"};
 
-            std::vector<std::string> pathList {
+            const std::vector<std::string>& pathList {
                 Utils::String::delimitedStringToVector(pathVariable, ":")};
 
             // Using a temporary file is the only viable solution I've found to communicate
             // between the sandbox and the outside world.
-            std::string tempFile {Utils::FileSystem::getHomePath() + "/.emulationstation/" +
-                                  ".flatpak_emulator_binary_path.tmp"};
+            const std::string& tempFile {Utils::FileSystem::getHomePath() + "/.emulationstation/" +
+                                         ".flatpak_emulator_binary_path.tmp"};
 
             std::string emulatorPath;
 
@@ -293,9 +296,9 @@ namespace Utils
 
             return emulatorPath;
 #else
-            std::string pathVariable {std::string(getenv("PATH"))};
+            const std::string& pathVariable {std::string {getenv("PATH")}};
 
-            std::vector<std::string> pathList {
+            const std::vector<std::string>& pathList {
                 Utils::String::delimitedStringToVector(pathVariable, ":")};
 
             std::string pathTest;
@@ -313,7 +316,7 @@ namespace Utils
 
         void setExePath(const std::string& path)
         {
-            constexpr int pathMax = 32767;
+            constexpr int pathMax {32767};
 #if defined(_WIN64)
             std::wstring result(pathMax, 0);
             if (GetModuleFileNameW(nullptr, &result[0], pathMax) != 0)
@@ -349,20 +352,22 @@ namespace Utils
 
         std::string getPreferredPath(const std::string& path)
         {
-            std::string preferredPath = path;
 #if defined(_WIN64)
-            size_t offset = std::string::npos;
+            std::string preferredPath {path};
+            size_t offset {std::string::npos};
             // Convert '/' to '\\'
             while ((offset = preferredPath.find('/')) != std::string::npos)
                 preferredPath.replace(offset, 1, "\\");
+#else
+            const std::string& preferredPath {path};
 #endif
             return preferredPath;
         }
 
         std::string getGenericPath(const std::string& path)
         {
-            std::string genericPath = path;
-            size_t offset = std::string::npos;
+            std::string genericPath {path};
+            size_t offset {std::string::npos};
 
             // Remove "\\\\?\\"
             if ((genericPath.find("\\\\?\\")) == 0)
@@ -386,7 +391,7 @@ namespace Utils
 
         std::string getEscapedPath(const std::string& path)
         {
-            std::string escapedPath = getGenericPath(path);
+            std::string escapedPath {getGenericPath(path)};
 
 #if defined(_WIN64)
             // Windows escapes stuff by just putting everything in quotes.
@@ -396,12 +401,12 @@ namespace Utils
                 return getPreferredPath(escapedPath);
 #else
             // Insert a backslash before most characters that would mess up a bash path.
-            const char* invalidChars = "\\ '\"!$^&*(){}[]?;<>";
-            const char* invalidChar = invalidChars;
+            const char* invalidChars {"\\ '\"!$^&*(){}[]?;<>"};
+            const char* invalidChar {invalidChars};
 
             while (*invalidChar) {
-                size_t start = 0;
-                size_t offset = 0;
+                size_t start {0};
+                size_t offset {0};
 
                 while ((offset = escapedPath.find(*invalidChar, start)) != std::string::npos) {
                     start = offset + 1;
@@ -423,17 +428,17 @@ namespace Utils
             if ((path[0] == ':') && (path[1] == '/'))
                 return path;
 
-            std::string canonicalPath = exists(path) ? getAbsolutePath(path) : getGenericPath(path);
+            std::string canonicalPath {exists(path) ? getAbsolutePath(path) : getGenericPath(path)};
 
             // Cleanup path.
-            bool scan = true;
+            bool scan {true};
             while (scan) {
-                StringList pathList = getPathList(canonicalPath);
+                const StringList& pathList {getPathList(canonicalPath)};
 
                 canonicalPath.clear();
                 scan = false;
 
-                for (StringList::const_iterator it = pathList.cbegin(); it != pathList.cend();
+                for (StringList::const_iterator it {pathList.cbegin()}; it != pathList.cend();
                      ++it) {
                     // Ignore empty.
                     if ((*it).empty())
@@ -458,7 +463,7 @@ namespace Utils
 #endif
 
                     if (isSymlink(canonicalPath)) {
-                        std::string resolved = resolveSymlink(canonicalPath);
+                        const std::string& resolved {resolveSymlink(canonicalPath)};
 
                         if (resolved.empty())
                             return "";
@@ -481,8 +486,9 @@ namespace Utils
 
         std::string getAbsolutePath(const std::string& path, const std::string& base)
         {
-            std::string absolutePath = getGenericPath(path);
-            std::string baseVar = isAbsolute(base) ? getGenericPath(base) : getAbsolutePath(base);
+            const std::string& absolutePath {getGenericPath(path)};
+            const std::string& baseVar {isAbsolute(base) ? getGenericPath(base) :
+                                                           getAbsolutePath(base)};
 
             return isAbsolute(absolutePath) ? absolutePath :
                                               getGenericPath(baseVar + "/" + absolutePath);
@@ -490,8 +496,8 @@ namespace Utils
 
         std::string getParent(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
-            size_t offset = std::string::npos;
+            std::string genericPath {getGenericPath(path)};
+            size_t offset {std::string::npos};
 
             // Find last '/' and erase it.
             if ((offset = genericPath.find_last_of('/')) != std::string::npos)
@@ -503,13 +509,13 @@ namespace Utils
 
         std::string getFileName(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
-            size_t offset = std::string::npos;
+            const std::string& genericPath {getGenericPath(path)};
+            size_t offset {std::string::npos};
 
             // Find last '/' and return the filename.
             if ((offset = genericPath.find_last_of('/')) != std::string::npos)
                 return ((genericPath[offset + 1] == 0) ? "." :
-                                                         std::string(genericPath, offset + 1));
+                                                         std::string {genericPath, offset + 1});
 
             // No '/' found, entire path is a filename.
             return genericPath;
@@ -517,8 +523,8 @@ namespace Utils
 
         std::string getStem(const std::string& path)
         {
-            std::string fileName = getFileName(path);
-            size_t offset = std::string::npos;
+            std::string fileName {getFileName(path)};
+            size_t offset {std::string::npos};
 
             // Empty fileName.
             if (fileName == ".")
@@ -536,8 +542,8 @@ namespace Utils
 
         std::string getExtension(const std::string& path)
         {
-            std::string fileName = getFileName(path);
-            size_t offset = std::string::npos;
+            const std::string& fileName {getFileName(path)};
+            size_t offset {std::string::npos};
 
             // Empty fileName.
             if (fileName == ".")
@@ -545,7 +551,7 @@ namespace Utils
 
             // Find last '.' and return the extension.
             if ((offset = fileName.find_last_of('.')) != std::string::npos)
-                return std::string(fileName, offset);
+                return std::string {fileName, offset};
 
             // No '.' found, filename has no extension.
             return ".";
@@ -561,9 +567,9 @@ namespace Utils
                                         const std::string& relativeTo,
                                         const bool allowHome)
         {
-            std::string genericPath = getGenericPath(path);
-            std::string relativeToVar =
-                isDirectory(relativeTo) ? getGenericPath(relativeTo) : getParent(relativeTo);
+            const std::string& genericPath {getGenericPath(path)};
+            const std::string& relativeToVar {isDirectory(relativeTo) ? getGenericPath(relativeTo) :
+                                                                        getParent(relativeTo)};
 
             // Nothing to resolve.
             if (!genericPath.length())
@@ -585,8 +591,8 @@ namespace Utils
                                        const std::string& relativeTo,
                                        const bool allowHome)
         {
-            bool contains = false;
-            std::string relativePath = removeCommonPath(path, relativeTo, contains);
+            bool contains {false};
+            std::string relativePath {removeCommonPath(path, relativeTo, contains)};
 
             if (contains)
                 return ("./" + relativePath);
@@ -604,9 +610,9 @@ namespace Utils
                                      const std::string& commonArg,
                                      bool& contains)
         {
-            std::string genericPath = getGenericPath(path);
-            std::string common =
-                isDirectory(commonArg) ? getGenericPath(commonArg) : getParent(commonArg);
+            const std::string& genericPath {getGenericPath(path)};
+            const std::string& common {isDirectory(commonArg) ? getGenericPath(commonArg) :
+                                                                getParent(commonArg)};
 
             if (genericPath.find(common) == 0) {
                 contains = true;
@@ -619,7 +625,7 @@ namespace Utils
 
         std::string resolveSymlink(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
             std::string resolved;
 
 #if defined(_WIN64)
@@ -675,10 +681,10 @@ namespace Utils
             }
 
 #if defined(_WIN64)
-            std::ifstream sourceFile(Utils::String::stringToWideString(sourcePath).c_str(),
-                                     std::ios::binary);
+            std::ifstream sourceFile {Utils::String::stringToWideString(sourcePath).c_str(),
+                                      std::ios::binary};
 #else
-            std::ifstream sourceFile(sourcePath, std::ios::binary);
+            std::ifstream sourceFile {sourcePath, std::ios::binary};
 #endif
 
             if (sourceFile.fail()) {
@@ -689,10 +695,10 @@ namespace Utils
             }
 
 #if defined(_WIN64)
-            std::ofstream targetFile(Utils::String::stringToWideString(destinationPath).c_str(),
-                                     std::ios::binary);
+            std::ofstream targetFile {Utils::String::stringToWideString(destinationPath).c_str(),
+                                      std::ios::binary};
 #else
-            std::ofstream targetFile(destinationPath, std::ios::binary);
+            std::ofstream targetFile {destinationPath, std::ios::binary};
 #endif
 
             if (targetFile.fail()) {
@@ -744,7 +750,7 @@ namespace Utils
 
         bool removeFile(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
             // Don't remove if it doesn't exists.
             if (!exists(genericPath))
@@ -798,7 +804,7 @@ namespace Utils
 
         bool createDirectory(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
             if (exists(genericPath))
                 return true;
@@ -812,7 +818,7 @@ namespace Utils
 #endif
 
             // Failed to create directory, try to create the parent.
-            std::string parent = getParent(genericPath);
+            const std::string& parent {getParent(genericPath)};
 
             // Only try to create parent if it's not identical to genericPath.
             if (parent != genericPath)
@@ -829,7 +835,7 @@ namespace Utils
 
         bool exists(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
 #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
@@ -846,7 +852,7 @@ namespace Utils
         bool driveExists(const std::string& path)
         {
 #if defined(_WIN64)
-            std::string genericPath = getGenericPath(path);
+            std::string genericPath {getGenericPath(path)};
             // Try to add a dot or a backslash and a dot depending on how the drive
             // letter was defined by the user.
             if (genericPath.length() == 2 && genericPath.at(1) == ':')
@@ -864,7 +870,7 @@ namespace Utils
 
         bool isAbsolute(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
 #if defined(_WIN64)
             return ((genericPath.size() > 1) && (genericPath[1] == ':'));
@@ -875,7 +881,7 @@ namespace Utils
 
         bool isRegularFile(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
 #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
@@ -897,7 +903,7 @@ namespace Utils
 
         bool isDirectory(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
 #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
             struct stat info;
@@ -919,12 +925,12 @@ namespace Utils
 
         bool isSymlink(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
 #if defined(_WIN64)
             // Check for symlink attribute.
-            const DWORD Attributes =
-                GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str());
+            const DWORD Attributes {
+                GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str())};
             if ((Attributes != INVALID_FILE_ATTRIBUTES) &&
                 (Attributes & FILE_ATTRIBUTE_REPARSE_POINT))
                 return true;
@@ -952,12 +958,12 @@ namespace Utils
 
         bool isHidden(const std::string& path)
         {
-            std::string genericPath = getGenericPath(path);
+            const std::string& genericPath {getGenericPath(path)};
 
 #if defined(_WIN64)
             // Check for hidden attribute.
-            const DWORD Attributes =
-                GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str());
+            const DWORD Attributes {
+                GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str())};
             if ((Attributes != INVALID_FILE_ATTRIBUTES) && (Attributes & FILE_ATTRIBUTE_HIDDEN))
                 return true;
 #endif
