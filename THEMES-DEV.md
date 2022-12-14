@@ -1091,6 +1091,10 @@ Properties:
     - The direction to apply the color gradient if both `imageColor` and `imageColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
+* `imageBrightness` - type: FLOAT
+    - Controls the relative level of brightness. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image.
+    - Minimum value is `-2` and maximum value is `2`
+    - Default is `0` (no brightness adjustments applied)
 * `imageSaturation` - type: FLOAT
     - Controls the level of color saturation.
     - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
@@ -1262,6 +1266,10 @@ Properties:
     - The direction to apply the color gradient if both `imageColor` and `imageColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
+* `imageBrightness` - type: FLOAT
+    - Controls the relative level of brightness. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image.
+    - Minimum value is `-2` and maximum value is `2`
+    - Default is `0` (no brightness adjustments applied)
 * `imageSaturation` - type: FLOAT
     - Controls the level of color saturation.
     - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
@@ -1514,6 +1522,10 @@ Properties:
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This usually looks best if used for the main game image.
     - Default is `false`
+* `brightness` - type: FLOAT
+    - Controls the relative level of brightness. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image.
+    - Minimum value is `-2` and maximum value is `2`
+    - Default is `0` (no brightness adjustments applied)
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -1614,8 +1626,12 @@ Properties:
 * `scrollFadeIn` - type: BOOLEAN
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
     - Default is `false`
+* `brightness` - type: FLOAT
+    - Controls the relative level of brightness. This affects both the static image and the video stream. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image.
+    - Minimum value is `-2` and maximum value is `2`
+    - Default is `0` (no brightness adjustments applied)
 * `opacity` - type: FLOAT
-    - Controls the level of transparency. If set to `0` the element will be disabled.
+    - Controls the level of transparency. This affects both the static image and the video stream. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
     - Default is `1`
 * `saturation` - type: FLOAT
@@ -1674,6 +1690,10 @@ Properties:
     - Interpolation method to use when scaling GIF animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on Lottie animations.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
+* `brightness` - type: FLOAT
+    - Controls the relative level of brightness. This is intended primarily for fine adjustments.
+    - Minimum value is `-2` and maximum value is `2`
+    - Default is `0` (no brightness adjustments applied)
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`

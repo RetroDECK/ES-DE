@@ -49,6 +49,7 @@
 * Added support for the mugen system on Linux and macOS using the Ikemen GO game engine
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
+* Added the . (dot) file extension to the xbox360 system on Windows to support extensionless XBLA games
 * Added the .car and .rom file extensions to the a5200 system
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
@@ -109,6 +110,7 @@
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
 * Added support for arbitrary aspect ratios for RatingComponent images and also added an overlay property
 * Added theme support for defining the opacity for most element types
+* Added theme support for defining relative brightness for images, videos and animations
 * Added theme support for defining color saturation for images, videos and animations
 * Added theme support for defining the video fade-in time
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
@@ -188,6 +190,7 @@
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
 * Added carousel theme support for applying image color shifts
+* Added carousel theme support for defining image brightness
 * Added carousel theme support for defining image saturation
 * Added carousel theme support for setting item transitions to "slide" or "instant"
 * Added carousel theme support for controlling item stacking for overlapping items
@@ -220,12 +223,14 @@
 ### Bug fixes
 
 * Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
+* Adding a dot (.) to the es_systems.xml extension tag (to setup extensionless entries) lead to a crash if the system contained folders
 * For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Text wrapping did not work correctly for text that typically does not contain spaces, like Japanese
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
 * For gamelists which mixed files and folders, the folder sorting was sometimes incorrect
+* Incorrect folder paths were displayed in the metadata editor if the setting "Only show ROMs from gamelist.xml files" was enabled
 * Games located in subdirectories were not added back to custom collections when disabling the "Exclude from game counter" metadata option
 * Enabling and then disabling the "Exclude from game counter" metadata option would remove a game from all currently disabled custom collections
 * Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists

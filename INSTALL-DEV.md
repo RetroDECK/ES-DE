@@ -1165,6 +1165,8 @@ Wildcards are supported for emulator binaries, but not for directories:
 <command>~/App*/yuzu*.AppImage %ROM%</command>
 ```
 
+There is a special case when it comes to file extensions where it's possible to use extensionless files if required. To accomplish this simply add a dot (.) to the list of extensions in the `<extension>` tag. Obviously this makes it impossible to use the _directories interpreted as files_ functionality as there is no file extension, but apart from that everything should work the same as for regular files.
+
 Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
 
 Below is an overview of the file layout with various examples. For the command tag, the newer es_find_rules.xml logic described later in this document removes the need for most of the legacy options, but they are still supported for special configurations and for backward compatibility with old configuration files.
@@ -1195,8 +1197,8 @@ Below is an overview of the file layout with various examples. For the command t
         All subdirectories (and non-recursive links) will be included. -->
         <path>%ROMPATH%/snes</path>
 
-        <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t").
-        The extensions are case sensitive and they must begin with a dot. -->
+        <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t"). Extensions are
+        case sensitive and they must begin with a dot. It's also possible to add just a dot to include extensionless files. -->
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
         <!-- The command executed when a game is launched. Various variables are replaced if found for a command tag as explained below.
