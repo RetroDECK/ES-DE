@@ -38,6 +38,11 @@ rm -rf glew-*
 curl -LO https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0.zip
 unzip glew-2.1.0.zip
 
+if [ ! -d glew-2.1.0 ]; then
+  echo "GLEW directory is missing, aborting."
+  exit
+fi
+
 echo -e "\nSetting up FreeType"
 rm -rf freetype
 
