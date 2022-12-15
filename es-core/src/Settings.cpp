@@ -88,7 +88,8 @@ void Settings::setDefaults()
 
     mBoolMap["ScrapeGameNames"] = {true, true};
     mBoolMap["ScrapeRatings"] = {true, true};
-    mBoolMap["ScrapeControllers"] = {true, true};
+    // ScreenScraper controller scraping is currently broken, it's unclear if they will fix it.
+    // mBoolMap["ScrapeControllers"] = {true, true};
     mBoolMap["ScrapeMetadata"] = {true, true};
     mBoolMap["ScrapeVideos"] = {true, true};
     mBoolMap["ScrapeScreenshots"] = {true, true};
