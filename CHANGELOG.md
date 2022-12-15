@@ -160,7 +160,7 @@
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
 * Updated to build correctly with FFmpeg 5.1
-* Updated FFmpeg to 5.1.2, SDL to 2.24.1, FreeType to 2.12.1 and pugixml to 1.12.1 on Windows and macOS
+* Updated SDL to 2.26.1, FFmpeg to 5.1.2, FreeType to 2.12.1 and pugixml to 1.12.1 on Windows and macOS
 * Updated curl to 7.86.0 on Windows
 * Added a workaround for playing broken video files with invalid PTS values
 * Refactored the rendering code from a shared namespace into proper classes
