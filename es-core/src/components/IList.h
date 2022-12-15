@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  IList.h
 //
-//  List base class, used by both the gamelist views and the menu.
+//  List base class, used by the system view, gamelist view and menu system.
 //
 
 #ifndef ES_CORE_COMPONENTS_ILIST_H
@@ -284,7 +284,7 @@ protected:
         }
 
         // Actually perform the scrolling.
-        for (int i = 0; i < scrollCount; ++i)
+        for (int i {0}; i < scrollCount; ++i)
             scroll(mScrollVelocity);
     }
 
@@ -300,7 +300,7 @@ protected:
             }
 
             std::string titleIndex;
-            bool favoritesSorting;
+            bool favoritesSorting {true};
 
             if (getSelected()->getSystem()->isCustomCollection())
                 favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");

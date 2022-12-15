@@ -19,6 +19,7 @@
 GuiComponent::GuiComponent()
     : mWindow {Window::getInstance()}
     , mParent {nullptr}
+    , mThemeGameSelectorEntry {0}
     , mColor {0}
     , mColorShift {0}
     , mColorShiftEnd {0}
@@ -398,6 +399,9 @@ void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties && elem->has("gameselector"))
         mThemeGameSelector = elem->get<std::string>("gameselector");
+
+    if (properties && elem->has("gameselectorEntry"))
+        mThemeGameSelectorEntry = elem->get<unsigned int>("gameselectorEntry");
 }
 
 void GuiComponent::updateHelpPrompts()

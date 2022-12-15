@@ -878,12 +878,12 @@ void SystemView::updateGameSelectors()
     if (mLegacyMode)
         return;
 
-    int cursor {mPrimary->getCursor()};
+    const int cursor {mPrimary->getCursor()};
 
     if (mSystemElements[cursor].gameSelectors.size() == 0)
         return;
 
-    bool multipleSelectors {mSystemElements[cursor].gameSelectors.size() > 1};
+    const bool multipleSelectors {mSystemElements[cursor].gameSelectors.size() > 1};
 
     for (auto& image : mSystemElements[cursor].imageComponents) {
         if (image->getThemeImageTypes().size() == 0)
@@ -915,76 +915,79 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(image->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             std::string path;
             for (auto& imageType : image->getThemeImageTypes()) {
                 if (imageType == "image") {
-                    path = games.front()->getImagePath();
+                    path = games.at(gameSelectorEntry)->getImagePath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "miximage") {
-                    path = games.front()->getMiximagePath();
+                    path = games.at(gameSelectorEntry)->getMiximagePath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "marquee") {
-                    path = games.front()->getMarqueePath();
+                    path = games.at(gameSelectorEntry)->getMarqueePath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "screenshot") {
-                    path = games.front()->getScreenshotPath();
+                    path = games.at(gameSelectorEntry)->getScreenshotPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "titlescreen") {
-                    path = games.front()->getTitleScreenPath();
+                    path = games.at(gameSelectorEntry)->getTitleScreenPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "cover") {
-                    path = games.front()->getCoverPath();
+                    path = games.at(gameSelectorEntry)->getCoverPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "backcover") {
-                    path = games.front()->getBackCoverPath();
+                    path = games.at(gameSelectorEntry)->getBackCoverPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "3dbox") {
-                    path = games.front()->get3DBoxPath();
+                    path = games.at(gameSelectorEntry)->get3DBoxPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "physicalmedia") {
-                    path = games.front()->getPhysicalMediaPath();
+                    path = games.at(gameSelectorEntry)->getPhysicalMediaPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "fanart") {
-                    path = games.front()->getFanArtPath();
+                    path = games.at(gameSelectorEntry)->getFanArtPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
@@ -1031,10 +1034,13 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(video->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
-            if (!video->setVideo(games.front()->getVideoPath()))
+        if (games.size() > gameSelectorEntry) {
+            if (!video->setVideo(games.at(gameSelectorEntry)->getVideoPath()))
                 video->setDefaultVideo();
         }
     }
@@ -1069,76 +1075,79 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(video->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             std::string path;
             for (auto& imageType : video->getThemeImageTypes()) {
                 if (imageType == "image") {
-                    path = games.front()->getImagePath();
+                    path = games.at(gameSelectorEntry)->getImagePath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "miximage") {
-                    path = games.front()->getMiximagePath();
+                    path = games.at(gameSelectorEntry)->getMiximagePath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "marquee") {
-                    path = games.front()->getMarqueePath();
+                    path = games.at(gameSelectorEntry)->getMarqueePath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "screenshot") {
-                    path = games.front()->getScreenshotPath();
+                    path = games.at(gameSelectorEntry)->getScreenshotPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "titlescreen") {
-                    path = games.front()->getTitleScreenPath();
+                    path = games.at(gameSelectorEntry)->getTitleScreenPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "cover") {
-                    path = games.front()->getCoverPath();
+                    path = games.at(gameSelectorEntry)->getCoverPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "backcover") {
-                    path = games.front()->getBackCoverPath();
+                    path = games.at(gameSelectorEntry)->getBackCoverPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "3dbox") {
-                    path = games.front()->get3DBoxPath();
+                    path = games.at(gameSelectorEntry)->get3DBoxPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "physicalmedia") {
-                    path = games.front()->getPhysicalMediaPath();
+                    path = games.at(gameSelectorEntry)->getPhysicalMediaPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "fanart") {
-                    path = games.front()->getFanArtPath();
+                    path = games.at(gameSelectorEntry)->getFanArtPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
@@ -1184,37 +1193,45 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(text->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             const std::string metadata {text->getThemeMetadata()};
             if (metadata == "name")
-                text->setValue(games.front()->metadata.get("name"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("name"));
             if (metadata == "description")
-                text->setValue(games.front()->metadata.get("desc"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("desc"));
             if (metadata == "rating")
-                text->setValue(
-                    RatingComponent::getRatingValue(games.front()->metadata.get("rating")));
+                text->setValue(RatingComponent::getRatingValue(
+                    games.at(gameSelectorEntry)->metadata.get("rating")));
             if (metadata == "developer")
-                text->setValue(games.front()->metadata.get("developer"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("developer"));
             if (metadata == "publisher")
-                text->setValue(games.front()->metadata.get("publisher"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("publisher"));
             if (metadata == "genre")
-                text->setValue(games.front()->metadata.get("genre"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("genre"));
             if (metadata == "players")
-                text->setValue(games.front()->metadata.get("players"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("players"));
             if (metadata == "favorite")
-                text->setValue(games.front()->metadata.get("favorite") == "true" ? "yes" : "no");
+                text->setValue(
+                    games.at(gameSelectorEntry)->metadata.get("favorite") == "true" ? "yes" : "no");
             if (metadata == "completed")
-                text->setValue(games.front()->metadata.get("completed") == "true" ? "yes" : "no");
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("completed") == "true" ?
+                                   "yes" :
+                                   "no");
             if (metadata == "kidgame")
-                text->setValue(games.front()->metadata.get("kidgame") == "true" ? "yes" : "no");
+                text->setValue(
+                    games.at(gameSelectorEntry)->metadata.get("kidgame") == "true" ? "yes" : "no");
             if (metadata == "broken")
-                text->setValue(games.front()->metadata.get("broken") == "true" ? "yes" : "no");
+                text->setValue(
+                    games.at(gameSelectorEntry)->metadata.get("broken") == "true" ? "yes" : "no");
             if (metadata == "playcount")
-                text->setValue(games.front()->metadata.get("playcount"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("playcount"));
             if (metadata == "altemulator")
-                text->setValue(games.front()->metadata.get("altemulator"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("altemulator"));
         }
         else {
             text->setValue("");
@@ -1251,15 +1268,18 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(dateTime->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             dateTime->setVisible(true);
             const std::string metadata {dateTime->getThemeMetadata()};
             if (metadata == "releasedate")
-                dateTime->setValue(games.front()->metadata.get("releasedate"));
+                dateTime->setValue(games.at(gameSelectorEntry)->metadata.get("releasedate"));
             if (metadata == "lastplayed")
-                dateTime->setValue(games.front()->metadata.get("lastplayed"));
+                dateTime->setValue(games.at(gameSelectorEntry)->metadata.get("lastplayed"));
         }
         else {
             dateTime->setVisible(false);
@@ -1295,11 +1315,14 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(rating->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             rating->setVisible(true);
-            rating->setValue(games.front()->metadata.get("rating"));
+            rating->setValue(games.at(gameSelectorEntry)->metadata.get("rating"));
         }
         else {
             rating->setVisible(false);

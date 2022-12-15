@@ -45,6 +45,7 @@ public:
     const bool getNeedsRefresh() { return mNeedsRefresh; }
     const GameSelection getGameSelection() const { return mGameSelection; }
     const std::string& getSelectorName() const { return mSelectorName; }
+    const int getGameCount() const { return mGameCount; }
 
     void refreshGames()
     {
