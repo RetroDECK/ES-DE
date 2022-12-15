@@ -1915,7 +1915,6 @@ Here's an overview of what's supported when using these scrapers:
 | Multi-language                    | Yes           | No         |
 | Game names                        | Yes           | Yes        |
 | Ratings                           | Yes           | No         |
-| Controllers (arcade systems only) | Yes           | No         |
 | Other game metadata               | Yes           | Yes        |
 | Videos                            | Yes           | No         |
 | Screenshots                       | Yes           | Yes        |
@@ -1930,8 +1929,6 @@ Here's an overview of what's supported when using these scrapers:
 The category **Other game metadata** includes Description, Release date, Developer, Publisher, Genre and Players.
 
 The **Multi-language** support includes translated game genres and game descriptions for a number of languages.
-
-**Controllers** is metadata indicating the controller type (it's not images of controllers).
 
 **Physical media** means images of cartridges, diskettes, tapes, CD-ROMs etc. that were used to distribute the games.
 
@@ -2102,10 +2099,6 @@ Whether to scrape the names of the games. This does not affect the actual files 
 **Ratings** _(ScreenScraper only)_
 
 Downloads game ratings.
-
-**Controllers (arcade systems only)** _(ScreenScraper only)_
-
-Scrapes controller metadata which is used to set the correct controller badge. This is only available for MAME arcade games, for systems such as _arcade_, _mame_, _neogeo_, _fba_ etc. This is so because ScreenScraper does not seem to provide controller information for other platforms. The type of controllers that are scraped are _joystick_ (separated into entries from no buttons up to 6 buttons), _steering wheel_, _flight stick_, _spinner_, _trackball_ and _lightgun_.
 
 **Other metadata**
 

@@ -140,6 +140,7 @@
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
 * If a wheel (marquee) image on ScreenScraper falls back to another region, then the wheel-hd image is now used instead if it matches the set region
+* Removed scraping of arcade controller information using ScreenScraper as they have ruined this functionality
 * Added a ScreenScraper-specific option to remove dots from game name searches when using the multi-scraper in automatic mode
 * Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
@@ -178,6 +179,7 @@
 * (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
 * Added the build date to to main menu for alpha and dev builds
 * Added a left trigger + right trigger help system icon and removed the deprecated hotkey icon
+* Added an arcade twin stick controller badge icon
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization

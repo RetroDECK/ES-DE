@@ -1491,6 +1491,10 @@ Properties:
     - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `imageType` property is utilized.
+* `gameselectorEntry` - type: UNSIGNED_INTEGER
+    - This property which is only available in the `system` view makes it possible to select which `gameselector` entry to use to populate the `imageType` property. This assumes that a `gameCount` property for the gameselector element has been defined with a value higher than `1`. By defining multiple `image` elements with different values for the `gameselectorEntry` property it's possible to display multiple game entries at the same time, for example listing a couple of games that were last played, or a selection of random games. If the requested entry does not exist (for instance if `gameCount` has been set to 5 and `gameselectorEntry` has been set to `4` but the system only contains 3 games), then the overall element will not get rendered. Note that the first entry is defined as `0`, the second entry as `1` etc.
+    - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
+    - Default is `0`
 * `tile` - type: BOOLEAN
     - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
     - Default is `false`
@@ -1588,6 +1592,10 @@ Properties:
     - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element.
+* `gameselectorEntry` - type: UNSIGNED_INTEGER
+    - This property which is only available in the `system` view makes it possible to select which `gameselector` entry to use to populate the `imageType` property and to use for playing the video stream. This assumes that a `gameCount` property for the gameselector element has been defined with a value higher than `1`. By defining multiple `video` elements with different values for the `gameselectorEntry` property it's possible to display multiple game entries at the same time, for example listing a couple of games that were last played, or a selection of random games. If the requested entry does not exist (for instance if `gameCount` has been set to 5 and `gameselectorEntry` has been set to `4` but the system only contains 3 games), then the overall element will not get rendered. Note that the first entry is defined as `0`, the second entry as `1` etc.
+    - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
+    - Default is `0`
 * `audio` - type: BOOLEAN
     - Whether to enable or disable audio playback for the video. For static videos in the gamelist view it's strongly recommended to set this to `false` if there is also a separate video element playing game videos.
     - Default is `true`
@@ -1627,7 +1635,7 @@ Properties:
     - If enabled, a short fade-in animation will be applied when scrolling through games in the gamelist view. This animation is only applied to images and not to actual videos, so if no image metadata has been defined then this property has no effect. For this to work correctly the `delay` property also needs to be set.
     - Default is `false`
 * `brightness` - type: FLOAT
-    - Controls the relative level of brightness. This affects both the static image and the video stream. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image.
+    - Controls the relative level of brightness. This affects both the static image and the video stream. This is intended primarily for fine adjustments, for example if a color shift has been applied which may have lowered the overall brightness of the image/video.
     - Minimum value is `-2` and maximum value is `2`
     - Default is `0` (no brightness adjustments applied)
 * `opacity` - type: FLOAT
@@ -1788,6 +1796,7 @@ Properties:
     `gamepad_xbox`,
     `joystick_generic`,
     `joystick_arcade_no_buttons`,
+    `joystick_arcade_no_buttons_twin`,
     `joystick_arcade_1_button`,
     `joystick_arcade_2_buttons`,
     `joystick_arcade_3_buttons`,
@@ -1893,6 +1902,10 @@ Properties:
     - Default is `false`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
+* `gameselectorEntry` - type: UNSIGNED_INTEGER
+    - This property which is only available in the `system` view makes it possible to select which `gameselector` entry to use to populate the `metadata` property. This assumes that a `gameCount` property for the gameselector element has been defined with a value higher than `1`. By defining multiple `text` elements with different values for the `gameselectorEntry` property it's possible to display multiple game entries at the same time, for example listing a couple of games that were last played, or a selection of random games. If the requested entry does not exist (for instance if `gameCount` has been set to 5 and `gameselectorEntry` has been set to `4` but the system only contains 3 games), then the overall element will not get rendered. Note that the first entry is defined as `0`, the second entry as `1` etc.
+    - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
+    - Default is `0`
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
     - Default is `false`
@@ -1981,6 +1994,10 @@ Properties:
     - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
+* `gameselectorEntry` - type: UNSIGNED_INTEGER
+    - This property which is only available in the `system` view makes it possible to select which `gameselector` entry to use to populate the `metadata` property. This assumes that a `gameCount` property for the gameselector element has been defined with a value higher than `1`. By defining multiple `datetime` elements with different values for the `gameselectorEntry` property it's possible to display multiple game entries at the same time, for example listing a couple of games that were last played, or a selection of random games. If the requested entry does not exist (for instance if `gameCount` has been set to 5 and `gameselectorEntry` has been set to `4` but the system only contains 3 games), then the overall element will not get rendered. Note that the first entry is defined as `0`, the second entry as `1` etc.
+    - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
+    - Default is `0`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
@@ -2113,6 +2130,10 @@ Properties:
     - Default is `0.5 0.5`
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view.
+* `gameselectorEntry` - type: UNSIGNED_INTEGER
+    - This property which is only available in the `system` view makes it possible to select which `gameselector` entry to use to populate the rating value. This assumes that a `gameCount` property for the gameselector element has been defined with a value higher than `1`. By defining multiple `rating` elements with different values for the `gameselectorEntry` property it's possible to display multiple game entries at the same time, for example listing a couple of games that were last played, or a selection of random games. If the requested entry does not exist (for instance if `gameCount` has been set to 5 and `gameselectorEntry` has been set to `4` but the system only contains 3 games), then the overall element will not get rendered. Note that the first entry is defined as `0`, the second entry as `1` etc.
+    - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
+    - Default is `0`
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling the images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images, and even more so if rotation is applied.
     - Valid values are `nearest` or `linear`
