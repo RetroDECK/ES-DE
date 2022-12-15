@@ -158,6 +158,7 @@ void main()
 
     // Brightness.
     if (brightness != 0.0) {
+        colorTemp.rgb /= colorTemp.a;
         colorTemp.rgb += 0.3 * brightness;
         colorTemp.rgb *= colorTemp.a;
     }

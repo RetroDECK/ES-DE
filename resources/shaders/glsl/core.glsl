@@ -73,6 +73,7 @@ void main()
 
     // Brightness.
     if (brightness != 0.0) {
+        sampledColor.rgb /= sampledColor.a;
         sampledColor.rgb += 0.3 * brightness;
         sampledColor.rgb *= sampledColor.a;
     }
