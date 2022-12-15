@@ -401,7 +401,7 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.24.1)
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.26.1)
 elseif(EMSCRIPTEN)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
@@ -450,7 +450,7 @@ if(APPLE)
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
                          ${PROJECT_SOURCE_DIR}/libpugixml.a
-                         ${PROJECT_SOURCE_DIR}/libSDL2-2.0.dylib)
+                         ${PROJECT_SOURCE_DIR}/libSDL2-2.0.0.dylib)
 elseif(WIN32)
     if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec.lib
