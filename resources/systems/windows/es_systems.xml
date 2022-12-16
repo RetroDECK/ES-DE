@@ -185,8 +185,8 @@
         <name>atarijaguarcd</name>
         <fullname>Atari Jaguar CD</fullname>
         <path>%ROMPATH%\atarijaguarcd</path>
-        <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\virtualjaguar_libretro.dll %ROM%</command>
+        <extension>.7z .7Z .zip .ZIP</extension>
+        <command>PLACEHOLDER %ROM%</command>
         <platform>atarijaguarcd</platform>
         <theme>atarijaguarcd</theme>
     </system>
