@@ -694,7 +694,9 @@ The following manually downloaded emulators are supported when using the bundled
 | flash                            | Lightspark    | lightspark/lightspark           |
 | flash                            | Ruffle        | ruffle/ruffle                   |
 | fmtowns                          | Tsugaru       | tsugaru/Tsugaru_CUI             |
+| gb/gbc                           | Gearboy       | gearboy/gearboy                 |
 | model3                           | Supermodel    | Supermodel/supermodel           |
+| famicom/nes                      | puNES         | punes/punes                     |
 | oric                             | Oricutron     | oricutron/Oricutron             |
 | pico8                            | PICO-8        | pico-8/pico8                    |
 | psvita                           | Vita3K        | Vita3K/Vita3K                   |
@@ -985,18 +987,6 @@ For the artwork there are two options. There are two MAME alternative emulator e
 As the artwork files also come with the .zip file extension they will show up inside ES-DE as if they were game files, so it's recommended to hide the entire artwork directory using the _Hidden_ option in the metadata editor.
 
 Be aware that neither ScreenScraper or TheGamesDB currently support these MAME short names natively so you'll need to refine the searches or the scraper services are unlikely to return any results at all (or very inaccurate results at best).
-
-#### Nintendo Switch
-
-The Nintendo Switch emulator Yuzu is distributed as a Snap package, Flatpak package or AppImage on Linux and as a regular installer on Windows. At the moment there is unfortunately no macOS release of this emulator and it's unclear if it can run on BSD Unix.
-
-If installed as a Snap or Flatpak package or if built from source code on Linux, ES-DE should be able to easily locate the emulator binary.
-
-But if using the AppImage release it's a bit more complicated. See [here](USERGUIDE-DEV.md#using-emulators-in-appimage-format-on-linux) for more information on how to get it to work.
-
-For Windows, ES-DE will look for _yuzu.exe_ in the system Path as well as in the default installation directory `~\AppData\Local\yuzu\yuzu-windows-msvc\`
-
-Apart from the potential difficulty in locating the emulator binary, there are some special configuration steps required for the emulator, refer to the Yuzu website for more information about this.
 
 #### Nintendo Wii U
 
@@ -3094,7 +3084,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | dreamcast             | Sega Dreamcast                                 | Flycast                           | Flycast **(Standalone)** [UMW*],<br>Redream **(Standalone)** [UMW*]   | No           | In separate folder                   |
 | easyrpg               | EasyRPG Game Engine                            | EasyRPG                           | EasyRPG Player **(Standalone)** [UMW*] | No           | See the specific _EasyRPG Game Engine_ section elsewhere in this guide |
 | epic                  | Epic Games Store                               | Epic Games Store application **(Standalone)** |                       | No           | Shortcut in root folder |
-| famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*],<br>ares FDS **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
+| famicom               | Nintendo Family Computer                       | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW*],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*],<br>ares FDS **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | fba                   | FinalBurn Alpha                                | FB Alpha 2012                     | FB Alpha 2012 Neo Geo,<br>FB Alpha 2012 CPS-1,<br>FB Alpha 2012 CPS-2,<br>FB Alpha 2012 CPS-3 | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fbneo                 | FinalBurn Neo                                  | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW*] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | fds                   | Nintendo Famicom Disk System                   | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          | Single archive or ROM file in root folder |
@@ -3102,9 +3092,9 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW*]    |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | gameandwatch          | Nintendo Game and Watch                        | Handheld Electronic (GW)          | MAME **(Standalone)** [UMW*],<br>MAME Local Artwork **(Standalone)** [UMW*] | No           | See the specific _Nintendo Game and Watch_ section elsewhere in this guide |
 | gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>Mednafen **(Standalone)** [UMW*] |              |                                      |
-| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)** [UMW*],<br>Gearboy,<br>Gearboy **(Standalone)** [UW*],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** [UMW*],<br>VBA Next,<br>gpSP       | No           | Single archive or ROM file in root folder |
-| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>Gearboy,<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)** [UMW*],<br>Gearboy,<br>Gearboy **(Standalone)** [UW*],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file in root folder |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)** [UMW*],<br>PrimeHack **(Standalone)** [UW*],<br>Triforce **(Standalone)** [UW*] | No           | Single .iso file in root folder       |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | gx4000                | Amstrad GX4000                                 | Caprice32                         | CrocoDS,<br>MAME **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
@@ -3142,7 +3132,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** [UMW*] | Yes          | .chd (NeoCD and MAME only) or .cue file in root folder |
 | neogeocdjp            | SNK Neo Geo CD [Japan]                         | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** [UMW*] | Yes          | .chd (NeoCD and MAME only) or .cue file in root folder |
-| nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*],<br>ares FDS **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
+| nes                   | Nintendo Entertainment System                  | Mesen                             | Nestopia UE,<br>Nestopia UE **(Standalone)** [U],<br>FCEUmm,<br>QuickNES,<br>puNES **(Standalone)** [UW*],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*],<br>ares FDS **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | ngp                   | SNK Neo Geo Pocket                             | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] |              |                                      |
 | ngpc                  | SNK Neo Geo Pocket Color                       | Beetle NeoPop                     | RACE,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] |              |                                      |
 | odyssey2              | Magnavox Odyssey2                              | O2EM                              |                                   |              |                                      |
@@ -3185,7 +3175,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | sufami                | Bandai SuFami Turbo                            | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)** [UMW*],<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW*],<br>ares **(Standalone)** [UMW*] |              |                                      |
 | supergrafx            | NEC SuperGrafx                                 | Beetle SuperGrafx                 | Beetle PCE,<br>ares **(Standalone)** [UMW*] |              |                                      |
 | supervision           | Watara Supervision                             | Potator                           |                                   | No           | Single archive or ROM file in root folder |
-| switch                | Nintendo Switch                                | Yuzu **(Standalone)** [UW]        | Ryujinx **(Standalone)** [UW*]    | Yes          |                                      |
+| switch                | Nintendo Switch                                | Yuzu **(Standalone)** [UW],<br>Ryujinx **(Standalone)** [M] | Ryujinx **(Standalone)** [UW*]    | Yes          |                                      |
 | symbian               | Symbian                                        | _Placeholder_                     |                                   |              |                                      |
 | tanodragon            | Tano Dragon                                    | XRoar **(Standalone)**            |                                   | Yes          | See the specific _Dragon 32 and Tano Dragon_ section elsewhere in this guide |
 | tg16                  | NEC TurboGrafx-16                              | Beetle PCE                        | Beetle PCE FAST,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |

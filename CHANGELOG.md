@@ -28,11 +28,16 @@
 * Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
 * Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
+* (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as an alternative emulator for the gameandwatch system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
+* Added SameBoy standalone as an alternative emulator for the gb and gbc systems
+* Added Gearboy standalone as an alternative emulator for the gb and gbc systems on Unix and Windows
+* Added puNES standalone as an alternative emulator for the famicom and nes systems on Unix and Windows
 * (Linux) Added support for the Sega Model 3 (model3) game system by adding the Supermodel standalone emulator
 * (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
+* (Linux) Added support for the mGBA Qt and Snes9x GTK standalone emulators
 * Added support for the Sega Model 2 (model2) game system on Linux on macOS by adding the MAME - Current RetroArch core
 * Added MAME standalone as an alternative emulator for the model2 system
 * (Windows) Added the MAME - Current RetroArch core as an alternative emulator for the model2 system
