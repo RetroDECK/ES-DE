@@ -246,14 +246,14 @@
         </rule>
     </emulator>
     <emulator name="GEARBOY">
-        <!-- Nintendo Game Boy / Color emulator Gearboy -->
+        <!-- Nintendo Game Boy and Game Boy Color emulator Gearboy -->
         <rule type="systempath">
             <entry>gearboy</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/gearboy</entry>
-            <entry>~/.local/bin/gearboy</entry>
-            <entry>~/bin/gearboy</entry>
+            <entry>~/Applications/gearboy/gearboy</entry>
+            <entry>~/.local/bin/gearboy/gearboy</entry>
+            <entry>~/bin/gearboy/gearboy</entry>
         </rule>
     </emulator>
     <emulator name="HYPSEUS-SINGE">

@@ -45,6 +45,7 @@ Emulators\EasyRPG\Player.exe
 Emulators\fbneo\fbneo64.exe
 Emulators\fbneo\fbneo.exe
 Emulators\flycast\flycast.exe
+Emulators\Gearboy\Gearboy.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\KEmulator\KEmulator.exe
 Emulators\m2emulator\EMULATOR.EXE

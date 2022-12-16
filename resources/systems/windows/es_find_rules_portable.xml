@@ -177,11 +177,11 @@
         </rule>
     </emulator>
     <emulator name="GEARBOY">
-        <!-- Nintendo Game Boy / Color emulator Gearboy -->
+        <!-- Nintendo Game Boy and Game Boy Color emulator Gearboy -->
         <rule type="staticpath">
-            <entry>%ESPATH%\Emulators\gearboy\gearboy.exe</entry>
-            <entry>%ESPATH%\gearboy\gearboy.exe</entry>
-            <entry>%ESPATH%\..\gearboy\gearboy.exe</entry>
+            <entry>%ESPATH%\Emulators\Gearboy\Gearboy.exe</entry>
+            <entry>%ESPATH%\Gearboy\Gearboy.exe</entry>
+            <entry>%ESPATH%\..\Gearboy\Gearboy.exe</entry>
         </rule>
     </emulator>
     <emulator name="HYPSEUS-SINGE">
