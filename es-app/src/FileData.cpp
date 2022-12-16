@@ -1440,6 +1440,9 @@ void FileData::launchGame()
     }
 #else
     if (isShortcut) {
+        // Note that the following is not an attempt to implement the entire FreeDesktop standard
+        // for .desktop files, for example argument parsing is not really usable in this context.
+        // There's essentially only enough functionality here to be able to run games and emulators.
         if (Utils::FileSystem::exists(Utils::String::replace(romPath, "\\", "")) &&
             !Utils::FileSystem::isDirectory(Utils::String::replace(romPath, "\\", ""))) {
             LOG(LogInfo) << "Parsing desktop file \"" << Utils::String::replace(romPath, "\\", "")
@@ -1464,6 +1467,7 @@ void FileData::launchGame()
                     romPath = Utils::String::replace(romPath, "%f", "");
                     romPath = Utils::String::replace(romPath, "%U", "");
                     romPath = Utils::String::replace(romPath, "%u", "");
+                    romPath = Utils::String::replace(romPath, "%%", "%");
                     romPath = Utils::String::trim(romPath);
                     command = Utils::String::replace(command, binaryPath, "");
                     execEntry = true;
