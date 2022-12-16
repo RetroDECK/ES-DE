@@ -707,7 +707,7 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
         float posMax {static_cast<float>(mEntries.size())};
         float endPos {static_cast<float>(mCursor)};
 
-        float animTime {380.0f};
+        float animTime {400.0f};
         float timeDiff {1.0f};
 
         // If startPos is inbetween two positions then reduce the time slightly as the distance will
@@ -726,6 +726,7 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
                 // Non-linear interpolation.
                 t = 1.0f - (1.0f - t) * (1.0f - t);
                 float f {(endPos * t) + (startPos * (1.0f - t))};
+
                 if (f < 0)
                     f += posMax;
                 if (f >= posMax)

@@ -352,7 +352,7 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     Animation* anim;
 
-    float animTime {380.0f};
+    float animTime {400.0f};
     float timeMin {200.0f};
     float timeDiff {1.0f};
 

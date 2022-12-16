@@ -1480,7 +1480,7 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
         mPositiveDirection = false;
 
     mEntryCamTarget = endPos;
-    float animTime {380.0f};
+    float animTime {400.0f};
     float timeDiff {1.0f};
 
     // If startPos is inbetween two positions then reduce the time slightly as the distance will
