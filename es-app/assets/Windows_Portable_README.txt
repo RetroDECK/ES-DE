@@ -64,6 +64,7 @@ Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
 Emulators\PrimeHack\Dolphin.exe
 Emulators\Project64\Project64.exe
+Emulators\punes\punes64.exe
 Emulators\redream\redream.exe
 Emulators\RMG\RMG.exe
 Emulators\RPCS3\rpcs3.exe

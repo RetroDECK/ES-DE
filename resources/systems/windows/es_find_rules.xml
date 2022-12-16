@@ -481,7 +481,7 @@
         </rule>
     </emulator>
     <emulator name="PUNES">
-        <!-- NES/Famicom emulator puNES -->
+        <!-- Nintendo NES and Famicom emulator puNES -->
         <rule type="systempath">
             <entry>punes64.exe</entry>
         </rule>
@@ -584,7 +584,7 @@
         </rule>
     </emulator>
     <emulator name="SHEEPSHAVER">
-        <!-- Macintosh PowerPC emulator SheepShaver -->
+        <!-- Apple Macintosh PowerPC emulator SheepShaver -->
         <rule type="systempath">
             <entry>SheepShaver.exe</entry>
         </rule>

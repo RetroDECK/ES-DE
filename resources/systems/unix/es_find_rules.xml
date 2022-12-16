@@ -349,7 +349,7 @@
         </rule>
     </emulator>
     <emulator name="NESTOPIA-UE">
-        <!-- NES/Famicom emulator Nestopia UE -->
+        <!-- Nintendo NES and Famicom emulator Nestopia UE -->
         <rule type="systempath">
             <entry>nestopia</entry>
         </rule>
@@ -448,14 +448,14 @@
         </rule>
     </emulator>
     <emulator name="PUNES">
-        <!-- NES/Famicom emulator puNES -->
+        <!-- Nintendo NES and Famicom emulator puNES -->
         <rule type="systempath">
             <entry>punes</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/punes</entry>
-            <entry>~/.local/bin/punes</entry>
-            <entry>~/bin/punes</entry>
+            <entry>~/Applications/punes/punes</entry>
+            <entry>~/.local/bin/punes/punes</entry>
+            <entry>~/bin/punes/punes</entry>
         </rule>
     </emulator>
     <emulator name="REDREAM">
@@ -554,7 +554,7 @@
         </rule>
     </emulator>
     <emulator name="SHEEPSHAVER">
-        <!-- Macintosh PowerPC emulator SheepShaver -->
+        <!-- Apple Macintosh PowerPC emulator SheepShaver -->
         <rule type="systempath">
             <entry>SheepShaver</entry>
         </rule>
