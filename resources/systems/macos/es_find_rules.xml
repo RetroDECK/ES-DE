@@ -223,11 +223,9 @@
         </rule>
     </emulator>
     <emulator name="SAMEBOY">
-        <!-- Nintendo Game Boy / Color emulator SameBoy -->
+        <!-- Nintendo Game Boy and Game Boy Color emulator SameBoy -->
         <rule type="staticpath">
-            <entry>/Applications/sameboy</entry>
-            <entry>/opt/homebrew/bin/sameboy</entry>
-            <entry>/usr/local/bin/sameboy</entry>
+            <entry>/Applications/SameBoy.app/Contents/MacOS/SameBoy</entry>
         </rule>
     </emulator>
     <emulator name="SIMCOUPE">

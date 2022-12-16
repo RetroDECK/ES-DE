@@ -521,7 +521,7 @@
         </rule>
     </emulator>
     <emulator name="SAMEBOY">
-        <!-- Nintendo Game Boy / Color emulator SameBoy -->
+        <!-- Nintendo Game Boy and Game Boy Color emulator SameBoy -->
         <rule type="systempath">
             <entry>sameboy</entry>
             <entry>io.github.sameboy.SameBoy</entry>
@@ -529,8 +529,6 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
             <entry>~/.local/share/flatpak/exports/bin/io.github.sameboy.SameBoy</entry>
-            <entry>~/.local/bin/sameboy</entry>
-            <entry>~/bin/sameboy</entry>
         </rule>
     </emulator>
     <emulator name="SCUMMVM">

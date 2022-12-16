@@ -372,7 +372,7 @@
         </rule>
     </emulator>
     <emulator name="SAMEBOY">
-        <!-- Nintendo Game Boy / Color emulator SameBoy -->
+        <!-- Nintendo Game Boy and Game Boy Color emulator SameBoy -->
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\sameboy\sameboy.exe</entry>
             <entry>%ESPATH%\sameboy\sameboy.exe</entry>
