@@ -61,6 +61,7 @@ public:
         glm::vec2 texcoord;
         unsigned int color;
         glm::vec4 clipregion;
+        float brightness;
         float opacity;
         float saturation;
         float dimming;
@@ -69,7 +70,8 @@ public:
         unsigned int shaderFlags;
 
         Vertex()
-            : opacity {1.0f}
+            : brightness {0.0f}
+            , opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}
             , reflectionsFalloff {0.0f}
@@ -86,6 +88,7 @@ public:
             , texcoord(textureCoord)
             , color(color)
             , clipregion(clipRegion)
+            , brightness {0.0f}
             , opacity {1.0f}
             , saturation {1.0f}
             , dimming {1.0f}

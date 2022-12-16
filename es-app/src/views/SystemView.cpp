@@ -128,7 +128,7 @@ bool SystemView::input(InputConfig* config, Input input)
             return true;
         }
 
-        if (config->isMappedTo("back", input) &&
+        if (config->isMappedTo("x", input) &&
             Settings::getInstance()->getBool("ScreensaverControls")) {
             if (!mWindow->isScreensaverActive()) {
                 ViewController::getInstance()->stopScrolling();
@@ -145,9 +145,6 @@ bool SystemView::input(InputConfig* config, Input input)
 
 void SystemView::update(int deltaTime)
 {
-    if (!mPrimary->isAnimationPlaying(0))
-        mMaxFade = false;
-
     mPrimary->update(deltaTime);
 
     for (auto& video : mSystemElements[mPrimary->getCursor()].videoComponents) {
@@ -208,6 +205,9 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
         else
             prompts.push_back(HelpPrompt("left/right", "choose"));
     }
+    else if (mGrid != nullptr) {
+        prompts.push_back(HelpPrompt("up/down/left/right", "choose"));
+    }
     else if (mTextList != nullptr) {
         prompts.push_back(HelpPrompt("up/down", "choose"));
     }
@@ -218,14 +218,50 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (Settings::getInstance()->getBool("ScreensaverControls"))
-        prompts.push_back(HelpPrompt("back", "screensaver"));
+        prompts.push_back(HelpPrompt("x", "screensaver"));
 
     return prompts;
 }
 
 void SystemView::onCursorChanged(const CursorState& state)
 {
-    int cursor {mPrimary->getCursor()};
+    const int cursor {mPrimary->getCursor()};
+    const int scrollVelocity {mPrimary->getScrollingVelocity()};
+    const std::string& transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
+    mFadeTransitions = transitionStyle == "fade";
+
+    // Some logic needed to avoid various navigation glitches with GridComponent and
+    // TextListComponent.
+    if (state == CursorState::CURSOR_STOPPED && mCarousel == nullptr) {
+        const int numEntries {static_cast<int>(mPrimary->getNumEntries())};
+        bool doStop {false};
+
+        if (cursor == 0 && mLastCursor == numEntries - 1 && std::abs(scrollVelocity) == 1)
+            doStop = false;
+        else if (cursor == 0)
+            doStop = true;
+        else if (cursor == numEntries - 1 && mLastCursor == 0 && std::abs(scrollVelocity) == 1)
+            doStop = false;
+        else if (cursor == numEntries - 1)
+            doStop = true;
+
+        if (!doStop && mGrid != nullptr && std::abs(scrollVelocity) == mGrid->getColumnCount()) {
+            const int columns {mGrid->getColumnCount()};
+            const int columnModulus {numEntries % columns};
+
+            if (cursor < columns)
+                doStop = true;
+            else if (cursor >= numEntries - (columnModulus == 0 ? columns : columnModulus))
+                doStop = true;
+        }
+
+        if (doStop) {
+            if (mGrid != nullptr)
+                mGrid->setScrollVelocity(0);
+            mPrimary->stopScrolling();
+            mNavigated = false;
+        }
+    }
 
     // Avoid double updates.
     if (cursor != mLastCursor) {
@@ -238,6 +274,31 @@ void SystemView::onCursorChanged(const CursorState& state)
     if (mLastCursor >= 0 && mLastCursor <= static_cast<int>(mSystemElements.size())) {
         for (auto& video : mSystemElements[mLastCursor].videoComponents)
             video->stopVideoPlayer();
+    }
+
+    // This is needed to avoid erratic camera movements during extreme navigation input when using
+    // slide transitions. This should very rarely occur during normal application usage.
+    if (transitionStyle == "slide") {
+        bool resetCamOffset {false};
+
+        if (scrollVelocity == -1 && mPreviousScrollVelocity == 1) {
+            if (mLastCursor > cursor && mCamOffset > static_cast<float>(mLastCursor))
+                resetCamOffset = true;
+            else if (mLastCursor > cursor && mCamOffset < static_cast<float>(cursor))
+                resetCamOffset = true;
+            else if (mLastCursor < cursor && mCamOffset <= static_cast<float>(cursor) &&
+                     mCamOffset != static_cast<float>(mLastCursor))
+                resetCamOffset = true;
+        }
+        else if (scrollVelocity == 1 && mPreviousScrollVelocity == -1) {
+            if (mLastCursor > cursor && mCamOffset < static_cast<float>(mLastCursor))
+                resetCamOffset = true;
+            else if (mLastCursor < cursor && mCamOffset > static_cast<float>(cursor))
+                resetCamOffset = true;
+        }
+
+        if (resetCamOffset)
+            mCamOffset = static_cast<float>(cursor);
     }
 
     mLastCursor = cursor;
@@ -255,10 +316,9 @@ void SystemView::onCursorChanged(const CursorState& state)
     startViewVideos();
     updateHelpPrompts();
 
-    int scrollVelocity {mPrimary->getScrollingVelocity()};
+    const float posMax {static_cast<float>(mPrimary->getNumEntries())};
+    const float target {static_cast<float>(cursor)};
     float startPos {mCamOffset};
-    float posMax {static_cast<float>(mPrimary->getNumEntries())};
-    float target {static_cast<float>(cursor)};
     float endPos {target};
 
     if (mPreviousScrollVelocity > 0 && scrollVelocity == 0 && mCamOffset > posMax - 1.0f)
@@ -290,24 +350,32 @@ void SystemView::onCursorChanged(const CursorState& state)
     if (scrollVelocity != 0)
         mPreviousScrollVelocity = scrollVelocity;
 
-    std::string transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
-    mFadeTransitions = transitionStyle == "fade";
-
     Animation* anim;
+
+    float animTime {400.0f};
+    float timeMin {200.0f};
+    float timeDiff {1.0f};
+
+    if (mGrid != nullptr) {
+        animTime = 300.0f;
+        timeMin = 100.0f;
+    }
+
+    // If startPos is inbetween two positions then reduce the time slightly as the distance will
+    // be shorter meaning the animation would play for too long if not compensated for.
+    if (scrollVelocity == 1)
+        timeDiff = endPos - startPos;
+    else if (scrollVelocity == -1)
+        timeDiff = startPos - endPos;
+
+    if (timeDiff != 1.0f)
+        animTime =
+            glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), timeMin, animTime);
 
     if (transitionStyle == "fade") {
         float startFade {mFadeOpacity};
         anim = new LambdaAnimation(
-            [this, startFade, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
-                if (f < 0.0f)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
-
-                t += 1;
-
+            [this, startFade, endPos](float t) {
                 if (t < 0.3f)
                     mFadeOpacity =
                         glm::mix(0.0f, 1.0f, glm::clamp(t / 0.2f + startFade, 0.0f, 1.0f));
@@ -319,7 +387,7 @@ void SystemView::onCursorChanged(const CursorState& state)
                 if (t > 0.5f)
                     mCamOffset = endPos;
 
-                if (t >= 0.7f && t != 1.0f)
+                if (mNavigated && t >= 0.7f && t != 1.0f)
                     mMaxFade = true;
 
                 // Update the game count when the entire animation has been completed.
@@ -328,15 +396,17 @@ void SystemView::onCursorChanged(const CursorState& state)
                     updateGameCount();
                 }
             },
-            500);
+            static_cast<int>(animTime * 1.3f));
     }
     else if (transitionStyle == "slide") {
         mUpdatedGameCount = false;
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
-                if (f < 0.0f)
+                // Non-linear interpolation.
+                t = 1.0f - (1.0f - t) * (1.0f - t);
+                float f {(endPos * t) + (startPos * (1.0f - t))};
+
+                if (f < 0)
                     f += posMax;
                 if (f >= posMax)
                     f -= posMax;
@@ -362,23 +432,13 @@ void SystemView::onCursorChanged(const CursorState& state)
                     updateGameCount();
                 }
             },
-            500);
+            static_cast<int>(animTime));
     }
     else {
         // Instant.
         updateGameCount();
-        anim = new LambdaAnimation(
-            [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1.0f)};
-                if (f < 0.0f)
-                    f += posMax;
-                if (f >= posMax)
-                    f -= posMax;
-
-                mCamOffset = endPos;
-            },
-            500);
+        anim = new LambdaAnimation([this, endPos](float t) { mCamOffset = endPos; },
+                                   static_cast<int>(animTime));
     }
 
     setAnimation(anim, 0, nullptr, false, 0);
@@ -389,7 +449,7 @@ void SystemView::populate()
     if (SystemData::sSystemVector.size() == 0)
         return;
 
-    LOG(LogDebug) << "SystemView::populate(): Populating carousel";
+    LOG(LogDebug) << "SystemView::populate(): Populating primary element...";
 
     auto themeSets = ThemeData::getThemeSets();
     std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
@@ -405,8 +465,9 @@ void SystemView::populate()
 
     for (auto it : SystemData::sSystemVector) {
         const std::shared_ptr<ThemeData>& theme {it->getTheme()};
-        std::string itemPath;
-        std::string defaultItemPath;
+        std::string imagePath;
+        std::string defaultImagePath;
+        std::string itemText;
 
         if (mLegacyMode && mViewNeedsReload) {
             if (mCarousel == nullptr) {
@@ -458,23 +519,38 @@ void SystemView::populate()
                                                                   ThemeFlags::ALL);
                         elements.gameSelectors.back()->setNeedsRefresh();
                     }
-                    if (element.second.type == "textlist" || element.second.type == "carousel") {
-                        if (element.second.type == "carousel" && mTextList != nullptr) {
+                    if (element.second.type == "carousel" || element.second.type == "grid" ||
+                        element.second.type == "textlist") {
+                        if (element.second.type == "carousel" &&
+                            (mGrid != nullptr || mTextList != nullptr)) {
                             LOG(LogWarning)
                                 << "SystemView::populate(): Multiple primary components "
-                                << "defined, skipping <carousel> configuration entry";
+                                << "defined, skipping carousel configuration entry";
                             continue;
                         }
-                        if (element.second.type == "textlist" && mCarousel != nullptr) {
+                        if (element.second.type == "grid" &&
+                            (mCarousel != nullptr || mTextList != nullptr)) {
                             LOG(LogWarning)
                                 << "SystemView::populate(): Multiple primary components "
-                                << "defined, skipping <textlist> configuration entry";
+                                << "defined, skipping grid configuration entry";
+                            continue;
+                        }
+                        if (element.second.type == "textlist" &&
+                            (mCarousel != nullptr || mGrid != nullptr)) {
+                            LOG(LogWarning)
+                                << "SystemView::populate(): Multiple primary components "
+                                << "defined, skipping textlist configuration entry";
                             continue;
                         }
                         if (element.second.type == "carousel" && mCarousel == nullptr) {
                             mCarousel = std::make_unique<CarouselComponent<SystemData*>>();
                             mPrimary = mCarousel.get();
                             mPrimaryType = PrimaryType::CAROUSEL;
+                        }
+                        else if (element.second.type == "grid" && mGrid == nullptr) {
+                            mGrid = std::make_unique<GridComponent<SystemData*>>();
+                            mPrimary = mGrid.get();
+                            mPrimaryType = PrimaryType::GRID;
                         }
                         else if (element.second.type == "textlist" && mTextList == nullptr) {
                             mTextList = std::make_unique<TextListComponent<SystemData*>>();
@@ -497,11 +573,21 @@ void SystemView::populate()
                                     anim->setPauseAnimation(true);
                             }
                         });
-                        if (mCarousel != nullptr) {
-                            if (element.second.has("staticItem"))
-                                itemPath = element.second.get<std::string>("staticItem");
-                            if (element.second.has("defaultItem"))
-                                defaultItemPath = element.second.get<std::string>("defaultItem");
+                        if (mCarousel != nullptr || mGrid != nullptr) {
+                            if (mCarousel != nullptr) {
+                                // TEMPORARY: Backward compatiblity due to property name changes.
+                                if (element.second.has("staticItem"))
+                                    imagePath = element.second.get<std::string>("staticItem");
+                                if (element.second.has("defaultItem"))
+                                    defaultImagePath =
+                                        element.second.get<std::string>("defaultItem");
+                            }
+                            if (element.second.has("staticImage"))
+                                imagePath = element.second.get<std::string>("staticImage");
+                            if (element.second.has("defaultImage"))
+                                defaultImagePath = element.second.get<std::string>("defaultImage");
+                            if (element.second.has("text"))
+                                itemText = element.second.get<std::string>("text");
                         }
                     }
                     else if (element.second.type == "image") {
@@ -663,17 +749,34 @@ void SystemView::populate()
 
         if (mCarousel != nullptr) {
             CarouselComponent<SystemData*>::Entry entry;
-            // Keep showing only the short name for legacy themes to maintain maximum
-            // backward compatibility. This also applies to unreadable theme sets.
-            if (mLegacyMode)
+            if (mLegacyMode) {
+                // Keep showing only the short name for legacy themes to maintain maximum
+                // backward compatibility. This also applies to unreadable theme sets.
                 entry.name = it->getName();
-            else
-                entry.name = it->getFullName();
+            }
+            else {
+                if (itemText == "")
+                    entry.name = it->getFullName();
+                else
+                    entry.name = itemText;
+            }
             letterCaseFunc(entry.name);
             entry.object = it;
-            entry.data.itemPath = itemPath;
-            entry.data.defaultItemPath = defaultItemPath;
+            entry.data.imagePath = imagePath;
+            entry.data.defaultImagePath = defaultImagePath;
             mCarousel->addEntry(entry, theme);
+        }
+        else if (mGrid != nullptr) {
+            GridComponent<SystemData*>::Entry entry;
+            if (itemText == "")
+                entry.name = it->getFullName();
+            else
+                entry.name = itemText;
+            letterCaseFunc(entry.name);
+            entry.object = it;
+            entry.data.imagePath = imagePath;
+            entry.data.defaultImagePath = defaultImagePath;
+            mGrid->addEntry(entry, theme);
         }
         else if (mTextList != nullptr) {
             TextListComponent<SystemData*>::Entry entry;
@@ -684,6 +787,9 @@ void SystemView::populate()
             mTextList->addEntry(entry);
         }
     }
+
+    if (mGrid != nullptr)
+        mGrid->calculateLayout();
 
     for (auto& elements : mSystemElements) {
         for (auto& text : elements.textComponents) {
@@ -772,12 +878,12 @@ void SystemView::updateGameSelectors()
     if (mLegacyMode)
         return;
 
-    int cursor {mPrimary->getCursor()};
+    const int cursor {mPrimary->getCursor()};
 
     if (mSystemElements[cursor].gameSelectors.size() == 0)
         return;
 
-    bool multipleSelectors {mSystemElements[cursor].gameSelectors.size() > 1};
+    const bool multipleSelectors {mSystemElements[cursor].gameSelectors.size() > 1};
 
     for (auto& image : mSystemElements[cursor].imageComponents) {
         if (image->getThemeImageTypes().size() == 0)
@@ -809,76 +915,79 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(image->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             std::string path;
             for (auto& imageType : image->getThemeImageTypes()) {
                 if (imageType == "image") {
-                    path = games.front()->getImagePath();
+                    path = games.at(gameSelectorEntry)->getImagePath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "miximage") {
-                    path = games.front()->getMiximagePath();
+                    path = games.at(gameSelectorEntry)->getMiximagePath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "marquee") {
-                    path = games.front()->getMarqueePath();
+                    path = games.at(gameSelectorEntry)->getMarqueePath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "screenshot") {
-                    path = games.front()->getScreenshotPath();
+                    path = games.at(gameSelectorEntry)->getScreenshotPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "titlescreen") {
-                    path = games.front()->getTitleScreenPath();
+                    path = games.at(gameSelectorEntry)->getTitleScreenPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "cover") {
-                    path = games.front()->getCoverPath();
+                    path = games.at(gameSelectorEntry)->getCoverPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "backcover") {
-                    path = games.front()->getBackCoverPath();
+                    path = games.at(gameSelectorEntry)->getBackCoverPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "3dbox") {
-                    path = games.front()->get3DBoxPath();
+                    path = games.at(gameSelectorEntry)->get3DBoxPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "physicalmedia") {
-                    path = games.front()->getPhysicalMediaPath();
+                    path = games.at(gameSelectorEntry)->getPhysicalMediaPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "fanart") {
-                    path = games.front()->getFanArtPath();
+                    path = games.at(gameSelectorEntry)->getFanArtPath();
                     if (path != "") {
                         image->setImage(path);
                         break;
@@ -925,10 +1034,13 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(video->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
-            if (!video->setVideo(games.front()->getVideoPath()))
+        if (games.size() > gameSelectorEntry) {
+            if (!video->setVideo(games.at(gameSelectorEntry)->getVideoPath()))
                 video->setDefaultVideo();
         }
     }
@@ -963,76 +1075,79 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(video->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             std::string path;
             for (auto& imageType : video->getThemeImageTypes()) {
                 if (imageType == "image") {
-                    path = games.front()->getImagePath();
+                    path = games.at(gameSelectorEntry)->getImagePath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "miximage") {
-                    path = games.front()->getMiximagePath();
+                    path = games.at(gameSelectorEntry)->getMiximagePath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "marquee") {
-                    path = games.front()->getMarqueePath();
+                    path = games.at(gameSelectorEntry)->getMarqueePath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "screenshot") {
-                    path = games.front()->getScreenshotPath();
+                    path = games.at(gameSelectorEntry)->getScreenshotPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "titlescreen") {
-                    path = games.front()->getTitleScreenPath();
+                    path = games.at(gameSelectorEntry)->getTitleScreenPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "cover") {
-                    path = games.front()->getCoverPath();
+                    path = games.at(gameSelectorEntry)->getCoverPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "backcover") {
-                    path = games.front()->getBackCoverPath();
+                    path = games.at(gameSelectorEntry)->getBackCoverPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "3dbox") {
-                    path = games.front()->get3DBoxPath();
+                    path = games.at(gameSelectorEntry)->get3DBoxPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "physicalmedia") {
-                    path = games.front()->getPhysicalMediaPath();
+                    path = games.at(gameSelectorEntry)->getPhysicalMediaPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
                     }
                 }
                 else if (imageType == "fanart") {
-                    path = games.front()->getFanArtPath();
+                    path = games.at(gameSelectorEntry)->getFanArtPath();
                     if (path != "") {
                         video->setImage(path);
                         break;
@@ -1078,37 +1193,45 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(text->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             const std::string metadata {text->getThemeMetadata()};
             if (metadata == "name")
-                text->setValue(games.front()->metadata.get("name"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("name"));
             if (metadata == "description")
-                text->setValue(games.front()->metadata.get("desc"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("desc"));
             if (metadata == "rating")
-                text->setValue(
-                    RatingComponent::getRatingValue(games.front()->metadata.get("rating")));
+                text->setValue(RatingComponent::getRatingValue(
+                    games.at(gameSelectorEntry)->metadata.get("rating")));
             if (metadata == "developer")
-                text->setValue(games.front()->metadata.get("developer"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("developer"));
             if (metadata == "publisher")
-                text->setValue(games.front()->metadata.get("publisher"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("publisher"));
             if (metadata == "genre")
-                text->setValue(games.front()->metadata.get("genre"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("genre"));
             if (metadata == "players")
-                text->setValue(games.front()->metadata.get("players"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("players"));
             if (metadata == "favorite")
-                text->setValue(games.front()->metadata.get("favorite") == "true" ? "yes" : "no");
+                text->setValue(
+                    games.at(gameSelectorEntry)->metadata.get("favorite") == "true" ? "yes" : "no");
             if (metadata == "completed")
-                text->setValue(games.front()->metadata.get("completed") == "true" ? "yes" : "no");
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("completed") == "true" ?
+                                   "yes" :
+                                   "no");
             if (metadata == "kidgame")
-                text->setValue(games.front()->metadata.get("kidgame") == "true" ? "yes" : "no");
+                text->setValue(
+                    games.at(gameSelectorEntry)->metadata.get("kidgame") == "true" ? "yes" : "no");
             if (metadata == "broken")
-                text->setValue(games.front()->metadata.get("broken") == "true" ? "yes" : "no");
+                text->setValue(
+                    games.at(gameSelectorEntry)->metadata.get("broken") == "true" ? "yes" : "no");
             if (metadata == "playcount")
-                text->setValue(games.front()->metadata.get("playcount"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("playcount"));
             if (metadata == "altemulator")
-                text->setValue(games.front()->metadata.get("altemulator"));
+                text->setValue(games.at(gameSelectorEntry)->metadata.get("altemulator"));
         }
         else {
             text->setValue("");
@@ -1145,15 +1268,18 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(dateTime->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             dateTime->setVisible(true);
             const std::string metadata {dateTime->getThemeMetadata()};
             if (metadata == "releasedate")
-                dateTime->setValue(games.front()->metadata.get("releasedate"));
+                dateTime->setValue(games.at(gameSelectorEntry)->metadata.get("releasedate"));
             if (metadata == "lastplayed")
-                dateTime->setValue(games.front()->metadata.get("lastplayed"));
+                dateTime->setValue(games.at(gameSelectorEntry)->metadata.get("lastplayed"));
         }
         else {
             dateTime->setVisible(false);
@@ -1189,11 +1315,14 @@ void SystemView::updateGameSelectors()
         else {
             gameSelector = mSystemElements[cursor].gameSelectors.front().get();
         }
+        const size_t gameSelectorEntry {static_cast<size_t>(
+            glm::clamp(rating->getThemeGameSelectorEntry(), 0u,
+                       static_cast<unsigned int>(gameSelector->getGameCount() - 1)))};
         gameSelector->refreshGames();
         std::vector<FileData*> games {gameSelector->getGames()};
-        if (!games.empty()) {
+        if (games.size() > gameSelectorEntry) {
             rating->setVisible(true);
-            rating->setValue(games.front()->metadata.get("rating"));
+            rating->setValue(games.at(gameSelectorEntry)->metadata.get("rating"));
         }
         else {
             rating->setVisible(false);
@@ -1241,7 +1370,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
     int renderAfter {static_cast<int>(mCamOffset)};
 
     // If we're transitioning then also render the previous and next systems.
-    if (mPrimary->isAnimationPlaying(0)) {
+    if (isAnimationPlaying(0)) {
         renderBefore -= 1;
         renderAfter += 1;
     }
@@ -1253,7 +1382,7 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
         while (index >= static_cast<int>(mPrimary->getNumEntries()))
             index -= static_cast<int>(mPrimary->getNumEntries());
 
-        if (mPrimary->isAnimationPlaying(0) || index == mPrimary->getCursor()) {
+        if (isAnimationPlaying(0) || index == mPrimary->getCursor()) {
             glm::mat4 elementTrans {trans};
             if (mCarousel != nullptr) {
                 if (mCarousel->getType() ==
@@ -1267,6 +1396,10 @@ void SystemView::renderElements(const glm::mat4& parentTrans, bool abovePrimary)
                     elementTrans = glm::translate(
                         elementTrans,
                         glm::round(glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f}));
+            }
+            else if (mGrid != nullptr) {
+                elementTrans = glm::translate(
+                    elementTrans, glm::round(glm::vec3 {0.0f, (i - mCamOffset) * mSize.y, 0.0f}));
             }
             else if (mTextList != nullptr) {
                 elementTrans = glm::translate(

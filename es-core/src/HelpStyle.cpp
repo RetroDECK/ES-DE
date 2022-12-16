@@ -63,7 +63,7 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         iconColorDimmed = iconColor;
 
     if (elem->has("fontPath") || elem->has("fontSize"))
-        font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, theme->isLegacyTheme());
+        font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false, theme->isLegacyTheme());
 
     if (elem->has("entrySpacing"))
         entrySpacing = glm::clamp(elem->get<float>("entrySpacing"), 0.0f, 0.04f);
@@ -100,6 +100,8 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         mCustomButtons.button_lt = elem->get<std::string>(PREFIX "button_lt");
     if (elem->has(PREFIX "button_rt"))
         mCustomButtons.button_rt = elem->get<std::string>(PREFIX "button_rt");
+    if (elem->has(PREFIX "button_ltrt"))
+        mCustomButtons.button_ltrt = elem->get<std::string>(PREFIX "button_ltrt");
 
     // SNES.
     if (elem->has(PREFIX "button_a_SNES"))

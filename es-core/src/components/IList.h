@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  IList.h
 //
-//  List base class, used by both the gamelist views and the menu.
+//  List base class, used by the system view, gamelist view and menu system.
 //
 
 #ifndef ES_CORE_COMPONENTS_ILIST_H
@@ -73,6 +73,9 @@ protected:
     const ScrollTierList& mTierList;
     const ListLoopType mLoopType;
     int mCursor;
+    int mLastCursor;
+    int mColumns;
+    int mRows;
     int mScrollTier;
     int mScrollVelocity;
     int mScrollTierAccumulator;
@@ -88,6 +91,9 @@ public:
         , mTierList {tierList}
         , mLoopType {loopType}
         , mCursor {0}
+        , mLastCursor {0}
+        , mColumns {0}
+        , mRows {0}
         , mScrollTier {0}
         , mScrollVelocity {0}
         , mScrollTierAccumulator {0}
@@ -117,6 +123,7 @@ public:
     {
         mEntries.clear();
         mCursor = 0;
+        mLastCursor = 0;
         listInput(0);
         onCursorChanged(CursorState::CURSOR_STOPPED);
     }
@@ -213,7 +220,10 @@ protected:
 
     bool listFirstRow()
     {
+        mLastCursor = mCursor;
         mCursor = 0;
+        mScrollVelocity = 0;
+        mScrollTier = 0;
         onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
         return true;
@@ -221,7 +231,10 @@ protected:
 
     bool listLastRow()
     {
+        mLastCursor = mCursor;
         mCursor = static_cast<int>(mEntries.size()) - 1;
+        mScrollVelocity = 0;
+        mScrollTier = 0;
         onCursorChanged(CursorState::CURSOR_STOPPED);
         onScroll();
         return true;
@@ -271,7 +284,7 @@ protected:
         }
 
         // Actually perform the scrolling.
-        for (int i = 0; i < scrollCount; ++i)
+        for (int i {0}; i < scrollCount; ++i)
             scroll(mScrollVelocity);
     }
 
@@ -287,7 +300,7 @@ protected:
             }
 
             std::string titleIndex;
-            bool favoritesSorting;
+            bool favoritesSorting {true};
 
             if (getSelected()->getSystem()->isCustomCollection())
                 favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
@@ -322,6 +335,29 @@ protected:
     {
         if (mScrollVelocity == 0 || size() < 2)
             return;
+
+        bool doScroll {true};
+
+        // This is only needed for GridComponent.
+        if (mColumns > 1 && mScrollVelocity == -mColumns && mCursor < mColumns) {
+            doScroll = false;
+        }
+        else if (mColumns != 0 && mScrollVelocity == mColumns) {
+            if (size() - mCursor <= size() % mColumns)
+                doScroll = false;
+            else if (mColumns != 1 && mCursor >= (mColumns * mRows) - mColumns &&
+                     size() - mCursor <= mColumns && size() % mColumns == 0)
+                doScroll = false;
+            else if (size() < mColumns)
+                doScroll = false;
+        }
+
+        mLastCursor = mCursor;
+
+        if (!doScroll) {
+            onCursorChanged(CursorState::CURSOR_STOPPED);
+            return;
+        }
 
         int cursor {mCursor + amt};
         int absAmt {amt < 0 ? -amt : amt};

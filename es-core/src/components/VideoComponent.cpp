@@ -22,6 +22,9 @@
 VideoComponent::VideoComponent()
     : mVideoWidth {0}
     , mVideoHeight {0}
+    , mColorShift {0xFFFFFFFF}
+    , mColorShiftEnd {0xFFFFFFFF}
+    , mColorGradientHorizontal {true}
     , mTargetSize {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}
     , mVideoAreaSize {0.0f, 0.0f}
@@ -254,6 +257,29 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (elem->has("color")) {
+        mColorShift = elem->get<unsigned int>("color");
+        mColorShiftEnd = mColorShift;
+    }
+    if (elem->has("colorEnd"))
+        mColorShiftEnd = elem->get<unsigned int>("colorEnd");
+
+    if (elem->has("gradientType")) {
+        const std::string& gradientType {elem->get<std::string>("gradientType")};
+        if (gradientType == "horizontal") {
+            mColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            mColorGradientHorizontal = false;
+        }
+        else {
+            mColorGradientHorizontal = true;
+            LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property "
+                               "\"gradientType\" for element \""
+                            << element.substr(6) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
     if (elem->has("pillarboxes"))
         mDrawPillarboxes = elem->get<bool>("pillarboxes");
 
@@ -355,6 +381,14 @@ void VideoComponent::renderSnapshot(const glm::mat4& parentTrans)
     if (mStaticImagePath != "") {
         mStaticImage.setOpacity(mOpacity * mThemeOpacity);
         mStaticImage.setSaturation(mSaturation * mThemeSaturation);
+        if (mBrightness != 0.0f)
+            mStaticImage.setBrightness(mBrightness);
+        if (mColorShift != 0xFFFFFFFF)
+            mStaticImage.setColorShift(mColorShift);
+        if (mColorShift != mColorShiftEnd)
+            mStaticImage.setColorShiftEnd(mColorShiftEnd);
+        if (!mColorGradientHorizontal)
+            mStaticImage.setColorGradientHorizontal(mColorGradientHorizontal);
         mStaticImage.setDimming(mDimming);
         mStaticImage.render(parentTrans);
     }

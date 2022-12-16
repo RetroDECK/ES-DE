@@ -149,8 +149,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             case MD_BOOL: {
                 ed = std::make_shared<SwitchComponent>();
                 // Make the switches slightly smaller.
-                glm::vec2 switchSize {ed->getSize() * 0.9f};
-                ed->setResize(ceilf(switchSize.x), switchSize.y);
+                ed->setSize(glm::ceil(ed->getSize() * 0.9f));
 
                 ed->setChangedColor(ICONCOLOR_USERMARKED);
                 row.addElement(ed, false, true);

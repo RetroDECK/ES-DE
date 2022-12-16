@@ -23,6 +23,7 @@
 #include "components/TextComponent.h"
 #include "components/VideoFFmpegComponent.h"
 #include "components/primary/CarouselComponent.h"
+#include "components/primary/GridComponent.h"
 #include "components/primary/TextListComponent.h"
 
 #include <stack>
@@ -85,11 +86,12 @@ protected:
 
     bool isListScrolling() override { return mPrimary->isScrolling(); }
 
-    std::string getQuickSystemSelectRightButton() { return "right"; }
-    std::string getQuickSystemSelectLeftButton() { return "left"; }
+    std::string getQuickSystemSelectLeftButton();
+    std::string getQuickSystemSelectRightButton();
 
     FileData* mRoot;
     std::unique_ptr<CarouselComponent<FileData*>> mCarousel;
+    std::unique_ptr<GridComponent<FileData*>> mGrid;
     std::unique_ptr<TextListComponent<FileData*>> mTextList;
     PrimaryComponent<FileData*>* mPrimary;
 

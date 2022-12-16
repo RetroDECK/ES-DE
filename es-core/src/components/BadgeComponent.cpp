@@ -40,6 +40,7 @@ namespace
         {"gamepad_xbox",                    "Gamepad (Xbox)",                              ":/graphics/controllers/gamepad_xbox.svg"},
         {"joystick_generic",                "Joystick (Generic)",                          ":/graphics/controllers/joystick_generic.svg"},
         {"joystick_arcade_no_buttons",      "Joystick (Arcade No Buttons)",                ":/graphics/controllers/joystick_arcade_no_buttons.svg"},
+        {"joystick_arcade_no_buttons_twin", "Joystick (Arcade No Buttons Twin Stick)",     ":/graphics/controllers/joystick_arcade_no_buttons_twin.svg"},
         {"joystick_arcade_1_button",        "Joystick (Arcade 1 Button)",                  ":/graphics/controllers/joystick_arcade_1_button.svg"},
         {"joystick_arcade_2_buttons",       "Joystick (Arcade 2 Buttons)",                 ":/graphics/controllers/joystick_arcade_2_buttons.svg"},
         {"joystick_arcade_3_buttons",       "Joystick (Arcade 3 Buttons)",                 ":/graphics/controllers/joystick_arcade_3_buttons.svg"},

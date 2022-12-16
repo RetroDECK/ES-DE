@@ -30,10 +30,13 @@ precision mediump float;
 uniform mat4 MVPMatrix;
 in vec2 positionVertex;
 in vec2 texCoordVertex;
+in vec4 colorVertex;
 uniform vec2 textureSize;
+
 out vec2 texCoord;
 out vec2 onex;
 out vec2 oney;
+out vec4 colorShift;
 
 #define SourceSize vec4(textureSize, 1.0 / textureSize)
 
@@ -43,6 +46,7 @@ void main()
     texCoord = texCoordVertex;
     onex = vec2(SourceSize.z, 0.0);
     oney = vec2(0.0, SourceSize.w);
+    colorShift.abgr = colorVertex.rgba;
 }
 
 // Fragment section of code:
@@ -54,11 +58,13 @@ precision mediump float;
 
 uniform vec2 textureSize;
 uniform float opacity;
+uniform float brightness;
 uniform float saturation;
 uniform sampler2D textureSampler;
 in vec2 texCoord;
 in vec2 onex;
 in vec2 oney;
+in vec4 colorShift;
 out vec4 FragColor;
 
 #define SourceSize vec4(textureSize, 1.0 / textureSize)
@@ -101,13 +107,6 @@ void main()
     float h_weight_00 = dx / SPOT_WIDTH;
     WEIGHT(h_weight_00);
 
-    // Saturation.
-    if (saturation != 1.0) {
-        vec3 grayscale = vec3(dot(color.rgb, vec3(0.34, 0.55, 0.11)));
-        vec3 blendedColor = mix(grayscale, color.rgb, saturation);
-        color = vec4(blendedColor, color.a);
-    }
-
     color *= vec4(h_weight_00, h_weight_00, h_weight_00, h_weight_00);
 
     // Get closest horizontal neighbour to blend.
@@ -121,13 +120,6 @@ void main()
         dx = 1.0 + dx;
     }
     vec4 colorNB = TEX2D(texture_coords + coords01);
-
-    // Saturation.
-    if (saturation != 1.0) {
-        vec3 grayscale = vec3(dot(colorNB.rgb, vec3(0.34, 0.55, 0.11)));
-        vec3 blendedColor = mix(grayscale, colorNB.rgb, saturation);
-        colorNB = vec4(blendedColor, colorNB.a);
-    }
 
     float h_weight_01 = dx / SPOT_WIDTH;
     WEIGHT(h_weight_01);
@@ -152,13 +144,6 @@ void main()
     }
     colorNB = TEX2D(texture_coords + coords10);
 
-    // Saturation.
-    if (saturation != 1.0) {
-        vec3 grayscale = vec3(dot(colorNB.rgb, vec3(0.34, 0.55, 0.11)));
-        vec3 blendedColor = mix(grayscale, colorNB.rgb, saturation);
-        colorNB = vec4(blendedColor, colorNB.a);
-    }
-
     float v_weight_10 = dy / SPOT_HEIGHT;
     WEIGHT(v_weight_10);
 
@@ -170,6 +155,26 @@ void main()
     color *= vec4(COLOR_BOOST);
 
     vec4 colorTemp = clamp(GAMMA_OUT(color), 0.0, 1.0);
+
+    // Brightness.
+    if (brightness != 0.0) {
+        colorTemp.rgb /= colorTemp.a;
+        colorTemp.rgb += 0.3 * brightness;
+        colorTemp.rgb *= colorTemp.a;
+    }
+
+    // Saturation.
+    if (saturation != 1.0) {
+        vec3 grayscale;
+        grayscale = vec3(dot(colorTemp.bgr, vec3(0.114, 0.587, 0.299)));
+        vec3 blendedColor = mix(grayscale, colorTemp.rgb, saturation);
+        colorTemp = vec4(blendedColor, colorTemp.a);
+    }
+
+    // Color shift.
+    colorTemp.rgb *= colorShift.rgb;
+    colorTemp.a *= colorShift.a;
+
     FragColor = vec4(colorTemp.rgb, colorTemp.a * opacity);
 }
 #endif

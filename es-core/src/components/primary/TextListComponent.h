@@ -3,11 +3,11 @@
 //  EmulationStation Desktop Edition
 //  TextListComponent.h
 //
-//  Text list used for displaying and navigating the gamelist views.
+//  Text list, usable in both the system and gamelist views.
 //
 
-#ifndef ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
-#define ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_PRIMARY_TEXT_LIST_COMPONENT_H
+#define ES_CORE_COMPONENTS_PRIMARY_TEXT_LIST_COMPONENT_H
 
 #include "Log.h"
 #include "Sound.h"
@@ -57,13 +57,13 @@ public:
 
     void setAlignment(PrimaryAlignment align) override { mAlignment = align; }
 
-    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
-    {
-        mCursorChangedCallback = func;
-    }
     void setCancelTransitionsCallback(const std::function<void()>& func) override
     {
         mCancelTransitionsCallback = func;
+    }
+    void setCursorChangedCallback(const std::function<void(CursorState state)>& func) override
+    {
+        mCursorChangedCallback = func;
     }
 
     void setFont(const std::shared_ptr<Font>& font)
@@ -82,7 +82,7 @@ public:
         return mLetterCaseGroupedCollections;
     }
 
-protected:
+private:
     void onShow() override { mLoopTime = 0; }
     void onScroll() override
     {
@@ -90,8 +90,6 @@ protected:
             NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     }
     void onCursorChanged(const CursorState& state) override;
-
-private:
     bool isScrolling() const override { return List::isScrolling(); }
     void stopScrolling() override { List::stopScrolling(); }
     const int getScrollingVelocity() override { return List::getScrollingVelocity(); }
@@ -111,6 +109,7 @@ private:
 
     Renderer* mRenderer;
     std::function<void()> mCancelTransitionsCallback;
+    std::function<void(CursorState state)> mCursorChangedCallback;
     float mCamOffset;
     int mPreviousScrollVelocity;
 
@@ -122,7 +121,6 @@ private:
     PrimaryAlignment mAlignment;
     float mHorizontalMargin;
 
-    std::function<void(CursorState state)> mCursorChangedCallback;
     ImageComponent mSelectorImage;
 
     std::shared_ptr<Font> mFont;
@@ -203,15 +201,19 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
                 return true;
             }
             if (config->isMappedLike("leftshoulder", input)) {
-                if (mCancelTransitionsCallback)
-                    mCancelTransitionsCallback();
-                List::listInput(-10);
+                if (mCursor != 0) {
+                    if (mCancelTransitionsCallback)
+                        mCancelTransitionsCallback();
+                    List::listInput(-10);
+                }
                 return true;
             }
             if (config->isMappedLike("rightshoulder", input)) {
-                if (mCancelTransitionsCallback)
-                    mCancelTransitionsCallback();
-                List::listInput(10);
+                if (mCursor != size() - 1) {
+                    if (mCancelTransitionsCallback)
+                        mCancelTransitionsCallback();
+                    List::listInput(10);
+                }
                 return true;
             }
             if (config->isMappedLike("lefttrigger", input)) {
@@ -235,14 +237,9 @@ template <typename T> bool TextListComponent<T>::input(InputConfig* config, Inpu
                 config->isMappedLike("rightshoulder", input) ||
                 config->isMappedLike("lefttrigger", input) ||
                 config->isMappedLike("righttrigger", input)) {
-                if constexpr (std::is_same_v<T, SystemData*>) {
-                    if (isScrolling())
-                        onCursorChanged(CursorState::CURSOR_STOPPED);
-                    List::listInput(0);
-                }
-                else {
-                    List::stopScrolling();
-                }
+                if (isScrolling())
+                    onCursorChanged(CursorState::CURSOR_STOPPED);
+                List::listInput(0);
             }
         }
     }
@@ -480,7 +477,14 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                       const std::string& element,
                                       unsigned int properties)
 {
+    mSize.x = Renderer::getScreenWidth();
+    mSize.y = Renderer::getScreenHeight() * 0.8f;
+    GuiComponent::mPosition.x = 0.0f;
+    GuiComponent::mPosition.y = Renderer::getScreenHeight() * 0.1f;
+    setAlignment(PrimaryAlignment::ALIGN_LEFT);
+
     GuiComponent::applyTheme(theme, view, element, properties);
+
     using namespace ThemeFlags;
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "textlist")};
 
@@ -525,7 +529,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mSelectedSecondaryColor = mSelectedColor;
     }
 
-    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, mLegacyMode));
+    setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, false, mLegacyMode));
     if (mLegacyMode)
         mFont->useLegacyMaxGlyphHeight();
     const float selectorHeight {mFont->getHeight(mLineSpacing)};
@@ -550,8 +554,8 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 << "\"";
             }
         }
-        // Legacy themes only.
         else if (elem->has("alignment")) {
+            // Legacy themes only.
             const std::string& alignment {elem->get<std::string>("alignment")};
             if (alignment == "left") {
                 setAlignment(PrimaryAlignment::ALIGN_LEFT);
@@ -703,10 +707,26 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
         float posMax {static_cast<float>(mEntries.size())};
         float endPos {static_cast<float>(mCursor)};
 
+        float animTime {400.0f};
+        float timeDiff {1.0f};
+
+        // If startPos is inbetween two positions then reduce the time slightly as the distance will
+        // be shorter meaning the animation would play for too long if not compensated for.
+        if (mScrollVelocity == 1)
+            timeDiff = endPos - startPos;
+        else if (mScrollVelocity == -1)
+            timeDiff = startPos - endPos;
+
+        if (timeDiff != 1.0f)
+            animTime =
+                glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), 200.0f, animTime);
+
         Animation* anim {new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
-                t -= 1;
-                float f {glm::mix(startPos, endPos, t * t * t + 1)};
+                // Non-linear interpolation.
+                t = 1.0f - (1.0f - t) * (1.0f - t);
+                float f {(endPos * t) + (startPos * (1.0f - t))};
+
                 if (f < 0)
                     f += posMax;
                 if (f >= posMax)
@@ -714,7 +734,7 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
 
                 mCamOffset = f;
             },
-            500)};
+            static_cast<int>(animTime))};
 
         GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
     }
@@ -723,4 +743,4 @@ template <typename T> void TextListComponent<T>::onCursorChanged(const CursorSta
         mCursorChangedCallback(state);
 }
 
-#endif // ES_CORE_COMPONENTS_TEXT_LIST_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_PRIMARY_TEXT_LIST_COMPONENT_H

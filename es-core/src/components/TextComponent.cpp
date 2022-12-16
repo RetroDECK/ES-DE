@@ -486,5 +486,5 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (properties & LINE_SPACING && elem->has("lineSpacing"))
         setLineSpacing(glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f));
 
-    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, theme->isLegacyTheme()));
+    setFont(Font::getFromTheme(elem, properties, mFont, maxHeight, false, theme->isLegacyTheme()));
 }

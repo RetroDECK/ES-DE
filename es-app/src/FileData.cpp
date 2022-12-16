@@ -40,6 +40,7 @@ FileData::FileData(FileType type,
     , mEnvData {envData}
     , mSystem {system}
     , mOnlyFolders {false}
+    , mHasFolders {false}
     , mUpdateChildrenLastPlayed {false}
     , mUpdateChildrenMostPlayed {false}
     , mDeletionFlag {false}
@@ -76,7 +77,7 @@ FileData::~FileData()
 
 std::string FileData::getDisplayName() const
 {
-    std::string stem {Utils::FileSystem::getStem(mPath)};
+    const std::string& stem {Utils::FileSystem::getStem(mPath)};
     return stem;
 }
 
@@ -167,7 +168,7 @@ const std::vector<FileData*> FileData::getChildrenRecursive() const
 
 const std::string FileData::getROMDirectory()
 {
-    std::string romDirSetting {Settings::getInstance()->getString("ROMDirectory")};
+    const std::string& romDirSetting {Settings::getInstance()->getString("ROMDirectory")};
     std::string romDirPath;
 
     if (romDirSetting == "") {
@@ -196,7 +197,7 @@ const std::string FileData::getROMDirectory()
 
 const std::string FileData::getMediaDirectory()
 {
-    std::string mediaDirSetting {Settings::getInstance()->getString("MediaDirectory")};
+    const std::string& mediaDirSetting {Settings::getInstance()->getString("MediaDirectory")};
     std::string mediaDirPath;
 
     if (mediaDirSetting == "") {
@@ -233,7 +234,7 @@ const std::string FileData::getMediafilePath(const std::string& subdirectory) co
                                 subFolders + "/" + getDisplayName()};
 
     // Look for an image file in the media directory.
-    for (size_t i = 0; i < extList.size(); ++i) {
+    for (size_t i {0}; i < extList.size(); ++i) {
         std::string mediaPath {tempPath + extList[i]};
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -332,7 +333,7 @@ const std::string FileData::getVideoPath() const
                                 getDisplayName()};
 
     // Look for media in the media directory.
-    for (size_t i = 0; i < extList.size(); ++i) {
+    for (size_t i {0}; i < extList.size(); ++i) {
         std::string mediaPath {tempPath + extList[i]};
         if (Utils::FileSystem::exists(mediaPath))
             return mediaPath;
@@ -424,7 +425,7 @@ std::vector<FileData*> FileData::getScrapeFilesRecursive(bool includeFolders,
 
 const bool FileData::isArcadeAsset() const
 {
-    const std::string stem {Utils::FileSystem::getStem(mPath)};
+    const std::string& stem {Utils::FileSystem::getStem(mPath)};
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
                          mSystem->hasPlatformId(PlatformIds::SNK_NEO_GEO))) &&
             (MameNames::getInstance().isBios(stem) || MameNames::getInstance().isDevice(stem)));
@@ -432,7 +433,7 @@ const bool FileData::isArcadeAsset() const
 
 const bool FileData::isArcadeGame() const
 {
-    const std::string stem {Utils::FileSystem::getStem(mPath)};
+    const std::string& stem {Utils::FileSystem::getStem(mPath)};
     return ((mSystem && (mSystem->hasPlatformId(PlatformIds::ARCADE) ||
                          mSystem->hasPlatformId(PlatformIds::SNK_NEO_GEO))) &&
             (!MameNames::getInstance().isBios(stem) && !MameNames::getInstance().isDevice(stem)));
@@ -444,7 +445,7 @@ void FileData::addChild(FileData* file)
     if (!mSystem->getFlattenFolders())
         assert(file->getParent() == nullptr);
 
-    const std::string key = file->getKey();
+    const std::string& key {file->getKey()};
     if (mChildrenByFilename.find(key) == mChildrenByFilename.cend()) {
         mChildrenByFilename[key] = file;
         mChildren.emplace_back(file);
@@ -481,7 +482,7 @@ void FileData::sort(ComparisonFunction& comparator,
     std::vector<FileData*> mChildrenOthers;
 
     if (mSystem->isGroupedCustomCollection())
-        gameCount = {};
+        gameCount = {0, 0};
 
     if (!showHiddenGames) {
         for (auto it = mChildren.begin(); it != mChildren.end();) {
@@ -505,20 +506,20 @@ void FileData::sort(ComparisonFunction& comparator,
     // The main custom collections view is sorted during startup in CollectionSystemsManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
-        std::pair<unsigned int, unsigned int> tempGameCount {};
+        std::pair<unsigned int, unsigned int> tempGameCount {0, 0};
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
             if ((*it)->getChildren().size() > 0)
                 (*it)->sort(comparator, gameCount);
             tempGameCount.first += gameCount.first;
             tempGameCount.second += gameCount.second;
-            gameCount = {};
+            gameCount = {0, 0};
         }
         gameCount = tempGameCount;
         return;
     }
 
     if (foldersOnTop) {
-        for (unsigned int i = 0; i < mChildren.size(); ++i) {
+        for (unsigned int i {0}; i < mChildren.size(); ++i) {
             if (mChildren[i]->getType() == FOLDER) {
                 mChildrenFolders.emplace_back(mChildren[i]);
             }
@@ -538,7 +539,7 @@ void FileData::sort(ComparisonFunction& comparator,
                              getSortTypeFromString("filename, ascending").comparisonFunction);
         }
 
-        if (foldersOnTop && mOnlyFolders)
+        if (foldersOnTop)
             std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
 
         std::stable_sort(mChildrenOthers.begin(), mChildrenOthers.end(), comparator);
@@ -597,24 +598,24 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     std::vector<FileData*> mChildrenOthers;
 
     if (mSystem->isGroupedCustomCollection())
-        gameCount = {};
+        gameCount = {0, 0};
 
     // The main custom collections view is sorted during startup in CollectionSystemsManager.
     // The individual collections are however sorted as any normal systems/folders.
     if (mSystem->isCollection() && mSystem->getFullName() == "collections") {
-        std::pair<unsigned int, unsigned int> tempGameCount = {};
+        std::pair<unsigned int, unsigned int> tempGameCount = {0, 0};
         for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
             if ((*it)->getChildren().size() > 0)
                 (*it)->sortFavoritesOnTop(comparator, gameCount);
             tempGameCount.first += gameCount.first;
             tempGameCount.second += gameCount.second;
-            gameCount = {};
+            gameCount = {0, 0};
         }
         gameCount = tempGameCount;
         return;
     }
 
-    for (unsigned int i = 0; i < mChildren.size(); ++i) {
+    for (unsigned int i {0}; i < mChildren.size(); ++i) {
         // If the option to hide hidden games has been set and the game is hidden,
         // then skip it. Normally games are hidden during loading of the gamelists in
         // Gamelist::parseGamelist() and this code should only run when a user has marked
@@ -685,7 +686,7 @@ void FileData::sortFavoritesOnTop(ComparisonFunction& comparator,
     }
 
     // Sort favorite games and the other games separately.
-    if (foldersOnTop && mOnlyFolders) {
+    if (foldersOnTop) {
         std::stable_sort(mChildrenFavoritesFolders.begin(), mChildrenFavoritesFolders.end(),
                          comparator);
         std::stable_sort(mChildrenFolders.begin(), mChildrenFolders.end(), comparator);
@@ -745,7 +746,7 @@ void FileData::countGames(std::pair<unsigned int, unsigned int>& gameCount)
     bool isKidMode {(Settings::getInstance()->getString("UIMode") == "kid" ||
                      Settings::getInstance()->getBool("ForceKid"))};
 
-    for (unsigned int i = 0; i < mChildren.size(); ++i) {
+    for (unsigned int i {0}; i < mChildren.size(); ++i) {
         if (mChildren[i]->getType() == GAME && mChildren[i]->getCountAsGame()) {
             if (!isKidMode || (isKidMode && mChildren[i]->getKidgame())) {
                 ++gameCount.first;
@@ -798,9 +799,9 @@ void FileData::updateMostPlayedList()
 
 const FileData::SortType& FileData::getSortTypeFromString(const std::string& desc) const
 {
-    std::vector<FileData::SortType> SortTypes = FileSorts::SortTypes;
+    std::vector<FileData::SortType> SortTypes {FileSorts::SortTypes};
 
-    for (unsigned int i = 0; i < FileSorts::SortTypes.size(); ++i) {
+    for (unsigned int i {0}; i < FileSorts::SortTypes.size(); ++i) {
         const FileData::SortType& sort {FileSorts::SortTypes.at(i)};
         if (sort.description == desc)
             return sort;
@@ -983,11 +984,11 @@ void FileData::launchGame()
     command = Utils::FileSystem::expandHomePath(command);
 
     // Check that the emulator binary actually exists, and if so, get its path.
-    std::string binaryPath {findEmulatorPath(command)};
+    const std::string& binaryPath {findEmulatorPath(command)};
 
     // Hack to show an error message if there was no emulator entry in es_find_rules.xml.
     if (binaryPath.substr(0, 18) == "NO EMULATOR RULE: ") {
-        std::string emulatorEntry {binaryPath.substr(18, binaryPath.size() - 18)};
+        const std::string& emulatorEntry {binaryPath.substr(18, binaryPath.size() - 18)};
         LOG(LogError) << "Couldn't launch game, either there is no emulator entry for \""
                       << emulatorEntry << "\" in es_find_rules.xml or there are no rules defined";
         LOG(LogError) << "Raw emulator launch command:";
@@ -1051,7 +1052,7 @@ void FileData::launchGame()
             quotationMarkPos =
                 static_cast<unsigned int>(command.find("\"", emuPathPos + 9) - emuPathPos);
         }
-        size_t spacePos {command.find(" ", emuPathPos + quotationMarkPos)};
+        const size_t spacePos {command.find(" ", emuPathPos + quotationMarkPos)};
         std::string coreRaw;
         std::string coreFile;
         if (spacePos != std::string::npos) {
@@ -1120,7 +1121,7 @@ void FileData::launchGame()
 
     // If a %CORE_ find rule entry is used in es_systems.xml for this system, then try to find
     // the emulator core using the rules defined in es_find_rules.xml.
-    for (std::string path : emulatorCorePaths) {
+    for (std::string& path : emulatorCorePaths) {
         // The position of the %CORE_ variable could have changed as there may have been an
         // %EMULATOR_ variable that was substituted for the actual emulator binary.
         coreEntryPos = command.find("%CORE_");
@@ -1210,7 +1211,7 @@ void FileData::launchGame()
     }
 
     std::string startDirectory;
-    size_t startDirPos {command.find("%STARTDIR%")};
+    const size_t startDirPos {command.find("%STARTDIR%")};
 
     if (startDirPos != std::string::npos) {
         bool invalidEntry {false};
@@ -1233,7 +1234,7 @@ void FileData::launchGame()
             }
         }
         else if (!invalidEntry) {
-            size_t spacePos {command.find(" ", startDirPos)};
+            const size_t spacePos {command.find(" ", startDirPos)};
             if (spacePos != std::string::npos) {
                 startDirectory = command.substr(startDirPos + 11, spacePos - startDirPos - 11);
                 command = command.replace(startDirPos, spacePos - startDirPos + 1, "");
@@ -1331,7 +1332,7 @@ void FileData::launchGame()
             }
         }
         else if (!invalidEntry) {
-            size_t spacePos {command.find(" ", injectPos)};
+            const size_t spacePos {command.find(" ", injectPos)};
             if (spacePos != std::string::npos) {
                 injectFile = command.substr(injectPos + 9, spacePos - injectPos - 9);
                 command = command.replace(injectPos, spacePos - injectPos + 1, "");
@@ -1407,8 +1408,8 @@ void FileData::launchGame()
         // The special characters need to be procesed in this order.
         std::string specialCharacters {"^&()=;,"};
 
-        for (size_t i = 0; i < specialCharacters.size(); ++i) {
-            std::string special(1, specialCharacters[i]);
+        for (size_t i {0}; i < specialCharacters.size(); ++i) {
+            const std::string& special {1, specialCharacters[i]};
             if (romPath.find(special) != std::string::npos) {
                 romPath = Utils::String::replace(romPath, special, "^" + special);
                 foundSpecial = true;
@@ -1701,15 +1702,15 @@ const std::string FileData::findEmulatorPath(std::string& command)
         return "NO EMULATOR RULE: " + emulatorEntry;
 
 #if defined(_WIN64)
-    for (std::string path : emulatorWinRegistryPaths) {
+    for (std::string& path : emulatorWinRegistryPaths) {
         // Search for the emulator using the App Paths keys in the Windows Registry.
-        std::string registryKeyPath {"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" +
-                                     path};
+        const std::string& registryKeyPath {
+            "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\" + path};
 
         HKEY registryKey;
         LSTATUS keyStatus {-1};
         LSTATUS pathStatus {-1};
-        char registryPath[1024] {};
+        char registryPath[1024] {0};
         DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
@@ -1746,11 +1747,11 @@ const std::string FileData::findEmulatorPath(std::string& command)
         RegCloseKey(registryKey);
     }
 
-    for (std::string value : emulatorWinRegistryValues) {
+    for (std::string& value : emulatorWinRegistryValues) {
         // If the pipe character is found, then the string following this should be appended
         // to the key value, assuming the key is found.
         std::string appendString;
-        size_t pipePos {value.find('|')};
+        const size_t pipePos {value.find('|')};
 
         if (pipePos != std::string::npos) {
             appendString = value.substr(pipePos + 1, std::string::npos);
@@ -1758,14 +1759,14 @@ const std::string FileData::findEmulatorPath(std::string& command)
         }
 
         // Search for the defined value in the Windows Registry.
-        std::string registryValueKey {
+        const std::string& registryValueKey {
             Utils::String::replace(Utils::FileSystem::getParent(value), "/", "\\")};
-        std::string registryValue {Utils::FileSystem::getFileName(value)};
+        const std::string& registryValue {Utils::FileSystem::getFileName(value)};
 
         HKEY registryKey;
         LSTATUS keyStatus {-1};
         LSTATUS pathStatus {-1};
-        char path[1024] {};
+        char path[1024] {0};
         DWORD pathSize {1024};
 
         // First look in HKEY_CURRENT_USER.
@@ -1811,7 +1812,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
     }
 #endif
 
-    for (std::string path : emulatorSystemPaths) {
+    for (std::string& path : emulatorSystemPaths) {
 #if defined(_WIN64)
         std::wstring pathWide {Utils::String::stringToWideString(path)};
         // Search for the emulator using the PATH environment variable.
@@ -1846,11 +1847,11 @@ const std::string FileData::findEmulatorPath(std::string& command)
 #endif
     }
 
-    for (std::string path : emulatorStaticPaths) {
+    for (std::string& path : emulatorStaticPaths) {
         // If a pipe character is present in the staticpath entry it means we should substitute
         // the emulator binary with whatever is defined after the pipe character.
         std::string replaceCommand;
-        size_t pipePos {path.find('|')};
+        const size_t pipePos {path.find('|')};
 
         if (pipePos != std::string::npos) {
             replaceCommand = path.substr(pipePos + 1);
@@ -1899,7 +1900,7 @@ const std::string FileData::findEmulatorPath(std::string& command)
     // If the first character is a quotation mark, then we need to extract up to the
     // next quotation mark, otherwise we'll only extract up to the first space character.
     if (command.front() == '\"') {
-        std::string emuTemp {command.substr(1, std::string::npos)};
+        const std::string& emuTemp {command.substr(1, std::string::npos)};
         emuExecutable = emuTemp.substr(0, emuTemp.find('"'));
     }
     else {
@@ -1917,7 +1918,8 @@ const std::string FileData::findEmulatorPath(std::string& command)
 #if defined(_WIN64)
     std::wstring emuExecutableWide {Utils::String::stringToWideString(emuExecutable)};
     // Search for the emulator using the PATH environment variable.
-    DWORD size {SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr)};
+    const DWORD size {
+        SearchPathW(nullptr, emuExecutableWide.c_str(), L".exe", 0, nullptr, nullptr)};
 
     if (size) {
         std::vector<wchar_t> pathBuffer(static_cast<size_t>(size) + 1);

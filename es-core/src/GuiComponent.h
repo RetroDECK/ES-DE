@@ -104,8 +104,8 @@ public:
     virtual glm::vec2 getSize() const { return mSize; }
     void setSize(const glm::vec2& size) { setSize(size.x, size.y); }
     void setSize(const float w, const float h);
-    virtual void setResize(float width, float height) {}
-    virtual void setResize(float width, float height, bool rasterize) {}
+    virtual void setResize(const float width, const float height) {}
+    virtual void setResize(const glm::vec2& size, bool rasterize = true) {}
     virtual void onSizeChanged() {}
 
     virtual glm::vec2 getRotationSize() const { return getSize(); }
@@ -222,8 +222,10 @@ public:
     virtual void stopGamelistFadeAnimations() {}
     virtual bool isListScrolling() { return false; }
     virtual void stopListScrolling() {}
+    virtual const float getBrightness() const { return mBrightness; }
     virtual const float getOpacity() const { return mOpacity; }
     virtual const float getColorOpacity() const { return 1.0f; }
+    virtual void setBrightness(float brightness);
     virtual void setOpacity(float opacity);
     virtual float getSaturation() const { return static_cast<float>(mColor); }
     virtual void setSaturation(float saturation) { mSaturation = saturation; }
@@ -257,7 +259,8 @@ public:
     const std::string& getThemeMetadata() { return mThemeMetadata; }
     void setThemeMetadata(const std::string& text) { mThemeMetadata = text; }
     const std::vector<std::string>& getThemeImageTypes() { return mThemeImageTypes; }
-    const std::string& getThemeGameSelector() { return mThemeGameSelector; }
+    const std::string& getThemeGameSelector() const { return mThemeGameSelector; }
+    const unsigned int getThemeGameSelectorEntry() const { return mThemeGameSelectorEntry; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }
 
@@ -323,6 +326,7 @@ protected:
     std::string mThemeSystemdata;
     std::string mThemeMetadata;
     std::string mThemeGameSelector;
+    unsigned int mThemeGameSelectorEntry;
 
     unsigned int mColor;
     unsigned int mColorShift;
@@ -336,6 +340,7 @@ protected:
     glm::vec2 mRotationOrigin;
     glm::vec2 mSize;
 
+    float mBrightness;
     float mOpacity;
     float mSaturation;
     float mDimming;

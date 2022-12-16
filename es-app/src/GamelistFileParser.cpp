@@ -32,19 +32,32 @@ namespace GamelistFileParser
             return nullptr;
         }
 
-        Utils::FileSystem::StringList pathList = Utils::FileSystem::getPathList(relative);
+        const Utils::FileSystem::StringList& pathList {Utils::FileSystem::getPathList(relative)};
         auto path_it = pathList.begin();
-        FileData* treeNode = root;
-        bool found = false;
-        while (path_it != pathList.end()) {
-            const std::unordered_map<std::string, FileData*>& children =
-                treeNode->getChildrenByFilename();
+        FileData* treeNode {root};
+        bool found {false};
 
-            std::string key = *path_it;
-            found = children.find(key) != children.cend();
-            if (found) {
-                treeNode = children.at(key);
+        while (path_it != pathList.end()) {
+            // Workaround for an extremely rare issue that can basically only happen if a dot (.)
+            // has been defined as a valid extension for the system (meaning extensionless files
+            // are loaded), in combination with the "Only show ROMs from gamelist.xml files" option
+            // being enabled and a stale entry being present in the gamelist.xml file that perfectly
+            // matches a folder which is actually in use. The workaround is not a perfect solution
+            // but it at least prevents the application from crashing.
+            if (treeNode->getType() != FOLDER) {
+                LOG(LogWarning)
+                    << "Invalid gamelist entry caused by folder having the same name as a stale "
+                    << "extensionless game file (this may cause undefined behavior):";
+                return nullptr;
             }
+
+            const std::unordered_map<std::string, FileData*>& children {
+                treeNode->getChildrenByFilename()};
+
+            const std::string key {*path_it};
+            found = children.find(key) != children.cend();
+            if (found)
+                treeNode = children.at(key);
 
             // This is the end.
             if (path_it == --pathList.end()) {
@@ -58,8 +71,8 @@ namespace GamelistFileParser
 
                 // Handle the special situation where a file exists and has an entry in the
                 // gamelist.xml file but the file extension is not configured in es_systems.xml.
-                const std::vector<std::string> extensions =
-                    system->getSystemEnvData()->mSearchExtensions;
+                const std::vector<std::string>& extensions {
+                    system->getSystemEnvData()->mSearchExtensions};
 
                 if (std::find(extensions.cbegin(), extensions.cend(),
                               Utils::FileSystem::getExtension(path)) == extensions.cend()) {
@@ -69,7 +82,7 @@ namespace GamelistFileParser
                     return nullptr;
                 }
 
-                FileData* file = new FileData(type, path, system->getSystemEnvData(), system);
+                FileData* file {new FileData(type, path, system->getSystemEnvData(), system)};
 
                 // Skipping arcade assets from gamelist.
                 if (!file->isArcadeAsset())
@@ -87,9 +100,8 @@ namespace GamelistFileParser
 
                 if (!system->getFlattenFolders()) {
                     // Create missing folder.
-                    FileData* folder {new FileData(
-                        FOLDER, Utils::FileSystem::getStem(treeNode->getPath()) + "/" + *path_it,
-                        system->getSystemEnvData(), system)};
+                    FileData* folder {new FileData(FOLDER, treeNode->getPath() + "/" + *path_it,
+                                                   system->getSystemEnvData(), system)};
                     treeNode->addChild(folder);
                     treeNode = folder;
                 }
@@ -103,8 +115,8 @@ namespace GamelistFileParser
 
     void parseGamelist(SystemData* system)
     {
-        bool trustGamelist = Settings::getInstance()->getBool("ParseGamelistOnly");
-        std::string xmlpath = system->getGamelistPath(false);
+        const bool trustGamelist {Settings::getInstance()->getBool("ParseGamelistOnly")};
+        const std::string& xmlpath {system->getGamelistPath(false)};
 
         if (!Utils::FileSystem::exists(xmlpath)) {
             LOG(LogDebug) << "GamelistFileParser::parseGamelist(): System \"" << system->getName()
@@ -121,10 +133,10 @@ namespace GamelistFileParser
 
         pugi::xml_document doc;
 #if defined(_WIN64)
-        pugi::xml_parse_result result =
-            doc.load_file(Utils::String::stringToWideString(xmlpath).c_str());
+        const pugi::xml_parse_result& result {
+            doc.load_file(Utils::String::stringToWideString(xmlpath).c_str())};
 #else
-        pugi::xml_parse_result result = doc.load_file(xmlpath.c_str());
+        const pugi::xml_parse_result& result {doc.load_file(xmlpath.c_str())};
 #endif
 
         if (!result) {
@@ -133,18 +145,18 @@ namespace GamelistFileParser
             return;
         }
 
-        pugi::xml_node root = doc.child("gameList");
+        const pugi::xml_node& root {doc.child("gameList")};
         if (!root) {
             LOG(LogError) << "Couldn't find <gameList> node in gamelist \"" << xmlpath << "\"";
             return;
         }
 
-        pugi::xml_node alternativeEmulator = doc.child("alternativeEmulator");
+        const pugi::xml_node& alternativeEmulator {doc.child("alternativeEmulator")};
         if (alternativeEmulator) {
-            std::string label = alternativeEmulator.child("label").text().get();
+            const std::string& label {alternativeEmulator.child("label").text().get()};
             if (label != "") {
-                bool validLabel = false;
-                for (auto command : system->getSystemEnvData()->mLaunchCommands) {
+                bool validLabel {false};
+                for (auto& command : system->getSystemEnvData()->mLaunchCommands) {
                     if (command.second == label)
                         validLabel = true;
                 }
@@ -165,18 +177,19 @@ namespace GamelistFileParser
             }
         }
 
-        std::string relativeTo = system->getStartPath();
-        bool showHiddenFiles = Settings::getInstance()->getBool("ShowHiddenFiles");
+        const std::string& relativeTo {system->getStartPath()};
+        const bool showHiddenFiles {Settings::getInstance()->getBool("ShowHiddenFiles")};
 
-        std::vector<std::string> tagList = {"game", "folder"};
-        FileType typeList[2] = {GAME, FOLDER};
-        for (int i = 0; i < 2; ++i) {
-            std::string tag = tagList[i];
-            FileType type = typeList[i];
-            for (pugi::xml_node fileNode = root.child(tag.c_str()); fileNode;
+        const std::vector<std::string> tagList {"game", "folder"};
+        const FileType typeList[2] = {GAME, FOLDER};
+
+        for (int i {0}; i < 2; ++i) {
+            std::string tag {tagList[i]};
+            FileType type {typeList[i]};
+            for (pugi::xml_node fileNode {root.child(tag.c_str())}; fileNode;
                  fileNode = fileNode.next_sibling(tag.c_str())) {
-                const std::string path = Utils::FileSystem::resolveRelativePath(
-                    fileNode.child("path").text().get(), relativeTo, false);
+                const std::string& path {Utils::FileSystem::resolveRelativePath(
+                    fileNode.child("path").text().get(), relativeTo, false)};
 
                 if (!trustGamelist && !Utils::FileSystem::exists(path)) {
 #if defined(_WIN64)
@@ -199,7 +212,7 @@ namespace GamelistFileParser
                     continue;
                 }
 
-                FileData* file = findOrCreateFile(system, path, type);
+                FileData* file {findOrCreateFile(system, path, type)};
 
                 // Don't load entries with the wrong type. This should very rarely (if ever) happen.
                 if (file != nullptr && ((tag == "game" && file->getType() == FOLDER) ||
@@ -214,7 +227,7 @@ namespace GamelistFileParser
                     continue;
                 }
                 else if (!file->isArcadeAsset()) {
-                    std::string defaultName = file->metadata.get("name");
+                    const std::string& defaultName {file->metadata.get("name")};
                     if (file->getType() == FOLDER) {
                         file->metadata =
                             MetaDataList::createFromXML(FOLDER_METADATA, fileNode, relativeTo);
@@ -265,7 +278,7 @@ namespace GamelistFileParser
                          SystemData* system)
     {
         // Create game and add to parent node.
-        pugi::xml_node newNode = parent.append_child(tag.c_str());
+        pugi::xml_node newNode {parent.append_child(tag.c_str())};
 
         // Write metadata.
         file->metadata.appendToXML(newNode, true, system->getStartPath());
@@ -303,17 +316,17 @@ namespace GamelistFileParser
 
         pugi::xml_document doc;
         pugi::xml_node root;
-        std::string xmlReadPath = system->getGamelistPath(false);
-        bool hasAlternativeEmulatorTag = false;
+        const std::string& xmlReadPath {system->getGamelistPath(false)};
+        bool hasAlternativeEmulatorTag {false};
 
         if (Utils::FileSystem::exists(xmlReadPath)) {
             // Parse an existing file first.
 
 #if defined(_WIN64)
-            pugi::xml_parse_result result =
-                doc.load_file(Utils::String::stringToWideString(xmlReadPath).c_str());
+            const pugi::xml_parse_result& result {
+                doc.load_file(Utils::String::stringToWideString(xmlReadPath).c_str())};
 #else
-            pugi::xml_parse_result result = doc.load_file(xmlReadPath.c_str());
+            const pugi::xml_parse_result& result {doc.load_file(xmlReadPath.c_str())};
 #endif
 
             if (!result) {
@@ -329,7 +342,7 @@ namespace GamelistFileParser
                 return;
             }
             if (updateAlternativeEmulator) {
-                pugi::xml_node alternativeEmulator = doc.child("alternativeEmulator");
+                pugi::xml_node alternativeEmulator {doc.child("alternativeEmulator")};
 
                 if (alternativeEmulator)
                     hasAlternativeEmulatorTag = true;
@@ -340,7 +353,7 @@ namespace GamelistFileParser
                         alternativeEmulator = doc.child("alternativeEmulator");
                     }
 
-                    pugi::xml_node label = alternativeEmulator.child("label");
+                    const pugi::xml_node& label {alternativeEmulator.child("label")};
 
                     if (label && system->getAlternativeEmulator() !=
                                      alternativeEmulator.child("label").text().get()) {
@@ -360,7 +373,7 @@ namespace GamelistFileParser
         }
         else {
             if (updateAlternativeEmulator && system->getAlternativeEmulator() != "") {
-                pugi::xml_node alternativeEmulator = doc.prepend_child("alternativeEmulator");
+                pugi::xml_node alternativeEmulator {doc.prepend_child("alternativeEmulator")};
                 alternativeEmulator.prepend_child("label").text().set(
                     system->getAlternativeEmulator().c_str());
             }
@@ -372,14 +385,14 @@ namespace GamelistFileParser
         // through all our games and add the information from there.
         FileData* rootFolder {system->getRootFolder()};
         if (rootFolder != nullptr) {
-            int numUpdated = 0;
+            int numUpdated {0};
 
             // Get only files, no folders.
-            std::vector<FileData*> files = rootFolder->getFilesRecursive(GAME | FOLDER);
+            std::vector<FileData*> files {rootFolder->getFilesRecursive(GAME | FOLDER)};
             // Iterate through all files, checking if they're already in the XML file.
-            for (std::vector<FileData*>::const_iterator fit = files.cbegin(); // Line break.
+            for (std::vector<FileData*>::const_iterator fit {files.cbegin()}; // Line break.
                  fit != files.cend(); ++fit) {
-                const std::string tag = ((*fit)->getType() == GAME) ? "game" : "folder";
+                const std::string& tag {((*fit)->getType() == GAME) ? "game" : "folder"};
 
                 // Do not touch if it wasn't changed and is not flagged for deletion.
                 if (!(*fit)->metadata.wasChanged() && !(*fit)->getDeletionFlag())
@@ -387,18 +400,19 @@ namespace GamelistFileParser
 
                 // Check if the file already exists in the XML file.
                 // If it does, remove the entry before adding it back.
-                for (pugi::xml_node fileNode = root.child(tag.c_str()); fileNode;
+                for (pugi::xml_node fileNode {root.child(tag.c_str())}; fileNode;
                      fileNode = fileNode.next_sibling(tag.c_str())) {
-                    pugi::xml_node pathNode = fileNode.child("path");
+                    const pugi::xml_node& pathNode {fileNode.child("path")};
                     if (!pathNode) {
                         LOG(LogError) << "<" << tag << "> node contains no <path> child";
                         continue;
                     }
 
-                    std::string nodePath =
+                    const std::string& nodePath {
                         Utils::FileSystem::getCanonicalPath(Utils::FileSystem::resolveRelativePath(
-                            pathNode.text().get(), system->getStartPath(), true));
-                    std::string gamePath = Utils::FileSystem::getCanonicalPath((*fit)->getPath());
+                            pathNode.text().get(), system->getStartPath(), true))};
+                    const std::string& gamePath {
+                        Utils::FileSystem::getCanonicalPath((*fit)->getPath())};
 
                     if (nodePath == gamePath) {
                         // Found it
@@ -420,7 +434,7 @@ namespace GamelistFileParser
             // Now write the file.
             if (numUpdated > 0 || updateAlternativeEmulator) {
                 // Make sure the folders leading up to this path exist (or the write will fail).
-                std::string xmlWritePath(system->getGamelistPath(true));
+                const std::string& xmlWritePath {system->getGamelistPath(true)};
                 Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(xmlWritePath));
 
                 if (updateAlternativeEmulator) {

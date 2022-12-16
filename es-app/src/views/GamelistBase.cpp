@@ -196,8 +196,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedLike(getQuickSystemSelectRightButton(), input)) {
-            if (mLeftRightAvailable && Settings::getInstance()->getBool("QuickSystemSelect") &&
-                SystemData::sSystemVector.size() > 1) {
+            if (SystemData::sSystemVector.size() > 1) {
                 muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
@@ -207,8 +206,7 @@ bool GamelistBase::input(InputConfig* config, Input input)
             }
         }
         else if (config->isMappedLike(getQuickSystemSelectLeftButton(), input)) {
-            if (mLeftRightAvailable && Settings::getInstance()->getBool("QuickSystemSelect") &&
-                SystemData::sSystemVector.size() > 1) {
+            if (SystemData::sSystemVector.size() > 1) {
                 muteViewVideos();
                 onFocusLost();
                 stopListScrolling();
@@ -435,11 +433,18 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 }
                 else if (CollectionSystemsManager::getInstance()->toggleGameInCollection(
                              entryToUpdate)) {
+                    // Needed to avoid some minor transition animation glitches.
+                    auto grid =
+                        ViewController::getInstance()->getGamelistView(system).get()->mGrid.get();
+                    if (grid != nullptr)
+                        grid->setSuppressTransitions(true);
+
                     // As the toggling of the game destroyed this object, we need to get the view
                     // from ViewController instead of using the reference that existed before the
                     // destruction. Otherwise we get random crashes.
                     GamelistView* view {
                         ViewController::getInstance()->getGamelistView(system).get()};
+
                     // Jump to the first entry in the gamelist if the last favorite was unmarked.
                     if (foldersOnTop && removedLastFavorite &&
                         !entryToUpdate->getSystem()->isCustomCollection()) {
@@ -457,6 +462,10 @@ bool GamelistBase::input(InputConfig* config, Input input)
                     else if (selectLastEntry && view->getPrimary()->size() > 0) {
                         view->setCursor(view->getLastEntry());
                     }
+
+                    if (grid != nullptr)
+                        grid->setSuppressTransitions(false);
+
                     // Display the indication icons which show what games are part of the
                     // custom collection currently being edited. This is done cheaply using
                     // onFileChanged() which will trigger populateList().
@@ -568,15 +577,19 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 
     auto theme = mRoot->getSystem()->getTheme();
     std::string name;
-    std::string carouselItemType;
-    std::string carouselDefaultItem;
+    std::string defaultImage;
 
     if (mCarousel != nullptr) {
-        carouselItemType = mCarousel->getItemType();
-        carouselDefaultItem = mCarousel->getDefaultItem();
-        if (!ResourceManager::getInstance().fileExists(carouselDefaultItem))
-            carouselDefaultItem = "";
+        defaultImage = mCarousel->getDefaultImage();
+        if (!ResourceManager::getInstance().fileExists(defaultImage))
+            defaultImage = "";
     }
+    else if (mGrid != nullptr) {
+        defaultImage = mGrid->getDefaultImage();
+        if (!ResourceManager::getInstance().fileExists(defaultImage))
+            defaultImage = "";
+    }
+
     if (files.size() > 0) {
         for (auto it = files.cbegin(); it != files.cend(); ++it) {
 
@@ -593,8 +606,6 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
             }
 
             if (mCarousel != nullptr) {
-                assert(carouselItemType != "");
-
                 CarouselComponent<FileData*>::Entry carouselEntry;
                 carouselEntry.name = (*it)->getName();
                 carouselEntry.object = *it;
@@ -606,13 +617,29 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 else if (letterCase == LetterCase::CAPITALIZED)
                     carouselEntry.name = Utils::String::toCapitalized(carouselEntry.name);
 
-                if (carouselDefaultItem != "")
-                    carouselEntry.data.defaultItemPath = carouselDefaultItem;
+                if (defaultImage != "")
+                    carouselEntry.data.defaultImagePath = defaultImage;
 
                 mCarousel->addEntry(carouselEntry, theme);
             }
+            else if (mGrid != nullptr) {
+                GridComponent<FileData*>::Entry gridEntry;
+                gridEntry.name = (*it)->getName();
+                gridEntry.object = *it;
 
-            if (mTextList != nullptr) {
+                if (letterCase == LetterCase::UPPERCASE)
+                    gridEntry.name = Utils::String::toUpper(gridEntry.name);
+                else if (letterCase == LetterCase::LOWERCASE)
+                    gridEntry.name = Utils::String::toLower(gridEntry.name);
+                else if (letterCase == LetterCase::CAPITALIZED)
+                    gridEntry.name = Utils::String::toCapitalized(gridEntry.name);
+
+                if (defaultImage != "")
+                    gridEntry.data.defaultImagePath = defaultImage;
+
+                mGrid->addEntry(gridEntry, theme);
+            }
+            else if (mTextList != nullptr) {
                 TextListComponent<FileData*>::Entry textListEntry;
                 std::string indicators {mTextList->getIndicators()};
                 std::string collectionIndicators {mTextList->getCollectionIndicators()};
@@ -685,6 +712,9 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
         addPlaceholder(firstEntry);
     }
 
+    if (mGrid != nullptr)
+        mGrid->calculateLayout();
+
     generateGamelistInfo(getCursor(), firstEntry);
     generateFirstLetterIndex(files);
 }
@@ -717,12 +747,19 @@ void GamelistBase::addPlaceholder(FileData* firstEntry)
         textListEntry.data.entryType = TextListEntryType::SECONDARY;
         mTextList->addEntry(textListEntry);
     }
-    if (mCarousel != nullptr) {
+    else if (mCarousel != nullptr) {
         CarouselComponent<FileData*>::Entry carouselEntry;
         carouselEntry.name = placeholder->getName();
         letterCaseFunc(carouselEntry.name);
         carouselEntry.object = placeholder;
         mCarousel->addEntry(carouselEntry, mRoot->getSystem()->getTheme());
+    }
+    else if (mGrid != nullptr) {
+        GridComponent<FileData*>::Entry gridEntry;
+        gridEntry.name = placeholder->getName();
+        letterCaseFunc(gridEntry.name);
+        gridEntry.object = placeholder;
+        mGrid->addEntry(gridEntry, mRoot->getSystem()->getTheme());
     }
 }
 
@@ -960,4 +997,80 @@ void GamelistBase::removeMedia(FileData* game)
         Utils::FileSystem::removeFile(path);
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
+}
+
+std::string GamelistBase::getQuickSystemSelectLeftButton()
+{
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrightshoulders") {
+        if (mLeftRightAvailable)
+            return "left";
+        else
+            return "leftshoulder";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrighttriggers") {
+        if (mLeftRightAvailable)
+            return "left";
+        else
+            return "lefttrigger";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "shoulders")
+        return "leftshoulder";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "triggers")
+        return "lefttrigger";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftright") {
+        if (mLeftRightAvailable)
+            return "left";
+        else
+            return "";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "disabled")
+        return "";
+
+    // This should only happen if there is an invalid value in es_settings.xml.
+    if (mLeftRightAvailable)
+        return "left";
+    else
+        return "leftshoulder";
+}
+std::string GamelistBase::getQuickSystemSelectRightButton()
+{
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrightshoulders") {
+        if (mLeftRightAvailable)
+            return "right";
+        else
+            return "rightshoulder";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftrighttriggers") {
+        if (mLeftRightAvailable)
+            return "right";
+        else
+            return "righttrigger";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "shoulders")
+        return "rightshoulder";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "triggers")
+        return "righttrigger";
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "leftright") {
+        if (mLeftRightAvailable)
+            return "right";
+        else
+            return "";
+    }
+
+    if (Settings::getInstance()->getString("QuickSystemSelect") == "disabled")
+        return "";
+
+    if (mLeftRightAvailable)
+        return "right";
+    else
+        return "rightshoulder";
 }

@@ -32,7 +32,7 @@
 #include <SDL2/SDL.h>
 
 GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
-    : mMenu {"OPTIONS"}
+    : mMenu {"GAMELIST OPTIONS"}
     , mSystem {system}
     , mFiltersChanged {false}
     , mCancelled {false}
@@ -403,29 +403,29 @@ void GuiGamelistOptions::openMetaDataEd()
     clearGameBtnFunc = [this, file] {
 #if defined(_WIN64)
         if (file->getType() == FOLDER) {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder \""
+            LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the folder \""
                          << Utils::String::replace(file->getFullPath(), "/", "\\") << "\"";
         }
         else if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath())) {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the "
+            LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the "
                             "file-interpreted folder \""
                          << Utils::String::replace(file->getFullPath(), "/", "\\") << "\"";
         }
         else {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file \""
+            LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the file \""
                          << Utils::String::replace(file->getFullPath(), "/", "\\") << "\"";
 #else
         if (file->getType() == FOLDER) {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the folder \""
+            LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the folder \""
                          << file->getFullPath() << "\"";
         }
         else if (file->getType() == GAME && Utils::FileSystem::isDirectory(file->getFullPath())) {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the "
+            LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the "
                             "file-interpreted folder \""
                          << file->getFullPath() << "\"";
         }
         else {
-            LOG(LogInfo) << "Deleting the media files and gamelist.xml entry for the file \""
+            LOG(LogInfo) << "Deleting media files and gamelist.xml entry for the file \""
                          << file->getFullPath() << "\"";
 #endif
         }
@@ -473,8 +473,8 @@ void GuiGamelistOptions::openMetaDataEd()
     };
 
     deleteGameBtnFunc = [this, file] {
-        LOG(LogInfo) << "Deleting the game file \"" << file->getFullPath()
-                     << "\", all its media files and its gamelist.xml entry.";
+        LOG(LogInfo) << "Deleting game file \"" << file->getFullPath()
+                     << "\", all its media files and its gamelist.xml entry";
         CollectionSystemsManager::getInstance()->deleteCollectionFiles(file);
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->remove(file, true);

@@ -110,11 +110,11 @@
             <pos>0.025 0.231</pos>
             <size>0.95 0.692</size>
             <type>horizontal</type>
-            <itemType>cover</itemType>
+            <imageType>cover</imageType>
             <maxItemCount>5</maxItemCount>
             <itemSize>0.105 0.235</itemSize>
             <itemScale>1.53</itemScale>
-            <itemInterpolation>linear</itemInterpolation>
+            <imageInterpolation>linear</imageInterpolation>
             <itemVerticalAlignment>center</itemVerticalAlignment>
             <verticalOffset>0.1</verticalOffset>
             <reflections>true</reflections>

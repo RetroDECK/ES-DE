@@ -60,12 +60,12 @@ VideoFFmpegComponent::VideoFFmpegComponent()
 {
 }
 
-void VideoFFmpegComponent::setResize(float width, float height)
+void VideoFFmpegComponent::setResize(const float width, const float height)
 {
     // This resize function is used when stretching videos to full screen in the video screensaver.
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = false;
-    mStaticImage.setResize(width, height);
+    mStaticImage.setResize(mTargetSize);
     resize();
 }
 
@@ -164,6 +164,11 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
         // clang-format on
 
+        vertices[0].color = mColorShift;
+        vertices[1].color = mColorGradientHorizontal ? mColorShift : mColorShiftEnd;
+        vertices[2].color = mColorGradientHorizontal ? mColorShiftEnd : mColorShift;
+        vertices[3].color = mColorShiftEnd;
+
         // Round vertices.
         for (int i = 0; i < 4; ++i)
             vertices[i].position = glm::round(vertices[i].position);
@@ -171,6 +176,7 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
         if (mFadeIn < 1.0f || mThemeOpacity < 1.0f)
             vertices->opacity = mFadeIn * mThemeOpacity;
 
+        vertices->brightness = mBrightness;
         vertices->saturation = mSaturation * mThemeSaturation;
         vertices->dimming = mDimming;
 

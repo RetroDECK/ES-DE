@@ -1,0 +1,188 @@
+<theme>
+    <!-- Test of grid element for both the system view and gamelist view -->
+
+    <view name="system">
+        <grid name="system_grid">
+            <pos>0.5 0.2</pos>
+            <size>0.86 0.715</size>
+            <origin>0.5 0</origin>
+            <staticImage>./${system.theme}/images/logo.svg</staticImage>
+            <itemSize>0.151 -1</itemSize>
+            <itemScale>1.1</itemScale>
+            <itemSpacing>0.022 -1</itemSpacing>
+            <fractionalRows>true</fractionalRows>
+            <itemTransitions>animate</itemTransitions>
+            <rowTransitions>animate</rowTransitions>
+            <unfocusedItemOpacity>1.0</unfocusedItemOpacity>
+            <imageRelativeScale>0.9</imageRelativeScale>
+            <imageFit>contain</imageFit>
+            <backgroundImage>./core/images/grid_frame.svg</backgroundImage>
+            <backgroundRelativeScale>1.0</backgroundRelativeScale>
+            <backgroundColor>424242</backgroundColor>
+            <selectorImage>./core/images/grid_frame.svg</selectorImage>
+            <selectorRelativeScale>1.0</selectorRelativeScale>
+            <selectorLayer>middle</selectorLayer>
+            <selectorColor>FF3333</selectorColor>
+            <textRelativeScale>0.8</textRelativeScale>
+            <textColor>F0F0F0</textColor>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.032</fontSize>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.2</lineSpacing>
+            <fadeAbovePrimary>true</fadeAbovePrimary>
+        </grid>
+        <image name="consolegame">
+            <pos>0.02 0.17</pos>
+            <maxSize>0.4 0.15</maxSize>
+            <origin>0 1</origin>
+        </image>
+        <image name="controller">
+            <pos>0.78 0.17</pos>
+            <maxSize>0.1 0.15</maxSize>
+            <origin>1 1</origin>
+        </image>
+        <image name="backframe2">
+            <pos>0.5 0.19</pos>
+            <size>0.96 0.735</size>
+            <origin>0.5 0</origin>
+            <path>./core/images/frame.png</path>
+            <color>181818</color>
+            <zIndex>10</zIndex>
+        </image>
+        <image name="logo">
+            <pos>0.02 0.17</pos>
+            <maxSize>0.32 0.13</maxSize>
+            <origin>0 1</origin>
+        </image>
+        <text name="game_counter">
+            <pos>0.8 0.145</pos>
+            <size>0.117 0.056</size>
+            <origin>0 0.5</origin>
+            <systemdata>gamecount_games</systemdata>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.035</fontSize>
+            <horizontalAlignment>center</horizontalAlignment>
+            <color>DDDDDD</color>
+            <backgroundColor>262626DD</backgroundColor>
+            <letterCase>uppercase</letterCase>
+            <zIndex>50</zIndex>
+        </text>
+        <helpsystem name="help">
+            <pos>0.012 0.955</pos>
+            <textColor>${gamelistHelpColor}</textColor>
+            <iconColor>${gamelistHelpColor}</iconColor>
+            <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
+            <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+        </helpsystem>
+        <!-- Hide some unwanted elements -->
+        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+            <visible>false</visible>
+        </text>
+    </view>
+
+    <view name="gamelist">
+        <grid name="gamelist_grid">
+            <pos>0.5 0.3</pos>
+            <size>0.86 0.623</size>
+            <origin>0.5 0</origin>
+            <imageType>cover</imageType>
+            <itemSize>0.151 -1</itemSize>
+            <itemScale>1.1</itemScale>
+            <itemSpacing>0.022 -1</itemSpacing>
+            <fractionalRows>false</fractionalRows>
+            <itemTransitions>animate</itemTransitions>
+            <rowTransitions>animate</rowTransitions>
+            <unfocusedItemOpacity>1.0</unfocusedItemOpacity>
+            <imageRelativeScale>0.9</imageRelativeScale>
+            <imageFit>contain</imageFit>
+            <backgroundImage>./core/images/grid_frame.svg</backgroundImage>
+            <backgroundRelativeScale>1.0</backgroundRelativeScale>
+            <backgroundColor>424242</backgroundColor>
+            <selectorImage>./core/images/grid_frame.svg</selectorImage>
+            <selectorRelativeScale>1.0</selectorRelativeScale>
+            <selectorLayer>middle</selectorLayer>
+            <selectorColor>FF3333</selectorColor>
+            <textRelativeScale>0.8</textRelativeScale>
+            <textColor>F0F0F0</textColor>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.032</fontSize>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.2</lineSpacing>
+        </grid>
+        <image name="backframe2">
+            <pos>0.5 0.19</pos>
+            <size>0.96 0.735</size>
+            <origin>0.5 0</origin>
+            <path>./core/images/frame.png</path>
+            <color>181818</color>
+            <zIndex>10</zIndex>
+        </image>
+        <text name="game_name">
+            <pos>0.92 0.225</pos>
+            <size>0.55 0.08</size>
+            <origin>1 0</origin>
+            <metadata>name</metadata>
+            <gameselector>selector_recent</gameselector>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.045</fontSize>
+            <horizontalAlignment>right</horizontalAlignment>
+            <verticalAlignment>center</verticalAlignment>
+            <color>D6D6D6</color>
+            <letterCase>none</letterCase>
+            <zIndex>80</zIndex>
+        </text>
+        <text name="md_description">
+            <pos>0.025 0.205</pos>
+            <size>0.446 0.185</size>
+            <fontSize>0.02</fontSize>
+            <lineSpacing>1.2</lineSpacing>
+        </text>
+        <rating name="md_rating">
+            <pos>0.815 0.203</pos>
+            <size>0.04 0.03</size>
+        </rating>
+        <gamelistinfo name="gamelistInfo">
+            <color>888888</color>
+        </gamelistinfo>
+        <badges name="md_badges">
+            <pos>0.03 0.205</pos>
+            <size>0.38 0.08</size>
+            <lines>1</lines>
+            <itemsPerLine>10</itemsPerLine>
+        </badges>
+        <helpsystem name="help">
+            <pos>0.012 0.955</pos>
+            <textColor>${gamelistHelpColor}</textColor>
+            <iconColor>${gamelistHelpColor}</iconColor>
+            <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
+            <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
+        </helpsystem>
+        <!-- Hide some unwanted elements -->
+        <image name="backframe3">
+            <visible>false</visible>
+        </image>
+        <text name="md_lbl_publisher, md_lbl_releasedate, md_lbl_developer, md_lbl_genre,
+            md_lbl_players, md_lbl_lastplayed, md_developer, md_publisher, md_genre,
+            md_players, md_description">
+            <visible>false</visible>
+        </text>
+        <datetime name="md_releasedate md_lastplayed">
+            <visible>false</visible>
+        </datetime>
+        <rating name="md_rating">
+            <visible>false</visible>
+        </rating>
+    </view>
+
+    <aspectRatio name="4:3">
+        <view name="system, gamelist">
+            <grid name="gamelist_grid">
+                <itemSize>0.192 -1</itemSize>
+            </grid>
+            <helpsystem name="help">
+                <fontSize>0.034</fontSize>
+            </helpsystem>
+        </view>
+        <view name="gamelist"></view>
+    </aspectRatio>
+</theme>

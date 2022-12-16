@@ -15,10 +15,11 @@
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
-Font::Font(float size, const std::string& path)
+Font::Font(float size, const std::string& path, const bool linearMagnify)
     : mRenderer {Renderer::getInstance()}
     , mPath(path)
     , mFontSize {size}
+    , mLinearMagnify {linearMagnify}
     , mLetterHeight {0.0f}
     , mMaxGlyphHeight {static_cast<int>(std::round(size))}
     , mLegacyMaxGlyphHeight {0}
@@ -46,7 +47,8 @@ Font::~Font()
 {
     unload(ResourceManager::getInstance());
 
-    auto fontEntry = sFontMap.find(std::pair<std::string, float>(mPath, mFontSize));
+    auto fontEntry =
+        sFontMap.find(std::tuple<float, std::string, bool>(mFontSize, mPath, mLinearMagnify));
 
     if (fontEntry != sFontMap.cend())
         sFontMap.erase(fontEntry);
@@ -57,11 +59,11 @@ Font::~Font()
     }
 }
 
-std::shared_ptr<Font> Font::get(float size, const std::string& path)
+std::shared_ptr<Font> Font::get(float size, const std::string& path, const bool linearMagnify)
 {
     const std::string canonicalPath {Utils::FileSystem::getCanonicalPath(path)};
-    const std::pair<std::string, float> def {
-        canonicalPath.empty() ? getDefaultPath() : canonicalPath, size};
+    const std::tuple<float, std::string, bool> def {
+        size, canonicalPath.empty() ? getDefaultPath() : canonicalPath, linearMagnify};
 
     auto foundFont = sFontMap.find(def);
     if (foundFont != sFontMap.cend()) {
@@ -69,7 +71,7 @@ std::shared_ptr<Font> Font::get(float size, const std::string& path)
             return foundFont->second.lock();
     }
 
-    std::shared_ptr<Font> font {new Font(def.second, def.first)};
+    std::shared_ptr<Font> font {new Font(std::get<0>(def), std::get<1>(def), std::get<2>(def))};
     sFontMap[def] = std::weak_ptr<Font>(font);
     ResourceManager::getInstance().addReloadable(font);
     return font;
@@ -423,6 +425,7 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          unsigned int properties,
                                          const std::shared_ptr<Font>& orig,
                                          const float maxHeight,
+                                         const bool linearMagnify,
                                          const bool legacyTheme,
                                          const float sizeMultiplier)
 {
@@ -459,9 +462,9 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
     }
 
     if (mLegacyTheme)
-        return get(std::floor(size), path);
+        return get(std::floor(size), path, false);
     else
-        return get(size, path);
+        return get(size, path, linearMagnify);
 }
 
 size_t Font::getMemUsage() const
@@ -522,11 +525,12 @@ std::vector<std::string> Font::getFallbackFontPaths()
     return fontPaths;
 }
 
-Font::FontTexture::FontTexture(const int mFontSize)
+Font::FontTexture::FontTexture(const int mFontSize, const bool linearMagnifyArg)
 {
     textureId = 0;
     rowHeight = 0;
     writePos = glm::ivec2 {0, 0};
+    linearMagnify = linearMagnifyArg;
 
     // Set the texture to a reasonable size, if we run out of space for adding glyphs then
     // more textures will be created dynamically.
@@ -573,9 +577,9 @@ void Font::FontTexture::initTexture()
     // glyphs will not be visible. That would otherwise lead to edge artifacts as these pixels
     // would get sampled during scaling.
     std::vector<uint8_t> texture(textureSize.x * textureSize.y * 4, 0);
-    textureId =
-        Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true, false, false,
-                                               false, textureSize.x, textureSize.y, &texture[0]);
+    textureId = Renderer::getInstance()->createTexture(Renderer::TextureType::RED, true,
+                                                       linearMagnify, false, false, textureSize.x,
+                                                       textureSize.y, &texture[0]);
 }
 
 void Font::FontTexture::deinitTexture()
@@ -664,7 +668,8 @@ void Font::getTextureForNewGlyph(const glm::ivec2& glyphSize,
             return; // Yes.
     }
 
-    mTextures.emplace_back(std::make_unique<FontTexture>(static_cast<int>(std::round(mFontSize))));
+    mTextures.emplace_back(
+        std::make_unique<FontTexture>(static_cast<int>(std::round(mFontSize)), mLinearMagnify));
     tex_out = mTextures.back().get();
     tex_out->initTexture();
 

@@ -49,7 +49,12 @@ void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
     FileData* cursor {getCursor()};
     if (!cursor->isPlaceHolder()) {
         populateList(cursor->getParent()->getChildrenListToDisplay(), cursor->getParent());
+        // Needed to avoid some minor transition animation glitches.
+        if (mGrid != nullptr)
+            mGrid->setSuppressTransitions(true);
         setCursor(cursor);
+        if (mGrid != nullptr)
+            mGrid->setSuppressTransitions(false);
     }
     else {
         populateList(mRoot->getChildrenListToDisplay(), mRoot);
@@ -114,15 +119,24 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
     if (mTheme->hasView("gamelist")) {
         for (auto& element : mTheme->getViewElements("gamelist").elements) {
-            if (element.second.type == "textlist" || element.second.type == "carousel") {
-                if (element.second.type == "carousel" && mTextList != nullptr) {
+            if (element.second.type == "carousel" || element.second.type == "grid" ||
+                element.second.type == "textlist") {
+                if (element.second.type == "carousel" &&
+                    (mGrid != nullptr || mTextList != nullptr)) {
                     LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
-                                    << "defined, skipping <carousel> configuration entry";
+                                    << "defined, skipping carousel configuration entry";
                     continue;
                 }
-                if (element.second.type == "textlist" && mCarousel != nullptr) {
+                if (element.second.type == "grid" &&
+                    (mCarousel != nullptr || mTextList != nullptr)) {
                     LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
-                                    << "defined, skipping <textlist> configuration entry";
+                                    << "defined, skipping grid configuration entry";
+                    continue;
+                }
+                if (element.second.type == "textlist" &&
+                    (mCarousel != nullptr || mGrid != nullptr)) {
+                    LOG(LogWarning) << "SystemView::populate(): Multiple primary components "
+                                    << "defined, skipping textlist configuration entry";
                     continue;
                 }
             }
@@ -131,9 +145,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mTextList = std::make_unique<TextListComponent<FileData*>>();
                     mPrimary = mTextList.get();
                 }
-                mPrimary->setPosition(0.0f, mSize.y * 0.1f);
-                mPrimary->setSize(mSize.x, mSize.y * 0.8f);
-                mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
                 mPrimary->setCursorChangedCallback(
                     [&](const CursorState& state) { updateView(state); });
                 mPrimary->setDefaultZIndex(50.0f);
@@ -144,29 +155,86 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
             if (element.second.type == "carousel") {
                 if (mCarousel == nullptr) {
                     mCarousel = std::make_unique<CarouselComponent<FileData*>>();
-                    if (element.second.has("itemType")) {
+                    if (element.second.has("imageType")) {
+                        const std::string imageType {element.second.get<std::string>("imageType")};
+                        if (imageType == "marquee" || imageType == "cover" ||
+                            imageType == "backcover" || imageType == "3dbox" ||
+                            imageType == "physicalmedia" || imageType == "screenshot" ||
+                            imageType == "titlescreen" || imageType == "miximage" ||
+                            imageType == "fanart" || imageType == "none") {
+                            mCarousel->setImageType(imageType);
+                        }
+                        else {
+                            LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
+                                               "configuration, carousel property \"imageType\" "
+                                               "for element \""
+                                            << element.first.substr(9) << "\" defined as \""
+                                            << imageType << "\"";
+                            mCarousel->setImageType("marquee");
+                        }
+                    }
+                    else if (element.second.has("itemType")) {
+                        // TEMPORARY: Backward compatiblity due to property name changes.
                         const std::string itemType {element.second.get<std::string>("itemType")};
                         if (itemType == "marquee" || itemType == "cover" ||
                             itemType == "backcover" || itemType == "3dbox" ||
                             itemType == "physicalmedia" || itemType == "screenshot" ||
                             itemType == "titlescreen" || itemType == "miximage" ||
                             itemType == "fanart" || itemType == "none") {
-                            mCarousel->setItemType(itemType);
+                            mCarousel->setImageType(itemType);
                         }
                         else {
-                            LOG(LogWarning)
-                                << "GamelistView::onThemeChanged(): Invalid theme configuration, "
-                                   "<itemType> property defined as \""
-                                << itemType << "\"";
-                            mCarousel->setItemType("marquee");
+                            LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
+                                               "configuration, carousel property \"itemType\" "
+                                               "for element \""
+                                            << element.first.substr(9) << "\" defined as \""
+                                            << itemType << "\"";
+                            mCarousel->setImageType("marquee");
                         }
                     }
                     else {
-                        mCarousel->setItemType("marquee");
+                        mCarousel->setImageType("marquee");
                     }
+                    // TEMPORARY: Backward compatiblity due to property name changes.
                     if (element.second.has("defaultItem"))
-                        mCarousel->setDefaultItem(element.second.get<std::string>("defaultItem"));
+                        mCarousel->setDefaultImage(element.second.get<std::string>("defaultItem"));
+                    if (element.second.has("defaultImage"))
+                        mCarousel->setDefaultImage(element.second.get<std::string>("defaultImage"));
                     mPrimary = mCarousel.get();
+                }
+                mPrimary->setCursorChangedCallback(
+                    [&](const CursorState& state) { updateView(state); });
+                mPrimary->setDefaultZIndex(50.0f);
+                mPrimary->applyTheme(theme, "gamelist", element.first, ALL);
+                addChild(mPrimary);
+            }
+            if (element.second.type == "grid") {
+                if (mGrid == nullptr) {
+                    mGrid = std::make_unique<GridComponent<FileData*>>();
+                    if (element.second.has("imageType")) {
+                        const std::string imageType {element.second.get<std::string>("imageType")};
+                        if (imageType == "marquee" || imageType == "cover" ||
+                            imageType == "backcover" || imageType == "3dbox" ||
+                            imageType == "physicalmedia" || imageType == "screenshot" ||
+                            imageType == "titlescreen" || imageType == "miximage" ||
+                            imageType == "fanart" || imageType == "none") {
+                            mGrid->setImageType(imageType);
+                        }
+                        else {
+                            LOG(LogWarning) << "GamelistView::onThemeChanged(): Invalid theme "
+                                               "configuration, grid property \"imageType\" "
+                                               "for element \""
+                                            << element.first.substr(5) << "\" defined as \""
+                                            << imageType << "\"";
+                            mGrid->setImageType("marquee");
+                        }
+                    }
+                    else {
+                        mGrid->setImageType("marquee");
+                    }
+                    if (element.second.has("defaultImage"))
+                        mGrid->setDefaultImage(element.second.get<std::string>("defaultImage"));
+                    mPrimary = mGrid.get();
                 }
                 mPrimary->setCursorChangedCallback(
                     [&](const CursorState& state) { updateView(state); });
@@ -313,9 +381,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
     if (mPrimary == nullptr) {
         mTextList = std::make_unique<TextListComponent<FileData*>>();
         mPrimary = mTextList.get();
-        mPrimary->setPosition(0.0f, mSize.y * 0.1f);
-        mPrimary->setSize(mSize.x, mSize.y * 0.8f);
-        mPrimary->setAlignment(TextListComponent<FileData*>::PrimaryAlignment::ALIGN_LEFT);
         mPrimary->setCursorChangedCallback([&](const CursorState& state) { updateView(state); });
         mPrimary->setDefaultZIndex(50.0f);
         mPrimary->setZIndex(50.0f);
@@ -325,11 +390,14 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
 
     populateList(mRoot->getChildrenListToDisplay(), mRoot);
 
-    // Disable quick system select if the primary component uses the left and right buttons.
+    // Check whether the primary component uses the left and right buttons for its navigation.
     if (mCarousel != nullptr) {
         if (mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL ||
             mCarousel->getType() == CarouselComponent<FileData*>::CarouselType::HORIZONTAL_WHEEL)
             mLeftRightAvailable = false;
+    }
+    else if (mGrid != nullptr) {
+        mLeftRightAvailable = false;
     }
 
     for (auto& video : mStaticVideoComponents) {
@@ -386,15 +454,20 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
 
-    if (Settings::getInstance()->getBool("QuickSystemSelect") &&
-        SystemData::sSystemVector.size() > 1 && mLeftRightAvailable)
-        prompts.push_back(HelpPrompt("left/right", "system"));
+    if (Settings::getInstance()->getString("QuickSystemSelect") != "disabled") {
+        if (getQuickSystemSelectLeftButton() == "leftshoulder")
+            prompts.push_back(HelpPrompt("lr", "system"));
+        else if (getQuickSystemSelectLeftButton() == "lefttrigger")
+            prompts.push_back(HelpPrompt("ltrt", "system"));
+        else if (getQuickSystemSelectLeftButton() == "left")
+            prompts.push_back(HelpPrompt("left/right", "system"));
+    }
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" && mCursorStack.empty() &&
         ViewController::getInstance()->getState().viewing == ViewController::GAMELIST)
-        prompts.push_back(HelpPrompt("a", "enter"));
+        prompts.push_back(HelpPrompt("a", "select"));
     else
-        prompts.push_back(HelpPrompt("a", "launch"));
+        prompts.push_back(HelpPrompt("a", "select"));
 
     prompts.push_back(HelpPrompt("b", "back"));
     prompts.push_back(HelpPrompt("x", "view media"));

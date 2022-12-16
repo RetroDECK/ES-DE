@@ -107,7 +107,7 @@ rm -f CMakeCache.txt
 cmake -DCMAKE_BUILD_TYPE=Release -S .. -B .
 make clean
 make -j${JOBS}
-cp libSDL2-2.0.dylib ../../..
+cp libSDL2-2.0.0.dylib ../../..
 cd ../..
 
 echo "\nBuilding libvpx"

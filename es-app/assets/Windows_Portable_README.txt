@@ -64,6 +64,7 @@ Emulators\PPSSPP\PPSSPPWindows64.exe
 Emulators\PrimeHack\Dolphin.exe
 Emulators\Project64\Project64.exe
 Emulators\redream\redream.exe
+Emulators\RMG\RMG.exe
 Emulators\RPCS3\rpcs3.exe
 Emulators\ruffle\ruffle.exe
 Emulators\ryujinx\Ryujinx.exe

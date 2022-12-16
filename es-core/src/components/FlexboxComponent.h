@@ -78,7 +78,7 @@ public:
 
 private:
     // Calculate flexbox layout.
-    void computeLayout();
+    void calculateLayout();
 
     Renderer* mRenderer;
     std::vector<FlexboxItem>& mItems;

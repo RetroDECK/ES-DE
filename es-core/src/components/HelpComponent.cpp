@@ -56,6 +56,9 @@ void HelpComponent::assignIcons()
                                                                    mStyle.mCustomButtons.button_lt;
     sIconPathMap["rt"] = mStyle.mCustomButtons.button_rt.empty() ? ":/graphics/help/button_rt.svg" :
                                                                    mStyle.mCustomButtons.button_rt;
+    sIconPathMap["ltrt"] = mStyle.mCustomButtons.button_ltrt.empty() ?
+                               ":/graphics/help/button_ltrt.svg" :
+                               mStyle.mCustomButtons.button_ltrt;
 
     // These graphics files are custom per controller type.
     if (controllerType == "snes") {

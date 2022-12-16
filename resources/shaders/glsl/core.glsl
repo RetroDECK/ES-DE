@@ -4,7 +4,7 @@
 //  core.glsl
 //
 //  Core shader functionality:
-//  Clipping, opacity, saturation, dimming and reflections falloff.
+//  Clipping, brightness, saturation, opacity, dimming and reflections falloff.
 //
 
 // Vertex section of code:
@@ -39,8 +39,9 @@ in vec2 texCoord;
 in vec4 color;
 
 uniform vec4 clipRegion;
-uniform float opacity;
+uniform float brightness;
 uniform float saturation;
+uniform float opacity;
 uniform float dimming;
 uniform float reflectionsFalloff;
 uniform uint shaderFlags;
@@ -70,6 +71,25 @@ void main()
 
     vec4 sampledColor = texture(textureSampler, texCoord);
 
+    // Brightness.
+    if (brightness != 0.0) {
+        sampledColor.rgb /= sampledColor.a;
+        sampledColor.rgb += 0.3 * brightness;
+        sampledColor.rgb *= sampledColor.a;
+    }
+
+    // Saturation.
+    if (saturation != 1.0) {
+        vec3 grayscale;
+        // Premultiplied textures are all in BGRA format.
+        if (0x0u != (shaderFlags & 0x01u))
+            grayscale = vec3(dot(sampledColor.bgr, vec3(0.114, 0.587, 0.299)));
+        else
+            grayscale = vec3(dot(sampledColor.rgb, vec3(0.299, 0.587, 0.114)));
+        vec3 blendedColor = mix(grayscale, sampledColor.rgb, saturation);
+        sampledColor = vec4(blendedColor, sampledColor.a);
+    }
+
     // For fonts the alpha information is stored in the red channel.
     if (0x0u != (shaderFlags & 0x2u))
         sampledColor = vec4(1.0, 1.0, 1.0, sampledColor.r);
@@ -95,18 +115,6 @@ void main()
             sampledColor.a *= opacity;
         else
             sampledColor *= opacity;
-    }
-
-    // Saturation.
-    if (saturation != 1.0) {
-        vec3 grayscale;
-        // Premultiplied textures are all in BGRA format.
-        if (0x0u != (shaderFlags & 0x01u))
-            grayscale = vec3(dot(sampledColor.bgr, vec3(0.34, 0.55, 0.11)));
-        else
-            grayscale = vec3(dot(sampledColor.rgb, vec3(0.34, 0.55, 0.11)));
-        vec3 blendedColor = mix(grayscale, sampledColor.rgb, saturation);
-        sampledColor = vec4(blendedColor, sampledColor.a);
     }
 
     // Dimming.

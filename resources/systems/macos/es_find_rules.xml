@@ -46,6 +46,12 @@
             <entry>/Applications/BasiliskII.app/Contents/MacOS/BasiliskII</entry>
         </rule>
     </emulator>
+    <emulator name="CEMU">
+        <!-- Nintendo Wii U emulator Cemu -->
+        <rule type="staticpath">
+            <entry>/Applications/Cemu.app/Contents/MacOS/Cemu</entry>
+        </rule>
+    </emulator>
     <emulator name="CITRA">
         <!-- Nintendo 3DS emulator Citra -->
         <rule type="staticpath">
@@ -216,6 +222,12 @@
         <!-- Adobe Flash player Ruffle -->
         <rule type="staticpath">
             <entry>/Applications/Ruffle.app/Contents/MacOS/ruffle</entry>
+        </rule>
+    </emulator>
+    <emulator name="RYUJINX">
+        <!-- Nintendo Switch emulator Ryujinx -->
+        <rule type="staticpath">
+            <entry>/Applications/Ryujinx.app/Contents/MacOS/Ryujinx</entry>
         </rule>
     </emulator>
     <emulator name="SAMEBOY">

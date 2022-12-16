@@ -39,17 +39,16 @@ public:
     // Can be set before or after an image is loaded.
     // setMaxSize() and setResize() are mutually exclusive.
     void setResize(const float width, const float height) override;
-    void setResize(const glm::vec2& size, bool rasterize = true)
-    {
-        setResize(size.x, size.y, rasterize);
-    }
-    void setResize(const float width, const float height, bool rasterize) override;
+    void setResize(const glm::vec2& size, bool rasterize = true) override;
 
     // Resize the image to be as large as possible but fit within a box of this size.
     // Can be set before or after an image is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(const float width, const float height);
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
+
+    // Resize and crop image so it fills the entire area defined by the size parameter.
+    void setCroppedSize(const glm::vec2& size);
 
     void setTileSize(const float width, const float height)
     {
@@ -59,14 +58,16 @@ public:
 
     glm::vec2 getRotationSize() const override { return mRotateByTargetSize ? mTargetSize : mSize; }
 
-    // Applied AFTER image positioning and sizing.
-    // cropTop(0.2) will crop 20% of the top of the image.
-    void cropLeft(const float percent);
-    void cropTop(const float percent);
-    void cropRight(const float percent);
-    void cropBot(const float percent);
-    void crop(const float left, const float top, const float right, const float bot);
+    // Applied after image positioning and sizing.
+    void cropLeft(const float value);
+    void cropTop(const float value);
+    void cropRight(const float value);
+    void cropBottom(const float value);
+    void crop(const float left, const float top, const float right, const float bottom);
     void uncrop();
+    // This essentially implements CSS "object-fit: cover" and has nothing to do with the
+    // cover image type (as the name may seem to imply).
+    void coverFitCrop();
 
     // This crops any entirely transparent areas around the actual image.
     // The arguments restrict how much the end result is allowed to be scaled.
@@ -119,6 +120,7 @@ private:
     bool mFlipX;
     bool mFlipY;
     bool mTargetIsMax;
+    bool mTargetIsCrop;
 
     float mTileWidth;
     float mTileHeight;

@@ -22,7 +22,6 @@ public:
     void render(const glm::mat4& parentTrans) override;
     void onSizeChanged() override { mImage.setSize(mSize); }
 
-    void setResize(float width, float height) override { setSize(width, height); }
     bool getState() const { return mState; }
     void setState(bool state);
     std::string getValue() const override;

@@ -966,9 +966,10 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
         if (key == "rating" && !Settings::getInstance()->getBool("ScrapeRatings"))
             continue;
 
-        // Skip saving of controller metadata if the corresponding option has been set to false.
-        if (key == "controller" && !Settings::getInstance()->getBool("ScrapeControllers"))
-            continue;
+        // ScreenScraper controller scraping is currently broken, it's unclear if they will fix it.
+        // // Skip saving of controller metadata if the corresponding option has been set to false.
+        // if (key == "controller" && !Settings::getInstance()->getBool("ScrapeControllers"))
+        //    continue;
 
         // Skip saving of game name if the corresponding option has been set to false.
         if (key == "name" && !Settings::getInstance()->getBool("ScrapeGameNames"))

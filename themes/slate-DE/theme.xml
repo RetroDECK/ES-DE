@@ -27,11 +27,11 @@
                 <pos>0 0.383796</pos>
                 <size>1 0.232407</size>
                 <type>horizontal</type>
-                <staticItem>./${system.theme}/images/logo.svg</staticItem>
+                <staticImage>./${system.theme}/images/logo.svg</staticImage>
                 <maxItemCount>3</maxItemCount>
                 <itemSize>0.25 0.125</itemSize>
                 <itemScale>1.23</itemScale>
-                <itemInterpolation>linear</itemInterpolation>
+                <imageInterpolation>linear</imageInterpolation>
                 <unfocusedItemOpacity>0.5</unfocusedItemOpacity>
                 <color>${systemCarouselColor}</color>
                 <text>${system.fullName}</text>
@@ -430,5 +430,9 @@
 
     <variant name="themeEngineTest_3">
         <include>./theme_engine_test_3.xml</include>
+    </variant>
+
+    <variant name="themeEngineTest_4">
+        <include>./theme_engine_test_4.xml</include>
     </variant>
 </theme>

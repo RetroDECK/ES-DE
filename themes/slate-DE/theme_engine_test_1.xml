@@ -6,7 +6,7 @@
             <pos>0 0</pos>
             <size>0.28 1.0</size>
             <type>vertical_wheel</type>
-            <staticItem>./${system.theme}/images/logo.svg</staticItem>
+            <staticImage>./${system.theme}/images/logo.svg</staticImage>
             <itemsBeforeCenter>4</itemsBeforeCenter>
             <itemsAfterCenter>4</itemsAfterCenter>
             <itemSize>0.15 0.125</itemSize>
@@ -28,7 +28,7 @@
         </carousel>
         <gameselector name="selector_recent">
             <selection>lastplayed</selection>
-            <gameCount>3</gameCount>
+            <gameCount>1</gameCount>
         </gameselector>
         <gameselector name="selector_random">
             <selection>random</selection>
@@ -40,7 +40,6 @@
             <imageType>fanart, titlescreen</imageType>
             <gameselector>selector_random</gameselector>
             <interpolation>nearest</interpolation>
-            <scrollFadeIn>true</scrollFadeIn>
             <opacity>0.8</opacity>
             <saturation>0.8</saturation>
             <zIndex>3</zIndex>
@@ -52,7 +51,6 @@
             <imageType>cover</imageType>
             <gameselector>selector_recent</gameselector>
             <interpolation>nearest</interpolation>
-            <scrollFadeIn>true</scrollFadeIn>
             <zIndex>3</zIndex>
         </image>
         <video name="random_game_video">
@@ -118,7 +116,7 @@
             <letterCase>none</letterCase>
             <zIndex>50</zIndex>
         </text>
-        <datetime name="game_release_date">
+        <datetime name="game_lastplayed_date">
             <pos>0.775 0.64</pos>
             <size>0.2 0.05</size>
             <metadata>lastplayed</metadata>

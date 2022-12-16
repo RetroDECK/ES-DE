@@ -33,6 +33,7 @@ set(CORE_HEADERS
 
     # Primary GUI components
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/primary/CarouselComponent.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/components/primary/GridComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/primary/PrimaryComponent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/components/primary/TextListComponent.h
 

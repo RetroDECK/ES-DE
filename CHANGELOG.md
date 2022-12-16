@@ -13,6 +13,7 @@
 * Made fundamental changes to the application logic by removing most view styles and replacing them with a new theme variants concept
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Added theme support for defining and applying different color schemes
+* Added a new grid component that is usable in both the system and gamelist views
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
@@ -21,10 +22,15 @@
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
+* Expanded the quick system select menu option from an on/off entry to a selection of different button combinations
+* Changed the order of the help system entries Y, X, B and A to instead be listed as A, B, X and Y
+* Changed the start button for the screensaver from "Back" to "X"
+* Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
+* Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
+* Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as an alternative emulator for the gameandwatch system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
-* (Linux) Added support for the Nintendo Wii U (wiiu) game system by adding the Cemu standalone emulator
 * (Linux) Added support for the Sega Model 3 (model3) game system by adding the Supermodel standalone emulator
 * (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
 * Added support for the Sega Model 2 (model2) game system on Linux on macOS by adding the MAME - Current RetroArch core
@@ -34,7 +40,7 @@
 * Added a %GAMEDIR% variable to the -rompath option for all MAME standalone entries to allow launching games from subdirectories
 * Added Triforce (Dolphin fork) standalone as an alternative emulator for the gc system on Linux and Windows
 * Added simple64 standalone as an alternative emulator for the n64 system on Linux and Windows
-* (Linux) Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 system
+* Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 system on Linux and Windows
 * Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
 * (Windows) Added PrimeHack as an alternative emulator for the gc and wii systems
 * (Windows) Added Project64 as an alternative emulator for the n64 system
@@ -43,6 +49,7 @@
 * Added support for the mugen system on Linux and macOS using the Ikemen GO game engine
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
+* Added the . (dot) file extension to the xbox360 system on Windows to support extensionless XBLA games
 * Added the .car and .rom file extensions to the a5200 system
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
@@ -72,6 +79,7 @@
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
 * Implemented dynamic texture allocation to the font code to reduce memory usage and avoid missing glyphs
 * Large optimizations to the text wrapping code (generallly 300-400% faster)
+* Added support for linear interpolation for font texture magnifications
 * Added support for texture mipmapping with trilinear filtering
 * Added on-demand texture loading to the carousel
 * Improved the renderer scaling accuracy
@@ -102,11 +110,13 @@
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
 * Added support for arbitrary aspect ratios for RatingComponent images and also added an overlay property
 * Added theme support for defining the opacity for most element types
+* Added theme support for defining relative brightness for images, videos and animations
 * Added theme support for defining color saturation for images, videos and animations
 * Added theme support for defining the video fade-in time
 * Added theme support for enabling and disabling video pillarboxes and scanline rendering
 * Added theme support for defining the threshold for when pillarboxes should be applied to a video
 * Added theme support for enabling or disabling audio playback for videos
+* Added theme support for color shifting videos (and the static image)
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
 * Added support for nesting of theme variables
 * Added support for defining multiple theme "variables" tags in the same XML file
@@ -120,6 +130,7 @@
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
 * Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
+* Added support for resizing and cropping images to fill the entire defined area (cover fitting)
 * Changed the helpsystem properties entrySpacing and iconTextSpacing from fixed pixel values to relative values
 * Added support for using unsigned integers for theme properties
 * Added a metadataElement theme property to the image, video, animation and text element types to control fading and hiding of arbitrary elements
@@ -129,6 +140,7 @@
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
 * If a wheel (marquee) image on ScreenScraper falls back to another region, then the wheel-hd image is now used instead if it matches the set region
+* Removed scraping of arcade controller information using ScreenScraper as they have ruined this functionality
 * Added a ScreenScraper-specific option to remove dots from game name searches when using the multi-scraper in automatic mode
 * Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
@@ -148,7 +160,7 @@
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
 * Updated to build correctly with FFmpeg 5.1
-* Updated FFmpeg to 5.1.2, SDL to 2.24.1, FreeType to 2.12.1 and pugixml to 1.12.1 on Windows and macOS
+* Updated SDL to 2.26.1, FFmpeg to 5.1.2, FreeType to 2.12.1 and pugixml to 1.12.1 on Windows and macOS
 * Updated curl to 7.86.0 on Windows
 * Added a workaround for playing broken video files with invalid PTS values
 * Refactored the rendering code from a shared namespace into proper classes
@@ -166,9 +178,12 @@
 * Made the logging thread safe
 * (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
 * Added the build date to to main menu for alpha and dev builds
+* Added a left trigger + right trigger help system icon and removed the deprecated hotkey icon
+* Added an arcade twin stick controller badge icon
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
+* Made animations on the carousel better looking by using a new non-linear interpolation method
 * Migrated the carousel code from SystemView to a separate new CarouselComponent
 * Changed the carousel properties to be more generic by renaming "logo" to "item", e.g. itemSize, maxItemCount etc.
 * Added the properties "itemsBeforeCenter" and "itemsAfterCenter" to define entries for carousels of the wheel type
@@ -176,7 +191,11 @@
 * Added reflections support to the carousel
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
+* Added carousel theme support for applying image color shifts
+* Added carousel theme support for defining image brightness
+* Added carousel theme support for defining image saturation
 * Added carousel theme support for setting item transitions to "slide" or "instant"
+* Added carousel theme support for controlling item stacking for overlapping items
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
@@ -206,11 +225,14 @@
 ### Bug fixes
 
 * Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
+* Adding a dot (.) to the es_systems.xml extension tag (to setup extensionless entries) lead to a crash if the system contained folders
 * For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Text wrapping did not work correctly for text that typically does not contain spaces, like Japanese
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
 * Changing the setting "Group unthemed custom collections" could lead to incorrect custom collections sorting under some circumstances
+* For gamelists which mixed files and folders, the folder sorting was sometimes incorrect
+* Incorrect folder paths were displayed in the metadata editor if the setting "Only show ROMs from gamelist.xml files" was enabled
 * Games located in subdirectories were not added back to custom collections when disabling the "Exclude from game counter" metadata option
 * Enabling and then disabling the "Exclude from game counter" metadata option would remove a game from all currently disabled custom collections
 * Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists
@@ -226,6 +248,7 @@
 * The video player output frame width was not set correctly which made some videos render as garbled when using FFmpeg 5.1 and later
 * If a gamelist scroll fade-in animation was playing when opening a menu, it would continue to play after closing the menu
 * The gamelist quick list scrolling overlay would not disappear as intended under some circumstances
+* Using the trigger buttons to jump to the start or end of a gamelist did not reset any currently held navigation buttons
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
 * The tile property for the image element did not work correctly with SVG images

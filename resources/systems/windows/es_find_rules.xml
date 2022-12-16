@@ -502,6 +502,18 @@
             <entry>%ESPATH%\..\redream\redream.exe</entry>
         </rule>
     </emulator>
+    <emulator name="ROSALIES-MUPEN-GUI">
+        <!-- Nintendo 64 emulator Rosalie's Mupen GUI -->
+        <rule type="systempath">
+            <entry>RMG.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~\AppData\Local\Programs\Rosalie's Mupen GUI\RMG.exe</entry>
+            <entry>%ESPATH%\Emulators\RMG\RMG.exe</entry>
+            <entry>%ESPATH%\RMG\RMG.exe</entry>
+            <entry>%ESPATH%\..\RMG\RMG.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="RPCS3">
         <!-- Sony PlayStation 3 emulator RPCS3 -->
         <rule type="systempath">

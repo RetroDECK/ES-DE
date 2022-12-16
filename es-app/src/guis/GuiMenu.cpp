@@ -119,7 +119,7 @@ void GuiMenu::openUIOptions()
 
         for (auto it = themeSets.cbegin(); it != themeSets.cend(); ++it) {
             // If required, abbreviate the theme set name so it doesn't overlap the setting name.
-            float maxNameLength = mSize.x * 0.62f;
+            const float maxNameLength = mSize.x * 0.62f;
             themeSet->add(it->first, it->first, it == selectedSet, maxNameLength);
         }
         s->addWithLabel("THEME SET", themeSet);
@@ -176,7 +176,7 @@ void GuiMenu::openUIOptions()
                 if (variant.selectable) {
                     // If required, abbreviate the variant name so it doesn't overlap the
                     // setting name.
-                    float maxNameLength {mSize.x * 0.62f};
+                    const float maxNameLength {mSize.x * 0.62f};
                     themeVariant->add(variant.label, variant.name, variant.name == selectedVariant,
                                       maxNameLength);
                 }
@@ -226,7 +226,7 @@ void GuiMenu::openUIOptions()
             for (auto& colorScheme : currentSet->second.capabilities.colorSchemes) {
                 // If required, abbreviate the color scheme name so it doesn't overlap the
                 // setting name.
-                float maxNameLength {mSize.x * 0.52f};
+                const float maxNameLength {mSize.x * 0.52f};
                 themeColorScheme->add(colorScheme.label, colorScheme.name,
                                       colorScheme.name == selectedColorScheme, maxNameLength);
             }
@@ -298,12 +298,12 @@ void GuiMenu::openUIOptions()
     auto gamelistViewStyle = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "LEGACY GAMELIST VIEW STYLE", false);
     std::string selectedViewStyle {Settings::getInstance()->getString("GamelistViewStyle")};
-    gamelistViewStyle->add("automatic", "automatic", selectedViewStyle == "automatic");
-    gamelistViewStyle->add("basic", "basic", selectedViewStyle == "basic");
-    gamelistViewStyle->add("detailed", "detailed", selectedViewStyle == "detailed");
-    gamelistViewStyle->add("video", "video", selectedViewStyle == "video");
+    gamelistViewStyle->add("AUTOMATIC", "automatic", selectedViewStyle == "automatic");
+    gamelistViewStyle->add("BASIC", "basic", selectedViewStyle == "basic");
+    gamelistViewStyle->add("DETAILED", "detailed", selectedViewStyle == "detailed");
+    gamelistViewStyle->add("VIDEO", "video", selectedViewStyle == "video");
     // If there are no objects returned, then there must be a manually modified entry in the
-    // configuration file. Simply set the view style to Automatic in this case.
+    // configuration file. Simply set the view style to "automatic" in this case.
     if (gamelistViewStyle->getSelectedObjects().size() == 0)
         gamelistViewStyle->selectEntry(0);
     s->addWithLabel("LEGACY GAMELIST VIEW STYLE", gamelistViewStyle);
@@ -337,20 +337,43 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Quick system select (navigate between systems in the gamelist view).
+    auto quickSystemSelect = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "QUICK SYSTEM SELECT", false);
+    std::string selectedQuickSelect {Settings::getInstance()->getString("QuickSystemSelect")};
+    quickSystemSelect->add("LEFT/RIGHT OR SHOULDERS", "leftrightshoulders",
+                           selectedQuickSelect == "leftrightshoulders");
+    quickSystemSelect->add("LEFT/RIGHT OR TRIGGERS", "leftrighttriggers",
+                           selectedQuickSelect == "leftrighttriggers");
+    quickSystemSelect->add("SHOULDERS", "shoulders", selectedQuickSelect == "shoulders");
+    quickSystemSelect->add("TRIGGERS", "triggers", selectedQuickSelect == "triggers");
+    quickSystemSelect->add("LEFT/RIGHT", "leftright", selectedQuickSelect == "leftright");
+    quickSystemSelect->add("DISABLED", "disabled", selectedQuickSelect == "disabled");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the quick system select to "leftrightshoulders" in this case.
+    if (quickSystemSelect->getSelectedObjects().size() == 0)
+        quickSystemSelect->selectEntry(0);
+    s->addWithLabel("QUICK SYSTEM SELECT", quickSystemSelect);
+    s->addSaveFunc([quickSystemSelect, s] {
+        if (quickSystemSelect->getSelected() !=
+            Settings::getInstance()->getString("QuickSystemSelect")) {
+            Settings::getInstance()->setString("QuickSystemSelect",
+                                               quickSystemSelect->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
     // Optionally start in selected system/gamelist.
     auto startupSystem = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "GAMELIST ON STARTUP", false);
     startupSystem->add("NONE", "", Settings::getInstance()->getString("StartupSystem") == "");
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
-        if ((*it)->getName() != "retropie") {
-            // If required, abbreviate the system name so it doesn't overlap the setting name.
-            float maxNameLength {mSize.x * 0.51f};
-            startupSystem->add((*it)->getFullName(), (*it)->getName(),
-                               Settings::getInstance()->getString("StartupSystem") ==
-                                   (*it)->getName(),
-                               maxNameLength);
-        }
+        // If required, abbreviate the system name so it doesn't overlap the setting name.
+        float maxNameLength {mSize.x * 0.51f};
+        startupSystem->add((*it)->getFullName(), (*it)->getName(),
+                           Settings::getInstance()->getString("StartupSystem") == (*it)->getName(),
+                           maxNameLength);
     }
     // This can probably not happen but as an extra precaution select the "NONE" entry if no
     // entry is selected.
@@ -683,18 +706,6 @@ void GuiMenu::openUIOptions()
             Settings::getInstance()->setBool("GamelistFilters", gamelistFilters->getState());
             s->setNeedsSaving();
             s->setNeedsReloading();
-        }
-    });
-
-    // Quick system select (navigate left/right in gamelist view).
-    auto quickSystemSelect = std::make_shared<SwitchComponent>();
-    quickSystemSelect->setState(Settings::getInstance()->getBool("QuickSystemSelect"));
-    s->addWithLabel("ENABLE QUICK SYSTEM SELECT", quickSystemSelect);
-    s->addSaveFunc([quickSystemSelect, s] {
-        if (Settings::getInstance()->getBool("QuickSystemSelect") !=
-            quickSystemSelect->getState()) {
-            Settings::getInstance()->setBool("QuickSystemSelect", quickSystemSelect->getState());
-            s->setNeedsSaving();
         }
     });
 

@@ -47,6 +47,11 @@
         <selectable>true</selectable>
     </variant>
 
+    <variant name="themeEngineTest_4">
+        <label>Theme engine test 4</label>
+        <selectable>true</selectable>
+    </variant>
+
     <variant name="noMedia">
         <label>No game media</label>
         <selectable>false</selectable>

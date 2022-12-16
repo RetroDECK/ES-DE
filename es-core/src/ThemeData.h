@@ -57,9 +57,10 @@ namespace ThemeFlags
         DELAY           = 0x00002000,
         Z_INDEX         = 0x00004000,
         ROTATION        = 0x00008000,
-        OPACITY         = 0x00010000,
-        SATURATION      = 0x00020000,
-        VISIBLE         = 0x00040000,
+        BRIGHTNESS      = 0x00010000,
+        OPACITY         = 0x00020000,
+        SATURATION      = 0x00040000,
+        VISIBLE         = 0x00080000,
         ALL             = 0xFFFFFFFF
     };
     // clang-format on
@@ -281,7 +282,8 @@ private:
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sLegacySupportedViews;
     static std::vector<std::string> sLegacySupportedFeatures;
-    static std::vector<std::string> sLegacyElements;
+    static std::vector<std::string> sLegacyProperties;
+    static std::vector<std::string> sDeprecatedProperties;
     static std::vector<std::pair<std::string, std::string>> sSupportedAspectRatios;
     static std::map<std::string, float> sAspectRatioMap;
 

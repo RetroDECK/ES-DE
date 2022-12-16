@@ -21,6 +21,7 @@
 #include "components/TextComponent.h"
 #include "components/VideoFFmpegComponent.h"
 #include "components/primary/CarouselComponent.h"
+#include "components/primary/GridComponent.h"
 #include "components/primary/TextListComponent.h"
 #include "resources/Font.h"
 
@@ -125,6 +126,7 @@ private:
 
     Renderer* mRenderer;
     std::unique_ptr<CarouselComponent<SystemData*>> mCarousel;
+    std::unique_ptr<GridComponent<SystemData*>> mGrid;
     std::unique_ptr<TextListComponent<SystemData*>> mTextList;
     std::unique_ptr<TextComponent> mLegacySystemInfo;
     std::vector<SystemViewElements> mSystemElements;

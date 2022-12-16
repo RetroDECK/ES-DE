@@ -69,6 +69,7 @@ public:
     void setAttribPointers();
     void setTextureSize(std::array<GLfloat, 2> shaderVec2);
     void setClipRegion(glm::vec4 clipRegion);
+    void setBrightness(GLfloat brightness);
     void setOpacity(GLfloat opacity);
     void setSaturation(GLfloat saturation);
     void setDimming(GLfloat dimming);
@@ -95,6 +96,7 @@ private:
     GLint mShaderColor;
     GLint mShaderClipRegion;
     GLint mShaderTextureSize;
+    GLint mShaderBrightness;
     GLint mShaderOpacity;
     GLint mShaderSaturation;
     GLint mShaderDimming;

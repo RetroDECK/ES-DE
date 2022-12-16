@@ -3,17 +3,18 @@
 //  EmulationStation Desktop Edition
 //  PrimaryComponent.h
 //
-//  Base class for the primary components (carousel and textlist).
+//  Base class for the primary components (carousel, grid and textlist).
 //
 
-#ifndef ES_CORE_COMPONENTS_PRIMARY_COMPONENT_H
-#define ES_CORE_COMPONENTS_PRIMARY_COMPONENT_H
+#ifndef ES_CORE_COMPONENTS_PRIMARY_PRIMARY_COMPONENT_H
+#define ES_CORE_COMPONENTS_PRIMARY_PRIMARY_COMPONENT_H
 
 template <typename T> class PrimaryComponent : public virtual GuiComponent
 {
 public:
     enum class PrimaryType {
         CAROUSEL,
+        GRID,
         TEXTLIST
     };
 
@@ -52,4 +53,4 @@ public:
     virtual void setAlignment(PrimaryAlignment align) {}
 };
 
-#endif // ES_CORE_COMPONENTS_PRIMARY_COMPONENT_H
+#endif // ES_CORE_COMPONENTS_PRIMARY_PRIMARY_COMPONENT_H

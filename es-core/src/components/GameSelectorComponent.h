@@ -45,6 +45,7 @@ public:
     const bool getNeedsRefresh() { return mNeedsRefresh; }
     const GameSelection getGameSelection() const { return mGameSelection; }
     const std::string& getSelectorName() const { return mSelectorName; }
+    const int getGameCount() const { return mGameCount; }
 
     void refreshGames()
     {
@@ -63,8 +64,11 @@ public:
                          Settings::getInstance()->getBool("ForceKid"))};
 
         if (mGameSelection == GameSelection::RANDOM) {
-            for (int i = 0; i < mGameCount; ++i) {
+            int tries {8};
+            for (int i {0}; i < mGameCount; ++i) {
                 if (mSystem->getRootFolder()->getGameCount().first == 0)
+                    break;
+                if (mSystem->getRootFolder()->getGameCount().first == mGames.size())
                     break;
                 FileData* randomGame {nullptr};
 
@@ -73,6 +77,14 @@ public:
                     randomGame = mSystem->getRandomGame(nullptr, true);
                 else
                     randomGame = mSystem->getRandomGame(lastGame, true);
+
+                if (std::find(mGames.begin(), mGames.end(), randomGame) != mGames.end()) {
+                    if (tries > 0) {
+                        --i;
+                        --tries;
+                    }
+                    continue;
+                }
 
                 if (randomGame != nullptr)
                     mGames.emplace_back(randomGame);

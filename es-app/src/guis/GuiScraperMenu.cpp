@@ -139,7 +139,7 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
 
     addChild(&mMenu);
 
-    mMenu.addButton("START", "start", std::bind(&GuiScraperMenu::pressedStart, this));
+    mMenu.addButton("START", "start scraper", std::bind(&GuiScraperMenu::pressedStart, this));
     mMenu.addButton("BACK", "back", [&] { delete this; });
 
     setSize(mMenu.getSize());
@@ -252,27 +252,28 @@ void GuiScraperMenu::openContentOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
-    // Scrape controllers (arcade systems only).
-    auto scrapeControllers = std::make_shared<SwitchComponent>();
-    scrapeControllers->setState(Settings::getInstance()->getBool("ScrapeControllers"));
-    s->addWithLabel("CONTROLLERS (ARCADE SYSTEMS ONLY)", scrapeControllers);
-    s->addSaveFunc([scrapeControllers, s] {
-        if (scrapeControllers->getState() !=
-            Settings::getInstance()->getBool("ScrapeControllers")) {
-            Settings::getInstance()->setBool("ScrapeControllers", scrapeControllers->getState());
-            s->setNeedsSaving();
-        }
-    });
+    // ScreenScraper controller scraping is currently broken, it's unclear if they will fix it.
+    // // Scrape controllers (arcade systems only).
+    // auto scrapeControllers = std::make_shared<SwitchComponent>();
+    // scrapeControllers->setState(Settings::getInstance()->getBool("ScrapeControllers"));
+    // s->addWithLabel("CONTROLLERS (ARCADE SYSTEMS ONLY)", scrapeControllers);
+    // s->addSaveFunc([scrapeControllers, s] {
+    //     if (scrapeControllers->getState() !=
+    //         Settings::getInstance()->getBool("ScrapeControllers")) {
+    //         Settings::getInstance()->setBool("ScrapeControllers", scrapeControllers->getState());
+    //         s->setNeedsSaving();
+    //     }
+    // });
 
-    // Controllers are not supported by TheGamesDB, so gray out the option if this scraper is
-    // selected.
-    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scrapeControllers->setEnabled(false);
-        scrapeControllers->setOpacity(DISABLED_OPACITY);
-        scrapeControllers->getParent()
-            ->getChild(scrapeControllers->getChildIndex() - 1)
-            ->setOpacity(DISABLED_OPACITY);
-    }
+    // // Controllers are not supported by TheGamesDB, so gray out the option if this scraper is
+    // // selected.
+    // if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+    //     scrapeControllers->setEnabled(false);
+    //     scrapeControllers->setOpacity(DISABLED_OPACITY);
+    //     scrapeControllers->getParent()
+    //         ->getChild(scrapeControllers->getChildIndex() - 1)
+    //         ->setOpacity(DISABLED_OPACITY);
+    // }
 
     // Scrape other metadata.
     auto scrapeMetadata = std::make_shared<SwitchComponent>();
@@ -1059,11 +1060,12 @@ void GuiScraperMenu::start()
             contentToScrape = true;
             break;
         }
-        if (scraperService == "screenscraper" &&
-            Settings::getInstance()->getBool("ScrapeControllers")) {
-            contentToScrape = true;
-            break;
-        }
+        // ScreenScraper controller scraping is currently broken, it's unclear if they will fix it.
+        // if (scraperService == "screenscraper" &&
+        //    Settings::getInstance()->getBool("ScrapeControllers")) {
+        //    contentToScrape = true;
+        //    break;
+        // }
         if (Settings::getInstance()->getBool("ScrapeMetadata")) {
             contentToScrape = true;
             break;
@@ -1192,6 +1194,6 @@ std::vector<HelpPrompt> GuiScraperMenu::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mMenu.getHelpPrompts()};
     prompts.push_back(HelpPrompt("b", "back"));
-    prompts.push_back(HelpPrompt("y", "start"));
+    prompts.push_back(HelpPrompt("y", "start scraper"));
     return prompts;
 }

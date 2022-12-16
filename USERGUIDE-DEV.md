@@ -481,8 +481,8 @@ ES-DE supports three separate modes, **Full**, **Kiosk** and **Kid**.
 These modes mandate the functionalty provided by the application in the following way:
 
 * Full - This is the default mode which enables all functionality.
-* Kiosk - The main menu will be severely restricted, only displaying the entry to change the audio volume. The game options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag or unflag games as favorites will be removed. Apart from this all games will be playable.
-* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the game options menu is disabled as is the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see _Enable menu in kid mode_ for additional information.
+* Kiosk - The main menu will be severely restricted, only displaying the entry to change the audio volume. The gamelist options menu will be restricted as well, removing the metadata editor and the ability to modify custom game collections. And finally the ability to flag or unflag games as favorites will be removed. Apart from this all games will be playable.
+* Kid - Only games marked as being suitable for children will be displayed (this flag is set manually per game using the metadata editor). Additionally, the gamelist options menu is disabled as is the ability to flag and unflag games as favorites. There is also a separate option available to enable or disable the main menu when in Kid mode, see _Enable menu in kid mode_ for additional information.
 
 There is an unlock code available to revert to the Full mode from the Kiosk or Kid mode, as is described when changing this setting from the main menu. By default the button sequence is **Up, Up, Down, Down, Left, Right, Left, Right, B, A** (or equivalent buttons if an Xbox controller is not used). Either the keyboard or a controller can be used to input the passkey sequence, but it can't be entered when a menu is open.
 
@@ -506,12 +506,12 @@ Default keyboard mappings are shown in brackets.
 **Up and down**\
 _(Arrow up / Arrow down)_
 
-Navigate up and down in gamelists, between systems in the system view (if the theme has a vertical carousel) and in menus.
+Navigates between system and game entries where these buttons are applicable, such as for textlists and vertical carousels. Also used in menus for general navigation.
 
 **Left and right**\
 _(Arrow left / Arrow right)_
 
-Navigate between gamelists (if the _Quick system select_ option has been enabled), between systems in the system view (if the theme has a horizontal carousel) and between media files in the media viewer. If the _Enable screensaver controls_ option has been enabled, either button also randomly selects a new game when using the Video or Slideshow screensavers.
+Navigates between system and game entries where these buttons are applicable, such as for grids and horizontal carousels. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it. Navigates between media files in the media viewer and selects a random game when using the _Video_ or _Slideshow_ screensavers if the _Enable screensaver controls_ option has been enabled. Also used in menus for general navigation.
 
 **Start button**\
 _(Escape)_
@@ -521,17 +521,17 @@ Opens and closes the main menu.
 **Back button**\
 _(F1)_
 
-Opens and closes the game options menu in the gamelist view, or toggles the screensaver in the system view (if the _Enable screensaver controls_ setting is enabled).
+Opens and closes the gamelist options menu in the gamelist view.
 
 **Left and right shoulder buttons**\
 _(Page up / Page down)_
 
-Provides quick jumping in gamelists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Also jumps forward in text edit dialogs.
+Provides quick jumping in textlists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it. Also used as back and blankspace keys in text edit dialogs.
 
 **Left and right trigger buttons**\
 _(Home / End)_
 
-Jumps to the first and last entry of the gamelists, menus and text edit dialogs.
+Jumps to the first or last entries in carousels, grids and textlists as well as in menus and text edit dialogs. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it.
 
 **Left and right thumbstick click**\
 _(F2 / F3)_
@@ -541,7 +541,7 @@ Jumps to a random game or system depending on whether pressed when in the system
 **A button**\
 _(Enter)_
 
-Opens gamelists from the system view, launches games, enters folders, selects menu entries etc.
+Select button which opens gamelists from the system view, launches games, enters folders, selects menu entries etc.
 
 **B button**\
 _(Back key)_
@@ -551,7 +551,7 @@ Back button, self explanatory.
 **X button**\
 _(Delete)_
 
-Starts the game media viewer (which is accessible from the gamelist views). Used by some other minor functions as explained by the help system and/or this guide.
+Starts the media viewer in the gamelist view or the screensaver in the system view (if the _Enable screensaver controls_ setting is enabled). Used by some other minor functions as explained by the help system and/or this guide.
 
 **Y button**\
 _(Insert on Unix and Windows, F13 on macOS)_
@@ -1000,11 +1000,9 @@ Apart from the potential difficulty in locating the emulator binary, there are s
 
 #### Nintendo Wii U
 
-Cemu is available for Windows and Linux.
+The .wua archive format is the preferred method to use for Wii U games, but the method of using unpacked games is also documented here for reference.
 
-Some time ago Cemu added support for the .wua archive format which is much easier to use than the unpacked game format. Therefore this is now the recommended approach, but both this and the traditional method of adding unpacked games are covered here.
-
-.wud and .wux files are also supported, but these two formats are not discussed here as the .wua format is clearly the way to go in the future.
+.wud and .wux files are supported as well, but these two formats are not discussed here as the .wua format is clearly the way to go in the future.
 
 **Method 1, using .wua files**
 
@@ -1013,6 +1011,8 @@ Start Cemu and install the game, any updates as well as optional DLCs to the Cem
 Following this just start ES-DE and the game should be shown as a single entry that can be launched using Cemu.
 
 **Method 2, unpacked games**
+
+Only the setup on Windows is covered here, but it's the same principle in Linux and macOS.
 
 Using this unpacked approach, the content of each game is divided into the three directories _code, content_ and _meta_.
 
@@ -1915,7 +1915,6 @@ Here's an overview of what's supported when using these scrapers:
 | Multi-language                    | Yes           | No         |
 | Game names                        | Yes           | Yes        |
 | Ratings                           | Yes           | No         |
-| Controllers (arcade systems only) | Yes           | No         |
 | Other game metadata               | Yes           | Yes        |
 | Videos                            | Yes           | No         |
 | Screenshots                       | Yes           | Yes        |
@@ -1931,8 +1930,6 @@ The category **Other game metadata** includes Description, Release date, Develop
 
 The **Multi-language** support includes translated game genres and game descriptions for a number of languages.
 
-**Controllers** is metadata indicating the controller type (it's not images of controllers).
-
 **Physical media** means images of cartridges, diskettes, tapes, CD-ROMs etc. that were used to distribute the games.
 
 There are two approaches to scraping, either for a single game from the metadata editor, or for multiple games and systems using the multi-scraper.
@@ -1942,11 +1939,11 @@ _Here's an example of the multi-scraper running in interactive mode, asking the 
 
 ### Single-game scraper
 
-The single-game scraper is launched from the metadata editor. You navigate to a game, open the game options menu, choose **Edit this game's metadata** and then select the **Scrape** button (alternatively the "Y" button shortcut can be used to start the scraper).
+The single-game scraper is launched from the metadata editor. You navigate to a game, open the gamelist options menu, choose **Edit this game's metadata** and then select the **Scrape** button (alternatively the _Y_ button shortcut can be used to start the scraper).
 
 ### Multi-scraper
 
-The multi-scraper is accessed from the main menu by entering the **Scraper** menu and then selecting the **Start** button (or the "Y" button shortcut can be used).
+The multi-scraper is accessed from the main menu by entering the **Scraper** menu and then selecting the **Start** button (or the _Y_ button shortcut can be used).
 
 ### Scraping process
 
@@ -2102,10 +2099,6 @@ Whether to scrape the names of the games. This does not affect the actual files 
 **Ratings** _(ScreenScraper only)_
 
 Downloads game ratings.
-
-**Controllers (arcade systems only)** _(ScreenScraper only)_
-
-Scrapes controller metadata which is used to set the correct controller badge. This is only available for MAME arcade games, for systems such as _arcade_, _mame_, _neogeo_, _fba_ etc. This is so because ScreenScraper does not seem to provide controller information for other platforms. The type of controllers that are scraped are _joystick_ (separated into entries from no buttons up to 6 buttons), _steering wheel_, _flight stick_, _spinner_, _trackball_ and _lightgun_.
 
 **Other metadata**
 
@@ -2295,17 +2288,21 @@ Sets the view style to _Automatic, Basic, Detailed or Video_ for legacy themes. 
 
 Transition animation when navigating between gamelists, or between systems on the System view carousel. Can be set to _Slide, Fade_ or _Instant_. Only applicable for legacy themes as the newer type of theme sets lets the theme author define the transition animations in a more fine-grained manner. Therefore this option will be grayed out if a modern theme set has been selected.
 
+**Quick system select**
+
+The buttons to use to jump between systems in the gamelist view. The options are _Left/right or shoulders_, _Left/right or triggers_, _Shoulders_, _Triggers_, _Left/right_ or _Disabled_. The first two options will apply either left/right or shoulder/trigger buttons depending on the type of primary element used for the gamelist. For example a textlist or a vertical carousel will allow the use of the left and right buttons, but for horizontal carousels and grids these buttons are reserved for navigating the entries so instead the secondary buttons will be used, i.e. the shoulder or trigger buttons. Using these two options therefore leads to a slight inconsistency as different buttons will be used depending on the theme configuration. If instead using any of the single button pair options, i.e. _Shoulders_, _Triggers_ or _Left/right_, the navigation will be consistent regardless of theme configuration but you'll sacrifice the ability to use the selected buttons if the gamelist supports it, such as the ability to jump rows in a textlist using the shoulder and trigger buttons.
+
 **Gamelist on startup**
 
 If set to _None_, the system view will be displayed. Any other value will jump to that game system automatically on startup.
 
 **Default sort order**
 
-The order in which to sort your gamelists. This can be overriden per game system using the game options menu, but that override will only be persistent during the application session. The _System_ sorting can not be selected here as it's only applicable to collection systems.
+The order in which to sort your gamelists. This can be overriden per game system using the gamelist options menu, but that override will only be persistent during the application session. The _System_ sorting can not be selected here as it's only applicable to collection systems.
 
 **Menu opening effect**
 
-Animation to play when opening the main menu or the game options menu. Also sets the animation for the game launch screen. Can be set to _Scale-up_ or _None_.
+Animation to play when opening the main menu or the gamelist options menu. Also sets the animation for the game launch screen. Can be set to _Scale-up_ or _None_.
 
 **Launch screen duration**
 
@@ -2366,10 +2363,6 @@ This enables or disables the ability to jump to a random system or game. It's ma
 **Enable gamelist filters**
 
 Activating or deactivating the ability to filter your gamelists. This can normally be left enabled.
-
-**Enable quick system select**
-
-If enabled, it's possible to navigate between gamelists using the _Left_ and _Right_ buttons without having to first go back to the System view.
 
 **Display on-screen help**
 
@@ -2663,14 +2656,14 @@ Self explanatory.
 
 Self explanatory.
 
-## Game options menu
+## Gamelist options menu
 
 This menu is opened from the gamelist view, and can't be accessed from the system view. The menu changes slightly depending on the context, for example if a game file or a folder is selected, or whether the current system is a collection or a normal game system.
 
 You open the menu using the **Back** button, and by pressing **B** or selecting the **Apply** button any settings such as letter jumping using the quick selector or sorting changes are applied. If you instead press the Back button again or select the **Cancel** button, the menu is closed without applying any changes.
 
-![alt text](images/es-de_game_options_menu.png "ES-DE Game Options Menu")
-_The game options menu as laid out when opening it from within a custom collection, which adds the menu entry to add or remove games from the collection._
+![alt text](images/es-de_game_options_menu.png "ES-DE Gamelist Options Menu")
+_The gamelist options menu as laid out when opening it from within a custom collection, which adds the menu entry to add or remove games from the collection._
 
 Here's a summary of the menu entries:
 
@@ -2680,7 +2673,7 @@ This provides a quick selector for jumping to a certain letter. If the setting t
 
 ### Sort games by
 
-This is the sort order for the gamelist. The default sorting shown here is taken from the setting _Default sort order_ under _UI settings_ in the main menu. Any sorting that is applied via the game options menu will be persistent throughout the program session, and it can be set individually per game system and per collection.
+This is the sort order for the gamelist. The default sorting shown here is taken from the setting _Default sort order_ under _UI settings_ in the main menu. Any sorting that is applied via the gamelist options menu will be persistent throughout the program session, and it can be set individually per game system and per collection.
 
 Sorting can be applied using the following metadata, in either ascending or descending order:
 
@@ -2702,7 +2695,7 @@ The secondary sorting is always in ascending filename order.
 Choosing this entry opens a separate screen where it's possible to apply a filter to the gamelist. The filter is persistent throughout the program session, or until it's manually reset. The option to reset all filters is shown on the same screen.
 
 ![alt text](images/es-de_gamelist_filters.png "ES-DE Gamelist Filters")
-_The gamelist filter screen, accessed from the game options menu._
+_The gamelist filter screen, accessed from the gamelist options menu._
 
 The following filters can be applied:
 
@@ -2775,7 +2768,7 @@ This is the name that will be shown when browsing the gamelist. If no sortname h
 
 **Sortname** _(files only)_
 
-This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the game options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. The _sortname_ entry also affects custom collections, although for these it's possible to override the value as described below. This entry only applies if the sort order has been set to _Filename, Ascending_ or _Filename, Descending_.
+This entry makes it possible to change the sorting of a game without having to change its name. For instance it can be used to sort _Mille Miglia_ as _1000 Miglia_ or _The Punisher_ as _Punisher, The_. Note that the _Jump to..._ quick selector on the gamelist options menu will base its index on the first character of the sortname if it exists for a game, which could be slightly confusing in some instances when quick jumping in the gamelist. The _sortname_ entry also affects custom collections, although for these it's possible to override the value as described below. This entry only applies if the sort order has been set to _Filename, Ascending_ or _Filename, Descending_.
 
 **Custom collections sortname** _(only visible when editing a game from within a custom collection)_
 
@@ -2823,7 +2816,7 @@ A flag to mark whether the game is suitable for children. This will be applied a
 
 **Hidden**
 
-A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch scripts and unnecessary binaries or to hide the actual game files for multi-disc games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games has not been enabled, then the opacity of the text will be lowered significantly to make it clear that it's a hidden entry.
+A flag to indicate that the game is hidden. If the corresponding option has been set in the main menu, the game will not be shown. Useful for example for DOS games to hide batch files and unnecessary binaries or to hide the actual game files for multi-disc games. If a file or folder is flagged as hidden but the corresponding option to hide hidden games has not been enabled, then the opacity for the entry will be lowered significantly to make it clear that it's a hidden entry.
 
 **Broken/not working**
 
@@ -2855,7 +2848,7 @@ If the option _Enable alternative emulators per game_ has been enabled, there wi
 
 **Folder link** _(folders only)_
 
-Using this option it's possible to link a specific file inside the game's folder structure that will be launched directly instead of entering the folder when pressing the _A_ button. This is very useful for systems where there are multiple files per game, such as multi-disc games where an .m3u file is used to launch the game. As the name implies this is only a link, and as folders can't be part of collections (the automatic collections _All games, Favorites_ and _Last played_ as well as any custom collections) it's the linked file inside the folder that is included in such collections. So for instance, launching a game via a linked folder will have the linked file show up in the _Last played_ collection rather than the folder itself. This also means that you should scrape the linked file in addition to the folder to be able to see game media and metadata throughout the application. To override the folder link and enter the directory, there is an entry available in the game options menu.
+Using this option it's possible to link a specific file inside the game's folder structure that will be launched directly instead of entering the folder when pressing the _A_ button. This is very useful for systems where there are multiple files per game, such as multi-disc games where an .m3u file is used to launch the game. As the name implies this is only a link, and as folders can't be part of collections (the automatic collections _All games, Favorites_ and _Last played_ as well as any custom collections) it's the linked file inside the folder that is included in such collections. So for instance, launching a game via a linked folder will have the linked file show up in the _Last played_ collection rather than the folder itself. This also means that you should scrape the linked file in addition to the folder to be able to see game media and metadata throughout the application. To override the folder link and enter the directory, there is an entry available in the gamelist options menu.
 
 ### Buttons
 
@@ -2901,7 +2894,7 @@ Numerous options can be set for these screensavers, as detailed [here](USERGUIDE
 
 The Dim screensaver simply dims and desaturates the current view and Black will show a black screen. The Slideshow and Video screensavers are more interesting as they can display images and videos from your game collection. In addition to this, the Slideshow screensaver can be configured to only show images from a specified directory.
 
-If the option _Enable screensaver controls_ has been activated, you can manually toggle the screensaver from the system view by pressing the _Back_ button. In addition to this, for the Slideshow and Video screensavers, the controls will allow you to jump to a new random image or video by using the _Left_ and _Right_ buttons on your keyboard or controller. It's also possible to launch the game currently displayed using the _A_ button, and the _Y_ button will jump to the game in its gamelist without starting it.
+If the option _Enable screensaver controls_ has been activated, you can manually toggle the screensaver from the system view by pressing the _X_ button. In addition to this, for the Slideshow and Video screensavers, the controls will allow you to jump to a new random image or video by using the _Left_ and _Right_ buttons on your keyboard or controller. It's also possible to launch the game currently displayed using the _A_ button, and the _Y_ button will jump to the game in its gamelist without starting it.
 
 For the video and slideshow screensavers, an overlay can be enabled via the screensaver options that displays the game name and the game system as well as a star symbol if the game is marked as a favorite.
 
@@ -2944,9 +2937,9 @@ During the time that the collection is being edited, any game that is part of th
 
 As well, when editing custom collections the _folder link_ configuration is disabled, making it possible to enter folders with such configuration just as if there were no folder links configured.
 
-When you are done adding games, you can either open the main menu and go to **Game collection settings** and select the **Finish editing 'Platform' collection** or you can open the game options menu and select the same option there. The latter works from within any gamelist, so you don't need to first navigate back to the collection that you're editing.
+When you are done adding games, you can either open the main menu and go to **Game collection settings** and select the **Finish editing 'Platform' collection** or you can open the gamelist options menu and select the same option there. The latter works from within any gamelist, so you don't need to first navigate back to the collection that you're editing.
 
-You can later add additional games to the collection by navigating to it, bringing up the game options menu and choosing **Add/remove games to this game collection**.
+You can later add additional games to the collection by navigating to it, bringing up the gamelist options menu and choosing **Add/remove games to this game collection**.
 
 ![alt text](images/es-de_custom_collections.png "ES-DE Custom Collections")
 _Example of custom collections, here configured as genres._
@@ -3071,7 +3064,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file in root folder  |
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W*] | Mednafen **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME **(Standalone)** [UMW*]      |                                   | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [UW*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [UW*],<br>Supermodel [Fullscreen] **(Standalone)** [UW*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)** [UMW*]      |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** [UMW*] | Yes          |                                      |
@@ -3121,7 +3114,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | Lutris application **(Standalone)** [U] |                             | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | Basilisk II **(Standalone)** [UMW*] | SheepShaver **(Standalone)** [UMW*] | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [UW*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [UW*],<br>Supermodel [Fullscreen] **(Standalone)** [UW*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      |                                      |
 | mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      |                                      |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file in root folder |
@@ -3131,7 +3124,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | megaduck              | Creatronic Mega Duck                           | SameDuck                          |                                   | No           | Single archive or ROM file in root folder |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
 | model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W*],<br>MAME - Current [UM] | Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>MAME - Current [W],<br>MAME **(Standalone)** [UMW*] | Yes for MAME | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
-| model3                | Sega Model 3                                   | Supermodel **(Standalone)** [UW*]  |                                   | No           | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| model3                | Sega Model 3                                   | Supermodel **(Standalone)** [UW*] | Supermodel [Fullscreen] **(Standalone)** [UW*] | No           | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | moonlight             | Moonlight Game Streaming                       | _Placeholder_                     |                                   |              |                                      |
 | moto                  | Thomson MO/TO Series                           | Theodore                          |                                   |              |                                      |
 | msx                   | MSX                                            | blueMSX                           | fMSX,<br>openMSX **(Standalone)** [UMW*],<br>openMSX No Machine **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
@@ -3143,7 +3136,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW*],<br>Rosalie's Mupen GUI **(Standalone)** [U],<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW*],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
 | n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** [UMW*] | No           |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
@@ -3207,7 +3200,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)** [UMW*]  | No           |                                      |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)** [UMW*],<br>PrimeHack **(Standalone)** [UW*] | No           |                                      |
-| wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)** [UW*]       |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
+| wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)** [UMW*]      |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           |                                      |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file in root folder |

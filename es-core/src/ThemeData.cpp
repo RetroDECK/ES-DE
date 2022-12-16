@@ -43,7 +43,7 @@ std::vector<std::string> ThemeData::sLegacySupportedFeatures {
     {"z-index"},
     {"visible"}};
 
-std::vector<std::string> ThemeData::sLegacyElements {
+std::vector<std::string> ThemeData::sLegacyProperties {
     {"showSnapshotNoVideo"},
     {"showSnapshotDelay"},
     {"forceUppercase"},
@@ -55,6 +55,12 @@ std::vector<std::string> ThemeData::sLegacyElements {
     {"logoRotationOrigin"},
     {"logoAlignment"},
     {"maxLogoCount"}};
+
+std::vector<std::string> ThemeData::sDeprecatedProperties {
+    {"staticItem"},
+    {"itemType"},
+    {"defaultItem"},
+    {"itemInterpolation"}};
 
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"automatic", "automatic"},
@@ -101,6 +107,140 @@ std::map<std::string, std::map<std::string, std::string>> ThemeData::sPropertyAt
 
 std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
     ThemeData::sElementMap {
+     {"carousel",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"type", STRING},
+       {"staticImage", PATH},
+       {"imageType", STRING},
+       {"defaultImage", PATH},
+       {"staticItem", PATH},                       // TEMPORARY: For backward compatibility.
+       {"itemType", STRING},                       // TEMPORARY: For backward compatibility.
+       {"defaultItem", PATH},                      // TEMPORARY: For backward compatibility.
+       {"maxItemCount", FLOAT},
+       {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
+       {"itemsBeforeCenter", UNSIGNED_INTEGER},
+       {"itemsAfterCenter", UNSIGNED_INTEGER},
+       {"itemStacking", STRING},
+       {"itemSize", NORMALIZED_PAIR},
+       {"itemScale", FLOAT},
+       {"itemRotation", FLOAT},
+       {"itemRotationOrigin", NORMALIZED_PAIR},
+       {"itemAxisHorizontal", BOOLEAN},
+       {"itemInterpolation", STRING},              // TEMPORARY: For backward compatibility.
+       {"imageInterpolation", STRING},
+       {"imageColor", COLOR},
+       {"imageColorEnd", COLOR},
+       {"imageGradientType", STRING},
+       {"imageBrightness", FLOAT},
+       {"imageSaturation", FLOAT},
+       {"itemTransitions", STRING},
+       {"itemHorizontalAlignment", STRING},
+       {"itemVerticalAlignment", STRING},
+       {"wheelHorizontalAlignment", STRING},
+       {"horizontalOffset", FLOAT},
+       {"verticalOffset", FLOAT},
+       {"reflections", BOOLEAN},
+       {"reflectionsOpacity", FLOAT},
+       {"reflectionsFalloff", FLOAT},
+       {"unfocusedItemOpacity", FLOAT},
+       {"defaultLogo", PATH},                      // For backward compatibility with legacy themes.
+       {"logoSize", NORMALIZED_PAIR},              // For backward compatibility with legacy themes.
+       {"logoScale", FLOAT},                       // For backward compatibility with legacy themes.
+       {"logoRotation", FLOAT},                    // For backward compatibility with legacy themes.
+       {"logoRotationOrigin", NORMALIZED_PAIR},    // For backward compatibility with legacy themes.
+       {"logoAlignment", STRING},                  // For backward compatibility with legacy themes.
+       {"color", COLOR},
+       {"colorEnd", COLOR},
+       {"gradientType", STRING},
+       {"text", STRING},
+       {"textColor", COLOR},
+       {"textBackgroundColor", COLOR},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"letterCase", STRING},
+       {"letterCaseCollections", STRING},
+       {"letterCaseGroupedCollections", STRING},
+       {"lineSpacing", FLOAT},
+       {"fadeAbovePrimary", BOOLEAN},
+       {"zIndex", FLOAT},
+       {"legacyZIndexMode", STRING}}},             // For backward compatibility with legacy themes.
+     {"grid",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"staticImage", PATH},
+       {"imageType", STRING},
+       {"defaultImage", PATH},
+       {"itemSize", NORMALIZED_PAIR},
+       {"itemScale", FLOAT},
+       {"itemSpacing", NORMALIZED_PAIR},
+       {"fractionalRows", BOOLEAN},
+       {"itemTransitions", STRING},
+       {"rowTransitions", STRING},
+       {"unfocusedItemOpacity", FLOAT},
+       {"edgeScaleInwards", BOOLEAN},              // TODO
+       {"imageFit", STRING},
+       {"imageRelativeScale", FLOAT},
+       {"imageColor", COLOR},
+       {"imageColorEnd", COLOR},
+       {"imageGradientType", STRING},
+       {"imageBrightness", FLOAT},
+       {"imageSaturation", FLOAT},
+       {"backgroundImage", PATH},
+       {"backgroundRelativeScale", FLOAT},
+       {"backgroundColor", COLOR},
+       {"backgroundColorEnd", COLOR},
+       {"backgroundGradientType", STRING},
+       {"selectorImage", PATH},
+       {"selectorRelativeScale", FLOAT},
+       {"selectorLayer", STRING},
+       {"selectorColor", COLOR},
+       {"selectorColorEnd", COLOR},
+       {"selectorGradientType", STRING},
+       {"text", STRING},
+       {"textRelativeScale", FLOAT},
+       {"textColor", COLOR},
+       {"textBackgroundColor", COLOR},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"letterCase", STRING},
+       {"letterCaseCollections", STRING},
+       {"letterCaseGroupedCollections", STRING},
+       {"lineSpacing", FLOAT},
+       {"fadeAbovePrimary", BOOLEAN},
+       {"zIndex", FLOAT}}},
+     {"textlist",
+      {{"pos", NORMALIZED_PAIR},
+       {"size", NORMALIZED_PAIR},
+       {"origin", NORMALIZED_PAIR},
+       {"selectorHeight", FLOAT},
+       {"selectorOffsetY", FLOAT},
+       {"selectorColor", COLOR},
+       {"selectorColorEnd", COLOR},
+       {"selectorGradientType", STRING},
+       {"selectorImagePath", PATH},
+       {"selectorImageTile", BOOLEAN},
+       {"primaryColor", COLOR},
+       {"secondaryColor", COLOR},
+       {"selectedColor", COLOR},
+       {"selectedSecondaryColor", COLOR},
+       {"fontPath", PATH},
+       {"fontSize", FLOAT},
+       {"scrollSound", PATH},                      // For backward compatibility with legacy themes.
+       {"horizontalAlignment", STRING},
+       {"alignment", STRING},                      // For backward compatibility with legacy themes.
+       {"horizontalMargin", FLOAT},
+       {"letterCase", STRING},
+       {"letterCaseCollections", STRING},
+       {"letterCaseGroupedCollections", STRING},
+       {"forceUppercase", BOOLEAN},                // For backward compatibility with legacy themes.
+       {"lineSpacing", FLOAT},
+       {"indicators", STRING},
+       {"collectionIndicators", STRING},
+       {"fadeAbovePrimary", BOOLEAN},
+       {"zIndex", FLOAT}}},
      {"image",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
@@ -113,6 +253,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"imageType", STRING},
        {"metadataElement", BOOLEAN},
        {"gameselector", STRING},
+       {"gameselectorEntry", UNSIGNED_INTEGER},
        {"tile", BOOLEAN},
        {"tileSize", NORMALIZED_PAIR},
        {"tileHorizontalAlignment", STRING},
@@ -122,6 +263,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"colorEnd", COLOR},
        {"gradientType", STRING},
        {"scrollFadeIn", BOOLEAN},
+       {"brightness", FLOAT},
        {"opacity", FLOAT},
        {"saturation", FLOAT},
        {"visible", BOOLEAN},
@@ -137,14 +279,19 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"imageType", STRING},
        {"metadataElement", BOOLEAN},
        {"gameselector", STRING},
+       {"gameselectorEntry", UNSIGNED_INTEGER},
        {"audio", BOOLEAN},
        {"interpolation", STRING},
+       {"color", COLOR},
+       {"colorEnd", COLOR},
+       {"gradientType", STRING},
        {"pillarboxes", BOOLEAN},
        {"pillarboxThreshold", NORMALIZED_PAIR},
        {"scanlines", BOOLEAN},
        {"delay", FLOAT},
        {"fadeInTime", FLOAT},
        {"scrollFadeIn", BOOLEAN},
+       {"brightness", FLOAT},
        {"opacity", FLOAT},
        {"saturation", FLOAT},
        {"visible", BOOLEAN},
@@ -163,6 +310,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"direction", STRING},
        {"keepAspectRatio", BOOLEAN},
        {"interpolation", STRING},
+       {"brightness", FLOAT},
        {"opacity", FLOAT},
        {"saturation", FLOAT},
        {"visible", BOOLEAN},
@@ -201,6 +349,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"metadata", STRING},
        {"metadataElement", BOOLEAN},
        {"gameselector", STRING},
+       {"gameselectorEntry", UNSIGNED_INTEGER},
        {"container", BOOLEAN},
        {"containerVerticalSnap", BOOLEAN},
        {"containerScrollSpeed", FLOAT},
@@ -227,6 +376,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotationOrigin", NORMALIZED_PAIR},
        {"metadata", STRING},
        {"gameselector", STRING},
+       {"gameselectorEntry", UNSIGNED_INTEGER},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"horizontalAlignment", STRING},
@@ -265,6 +415,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
        {"gameselector", STRING},
+       {"gameselectorEntry", UNSIGNED_INTEGER},
        {"interpolation", STRING},
        {"color", COLOR},
        {"filledPath", PATH},
@@ -272,85 +423,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"overlay", BOOLEAN},
        {"opacity", FLOAT},
        {"visible", BOOLEAN},
-       {"zIndex", FLOAT}}},
-     {"carousel",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR},
-       {"type", STRING},
-       {"staticItem", PATH},
-       {"itemType", STRING},
-       {"defaultItem", PATH},
-       {"maxItemCount", FLOAT},
-       {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
-       {"itemsBeforeCenter", UNSIGNED_INTEGER},
-       {"itemsAfterCenter", UNSIGNED_INTEGER},
-       {"itemSize", NORMALIZED_PAIR},
-       {"itemScale", FLOAT},
-       {"itemTransitions", STRING},
-       {"itemInterpolation", STRING},
-       {"itemRotation", FLOAT},
-       {"itemRotationOrigin", NORMALIZED_PAIR},
-       {"itemAxisHorizontal", BOOLEAN},
-       {"itemHorizontalAlignment", STRING},
-       {"itemVerticalAlignment", STRING},
-       {"wheelHorizontalAlignment", STRING},
-       {"horizontalOffset", FLOAT},
-       {"verticalOffset", FLOAT},
-       {"reflections", BOOLEAN},
-       {"reflectionsOpacity", FLOAT},
-       {"reflectionsFalloff", FLOAT},
-       {"unfocusedItemOpacity", FLOAT},
-       {"defaultLogo", PATH},                      // For backward compatibility with legacy themes.
-       {"logoSize", NORMALIZED_PAIR},              // For backward compatibility with legacy themes.
-       {"logoScale", FLOAT},                       // For backward compatibility with legacy themes.
-       {"logoRotation", FLOAT},                    // For backward compatibility with legacy themes.
-       {"logoRotationOrigin", NORMALIZED_PAIR},    // For backward compatibility with legacy themes.
-       {"logoAlignment", STRING},                  // For backward compatibility with legacy themes.
-       {"color", COLOR},
-       {"colorEnd", COLOR},
-       {"gradientType", STRING},
-       {"text", STRING},
-       {"textColor", COLOR},
-       {"textBackgroundColor", COLOR},
-       {"fontPath", PATH},
-       {"fontSize", FLOAT},
-       {"letterCase", STRING},
-       {"letterCaseCollections", STRING},
-       {"letterCaseGroupedCollections", STRING},
-       {"lineSpacing", FLOAT},
-       {"fadeAbovePrimary", BOOLEAN},
-       {"zIndex", FLOAT},
-       {"legacyZIndexMode", STRING}}},             // For backward compatibility with legacy themes.
-     {"textlist",
-      {{"pos", NORMALIZED_PAIR},
-       {"size", NORMALIZED_PAIR},
-       {"origin", NORMALIZED_PAIR},
-       {"selectorHeight", FLOAT},
-       {"selectorOffsetY", FLOAT},
-       {"selectorColor", COLOR},
-       {"selectorColorEnd", COLOR},
-       {"selectorGradientType", STRING},
-       {"selectorImagePath", PATH},
-       {"selectorImageTile", BOOLEAN},
-       {"primaryColor", COLOR},
-       {"secondaryColor", COLOR},
-       {"selectedColor", COLOR},
-       {"selectedSecondaryColor", COLOR},
-       {"fontPath", PATH},
-       {"fontSize", FLOAT},
-       {"scrollSound", PATH},                      // For backward compatibility with legacy themes.
-       {"horizontalAlignment", STRING},
-       {"alignment", STRING},                      // For backward compatibility with legacy themes.
-       {"horizontalMargin", FLOAT},
-       {"letterCase", STRING},
-       {"letterCaseCollections", STRING},
-       {"letterCaseGroupedCollections", STRING},
-       {"forceUppercase", BOOLEAN},                // For backward compatibility with legacy themes.
-       {"lineSpacing", FLOAT},
-       {"indicators", STRING},
-       {"collectionIndicators", STRING},
-       {"fadeAbovePrimary", BOOLEAN},
        {"zIndex", FLOAT}}},
      {"gameselector",
       {{"selection", STRING},
@@ -370,8 +442,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"textStyle", STRING},                      // For backward compatibility with legacy themes.
        {"opacity", FLOAT},
        {"customButtonIcon", PATH}}},
-     {"sound",
-      {{"path", PATH}}},
      {"navigationsounds",
       {{"systembrowseSound", PATH},
        {"quicksysselectSound", PATH},
@@ -381,6 +451,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"favoriteSound", PATH},
        {"launchSound", PATH}}},
      // Legacy components below, not in use any longer but needed for backward compatibility.
+     {"sound",
+      {{"path", PATH}}},
      {"imagegrid",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
@@ -1415,13 +1487,25 @@ void ThemeData::parseElement(const pugi::xml_node& root,
 
         std::string nodeName = node.name();
 
-        // Strictly enforce removal of legacy elements for non-legacy theme sets by creating
+        // Strictly enforce removal of legacy properties for non-legacy theme sets by creating
         // an unthemed system if they're present in the configuration.
         if (!mLegacyTheme) {
-            for (auto& legacyElement : sLegacyElements) {
-                if (nodeName == legacyElement) {
+            for (auto& legacyProperty : sLegacyProperties) {
+                if (nodeName == legacyProperty) {
                     throw error << ": Legacy <" << nodeName
                                 << "> property found for non-legacy theme set";
+                }
+            }
+        }
+
+        // Print a warning if a deprecated property is used for a non-legacy theme set.
+        if (!mLegacyTheme) {
+            for (auto& deprecatedProperty : sDeprecatedProperties) {
+                if (nodeName == deprecatedProperty) {
+                    LOG(LogWarning)
+                        << "ThemeData::parseElement(): Property \"" << deprecatedProperty
+                        << "\" is deprecated and support for it will be removed in a future "
+                           "version";
                 }
             }
         }
