@@ -315,6 +315,7 @@
         <!-- Nintendo Game Boy Advance emulator mGBA -->
         <rule type="systempath">
             <entry>mgba</entry>
+            <entry>mgba-qt</entry>
             <entry>io.mgba.mGBA</entry>
         </rule>
         <rule type="staticpath">
@@ -556,6 +557,7 @@
         <!-- Super Nintendo emulator Snes9x -->
         <rule type="systempath">
             <entry>snes9x</entry>
+            <entry>snes9x-gtk</entry>
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/com.snes9x.Snes9x</entry>
