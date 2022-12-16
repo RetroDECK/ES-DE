@@ -1435,8 +1435,8 @@
         <name>switch</name>
         <fullname>Nintendo Switch</fullname>
         <path>%ROMPATH%/switch</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI .7z .7Z .zip .ZIP</extension>
+        <command label="Ryujinx (Standalone)">%EMULATOR_RYUJINX% %ROM%</command>
         <platform>switch</platform>
         <theme>switch</theme>
     </system>

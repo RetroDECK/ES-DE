@@ -216,6 +216,12 @@
             <entry>/Applications/Ruffle.app/Contents/MacOS/ruffle</entry>
         </rule>
     </emulator>
+    <emulator name="RYUJINX">
+        <!-- Nintendo Switch emulator Ryujinx -->
+        <rule type="staticpath">
+            <entry>/Applications/Ryujinx.app/Contents/MacOS/Ryujinx</entry>
+        </rule>
+    </emulator>
     <emulator name="SIMCOUPE">
         <!-- SAM Coupé emulator SimCoupé -->
         <rule type="staticpath">
