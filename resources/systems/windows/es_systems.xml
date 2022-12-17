@@ -178,6 +178,7 @@
         <path>%ROMPATH%\atarijaguar</path>
         <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
         <command label="Virtual Jaguar">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\virtualjaguar_libretro.dll %ROM%</command>
+        <command label="BigPEmu (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_BIGPEMU% %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\atarijaguar jaguar -cart %ROM%</command>
         <platform>atarijaguar, atarijaguarcd</platform>
         <theme>atarijaguar</theme>

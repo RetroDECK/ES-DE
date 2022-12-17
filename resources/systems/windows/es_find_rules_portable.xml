@@ -63,6 +63,14 @@
             <entry>%ESPATH%\..\BasiliskII\BasiliskII.exe</entry>
         </rule>
     </emulator>
+    <emulator name="BIGPEMU">
+        <!-- Atari Jaguar emulator BigPEmu -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\BigPEmu\BigPEmu.exe</entry>
+            <entry>%ESPATH%\BigPEmu\BigPEmu.exe</entry>
+            <entry>%ESPATH%\..\BigPEmu\BigPEmu.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="BSNES">
         <!-- Super Nintendo/Super Famicom emulator bsnes -->
         <rule type="staticpath">
