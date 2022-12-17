@@ -1027,7 +1027,7 @@ Properties:
 * `staticImage` - type: PATH
     - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
 * `imageType` - type: STRING
-    - This displays a game image of a certain media type, and can only be used in the `gamelist` view.
+    - This displays a game image of a certain media type, and can only be used in the `gamelist` view. Optionally two types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined, and any superfluous entries will be ignored. Note that defining two entries can lead to quite a performance penalty so in general it's recommended to define a single value and instead use `defaultImage` as a fallback in case no image is found.
     - Valid values:
     - `marquee` - This will look for a marquee (wheel) image.
     - `cover` - This will look for a box front cover image.
@@ -1038,7 +1038,7 @@ Properties:
     - `titlescreen` - This will look for a title screen image.
     - `miximage` - This will look for a miximage.
     - `fanart` - This will look for a fan art image.
-    - `none` - No image will be used, instead the game name will be displayed as text.
+    - `none` - No image will be used, instead the game name will be displayed as text. Has no effect if `defaultImage` has been defined.
     - Default is `marquee`
 * `defaultImage` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
@@ -1208,7 +1208,7 @@ Properties:
 * `staticImage` - type: PATH
     - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
 * `imageType` - type: STRING
-    - This displays a game image of a certain media type, and can only be used in the `gamelist` view.
+    - This displays a game image of a certain media type, and can only be used in the `gamelist` view. Optionally two types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined, and any superfluous entries will be ignored. Note that defining two entries can lead to quite a performance penalty so in general it's recommended to define a single value and instead use `defaultImage` as a fallback in case no image is found.
     - Valid values:
     - `marquee` - This will look for a marquee (wheel) image.
     - `cover` - This will look for a box front cover image.
@@ -1219,7 +1219,7 @@ Properties:
     - `titlescreen` - This will look for a title screen image.
     - `miximage` - This will look for a miximage.
     - `fanart` - This will look for a fan art image.
-    - `none` - No image will be used, instead the game name will be displayed as text.
+    - `none` - No image will be used, instead the game name will be displayed as text. Has no effect if `defaultImage` has been defined.
     - Default is `marquee`
 * `defaultImage` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
