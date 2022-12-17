@@ -27,6 +27,7 @@
 #include "views/ViewController.h"
 
 #include <assert.h>
+#include <regex>
 
 FileData::FileData(FileType type,
                    const std::string& path,
@@ -1463,10 +1464,19 @@ void FileData::launchGame()
                     validFile = true;
                 if (line.substr(0, 5) == "Exec=") {
                     romPath = {line.substr(5, line.size() - 5)};
-                    romPath = Utils::String::replace(romPath, "%F", "");
-                    romPath = Utils::String::replace(romPath, "%f", "");
-                    romPath = Utils::String::replace(romPath, "%U", "");
-                    romPath = Utils::String::replace(romPath, "%u", "");
+                    const std::string regexString {"[^%]%"};
+                    // Field codes, some of these are deprecated but may still exist in older
+                    // .desktop files. Any matching codes escaped by double %% characters will
+                    // be left as-is.
+                    std::string codeCharacters {"fFuUdDnNickvm"};
+                    std::smatch searchResult;
+                    while (!codeCharacters.empty()) {
+                        while (std::regex_search(romPath, searchResult,
+                                                 std::regex(regexString + codeCharacters.back())))
+                            romPath.replace(searchResult.position(0) + 1, searchResult.length() - 1,
+                                            "");
+                        codeCharacters.pop_back();
+                    }
                     romPath = Utils::String::replace(romPath, "%%", "%");
                     romPath = Utils::String::trim(romPath);
                     command = Utils::String::replace(command, binaryPath, "");
