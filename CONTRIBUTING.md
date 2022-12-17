@@ -77,22 +77,22 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.1
 
-* Add element transition animations to the theme engine
-* New texture/cache manager with improved memory management and support for GIF and Lottie animations
-* Reduced amount of gamelist reloading to retain cached textures and improve overall performance
-* Add scraping of game manuals and maps and create a viewer for these (with PDF, GIF, JPG and PNG support)
-* Support for additional scraper services (if feasible?)
-* Web proxy support for the scraper
+* Theme engine composite element support for enabling advanced and finely controlled layouts
+* Theme engine element animation support (storyboards)
+* New texture/cache manager with improved memory management and performance
+* Better and more accurate RAM and VRAM usage statistics
+* Scraping of game manuals and maps plus a viewer for these (with PDF and raster image support)
+* Support for additional scraper services
 * RetroAchievements.org integration
-* Add "time played" counter per game, similar to how it works in Steam
 
 #### v2.2
 
 * Theme downloader
-* Scrollbar component for the gamelist view which can be used by the themes
-* Reorganize the menus, possibly adding basic/advanced modes
 * Background music
 * Proper audio mixer
+* Reorganize the menus, possibly adding basic/advanced modes
+* Reduced amount of gamelist reloading to retain cached textures and improve overall performance
+* Add "time played" counter per game, similar to how it works in Steam
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Support for portrait orientation, e.g. for Tate Mode arcade cabinets
 * Replace the built-in Unicode functions and lookup tables with those of the ICU library
@@ -101,11 +101,12 @@ The roadmap is under constant review so expect it to change from time to time. S
 #### v2.3
 
 * Vulkan renderer for all supported operating systems
+* Use of MoltenVK to get Metal support on macOS
 * Localization/multi-language support
-* Dependency on MoltenVK to get Metal support on macOS
-* Better and more accurate GPU and memory usage statistics overlay
-* Simple file browsing component
 * Bulk metadata editor
+* Scrollbar component for the gamelist view which can be used by themes
+* Simple file browsing component
+* Web proxy support for the scraper
 * Improve multi-threading
 
 #### v2.4

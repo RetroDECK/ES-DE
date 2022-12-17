@@ -30,6 +30,7 @@ Emulators\ArcadeFlashWeb\ArcadeFlashWeb.exe
 Emulators\ares\ares.exe
 Emulators\atari800\atari800.exe
 Emulators\BasiliskII\BasiliskII.exe
+Emulators\BigPEmu\BigPEmu.exe
 Emulators\bsnes\bsnes.exe
 Emulators\cemu\Cemu.exe
 Emulators\Citra\canary-mingw\citra-qt.exe

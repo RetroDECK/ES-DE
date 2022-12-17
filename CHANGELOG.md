@@ -54,18 +54,21 @@
 * Added support for the mugen system on Linux and macOS using the Ikemen GO game engine
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
+* Added MAME standalone as an alternative emulator for the atarijaguar system
+* (Windows) Added BigPEmu standalone as an alternative emulator for the atarijaguar system
+* Reverted the atarijaguarcd system to placeholder status as no emulators including Virtual Jaguar run these games properly
 * Added the . (dot) file extension to the xbox360 system on Windows to support extensionless XBLA games
 * Added the .car and .rom file extensions to the a5200 system
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
 * Added the .m3u file extension to the pcfx system
-* Removed the .7z and .zip file extensions from the 3do, neogeocd and neogeocdjp systems
+* Removed the .7z and .zip file extensions from the 3do, neogeocd, neogeocdjp and switch systems
 * Removed the .ccd and .cue file extensions from the fbneo system
 * Removed the .ccd, .cue and .iso file extensions from the neogeo system
 * Added the FinalBurn Neo RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems
 * Added MAME standalone as an alternative emulator for the neogeo, neogeocd and neogeocdjp systems
-* Added FinalBurn Neo standalone as an alternative emulator for the fbneo, neogeo, neogeocd and neogeocdjp systems on Linux
-* Added FinalBurn Neo standalone as an alternative emulator for the fbneo and neogeo system on Windows
+* (Linux) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame, neogeo, neogeocd and neogeocdjp systems
+* (Windows) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame and neogeo system
 * Set DOSBox-X and DOSBox Staging to start in the game directory so per-game dosbox.conf files can be used
 * (macOS) Added an additional find rule entry for DOSBox-X as the binary name has been changed
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package
@@ -231,6 +234,7 @@
 
 * Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
 * Adding a dot (.) to the es_systems.xml extension tag (to setup extensionless entries) lead to a crash if the system contained folders
+* Parsing of .desktop files on Unix did not properly handle escaping of % characters which made game launching fail for some RPCS3 games
 * For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Text wrapping did not work correctly for text that typically does not contain spaces, like Japanese
