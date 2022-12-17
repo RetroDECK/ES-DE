@@ -110,6 +110,7 @@
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\arcade %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
+        <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
@@ -335,6 +336,7 @@
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cps %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
+        <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
         <command label="FB Alpha 2012 CPS-1">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_cps1_libretro.dll %ROM%</command>
         <command label="FB Alpha 2012 CPS-2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_cps2_libretro.dll %ROM%</command>
@@ -680,6 +682,7 @@
         <command label="MAME 2000">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mame2000_libretro.dll %ROM%</command>
         <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\mame %BASENAME%</command>
         <command label="FinalBurn Neo">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbneo_libretro.dll %ROM%</command>
+        <command label="FinalBurn Neo (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_FINALBURN-NEO% %BASENAME%</command>
         <command label="FB Alpha 2012">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\fbalpha2012_libretro.dll %ROM%</command>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\flycast_libretro.dll %ROM%</command>
         <command label="Flycast (Standalone)">%EMULATOR_FLYCAST% %ROM%</command>
