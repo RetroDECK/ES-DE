@@ -564,8 +564,8 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
 
         for (std::string& type : mThemeImageTypes) {
-            if (std::find(supportedImageTypes.cbegin(), supportedImageTypes.cend(), type) ==
-                supportedImageTypes.cend()) {
+            if (std::find(sSupportedImageTypes.cbegin(), sSupportedImageTypes.cend(), type) ==
+                sSupportedImageTypes.cend()) {
                 LOG(LogError)
                     << "ImageComponent: Invalid theme configuration, property \"imageType\" "
                        "for element \""

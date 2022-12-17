@@ -144,7 +144,7 @@ private:
 
     std::string mDefaultPath;
 
-    static inline std::vector<std::string> supportedImageTypes {
+    static inline std::vector<std::string> sSupportedImageTypes {
         "image", "miximage",  "marquee", "screenshot",    "titlescreen",
         "cover", "backcover", "3dbox",   "physicalmedia", "fanart"};
 
