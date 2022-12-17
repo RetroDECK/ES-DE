@@ -1063,8 +1063,8 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
     // Add the aspect ratios in the order they are defined in sSupportedAspectRatios so they
     // always show up in the same order in the UI Settings menu.
     if (!aspectRatiosTemp.empty()) {
-        // Add the "automatic" aspect ratio if there is more than one entry.
-        if (aspectRatiosTemp.size() > 1)
+        // Add the "automatic" aspect ratio if there is at least one entry.
+        if (!aspectRatiosTemp.empty())
             capabilities.aspectRatios.emplace_back(sSupportedAspectRatios.front().first);
         for (auto& aspectRatio : sSupportedAspectRatios) {
             if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), aspectRatio.first) !=
