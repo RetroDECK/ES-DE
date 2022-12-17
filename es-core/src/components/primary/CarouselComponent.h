@@ -61,8 +61,6 @@ public:
     Entry& getEntry(int index) { return mEntries.at(index); }
     void onDemandTextureLoad() override;
     const CarouselType getType() { return mType; }
-    const std::string& getImageType() { return mImageType; }
-    void setImageType(std::string imageType) { mImageType = imageType; }
     const std::string& getDefaultImage() { return mDefaultImage; }
     void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
     bool isScrolling() const override { return List::isScrolling(); }
@@ -132,7 +130,7 @@ private:
     bool mLegacyMode;
 
     CarouselType mType;
-    std::string mImageType;
+    std::vector<std::string> mImageTypes;
     std::string mDefaultImage;
     float mMaxItemCount;
     int mItemsBeforeCenter;
@@ -399,6 +397,9 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
 template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
 {
     if constexpr (std::is_same_v<T, FileData*>) {
+        if (mImageTypes.empty())
+            mImageTypes.emplace_back("marquee");
+
         const int numEntries {size()};
         const int center {getCursor()};
         const bool isWheel {mType == CarouselType::VERTICAL_WHEEL ||
@@ -463,26 +464,31 @@ template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
             if (entry.data.imagePath == "") {
                 FileData* game {entry.object};
 
-                if (mImageType == "" || mImageType == "marquee")
-                    entry.data.imagePath = game->getMarqueePath();
-                else if (mImageType == "cover")
-                    entry.data.imagePath = game->getCoverPath();
-                else if (mImageType == "backcover")
-                    entry.data.imagePath = game->getBackCoverPath();
-                else if (mImageType == "3dbox")
-                    entry.data.imagePath = game->get3DBoxPath();
-                else if (mImageType == "physicalmedia")
-                    entry.data.imagePath = game->getPhysicalMediaPath();
-                else if (mImageType == "screenshot")
-                    entry.data.imagePath = game->getScreenshotPath();
-                else if (mImageType == "titlescreen")
-                    entry.data.imagePath = game->getTitleScreenPath();
-                else if (mImageType == "miximage")
-                    entry.data.imagePath = game->getMiximagePath();
-                else if (mImageType == "fanart")
-                    entry.data.imagePath = game->getFanArtPath();
-                else if (mImageType == "none") // Display the game name as text.
-                    return;
+                for (auto& imageType : mImageTypes) {
+                    if (imageType == "marquee")
+                        entry.data.imagePath = game->getMarqueePath();
+                    else if (imageType == "cover")
+                        entry.data.imagePath = game->getCoverPath();
+                    else if (imageType == "backcover")
+                        entry.data.imagePath = game->getBackCoverPath();
+                    else if (imageType == "3dbox")
+                        entry.data.imagePath = game->get3DBoxPath();
+                    else if (imageType == "physicalmedia")
+                        entry.data.imagePath = game->getPhysicalMediaPath();
+                    else if (imageType == "screenshot")
+                        entry.data.imagePath = game->getScreenshotPath();
+                    else if (imageType == "titlescreen")
+                        entry.data.imagePath = game->getTitleScreenPath();
+                    else if (imageType == "miximage")
+                        entry.data.imagePath = game->getMiximagePath();
+                    else if (imageType == "fanart")
+                        entry.data.imagePath = game->getFanArtPath();
+                    else if (imageType == "none") // Display the game name as text.
+                        break;
+
+                    if (entry.data.imagePath != "")
+                        break;
+                }
 
                 if (entry.data.imagePath == "")
                     entry.data.imagePath = entry.data.defaultImagePath;
@@ -1030,6 +1036,57 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                "for element \""
                             << element.substr(9) << "\" defined as \"" << type << "\"";
             mType = CarouselType::HORIZONTAL;
+        }
+    }
+
+    // TEMPORARY: Support for itemType is for backward compatiblity due to property name changes.
+    if (mGamelistView && properties && (elem->has("imageType") || elem->has("itemType"))) {
+        const std::vector<std::string> supportedImageTypes {
+            "marquee",    "cover",       "backcover", "3dbox",  "physicalmedia",
+            "screenshot", "titlescreen", "miximage",  "fanart", "none"};
+        std::string imageTypesString;
+
+        if (elem->has("imageType"))
+            imageTypesString = elem->get<std::string>("imageType");
+        else
+            imageTypesString = elem->get<std::string>("itemType");
+
+        for (auto& character : imageTypesString) {
+            if (std::isspace(character))
+                character = ',';
+        }
+        imageTypesString = Utils::String::replace(imageTypesString, ",,", ",");
+        mImageTypes = Utils::String::delimitedStringToVector(imageTypesString, ",");
+
+        // Only allow two imageType entries due to performance reasons.
+        if (mImageTypes.size() > 2)
+            mImageTypes.erase(mImageTypes.begin() + 2, mImageTypes.end());
+
+        if (mImageTypes.empty()) {
+            LOG(LogWarning)
+                << "CarouselComponent: Invalid theme configuration, property \"imageType\" "
+                   "for element \""
+                << element.substr(9) << "\" contains no values";
+        }
+
+        for (std::string& type : mImageTypes) {
+            if (std::find(supportedImageTypes.cbegin(), supportedImageTypes.cend(), type) ==
+                supportedImageTypes.cend()) {
+                LOG(LogWarning)
+                    << "CarouselComponent: Invalid theme configuration, property \"imageType\" "
+                       "for element \""
+                    << element.substr(9) << "\" defined as \"" << type << "\"";
+                mImageTypes.clear();
+                break;
+            }
+        }
+
+        if (mImageTypes.size() == 2 && mImageTypes.front() == mImageTypes.back()) {
+            LOG(LogError)
+                << "CarouselComponent: Invalid theme configuration, property \"imageType\" "
+                   "for element \""
+                << element.substr(9) << "\" contains duplicate values";
+            mImageTypes.clear();
         }
     }
 
