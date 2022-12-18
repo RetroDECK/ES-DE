@@ -108,6 +108,8 @@
 * Added support to the system view for displaying videos, Lottie animations, GIF animations, date/time components and game ratings
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Added two letterCaseCollections and letterCaseGroupedCollections properties to control the letter case more specifically for the primary components
+* Renamed the textlist property selectorOffsetY to selectorVerticalOffset
+* Added a selectorHorizontalOffset textlist property to control the selector's relative horizontal position
 * Added a selectedSecondaryColor property to the textlist to highlight folder entries in the gamelist view with a different color than file entries
 * Added theme support for setting the textlist indicators to symbols, ascii or none
 * Added theme support for setting the textlist custom collection indicators to symbols or ascii

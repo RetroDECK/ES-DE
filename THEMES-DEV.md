@@ -90,6 +90,7 @@ As for more specific changes, the following are the most important ones compared
 * The carousel property `maxItemCount` (formerly named maxLogoCount) is now in float format for more granular control of logo placement compared to integer format for legacy themes. However some legacy theme authors thought this property supported floats (as the theme documentation incorrectly stated this) and have therefore set it to fractional values such as 3.5. This was actually rounded up when loading the theme configuration, and this logic is retained for legacy themes for backward compatibility. But for current themes the float value is correctly interpreted which means a manual rounding of the value is required in order to retain an identical layout when porting theme sets to the new theme engine. As well carousels of the wheel type now have the amount of entries controlled by the two new properties `itemsBeforeCenter` and `itemsAfterCenter`. This provides more exact control, including the ability to setup asymmetric wheels.
 * The full names of unthemed systems (or systems where the defined staticImage file is missing) will now be displayed in the system carousel instead of the short names shown for legacy themes. So for instance, instead of "cps" the full name "Capcom Play System" (as defined in es_systems.xml) will be displayed.
 * The carousel now has a zIndex value of 50 instead of 40. This means it's aligned with the textlist element which already had a zIndex value of 50.
+* The textlist property `selectorOffsetY` has been renamed to `selectorVerticalOffset` and a `selectorHorizontalOffset` property has been added as well.
 * The helpsystem `textColorDimmed` and `iconColorDimmed` properties (which apply when opening a menu) were always defined under the system view configuration which meant these properties could not be separately set for the gamelist views. Now these properties work as expected with the possibility to configure separate values for the system and gamelist views
 * When right-aligning the helpsystem using an X origin value of 1, the element is now aligned correctly to the defined position instead of being offset by the entrySpacing width (in RetroPie ES the offset was instead the hardcoded element entry padding)
 * Correct theme structure is enforced more strictly than before, and deviations will generate error log messages and make the theme loading fail
@@ -1357,16 +1358,23 @@ Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0 0.1`
 * `size` - type: NORMALIZED_PAIR
+    - Minimum value per axis is `0.05` and maximum value per axis is `1`
     - Default is `1 0.8`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the textlist exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `selectorHeight` - type: FLOAT
-    - Height of the selector bar. This is expanded downwards so you'll probably want to adjust its position using `selectorOffsetY` if making use of this property.
+    - Height of the selector bar. This is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if making use of this property.
+    - Minimum value is `0` and maximum value is `1`
     - Default is 1.5 times the value defined by `fontSize`
-* `selectorOffsetY` - type: FLOAT
-    - Allows moving of the selector bar up or down from its calculated position. Useful for fine tuning the position of the selector bar relative to the text.
+* `selectorHorizontalOffset` - type: FLOAT
+    - Allows moving of the selector bar left or right from its calculated position. Useful for fine tuning the selector bar position relative to the text.
+    - Minimum value is `-1` and maximum value is `1`
+    - Default is `0`
+* `selectorVerticalOffset` - type: FLOAT
+    - Allows moving of the selector bar up or down from its calculated position. Useful for fine tuning the selector bar position relative to the text.
+    - Minimum value is `-1` and maximum value is `1`
     - Default is `0`
 * `selectorColor` - type: COLOR
     - Color of the selector bar.
