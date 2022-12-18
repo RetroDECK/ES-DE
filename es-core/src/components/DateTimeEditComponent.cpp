@@ -173,7 +173,7 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
         float referenceSize {0.0f};
 
         if (mAlignRight)
-            referenceSize = mParent->getSize().x * 0.1045f;
+            referenceSize = std::round(mParent->getSize().x * 0.1045f);
 
         // Vertically center.
         glm::vec3 off {0.0f, (mSize.y - mTextCache->metrics.size.y) / 2.0f, 0.0f};
