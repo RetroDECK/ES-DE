@@ -133,7 +133,8 @@ private:
     LetterCase mLetterCaseGroupedCollections;
     float mLineSpacing;
     float mSelectorHeight;
-    float mSelectorOffsetY;
+    float mSelectorHorizontalOffset;
+    float mSelectorVerticalOffset;
     unsigned int mSelectorColor;
     unsigned int mSelectorColorEnd;
     bool mSelectorColorGradientHorizontal;
@@ -167,7 +168,8 @@ TextListComponent<T>::TextListComponent()
     , mLetterCaseGroupedCollections {LetterCase::NONE}
     , mLineSpacing {1.5f}
     , mSelectorHeight {mFont->getSize() * 1.5f}
-    , mSelectorOffsetY {0.0f}
+    , mSelectorHorizontalOffset {0.0f}
+    , mSelectorVerticalOffset {0.0f}
     , mSelectorColor {0x333333FF}
     , mSelectorColorEnd {0x333333FF}
     , mSelectorColorGradientHorizontal {true}
@@ -357,13 +359,15 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
     // Draw selector bar.
     if (startEntry < listCutoff) {
         if (mSelectorImage.hasImage()) {
-            mSelectorImage.setPosition(0.0f, (mCursor - startEntry) * entrySize + mSelectorOffsetY,
+            mSelectorImage.setPosition(mSelectorHorizontalOffset,
+                                       (mCursor - startEntry) * entrySize + mSelectorVerticalOffset,
                                        0.0f);
             mSelectorImage.render(trans);
         }
         else {
             mRenderer->setMatrix(trans);
-            mRenderer->drawRect(0.0f, (mCursor - startEntry) * entrySize + mSelectorOffsetY,
+            mRenderer->drawRect(mSelectorHorizontalOffset,
+                                (mCursor - startEntry) * entrySize + mSelectorVerticalOffset,
                                 mSize.x, mSelectorHeight, mSelectorColor, mSelectorColorEnd,
                                 mSelectorColorGradientHorizontal);
         }
@@ -639,18 +643,33 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mLetterCase = LetterCase::UPPERCASE;
     }
 
+    mSelectorHorizontalOffset = 0.0f;
+    mSelectorVerticalOffset = 0.0f;
+
     if (properties & LINE_SPACING) {
         if (elem->has("lineSpacing"))
             mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
         if (elem->has("selectorHeight"))
-            mSelectorHeight = elem->get<float>("selectorHeight") * Renderer::getScreenHeight();
-        if (elem->has("selectorOffsetY")) {
+            mSelectorHeight = glm::clamp(elem->get<float>("selectorHeight"), 0.0f, 1.0f) *
+                              Renderer::getScreenHeight();
+        if (elem->has("selectorHorizontalOffset")) {
+            const float scale {this->mParent ? this->mParent->getSize().x :
+                                               Renderer::getScreenWidth()};
+            mSelectorHorizontalOffset =
+                glm::clamp(elem->get<float>("selectorHorizontalOffset"), -1.0f, 1.0f) * scale;
+        }
+        if (elem->has("selectorVerticalOffset")) {
             const float scale {this->mParent ? this->mParent->getSize().y :
                                                Renderer::getScreenHeight()};
-            mSelectorOffsetY = elem->get<float>("selectorOffsetY") * scale;
+            mSelectorVerticalOffset =
+                glm::clamp(elem->get<float>("selectorVerticalOffset"), -1.0f, 1.0f) * scale;
         }
-        else {
-            mSelectorOffsetY = 0.0f;
+        else if (elem->has("selectorOffsetY")) {
+            // TEMPORARY: This property will only be usable for legacy themes as of 2.0.0-beta
+            const float scale {this->mParent ? this->mParent->getSize().y :
+                                               Renderer::getScreenHeight()};
+            mSelectorVerticalOffset =
+                glm::clamp(elem->get<float>("selectorOffsetY"), -1.0f, 1.0f) * scale;
         }
     }
 
@@ -696,6 +715,11 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("fadeAbovePrimary"))
         mFadeAbovePrimary = elem->get<bool>("fadeAbovePrimary");
+
+    mSize.x = glm::clamp(mSize.x, mRenderer->getScreenWidth() * 0.05f,
+                         mRenderer->getScreenWidth() * 1.0f);
+    mSize.y = glm::clamp(mSize.y, mRenderer->getScreenHeight() * 0.05f,
+                         mRenderer->getScreenHeight() * 1.0f);
 }
 
 template <typename T> void TextListComponent<T>::onCursorChanged(const CursorState& state)

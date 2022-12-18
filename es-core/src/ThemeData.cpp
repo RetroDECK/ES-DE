@@ -57,6 +57,7 @@ std::vector<std::string> ThemeData::sLegacyProperties {
     {"maxLogoCount"}};
 
 std::vector<std::string> ThemeData::sDeprecatedProperties {
+    {"selectorOffsetY"},
     {"staticItem"},
     {"itemType"},
     {"defaultItem"},
@@ -216,7 +217,9 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"size", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"selectorHeight", FLOAT},
-       {"selectorOffsetY", FLOAT},
+       {"selectorHorizontalOffset", FLOAT},
+       {"selectorVerticalOffset", FLOAT},
+       {"selectorOffsetY", FLOAT},                 // For backward compatibility with legacy themes.
        {"selectorColor", COLOR},
        {"selectorColorEnd", COLOR},
        {"selectorGradientType", STRING},
