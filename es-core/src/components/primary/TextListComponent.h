@@ -86,8 +86,11 @@ private:
     void onShow() override { mLoopTime = 0; }
     void onScroll() override
     {
-        if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+        if (mGamelistView &&
+            !NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
             NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+        else if (!mGamelistView)
+            NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
     }
     void onCursorChanged(const CursorState& state) override;
     bool isScrolling() const override { return List::isScrolling(); }
@@ -126,6 +129,7 @@ private:
     std::shared_ptr<Font> mFont;
     std::string mIndicators;
     std::string mCollectionIndicators;
+    bool mGamelistView;
     bool mLegacyMode;
     bool mFadeAbovePrimary;
     LetterCase mLetterCase;
@@ -161,6 +165,7 @@ TextListComponent<T>::TextListComponent()
     , mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mIndicators {"symbols"}
     , mCollectionIndicators {"symbols"}
+    , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mLegacyMode {false}
     , mFadeAbovePrimary {false}
     , mLetterCase {LetterCase::NONE}

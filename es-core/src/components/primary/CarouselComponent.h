@@ -92,7 +92,10 @@ private:
     void onCursorChanged(const CursorState& state) override;
     void onScroll() override
     {
-        NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
+        if (mGamelistView)
+            NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+        else
+            NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
     }
 
     void stopScrolling() override

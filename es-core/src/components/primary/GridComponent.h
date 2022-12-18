@@ -76,8 +76,10 @@ public:
 private:
     void onScroll() override
     {
-        if (!NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
+        if (mGamelistView)
             NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+        else
+            NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
     }
     void onCursorChanged(const CursorState& state) override;
     bool isScrolling() const override { return List::isScrolling(); }
