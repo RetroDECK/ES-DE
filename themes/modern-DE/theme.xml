@@ -149,7 +149,7 @@
             <size>0.31 0.68</size>
             <origin>0 0</origin>
             <selectorHeight>0.075</selectorHeight>
-            <selectorOffsetY>-0.0015</selectorOffsetY>
+            <selectorVerticalOffset>-0.0015</selectorVerticalOffset>
             <selectorColor>${mainColor}</selectorColor>
             <selectorImagePath>./assets/selector.png</selectorImagePath>
             <selectedColor>${mainColor}</selectedColor>
