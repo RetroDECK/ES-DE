@@ -40,8 +40,8 @@ The following operating systems have been tested (all for the x86 architecture u
 * Ubuntu 20.04 to 22.04
 * Linux Mint 20
 * Manjaro 21
-* Fedora 36 Workstation
-* SteamOS 3.0
+* Fedora 37 Workstation
+* SteamOS 3
 * elementary OS 6
 * Raspberry Pi OS 10 and 11 (armv7l and aarch64)
 * FreeBSD 13.0
@@ -287,7 +287,7 @@ If you want to create your own portable intallation from scratch or customize th
 
 ## Specific notes for macOS
 
-**Note:** Apple once again broke OpenGL VSync with their lates OS release Ventura. Last time this happened was with Monterey, and it was later fixed via the 12.1 OS update. It's unclear if and when Apple will fix the issue on Ventura, in the meanwhile ES-DE will run very badly. It will still work and games can be launched and such, but navigation and animations will be very choppy. There is nothing that can be done in ES-DE to fix this, it has to be resolved by Apple via an operating system patch.
+**Note:** Apple once again broke OpenGL VSync with their latest OS release Ventura. Last time this happened was with Monterey, and it was later fixed via the 12.1 OS update. It's unclear if and when Apple will fix the latest issue. As such a workaround has been implemented in ES-DE 2.0.0-alpha so make sure to use this version if you're on Ventura or otherwise the application will be very slow and sluggish.
 
 As macOS does not support Vulkan some emulators are not available, and some that do exist have not been updated for this operating system in recent years. But emulator support is steadily improving and native M1/ARM releases are also getting more common. One issue though is that some emulators are not codesigned and notarized so macOS refuses to run them by default. You can override the operating system's security settings however, which will work around this problem. Some emulators are also available via the [Homebrew](https://brew.sh) package manager and in many instances ES-DE includes support for these releases using the bundled configuration.
 
