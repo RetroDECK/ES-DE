@@ -76,7 +76,11 @@ namespace GamelistFileParser
 
                 if (std::find(extensions.cbegin(), extensions.cend(),
                               Utils::FileSystem::getExtension(path)) == extensions.cend()) {
+#if defined(_WIN64)
+                    LOG(LogWarning) << "File \"" << Utils::String::replace(path, "/", "\\")
+#else
                     LOG(LogWarning) << "File \"" << path
+#endif
                                     << "\" is present in gamelist.xml but the extension is not "
                                        "configured in es_systems.xml";
                     return nullptr;
@@ -198,7 +202,7 @@ namespace GamelistFileParser
 #else
                     LOG(LogWarning) << (type == GAME ? "File \"" : "Folder \"") << path
 #endif
-                                    << "\" does not exist, ignoring entry";
+                                    << "\" does not exist, skipping entry";
                     continue;
                 }
 
@@ -223,7 +227,13 @@ namespace GamelistFileParser
                 }
 
                 if (!file) {
-                    LOG(LogError) << "Couldn't find or create \"" << path << "\", skipping entry";
+#if defined(_WIN64)
+                    LOG(LogWarning)
+                        << "Couldn't process \"" << Utils::String::replace(path, "/", "\\")
+                        << "\", skipping entry";
+#else
+                    LOG(LogWarning) << "Couldn't process \"" << path << "\", skipping entry";
+#endif
                     continue;
                 }
                 else if (!file->isArcadeAsset()) {

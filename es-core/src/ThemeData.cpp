@@ -1106,10 +1106,18 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
                 if (!(Settings::getInstance()->getBool("DebugSkipMissingThemeFiles") ||
                       (mCustomCollection && Settings::getInstance()->getBool(
                                                 "DebugSkipMissingThemeFilesCustomCollections")))) {
+#if defined(_WIN64)
+                    LOG(LogDebug) << Utils::String::replace(error.message, "/", "\\")
+                                  << ": Couldn't find file \"" << node.text().get() << "\" "
+                                  << ((node.text().get() != path) ?
+                                          "which resolves to \"" +
+                                              Utils::String::replace(path, "/", "\\") + "\"" :
+#else
                     LOG(LogDebug) << error.message << ": Couldn't find file \"" << node.text().get()
                                   << "\" "
                                   << ((node.text().get() != path) ?
                                           "which resolves to \"" + path + "\"" :
+#endif
                                           "");
                 }
                 return;
@@ -1584,27 +1592,43 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                     // For explicit paths, print a warning if the file couldn't be found, but
                     // only print a debug message if it was set using a variable.
                     if (str == node.text().as_string()) {
+#if defined(_WIN64)
+                        LOG(LogWarning) << Utils::String::replace(error.message, "/", "\\")
+                                        << ": Couldn't find file \"" << node.text().get() << "\" "
+                                        << ((node.text().get() != path) ?
+                                                "which resolves to \"" +
+                                                    Utils::String::replace(path, "/", "\\") + "\"" :
+#else
                         LOG(LogWarning)
                             << error.message << ": Couldn't find file \"" << node.text().get()
                             << "\" "
                             << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
-                                                              "")
-                            << " (element type \"" << element.type << "\", name \""
-                            << root.attribute("name").as_string() << "\", property \"" << nodeName
-                            << "\")";
+#endif
+                                                "")
+                                        << " (element type \"" << element.type << "\", name \""
+                                        << root.attribute("name").as_string() << "\", property \""
+                                        << nodeName << "\")";
                     }
                     else if (!(Settings::getInstance()->getBool("DebugSkipMissingThemeFiles") ||
                                (mCustomCollection &&
                                 Settings::getInstance()->getBool(
                                     "DebugSkipMissingThemeFilesCustomCollections")))) {
+#if defined(_WIN64)
+                        LOG(LogDebug) << Utils::String::replace(error.message, "/", "\\")
+                                      << ": Couldn't find file \"" << node.text().get() << "\" "
+                                      << ((node.text().get() != path) ?
+                                              "which resolves to \"" +
+                                                  Utils::String::replace(path, "/", "\\") + "\"" :
+#else
                         LOG(LogDebug)
                             << error.message << ": Couldn't find file \"" << node.text().get()
                             << "\" "
                             << ((node.text().get() != path) ? "which resolves to \"" + path + "\"" :
-                                                              "")
-                            << " (element type \"" << element.type << "\", name \""
-                            << root.attribute("name").as_string() << "\", property \"" << nodeName
-                            << "\")";
+#endif
+                                              "")
+                                      << " (element type \"" << element.type << "\", name \""
+                                      << root.attribute("name").as_string() << "\", property \""
+                                      << nodeName << "\")";
                     }
                 }
                 element.properties[nodeName] = path;
