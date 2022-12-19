@@ -36,8 +36,6 @@
             <entry>/usr/lib64/libretro</entry>
             <!-- Manjaro repository -->
             <entry>/usr/lib/libretro</entry>
-            <!-- NixOS and nixpkgs repository -->
-            <entry>/run/current-system/sw/lib</entry>
             <!-- FreeBSD and OpenBSD repository -->
             <entry>/usr/local/lib/libretro</entry>
             <!-- NetBSD repository -->
