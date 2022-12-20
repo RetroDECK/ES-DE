@@ -285,8 +285,8 @@ void Window::textInput(const std::string& text)
 
 void Window::logInput(InputConfig* config, Input input)
 {
-    std::string mapname = "";
-    std::vector<std::string> maps = config->getMappedTo(input);
+    std::string mapname;
+    std::vector<std::string> maps {config->getMappedTo(input)};
 
     for (auto mn : maps) {
         mapname += mn;
@@ -330,15 +330,15 @@ void Window::update(int deltaTime)
             // broken. For now, still report the figures as it's somehow useful to locate memory
             // leaks and similar. But this needs to be completely overhauled later on.
             // VRAM.
-            float textureVramUsageMiB = TextureResource::getTotalMemUsage() / 1024.0f / 1024.0f;
-            float textureTotalUsageMiB = TextureResource::getTotalTextureSize() / 1024.0f / 1024.0f;
-            float fontVramUsageMiB = Font::getTotalMemUsage() / 1024.0f / 1024.0f;
+            float textureVramUsageMiB {TextureResource::getTotalMemUsage() / 1024.0f / 1024.0f};
+            float textureTotalUsageMiB {TextureResource::getTotalTextureSize() / 1024.0f / 1024.0f};
+            float fontVramUsageMiB {Font::getTotalMemUsage() / 1024.0f / 1024.0f};
 
             ss << "\nFont VRAM: " << fontVramUsageMiB
                << " MiB\nTexture VRAM: " << textureVramUsageMiB
                << " MiB\nMax Texture VRAM: " << textureTotalUsageMiB << " MiB";
             mFrameDataText = std::unique_ptr<TextCache>(mDefaultFonts.at(0)->buildTextCache(
-                ss.str(), Renderer::getScreenWidth() * 0.02f, Renderer::getScreenHeight() * 0.02f,
+                ss.str(), mRenderer->getScreenWidth() * 0.02f, mRenderer->getScreenHeight() * 0.02f,
                 0xFF00FFFF, 1.3f));
         }
 
@@ -402,7 +402,7 @@ void Window::render()
         mInitiateCacheTimer = false;
     }
 
-    glm::mat4 trans {Renderer::getIdentity()};
+    glm::mat4 trans {mRenderer->getIdentity()};
 
     mRenderedHelpPrompts = false;
 
@@ -453,15 +453,15 @@ void Window::render()
                 const auto backgroundStartTime = std::chrono::system_clock::now();
 #endif
                 std::vector<unsigned char> processedTexture(
-                    static_cast<size_t>(Renderer::getScreenWidth()) *
-                    static_cast<size_t>(Renderer::getScreenHeight()) * 4);
+                    static_cast<size_t>(mRenderer->getScreenWidth()) *
+                    static_cast<size_t>(mRenderer->getScreenHeight()) * 4);
 
                 // De-focus the background using multiple passes of gaussian blur, with the number
                 // of iterations relative to the screen resolution.
                 Renderer::postProcessingParams backgroundParameters;
 
                 if (Settings::getInstance()->getBool("MenuBlurBackground")) {
-                    float heightModifier = Renderer::getScreenHeightModifier();
+                    float heightModifier {mRenderer->getScreenHeightModifier()};
                     // clang-format off
                     if (heightModifier < 1)
                         backgroundParameters.blurPasses = 2;        // Below 1080
@@ -495,8 +495,8 @@ void Window::render()
                 }
 
                 mPostprocessedBackground->initFromPixels(
-                    &processedTexture[0], static_cast<size_t>(Renderer::getScreenWidth()),
-                    static_cast<size_t>(Renderer::getScreenHeight()));
+                    &processedTexture[0], static_cast<size_t>(mRenderer->getScreenWidth()),
+                    static_cast<size_t>(mRenderer->getScreenHeight()));
 
                 mBackgroundOverlay->setImage(mPostprocessedBackground);
 
@@ -555,14 +555,14 @@ void Window::render()
 
     // Render the quick list scrolling overlay, which is triggered in IList.
     if (mListScrollOpacity != 0.0f) {
-        mRenderer->setMatrix(Renderer::getIdentity());
-        mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+        mRenderer->setMatrix(mRenderer->getIdentity());
+        mRenderer->drawRect(0.0f, 0.0f, mRenderer->getScreenWidth(), mRenderer->getScreenHeight(),
                             0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f),
                             0x00000000 | static_cast<unsigned char>(mListScrollOpacity * 255.0f));
 
         glm::vec2 offset {mListScrollFont->sizeText(mListScrollText)};
-        offset.x = (Renderer::getScreenWidth() - offset.x) * 0.5f;
-        offset.y = (Renderer::getScreenHeight() - offset.y) * 0.5f;
+        offset.x = (mRenderer->getScreenWidth() - offset.x) * 0.5f;
+        offset.y = (mRenderer->getScreenHeight() - offset.y) * 0.5f;
 
         TextCache* cache {mListScrollFont->buildTextCache(
             mListScrollText, offset.x, offset.y,
@@ -571,8 +571,8 @@ void Window::render()
         delete cache;
     }
 
-    unsigned int screensaverTimer =
-        static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"));
+    unsigned int screensaverTimer {
+        static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"))};
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
         // If the media viewer is running or if a menu is open, reset the screensaver timer so
         // that the screensaver won't start.
@@ -600,24 +600,24 @@ void Window::render()
         mLaunchScreen->render(trans);
 
     if (Settings::getInstance()->getBool("DisplayGPUStatistics") && mFrameDataText) {
-        mRenderer->setMatrix(Renderer::getIdentity());
+        mRenderer->setMatrix(mRenderer->getIdentity());
         mDefaultFonts.at(1)->renderTextCache(mFrameDataText.get());
     }
 }
 
 void Window::renderLoadingScreen(std::string text)
 {
-    glm::mat4 trans {Renderer::getIdentity()};
+    glm::mat4 trans {mRenderer->getIdentity()};
     mRenderer->setMatrix(trans);
-    mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
+    mRenderer->drawRect(0.0f, 0.0f, mRenderer->getScreenWidth(), mRenderer->getScreenHeight(),
                         0x000000FF, 0x000000FF);
     mSplash->render(trans);
 
     auto& font = mDefaultFonts.at(1);
-    TextCache* cache = font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF);
+    TextCache* cache {font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF)};
 
-    float x {std::round((Renderer::getScreenWidth() - cache->metrics.size.x) / 2.0f)};
-    float y {std::round(Renderer::getScreenHeight() * 0.835f)};
+    float x {std::round((mRenderer->getScreenWidth() - cache->metrics.size.x) / 2.0f)};
+    float y {std::round(mRenderer->getScreenHeight() * 0.835f)};
     trans = glm::translate(trans, glm::round(glm::vec3 {x, y, 0.0f}));
     mRenderer->setMatrix(trans);
     font->renderTextCache(cache);
@@ -634,7 +634,7 @@ void Window::renderListScrollOverlay(const float opacity, const std::string& tex
 
 void Window::renderHelpPromptsEarly()
 {
-    mHelp->render(Renderer::getIdentity());
+    mHelp->render(mRenderer->getIdentity());
     mRenderedHelpPrompts = true;
 }
 
@@ -677,22 +677,22 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
     // Sort prompts so it goes [dpad_all] [dpad_u/d] [dpad_l/r] [a/b/x/y/l/r] [start/back].
     std::sort(addPrompts.begin(), addPrompts.end(),
               [](const HelpPrompt& a, const HelpPrompt& b) -> bool {
-                  static const std::vector<std::string> map = {"up/down/left/right",
-                                                               "up/down",
-                                                               "left/right",
-                                                               "rt",
-                                                               "lt",
-                                                               "r",
-                                                               "l",
-                                                               "y",
-                                                               "x",
-                                                               "b",
-                                                               "a",
-                                                               "start",
-                                                               "back"};
-                  int i = 0;
-                  int aVal = 0;
-                  int bVal = 0;
+                  static const std::vector<std::string> map {"up/down/left/right",
+                                                             "up/down",
+                                                             "left/right",
+                                                             "rt",
+                                                             "lt",
+                                                             "r",
+                                                             "l",
+                                                             "y",
+                                                             "x",
+                                                             "b",
+                                                             "a",
+                                                             "start",
+                                                             "back"};
+                  int i {0};
+                  int aVal {0};
+                  int bVal {0};
                   while (i < static_cast<int>(map.size())) {
                       if (a.first == map[i])
                           aVal = i;

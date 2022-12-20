@@ -411,7 +411,7 @@ void GuiComponent::updateHelpPrompts()
         return;
     }
 
-    std::vector<HelpPrompt> prompts = getHelpPrompts();
+    std::vector<HelpPrompt> prompts {getHelpPrompts()};
 
     if (mWindow->peekGui() == this)
         mWindow->setHelpPrompts(prompts, getHelpStyle());

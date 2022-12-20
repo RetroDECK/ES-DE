@@ -242,7 +242,7 @@ void HelpComponent::updateGrid()
 
     mGrid->setSize(width, height);
 
-    for (int i = 0; i < static_cast<int>(icons.size()); ++i) {
+    for (int i {0}; i < static_cast<int>(icons.size()); ++i) {
         const int col {i * 5};
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(col + 1,
