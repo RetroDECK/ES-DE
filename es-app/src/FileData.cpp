@@ -47,22 +47,19 @@ FileData::FileData(FileType type,
     , mDeletionFlag {false}
 {
     // Metadata needs at least a name field (since that's what getName() will return).
-    if (metadata.get("name").empty()) {
-        if ((system->hasPlatformId(PlatformIds::ARCADE) ||
-             system->hasPlatformId(PlatformIds::SNK_NEO_GEO)) &&
-            metadata.getType() != FOLDER_METADATA) {
-            // If it's a MAME or Neo Geo game, expand the game name accordingly.
-            metadata.set("name", MameNames::getInstance().getCleanName(getCleanName()));
-        }
-        else {
-            if (metadata.getType() == FOLDER_METADATA && Utils::FileSystem::isHidden(mPath)) {
-                metadata.set("name", Utils::FileSystem::getFileName(mPath));
-            }
-            else {
-                metadata.set("name", getDisplayName());
-            }
-        }
+    if ((system->hasPlatformId(PlatformIds::ARCADE) ||
+         system->hasPlatformId(PlatformIds::SNK_NEO_GEO)) &&
+        metadata.getType() != FOLDER_METADATA) {
+        // If it's a MAME or Neo Geo game, expand the game name accordingly.
+        metadata.set("name", MameNames::getInstance().getCleanName(getCleanName()));
     }
+    else {
+        if (metadata.getType() == FOLDER_METADATA && Utils::FileSystem::isHidden(mPath))
+            metadata.set("name", Utils::FileSystem::getFileName(mPath));
+        else
+            metadata.set("name", getDisplayName());
+    }
+
     mSystemName = system->getName();
     metadata.resetChangedFlag();
 }
