@@ -329,7 +329,7 @@ bool SystemData::populateFolder(FileData* folder)
             // parameters instead of regular files. In these instances we remove the extension
             // from the metadata name so it does not show up in the gamelists and similar.
             if (isDirectory && extension != ".") {
-                const std::string& folderName {newGame->metadata.get("name")};
+                const std::string folderName {newGame->metadata.get("name")};
                 newGame->metadata.set(
                     "name", folderName.substr(0, folderName.length() - extension.length()));
             }

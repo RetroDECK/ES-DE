@@ -237,7 +237,7 @@ namespace GamelistFileParser
                     continue;
                 }
                 else if (!file->isArcadeAsset()) {
-                    const std::string& defaultName {file->metadata.get("name")};
+                    const std::string defaultName {file->metadata.get("name")};
                     if (file->getType() == FOLDER) {
                         file->metadata =
                             MetaDataList::createFromXML(FOLDER_METADATA, fileNode, relativeTo);
