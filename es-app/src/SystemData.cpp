@@ -1095,14 +1095,30 @@ SystemData* SystemData::getPrev() const
 
 std::string SystemData::getGamelistPath(bool forWrite) const
 {
-    std::string filePath;
+    std::string filePath {mRootFolder->getPath() + "/gamelist.xml"};
+    const std::string gamelistPath {Utils::FileSystem::getHomePath() +
+                                    "/.emulationstation/gamelists/" + mName};
 
-    filePath = mRootFolder->getPath() + "/gamelist.xml";
-    if (Utils::FileSystem::exists(filePath))
-        return filePath;
+    if (Utils::FileSystem::exists(filePath)) {
+        if (Settings::getInstance()->getBool("LegacyGamelistFileLocation")) {
+            return filePath;
+        }
+        else {
+#if defined(_WIN64)
+            LOG(LogWarning) << "Found a gamelist.xml file in \""
+                            << Utils::String::replace(mRootFolder->getPath(), "/", "\\")
+                            << "\\\" which will not get loaded, move it to \""
+                            << Utils::String::replace(gamelistPath, "/", "\\")
+                            << "\\\" or otherwise delete it";
+#else
+            LOG(LogWarning) << "Found a gamelist.xml file in \"" << mRootFolder->getPath()
+                            << "/\" which will not get loaded, move it to \"" << gamelistPath
+                            << "/\" or otherwise delete it";
+#endif
+        }
+    }
 
-    filePath = Utils::FileSystem::getHomePath() + "/.emulationstation/gamelists/" + mName +
-               "/gamelist.xml";
+    filePath = gamelistPath + "/gamelist.xml";
 
     // Make sure the directory exists if we're going to write to it,
     // or crashes will happen.

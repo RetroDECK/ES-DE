@@ -289,6 +289,7 @@ void Settings::setDefaults()
     mBoolMap["DebugSkipInputLogging"] = {false, false};
     mBoolMap["DebugSkipMissingThemeFiles"] = {false, false};
     mBoolMap["DebugSkipMissingThemeFilesCustomCollections"] = {true, true};
+    mBoolMap["LegacyGamelistFileLocation"] = {false, false};
     mStringMap["OpenGLVersion"] = {"", ""};
     mStringMap["ROMDirectory"] = {"", ""};
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
