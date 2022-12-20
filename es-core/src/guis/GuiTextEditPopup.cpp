@@ -251,10 +251,14 @@ void GuiTextEditPopup::update(int deltaTime)
 
 std::vector<HelpPrompt> GuiTextEditPopup::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
 
-    if (mText->isEditing())
-        prompts.push_back(HelpPrompt("a", mAcceptBtnText));
+    if (mText->isEditing()) {
+        if (mMultiLine)
+            prompts.push_back(HelpPrompt("a", "newline"));
+        else
+            prompts.push_back(HelpPrompt("a", mAcceptBtnText));
+    }
 
     prompts.push_back(HelpPrompt("l", "backspace"));
     prompts.push_back(HelpPrompt("r", "space"));

@@ -480,11 +480,14 @@ void GuiTextEditKeyboardPopup::update(int deltaTime)
 
 std::vector<HelpPrompt> GuiTextEditKeyboardPopup::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
 
     if (!mText->isEditing()) {
         prompts.push_back(HelpPrompt("lt", "shift"));
         prompts.push_back(HelpPrompt("rt", "alt"));
+    }
+    else if (mMultiLine) {
+        prompts.push_back(HelpPrompt("a", "newline"));
     }
     else {
         prompts.push_back(HelpPrompt("a", mAcceptBtnHelpText));
@@ -496,17 +499,13 @@ std::vector<HelpPrompt> GuiTextEditKeyboardPopup::getHelpPrompts()
 
     if (prompts.size() > 0 && prompts.front().second == OK_SYMBOL)
         prompts.front().second = mAcceptBtnHelpText;
-
-    if (prompts.size() > 0 && prompts.front().second == " ")
+    else if (prompts.size() > 0 && prompts.front().second == " ")
         prompts.front().second = "SPACE";
-
-    if (prompts.size() > 0 && prompts.front().second == "CLEAR")
+    else if (prompts.size() > 0 && prompts.front().second == "CLEAR")
         prompts.front().second = mClearBtnHelpText;
-
-    if (prompts.size() > 0 && prompts.front().second == "LOAD")
+    else if (prompts.size() > 0 && prompts.front().second == "LOAD")
         prompts.front().second = mLoadBtnHelpText;
-
-    if (prompts.size() > 0 && prompts.front().second == "CANCEL")
+    else if (prompts.size() > 0 && prompts.front().second == "CANCEL")
         prompts.front().second = mCancelBtnHelpText;
 
     // If a prompt has no value set, then remove it.
