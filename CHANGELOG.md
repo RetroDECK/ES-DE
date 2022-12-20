@@ -274,6 +274,7 @@
 * Text elements that had an opacity set to lower than FF via the color tag were faded in during gamelist scrolling
 * The help system was offset by the entrySpacing property width when right-aligned using an X origin value of 1
 * The help system was rendered on top of menus if placed at such a location on the screen
+* The help system "A" button was incorrectly shown as "Apply" instead of "Newline" when using the virtual keyboard with multi-line input fields
 * Theme sets were not always sorted correctly (as seen when mixing uppercase and lowercase letters in theme names)
 * The SliderComponent knob was not consistently positioned
 * The device text flickered in GuiDetectDevice when configuring a controller
