@@ -111,6 +111,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 #### v2.4
 
+* Touch screen support
 * Animated menu elements like switches and tick boxes
 * Migration tools for importing game metadata and media from other frontend applications
 * Audit tools to clean up orphaned gamelist entries, media files etc.

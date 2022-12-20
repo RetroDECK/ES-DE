@@ -1113,6 +1113,10 @@ Enabling this will skip all debug messages about missing files when loading a th
 
 Enabling this will skip all debug messages about missing files specifically for custom collections when loading a theme set. Note that DebugSkipMissingThemeFiles takes precedence, so if that setting is set to true then the DebugSkipMissingThemeFilesCustomCollections setting will be ignored. Default value is true.
 
+**LegacyGamelistFileLocation**
+
+As of ES-DE 2.0.0 any gamelist.xml files stored in the game system directories (e.g. under `~/ROMs/`) will not get loaded, they are instead required to be placed in the `~/.emulationstation/gamelists/` directory tree. By setting this option to `true` it's however possible to retain the old behavior of first looking for gamelist.xml files in the system directories on startup. Note that even if this setting is enabled ES-DE will still always create new gamelist.xml files under `~/.emulationstation/gamelists/` which was the case also for the 1.x.x releases.
+
 **LottieMaxFileCache**
 
 Sets the maximum per-file animation cache for Lottie animations. Minimum value is 0 MiB and maximum value is 1024 MiB. Default value is 150 MiB.

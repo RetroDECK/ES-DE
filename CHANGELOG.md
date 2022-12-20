@@ -22,6 +22,7 @@
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
+* gamelist.xml files are no longer loaded from the ROMs/system directories (although old behavior can be retained via an option in es_settings.xml)
 * Expanded the quick system select menu option from an on/off entry to a selection of different button combinations
 * Changed the order of the help system entries Y, X, B and A to instead be listed as A, B, X and Y
 * Changed the start button for the screensaver from "Back" to "X"
@@ -179,6 +180,7 @@
 * Increased the minimum VRAM limit from 80 MiB to 128 MiB
 * Increased the default VRAM limit from 256 MiB to 512 MiB
 * Increased the default VRAM limit for the Raspberry Pi from 184 MiB to 192 MiB
+* (Unix) Removed the RetroArch core directory for the NixOS and nixpkgs repository
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
