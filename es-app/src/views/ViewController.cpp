@@ -779,7 +779,8 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
         case BASIC: {
         }
         default: {
-            mState.viewstyle = BASIC;
+            if (!system->isGroupedCustomCollection())
+                mState.viewstyle = BASIC;
             break;
         }
     }
