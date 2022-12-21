@@ -4,6 +4,8 @@
 
 If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `slate-DE`. Because ES-DE theme functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. It would be confusing and annoying for users that attempt to use ES-DE theme sets in older EmulationStation forks as they would get unthemed systems, crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
 
+It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
+
 Table of contents:
 
 [[_TOC_]]
@@ -1579,11 +1581,11 @@ Properties:
 * `path` - type: PATH
     - Path to a video file. Setting a value for this property will make the video static, i.e. any `imageType`, `gameselector` and `default` properties will be ignored.
 * `default` - type: PATH
-    - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default video file. The default video will be played when the selected game does not have a video. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system. Takes precedence over `defaultImage`.
 * `defaultImage` - type: PATH
-    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default image file. If the `imageType` property has a value set, then the default image will be displayed if the selected game does not have an image for any of the defined types. If `imageType` is not defined, then the default image will be shown if there is no video file found and if `default` has not been set. This property is also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING
-    - This displays a game image of a certain media type. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, then the space will be left blank unless the `default` property has been set. To use this property from the `system` view, you will first need to add a `gameselector` element. If `delay` is set to zero, then this property is ignored. Defining duplicate values is considered an error and will also result in the property getting ignored.
+    - This displays a game image of a certain media type, either before the video starts to play if `delay` is set to a non-zero value, or if there is no video file found and `default` has not been defined. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, then the space will be left blank unless either the `default` or `defaultImage` properties have been set. To use this property from the `system` view, you will first need to add a `gameselector` element. If `delay` is set to zero, then this property has no effect. Defining duplicate values is considered an error and will result in the property getting ignored.
     - Valid values:
     - `image` - This will look for a `miximage`, and if that is not found `screenshot` is tried next, then `titlescreen` and finally `cover`. This is just a convenient shortcut and it's equivalent to explicitly defining `miximage, screenshot, titlescreen, cover`
     - `miximage` - This will look for a miximage.

@@ -188,7 +188,7 @@ Just run the installer for the new release. A question will be asked whether you
 
 **Windows portable**
 
-When upgrading the portable release it's recommended to not overwrite the contents by unpacking on top of the old release but instead to rename the old _EmulationStation-DE_ directory to something else, such as _EmulationStation-DE_OLD_ and then unpack the new release next to it. Following this, move over the contents inside _Emulators_, _ROMs_, _themes_ and _.emulationstation_ from the old to the new directory. That's the safest way to make the upgrade.
+When upgrading the portable release it's recommended to not overwrite the contents by unpacking on top of the old release but instead to rename the old _EmulationStation-DE_ directory to something else, such as _EmulationStation-DE_OLD_ and then unpack the new release next to it. Following this, move over the contents from _Emulators_, _ROMs_ and _.emulationstation_ from the old to the new directory. That's the safest way to make the upgrade.
 
 ## Placing games into non-standard directories
 
