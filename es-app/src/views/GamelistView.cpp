@@ -561,14 +561,14 @@ void GamelistView::updateView(const CursorState& state)
         }
     }
 
-    bool fadingOut = false;
+    bool fadingOut {false};
     if (file == nullptr) {
         if (mVideoPlaying) {
             for (auto& video : mVideoComponents) {
                 video->stopVideoPlayer(!mStaticVideoAudio);
                 video->setVideo("");
                 if (!video->hasStartDelay())
-                    video->setImage("");
+                    video->setImageNoDefault("");
             }
         }
         mVideoPlaying = false;
@@ -588,7 +588,6 @@ void GamelistView::updateView(const CursorState& state)
 
                 for (auto& video : mVideoComponents) {
                     setGameImage(mRandomGame, video.get());
-
                     video->stopVideoPlayer(!mStaticVideoAudio);
 
                     if (video->hasStaticVideo())
@@ -609,12 +608,15 @@ void GamelistView::updateView(const CursorState& state)
                     video->stopVideoPlayer(!mStaticVideoAudio);
                     video->setImage("");
                     video->setVideo("");
+
                     if (video->hasStaticVideo()) {
                         video->setStaticVideo();
                     }
                     else {
                         video->setDefaultVideo();
                     }
+
+                    video->startVideoPlayer();
                 }
             }
         }
@@ -991,6 +993,6 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
         }
     }
     // This is needed so the default image is set if no game media was found.
-    if (path == "" && comp->getThemeImageTypes().size() > 0)
+    if (path == "" && (comp->getThemeImageTypes().size() > 0 || comp->getDefaultImage() != ""))
         comp->setImage("");
 }

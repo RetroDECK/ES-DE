@@ -41,6 +41,8 @@ public:
     void setStaticVideo() { setVideo(mConfig.staticVideoPath); }
     // Loads a static image that is displayed if the video cannot be played.
     void setImage(const std::string& path, bool tile = false) override;
+    // Same as setImage() but does not set the default image if the path argument is empty.
+    void setImageNoDefault(const std::string& path);
     // Sets whether we're in media viewer mode.
     void setMediaViewerMode(bool isMediaViewer) { mMediaViewerMode = isMediaViewer; }
     // Sets whether we're in screensaver mode.

@@ -261,6 +261,7 @@ public:
     const std::vector<std::string>& getThemeImageTypes() { return mThemeImageTypes; }
     const std::string& getThemeGameSelector() const { return mThemeGameSelector; }
     const unsigned int getThemeGameSelectorEntry() const { return mThemeGameSelectorEntry; }
+    virtual const std::string getDefaultImage() const { return ""; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }
 

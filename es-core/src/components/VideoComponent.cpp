@@ -100,6 +100,16 @@ void VideoComponent::setImage(const std::string& path, bool tile)
     mStaticImagePath = imagePath;
 }
 
+void VideoComponent::setImageNoDefault(const std::string& path)
+{
+    // Check if the image has changed.
+    if (path == mStaticImagePath)
+        return;
+
+    mStaticImage.setImage(path, false);
+    mStaticImagePath = path;
+}
+
 void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                 const std::string& view,
                                 const std::string& element,
@@ -256,6 +266,9 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mThemeImageTypes.clear();
         }
     }
+
+    if (mThemeImageTypes.empty())
+        mConfig.startDelay = 0;
 
     if (elem->has("color")) {
         mColorShift = elem->get<unsigned int>("color");

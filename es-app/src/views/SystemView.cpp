@@ -1046,7 +1046,8 @@ void SystemView::updateGameSelectors()
     }
 
     for (auto& video : mSystemElements[cursor].videoComponents) {
-        if (video->hasStaticVideo() || video->getThemeImageTypes().size() == 0)
+        if (video->hasStaticVideo() ||
+            (video->getThemeImageTypes().size() == 0 && video->getDefaultImage() == ""))
             continue;
         GameSelectorComponent* gameSelector {nullptr};
         if (multipleSelectors) {
@@ -1155,7 +1156,8 @@ void SystemView::updateGameSelectors()
                 }
             }
             // This is needed so the default image is set if no game media was found.
-            if (path == "" && video->getThemeImageTypes().size() > 0)
+            if (path == "" &&
+                (video->getThemeImageTypes().size() > 0 || video->getDefaultImage() != ""))
                 video->setImage("");
         }
         else {

@@ -53,6 +53,8 @@ public:
     void handleLooping() override;
     // Used to immediately mute audio even if there are samples to play in the buffer.
     void muteVideoPlayer() override;
+    // Needed to be able to display the default image even if no image types have been defined.
+    const std::string getDefaultImage() const override { return mDefaultImagePath; }
 
 private:
     void startVideoStream() override;
