@@ -267,7 +267,7 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (mThemeImageTypes.empty())
+    if (!mLegacyTheme && mThemeImageTypes.empty())
         mConfig.startDelay = 0;
 
     if (elem->has("color")) {
