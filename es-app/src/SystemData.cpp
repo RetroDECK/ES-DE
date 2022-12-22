@@ -1357,7 +1357,8 @@ void SystemData::loadTheme()
         mTheme->loadFile(sysData, path, isCustomCollection());
     }
     catch (ThemeException& e) {
-        LOG(LogError) << e.what();
+        LOG(LogError) << e.what() << " (system \"" << mName << "\", theme \"" << mThemeFolder
+                      << "\")";
         mTheme = std::make_shared<ThemeData>(); // Reset to empty.
     }
 }
