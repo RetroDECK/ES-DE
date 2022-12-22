@@ -28,7 +28,7 @@ fi
 if [ $# -ne 3 ] && [ $# -ne 4 ]; then
   echo "Usage: ./update_version_string.sh <major version> <minor version> <patch version> [<suffix>]"
   echo "For example:"
-  echo "./update_version_string.sh 1 0 0 beta1"
+  echo "./update_version_string.sh 2 0 0 beta"
   exit
 fi
 

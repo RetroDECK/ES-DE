@@ -343,8 +343,8 @@ if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
     add_compile_definitions(LEGACY_MACOS)
 endif()
 
-# If it's an alpha or dev build, then display the build date in the main menu.
-if(ES_VERSION MATCHES alpha OR ES_VERSION MATCHES dev)
+# If it's an alpha, beta or dev build, then display the build date in the main menu.
+if(ES_VERSION MATCHES alpha OR ES_VERSION MATCHES beta OR ES_VERSION MATCHES dev)
     add_compile_definitions(MENU_BUILD_DATE)
 endif()
 
