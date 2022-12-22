@@ -4,7 +4,7 @@
 //  Sound.cpp
 //
 //  Higher-level audio functions.
-//  Reading theme sound setings, playing audio samples etc.
+//  Navigation sounds, audio sample playback etc.
 //
 
 #include "Sound.h"
@@ -14,8 +14,6 @@
 #include "Settings.h"
 #include "ThemeData.h"
 #include "resources/ResourceManager.h"
-
-std::map<std::string, std::shared_ptr<Sound>> Sound::sMap;
 
 std::shared_ptr<Sound> Sound::get(const std::string& path)
 {
@@ -43,9 +41,15 @@ std::shared_ptr<Sound> Sound::getFromTheme(ThemeData* const theme,
 
     LOG(LogDebug) << "Sound::getFromTheme(): Looking for tag <sound name=\"" << elemName << "\">";
 
-    const ThemeData::ThemeElement* elem = theme->getElement(view, element, "sound");
+    const ThemeData::ThemeElement* elem {theme->getElement(view, element, "sound")};
     if (!elem || !elem->has("path")) {
         LOG(LogDebug) << "Sound::getFromTheme(): Tag not found, using fallback sound file";
+        return get(ResourceManager::getInstance().getResourcePath(":/sounds/" + elemName + ".wav"));
+    }
+
+    if (!Utils::FileSystem::exists(elem->get<std::string>("path"))) {
+        LOG(LogError) << "Sound::getFromTheme(): Navigation sound tag found but sound file does "
+                         "not exist, falling back to default sound";
         return get(ResourceManager::getInstance().getResourcePath(":/sounds/" + elemName + ".wav"));
     }
 
@@ -78,17 +82,17 @@ void Sound::init()
 
     // Load WAV file via SDL.
     SDL_AudioSpec wave;
-    Uint8* data = nullptr;
-    Uint32 dlen = 0;
+    Uint8* data {nullptr};
+    Uint32 dlen {0};
     if (SDL_LoadWAV(mPath.c_str(), &wave, &data, &dlen) == nullptr) {
         LOG(LogError) << "Failed to load theme navigation sound file: " << SDL_GetError();
         return;
     }
 
     // Convert sound file to the format required by ES-DE.
-    SDL_AudioStream* conversionStream =
+    SDL_AudioStream* conversionStream {
         SDL_NewAudioStream(wave.format, wave.channels, wave.freq, AudioManager::sAudioFormat.format,
-                           AudioManager::sAudioFormat.channels, AudioManager::sAudioFormat.freq);
+                           AudioManager::sAudioFormat.channels, AudioManager::sAudioFormat.freq)};
 
     if (conversionStream == nullptr) {
         LOG(LogError) << "Failed to create sample conversion stream: " << SDL_GetError();
@@ -101,9 +105,9 @@ void Sound::init()
         return;
     }
 
-    int sampleLength = SDL_AudioStreamAvailable(conversionStream);
+    int sampleLength {SDL_AudioStreamAvailable(conversionStream)};
 
-    Uint8* converted = new Uint8[sampleLength];
+    Uint8* converted {new Uint8[sampleLength]};
     if (SDL_AudioStreamGet(conversionStream, converted, sampleLength) == -1) {
         LOG(LogError) << "Failed to convert sound file '" << mPath << "': " << SDL_GetError();
         SDL_FreeAudioStream(conversionStream);

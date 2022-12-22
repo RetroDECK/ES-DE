@@ -4,7 +4,7 @@
 //  Sound.h
 //
 //  Higher-level audio functions.
-//  Reading theme sound setings, playing audio samples etc.
+//  Navigation sounds, audio sample playback etc.
 //
 
 #ifndef ES_CORE_SOUND_H
@@ -47,7 +47,7 @@ public:
 private:
     Sound(const std::string& path = "");
 
-    static std::map<std::string, std::shared_ptr<Sound>> sMap;
+    static inline std::map<std::string, std::shared_ptr<Sound>> sMap;
     std::string mPath;
     SDL_AudioSpec mSampleFormat;
     Uint8* mSampleData;
