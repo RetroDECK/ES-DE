@@ -240,8 +240,10 @@ emulationstation --debug --resolution 1280 720
 
 Enforcement of a correct theme configuration is quite strict, and most errors will abort the theme loading, leading to an unthemed system. In each such situation the log output will be very clear of what happened, for instance:
 ```
-Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml": Property "origin" for element "image" has no value defined
+Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
 ```
+
+Note that an unthemed system means precisely that, the specific system where the error occured will be unthemed but not necessarily the entire theme set. The latter can still happen if the error is global such as a missing variable used by all XML files or an error in a file included by all XML files. The approach is to only untheme relevant sections of the theme set to be able to pinpoint precisely where the problem lies.
 
 Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in many instances is that a warning log entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its horizontalAlignment property set to _leftr_ instead of _left_:
 ```

@@ -215,6 +215,7 @@
 * Removed a lot of unnecessary applyTheme() calls when updating help prompts
 * Removed the last remnants of the PowerSaver
 * Removed the RetroPie ES sizing bug replication from TextListComponent for non-legacy theme sets
+* Added checks for nonexistent navigation sounds in the theme configuration with fallback to the default sounds
 * Changed the opacity data type and functions from unsigned char to float throughout the codebase
 * Refactored the six gamelist classes into two new classes; GamelistBase and GamelistView
 * Rewrote the gamelist logic to handle an arbitrary amount of components per type and split the legacy code into a separate file
