@@ -752,16 +752,20 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     else if (viewPreference == "video")
         selectedViewStyle = VIDEO;
 
-    if (selectedViewStyle == AUTOMATIC) {
-        std::vector<FileData*> files {system->getRootFolder()->getFilesRecursive(GAME | FOLDER)};
-        for (auto it = files.cbegin(); it != files.cend(); ++it) {
-            if (themeHasVideoView && !(*it)->getVideoPath().empty()) {
-                selectedViewStyle = VIDEO;
-                break;
-            }
-            else if (!(*it)->getImagePath().empty()) {
-                selectedViewStyle = DETAILED;
-                // Don't break out in case any subsequent files have videos.
+    if (system->getTheme()->isLegacyTheme()) {
+        if (selectedViewStyle == AUTOMATIC) {
+            std::vector<FileData*> files {
+                system->getRootFolder()->getFilesRecursive(GAME | FOLDER)};
+
+            for (auto it = files.cbegin(); it != files.cend(); ++it) {
+                if (themeHasVideoView && !(*it)->getVideoPath().empty()) {
+                    selectedViewStyle = VIDEO;
+                    break;
+                }
+                else if (!(*it)->getImagePath().empty()) {
+                    selectedViewStyle = DETAILED;
+                    // Don't break out in case any subsequent files have videos.
+                }
             }
         }
     }
