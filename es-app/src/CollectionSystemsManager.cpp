@@ -317,14 +317,15 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
         std::string key {file->getFullPath()};
 
         SystemData* curSys {sysData.system};
-        bool mFavoritesSorting = false;
+        bool favoritesSorting {false};
+        bool onFileChanged {false};
 
         // Read the applicable favorite sorting setting depending on whether the
         // system is a custom collection or not.
         if (sysData.decl.isCustom)
-            mFavoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
+            favoritesSorting = Settings::getInstance()->getBool("FavFirstCustom");
         else
-            mFavoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
+            favoritesSorting = Settings::getInstance()->getBool("FavoritesFirst");
 
         const std::unordered_map<std::string, FileData*>& children =
             curSys->getRootFolder()->getChildrenByFilename();
@@ -364,7 +365,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                         rootFolder->getParent()->getSystem()->getRootFolder()};
                     parentRootFolder->sort(parentRootFolder->getSortTypeFromString(
                                                parentRootFolder->getSortTypeString()),
-                                           mFavoritesSorting);
+                                           favoritesSorting);
                     mWindow->queueInfoPopup(
                         "DISABLED '" +
                             Utils::String::toUpper(
@@ -377,12 +378,13 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                         collectionEntry, false);
                 }
                 rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
-                                 mFavoritesSorting);
+                                 favoritesSorting);
             }
             else {
                 // Re-index with new metadata.
                 fileIndex->addToIndex(collectionEntry);
                 ViewController::getInstance()->onFileChanged(collectionEntry, true);
+                onFileChanged = true;
             }
         }
         else {
@@ -403,6 +405,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
                 fileIndex->addToIndex(newGame);
                 ViewController::getInstance()->getGamelistView(curSys)->onFileChanged(newGame,
                                                                                       true);
+                onFileChanged = true;
             }
         }
 
@@ -412,7 +415,7 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
         else if (sysData.decl.isCustom &&
                  !Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
             rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
-                             mFavoritesSorting);
+                             favoritesSorting);
         }
         // If the game doesn't exist in the current system and it's a custom
         // collection, then skip the sorting.
@@ -422,18 +425,18 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             if (rootFolder->getSystem()->isGroupedCustomCollection()) {
                 rootFolder->getParent()->sort(rootFolder->getParent()->getSortTypeFromString(
                                                   rootFolder->getParent()->getSortTypeString()),
-                                              mFavoritesSorting);
+                                              favoritesSorting);
                 rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
-                                 mFavoritesSorting);
+                                 favoritesSorting);
             }
             else {
                 rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
-                                 mFavoritesSorting);
+                                 favoritesSorting);
             }
         }
         else if (!sysData.decl.isCustom) {
             rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
-                             mFavoritesSorting);
+                             favoritesSorting);
         }
 
         if (name == "recent") {
@@ -456,14 +459,17 @@ void CollectionSystemsManager::updateCollectionSystem(FileData* file, Collection
             }
         }
         else {
-            ViewController::getInstance()->onFileChanged(rootFolder, true);
-            // For custom collections, update either the actual system or its parent depending
-            // on whether the collection is grouped or not.
             if (sysData.decl.isCustom) {
+                // For custom collections, update either the actual system or its parent depending
+                // on whether the collection is grouped or not.
+                ViewController::getInstance()->onFileChanged(rootFolder, true);
                 if (rootFolder->getSystem()->isGroupedCustomCollection())
                     ViewController::getInstance()->onFileChanged(rootFolder->getParent(), true);
                 else
                     ViewController::getInstance()->onFileChanged(rootFolder, true);
+            }
+            else if (!onFileChanged) {
+                ViewController::getInstance()->onFileChanged(rootFolder, true);
             }
         }
     }
