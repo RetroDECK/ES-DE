@@ -14,6 +14,7 @@
 #include "Settings.h"
 #include "Window.h"
 #include "resources/TextureResource.h"
+#include "utils/StringUtil.h"
 
 #include <SDL2/SDL.h>
 
@@ -1368,7 +1369,12 @@ void VideoFFmpegComponent::startVideoStream()
         mVideoHeight = mFormatContext->streams[mVideoStreamIndex]->codecpar->height;
 
         LOG(LogDebug) << "VideoFFmpegComponent::startVideoStream(): "
+#if defined(_WIN64)
+                      << "Playing video \"" << Utils::String::replace(mVideoPath, "/", "\\")
+                      << "\" (codec: "
+#else
                       << "Playing video \"" << mVideoPath << "\" (codec: "
+#endif
                       << avcodec_get_name(
                              mFormatContext->streams[mVideoStreamIndex]->codecpar->codec_id)
                       << ", decoder: " << (hwDecoding ? "hardware" : "software") << ")";
