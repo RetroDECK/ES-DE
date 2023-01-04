@@ -21,7 +21,7 @@
         <systemLogo>./${system.theme}/images/logo.svg</systemLogo>
     </variables>
 
-    <variant name="withVideos, withoutVideos">
+    <variant name="withVideos, withoutVideos, noGameMedia">
         <view name="system">
             <carousel name="system_carousel">
                 <pos>0 0.383796</pos>
@@ -205,7 +205,7 @@
             <zIndex>10</zIndex>
         </image>
         <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
-                    md_lbl_genre, md_lbl_players, md_lbl_lastplayed ">
+                    md_lbl_genre, md_lbl_players, md_lbl_lastplayed">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
@@ -357,20 +357,43 @@
         </view>
     </variant>
 
-    <variant name="noMedia">
+    <variant name="noGameMedia">
         <view name="gamelist">
-            <image name="backframe1">
-                <pos>0.02 0.19</pos>
-                <size>0.96 0.735</size>
-                <path>./core/images/frame.png</path>
-                <color>${gamelistBackFrameColor}</color>
-            </image>
             <textlist name="gamelist_textlist">
                 <pos>0.04 0.201</pos>
                 <size>0.92 0.71</size>
                 <horizontalAlignment>center</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
             </textlist>
+            <image name="backframe1">
+                <pos>0.02 0.19</pos>
+                <size>0.96 0.735</size>
+                <path>./core/images/frame.png</path>
+                <color>${gamelistBackFrameColor}</color>
+            </image>
+            <image name="backframe2">
+                <visible>false</visible>
+            </image>
+            <image name="backframe3">
+                <visible>false</visible>
+            </image>
+            <badges name="md_badges">
+                <visible>false</visible>
+            </badges>
+            <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
+                        md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_developer,
+                        md_publisher, md_genre, md_players, md_description">
+                <visible>false</visible>
+            </text>
+            <datetime name="md_releasedate, md_lastplayed">
+                <visible>false</visible>
+            </datetime>
+            <gamelistinfo name="gamelistInfo">
+                <visible>false</visible>
+            </gamelistinfo>
+            <rating name="md_rating">
+                <visible>false</visible>
+            </rating>
         </view>
     </variant>
 

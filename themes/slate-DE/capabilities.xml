@@ -18,8 +18,9 @@
         <label>Textlist with videos</label>
         <selectable>true</selectable>
         <override>
-            <trigger>no_game_media</trigger>
-            <useVariant>noMedia</useVariant>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover, video</mediaType>
+            <useVariant>noGameMedia</useVariant>
         </override>
     </variant>
 
@@ -27,9 +28,15 @@
         <label>Textlist without videos</label>
         <selectable>true</selectable>
         <override>
-            <trigger>no_game_media</trigger>
-            <useVariant>noMedia</useVariant>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover</mediaType>
+            <useVariant>noGameMedia</useVariant>
         </override>
+    </variant>
+
+    <variant name="noGameMedia">
+        <label>No game media</label>
+        <selectable>false</selectable>
     </variant>
 
     <variant name="themeEngineTest_1">
@@ -50,10 +57,5 @@
     <variant name="themeEngineTest_4">
         <label>Theme engine test 4</label>
         <selectable>true</selectable>
-    </variant>
-
-    <variant name="noMedia">
-        <label>No game media</label>
-        <selectable>false</selectable>
     </variant>
 </themeCapabilities>
