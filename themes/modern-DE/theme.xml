@@ -308,11 +308,11 @@
             <metadataElement>true</metadataElement>
             <fontSize>0.02</fontSize>
         </text>
-        <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher, md_lbl_genre,
-                    md_lbl_players, md_lbl_lastplayed, md_lbl_playcount, md_lbl_rating">
+        <text name="md_lbl_publisher, md_lbl_developer, md_lbl_releasedate, md_lbl_players,
+                    md_lbl_genre, md_lbl_rating">
             <color>${tertiaryColor}</color>
         </text>
-        <text name="md_developer, md_publisher, md_genre, md_players, md_playcount, md_description">
+        <text name="md_publisher, md_developer, md_players, md_genre, md_description">
             <color>${secondaryColor}</color>
         </text>
         <datetime name="md_releasedate">
@@ -389,6 +389,43 @@
                 <origin>0.5 0.5</origin>
                 <imageType>image</imageType>
             </image>
+        </view>
+    </variant>
+
+    <variant name="noGameMedia">
+        <view name="gamelist">
+            <textlist name="gamelist">
+                <pos>0.04 0.182</pos>
+                <size>0.924 0.682</size>
+                <selectorColor>00000000</selectorColor>
+                <horizontalAlignment>center</horizontalAlignment>
+            </textlist>
+            <image name="md_marquee">
+                <visible>false</visible>
+            </image>
+            <image name="md_background">
+                <visible>false</visible>
+            </image>
+            <image name="md_background_grad_top">
+                <visible>false</visible>
+            </image>
+            <image name="md_background_grad_bottom">
+                <visible>false</visible>
+            </image>
+            <badges name="md_badges">
+                <visible>false</visible>
+            </badges>
+            <text name="md_lbl_publisher, md_lbl_developer, md_lbl_releasedate, md_lbl_players,
+                        md_lbl_genre, md_lbl_rating, md_publisher, md_developer, md_players,
+                        md_genre, md_description">
+                <visible>false</visible>
+            </text>
+            <datetime name="md_releasedate">
+                <visible>false</visible>
+            </datetime>
+            <rating name="md_rating">
+                <visible>false</visible>
+            </rating>
         </view>
     </variant>
 </theme>
