@@ -356,6 +356,40 @@ Here are some example uses of the `<variant>` functionality:
     </view>
 </theme>
 ```
+
+## Variant triggers (overrides)
+
+Variant triggers is an optional feature which can be used to replicate the automatic view style switching functionality of the legacy theme engine. This can be used to automatically override the selected variant based on two triggers, either when there are no game videos found for a system, or if there are no game media files of some specified types found for a system. These two trigger types are named `noVideos` and `noMedia` respectively.
+
+For the `noMedia` trigger there's an optional `mediaType` tag that can be used to specify precisely which media files should be checked for to determine whether to switch to the override variant. Valid values are `miximage`, `marquee`, `screenshot`, `titlescreen`, `cover`, `backcover`, `3dbox`, `physicalmedia`, `fanart` and `video`. Multiple values can be defined, in which case they are separated by a comma, or by a whitespace character (tab, space or line break). If no value is defined, it will be set to `miximage`.
+
+The `useVariant` tag specifies which variant to use to override the selected variant.
+
+You'll probably rarely need to use the `noVideos` trigger as `video` can be defined also when using the `noMedia` trigger. The reason for including both trigger types is that it makes it possible to apply a specific variant only when videos are missing and another variant when no media files at all are present.
+
+The following example (from the `capabilities.xml` file) defines a `noGameMedia` variant which is used as the override for the `withVideos` variant if no miximages, screenshots, covers and videos are found for any game in a system. For this example the `noGameMedia` variant has been set as non-selectable from the _UI Settings_ menu.
+
+As can be seen here, the overall variant trigger configuration needs to be enclosed within an `override` tag pair
+
+```xml
+    <variant name="withVideos">
+        <label>Textlist with videos</label>
+        <selectable>true</selectable>
+        <override>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover, video</mediaType>
+            <useVariant>noGameMedia</useVariant>
+        </override>
+    </variant>
+
+    <variant name="noGameMedia">
+        <label>No game media</label>
+        <selectable>false</selectable>
+    </variant>
+```
+
+Note that variant triggers will only apply to the gamelist view and not the system view. Also be aware that it will add a potentially noticeable application slowdown as game media files need to be scanned for at various points when using the application, as well as during startup. The impact of the performance penalty depends on multiple factors such as the game collection size, how many games have been scraped and disk I/O and filesystem performance. So only use variant triggers if really necessary for your theme design. As well, specifying many values for the `mediaType` tag will lead to more files potentially being scanned which could introduce further lag and latency.
+
 ## Color schemes
 
 Color schemes are essentially a collection of variables that can be selected between from the _UI Settings_ menu. This makes it possible to define different values that will be applied to the overall theme configuration based on this menu selection. Only variables can be used for the color schemes, but since variables can be used for almost everything this makes the functionality very flexible. In most cases you'll probably want to apply different color values to `<color>` properties and similar, but it's also possible to apply different images, animations, fonts etc. per color scheme.
@@ -493,7 +527,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 
 ## capabilities.xml
 
-Variants, color schemes and aspect ratios need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
+Variants, variant triggers, color schemes and aspect ratios need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
 ```
 ~/.emulationstation/themes/mythemeset-DE/capabilities.xml
 ```
@@ -520,15 +554,30 @@ The structure of the file is simple, it just contains declarations for the varia
     <variant name="withVideos">
         <label>Textlist with videos</label>
         <selectable>true</selectable>
+        <override>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover, video</mediaType>
+            <useVariant>noGameMedia</useVariant>
+        </override>
     </variant>
 
     <variant name="withoutVideos">
         <label>Textlist without videos</label>
         <selectable>true</selectable>
+        <override>
+            <trigger>noMedia</trigger>
+            <mediaType>miximage, screenshot, cover</mediaType>
+            <useVariant>noGameMedia</useVariant>
+        </override>
+    </variant>
+
+    <variant name="noGameMedia">
+        <label>No game media</label>
+        <selectable>false</selectable>
     </variant>
 </themeCapabilities>
 ```
-The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes and two variants. The `<label>` tag for the variant is the text that will show up in the _UI Settings_ menu where the variants can be selected, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
+The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes and three variants, one of which is a variant trigger override. The `<label>` tag for the variant is the text that will show up in the _UI Settings_ menu where the variants can be selected, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
 Both the variant and color scheme names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants and color schemes will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
@@ -550,7 +599,7 @@ It's normally not necessary to define all or even most of these for a theme set,
 
 The declared aspect ratios will always get displayed in the _UI settings_ menu in the order listed in the table above, so they can be declared in any order in the capabilities.xml file. If an unsupported aspect ratio value is entered, a warning will be generated on startup and the entry will not get loaded.
 
-The use of variants, color schemes and aspect ratios is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
+The use of variants, variant triggers, color schemes and aspect ratios is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
 Note that changes to the capabilities.xml file are not reloaded when using the Ctrl+r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
 

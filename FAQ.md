@@ -60,6 +60,10 @@ This is almost always caused by either corrupt ROMs/disc images or by missing em
 
 This is related to the two questions above, ES-DE does not perform any emulator configuration or general system configuration. So you would either need to configure an exit button combination inside your emulator, or use a third party tool to map for instance Alt + F4 or Command + Q to a certain button combination on your controller. If you use RetroArch then it's easy to setup a button combination to exit back to ES-DE, which will apply to all cores. Refer to the RetroArch documentation or their support channels on how to accomplish this.
 
+## Why does it take a long time for ES-DE to resume after I've exited a game?
+
+With a few notable exceptions like the Valve Steam system on all platforms and the MAME standalone emulator on Windows, ES-DE will wait for emulators and games to fully exit before it resumes. Some emulators take quite some time to fully exit (sometimes even after their application windows have been destroyed). This may make it seem as if ES-DE is hanging although it's actually waiting for the launched child process to exit. Another reason for a delayed resume is if a custom event script is executed on game end which itself takes a long time to run. If you have such a custom setup then there is a way to work around this by executing scripts as background processes, which is documented [here](INSTALL.md#custom-event-scripts).
+
 ## I have many games with multiple files, is there a way to show these as single entries?
 
 Yes this is supported for both single-disc games using a .bin/.cue structure for instance, or for multi-file/multi-disc games where .m3u files are used for emulator disc swapping. See the _Directories interpreted as files_ section of the [User guide](USERGUIDE.md#directories-interpreted-as-files) for details on how to configure this.

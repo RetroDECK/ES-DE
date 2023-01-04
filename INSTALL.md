@@ -2140,7 +2140,9 @@ Just make sure to not place the portable installation on a network share that us
 
 There are numerous locations throughout ES-DE where custom scripts can be executed if the option to do so has been enabled in the settings. You'll find the option _Enable custom event scripts_ on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
 
-The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files. There are up to four parameters that will be passed to these scripts, as detailed below:
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files. It will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
+
+There are up to four parameters that will be passed to these scripts, as detailed below:
 
 | Event                    | Parameters*                                        | Description                                                                 |
 | :----------------------- | :------------------------------------------------- | :-------------------------------------------------------------------------- |
