@@ -66,14 +66,8 @@ std::vector<std::string> ThemeData::sLegacyProperties {
     {"logoRotation"},
     {"logoRotationOrigin"},
     {"logoAlignment"},
-    {"maxLogoCount"}};
-
-std::vector<std::string> ThemeData::sDeprecatedProperties {
-    {"selectorOffsetY"},
-    {"staticItem"},
-    {"itemType"},
-    {"defaultItem"},
-    {"itemInterpolation"}};
+    {"maxLogoCount"},
+    {"selectorOffsetY"}};
 
 std::vector<std::pair<std::string, std::string>> ThemeData::sSupportedAspectRatios {
     {"automatic", "automatic"},
@@ -128,9 +122,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"staticImage", PATH},
        {"imageType", STRING},
        {"defaultImage", PATH},
-       {"staticItem", PATH},                       // TEMPORARY: For backward compatibility.
-       {"itemType", STRING},                       // TEMPORARY: For backward compatibility.
-       {"defaultItem", PATH},                      // TEMPORARY: For backward compatibility.
        {"maxItemCount", FLOAT},
        {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
        {"itemsBeforeCenter", UNSIGNED_INTEGER},
@@ -141,7 +132,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemRotation", FLOAT},
        {"itemRotationOrigin", NORMALIZED_PAIR},
        {"itemAxisHorizontal", BOOLEAN},
-       {"itemInterpolation", STRING},              // TEMPORARY: For backward compatibility.
        {"imageInterpolation", STRING},
        {"imageColor", COLOR},
        {"imageColorEnd", COLOR},
@@ -193,7 +183,6 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemTransitions", STRING},
        {"rowTransitions", STRING},
        {"unfocusedItemOpacity", FLOAT},
-       {"edgeScaleInwards", BOOLEAN},              // TODO
        {"imageFit", STRING},
        {"imageRelativeScale", FLOAT},
        {"imageColor", COLOR},
@@ -1611,18 +1600,6 @@ void ThemeData::parseElement(const pugi::xml_node& root,
                 if (nodeName == legacyProperty) {
                     throw error << ": Legacy <" << nodeName
                                 << "> property found for non-legacy theme set";
-                }
-            }
-        }
-
-        // Print a warning if a deprecated property is used for a non-legacy theme set.
-        if (!mLegacyTheme) {
-            for (auto& deprecatedProperty : sDeprecatedProperties) {
-                if (nodeName == deprecatedProperty) {
-                    LOG(LogWarning)
-                        << "ThemeData::parseElement(): Property \"" << deprecatedProperty
-                        << "\" is deprecated and support for it will be removed in a future "
-                           "version";
                 }
             }
         }
