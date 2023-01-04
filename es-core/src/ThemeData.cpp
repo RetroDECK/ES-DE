@@ -28,6 +28,18 @@ std::vector<std::string> ThemeData::sSupportedViews {
     {"system"},
     {"gamelist"}};
 
+std::vector<std::string> ThemeData::sSupportedMediaTypes {
+    {"miximage"},
+    {"marquee"},
+    {"screenshot"},
+    {"titlescreen"},
+    {"cover"},
+    {"backcover"},
+    {"3dbox"},
+    {"physicalmedia"},
+    {"fanart"},
+    {"video"}};
+
 std::vector<std::string> ThemeData::sLegacySupportedViews {
     {"all"},
     {"system"},
@@ -497,9 +509,11 @@ ThemeData::ThemeData()
 
 void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
                          const std::string& path,
+                         const ThemeTriggers::TriggerType trigger,
                          const bool customCollection)
 {
     mCustomCollection = customCollection;
+    mOverrideVariant = "";
 
     mPaths.push_back(path);
 
@@ -565,6 +579,12 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
                 mSelectedVariant = mVariants.front();
             // Special shortcut variant to apply configuration to all defined variants.
             mVariants.emplace_back("all");
+
+            if (trigger != ThemeTriggers::TriggerType::NONE) {
+                auto overrides = getCurrentThemeSetSelectedVariantOverrides();
+                if (overrides.find(trigger) != overrides.end())
+                    mOverrideVariant = overrides.at(trigger).first;
+            }
         }
 
         if (mCurrentThemeSet->second.capabilities.colorSchemes.size() > 0) {
@@ -809,6 +829,21 @@ const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
         return "invalid ratio";
 }
 
+const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
+ThemeData::getCurrentThemeSetSelectedVariantOverrides()
+{
+    const auto variantIter = std::find_if(
+        mCurrentThemeSet->second.capabilities.variants.cbegin(),
+        mCurrentThemeSet->second.capabilities.variants.cend(),
+        [this](ThemeVariant currVariant) { return currVariant.name == mSelectedVariant; });
+
+    if (variantIter != mCurrentThemeSet->second.capabilities.variants.cend() &&
+        !(*variantIter).overrides.empty())
+        return (*variantIter).overrides;
+    else
+        return ThemeVariant().overrides;
+}
+
 unsigned int ThemeData::getHexColor(const std::string& str)
 {
     ThemeException error;
@@ -816,20 +851,20 @@ unsigned int ThemeData::getHexColor(const std::string& str)
     if (str == "")
         throw error << "Empty color property";
 
-    size_t len {str.size()};
-    if (len != 6 && len != 8)
+    const size_t length {str.size()};
+    if (length != 6 && length != 8)
         throw error << "Invalid color property \"" << str
                     << "\" (must be 6 or 8 characters in length)";
 
-    unsigned int val;
+    unsigned int value;
     std::stringstream ss;
     ss << str;
-    ss >> std::hex >> val;
+    ss >> std::hex >> value;
 
-    if (len == 6)
-        val = (val << 8) | 0xFF;
+    if (length == 6)
+        value = (value << 8) | 0xFF;
 
-    return val;
+    return value;
 }
 
 std::string ThemeData::resolvePlaceholders(const std::string& in)
@@ -854,18 +889,19 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 {
     ThemeCapability capabilities;
     std::vector<std::string> aspectRatiosTemp;
+    bool hasTriggers {false};
 
-    std::string capFile {path + "/capabilities.xml"};
+    const std::string capFile {path + "/capabilities.xml"};
 
     if (Utils::FileSystem::isRegularFile(capFile) || Utils::FileSystem::isSymlink(capFile)) {
         capabilities.legacyTheme = false;
 
         pugi::xml_document doc;
 #if defined(_WIN64)
-        pugi::xml_parse_result res {
+        const pugi::xml_parse_result& res {
             doc.load_file(Utils::String::stringToWideString(capFile).c_str())};
 #else
-        pugi::xml_parse_result res {doc.load_file(capFile.c_str())};
+        const pugi::xml_parse_result& res {doc.load_file(capFile.c_str())};
 #endif
         if (res.status == pugi::status_no_document_element) {
             LOG(LogDebug) << "Found a capabilities.xml file with no configuration";
@@ -874,7 +910,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             LOG(LogError) << "Couldn't parse capabilities.xml: " << res.description();
             return capabilities;
         }
-        pugi::xml_node themeCapabilities {doc.child("themeCapabilities")};
+        const pugi::xml_node& themeCapabilities {doc.child("themeCapabilities")};
         if (!themeCapabilities) {
             LOG(LogError) << "Missing <themeCapabilities> tag in capabilities.xml";
             return capabilities;
@@ -882,7 +918,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
 
         for (pugi::xml_node aspectRatio {themeCapabilities.child("aspectRatio")}; aspectRatio;
              aspectRatio = aspectRatio.next_sibling("aspectRatio")) {
-            std::string value {aspectRatio.text().get()};
+            const std::string& value {aspectRatio.text().get()};
             if (std::find_if(sSupportedAspectRatios.cbegin(), sSupportedAspectRatios.cend(),
                              [&value](const std::pair<std::string, std::string>& entry) {
                                  return entry.first == value;
@@ -906,7 +942,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
         for (pugi::xml_node variant {themeCapabilities.child("variant")}; variant;
              variant = variant.next_sibling("variant")) {
             ThemeVariant readVariant;
-            std::string name {variant.attribute("name").as_string()};
+            const std::string& name {variant.attribute("name").as_string()};
             if (name.empty()) {
                 LOG(LogWarning)
                     << "Found <variant> tag without name attribute, ignoring entry in \"" << capFile
@@ -921,7 +957,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readVariant.name = name;
             }
 
-            pugi::xml_node labelTag {variant.child("label")};
+            const pugi::xml_node& labelTag {variant.child("label")};
             if (labelTag == nullptr) {
                 LOG(LogDebug)
                     << "No variant <label> tag found, setting label value to the variant name \""
@@ -929,7 +965,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readVariant.label = name;
             }
             else {
-                std::string labelValue {labelTag.text().as_string()};
+                const std::string& labelValue {labelTag.text().as_string()};
                 if (labelValue == "") {
                     LOG(LogWarning) << "No variant <label> value defined, setting value to "
                                        "the variant name \""
@@ -941,9 +977,9 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 }
             }
 
-            pugi::xml_node selectableTag {variant.child("selectable")};
+            const pugi::xml_node& selectableTag {variant.child("selectable")};
             if (selectableTag != nullptr) {
-                std::string value {selectableTag.text().as_string()};
+                const std::string& value {selectableTag.text().as_string()};
                 if (value.front() == '0' || value.front() == 'f' || value.front() == 'F' ||
                     value.front() == 'n' || value.front() == 'N')
                     readVariant.selectable = false;
@@ -951,37 +987,82 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                     readVariant.selectable = true;
             }
 
-            pugi::xml_node overrideTag {variant.child("override")};
-            if (overrideTag != nullptr) {
-                pugi::xml_node triggerTag {overrideTag.child("trigger")};
-                if (triggerTag != nullptr) {
-                    std::string triggerValue {triggerTag.text().as_string()};
-                    if (triggerValue == "") {
-                        LOG(LogWarning)
-                            << "No <trigger> tag value defined for variant \"" << readVariant.name
-                            << "\", ignoring entry in \"" << capFile << "\"";
-                    }
-                    else {
-                        pugi::xml_node useVariantTag {overrideTag.child("useVariant")};
-                        if (useVariantTag != nullptr) {
-                            std::string useVariantValue {useVariantTag.text().as_string()};
-                            if (useVariantValue == "") {
-                                LOG(LogWarning)
-                                    << "No <useVariant> tag value defined for variant \""
-                                    << readVariant.name << "\", ignoring entry in \"" << capFile
-                                    << "\"";
-                            }
-                            else {
-                                readVariant.override = true;
-                                readVariant.overrideTrigger = triggerValue;
-                                readVariant.overrideVariant = useVariantValue;
+            for (pugi::xml_node overrideTag {variant.child("override")}; overrideTag;
+                 overrideTag = overrideTag.next_sibling("override")) {
+                if (overrideTag != nullptr) {
+                    std::vector<std::string> mediaTypes;
+                    const pugi::xml_node& mediaTypeTag {overrideTag.child("mediaType")};
+                    if (mediaTypeTag != nullptr) {
+                        std::string mediaTypeValue {mediaTypeTag.text().as_string()};
+                        for (auto& character : mediaTypeValue) {
+                            if (std::isspace(character))
+                                character = ',';
+                        }
+                        mediaTypeValue = Utils::String::replace(mediaTypeValue, ",,", ",");
+                        mediaTypes = Utils::String::delimitedStringToVector(mediaTypeValue, ",");
+
+                        for (std::string& type : mediaTypes) {
+                            if (std::find(sSupportedMediaTypes.cbegin(),
+                                          sSupportedMediaTypes.cend(),
+                                          type) == sSupportedMediaTypes.cend()) {
+                                LOG(LogError) << "ThemeData::parseThemeCapabilities(): Invalid "
+                                                 "override configuration, unsupported "
+                                                 "\"mediaType\" value \""
+                                              << type << "\"";
+                                mediaTypes.clear();
+                                break;
                             }
                         }
+                    }
+
+                    const pugi::xml_node& triggerTag {overrideTag.child("trigger")};
+                    if (triggerTag != nullptr) {
+                        const std::string& triggerValue {triggerTag.text().as_string()};
+                        if (triggerValue == "") {
+                            LOG(LogWarning) << "No <trigger> tag value defined for variant \""
+                                            << readVariant.name << "\", ignoring entry in \""
+                                            << capFile << "\"";
+                        }
+                        else if (triggerValue != "noVideos" && triggerValue != "noMedia") {
+                            LOG(LogWarning) << "Invalid <useVariant> tag value \"" << triggerValue
+                                            << "\" defined for variant \"" << readVariant.name
+                                            << "\", ignoring entry in \"" << capFile << "\"";
+                        }
                         else {
-                            LOG(LogWarning) << "Found an <override> tag without a corresponding "
-                                               "<useVariant> tag, "
-                                            << "ignoring entry for variant \"" << readVariant.name
-                                            << "\" in \"" << capFile << "\"";
+                            const pugi::xml_node& useVariantTag {overrideTag.child("useVariant")};
+                            if (useVariantTag != nullptr) {
+                                const std::string& useVariantValue {
+                                    useVariantTag.text().as_string()};
+                                if (useVariantValue == "") {
+                                    LOG(LogWarning)
+                                        << "No <useVariant> tag value defined for variant \""
+                                        << readVariant.name << "\", ignoring entry in \"" << capFile
+                                        << "\"";
+                                }
+                                else {
+                                    hasTriggers = true;
+                                    if (triggerValue == "noVideos") {
+                                        readVariant
+                                            .overrides[ThemeTriggers::TriggerType::NO_VIDEOS] =
+                                            std::make_pair(useVariantValue,
+                                                           std::vector<std::string>());
+                                    }
+                                    else if (triggerValue == "noMedia") {
+                                        if (mediaTypes.empty())
+                                            mediaTypes.emplace_back("miximage");
+                                        readVariant
+                                            .overrides[ThemeTriggers::TriggerType::NO_MEDIA] =
+                                            std::make_pair(useVariantValue, mediaTypes);
+                                    }
+                                }
+                            }
+                            else {
+                                LOG(LogWarning)
+                                    << "Found an <override> tag without a corresponding "
+                                       "<useVariant> tag, "
+                                    << "ignoring entry for variant \"" << readVariant.name
+                                    << "\" in \"" << capFile << "\"";
+                            }
                         }
                     }
                 }
@@ -1012,7 +1093,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
         for (pugi::xml_node colorScheme {themeCapabilities.child("colorScheme")}; colorScheme;
              colorScheme = colorScheme.next_sibling("colorScheme")) {
             ThemeColorScheme readColorScheme;
-            std::string name {colorScheme.attribute("name").as_string()};
+            const std::string& name {colorScheme.attribute("name").as_string()};
             if (name.empty()) {
                 LOG(LogWarning)
                     << "Found <colorScheme> tag without name attribute, ignoring entry in \""
@@ -1022,7 +1103,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readColorScheme.name = name;
             }
 
-            pugi::xml_node labelTag {colorScheme.child("label")};
+            const pugi::xml_node& labelTag {colorScheme.child("label")};
             if (labelTag == nullptr) {
                 LOG(LogDebug) << "No colorScheme <label> tag found, setting label value to the "
                                  "color scheme name \""
@@ -1030,7 +1111,7 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                 readColorScheme.label = name;
             }
             else {
-                std::string labelValue {labelTag.text().as_string()};
+                const std::string& labelValue {labelTag.text().as_string()};
                 if (labelValue == "") {
                     LOG(LogWarning) << "No colorScheme <label> value defined, setting value to "
                                        "the color scheme name \""
@@ -1073,6 +1154,28 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             if (std::find(aspectRatiosTemp.cbegin(), aspectRatiosTemp.cend(), aspectRatio.first) !=
                 aspectRatiosTemp.cend()) {
                 capabilities.aspectRatios.emplace_back(aspectRatio.first);
+            }
+        }
+    }
+
+    if (hasTriggers) {
+        for (auto& variant : capabilities.variants) {
+            for (auto it = variant.overrides.begin(); it != variant.overrides.end();) {
+                const auto variantIter =
+                    std::find_if(capabilities.variants.begin(), capabilities.variants.end(),
+                                 [it](ThemeVariant currVariant) {
+                                     return currVariant.name == (*it).second.first;
+                                 });
+                if (variantIter == capabilities.variants.end()) {
+                    LOG(LogWarning)
+                        << "The <useVariant> tag value \"" << (*it).second.first
+                        << "\" does not match any defined variants, ignoring entry in \"" << capFile
+                        << "\"";
+                    it = variant.overrides.erase(it);
+                }
+                else {
+                    ++it;
+                }
             }
         }
     }
@@ -1214,7 +1317,10 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedVariant == viewKey || viewKey == "all") {
+            const std::string variant {mOverrideVariant.empty() ? mSelectedVariant :
+                                                                  mOverrideVariant};
+
+            if (variant == viewKey || viewKey == "all") {
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseIncludes(node);

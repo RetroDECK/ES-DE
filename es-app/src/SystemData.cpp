@@ -239,7 +239,7 @@ SystemData::SystemData(const std::string& name,
     mPlaceholder = new FileData(PLACEHOLDER, "<No Entries Found>", getSystemEnvData(), this);
 
     setIsGameSystemStatus();
-    loadTheme();
+    loadTheme(ThemeTriggers::TriggerType::NONE);
 }
 
 SystemData::~SystemData()
@@ -1304,7 +1304,7 @@ std::pair<unsigned int, unsigned int> SystemData::getDisplayedGameCount() const
     return mRootFolder->getGameCount();
 }
 
-void SystemData::loadTheme()
+void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
 {
     mTheme = std::make_shared<ThemeData>();
 
@@ -1354,7 +1354,7 @@ void SystemData::loadTheme()
             sysData.insert(std::pair<std::string, std::string>("system.theme.collections", "\b"));
         }
 
-        mTheme->loadFile(sysData, path, isCustomCollection());
+        mTheme->loadFile(sysData, path, trigger, isCustomCollection());
     }
     catch (ThemeException& e) {
         LOG(LogError) << e.what() << " (system \"" << mName << "\", theme \"" << mThemeFolder

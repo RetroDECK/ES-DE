@@ -66,6 +66,15 @@ namespace ThemeFlags
     // clang-format on
 } // namespace ThemeFlags
 
+namespace ThemeTriggers
+{
+    enum class TriggerType {
+        NONE,
+        NO_VIDEOS,
+        NO_MEDIA
+    };
+} // namespace ThemeTriggers
+
 class ThemeException : public std::exception
 {
 public:
@@ -175,13 +184,11 @@ public:
         std::string name;
         std::string label;
         bool selectable;
-        bool override;
-        std::string overrideTrigger;
-        std::string overrideVariant;
+        std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
+            overrides;
 
         ThemeVariant()
             : selectable {false}
-            , override {false}
         {
         }
     };
@@ -218,6 +225,7 @@ public:
 
     void loadFile(const std::map<std::string, std::string>& sysDataMap,
                   const std::string& path,
+                  const ThemeTriggers::TriggerType trigger,
                   const bool customCollection);
     bool hasView(const std::string& view);
     ThemeView& getViewElements(std::string view) { return mViews[view]; }
@@ -239,6 +247,8 @@ public:
     const static std::string getCurrentThemeSetName() { return mCurrentThemeSet->first; }
 
     const bool isLegacyTheme() { return mLegacyTheme; }
+    const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
+    getCurrentThemeSetSelectedVariantOverrides();
 
     enum ElementPropertyType {
         NORMALIZED_RECT,
@@ -280,6 +290,7 @@ private:
                       const LegacyWorkaround legacyWorkaround);
 
     static std::vector<std::string> sSupportedViews;
+    static std::vector<std::string> sSupportedMediaTypes;
     static std::vector<std::string> sLegacySupportedViews;
     static std::vector<std::string> sLegacySupportedFeatures;
     static std::vector<std::string> sLegacyProperties;
@@ -298,6 +309,7 @@ private:
     std::vector<std::string> mVariants;
     std::vector<std::string> mColorSchemes;
     std::string mSelectedVariant;
+    std::string mOverrideVariant;
     std::string mSelectedColorScheme;
     std::string mSelectedAspectRatio;
     bool mLegacyTheme;

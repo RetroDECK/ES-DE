@@ -739,22 +739,22 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     // If there's no entry, then create it and return it.
     std::shared_ptr<GamelistView> view;
 
-    bool themeHasVideoView {system->getTheme()->hasView("video")};
-
-    // Decide which view style to use.
-    GamelistViewStyle selectedViewStyle {AUTOMATIC};
-
-    std::string viewPreference {Settings::getInstance()->getString("GamelistViewStyle")};
-    if (viewPreference == "basic")
-        selectedViewStyle = BASIC;
-    else if (viewPreference == "detailed")
-        selectedViewStyle = DETAILED;
-    else if (viewPreference == "video")
-        selectedViewStyle = VIDEO;
-
     if (system->getTheme()->isLegacyTheme()) {
+        const bool themeHasVideoView {system->getTheme()->hasView("video")};
+
+        // Decide which view style to use.
+        GamelistViewStyle selectedViewStyle {AUTOMATIC};
+
+        const std::string& viewPreference {Settings::getInstance()->getString("GamelistViewStyle")};
+        if (viewPreference == "basic")
+            selectedViewStyle = BASIC;
+        else if (viewPreference == "detailed")
+            selectedViewStyle = DETAILED;
+        else if (viewPreference == "video")
+            selectedViewStyle = VIDEO;
+
         if (selectedViewStyle == AUTOMATIC) {
-            std::vector<FileData*> files {
+            const std::vector<FileData*> files {
                 system->getRootFolder()->getFilesRecursive(GAME | FOLDER)};
 
             for (auto it = files.cbegin(); it != files.cend(); ++it) {
@@ -768,29 +768,125 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
                 }
             }
         }
+        // Create the view.
+        switch (selectedViewStyle) {
+            case VIDEO: {
+                mState.viewstyle = VIDEO;
+                break;
+            }
+            case DETAILED: {
+                mState.viewstyle = DETAILED;
+                break;
+            }
+            case BASIC: {
+            }
+            default: {
+                if (!system->isGroupedCustomCollection())
+                    mState.viewstyle = BASIC;
+                break;
+            }
+        }
     }
+    else {
+        // Variant triggers.
+        const auto overrides = system->getTheme()->getCurrentThemeSetSelectedVariantOverrides();
 
-    // Create the view.
-    switch (selectedViewStyle) {
-        case VIDEO: {
-            mState.viewstyle = VIDEO;
-            break;
-        }
-        case DETAILED: {
-            mState.viewstyle = DETAILED;
-            break;
-        }
-        case BASIC: {
-        }
-        default: {
-            if (!system->isGroupedCustomCollection())
-                mState.viewstyle = BASIC;
-            break;
+        if (!overrides.empty()) {
+            ThemeTriggers::TriggerType noVideosTriggerType {ThemeTriggers::TriggerType::NONE};
+            ThemeTriggers::TriggerType noMediaTriggerType {ThemeTriggers::TriggerType::NONE};
+
+            const std::vector<FileData*> files {
+                system->getRootFolder()->getFilesRecursive(GAME | FOLDER)};
+
+            if (overrides.find(ThemeTriggers::TriggerType::NO_VIDEOS) != overrides.end()) {
+                noVideosTriggerType = ThemeTriggers::TriggerType::NO_VIDEOS;
+
+                for (auto it = files.cbegin(); it != files.cend(); ++it) {
+                    if (!(*it)->getVideoPath().empty()) {
+                        noVideosTriggerType = ThemeTriggers::TriggerType::NONE;
+                        break;
+                    }
+                }
+            }
+
+            if (overrides.find(ThemeTriggers::TriggerType::NO_MEDIA) != overrides.end()) {
+                noMediaTriggerType = ThemeTriggers::TriggerType::NO_MEDIA;
+
+                for (auto& imageType : overrides.at(ThemeTriggers::TriggerType::NO_MEDIA).second) {
+                    for (auto it = files.cbegin(); it != files.cend(); ++it) {
+                        if (imageType == "miximage") {
+                            if (!(*it)->getMiximagePath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "marquee") {
+                            if (!(*it)->getMarqueePath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "screenshot") {
+                            if (!(*it)->getScreenshotPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "titlescreen") {
+                            if (!(*it)->getTitleScreenPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "cover") {
+                            if (!(*it)->getCoverPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "backcover") {
+                            if (!(*it)->getBackCoverPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "3dbox") {
+                            if (!(*it)->get3DBoxPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "physicalmedia") {
+                            if (!(*it)->getPhysicalMediaPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "fanart") {
+                            if (!(*it)->getFanArtPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                        else if (imageType == "video") {
+                            if (!(*it)->getVideoPath().empty()) {
+                                noMediaTriggerType = ThemeTriggers::TriggerType::NONE;
+                                goto BREAK;
+                            }
+                        }
+                    }
+                }
+            }
+        BREAK:
+            // noMedia takes precedence over the noVideos trigger.
+            if (noMediaTriggerType == ThemeTriggers::TriggerType::NO_MEDIA)
+                system->loadTheme(noMediaTriggerType);
+            else
+                system->loadTheme(noVideosTriggerType);
         }
     }
 
     view = std::shared_ptr<GamelistView>(new GamelistView(system->getRootFolder()));
-
     view->setTheme(system->getTheme());
 
     std::vector<SystemData*>& sysVec = SystemData::sSystemVector;
@@ -970,7 +1066,7 @@ void ViewController::preload()
 
     // Load navigation sounds, either from the theme if it supports it, or otherwise from
     // the bundled fallback sound files.
-    bool themeSoundSupport = false;
+    bool themeSoundSupport {false};
     for (SystemData* system : SystemData::sSystemVector) {
         if (system->getTheme()->hasView("all")) {
             NavigationSounds::getInstance().loadThemeNavigationSounds(system->getTheme().get());
@@ -1000,7 +1096,7 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
                 mCurrentView = nullptr;
 
             if (reloadTheme)
-                system->loadTheme();
+                system->loadTheme(ThemeTriggers::TriggerType::NONE);
             system->getIndex()->setKidModeFilters();
             std::shared_ptr<GamelistView> newView {getGamelistView(system)};
 
@@ -1047,14 +1143,17 @@ void ViewController::reloadAll()
 
     // Load themes, create GamelistViews and reset filters.
     for (auto it = cursorMap.cbegin(); it != cursorMap.cend(); ++it) {
-        it->first->loadTheme();
+        it->first->loadTheme(ThemeTriggers::TriggerType::NONE);
         it->first->getIndex()->resetFilters();
-        getGamelistView(it->first)->setCursor(it->second);
     }
 
     // Rebuild SystemListView.
     mSystemListView.reset();
     getSystemListView();
+
+    // Restore cursor positions for all systems.
+    for (auto it = cursorMap.cbegin(); it != cursorMap.cend(); ++it)
+        getGamelistView(it->first)->setCursor(it->second);
 
     // Update mCurrentView since the pointers changed.
     if (mState.viewing == GAMELIST) {
@@ -1073,7 +1172,7 @@ void ViewController::reloadAll()
     // Load navigation sounds, either from the theme if it supports it, or otherwise from
     // the bundled fallback sound files.
     NavigationSounds::getInstance().deinit();
-    bool themeSoundSupport = false;
+    bool themeSoundSupport {false};
     for (SystemData* system : SystemData::sSystemVector) {
         if (system->getTheme()->hasView("all")) {
             NavigationSounds::getInstance().loadThemeNavigationSounds(system->getTheme().get());

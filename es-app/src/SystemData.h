@@ -13,6 +13,7 @@
 #define ES_APP_SYSTEM_DATA_H
 
 #include "PlatformId.h"
+#include "ThemeData.h"
 
 #include <algorithm>
 #include <map>
@@ -134,8 +135,8 @@ public:
 
     void sortSystem(bool reloadGamelist = true, bool jumpToFirstRow = false);
 
-    // Load or re-load theme.
-    void loadTheme();
+    // Load or reload theme.
+    void loadTheme(ThemeTriggers::TriggerType trigger);
 
     FileFilterIndex* getIndex() { return mFilterIndex; }
     void onMetaDataSavePoint();
