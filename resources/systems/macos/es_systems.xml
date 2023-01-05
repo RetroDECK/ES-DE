@@ -876,7 +876,7 @@
         <name>n64</name>
         <fullname>Nintendo 64</fullname>
         <path>%ROMPATH%/n64</path>
-        <extension>.bin .BIN .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .d64 .D64 .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
         <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Nintendo 64" %ROM%</command>
@@ -888,7 +888,7 @@
         <name>n64dd</name>
         <fullname>Nintendo 64DD</fullname>
         <path>%ROMPATH%/n64dd</path>
-        <extension>.bin .BIN .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
+        <extension>.bin .BIN .d64 .D64 .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
         <platform>n64</platform>
         <theme>n64dd</theme>
