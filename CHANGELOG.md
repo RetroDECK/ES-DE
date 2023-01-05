@@ -18,6 +18,7 @@
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
 * Renamed the default theme set from rbsimple-DE to slate-DE
 * Ported modern-DE to the new theme engine
+* Added variant trigger (override) support to replicate the legacy theme engine automatic view style switching
 * Replaced the NanoSVG library with LunaSVG for greatly improved SVG rendering capabilities
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
@@ -46,7 +47,7 @@
 * Added a %GAMEDIR% variable to the -rompath option for all MAME standalone entries to allow launching games from subdirectories
 * Added Triforce (Dolphin fork) standalone as an alternative emulator for the gc system on Linux and Windows
 * Added simple64 standalone as an alternative emulator for the n64 system on Linux and Windows
-* Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 system on Linux and Windows
+* Added Rosalie's Mupen GUI standalone as an alternative emulator for the n64 and n64dd systems on Linux and Windows
 * Added VICE standalone as an alternative emulator for the c64 (x64sc only) and vic20 systems
 * (Windows) Added PrimeHack as an alternative emulator for the gc and wii systems
 * (Windows) Added Project64 as an alternative emulator for the n64 system
@@ -284,6 +285,7 @@
 * Doing a manual reload using Ctrl+r in debug mode would sometimes not update modified image files
 * Abbreviations of long words in multiline text entries sometimes exceeded the designated text area
 * Navigation sounds would sometimes not play when browsing game media in the media viewer
+* When defining the same sound file for multiple navigation sounds in the theme configuration an error was logged to es_log.txt on theme change
 * The text debug overlay had the wrong size for scrollable containers
 * The textlist debug overlay would sometimes get positioned incorrectly
 * StringUtil::delimitedStringToVector could return empty elements

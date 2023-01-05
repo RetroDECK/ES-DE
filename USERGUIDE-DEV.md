@@ -1028,15 +1028,19 @@ Starting ES-DE should now show the _Super Mario 3D World_ entry for the Wii U sy
 
 #### Nintendo 64DD
 
-The Japan-only 64DD floppy disk addon for the Nintendo 64 is of limited use since there were almost no games released for it, but ES-DE still supports it.
+The Japan-only 64DD floppy disk addon for the Nintendo 64 is of limited use since there were almost no games released for it, but ES-DE still supports it. The setup below is applicable to both the regular n64 system and the specific n64dd system.
 
-The setup is quite particular and works differently between the two supported emulators ParaLLEl N64 and Mupen64Plus-Next.
+The setup is quite particular and works differently between the three supported emulators ParaLLEl N64, Mupen64Plus-Next and Rosalie's Mupen GUI.
+
+**ParaLLEl N64**
 
 For ParaLLEl N64, place a file named `64DD_IPL.bin` in the root of the RetroArch system directory. Refer to the RetroArch documentation if you're uncertain where this directory is located.
 
 This file which is commonly referred to as _Nintendo 64DD IPL v1.2_ or similar has to have an MD5 hash value of 8d3d9f294b6e174bc7b1d2fd1c727530 or it will not work.
 
 The final step is to enable the option _64DD Hardware_ in the ParaLLEl N64 core options inside RetroArch. Following this you should be able to launch games with the .ndd file extension, or such files compressed into .zip or .7z archives.
+
+**Mupen64Plus-Next**
 
 For Mupen64Plus-Next you should use the exact same IPL file as for ParaLLEl N64 but it has to be placed inside the Mupen64plus subdirectory in the RetroArch system directory. The file also has to be named `IPL.n64` instead of 64DD_IPL.bin.
 
@@ -1049,6 +1053,12 @@ This is such an example setup for Super Mario 64:
 ```
 
 So to clarify it's `Super Mario 64.v64` that has to be launched. Compressing this file into a .zip or .7z file will not work, the game has to be uncompresssed. If using Mupen64Plus-Next it's probably also a good idea to hide the .ndd files from the gamelist (using the _Hidden_ option in the metadata editor) for a more tidy setup.
+
+**Rosalie's Mupen GUI**
+
+For RMG you should use the exact same IPL file as for ParaLLEl N64 but it has to be named `IPL.n64` and you can browse to its location from the emulator settings menu.
+
+Following this setup you will be able to launch games with the .ndd file extension, meaning it works similar to ParaLLEl N64 with the exception that zipped files are not supported.
 
 #### Sony PlayStation 3
 
@@ -3127,7 +3137,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)** [UMW*]   |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW*] | No           | Single ROM file in root folder       |
 | n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)** [UMW*],<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW*],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>Project64 **(Standalone)** [W*],<br>ares **(Standalone)** [UMW*],<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file in root folder |
-| n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
+| n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW],<br>Rosalie's Mupen GUI **(Standalone)** [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** [UMW*] | No           |                                      |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** [UMW*] | Yes          | .chd (NeoCD and MAME only) or .cue file in root folder |

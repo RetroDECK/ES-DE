@@ -367,9 +367,9 @@ The `useVariant` tag specifies which variant to use to override the selected var
 
 You'll probably rarely need to use the `noVideos` trigger as `video` can be defined also when using the `noMedia` trigger. The reason for including both trigger types is that it makes it possible to apply a specific variant only when videos are missing and another variant when no media files at all are present.
 
-The following example (from the `capabilities.xml` file) defines a `noGameMedia` variant which is used as the override for the `withVideos` variant if no miximages, screenshots, covers and videos are found for any game in a system. For this example the `noGameMedia` variant has been set as non-selectable from the _UI Settings_ menu.
+The following example (from the `capabilities.xml` file) defines a `noGameMedia` variant which is used as the override for the `withVideos` variant if no miximages, screenshots, covers and videos are found for any game in a system. For this example the `noGameMedia` variant has been set as non-selectable from the _UI Settings_ menu by defining the `selectable` property as `false`.
 
-As can be seen here, the overall variant trigger configuration needs to be enclosed within an `override` tag pair
+As can be seen here, the overall variant trigger configuration needs to be enclosed within an `override` tag pair. And you can only define a single `override` tag pair per trigger type.
 
 ```xml
     <variant name="withVideos">
@@ -388,7 +388,7 @@ As can be seen here, the overall variant trigger configuration needs to be enclo
     </variant>
 ```
 
-Note that variant triggers will only apply to the gamelist view and not the system view. Also be aware that it will add a potentially noticeable application slowdown as game media files need to be scanned for at various points when using the application, as well as during startup. The impact of the performance penalty depends on multiple factors such as the game collection size, how many games have been scraped and disk I/O and filesystem performance. So only use variant triggers if really necessary for your theme design. As well, specifying many values for the `mediaType` tag will lead to more files potentially being scanned which could introduce further lag and latency.
+Note that variant triggers will only apply to the gamelist view and not the system view. Also be aware that it will add a potentially noticeable application slowdown as game media files need to be scanned for at various points when using the application, as well as during startup. The impact of the performance penalty depends on multiple factors such as the game collection size, how many games have been scraped, as well as disk I/O and filesystem performance. So only use variant triggers if really necessary for your theme design. As well, specifying many values for the `mediaType` tag will lead to more files potentially being scanned which could introduce further lag and latency.
 
 ## Color schemes
 
