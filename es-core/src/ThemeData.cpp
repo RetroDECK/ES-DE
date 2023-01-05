@@ -127,6 +127,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemsBeforeCenter", UNSIGNED_INTEGER},
        {"itemsAfterCenter", UNSIGNED_INTEGER},
        {"itemStacking", STRING},
+       {"selectedItemMargins", NORMALIZED_PAIR},
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
        {"itemRotation", FLOAT},
