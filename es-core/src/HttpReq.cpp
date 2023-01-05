@@ -136,7 +136,13 @@ HttpReq::HttpReq(const std::string& url)
     }
 
     // Set curl restrict redirect protocols.
+
+#if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 85)
     err = curl_easy_setopt(mHandle, CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
+#else
+    err = curl_easy_setopt(mHandle, CURLOPT_REDIR_PROTOCOLS_STR, "http,https");
+#endif
+
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
         onError(curl_easy_strerror(err));
