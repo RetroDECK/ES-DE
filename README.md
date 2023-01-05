@@ -69,7 +69,7 @@ The latest prerelease version is 2.0.0-alpha-2022-12-22
 | macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689044/download)|
 | Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-2.0.0-alpha-2022-12-22-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689033/download)|
 | Fedora RPM package   | Fedora Workstation 37, possibly others                  | x64 (x86)    | [emulationstation-de-2.0.0-alpha-2022-12-22-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689089/download)|
-| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689030/download)|
+| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/64535341/download)|
 | Linux AppImage       | Steam Deck / SteamOS 3.x specific                       | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689122/download)|
 
 Version 1.2.0 (released 2021-12-28) will be the last legacy release for macOS

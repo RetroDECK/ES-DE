@@ -60,6 +60,7 @@
 * (Windows) Added BigPEmu standalone as an alternative emulator for the atarijaguar system
 * Reverted the atarijaguarcd system to placeholder status as no emulators including Virtual Jaguar run these games properly
 * Added the . (dot) file extension to the xbox360 system on Windows to support extensionless XBLA games
+* Added the .d64 file extension to the n64 and n64dd systems
 * Added the .car and .rom file extensions to the a5200 system
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
@@ -187,6 +188,7 @@
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies
 * When building as an AppImage a current SDL library release is now built and bundled instead of including the OS-supplied version
 * When building as an AppImage the "data" directory (e.g. /usr/share/emulationstation) is now excluded when looking for resources and themes
+* Added libGLdispatch.so.0 to the AppImage to fix a crash introduced by a Mesa library update
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Made the logging thread safe
 * (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
@@ -209,6 +211,7 @@
 * Added carousel theme support for defining image saturation
 * Added carousel theme support for setting item transitions to "slide" or "instant"
 * Added carousel theme support for controlling item stacking for overlapping items
+* Added carousel theme support for defining margins around the currently selected item
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase

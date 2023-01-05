@@ -1112,6 +1112,10 @@ Properties:
     - Controls how to stack overlapping items when `type` has been set to "horizontal" or "vertical". It has no effect on wheel carousels or when items do not overlap. When set to `centered` the selected item will be raised and items further from the selected item (to the left/right or above/below depending on the carousel orientation) will be progressively rendered lower than the items closer to the center. If set to `ascending` then items will be rendered progressively higher from left to right or from top to bottom depending on the carousel orientation. If set to `descending` the opposite takes place with items being progressively rendered lower from left to right or top to bottom depending on the carousel orientation. Finally `ascendingRaised` and `descendingRaised` work identically to `ascending` and `descending` with the only difference that the currently selected item will be raised above the other items.
     - Valid values are `centered`, `ascending`, `ascendingRaised`, `descending` or `descendingRaised`
     - Default is `centered`
+* `selectedItemMargins` - type: NORMALIZED_PAIR
+    - By default items are evenly spaced across the carousel area, but if `type` has been set to `horizontal` or `vertical` then this property makes it possible to define margins (extra space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation. This property has no effect on wheel carousels.
+    - Minimum value per margin is `0` and maximum value per margin is `1`
+    - Default is `0 0`
 * `itemSize` - type: NORMALIZED_PAIR
     - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`

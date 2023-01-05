@@ -1058,7 +1058,7 @@ So to clarify it's `Super Mario 64.v64` that has to be launched. Compressing thi
 
 For RMG you should use the exact same IPL file as for ParaLLEl N64 but it has to be named `IPL.n64` and you can browse to its location from the emulator settings menu.
 
-Following this setup you will be able to launch games with the .ndd file extension, meaning it works similar to ParaLLEl N64 with the exception that zipped files are not supported.
+Following this setup you will be able to launch games with the .ndd and .d64 file extensions, meaning it works similar to ParaLLEl N64 with the exception that zipped files are not supported.
 
 #### Sony PlayStation 3
 
