@@ -907,7 +907,7 @@
         <command label="Mupen64Plus (Standalone)">%EMULATOR_MUPEN64PLUS% --nogui %ROM%</command>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.so %ROM%</command>
         <command label="simple64 (Standalone)">%EMULATOR_SIMPLE64% --nogui %ROM%</command>
-        <command label="Rosalie's Mupen GUI (Standalone)">%EMULATOR_ROSALIES-MUPEN-GUI% %ROM%</command>
+        <command label="Rosalie's Mupen GUI (Standalone)">%EMULATOR_ROSALIES-MUPEN-GUI% -q %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Nintendo 64" %ROM%</command>
         <platform>n64</platform>
         <theme>n64</theme>
@@ -919,6 +919,7 @@
         <extension>.bin .BIN .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.so %ROM%</command>
         <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mupen64plus_next_libretro.so %ROM%</command>
+        <command label="Rosalie's Mupen GUI (Standalone)">%EMULATOR_ROSALIES-MUPEN-GUI% -q %ROM%</command>
         <platform>n64</platform>
         <theme>n64dd</theme>
     </system>
