@@ -61,7 +61,7 @@ public:
     Entry& getEntry(int index) { return mEntries.at(index); }
     void onDemandTextureLoad() override;
     const CarouselType getType() { return mType; }
-    const std::string& getDefaultImage() { return mDefaultImage; }
+    const std::string& getDefaultCarouselImage() const { return mDefaultImage; }
     void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
     bool isScrolling() const override { return List::isScrolling(); }
     const LetterCase getLetterCase() const override { return mLetterCase; }

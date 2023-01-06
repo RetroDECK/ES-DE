@@ -580,12 +580,12 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     std::string defaultImage;
 
     if (mCarousel != nullptr) {
-        defaultImage = mCarousel->getDefaultImage();
+        defaultImage = mCarousel->getDefaultCarouselImage();
         if (!ResourceManager::getInstance().fileExists(defaultImage))
             defaultImage = "";
     }
     else if (mGrid != nullptr) {
-        defaultImage = mGrid->getDefaultImage();
+        defaultImage = mGrid->getDefaultGridImage();
         if (!ResourceManager::getInstance().fileExists(defaultImage))
             defaultImage = "";
     }

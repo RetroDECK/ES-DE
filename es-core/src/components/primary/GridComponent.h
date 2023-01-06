@@ -63,7 +63,7 @@ public:
     {
         return mLetterCaseGroupedCollections;
     }
-    const std::string& getDefaultImage() { return mDefaultImage; }
+    const std::string& getDefaultGridImage() const { return mDefaultImage; }
     void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
