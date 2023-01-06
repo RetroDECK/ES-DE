@@ -52,6 +52,22 @@ namespace
         "ScraperFilter"
         // clang-format on
     };
+
+    template <typename K, typename V>
+    void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& type)
+    {
+        for (auto it = map.cbegin(); it != map.cend(); ++it) {
+            // Key is on the "don't save" list, so don't save it.
+            if (std::find(settingsSkipSaving.cbegin(), settingsSkipSaving.cend(), it->first) !=
+                settingsSkipSaving.cend()) {
+                continue;
+            }
+
+            pugi::xml_node node = doc.append_child(type.c_str());
+            node.append_attribute("name").set_value(it->first.c_str());
+            node.append_attribute("value").set_value(it->second.second);
+        }
+    }
 } // namespace
 
 Settings::Settings()
@@ -309,22 +325,6 @@ void Settings::setDefaults()
     mIntMap["ScraperFilter"] = {0, 0};
 }
 
-template <typename K, typename V>
-void saveMap(pugi::xml_document& doc, std::map<K, V>& map, const std::string& type)
-{
-    for (auto it = map.cbegin(); it != map.cend(); ++it) {
-        // Key is on the "don't save" list, so don't save it.
-        if (std::find(settingsSkipSaving.cbegin(), settingsSkipSaving.cend(), it->first) !=
-            settingsSkipSaving.cend()) {
-            continue;
-        }
-
-        pugi::xml_node node = doc.append_child(type.c_str());
-        node.append_attribute("name").set_value(it->first.c_str());
-        node.append_attribute("value").set_value(it->second.second);
-    }
-}
-
 void Settings::saveFile()
 {
     LOG(LogDebug) << "Settings::saveFile(): Saving settings to es_settings.xml";
@@ -338,6 +338,10 @@ void Settings::saveFile()
     saveMap<std::string, std::pair<float, float>>(doc, mFloatMap, "float");
 
     for (auto it = mStringMap.cbegin(); it != mStringMap.cend(); ++it) {
+        if (std::find(settingsSkipSaving.cbegin(), settingsSkipSaving.cend(), it->first) !=
+            settingsSkipSaving.cend()) {
+            continue;
+        }
         pugi::xml_node node = doc.append_child("string");
         node.append_attribute("name").set_value(it->first.c_str());
         node.append_attribute("value").set_value(it->second.second.c_str());
