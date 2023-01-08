@@ -22,6 +22,10 @@
     </variables>
 
     <variant name="withVideos, withoutVideos, noGameMedia">
+        <transitions>slide</transitions>
+    </variant>
+
+    <variant name="withVideos, withoutVideos, noGameMedia">
         <view name="system">
             <carousel name="system_carousel">
                 <pos>0 0.383796</pos>
@@ -444,18 +448,22 @@
     </variant>
 
     <variant name="themeEngineTest_1">
+        <transitions>fadeAndSlide</transitions>
         <include>./theme_engine_test_1.xml</include>
     </variant>
 
     <variant name="themeEngineTest_2">
+        <transitions>instantAndSlide</transitions>
         <include>./theme_engine_test_2.xml</include>
     </variant>
 
     <variant name="themeEngineTest_3">
+        <transitions>instantAndSlide</transitions>
         <include>./theme_engine_test_3.xml</include>
     </variant>
 
     <variant name="themeEngineTest_4">
+        <transitions>instantAndSlide</transitions>
         <include>./theme_engine_test_4.xml</include>
     </variant>
 </theme>
