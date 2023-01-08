@@ -34,6 +34,21 @@ class InputConfig;
 class ThemeData;
 class Window;
 
+enum class ViewTransition {
+    SYSTEM_TO_SYSTEM,
+    SYSTEM_TO_GAMELIST,
+    GAMELIST_TO_GAMELIST,
+    GAMELIST_TO_SYSTEM,
+    STARTUP_TO_SYSTEM,
+    STARTUP_TO_GAMELIST
+};
+
+enum ViewTransitionAnimation {
+    INSTANT,
+    SLIDE,
+    FADE
+};
+
 enum Alignment {
     ALIGN_LEFT,
     ALIGN_CENTER, // Used for both horizontal and vertical alignments.

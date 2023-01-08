@@ -227,8 +227,9 @@ void SystemView::onCursorChanged(const CursorState& state)
 {
     const int cursor {mPrimary->getCursor()};
     const int scrollVelocity {mPrimary->getScrollingVelocity()};
-    const std::string& transitionStyle {Settings::getInstance()->getString("TransitionStyle")};
-    mFadeTransitions = transitionStyle == "fade";
+    const ViewTransitionAnimation transitionAnim {static_cast<ViewTransitionAnimation>(
+        Settings::getInstance()->getInt("TransitionsSystemToSystem"))};
+    mFadeTransitions = (transitionAnim == ViewTransitionAnimation::FADE);
 
     // Some logic needed to avoid various navigation glitches with GridComponent and
     // TextListComponent.
@@ -278,7 +279,7 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     // This is needed to avoid erratic camera movements during extreme navigation input when using
     // slide transitions. This should very rarely occur during normal application usage.
-    if (transitionStyle == "slide") {
+    if (transitionAnim == ViewTransitionAnimation::SLIDE) {
         bool resetCamOffset {false};
 
         if (scrollVelocity == -1 && mPreviousScrollVelocity == 1) {
@@ -372,7 +373,7 @@ void SystemView::onCursorChanged(const CursorState& state)
         animTime =
             glm::clamp(std::fabs(glm::mix(0.0f, animTime, timeDiff * 1.5f)), timeMin, animTime);
 
-    if (transitionStyle == "fade") {
+    if (transitionAnim == ViewTransitionAnimation::FADE) {
         float startFade {mFadeOpacity};
         anim = new LambdaAnimation(
             [this, startFade, endPos](float t) {
@@ -398,7 +399,7 @@ void SystemView::onCursorChanged(const CursorState& state)
             },
             static_cast<int>(animTime * 1.3f));
     }
-    else if (transitionStyle == "slide") {
+    else if (transitionAnim == ViewTransitionAnimation::SLIDE) {
         mUpdatedGameCount = false;
         anim = new LambdaAnimation(
             [this, startPos, endPos, posMax](float t) {
@@ -815,7 +816,8 @@ void SystemView::populate()
         }
     }
 
-    mFadeTransitions = Settings::getInstance()->getString("TransitionStyle") == "fade";
+    mFadeTransitions = (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+                            "TransitionsSystemToSystem")) == ViewTransitionAnimation::FADE);
 }
 
 void SystemView::updateGameCount()

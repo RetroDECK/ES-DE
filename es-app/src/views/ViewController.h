@@ -160,7 +160,7 @@ private:
     std::string mRomDirectory;
     GuiMsgBox* mNoGamesMessageBox;
 
-    void playViewTransition(bool instant = false);
+    void playViewTransition(ViewTransition transitionType, bool instant = false);
     int getSystemId(SystemData* system);
     // Restore view position if it was moved during wrap around.
     void restoreViewPosition();
@@ -170,6 +170,7 @@ private:
     std::shared_ptr<GuiComponent> mSkipView;
     std::map<SystemData*, std::shared_ptr<GamelistView>> mGamelistViews;
     std::shared_ptr<SystemView> mSystemListView;
+    ViewTransitionAnimation mLastTransitionAnim;
 
     std::vector<std::string> mGameEndEventParams;
     FileData* mGameToLaunch;

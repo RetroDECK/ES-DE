@@ -37,6 +37,7 @@ ViewController::ViewController() noexcept
     , mCurrentView {nullptr}
     , mPreviousView {nullptr}
     , mSkipView {nullptr}
+    , mLastTransitionAnim {ViewTransitionAnimation::INSTANT}
     , mGameToLaunch {nullptr}
     , mCamera {Renderer::getIdentity()}
     , mSystemViewTransition {false}
@@ -220,7 +221,7 @@ void ViewController::goToStart(bool playTransition)
 
     // If a specific system is requested, go directly to its game list.
     auto requestedSystem = Settings::getInstance()->getString("StartupSystem");
-    if ("" != requestedSystem && "retropie" != requestedSystem) {
+    if (requestedSystem != "") {
         for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
              it != SystemData::sSystemVector.cend(); ++it) {
             if ((*it)->getName() == requestedSystem) {
@@ -263,7 +264,7 @@ bool ViewController::isCameraMoving()
 
 void ViewController::cancelViewTransitions()
 {
-    if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
+    if (mLastTransitionAnim == ViewTransitionAnimation::SLIDE) {
         if (isCameraMoving()) {
             mCamera[3].x = -mCurrentView->getPosition().x;
             mCamera[3].y = -mCurrentView->getPosition().y;
@@ -277,7 +278,7 @@ void ViewController::cancelViewTransitions()
             mSkipView = nullptr;
         }
     }
-    else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
+    else if (mLastTransitionAnim == ViewTransitionAnimation::FADE) {
         if (isAnimationPlaying(0)) {
             finishAnimation(0);
             mCancelledTransition = true;
@@ -354,8 +355,11 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
 
     // Application startup animation.
     if (applicationStartup) {
+        const ViewTransitionAnimation transitionAnim {static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsStartupToSystem"))};
+
         mCamera = glm::translate(mCamera, glm::round(-mCurrentView->getPosition()));
-        if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
+        if (transitionAnim == ViewTransitionAnimation::SLIDE) {
             if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::CAROUSEL) {
                 if (getSystemListView()->getCarouselType() ==
                         CarouselComponent<SystemData*>::CarouselType::HORIZONTAL ||
@@ -370,7 +374,7 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
             }
             updateHelpPrompts();
         }
-        else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
+        else if (transitionAnim == ViewTransitionAnimation::FADE) {
             if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::CAROUSEL) {
                 if (getSystemListView()->getCarouselType() ==
                         CarouselComponent<SystemData*>::CarouselType::HORIZONTAL ||
@@ -389,18 +393,21 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         }
     }
 
+    if (applicationStartup) {
 #if defined(__APPLE__)
-    // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
-    // best user experience is to simply disable them on this OS.
-    if (applicationStartup)
-        playViewTransition(true);
-    else if (playTransition)
+        // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
+        // best user experience is to simply disable them on this OS.
+        playViewTransition(ViewTransition::STARTUP_TO_SYSTEM, true);
 #else
-    if (playTransition || applicationStartup)
+        playViewTransition(ViewTransition::STARTUP_TO_SYSTEM);
 #endif
-        playViewTransition();
-    else
-        playViewTransition(true);
+    }
+    else if (playTransition) {
+        playViewTransition(ViewTransition::GAMELIST_TO_SYSTEM);
+    }
+    else {
+        playViewTransition(ViewTransition::GAMELIST_TO_SYSTEM, true);
+    }
 }
 
 void ViewController::goToSystem(SystemData* system, bool animate)
@@ -433,21 +440,37 @@ void ViewController::goToGamelist(SystemData* system)
     bool wrapFirstToLast {false};
     bool wrapLastToFirst {false};
     bool slideTransitions {false};
+    bool fadeTransitions {false};
 
     if (mCurrentView != nullptr)
         mCurrentView->onTransition();
 
-    if (Settings::getInstance()->getString("TransitionStyle") == "slide")
+    ViewTransition transitionType;
+    ViewTransitionAnimation transitionAnim;
+
+    if (mState.viewing == SYSTEM_SELECT) {
+        transitionType = ViewTransition::SYSTEM_TO_GAMELIST;
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsSystemToGamelist"));
+    }
+    else {
+        transitionType = ViewTransition::GAMELIST_TO_GAMELIST;
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsGamelistToGamelist"));
+    }
+
+    if (transitionAnim == ViewTransitionAnimation::SLIDE)
         slideTransitions = true;
+
+    if (transitionAnim == ViewTransitionAnimation::FADE)
+        fadeTransitions = true;
 
     // Restore the X position for the view, if it was previously moved.
     if (mWrappedViews)
         restoreViewPosition();
 
-    if (mPreviousView && Settings::getInstance()->getString("TransitionStyle") == "fade" &&
-        isAnimationPlaying(0)) {
+    if (mPreviousView && fadeTransitions && isAnimationPlaying(0))
         mPreviousView->onHide();
-    }
 
     if (mPreviousView) {
         mSkipView = mPreviousView;
@@ -540,12 +563,17 @@ void ViewController::goToGamelist(SystemData* system)
 
     // Application startup animation, if starting in a gamelist rather than in the system view.
     if (mState.viewing == NOTHING) {
+        if (mLastTransitionAnim == ViewTransitionAnimation::FADE)
+            cancelViewTransitions();
+        transitionType = ViewTransition::STARTUP_TO_GAMELIST;
         mCamera = glm::translate(mCamera, glm::round(-mCurrentView->getPosition()));
-        if (Settings::getInstance()->getString("TransitionStyle") == "slide") {
+        if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+                "TransitionsStartupToGamelist")) == ViewTransitionAnimation::SLIDE) {
             mCamera[3].y -= Renderer::getScreenHeight();
             updateHelpPrompts();
         }
-        else if (Settings::getInstance()->getString("TransitionStyle") == "fade") {
+        else if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
+                     "TransitionsStartupToGamelist")) == ViewTransitionAnimation::FADE) {
             mCamera[3].y += Renderer::getScreenHeight() * 2.0f;
         }
         else {
@@ -570,14 +598,14 @@ void ViewController::goToGamelist(SystemData* system)
     if (mCurrentView)
         mCurrentView->onShow();
 
-    playViewTransition();
+    playViewTransition(transitionType);
 }
 
-void ViewController::playViewTransition(bool instant)
+void ViewController::playViewTransition(ViewTransition transitionType, bool instant)
 {
     mCancelledTransition = false;
 
-    glm::vec3 target {};
+    glm::vec3 target {0.0f, 0.0f, 0.0f};
     if (mCurrentView)
         target = mCurrentView->getPosition();
 
@@ -586,9 +614,30 @@ void ViewController::playViewTransition(bool instant)
     if (target == static_cast<glm::vec3>(-mCamera[3]) && !isAnimationPlaying(0))
         return;
 
-    std::string transition_style {Settings::getInstance()->getString("TransitionStyle")};
+    ViewTransitionAnimation transitionAnim {ViewTransitionAnimation::INSTANT};
 
-    if (instant || transition_style == "instant") {
+    if (transitionType == ViewTransition::SYSTEM_TO_SYSTEM)
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsSystemToSystem"));
+    else if (transitionType == ViewTransition::SYSTEM_TO_GAMELIST)
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsSystemToGamelist"));
+    else if (transitionType == ViewTransition::GAMELIST_TO_GAMELIST)
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsGamelistToGamelist"));
+    else if (transitionType == ViewTransition::GAMELIST_TO_SYSTEM)
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsGamelistToSystem"));
+    else if (transitionType == ViewTransition::STARTUP_TO_SYSTEM)
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsStartupToSystem"));
+    else
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsStartupToGamelist"));
+
+    mLastTransitionAnim = transitionAnim;
+
+    if (instant || transitionAnim == ViewTransitionAnimation::INSTANT) {
         setAnimation(new LambdaAnimation(
             [this, target](float /*t*/) {
                 this->mCamera[3].x = -target.x;
@@ -600,7 +649,7 @@ void ViewController::playViewTransition(bool instant)
             1));
         updateHelpPrompts();
     }
-    else if (transition_style == "fade") {
+    else if (transitionAnim == ViewTransitionAnimation::FADE) {
         // Stop whatever's currently playing, leaving mFadeOpacity wherever it is.
         cancelAnimation(0);
 
@@ -641,7 +690,7 @@ void ViewController::playViewTransition(bool instant)
             advanceAnimation(0, static_cast<int>(mFadeOpacity * FADE_DURATION));
         }
     }
-    else if (transition_style == "slide") {
+    else if (transitionAnim == ViewTransitionAnimation::SLIDE) {
         auto slideCallback = [this]() {
             if (mSkipView) {
                 mSkipView->onHide();
@@ -1046,7 +1095,7 @@ void ViewController::render(const glm::mat4& parentTrans)
 
 void ViewController::preload()
 {
-    unsigned int systemCount = static_cast<int>(SystemData::sSystemVector.size());
+    unsigned int systemCount {static_cast<unsigned int>(SystemData::sSystemVector.size())};
 
     // This reduces the amount of texture pop-in when loading theme extras.
     if (!SystemData::sSystemVector.empty())
@@ -1063,6 +1112,8 @@ void ViewController::preload()
         (*it)->getIndex()->resetFilters();
         getGamelistView(*it)->preloadGamelist();
     }
+
+    ThemeData::setThemeTransitions();
 
     // Load navigation sounds, either from the theme if it supports it, or otherwise from
     // the bundled fallback sound files.
@@ -1082,7 +1133,7 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
 {
     for (auto it = mGamelistViews.cbegin(); it != mGamelistViews.cend(); ++it) {
         if (it->second.get() == view) {
-            bool isCurrent {(mCurrentView == it->second)};
+            bool isCurrent {mCurrentView == it->second};
             SystemData* system {it->first};
             FileData* cursor {view->getCursor()};
 
@@ -1147,6 +1198,8 @@ void ViewController::reloadAll()
         it->first->getIndex()->resetFilters();
     }
 
+    ThemeData::setThemeTransitions();
+
     // Rebuild SystemListView.
     mSystemListView.reset();
     getSystemListView();
@@ -1160,7 +1213,7 @@ void ViewController::reloadAll()
         mCurrentView = getGamelistView(mState.getSystem());
     }
     else if (mState.viewing == SYSTEM_SELECT) {
-        SystemData* system = mState.getSystem();
+        SystemData* system {mState.getSystem()};
         mSystemListView->goToSystem(system, false);
         mCurrentView = mSystemListView;
         mCamera[3].x = 0.0f;

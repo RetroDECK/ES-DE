@@ -294,6 +294,101 @@ void GuiMenu::openUIOptions()
     themeAspectRatiosFunc(Settings::getInstance()->getString("ThemeSet"),
                           Settings::getInstance()->getString("ThemeAspectRatio"));
 
+    // Theme transition animations.
+    auto themeTransitionAnimations = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "THEME TRANSITION ANIMS", false);
+    std::string selectedAnim {Settings::getInstance()->getString("ThemeTransitionAnimations")};
+    themeTransitionAnimations->add("AUTOMATIC", "automatic", selectedAnim == "automatic");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the animation type to "automatic" in this case.
+    if (themeTransitionAnimations->getSelectedObjects().size() == 0)
+        themeTransitionAnimations->selectEntry(0);
+    s->addWithLabel("THEME TRANSITION ANIMATIONS", themeTransitionAnimations);
+    s->addSaveFunc([themeTransitionAnimations, s] {
+        if (themeTransitionAnimations->getSelected() !=
+            Settings::getInstance()->getString("ThemeTransitionAnimations")) {
+            Settings::getInstance()->setString("ThemeTransitionAnimations",
+                                               themeTransitionAnimations->getSelected());
+            ThemeData::setThemeTransitions();
+            s->setNeedsSaving();
+        }
+    });
+
+    auto themeTransitionAnimationsFunc = [=](const std::string& selectedTheme,
+                                             const std::string& selectedTransitionAnimation) {
+        std::map<std::string, ThemeData::ThemeSet, ThemeData::StringComparator>::const_iterator
+            currentSet {themeSets.find(selectedTheme)};
+        if (currentSet == themeSets.cend())
+            return;
+        // We need to recreate the OptionListComponent entries.
+        themeTransitionAnimations->clearEntries();
+        if (currentSet->second.capabilities.legacyTheme) {
+            themeTransitionAnimations->add("Legacy theme set", "automatic", true);
+            themeTransitionAnimations->setEnabled(false);
+            themeTransitionAnimations->setOpacity(DISABLED_OPACITY);
+            themeTransitionAnimations->getParent()
+                ->getChild(themeTransitionAnimations->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            themeTransitionAnimations->add("AUTOMATIC", "automatic",
+                                           "automatic" == selectedTransitionAnimation);
+            if (currentSet->second.capabilities.transitions.size() == 1 &&
+                currentSet->second.capabilities.transitions.front().selectable) {
+                std::string label;
+                if (currentSet->second.capabilities.transitions.front().label == "")
+                    label = "THEME PROFILE";
+                else
+                    label = currentSet->second.capabilities.transitions.front().label;
+                const std::string transitionAnim {
+                    currentSet->second.capabilities.transitions.front().name};
+                themeTransitionAnimations->add(label, transitionAnim,
+                                               transitionAnim == selectedTransitionAnimation);
+            }
+            else {
+                for (size_t i {0}; i < currentSet->second.capabilities.transitions.size(); ++i) {
+                    if (!currentSet->second.capabilities.transitions[i].selectable)
+                        continue;
+                    std::string label;
+                    if (currentSet->second.capabilities.transitions[i].label == "")
+                        label = "THEME PROFILE " + std::to_string(i + 1);
+                    else
+                        label = currentSet->second.capabilities.transitions[i].label;
+                    const std::string transitionAnim {
+                        currentSet->second.capabilities.transitions[i].name};
+                    themeTransitionAnimations->add(label, transitionAnim,
+                                                   transitionAnim == selectedTransitionAnimation);
+                }
+            }
+            if (std::find(currentSet->second.capabilities.suppressedTransitionEntries.cbegin(),
+                          currentSet->second.capabilities.suppressedTransitionEntries.cend(),
+                          "builtin-instant") ==
+                currentSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                themeTransitionAnimations->add("INSTANT (BUILT-IN)", "builtin-instant",
+                                               "builtin-instant" == selectedTransitionAnimation);
+            }
+            if (std::find(currentSet->second.capabilities.suppressedTransitionEntries.cbegin(),
+                          currentSet->second.capabilities.suppressedTransitionEntries.cend(),
+                          "builtin-slide") ==
+                currentSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                themeTransitionAnimations->add("SLIDE (BUILT-IN)", "builtin-slide",
+                                               "builtin-slide" == selectedTransitionAnimation);
+            }
+            if (std::find(currentSet->second.capabilities.suppressedTransitionEntries.cbegin(),
+                          currentSet->second.capabilities.suppressedTransitionEntries.cend(),
+                          "builtin-fade") ==
+                currentSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                themeTransitionAnimations->add("FADE (BUILT-IN)", "builtin-fade",
+                                               "builtin-fade" == selectedTransitionAnimation);
+            }
+            if (themeTransitionAnimations->getSelectedObjects().size() == 0)
+                themeTransitionAnimations->selectEntry(0);
+        }
+    };
+
+    themeTransitionAnimationsFunc(Settings::getInstance()->getString("ThemeSet"),
+                                  Settings::getInstance()->getString("ThemeTransitionAnimations"));
+
     // Legacy gamelist view style.
     auto gamelistViewStyle = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "LEGACY GAMELIST VIEW STYLE", false);
@@ -318,21 +413,28 @@ void GuiMenu::openUIOptions()
         }
     });
 
-    // Legacy ransition style.
-    auto transitionStyle = std::make_shared<OptionListComponent<std::string>>(
-        getHelpStyle(), "LEGACY TRANSITION STYLE", false);
-    std::vector<std::string> transitions;
-    transitions.push_back("slide");
-    transitions.push_back("fade");
-    transitions.push_back("instant");
-    for (auto it = transitions.cbegin(); it != transitions.cend(); ++it)
-        transitionStyle->add(*it, *it,
-                             Settings::getInstance()->getString("TransitionStyle") == *it);
-    s->addWithLabel("LEGACY TRANSITION STYLE", transitionStyle);
-    s->addSaveFunc([transitionStyle, s] {
-        if (transitionStyle->getSelected() !=
-            Settings::getInstance()->getString("TransitionStyle")) {
-            Settings::getInstance()->setString("TransitionStyle", transitionStyle->getSelected());
+    // Legacy transition animations.
+    auto legacyTransitionAnimations = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "LEGACY TRANSITION ANIMS", false);
+    const std::string& selectedLegacyAnimations {
+        Settings::getInstance()->getString("LegacyTransitionAnimations")};
+    legacyTransitionAnimations->add("INSTANT", "builtin-instant",
+                                    selectedLegacyAnimations == "builtin-instant");
+    legacyTransitionAnimations->add("SLIDE", "builtin-slide",
+                                    selectedLegacyAnimations == "builtin-slide");
+    legacyTransitionAnimations->add("FADE", "builtin-fade",
+                                    selectedLegacyAnimations == "builtin-fade");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the  animations to "builtin-instant" in this case.
+    if (legacyTransitionAnimations->getSelectedObjects().size() == 0)
+        legacyTransitionAnimations->selectEntry(0);
+    s->addWithLabel("LEGACY TRANSITION ANIMATIONS", legacyTransitionAnimations);
+    s->addSaveFunc([legacyTransitionAnimations, s] {
+        if (legacyTransitionAnimations->getSelected() !=
+            Settings::getInstance()->getString("LegacyTransitionAnimations")) {
+            Settings::getInstance()->setString("LegacyTransitionAnimations",
+                                               legacyTransitionAnimations->getSelected());
+            ThemeData::setThemeTransitions();
             s->setNeedsSaving();
         }
     });
@@ -729,6 +831,7 @@ void GuiMenu::openUIOptions()
             themeVariantsFunc(themeName, themeVariant->getSelected());
             themeColorSchemesFunc(themeName, themeColorScheme->getSelected());
             themeAspectRatiosFunc(themeName, themeAspectRatio->getSelected());
+            themeTransitionAnimationsFunc(themeName, themeTransitionAnimations->getSelected());
         }
         int selectableVariants {0};
         for (auto& variant : selectedSet->second.capabilities.variants) {
@@ -785,12 +888,18 @@ void GuiMenu::openUIOptions()
             gamelistViewStyle->getParent()
                 ->getChild(gamelistViewStyle->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
-            // TEMPORARY
-            // transitionStyle->setEnabled(false);
-            // transitionStyle->setOpacity(DISABLED_OPACITY);
-            // transitionStyle->getParent()
-            //    ->getChild(transitionStyle->getChildIndex() - 1)
-            //    ->setOpacity(DISABLED_OPACITY);
+
+            themeTransitionAnimations->setEnabled(true);
+            themeTransitionAnimations->setOpacity(1.0f);
+            themeTransitionAnimations->getParent()
+                ->getChild(themeTransitionAnimations->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+
+            legacyTransitionAnimations->setEnabled(false);
+            legacyTransitionAnimations->setOpacity(DISABLED_OPACITY);
+            legacyTransitionAnimations->getParent()
+                ->getChild(legacyTransitionAnimations->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
 
             // Pillarboxes are theme-controlled for newer themes.
             gamelistVideoPillarbox->setEnabled(false);
@@ -813,10 +922,16 @@ void GuiMenu::openUIOptions()
                 ->getChild(gamelistViewStyle->getChildIndex() - 1)
                 ->setOpacity(1.0f);
 
-            transitionStyle->setEnabled(true);
-            transitionStyle->setOpacity(1.0f);
-            transitionStyle->getParent()
-                ->getChild(transitionStyle->getChildIndex() - 1)
+            themeTransitionAnimations->setEnabled(false);
+            themeTransitionAnimations->setOpacity(DISABLED_OPACITY);
+            themeTransitionAnimations->getParent()
+                ->getChild(themeTransitionAnimations->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+
+            legacyTransitionAnimations->setEnabled(true);
+            legacyTransitionAnimations->setOpacity(1.0f);
+            legacyTransitionAnimations->getParent()
+                ->getChild(legacyTransitionAnimations->getChildIndex() - 1)
                 ->setOpacity(1.0f);
 
             gamelistVideoPillarbox->setEnabled(true);

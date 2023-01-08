@@ -40,6 +40,19 @@ std::vector<std::string> ThemeData::sSupportedMediaTypes {
     {"fanart"},
     {"video"}};
 
+std::vector<std::string> ThemeData::sSupportedTransitions {
+    {"systemToSystem"},
+    {"systemToGamelist"},
+    {"gamelistToGamelist"},
+    {"gamelistToSystem"},
+    {"startupToSystem"},
+    {"startupToGamelist"}};
+
+std::vector<std::string> ThemeData::sSupportedTransitionAnimations {
+    {"builtin-instant"},
+    {"builtin-slide"},
+    {"builtin-fade"}};
+
 std::vector<std::string> ThemeData::sLegacySupportedViews {
     {"all"},
     {"system"},
@@ -495,6 +508,7 @@ ThemeData::ThemeData()
     , mCustomCollection {false}
 {
     mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
+    mVariantDefinedTransitions = "";
 }
 
 void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
@@ -819,6 +833,95 @@ const std::string ThemeData::getAspectRatioLabel(const std::string& aspectRatio)
         return "invalid ratio";
 }
 
+void ThemeData::setThemeTransitions()
+{
+    auto setTransitionsFunc = [](int transitionAnim) {
+        Settings::getInstance()->setInt("TransitionsSystemToSystem", transitionAnim);
+        Settings::getInstance()->setInt("TransitionsSystemToGamelist", transitionAnim);
+        Settings::getInstance()->setInt("TransitionsGamelistToGamelist", transitionAnim);
+        Settings::getInstance()->setInt("TransitionsGamelistToSystem", transitionAnim);
+        Settings::getInstance()->setInt("TransitionsStartupToSystem", transitionAnim);
+        Settings::getInstance()->setInt("TransitionsStartupToGamelist", transitionAnim);
+    };
+
+    int transitionAnim {ViewTransitionAnimation::INSTANT};
+    setTransitionsFunc(transitionAnim);
+
+    if (mCurrentThemeSet->second.capabilities.legacyTheme) {
+        const std::string& legacyTransitionSetting {
+            Settings::getInstance()->getString("LegacyTransitionAnimations")};
+        if (legacyTransitionSetting == "builtin-slide")
+            transitionAnim = static_cast<int>(ViewTransitionAnimation::SLIDE);
+        else if (legacyTransitionSetting == "builtin-fade")
+            transitionAnim = static_cast<int>(ViewTransitionAnimation::FADE);
+        setTransitionsFunc(transitionAnim);
+    }
+    else {
+        const std::string& transitionSetting {
+            Settings::getInstance()->getString("ThemeTransitionAnimations")};
+        std::string profile;
+        size_t profileEntry {0};
+
+        if (transitionSetting == "automatic") {
+            if (mVariantDefinedTransitions != "")
+                profile = mVariantDefinedTransitions;
+            else if (!mCurrentThemeSet->second.capabilities.transitions.empty())
+                profile = mCurrentThemeSet->second.capabilities.transitions.front().name;
+        }
+        else {
+            profile = transitionSetting;
+        }
+
+        auto it = std::find_if(
+            mCurrentThemeSet->second.capabilities.transitions.cbegin(),
+            mCurrentThemeSet->second.capabilities.transitions.cend(),
+            [&profile](const ThemeTransitions transitions) { return transitions.name == profile; });
+        if (it != mCurrentThemeSet->second.capabilities.transitions.cend())
+            profileEntry = static_cast<size_t>(
+                std::distance(mCurrentThemeSet->second.capabilities.transitions.cbegin(), it) + 1);
+
+        if (profileEntry != 0 &&
+            mCurrentThemeSet->second.capabilities.transitions.size() > profileEntry - 1) {
+            auto transitionMap =
+                mCurrentThemeSet->second.capabilities.transitions[profileEntry - 1].animations;
+            if (transitionMap.find(ViewTransition::SYSTEM_TO_SYSTEM) != transitionMap.end())
+                Settings::getInstance()->setInt("TransitionsSystemToSystem",
+                                                transitionMap[ViewTransition::SYSTEM_TO_SYSTEM]);
+            if (transitionMap.find(ViewTransition::SYSTEM_TO_GAMELIST) != transitionMap.end())
+                Settings::getInstance()->setInt("TransitionsSystemToGamelist",
+                                                transitionMap[ViewTransition::SYSTEM_TO_GAMELIST]);
+            if (transitionMap.find(ViewTransition::GAMELIST_TO_GAMELIST) != transitionMap.end())
+                Settings::getInstance()->setInt(
+                    "TransitionsGamelistToGamelist",
+                    transitionMap[ViewTransition::GAMELIST_TO_GAMELIST]);
+            if (transitionMap.find(ViewTransition::GAMELIST_TO_SYSTEM) != transitionMap.end())
+                Settings::getInstance()->setInt("TransitionsGamelistToSystem",
+                                                transitionMap[ViewTransition::GAMELIST_TO_SYSTEM]);
+            if (transitionMap.find(ViewTransition::STARTUP_TO_SYSTEM) != transitionMap.end())
+                Settings::getInstance()->setInt("TransitionsStartupToSystem",
+                                                transitionMap[ViewTransition::STARTUP_TO_SYSTEM]);
+            if (transitionMap.find(ViewTransition::STARTUP_TO_GAMELIST) != transitionMap.end())
+                Settings::getInstance()->setInt("TransitionsStartupToGamelist",
+                                                transitionMap[ViewTransition::STARTUP_TO_GAMELIST]);
+        }
+        else if (transitionSetting == "builtin-slide" || transitionSetting == "builtin-fade") {
+            if (std::find(
+                    mCurrentThemeSet->second.capabilities.suppressedTransitionEntries.cbegin(),
+                    mCurrentThemeSet->second.capabilities.suppressedTransitionEntries.cend(),
+                    transitionSetting) ==
+                mCurrentThemeSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                if (transitionSetting == "builtin-slide") {
+                    transitionAnim = static_cast<int>(ViewTransitionAnimation::SLIDE);
+                }
+                else if (transitionSetting == "builtin-fade") {
+                    transitionAnim = static_cast<int>(ViewTransitionAnimation::FADE);
+                }
+                setTransitionsFunc(transitionAnim);
+            }
+        }
+    }
+}
+
 const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
 ThemeData::getCurrentThemeSetSelectedVariantOverrides()
 {
@@ -1128,6 +1231,140 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
                     capabilities.colorSchemes.emplace_back(readColorScheme);
             }
         }
+
+        for (pugi::xml_node transitions {themeCapabilities.child("transitions")}; transitions;
+             transitions = transitions.next_sibling("transitions")) {
+            std::map<ViewTransition, ViewTransitionAnimation> readTransitions;
+            std::string name {transitions.attribute("name").as_string()};
+            std::string label;
+            bool selectable {true};
+
+            if (name.empty()) {
+                LOG(LogWarning)
+                    << "Found <transitions> tag without name attribute, ignoring entry in \""
+                    << capFile << "\"";
+                name.clear();
+            }
+            else {
+                if (std::find(sSupportedTransitionAnimations.cbegin(),
+                              sSupportedTransitionAnimations.cend(),
+                              name) != sSupportedTransitionAnimations.cend()) {
+                    LOG(LogWarning)
+                        << "Found <transitions> tag using reserved name attribute value \"" << name
+                        << "\", ignoring entry in \"" << capFile << "\"";
+                    name.clear();
+                }
+                else {
+                    for (auto& transitionEntry : capabilities.transitions) {
+                        if (transitionEntry.name == name) {
+                            LOG(LogWarning)
+                                << "Found <transitions> tag with previously used name attribute "
+                                   "value \""
+                                << name << "\", ignoring entry in \"" << capFile << "\"";
+                            name.clear();
+                        }
+                    }
+                }
+            }
+
+            if (name == "")
+                continue;
+
+            const pugi::xml_node& labelTag {transitions.child("label")};
+            if (labelTag != nullptr)
+                label = labelTag.text().as_string();
+
+            const pugi::xml_node& selectableTag {transitions.child("selectable")};
+            if (selectableTag != nullptr) {
+                const std::string& value {selectableTag.text().as_string()};
+                if (value.front() == '0' || value.front() == 'f' || value.front() == 'F' ||
+                    value.front() == 'n' || value.front() == 'N')
+                    selectable = false;
+            }
+
+            for (auto& currTransition : sSupportedTransitions) {
+                const pugi::xml_node& transitionTag {transitions.child(currTransition.c_str())};
+                if (transitionTag != nullptr) {
+                    const std::string& transitionValue {transitionTag.text().as_string()};
+                    if (transitionValue.empty()) {
+                        LOG(LogWarning) << "Found <" << currTransition
+                                        << "> transition tag without any value, "
+                                           "ignoring entry in \""
+                                        << capFile << "\"";
+                    }
+                    else if (std::find(sSupportedTransitionAnimations.cbegin(),
+                                       sSupportedTransitionAnimations.cend(),
+                                       currTransition) != sSupportedTransitionAnimations.cend()) {
+                        LOG(LogWarning)
+                            << "Invalid <" << currTransition << "> transition tag value \""
+                            << transitionValue << "\", ignoring entry in \"" << capFile << "\"";
+                    }
+                    else {
+                        ViewTransitionAnimation transitionAnim {ViewTransitionAnimation::INSTANT};
+                        if (transitionValue == "slide")
+                            transitionAnim = ViewTransitionAnimation::SLIDE;
+                        else if (transitionValue == "fade")
+                            transitionAnim = ViewTransitionAnimation::FADE;
+
+                        if (currTransition == "systemToSystem")
+                            readTransitions[ViewTransition::SYSTEM_TO_SYSTEM] = transitionAnim;
+                        else if (currTransition == "systemToGamelist")
+                            readTransitions[ViewTransition::SYSTEM_TO_GAMELIST] = transitionAnim;
+                        else if (currTransition == "gamelistToGamelist")
+                            readTransitions[ViewTransition::GAMELIST_TO_GAMELIST] = transitionAnim;
+                        else if (currTransition == "gamelistToSystem")
+                            readTransitions[ViewTransition::GAMELIST_TO_SYSTEM] = transitionAnim;
+                        else if (currTransition == "startupToSystem")
+                            readTransitions[ViewTransition::STARTUP_TO_SYSTEM] = transitionAnim;
+                        else if (currTransition == "startupToGamelist")
+                            readTransitions[ViewTransition::STARTUP_TO_GAMELIST] = transitionAnim;
+                    }
+                }
+            }
+
+            if (!readTransitions.empty()) {
+                ThemeTransitions transition;
+                transition.name = name;
+                transition.label = label;
+                transition.selectable = selectable;
+                transition.animations = std::move(readTransitions);
+                capabilities.transitions.emplace_back(std::move(transition));
+            }
+        }
+
+        for (pugi::xml_node suppressTransitionEntries {
+                 themeCapabilities.child("suppressTransitionEntries")};
+             suppressTransitionEntries;
+             suppressTransitionEntries =
+                 suppressTransitionEntries.next_sibling("suppressTransitionEntries")) {
+            std::vector<std::string> readSuppressEntries;
+
+            for (pugi::xml_node entries {suppressTransitionEntries.child("entry")}; entries;
+                 entries = entries.next_sibling("entry")) {
+                const std::string& entryValue {entries.text().as_string()};
+
+                if (std::find(sSupportedTransitionAnimations.cbegin(),
+                              sSupportedTransitionAnimations.cend(),
+                              entryValue) != sSupportedTransitionAnimations.cend()) {
+                    capabilities.suppressedTransitionEntries.emplace_back(entryValue);
+                }
+                else {
+                    LOG(LogWarning)
+                        << "Found suppressTransitionEntries <entry> tag with invalid value \""
+                        << entryValue << "\", ignoring entry in \"" << capFile << "\"";
+                }
+            }
+
+            // Sort and remove any duplicates.
+            if (capabilities.suppressedTransitionEntries.size() > 1) {
+                std::sort(capabilities.suppressedTransitionEntries.begin(),
+                          capabilities.suppressedTransitionEntries.end());
+                auto last = std::unique(capabilities.suppressedTransitionEntries.begin(),
+                                        capabilities.suppressedTransitionEntries.end());
+                capabilities.suppressedTransitionEntries.erase(
+                    last, capabilities.suppressedTransitionEntries.end());
+            }
+        }
     }
     else {
         LOG(LogDebug) << "No capabilities.xml file found, flagging as legacy theme set";
@@ -1311,6 +1548,21 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                                                                   mOverrideVariant};
 
             if (variant == viewKey || viewKey == "all") {
+                const pugi::xml_node& transitions {node.child("transitions")};
+                if (transitions != nullptr) {
+                    const std::string& transitionsValue {transitions.text().as_string()};
+                    if (std::find_if(mCurrentThemeSet->second.capabilities.transitions.cbegin(),
+                                     mCurrentThemeSet->second.capabilities.transitions.cend(),
+                                     [&transitionsValue](const ThemeTransitions transitions) {
+                                         return transitions.name == transitionsValue;
+                                     }) ==
+                        mCurrentThemeSet->second.capabilities.transitions.cend()) {
+                        throw error << ": <transitions> value \"" << transitionsValue
+                                    << "\" is not matching any defined transitions";
+                    }
+                    mVariantDefinedTransitions = transitionsValue;
+                }
+
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseIncludes(node);

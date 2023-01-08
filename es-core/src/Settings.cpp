@@ -9,6 +9,7 @@
 
 #include "Settings.h"
 
+#include "GuiComponent.h"
 #include "Log.h"
 #include "Scripting.h"
 #include "utils/FileSystemUtil.h"
@@ -20,10 +21,8 @@
 
 namespace
 {
-    // These values are NOT saved to es_settings.xml since they're not set via
-    // the in-program settings menu. Most can be set using command-line arguments,
-    // but some are debug flags that are either hardcoded or set by internal debug
-    // functions.
+    // These settings are not saved to es_settings.xml. Most can be set using command-line
+    // arguments but a couple are debug flags or used for other application-internal purposes.
     std::vector<std::string> settingsSkipSaving {
         // clang-format off
         // These options can be set using command-line arguments:
@@ -38,18 +37,24 @@ namespace
         "ForceKiosk",           // --force-kiosk
         "ForceKid",             // --force-kid
 
-        // These options are not shown in the --help text and are intended
+        // These command-line argument options are not shown in the --help text and are intended
         // for debugging and testing purposes:
         "ScreenWidth",          // Set via --screensize [width] [height]
         "ScreenHeight",         // set via --screensize [width] [height]
         "ScreenOffsetX",        // Set via --screenoffset [X] [Y]
         "ScreenOffsetY",        // Set via --screenoffset [X] [Y]
 
-        // These options are not configurable from the command-line:
+        // These options are only used internally during the application session:
         "DebugGrid",
         "DebugText",
         "DebugImage",
-        "ScraperFilter"
+        "ScraperFilter",
+        "TransitionsSystemToSystem",
+        "TransitionsSystemToGamelist",
+        "TransitionsGamelistToGamelist",
+        "TransitionsGamelistToSystem",
+        "TransitionsStartupToSystem",
+        "TransitionsStartupToGamelist"
         // clang-format on
     };
 
@@ -151,8 +156,9 @@ void Settings::setDefaults()
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeColorScheme"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
+    mStringMap["ThemeTransitionAnimations"] = {"automatic", "automatic"};
     mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
-    mStringMap["TransitionStyle"] = {"slide", "slide"};
+    mStringMap["LegacyTransitionAnimations"] = {"builtin-instant", "builtin-instant"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
     mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};
@@ -323,6 +329,19 @@ void Settings::setDefaults()
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};
     mIntMap["ScraperFilter"] = {0, 0};
+
+    mIntMap["TransitionsSystemToSystem"] = {ViewTransitionAnimation::INSTANT,
+                                            ViewTransitionAnimation::INSTANT};
+    mIntMap["TransitionsSystemToGamelist"] = {ViewTransitionAnimation::INSTANT,
+                                              ViewTransitionAnimation::INSTANT};
+    mIntMap["TransitionsGamelistToGamelist"] = {ViewTransitionAnimation::INSTANT,
+                                                ViewTransitionAnimation::INSTANT};
+    mIntMap["TransitionsGamelistToSystem"] = {ViewTransitionAnimation::INSTANT,
+                                              ViewTransitionAnimation::INSTANT};
+    mIntMap["TransitionsStartupToSystem"] = {ViewTransitionAnimation::INSTANT,
+                                             ViewTransitionAnimation::INSTANT};
+    mIntMap["TransitionsStartupToGamelist"] = {ViewTransitionAnimation::INSTANT,
+                                               ViewTransitionAnimation::INSTANT};
 }
 
 void Settings::saveFile()

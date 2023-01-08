@@ -11,6 +11,7 @@
 #ifndef ES_CORE_THEME_DATA_H
 #define ES_CORE_THEME_DATA_H
 
+#include "GuiComponent.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/MathUtil.h"
 #include "utils/StringUtil.h"
@@ -198,10 +199,24 @@ public:
         std::string label;
     };
 
+    struct ThemeTransitions {
+        std::string name;
+        std::string label;
+        bool selectable;
+        std::map<ViewTransition, ViewTransitionAnimation> animations;
+
+        ThemeTransitions()
+            : selectable {true}
+        {
+        }
+    };
+
     struct ThemeCapability {
         std::vector<ThemeVariant> variants;
         std::vector<ThemeColorScheme> colorSchemes;
         std::vector<std::string> aspectRatios;
+        std::vector<ThemeTransitions> transitions;
+        std::vector<std::string> suppressedTransitionEntries;
         bool legacyTheme;
     };
 
@@ -245,6 +260,7 @@ public:
     const static std::string getThemeFromCurrentSet(const std::string& system);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
     const static std::string getCurrentThemeSetName() { return mCurrentThemeSet->first; }
+    static void setThemeTransitions();
 
     const bool isLegacyTheme() { return mLegacyTheme; }
     const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
@@ -291,6 +307,8 @@ private:
 
     static std::vector<std::string> sSupportedViews;
     static std::vector<std::string> sSupportedMediaTypes;
+    static std::vector<std::string> sSupportedTransitions;
+    static std::vector<std::string> sSupportedTransitionAnimations;
     static std::vector<std::string> sLegacySupportedViews;
     static std::vector<std::string> sLegacySupportedFeatures;
     static std::vector<std::string> sLegacyProperties;
@@ -302,6 +320,7 @@ private:
 
     static inline std::map<std::string, ThemeSet, StringComparator> mThemeSets;
     static inline std::map<std::string, ThemeSet, StringComparator>::iterator mCurrentThemeSet {};
+    static inline std::string mVariantDefinedTransitions;
 
     std::map<std::string, ThemeView> mViews;
     std::deque<std::string> mPaths;
