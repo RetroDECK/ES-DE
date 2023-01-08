@@ -95,9 +95,9 @@ namespace
 // and there is no console available, a new console window will be spawned.
 win64ConsoleType outputToConsole(bool allocConsole)
 {
-    HANDLE outputHandle = nullptr;
-    HWND consoleWindow = nullptr;
-    win64ConsoleType consoleType = NO_CONSOLE;
+    HANDLE outputHandle {nullptr};
+    HWND consoleWindow {nullptr};
+    win64ConsoleType consoleType {NO_CONSOLE};
 
     // Try to attach to a parent console process.
     if (AttachConsole(ATTACH_PARENT_PROCESS))
@@ -118,7 +118,7 @@ win64ConsoleType outputToConsole(bool allocConsole)
     // If we are attached to the parent console or we have opened a new console window,
     // then redirect stdin, stdout and stderr accordingly.
     if (consoleType == PARENT_CONSOLE || consoleType == ALLOCATED_CONSOLE) {
-        FILE* fp = nullptr;
+        FILE* fp {nullptr};
         freopen_s(&fp, "CONIN$", "rb", stdin);
         freopen_s(&fp, "CONOUT$", "wb", stdout);
         setvbuf(stdout, 0, _IONBF, 0);
@@ -204,7 +204,7 @@ bool parseArgs(int argc, char* argv[])
 
     // We need to process --home before any call to Settings::getInstance(),
     // because settings are loaded from the home path.
-    for (int i = 1; i < argc; ++i) {
+    for (int i {1}; i < argc; ++i) {
         if (strcmp(argv[i], "--home") == 0) {
             if (i >= argc - 1) {
                 std::cerr << "Error: No home path supplied with \'--home'\n";
@@ -230,7 +230,7 @@ bool parseArgs(int argc, char* argv[])
         }
     }
 
-    for (int i = 1; i < argc; ++i) {
+    for (int i {1}; i < argc; ++i) {
         // Skip past --home flag as we already processed it.
         if (strcmp(argv[i], "--home") == 0) {
             ++i; // Skip the argument value.
@@ -241,7 +241,7 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid display index supplied.\n";
                 return false;
             }
-            int DisplayIndex = atoi(argv[i + 1]);
+            int DisplayIndex {atoi(argv[i + 1])};
             Settings::getInstance()->setInt("DisplayIndex", DisplayIndex);
             settingsNeedSaving = true;
             ++i;
@@ -251,15 +251,15 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid resolution values supplied.\n";
                 return false;
             }
-            std::string widthArg = argv[i + 1];
-            std::string heightArg = argv[i + 2];
+            std::string widthArg {argv[i + 1]};
+            std::string heightArg {argv[i + 2]};
             if (widthArg.find_first_not_of("0123456789") != std::string::npos ||
                 heightArg.find_first_not_of("0123456789") != std::string::npos) {
                 std::cerr << "Error: Invalid resolution values supplied.\n";
                 return false;
             }
-            int width = atoi(argv[i + 1]);
-            int height = atoi(argv[i + 2]);
+            int width {atoi(argv[i + 1])};
+            int height {atoi(argv[i + 2])};
             if (width < 224 || height < 224 || width > 7680 || height > 7680 ||
                 height < width / 4 || width < height / 2) {
                 std::cerr << "Error: Unsupported resolution " << width << "x" << height
@@ -275,8 +275,8 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid screensize values supplied.\n";
                 return false;
             }
-            int width = atoi(argv[i + 1]);
-            int height = atoi(argv[i + 2]);
+            int width {atoi(argv[i + 1])};
+            int height {atoi(argv[i + 2])};
             Settings::getInstance()->setInt("ScreenWidth", width);
             Settings::getInstance()->setInt("ScreenHeight", height);
             i += 2;
@@ -286,8 +286,8 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid screenoffset values supplied.\n";
                 return false;
             }
-            int x = atoi(argv[i + 1]);
-            int y = atoi(argv[i + 2]);
+            int x {atoi(argv[i + 1])};
+            int y {atoi(argv[i + 2])};
             Settings::getInstance()->setInt("ScreenOffsetX", x);
             Settings::getInstance()->setInt("ScreenOffsetY", y);
             i += 2;
@@ -318,7 +318,7 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid VSync value supplied.\n";
                 return false;
             }
-            bool vSync = (vSyncValue == "on" || vSyncValue == "1") ? true : false;
+            bool vSync {(vSyncValue == "on" || vSyncValue == "1") ? true : false};
             Settings::getInstance()->setBool("VSync", vSync);
             ++i;
         }
@@ -327,7 +327,7 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid VRAM value supplied.\n";
                 return false;
             }
-            int maxVRAM = atoi(argv[i + 1]);
+            int maxVRAM {atoi(argv[i + 1])};
             Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
             settingsNeedSaving = true;
             ++i;
@@ -421,8 +421,8 @@ bool parseArgs(int argc, char* argv[])
 bool checkApplicationHomeDirectory()
 {
     // Check that the application home directory exists, otherwise create it.
-    std::string home = Utils::FileSystem::getHomePath();
-    std::string applicationHome = home + "/.emulationstation";
+    std::string home {Utils::FileSystem::getHomePath()};
+    std::string applicationHome {home + "/.emulationstation"};
     if (!Utils::FileSystem::exists(applicationHome)) {
 #if defined(_WIN64)
         std::cout << "First startup, creating application home directory \""
@@ -499,7 +499,7 @@ void applicationLoop()
 
 int main(int argc, char* argv[])
 {
-    const auto applicationStartTime = std::chrono::system_clock::now();
+    const auto applicationStartTime {std::chrono::system_clock::now()};
 
     std::locale::global(std::locale("C"));
 
@@ -523,7 +523,7 @@ int main(int argc, char* argv[])
     }
     // Removing the write permission from the save state directory effectively disables
     // the functionality.
-    std::string chmodCommand = "chmod 500 \"" + saveStateDir + "\"";
+    std::string chmodCommand {"chmod 500 \"" + saveStateDir + "\""};
     system(chmodCommand.c_str());
 #endif
 
@@ -613,7 +613,7 @@ int main(int argc, char* argv[])
 
     // Create the themes directory in the application home folder. This is not required but
     // is rather a convenience in case the user wants to add additional themes.
-    std::string themesDir = Utils::FileSystem::getHomePath() + "/.emulationstation/themes";
+    std::string themesDir {Utils::FileSystem::getHomePath() + "/.emulationstation/themes"};
     if (!Utils::FileSystem::exists(themesDir)) {
         LOG(LogInfo) << "Creating themes directory \"" << themesDir << "\"...";
         Utils::FileSystem::createDirectory(themesDir);
@@ -624,7 +624,7 @@ int main(int argc, char* argv[])
 
     // Create the scripts directory in the application home folder. This is only required
     // for custom event scripts so it's also created as a convenience.
-    std::string scriptsDir = Utils::FileSystem::getHomePath() + "/.emulationstation/scripts";
+    std::string scriptsDir {Utils::FileSystem::getHomePath() + "/.emulationstation/scripts"};
     if (!Utils::FileSystem::exists(scriptsDir)) {
         LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
         Utils::FileSystem::createDirectory(scriptsDir);
@@ -662,8 +662,8 @@ int main(int argc, char* argv[])
 
 #if defined(_WIN64)
     // Hide taskbar if the setting for this is enabled.
-    bool taskbarStateChanged = false;
-    unsigned int taskbarState;
+    bool taskbarStateChanged {false};
+    unsigned int taskbarState {0};
 
     if (Settings::getInstance()->getBool("HideTaskbar")) {
         taskbarStateChanged = true;
@@ -680,7 +680,7 @@ int main(int argc, char* argv[])
     AudioManager::getInstance();
     MameNames::getInstance();
     ThemeData::populateThemeSets();
-    loadSystemsReturnCode loadSystemsStatus = loadSystemConfigFile();
+    loadSystemsReturnCode loadSystemsStatus {loadSystemConfigFile()};
 
     if (loadSystemsStatus) {
         // If there was an issue parsing the es_systems.xml file, display an error message.
