@@ -302,7 +302,7 @@ void ViewController::stopScrolling()
 
 int ViewController::getSystemId(SystemData* system)
 {
-    std::vector<SystemData*>& sysVec = SystemData::sSystemVector;
+    std::vector<SystemData*>& sysVec {SystemData::sSystemVector};
     return static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin());
 }
 
@@ -319,7 +319,7 @@ void ViewController::restoreViewPosition()
 
 void ViewController::goToSystemView(SystemData* system, bool playTransition)
 {
-    bool applicationStartup = false;
+    bool applicationStartup {false};
 
     if (mState.viewing == NOTHING)
         applicationStartup = true;
@@ -369,7 +369,8 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
                 else
                     mCamera[3].x -= Renderer::getScreenWidth();
             }
-            else if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::TEXTLIST) {
+            else if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::TEXTLIST ||
+                     getSystemListView()->getPrimaryType() == SystemView::PrimaryType::GRID) {
                 mCamera[3].y += Renderer::getScreenHeight();
             }
             updateHelpPrompts();
@@ -384,7 +385,8 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
                 else
                     mCamera[3].x += Renderer::getScreenWidth();
             }
-            else if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::TEXTLIST) {
+            else if (getSystemListView()->getPrimaryType() == SystemView::PrimaryType::TEXTLIST ||
+                     getSystemListView()->getPrimaryType() == SystemView::PrimaryType::GRID) {
                 mCamera[3].y += Renderer::getScreenHeight();
             }
         }
@@ -418,7 +420,7 @@ void ViewController::goToSystem(SystemData* system, bool animate)
 void ViewController::goToNextGamelist()
 {
     assert(mState.viewing == GAMELIST);
-    SystemData* system = getState().getSystem();
+    SystemData* system {getState().getSystem()};
     assert(system);
     NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
     mNextSystem = true;
@@ -428,7 +430,7 @@ void ViewController::goToNextGamelist()
 void ViewController::goToPrevGamelist()
 {
     assert(mState.viewing == GAMELIST);
-    SystemData* system = getState().getSystem();
+    SystemData* system {getState().getSystem()};
     assert(system);
     NavigationSounds::getInstance().playThemeNavigationSound(QUICKSYSSELECTSOUND);
     mNextSystem = false;
@@ -524,8 +526,8 @@ void ViewController::goToGamelist(SystemData* system)
     if (mState.viewing == SYSTEM_SELECT) {
         // Move the system list.
         auto sysList = getSystemListView();
-        float offsetX = sysList->getPosition().x;
-        int sysId = getSystemId(system);
+        float offsetX {sysList->getPosition().x};
+        int sysId {getSystemId(system)};
 
         sysList->setPosition(sysId * Renderer::getScreenWidth(), sysList->getPosition().y);
         offsetX = sysList->getPosition().x - offsetX;
@@ -672,8 +674,8 @@ void ViewController::playViewTransition(ViewTransition transitionType, bool inst
                 mPreviousView->onHide();
         };
 
-        const static int FADE_DURATION = 120; // Fade in/out time.
-        const static int FADE_WAIT = 200; // Time to wait between in/out.
+        const static int FADE_DURATION {120}; // Fade in/out time.
+        const static int FADE_WAIT {200}; // Time to wait between in/out.
         setAnimation(new LambdaAnimation(fadeFunc, FADE_DURATION), 0,
                      [this, fadeFunc, fadeCallback, target] {
                          this->mCamera[3].x = -target.x;
@@ -733,8 +735,8 @@ void ViewController::launch(FileData* game)
     stopAnimation(1); // Make sure the fade in isn't still playing.
     mWindow->stopInfoPopup(); // Make sure we disable any existing info popup.
 
-    int duration = 0;
-    std::string durationString = Settings::getInstance()->getString("LaunchScreenDuration");
+    int duration {0};
+    std::string durationString {Settings::getInstance()->getString("LaunchScreenDuration")};
 
     if (durationString == "disabled") {
         // If the game launch screen has been set as disabled, show a simple info popup
@@ -943,7 +945,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
     view = std::shared_ptr<GamelistView>(new GamelistView(system->getRootFolder()));
     view->setTheme(system->getTheme());
 
-    std::vector<SystemData*>& sysVec = SystemData::sSystemVector;
+    std::vector<SystemData*>& sysVec {SystemData::sSystemVector};
     int id {static_cast<int>(std::find(sysVec.cbegin(), sysVec.cend(), system) - sysVec.cbegin())};
     view->setPosition(id * Renderer::getScreenWidth(), Renderer::getScreenHeight() * 2.0f);
 
@@ -1091,7 +1093,7 @@ void ViewController::render(const glm::mat4& parentTrans)
 
     // Fade out.
     if (mFadeOpacity) {
-        unsigned int fadeColor = 0x00000000 | static_cast<unsigned char>(mFadeOpacity * 255.0f);
+        unsigned int fadeColor {0x00000000 | static_cast<unsigned int>(mFadeOpacity * 255.0f)};
         mRenderer->setMatrix(parentTrans);
         mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                             fadeColor, fadeColor);
