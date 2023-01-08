@@ -453,6 +453,11 @@ void ViewController::goToGamelist(SystemData* system)
         transitionAnim = static_cast<ViewTransitionAnimation>(
             Settings::getInstance()->getInt("TransitionsSystemToGamelist"));
     }
+    else if (mState.viewing == NOTHING) {
+        transitionType = ViewTransition::STARTUP_TO_GAMELIST;
+        transitionAnim = static_cast<ViewTransitionAnimation>(
+            Settings::getInstance()->getInt("TransitionsStartupToGamelist"));
+    }
     else {
         transitionType = ViewTransition::GAMELIST_TO_GAMELIST;
         transitionAnim = static_cast<ViewTransitionAnimation>(
@@ -512,7 +517,8 @@ void ViewController::goToGamelist(SystemData* system)
             mSystemListView->finishSystemAnimation(0);
     }
 
-    if (slideTransitions)
+    if (slideTransitions ||
+        (!fadeTransitions && mLastTransitionAnim == ViewTransitionAnimation::FADE))
         cancelViewTransitions();
 
     if (mState.viewing == SYSTEM_SELECT) {
@@ -565,15 +571,12 @@ void ViewController::goToGamelist(SystemData* system)
     if (mState.viewing == NOTHING) {
         if (mLastTransitionAnim == ViewTransitionAnimation::FADE)
             cancelViewTransitions();
-        transitionType = ViewTransition::STARTUP_TO_GAMELIST;
         mCamera = glm::translate(mCamera, glm::round(-mCurrentView->getPosition()));
-        if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
-                "TransitionsStartupToGamelist")) == ViewTransitionAnimation::SLIDE) {
+        if (transitionAnim == ViewTransitionAnimation::SLIDE) {
             mCamera[3].y -= Renderer::getScreenHeight();
             updateHelpPrompts();
         }
-        else if (static_cast<ViewTransitionAnimation>(Settings::getInstance()->getInt(
-                     "TransitionsStartupToGamelist")) == ViewTransitionAnimation::FADE) {
+        else if (transitionAnim == ViewTransitionAnimation::FADE) {
             mCamera[3].y += Renderer::getScreenHeight() * 2.0f;
         }
         else {
@@ -584,15 +587,17 @@ void ViewController::goToGamelist(SystemData* system)
     mState.viewing = GAMELIST;
     mState.system = system;
 
-    auto it = mGamelistViews.find(system);
-    if (it != mGamelistViews.cend()) {
-        std::string viewStyle = it->second->getName();
-        if (viewStyle == "basic")
-            mState.viewstyle = BASIC;
-        else if (viewStyle == "detailed")
-            mState.viewstyle = DETAILED;
-        else if (viewStyle == "video")
-            mState.viewstyle = VIDEO;
+    if (system->getTheme()->isLegacyTheme()) {
+        auto it = mGamelistViews.find(system);
+        if (it != mGamelistViews.cend()) {
+            std::string viewStyle {it->second->getName()};
+            if (viewStyle == "basic")
+                mState.viewstyle = BASIC;
+            else if (viewStyle == "detailed")
+                mState.viewstyle = DETAILED;
+            else if (viewStyle == "video")
+                mState.viewstyle = VIDEO;
+        }
     }
 
     if (mCurrentView)

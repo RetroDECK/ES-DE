@@ -329,7 +329,6 @@ void Settings::setDefaults()
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};
     mIntMap["ScraperFilter"] = {0, 0};
-
     mIntMap["TransitionsSystemToSystem"] = {ViewTransitionAnimation::INSTANT,
                                             ViewTransitionAnimation::INSTANT};
     mIntMap["TransitionsSystemToGamelist"] = {ViewTransitionAnimation::INSTANT,
