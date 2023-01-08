@@ -906,10 +906,10 @@ void ThemeData::setThemeTransitions()
         }
         else if (transitionSetting == "builtin-slide" || transitionSetting == "builtin-fade") {
             if (std::find(
-                    mCurrentThemeSet->second.capabilities.suppressedTransitionEntries.cbegin(),
-                    mCurrentThemeSet->second.capabilities.suppressedTransitionEntries.cend(),
+                    mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                    mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend(),
                     transitionSetting) ==
-                mCurrentThemeSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend()) {
                 if (transitionSetting == "builtin-slide") {
                     transitionAnim = static_cast<int>(ViewTransitionAnimation::SLIDE);
                 }
@@ -1350,37 +1350,37 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             }
         }
 
-        for (pugi::xml_node suppressTransitionEntries {
-                 themeCapabilities.child("suppressTransitionEntries")};
-             suppressTransitionEntries;
-             suppressTransitionEntries =
-                 suppressTransitionEntries.next_sibling("suppressTransitionEntries")) {
-            std::vector<std::string> readSuppressEntries;
+        for (pugi::xml_node suppressTransitionProfiles {
+                 themeCapabilities.child("suppressTransitionProfiles")};
+             suppressTransitionProfiles;
+             suppressTransitionProfiles =
+                 suppressTransitionProfiles.next_sibling("suppressTransitionProfiles")) {
+            std::vector<std::string> readSuppressProfiles;
 
-            for (pugi::xml_node entries {suppressTransitionEntries.child("entry")}; entries;
+            for (pugi::xml_node entries {suppressTransitionProfiles.child("entry")}; entries;
                  entries = entries.next_sibling("entry")) {
                 const std::string& entryValue {entries.text().as_string()};
 
                 if (std::find(sSupportedTransitionAnimations.cbegin(),
                               sSupportedTransitionAnimations.cend(),
                               entryValue) != sSupportedTransitionAnimations.cend()) {
-                    capabilities.suppressedTransitionEntries.emplace_back(entryValue);
+                    capabilities.suppressedTransitionProfiles.emplace_back(entryValue);
                 }
                 else {
                     LOG(LogWarning)
-                        << "Found suppressTransitionEntries <entry> tag with invalid value \""
+                        << "Found suppressTransitionProfiles <entry> tag with invalid value \""
                         << entryValue << "\", ignoring entry in \"" << capFile << "\"";
                 }
             }
 
             // Sort and remove any duplicates.
-            if (capabilities.suppressedTransitionEntries.size() > 1) {
-                std::sort(capabilities.suppressedTransitionEntries.begin(),
-                          capabilities.suppressedTransitionEntries.end());
-                auto last = std::unique(capabilities.suppressedTransitionEntries.begin(),
-                                        capabilities.suppressedTransitionEntries.end());
-                capabilities.suppressedTransitionEntries.erase(
-                    last, capabilities.suppressedTransitionEntries.end());
+            if (capabilities.suppressedTransitionProfiles.size() > 1) {
+                std::sort(capabilities.suppressedTransitionProfiles.begin(),
+                          capabilities.suppressedTransitionProfiles.end());
+                auto last = std::unique(capabilities.suppressedTransitionProfiles.begin(),
+                                        capabilities.suppressedTransitionProfiles.end());
+                capabilities.suppressedTransitionProfiles.erase(
+                    last, capabilities.suppressedTransitionProfiles.end());
             }
         }
     }

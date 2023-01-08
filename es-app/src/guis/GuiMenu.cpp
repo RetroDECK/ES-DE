@@ -360,24 +360,24 @@ void GuiMenu::openUIOptions()
                                                    transitionAnim == selectedTransitionAnimation);
                 }
             }
-            if (std::find(currentSet->second.capabilities.suppressedTransitionEntries.cbegin(),
-                          currentSet->second.capabilities.suppressedTransitionEntries.cend(),
+            if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                          currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
                           "builtin-instant") ==
-                currentSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
                 themeTransitionAnimations->add("INSTANT (BUILT-IN)", "builtin-instant",
                                                "builtin-instant" == selectedTransitionAnimation);
             }
-            if (std::find(currentSet->second.capabilities.suppressedTransitionEntries.cbegin(),
-                          currentSet->second.capabilities.suppressedTransitionEntries.cend(),
+            if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                          currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
                           "builtin-slide") ==
-                currentSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
                 themeTransitionAnimations->add("SLIDE (BUILT-IN)", "builtin-slide",
                                                "builtin-slide" == selectedTransitionAnimation);
             }
-            if (std::find(currentSet->second.capabilities.suppressedTransitionEntries.cbegin(),
-                          currentSet->second.capabilities.suppressedTransitionEntries.cend(),
+            if (std::find(currentSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                          currentSet->second.capabilities.suppressedTransitionProfiles.cend(),
                           "builtin-fade") ==
-                currentSet->second.capabilities.suppressedTransitionEntries.cend()) {
+                currentSet->second.capabilities.suppressedTransitionProfiles.cend()) {
                 themeTransitionAnimations->add("FADE (BUILT-IN)", "builtin-fade",
                                                "builtin-fade" == selectedTransitionAnimation);
             }

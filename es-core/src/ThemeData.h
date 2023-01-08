@@ -216,7 +216,7 @@ public:
         std::vector<ThemeColorScheme> colorSchemes;
         std::vector<std::string> aspectRatios;
         std::vector<ThemeTransitions> transitions;
-        std::vector<std::string> suppressedTransitionEntries;
+        std::vector<std::string> suppressedTransitionProfiles;
         bool legacyTheme;
     };
 
