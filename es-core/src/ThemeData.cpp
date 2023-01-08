@@ -1323,6 +1323,24 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             }
 
             if (!readTransitions.empty()) {
+                // If startupToSystem and startupToGamelist are not defined, then set them
+                // to the same values as systemToSystem and gamelistToGamelist respectively,
+                // assuming those transitions have been defined.
+                if (readTransitions.find(ViewTransition::STARTUP_TO_SYSTEM) ==
+                    readTransitions.cend()) {
+                    if (readTransitions.find(ViewTransition::SYSTEM_TO_SYSTEM) !=
+                        readTransitions.cend())
+                        readTransitions[ViewTransition::STARTUP_TO_SYSTEM] =
+                            readTransitions[ViewTransition::SYSTEM_TO_SYSTEM];
+                }
+                if (readTransitions.find(ViewTransition::STARTUP_TO_GAMELIST) ==
+                    readTransitions.cend()) {
+                    if (readTransitions.find(ViewTransition::GAMELIST_TO_GAMELIST) !=
+                        readTransitions.cend())
+                        readTransitions[ViewTransition::STARTUP_TO_GAMELIST] =
+                            readTransitions[ViewTransition::GAMELIST_TO_GAMELIST];
+                }
+
                 ThemeTransitions transition;
                 transition.name = name;
                 transition.label = label;
