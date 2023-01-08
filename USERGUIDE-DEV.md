@@ -2280,13 +2280,17 @@ If the theme author has included multiple color schemes, then these can be selec
 
 Non-legacy theme sets could optionally be optimized for different screen aspect ratios. ES-DE supports 16:9, 16:10, 3:2, 4:3, 5:4, 21:9 and 32:9 in both horizontal and vertical orientation, but it's completely up to the theme author which of these are actually supported by the theme set. It's normally best to leave this setting at _Automatic_ in which case ES-DE will automatically select the aspect ratio that most closely matches the screen resolution. The _Automatic_ option is however only available if the theme set supports at least two aspect ratios.
 
+**Theme transition animations**
+
+Transition animations to play when navigating between gamelists, between systems in the System view and between the system and gamelist views. It's normally recommended to keep this setting at its default _Automatic_ value as that allows per-variant transitions, assuming the theme author has included support for that in the theme set. All other values than _Automatic_ are optional as decided by the theme author. For example there could be multiple theme-defined transition entries to choose from, or there could be the possibility to make a selection between the built-in _Instant_, _Slide_ and _Fade_ transitions (although these options could have been disabled from the theme configuration).
+
 **Legacy gamelist view style**
 
 Sets the view style to _Automatic, Basic, Detailed or Video_ for legacy themes. See the description [above](USERGUIDE-DEV.md#gamelist-view) in this document for more information regarding view styles. _Variants_ have replaced gamelist view styles for non-legacy themes so this option will be grayed out if a modern theme set has been selected.
 
-**Legacy transition style**
+**Legacy transition animations**
 
-Transition animation when navigating between gamelists, or between systems on the System view carousel. Can be set to _Slide, Fade_ or _Instant_. Only applicable for legacy themes as the newer type of theme sets lets the theme author define the transition animations in a more fine-grained manner. Therefore this option will be grayed out if a modern theme set has been selected.
+Transition animations to play when navigating between gamelists, between systems on the system view carousel and between the system and gamelist views. Can be set to _Instant_, _Slide_ or _Fade_. Only applicable for legacy themes as current theme sets let the theme author define transition animations in a more fine-grained manner. Therefore this option will be grayed out if a non-legacy theme set has been selected.
 
 **Quick system select**
 

@@ -525,16 +525,84 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 </theme>
 ```
 
+## Transitions (animation profiles)
+
+Using the `capabilities.xml` file it's possible to define granular transition animation profiles. Prior to ES-DE 2.0 there was only a user-selectable option for _Instant_, _Slide_ or _Fade_ animations that were applied globally. It's now possible to define each of these animation types individually for the following transitions:
+
+* System to system
+* System to gamelist
+* Gamelist to gamelist
+* Gamelist to system
+* Startup to system
+* Startup to gamelist
+
+Here's an example configuration:
+```xml
+<transitions name="instantAndSlide">
+    <label>instant and slide</label>
+    <selectable>true</selectable>
+    <systemToSystem>instant</systemToSystem>
+    <systemToGamelist>slide</systemToGamelist>
+    <gamelistToGamelist>instant</gamelistToGamelist>
+    <gamelistToSystem>slide</gamelistToSystem>
+    <startupToSystem>fade</startupToSystem>
+    <startupToGamelist>fade</startupToGamelist>
+</transitions>
+
+<transitions name="instant">
+    <label>instant</label>
+    <selectable>true</selectable>
+    <systemToSystem>instant</systemToSystem>
+    <systemToGamelist>instant</systemToGamelist>
+    <gamelistToGamelist>instant</gamelistToGamelist>
+    <gamelistToSystem>instant</gamelistToSystem>
+</transitions>
+```
+
+The `name` attribute is mandatory and it must be set to a unique value for each profile. Any string can be used except the three reserved values `builtin-instant`, `builtin-slide` and `builtin-fade`.
+
+The `selectable` property which is set to `true` by default defines whether the transition profile can be selected from the _Theme transition animations_ entry on the _UI Settings_ menu. The `label` defines the label to show there. If no label value is set then a default _Theme profile_ label will be applied.
+
+At least one of the six transition types must be defined or the `transitions` entry is not considered valid. Any non-defined types will be set to `instant` with the exception of `startupToSystem` which will be set to the same value as `systemToSystem` and `startupToGamelist` which will be set to the same value as `gamelistToGamelist`.
+
+The profiles will be listed in the _UI Settings_ menu in the order that they have been defined, and the first entry will be used if the _Automatic_ profile has been selected, unless a per-variant configuration is defined in the theme configuration.
+
+In addition to defining custom transition profiles it's possible to suppress the built-in profiles. For example slide transitions will look very broken with some theme designs so in such cases it could make sense to disable this animation type altogether. Suppressing a profile simply means its entry will not show up under _Theme transition animations_ in the _UI Settings_ menu, making it impossible to select and use it.
+
+Here's an example where all the built-in transition profiles have been disabled:
+
+```xml
+<suppressTransitionProfiles>
+    <entry>builtin-instant</entry>
+    <entry>builtin-slide</entry>
+    <entry>builtin-fade</entry>
+</suppressTransitionProfiles>
+```
+
+Regardless of whether any custom profiles have been created or whether the built-in profiles have been disabled there will always be an `Automatic` entry added to the _Theme transition animations_ menu. If no theme profiles have been defined and all built-in profiles have been suppressed, then the `Automatic` entry will be the only available option. In this case `instant` animations will by applied to all transition types.
+
+Finally it's possible to apply theme-defined transition profiles on a per-variant basis. This requires that the user has selected the `Automatic` profile from the _Theme transition animations_ menu as selecting any other profile will override whatever is defined in the theme configuration. Note that the built-in transition profiles can't be used in this manner, only profiles defined in `capabilities.xml`.
+
+```xml
+<variant name="withVideos">
+    <transitions>instantAndSlide</transitions>
+</variant>
+
+<variant name="withoutVideos">
+    <transitions>instant</transitions>
+</variant>
+```
+
 ## capabilities.xml
 
-Variants, variant triggers, color schemes and aspect ratios need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
+Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
 ```
 ~/.emulationstation/themes/mythemeset-DE/capabilities.xml
 ```
 
 This file type was introduced with the new ES-DE theme engine in v2.0 and is an indicator that the theme set is of the new generation instead of being of the legacy type (i.e. a theme set backward compatible with RetroPie EmulationStation). In other words, if the capabilities.xml file is absent, the theme will get loaded as a legacy set.
 
-The structure of the file is simple, it just contains declarations for the variants, color schemes and aspect ratios, such as in this example:
+The structure of the file is simple, as can be seen in this example:
 
 ```xml
 <!-- Theme capabilities for mythemeset-DE -->
@@ -550,6 +618,13 @@ The structure of the file is simple, it just contains declarations for the varia
     <colorScheme name="light">
         <label>Light mode</label>
     </colorScheme>
+
+    <transitions name="instantAndSlide">
+        <systemToSystem>instant</systemToSystem>
+        <systemToGamelist>slide</systemToGamelist>
+        <gamelistToGamelist>instant</gamelistToGamelist>
+        <gamelistToSystem>slide</gamelistToSystem>
+    </transitions>
 
     <variant name="withVideos">
         <label>Textlist with videos</label>
@@ -577,11 +652,11 @@ The structure of the file is simple, it just contains declarations for the varia
     </variant>
 </themeCapabilities>
 ```
-The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes and three variants, one of which is a variant trigger override. The `<label>` tag for the variant is the text that will show up in the _UI Settings_ menu where the variants can be selected, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
+The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
-Both the variant and color scheme names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants and color schemes will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
+The variant, color scheme and transitions names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants, color schemes and transition animations will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
-Unlike variants and color schemes, aspectRatio entries can not be set to arbitrary values, instead they have to use a value from the _horizontal name_ or _vertical name_ columns in the following table:
+Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary values, instead they have to use a value from the _horizontal name_ or _vertical name_ columns in the following table:
 
 | Horizontal name  | Vertical name  | Common resolutions                             |
 | :--------------- | :------------- | :--------------------------------------------- |
@@ -599,7 +674,7 @@ It's normally not necessary to define all or even most of these for a theme set,
 
 The declared aspect ratios will always get displayed in the _UI settings_ menu in the order listed in the table above, so they can be declared in any order in the capabilities.xml file. If an unsupported aspect ratio value is entered, a warning will be generated on startup and the entry will not get loaded.
 
-The use of variants, variant triggers, color schemes and aspect ratios is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
+The use of variants, variant triggers, color schemes, aspect ratios and transition animation profiles is optional, i.e. a theme set does not need to provide any of them. There must however be a capabilities.xml file present in the root of the theme set directory. So if you don't wish to provide this functionality, simply create an empty file or perhaps add a short XML comment to clarify that the theme set does not provide this functionality. In this case the theme will still load and work correctly but the menu options for selecting variants, color schemes and aspect ratios will be grayed out.
 
 Note that changes to the capabilities.xml file are not reloaded when using the Ctrl+r key combination, instead ES-DE needs to be restarted to reload any changes to this file.
 

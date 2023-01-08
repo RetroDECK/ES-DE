@@ -13,6 +13,7 @@
 * Made fundamental changes to the application logic by removing most view styles and replacing them with a new theme variants concept
 * Added theme support for defining and applying different layouts for various display aspect ratios such as 16:9 and 4:3
 * Added theme support for defining and applying different color schemes
+* Added theme support for defining and applying granular transition animation profiles
 * Added a new grid component that is usable in both the system and gamelist views
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
@@ -189,6 +190,7 @@
 * When building as an AppImage a current SDL library release is now built and bundled instead of including the OS-supplied version
 * When building as an AppImage the "data" directory (e.g. /usr/share/emulationstation) is now excluded when looking for resources and themes
 * Added libGLdispatch.so.0 to the AppImage to fix a crash introduced by a Mesa library update
+* Updated the CImg library to commit 4d061dcd67c08e9a36a01875e78b53ee86501dd7
 * Large refactoring to improve thread safety and improve singleton pattern usage
 * Made the logging thread safe
 * (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
