@@ -592,8 +592,8 @@ void MediaDownloadHandle::update()
 
 bool resizeImage(const std::string& path, const std::string& mediaType)
 {
-    float maxWidth = 0.0f;
-    float maxHeight = 0.0f;
+    float maxWidth {0.0f};
+    float maxHeight {0.0f};
 
     if (mediaType == "marquees") {
         // We don't really need huge marquees.
@@ -605,8 +605,8 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
         maxHeight = 1440.0f;
     }
 
-    FREE_IMAGE_FORMAT format = FIF_UNKNOWN;
-    FIBITMAP* image = nullptr;
+    FREE_IMAGE_FORMAT format {FIF_UNKNOWN};
+    FIBITMAP* image {nullptr};
 
     // Detect the file format.
 
@@ -637,19 +637,25 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
         return false;
     }
 
-    float width = static_cast<float>(FreeImage_GetWidth(image));
-    float height = static_cast<float>(FreeImage_GetHeight(image));
+    float width {static_cast<float>(FreeImage_GetWidth(image))};
+    float height {static_cast<float>(FreeImage_GetHeight(image))};
 
     // If the image is smaller than (or the same size as) maxWidth and maxHeight, then don't
     // do any scaling. It doesn't make sense to upscale the image and waste disk space.
     if (maxWidth >= width && maxHeight >= height) {
+#if defined(_WIN64)
+        LOG(LogDebug) << "Scraper::resizeImage(): Saving image \""
+                      << Utils::String::replace(path, "/", "\\") << "\" at its original resolution "
+                      << width << "x" << height;
+#else
         LOG(LogDebug) << "Scraper::resizeImage(): Saving image \"" << path
                       << "\" at its original resolution " << width << "x" << height;
+#endif
         FreeImage_Unload(image);
         return true;
     }
 
-    float scaleFactor = 0.0f;
+    float scaleFactor {0.0f};
 
     // Calculate how much we should scale.
     if (width > maxWidth) {
@@ -665,8 +671,8 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
     maxHeight = floorf(height * scaleFactor);
 
     // We use Lanczos3 which is the highest quality resampling method available in FreeImage.
-    FIBITMAP* imageRescaled = FreeImage_Rescale(image, static_cast<int>(maxWidth),
-                                                static_cast<int>(maxHeight), FILTER_LANCZOS3);
+    FIBITMAP* imageRescaled {FreeImage_Rescale(image, static_cast<int>(maxWidth),
+                                               static_cast<int>(maxHeight), FILTER_LANCZOS3)};
     FreeImage_Unload(image);
 
     if (imageRescaled == nullptr) {
@@ -675,10 +681,10 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
     }
 
 #if defined(_WIN64)
-    bool saved = (FreeImage_SaveU(format, imageRescaled,
-                                  Utils::String::stringToWideString(path).c_str()) != 0);
+    bool saved {FreeImage_SaveU(format, imageRescaled,
+                                Utils::String::stringToWideString(path).c_str()) != 0};
 #else
-    bool saved = (FreeImage_Save(format, imageRescaled, path.c_str()) != 0);
+    bool saved {FreeImage_Save(format, imageRescaled, path.c_str()) != 0};
 #endif
     FreeImage_Unload(imageRescaled);
 
@@ -686,8 +692,14 @@ bool resizeImage(const std::string& path, const std::string& mediaType)
         LOG(LogError) << "Failed to save resized image";
     }
     else {
+#if defined(_WIN64)
+        LOG(LogDebug) << "Scraper::resizeImage(): Downscaled image \""
+                      << Utils::String::replace(path, "/", "\\") << "\" from " << width << "x"
+                      << height << " to " << maxWidth << "x" << maxHeight;
+#else
         LOG(LogDebug) << "Scraper::resizeImage(): Downscaled image \"" << path << "\" from "
                       << width << "x" << height << " to " << maxWidth << "x" << maxHeight;
+#endif
     }
 
     return saved;
