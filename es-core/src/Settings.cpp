@@ -274,7 +274,7 @@ void Settings::setDefaults()
     mBoolMap["CustomEventScripts"] = {false, false};
     mBoolMap["ParseGamelistOnly"] = {false, false};
 #if defined(__unix__)
-    mBoolMap["DisableComposition"] = {true, true};
+    mBoolMap["DisableComposition"] = {false, false};
 #endif
     mBoolMap["DisplayGPUStatistics"] = {false, false};
     mBoolMap["EnableMenuKidMode"] = {false, false};
