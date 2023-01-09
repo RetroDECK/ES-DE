@@ -238,7 +238,7 @@ bool parseArgs(int argc, char* argv[])
         }
         if (strcmp(argv[i], "--display") == 0) {
             if (i >= argc - 1 || atoi(argv[i + 1]) < 1 || atoi(argv[i + 1]) > 4) {
-                std::cerr << "Error: Invalid display index supplied.\n";
+                std::cerr << "Error: Invalid display index supplied\n";
                 return false;
             }
             int DisplayIndex {atoi(argv[i + 1])};
@@ -248,14 +248,14 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--resolution") == 0) {
             if (i >= argc - 2) {
-                std::cerr << "Error: Invalid resolution values supplied.\n";
+                std::cerr << "Error: Invalid resolution values supplied\n";
                 return false;
             }
             std::string widthArg {argv[i + 1]};
             std::string heightArg {argv[i + 2]};
             if (widthArg.find_first_not_of("0123456789") != std::string::npos ||
                 heightArg.find_first_not_of("0123456789") != std::string::npos) {
-                std::cerr << "Error: Invalid resolution values supplied.\n";
+                std::cerr << "Error: Invalid resolution values supplied\n";
                 return false;
             }
             int width {atoi(argv[i + 1])};
@@ -263,7 +263,7 @@ bool parseArgs(int argc, char* argv[])
             if (width < 224 || height < 224 || width > 7680 || height > 7680 ||
                 height < width / 4 || width < height / 2) {
                 std::cerr << "Error: Unsupported resolution " << width << "x" << height
-                          << " supplied.\n";
+                          << " supplied\n";
                 return false;
             }
             Settings::getInstance()->setInt("WindowWidth", width);
@@ -272,7 +272,7 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--screensize") == 0) {
             if (i >= argc - 2) {
-                std::cerr << "Error: Invalid screensize values supplied.\n";
+                std::cerr << "Error: Invalid screensize values supplied\n";
                 return false;
             }
             int width {atoi(argv[i + 1])};
@@ -283,7 +283,7 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--screenoffset") == 0) {
             if (i >= argc - 2) {
-                std::cerr << "Error: Invalid screenoffset values supplied.\n";
+                std::cerr << "Error: Invalid screenoffset values supplied\n";
                 return false;
             }
             int x {atoi(argv[i + 1])};
@@ -294,13 +294,13 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--screenrotate") == 0) {
             if (i >= argc - 1) {
-                std::cerr << "Error: No screenrotate value supplied.\n";
+                std::cerr << "Error: No screenrotate value supplied\n";
                 return false;
             }
             std::string rotateValue {argv[i + 1]};
             if (rotateValue != "on" && rotateValue != "off" && rotateValue != "1" &&
                 rotateValue != "0") {
-                std::cerr << "Error: Invalid screenrotate value supplied.\n";
+                std::cerr << "Error: Invalid screenrotate value supplied\n";
                 return false;
             }
             bool screenRotate {(rotateValue == "on" || rotateValue == "1") ? true : false};
@@ -309,13 +309,13 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--vsync") == 0) {
             if (i >= argc - 1) {
-                std::cerr << "Error: No VSync value supplied.\n";
+                std::cerr << "Error: No VSync value supplied\n";
                 return false;
             }
             std::string vSyncValue = argv[i + 1];
             if (vSyncValue != "on" && vSyncValue != "off" && vSyncValue != "1" &&
                 vSyncValue != "0") {
-                std::cerr << "Error: Invalid VSync value supplied.\n";
+                std::cerr << "Error: Invalid VSync value supplied\n";
                 return false;
             }
             bool vSync {(vSyncValue == "on" || vSyncValue == "1") ? true : false};
@@ -324,7 +324,7 @@ bool parseArgs(int argc, char* argv[])
         }
         else if (strcmp(argv[i], "--max-vram") == 0) {
             if (i >= argc - 1) {
-                std::cerr << "Error: Invalid VRAM value supplied.\n";
+                std::cerr << "Error: Invalid VRAM value supplied\n";
                 return false;
             }
             int maxVRAM {atoi(argv[i + 1])};
@@ -332,6 +332,27 @@ bool parseArgs(int argc, char* argv[])
             settingsNeedSaving = true;
             ++i;
         }
+#if !defined(USE_OPENGLES)
+        else if (strcmp(argv[i], "--anti-aliasing") == 0) {
+            bool invalidValue {false};
+            int antiAlias {0};
+            if (i >= argc - 1) {
+                invalidValue = true;
+            }
+            else {
+                antiAlias = atoi(argv[i + 1]);
+                if (antiAlias != 0 && antiAlias != 2 && antiAlias != 4)
+                    invalidValue = true;
+            }
+            if (invalidValue) {
+                std::cerr << "Error: Invalid anti-aliasing value supplied\n";
+                return false;
+            }
+            Settings::getInstance()->setInt("AntiAliasing", antiAlias);
+            settingsNeedSaving = true;
+            ++i;
+        }
+#endif
         else if (strcmp(argv[i], "--no-splash") == 0) {
             Settings::getInstance()->setBool("SplashScreen", false);
         }
@@ -385,6 +406,9 @@ bool parseArgs(int argc, char* argv[])
 "  --screenrotate [1/on or 0/off]  Rotate application screen 180 degrees\n"
 "  --vsync [1/on or 0/off]         Turn VSync on or off (default is on)\n"
 "  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
+#if !defined(USE_OPENGLES)
+"  --anti-aliasing [0, 2 or 4]     Set MSAA anti-aliasing to disabled, 2x or 4x\n"
+#endif
 "  --no-splash                     Don't show the splash screen during startup\n"
 "  --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
 "  --ignore-gamelist               Ignore the gamelist.xml files (useful for troubleshooting)\n"

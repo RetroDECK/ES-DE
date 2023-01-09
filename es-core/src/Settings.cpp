@@ -247,6 +247,9 @@ void Settings::setDefaults()
     mIntMap["MaxVRAM"] = {512, 512};
 #endif
     mIntMap["DisplayIndex"] = {1, 1};
+#if !defined(USE_OPENGLES)
+    mIntMap["AntiAliasing"] = {0, 0};
+#endif
 #if defined(__APPLE__)
     mStringMap["KeyboardQuitShortcut"] = {"CmdQ", "CmdQ"};
 #else

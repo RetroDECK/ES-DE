@@ -1224,6 +1224,30 @@ void GuiMenu::openOtherOptions()
         }
     });
 
+#if !defined(USE_OPENGLES)
+    // Anti-aliasing (MSAA).
+    auto antiAliasing = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "ANTI-ALIASING (MSAA)", false);
+    const std::string& selectedAntiAliasing {
+        std::to_string(Settings::getInstance()->getInt("AntiAliasing"))};
+    antiAliasing->add("DISABLED", "0", selectedAntiAliasing == "0");
+    antiAliasing->add("2X", "2", selectedAntiAliasing == "2");
+    antiAliasing->add("4X", "4", selectedAntiAliasing == "4");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set anti-aliasing to "0" in this case.
+    if (antiAliasing->getSelectedObjects().size() == 0)
+        antiAliasing->selectEntry(0);
+    s->addWithLabel("ANTI-ALIASING (MSAA) (REQUIRES RESTART)", antiAliasing);
+    s->addSaveFunc([this, antiAliasing, s] {
+        if (antiAliasing->getSelected() !=
+            std::to_string(Settings::getInstance()->getInt("AntiAliasing"))) {
+            Settings::getInstance()->setInt("AntiAliasing",
+                                            atoi(antiAliasing->getSelected().c_str()));
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
     // Display/monitor.
     auto displayIndex = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "DISPLAY/MONITOR INDEX", false);

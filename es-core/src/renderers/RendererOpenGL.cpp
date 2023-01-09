@@ -192,6 +192,14 @@ void RendererOpenGL::setup()
     SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
     SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+#if !defined(USE_OPENGLES)
+    const int antiAliasing {Settings::getInstance()->getInt("AntiAliasing")};
+    if (antiAliasing == 2 || antiAliasing == 4) {
+        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);
+        SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, antiAliasing);
+    }
+#endif
 }
 
 bool RendererOpenGL::createContext()
@@ -238,6 +246,17 @@ bool RendererOpenGL::createContext()
     GL_CHECK_ERROR(glPixelStorei(GL_PACK_ALIGNMENT, 1));
     GL_CHECK_ERROR(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
+#if !defined(USE_OPENGLES)
+    const int antiAliasing {Settings::getInstance()->getInt("AntiAliasing")};
+    if (antiAliasing == 2 || antiAliasing == 4) {
+        GL_CHECK_ERROR(glEnable(GL_MULTISAMPLE));
+        LOG(LogInfo) << "Anti-aliasing: " << antiAliasing << "x MSAA";
+    }
+    else {
+        LOG(LogInfo) << "Anti-aliasing: disabled";
+    }
+#endif
+
     // These are used for the shader post processing.
     GL_CHECK_ERROR(glGenFramebuffers(1, &mShaderFBO1));
     GL_CHECK_ERROR(glGenFramebuffers(1, &mShaderFBO2));
@@ -279,6 +298,15 @@ void RendererOpenGL::destroyContext()
     destroyTexture(mPostProcTexture1);
     destroyTexture(mPostProcTexture2);
     destroyTexture(mWhiteTexture);
+
+    mShaderProgramVector.clear();
+
+    mCoreShader.reset();
+    mBlurHorizontalShader.reset();
+    mBlurVerticalShader.reset();
+    mScanlinelShader.reset();
+    mLastShader.reset();
+
     SDL_GL_DeleteContext(mSDLContext);
     mSDLContext = nullptr;
 }
