@@ -635,9 +635,20 @@ int main(int argc, char* argv[])
         Settings::getInstance()->saveFile();
     }
 
+    // Create the gamelists directory in the application home folder.
+    const std::string gamelistsDir {Utils::FileSystem::getHomePath() +
+                                    "/.emulationstation/gamelists"};
+    if (!Utils::FileSystem::exists(gamelistsDir)) {
+        LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir << "\"...";
+        Utils::FileSystem::createDirectory(gamelistsDir);
+        if (!Utils::FileSystem::exists(gamelistsDir)) {
+            LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
+        }
+    }
+
     // Create the themes directory in the application home folder. This is not required but
     // is rather a convenience in case the user wants to add additional themes.
-    std::string themesDir {Utils::FileSystem::getHomePath() + "/.emulationstation/themes"};
+    const std::string themesDir {Utils::FileSystem::getHomePath() + "/.emulationstation/themes"};
     if (!Utils::FileSystem::exists(themesDir)) {
         LOG(LogInfo) << "Creating themes directory \"" << themesDir << "\"...";
         Utils::FileSystem::createDirectory(themesDir);
@@ -648,7 +659,7 @@ int main(int argc, char* argv[])
 
     // Create the scripts directory in the application home folder. This is only required
     // for custom event scripts so it's also created as a convenience.
-    std::string scriptsDir {Utils::FileSystem::getHomePath() + "/.emulationstation/scripts"};
+    const std::string scriptsDir {Utils::FileSystem::getHomePath() + "/.emulationstation/scripts"};
     if (!Utils::FileSystem::exists(scriptsDir)) {
         LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
         Utils::FileSystem::createDirectory(scriptsDir);
