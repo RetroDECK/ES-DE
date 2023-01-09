@@ -23,6 +23,7 @@
 * Replaced the NanoSVG library with LunaSVG for greatly improved SVG rendering capabilities
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
+* Added support for 2x and 4x MSAA anti-aliasing (OpenGL renderer only)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * gamelist.xml files are no longer loaded from the ROMs/system directories (although old behavior can be retained via an option in es_settings.xml)
 * Expanded the quick system select menu option from an on/off entry to a selection of different button combinations

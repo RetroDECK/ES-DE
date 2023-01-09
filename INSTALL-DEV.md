@@ -1062,6 +1062,7 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --screenrotate [1/on or 0/off]  Rotate application screen 180 degrees
 --vsync [1/on or 0/off]         Turn VSync on or off (default is on)
 --max-vram [size]               Max VRAM to use (in mebibytes) before swapping
+--anti-aliasing [0, 2 or 4]     Set MSAA anti-aliasing to disabled, 2x or 4x
 --no-splash                     Don't show the splash screen during startup
 --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist               Ignore the gamelist.xml files (useful for troubleshooting)
@@ -1078,6 +1079,8 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --help, -h                      Summon a sentient, angry tuba
 ```
 
+_The --anti-aliasing option is not available if ES-DE is built using the OpenGL ES renderer._
+
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its application home directory. Be aware that this option completely replaces what is considered the home directory, meaning the default ROM directory ~/ROMs would be resolved to ~/games/emulation/ROMs. The same is true for the emulator core locations if es_find_rules.xml is configured to look for them relative to the home directory. So of course RetroArch and other emulators would also need to be configured to use ~/games/emulation as its base directory in this instance.
 
 Setting the resolution to a lower or higher value than the display resolution will add a border to the application window.
@@ -1088,6 +1091,7 @@ For the following options, the es_settings.xml file is immediately updated/saved
 ```
 --display
 --max-vram
+--anti-aliasing
 --gamelist-only
 --show-hidden-files
 --show-hidden-games

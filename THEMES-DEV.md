@@ -527,7 +527,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 
 ## Transitions (animation profiles)
 
-Using the `capabilities.xml` file it's possible to define granular transition animation profiles. Prior to ES-DE 2.0 there was only a user-selectable option for _Instant_, _Slide_ or _Fade_ animations that were applied globally. It's now possible to define each of these animation types individually for the following transitions:
+Using the `capabilities.xml` file it's possible to define granular transition animation profiles. Prior to ES-DE 2.0 there was only a user-selectable option for _Instant_, _Slide_ or _Fade_ animations that was applied globally. It's now possible to select each of these animation types individually for the following transitions:
 
 * System to system
 * System to gamelist
@@ -535,6 +535,13 @@ Using the `capabilities.xml` file it's possible to define granular transition an
 * Gamelist to system
 * Startup to system
 * Startup to gamelist
+
+This is a brief overview of the supported animations:
+
+* Instant - as the name implies, transitions are immediate
+* Slide - pans the camera to move between views which may look broken with some elements like textlists and grids when used in the system view
+* Fade - fades to black when transitioning between views
+
 
 Here's an example configuration:
 ```xml
@@ -565,7 +572,7 @@ The `selectable` property which is set to `true` by default defines whether the 
 
 At least one of the six transition types must be defined or the `transitions` entry is not considered valid. Any non-defined types will be set to `instant` with the exception of `startupToSystem` which will be set to the same value as `systemToSystem` and `startupToGamelist` which will be set to the same value as `gamelistToGamelist`.
 
-The profiles will be listed in the _UI Settings_ menu in the order that they have been defined, and the first entry will be used if the _Automatic_ profile has been selected, unless a per-variant configuration is defined in the theme configuration.
+The profiles will be listed in the _UI Settings_ menu in the order that they have been defined, and the first profile (regardless of whether it's set as user-selectable or not), will be used if the _Automatic_ entry has been selected, unless a per-variant configuration is defined in the theme configuration.
 
 In addition to defining custom transition profiles it's possible to suppress the built-in profiles. For example slide transitions will look very broken with some theme designs so in such cases it could make sense to disable this animation type altogether. Suppressing a profile simply means its entry will not show up under _Theme transition animations_ in the _UI Settings_ menu, making it impossible to select and use it.
 
