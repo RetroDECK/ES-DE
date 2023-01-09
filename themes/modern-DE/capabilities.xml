@@ -16,6 +16,17 @@
         <label>Light mode</label>
     </colorScheme>
 
+    <transitions name="instant">
+        <label>instant</label>
+        <selectable>true</selectable>
+        <systemToSystem>instant</systemToSystem>
+        <systemToGamelist>instant</systemToGamelist>
+        <gamelistToGamelist>instant</gamelistToGamelist>
+        <gamelistToSystem>instant</gamelistToSystem>
+        <startupToSystem>slide</startupToSystem>
+        <startupToGamelist>slide</startupToGamelist>
+    </transitions>
+
     <transitions name="instantAndSlide">
         <label>instant and slide</label>
         <selectable>true</selectable>
@@ -34,17 +45,6 @@
         <systemToGamelist>fade</systemToGamelist>
         <gamelistToGamelist>fade</gamelistToGamelist>
         <gamelistToSystem>fade</gamelistToSystem>
-        <startupToSystem>slide</startupToSystem>
-        <startupToGamelist>slide</startupToGamelist>
-    </transitions>
-
-    <transitions name="instant">
-        <label>instant</label>
-        <selectable>true</selectable>
-        <systemToSystem>instant</systemToSystem>
-        <systemToGamelist>instant</systemToGamelist>
-        <gamelistToGamelist>instant</gamelistToGamelist>
-        <gamelistToSystem>instant</gamelistToSystem>
         <startupToSystem>slide</startupToSystem>
         <startupToGamelist>slide</startupToGamelist>
     </transitions>
