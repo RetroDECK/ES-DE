@@ -258,10 +258,9 @@ SystemData::~SystemData()
 
 void SystemData::setIsGameSystemStatus()
 {
-    // We exclude non-game systems from specific operations (i.e. the "RetroPie" system, at least).
-    // If/when there are more in the future, maybe this can be a more complex method, with a proper
-    // list but for now a simple string comparison is enough.
-    mIsGameSystem = (mName != "retropie");
+    // Reserved for future use, could be used to exclude certain systems from some operations,
+    // such as dedicated tools systems and similar.
+    mIsGameSystem = true;
 }
 
 bool SystemData::populateFolder(FileData* folder)
