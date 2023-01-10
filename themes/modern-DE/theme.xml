@@ -247,6 +247,7 @@
             <pos>0.70 0.552</pos>
             <size>0.13125 0.03</size>
             <metadata>publisher</metadata>
+            <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
         <text name="md_lbl_developer">
@@ -260,6 +261,7 @@
             <pos>0.8453 0.552</pos>
             <size>0.13125 0.03</size>
             <metadata>developer</metadata>
+            <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
         <text name="md_lbl_releasedate">
@@ -273,6 +275,7 @@
             <pos>0.70 0.628</pos>
             <size>0.13125 0.03</size>
             <metadata>releasedate</metadata>
+            <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </datetime>
         <text name="md_lbl_players">
@@ -286,6 +289,7 @@
             <pos>0.8453 0.628</pos>
             <size>0.13125 0.03</size>
             <metadata>players</metadata>
+            <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
         <text name="md_lbl_genre">
@@ -299,6 +303,7 @@
             <pos>0.70 0.704</pos>
             <size>0.13125 0.03</size>
             <metadata>genre</metadata>
+            <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
         <text name="md_lbl_rating">
