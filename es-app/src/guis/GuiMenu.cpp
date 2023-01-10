@@ -1238,7 +1238,7 @@ void GuiMenu::openOtherOptions()
     if (antiAliasing->getSelectedObjects().size() == 0)
         antiAliasing->selectEntry(0);
     s->addWithLabel("ANTI-ALIASING (MSAA) (REQUIRES RESTART)", antiAliasing);
-    s->addSaveFunc([this, antiAliasing, s] {
+    s->addSaveFunc([antiAliasing, s] {
         if (antiAliasing->getSelected() !=
             std::to_string(Settings::getInstance()->getInt("AntiAliasing"))) {
             Settings::getInstance()->setInt("AntiAliasing",
