@@ -104,6 +104,7 @@
 * Removed the "Play videos immediately (override theme)" setting
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
 * Added an "Ignore keyboard input" option to the input device settings menu
+* (Unix) Set the "Disable desktop composition" option as disabled by default as it caused issues with some GPU drivers
 * The media viewer now always loads all images upfront to avoid audio stutter when browsing the files
 * Added support for defining which types of game media to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
@@ -113,6 +114,7 @@
 * Added support to the system view for displaying videos, Lottie animations, GIF animations, date/time components and game ratings
 * Replaced the forceUppercase theme property with a more versatile letterCase property (forceUppercase is retained for legacy theme compatibility)
 * Added two letterCaseCollections and letterCaseGroupedCollections properties to control the letter case more specifically for the primary components
+* Added support for overriding the default "unknown" values for the datetime and text elements (in case of missing game metadata)
 * Renamed the textlist property selectorOffsetY to selectorVerticalOffset
 * Added a selectorHorizontalOffset textlist property to control the selector's relative horizontal position
 * Added a selectedSecondaryColor property to the textlist to highlight folder entries in the gamelist view with a different color than file entries
@@ -185,6 +187,7 @@
 * Increased the default VRAM limit from 256 MiB to 512 MiB
 * Increased the default VRAM limit for the Raspberry Pi from 184 MiB to 192 MiB
 * (Unix) Removed the RetroArch core directory for the NixOS and nixpkgs repository
+* The .emulationstation/gamelists directory is now created on application startup instead of when scraping for the first time
 * On Windows all dependencies were moved in-tree to the "external" directory to greatly simplify the build environment
 * Updated the build scripts to support native M1/ARM builds on macOS
 * Improved the in-tree build on macOS to not needing to install any libraries when compiling the "external" dependencies

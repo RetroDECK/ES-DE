@@ -2585,7 +2585,7 @@ The amount of video RAM to use for the application. Defaults to 512 MiB (192 MiB
 
 **Anti-aliasing (MSAA) (requires restart)**
 
-Sets the level of anti-aliasing for the application. You can select between _disabled_, _2x_ or _4x_. Note that this is a potentially dangerous option which may prevent the application from starting altogether with some GPU drivers. If you're unable to run the application after changing this option then you can reset it via the `--anti-alias 0` command line option. This option also has a performance impact and may lead to slightly less leglible text so in general it's recommended to keep it disabled unless you really need it.
+Sets the level of anti-aliasing for the application. You can select between _disabled_, _2x_ or _4x_. Note that this is a potentially dangerous option which may prevent the application from starting altogether with some GPU drivers. If you're unable to run the application after changing this option then you can reset it via the `--anti-alias 0` command line option. This option also has a performance impact and may lead to slightly less legible text so in general it's recommended to keep it disabled unless you really need it.
 
 **Display/monitor index (requires restart)**
 
@@ -2633,7 +2633,7 @@ If enabled, only ROMs that have metadata saved to the gamelist.xml files will be
 
 **Disable desktop composition (requires restart)** _(Unix and X11/Xorg only)_
 
-The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphics cards and when running at higher resolution. As such the desktop compositor is disabled by default, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that this setting can cause problems with some graphics drivers (notably the Nvidia proprietary drivers) so if you see strange flickering and similar after quitting ES-DE, then disable the setting. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option). This setting has no effect if using Wayland, it only applies to X11/Xorg.
+The window manager desktop composition can adversely affect the framerate of ES-DE, especially on weaker graphics cards and when running at higher resolution. As such the desktop compositor can be disabled when running ES-DE, although the window manager has to be configured to allow applications to do this for the option to have any effect. Note that enabling this setting can cause problems with some graphics drivers so if you experience strange flickering and similar, then make sure to keep this setting disabled. In case of such issues, make sure that the emulator is also not blocking the composition (e.g. RetroArch has a corresponding option). This setting has no effect if using Wayland, it only applies to X11/Xorg.
 
 **Display GPU statistics overlay**
 

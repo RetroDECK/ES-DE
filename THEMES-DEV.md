@@ -2044,6 +2044,8 @@ Properties:
     - `playcount` - How many times the game has been played.
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
+* `defaultValue` - type: STRING
+    - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `developer`, `publisher`, `genre` or `players` and there is no metadata available for the defined type. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for blank values.
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define additional text elements that should be treated as if they were game metadata entries. This is for example useful for hiding and fading out text labels for the various metadata types like genre, publisher, players etc. Note that it's not possible to disable the metadata hiding functionality for the default metadata fields as that would break basic application behavior. Also note that there is a slight exception to the hiding logic for text containers with the metadata value set to `description`. In this case the element is by default not hidden when enabling the _Hide metadata fields_ setting. To also hide such containers, set this property to true.
     - Default is `false`
@@ -2135,10 +2137,12 @@ Properties:
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
 * `metadata` - type: STRING
-    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per datetime element.
+    - This displays the metadata values that are available for the game. If an invalid metadata field is defined, the text "unknown" or "never" will be printed. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per datetime element.
     - Valid values:
     - `releasedate` - The release date of the game.
     - `lastplayed` - The time the game was last played. This will be displayed as a value relative to the current date and time by default, but can be overridden using the `displayRelative` property.
+* `defaultValue` - type: STRING
+    - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `releasedate` or the default "never" text that is displayed if `metadata` has been set to `lastplayed`. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for undefined release date values.
 * `gameselector` - type: STRING
     - If more than one gameselector element has been defined, this property makes it possible to state which one to use. If multiple gameselector elements have been defined and this property is missing then the first entry will be chosen and a warning message will be logged. If only a single gameselector has been defined, this property is ignored. The value of this property must match the `name` attribute value of the gameselector element. This property is only needed for the `system` view and only if the `metadata` property is utilized.
 * `gameselectorEntry` - type: UNSIGNED_INTEGER
@@ -2178,7 +2182,7 @@ Properties:
     - %S: The second [00,59]
 * `displayRelative` - type: BOOLEAN.
     - Renders the datetime as a relative string (e.g. 'x days ago').
-    - Default is `false`
+    - Default is `false` if `metadata` has been set to `releasedate` and `true` if `metadata` has been set to `lastplayed`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
