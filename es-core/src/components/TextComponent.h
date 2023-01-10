@@ -50,7 +50,7 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
     std::string getValue() const override { return mText; }
-    void setValue(const std::string& value) override { setText(value); }
+    void setValue(const std::string& value) override;
 
     std::string getHiddenValue() const override { return mHiddenText; }
     void setHiddenValue(const std::string& value) override { setHiddenText(value); }
@@ -102,6 +102,7 @@ private:
         "broken", "playcount",   "controller", "altemulator"};
 
     Renderer* mRenderer;
+    std::string mDefaultValue;
     unsigned int mColor;
     unsigned int mBgColor;
     float mColorOpacity;

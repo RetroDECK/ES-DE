@@ -69,8 +69,12 @@ std::string DateTimeComponent::getDisplayString() const
 {
     if (mDisplayRelative) {
         // Workaround to handle Unix epoch for different time zones.
-        if (mTime.getTime() < 82800)
-            return "never";
+        if (mTime.getTime() < 82800) {
+            if (mDefaultValue == "")
+                return "never";
+            else
+                return mDefaultValue;
+        }
 
         Utils::Time::DateTime now {Utils::Time::now()};
         Utils::Time::Duration dur {now.getTime() - mTime.getTime()};
@@ -93,8 +97,12 @@ std::string DateTimeComponent::getDisplayString() const
         return std::string(buf);
     }
 
-    if (mTime.getTime() == 0)
-        return "unknown";
+    if (mTime.getTime() == 0) {
+        if (mDefaultValue == "")
+            return "unknown";
+        else
+            return mDefaultValue;
+    }
 
     return Utils::Time::timeToString(mTime.getTime(), mFormat);
 }
@@ -176,6 +184,13 @@ void DateTimeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mThemeMetadata = "";
         const std::string& metadata {elem->get<std::string>("metadata")};
         if (metadata == "releasedate" || metadata == "lastplayed") {
+            if (elem->has("defaultValue")) {
+                const std::string& defaultValue {elem->get<std::string>("defaultValue")};
+                if (defaultValue == ":space:")
+                    mDefaultValue = " ";
+                else
+                    mDefaultValue = defaultValue;
+            }
             mThemeMetadata = metadata;
         }
         else {

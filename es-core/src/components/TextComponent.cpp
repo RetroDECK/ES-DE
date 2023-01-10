@@ -238,6 +238,18 @@ void TextComponent::render(const glm::mat4& parentTrans)
     }
 }
 
+void TextComponent::setValue(const std::string& value)
+{
+    if (value == "unknown" && mDefaultValue != "" &&
+        (mThemeMetadata == "developer" || mThemeMetadata == "publisher" ||
+         mThemeMetadata == "genre" || mThemeMetadata == "players")) {
+        setText(mDefaultValue);
+    }
+    else {
+        setText(value);
+    }
+}
+
 void TextComponent::onTextChanged()
 {
     mTextCache.reset();
@@ -443,6 +455,16 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         for (auto& type : supportedMetadataTypes) {
             if (type == metadata) {
                 mThemeMetadata = type;
+                if (elem->has("defaultValue")) {
+                    if (mThemeMetadata == "developer" || mThemeMetadata == "publisher" ||
+                        mThemeMetadata == "genre" || mThemeMetadata == "players") {
+                        const std::string& defaultValue {elem->get<std::string>("defaultValue")};
+                        if (defaultValue == ":space:")
+                            mDefaultValue = " ";
+                        else
+                            mDefaultValue = defaultValue;
+                    }
+                }
                 break;
             }
         }

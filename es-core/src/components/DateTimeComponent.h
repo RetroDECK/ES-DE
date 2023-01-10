@@ -48,6 +48,7 @@ protected:
 private:
     std::string getDisplayString() const;
 
+    std::string mDefaultValue;
     Utils::Time::DateTime mTime;
     std::string mFormat;
     bool mDisplayRelative;
