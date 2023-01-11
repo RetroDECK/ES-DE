@@ -277,6 +277,7 @@ public:
     const std::string& getThemeGameSelector() const { return mThemeGameSelector; }
     const unsigned int getThemeGameSelectorEntry() const { return mThemeGameSelectorEntry; }
     virtual const std::string getDefaultImage() const { return ""; }
+    const float getThemeOpacity() const { return mThemeOpacity; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }
 

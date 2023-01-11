@@ -189,32 +189,47 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mImageComponents.push_back(std::make_unique<ImageComponent>());
                 mImageComponents.back()->setDefaultZIndex(30.0f);
                 mImageComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mImageComponents.back()->getThemeImageTypes().size() != 0)
-                    mImageComponents.back()->setScrollHide(true);
-                else if (mImageComponents.back()->getMetadataElement())
-                    mImageComponents.back()->setScrollHide(true);
-                addChild(mImageComponents.back().get());
+                if (mImageComponents.back()->getThemeOpacity() != 0.0f) {
+                    if (mImageComponents.back()->getThemeImageTypes().size() != 0)
+                        mImageComponents.back()->setScrollHide(true);
+                    else if (mImageComponents.back()->getMetadataElement())
+                        mImageComponents.back()->setScrollHide(true);
+                    addChild(mImageComponents.back().get());
+                }
+                else {
+                    mImageComponents.pop_back();
+                }
             }
             else if (element.second.type == "video") {
                 if (element.second.has("path")) {
                     mStaticVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
                     mStaticVideoComponents.back()->setDefaultZIndex(30.0f);
-                    addChild(mStaticVideoComponents.back().get());
                     mStaticVideoComponents.back()->applyTheme(theme, "gamelist", element.first,
                                                               ALL);
-                    if (mStaticVideoComponents.back()->getMetadataElement())
-                        mStaticVideoComponents.back()->setScrollHide(true);
-                    mStaticVideoComponents.back()->setGeneralFade(true);
-                    if (element.second.has("audio"))
-                        mStaticVideoAudio = element.second.get<bool>("audio");
+                    if (mStaticVideoComponents.back()->getThemeOpacity() != 0.0f) {
+                        if (mStaticVideoComponents.back()->getMetadataElement())
+                            mStaticVideoComponents.back()->setScrollHide(true);
+                        mStaticVideoComponents.back()->setGeneralFade(true);
+                        if (element.second.has("audio"))
+                            mStaticVideoAudio = element.second.get<bool>("audio");
+                        addChild(mStaticVideoComponents.back().get());
+                    }
+                    else {
+                        mStaticVideoComponents.pop_back();
+                    }
                 }
                 else {
                     mVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
                     mVideoComponents.back()->setDefaultZIndex(30.0f);
-                    addChild(mVideoComponents.back().get());
                     mVideoComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                    if (mVideoComponents.back()->getThemeImageTypes().size() != 0)
-                        mVideoComponents.back()->setScrollHide(true);
+                    if (mVideoComponents.back()->getThemeOpacity() != 0.0f) {
+                        if (mVideoComponents.back()->getThemeImageTypes().size() != 0)
+                            mVideoComponents.back()->setScrollHide(true);
+                        addChild(mVideoComponents.back().get());
+                    }
+                    else {
+                        mVideoComponents.pop_back();
+                    }
                 }
             }
             else if (element.second.type == "animation" && element.second.has("path")) {
@@ -224,17 +239,27 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mLottieAnimComponents.push_back(std::make_unique<LottieAnimComponent>());
                     mLottieAnimComponents.back()->setDefaultZIndex(35.0f);
                     mLottieAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                    if (mLottieAnimComponents.back()->getMetadataElement())
-                        mLottieAnimComponents.back()->setScrollHide(true);
-                    addChild(mLottieAnimComponents.back().get());
+                    if (mLottieAnimComponents.back()->getThemeOpacity() != 0.0f) {
+                        if (mLottieAnimComponents.back()->getMetadataElement())
+                            mLottieAnimComponents.back()->setScrollHide(true);
+                        addChild(mLottieAnimComponents.back().get());
+                    }
+                    else {
+                        mLottieAnimComponents.pop_back();
+                    }
                 }
                 else if (extension == ".gif") {
                     mGIFAnimComponents.push_back(std::make_unique<GIFAnimComponent>());
                     mGIFAnimComponents.back()->setDefaultZIndex(35.0f);
                     mGIFAnimComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                    if (mGIFAnimComponents.back()->getMetadataElement())
-                        mGIFAnimComponents.back()->setScrollHide(true);
-                    addChild(mGIFAnimComponents.back().get());
+                    if (mGIFAnimComponents.back()->getThemeOpacity() != 0.0f) {
+                        if (mGIFAnimComponents.back()->getMetadataElement())
+                            mGIFAnimComponents.back()->setScrollHide(true);
+                        addChild(mGIFAnimComponents.back().get());
+                    }
+                    else {
+                        mGIFAnimComponents.pop_back();
+                    }
                 }
                 else if (extension == ".") {
                     LOG(LogWarning)
@@ -252,65 +277,92 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 mBadgeComponents.push_back(std::make_unique<BadgeComponent>());
                 mBadgeComponents.back()->setDefaultZIndex(35.0f);
                 mBadgeComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                mBadgeComponents.back()->setScrollHide(true);
-                addChild(mBadgeComponents.back().get());
+                if (mBadgeComponents.back()->getThemeOpacity() != 0.0f) {
+                    mBadgeComponents.back()->setScrollHide(true);
+                    addChild(mBadgeComponents.back().get());
+                }
+                else {
+                    mBadgeComponents.pop_back();
+                }
             }
             else if (element.second.type == "text") {
                 if (element.second.has("container") && element.second.get<bool>("container")) {
                     mContainerComponents.push_back(std::make_unique<ScrollableContainer>());
                     mContainerComponents.back()->setDefaultZIndex(40.0f);
-                    addChild(mContainerComponents.back().get());
                     mContainerTextComponents.push_back(std::make_unique<TextComponent>());
                     mContainerTextComponents.back()->setDefaultZIndex(40.0f);
                     mContainerComponents.back()->addChild(mContainerTextComponents.back().get());
                     mContainerComponents.back()->applyTheme(theme, "gamelist", element.first,
                                                             POSITION | ThemeFlags::SIZE | Z_INDEX |
                                                                 VISIBLE);
-                    mContainerComponents.back()->setAutoScroll(true);
-                    mContainerTextComponents.back()->setSize(
-                        mContainerComponents.back()->getSize().x, 0.0f);
-                    mContainerTextComponents.back()->applyTheme(
-                        theme, "gamelist", element.first,
-                        ALL ^ POSITION ^ ORIGIN ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^ ROTATION);
-                    if (mContainerTextComponents.back()->getThemeMetadata() != "")
-                        mContainerComponents.back()->setScrollHide(true);
-                    else if (mContainerTextComponents.back()->getMetadataElement())
-                        mContainerComponents.back()->setScrollHide(true);
+                    if (mContainerComponents.back()->getThemeOpacity() != 0.0f) {
+                        mContainerComponents.back()->setAutoScroll(true);
+                        mContainerTextComponents.back()->setSize(
+                            mContainerComponents.back()->getSize().x, 0.0f);
+                        mContainerTextComponents.back()->applyTheme(
+                            theme, "gamelist", element.first,
+                            ALL ^ POSITION ^ ORIGIN ^ Z_INDEX ^ ThemeFlags::SIZE ^ VISIBLE ^
+                                ROTATION);
+                        if (mContainerTextComponents.back()->getThemeMetadata() != "")
+                            mContainerComponents.back()->setScrollHide(true);
+                        else if (mContainerTextComponents.back()->getMetadataElement())
+                            mContainerComponents.back()->setScrollHide(true);
+                        addChild(mContainerComponents.back().get());
+                    }
+                    else {
+                        mContainerComponents.pop_back();
+                    }
                 }
                 else {
                     mTextComponents.push_back(std::make_unique<TextComponent>());
                     mTextComponents.back()->setDefaultZIndex(40.0f);
                     mTextComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                    if (mTextComponents.back()->getThemeMetadata() != "") {
-                        mTextComponents.back()->setScrollHide(true);
+                    if (mTextComponents.back()->getThemeOpacity() != 0.0f) {
+                        if (mTextComponents.back()->getThemeMetadata() != "")
+                            mTextComponents.back()->setScrollHide(true);
+                        else if (mTextComponents.back()->getMetadataElement())
+                            mTextComponents.back()->setScrollHide(true);
+                        addChild(mTextComponents.back().get());
                     }
-                    else if (mTextComponents.back()->getMetadataElement()) {
-                        mTextComponents.back()->setScrollHide(true);
+                    else {
+                        mTextComponents.pop_back();
                     }
-                    addChild(mTextComponents.back().get());
                 }
             }
             else if (element.second.type == "datetime") {
                 mDateTimeComponents.push_back(std::make_unique<DateTimeComponent>());
                 mDateTimeComponents.back()->setDefaultZIndex(40.0f);
                 mDateTimeComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                if (mDateTimeComponents.back()->getThemeMetadata() != "")
-                    mDateTimeComponents.back()->setScrollHide(true);
-                addChild(mDateTimeComponents.back().get());
+                if (mDateTimeComponents.back()->getThemeOpacity() != 0.0f) {
+                    if (mDateTimeComponents.back()->getThemeMetadata() != "")
+                        mDateTimeComponents.back()->setScrollHide(true);
+                    addChild(mDateTimeComponents.back().get());
+                }
+                else {
+                    mDateTimeComponents.pop_back();
+                }
             }
             else if (element.second.type == "gamelistinfo") {
                 mGamelistInfoComponents.push_back(std::make_unique<TextComponent>());
                 mGamelistInfoComponents.back()->setDefaultZIndex(45.0f);
                 mGamelistInfoComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                addChild(mGamelistInfoComponents.back().get());
+                if (mGamelistInfoComponents.back()->getThemeOpacity() != 0.0f)
+                    addChild(mGamelistInfoComponents.back().get());
+                else
+                    mGamelistInfoComponents.pop_back();
             }
             else if (element.second.type == "rating") {
                 mRatingComponents.push_back(std::make_unique<RatingComponent>());
                 mRatingComponents.back()->setDefaultZIndex(45.0f);
                 mRatingComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
-                mRatingComponents.back()->setScrollHide(true);
-                mRatingComponents.back()->setOpacity(mRatingComponents.back()->getOpacity());
-                addChild(mRatingComponents.back().get());
+                if (mRatingComponents.back()->getThemeOpacity() != 0.0f) {
+                    mRatingComponents.back()->setScrollHide(true);
+                    mRatingComponents.back()->setOpacity(mRatingComponents.back()->getOpacity());
+                    addChild(mRatingComponents.back().get());
+                }
+                else {
+                    mRatingComponents.pop_back();
+                }
             }
         }
 

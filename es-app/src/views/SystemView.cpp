@@ -604,7 +604,10 @@ void SystemView::populate()
                         elements.imageComponents.back()->setDefaultZIndex(30.0f);
                         elements.imageComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);
-                        elements.children.emplace_back(elements.imageComponents.back().get());
+                        if (elements.imageComponents.back()->getThemeOpacity() != 0.0f)
+                            elements.children.emplace_back(elements.imageComponents.back().get());
+                        else
+                            elements.imageComponents.pop_back();
                     }
                     else if (element.second.type == "video") {
                         elements.videoComponents.emplace_back(
@@ -613,7 +616,10 @@ void SystemView::populate()
                         elements.videoComponents.back()->setStaticVideo();
                         elements.videoComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);
-                        elements.children.emplace_back(elements.videoComponents.back().get());
+                        if (elements.videoComponents.back()->getThemeOpacity() != 0.0f)
+                            elements.children.emplace_back(elements.videoComponents.back().get());
+                        else
+                            elements.videoComponents.pop_back();
                     }
                     else if (element.second.type == "animation" && element.second.has("path")) {
                         const std::string extension {Utils::FileSystem::getExtension(
@@ -624,8 +630,11 @@ void SystemView::populate()
                             elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
                             elements.lottieAnimComponents.back()->applyTheme(
                                 theme, "system", element.first, ThemeFlags::ALL);
-                            elements.children.emplace_back(
-                                elements.lottieAnimComponents.back().get());
+                            if (elements.lottieAnimComponents.back()->getThemeOpacity() != 0.0f)
+                                elements.children.emplace_back(
+                                    elements.lottieAnimComponents.back().get());
+                            else
+                                elements.lottieAnimComponents.pop_back();
                         }
                         else if (extension == ".gif") {
                             elements.GIFAnimComponents.emplace_back(
@@ -633,7 +642,11 @@ void SystemView::populate()
                             elements.GIFAnimComponents.back()->setDefaultZIndex(35.0f);
                             elements.GIFAnimComponents.back()->applyTheme(
                                 theme, "system", element.first, ThemeFlags::ALL);
-                            elements.children.emplace_back(elements.GIFAnimComponents.back().get());
+                            if (elements.GIFAnimComponents.back()->getThemeOpacity() != 0.0f)
+                                elements.children.emplace_back(
+                                    elements.GIFAnimComponents.back().get());
+                            else
+                                elements.GIFAnimComponents.pop_back();
                         }
                         else if (extension == ".") {
                             LOG(LogWarning)
@@ -657,8 +670,11 @@ void SystemView::populate()
                                 elements.gameCountComponents.back()->setDefaultZIndex(40.0f);
                                 elements.gameCountComponents.back()->applyTheme(
                                     theme, "system", element.first, ThemeFlags::ALL);
-                                elements.children.emplace_back(
-                                    elements.gameCountComponents.back().get());
+                                if (elements.gameCountComponents.back()->getThemeOpacity() != 0.0f)
+                                    elements.children.emplace_back(
+                                        elements.gameCountComponents.back().get());
+                                else
+                                    elements.gameCountComponents.pop_back();
                             }
                         }
                         else {
@@ -666,7 +682,11 @@ void SystemView::populate()
                             elements.textComponents.back()->setDefaultZIndex(40.0f);
                             elements.textComponents.back()->applyTheme(
                                 theme, "system", element.first, ThemeFlags::ALL);
-                            elements.children.emplace_back(elements.textComponents.back().get());
+                            if (elements.textComponents.back()->getThemeOpacity() != 0.0f)
+                                elements.children.emplace_back(
+                                    elements.textComponents.back().get());
+                            else
+                                elements.textComponents.pop_back();
                         }
                     }
                     else if (element.second.type == "datetime") {
@@ -675,18 +695,29 @@ void SystemView::populate()
                         elements.dateTimeComponents.back()->setDefaultZIndex(40.0f);
                         elements.dateTimeComponents.back()->applyTheme(
                             theme, "system", element.first, ThemeFlags::ALL);
-                        elements.dateTimeComponents.back()->setVisible(false);
-                        elements.children.emplace_back(elements.dateTimeComponents.back().get());
+                        if (elements.dateTimeComponents.back()->getThemeOpacity() != 0.0f) {
+                            elements.dateTimeComponents.back()->setVisible(false);
+                            elements.children.emplace_back(
+                                elements.dateTimeComponents.back().get());
+                        }
+                        else {
+                            elements.dateTimeComponents.pop_back();
+                        }
                     }
                     else if (element.second.type == "rating") {
                         elements.ratingComponents.emplace_back(std::make_unique<RatingComponent>());
                         elements.ratingComponents.back()->setDefaultZIndex(45.0f);
                         elements.ratingComponents.back()->applyTheme(theme, "system", element.first,
                                                                      ThemeFlags::ALL);
-                        elements.ratingComponents.back()->setVisible(false);
-                        elements.ratingComponents.back()->setOpacity(
-                            elements.ratingComponents.back()->getOpacity());
-                        elements.children.emplace_back(elements.ratingComponents.back().get());
+                        if (elements.ratingComponents.back()->getThemeOpacity() != 0.0f) {
+                            elements.ratingComponents.back()->setVisible(false);
+                            elements.ratingComponents.back()->setOpacity(
+                                elements.ratingComponents.back()->getOpacity());
+                            elements.children.emplace_back(elements.ratingComponents.back().get());
+                        }
+                        else {
+                            elements.ratingComponents.pop_back();
+                        }
                     }
                 }
             }
