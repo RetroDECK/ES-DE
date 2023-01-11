@@ -146,6 +146,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemRotation", FLOAT},
        {"itemRotationOrigin", NORMALIZED_PAIR},
        {"itemAxisHorizontal", BOOLEAN},
+       {"itemAxisRotation", FLOAT},
        {"imageInterpolation", STRING},
        {"imageColor", COLOR},
        {"imageColorEnd", COLOR},

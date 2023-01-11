@@ -145,6 +145,7 @@ private:
     float mItemRotation;
     glm::vec2 mItemRotationOrigin;
     bool mItemAxisHorizontal;
+    float mItemAxisRotation;
     bool mLinearInterpolation;
     unsigned int mImageColorShift;
     unsigned int mImageColorShiftEnd;
@@ -201,6 +202,7 @@ CarouselComponent<T>::CarouselComponent()
     , mItemRotation {7.5f}
     , mItemRotationOrigin {-3.0f, 0.5f}
     , mItemAxisHorizontal {false}
+    , mItemAxisRotation {0.0f}
     , mLinearInterpolation {false}
     , mImageColorShift {0xFFFFFFFF}
     , mImageColorShiftEnd {0xFFFFFFFF}
@@ -1049,6 +1051,21 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                 renderItem.trans = positionCalc;
             }
         }
+        else if (mItemAxisRotation != 0.0f) {
+            // Rotate items around their own axis.
+            const float xOffTransRotate {-(mItemSize.x / 2.0f)};
+            const float yOffTransRotate {-(mItemSize.y / 2.0f)};
+
+            renderItem.trans =
+                glm::translate(renderItem.trans,
+                               glm::vec3 {xOffTransRotate * -1.0f, yOffTransRotate * -1.0f, 0.0f});
+
+            renderItem.trans = glm::rotate(renderItem.trans, glm::radians(mItemAxisRotation),
+                                           glm::vec3 {0.0f, 0.0f, 1.0f});
+
+            renderItem.trans = glm::translate(renderItem.trans,
+                                              glm::vec3 {xOffTransRotate, yOffTransRotate, 0.0f});
+        }
 
         float metadataOpacity {1.0f};
 
@@ -1317,6 +1334,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         mItemAxisHorizontal =
             (elem->has("itemAxisHorizontal") && elem->get<bool>("itemAxisHorizontal"));
+
+        if (elem->has("itemAxisRotation"))
+            mItemAxisRotation = elem->get<float>("itemAxisRotation");
 
         if (elem->has("imageColor")) {
             mImageColorShift = elem->get<unsigned int>("imageColor");
