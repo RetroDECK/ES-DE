@@ -156,6 +156,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},
        {"wheelHorizontalAlignment", STRING},
+       {"wheelVerticalAlignment", STRING},
        {"horizontalOffset", FLOAT},
        {"verticalOffset", FLOAT},
        {"reflections", BOOLEAN},
