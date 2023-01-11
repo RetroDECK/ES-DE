@@ -4,7 +4,7 @@
     <view name="system">
         <carousel name="system_carousel">
             <pos>0 0</pos>
-            <size>0.28 1.0</size>
+            <size>0.28 1</size>
             <type>vertical_wheel</type>
             <staticImage>./${system.theme}/images/logo.svg</staticImage>
             <itemsBeforeCenter>4</itemsBeforeCenter>
@@ -232,28 +232,59 @@
     </view>
 
     <view name="gamelist">
-        <textlist name="gamelist_textlist">
-            <pos>0.025 0.201</pos>
-            <size>0.39 0.711</size>
-            <selectorColor>${gamelistTextlistSelectorColor}</selectorColor>
-            <selectedColor>${gamelistTextlistSelectedColor}</selectedColor>
-            <primaryColor>${gamelistTextlistPrimaryColor}</primaryColor>
-            <secondaryColor>${gamelistTextlistSecondaryColor}</secondaryColor>
-            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.025</fontSize>
-            <horizontalAlignment>left</horizontalAlignment>
-            <horizontalMargin>0.01</horizontalMargin>
+        <carousel name="gamelist_carousel">
+            <pos>0.5 0.645</pos>
+            <size>0.96 0.28</size>
+            <origin>0.5 0</origin>
+            <type>horizontal_wheel</type>
+            <imageType>marquee</imageType>
+            <itemSize>0.12 0.125</itemSize>
+            <itemScale>1.5</itemScale>
+            <imageInterpolation>linear</imageInterpolation>
+            <itemRotation>11.8</itemRotation>
+            <itemRotationOrigin>-6.8 0.5</itemRotationOrigin>
+            <itemAxisHorizontal>true</itemAxisHorizontal>
+            <itemVerticalAlignment>center</itemVerticalAlignment>
+            <wheelVerticalAlignment>top</wheelVerticalAlignment>
+            <verticalOffset>-0.21</verticalOffset>
+            <unfocusedItemOpacity>0.7</unfocusedItemOpacity>
+            <color>555555DD</color>
+            <textColor>${systemCarouselTextColor}</textColor>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.046</fontSize>
             <letterCase>uppercase</letterCase>
-        </textlist>
-        <video name="md_video">
-            <pos>0.63 0.45</pos>
-            <maxSize>0.356 0.424</maxSize>
-            <origin>0.5 0.5</origin>
-            <imageType>image</imageType>
-            <interpolation>nearest</interpolation>
-            <delay>1.7</delay>
+            <lineSpacing>1.2</lineSpacing>
+            <zIndex>80</zIndex>
+        </carousel>
+        <image name="backframe2">
+            <pos>0.5 0.19</pos>
+            <size>0.96 0.735</size>
+            <origin>0.5 0</origin>
+            <path>./core/images/frame.png</path>
+            <zIndex>10</zIndex>
+        </image>
+        <image name="coverImage">
+            <pos>0.26 0.25</pos>
+            <maxSize>0.18 0.324</maxSize>
+            <origin>0.5 0</origin>
+            <imageType>cover</imageType>
+            <interpolation>linear</interpolation>
             <scrollFadeIn>true</scrollFadeIn>
-        </video>
+        </image>
+        <image name="gameImage">
+            <pos>0.5 0.25</pos>
+            <maxSize>0.256 0.324</maxSize>
+            <origin>0.5 0</origin>
+            <imageType>screenshot, titlescreen</imageType>
+            <interpolation>nearest</interpolation>
+            <scrollFadeIn>true</scrollFadeIn>
+        </image>
+        <badges name="md_badges">
+            <pos>0.65 0.29</pos>
+        </badges>
+        <rating name="md_rating">
+            <pos>0.65 0.25</pos>
+        </rating>
         <helpsystem name="help">
             <pos>0.012 0.955</pos>
             <textColor>${gamelistHelpColor}</textColor>
@@ -261,6 +292,16 @@
             <textColorDimmed>${gamelistHelpColorDimmed}</textColorDimmed>
             <iconColorDimmed>${gamelistHelpColorDimmed}</iconColorDimmed>
         </helpsystem>
+        <!-- Hide some unwanted elements -->
+        <image name="backframe3">
+            <visible>false</visible>
+        </image>
+        <text name="md_lbl_lastplayed, md_description">
+            <visible>false</visible>
+        </text>
+        <datetime name="md_lastplayed">
+            <visible>false</visible>
+        </datetime>
     </view>
 
     <aspectRatio name="4:3">
