@@ -210,6 +210,7 @@
 * Added the properties "itemsBeforeCenter" and "itemsAfterCenter" to define entries for carousels of the wheel type
 * Added a wheelHorizontalAlignment property for aligning the carousel within the overall element area (horizontal/vertical wheel only)
 * Added reflections support to the carousel
+* Added support for horizontal wheel carousels
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added carousel theme support for setting the opacity for unfocused entries
 * Added carousel theme support for applying image color shifts
@@ -218,6 +219,7 @@
 * Added carousel theme support for setting item transitions to "slide" or "instant"
 * Added carousel theme support for controlling item stacking for overlapping items
 * Added carousel theme support for defining margins around the currently selected item
+* Added carousel theme support for rotating items around their own axis (although not supported for wheel carousels)
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase

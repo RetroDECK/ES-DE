@@ -1158,7 +1158,7 @@ Properties:
     - Default is `0 0`
 * `type` - type: STRING
     - Sets the carousel type and scroll direction.
-    - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`.
+    - Valid values are `horizontal`, `vertical`, `horizontal_wheel` or `vertical_wheel`
     - Default is `horizontal`
 * `staticImage` - type: PATH
     - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
@@ -1179,23 +1179,28 @@ Properties:
 * `defaultImage` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `maxItemCount` - type: FLOAT
-    - Sets the number of items to display in the carousel when the `type` property has been set to "horizontal" or "vertical". Has no effect if the `type` has been set to "horizontal_wheel" or "vertical_wheel".
+    - Sets the number of carousel items to display.
+    - This property applies when `type` is `horizontal` or `vertical`
     - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
 * `itemsBeforeCenter` - type: UNSIGNED_INTEGER
-    - Sets the number of items above the center position (the currently selected item) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsAfterCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - Sets the number of items before the center position (the currently selected item). By setting this property and `itemsAfterCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
 * `itemsAfterCenter` - type: UNSIGNED_INTEGER
-    - Sets the number of items below the center position (the currently selected item) when the `type` property has been set to "horizontal_wheel" or "vertical_wheel". By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - Sets the number of items after the center position (the currently selected item). By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
+    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
 * `itemStacking` - type: STRING
-    - Controls how to stack overlapping items when `type` has been set to "horizontal" or "vertical". It has no effect on wheel carousels or when items do not overlap. When set to `centered` the selected item will be raised and items further from the selected item (to the left/right or above/below depending on the carousel orientation) will be progressively rendered lower than the items closer to the center. If set to `ascending` then items will be rendered progressively higher from left to right or from top to bottom depending on the carousel orientation. If set to `descending` the opposite takes place with items being progressively rendered lower from left to right or top to bottom depending on the carousel orientation. Finally `ascendingRaised` and `descendingRaised` work identically to `ascending` and `descending` with the only difference that the currently selected item will be raised above the other items.
+    - Controls how to stack overlapping items. When set to `centered` the selected item will be raised and items further from the selected item (to the left/right or above/below depending on the carousel orientation) will be progressively rendered lower than the items closer to the center. If set to `ascending` then items will be rendered progressively higher from left to right or from top to bottom depending on the carousel orientation. If set to `descending` the opposite takes place with items being progressively rendered lower from left to right or top to bottom depending on the carousel orientation. Finally `ascendingRaised` and `descendingRaised` work identically to `ascending` and `descending` with the only difference that the currently selected item will be raised above the other items.
+    - This property applies when `type` is `horizontal` or `vertical`
     - Valid values are `centered`, `ascending`, `ascendingRaised`, `descending` or `descendingRaised`
     - Default is `centered`
 * `selectedItemMargins` - type: NORMALIZED_PAIR
-    - By default items are evenly spaced across the carousel area, but if `type` has been set to `horizontal` or `vertical` then this property makes it possible to define margins (extra space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation. This property has no effect on wheel carousels.
+    - By default items are evenly spaced across the carousel area, but this property makes it possible to define margins (extra space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation.
+    - This property applies when `type` is `horizontal` or `vertical`
     - Minimum value per margin is `0` and maximum value per margin is `1`
     - Default is `0 0`
 * `itemSize` - type: NORMALIZED_PAIR
@@ -1208,15 +1213,20 @@ Properties:
     - Default is `1.2`
 * `itemRotation` - type: FLOAT
     - Angle in degrees that the item should be rotated. This value should be positive if the `itemRotationOrigin` X axis has a negative value, and it should be negative if the `itemRotationOrigin` X axis has a positive value, otherwise the wheel will rotate in the wrong direction.
-    - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
+    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `7.5`
 * `itemRotationOrigin` - type: NORMALIZED_PAIR
-    - Point around which the item will be rotated. The X axis of this property is the distance from the left side of the item to the center of the wheel in multiples of the size defined by the `itemSize` X axis. So if for instance the itemSize X axis is set to 0.2 and itemRotationOrigin is set to -2, then the center of the wheel will be at a -0.4 distance from the left side of the item. In other words, if specifying a negative number the item will be located on the right side of the carousel, i.e. the wheel will be to the left and if specifying a positive number the wheel will be to the right. Note again that this is calculated from the left side of the item, so to get an identically sized wheel as the -2 wheel just mentioned you need to define 3 as the value rather than 2 if you want the wheel to the right side of the item. This is not an error but due to the way that the coordinates are calculated. The Y axis should normally be left at `0.5` or you may get some weird results. It is however possible to use this axis value creatively if you know what you are doing.
-    - This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
+    - Point around which the items will be rotated. The X axis of this property is the distance from the left side of the item to the center of the wheel in multiples of the size defined by the `itemSize` X axis. So if for instance the itemSize X axis is set to 0.2 and itemRotationOrigin is set to -2, then the center of the wheel will be at a -0.4 distance from the left side of the item. In other words, if specifying a negative number the item will be located on the right side of the carousel, i.e. the wheel will be to the left and if specifying a positive number the wheel will be to the right. Note again that this is calculated from the left side of the item, so to get an identically sized wheel as the -2 wheel just mentioned you need to define 3 as the value rather than 2 if you want the wheel to the right side of the item. This is not an error but due to the way that coordinates are calculated. The Y axis should normally be left at `0.5` or you may get some weird results. It is however possible to use this axis value creatively if you know what you are doing.
+    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `-3 0.5`
 * `itemAxisHorizontal` - type: BOOLEAN
-    - If `type` has been set to "horizontal_wheel" or "vertical_wheel" then the items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel. Make sure that `itemVerticalAlignment` is set to `center` when using this attribute or you'll get some strange alignment issues.
+    - Wheel carousel items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel. Make sure that `itemVerticalAlignment` is set to `center` when using this property or you'll get strange alignment issues.
+    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `false`
+* `itemAxisRotation` - type: FLOAT
+    - Angle in degrees that the items should be rotated around their own axis. Note that this does not work well with reflections as these are rotated too which does not look right.
+    - This property applies when `type` is `horizontal` or `vertical`
+    - Default is `0`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
@@ -1244,16 +1254,24 @@ Properties:
     - Valid values are `animate` or `instant`
     - Default is `animate`
 * `itemHorizontalAlignment` - type: STRING
-    - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the X axis, which applies when `type` is "vertical", "horizontal_wheel" or "vertical_wheel".
+    - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the X axis.
+    - This property applies when type is `vertical` or `vertical_wheel`
     - Valid values are `left`, `center` or `right`
     - Default is `center`
 * `itemVerticalAlignment` - type: STRING
-    - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the Y axis, which applies when `type` is "horizontal", "horizontal_wheel" or "vertical_wheel".
+    - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the Y axis. Make sure to set this to `center` if you've enabled `itemAxisHorizontal`
+    - This property applies when `type` is `horizontal`, `horizontal_wheel` or `vertical_wheel`
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
 * `wheelHorizontalAlignment` - type: STRING
-    - Sets the alignment of the actual carousel inside the overall element area. This property only applies when `type` is "horizontal_wheel" or "vertical_wheel".
+    - Sets the horizontal alignment of the actual carousel inside the overall element area. Note that the positioning is calculated before `itemAxisHorizontal` is applied.
+    - This property applies when `type` is `vertical_wheel`
     - Valid values are `left`, `center` or `right`
+    - Default is `center`
+* `wheelVerticalAlignment` - type: STRING
+    - Sets the vertical alignment of the actual carousel inside the overall element area. Note that the positioning is calculated before `itemAxisHorizontal` is applied.
+    - This property applies when `type` is `horizontal_wheel`
+    - Valid values are `top`, `center` or `bottom`
     - Default is `center`
 * `horizontalOffset` - type: FLOAT
     - Offsets the carousel horizontally inside its designated area, as defined by the `size` property. The value of this property is relative to the width of the carousel (with `1` being equivalent to its entire width). This property can for example be used to add a margin if using `itemHorizontalAlignment` or to offset the selected item of horizontal carousels to a non-centered position.
@@ -1264,14 +1282,17 @@ Properties:
     - Minimum value is `-1.0` and maximum value is `1`
     - Default is `0`
 * `reflections` - type: BOOLEAN
-    - Enables reflections beneath the carousel items. This is only available for the `horizontal` carousel type. It's probably a good idea to combine this with the `verticalOffset` property to define how much of the reflections should be visible.
+    - Enables reflections beneath the carousel items. It's probably a good idea to combine this with the `verticalOffset` property to define how much of the reflections should be visible.
+    - This property applies when type is `horizontal`
     - Default is `false`
 * `reflectionsOpacity` - type: FLOAT
     - Defines the base opacity for the reflections.
+    - This property applies when type is `horizontal`
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
 * `reflectionsFalloff` - type: FLOAT
     - Defines the reflections opacity falloff, starting from the item's base opacity and ending at complete transparency. The value is set relative to the item height, so `1` will fade the bottom of the item to full transparency, `2` will fade to full transparency at half the item height and `0.5` will place the full transparency point at twice the item height.
+    - This property applies when type is `horizontal`
     - Minimum value is `0` and maximum value is `10`
     - Default is `1`
 * `unfocusedItemOpacity` - type: FLOAT
