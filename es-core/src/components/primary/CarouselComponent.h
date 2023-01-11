@@ -1132,17 +1132,11 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    // TEMPORARY: Support for itemType is for backward compatiblity due to property name changes.
-    if (mGamelistView && properties && (elem->has("imageType") || elem->has("itemType"))) {
+    if (mGamelistView && properties && elem->has("imageType")) {
         const std::vector<std::string> supportedImageTypes {
             "marquee",    "cover",       "backcover", "3dbox",  "physicalmedia",
             "screenshot", "titlescreen", "miximage",  "fanart", "none"};
-        std::string imageTypesString;
-
-        if (elem->has("imageType"))
-            imageTypesString = elem->get<std::string>("imageType");
-        else
-            imageTypesString = elem->get<std::string>("itemType");
+        std::string imageTypesString {elem->get<std::string>("imageType")};
 
         for (auto& character : imageTypesString) {
             if (std::isspace(character))
@@ -1274,24 +1268,6 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("itemScale"))
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
-
-        if (elem->has("itemInterpolation")) {
-            // TEMPORARY: Backward compatiblity due to property name changes.
-            const std::string& itemInterpolation {elem->get<std::string>("itemInterpolation")};
-            if (itemInterpolation == "linear") {
-                mLinearInterpolation = true;
-            }
-            else if (itemInterpolation == "nearest") {
-                mLinearInterpolation = false;
-            }
-            else {
-                mLinearInterpolation = true;
-                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
-                                   "\"itemInterpolation\" for element \""
-                                << element.substr(9) << "\" defined as \"" << itemInterpolation
-                                << "\"";
-            }
-        }
 
         if (elem->has("imageBrightness"))
             mImageBrightness = glm::clamp(elem->get<float>("imageBrightness"), -2.0f, 2.0f);
