@@ -232,9 +232,9 @@ void Settings::setDefaults()
     // Game collection settings.
     mStringMap["CollectionSystemsAuto"] = {"", ""};
     mStringMap["CollectionSystemsCustom"] = {"", ""};
+    mStringMap["CollectionCustomGrouping"] = {"unthemed", "unthemed"};
     mBoolMap["FavFirstCustom"] = {false, false};
     mBoolMap["FavStarCustom"] = {false, false};
-    mBoolMap["UseCustomCollectionsSystem"] = {true, true};
     mBoolMap["CollectionShowSystemInfo"] = {true, true};
 
     // Other settings.

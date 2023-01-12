@@ -98,6 +98,19 @@ void GuiSettings::save()
     if (mNeedsGoToStart)
         ViewController::getInstance()->goToStart(true);
 
+    // Special case from GuiCollectionSystemsOptions where we didn't yet know whether a matching
+    // theme existed when creating a new custom collection.
+    if (mNeedsGoToSystem && mNeedsGoToGroupedCollections) {
+        mNeedsGoToSystem = false;
+        for (SystemData* system : SystemData::sSystemVector) {
+            if (system->getThemeFolder() == mGoToSystem->getThemeFolder()) {
+                mNeedsGoToSystem = true;
+                mNeedsGoToGroupedCollections = false;
+                break;
+            }
+        }
+    }
+
     if (mNeedsGoToSystem)
         ViewController::getInstance()->goToSystem(mGoToSystem, false);
 
@@ -107,7 +120,7 @@ void GuiSettings::save()
             if (system->getThemeFolder() == "custom-collections") {
                 ViewController::getInstance()->goToSystem(system, false);
                 groupedSystemExists = true;
-                continue;
+                break;
             }
         }
         if (!groupedSystemExists)

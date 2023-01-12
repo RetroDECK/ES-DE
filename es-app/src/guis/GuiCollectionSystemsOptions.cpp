@@ -309,6 +309,36 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     });
     addRow(row);
 
+    // Custom collections grouping.
+    auto collectionCustomGrouping = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "GROUP CUSTOM COLLECTIONS", false);
+    const std::string& selectedCustomGrouping {
+        Settings::getInstance()->getString("CollectionCustomGrouping")};
+    collectionCustomGrouping->add("IF UNTHEMED", "unthemed", selectedCustomGrouping == "unthemed");
+    collectionCustomGrouping->add("ALWAYS", "always", selectedCustomGrouping == "always");
+    collectionCustomGrouping->add("NEVER", "never", selectedCustomGrouping == "never");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set custom collections grouping to "unthemed" in this case.
+    if (collectionCustomGrouping->getSelectedObjects().size() == 0)
+        collectionCustomGrouping->selectEntry(0);
+    addWithLabel("GROUP CUSTOM COLLECTIONS", collectionCustomGrouping);
+    addSaveFunc([this, collectionCustomGrouping] {
+        if (collectionCustomGrouping->getSelected() !=
+            Settings::getInstance()->getString("CollectionCustomGrouping")) {
+            Settings::getInstance()->setString("CollectionCustomGrouping",
+                                               collectionCustomGrouping->getSelected());
+            if (CollectionSystemsManager::getInstance()->isEditing())
+                CollectionSystemsManager::getInstance()->exitEditMode();
+            setNeedsSaving();
+            setNeedsSorting();
+            setNeedsSortingCollections();
+            setNeedsCollectionsUpdate();
+            setNeedsReloading();
+            setNeedsGoToSystem(SystemData::sSystemVector.front());
+            setInvalidateCachedBackground();
+        }
+    });
+
     // Sort favorites on top for custom collections.
     auto fav_first_custom = std::make_shared<SwitchComponent>();
     fav_first_custom->setState(Settings::getInstance()->getBool("FavFirstCustom"));
@@ -333,28 +363,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             Settings::getInstance()->setBool("FavStarCustom", fav_star_custom->getState());
             setNeedsSaving();
             setNeedsReloading();
-            setInvalidateCachedBackground();
-        }
-    });
-
-    // Group unthemed custom collections.
-    auto use_custom_collections_system = std::make_shared<SwitchComponent>();
-    use_custom_collections_system->setState(
-        Settings::getInstance()->getBool("UseCustomCollectionsSystem"));
-    addWithLabel("GROUP UNTHEMED CUSTOM COLLECTIONS", use_custom_collections_system);
-    addSaveFunc([this, use_custom_collections_system] {
-        if (use_custom_collections_system->getState() !=
-            Settings::getInstance()->getBool("UseCustomCollectionsSystem")) {
-            Settings::getInstance()->setBool("UseCustomCollectionsSystem",
-                                             use_custom_collections_system->getState());
-            if (CollectionSystemsManager::getInstance()->isEditing())
-                CollectionSystemsManager::getInstance()->exitEditMode();
-            setNeedsSaving();
-            setNeedsSorting();
-            setNeedsSortingCollections();
-            setNeedsCollectionsUpdate();
-            setNeedsReloading();
-            setNeedsGoToSystem(SystemData::sSystemVector.front());
             setInvalidateCachedBackground();
         }
     });
@@ -392,10 +400,18 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
     mAddedCustomCollection = true;
     setNeedsGoToStart();
 
-    if (Settings::getInstance()->getBool("UseCustomCollectionsSystem"))
+    if (Settings::getInstance()->getString("CollectionCustomGrouping") == "unthemed") {
+        // We set both these flags as we don't know yet whether a theme exists for the collection.
+        // It will be checked for properly in GuiSettings.
         setNeedsGoToGroupedCollections();
-    else
         setNeedsGoToSystem(newCollection);
+    }
+    else if (Settings::getInstance()->getString("CollectionCustomGrouping") == "always") {
+        setNeedsGoToGroupedCollections();
+    }
+    else {
+        setNeedsGoToSystem(newCollection);
+    }
 
     Window* window {mWindow};
     while (window->peekGui() && window->peekGui() != ViewController::getInstance())

@@ -176,15 +176,9 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         mMenu.addRow(row);
     }
 
-    std::string customSystem;
-    if (Settings::getInstance()->getBool("UseCustomCollectionsSystem"))
-        customSystem = file->getSystem()->getName();
-    else
-        customSystem = system->getName();
-
     if (UIModeController::getInstance()->isUIModeFull() &&
         (mIsCustomCollection || mIsCustomCollectionGroup)) {
-        if (CollectionSystemsManager::getInstance()->getEditingCollection() != customSystem) {
+        if (CollectionSystemsManager::getInstance()->getEditingCollection() != system->getName()) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>("ADD/REMOVE GAMES TO THIS COLLECTION",
                                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
