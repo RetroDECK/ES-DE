@@ -1193,8 +1193,11 @@ void ViewController::reloadAll()
 
     // Clear all GamelistViews.
     std::map<SystemData*, FileData*> cursorMap;
-    for (auto it = mGamelistViews.cbegin(); it != mGamelistViews.cend(); ++it)
-        cursorMap[it->first] = it->second->getCursor();
+    for (auto it = mGamelistViews.cbegin(); it != mGamelistViews.cend(); ++it) {
+        if (std::find(SystemData::sSystemVector.cbegin(), SystemData::sSystemVector.cend(),
+                      (*it).first) != SystemData::sSystemVector.cend())
+            cursorMap[it->first] = it->second->getCursor();
+    }
 
     mGamelistViews.clear();
     mCurrentView = nullptr;
