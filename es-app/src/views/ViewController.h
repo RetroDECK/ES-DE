@@ -65,6 +65,13 @@ public:
     bool isCameraMoving();
     void cancelViewTransitions();
     void stopScrolling();
+    void resetCamera()
+    {
+        if (mCurrentView != nullptr) {
+            mCamera[3].x = -mCurrentView->getPosition().x;
+            mCamera[3].y = -mCurrentView->getPosition().y;
+        }
+    }
 
     // Basic video controls.
     void startViewVideos() override { mCurrentView->startViewVideos(); }

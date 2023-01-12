@@ -89,6 +89,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             setNeedsSaving();
             setNeedsReloading();
             setNeedsCollectionsUpdate();
+            setInvalidateCachedBackground();
         }
     });
 
@@ -144,6 +145,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                 setNeedsReloading();
                 setNeedsCollectionsUpdate();
                 setNeedsGoToGroupedCollections();
+                setInvalidateCachedBackground();
             }
         }
     });

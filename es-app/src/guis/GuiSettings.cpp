@@ -137,6 +137,9 @@ void GuiSettings::save()
         if (state.getSystem()->isCollection() &&
             state.getSystem()->getThemeFolder() != "custom-collections") {
             ViewController::getInstance()->goToStart(false);
+            ViewController::getInstance()->resetCamera();
+            SDL_Delay(100);
+            mWindow->invalidateCachedBackground();
             ViewController::getInstance()->goToSystem(SystemData::sSystemVector.front(), false);
             // We don't want to invalidate the cached background when there has been a collection
             // systen change as that may show a black screen in some circumstances.
@@ -147,8 +150,12 @@ void GuiSettings::save()
         if (std::find(SystemData::sSystemVector.begin(), SystemData::sSystemVector.end(),
                       state.getSystem()) == SystemData::sSystemVector.end()) {
             ViewController::getInstance()->goToStart(false);
+            ViewController::getInstance()->resetCamera();
+            SDL_Delay(100);
+            mWindow->invalidateCachedBackground();
             return;
         }
+        ViewController::getInstance()->resetCamera();
     }
 
     if (mInvalidateCachedBackground) {
