@@ -118,37 +118,34 @@ private:
     std::function<void(CursorState state)> mCursorChangedCallback;
     float mCamOffset;
     int mPreviousScrollVelocity;
-
     int mLoopOffset1;
     int mLoopOffset2;
     int mLoopTime;
     bool mLoopScroll;
-
-    PrimaryAlignment mAlignment;
-    float mHorizontalMargin;
-
-    ImageComponent mSelectorImage;
-
-    std::shared_ptr<Font> mFont;
-    std::string mIndicators;
-    std::string mCollectionIndicators;
     bool mGamelistView;
     bool mLegacyMode;
-    bool mFadeAbovePrimary;
-    LetterCase mLetterCase;
-    LetterCase mLetterCaseAutoCollections;
-    LetterCase mLetterCaseCustomCollections;
-    float mLineSpacing;
+
+    std::shared_ptr<Font> mFont;
     float mSelectorHeight;
     float mSelectorHorizontalOffset;
     float mSelectorVerticalOffset;
     unsigned int mSelectorColor;
     unsigned int mSelectorColorEnd;
     bool mSelectorColorGradientHorizontal;
+    ImageComponent mSelectorImage;
     unsigned int mPrimaryColor;
     unsigned int mSecondaryColor;
     unsigned int mSelectedColor;
     unsigned int mSelectedSecondaryColor;
+    PrimaryAlignment mAlignment;
+    float mHorizontalMargin;
+    LetterCase mLetterCase;
+    LetterCase mLetterCaseAutoCollections;
+    LetterCase mLetterCaseCustomCollections;
+    float mLineSpacing;
+    std::string mIndicators;
+    std::string mCollectionIndicators;
+    bool mFadeAbovePrimary;
 };
 
 template <typename T>
@@ -163,18 +160,9 @@ TextListComponent<T>::TextListComponent()
     , mLoopOffset2 {0}
     , mLoopTime {0}
     , mLoopScroll {false}
-    , mAlignment {PrimaryAlignment::ALIGN_CENTER}
-    , mHorizontalMargin {0.0f}
-    , mFont {Font::get(FONT_SIZE_MEDIUM)}
-    , mIndicators {"symbols"}
-    , mCollectionIndicators {"symbols"}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mLegacyMode {false}
-    , mFadeAbovePrimary {false}
-    , mLetterCase {LetterCase::NONE}
-    , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
-    , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
-    , mLineSpacing {1.5f}
+    , mFont {Font::get(FONT_SIZE_MEDIUM)}
     , mSelectorHeight {mFont->getSize() * 1.5f}
     , mSelectorHorizontalOffset {0.0f}
     , mSelectorVerticalOffset {0.0f}
@@ -185,6 +173,15 @@ TextListComponent<T>::TextListComponent()
     , mSecondaryColor {0x00FF00FF}
     , mSelectedColor {0x0000FFFF}
     , mSelectedSecondaryColor {0x00FF00FF}
+    , mAlignment {PrimaryAlignment::ALIGN_CENTER}
+    , mHorizontalMargin {0.0f}
+    , mLetterCase {LetterCase::NONE}
+    , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
+    , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
+    , mLineSpacing {1.5f}
+    , mIndicators {"symbols"}
+    , mCollectionIndicators {"symbols"}
+    , mFadeAbovePrimary {false}
 {
 }
 
