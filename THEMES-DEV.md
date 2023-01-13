@@ -116,10 +116,10 @@ Here is a very simple theme that changes the color of the game name text:
 ```xml
 <theme>
     <view name="gamelist">
-        <text name="game_name">
+        <text name="gameName">
             <color>00FF00</color>
         </text>
-        <image name="frame_1">
+        <image name="frame1">
             <pos>0.5 0.5</pos>
             <origin>0.5 0.5</origin>
             <size>0.8 0.8</size>
@@ -139,7 +139,7 @@ The `<view>` tag pair refers to the available views within ES-DE, which is eithe
 Views are defined like this:
 
 ```xml
-<view name="ViewNameHere">
+<view name="viewNameHere">
     ... define elements here ...
 </view>
 ```
@@ -149,7 +149,7 @@ An element is a particular visual component such as an image, an animation or a 
 This is the element structure:
 
 ```xml
-<ElementTypeHere name="ElementNameHere">
+<ElementTypeHere name="elementNameHere">
     ... define properties here ...
 </ElementTypeHere>
 ```
@@ -158,7 +158,7 @@ Finally _properties_ control how a particular element looks and behaves, for exa
 [Reference](THEMES-DEV.md#reference) section. Properties are defined like this:
 
 ```xml
-<propertyNameHere>ValueHere</propertyNameHere>
+<propertyNameHere>valueHere</propertyNameHere>
 ```
 Let's now put it all together. The following is a simple example of a text element which has its definition split across two separate XML files.
 
@@ -166,7 +166,7 @@ Let's now put it all together. The following is a simple example of a text eleme
 ```xml
 <theme>
     <view name="gamelist">
-        <text name="system_name">
+        <text name="systemName">
             <pos>0.27 0.32</pos>
             <origin>0.5 0.5</origin>
             <size>0.12 0.41</size>
@@ -180,25 +180,25 @@ Let's now put it all together. The following is a simple example of a text eleme
 ```xml
 <theme>
     <view name="gamelist">
-        <text name="system_name">
+        <text name="systemName">
             <color>707070</color>
         </text>
     </view>
 </theme>
 ```
 
-As long as the name attribute is identical, the element configuration will be combined automatically. But that is only true for elements of the same type, so for instance an image element could be defined that also uses _system_name_ for its name attribute without colliding with the text element:
+As long as the name attribute is identical, the element configuration will be combined automatically. But that is only true for elements of the same type, so for instance an image element could be defined that also uses _systemName_ for its name attribute without colliding with the text element:
 ```xml
 <theme>
     <view name="gamelist">
-        <text name="system_name">
+        <text name="systemName">
             <pos>0.27 0.32</pos>
             <origin>0.5 0.5</origin>
             <size>0.12 0.41</size>
             <zIndex>40</zIndex>
         </text>
         <!-- Does not cause a collision, but is probably a bad idea for readability reasons -->
-        <image name="system_name">
+        <image name="systemName">
             <pos>0.49 0.8</pos>
             <maxSize>0.4 0.28</maxSize>
             <zIndex>35</zIndex>
@@ -207,14 +207,14 @@ As long as the name attribute is identical, the element configuration will be co
 </theme>
 ```
 
-Whether this is a good idea is another question, it would probably be better to set the name attribute for the image to _system_logo_ or similar for this example.
+Whether this is a good idea is another question, it would probably be better to set the name attribute for the image to _systemLogo_ or similar for this example.
 
 In addition to this, if the name is used for the same element type but for different views, then there will also not be any collision:
 
 ```xml
 <theme>
     <view name="system">
-        <text name="system_name">
+        <text name="systemName">
         <pos>0.04 0.73</pos>
         <origin>0.5 0.5</origin>
         <size>0.12 0.22</size>
@@ -222,7 +222,7 @@ In addition to this, if the name is used for the same element type but for diffe
     </view>
     <!-- This will not cause a collision as these two text elements are defined for different views -->
     <view name="gamelist">
-        <text name="system_name">
+        <text name="systemName">
         <pos>0.27 0.32</pos>
         <origin>0.5 0.5</origin>
         <size>0.12 0.41</size>
@@ -247,7 +247,7 @@ Note that an unthemed system means precisely that, the specific system where the
 
 Sanitization for valid data format and structure is done in this manner, but verification that property values are actually correct (or reasonable) is handled by the individual component that takes care of creating and rendering the specific theme element. What happens in many instances is that a warning log entry is created and the invalid property is reset to its default value. So for these situations, the system will not become unthemed. Here's an example where a badges element accidentally had its horizontalAlignment property set to _leftr_ instead of _left_:
 ```
-Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, property "horizontalAlignment" for element "gamelist_badges" defined as "leftr"
+Jan 28 17:25:27 Warn:   BadgeComponent: Invalid theme configuration, property "horizontalAlignment" for element "gamelistBadges" defined as "leftr"
 ```
 
 Note however that warnings are not printed for all invalid properties as that would lead to an excessive amount of logging code. This is especially true for numeric values which are commonly just clamped to the allowable range without notifying the theme author. So make sure to check the [Reference](THEMES-DEV.md#reference) section of this document for valid values for each property.
@@ -255,7 +255,7 @@ Note however that warnings are not printed for all invalid properties as that wo
 For more serious issues where it does not make sense to assign a default value or auto-adjust the configuration, an error log entry is generated and the element will in most instances not get rendered at all. Here's such an example where the imageType property for a video element was accidentally set to _covr_ instead of _cover_:
 
 ```
-Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property "imageType" for element "gamelist_video" defined as "covr"
+Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property "imageType" for element "gamelistVideo" defined as "covr"
 ```
 
 Error handling for missing files is handled a bit differently depending on whether the paths have been defined explicitly or via a variable. For explicitly defined paths a warning will be logged for element properties and an error will be triggered for include files. Here's an example of the latter case:
@@ -308,7 +308,7 @@ Here are some example uses of the `<variant>` functionality:
 
     <!-- This will be parsed before the variant-specific configuration -->
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <fontPath>./core/font.ttf</fontPath>
             <fontSize>0.035</fontSize>
             <pos>0.3 0.56</pos>
@@ -322,7 +322,7 @@ Here are some example uses of the `<variant>` functionality:
 <theme>
     <variant name="withVideos">
         <view name="gamelist">
-            <video name="game_video">
+            <video name="gameVideo">
                 <imageType>cover</imageType>
                 <delay>1.7</delay>
                 <scrollFadeIn>true</scrollFadeIn>
@@ -332,7 +332,7 @@ Here are some example uses of the `<variant>` functionality:
     </variant>
     <variant name="withoutVideos">
         <view name="gamelist">
-            <image name="game_image">
+            <image name="gameImage">
                 <imageType>titlescreen</imageType>
                 <scrollFadeIn>true</scrollFadeIn>
                 <zIndex>42</zIndex>
@@ -347,7 +347,7 @@ Here are some example uses of the `<variant>` functionality:
 <theme>
     <view name="gamelist">
         <variant name="lightModeNoVideo">
-            <image name="game_image">
+            <image name="gameImage">
                 <imageType>titlescreen</imageType>
                 <scrollFadeIn>true</scrollFadeIn>
                 <zIndex>42</zIndex>
@@ -434,7 +434,7 @@ Here's an example configuration:
                 <tile>true</tile>
                 <color>${backgroundColor}</color>
             </image>
-            <text name="game_counter">
+            <text name="gameCounter">
                 <pos>0.5 0.6437</pos>
                 <size>1 0.056</size>
                 <color>${defaultTextColor}</color>
@@ -468,7 +468,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
     </aspectRatio>
 
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <fontPath>./core/font.ttf</fontPath>
             <fontSize>0.035</fontSize>
         </text>
@@ -481,7 +481,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 <theme>
     <aspectRatio name="4:3, 5:4">
         <view name="gamelist">
-            <image name="image_logo">
+            <image name="imageLogo">
                 <pos>0.3 0.56</pos>
             </image>
         </view>
@@ -489,7 +489,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 
     <aspectRatio name="16:9, 16:10, 21:9">
         <view name="gamelist">
-            <image name="image_logo">
+            <image name="imageLogo">
                 <pos>0.42 0.31</pos>
             </image>
         </view>
@@ -503,7 +503,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
     <variant name="withVideos, withoutVideos">
         <aspectRatio name="4:3, 5:4">
             <view name="gamelist">
-                <image name="image_logo">
+                <image name="imageLogo">
                     <pos>0.3 0.56</pos>
                 </image>
             </view>
@@ -517,7 +517,7 @@ Once the aspect ratios have been defined, they are applied to the theme configur
 <theme>
     <view name="gamelist">
         <aspectRatio name="4:3, 5:4">
-            <image name="image_logo">
+            <image name="imageLogo">
                 <pos>0.3 0.56</pos>
             </image>
         </aspectRatio>
@@ -693,7 +693,7 @@ You can include theme files within theme files, for example:
 ```xml
 <theme>
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <fontPath>./core/font.ttf</fontPath>
             <fontSize>0.035</fontSize>
             <color>00FF00</color>
@@ -707,7 +707,7 @@ You can include theme files within theme files, for example:
 <theme>
     <include>./../fonts.xml</include>
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <pos>0.3 0.56</pos>
             <color>FF0000</color>
         </text>
@@ -719,7 +719,7 @@ The above is equivalent to the following:
 ```xml
 <theme>
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <fontPath>./core/font.ttf</fontPath>
             <fontSize>0.035</fontSize>
             <pos>0.3 0.56</pos>
@@ -745,7 +745,7 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside the `<
 <theme>
     <include>./../colors.xml</include>
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <pos>0.3 0.56</pos>
         </text>
     </view>
@@ -759,7 +759,7 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside the `<
         <include>./../colors.xml</include>
     </variant>
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <pos>0.3 0.56</pos>
         </text>
     </view>
@@ -773,7 +773,7 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside the `<
         <include>./../colors.xml</include>
     </aspectRatio>
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <pos>0.3 0.56</pos>
         </text>
     </view>
@@ -785,7 +785,7 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside the `<
 <theme>
     <view name="gamelist">
         <include>./../colors.xml</include>
-        <text name="info_text_01">
+        <text name="infoText01">
             <pos>0.3 0.56</pos>
         </text>
     </view>
@@ -797,7 +797,7 @@ You can add `<include>` tags directly inside the `<theme>` tags or inside the `<
 <include>./../colors.xml</include>
 <theme>
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <pos>0.3 0.56</pos>
         </text>
     </view>
@@ -855,8 +855,8 @@ Here's an example of defining a common color to multiple text elements:
 <theme>
     <view name="gamelist">
         <!-- Weird spaces/newline on purpose -->
-        <text name="md_lbl_rating, md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
-        md_lbl_genre,    md_lbl_players,        md_lbl_lastplayed, md_lbl_playcount">
+        <text name="labelRating, labelReleasedate labelDeveloper labelPublisher,
+                labelGenre,    labelPlayers,        labelLastplayed, labelPlaycount">
             <color>48474D</color>
         </text>
     </view>
@@ -868,28 +868,28 @@ The above is equivalent to:
 ```xml
 <theme>
     <view name="gamelist">
-        <text name="md_lbl_rating">
+        <text name="labelRating">
             <color>48474D</color>
         </text>
-        <text name="md_lbl_releasedate">
+        <text name="labelReleasedate">
             <color>48474D</color>
         </text>
-        <text name="md_lbl_developer">
+        <text name="labelDeveloper">
             <color>48474D</color>
         </text>
-        <text name="md_lbl_publisher">
+        <text name="labelPublisher">
             <color>48474D</color>
         </text>
-        <text name="md_lbl_genre">
+        <text name="labelGenre">
             <color>48474D</color>
         </text>
-        <text name="md_lbl_players">
+        <text name="labelPlayers">
             <color>48474D</color>
         </text>
-        <text name="md_lbl_lastplayed">
+        <text name="labelLastplayed">
             <color>48474D</color>
         </text>
-        <text name="md_lbl_playcount">
+        <text name="labelPlaycount">
             <color>48474D</color>
         </text>
     </view>
@@ -974,42 +974,50 @@ Theme variables can be used to simplify theme construction and there are two typ
 
 ### System variables
 
-System variables are system specific and are derived from the values defined in es_systems.xml (except for collections which are derived from hardcoded application-internal values).
+System variables are system specific and are derived from values defined in es_systems.xml (except for collections which are derived from hardcoded application-internal values).
 * `system.name`
-* `system.name.collections`
+* `system.name.autoCollections`
+* `system.name.customCollections`
 * `system.name.noCollections`
 * `system.fullName`
-* `system.fullName.collections`
+* `system.fullName.autoCollections`
+* `system.fullName.customCollections`
 * `system.fullName.noCollections`
 * `system.theme`
-* `system.theme.collections`
+* `system.theme.autoCollections`
+* `system.theme.customCollections`
 * `system.theme.noCollections`
 
 `system.name` expands to the short name of the system as defined by the `name` tag in es_systems.xml\
 `system.fullName` expands to the full system name as defined by the `fullname` tag in es_systems.xml\
 `system.theme` expands to the theme directory as defined by the `theme` tag in es_systems.xml
 
-The `.collections` and `.noCollections` versions of these variables make it possible to differentiate between regular systems and collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems. The below example capitalizes the names of the collections while leaving the regular systems at their default formatting (as they are defined in es_systems.xml). The reason this works is that the .collections and .noCollections variables are mutually exclusive, i.e. they can never both hold a value at the same time as a system is either a real system or a collection and never both.
+The `.autoCollections`, `.customCollections` and `.noCollections` versions of these variables make it possible to differentiate between regular systems, automatic collections (_all games_, _favorites_ and _last played_) and custom collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems.
+
+The below example capitalizes the names of the auto collections while leaving custom collections and regular systems at their default formatting (as they are defined by the user and es_systems.xml respectively). The reason this works is that the .autoCollections, .customCollections and .noCollections variables are mutually exclusive, i.e. a system is either a real system or an automatic collection or a custom collection and never more than one of these.
 
 ```xml
 <theme>
     <view name="system">
-        <text name="system_name, collection_name">
+        <text name="systemName, autoCollectionName, customCollectionName">
             <pos>0.05 0.83</pos>
             <size>0.9 0.06</size>
             <fontSize>0.06</fontSize>
             <fontPath>./core/font.ttf</fontPath>
         </text>
-        <text name="collection_name">
+        <text name="systemName">
+            <text>${system.fullName.noCollections}</text>
+            <letterCase>none</letterCase>
+        </text>
+        <text name="autoCollectionName">
+            <text>${system.fullName.autoCollections}</text>
             <letterCase>capitalize</letterCase>
         </text>
-        <text name="system_name">
-            <text>${system.fullName.noCollections}</text>
+        <text name="customCollectionName">
+            <text>${system.fullName.customCollections}</text>
+            <letterCase>none</letterCase>
         </text>
-        <text name="collection_name">
-            <text>${system.fullName.collections}</text>
-        </text>
-    </view>
+</view>
 </theme>
 ```
 
@@ -1077,7 +1085,7 @@ Variables live in the global namespace, i.e. they are reachable by all configura
 
     <!-- color will be set to 8b0000 as it's parsed before the variants configuration -->
     <view name="gamelist">
-        <text name="info_text_01">
+        <text name="infoText01">
             <pos>0.3 0.56</pos>
             <color>${themeColor}</color>
         </text>
@@ -1086,7 +1094,7 @@ Variables live in the global namespace, i.e. they are reachable by all configura
     <!-- color will be set to 6533ff -->
     <variant name="lightMode, lightModeNoVideo">
         <view name="gamelist">
-            <text name="game_name">
+            <text name="gameName">
                 <pos>0.8 0.12</pos>
                 <color>${themeColor}</color>
             </text>
@@ -1212,7 +1220,7 @@ Properties:
     - Minimum value is `0.2` and maximum value is `3`
     - Default is `1.2`
 * `itemRotation` - type: FLOAT
-    - Angle in degrees that the item should be rotated. This value should be positive if the `itemRotationOrigin` X axis has a negative value, and it should be negative if the `itemRotationOrigin` X axis has a positive value, otherwise the wheel will rotate in the wrong direction.
+    - Angle in degrees that items should be rotated. This value should be positive if the `itemRotationOrigin` X axis has a negative value, and it should be negative if the `itemRotationOrigin` X axis has a positive value, otherwise the wheel will rotate in the wrong direction.
     - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `7.5`
 * `itemRotationOrigin` - type: NORMALIZED_PAIR
@@ -1224,7 +1232,7 @@ Properties:
     - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `false`
 * `itemAxisRotation` - type: FLOAT
-    - Angle in degrees that the items should be rotated around their own axis. Note that this does not work well with reflections as these are rotated too which does not look right.
+    - Angle in degrees that items should be rotated around their own axis. Note that this does not work well with reflections as these are rotated too which does not look right.
     - This property applies when `type` is `horizontal` or `vertical`
     - Default is `0`
 * `imageInterpolation` - type: STRING
@@ -1325,13 +1333,15 @@ Properties:
 * `letterCase` - type: STRING
     - Sets the letter case for all entries.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
-    - Default is `none` (original letter case is retained)
-* `letterCaseCollections` - type: STRING
-    - For technical reasons both automatic collections and custom collections have their names spelled in lowercase characters. This property which can only be used in the `system` view will make it possible to change the letter case for all such collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all collections.
-    - Valid values are `uppercase`, `lowercase` or `capitalize`
-* `letterCaseGroupedCollections` - type: STRING
-    - For technical reasons custom collections have their names spelled in lowercase characters. This property which can only be used in the `gamelist` view will make it possible to change the letter case for all such grouped collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all grouped collections.
-    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained).
+* `letterCaseAutoCollections` - type: STRING
+    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default. This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is the same value as `letterCase`
+* `letterCaseCustomCollections` - type: STRING
+    - Sets the letter case specifically for custom collections entries. Be cautious about using this property as it will override whatever lettercase the user has defined for their custom collection names. This property takes precedence over `letterCase` if that has also been defined.
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is the same value as `letterCase`
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
@@ -1485,13 +1495,15 @@ Properties:
 * `letterCase` - type: STRING
     - Sets the letter case for all entries.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
-    - Default is `none` (original letter case is retained)
-* `letterCaseCollections` - type: STRING
-    - For technical reasons both automatic collections and custom collections have their names spelled in lowercase characters. This property which can only be used in the `system` view will make it possible to change the letter case for all such collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all collections.
-    - Valid values are `uppercase`, `lowercase` or `capitalize`
-* `letterCaseGroupedCollections` - type: STRING
-    - For technical reasons custom collections have their names spelled in lowercase characters. This property which can only be used in the `gamelist` view will make it possible to change the letter case for all such grouped collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all grouped collections.
-    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained).
+* `letterCaseAutoCollections` - type: STRING
+    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default. This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is the same value as `letterCase`
+* `letterCaseCustomCollections` - type: STRING
+    - Sets the letter case specifically for custom collections entries. Be cautious about using this property as it will override whatever lettercase the user has defined for their custom collection names. This property takes precedence over `letterCase` if that has also been defined.
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is the same value as `letterCase`
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
@@ -1577,13 +1589,15 @@ Properties:
 * `letterCase` - type: STRING
     - Sets the letter case for all entries.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
-    - Default is `none` (original letter case is retained)
-* `letterCaseCollections` - type: STRING
-    - For technical reasons both automatic collections and custom collections have their names spelled in lowercase characters. This property which can only be used in the `system` view will make it possible to change the letter case for all such collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all collections.
-    - Valid values are `uppercase`, `lowercase` or `capitalize`
-* `letterCaseGroupedCollections` - type: STRING
-    - For technical reasons custom collections have their names spelled in lowercase characters. This property which can only be used in the `gamelist` view will make it possible to change the letter case for all such grouped collections. This is only needed when `letterCase` is omitted or has been set to `none` as that property will otherwise apply also to all grouped collections.
-    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `none` (original letter case is retained).
+* `letterCaseAutoCollections` - type: STRING
+    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default. This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is the same value as `letterCase`
+* `letterCaseCustomCollections` - type: STRING
+    - Sets the letter case specifically for custom collections entries. Be cautious about using this property as it will override whatever lettercase the user has defined for their custom collection names. This property takes precedence over `letterCase` if that has also been defined.
+    - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
+    - Default is the same value as `letterCase`
 * `lineSpacing` - type: FLOAT
     - Controls the space between lines. This works a bit different for the textlist element compared to all other elements. In all other instances the line spacing is calculated in relation to the rasterized reference 'S' character. This will however not work for the textlist as there are no guarantees which sizes the rasterized characters may end up as. The nature of font rendering is simply not that static with glyphs being able to have any shape and size and linting/grid alignment being applied during font rasterization. Using the rasterized glyph size would be too imprecise and the spacing would be inconsistent across different display resolutions, possibly leading to a different number of textlist rows. Therefore this specific lineSpacing property is based on the defined font size regardless of what's actually being rasterized. This may seem confusing as some fonts greatly exceed the requested size, but if you simply adjust the spacing until the textlist looks correct it will look almost identical regardless of what display resolution is used.
     - Minimum value is `0.5` and maximum value is `3`

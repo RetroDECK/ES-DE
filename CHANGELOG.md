@@ -26,6 +26,8 @@
 * Added support for 2x and 4x MSAA anti-aliasing (OpenGL renderer only)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
 * gamelist.xml files are no longer loaded from the ROMs/system directories (although old behavior can be retained via an option in es_settings.xml)
+* Added support for always grouping custom collections under the custom collections system regardless of theme set support
+* Added support for mixed-case custom collection names
 * Expanded the quick system select menu option from an on/off entry to a selection of different button combinations
 * Changed the order of the help system entries Y, X, B and A to instead be listed as A, B, X and Y
 * Changed the start button for the screensaver from "Back" to "X"
@@ -250,7 +252,8 @@
 ### Bug fixes
 
 * Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
-* Adding a dot (.) to the es_systems.xml extension tag (to setup extensionless entries) lead to a crash if the system contained folders
+* Adding a dot (.) to the es_systems.xml extension tag (to setup extensionless entries) led to a crash if the system contained folders
+* Enabling collections from the Game Collection Settings menu could crash the application in some rare cases
 * Parsing of .desktop files on Unix did not properly handle escaping of % characters which made game launching fail for some RPCS3 games
 * For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
@@ -277,6 +280,7 @@
 * Using the trigger buttons to jump to the start or end of a gamelist did not reset any currently held navigation buttons
 * When a legacy theme set had a video view style but did not have a valid md_video entry then the video player would still start (and play the audio)
 * Clearing a game in the metadata editor would sometimes not remove all media files (if there were both a .jpg and a .png for a certain file type)
+* Adding collections or changing collection settings could sometime lead to the gamelist not getting rendered until navigating away from the current system
 * The tile property for the image element did not work correctly with SVG images
 * Defining an itemScale (logoScale) property lower than 1.0 for the carousel did not work correctly
 * Carousel text did not get scaled/multiplied correctly with the itemScale property (bug retained for legacy themes for maximum backward compatibility)

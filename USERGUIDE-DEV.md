@@ -2538,7 +2538,7 @@ This lets you enable or disable your own custom game collections. If there are n
 
 **Create new custom collection from theme** _(Entry only visible if the ability is provided by the theme set)_
 
-If the theme set in use provides themes for custom collections, then this entry can be selected. For example, there could be themes for _Fighting games_ or _Driving games_ etc. The default slate-DE theme set does not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [later](USERGUIDE-DEV.md#custom-collections) in this guide.
+If the theme set in use provides themes for custom collections, then this entry can be selected. For example, there could be themes for _Fighting_ or _Racing_ etc. The default slate-DE and modern-DE theme sets do not provide such themes for custom collections and in general it's not recommended to use this approach, as is explained [elsewhere](USERGUIDE-DEV.md#custom-collections) in this guide.
 
 **Create new custom collection**
 
@@ -2548,6 +2548,10 @@ This lets you create a completely custom collection with a name of your choice. 
 
 This permanently deletes a custom collection, including its configuration file on the file system. A list of available collections is shown, and a confirmation dialog is displayed before performing the actual deletion. Only one collection at a time can be deleted.
 
+**Group custom collections**
+
+This setting controls where to place custom collections and the available options are _If unthemed_, _Always_ or _Never_. If the _If unthemed_ option is selected then only collections which don't have explicit support from the theme set will be moved to the grouped custom collections system. If _Always_ is selected then every collection will be placed in the grouped custom collections system regardless of whether the theme set has support for the collection or not. This is generally recommended as it leads to a less cluttered experience and it's also consistent as all custom collections will be located in one place regardless of how they've been named. The _Never_ option is mostly useful for testing purposes and for theme development as it will move all custom collections into discrete systems which will likely lead to some of them being unthemed.
+
 **Sort favorites on top for custom collections**
 
 Whether to sort your favorite games above your other games. This is disabled by default, as for collections you probably want to be able to mix all games regardless of whether they are favorites or not.
@@ -2555,10 +2559,6 @@ Whether to sort your favorite games above your other games. This is disabled by 
 **Display star markings for custom collections**
 
 With this option enabled, there is a star symbol added to each favorite game name. It works identically to the setting _Add star markings to favorite games_ under the _UI settings_ menu but is applied specifically to custom collections. It's disabled by default.
-
-**Group unthemed custom collections**
-
-With this enabled, if you have created custom collections and there is no theme support for the names you've selected, the collections will be grouped in a general collection system which is correctly themed. It's strongly recommended to keep this option enabled as otherwise your collections would be completely unthemed which doesn't make much sense. This option is provided mostly for testing and theme development purposes.
 
 **Show system names in collections**
 
@@ -2929,7 +2929,7 @@ These are collections that you create yourself. Examples could be grouping in ge
 
 If the theme set supports it, you can create a custom collection directly from a theme. However, slate-DE and modern-DE do not provide such themes as it's believed that grouping them together in a dedicated _Collections_ system is a more elegant solution. Especially since the theme set would need to ship with an almost endless amount of collection themes for whatever categories the users would like to use for their game collections.
 
-So if you have enabled the option _Group unthemed custom collections_ (it's enabled by default), any collections you add will show up in the special _Collections_ system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list. You can also quick jump to this random game by pressing the _Y_ button.
+So if you have set the option _Group custom collections_ to _If unthemed_ or _Always_, then any collections you add will show up in the special _Collections_ system. Here you can access them just as you would access folders inside a regular gamelist. The amount of games per collection is shown in the description, and a random game is displayed each time you browse through the list. You can also quick jump to this random game by pressing the _Y_ button.
 
 To create a custom collection, go to **Game collection settings** from the main menu and choose **Create new custom collection**.
 
@@ -2958,7 +2958,7 @@ _When editing a custom collection, a tick symbol will be displayed for any game 
 
 The way that custom collections are implemented is very simple. There is a single configuration file per collection inside the folder `~/.emulationstation/collections`
 
-For this example a file will have been created named `~/.emulationstation/collections/custom-platform.cfg`
+For this example a file will have been created named `~/.emulationstation/collections/custom-Platform.cfg`
 
 The file contents is simply a list of ROM files, such as the following:
 
