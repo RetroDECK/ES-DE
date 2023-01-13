@@ -27,7 +27,7 @@
 
     <variant name="withVideos, withoutVideos, noGameMedia">
         <view name="system">
-            <carousel name="system_carousel">
+            <carousel name="systemCarousel">
                 <pos>0 0.383796</pos>
                 <size>1 0.232407</size>
                 <type>horizontal</type>
@@ -45,7 +45,7 @@
                 <letterCase>uppercase</letterCase>
                 <lineSpacing>1.2</lineSpacing>
             </carousel>
-            <text name="game_counter">
+            <text name="gameCounter">
                 <pos>0.5 0.6437</pos>
                 <size>1 0.056</size>
                 <origin>0.5 0.5</origin>
@@ -68,7 +68,7 @@
             </helpsystem>
         </view>
         <view name="gamelist">
-            <textlist name="gamelist_textlist">
+            <textlist name="gamelistTextlist">
                 <pos>0.025 0.201</pos>
                 <size>0.39 0.711</size>
                 <selectorColor>${gamelistTextlistSelectorColor}</selectorColor>
@@ -208,22 +208,22 @@
             <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
-        <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
-                    md_lbl_genre, md_lbl_players, md_lbl_lastplayed">
+        <text name="labelReleasedate, labelDeveloper, labelPublisher,
+                    labelGenre, labelPlayers, labelLastplayed">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
             <color>${gamelistDefaultTextColor}</color>
             <letterCase>uppercase</letterCase>
         </text>
-        <text name="md_developer, md_publisher, md_genre, md_players">
+        <text name="developer, publisher, genre, players">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
             <color>${gamelistDefaultTextColor}</color>
             <letterCase>uppercase</letterCase>
         </text>
-        <text name="md_description">
+        <text name="description">
             <pos>0.454 0.675</pos>
             <size>0.346 0.242</size>
             <container>true</container>
@@ -238,68 +238,68 @@
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
         </text>
-        <datetime name="md_releasedate, md_lastplayed">
+        <datetime name="releasedate, lastplayed">
             <size>0.14 0.02</size>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.0195</fontSize>
             <color>${gamelistDefaultTextColor}</color>
             <letterCase>uppercase</letterCase>
         </datetime>
-        <text name="md_lbl_releasedate">
+        <text name="labelReleasedate">
             <pos>0.815 0.2755</pos>
             <text>Released:</text>
             <metadataElement>true</metadataElement>
         </text>
-        <datetime name="md_releasedate">
+        <datetime name="releasedate">
             <pos>0.83 0.3005</pos>
             <metadata>releasedate</metadata>
         </datetime>
-        <text name="md_lbl_developer">
+        <text name="labelDeveloper">
             <pos>0.815 0.3355</pos>
             <text>Developer:</text>
             <metadataElement>true</metadataElement>
         </text>
-        <text name="md_developer">
+        <text name="developer">
             <pos>0.83 0.3605</pos>
             <metadata>developer</metadata>
         </text>
-        <text name="md_lbl_publisher">
+        <text name="labelPublisher">
             <pos>0.815 0.3955</pos>
             <text>Publisher:</text>
             <metadataElement>true</metadataElement>
         </text>
-        <text name="md_publisher">
+        <text name="publisher">
             <pos>0.83 0.4205</pos>
             <metadata>publisher</metadata>
         </text>
-        <text name="md_lbl_genre">
+        <text name="labelGenre">
             <pos>0.815 0.4555</pos>
             <text>Genre:</text>
             <metadataElement>true</metadataElement>
         </text>
-        <text name="md_genre">
+        <text name="genre">
             <pos>0.83 0.4805</pos>
             <metadata>genre</metadata>
         </text>
-        <text name="md_lbl_players">
+        <text name="labelPlayers">
             <pos>0.815 0.5155</pos>
             <text>Players:</text>
             <metadataElement>true</metadataElement>
         </text>
-        <text name="md_players">
+        <text name="players">
             <pos>0.83 0.5405</pos>
             <metadata>players</metadata>
         </text>
-        <text name="md_lbl_lastplayed">
+        <text name="labelLastplayed">
             <pos>0.815 0.5755</pos>
             <text>Last played:</text>
             <metadataElement>true</metadataElement>
         </text>
-        <datetime name="md_lastplayed">
+        <datetime name="lastplayed">
             <pos>0.83 0.6005</pos>
             <metadata>lastplayed</metadata>
         </datetime>
-        <rating name="md_rating">
+        <rating name="rating">
             <pos>0.453 0.203</pos>
             <size>0 0.03</size>
             <interpolation>nearest</interpolation>
@@ -316,7 +316,7 @@
             <horizontalAlignment>right</horizontalAlignment>
             <color>${gamelistInfoColor}</color>
         </gamelistinfo>
-        <badges name="md_badges">
+        <badges name="badges">
             <pos>0.815 0.675</pos>
             <size>0.13 0.235</size>
             <horizontalAlignment>left</horizontalAlignment>
@@ -334,7 +334,7 @@
 
     <variant name="withVideos">
         <view name="gamelist">
-            <video name="md_video">
+            <video name="gameVideo">
                 <pos>0.63 0.45</pos>
                 <maxSize>0.356 0.424</maxSize>
                 <origin>0.5 0.5</origin>
@@ -350,7 +350,7 @@
 
     <variant name="withoutVideos">
         <view name="gamelist">
-            <image name="md_image">
+            <image name="gameImage">
                 <pos>0.63 0.45</pos>
                 <maxSize>0.360 0.424</maxSize>
                 <origin>0.5 0.5</origin>
@@ -409,7 +409,7 @@
 
     <variant name="noGameMedia">
         <view name="gamelist">
-            <textlist name="gamelist_textlist">
+            <textlist name="gamelistTextlist">
                 <pos>0.04 0.201</pos>
                 <size>0.92 0.71</size>
                 <horizontalAlignment>center</horizontalAlignment>
@@ -427,21 +427,20 @@
             <image name="backframe3">
                 <visible>false</visible>
             </image>
-            <badges name="md_badges">
+            <badges name="badges">
                 <visible>false</visible>
             </badges>
-            <text name="md_lbl_releasedate, md_lbl_developer, md_lbl_publisher,
-                        md_lbl_genre, md_lbl_players, md_lbl_lastplayed, md_developer,
-                        md_publisher, md_genre, md_players, md_description">
+            <text name="labelReleasedate, labelDeveloper, labelPublisher, labelGenre, labelPlayers,
+                        labelLastplayed, developer, publisher, genre, players, description">
                 <visible>false</visible>
             </text>
-            <datetime name="md_releasedate, md_lastplayed">
+            <datetime name="releasedate, lastplayed">
                 <visible>false</visible>
             </datetime>
             <gamelistinfo name="gamelistInfo">
                 <visible>false</visible>
             </gamelistinfo>
-            <rating name="md_rating">
+            <rating name="rating">
                 <visible>false</visible>
             </rating>
         </view>

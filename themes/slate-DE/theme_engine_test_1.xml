@@ -2,7 +2,7 @@
     <!-- Test of vertical system carousel wheel, system videos, gameselector elements etc. -->
 
     <view name="system">
-        <carousel name="system_carousel">
+        <carousel name="systemCarousel">
             <pos>0 0</pos>
             <size>0.28 1</size>
             <type>vertical_wheel</type>
@@ -26,38 +26,38 @@
             <letterCase>uppercase</letterCase>
             <lineSpacing>1.2</lineSpacing>
         </carousel>
-        <gameselector name="selector_recent">
+        <gameselector name="selectorRecent">
             <selection>lastplayed</selection>
             <gameCount>1</gameCount>
         </gameselector>
-        <gameselector name="selector_random">
+        <gameselector name="selectorRandom">
             <selection>random</selection>
             <gameCount>1</gameCount>
         </gameselector>
-        <image name="random_background_image">
+        <image name="randomBackgroundImage">
             <pos>0 0</pos>
             <size>1 1</size>
             <imageType>fanart, titlescreen</imageType>
-            <gameselector>selector_random</gameselector>
+            <gameselector>selectorRandom</gameselector>
             <interpolation>nearest</interpolation>
             <opacity>0.8</opacity>
             <saturation>0.8</saturation>
             <zIndex>3</zIndex>
         </image>
-        <image name="recent_game_image">
+        <image name="recentGameImage">
             <pos>0.975 0.08</pos>
             <origin>1 0</origin>
             <size>0.2 0</size>
             <imageType>cover</imageType>
-            <gameselector>selector_recent</gameselector>
+            <gameselector>selectorRecent</gameselector>
             <interpolation>nearest</interpolation>
             <zIndex>3</zIndex>
         </image>
-        <video name="random_game_video">
+        <video name="randomGameVideo">
             <pos>0.30 0.23</pos>
             <maxSize>0.3 0.424</maxSize>
             <imageType>marquee, titlescreen</imageType>
-            <gameselector>selector_random</gameselector>
+            <gameselector>selectorRandom</gameselector>
             <audio>true</audio>
             <interpolation>linear</interpolation>
             <pillarboxes>false</pillarboxes>
@@ -65,7 +65,7 @@
             <delay>1.7</delay>
             <fadeInTime>1.2</fadeInTime>
         </video>
-        <text name="game_counter">
+        <text name="gameCounter">
             <pos>0.30 0.082</pos>
             <size>0.35 0.1</size>
             <systemdata>gamecount</systemdata>
@@ -77,7 +77,7 @@
             <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
-        <text name="game_counter2">
+        <text name="gameCounter2">
             <pos>0.42 0.5437</pos>
             <size>0.25 0.056</size>
             <origin>0.5 0.5</origin>
@@ -91,7 +91,7 @@
             <visible>false</visible>
             <zIndex>50</zIndex>
         </text>
-        <text name="system_name">
+        <text name="systemName">
             <pos>0.30 0.01</pos>
             <size>0.46 0.1</size>
             <systemdata>fullname</systemdata>
@@ -103,11 +103,11 @@
             <letterCase>uppercase</letterCase>
             <zIndex>50</zIndex>
         </text>
-        <text name="game_name">
+        <text name="gameName">
             <pos>0.775 0.59</pos>
             <size>0.2 0.05</size>
             <metadata>name</metadata>
-            <gameselector>selector_recent</gameselector>
+            <gameselector>selectorRecent</gameselector>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
             <horizontalAlignment>right</horizontalAlignment>
@@ -116,11 +116,11 @@
             <letterCase>none</letterCase>
             <zIndex>50</zIndex>
         </text>
-        <datetime name="game_lastplayed_date">
+        <datetime name="gameLastplayed">
             <pos>0.775 0.64</pos>
             <size>0.2 0.05</size>
             <metadata>lastplayed</metadata>
-            <gameselector>selector_recent</gameselector>
+            <gameselector>selectorRecent</gameselector>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
             <horizontalAlignment>right</horizontalAlignment>
@@ -130,7 +130,7 @@
             <displayRelative>true</displayRelative>
             <zIndex>50</zIndex>
         </datetime>
-        <text name="recently_played_text">
+        <text name="recentlyPlayed">
             <pos>0.775 0.03</pos>
             <size>0.2 0</size>
             <text>Last played</text>
@@ -185,18 +185,18 @@
             <pos>0.58 0.904</pos>
             <horizontalAlignment>right</horizontalAlignment>
         </text>
-        <rating name="random_game_rating">
+        <rating name="randomGameRating">
             <pos>0.30 0.167</pos>
             <size>0.06 0.04</size>
-            <gameselector>selector_random</gameselector>
+            <gameselector>selectorRandom</gameselector>
             <color>FFEE00</color>
             <opacity>0.9</opacity>
         </rating>
-        <rating name="recent_game_rating">
+        <rating name="recentGameRating">
             <pos>0.975 0.042</pos>
             <origin>1 0</origin>
             <size>0.03 0.03</size>
-            <gameselector>selector_recent</gameselector>
+            <gameselector>selectorRecent</gameselector>
             <color>FFEE00</color>
         </rating>
         <helpsystem name="help">
@@ -232,7 +232,7 @@
     </view>
 
     <view name="gamelist">
-        <carousel name="gamelist_carousel">
+        <carousel name="gamelistCarousel">
             <pos>0.5 0.645</pos>
             <size>0.96 0.28</size>
             <origin>0.5 0</origin>
@@ -279,10 +279,10 @@
             <interpolation>nearest</interpolation>
             <scrollFadeIn>true</scrollFadeIn>
         </image>
-        <badges name="md_badges">
+        <badges name="badges">
             <pos>0.65 0.29</pos>
         </badges>
-        <rating name="md_rating">
+        <rating name="rating">
             <pos>0.65 0.25</pos>
         </rating>
         <helpsystem name="help">
@@ -296,10 +296,10 @@
         <image name="backframe3">
             <visible>false</visible>
         </image>
-        <text name="md_lbl_lastplayed, md_description">
+        <text name="labelLastplayed, description">
             <visible>false</visible>
         </text>
-        <datetime name="md_lastplayed">
+        <datetime name="lastplayed">
             <visible>false</visible>
         </datetime>
     </view>
@@ -312,16 +312,16 @@
             </helpsystem>
         </view>
         <view name="system">
-            <carousel name="system_carousel">
+            <carousel name="systemCarousel">
                 <itemRotationOrigin>-4.05 0.5</itemRotationOrigin>
                 <horizontalOffset>-0.03</horizontalOffset>
             </carousel>
-            <text name="recently_played_text">
+            <text name="recentlyPlayed">
                 <pos>0.775 0.038</pos>
                 <size>0.2 0</size>
                 <fontSize>0.031</fontSize>
             </text>
-            <rating name="recent_game_rating">
+            <rating name="recentGameRating">
                 <pos>0.975 0.050</pos>
                 <size>0.022 0.022</size>
             </rating>

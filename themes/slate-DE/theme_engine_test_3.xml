@@ -2,7 +2,7 @@
     <!-- Test of system textlist and horizontal gamelist carousel with reflections -->
 
     <view name="system">
-        <textlist name="system_textlist">
+        <textlist name="systemTextlist">
             <pos>0.025 0.201</pos>
             <size>0.39 0.711</size>
             <selectorColor>${gamelistTextlistSelectorColor}</selectorColor>
@@ -44,7 +44,7 @@
             <maxSize>0.32 0.13</maxSize>
             <origin>0 1</origin>
         </image>
-        <text name="game_counter">
+        <text name="gameCounter">
             <pos>0.45 0.225</pos>
             <size>0.4 0.056</size>
             <origin>0 0.5</origin>
@@ -106,7 +106,7 @@
     </view>
 
     <view name="gamelist">
-        <carousel name="gamelist_carousel">
+        <carousel name="gamelistCarousel">
             <pos>0.025 0.231</pos>
             <size>0.95 0.692</size>
             <type>horizontal</type>
@@ -138,12 +138,11 @@
             <color>181818</color>
             <zIndex>10</zIndex>
         </image>
-        <text name="game_name">
+        <text name="gameName">
             <pos>0.5 0.77</pos>
             <size>0.95 0.08</size>
             <origin>0.5 0</origin>
             <metadata>name</metadata>
-            <gameselector>selector_recent</gameselector>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.045</fontSize>
             <horizontalAlignment>center</horizontalAlignment>
@@ -152,20 +151,20 @@
             <letterCase>none</letterCase>
             <zIndex>80</zIndex>
         </text>
-        <text name="md_description">
+        <text name="description">
             <pos>0.025 0.205</pos>
             <size>0.446 0.185</size>
             <fontSize>0.02</fontSize>
             <lineSpacing>1.2</lineSpacing>
         </text>
-        <rating name="md_rating">
+        <rating name="rating">
             <pos>0.815 0.203</pos>
             <size>0.04 0.03</size>
         </rating>
         <gamelistinfo name="gamelistInfo">
             <color>888888</color>
         </gamelistinfo>
-        <badges name="md_badges">
+        <badges name="badges">
             <pos>0.03 0.205</pos>
             <size>0.38 0.08</size>
             <lines>1</lines>
@@ -182,15 +181,14 @@
         <image name="backframe3">
             <visible>false</visible>
         </image>
-        <text name="md_lbl_publisher, md_lbl_releasedate, md_lbl_developer, md_lbl_genre,
-            md_lbl_players, md_lbl_lastplayed, md_developer, md_publisher, md_genre,
-            md_players, md_description">
+        <text name="labelPublisher, labelReleasedate, labelDeveloper, labelGenre, labelPlayers,
+                    labelLastplayed, developer, publisher, genre, players, description">
             <visible>false</visible>
         </text>
-        <datetime name="md_releasedate md_lastplayed">
+        <datetime name="releasedate lastplayed">
             <visible>false</visible>
         </datetime>
-        <rating name="md_rating">
+        <rating name="rating">
             <visible>false</visible>
         </rating>
     </view>
@@ -202,7 +200,7 @@
             </helpsystem>
         </view>
         <view name="gamelist">
-            <carousel name="gamelist_carousel">
+            <carousel name="gamelistCarousel">
                 <itemSize>0.12 0.225</itemSize>
             </carousel>
         </view>
