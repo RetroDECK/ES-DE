@@ -755,7 +755,7 @@ void GuiMenu::openUIOptions()
     // Enable quick list scrolling overlay.
     auto listScrollOverlay = std::make_shared<SwitchComponent>();
     listScrollOverlay->setState(Settings::getInstance()->getBool("ListScrollOverlay"));
-    s->addWithLabel("ENABLE QUICK LIST SCROLLING OVERLAY", listScrollOverlay);
+    s->addWithLabel("ENABLE TEXTLIST QUICK SCROLLING OVERLAY", listScrollOverlay);
     s->addSaveFunc([listScrollOverlay, s] {
         if (listScrollOverlay->getState() !=
             Settings::getInstance()->getBool("ListScrollOverlay")) {
