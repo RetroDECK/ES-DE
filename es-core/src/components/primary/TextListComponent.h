@@ -76,10 +76,13 @@ public:
     const std::string& getIndicators() const { return mIndicators; }
     const std::string& getCollectionIndicators() const { return mCollectionIndicators; }
     const LetterCase getLetterCase() const override { return mLetterCase; }
-    const LetterCase getLetterCaseCollections() const override { return mLetterCaseCollections; }
-    const LetterCase getLetterCaseGroupedCollections() const override
+    const LetterCase getLetterCaseAutoCollections() const override
     {
-        return mLetterCaseGroupedCollections;
+        return mLetterCaseAutoCollections;
+    }
+    const LetterCase getLetterCaseCustomCollections() const override
+    {
+        return mLetterCaseCustomCollections;
     }
 
 private:
@@ -133,8 +136,8 @@ private:
     bool mLegacyMode;
     bool mFadeAbovePrimary;
     LetterCase mLetterCase;
-    LetterCase mLetterCaseCollections;
-    LetterCase mLetterCaseGroupedCollections;
+    LetterCase mLetterCaseAutoCollections;
+    LetterCase mLetterCaseCustomCollections;
     float mLineSpacing;
     float mSelectorHeight;
     float mSelectorHorizontalOffset;
@@ -169,8 +172,8 @@ TextListComponent<T>::TextListComponent()
     , mLegacyMode {false}
     , mFadeAbovePrimary {false}
     , mLetterCase {LetterCase::NONE}
-    , mLetterCaseCollections {LetterCase::NONE}
-    , mLetterCaseGroupedCollections {LetterCase::NONE}
+    , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
+    , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
     , mLineSpacing {1.5f}
     , mSelectorHeight {mFont->getSize() * 1.5f}
     , mSelectorHorizontalOffset {0.0f}
@@ -597,7 +600,7 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mLetterCase = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            mLetterCase = LetterCase::CAPITALIZED;
+            mLetterCase = LetterCase::CAPITALIZE;
         }
         else if (letterCase != "none") {
             LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
@@ -606,38 +609,44 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (properties & LETTER_CASE && elem->has("letterCaseCollections")) {
-        const std::string& letterCase {elem->get<std::string>("letterCaseCollections")};
+    if (properties & LETTER_CASE && elem->has("letterCaseAutoCollections")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseAutoCollections")};
         if (letterCase == "uppercase") {
-            mLetterCaseCollections = LetterCase::UPPERCASE;
+            mLetterCaseAutoCollections = LetterCase::UPPERCASE;
         }
         else if (letterCase == "lowercase") {
-            mLetterCaseCollections = LetterCase::LOWERCASE;
+            mLetterCaseAutoCollections = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            mLetterCaseCollections = LetterCase::CAPITALIZED;
+            mLetterCaseAutoCollections = LetterCase::CAPITALIZE;
+        }
+        else if (letterCase == "none") {
+            mLetterCaseAutoCollections = LetterCase::NONE;
         }
         else {
             LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                               "\"letterCaseCollections\" for element \""
+                               "\"letterCaseAutoCollections\" for element \""
                             << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
     }
 
-    if (properties & LETTER_CASE && elem->has("letterCaseGroupedCollections")) {
-        const std::string& letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
+    if (properties & LETTER_CASE && elem->has("letterCaseCustomCollections")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseCustomCollections")};
         if (letterCase == "uppercase") {
-            mLetterCaseGroupedCollections = LetterCase::UPPERCASE;
+            mLetterCaseCustomCollections = LetterCase::UPPERCASE;
         }
         else if (letterCase == "lowercase") {
-            mLetterCaseGroupedCollections = LetterCase::LOWERCASE;
+            mLetterCaseCustomCollections = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            mLetterCaseGroupedCollections = LetterCase::CAPITALIZED;
+            mLetterCaseCustomCollections = LetterCase::CAPITALIZE;
+        }
+        else if (letterCase == "none") {
+            mLetterCaseCustomCollections = LetterCase::NONE;
         }
         else {
             LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
-                               "\"letterCaseGroupedCollections\" for element \""
+                               "\"letterCaseCustomCollections\" for element \""
                             << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
     }

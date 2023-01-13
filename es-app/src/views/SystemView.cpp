@@ -762,9 +762,14 @@ void SystemView::populate()
 
         auto letterCaseFunc = [&it, this](std::string& name) {
             LetterCase letterCase {LetterCase::NONE};
-            if (it->isCollection()) {
-                letterCase = mPrimary->getLetterCaseCollections();
-                if (letterCase == LetterCase::NONE)
+            if (it->isCustomCollection()) {
+                letterCase = mPrimary->getLetterCaseCustomCollections();
+                if (letterCase == LetterCase::UNDEFINED)
+                    letterCase = mPrimary->getLetterCase();
+            }
+            else if (it->isCollection()) {
+                letterCase = mPrimary->getLetterCaseAutoCollections();
+                if (letterCase == LetterCase::UNDEFINED)
                     letterCase = mPrimary->getLetterCase();
             }
             else {
@@ -775,7 +780,7 @@ void SystemView::populate()
                 name = Utils::String::toUpper(name);
             else if (letterCase == LetterCase::LOWERCASE)
                 name = Utils::String::toLower(name);
-            else if (letterCase == LetterCase::CAPITALIZED)
+            else if (letterCase == LetterCase::CAPITALIZE)
                 name = Utils::String::toCapitalized(name);
         };
 

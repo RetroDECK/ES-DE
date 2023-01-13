@@ -58,10 +58,13 @@ public:
     const size_t getNumEntries() override { return mEntries.size(); }
     const bool getFadeAbovePrimary() const override { return mFadeAbovePrimary; }
     const LetterCase getLetterCase() const override { return mLetterCase; }
-    const LetterCase getLetterCaseCollections() const override { return mLetterCaseCollections; }
-    const LetterCase getLetterCaseGroupedCollections() const override
+    const LetterCase getLetterCaseAutoCollections() const override
     {
-        return mLetterCaseGroupedCollections;
+        return mLetterCaseAutoCollections;
+    }
+    const LetterCase getLetterCaseCustomCollections() const override
+    {
+        return mLetterCaseCustomCollections;
     }
     const std::string& getDefaultGridImage() const { return mDefaultImage; }
     void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
@@ -170,8 +173,8 @@ private:
     unsigned int mTextBackgroundColor;
     std::shared_ptr<Font> mFont;
     LetterCase mLetterCase;
-    LetterCase mLetterCaseCollections;
-    LetterCase mLetterCaseGroupedCollections;
+    LetterCase mLetterCaseAutoCollections;
+    LetterCase mLetterCaseCustomCollections;
     float mLineSpacing;
     bool mFadeAbovePrimary;
 };
@@ -223,8 +226,8 @@ GridComponent<T>::GridComponent()
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
     , mLetterCase {LetterCase::NONE}
-    , mLetterCaseCollections {LetterCase::NONE}
-    , mLetterCaseGroupedCollections {LetterCase::NONE}
+    , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
+    , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
     , mLineSpacing {1.5f}
     , mFadeAbovePrimary {false}
 {
@@ -1124,7 +1127,7 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mLetterCase = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            mLetterCase = LetterCase::CAPITALIZED;
+            mLetterCase = LetterCase::CAPITALIZE;
         }
         else if (letterCase != "none") {
             LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
@@ -1133,40 +1136,46 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (elem->has("letterCaseCollections")) {
-        const std::string& letterCase {elem->get<std::string>("letterCaseCollections")};
+    if (elem->has("letterCaseAutoCollections")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseAutoCollections")};
 
         if (letterCase == "uppercase") {
-            mLetterCaseCollections = LetterCase::UPPERCASE;
+            mLetterCaseAutoCollections = LetterCase::UPPERCASE;
         }
         else if (letterCase == "lowercase") {
-            mLetterCaseCollections = LetterCase::LOWERCASE;
+            mLetterCaseAutoCollections = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            mLetterCaseCollections = LetterCase::CAPITALIZED;
+            mLetterCaseAutoCollections = LetterCase::CAPITALIZE;
+        }
+        else if (letterCase == "none") {
+            mLetterCaseAutoCollections = LetterCase::NONE;
         }
         else {
             LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
-                               "\"letterCaseCollections\" for element \""
+                               "\"letterCaseAutoCollections\" for element \""
                             << element.substr(5) << "\" defined as \"" << letterCase << "\"";
         }
     }
 
-    if (elem->has("letterCaseGroupedCollections")) {
-        const std::string& letterCase {elem->get<std::string>("letterCaseGroupedCollections")};
+    if (elem->has("letterCaseCustomCollections")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseCustomCollections")};
 
         if (letterCase == "uppercase") {
-            mLetterCaseGroupedCollections = LetterCase::UPPERCASE;
+            mLetterCaseCustomCollections = LetterCase::UPPERCASE;
         }
         else if (letterCase == "lowercase") {
-            mLetterCaseGroupedCollections = LetterCase::LOWERCASE;
+            mLetterCaseCustomCollections = LetterCase::LOWERCASE;
         }
         else if (letterCase == "capitalize") {
-            mLetterCaseGroupedCollections = LetterCase::CAPITALIZED;
+            mLetterCaseCustomCollections = LetterCase::CAPITALIZE;
+        }
+        else if (letterCase == "none") {
+            mLetterCaseCustomCollections = LetterCase::NONE;
         }
         else {
             LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
-                               "\"letterCaseGroupedCollections\" for element \""
+                               "\"letterCaseCustomCollections\" for element \""
                             << element.substr(5) << "\" defined as \"" << letterCase << "\"";
         }
     }

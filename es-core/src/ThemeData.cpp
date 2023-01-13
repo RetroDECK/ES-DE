@@ -179,8 +179,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"letterCase", STRING},
-       {"letterCaseCollections", STRING},
-       {"letterCaseGroupedCollections", STRING},
+       {"letterCaseAutoCollections", STRING},
+       {"letterCaseCustomCollections", STRING},
        {"lineSpacing", FLOAT},
        {"fadeAbovePrimary", BOOLEAN},
        {"zIndex", FLOAT},
@@ -224,8 +224,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"letterCase", STRING},
-       {"letterCaseCollections", STRING},
-       {"letterCaseGroupedCollections", STRING},
+       {"letterCaseAutoCollections", STRING},
+       {"letterCaseCustomCollections", STRING},
        {"lineSpacing", FLOAT},
        {"fadeAbovePrimary", BOOLEAN},
        {"zIndex", FLOAT}}},
@@ -253,8 +253,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"alignment", STRING},                      // For backward compatibility with legacy themes.
        {"horizontalMargin", FLOAT},
        {"letterCase", STRING},
-       {"letterCaseCollections", STRING},
-       {"letterCaseGroupedCollections", STRING},
+       {"letterCaseAutoCollections", STRING},
+       {"letterCaseCustomCollections", STRING},
        {"forceUppercase", BOOLEAN},                // For backward compatibility with legacy themes.
        {"lineSpacing", FLOAT},
        {"indicators", STRING},
@@ -1853,7 +1853,7 @@ void ThemeData::parseElement(const pugi::xml_node& root,
         std::string str {resolvePlaceholders(node.text().as_string())};
 
         // Handle the special case with mutually exclusive system variables, for example
-        // system.fullName.collections and system.fullName.noCollections which can never
+        // system.fullName.autoCollections and system.fullName.noCollections which can never
         // exist at the same time. A backspace is assigned in SystemData to flag the
         // variables that do not apply and if it's encountered here we simply skip the
         // property.

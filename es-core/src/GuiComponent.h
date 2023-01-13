@@ -60,8 +60,9 @@ enum Alignment {
 enum class LetterCase {
     UPPERCASE,
     LOWERCASE,
-    CAPITALIZED,
-    NONE
+    CAPITALIZE,
+    NONE,
+    UNDEFINED
 };
 
 class GuiComponent

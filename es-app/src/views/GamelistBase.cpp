@@ -597,8 +597,8 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 mFirstGameEntry = (*it);
 
             if (customCollection && (*it)->getType() == FOLDER) {
-                letterCase = mPrimary->getLetterCaseGroupedCollections();
-                if (letterCase == LetterCase::NONE)
+                letterCase = mPrimary->getLetterCaseCustomCollections();
+                if (letterCase == LetterCase::UNDEFINED)
                     letterCase = mPrimary->getLetterCase();
             }
             else {
@@ -614,7 +614,7 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                     carouselEntry.name = Utils::String::toUpper(carouselEntry.name);
                 else if (letterCase == LetterCase::LOWERCASE)
                     carouselEntry.name = Utils::String::toLower(carouselEntry.name);
-                else if (letterCase == LetterCase::CAPITALIZED)
+                else if (letterCase == LetterCase::CAPITALIZE)
                     carouselEntry.name = Utils::String::toCapitalized(carouselEntry.name);
 
                 if (defaultImage != "")
@@ -631,7 +631,7 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                     gridEntry.name = Utils::String::toUpper(gridEntry.name);
                 else if (letterCase == LetterCase::LOWERCASE)
                     gridEntry.name = Utils::String::toLower(gridEntry.name);
-                else if (letterCase == LetterCase::CAPITALIZED)
+                else if (letterCase == LetterCase::CAPITALIZE)
                     gridEntry.name = Utils::String::toCapitalized(gridEntry.name);
 
                 if (defaultImage != "")
@@ -695,7 +695,7 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                     name = Utils::String::toUpper(name);
                 else if (letterCase == LetterCase::LOWERCASE)
                     name = Utils::String::toLower(name);
-                else if (letterCase == LetterCase::CAPITALIZED)
+                else if (letterCase == LetterCase::CAPITALIZE)
                     name = Utils::String::toCapitalized(name);
 
                 textListEntry.name = name;
@@ -735,7 +735,7 @@ void GamelistBase::addPlaceholder(FileData* firstEntry)
             name = Utils::String::toUpper(name);
         else if (letterCase == LetterCase::LOWERCASE)
             name = Utils::String::toLower(name);
-        else if (letterCase == LetterCase::CAPITALIZED)
+        else if (letterCase == LetterCase::CAPITALIZE)
             name = Utils::String::toCapitalized(name);
     };
 

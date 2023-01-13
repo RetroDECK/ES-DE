@@ -1328,13 +1328,37 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
         sysData.insert(std::pair<std::string, std::string>("system.name", getName()));
         sysData.insert(std::pair<std::string, std::string>("system.theme", getThemeFolder()));
         sysData.insert(std::pair<std::string, std::string>("system.fullName", getFullName()));
-        if (isCollection()) {
+        if (isCollection() && isCustomCollection()) {
             sysData.insert(
-                std::pair<std::string, std::string>("system.name.collections", getName()));
+                std::pair<std::string, std::string>("system.name.customCollections", getName()));
+            sysData.insert(std::pair<std::string, std::string>("system.fullName.customCollections",
+                                                               getFullName()));
+            sysData.insert(std::pair<std::string, std::string>("system.theme.customCollections",
+                                                               getThemeFolder()));
             sysData.insert(
-                std::pair<std::string, std::string>("system.fullName.collections", getFullName()));
+                std::pair<std::string, std::string>("system.name.autoCollections", "\b"));
             sysData.insert(
-                std::pair<std::string, std::string>("system.theme.collections", getThemeFolder()));
+                std::pair<std::string, std::string>("system.fullName.autoCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.theme.autoCollections", "\b"));
+            sysData.insert(std::pair<std::string, std::string>("system.name.noCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.noCollections", "\b"));
+            sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections", "\b"));
+        }
+        else if (isCollection()) {
+            sysData.insert(
+                std::pair<std::string, std::string>("system.name.autoCollections", getName()));
+            sysData.insert(std::pair<std::string, std::string>("system.fullName.autoCollections",
+                                                               getFullName()));
+            sysData.insert(std::pair<std::string, std::string>("system.theme.autoCollections",
+                                                               getThemeFolder()));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.name.customCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.customCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.theme.customCollections", "\b"));
             sysData.insert(std::pair<std::string, std::string>("system.name.noCollections", "\b"));
             sysData.insert(
                 std::pair<std::string, std::string>("system.fullName.noCollections", "\b"));
@@ -1347,10 +1371,18 @@ void SystemData::loadTheme(ThemeTriggers::TriggerType trigger)
                                                                getFullName()));
             sysData.insert(std::pair<std::string, std::string>("system.theme.noCollections",
                                                                getThemeFolder()));
-            sysData.insert(std::pair<std::string, std::string>("system.name.collections", "\b"));
             sysData.insert(
-                std::pair<std::string, std::string>("system.fullName.collections", "\b"));
-            sysData.insert(std::pair<std::string, std::string>("system.theme.collections", "\b"));
+                std::pair<std::string, std::string>("system.name.autoCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.autoCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.theme.autoCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.name.customCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.fullName.customCollections", "\b"));
+            sysData.insert(
+                std::pair<std::string, std::string>("system.theme.customCollections", "\b"));
         }
 
         mTheme->loadFile(sysData, path, trigger, isCustomCollection());
