@@ -6,41 +6,41 @@
             <entrySpacing>0.022</entrySpacing>
             <iconTextSpacing>0.00516</iconTextSpacing>
         </helpsystem>
-        <image name="bottomline">
+        <image name="bottomLine">
             <pos>0.5 0.9</pos>
         </image>
     </view>
 
     <view name="system">
-        <carousel name="system_carousel">
+        <carousel name="systemCarousel">
             <maxItemCount>4</maxItemCount>
             <itemSize>0.224 0.397</itemSize>
         </carousel>
-        <image name="arrowblock">
+        <image name="arrowBlock">
             <size>0.023 0.047</size>
         </image>
-        <image name="selection_bottom">
+        <image name="selectionBoxBottom">
             <pos>0.5 0.703</pos>
             <origin>0.5 0</origin>
             <size>0.2302 0.003</size>
         </image>
-        <image name="selection_top">
+        <image name="selectionBoxTop">
             <pos>0.5 0.2945</pos>
             <origin>0.5 0</origin>
             <size>0.2302 0.003</size>
         </image>
-        <image name="selection_left">
+        <image name="selectionBoxLeft">
             <pos>0.385 0.5</pos>
             <size>0.0016875 0.4112</size>
         </image>
-        <image name="selection_right">
+        <image name="selectionBoxRight">
             <pos>0.615 0.5</pos>
             <size>0.0016875 0.4112</size>
         </image>
     </view>
 
     <view name="gamelist">
-        <badges name="md_badges">
+        <badges name="badges">
             <lines>2</lines>
             <itemsPerLine>4</itemsPerLine>
             <itemMargin>0.0028125 0.005</itemMargin>

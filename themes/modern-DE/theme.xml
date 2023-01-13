@@ -37,7 +37,7 @@
             <color>${backgroundColor}</color>
             <zIndex>0</zIndex>
         </image>
-        <image name="bottomline">
+        <image name="bottomLine">
             <size>0.938 0.001</size>
             <origin>0.5 0.5</origin>
             <path>./assets/box.png</path>
@@ -56,7 +56,7 @@
     </view>
 
     <view name="system">
-        <carousel name="system_carousel">
+        <carousel name="systemCarousel">
             <pos>0 0.3</pos>
             <size>1 0.4</size>
             <type>horizontal</type>
@@ -72,11 +72,12 @@
             <fontPath>${mainFont}</fontPath>
             <fontSize>0.035</fontSize>
             <letterCase>none</letterCase>
-            <letterCaseCollections>capitalize</letterCaseCollections>
+            <letterCaseAutoCollections>capitalize</letterCaseAutoCollections>
+            <letterCaseCustomCollections>none</letterCaseCustomCollections>
             <lineSpacing>1.5</lineSpacing>
             <zIndex>50</zIndex>
         </carousel>
-        <text name="game_counter">
+        <text name="gameCounter">
             <pos>0.5 0.75</pos>
             <size>1 0.056</size>
             <origin>0.5 0.5</origin>
@@ -89,13 +90,13 @@
             <zIndex>50</zIndex>
         </text>
         <!-- System title top left -->
-        <image name="arrowblock">
+        <image name="arrowBlock">
             <pos>0.03 0.244</pos>
             <origin>0 0.5</origin>
             <path>./assets/arrow_block.svg</path>
             <color>${mainColor}</color>
         </image>
-        <text name="system_name, collection_name">
+        <text name="systemName, autoCollectionName, customCollectionName">
             <pos>0.063 0.244</pos>
             <size>0.743 0.035</size>
             <origin>0 0.5</origin>
@@ -104,37 +105,41 @@
             <horizontalAlignment>left</horizontalAlignment>
             <color>${mainColor}</color>
         </text>
-        <text name="system_name">
+        <text name="systemName">
             <text>${system.fullName.noCollections}</text>
             <letterCase>none</letterCase>
         </text>
-        <text name="collection_name">
-            <text>${system.fullName.collections}</text>
+        <text name="autoCollectionName">
+            <text>${system.fullName.autoCollections}</text>
             <letterCase>capitalize</letterCase>
         </text>
+        <text name="customCollectionName">
+            <text>${system.fullName.customCollections}</text>
+            <letterCase>none</letterCase>
+        </text>
         <!-- Blue selection box -->
-        <image name="selection_bottom">
+        <image name="selectionBoxBottom">
             <origin>0.5 0.5</origin>
             <path>./assets/box.png</path>
             <tile>false</tile>
             <color>${highlightColor}</color>
             <zIndex>70</zIndex>
         </image>
-        <image name="selection_top">
+        <image name="selectionBoxTop">
             <origin>0.5 0.5</origin>
             <path>./assets/box.png</path>
             <tile>false</tile>
             <color>${highlightColor}</color>
             <zIndex>70</zIndex>
         </image>
-        <image name="selection_left">
+        <image name="selectionBoxLeft">
             <origin>0.5 0.5</origin>
             <path>./assets/box.png</path>
             <tile>false</tile>
             <color>${highlightColor}</color>
             <zIndex>70</zIndex>
         </image>
-        <image name="selection_right">
+        <image name="selectionBoxRight">
             <origin>0.5 0.5</origin>
             <path>./assets/box.png</path>
             <tile>false</tile>
@@ -144,7 +149,7 @@
     </view>
 
     <view name="gamelist">
-        <textlist name="gamelist">
+        <textlist name="gamelistTextlist">
             <pos>0.04 0.182</pos>
             <size>0.31 0.68</size>
             <origin>0 0</origin>
@@ -160,10 +165,9 @@
             <horizontalAlignment>left</horizontalAlignment>
             <horizontalMargin>0.01</horizontalMargin>
             <letterCase>none</letterCase>
-            <letterCaseGroupedCollections>capitalize</letterCaseGroupedCollections>
             <lineSpacing>1.9</lineSpacing>
         </textlist>
-        <image name="topline">
+        <image name="topLine">
             <pos>0.5 0.13</pos>
             <size>0.938 0.001</size>
             <origin>0.5 0.5</origin>
@@ -171,7 +175,7 @@
             <tile>false</tile>
             <color>${tertiaryColor}</color>
         </image>
-        <text name="system_name, collection_name">
+        <text name="systemName, autoCollectionName, customCollectionName">
             <pos>0.034 0.065</pos>
             <size>0.743 0.031</size>
             <fontPath>${mainFont}</fontPath>
@@ -180,15 +184,19 @@
             <color>${secondaryColor}</color>
             <letterCase>capitalize</letterCase>
         </text>
-        <text name="system_name">
+        <text name="systemName">
             <text>${system.fullName.noCollections}</text>
             <letterCase>none</letterCase>
         </text>
-        <text name="collection_name">
-            <text>${system.fullName.collections}</text>
+        <text name="autoCollectionName">
+            <text>${system.fullName.autoCollections}</text>
             <letterCase>capitalize</letterCase>
         </text>
-        <gamelistinfo name="gamelistinfo">
+        <text name="customCollectionName">
+            <text>${system.fullName.customCollections}</text>
+            <letterCase>none</letterCase>
+        </text>
+        <gamelistinfo name="gamelistInfo">
             <pos>0.966 0.065</pos>
             <size>0.2 0.031</size>
             <origin>1 0</origin>
@@ -197,14 +205,14 @@
             <horizontalAlignment>right</horizontalAlignment>
             <color>${secondaryColor}</color>
         </gamelistinfo>
-        <image name="md_marquee">
+        <image name="marquee">
             <pos>0.494 0.68</pos>
             <maxSize>0.268 0.228</maxSize>
             <origin>0.5 0.5</origin>
             <imageType>marquee</imageType>
         </image>
         <!-- Metadata panel (right) -->
-        <image name="md_background">
+        <image name="backgroundMetadata">
             <pos>0.675 0.20</pos>
             <size>0.325 0.63</size>
             <origin>0 0</origin>
@@ -212,20 +220,20 @@
             <tile>false</tile>
             <color>${backgroundColor2}</color>
         </image>
-        <image name="md_background_grad_top">
+        <image name="backgroundMetadataGradTop">
             <pos>0.675 0.131</pos>
             <size>0.325 0.07</size>
             <origin>0 0</origin>
             <rotation>180</rotation>
             <path>./assets/${colorSchemeName}/gradient.png</path>
         </image>
-        <image name="md_background_grad_bottom">
+        <image name="backgroundMetadataGradBottom">
             <pos>0.675 0.83</pos>
             <size>0.325 0.07</size>
             <origin>0 0</origin>
             <path>./assets/${colorSchemeName}/gradient.png</path>
         </image>
-        <text name="md_description">
+        <text name="description">
             <pos>0.70 0.1745</pos>
             <size>0.269 0.3105</size>
             <metadata>description</metadata>
@@ -236,100 +244,100 @@
             <fontSize>0.03</fontSize>
             <lineSpacing>1.2</lineSpacing>
         </text>
-        <text name="md_lbl_publisher">
+        <text name="labelPublisher">
             <pos>0.70 0.532</pos>
             <size>0.13125 0.02</size>
             <text>Publisher:</text>
             <metadataElement>true</metadataElement>
             <fontSize>0.02</fontSize>
         </text>
-        <text name="md_publisher">
+        <text name="publisher">
             <pos>0.70 0.552</pos>
             <size>0.13125 0.03</size>
             <metadata>publisher</metadata>
             <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
-        <text name="md_lbl_developer">
+        <text name="labelDeveloper">
             <pos>0.8453 0.532</pos>
             <size>0.13125 0.02</size>
             <text>Developer:</text>
             <metadataElement>true</metadataElement>
             <fontSize>0.02</fontSize>
         </text>
-        <text name="md_developer">
+        <text name="developer">
             <pos>0.8453 0.552</pos>
             <size>0.13125 0.03</size>
             <metadata>developer</metadata>
             <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
-        <text name="md_lbl_releasedate">
+        <text name="labelReleasedate">
             <pos>0.70 0.608</pos>
             <size>0.13125 0.02</size>
             <text>Released:</text>
             <metadataElement>true</metadataElement>
             <fontSize>0.02</fontSize>
         </text>
-        <datetime name="md_releasedate">
+        <datetime name="releasedate">
             <pos>0.70 0.628</pos>
             <size>0.13125 0.03</size>
             <metadata>releasedate</metadata>
             <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </datetime>
-        <text name="md_lbl_players">
+        <text name="labelPlayers">
             <pos>0.8453 0.608</pos>
             <size>0.13125 0.02</size>
             <text>Players:</text>
             <metadataElement>true</metadataElement>
             <fontSize>0.02</fontSize>
         </text>
-        <text name="md_players">
+        <text name="players">
             <pos>0.8453 0.628</pos>
             <size>0.13125 0.03</size>
             <metadata>players</metadata>
             <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
-        <text name="md_lbl_genre">
+        <text name="labelGenre">
             <pos>0.70 0.684</pos>
             <size>0.13125 0.02</size>
             <text>Genre:</text>
             <metadataElement>true</metadataElement>
             <fontSize>0.02</fontSize>
         </text>
-        <text name="md_genre">
+        <text name="genre">
             <pos>0.70 0.704</pos>
             <size>0.13125 0.03</size>
             <metadata>genre</metadata>
             <defaultValue>Unknown</defaultValue>
             <fontSize>0.03</fontSize>
         </text>
-        <text name="md_lbl_rating">
+        <text name="labelRating">
             <pos>0.70 0.760</pos>
             <size>0.13125 0.02</size>
             <text>Rating:</text>
             <metadataElement>true</metadataElement>
             <fontSize>0.02</fontSize>
         </text>
-        <text name="md_lbl_publisher, md_lbl_developer, md_lbl_releasedate, md_lbl_players,
-                    md_lbl_genre, md_lbl_rating">
+        <text name="labelPublisher, labelDeveloper, labelReleasedate, labelPlayers,
+                    labelGenre, labelRating">
             <color>${tertiaryColor}</color>
         </text>
-        <text name="md_publisher, md_developer, md_players, md_genre, md_description">
+        <text name="publisher, developer, players, genre, description">
             <color>${secondaryColor}</color>
         </text>
-        <datetime name="md_releasedate">
+        <datetime name="releasedate">
             <color>${secondaryColor}</color>
         </datetime>
-        <rating name="md_rating">
+        <rating name="rating">
             <pos>0.70 0.785</pos>
             <size>0.04 0.03</size>
             <filledPath>./assets/star-filled.svg</filledPath>
             <unfilledPath>./assets/${colorSchemeName}/star-unfilled.svg</unfilledPath>
         </rating>
-        <badges name="md_badges">
+        <badges name="badges">
             <pos>0.8423 0.69</pos>
             <size>0.1267 0.17335978655</size>
             <origin>0 0</origin>
@@ -372,7 +380,7 @@
 
     <variant name="withVideos">
         <view name="gamelist">
-            <video name="md_video">
+            <video name="gameVideo">
                 <pos>0.4985 0.365</pos>
                 <maxSize>0.277 0.39</maxSize>
                 <origin>0.5 0.5</origin>
@@ -388,7 +396,7 @@
 
     <variant name="withoutVideos">
         <view name="gamelist">
-            <image name="md_image">
+            <image name="gameImage">
                 <pos>0.4985 0.365</pos>
                 <maxSize>0.277 0.39</maxSize>
                 <origin>0.5 0.5</origin>
@@ -399,36 +407,36 @@
 
     <variant name="noGameMedia">
         <view name="gamelist">
-            <textlist name="gamelist">
+            <textlist name="gamelistTextlist">
                 <pos>0.04 0.182</pos>
                 <size>0.924 0.682</size>
                 <selectorColor>00000000</selectorColor>
                 <horizontalAlignment>center</horizontalAlignment>
             </textlist>
-            <image name="md_marquee">
+            <image name="marquee">
                 <visible>false</visible>
             </image>
-            <image name="md_background">
+            <image name="backgroundMetadata">
                 <visible>false</visible>
             </image>
-            <image name="md_background_grad_top">
+            <image name="backgroundMetadataGradTop">
                 <visible>false</visible>
             </image>
-            <image name="md_background_grad_bottom">
+            <image name="backgroundMetadataGradBottom">
                 <visible>false</visible>
             </image>
-            <badges name="md_badges">
+            <badges name="badges">
                 <visible>false</visible>
             </badges>
-            <text name="md_lbl_publisher, md_lbl_developer, md_lbl_releasedate, md_lbl_players,
-                        md_lbl_genre, md_lbl_rating, md_publisher, md_developer, md_players,
-                        md_genre, md_description">
+            <text name="labelPublisher, labelDeveloper, labelReleasedate, labelPlayers,
+                        labelGenre, labelRating, publisher, developer, players,
+                        genre, description">
                 <visible>false</visible>
             </text>
-            <datetime name="md_releasedate">
+            <datetime name="releasedate">
                 <visible>false</visible>
             </datetime>
-            <rating name="md_rating">
+            <rating name="rating">
                 <visible>false</visible>
             </rating>
         </view>
