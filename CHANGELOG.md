@@ -124,6 +124,8 @@
 * Added theme support for setting the textlist custom collection indicators to symbols or ascii
 * Removed the "Use plain ASCII for special gamelist characters" menu option as it's now theme-controlled
 * Removed the "Enable menu scroll indicators" menu option
+* Removed the "Show system names in collections" menu option
+* Added theme support for appending system names to game names in collection systems
 * Changed the badges default lines property value from 2 to 3
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
 * Added support for defining the scrollable container speed, start delay and reset delay from the theme configuration
@@ -267,6 +269,7 @@
 * Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
+* Custom collections editing mode did not end when switching UI modes
 * The outermost logos would sometimes glitch out during carousel transitions
 * Horizontal and vertical gradients were mixed up (showing the opposite gradient type if set in a theme)
 * The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling

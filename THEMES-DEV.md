@@ -1346,8 +1346,18 @@ Properties:
     - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
+* `systemNameSuffix` - type: BOOLEAN
+    - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). This assumes a fallback to text is made.
+    - This property applies when view type is `gamelist`
+    - Default is `true`
+* `letterCaseSystemNameSuffix` - type: STRING
+    - Sets the letter case for the system name suffix.
+    - This property applies when view type is `gamelist` and `systemNameSuffix` is `true`
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `uppercase`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the carousel are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the carousel will be dimmed to black and elements above the carousel will be faded to transparent.
+    - This property applies when view type is `system`
     - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
@@ -1508,8 +1518,18 @@ Properties:
     - Controls the space between lines (as a multiple of the font height). Due to the imprecise nature of typefaces where certain glyphs (characters) may exceed the requested font size, it's recommended to keep this value at around `1.1` or higher. This way overlapping glyphs or characters being cut off at the top or bottom will be prevented.
     - Minimum value is `0.5` and maximum value is `3`
     - Default is `1.5`
+* `systemNameSuffix` - type: BOOLEAN
+    - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). This assumes a fallback to text is made.
+    - This property applies when view type is `gamelist`
+    - Default is `true`
+* `letterCaseSystemNameSuffix` - type: STRING
+    - Sets the letter case for the system name suffix.
+    - This property applies when view type is `gamelist` and `systemNameSuffix` is `true`
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `uppercase`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the grid are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the grid will be dimmed to black and elements above the grid will be faded to transparent.
+    - This property applies when view type is `system`
     - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
@@ -1610,8 +1630,18 @@ Properties:
     - Controls the style of the indicators which get displayed when editing a custom collection. This property can't be disabled as it's crucial for getting a visual overview when editing collections. When set to `ascii`, the indicator is displayed as a `!`
     - Valid values are `ascii` and `symbols`
     - Default is `symbols`
+* `systemNameSuffix` - type: BOOLEAN
+    - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections).
+    - This property applies when view type is `gamelist`
+    - Default is `true`
+* `letterCaseSystemNameSuffix` - type: STRING
+    - Sets the letter case for the system name suffix.
+    - This property applies when view type is `gamelist` and `systemNameSuffix` is `true`
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `uppercase`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the textlist are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the textlist will be dimmed to black and elements above the textlist will be faded to transparent.
+    - This property applies when view type is `system`
     - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
@@ -2081,6 +2111,15 @@ Properties:
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
 * `defaultValue` - type: STRING
     - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `developer`, `publisher`, `genre` or `players` and there is no metadata available for the defined type. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for blank values.
+* `systemNameSuffix` - type: BOOLEAN
+    - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). If `metadata` has been set to `description` then this property will only apply when inside the root of the grouped custom collections system where a summary of available games for the currently selected collection is displayed.
+    - This property applies when `metadata` has been set to `name` or `description`
+    - Default is `true`
+* `letterCaseSystemNameSuffix` - type: STRING
+    - Sets the letter case for the system name suffix.
+    - This property applies when `systemNameSuffix` is `true` except if `metadata` has been set to `description` in which case it only applies if `letterCase` is also set to `none`
+    - Valid values are `uppercase`, `lowercase` or `capitalize`
+    - Default is `uppercase`
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define additional text elements that should be treated as if they were game metadata entries. This is for example useful for hiding and fading out text labels for the various metadata types like genre, publisher, players etc. Note that it's not possible to disable the metadata hiding functionality for the default metadata fields as that would break basic application behavior. Also note that there is a slight exception to the hiding logic for text containers with the metadata value set to `description`. In this case the element is by default not hidden when enabling the _Hide metadata fields_ setting. To also hide such containers, set this property to true.
     - Default is `false`
