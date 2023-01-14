@@ -43,7 +43,6 @@ private:
     void openConfigInput(GuiSettings* settings);
     void openCollectionSystemOptions();
     void openOtherOptions();
-    void openUtilitiesMenu();
     void openQuitMenu();
 
     MenuComponent mMenu;

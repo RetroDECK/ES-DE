@@ -62,11 +62,6 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
 
-    // TEMPORARY: Disabled for now, will be used in the future.
-    //    if (isFullUI)
-    //        addEntry("UTILITIES", 0x777777FF, true, [this] {
-    //                openUtilitiesMenu(); });
-
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
@@ -617,6 +612,8 @@ void GuiMenu::openUIOptions()
                     Settings::getInstance()->setBool("ForceKiosk", false);
                     Settings::getInstance()->setBool("ForceKid", false);
                     Settings::getInstance()->saveFile();
+                    if (CollectionSystemsManager::getInstance()->isEditing())
+                        CollectionSystemsManager::getInstance()->exitEditMode();
                     UIModeController::getInstance()->setCurrentUIMode(selectedMode);
                     for (auto it = SystemData::sSystemVector.cbegin();
                          it != SystemData::sSystemVector.cend(); ++it) {
@@ -1496,13 +1493,6 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-    s->setSize(mSize);
-    mWindow->pushGui(s);
-}
-
-void GuiMenu::openUtilitiesMenu()
-{
-    auto s = new GuiSettings("UTILITIES");
     s->setSize(mSize);
     mWindow->pushGui(s);
 }
