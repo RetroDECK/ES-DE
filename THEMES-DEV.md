@@ -1188,27 +1188,27 @@ Properties:
     - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `maxItemCount` - type: FLOAT
     - Sets the number of carousel items to display.
-    - This property applies when `type` is `horizontal` or `vertical`
+    - This property can be used when `type` is `horizontal` or `vertical`
     - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
 * `itemsBeforeCenter` - type: UNSIGNED_INTEGER
     - Sets the number of items before the center position (the currently selected item). By setting this property and `itemsAfterCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
-    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
+    - This property can be used when `type` is `horizontal_wheel` or `vertical_wheel`
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
 * `itemsAfterCenter` - type: UNSIGNED_INTEGER
     - Sets the number of items after the center position (the currently selected item). By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
-    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
+    - This property can be used when `type` is `horizontal_wheel` or `vertical_wheel`
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
 * `itemStacking` - type: STRING
     - Controls how to stack overlapping items. When set to `centered` the selected item will be raised and items further from the selected item (to the left/right or above/below depending on the carousel orientation) will be progressively rendered lower than the items closer to the center. If set to `ascending` then items will be rendered progressively higher from left to right or from top to bottom depending on the carousel orientation. If set to `descending` the opposite takes place with items being progressively rendered lower from left to right or top to bottom depending on the carousel orientation. Finally `ascendingRaised` and `descendingRaised` work identically to `ascending` and `descending` with the only difference that the currently selected item will be raised above the other items.
-    - This property applies when `type` is `horizontal` or `vertical`
+    - This property can be used when `type` is `horizontal` or `vertical`
     - Valid values are `centered`, `ascending`, `ascendingRaised`, `descending` or `descendingRaised`
     - Default is `centered`
 * `selectedItemMargins` - type: NORMALIZED_PAIR
     - By default items are evenly spaced across the carousel area, but this property makes it possible to define margins (extra space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation.
-    - This property applies when `type` is `horizontal` or `vertical`
+    - This property can be used when `type` is `horizontal` or `vertical`
     - Minimum value per margin is `0` and maximum value per margin is `1`
     - Default is `0 0`
 * `itemSize` - type: NORMALIZED_PAIR
@@ -1221,19 +1221,19 @@ Properties:
     - Default is `1.2`
 * `itemRotation` - type: FLOAT
     - Angle in degrees that items should be rotated. This value should be positive if the `itemRotationOrigin` X axis has a negative value, and it should be negative if the `itemRotationOrigin` X axis has a positive value, otherwise the wheel will rotate in the wrong direction.
-    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
+    - This property can be used when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `7.5`
 * `itemRotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the items will be rotated. The X axis of this property is the distance from the left side of the item to the center of the wheel in multiples of the size defined by the `itemSize` X axis. So if for instance the itemSize X axis is set to 0.2 and itemRotationOrigin is set to -2, then the center of the wheel will be at a -0.4 distance from the left side of the item. In other words, if specifying a negative number the item will be located on the right side of the carousel, i.e. the wheel will be to the left and if specifying a positive number the wheel will be to the right. Note again that this is calculated from the left side of the item, so to get an identically sized wheel as the -2 wheel just mentioned you need to define 3 as the value rather than 2 if you want the wheel to the right side of the item. This is not an error but due to the way that coordinates are calculated. The Y axis should normally be left at `0.5` or you may get some weird results. It is however possible to use this axis value creatively if you know what you are doing.
-    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
+    - This property can be used when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `-3 0.5`
 * `itemAxisHorizontal` - type: BOOLEAN
     - Wheel carousel items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel. Make sure that `itemVerticalAlignment` is set to `center` when using this property or you'll get strange alignment issues.
-    - This property applies when `type` is `horizontal_wheel` or `vertical_wheel`
+    - This property can be used when `type` is `horizontal_wheel` or `vertical_wheel`
     - Default is `false`
 * `itemAxisRotation` - type: FLOAT
     - Angle in degrees that items should be rotated around their own axis. Note that this does not work well with reflections as these are rotated too which does not look right.
-    - This property applies when `type` is `horizontal` or `vertical`
+    - This property can be used when `type` is `horizontal` or `vertical`
     - Default is `0`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
@@ -1263,22 +1263,22 @@ Properties:
     - Default is `animate`
 * `itemHorizontalAlignment` - type: STRING
     - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the X axis.
-    - This property applies when type is `vertical` or `vertical_wheel`
+    - This property can be used when `type` is `vertical` or `vertical_wheel`
     - Valid values are `left`, `center` or `right`
     - Default is `center`
 * `itemVerticalAlignment` - type: STRING
     - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the Y axis. Make sure to set this to `center` if you've enabled `itemAxisHorizontal`
-    - This property applies when `type` is `horizontal`, `horizontal_wheel` or `vertical_wheel`
+    - This property can be used when `type` is `horizontal`, `horizontal_wheel` or `vertical_wheel`
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
 * `wheelHorizontalAlignment` - type: STRING
     - Sets the horizontal alignment of the actual carousel inside the overall element area. Note that the positioning is calculated before `itemAxisHorizontal` is applied.
-    - This property applies when `type` is `vertical_wheel`
+    - This property can be used when `type` is `vertical_wheel`
     - Valid values are `left`, `center` or `right`
     - Default is `center`
 * `wheelVerticalAlignment` - type: STRING
     - Sets the vertical alignment of the actual carousel inside the overall element area. Note that the positioning is calculated before `itemAxisHorizontal` is applied.
-    - This property applies when `type` is `horizontal_wheel`
+    - This property can be used when `type` is `horizontal_wheel`
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
 * `horizontalOffset` - type: FLOAT
@@ -1291,16 +1291,16 @@ Properties:
     - Default is `0`
 * `reflections` - type: BOOLEAN
     - Enables reflections beneath the carousel items. It's probably a good idea to combine this with the `verticalOffset` property to define how much of the reflections should be visible.
-    - This property applies when type is `horizontal`
+    - This property can be used when `type` is `horizontal`
     - Default is `false`
 * `reflectionsOpacity` - type: FLOAT
     - Defines the base opacity for the reflections.
-    - This property applies when type is `horizontal`
+    - This property can be used when `type` is `horizontal`
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
 * `reflectionsFalloff` - type: FLOAT
     - Defines the reflections opacity falloff, starting from the item's base opacity and ending at complete transparency. The value is set relative to the item height, so `1` will fade the bottom of the item to full transparency, `2` will fade to full transparency at half the item height and `0.5` will place the full transparency point at twice the item height.
-    - This property applies when type is `horizontal`
+    - This property can be used when `type` is `horizontal`
     - Minimum value is `0` and maximum value is `10`
     - Default is `1`
 * `unfocusedItemOpacity` - type: FLOAT
@@ -1348,16 +1348,16 @@ Properties:
     - Default is `1.5`
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). This assumes a fallback to text is made.
-    - This property applies when view type is `gamelist`
+    - This property can be used when view type is `gamelist`
     - Default is `true`
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
-    - This property applies when view type is `gamelist` and `systemNameSuffix` is `true`
+    - This property can be used when view type is `gamelist` and `systemNameSuffix` is `true`
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the carousel are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the carousel will be dimmed to black and elements above the carousel will be faded to transparent.
-    - This property applies when view type is `system`
+    - This property can be used when view type is `system`
     - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
@@ -1520,16 +1520,16 @@ Properties:
     - Default is `1.5`
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). This assumes a fallback to text is made.
-    - This property applies when view type is `gamelist`
+    - This property can be used when view type is `gamelist`
     - Default is `true`
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
-    - This property applies when view type is `gamelist` and `systemNameSuffix` is `true`
+    - This property can be used when view type is `gamelist` and `systemNameSuffix` is `true`
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the grid are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the grid will be dimmed to black and elements above the grid will be faded to transparent.
-    - This property applies when view type is `system`
+    - This property can be used when view type is `system`
     - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
@@ -1632,16 +1632,16 @@ Properties:
     - Default is `symbols`
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections).
-    - This property applies when view type is `gamelist`
+    - This property can be used when view type is `gamelist`
     - Default is `true`
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
-    - This property applies when view type is `gamelist` and `systemNameSuffix` is `true`
+    - This property can be used when view type is `gamelist` and `systemNameSuffix` is `true`
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the textlist are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the textlist will be dimmed to black and elements above the textlist will be faded to transparent.
-    - This property applies when view type is `system`
+    - This property can be used when view type is `system`
     - Default is `false`
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
@@ -2113,11 +2113,11 @@ Properties:
     - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `developer`, `publisher`, `genre` or `players` and there is no metadata available for the defined type. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for blank values.
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). If `metadata` has been set to `description` then this property will only apply when inside the root of the grouped custom collections system where a summary of available games for the currently selected collection is displayed.
-    - This property applies when `metadata` has been set to `name` or `description`
+    - This property can be used when `metadata` has been set to `name` or `description`
     - Default is `true`
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
-    - This property applies when `systemNameSuffix` is `true` except if `metadata` has been set to `description` in which case it only applies if `letterCase` is also set to `none`
+    - This property can be used when `systemNameSuffix` is `true` except if `metadata` has been set to `description` in which case it only applies if `letterCase` is also set to `none`
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
 * `metadataElement` - type: BOOLEAN
@@ -2130,8 +2130,9 @@ Properties:
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
 * `container` - type: BOOLEAN
-    - Whether the text should be placed inside a scrollable container. Only available for the `gamelist` view.
-    - Default is `false`
+    - Whether the text should be placed inside a scrollable container.
+    - This property can be used when view type is `gamelist`
+    - Default is `true` if `metadata` is set to `description`, otherwise `false`
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`
