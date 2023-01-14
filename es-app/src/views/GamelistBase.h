@@ -115,6 +115,7 @@ protected:
     bool mIsFolder;
     bool mVideoPlaying;
     bool mLeftRightAvailable;
+    bool mSystemNameSuffix;
 
 private:
 };

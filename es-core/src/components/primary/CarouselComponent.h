@@ -73,6 +73,11 @@ public:
     {
         return mLetterCaseCustomCollections;
     }
+    const bool getSystemNameSuffix() const override { return mSystemNameSuffix; }
+    const LetterCase getLetterCaseSystemNameSuffix() const override
+    {
+        return mLetterCaseSystemNameSuffix;
+    }
 
     void setCancelTransitionsCallback(const std::function<void()>& func) override
     {
@@ -176,6 +181,8 @@ private:
     LetterCase mLetterCaseAutoCollections;
     LetterCase mLetterCaseCustomCollections;
     float mLineSpacing;
+    bool mSystemNameSuffix;
+    LetterCase mLetterCaseSystemNameSuffix;
     bool mFadeAbovePrimary;
 };
 
@@ -233,6 +240,8 @@ CarouselComponent<T>::CarouselComponent()
     , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
     , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
     , mLineSpacing {1.5f}
+    , mSystemNameSuffix {true}
+    , mLetterCaseSystemNameSuffix {LetterCase::UPPERCASE}
     , mFadeAbovePrimary {false}
 {
 }
@@ -1607,6 +1616,27 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else {
             LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
                                "\"letterCaseCustomCollections\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
+        }
+    }
+
+    if (mGamelistView && elem->has("systemNameSuffix"))
+        mSystemNameSuffix = elem->get<bool>("systemNameSuffix");
+
+    if (mGamelistView && properties & LETTER_CASE && elem->has("letterCaseSystemNameSuffix")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseSystemNameSuffix")};
+        if (letterCase == "uppercase") {
+            mLetterCaseSystemNameSuffix = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseSystemNameSuffix = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseSystemNameSuffix = LetterCase::CAPITALIZE;
+        }
+        else {
+            LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                               "\"letterCaseSystemNameSuffix\" for element \""
                             << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
     }

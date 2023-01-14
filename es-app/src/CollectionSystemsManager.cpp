@@ -756,6 +756,9 @@ SystemData* CollectionSystemsManager::getSystemToView(SystemData* sys)
 
 FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* sys)
 {
+    if (sys->getRootFolder()->getParent() == nullptr)
+        return nullptr;
+
     FileData* rootFolder {sys->getRootFolder()};
     FileFilterIndex* idx {rootFolder->getSystem()->getIndex()};
     std::string desc {"This collection is empty"};
@@ -763,7 +766,7 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
     std::vector<FileData*> gamesListRandom;
 
     if (UIModeController::getInstance()->isUIModeKid()) {
-        for (FileData* game : rootFolder->getChildrenListToDisplay()) {
+        for (auto game : rootFolder->getChildrenListToDisplay()) {
             if (game->getKidgame())
                 gamesList.push_back(game);
         }
@@ -781,11 +784,11 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         std::mt19937 engine {randDev()};
         int target;
 
-        for (int i = 0; i < 3; ++i) {
+        for (int i {0}; i < 3; ++i) {
             std::uniform_int_distribution<int> uniform_dist {0, gameCount - 1 - i};
             target = uniform_dist(engine);
             gamesListRandom.push_back(gamesList[target]);
-            std::vector<FileData*>::iterator it {(gamesList.begin() + target)};
+            std::vector<FileData*>::iterator it {gamesList.begin() + target};
             gamesList.erase(it);
             if (gamesList.size() == 0)
                 break;
@@ -796,31 +799,62 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
     }
 
     if (gameCount > 0) {
-        if (Settings::getInstance()->getBool("CollectionShowSystemInfo")) {
+        auto nameSuffix = ViewController::getInstance()
+                              ->getGamelistView(sys->getRootFolder()->getParent()->getSystem())
+                              ->getDescriptionSystemNameSuffix();
+        if (nameSuffix.first) {
+            auto caseConversion = [nameSuffix](std::string name) -> std::string {
+                if (nameSuffix.second == LetterCase::UPPERCASE)
+                    return Utils::String::toUpper(name);
+                else if (nameSuffix.second == LetterCase::CAPITALIZE)
+                    return Utils::String::toCapitalized(name);
+                else
+                    return Utils::String::toLower(name);
+            };
             switch (gameCount) {
                 case 1: {
-                    desc = "This collection contains 1 game: '" +
-                           gamesList[0]->metadata.get("name") + " [" +
-                           gamesList[0]->getSourceFileData()->getSystem()->getName() + "]'";
+                    desc = "This collection contains 1 game: '";
+                    desc.append(gamesList[0]->metadata.get("name"))
+                        .append(" [")
+                        .append(caseConversion(
+                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
+                        .append("]'");
                     break;
                 }
                 case 2: {
-                    desc = "This collection contains 2 games: '" +
-                           gamesList[0]->metadata.get("name") + " [" +
-                           gamesList[0]->getSourceFileData()->getSystem()->getName() + "]' and '" +
-                           gamesList[1]->metadata.get("name") + " [" +
-                           gamesList[1]->getSourceFileData()->getSystem()->getName() + "]'";
+                    desc = "This collection contains 2 games: '";
+                    desc.append(gamesList[0]->metadata.get("name"))
+                        .append(" [")
+                        .append(caseConversion(
+                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
+                        .append("]' and '")
+                        .append(gamesList[1]->metadata.get("name"))
+                        .append(" [")
+                        .append(caseConversion(
+                            gamesList[1]->getSourceFileData()->getSystem()->getName()))
+                        .append("]'");
                     break;
                 }
                 default: {
-                    desc = "This collection contains " + std::to_string(gameCount) + " games: '" +
-                           gamesList[0]->metadata.get("name") + " [" +
-                           gamesList[0]->getSourceFileData()->getSystem()->getName() + "]', '" +
-                           gamesList[1]->metadata.get("name") + " [" +
-                           gamesList[1]->getSourceFileData()->getSystem()->getName() + "]' and '" +
-                           gamesList[2]->metadata.get("name") + " [" +
-                           gamesList[2]->getSourceFileData()->getSystem()->getName() + "]'";
-                    desc += (gameCount == 3 ? "" : ", among others");
+                    desc = "This collection contains ";
+                    desc.append(std::to_string(gameCount))
+                        .append(" games: '")
+                        .append(gamesList[0]->metadata.get("name"))
+                        .append(" [")
+                        .append(caseConversion(
+                            gamesList[0]->getSourceFileData()->getSystem()->getName()))
+                        .append("]', '")
+                        .append(gamesList[1]->metadata.get("name"))
+                        .append(" [")
+                        .append(caseConversion(
+                            gamesList[1]->getSourceFileData()->getSystem()->getName()))
+                        .append("]' and '")
+                        .append(gamesList[2]->metadata.get("name"))
+                        .append(" [")
+                        .append(caseConversion(
+                            gamesList[2]->getSourceFileData()->getSystem()->getName()))
+                        .append("]'");
+                    desc.append(gameCount == 3 ? "" : ", among others");
                     break;
                 }
             }
@@ -828,31 +862,40 @@ FileData* CollectionSystemsManager::updateCollectionFolderMetadata(SystemData* s
         else {
             switch (gameCount) {
                 case 1: {
-                    desc = "This collection contains 1 game: '" +
-                           gamesList[0]->metadata.get("name") + " '";
+                    desc = "This collection contains 1 game: '";
+                    desc.append(gamesList[0]->metadata.get("name")).append("'");
                     break;
                 }
                 case 2: {
-                    desc = "This collection contains 2 games: '" +
-                           gamesList[0]->metadata.get("name") + "' and '" +
-                           gamesList[1]->metadata.get("name") + "'";
+                    desc = "This collection contains 2 games: '";
+                    desc.append(gamesList[0]->metadata.get("name"))
+                        .append("' and '")
+                        .append(gamesList[1]->metadata.get("name"))
+                        .append("'");
                     break;
                 }
                 default: {
-                    desc = "This collection contains " + std::to_string(gameCount) + " games: '" +
-                           gamesList[0]->metadata.get("name") + "', '" +
-                           gamesList[1]->metadata.get("name") + "' and '" +
-                           gamesList[2]->metadata.get("name") + "'";
-                    desc += (gameCount == 3 ? "" : ", among others");
+                    desc = "This collection contains ";
+                    desc.append(std::to_string(gameCount))
+                        .append(" games: '")
+                        .append(gamesList[0]->metadata.get("name"))
+                        .append("', '")
+                        .append(gamesList[1]->metadata.get("name"))
+                        .append("' and '")
+                        .append(gamesList[2]->metadata.get("name"))
+                        .append("'");
+                    desc.append(gameCount == 3 ? "" : ", among others");
                     break;
                 }
             }
         }
     }
 
-    if (idx->isFiltered())
-        desc += "\n\n'" + rootFolder->getSystem()->getFullName() +
-                "' is filtered so there may be more games available";
+    if (idx->isFiltered()) {
+        desc.append("\n\n'")
+            .append(rootFolder->getSystem()->getFullName())
+            .append("' is filtered so there may be more games available");
+    }
 
     rootFolder->metadata.set("desc", desc);
 
@@ -1139,7 +1182,7 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
                     if (!(*gameIt)->getCountAsGame())
                         continue;
 
-                    CollectionFileData* newGame = new CollectionFileData(*gameIt, newSys);
+                    CollectionFileData* newGame {new CollectionFileData(*gameIt, newSys)};
                     rootFolder->addChild(newGame);
                     index->addToIndex(newGame);
                 }

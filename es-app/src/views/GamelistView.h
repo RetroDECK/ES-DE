@@ -18,6 +18,8 @@ public:
     GamelistView(FileData* root);
     ~GamelistView();
 
+    const std::pair<bool, LetterCase> getDescriptionSystemNameSuffix() const;
+
     // Called when a FileData* is added, has its metadata changed, or is removed.
     void onFileChanged(FileData* file, bool reloadGamelist) override;
     void onShow() override;

@@ -77,6 +77,8 @@ public:
     std::shared_ptr<Font> getFont() const override { return mFont; }
     Alignment getHorizontalAlignment() { return mHorizontalAlignment; }
     Alignment getVerticalAlignment() { return mVerticalAlignment; }
+    const bool getSystemNameSuffix() const { return mSystemNameSuffix; }
+    const LetterCase getLetterCaseSystemNameSuffix() const { return mLetterCaseSystemNameSuffix; }
 
     int getTextCacheGlyphHeight() override
     {
@@ -108,6 +110,8 @@ private:
     float mColorOpacity;
     float mBgColorOpacity;
     bool mRenderBackground;
+    bool mSystemNameSuffix;
+    LetterCase mLetterCaseSystemNameSuffix;
 
     bool mUppercase;
     bool mLowercase;

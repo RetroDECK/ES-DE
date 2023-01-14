@@ -20,6 +20,8 @@ TextComponent::TextComponent()
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
+    , mSystemNameSuffix {false}
+    , mLetterCaseSystemNameSuffix {LetterCase::UPPERCASE}
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
@@ -49,6 +51,8 @@ TextComponent::TextComponent(const std::string& text,
     , mColorOpacity {1.0f}
     , mBgColorOpacity {0.0f}
     , mRenderBackground {false}
+    , mSystemNameSuffix {false}
+    , mLetterCaseSystemNameSuffix {LetterCase::UPPERCASE}
     , mUppercase {false}
     , mLowercase {false}
     , mCapitalize {false}
@@ -465,6 +469,12 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                             mDefaultValue = defaultValue;
                     }
                 }
+                if (mThemeMetadata == "name" || mThemeMetadata == "description") {
+                    if (elem->has("systemNameSuffix"))
+                        mSystemNameSuffix = elem->get<bool>("systemNameSuffix");
+                    else
+                        mSystemNameSuffix = true;
+                }
                 break;
             }
         }
@@ -472,6 +482,24 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             LOG(LogError)
                 << "TextComponent: Invalid theme configuration, property <metadata> defined as \""
                 << metadata << "\"";
+        }
+    }
+
+    if (properties & LETTER_CASE && elem->has("letterCaseSystemNameSuffix")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseSystemNameSuffix")};
+        if (letterCase == "uppercase") {
+            mLetterCaseSystemNameSuffix = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseSystemNameSuffix = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseSystemNameSuffix = LetterCase::CAPITALIZE;
+        }
+        else {
+            LOG(LogWarning) << "TextComponent: Invalid theme configuration, property "
+                               "\"letterCaseSystemNameSuffix\" for element \""
+                            << element.substr(5) << "\" defined as \"" << letterCase << "\"";
         }
     }
 

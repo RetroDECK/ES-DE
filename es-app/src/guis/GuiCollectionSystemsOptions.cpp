@@ -368,22 +368,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             setInvalidateCachedBackground();
         }
     });
-
-    // Show system names in collections.
-    auto collection_show_system_info = std::make_shared<SwitchComponent>();
-    collection_show_system_info->setState(
-        Settings::getInstance()->getBool("CollectionShowSystemInfo"));
-    addWithLabel("SHOW SYSTEM NAMES IN COLLECTIONS", collection_show_system_info);
-    addSaveFunc([this, collection_show_system_info] {
-        if (collection_show_system_info->getState() !=
-            Settings::getInstance()->getBool("CollectionShowSystemInfo")) {
-            Settings::getInstance()->setBool("CollectionShowSystemInfo",
-                                             collection_show_system_info->getState());
-            setNeedsSaving();
-            setNeedsReloading();
-            setInvalidateCachedBackground();
-        }
-    });
 }
 
 void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)

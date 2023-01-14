@@ -22,7 +22,6 @@
 
 FileFilterIndex::FileFilterIndex()
     : mFilterByText {false}
-    , mTextRemoveSystem {false}
     , mFilterByRatings {false}
     , mFilterByDeveloper {false}
     , mFilterByPublisher {false}
@@ -404,17 +403,10 @@ bool FileFilterIndex::showFile(FileData* game)
     bool keepGoing = false;
 
     // Name filters take precedence over all other filters, so if there is no match for
-    // the game name, then always return false. If we're in a collection system and the option
-    // to show the system name has been enabled, then exclude the system name that is encapsulated
-    // in [] from the search string.
-    if (mTextFilter != "" && mTextRemoveSystem &&
-        !(Utils::String::toUpper(game->getName().substr(0, game->getName().find_last_of("[")))
-              .find(Utils::String::toUpper(mTextFilter)) != std::string::npos)) {
-        return false;
-    }
-    else if (mTextFilter != "" &&
-             !(Utils::String::toUpper(game->getName()).find(Utils::String::toUpper(mTextFilter)) !=
-               std::string::npos)) {
+    // the game name, then always return false.
+    if (mTextFilter != "" &&
+        !(Utils::String::toUpper(game->getName()).find(Utils::String::toUpper(mTextFilter)) !=
+          std::string::npos)) {
         return false;
     }
 

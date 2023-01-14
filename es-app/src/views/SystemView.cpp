@@ -1240,8 +1240,35 @@ void SystemView::updateGameSelectors()
         std::vector<FileData*> games {gameSelector->getGames()};
         if (games.size() > gameSelectorEntry) {
             const std::string metadata {text->getThemeMetadata()};
-            if (metadata == "name")
-                text->setValue(games.at(gameSelectorEntry)->metadata.get("name"));
+            if (metadata == "name") {
+                if (mPrimary->getSelected()->isCollection() && text->getSystemNameSuffix()) {
+                    const LetterCase letterCase {text->getLetterCaseSystemNameSuffix()};
+                    std::string suffix {" ["};
+                    if (letterCase == LetterCase::UPPERCASE) {
+                        suffix.append(Utils::String::toUpper(games.at(gameSelectorEntry)
+                                                                 ->getSourceFileData()
+                                                                 ->getSystem()
+                                                                 ->getName()));
+                    }
+                    else if (letterCase == LetterCase::CAPITALIZE) {
+                        suffix.append(Utils::String::toCapitalized(games.at(gameSelectorEntry)
+                                                                       ->getSourceFileData()
+                                                                       ->getSystem()
+                                                                       ->getName()));
+                    }
+                    else {
+                        suffix.append(games.at(gameSelectorEntry)
+                                          ->getSourceFileData()
+                                          ->getSystem()
+                                          ->getName());
+                    }
+                    suffix.append("]");
+                    text->setValue(games.at(gameSelectorEntry)->metadata.get("name") + suffix);
+                }
+                else {
+                    text->setValue(games.at(gameSelectorEntry)->metadata.get("name"));
+                }
+            }
             if (metadata == "description")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("desc"));
             if (metadata == "rating")

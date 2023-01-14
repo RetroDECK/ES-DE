@@ -21,7 +21,6 @@
 #include "Window.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/PlatformUtil.h"
-#include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
@@ -71,23 +70,6 @@ FileData::~FileData()
 
     if (mParent)
         mParent->removeChild(this);
-}
-
-std::string FileData::getDisplayName() const
-{
-    const std::string& stem {Utils::FileSystem::getStem(mPath)};
-    return stem;
-}
-
-std::string FileData::getCleanName() const
-{
-    return Utils::String::removeParenthesis(this->getDisplayName());
-}
-
-const std::string& FileData::getName()
-{
-    // Return metadata name.
-    return metadata.get("name");
 }
 
 const std::string& FileData::getSortName()
@@ -1965,7 +1947,6 @@ CollectionFileData::CollectionFileData(FileData* file, SystemData* system)
 {
     // We use this constructor to create a clone of the filedata, and change its system.
     mSourceFileData = file->getSourceFileData();
-    refreshMetadata();
     mParent = nullptr;
     metadata = mSourceFileData->metadata;
     mSystemName = mSourceFileData->getSystem()->getName();
@@ -1977,26 +1958,4 @@ CollectionFileData::~CollectionFileData()
     if (mParent)
         mParent->removeChild(this);
     mParent = nullptr;
-}
-
-void CollectionFileData::refreshMetadata()
-{
-    metadata = mSourceFileData->metadata;
-    mDirty = true;
-}
-
-const std::string& CollectionFileData::getName()
-{
-    if (mDirty) {
-        mCollectionFileName = mSourceFileData->metadata.get("name");
-        mCollectionFileName.append(" [")
-            .append(Utils::String::toUpper(mSourceFileData->getSystem()->getName()))
-            .append("]");
-        mDirty = false;
-    }
-
-    if (Settings::getInstance()->getBool("CollectionShowSystemInfo"))
-        return mCollectionFileName;
-
-    return mSourceFileData->metadata.get("name");
 }

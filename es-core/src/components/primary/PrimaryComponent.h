@@ -47,6 +47,8 @@ public:
     virtual const LetterCase getLetterCase() const = 0;
     virtual const LetterCase getLetterCaseAutoCollections() const = 0;
     virtual const LetterCase getLetterCaseCustomCollections() const = 0;
+    virtual const bool getSystemNameSuffix() const = 0;
+    virtual const LetterCase getLetterCaseSystemNameSuffix() const = 0;
 
     // Functions used by some primary components.
     virtual void onDemandTextureLoad() {}

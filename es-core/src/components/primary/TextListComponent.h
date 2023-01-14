@@ -84,6 +84,11 @@ public:
     {
         return mLetterCaseCustomCollections;
     }
+    const bool getSystemNameSuffix() const override { return mSystemNameSuffix; }
+    const LetterCase getLetterCaseSystemNameSuffix() const override
+    {
+        return mLetterCaseSystemNameSuffix;
+    }
 
 private:
     void onShow() override { mLoopTime = 0; }
@@ -145,6 +150,8 @@ private:
     float mLineSpacing;
     std::string mIndicators;
     std::string mCollectionIndicators;
+    bool mSystemNameSuffix;
+    LetterCase mLetterCaseSystemNameSuffix;
     bool mFadeAbovePrimary;
 };
 
@@ -181,6 +188,8 @@ TextListComponent<T>::TextListComponent()
     , mLineSpacing {1.5f}
     , mIndicators {"symbols"}
     , mCollectionIndicators {"symbols"}
+    , mSystemNameSuffix {true}
+    , mLetterCaseSystemNameSuffix {LetterCase::UPPERCASE}
     , mFadeAbovePrimary {false}
 {
 }
@@ -708,6 +717,27 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                "\"collectionIndicators\" for element \""
                             << element.substr(9) << "\" defined as \"" << collectionIndicators
                             << "\"";
+        }
+    }
+
+    if (mGamelistView && elem->has("systemNameSuffix"))
+        mSystemNameSuffix = elem->get<bool>("systemNameSuffix");
+
+    if (mGamelistView && properties & LETTER_CASE && elem->has("letterCaseSystemNameSuffix")) {
+        const std::string& letterCase {elem->get<std::string>("letterCaseSystemNameSuffix")};
+        if (letterCase == "uppercase") {
+            mLetterCaseSystemNameSuffix = LetterCase::UPPERCASE;
+        }
+        else if (letterCase == "lowercase") {
+            mLetterCaseSystemNameSuffix = LetterCase::LOWERCASE;
+        }
+        else if (letterCase == "capitalize") {
+            mLetterCaseSystemNameSuffix = LetterCase::CAPITALIZE;
+        }
+        else {
+            LOG(LogWarning) << "TextListComponent: Invalid theme configuration, property "
+                               "\"letterCaseSystemNameSuffix\" for element \""
+                            << element.substr(9) << "\" defined as \"" << letterCase << "\"";
         }
     }
 

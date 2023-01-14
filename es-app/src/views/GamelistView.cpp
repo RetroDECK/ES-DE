@@ -36,6 +36,25 @@ GamelistView::~GamelistView()
     mThemeExtras.clear();
 }
 
+const std::pair<bool, LetterCase> GamelistView::getDescriptionSystemNameSuffix() const
+{
+    if (mLegacyMode)
+        return std::make_pair(true, LetterCase::UPPERCASE);
+
+    bool suffix {false};
+    LetterCase letterCase {LetterCase::UPPERCASE};
+
+    for (auto& text : mContainerTextComponents) {
+        if (text->getThemeMetadata() == "description" && text->getSystemNameSuffix()) {
+            suffix = true;
+            letterCase = text->getLetterCaseSystemNameSuffix();
+            break;
+        }
+    }
+
+    return std::make_pair(suffix, letterCase);
+}
+
 void GamelistView::onFileChanged(FileData* file, bool reloadGamelist)
 {
     if (reloadGamelist) {
@@ -378,6 +397,8 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
         mPrimary->applyTheme(theme, "gamelist", "", ALL);
         addChild(mPrimary);
     }
+
+    mSystemNameSuffix = mPrimary->getSystemNameSuffix();
 
     populateList(mRoot->getChildrenListToDisplay(), mRoot);
 
@@ -893,7 +914,25 @@ void GamelistView::updateView(const CursorState& state)
                 continue;
             }
 
-            text->setValue(getMetadataValue());
+            if (metadata == "name" && file->getSystem()->isCollection() &&
+                text->getSystemNameSuffix()) {
+                const LetterCase letterCase {text->getLetterCaseSystemNameSuffix()};
+                std::string suffix {" ["};
+                if (letterCase == LetterCase::UPPERCASE)
+                    suffix.append(
+                        Utils::String::toUpper(file->getSourceFileData()->getSystem()->getName()));
+                else if (letterCase == LetterCase::CAPITALIZE)
+                    suffix.append(Utils::String::toCapitalized(
+                        file->getSourceFileData()->getSystem()->getName()));
+                else
+                    suffix.append(file->getSourceFileData()->getSystem()->getName());
+                suffix.append("]");
+
+                text->setValue(getMetadataValue() + suffix);
+            }
+            else {
+                text->setValue(getMetadataValue());
+            }
         }
 
         for (auto& date : mDateTimeComponents) {

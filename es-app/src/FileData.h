@@ -13,6 +13,7 @@
 
 #include "MetaData.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 #include <functional>
 #include <unordered_map>
@@ -38,8 +39,19 @@ public:
 
     virtual ~FileData();
 
-    virtual const std::string& getName();
+    const std::string& getName() { return metadata.get("name"); }
     const std::string& getSortName();
+    // Returns our best guess at the "real" name for this file.
+    std::string getDisplayName() const
+    {
+        const std::string& stem {Utils::FileSystem::getStem(mPath)};
+        return stem;
+    }
+    std::string getCleanName() const
+    {
+        return Utils::String::removeParenthesis(this->getDisplayName());
+    }
+
     const bool getFavorite();
     const bool getKidgame();
     const bool getHidden();
@@ -108,12 +120,6 @@ public:
     virtual FileData* getSourceFileData() { return this; }
     const std::string& getSystemName() const { return mSystemName; }
 
-    // Returns our best guess at the "real" name for this file.
-    std::string getDisplayName() const;
-
-    // As above, but also remove parenthesis.
-    std::string getCleanName() const;
-
     void launchGame();
     const std::string findEmulatorPath(std::string& command);
 
@@ -173,15 +179,8 @@ class CollectionFileData : public FileData
 public:
     CollectionFileData(FileData* file, SystemData* system);
     ~CollectionFileData();
-    const std::string& getName();
-    void refreshMetadata();
     FileData* getSourceFileData() { return mSourceFileData; }
     std::string getKey() { return getFullPath(); }
-
-private:
-    // Needs to be updated when metadata changes.
-    std::string mCollectionFileName;
-    bool mDirty;
 };
 
 #endif // ES_APP_FILE_DATA_H

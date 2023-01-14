@@ -235,7 +235,6 @@ void Settings::setDefaults()
     mStringMap["CollectionCustomGrouping"] = {"unthemed", "unthemed"};
     mBoolMap["FavFirstCustom"] = {false, false};
     mBoolMap["FavStarCustom"] = {false, false};
-    mBoolMap["CollectionShowSystemInfo"] = {true, true};
 
     // Other settings.
     mStringMap["MediaDirectory"] = {"", ""};

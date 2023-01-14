@@ -32,6 +32,7 @@ GamelistBase::GamelistBase(FileData* root)
     , mIsFolder {false}
     , mVideoPlaying {false}
     , mLeftRightAvailable {true}
+    , mSystemNameSuffix {false}
 {
     setSize(Renderer::getScreenWidth(), Renderer::getScreenHeight());
 }
@@ -552,7 +553,8 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     mFirstGameEntry = nullptr;
     bool favoriteStar {true};
     bool isEditing {false};
-    bool customCollection {false};
+    bool isCollection {false};
+    bool isCustomCollection {false};
     std::string editingCollection;
     std::string inCollectionPrefix;
     LetterCase letterCase {LetterCase::NONE};
@@ -563,10 +565,11 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     }
 
     if (files.size() > 0) {
-        customCollection = files.front()->getSystem()->isCustomCollection();
+        isCollection = files.front()->getSystem()->isCollection();
+        isCustomCollection = files.front()->getSystem()->isCustomCollection();
         // Read the settings that control whether a unicode star character should be added
         // as a prefix to the game name.
-        if (customCollection)
+        if (isCustomCollection)
             favoriteStar = Settings::getInstance()->getBool("FavStarCustom");
         else
             favoriteStar = Settings::getInstance()->getBool("FavoritesStar");
@@ -574,6 +577,25 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
 
     if (mPrimary != nullptr)
         mPrimary->clear();
+
+    auto nameSuffixFunc = [this](std::vector<FileData*>::const_iterator it, std::string& name) {
+        if ((*it)->getType() == GAME) {
+            const LetterCase letterCase {mPrimary->getLetterCaseSystemNameSuffix()};
+            name.append(" [");
+            if (letterCase == LetterCase::UPPERCASE) {
+                name.append(
+                    Utils::String::toUpper((*it)->getSourceFileData()->getSystem()->getName()));
+            }
+            else if (letterCase == LetterCase::CAPITALIZE) {
+                name.append(Utils::String::toCapitalized(
+                    (*it)->getSourceFileData()->getSystem()->getName()));
+            }
+            else {
+                name.append((*it)->getSourceFileData()->getSystem()->getName());
+            }
+            name.append("]");
+        }
+    };
 
     auto theme = mRoot->getSystem()->getTheme();
     std::string name;
@@ -596,7 +618,7 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
             if (!mFirstGameEntry && (*it)->getType() == GAME)
                 mFirstGameEntry = (*it);
 
-            if (customCollection && (*it)->getType() == FOLDER) {
+            if (isCustomCollection && (*it)->getType() == FOLDER) {
                 letterCase = mPrimary->getLetterCaseCustomCollections();
                 if (letterCase == LetterCase::UNDEFINED)
                     letterCase = mPrimary->getLetterCase();
@@ -617,6 +639,9 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 else if (letterCase == LetterCase::CAPITALIZE)
                     carouselEntry.name = Utils::String::toCapitalized(carouselEntry.name);
 
+                if (isCollection && mSystemNameSuffix)
+                    nameSuffixFunc(it, carouselEntry.name);
+
                 if (defaultImage != "")
                     carouselEntry.data.defaultImagePath = defaultImage;
 
@@ -633,6 +658,9 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                     gridEntry.name = Utils::String::toLower(gridEntry.name);
                 else if (letterCase == LetterCase::CAPITALIZE)
                     gridEntry.name = Utils::String::toCapitalized(gridEntry.name);
+
+                if (isCollection && mSystemNameSuffix)
+                    nameSuffixFunc(it, gridEntry.name);
 
                 if (defaultImage != "")
                     gridEntry.data.defaultImagePath = defaultImage;
@@ -697,6 +725,9 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                     name = Utils::String::toLower(name);
                 else if (letterCase == LetterCase::CAPITALIZE)
                     name = Utils::String::toCapitalized(name);
+
+                if (isCollection && mSystemNameSuffix)
+                    nameSuffixFunc(it, name);
 
                 textListEntry.name = name;
                 textListEntry.object = *it;
