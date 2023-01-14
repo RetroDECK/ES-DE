@@ -692,9 +692,9 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/app.xemu.xemu</entry>
             <entry>~/.local/share/flatpak/exports/bin/app.xemu.xemu</entry>
-            <entry>~/Applications/Xemu*.AppImage</entry>
-            <entry>~/.local/bin/Xemu*.AppImage</entry>
-            <entry>~/bin/Xemu*.AppImage</entry>
+            <entry>~/Applications/xemu*.AppImage</entry>
+            <entry>~/.local/bin/xemu*.AppImage</entry>
+            <entry>~/bin/xemu*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">
