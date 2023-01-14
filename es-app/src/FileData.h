@@ -96,6 +96,8 @@ public:
 
     const bool getDeletionFlag() const { return mDeletionFlag; }
     void setDeletionFlag(bool setting) { mDeletionFlag = setting; }
+    const bool isPlaceHolder() const { return mType == PLACEHOLDER; }
+    void refreshMetadata() { metadata = mSourceFileData->metadata; }
 
     const std::vector<FileData*>& getChildrenListToDisplay();
     std::vector<FileData*> getFilesRecursive(unsigned int typeMask,
@@ -107,10 +109,6 @@ public:
 
     void addChild(FileData* file); // Error if mType != FOLDER
     void removeChild(FileData* file); // Error if mType != FOLDER
-
-    const bool isPlaceHolder() const { return mType == PLACEHOLDER; }
-
-    virtual void refreshMetadata() { return; }
 
     virtual std::string getKey() { return getFileName(); }
     const bool isArcadeAsset() const;
