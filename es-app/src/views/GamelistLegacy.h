@@ -218,6 +218,7 @@ void GamelistView::legacyOnThemeChanged(const std::shared_ptr<ThemeData>& theme)
         mPrimary = mTextList.get();
     }
 
+    mSystemNameSuffix = true;
     legacyPopulateFields();
 
     using namespace ThemeFlags;
