@@ -305,7 +305,16 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 }
             }
             else if (element.second.type == "text") {
-                if (element.second.has("container") && element.second.get<bool>("container")) {
+                // Set as container by default if metadata type is "description".
+                bool container {false};
+                if (element.second.has("container")) {
+                    container = element.second.get<bool>("container");
+                }
+                else if (element.second.has("metadata") &&
+                         element.second.get<std::string>("metadata") == "description") {
+                    container = true;
+                }
+                if (container) {
                     mContainerComponents.push_back(std::make_unique<ScrollableContainer>());
                     mContainerComponents.back()->setDefaultZIndex(40.0f);
                     mContainerTextComponents.push_back(std::make_unique<TextComponent>());
