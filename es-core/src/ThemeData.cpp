@@ -1502,6 +1502,8 @@ void ThemeData::parseIncludes(const pugi::xml_node& root)
         if (!theme)
             throw error << ": Missing <theme> tag";
 
+        if (!mLegacyTheme)
+            parseTransitions(theme);
         parseVariables(theme);
         if (!mLegacyTheme)
             parseColorSchemes(theme);
@@ -1578,21 +1580,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
                                                                   mOverrideVariant};
 
             if (variant == viewKey || viewKey == "all") {
-                const pugi::xml_node& transitions {node.child("transitions")};
-                if (transitions != nullptr) {
-                    const std::string& transitionsValue {transitions.text().as_string()};
-                    if (std::find_if(mCurrentThemeSet->second.capabilities.transitions.cbegin(),
-                                     mCurrentThemeSet->second.capabilities.transitions.cend(),
-                                     [&transitionsValue](const ThemeTransitions transitions) {
-                                         return transitions.name == transitionsValue;
-                                     }) ==
-                        mCurrentThemeSet->second.capabilities.transitions.cend()) {
-                        throw error << ": <transitions> value \"" << transitionsValue
-                                    << "\" is not matching any defined transitions";
-                    }
-                    mVariantDefinedTransitions = transitionsValue;
-                }
-
+                parseTransitions(node);
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseIncludes(node);
@@ -1683,6 +1671,27 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
                 parseViews(node);
             }
         }
+    }
+}
+
+void ThemeData::parseTransitions(const pugi::xml_node& root)
+{
+    ThemeException error;
+    error << "ThemeData::parseTransitions(): ";
+    error.setFiles(mPaths);
+
+    const pugi::xml_node& transitions {root.child("transitions")};
+    if (transitions != nullptr) {
+        const std::string& transitionsValue {transitions.text().as_string()};
+        if (std::find_if(mCurrentThemeSet->second.capabilities.transitions.cbegin(),
+                         mCurrentThemeSet->second.capabilities.transitions.cend(),
+                         [&transitionsValue](const ThemeTransitions transitions) {
+                             return transitions.name == transitionsValue;
+                         }) == mCurrentThemeSet->second.capabilities.transitions.cend()) {
+            throw error << ": <transitions> value \"" << transitionsValue
+                        << "\" is not matching any defined transitions";
+        }
+        mVariantDefinedTransitions = transitionsValue;
     }
 }
 

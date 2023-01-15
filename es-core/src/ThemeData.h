@@ -297,6 +297,7 @@ private:
     void parseVariants(const pugi::xml_node& root);
     void parseColorSchemes(const pugi::xml_node& root);
     void parseAspectRatios(const pugi::xml_node& root);
+    void parseTransitions(const pugi::xml_node& root);
     void parseVariables(const pugi::xml_node& root);
     void parseViews(const pugi::xml_node& root);
     void parseView(const pugi::xml_node& root, ThemeView& view);
