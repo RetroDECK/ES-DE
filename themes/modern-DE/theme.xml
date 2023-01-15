@@ -196,6 +196,13 @@
             <text>${system.fullName.customCollections}</text>
             <letterCase>none</letterCase>
         </text>
+        <text name="customCollectionsHeader">
+            <pos>0.035 0.095</pos>
+            <size>0.743 0.031</size>
+            <fontPath>${mainFont}</fontPath>
+            <fontSize>0.02</fontSize>
+            <color>${secondaryColor}</color>
+        </text>
         <gamelistinfo name="gamelistInfo">
             <pos>0.966 0.065</pos>
             <size>0.2 0.031</size>
