@@ -439,7 +439,20 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (properties & METADATA && elem->has("systemdata")) {
         mThemeSystemdata = "";
-        const std::string& systemdata {elem->get<std::string>("systemdata")};
+        std::string systemdata {elem->get<std::string>("systemdata")};
+        if (systemdata == "gamecount_games") {
+            systemdata = "gamecountGames";
+            LOG(LogWarning) << "TextComponent: Property value \"gamecount_games\" has been "
+                               "deprecated and will be removed in a future release, use "
+                               "\"gamecountGames\" instead";
+        }
+        else if (systemdata == "gamecount_favorites") {
+            systemdata = "gamecountFavorites";
+            LOG(LogWarning) << "TextComponent: Property value \"gamecount_favorites\" has been "
+                               "deprecated and will be removed in a future release, use "
+                               "\"gamecountFavorites\" instead";
+        }
+
         for (auto& type : supportedSystemdataTypes) {
             if (type == systemdata) {
                 mThemeSystemdata = type;
@@ -453,7 +466,16 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (properties & METADATA && elem->has("metadata")) {
+    bool systemdataAndMetadata {false};
+
+    if (elem->has("systemdata") && elem->has("metadata")) {
+        systemdataAndMetadata = true;
+        LOG(LogWarning) << "TextComponent: Invalid theme configuration, element \""
+                        << element.substr(5)
+                        << "\" has both \"systemdata\" and \"metadata\" properties defined";
+    }
+
+    if (!systemdataAndMetadata && properties & METADATA && elem->has("metadata")) {
         mThemeMetadata = "";
         const std::string& metadata {elem->get<std::string>("metadata")};
 

@@ -96,12 +96,15 @@ private:
     void onColorChanged();
 
     static inline std::vector<std::string> supportedSystemdataTypes {
-        "name", "fullname", "gamecount", "gamecount_games", "gamecount_favorites"};
+        "name", "fullname", "gamecount", "gamecountGames", "gamecountFavorites"};
 
     static inline std::vector<std::string> supportedMetadataTypes {
-        "name",   "description", "rating",     "developer",  "publisher",
-        "genre",  "players",     "favorite",   "completed",  "kidgame",
-        "broken", "playcount",   "controller", "altemulator"};
+        "name",           "description",      "rating",
+        "developer",      "publisher",        "genre",
+        "players",        "favorite",         "completed",
+        "kidgame",        "broken",           "playcount",
+        "controller",     "altemulator",      "systemName",
+        "systemFullname", "sourceSystemName", "sourceSystemFullname"};
 
     Renderer* mRenderer;
     std::string mDefaultValue;

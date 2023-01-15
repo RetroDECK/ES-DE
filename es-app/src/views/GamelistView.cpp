@@ -346,7 +346,10 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mTextComponents.back()->setDefaultZIndex(40.0f);
                     mTextComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
                     if (mTextComponents.back()->getThemeOpacity() != 0.0f) {
-                        if (mTextComponents.back()->getThemeMetadata() != "")
+                        const std::string& metadata {mTextComponents.back()->getThemeMetadata()};
+                        if (metadata != "" && metadata != "systemName" &&
+                            metadata != "systemFullname" && metadata != "sourceSystemName" &&
+                            metadata != "sourceSystemFullname")
                             mTextComponents.back()->setScrollHide(true);
                         else if (mTextComponents.back()->getMetadataElement())
                             mTextComponents.back()->setScrollHide(true);
@@ -581,7 +584,11 @@ void GamelistView::updateView(const CursorState& state)
 
     if (hideMetaDataFields) {
         for (auto& text : mTextComponents) {
-            if (text->getMetadataElement() || text->getThemeMetadata() != "")
+            if (text->getMetadataElement() ||
+                (text->getThemeMetadata() != "" && text->getThemeMetadata() != "systemName" &&
+                 text->getThemeMetadata() != "systemFullname" &&
+                 text->getThemeMetadata() != "sourceSystemName" &&
+                 text->getThemeMetadata() != "sourceSystemFullname"))
                 text->setVisible(false);
         }
         for (auto& date : mDateTimeComponents)
@@ -884,6 +891,14 @@ void GamelistView::updateView(const CursorState& state)
                 return file->metadata.get("playcount");
             else if (metadata == "altemulator")
                 return file->metadata.get("altemulator");
+            else if (metadata == "systemName")
+                return file->getSystem()->getName();
+            else if (metadata == "systemFullname")
+                return file->getSystem()->getFullName();
+            else if (metadata == "sourceSystemName")
+                return file->getSourceFileData()->getSystem()->getName();
+            else if (metadata == "sourceSystemFullname")
+                return file->getSourceFileData()->getSystem()->getFullName();
             else
                 return metadata;
         };
@@ -911,6 +926,13 @@ void GamelistView::updateView(const CursorState& state)
             metadata = text->getThemeMetadata();
             if (metadata == "")
                 continue;
+            if ((file->getSystem()->isCustomCollection() &&
+                 file->getPath() == file->getSystem()->getName()) &&
+                (metadata == "systemName" || metadata == "systemFullname" ||
+                 metadata == "sourceSystemName" || metadata == "sourceSystemFullname")) {
+                text->setValue("");
+                continue;
+            }
 
             if (metadata == "rating") {
                 text->setValue(RatingComponent::getRatingValue(file->metadata.get("rating")));

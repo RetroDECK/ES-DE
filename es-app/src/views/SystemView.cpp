@@ -895,13 +895,13 @@ void SystemView::updateGameCount()
             if (gameCount->getThemeSystemdata() == "gamecount") {
                 gameCount->setValue(ss.str());
             }
-            else if (gameCount->getThemeSystemdata() == "gamecount_games") {
+            else if (gameCount->getThemeSystemdata() == "gamecountGames") {
                 if (games)
                     gameCount->setValue(ssGames.str());
                 else
                     gameCount->setValue(ss.str());
             }
-            else if (gameCount->getThemeSystemdata() == "gamecount_favorites") {
+            else if (gameCount->getThemeSystemdata() == "gamecountFavorites") {
                 gameCount->setValue(ssFavorites.str());
             }
             else {
@@ -1269,36 +1269,46 @@ void SystemView::updateGameSelectors()
                     text->setValue(games.at(gameSelectorEntry)->metadata.get("name"));
                 }
             }
-            if (metadata == "description")
+            else if (metadata == "description")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("desc"));
-            if (metadata == "rating")
+            else if (metadata == "rating")
                 text->setValue(RatingComponent::getRatingValue(
                     games.at(gameSelectorEntry)->metadata.get("rating")));
-            if (metadata == "developer")
+            else if (metadata == "developer")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("developer"));
-            if (metadata == "publisher")
+            else if (metadata == "publisher")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("publisher"));
-            if (metadata == "genre")
+            else if (metadata == "genre")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("genre"));
-            if (metadata == "players")
+            else if (metadata == "players")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("players"));
-            if (metadata == "favorite")
+            else if (metadata == "favorite")
                 text->setValue(
                     games.at(gameSelectorEntry)->metadata.get("favorite") == "true" ? "yes" : "no");
-            if (metadata == "completed")
+            else if (metadata == "completed")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("completed") == "true" ?
                                    "yes" :
                                    "no");
-            if (metadata == "kidgame")
+            else if (metadata == "kidgame")
                 text->setValue(
                     games.at(gameSelectorEntry)->metadata.get("kidgame") == "true" ? "yes" : "no");
-            if (metadata == "broken")
+            else if (metadata == "broken")
                 text->setValue(
                     games.at(gameSelectorEntry)->metadata.get("broken") == "true" ? "yes" : "no");
-            if (metadata == "playcount")
+            else if (metadata == "playcount")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("playcount"));
-            if (metadata == "altemulator")
+            else if (metadata == "altemulator")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("altemulator"));
+            else if (metadata == "systemName")
+                text->setValue(games.at(gameSelectorEntry)->getSystem()->getName());
+            else if (metadata == "systemFullname")
+                text->setValue(games.at(gameSelectorEntry)->getSystem()->getFullName());
+            else if (metadata == "sourceSystemName")
+                text->setValue(
+                    games.at(gameSelectorEntry)->getSourceFileData()->getSystem()->getName());
+            else if (metadata == "sourceSystemFullname")
+                text->setValue(
+                    games.at(gameSelectorEntry)->getSourceFileData()->getSystem()->getFullName());
         }
         else {
             text->setValue("");
