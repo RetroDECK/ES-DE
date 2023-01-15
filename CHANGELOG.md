@@ -44,6 +44,7 @@
 * (Linux) Added support for the Sega Model 3 (model3) game system by adding the Supermodel standalone emulator
 * (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
 * (Linux) Added support for the mGBA Qt and Snes9x GTK standalone emulators
+* (Linux) Added support for the official xemu AppImage release
 * Added support for the Sega Model 2 (model2) game system on Linux on macOS by adding the MAME - Current RetroArch core
 * Added MAME standalone as an alternative emulator for the model2 system
 * (Windows) Added the MAME - Current RetroArch core as an alternative emulator for the model2 system

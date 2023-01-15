@@ -659,7 +659,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | psx          | DuckStation | duckstation-nogui-x64.AppImage  |
 | psx          | DuckStation | duckstation-qt-x64.AppImage     |
 | switch       | Yuzu        | yuzu*.AppImage                  |
-| xbox         | xemu        | Xemu*.AppImage                  |
+| xbox         | xemu        | xemu*.AppImage                  |
 | wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
 | wiiu         | Cemu        | Cemu*.AppImage                  |
 
