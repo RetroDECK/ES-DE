@@ -58,7 +58,7 @@
             <pos>0.8 0.145</pos>
             <size>0.117 0.056</size>
             <origin>0 0.5</origin>
-            <systemdata>gamecount_games</systemdata>
+            <systemdata>gamecountGames</systemdata>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
             <fontSize>0.035</fontSize>
             <horizontalAlignment>center</horizontalAlignment>
