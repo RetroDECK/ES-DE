@@ -176,9 +176,6 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mCarousel = std::make_unique<CarouselComponent<FileData*>>();
                     if (element.second.has("defaultImage"))
                         mCarousel->setDefaultImage(element.second.get<std::string>("defaultImage"));
-                    // TEMPORARY: Backward compatiblity due to property name changes.
-                    if (element.second.has("defaultItem"))
-                        mCarousel->setDefaultImage(element.second.get<std::string>("defaultItem"));
                     mPrimary = mCarousel.get();
                 }
                 mPrimary->setCursorChangedCallback(

@@ -798,17 +798,11 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    // TEMPORARY: Support for itemType is for backward compatiblity due to property name changes.
-    if (mGamelistView && properties && (elem->has("imageType") || elem->has("itemType"))) {
+    if (mGamelistView && properties && elem->has("imageType")) {
         const std::vector<std::string> supportedImageTypes {
             "marquee",    "cover",       "backcover", "3dbox",  "physicalmedia",
             "screenshot", "titlescreen", "miximage",  "fanart", "none"};
-        std::string imageTypesString;
-
-        if (elem->has("imageType"))
-            imageTypesString = elem->get<std::string>("imageType");
-        else
-            imageTypesString = elem->get<std::string>("itemType");
+        std::string imageTypesString {elem->get<std::string>("imageType")};
 
         for (auto& character : imageTypesString) {
             if (std::isspace(character))

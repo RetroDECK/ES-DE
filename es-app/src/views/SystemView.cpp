@@ -575,14 +575,6 @@ void SystemView::populate()
                             }
                         });
                         if (mCarousel != nullptr || mGrid != nullptr) {
-                            if (mCarousel != nullptr) {
-                                // TEMPORARY: Backward compatiblity due to property name changes.
-                                if (element.second.has("staticItem"))
-                                    imagePath = element.second.get<std::string>("staticItem");
-                                if (element.second.has("defaultItem"))
-                                    defaultImagePath =
-                                        element.second.get<std::string>("defaultItem");
-                            }
                             if (element.second.has("staticImage"))
                                 imagePath = element.second.get<std::string>("staticImage");
                             if (element.second.has("defaultImage"))

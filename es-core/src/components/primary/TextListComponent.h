@@ -685,7 +685,6 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 glm::clamp(elem->get<float>("selectorVerticalOffset"), -1.0f, 1.0f) * scale;
         }
         else if (elem->has("selectorOffsetY")) {
-            // TEMPORARY: This property will only be usable for legacy themes as of 2.0.0-beta
             const float scale {this->mParent ? this->mParent->getSize().y :
                                                Renderer::getScreenHeight()};
             mSelectorVerticalOffset =
