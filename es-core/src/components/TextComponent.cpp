@@ -398,8 +398,9 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
-                               "<horizontalAlignment> defined as \""
-                            << horizontalAlignment << "\"";
+                               "\"horizontalAlignment\" for element \""
+                            << element.substr(5) << "\" defined as \"" << horizontalAlignment
+                            << "\"";
     }
 
     if (properties & ALIGNMENT && elem->has("verticalAlignment")) {
@@ -413,8 +414,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
-                               "<verticalAlignment> defined as \""
-                            << verticalAlignment << "\"";
+                               "\"verticalAlignment\" for element \""
+                            << element.substr(5) << "\" defined as \"" << verticalAlignment << "\"";
     }
 
     // Legacy themes only.
@@ -429,8 +430,8 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         else
             LOG(LogWarning) << componentName
                             << ": Invalid theme configuration, property "
-                               "<alignment> defined as \""
-                            << alignment << "\"";
+                               "\"alignment\" for element \""
+                            << element.substr(5) << "\" defined as \"" << alignment << "\"";
     }
 
     if (properties & TEXT && elem->has("text"))
@@ -446,9 +447,9 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
         }
         if (mThemeSystemdata == "") {
-            LOG(LogError)
-                << "TextComponent: Invalid theme configuration, property <systemdata> defined as \""
-                << systemdata << "\"";
+            LOG(LogError) << "TextComponent: Invalid theme configuration, property "
+                             "\"systemdata\" for element \""
+                          << element.substr(5) << "\" defined as \"" << systemdata << "\"";
         }
     }
 
@@ -479,9 +480,9 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             }
         }
         if (mThemeMetadata == "") {
-            LOG(LogError)
-                << "TextComponent: Invalid theme configuration, property <metadata> defined as \""
-                << metadata << "\"";
+            LOG(LogError) << "TextComponent: Invalid theme configuration, property "
+                             "\"metadata\" for element \""
+                          << element.substr(5) << "\" defined as \"" << metadata << "\"";
         }
     }
 
@@ -515,9 +516,9 @@ void TextComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             setCapitalize(true);
         }
         else if (letterCase != "none") {
-            LOG(LogWarning)
-                << "TextComponent: Invalid theme configuration, property <letterCase> defined as \""
-                << letterCase << "\"";
+            LOG(LogWarning) << "TextComponent: Invalid theme configuration, property "
+                               "\"letterCase\" for element \""
+                            << element.substr(5) << "\" defined as \"" << letterCase << "\"";
         }
     }
 
