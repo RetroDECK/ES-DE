@@ -208,8 +208,18 @@
             <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
+        <text name="collectionsSystemName">
+            <size>0.214 0.025</size>
+            <origin>1 1</origin>
+            <metadataElement>true</metadataElement>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.025</fontSize>
+            <horizontalAlignment>right</horizontalAlignment>
+            <color>${gamelistCustomCollectionsHeaderColor}</color>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.0</lineSpacing>
+        </text>
         <text name="customCollectionsHeader">
-            <pos>0.42 0.174</pos>
             <size>0.214 0.05</size>
             <origin>1 1</origin>
             <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
@@ -416,6 +426,9 @@
                 </text>
             </view>
             <view name="gamelist">
+                <text name="collectionsSystemName">
+                    <size>0.182 0.025</size>
+                </text>
                 <text name="customCollectionsHeader">
                     <pos>0.42 0.175</pos>
                     <size>0.182 0.05</size>

@@ -4,12 +4,8 @@
     <variant name="withVideos, withoutVideos, noGameMedia">
         <view name="gamelist">
             <text name="collectionsSystemName">
-                <pos>0.42 0.128</pos>
-                <metadata>sourceSystemFullname</metadata>
-            </text>
-            <text name="customCollectionsHeader">
                 <pos>0.42 0.174</pos>
-                <metadata>systemFullname</metadata>
+                <metadata>sourceSystemFullname</metadata>
             </text>
         </view>
     </variant>
