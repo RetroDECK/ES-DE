@@ -208,6 +208,17 @@
             <color>${gamelistBackFrameColor}</color>
             <zIndex>10</zIndex>
         </image>
+        <text name="customCollectionsHeader">
+            <pos>0.42 0.174</pos>
+            <size>0.214 0.05</size>
+            <origin>1 1</origin>
+            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+            <fontSize>0.05</fontSize>
+            <horizontalAlignment>right</horizontalAlignment>
+            <color>${gamelistCustomCollectionsHeaderColor}</color>
+            <letterCase>uppercase</letterCase>
+            <lineSpacing>1.0</lineSpacing>
+        </text>
         <text name="labelReleasedate, labelDeveloper, labelPublisher,
                     labelGenre, labelPlayers, labelLastplayed">
             <size>0.14 0.02</size>
@@ -404,6 +415,13 @@
                     <pos>0.34 0.904</pos>
                 </text>
             </view>
+            <view name="gamelist">
+                <text name="customCollectionsHeader">
+                    <pos>0.42 0.175</pos>
+                    <size>0.182 0.05</size>
+                    <fontSize>0.042</fontSize>
+                </text>
+            </view>
         </aspectRatio>
     </variant>
 
@@ -430,6 +448,11 @@
             <badges name="badges">
                 <visible>false</visible>
             </badges>
+            <text name="customCollectionsHeader">
+                <pos>0.78 0.10</pos>
+                <origin>1 1</origin>
+                <horizontalAlignment>right</horizontalAlignment>
+            </text>
             <text name="labelReleasedate, labelDeveloper, labelPublisher, labelGenre, labelPlayers,
                         labelLastplayed, developer, publisher, genre, players, description">
                 <visible>false</visible>
