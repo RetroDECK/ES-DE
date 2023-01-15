@@ -1140,17 +1140,35 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     mLegacyMode = theme->isLegacyTheme();
 
     if (elem->has("type")) {
-        const std::string& type {elem->get<std::string>("type")};
+        std::string type {elem->get<std::string>("type")};
+        if (type == "horizontal_wheel") {
+            type = "horizontalWheel";
+            if (!mLegacyMode) {
+                LOG(LogWarning)
+                    << "CarouselComponent: Property value \"horizontal_wheel\" has been "
+                       "deprecated and will be removed in a future release, use "
+                       "\"horizontalWheel\" instead";
+            }
+        }
+        else if (type == "vertical_wheel") {
+            type = "verticalWheel";
+            if (!mLegacyMode) {
+                LOG(LogWarning) << "CarouselComponent: Property value \"vertical_wheel\" has been "
+                                   "deprecated and will be removed in a future release, use "
+                                   "\"verticalWheel\" instead";
+            }
+        }
+
         if (type == "horizontal") {
             mType = CarouselType::HORIZONTAL;
         }
-        else if (type == "horizontal_wheel") {
+        else if (type == "horizontalWheel") {
             mType = CarouselType::HORIZONTAL_WHEEL;
         }
         else if (type == "vertical") {
             mType = CarouselType::VERTICAL;
         }
-        else if (type == "vertical_wheel") {
+        else if (type == "verticalWheel") {
             mType = CarouselType::VERTICAL_WHEEL;
         }
         else {
@@ -1239,8 +1257,8 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                    "\"maxItemCount\" for element \""
                                 << element.substr(9) << "\" not applicable to the "
                                 << (mType == CarouselType::HORIZONTAL_WHEEL ?
-                                        "\"horizontal_wheel\"" :
-                                        "\"vertical_wheel\"")
+                                        "\"horizontalWheel\"" :
+                                        "\"verticalWheel\"")
                                 << " type";
             }
         }
