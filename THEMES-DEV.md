@@ -568,13 +568,13 @@ Here's an example configuration:
 
 The `name` attribute is mandatory and it must be set to a unique value for each profile. Any string can be used except the three reserved values `builtin-instant`, `builtin-slide` and `builtin-fade`.
 
-The `selectable` property which is set to `true` by default defines whether the transition profile can be selected from the _Theme transition animations_ entry on the _UI Settings_ menu. The `label` defines the label to show there. If no label value is set then a default _Theme profile_ label will be applied.
+The `selectable` property which is set to `true` by default defines whether the transitions profile can be selected from the _Theme transitions_ entry on the _UI Settings_ menu. The `label` defines the label to show there. If no label value is set then a default _Theme profile_ label will be applied.
 
 At least one of the six transition types must be defined or the `transitions` entry is not considered valid. Any non-defined types will be set to `instant` with the exception of `startupToSystem` which will be set to the same value as `systemToSystem` and `startupToGamelist` which will be set to the same value as `gamelistToGamelist`.
 
 The profiles will be listed in the _UI Settings_ menu in the order that they have been defined, and the first profile (regardless of whether it's set as user-selectable or not), will be used if the _Automatic_ entry has been selected, unless a per-variant configuration is defined in the theme configuration.
 
-In addition to defining custom transition profiles it's possible to suppress the built-in profiles. For example slide transitions will look very broken with some theme designs so in such cases it could make sense to disable this animation type altogether. Suppressing a profile simply means its entry will not show up under _Theme transition animations_ in the _UI Settings_ menu, making it impossible to select and use it.
+In addition to defining custom transition profiles it's possible to suppress the built-in profiles. For example slide transitions will look very broken with some theme designs so in such cases it could make sense to disable this animation type altogether. Suppressing a profile simply means its entry will not show up under _Theme transitions_ in the _UI Settings_ menu, making it impossible to select and use it.
 
 Here's an example where all the built-in transition profiles have been disabled:
 
@@ -588,7 +588,7 @@ Here's an example where all the built-in transition profiles have been disabled:
 
 Regardless of whether any custom profiles have been created or whether the built-in profiles have been disabled there will always be an `Automatic` entry added to the _Theme transition animations_ menu. If no theme profiles have been defined and all built-in profiles have been suppressed, then the `Automatic` entry will be the only available option. In this case `instant` animations will by applied to all transition types.
 
-Finally it's possible to apply theme-defined transition profiles on a per-variant basis. This requires that the user has selected the `Automatic` profile from the _Theme transition animations_ menu as selecting any other profile will override whatever is defined in the theme configuration. Note that the built-in transition profiles can't be used in this manner, only profiles defined in `capabilities.xml`.
+Finally it's possible to apply theme-defined transition profiles on a per-variant basis. This requires that the user has selected the `Automatic` profile from the _Theme transitions_ menu as selecting any other profile will override whatever is defined in the theme configuration. Note that the built-in transition profiles can't be used in this manner, only profiles defined in `capabilities.xml`.
 
 ```xml
 <variant name="withVideos">
@@ -2097,7 +2097,7 @@ Properties:
      - Valid values:
     - `name` - Game name.
     - `description` - Game description. Should be combined with the `container` property in most cases.
-    - `rating` - The numerical representation of the game rating, for example `3` or `4.5`.
+    - `rating` - The numerical representation of the game rating, for example `3` or `4.5`
     - `developer` - Developer.
     - `publisher` - Publisher.
     - `genre` - Genre.
