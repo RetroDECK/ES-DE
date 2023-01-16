@@ -153,6 +153,7 @@ private:
     std::string mThemeFolder;
     std::shared_ptr<ThemeData> mTheme;
 
+    bool mSymlinkMaxDepthReached;
     bool mIsCollectionSystem;
     bool mIsCustomCollectionSystem;
     bool mIsGroupedCustomCollectionSystem;

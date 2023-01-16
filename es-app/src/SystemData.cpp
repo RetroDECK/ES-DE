@@ -196,6 +196,7 @@ SystemData::SystemData(const std::string& name,
     , mSortName {sortName}
     , mEnvData {envData}
     , mThemeFolder {themeFolder}
+    , mSymlinkMaxDepthReached {false}
     , mIsCollectionSystem {CollectionSystem}
     , mIsCustomCollectionSystem {CustomCollectionSystem}
     , mIsGroupedCustomCollectionSystem {false}
@@ -265,6 +266,9 @@ void SystemData::setIsGameSystemStatus()
 
 bool SystemData::populateFolder(FileData* folder)
 {
+    if (mSymlinkMaxDepthReached)
+        return false;
+
     std::string filePath;
     std::string extension;
     const std::string& folderPath {folder->getPath()};
@@ -345,22 +349,43 @@ bool SystemData::populateFolder(FileData* folder)
 
         // Add directories that also do not match an extension as folders.
         if (!isGame && isDirectory) {
-            // Make sure that it's not a recursive symlink pointing to a location higher in the
-            // hierarchy as the application would run forever trying to resolve the link.
+            // Make sure that it's not a recursive symlink as the application would run into a
+            // loop trying to resolve the link.
             if (Utils::FileSystem::isSymlink(filePath)) {
+                bool recursiveSymlink {false};
                 const std::string& canonicalPath {Utils::FileSystem::getCanonicalPath(filePath)};
                 const std::string& canonicalStartPath {
                     Utils::FileSystem::getCanonicalPath(mEnvData->mStartPath)};
-                if (canonicalPath.size() >= canonicalStartPath.size()) {
+                // Last resort hack to prevent recursive symlinks in some really unusual situations.
+                if (filePath.length() > canonicalStartPath.length() + 100) {
+                    int folderDepth {0};
+                    const std::string& path {filePath.substr(canonicalStartPath.length())};
+                    for (char character : path) {
+                        if (character == '/') {
+                            ++folderDepth;
+                            if (folderDepth == 20) {
+                                LOG(LogWarning) << "Skipped \"" << filePath
+                                                << "\" as it seems to be a recursive symlink";
+                                mSymlinkMaxDepthReached = true;
+                                return false;
+                            }
+                        }
+                    }
+                }
+                if (canonicalStartPath.find(canonicalPath) != std::string::npos)
+                    recursiveSymlink = true;
+                else if (canonicalPath.size() >= canonicalStartPath.size() &&
+                         canonicalPath.find(canonicalStartPath) != std::string::npos) {
                     const std::string& combinedPath {
                         mEnvData->mStartPath +
                         canonicalPath.substr(canonicalStartPath.size(),
                                              canonicalStartPath.size() - canonicalPath.size())};
-                    if (filePath.find(combinedPath) == 0) {
-                        LOG(LogWarning)
-                            << "Skipped \"" << filePath << "\" as it's a recursive symlink";
-                        continue;
-                    }
+                    if (Utils::FileSystem::getParent(filePath).find(combinedPath) == 0)
+                        recursiveSymlink = true;
+                }
+                if (recursiveSymlink) {
+                    LOG(LogWarning) << "Skipped \"" << filePath << "\" as it's a recursive symlink";
+                    continue;
                 }
             }
 
