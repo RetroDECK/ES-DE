@@ -217,7 +217,7 @@
     </system>
     <system>
         <name>atomiswave</name>
-        <fullname>Atomiswave</fullname>
+        <fullname>Sammy Corporation Atomiswave</fullname>
         <path>%ROMPATH%/atomiswave</path>
         <extension>.bin .BIN .cdi .CDI .cue .CUE .dat .DAT .elf .ELF .gdi .GDI .iso .ISO .lst .LST .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="Flycast">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/flycast_libretro.dylib %ROM%</command>
@@ -227,7 +227,7 @@
     </system>
     <system>
         <name>bbcmicro</name>
-        <fullname>BBC Micro</fullname>
+        <fullname>Acorn Computers BBC Micro</fullname>
         <path>%ROMPATH%/bbcmicro</path>
         <extension>.7z .7Z .zip .ZIP</extension>
         <command>PLACEHOLDER %ROM%</command>
@@ -307,7 +307,7 @@
     </system>
     <system>
         <name>colecovision</name>
-        <fullname>ColecoVision</fullname>
+        <fullname>Coleco ColecoVision</fullname>
         <path>%ROMPATH%/colecovision</path>
         <extension>.bin .BIN .cas .CAS .col .COL .cv .CV .dsk .DSK .m3u .M3U .mx1 .MX1 .mx2 .MX2 .ri .RI .rom .ROM .sc .SC .sg .SG .7z .7Z .zip .ZIP</extension>
         <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.dylib %ROM%</command>
@@ -380,7 +380,7 @@
     </system>
     <system>
         <name>dragon32</name>
-        <fullname>Dragon 32</fullname>
+        <fullname>Dragon Data Dragon 32</fullname>
         <path>%ROMPATH%/dragon32</path>
         <extension>.cas .CAS .ccc .CCC .dsk .DSK .rom .ROM</extension>
         <command label="XRoar Dragon 32 (Standalone)">%EMULATOR_XROAR% -fs -default-machine dragon32 %ROM%</command>
@@ -1192,7 +1192,7 @@
     </system>
     <system>
         <name>samcoupe</name>
-        <fullname>SAM Coupé</fullname>
+        <fullname>MGT SAM Coupé</fullname>
         <path>%ROMPATH%/samcoupe</path>
         <extension>.dsk .DSK .mgt .MGT .sbt .SBT .sad .SAD .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_SIMCOUPE% %ROM%</command>
@@ -1532,7 +1532,7 @@
     </system>
     <system>
         <name>vectrex</name>
-        <fullname>Vectrex</fullname>
+        <fullname>Smith Engineering Vectrex</fullname>
         <path>%ROMPATH%/vectrex</path>
         <extension>.bin .BIN .vec .VEC .gam .GAM .vc .VC .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vecx_libretro.dylib %ROM%</command>
