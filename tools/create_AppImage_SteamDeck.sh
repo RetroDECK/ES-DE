@@ -7,7 +7,7 @@
 #  Runs the complete process of building a Linux AppImage specific to the Valve Steam Deck.
 #  The SDL library is also built and included in the AppImage.
 #
-#  This script has only been tested on Ubuntu 20.04 LTS.
+#  This script has only been tested on Ubuntu 20.04 LTS and 22.04 LTS.
 #
 
 # How many CPU threads to use for the compilation.
