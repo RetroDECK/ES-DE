@@ -156,9 +156,9 @@ void Settings::setDefaults()
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeColorScheme"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
-    mStringMap["ThemeTransitionAnimations"] = {"automatic", "automatic"};
+    mStringMap["ThemeTransitions"] = {"automatic", "automatic"};
     mStringMap["GamelistViewStyle"] = {"automatic", "automatic"};
-    mStringMap["LegacyTransitionAnimations"] = {"builtin-instant", "builtin-instant"};
+    mStringMap["LegacyThemeTransitions"] = {"builtin-instant", "builtin-instant"};
     mStringMap["QuickSystemSelect"] = {"leftrightshoulders", "leftrightshoulders"};
     mStringMap["StartupSystem"] = {"", ""};
     mStringMap["DefaultSortOrder"] = {"filename, ascending", "filename, ascending"};

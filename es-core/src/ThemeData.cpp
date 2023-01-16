@@ -860,28 +860,28 @@ void ThemeData::setThemeTransitions()
     setTransitionsFunc(transitionAnim);
 
     if (mCurrentThemeSet->second.capabilities.legacyTheme) {
-        const std::string& legacyTransitionSetting {
-            Settings::getInstance()->getString("LegacyTransitionAnimations")};
-        if (legacyTransitionSetting == "builtin-slide")
+        const std::string& legacyTransitionsSetting {
+            Settings::getInstance()->getString("LegacyThemeTransitions")};
+        if (legacyTransitionsSetting == "builtin-slide")
             transitionAnim = static_cast<int>(ViewTransitionAnimation::SLIDE);
-        else if (legacyTransitionSetting == "builtin-fade")
+        else if (legacyTransitionsSetting == "builtin-fade")
             transitionAnim = static_cast<int>(ViewTransitionAnimation::FADE);
         setTransitionsFunc(transitionAnim);
     }
     else {
-        const std::string& transitionSetting {
-            Settings::getInstance()->getString("ThemeTransitionAnimations")};
+        const std::string& transitionsSetting {
+            Settings::getInstance()->getString("ThemeTransitions")};
         std::string profile;
         size_t profileEntry {0};
 
-        if (transitionSetting == "automatic") {
+        if (transitionsSetting == "automatic") {
             if (mVariantDefinedTransitions != "")
                 profile = mVariantDefinedTransitions;
             else if (!mCurrentThemeSet->second.capabilities.transitions.empty())
                 profile = mCurrentThemeSet->second.capabilities.transitions.front().name;
         }
         else {
-            profile = transitionSetting;
+            profile = transitionsSetting;
         }
 
         auto it = std::find_if(
@@ -916,16 +916,16 @@ void ThemeData::setThemeTransitions()
                 Settings::getInstance()->setInt("TransitionsStartupToGamelist",
                                                 transitionMap[ViewTransition::STARTUP_TO_GAMELIST]);
         }
-        else if (transitionSetting == "builtin-slide" || transitionSetting == "builtin-fade") {
+        else if (transitionsSetting == "builtin-slide" || transitionsSetting == "builtin-fade") {
             if (std::find(
                     mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
                     mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend(),
-                    transitionSetting) ==
+                    transitionsSetting) ==
                 mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend()) {
-                if (transitionSetting == "builtin-slide") {
+                if (transitionsSetting == "builtin-slide") {
                     transitionAnim = static_cast<int>(ViewTransitionAnimation::SLIDE);
                 }
-                else if (transitionSetting == "builtin-fade") {
+                else if (transitionsSetting == "builtin-fade") {
                     transitionAnim = static_cast<int>(ViewTransitionAnimation::FADE);
                 }
                 setTransitionsFunc(transitionAnim);
