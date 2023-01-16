@@ -78,6 +78,8 @@ void ScrollableContainer::reset()
         if (mChildren.front()->getSize().y > mSize.y) {
             if (mVerticalSnap) {
                 float numLines {std::floor(mSize.y / combinedHeight)};
+                if (numLines == 0)
+                    numLines = 1;
                 mAdjustedHeight = std::round(numLines * combinedHeight);
             }
             else {
@@ -145,6 +147,8 @@ void ScrollableContainer::update(int deltaTime)
     if (!mUpdatedSize) {
         if (mVerticalSnap) {
             float numLines {std::floor(mSize.y / combinedHeight)};
+            if (numLines == 0)
+                numLines = 1;
             mAdjustedHeight = std::round(numLines * combinedHeight);
         }
         else {
