@@ -14,7 +14,7 @@
 
 template <typename T> class OptionListComponent;
 
-class GuiCollectionSystemsOptions : public GuiSettings
+class GuiCollectionSystemsOptions : public virtual GuiSettings
 {
 public:
     GuiCollectionSystemsOptions(std::string title);
