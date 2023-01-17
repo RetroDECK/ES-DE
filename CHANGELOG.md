@@ -8,13 +8,13 @@
 
 ### Release overview
 
-The 2.0 release introduces multiple fundamental changes to the application, most notably a new theme engine with various new concepts. The traditional view styles (basic/detailed/video/grid) have been replaced with only a system and gamelist view in addition to _variants_, which are essentially theme profiles. These are much more flexible than view styles and can be freely defined by the theme author. The new engine is also fully generalized and almost all theme elements can be used anywhere and in unlimited numbers.
+The 2.0 release introduces multiple fundamental changes to the application, most notably a new theme engine which brings various new concepts. The traditional view styles (basic/detailed/video/grid) have been replaced with only system and gamelist views in addition to _variants_, which are essentially theme profiles. These are much more flexible than view styles and can be freely defined by the theme author. The new engine is also fully generalized and almost all theme elements can be used anywhere and in unlimited numbers. Many of these elements and properties are new additions as well.
 
 Theme variants, color schemes, aspect ratios and transitions can now be defined by the theme author and are user-selectable from within the menu system. In addition to all this new theme functionality the application is still backward compatible with legacy theme sets.
 
-The renderer has been modernized and rewritten and while still using OpenGL it's now fully shader-based instead of using a fixed function pipeline as was the case in previous releases. Rendering performance has been greatly improved in some areas such as post processing (used for the video player scanline and blur shaders among other things). A new SVG rendering library (LunaSVG) has also been introduced which offers much better file compatibility than before, while doing it with better performance.
+The renderer has been modernized and rewritten and while still using OpenGL it's now fully shader-based instead of using a fixed function pipeline as was the case in previous releases. Rendering performance has been greatly improved in some areas such as post processing (used for the video player scanline and blur shaders among other things). A new SVG rendering library named LunaSVG has been introduced which offers much better file compatibility than before, while doing it with better performance.
 
-Overall application performance has been greatly improved with faster startup times, less latency and lower CPU utilization. Many bugs have been fixed and multiple quality of life improvements have been made. Support for a lot more standalone emulators is also included with this release, see below for more details.
+Overall application speed and performance has been greatly improved with faster startup times, less latency and lower CPU utilization. Many bugs have been fixed and multiple quality of life improvements have been made. Support for a lot more standalone emulators is also included with this release, see below for more details.
 
 ### Detailed list of changes
 
@@ -86,11 +86,13 @@ Overall application performance has been greatly improved with faster startup ti
 * (Linux) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame, neogeo, neogeocd and neogeocdjp systems
 * (Windows) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame and neogeo system
 * Set DOSBox-X and DOSBox Staging to start in the game directory so per-game dosbox.conf files can be used
+* Changed the fullname for the 3do system from "3DO" to "The 3DO Company 3DO"
 * Changed the fullname for the atomiswave system from "Atomiswave" to "Sammy Corporation Atomiswave"
 * Changed the fullname for the bbcmicro system from "BBC Micro" to "Acorn Computers BBC Micro"
 * Changed the fullname for the colecovision system from "ColecoVision" to "Coleco ColecoVision"
 * Changed the fullname for the dragon32 system from "Dragon 32" to "Dragon Data Dragon 32"
 * Changed the fullname for the samcoupe system from "SAM Coupé" to "MGT SAM Coupé"
+* Changed the fullname for the uzebox system from "Uzebox" to "Uzebox Open Source Console"
 * Changed the fullname for the vectrex system from "Vectrex" to "Smith Engineering Vectrex"
 * (macOS) Added an additional find rule entry for DOSBox-X as the binary name has been changed
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package

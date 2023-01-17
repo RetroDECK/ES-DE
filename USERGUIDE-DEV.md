@@ -3058,7 +3058,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
-| 3do                   | 3DO                                            | Opera                             |                                   | Yes          |                                      |
+| 3do                   | The 3DO Company 3DO                            | Opera                             |                                   | Yes          |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Native game binaries_            |                                   | No           | Shortcut (.desktop/.app/.lnk) file in root folder  |
 | amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
 | amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
@@ -3198,7 +3198,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | tic80                 | TIC-80 Game Engine                             | TIC-80                            |                                   | No           | Single .tic file in root folder      |
 | to8                   | Thomson TO8                                    | Theodore                          |                                   |              |                                      |
 | trs-80                | Tandy TRS-80                                   | sdl2trs DOS Diskette **(Standalone)** [UW*] | sdl2trs Bootable Diskette **(Standalone)** [UW*],<br>sdl2trs CMD File **(Standalone)** [UW*] | Yes          | See the specific _Tandy TRS-80_ section elsewhere in this guide |
-| uzebox                | Uzebox                                         | Uzem                              |                                   |              |                                      |
+| uzebox                | Uzebox Open Source Console                     | Uzem                              |                                   |              |                                      |
 | vectrex               | Smith Engineering Vectrex                      | vecx                              |                                   | No           |                                      |
 | vic20                 | Commodore VIC-20                               | VICE xvic                         | VICE xvic **(Standalone)** [UMW*] | No           | Single disk, tape or cartridge image in root folder |
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |

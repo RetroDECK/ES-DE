@@ -1109,14 +1109,15 @@ Due to the potential confusion caused by the above configuration it's recommende
 
 It's important to understand how the theme configuration files are parsed in order to avoid potentially confusing issues that may appear to be bugs. The following order is always used:
 
-1) Variables
-2) Color schemes
-3) Included files
-4) "General" (non-variant) configuration
-5) Variants
-6) Aspect ratios
+1) Transitions
+2) Variables
+3) Color schemes
+4) Included files
+5) "General" (non-variant) configuration
+6) Variants
+7) Aspect ratios
 
-When including a file using the `<include>` tag (i.e. step 3 above) then all steps listed above are executed for that included file prior to continuing to the next line after the `<include>` tag.
+When including a file using the `<include>` tag (i.e. step 4 above) then all steps listed above are executed for that included file prior to continuing to the next line after the `<include>` tag.
 
 For any given step, the configuration is parsed in the exact order that it's defined in the XML file. Be mindful of the logic described above as for instance defining variant-specific configuration above general configuration in the same XML file will still have that parsed afterwards.
 
@@ -1665,7 +1666,7 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case.
+    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case. This property takes precedence over `maxSize` if both properties are defined.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
     - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata). Although this property is possible to combine with the `tile` property that does not make a whole lot of sense, instead use the `size` property for tiled images.
@@ -1771,7 +1772,7 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), then the other will be automatically calculated in accordance with the static image's aspect ratio and the video's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.01 0.01` in this case.
+    - If only one axis is specified (and the other is zero), then the other will be automatically calculated in accordance with the static image's aspect ratio and the video's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.01 0.01` in this case. This property takes precedence over `maxSize` if both properties are defined.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
     - The static image and video will be resized as large as possible so that they fit within this size while maintaining their aspect ratios. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
@@ -1867,7 +1868,7 @@ Properties:
 
 #### animation
 
-GIF and Lottie (vector graphics) animations. The type of animation is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of them to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or high-resolution.
+GIF and Lottie (vector graphics) animations. The animation type is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of these to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or of high resolution.
 
 Supported views:
 * `system `
@@ -1879,7 +1880,11 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), the other will be automatically calculated in accordance with the animation's aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information.
+    - If only one axis is specified (and the other is zero), then the other will be automatically calculated in accordance with the animation's aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information. Setting both axes to 0 is an error and the size will be clamped to `0.01 0.01` in this case. This property takes precedence over `maxSize` if both properties are defined.
+    - Minimum value per axis is `0.01` and maximum value per axis is `1`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
+* `maxSize` - type: NORMALIZED_PAIR
+    - The animation will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Note that this is sometimes not entirely accurate as some animations contain invalid size information.
+    - Minimum value per axis is `0.01` and maximum value per axis is `1`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -1895,17 +1900,15 @@ Properties:
     - By default game metadata and media are faded out during gamelist fast-scrolling and text metadata fields, ratings and badges are hidden when enabling the _Hide metadata fields_ setting for a game entry. Using this property it's possible to explicitly define animation elements that should be treated as if they were game media files. This is for example useful for hiding and fading out animations that are used as indicators for the various metadata types like genre, publisher, players etc.
     - Default is `false`
 * `path` - type: PATH
-    - Path to the animation file. Only the .json extension is supported.
+    - Path to the animation file. Only .gif and .json extensions are supported.
 * `speed` - type: FLOAT.
     - The relative speed at which to play the animation.
     - Minimum value is `0.2` and maximum value is `3`
     - Default is `1`
 * `direction` - type: STRING
-    - The direction that the animation should be played. Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
+    - The direction that the animation should be played.
+    - Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
     - Default is `normal`
-* `keepAspectRatio` - type: BOOLEAN.
-    - If true, aspect ratio will be preserved. If false, animation will stretch to the defined size. Note that setting to `false` is incompatible with only defining one of the axes for the `size` element.
-    - Default is `true`
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling GIF animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on Lottie animations.
     - Valid values are `nearest` or `linear`
