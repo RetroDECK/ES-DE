@@ -3,7 +3,7 @@
 <systemList>
     <system>
         <name>3do</name>
-        <fullname>3DO</fullname>
+        <fullname>The 3DO Company 3DO</fullname>
         <path>%ROMPATH%/3do</path>
         <extension>.bin .BIN .chd .CHD .cue .CUE .iso .ISO</extension>
         <command label="Opera">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/opera_libretro.dylib %ROM%</command>
@@ -1523,7 +1523,7 @@
     </system>
     <system>
         <name>uzebox</name>
-        <fullname>Uzebox</fullname>
+        <fullname>Uzebox Open Source Console</fullname>
         <path>%ROMPATH%/uzebox</path>
         <extension>.uze .UZE .7z .7Z .zip .ZIP</extension>
         <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/uzem_libretro.dylib %ROM%</command>
