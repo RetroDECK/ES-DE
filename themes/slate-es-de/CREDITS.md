@@ -1,12 +1,12 @@
-# EmulationStation Desktop Edition (ES-DE) - slate-DE credits
+# EmulationStation Desktop Edition (ES-DE) - Slate credits
 
-The theme set slate-DE is based on recalbox-multi by the Recalbox community.
+The theme set Slate is based on recalbox-multi by the Recalbox community.
 
 Some graphics was also taken from the carbon theme by Rookervik.
 
 Some logotype graphics by Dan Patrick.
 
-## Original vector graphics for slate-DE
+## Original vector graphics for Slate
 
 - Leon Styhre
 

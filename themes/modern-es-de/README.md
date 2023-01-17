@@ -1,6 +1,6 @@
-# modern-DE for EmulationStation Desktop Edition
+# Modern for EmulationStation Desktop Edition (modern-es-de)
 
-modern-DE is an official theme set for ES-DE that supports all systems as well as the latest application features.
+Modern is an official theme set for ES-DE that supports all systems as well as the latest application features.
 
 The following options are included:
 
