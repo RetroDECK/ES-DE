@@ -25,7 +25,6 @@ public:
     ~GIFAnimComponent();
 
     void setAnimation(const std::string& path);
-    void setKeepAspectRatio(bool value) { mKeepAspectRatio = value; }
     void setPauseAnimation(bool state) { mExternalPause = state; }
 
     void resetFileAnimation() override;
@@ -70,6 +69,7 @@ private:
     }
 
     Renderer* mRenderer;
+    glm::vec2 mTargetSize;
     std::shared_ptr<TextureResource> mTexture;
     std::vector<uint8_t> mPictureRGBA;
     size_t mFrameSize;
@@ -100,7 +100,7 @@ private:
     bool mPause;
     bool mExternalPause;
     bool mAlternate;
-    bool mKeepAspectRatio;
+    bool mTargetIsMax;
 };
 
 #endif // ES_CORE_COMPONENTS_GIF_ANIM_COMPONENT_H

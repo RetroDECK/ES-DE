@@ -32,7 +32,6 @@ public:
     ~LottieAnimComponent();
 
     void setAnimation(const std::string& path);
-    void setKeepAspectRatio(bool value) { mKeepAspectRatio = value; }
     void setFrameCaching(bool value) { mCacheFrames = value; }
     void setMaxCacheSize(int value)
     {
@@ -54,6 +53,7 @@ private:
     void render(const glm::mat4& parentTrans) override;
 
     Renderer* mRenderer;
+    glm::vec2 mTargetSize;
     std::shared_ptr<TextureResource> mTexture;
     std::vector<uint8_t> mPictureRGBA;
     std::unordered_map<size_t, std::vector<uint8_t>> mFrameCache;
@@ -86,7 +86,7 @@ private:
     bool mPause;
     bool mExternalPause;
     bool mAlternate;
-    bool mKeepAspectRatio;
+    bool mTargetIsMax;
 };
 
 #endif // ES_CORE_COMPONENTS_LOTTIE_ANIM_COMPONENT_H

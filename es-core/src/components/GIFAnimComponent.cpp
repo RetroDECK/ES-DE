@@ -21,6 +21,7 @@
 
 GIFAnimComponent::GIFAnimComponent()
     : mRenderer {Renderer::getInstance()}
+    , mTargetSize {0.0f, 0.0f}
     , mFrameSize {0}
     , mAnimFile {nullptr}
     , mAnimation {nullptr}
@@ -41,7 +42,7 @@ GIFAnimComponent::GIFAnimComponent()
     , mPause {false}
     , mExternalPause {false}
     , mAlternate {false}
-    , mKeepAspectRatio {true}
+    , mTargetIsMax {false}
 {
     // Get an empty texture for rendering the animation.
     mTexture = TextureResource::get("");
@@ -54,8 +55,8 @@ GIFAnimComponent::GIFAnimComponent()
     // Set component defaults.
     setSize(Renderer::getScreenWidth() * 0.2f, Renderer::getScreenHeight() * 0.2f);
     setPosition(Renderer::getScreenWidth() * 0.3f, Renderer::getScreenHeight() * 0.3f);
-    setDefaultZIndex(10.0f);
-    setZIndex(10.0f);
+    setDefaultZIndex(35.0f);
+    setZIndex(35.0f);
     mTexture->setLinearMagnify(false);
 }
 
@@ -154,11 +155,6 @@ void GIFAnimComponent::setAnimation(const std::string& path)
         return;
     }
 
-    if (!mKeepAspectRatio && (mSize.x == 0.0f || mSize.y == 0.0f)) {
-        LOG(LogWarning) << "GIFAnimComponent: Width or height auto sizing is incompatible with "
-                           "disabling of <keepAspectRatio> so ignoring this setting";
-    }
-
     size_t width {0};
     size_t height {0};
 
@@ -170,10 +166,36 @@ void GIFAnimComponent::setAnimation(const std::string& path)
     mFileHeight = FreeImage_GetHeight(mFrame);
     filePitch = FreeImage_GetPitch(mFrame);
 
-    if (mSize.x == 0.0f || mSize.y == 0.0f) {
-        double sizeRatio {static_cast<double>(mFileWidth) / static_cast<double>(mFileHeight)};
+    if (mTargetIsMax || mSize.x == 0.0f || mSize.y == 0.0f) {
+        const double sizeRatio {static_cast<double>(mFileWidth) / static_cast<double>(mFileHeight)};
 
-        if (mSize.x == 0) {
+        if (mTargetIsMax) {
+            // Just a precaution if FreeImage would return zero for some reason.
+            if (mFileWidth == 0)
+                mFileWidth = 1;
+            if (mFileHeight == 0)
+                mFileHeight = 1;
+
+            mSize.x = static_cast<float>(mFileWidth);
+            mSize.y = static_cast<float>(mFileHeight);
+
+            // Preserve aspect ratio.
+            const glm::vec2 resizeScale {mTargetSize.x / mSize.x, mTargetSize.y / mSize.y};
+
+            if (resizeScale.x < resizeScale.y) {
+                mSize.x *= resizeScale.x;
+                mSize.y = std::min(mSize.y * resizeScale.x, mTargetSize.y);
+            }
+            else {
+                mSize.y *= resizeScale.y;
+                mSize.x = std::min((mSize.y / static_cast<float>(mFileHeight)) *
+                                       static_cast<float>(mFileWidth),
+                                   mTargetSize.x);
+            }
+            width = static_cast<size_t>(mSize.x);
+            height = static_cast<size_t>(mSize.y);
+        }
+        else if (mSize.x == 0) {
             width = static_cast<size_t>(static_cast<double>(mSize.y) * sizeRatio);
             height = static_cast<size_t>(mSize.y);
         }
@@ -189,6 +211,9 @@ void GIFAnimComponent::setAnimation(const std::string& path)
 
     mSize.x = static_cast<float>(width);
     mSize.y = static_cast<float>(height);
+
+    if (!mTargetIsMax)
+        mTargetSize = mSize;
 
     FreeImage_PreMultiplyWithAlpha(mFrame);
     mPictureRGBA.resize(mFileWidth * mFileHeight * 4);
@@ -256,34 +281,40 @@ void GIFAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                   unsigned int properties)
 {
     using namespace ThemeFlags;
+    GuiComponent::applyTheme(theme, view, element, properties ^ ThemeFlags::SIZE);
+
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "animation")};
+    if (!elem)
+        return;
+
+    const glm::vec2 scale {glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
     if (elem->has("size")) {
-        glm::vec2 size = elem->get<glm::vec2>("size");
-        if (size.x == 0.0f && size.y == 0.0f) {
-            LOG(LogWarning) << "GIFAnimComponent: Invalid theme configuration, <size> defined as \""
-                            << size.x << " " << size.y << "\"";
-            return;
+        glm::vec2 animationSize {elem->get<glm::vec2>("size")};
+        if (animationSize == glm::vec2 {0.0f, 0.0f}) {
+            LOG(LogWarning) << "GIFAnimComponent: Invalid theme configuration, property "
+                               "\"size\" for element \""
+                            << element.substr(10) << "\" is set to zero";
+            animationSize = {0.01f, 0.01f};
         }
+        if (animationSize.x > 0.0f)
+            animationSize.x = glm::clamp(animationSize.x, 0.01f, 1.0f);
+        if (animationSize.y > 0.0f)
+            animationSize.y = glm::clamp(animationSize.y, 0.01f, 1.0f);
+        setSize(animationSize * scale);
+    }
+    else if (elem->has("maxSize")) {
+        const glm::vec2 animationMaxSize {glm::clamp(elem->get<glm::vec2>("maxSize"), 0.01f, 1.0f)};
+        setSize(animationMaxSize * scale);
+        mTargetIsMax = true;
+        mTargetSize = mSize;
     }
 
     if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
         mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
 
-    if (elem->has("speed")) {
-        const float speed {elem->get<float>("speed")};
-        if (speed < 0.2f || speed > 3.0f) {
-            LOG(LogWarning)
-                << "GIFAnimComponent: Invalid theme configuration, <speed> defined as \""
-                << std::fixed << std::setprecision(1) << speed << "\"";
-        }
-        else {
-            mSpeedModifier = speed;
-        }
-    }
-
-    if (elem->has("keepAspectRatio"))
-        mKeepAspectRatio = elem->get<bool>("keepAspectRatio");
+    if (elem->has("speed"))
+        mSpeedModifier = glm::clamp(elem->get<float>("speed"), 0.2f, 3.0f);
 
     if (elem->has("direction")) {
         const std::string& direction {elem->get<std::string>("direction")};
@@ -304,9 +335,9 @@ void GIFAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mAlternate = true;
         }
         else {
-            LOG(LogWarning)
-                << "GIFAnimComponent: Invalid theme configuration, <direction> defined as \""
-                << direction << "\"";
+            LOG(LogWarning) << "GIFAnimComponent: Invalid theme configuration, property "
+                               "\"direction\" for element \""
+                            << element.substr(10) << "\" defined as \"" << direction << "\"";
             mStartDirection = "normal";
             mAlternate = false;
         }
@@ -322,25 +353,14 @@ void GIFAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             mTexture->setLinearMagnify(false);
-            LOG(LogWarning)
-                << "GIFAnimComponent::applyTheme(): Invalid theme configuration, property "
-                   "<interpolation> defined as \""
-                << interpolation << "\"";
+            LOG(LogWarning) << "GIFAnimComponent: Invalid theme configuration, property "
+                               "\"interpolation\" for element \""
+                            << element.substr(10) << "\" defined as \"" << interpolation << "\"";
         }
     }
 
-    GuiComponent::applyTheme(theme, view, element, properties);
-
-    if (elem->has("path")) {
-        const std::string& path {elem->get<std::string>("path")};
-        if (path != "") {
-            setAnimation(path);
-        }
-    }
-    else {
-        LOG(LogWarning) << "GIFAnimComponent: Invalid theme configuration, <path> not set";
-        return;
-    }
+    if (elem->has("path"))
+        setAnimation(elem->get<std::string>("path"));
 }
 
 void GIFAnimComponent::update(int deltaTime)
@@ -476,8 +496,15 @@ void GIFAnimComponent::render(const glm::mat4& parentTrans)
 
     mRenderer->setMatrix(trans);
 
-    if (Settings::getInstance()->getBool("DebugImage"))
+    if (Settings::getInstance()->getBool("DebugImage")) {
+        if (mTargetIsMax) {
+            const glm::vec2 targetSizePos {
+                glm::round((mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f})};
+            mRenderer->drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
+                                0xFF000033, 0xFF000033);
+        }
         mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+    }
 
     if (mTexture->getSize().x != 0.0f) {
         mTexture->bind();

@@ -17,6 +17,7 @@
 
 LottieAnimComponent::LottieAnimComponent()
     : mRenderer {Renderer::getInstance()}
+    , mTargetSize {0.0f, 0.0f}
     , mCacheFrames {true}
     , mMaxCacheSize {0}
     , mCacheSize {0}
@@ -36,7 +37,7 @@ LottieAnimComponent::LottieAnimComponent()
     , mPause {false}
     , mExternalPause {false}
     , mAlternate {false}
-    , mKeepAspectRatio {true}
+    , mTargetIsMax {false}
 {
     // Get an empty texture for rendering the animation.
     mTexture = TextureResource::get("");
@@ -55,8 +56,8 @@ LottieAnimComponent::LottieAnimComponent()
     // Set component defaults.
     setSize(mRenderer->getScreenWidth() * 0.2f, mRenderer->getScreenHeight() * 0.2f);
     setPosition(mRenderer->getScreenWidth() * 0.3f, mRenderer->getScreenHeight() * 0.3f);
-    setDefaultZIndex(10.0f);
-    setZIndex(10.0f);
+    setDefaultZIndex(35.0f);
+    setZIndex(35.0f);
 }
 
 LottieAnimComponent::~LottieAnimComponent()
@@ -117,22 +118,44 @@ void LottieAnimComponent::setAnimation(const std::string& path)
         return;
     }
 
-    if (!mKeepAspectRatio && (mSize.x == 0.0f || mSize.y == 0.0f)) {
-        LOG(LogWarning) << "LottieAnimComponent: Width or height auto sizing is incompatible with "
-                           "disabling of <keepAspectRatio> so ignoring this setting";
-    }
-
     size_t width {0};
     size_t height {0};
 
-    if (mSize.x == 0.0f || mSize.y == 0.0f) {
+    if (mTargetIsMax || mSize.x == 0.0f || mSize.y == 0.0f) {
         size_t viewportWidth {0};
         size_t viewportHeight {0};
 
         mAnimation->size(viewportWidth, viewportHeight);
-        double sizeRatio = static_cast<double>(viewportWidth) / static_cast<double>(viewportHeight);
+        const double sizeRatio {static_cast<double>(viewportWidth) /
+                                static_cast<double>(viewportHeight)};
 
-        if (mSize.x == 0) {
+        if (mTargetIsMax) {
+            // Just a precaution if rlottie::Animation::size() would return zero for some reason.
+            if (viewportWidth == 0)
+                viewportWidth = 1;
+            if (viewportHeight == 0)
+                viewportHeight = 1;
+
+            mSize.x = static_cast<float>(viewportWidth);
+            mSize.y = static_cast<float>(viewportHeight);
+
+            // Preserve aspect ratio.
+            const glm::vec2 resizeScale {mTargetSize.x / mSize.x, mTargetSize.y / mSize.y};
+
+            if (resizeScale.x < resizeScale.y) {
+                mSize.x *= resizeScale.x;
+                mSize.y = std::min(mSize.y * resizeScale.x, mTargetSize.y);
+            }
+            else {
+                mSize.y *= resizeScale.y;
+                mSize.x = std::min((mSize.y / static_cast<float>(viewportHeight)) *
+                                       static_cast<float>(viewportWidth),
+                                   mTargetSize.x);
+            }
+            width = static_cast<size_t>(mSize.x);
+            height = static_cast<size_t>(mSize.y);
+        }
+        else if (mSize.x == 0.0f) {
             width = static_cast<size_t>(static_cast<double>(mSize.y) * sizeRatio);
             height = static_cast<size_t>(mSize.y);
         }
@@ -148,6 +171,9 @@ void LottieAnimComponent::setAnimation(const std::string& path)
 
     mSize.x = static_cast<float>(width);
     mSize.y = static_cast<float>(height);
+
+    if (!mTargetIsMax)
+        mTargetSize = mSize;
 
     mPictureRGBA.resize(width * height * 4);
     mSurface = std::make_unique<rlottie::Surface>(reinterpret_cast<uint32_t*>(&mPictureRGBA[0]),
@@ -207,7 +233,7 @@ void LottieAnimComponent::resetFileAnimation()
     if (mAnimation != nullptr) {
         if (mFuture.valid())
             mFuture.get();
-        mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+        mFuture = mAnimation->render(mFrameNum, *mSurface, false);
         mLastRenderedFrame = static_cast<int>(mFrameNum);
     }
 }
@@ -225,35 +251,40 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                                      unsigned int properties)
 {
     using namespace ThemeFlags;
+    GuiComponent::applyTheme(theme, view, element, properties ^ ThemeFlags::SIZE);
+
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "animation")};
+    if (!elem)
+        return;
+
+    const glm::vec2 scale {glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
     if (elem->has("size")) {
-        glm::vec2 size {elem->get<glm::vec2>("size")};
-        if (size.x == 0.0f && size.y == 0.0f) {
-            LOG(LogWarning)
-                << "LottieAnimComponent: Invalid theme configuration, <size> defined as \""
-                << size.x << " " << size.y << "\"";
-            return;
+        glm::vec2 animationSize {elem->get<glm::vec2>("size")};
+        if (animationSize == glm::vec2 {0.0f, 0.0f}) {
+            LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, property "
+                               "\"size\" for element \""
+                            << element.substr(10) << "\" is set to zero";
+            animationSize = {0.01f, 0.01f};
         }
+        if (animationSize.x > 0.0f)
+            animationSize.x = glm::clamp(animationSize.x, 0.01f, 1.0f);
+        if (animationSize.y > 0.0f)
+            animationSize.y = glm::clamp(animationSize.y, 0.01f, 1.0f);
+        setSize(animationSize * scale);
+    }
+    else if (elem->has("maxSize")) {
+        const glm::vec2 animationMaxSize {glm::clamp(elem->get<glm::vec2>("maxSize"), 0.01f, 1.0f)};
+        setSize(animationMaxSize * scale);
+        mTargetIsMax = true;
+        mTargetSize = mSize;
     }
 
     if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))
         mComponentThemeFlags |= ComponentThemeFlags::METADATA_ELEMENT;
 
-    if (elem->has("speed")) {
-        const float speed {elem->get<float>("speed")};
-        if (speed < 0.2f || speed > 3.0f) {
-            LOG(LogWarning)
-                << "LottieAnimComponent: Invalid theme configuration, <speed> defined as \""
-                << std::fixed << std::setprecision(1) << speed << "\"";
-        }
-        else {
-            mSpeedModifier = speed;
-        }
-    }
-
-    if (elem->has("keepAspectRatio"))
-        mKeepAspectRatio = elem->get<bool>("keepAspectRatio");
+    if (elem->has("speed"))
+        mSpeedModifier = glm::clamp(elem->get<float>("speed"), 0.2f, 3.0f);
 
     if (elem->has("direction")) {
         const std::string& direction {elem->get<std::string>("direction")};
@@ -274,26 +305,16 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mAlternate = true;
         }
         else {
-            LOG(LogWarning)
-                << "LottieAnimComponent: Invalid theme configuration, <direction> defined as \""
-                << direction << "\"";
+            LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, property "
+                               "\"direction\" for element \""
+                            << element.substr(10) << "\" defined as \"" << direction << "\"";
             mStartDirection = "normal";
             mAlternate = false;
         }
     }
 
-    GuiComponent::applyTheme(theme, view, element, properties);
-
-    if (elem->has("path")) {
-        std::string path {elem->get<std::string>("path")};
-        if (path != "") {
-            setAnimation(path);
-        }
-    }
-    else {
-        LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, <path> not set";
-        return;
-    }
+    if (elem->has("path"))
+        setAnimation(elem->get<std::string>("path"));
 }
 
 void LottieAnimComponent::update(int deltaTime)
@@ -403,7 +424,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
                 mAnimationStartTime = std::chrono::system_clock::now();
         }
 
-        bool renderNextFrame = false;
+        bool renderNextFrame {false};
 
         if (mFuture.valid()) {
             if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
@@ -458,15 +479,23 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         }
 
         if (renderNextFrame && !mHoldFrame) {
-            mFuture = mAnimation->render(mFrameNum, *mSurface, mKeepAspectRatio);
+            mFuture = mAnimation->render(mFrameNum, *mSurface, false);
             mLastRenderedFrame = static_cast<int>(mFrameNum);
         }
     }
 
     mRenderer->setMatrix(trans);
 
-    if (Settings::getInstance()->getBool("DebugImage"))
+    if (Settings::getInstance()->getBool("DebugImage")) {
+
+        if (mTargetIsMax) {
+            const glm::vec2 targetSizePos {
+                glm::round((mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f})};
+            mRenderer->drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
+                                0xFF000033, 0xFF000033);
+        }
         mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0xFF000033, 0xFF000033);
+    }
 
     if (mTexture->getSize().x != 0.0f) {
         mTexture->bind();
@@ -481,7 +510,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         // clang-format on
 
         // Round vertices.
-        for (int i = 0; i < 4; ++i)
+        for (int i {0}; i < 4; ++i)
             vertices[i].position = glm::round(vertices[i].position);
 
         vertices->brightness = mBrightness;
