@@ -1,6 +1,6 @@
-# slate-DE for EmulationStation Desktop Edition
+# slate-es-de for EmulationStation Desktop Edition
 
-slate-DE is an official theme set for ES-DE that supports all systems as well as the latest application features.
+slate-es-de is an official theme set for ES-DE that supports all systems as well as the latest application features.
 
 The following options are included:
 

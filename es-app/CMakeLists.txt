@@ -172,8 +172,8 @@ if(WIN32)
 
     install(FILES ../LICENSE DESTINATION .)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION .)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-DE DESTINATION themes)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-DE DESTINATION themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de DESTINATION themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de DESTINATION themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION .)
 elseif(APPLE)
     # For completely unknown reasons, when generating a Bundle using cpack, an extra 'Resources'
@@ -215,8 +215,8 @@ elseif(APPLE)
 
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE DESTINATION ../Resources)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources DESTINATION ../Resources)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-DE DESTINATION ../Resources/themes)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-DE DESTINATION ../Resources/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de DESTINATION ../Resources/themes)
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de DESTINATION ../Resources/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION ../Resources)
 else()
     install(TARGETS emulationstation RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
@@ -239,9 +239,9 @@ else()
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/metainfo)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-DE
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/modern-es-de
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation/themes)
-    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-DE
+    install(DIRECTORY ${CMAKE_SOURCE_DIR}/themes/slate-es-de
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation/themes)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/resources
         DESTINATION ${CMAKE_INSTALL_PREFIX}/share/emulationstation)

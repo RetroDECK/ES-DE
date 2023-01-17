@@ -811,10 +811,10 @@ const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
         mThemeSets.find(Settings::getInstance()->getString("ThemeSet"))};
     if (set == mThemeSets.cend()) {
         // Currently configured theme set is missing, attempt to load the default theme set
-        // slate-DE instead, and if that's also missing then pick the first available set.
+        // slate-es-de instead, and if that's also missing then pick the first available set.
         bool defaultSetFound {true};
 
-        set = mThemeSets.find("slate-DE");
+        set = mThemeSets.find("slate-es-de");
 
         if (set == mThemeSets.cend()) {
             set = mThemeSets.cbegin();

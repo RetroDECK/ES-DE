@@ -1,6 +1,6 @@
 *
 !.gitignore
-!modern-DE
-!modern-DE/**
-!slate-DE
-!slate-DE/**
+!modern-es-de
+!modern-es-de/**
+!slate-es-de
+!slate-es-de/**

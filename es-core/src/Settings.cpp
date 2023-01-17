@@ -152,7 +152,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperRetryPeerVerification"] = {false, false};
 
     // UI settings.
-    mStringMap["ThemeSet"] = {"slate-DE", "slate-DE"};
+    mStringMap["ThemeSet"] = {"slate-es-de", "slate-es-de"};
     mStringMap["ThemeVariant"] = {"", ""};
     mStringMap["ThemeColorScheme"] = {"", ""};
     mStringMap["ThemeAspectRatio"] = {"", ""};
