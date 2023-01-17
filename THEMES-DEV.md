@@ -2,7 +2,7 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
-If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `slate-DE`. Because ES-DE theme functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. It would be confusing and annoying for users that attempt to use ES-DE theme sets in older EmulationStation forks as they would get unthemed systems, crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
+If creating theme sets specifically for ES-DE, please add `-es-de` to the theme name, as in `slate-es-de`. Because ES-DE theme functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. It would be confusing and annoying for users that attempt to use ES-DE theme sets in older EmulationStation forks as they would get unthemed systems, crashes, error messages or corrupted graphics. At least the -es-de extension is a visual indicator that it's an ES-DE specific theme set.
 
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
@@ -56,7 +56,7 @@ There are two places that ES-DE can load theme sets from:
 * `[INSTALLATION PATH]/themes/[THEME_SET]/`
 
 An example installation path would be: \
-`/usr/share/emulationstation/themes/slate-DE/`
+`/usr/share/emulationstation/themes/slate-es-de/`
 
 If a theme set with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
 
@@ -1910,7 +1910,8 @@ Properties:
     - Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
     - Default is `normal`
 * `interpolation` - type: STRING
-    - Interpolation method to use when scaling GIF animations. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. This property has no effect on Lottie animations.
+    - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
+    - This property can only be used for GIF animations.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
 * `brightness` - type: FLOAT

@@ -111,9 +111,9 @@ https://www.mamedev.org
 CA certificates (for TLS/SSL support on Windows) \
 https://wiki.mozilla.org/CA
 
-# slate-DE theme set
+# Slate theme set
 
-Recalbox Multi (slate-DE is based on this theme, using assets from before their change to a more restrictive license in 2018) \
+Recalbox Multi (Slate is based on this theme, using assets from before their change to a more restrictive license in 2018) \
 https://gitlab.com/recalbox/recalbox-themes
 
 Carbon (some graphics taken from this theme) \
@@ -121,7 +121,7 @@ https://github.com/RetroPie/es-theme-carbon
 
 # Sounds
 
-Used by the default slate-DE theme as well as for fallback sounds (for themes that lack navigation sounds).
+Used by the default Slate theme as well as for fallback sounds (for themes that lack navigation sounds).
 
 https://freesound.org/people/adcbicycle/sounds/14066
 

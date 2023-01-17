@@ -25,8 +25,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Added a new grid component that is usable in both the system and gamelist views
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
-* Renamed the default theme set from rbsimple-DE to slate-DE
-* Ported modern-DE to the new theme engine
+* Renamed the default theme set from rbsimple-DE to slate-es-de
+* Ported modern-DE to the new theme engine and renamed it to modern-es-de
 * Added variant trigger (override) support to replicate the legacy theme engine automatic view style switching
 * Replaced the NanoSVG library with LunaSVG for greatly improved SVG rendering capabilities
 * Added support for caching of SVG images

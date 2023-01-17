@@ -1,6 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE) v1.2 - Themes
 
-If creating theme sets specifically for ES-DE, please add `-DE` to the theme name, as in `rbsimple-DE`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -DE extension is a visual indicator that it's an ES-DE specific theme set.
+If creating theme sets specifically for ES-DE, please add `-es-de` to the theme name, as in `slate-es-de`. Because the ES-DE theme support has already deviated somehow from the RetroPie EmulationStation fork and will continue to deviate further in the future, the theme set will likely not be backwards compatible. It would be confusing and annoying for a user that downloads and attempts to use an ES-DE theme set in another EmulationStation fork only to get crashes, error messages or corrupted graphics. At least the -es-de extension is a visual indicator that it's an ES-DE specific theme set.
 
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
@@ -52,7 +52,7 @@ There are two places that ES-DE can load theme sets from:
 * `[INSTALLATION PATH]/themes/[THEME_SET]/`
 
 An example installation path would be: \
-`/usr/share/emulationstation/themes/slate-DE/`
+`/usr/share/emulationstation/themes/slate-es-de/`
 
 If a theme set with the same name exists in both locations, the one in the home directory will be loaded and the other one will be skipped.
 
