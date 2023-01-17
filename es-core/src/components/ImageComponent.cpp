@@ -18,7 +18,7 @@
 
 ImageComponent::ImageComponent(bool forceLoad, bool dynamic)
     : mRenderer {Renderer::getInstance()}
-    , mTargetSize {0, 0}
+    , mTargetSize {0.0f, 0.0f}
     , mFlipX {false}
     , mFlipY {false}
     , mTargetIsMax {false}
@@ -370,10 +370,12 @@ void ImageComponent::render(const glm::mat4& parentTrans)
 
     if (mTexture && mOpacity > 0.0f) {
         if (Settings::getInstance()->getBool("DebugImage")) {
-            glm::vec2 targetSizePos {
-                glm::round((mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f})};
-            mRenderer->drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
-                                0xFF000033, 0xFF000033);
+            if (mTargetIsMax) {
+                const glm::vec2 targetSizePos {
+                    glm::round((mTargetSize - mSize) * mOrigin * glm::vec2 {-1.0f})};
+                mRenderer->drawRect(targetSizePos.x, targetSizePos.y, mTargetSize.x, mTargetSize.y,
+                                    0xFF000033, 0xFF000033);
+            }
             if (mClipRegion == glm::vec4 {0.0f, 0.0f, 0.0f, 0.0f})
                 mRenderer->drawRect(0.0f, 0.0f, std::round(mSize.x), std::round(mSize.y),
                                     0xFF000033, 0xFF000033);
@@ -438,9 +440,9 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (!elem)
         return;
 
-    glm::vec2 scale {getParent() ?
-                         getParent()->getSize() :
-                         glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
+    const glm::vec2 scale {getParent() ?
+                               getParent()->getSize() :
+                               glm::vec2(Renderer::getScreenWidth(), Renderer::getScreenHeight())};
 
     if (properties & ThemeFlags::SIZE) {
         if (elem->has("size")) {
