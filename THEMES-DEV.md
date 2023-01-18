@@ -2,7 +2,11 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
-If creating theme sets specifically for ES-DE, please add `-es-de` to the theme name, as in `slate-es-de`. Because ES-DE theme functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. It would be confusing and annoying for users that attempt to use ES-DE theme sets in older EmulationStation forks as they would get unthemed systems, crashes, error messages or corrupted graphics. At least the -es-de extension is a visual indicator that it's an ES-DE specific theme set.
+If creating theme sets specifically for ES-DE, please add `-es-de` to the theme name, as in `slate-es-de`. Because ES-DE theme engine functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. It would be confusing and annoying for users that attempt to use ES-DE theme sets in older EmulationStation forks as they would get unthemed systems, crashes, error messages and so on. At least the -es-de extension is a visual indicator that it's an ES-DE specific theme set.
+
+Before your start, make sure to download the _Theme engine examples_ theme set that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view textlists, grids etc:
+
+https://gitlab.com/es-de/themes/theme-engine-examples-es-de
 
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
@@ -287,7 +291,7 @@ The mandatory _name_ attribute is used to specificy which variants to use, and m
 
 It could sometimes be a good idea to separate the variant configuration into separate files that are then included from the main theme file as this could improve the structure and readability of the theme set configuration.
 
-It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `info_text_01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. Alternatively you could use the special _all_ variant to define common configuration used by all variants in the theme set.
+It's also possible to apply only portions of the theme configuration to the variants and keep a common set of elements that are shared between all variants. This is accomplished by simply adding the shared configuration without specifying a variant, as is shown in the first example below for the `infoText01` text element. Just be aware that the variant-specific configuration will always be loaded after the general configuration even if it's located above the general configuration in the XML file. As this is potentially confusing and error-prone it's instead generally recommended to use the special _all_ variant to define common configuration used by all variants in the theme set rather than mixing variants configuration with non-variants configuration.
 
 Here are some example uses of the `<variant>` functionality:
 
@@ -1124,7 +1128,6 @@ For any given step, the configuration is parsed in the exact order that it's def
 ## Property data types
 
 * NORMALIZED_PAIR - two decimal values delimited by a space, for example `0.25 0.5`
-* NORMALIZED_RECT - four decimal values delimited by a space, for example `0.25 0.5 0.10 0.30`
 * PATH - path to a resource. If the first character is a tilde (`~`) then it will be expanded to the user's home directory (`$HOME` for Unix and macOS and `%HOMEPATH%` for Windows) unless overridden using the --home command line option.  If the first character is a dot (`.`) then the resource will be searched for relative to the location of the theme file, for example `./myfont.ttf` or `./../core/fonts/myfont.ttf`
 * BOOLEAN - `true`/`1` or `false`/`0`
 * COLOR - a hexadecimal RGB or RGBA color value consisting of 6 or 8 digits. If a 6 digit value is used then the alpha channel will be set to `FF` (completely opaque)

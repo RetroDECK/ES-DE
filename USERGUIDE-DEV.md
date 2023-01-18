@@ -3058,7 +3058,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 
 | System name           | Full name                                      | Default emulator                  | Alternative emulators             | Needs BIOS   | Recommended game setup               |
 | :-------------------- | :--------------------------------------------- | :-------------------------------- | :-------------------------------- | :----------- | :----------------------------------- |
-| 3do                   | The 3DO Company 3DO                            | Opera                             |                                   | Yes          |                                      |
+| 3do                   | 3DO Interactive Multiplayer                    | Opera                             |                                   | Yes          |                                      |
 | ags                   | Adventure Game Studio Game Engine              | _Native game binaries_            |                                   | No           | Shortcut (.desktop/.app/.lnk) file in root folder  |
 | amiga                 | Commodore Amiga                                | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |
 | amiga1200             | Commodore Amiga 1200                           | PUAE                              | PUAE 2021                         | Yes          | See the specific _Commodore Amiga_ section elsewhere in this guide |

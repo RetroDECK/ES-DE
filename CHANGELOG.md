@@ -86,7 +86,7 @@ Overall application speed and performance has been greatly improved with faster 
 * (Linux) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame, neogeo, neogeocd and neogeocdjp systems
 * (Windows) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame and neogeo system
 * Set DOSBox-X and DOSBox Staging to start in the game directory so per-game dosbox.conf files can be used
-* Changed the fullname for the 3do system from "3DO" to "The 3DO Company 3DO"
+* Changed the fullname for the 3do system from "3DO" to "3DO Interactive Multiplayer"
 * Changed the fullname for the atomiswave system from "Atomiswave" to "Sammy Corporation Atomiswave"
 * Changed the fullname for the bbcmicro system from "BBC Micro" to "Acorn Computers BBC Micro"
 * Changed the fullname for the colecovision system from "ColecoVision" to "Coleco ColecoVision"
