@@ -19,6 +19,12 @@ The following options are included:
 - 16:9
 - 4:3
 
+3 transitions:
+
+- Slide
+- Instant
+- Fade
+
 There is no need for a dedicated 16:10 aspect ratio as the 16:9 layout scales really well.
 
 # Credits

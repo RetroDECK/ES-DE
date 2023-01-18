@@ -10,22 +10,54 @@
     <include>./colors.xml</include>
 
     <!-- Per-system band colors and platform info -->
-    <variant name="all">
-        <include>./${system.theme}/colors.xml</include>
-        <include>./${system.theme}/systeminfo.xml</include>
-    </variant>
+    <include>./${system.theme}/colors.xml</include>
+    <include>./${system.theme}/systeminfo.xml</include>
 
     <variables>
+        <regularFont>./core/fonts/Exo2-RegularCondensed.otf</regularFont>
+        <semiBoldFont>./core/fonts/Exo2-SemiBoldCondensed.otf</semiBoldFont>
+        <boldFont>./core/fonts/Exo2-BoldCondensed.otf</boldFont>
         <systemConsoleImage>./${system.theme}/images/consolegame.svg</systemConsoleImage>
         <systemControllerImage>./${system.theme}/images/controller.svg</systemControllerImage>
         <systemLogo>./${system.theme}/images/logo.svg</systemLogo>
     </variables>
 
-    <variant name="withVideos, withoutVideos, noGameMedia">
-        <transitions>slide</transitions>
-    </variant>
+    <variant name="all">
+        <view name="system, gamelist">
+            <image name="background">
+                <pos>0 0</pos>
+                <size>1 1</size>
+                <path>./core/images/background.png</path>
+                <tile>true</tile>
+                <color>${backgroundColor}</color>
+                <zIndex>0</zIndex>
+            </image>
+            <image name="band1">
+                <pos>0.80 0</pos>
+                <size>0.03 1</size>
+                <path>./core/images/band.png</path>
+                <zIndex>5</zIndex>
+            </image>
+            <image name="band2">
+                <pos>0.829 0</pos>
+                <size>0.03 1</size>
+                <path>./core/images/band.png</path>
+                <zIndex>5</zIndex>
+            </image>
+            <image name="band3">
+                <pos>0.858 0</pos>
+                <size>0.03 1</size>
+                <path>./core/images/band.png</path>
+                <zIndex>5</zIndex>
+            </image>
+            <image name="band4">
+                <pos>0.887 0</pos>
+                <size>0.03 1</size>
+                <path>./core/images/band.png</path>
+                <zIndex>5</zIndex>
+            </image>
+        </view>
 
-    <variant name="withVideos, withoutVideos, noGameMedia">
         <view name="system">
             <carousel name="systemCarousel">
                 <pos>0 0.383796</pos>
@@ -40,7 +72,7 @@
                 <color>${systemCarouselColor}</color>
                 <text>${system.fullName}</text>
                 <textColor>${systemCarouselTextColor}</textColor>
-                <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+                <fontPath>${regularFont}</fontPath>
                 <fontSize>0.055</fontSize>
                 <letterCase>uppercase</letterCase>
                 <lineSpacing>1.2</lineSpacing>
@@ -50,13 +82,62 @@
                 <size>1 0.056</size>
                 <origin>0.5 0.5</origin>
                 <systemdata>gamecount</systemdata>
-                <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
+                <fontPath>${regularFont}</fontPath>
                 <fontSize>0.035</fontSize>
                 <horizontalAlignment>center</horizontalAlignment>
                 <color>${systemGameCounterColor}</color>
                 <backgroundColor>${systemGameCounterBackgroundColor}</backgroundColor>
                 <letterCase>uppercase</letterCase>
                 <zIndex>50</zIndex>
+            </text>
+            <image name="consolegame">
+                <pos>0.02 0.327</pos>
+                <maxSize>0.4 0.28</maxSize>
+                <origin>0 1</origin>
+                <path>${systemConsoleImage}</path>
+            </image>
+            <image name="controller">
+                <pos>0.78 0.327</pos>
+                <maxSize>0.12 0.28</maxSize>
+                <origin>1 1</origin>
+                <path>${systemControllerImage}</path>
+            </image>
+            <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
+                <size>0.4 0.03</size>
+                <fontPath>${semiBoldFont}</fontPath>
+                <fontSize>0.021</fontSize>
+                <horizontalAlignment>left</horizontalAlignment>
+                <color>${systemInfoTextColor}</color>
+            </text>
+            <text name="info1">
+                <pos>0.38 0.695</pos>
+            </text>
+            <text name="info2">
+                <pos>0.38 0.716</pos>
+            </text>
+            <text name="info3">
+                <pos>0.38 0.737</pos>
+            </text>
+            <text name="info4">
+                <pos>0.38 0.758</pos>
+            </text>
+            <text name="info5">
+                <pos>0.38 0.799</pos>
+            </text>
+            <text name="info6">
+                <pos>0.38 0.820</pos>
+            </text>
+            <text name="info7">
+                <pos>0.38 0.841</pos>
+            </text>
+            <text name="info8">
+                <pos>0.38 0.862</pos>
+            </text>
+            <text name="info9">
+                <pos>0.38 0.883</pos>
+            </text>
+            <text name="info10">
+                <pos>0.38 0.904</pos>
             </text>
             <helpsystem name="help">
                 <pos>0.012 0.955</pos>
@@ -67,6 +148,7 @@
                 <fontSize>0.035</fontSize>
             </helpsystem>
         </view>
+
         <view name="gamelist">
             <textlist name="gamelistTextlist">
                 <pos>0.025 0.201</pos>
@@ -75,7 +157,7 @@
                 <selectedColor>${gamelistTextlistSelectedColor}</selectedColor>
                 <primaryColor>${gamelistTextlistPrimaryColor}</primaryColor>
                 <secondaryColor>${gamelistTextlistSecondaryColor}</secondaryColor>
-                <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
+                <fontPath>${boldFont}</fontPath>
                 <fontSize>0.025</fontSize>
                 <horizontalAlignment>left</horizontalAlignment>
                 <horizontalMargin>0.01</horizontalMargin>
@@ -83,6 +165,185 @@
                 <indicators>symbols</indicators>
                 <collectionIndicators>symbols</collectionIndicators>
             </textlist>
+            <image name="consolegame">
+                <pos>0.02 0.17</pos>
+                <maxSize>0.4 0.15</maxSize>
+                <origin>0 1</origin>
+                <path>${systemConsoleImage}</path>
+            </image>
+            <image name="logo">
+                <pos>0.78 0.17</pos>
+                <maxSize>0.32 0.13</maxSize>
+                <origin>1 1</origin>
+                <path>${systemLogo}</path>
+            </image>
+            <image name="backframe2">
+                <pos>0.02 0.19</pos>
+                <size>0.4 0.735</size>
+                <path>./core/images/frame.png</path>
+                <color>${gamelistBackFrameColor}</color>
+                <zIndex>10</zIndex>
+            </image>
+            <image name="backframe3">
+                <pos>0.44 0.19</pos>
+                <size>0.54 0.735</size>
+                <path>./core/images/frame.png</path>
+                <color>${gamelistBackFrameColor}</color>
+                <zIndex>10</zIndex>
+            </image>
+            <text name="collectionsSystemName, customCollectionsSystemName">
+                <size>0.214 0.025</size>
+                <origin>1 1</origin>
+                <metadataElement>true</metadataElement>
+                <fontPath>${regularFont}</fontPath>
+                <fontSize>0.025</fontSize>
+                <horizontalAlignment>right</horizontalAlignment>
+                <color>${gamelistCollectionsHeaderColor}</color>
+                <letterCase>uppercase</letterCase>
+                <lineSpacing>1.0</lineSpacing>
+            </text>
+            <text name="customCollectionsHeader, customCollectionsHeaderNoMedia">
+                <size>0.214 0.05</size>
+                <origin>1 1</origin>
+                <fontPath>${regularFont}</fontPath>
+                <fontSize>0.05</fontSize>
+                <horizontalAlignment>right</horizontalAlignment>
+                <color>${gamelistCollectionsHeaderColor}</color>
+                <letterCase>uppercase</letterCase>
+                <lineSpacing>1.0</lineSpacing>
+            </text>
+            <text name="collectionsSystemName, customCollectionsHeader">
+                <pos>0.42 0.174</pos>
+            </text>
+            <text name="customCollectionsSystemName">
+                <pos>0.42 0.128</pos>
+            </text>
+            <text name="customCollectionsHeaderNoMedia">
+                <pos>0.78 0.10</pos>
+                <visible>false</visible>
+            </text>
+            <text name="labelReleasedate, labelDeveloper, labelPublisher,
+                        labelGenre, labelPlayers, labelLastplayed">
+                <size>0.14 0.02</size>
+                <fontPath>${boldFont}</fontPath>
+                <fontSize>0.0195</fontSize>
+                <color>${gamelistDefaultTextColor}</color>
+                <letterCase>uppercase</letterCase>
+            </text>
+            <text name="developer, publisher, genre, players">
+                <size>0.14 0.02</size>
+                <fontPath>${regularFont}</fontPath>
+                <fontSize>0.0195</fontSize>
+                <color>${gamelistDefaultTextColor}</color>
+                <letterCase>uppercase</letterCase>
+            </text>
+            <text name="description">
+                <pos>0.454 0.675</pos>
+                <size>0.346 0.242</size>
+                <container>true</container>
+                <containerVerticalSnap>true</containerVerticalSnap>
+                <containerScrollSpeed>1</containerScrollSpeed>
+                <containerStartDelay>4.5</containerStartDelay>
+                <containerResetDelay>7</containerResetDelay>
+                <metadata>description</metadata>
+                <fontPath>${semiBoldFont}</fontPath>
+                <fontSize>0.0195</fontSize>
+                <color>${gamelistDefaultTextColor}</color>
+                <letterCase>uppercase</letterCase>
+                <lineSpacing>1.2</lineSpacing>
+            </text>
+            <datetime name="releasedate, lastplayed">
+                <size>0.14 0.02</size>
+                <fontPath>${regularFont}</fontPath>
+                <fontSize>0.0195</fontSize>
+                <color>${gamelistDefaultTextColor}</color>
+                <letterCase>uppercase</letterCase>
+            </datetime>
+            <text name="labelReleasedate">
+                <pos>0.815 0.2755</pos>
+                <text>Released:</text>
+                <metadataElement>true</metadataElement>
+            </text>
+            <datetime name="releasedate">
+                <pos>0.83 0.3005</pos>
+                <metadata>releasedate</metadata>
+            </datetime>
+            <text name="labelDeveloper">
+                <pos>0.815 0.3355</pos>
+                <text>Developer:</text>
+                <metadataElement>true</metadataElement>
+            </text>
+            <text name="developer">
+                <pos>0.83 0.3605</pos>
+                <metadata>developer</metadata>
+            </text>
+            <text name="labelPublisher">
+                <pos>0.815 0.3955</pos>
+                <text>Publisher:</text>
+                <metadataElement>true</metadataElement>
+            </text>
+            <text name="publisher">
+                <pos>0.83 0.4205</pos>
+                <metadata>publisher</metadata>
+            </text>
+            <text name="labelGenre">
+                <pos>0.815 0.4555</pos>
+                <text>Genre:</text>
+                <metadataElement>true</metadataElement>
+            </text>
+            <text name="genre">
+                <pos>0.83 0.4805</pos>
+                <metadata>genre</metadata>
+            </text>
+            <text name="labelPlayers">
+                <pos>0.815 0.5155</pos>
+                <text>Players:</text>
+                <metadataElement>true</metadataElement>
+            </text>
+            <text name="players">
+                <pos>0.83 0.5405</pos>
+                <metadata>players</metadata>
+            </text>
+            <text name="labelLastplayed">
+                <pos>0.815 0.5755</pos>
+                <text>Last played:</text>
+                <metadataElement>true</metadataElement>
+            </text>
+            <datetime name="lastplayed">
+                <pos>0.83 0.6005</pos>
+                <metadata>lastplayed</metadata>
+            </datetime>
+            <rating name="rating">
+                <pos>0.453 0.203</pos>
+                <size>0 0.03</size>
+                <interpolation>nearest</interpolation>
+                <color>${gamelistRatingColor}</color>
+                <filledPath>./core/images/rating_filled.svg</filledPath>
+                <unfilledPath>./core/images/rating_empty.svg</unfilledPath>
+                <overlay>false</overlay>
+            </rating>
+            <gamelistinfo name="gamelistInfo">
+                <pos>0.773 0.192</pos>
+                <size>0.2 0.042</size>
+                <fontPath>${boldFont}</fontPath>
+                <fontSize>0.025</fontSize>
+                <horizontalAlignment>right</horizontalAlignment>
+                <color>${gamelistInfoColor}</color>
+            </gamelistinfo>
+            <badges name="badges">
+                <pos>0.815 0.675</pos>
+                <size>0.13 0.235</size>
+                <horizontalAlignment>left</horizontalAlignment>
+                <direction>row</direction>
+                <lines>3</lines>
+                <itemsPerLine>3</itemsPerLine>
+                <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
+                <controllerPos>0.5 0.572</controllerPos>
+                <controllerSize>0.81</controllerSize>
+                <folderLinkPos>0.54 0.64</folderLinkPos>
+                <folderLinkSize>0.31</folderLinkSize>
+                <itemMargin>-1.0 0.005</itemMargin>
+            </badges>
             <helpsystem name="help">
                 <pos>0.012 0.955</pos>
                 <textColor>${gamelistHelpColor}</textColor>
@@ -93,265 +354,6 @@
             </helpsystem>
         </view>
     </variant>
-
-    <view name="system, gamelist">
-        <image name="background">
-            <pos>0 0</pos>
-            <size>1 1</size>
-            <path>./core/images/background.png</path>
-            <tile>true</tile>
-            <color>${backgroundColor}</color>
-            <zIndex>0</zIndex>
-        </image>
-        <image name="band1">
-            <pos>0.80 0</pos>
-            <size>0.03 1</size>
-            <path>./core/images/band.png</path>
-            <zIndex>5</zIndex>
-        </image>
-        <image name="band2">
-            <pos>0.829 0</pos>
-            <size>0.03 1</size>
-            <path>./core/images/band.png</path>
-            <zIndex>5</zIndex>
-        </image>
-        <image name="band3">
-            <pos>0.858 0</pos>
-            <size>0.03 1</size>
-            <path>./core/images/band.png</path>
-            <zIndex>5</zIndex>
-        </image>
-        <image name="band4">
-            <pos>0.887 0</pos>
-            <size>0.03 1</size>
-            <path>./core/images/band.png</path>
-            <zIndex>5</zIndex>
-        </image>
-    </view>
-
-    <view name="system">
-        <image name="consolegame">
-            <pos>0.02 0.327</pos>
-            <maxSize>0.4 0.28</maxSize>
-            <origin>0 1</origin>
-            <path>${systemConsoleImage}</path>
-        </image>
-        <image name="controller">
-            <pos>0.78 0.327</pos>
-            <maxSize>0.12 0.28</maxSize>
-            <origin>1 1</origin>
-            <path>${systemControllerImage}</path>
-        </image>
-        <text name="info1, info2, info3, info4, info5, info6, info7, info8, info9, info10">
-            <size>0.4 0.03</size>
-            <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
-            <fontSize>0.021</fontSize>
-            <horizontalAlignment>left</horizontalAlignment>
-            <color>${systemInfoTextColor}</color>
-        </text>
-        <text name="info1">
-            <pos>0.38 0.695</pos>
-        </text>
-        <text name="info2">
-            <pos>0.38 0.716</pos>
-        </text>
-        <text name="info3">
-            <pos>0.38 0.737</pos>
-        </text>
-        <text name="info4">
-            <pos>0.38 0.758</pos>
-        </text>
-        <text name="info5">
-            <pos>0.38 0.799</pos>
-        </text>
-        <text name="info6">
-            <pos>0.38 0.820</pos>
-        </text>
-        <text name="info7">
-            <pos>0.38 0.841</pos>
-        </text>
-        <text name="info8">
-            <pos>0.38 0.862</pos>
-        </text>
-        <text name="info9">
-            <pos>0.38 0.883</pos>
-        </text>
-        <text name="info10">
-            <pos>0.38 0.904</pos>
-        </text>
-    </view>
-
-    <view name="gamelist">
-        <image name="consolegame">
-            <pos>0.02 0.17</pos>
-            <maxSize>0.4 0.15</maxSize>
-            <origin>0 1</origin>
-            <path>${systemConsoleImage}</path>
-        </image>
-        <image name="logo">
-            <pos>0.78 0.17</pos>
-            <maxSize>0.32 0.13</maxSize>
-            <origin>1 1</origin>
-            <path>${systemLogo}</path>
-        </image>
-        <image name="backframe2">
-            <pos>0.02 0.19</pos>
-            <size>0.4 0.735</size>
-            <path>./core/images/frame.png</path>
-            <color>${gamelistBackFrameColor}</color>
-            <zIndex>10</zIndex>
-        </image>
-        <image name="backframe3">
-            <pos>0.44 0.19</pos>
-            <size>0.54 0.735</size>
-            <path>./core/images/frame.png</path>
-            <color>${gamelistBackFrameColor}</color>
-            <zIndex>10</zIndex>
-        </image>
-        <text name="collectionsSystemName">
-            <size>0.214 0.025</size>
-            <origin>1 1</origin>
-            <metadataElement>true</metadataElement>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.025</fontSize>
-            <horizontalAlignment>right</horizontalAlignment>
-            <color>${gamelistCustomCollectionsHeaderColor}</color>
-            <letterCase>uppercase</letterCase>
-            <lineSpacing>1.0</lineSpacing>
-        </text>
-        <text name="customCollectionsHeader">
-            <size>0.214 0.05</size>
-            <origin>1 1</origin>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.05</fontSize>
-            <horizontalAlignment>right</horizontalAlignment>
-            <color>${gamelistCustomCollectionsHeaderColor}</color>
-            <letterCase>uppercase</letterCase>
-            <lineSpacing>1.0</lineSpacing>
-        </text>
-        <text name="labelReleasedate, labelDeveloper, labelPublisher,
-                    labelGenre, labelPlayers, labelLastplayed">
-            <size>0.14 0.02</size>
-            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.0195</fontSize>
-            <color>${gamelistDefaultTextColor}</color>
-            <letterCase>uppercase</letterCase>
-        </text>
-        <text name="developer, publisher, genre, players">
-            <size>0.14 0.02</size>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.0195</fontSize>
-            <color>${gamelistDefaultTextColor}</color>
-            <letterCase>uppercase</letterCase>
-        </text>
-        <text name="description">
-            <pos>0.454 0.675</pos>
-            <size>0.346 0.242</size>
-            <container>true</container>
-            <containerVerticalSnap>true</containerVerticalSnap>
-            <containerScrollSpeed>1</containerScrollSpeed>
-            <containerStartDelay>4.5</containerStartDelay>
-            <containerResetDelay>7</containerResetDelay>
-            <metadata>description</metadata>
-            <fontPath>./core/fonts/Exo2-SemiBoldCondensed.otf</fontPath>
-            <fontSize>0.0195</fontSize>
-            <color>${gamelistDefaultTextColor}</color>
-            <letterCase>uppercase</letterCase>
-            <lineSpacing>1.2</lineSpacing>
-        </text>
-        <datetime name="releasedate, lastplayed">
-            <size>0.14 0.02</size>
-            <fontPath>./core/fonts/Exo2-RegularCondensed.otf</fontPath>
-            <fontSize>0.0195</fontSize>
-            <color>${gamelistDefaultTextColor}</color>
-            <letterCase>uppercase</letterCase>
-        </datetime>
-        <text name="labelReleasedate">
-            <pos>0.815 0.2755</pos>
-            <text>Released:</text>
-            <metadataElement>true</metadataElement>
-        </text>
-        <datetime name="releasedate">
-            <pos>0.83 0.3005</pos>
-            <metadata>releasedate</metadata>
-        </datetime>
-        <text name="labelDeveloper">
-            <pos>0.815 0.3355</pos>
-            <text>Developer:</text>
-            <metadataElement>true</metadataElement>
-        </text>
-        <text name="developer">
-            <pos>0.83 0.3605</pos>
-            <metadata>developer</metadata>
-        </text>
-        <text name="labelPublisher">
-            <pos>0.815 0.3955</pos>
-            <text>Publisher:</text>
-            <metadataElement>true</metadataElement>
-        </text>
-        <text name="publisher">
-            <pos>0.83 0.4205</pos>
-            <metadata>publisher</metadata>
-        </text>
-        <text name="labelGenre">
-            <pos>0.815 0.4555</pos>
-            <text>Genre:</text>
-            <metadataElement>true</metadataElement>
-        </text>
-        <text name="genre">
-            <pos>0.83 0.4805</pos>
-            <metadata>genre</metadata>
-        </text>
-        <text name="labelPlayers">
-            <pos>0.815 0.5155</pos>
-            <text>Players:</text>
-            <metadataElement>true</metadataElement>
-        </text>
-        <text name="players">
-            <pos>0.83 0.5405</pos>
-            <metadata>players</metadata>
-        </text>
-        <text name="labelLastplayed">
-            <pos>0.815 0.5755</pos>
-            <text>Last played:</text>
-            <metadataElement>true</metadataElement>
-        </text>
-        <datetime name="lastplayed">
-            <pos>0.83 0.6005</pos>
-            <metadata>lastplayed</metadata>
-        </datetime>
-        <rating name="rating">
-            <pos>0.453 0.203</pos>
-            <size>0 0.03</size>
-            <interpolation>nearest</interpolation>
-            <color>${gamelistRatingColor}</color>
-            <filledPath>./core/images/rating_filled.svg</filledPath>
-            <unfilledPath>./core/images/rating_empty.svg</unfilledPath>
-            <overlay>false</overlay>
-        </rating>
-        <gamelistinfo name="gamelistInfo">
-            <pos>0.773 0.192</pos>
-            <size>0.2 0.042</size>
-            <fontPath>./core/fonts/Exo2-BoldCondensed.otf</fontPath>
-            <fontSize>0.025</fontSize>
-            <horizontalAlignment>right</horizontalAlignment>
-            <color>${gamelistInfoColor}</color>
-        </gamelistinfo>
-        <badges name="badges">
-            <pos>0.815 0.675</pos>
-            <size>0.13 0.235</size>
-            <horizontalAlignment>left</horizontalAlignment>
-            <direction>row</direction>
-            <lines>3</lines>
-            <itemsPerLine>3</itemsPerLine>
-            <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
-            <controllerPos>0.5 0.572</controllerPos>
-            <controllerSize>0.81</controllerSize>
-            <folderLinkPos>0.54 0.64</folderLinkPos>
-            <folderLinkSize>0.31</folderLinkSize>
-            <itemMargin>-1.0 0.005</itemMargin>
-        </badges>
-    </view>
 
     <variant name="withVideos">
         <view name="gamelist">
@@ -426,7 +428,7 @@
                 </text>
             </view>
             <view name="gamelist">
-                <text name="collectionsSystemName">
+                <text name="collectionsSystemName, customCollectionsSystemName">
                     <size>0.182 0.025</size>
                 </text>
                 <text name="customCollectionsHeader">
@@ -461,10 +463,11 @@
             <badges name="badges">
                 <visible>false</visible>
             </badges>
-            <text name="customCollectionsHeader">
-                <pos>0.78 0.10</pos>
-                <origin>1 1</origin>
-                <horizontalAlignment>right</horizontalAlignment>
+            <text name="customCollectionsHeaderNoMedia">
+                <visible>true</visible>
+            </text>
+            <text name="collectionsSystemName, customCollectionsSystemName, customCollectionsHeader">
+                <visible>false</visible>
             </text>
             <text name="labelReleasedate, labelDeveloper, labelPublisher, labelGenre, labelPlayers,
                         labelLastplayed, developer, publisher, genre, players, description">
@@ -480,25 +483,5 @@
                 <visible>false</visible>
             </rating>
         </view>
-    </variant>
-
-    <variant name="themeEngineTest_1">
-        <transitions>fadeAndSlide</transitions>
-        <include>./theme_engine_test_1.xml</include>
-    </variant>
-
-    <variant name="themeEngineTest_2">
-        <transitions>instantAndSlide</transitions>
-        <include>./theme_engine_test_2.xml</include>
-    </variant>
-
-    <variant name="themeEngineTest_3">
-        <transitions>instantAndSlide</transitions>
-        <include>./theme_engine_test_3.xml</include>
-    </variant>
-
-    <variant name="themeEngineTest_4">
-        <transitions>instantAndSlide</transitions>
-        <include>./theme_engine_test_4.xml</include>
     </variant>
 </theme>

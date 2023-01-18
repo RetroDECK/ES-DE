@@ -1,14 +1,12 @@
 <theme>
     <include>./../theme.xml</include>
 
-    <variant name="withVideos, withoutVideos, noGameMedia">
+    <variant name="all">
         <view name="gamelist">
-            <text name="collectionsSystemName">
-                <pos>0.42 0.128</pos>
+            <text name="customCollectionsSystemName">
                 <metadata>sourceSystemFullname</metadata>
             </text>
-            <text name="customCollectionsHeader">
-                <pos>0.42 0.174</pos>
+            <text name="customCollectionsHeader, customCollectionsHeaderNoMedia">
                 <metadata>systemFullname</metadata>
             </text>
         </view>

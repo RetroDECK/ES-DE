@@ -36,7 +36,7 @@
             <gamelistTextlistSelectedColor>AFAFAF</gamelistTextlistSelectedColor>
             <gamelistTextlistPrimaryColor>000000</gamelistTextlistPrimaryColor>
             <gamelistTextlistSecondaryColor>333333</gamelistTextlistSecondaryColor>
-            <gamelistCustomCollectionsHeaderColor>C6C6C6</gamelistCustomCollectionsHeaderColor>
+            <gamelistCollectionsHeaderColor>C6C6C6</gamelistCollectionsHeaderColor>
 
             <gamelistDefaultTextColor>000000</gamelistDefaultTextColor>
             <gamelistInfoColor>303030</gamelistInfoColor>
@@ -68,7 +68,7 @@
             <gamelistTextlistSelectedColor>9F9F9F</gamelistTextlistSelectedColor>
             <gamelistTextlistPrimaryColor>262626</gamelistTextlistPrimaryColor>
             <gamelistTextlistSecondaryColor>4D4D4D</gamelistTextlistSecondaryColor>
-            <gamelistCustomCollectionsHeaderColor>202020</gamelistCustomCollectionsHeaderColor>
+            <gamelistCollectionsHeaderColor>202020</gamelistCollectionsHeaderColor>
 
             <gamelistDefaultTextColor>262626</gamelistDefaultTextColor>
             <gamelistInfoColor>505050</gamelistInfoColor>
