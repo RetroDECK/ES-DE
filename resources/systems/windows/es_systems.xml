@@ -3,7 +3,7 @@
 <systemList>
     <system>
         <name>3do</name>
-        <fullname>The 3DO Company 3DO</fullname>
+        <fullname>3DO Interactive Multiplayer</fullname>
         <path>%ROMPATH%\3do</path>
         <extension>.bin .BIN .chd .CHD .cue .CUE .iso .ISO</extension>
         <command label="Opera">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\opera_libretro.dll %ROM%</command>
