@@ -776,13 +776,18 @@ void ThemeData::populateThemeSets()
                              << " theme set \"" << *it << "\"";
 #endif
                 if (!capabilities.legacyTheme) {
+                    int aspectRatios {0};
+                    if (capabilities.aspectRatios.size() > 0)
+                        aspectRatios = capabilities.aspectRatios.size() - 1;
                     LOG(LogDebug) << "Theme set includes support for "
                                   << capabilities.variants.size() << " variant"
                                   << (capabilities.variants.size() != 1 ? "s" : "") << ", "
                                   << capabilities.colorSchemes.size() << " color scheme"
-                                  << (capabilities.colorSchemes.size() != 1 ? "s" : "") << " and "
-                                  << capabilities.aspectRatios.size() << " aspect ratio"
-                                  << (capabilities.aspectRatios.size() != 1 ? "s" : "");
+                                  << (capabilities.colorSchemes.size() != 1 ? "s" : "") << ", "
+                                  << aspectRatios << " aspect ratio"
+                                  << (aspectRatios != 1 ? "s" : "") << " and "
+                                  << capabilities.transitions.size() << " transition"
+                                  << (capabilities.transitions.size() != 1 ? "s" : "");
                 }
                 ThemeSet set {*it, capabilities};
                 mThemeSets[set.getName()] = set;
