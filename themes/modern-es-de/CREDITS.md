@@ -1,7 +1,6 @@
-# EmulationStation Desktop Edition (ES-DE) - Modern credits
+# Modern for EmulationStation Desktop Edition - credits
 
-The theme Modern is based on [es-theme-switch](https://github.com/lilbud/es-theme-switch) by lilbud. The theme was modified for ES-DE by Sophia Hadash.
-
+The theme set modern-es-de is based on [es-theme-switch](https://github.com/lilbud/es-theme-switch) by lilbud. The theme was modified for ES-DE by Sophia Hadash.
 
 Credits
 =============

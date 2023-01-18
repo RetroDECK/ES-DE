@@ -21,6 +21,12 @@ The following options are included:
 - 4:3
 - 21:9
 
+3 transitions:
+
+- Instant
+- Instant and slide
+- Instant and fade
+
 # Credits
 
 The theme is based on [es-theme-switch](https://github.com/lilbud/es-theme-switch) by lilbud.

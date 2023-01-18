@@ -14,376 +14,380 @@
         <mainFont>./assets/fonts/nswitchui.ttf</mainFont>
     </variables>
 
-    <aspectRatio name="16:9">
-        <include>./aspect-ratio-16-9.xml</include>
-    </aspectRatio>
-    <aspectRatio name="16:10">
-        <include>./aspect-ratio-16-10.xml</include>
-    </aspectRatio>
-    <aspectRatio name="4:3">
-        <include>./aspect-ratio-4-3.xml</include>
-    </aspectRatio>
-    <aspectRatio name="21:9">
-        <include>./aspect-ratio-21-9.xml</include>
-    </aspectRatio>
+    <variant name="all">
+        <aspectRatio name="16:9">
+            <include>./aspect-ratio-16-9.xml</include>
+        </aspectRatio>
+        <aspectRatio name="16:10">
+            <include>./aspect-ratio-16-10.xml</include>
+        </aspectRatio>
+        <aspectRatio name="4:3">
+            <include>./aspect-ratio-4-3.xml</include>
+        </aspectRatio>
+        <aspectRatio name="21:9">
+            <include>./aspect-ratio-21-9.xml</include>
+        </aspectRatio>
+    </variant>
 
-    <view name="system, gamelist">
-        <image name="background">
-            <pos>0 0</pos>
-            <size>1 1</size>
-            <origin>0 0</origin>
-            <path>./assets/box.png</path>
-            <tile>true</tile>
-            <color>${backgroundColor}</color>
-            <zIndex>0</zIndex>
-        </image>
-        <image name="bottomLine">
-            <size>0.938 0.001</size>
-            <origin>0.5 0.5</origin>
-            <path>./assets/box.png</path>
-            <tile>false</tile>
-            <color>${tertiaryColor}</color>
-        </image>
-        <helpsystem name="help">
-            <origin>1 0</origin>
-            <textColor>${secondaryColor}</textColor>
-            <textColorDimmed>${secondaryColor}</textColorDimmed>
-            <iconColor>${secondaryColor}</iconColor>
-            <iconColorDimmed>${secondaryColor}</iconColorDimmed>
-            <fontPath>${mainFont}</fontPath>
-            <letterCase>capitalize</letterCase>
-        </helpsystem>
-    </view>
+    <variant name="all">
+        <view name="system, gamelist">
+            <image name="background">
+                <pos>0 0</pos>
+                <size>1 1</size>
+                <origin>0 0</origin>
+                <path>./assets/box.png</path>
+                <tile>true</tile>
+                <color>${backgroundColor}</color>
+                <zIndex>0</zIndex>
+            </image>
+            <image name="bottomLine">
+                <size>0.938 0.001</size>
+                <origin>0.5 0.5</origin>
+                <path>./assets/box.png</path>
+                <tile>false</tile>
+                <color>${tertiaryColor}</color>
+            </image>
+            <helpsystem name="help">
+                <origin>1 0</origin>
+                <textColor>${secondaryColor}</textColor>
+                <textColorDimmed>${secondaryColor}</textColorDimmed>
+                <iconColor>${secondaryColor}</iconColor>
+                <iconColorDimmed>${secondaryColor}</iconColorDimmed>
+                <fontPath>${mainFont}</fontPath>
+                <letterCase>capitalize</letterCase>
+            </helpsystem>
+        </view>
 
-    <view name="system">
-        <carousel name="systemCarousel">
-            <pos>0 0.3</pos>
-            <size>1 0.4</size>
-            <type>horizontal</type>
-            <staticImage>./art/${system.theme}.jpg</staticImage>
-            <itemScale>1</itemScale>
-            <itemVerticalAlignment>center</itemVerticalAlignment>
-            <unfocusedItemOpacity>1</unfocusedItemOpacity>
-            <color>00000000</color>
-            <textBackgroundColor>${placeholderColor}</textBackgroundColor>
-            <!-- Placeholder text -->
-            <text>${system.fullName}</text>
-            <textColor>${secondaryColor}</textColor>
-            <fontPath>${mainFont}</fontPath>
-            <fontSize>0.035</fontSize>
-            <letterCase>none</letterCase>
-            <letterCaseAutoCollections>capitalize</letterCaseAutoCollections>
-            <letterCaseCustomCollections>none</letterCaseCustomCollections>
-            <lineSpacing>1.5</lineSpacing>
-            <zIndex>50</zIndex>
-        </carousel>
-        <text name="gameCounter">
-            <pos>0.5 0.75</pos>
-            <size>1 0.056</size>
-            <origin>0.5 0.5</origin>
-            <systemdata>gamecount</systemdata>
-            <fontPath>${mainFont}</fontPath>
-            <fontSize>0.032</fontSize>
-            <horizontalAlignment>center</horizontalAlignment>
-            <color>${mainColor}</color>
-            <letterCase>capitalize</letterCase>
-            <zIndex>50</zIndex>
-        </text>
-        <!-- System title top left -->
-        <image name="arrowBlock">
-            <pos>0.03 0.244</pos>
-            <origin>0 0.5</origin>
-            <path>./assets/arrow_block.svg</path>
-            <color>${mainColor}</color>
-        </image>
-        <text name="systemName, autoCollectionName, customCollectionName">
-            <pos>0.063 0.244</pos>
-            <size>0.743 0.035</size>
-            <origin>0 0.5</origin>
-            <fontPath>${mainFont}</fontPath>
-            <fontSize>0.04</fontSize>
-            <horizontalAlignment>left</horizontalAlignment>
-            <color>${mainColor}</color>
-        </text>
-        <text name="systemName">
-            <text>${system.fullName.noCollections}</text>
-            <letterCase>none</letterCase>
-        </text>
-        <text name="autoCollectionName">
-            <text>${system.fullName.autoCollections}</text>
-            <letterCase>capitalize</letterCase>
-        </text>
-        <text name="customCollectionName">
-            <text>${system.fullName.customCollections}</text>
-            <letterCase>none</letterCase>
-        </text>
-        <!-- Blue selection box -->
-        <image name="selectionBoxBottom">
-            <origin>0.5 0.5</origin>
-            <path>./assets/box.png</path>
-            <tile>false</tile>
-            <color>${highlightColor}</color>
-            <zIndex>70</zIndex>
-        </image>
-        <image name="selectionBoxTop">
-            <origin>0.5 0.5</origin>
-            <path>./assets/box.png</path>
-            <tile>false</tile>
-            <color>${highlightColor}</color>
-            <zIndex>70</zIndex>
-        </image>
-        <image name="selectionBoxLeft">
-            <origin>0.5 0.5</origin>
-            <path>./assets/box.png</path>
-            <tile>false</tile>
-            <color>${highlightColor}</color>
-            <zIndex>70</zIndex>
-        </image>
-        <image name="selectionBoxRight">
-            <origin>0.5 0.5</origin>
-            <path>./assets/box.png</path>
-            <tile>false</tile>
-            <color>${highlightColor}</color>
-            <zIndex>70</zIndex>
-        </image>
-    </view>
+        <view name="system">
+            <carousel name="systemCarousel">
+                <pos>0 0.3</pos>
+                <size>1 0.4</size>
+                <type>horizontal</type>
+                <staticImage>./art/${system.theme}.jpg</staticImage>
+                <itemScale>1</itemScale>
+                <itemVerticalAlignment>center</itemVerticalAlignment>
+                <unfocusedItemOpacity>1</unfocusedItemOpacity>
+                <color>00000000</color>
+                <textBackgroundColor>${placeholderColor}</textBackgroundColor>
+                <!-- Placeholder text -->
+                <text>${system.fullName}</text>
+                <textColor>${secondaryColor}</textColor>
+                <fontPath>${mainFont}</fontPath>
+                <fontSize>0.035</fontSize>
+                <letterCase>none</letterCase>
+                <letterCaseAutoCollections>capitalize</letterCaseAutoCollections>
+                <letterCaseCustomCollections>none</letterCaseCustomCollections>
+                <lineSpacing>1.5</lineSpacing>
+                <zIndex>50</zIndex>
+            </carousel>
+            <text name="gameCounter">
+                <pos>0.5 0.75</pos>
+                <size>1 0.056</size>
+                <origin>0.5 0.5</origin>
+                <systemdata>gamecount</systemdata>
+                <fontPath>${mainFont}</fontPath>
+                <fontSize>0.032</fontSize>
+                <horizontalAlignment>center</horizontalAlignment>
+                <color>${mainColor}</color>
+                <letterCase>capitalize</letterCase>
+                <zIndex>50</zIndex>
+            </text>
+            <!-- System title top left -->
+            <image name="arrowBlock">
+                <pos>0.03 0.244</pos>
+                <origin>0 0.5</origin>
+                <path>./assets/arrow_block.svg</path>
+                <color>${mainColor}</color>
+            </image>
+            <text name="systemName, autoCollectionName, customCollectionName">
+                <pos>0.063 0.244</pos>
+                <size>0.743 0.035</size>
+                <origin>0 0.5</origin>
+                <fontPath>${mainFont}</fontPath>
+                <fontSize>0.04</fontSize>
+                <horizontalAlignment>left</horizontalAlignment>
+                <color>${mainColor}</color>
+            </text>
+            <text name="systemName">
+                <text>${system.fullName.noCollections}</text>
+                <letterCase>none</letterCase>
+            </text>
+            <text name="autoCollectionName">
+                <text>${system.fullName.autoCollections}</text>
+                <letterCase>capitalize</letterCase>
+            </text>
+            <text name="customCollectionName">
+                <text>${system.fullName.customCollections}</text>
+                <letterCase>none</letterCase>
+            </text>
+            <!-- Blue selection box -->
+            <image name="selectionBoxBottom">
+                <origin>0.5 0.5</origin>
+                <path>./assets/box.png</path>
+                <tile>false</tile>
+                <color>${highlightColor}</color>
+                <zIndex>70</zIndex>
+            </image>
+            <image name="selectionBoxTop">
+                <origin>0.5 0.5</origin>
+                <path>./assets/box.png</path>
+                <tile>false</tile>
+                <color>${highlightColor}</color>
+                <zIndex>70</zIndex>
+            </image>
+            <image name="selectionBoxLeft">
+                <origin>0.5 0.5</origin>
+                <path>./assets/box.png</path>
+                <tile>false</tile>
+                <color>${highlightColor}</color>
+                <zIndex>70</zIndex>
+            </image>
+            <image name="selectionBoxRight">
+                <origin>0.5 0.5</origin>
+                <path>./assets/box.png</path>
+                <tile>false</tile>
+                <color>${highlightColor}</color>
+                <zIndex>70</zIndex>
+            </image>
+        </view>
 
-    <view name="gamelist">
-        <textlist name="gamelistTextlist">
-            <pos>0.04 0.182</pos>
-            <size>0.31 0.68</size>
-            <origin>0 0</origin>
-            <selectorHeight>0.075</selectorHeight>
-            <selectorVerticalOffset>-0.0015</selectorVerticalOffset>
-            <selectorColor>${mainColor}</selectorColor>
-            <selectorImagePath>./assets/selector.png</selectorImagePath>
-            <selectedColor>${mainColor}</selectedColor>
-            <primaryColor>${secondaryColor}</primaryColor>
-            <secondaryColor>${tertiaryColor}</secondaryColor>
-            <fontPath>${mainFont}</fontPath>
-            <fontSize>0.030</fontSize>
-            <horizontalAlignment>left</horizontalAlignment>
-            <horizontalMargin>0.01</horizontalMargin>
-            <letterCase>none</letterCase>
-            <lineSpacing>1.9</lineSpacing>
-        </textlist>
-        <image name="topLine">
-            <pos>0.5 0.13</pos>
-            <size>0.938 0.001</size>
-            <origin>0.5 0.5</origin>
-            <path>./assets/box.png</path>
-            <tile>false</tile>
-            <color>${tertiaryColor}</color>
-        </image>
-        <text name="systemName, autoCollectionName, customCollectionName">
-            <pos>0.034 0.065</pos>
-            <size>0.743 0.031</size>
-            <fontPath>${mainFont}</fontPath>
-            <fontSize>0.03</fontSize>
-            <horizontalAlignment>left</horizontalAlignment>
-            <color>${secondaryColor}</color>
-            <letterCase>capitalize</letterCase>
-        </text>
-        <text name="systemName">
-            <text>${system.fullName.noCollections}</text>
-            <letterCase>none</letterCase>
-        </text>
-        <text name="autoCollectionName">
-            <text>${system.fullName.autoCollections}</text>
-            <letterCase>capitalize</letterCase>
-        </text>
-        <text name="customCollectionName">
-            <text>${system.fullName.customCollections}</text>
-            <letterCase>none</letterCase>
-        </text>
-        <text name="customCollectionsHeader">
-            <pos>0.035 0.095</pos>
-            <size>0.743 0.031</size>
-            <fontPath>${mainFont}</fontPath>
-            <fontSize>0.02</fontSize>
-            <color>${secondaryColor}</color>
-        </text>
-        <gamelistinfo name="gamelistInfo">
-            <pos>0.966 0.065</pos>
-            <size>0.2 0.031</size>
-            <origin>1 0</origin>
-            <fontPath>${mainFont}</fontPath>
-            <fontSize>0.03</fontSize>
-            <horizontalAlignment>right</horizontalAlignment>
-            <color>${secondaryColor}</color>
-        </gamelistinfo>
-        <image name="marquee">
-            <pos>0.494 0.68</pos>
-            <maxSize>0.268 0.228</maxSize>
-            <origin>0.5 0.5</origin>
-            <imageType>marquee</imageType>
-        </image>
-        <!-- Metadata panel (right) -->
-        <image name="backgroundMetadata">
-            <pos>0.675 0.20</pos>
-            <size>0.325 0.63</size>
-            <origin>0 0</origin>
-            <path>./assets/box.png</path>
-            <tile>false</tile>
-            <color>${backgroundColor2}</color>
-        </image>
-        <image name="backgroundMetadataGradTop">
-            <pos>0.675 0.131</pos>
-            <size>0.325 0.07</size>
-            <origin>0 0</origin>
-            <rotation>180</rotation>
-            <path>./assets/${colorSchemeName}/gradient.png</path>
-        </image>
-        <image name="backgroundMetadataGradBottom">
-            <pos>0.675 0.83</pos>
-            <size>0.325 0.07</size>
-            <origin>0 0</origin>
-            <path>./assets/${colorSchemeName}/gradient.png</path>
-        </image>
-        <text name="description">
-            <pos>0.70 0.1745</pos>
-            <size>0.269 0.3105</size>
-            <metadata>description</metadata>
-            <container>true</container>
-            <containerScrollSpeed>1</containerScrollSpeed>
-            <containerStartDelay>4.5</containerStartDelay>
-            <containerResetDelay>7</containerResetDelay>
-            <fontSize>0.03</fontSize>
-            <lineSpacing>1.2</lineSpacing>
-        </text>
-        <text name="labelPublisher">
-            <pos>0.70 0.532</pos>
-            <size>0.13125 0.02</size>
-            <text>Publisher:</text>
-            <metadataElement>true</metadataElement>
-            <fontSize>0.02</fontSize>
-        </text>
-        <text name="publisher">
-            <pos>0.70 0.552</pos>
-            <size>0.13125 0.03</size>
-            <metadata>publisher</metadata>
-            <defaultValue>Unknown</defaultValue>
-            <fontSize>0.03</fontSize>
-        </text>
-        <text name="labelDeveloper">
-            <pos>0.8453 0.532</pos>
-            <size>0.13125 0.02</size>
-            <text>Developer:</text>
-            <metadataElement>true</metadataElement>
-            <fontSize>0.02</fontSize>
-        </text>
-        <text name="developer">
-            <pos>0.8453 0.552</pos>
-            <size>0.13125 0.03</size>
-            <metadata>developer</metadata>
-            <defaultValue>Unknown</defaultValue>
-            <fontSize>0.03</fontSize>
-        </text>
-        <text name="labelReleasedate">
-            <pos>0.70 0.608</pos>
-            <size>0.13125 0.02</size>
-            <text>Released:</text>
-            <metadataElement>true</metadataElement>
-            <fontSize>0.02</fontSize>
-        </text>
-        <datetime name="releasedate">
-            <pos>0.70 0.628</pos>
-            <size>0.13125 0.03</size>
-            <metadata>releasedate</metadata>
-            <defaultValue>Unknown</defaultValue>
-            <fontSize>0.03</fontSize>
-        </datetime>
-        <text name="labelPlayers">
-            <pos>0.8453 0.608</pos>
-            <size>0.13125 0.02</size>
-            <text>Players:</text>
-            <metadataElement>true</metadataElement>
-            <fontSize>0.02</fontSize>
-        </text>
-        <text name="players">
-            <pos>0.8453 0.628</pos>
-            <size>0.13125 0.03</size>
-            <metadata>players</metadata>
-            <defaultValue>Unknown</defaultValue>
-            <fontSize>0.03</fontSize>
-        </text>
-        <text name="labelGenre">
-            <pos>0.70 0.684</pos>
-            <size>0.13125 0.02</size>
-            <text>Genre:</text>
-            <metadataElement>true</metadataElement>
-            <fontSize>0.02</fontSize>
-        </text>
-        <text name="genre">
-            <pos>0.70 0.704</pos>
-            <size>0.13125 0.03</size>
-            <metadata>genre</metadata>
-            <defaultValue>Unknown</defaultValue>
-            <fontSize>0.03</fontSize>
-        </text>
-        <text name="labelRating">
-            <pos>0.70 0.760</pos>
-            <size>0.13125 0.02</size>
-            <text>Rating:</text>
-            <metadataElement>true</metadataElement>
-            <fontSize>0.02</fontSize>
-        </text>
-        <text name="labelPublisher, labelDeveloper, labelReleasedate, labelPlayers,
+        <view name="gamelist">
+            <textlist name="gamelistTextlist">
+                <pos>0.04 0.182</pos>
+                <size>0.31 0.68</size>
+                <origin>0 0</origin>
+                <selectorHeight>0.075</selectorHeight>
+                <selectorVerticalOffset>-0.0015</selectorVerticalOffset>
+                <selectorColor>${mainColor}</selectorColor>
+                <selectorImagePath>./assets/selector.png</selectorImagePath>
+                <selectedColor>${mainColor}</selectedColor>
+                <primaryColor>${secondaryColor}</primaryColor>
+                <secondaryColor>${tertiaryColor}</secondaryColor>
+                <fontPath>${mainFont}</fontPath>
+                <fontSize>0.030</fontSize>
+                <horizontalAlignment>left</horizontalAlignment>
+                <horizontalMargin>0.01</horizontalMargin>
+                <letterCase>none</letterCase>
+                <lineSpacing>1.9</lineSpacing>
+            </textlist>
+            <image name="topLine">
+                <pos>0.5 0.13</pos>
+                <size>0.938 0.001</size>
+                <origin>0.5 0.5</origin>
+                <path>./assets/box.png</path>
+                <tile>false</tile>
+                <color>${tertiaryColor}</color>
+            </image>
+            <text name="systemName, autoCollectionName, customCollectionName">
+                <pos>0.034 0.065</pos>
+                <size>0.743 0.031</size>
+                <fontPath>${mainFont}</fontPath>
+                <fontSize>0.03</fontSize>
+                <horizontalAlignment>left</horizontalAlignment>
+                <color>${secondaryColor}</color>
+                <letterCase>capitalize</letterCase>
+            </text>
+            <text name="systemName">
+                <text>${system.fullName.noCollections}</text>
+                <letterCase>none</letterCase>
+            </text>
+            <text name="autoCollectionName">
+                <text>${system.fullName.autoCollections}</text>
+                <letterCase>capitalize</letterCase>
+            </text>
+            <text name="customCollectionName">
+                <text>${system.fullName.customCollections}</text>
+                <letterCase>none</letterCase>
+            </text>
+            <text name="customCollectionsHeader">
+                <pos>0.035 0.095</pos>
+                <size>0.743 0.031</size>
+                <fontPath>${mainFont}</fontPath>
+                <fontSize>0.02</fontSize>
+                <color>${secondaryColor}</color>
+            </text>
+            <gamelistinfo name="gamelistInfo">
+                <pos>0.966 0.065</pos>
+                <size>0.2 0.031</size>
+                <origin>1 0</origin>
+                <fontPath>${mainFont}</fontPath>
+                <fontSize>0.03</fontSize>
+                <horizontalAlignment>right</horizontalAlignment>
+                <color>${secondaryColor}</color>
+            </gamelistinfo>
+            <image name="marquee">
+                <pos>0.494 0.68</pos>
+                <maxSize>0.268 0.228</maxSize>
+                <origin>0.5 0.5</origin>
+                <imageType>marquee</imageType>
+            </image>
+            <!-- Metadata panel (right) -->
+            <image name="backgroundMetadata">
+                <pos>0.675 0.20</pos>
+                <size>0.325 0.63</size>
+                <origin>0 0</origin>
+                <path>./assets/box.png</path>
+                <tile>false</tile>
+                <color>${backgroundColor2}</color>
+            </image>
+            <image name="backgroundMetadataGradTop">
+                <pos>0.675 0.131</pos>
+                <size>0.325 0.07</size>
+                <origin>0 0</origin>
+                <rotation>180</rotation>
+                <path>./assets/${colorSchemeName}/gradient.png</path>
+            </image>
+            <image name="backgroundMetadataGradBottom">
+                <pos>0.675 0.83</pos>
+                <size>0.325 0.07</size>
+                <origin>0 0</origin>
+                <path>./assets/${colorSchemeName}/gradient.png</path>
+            </image>
+            <text name="description">
+                <pos>0.70 0.1745</pos>
+                <size>0.269 0.3105</size>
+                <metadata>description</metadata>
+                <container>true</container>
+                <containerScrollSpeed>1</containerScrollSpeed>
+                <containerStartDelay>4.5</containerStartDelay>
+                <containerResetDelay>7</containerResetDelay>
+                <fontSize>0.03</fontSize>
+                <lineSpacing>1.2</lineSpacing>
+            </text>
+            <text name="labelPublisher">
+                <pos>0.70 0.532</pos>
+                <size>0.13125 0.02</size>
+                <text>Publisher:</text>
+                <metadataElement>true</metadataElement>
+                <fontSize>0.02</fontSize>
+            </text>
+            <text name="publisher">
+                <pos>0.70 0.552</pos>
+                <size>0.13125 0.03</size>
+                <metadata>publisher</metadata>
+                <defaultValue>Unknown</defaultValue>
+                <fontSize>0.03</fontSize>
+            </text>
+            <text name="labelDeveloper">
+                <pos>0.8453 0.532</pos>
+                <size>0.13125 0.02</size>
+                <text>Developer:</text>
+                <metadataElement>true</metadataElement>
+                <fontSize>0.02</fontSize>
+            </text>
+            <text name="developer">
+                <pos>0.8453 0.552</pos>
+                <size>0.13125 0.03</size>
+                <metadata>developer</metadata>
+                <defaultValue>Unknown</defaultValue>
+                <fontSize>0.03</fontSize>
+            </text>
+            <text name="labelReleasedate">
+                <pos>0.70 0.608</pos>
+                <size>0.13125 0.02</size>
+                <text>Released:</text>
+                <metadataElement>true</metadataElement>
+                <fontSize>0.02</fontSize>
+            </text>
+            <datetime name="releasedate">
+                <pos>0.70 0.628</pos>
+                <size>0.13125 0.03</size>
+                <metadata>releasedate</metadata>
+                <defaultValue>Unknown</defaultValue>
+                <fontSize>0.03</fontSize>
+            </datetime>
+            <text name="labelPlayers">
+                <pos>0.8453 0.608</pos>
+                <size>0.13125 0.02</size>
+                <text>Players:</text>
+                <metadataElement>true</metadataElement>
+                <fontSize>0.02</fontSize>
+            </text>
+            <text name="players">
+                <pos>0.8453 0.628</pos>
+                <size>0.13125 0.03</size>
+                <metadata>players</metadata>
+                <defaultValue>Unknown</defaultValue>
+                <fontSize>0.03</fontSize>
+            </text>
+            <text name="labelGenre">
+                <pos>0.70 0.684</pos>
+                <size>0.13125 0.02</size>
+                <text>Genre:</text>
+                <metadataElement>true</metadataElement>
+                <fontSize>0.02</fontSize>
+            </text>
+            <text name="genre">
+                <pos>0.70 0.704</pos>
+                <size>0.13125 0.03</size>
+                <metadata>genre</metadata>
+                <defaultValue>Unknown</defaultValue>
+                <fontSize>0.03</fontSize>
+            </text>
+            <text name="labelRating">
+                <pos>0.70 0.760</pos>
+                <size>0.13125 0.02</size>
+                <text>Rating:</text>
+                <metadataElement>true</metadataElement>
+                <fontSize>0.02</fontSize>
+            </text>
+            <text name="labelPublisher, labelDeveloper, labelReleasedate, labelPlayers,
                     labelGenre, labelRating">
-            <color>${tertiaryColor}</color>
-        </text>
-        <text name="publisher, developer, players, genre, description">
-            <color>${secondaryColor}</color>
-        </text>
-        <datetime name="releasedate">
-            <color>${secondaryColor}</color>
-        </datetime>
-        <rating name="rating">
-            <pos>0.70 0.785</pos>
-            <size>0.04 0.03</size>
-            <filledPath>./assets/star-filled.svg</filledPath>
-            <unfilledPath>./assets/${colorSchemeName}/star-unfilled.svg</unfilledPath>
-        </rating>
-        <badges name="badges">
-            <pos>0.8423 0.69</pos>
-            <size>0.1267 0.17335978655</size>
-            <origin>0 0</origin>
-            <direction>column</direction>
-            <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
-            <controllerPos>0.165 0.5</controllerPos>
-            <controllerSize>0.2</controllerSize>
-            <customBadgeIcon badge="collection">./assets/${colorSchemeName}/badges/collection.svg</customBadgeIcon>
-            <customBadgeIcon badge="folder">./assets/${colorSchemeName}/badges/folder.svg</customBadgeIcon>
-            <customBadgeIcon badge="favorite">./assets/${colorSchemeName}/badges/favorite.svg</customBadgeIcon>
-            <customBadgeIcon badge="completed">./assets/${colorSchemeName}/badges/completed.svg</customBadgeIcon>
-            <customBadgeIcon badge="kidgame">./assets/${colorSchemeName}/badges/kidgame.svg</customBadgeIcon>
-            <customBadgeIcon badge="broken">./assets/${colorSchemeName}/badges/broken.svg</customBadgeIcon>
-            <customBadgeIcon badge="controller">./assets/${colorSchemeName}/badges/controller.svg</customBadgeIcon>
-            <customBadgeIcon badge="altemulator">./assets/${colorSchemeName}/badges/altemulator.svg</customBadgeIcon>
-            <customControllerIcon controller="gamepad_generic">./assets/controllers/generic.svg</customControllerIcon>
-            <customControllerIcon controller="gamepad_xbox">./assets/controllers/xbox.svg</customControllerIcon>
-            <customControllerIcon controller="gamepad_playstation">./assets/controllers/dualshock4.svg</customControllerIcon>
-            <customControllerIcon controller="gamepad_nintendo_nes">./assets/controllers/classic.svg</customControllerIcon>
-            <customControllerIcon controller="gamepad_nintendo_snes">./assets/controllers/classic.svg</customControllerIcon>
-            <customControllerIcon controller="gamepad_nintendo_64">./assets/controllers/n64.svg</customControllerIcon>
-            <customControllerIcon controller="joystick_generic">./assets/controllers/joystick.svg</customControllerIcon>
-            <customControllerIcon controller="trackball_generic">./assets/controllers/trackball.svg</customControllerIcon>
-            <customControllerIcon controller="lightgun_generic">./assets/controllers/gun.svg</customControllerIcon>
-            <customControllerIcon controller="lightgun_nintendo">./assets/controllers/gun.svg</customControllerIcon>
-            <customControllerIcon controller="keyboard_generic">./assets/controllers/keyboard.svg</customControllerIcon>
-            <customControllerIcon controller="mouse_generic">./assets/controllers/mouse.svg</customControllerIcon>
-            <customControllerIcon controller="mouse_amiga">./assets/controllers/mouse.svg</customControllerIcon>
-            <customControllerIcon controller="keyboard_mouse_generic">./assets/controllers/keyboard-mouse.svg</customControllerIcon>
-            <customControllerIcon controller="steering_wheel_generic">./assets/controllers/wheel.svg</customControllerIcon>
-            <customControllerIcon controller="wii_remote_nintendo">./assets/controllers/wiimote.svg</customControllerIcon>
-            <customControllerIcon controller="wii_remote_and_nunchuk_nintendo">./assets/controllers/wiimote-nunchuck.svg</customControllerIcon>
-            <customControllerIcon controller="joycon_left_or_right_nintendo">./assets/controllers/joycon-left.svg</customControllerIcon>
-            <customControllerIcon controller="joycon_pair_nintendo">./assets/controllers/joycon-pair.svg</customControllerIcon>
-            <customControllerIcon controller="unknown">./assets/controllers/generic.svg</customControllerIcon>
-            <folderLinkPos>0.18 0.55</folderLinkPos>
-            <folderLinkSize>0.14</folderLinkSize>
-        </badges>
-    </view>
+                <color>${tertiaryColor}</color>
+            </text>
+            <text name="publisher, developer, players, genre, description">
+                <color>${secondaryColor}</color>
+            </text>
+            <datetime name="releasedate">
+                <color>${secondaryColor}</color>
+            </datetime>
+            <rating name="rating">
+                <pos>0.70 0.785</pos>
+                <size>0.04 0.03</size>
+                <filledPath>./assets/star-filled.svg</filledPath>
+                <unfilledPath>./assets/${colorSchemeName}/star-unfilled.svg</unfilledPath>
+            </rating>
+            <badges name="badges">
+                <pos>0.8423 0.69</pos>
+                <size>0.1267 0.17335978655</size>
+                <origin>0 0</origin>
+                <direction>column</direction>
+                <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
+                <controllerPos>0.165 0.5</controllerPos>
+                <controllerSize>0.2</controllerSize>
+                <customBadgeIcon badge="collection">./assets/${colorSchemeName}/badges/collection.svg</customBadgeIcon>
+                <customBadgeIcon badge="folder">./assets/${colorSchemeName}/badges/folder.svg</customBadgeIcon>
+                <customBadgeIcon badge="favorite">./assets/${colorSchemeName}/badges/favorite.svg</customBadgeIcon>
+                <customBadgeIcon badge="completed">./assets/${colorSchemeName}/badges/completed.svg</customBadgeIcon>
+                <customBadgeIcon badge="kidgame">./assets/${colorSchemeName}/badges/kidgame.svg</customBadgeIcon>
+                <customBadgeIcon badge="broken">./assets/${colorSchemeName}/badges/broken.svg</customBadgeIcon>
+                <customBadgeIcon badge="controller">./assets/${colorSchemeName}/badges/controller.svg</customBadgeIcon>
+                <customBadgeIcon badge="altemulator">./assets/${colorSchemeName}/badges/altemulator.svg</customBadgeIcon>
+                <customControllerIcon controller="gamepad_generic">./assets/controllers/generic.svg</customControllerIcon>
+                <customControllerIcon controller="gamepad_xbox">./assets/controllers/xbox.svg</customControllerIcon>
+                <customControllerIcon controller="gamepad_playstation">./assets/controllers/dualshock4.svg</customControllerIcon>
+                <customControllerIcon controller="gamepad_nintendo_nes">./assets/controllers/classic.svg</customControllerIcon>
+                <customControllerIcon controller="gamepad_nintendo_snes">./assets/controllers/classic.svg</customControllerIcon>
+                <customControllerIcon controller="gamepad_nintendo_64">./assets/controllers/n64.svg</customControllerIcon>
+                <customControllerIcon controller="joystick_generic">./assets/controllers/joystick.svg</customControllerIcon>
+                <customControllerIcon controller="trackball_generic">./assets/controllers/trackball.svg</customControllerIcon>
+                <customControllerIcon controller="lightgun_generic">./assets/controllers/gun.svg</customControllerIcon>
+                <customControllerIcon controller="lightgun_nintendo">./assets/controllers/gun.svg</customControllerIcon>
+                <customControllerIcon controller="keyboard_generic">./assets/controllers/keyboard.svg</customControllerIcon>
+                <customControllerIcon controller="mouse_generic">./assets/controllers/mouse.svg</customControllerIcon>
+                <customControllerIcon controller="mouse_amiga">./assets/controllers/mouse.svg</customControllerIcon>
+                <customControllerIcon controller="keyboard_mouse_generic">./assets/controllers/keyboard-mouse.svg</customControllerIcon>
+                <customControllerIcon controller="steering_wheel_generic">./assets/controllers/wheel.svg</customControllerIcon>
+                <customControllerIcon controller="wii_remote_nintendo">./assets/controllers/wiimote.svg</customControllerIcon>
+                <customControllerIcon controller="wii_remote_and_nunchuk_nintendo">./assets/controllers/wiimote-nunchuck.svg</customControllerIcon>
+                <customControllerIcon controller="joycon_left_or_right_nintendo">./assets/controllers/joycon-left.svg</customControllerIcon>
+                <customControllerIcon controller="joycon_pair_nintendo">./assets/controllers/joycon-pair.svg</customControllerIcon>
+                <customControllerIcon controller="unknown">./assets/controllers/generic.svg</customControllerIcon>
+                <folderLinkPos>0.18 0.55</folderLinkPos>
+                <folderLinkSize>0.14</folderLinkSize>
+            </badges>
+        </view>
+    </variant>
 
     <variant name="withVideos">
         <view name="gamelist">
