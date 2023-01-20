@@ -222,6 +222,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Added the build date to to main menu for alpha and dev builds
 * Added a left trigger + right trigger help system icon and removed the deprecated hotkey icon
 * Added an arcade twin stick controller badge icon
+* (slate-es-de) Recreated the Nintendo GameCube controller as the old graphics had some issues and was not accurate
+* Added Nintendo GameCube, Sega Master System and Sega Dreamcast controller badge icons
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization

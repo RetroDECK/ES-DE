@@ -24,14 +24,14 @@ Every game system has its own subdirectory within the theme set directory struct
 
 By placing a theme.xml file directly in the root of the theme set directory, that file will be processed as a default if there is no system-specific theme.xml file available.
 
-In the example below, we have a theme set named `mythemeset-DE` which includes the `snes` and `nes` systems. Assuming you have some games installed for these systems, the files `mythemeset-DE/nes/theme.xml` and `mythemeset-DE/snes/theme.xml` will be processed on startup. If there are no games available for a system, its theme.xml file will be skipped.
+In the example below, we have a theme set named `mythemeset-es-de` which includes the `snes` and `nes` systems. Assuming you have some games installed for these systems, the files `mythemeset-es-de/nes/theme.xml` and `mythemeset-es-de/snes/theme.xml` will be processed on startup. If there are no games available for a system, its theme.xml file will be skipped.
 
 The directory structure of our example theme set could look something like the following:
 
 ```
 ...
    themes/
-      mythemeset-DE/
+      mythemeset-es-de/
          core/
             font.ttf
             bold_font.ttf
@@ -244,7 +244,7 @@ emulationstation --debug --resolution 1280 720
 
 Enforcement of a correct theme configuration is quite strict, and most errors will abort the theme loading, leading to an unthemed system. In each such situation the log output will be very clear of what happened, for instance:
 ```
-Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
+Jan 28 17:17:30 Error:  ThemeData::parseElement(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml": Property "origin" for element "image" has no value defined (system "collections", theme "custom-collections")
 ```
 
 Note that an unthemed system means precisely that, the specific system where the error occured will be unthemed but not necessarily the entire theme set. The latter can still happen if the error is global such as a missing variable used by all XML files or an error in a file included by all XML files. The approach is to only untheme relevant sections of the theme set to be able to pinpoint precisely where the problem lies.
@@ -265,12 +265,12 @@ Jan 28 17:29:11 Error:  VideoComponent: Invalid theme configuration, property "i
 Error handling for missing files is handled a bit differently depending on whether the paths have been defined explicitly or via a variable. For explicitly defined paths a warning will be logged for element properties and an error will be triggered for include files. Here's an example of the latter case:
 
 ```
-Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mythemeset-DE/colors_dark.xml")
+Jan 28 17:32:29 Error:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml" -> "./colors_dark.xml" not found (resolved to "/home/myusername/.emulationstation/themes/mythemeset-es-de/colors_dark.xml")
 ```
 
 However, if a variable has been used to define the include file, only a debug message will be generated if the file is not found:
 ```
-Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-DE/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mythemeset-DE/amiga/colors.xml"
+Jan 28 17:34:03 Debug:  ThemeData::parseIncludes(): "/home/myusername/.emulationstation/themes/mythemeset-es-de/theme.xml": Couldn't find file "./${system.theme}/colors.xml" which resolves to "/home/myusername/.emulationstation/themes/mythemeset-es-de/amiga/colors.xml"
 ```
 
 It works essentially the same way for element path properties as for include files. This distinction between explicit values and variables makes it possible to create a theme configuration where both include files and files for fonts, images, videos etc. will be used if found, and if not found a fallback configuration can still be applied so the system will be themed.
@@ -608,7 +608,7 @@ Finally it's possible to apply theme-defined transition profiles on a per-varian
 
 Variants, variant triggers, color schemes, aspect ratios and transition animation profiles need to be declared before they can be used inside the actual theme set configuration files and that is done in the `capabilities.xml` file. This file needs to exist in the root of the theme directory, for example:
 ```
-~/.emulationstation/themes/mythemeset-DE/capabilities.xml
+~/.emulationstation/themes/mythemeset-es-de/capabilities.xml
 ```
 
 This file type was introduced with the new ES-DE theme engine in v2.0 and is an indicator that the theme set is of the new generation instead of being of the legacy type (i.e. a theme set backward compatible with RetroPie EmulationStation). In other words, if the capabilities.xml file is absent, the theme will get loaded as a legacy set.
@@ -616,8 +616,10 @@ This file type was introduced with the new ES-DE theme engine in v2.0 and is an 
 The structure of the file is simple, as can be seen in this example:
 
 ```xml
-<!-- Theme capabilities for mythemeset-DE -->
+<!-- Theme capabilities for mythemeset-es-de -->
 <themeCapabilities>
+    <themeName>My theme set</themeName>
+
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
     <aspectRatio>4:3_vertical</aspectRatio>
@@ -665,6 +667,8 @@ The structure of the file is simple, as can be seen in this example:
 ```
 The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
+The optional `<themeName>` tag defines the name that will show up for the _Theme set_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEMESET-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu. Legacy theme sets are also clearly marked with the _[LEGACY]_ suffix.
+
 The variant, color scheme and transitions names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants, color schemes and transition animations will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
 Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary values, instead they have to use a value from the _horizontal name_ or _vertical name_ columns in the following table:
@@ -693,7 +697,7 @@ Note that changes to the capabilities.xml file are not reloaded when using the C
 
 You can include theme files within theme files, for example:
 
-`~/.emulationstation/themes/mythemeset-DE/fonts.xml`:
+`~/.emulationstation/themes/mythemeset-es-de/fonts.xml`:
 ```xml
 <theme>
     <view name="gamelist">
@@ -706,7 +710,7 @@ You can include theme files within theme files, for example:
 </theme>
 ```
 
-`~/.emulationstation/themes/mythemeset-DE/snes/theme.xml`:
+`~/.emulationstation/themes/mythemeset-es-de/snes/theme.xml`:
 ```xml
 <theme>
     <include>./../fonts.xml</include>
@@ -2009,9 +2013,12 @@ Properties:
     `gamepad_nintendo_nes`,
     `gamepad_nintendo_snes`,
     `gamepad_nintendo_64`,
+    `gamepad_nintendo_gamecube`,
     `gamepad_playstation`,
+    `gamepad_sega_master_system`,
     `gamepad_sega_md_3_buttons`,
     `gamepad_sega_md_6_buttons`,
+    `gamepad_sega_dreamcast`,
     `gamepad_xbox`,
     `joystick_generic`,
     `joystick_arcade_no_buttons`,
