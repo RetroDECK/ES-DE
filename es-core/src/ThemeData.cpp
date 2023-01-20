@@ -751,7 +751,7 @@ void ThemeData::populateThemeSets()
         Utils::FileSystem::getHomePath() + "/.emulationstation/themes"
     };
 
-    for (size_t i = 0; i < pathCount; ++i) {
+    for (size_t i {0}; i < pathCount; ++i) {
         if (!Utils::FileSystem::isDirectory(paths[i]))
             continue;
 
@@ -768,12 +768,20 @@ void ThemeData::populateThemeSets()
 #endif
                 ThemeCapability capabilities {parseThemeCapabilities(*it)};
 
+                std::string themeName;
+                if (capabilities.themeName != "") {
+                    themeName.append(" (theme name \"")
+                        .append(capabilities.themeName)
+                        .append("\")");
+                }
+
 #if defined(_WIN64)
                 LOG(LogInfo) << "Added" << (capabilities.legacyTheme ? " legacy" : "")
-                             << " theme set \"" << Utils::String::replace(*it, "/", "\\") << "\"";
+                             << " theme set \"" << Utils::String::replace(*it, "/", "\\") << "\""
+                             << themeName;
 #else
                 LOG(LogInfo) << "Added" << (capabilities.legacyTheme ? " legacy" : "")
-                             << " theme set \"" << *it << "\"";
+                             << " theme set \"" << *it << "\"" << themeName;
 #endif
                 if (!capabilities.legacyTheme) {
                     int aspectRatios {0};
@@ -1025,6 +1033,10 @@ ThemeData::ThemeCapability ThemeData::parseThemeCapabilities(const std::string& 
             LOG(LogError) << "Missing <themeCapabilities> tag in capabilities.xml";
             return capabilities;
         }
+
+        const pugi::xml_node& themeName {themeCapabilities.child("themeName")};
+        if (themeName != nullptr)
+            capabilities.themeName = themeName.text().get();
 
         for (pugi::xml_node aspectRatio {themeCapabilities.child("aspectRatio")}; aspectRatio;
              aspectRatio = aspectRatio.next_sibling("aspectRatio")) {

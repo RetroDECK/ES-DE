@@ -212,6 +212,7 @@ public:
     };
 
     struct ThemeCapability {
+        std::string themeName;
         std::vector<ThemeVariant> variants;
         std::vector<ThemeColorScheme> colorSchemes;
         std::vector<std::string> aspectRatios;

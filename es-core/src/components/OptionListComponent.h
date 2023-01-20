@@ -302,7 +302,7 @@ private:
     };
 
     HelpStyle mHelpStyle;
-    std::function<void(const std::string&)> mSelectedChangedCallback;
+    std::function<void(const T& object)> mSelectedChangedCallback;
 
     void open()
     {
@@ -357,7 +357,7 @@ private:
                         mParent->onSizeChanged();
 
                     if (mSelectedChangedCallback)
-                        mSelectedChangedCallback(it->name);
+                        mSelectedChangedCallback(it->object);
 
                     break;
                 }

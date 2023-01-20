@@ -106,16 +106,32 @@ void GuiMenu::openUIOptions()
     auto themeSet =
         std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
 
-    // Theme selection.
+    // Theme set.
     if (!themeSets.empty()) {
         selectedSet = themeSets.find(Settings::getInstance()->getString("ThemeSet"));
         if (selectedSet == themeSets.cend())
             selectedSet = themeSets.cbegin();
-
-        for (auto it = themeSets.cbegin(); it != themeSets.cend(); ++it) {
+        std::vector<std::pair<std::string, std::pair<std::string, ThemeData::ThemeSet>>>
+            themeSetsSorted;
+        std::string sortName;
+        for (auto& theme : themeSets) {
+            if (theme.second.capabilities.themeName != "")
+                sortName = theme.second.capabilities.themeName;
+            else
+                sortName = theme.first;
+            themeSetsSorted.emplace_back(std::make_pair(Utils::String::toUpper(sortName),
+                                                        std::make_pair(theme.first, theme.second)));
+        }
+        std::sort(themeSetsSorted.begin(), themeSetsSorted.end(),
+                  [](const auto& a, const auto& b) { return a.first < b.first; });
+        for (auto it = themeSetsSorted.cbegin(); it != themeSetsSorted.cend(); ++it) {
             // If required, abbreviate the theme set name so it doesn't overlap the setting name.
-            const float maxNameLength = mSize.x * 0.62f;
-            themeSet->add(it->first, it->first, it == selectedSet, maxNameLength);
+            const float maxNameLength {mSize.x * 0.62f};
+            std::string themeName {(*it).first};
+            if ((*it).second.second.capabilities.legacyTheme)
+                themeName.append(" [LEGACY]");
+            themeSet->add(themeName, it->second.first, (*it).second.first == selectedSet->first,
+                          maxNameLength);
         }
         s->addWithLabel("THEME SET", themeSet);
         s->addSaveFunc([this, themeSet, s] {
