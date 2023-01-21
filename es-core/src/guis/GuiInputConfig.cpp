@@ -79,7 +79,7 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
     mList = std::make_shared<ComponentList>();
     mGrid.setEntry(mList, glm::ivec2 {0, 5}, true, true);
 
-    for (int i = 0; i < inputCount; ++i) {
+    for (int i {0}; i < inputCount; ++i) {
         ComponentListRow row;
 
         // Icon.
@@ -169,12 +169,12 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
 
     // GUI buttons.
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
-    std::function<void()> okFunction = [this, okCallback] {
+    std::function<void()> okFunction {[this, okCallback] {
         InputManager::getInstance().writeDeviceConfig(mTargetConfig); // Save.
         if (okCallback)
             okCallback();
         delete this;
-    };
+    }};
 
     buttons.push_back(
         std::make_shared<ButtonComponent>("OK", "ok", [okFunction] { okFunction(); }));
@@ -184,8 +184,8 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = glm::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth();
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    float width {glm::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth()};
 
     setSize(width, Renderer::getScreenHeight() * 0.75f);
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
@@ -194,7 +194,7 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
 
 void GuiInputConfig::populateConfigList()
 {
-    std::string controllerType = Settings::getInstance()->getString("InputControllerType");
+    std::string controllerType {Settings::getInstance()->getString("InputControllerType")};
 
     // clang-format off
     sGuiInputConfigList[0] = {"Up",    false, "D-PAD UP",    ":/graphics/help/dpad_up.svg"};
@@ -209,6 +209,14 @@ void GuiInputConfig::populateConfigList()
         sGuiInputConfigList[7] = {"B",     false, "A",         ":/graphics/help/mbuttons_b_SNES.svg"};
         sGuiInputConfigList[8] = {"X",     true,  "Y",         ":/graphics/help/mbuttons_x_SNES.svg"};
         sGuiInputConfigList[9] = {"Y",     true,  "X",         ":/graphics/help/mbuttons_y_SNES.svg"};
+    }
+    else if (controllerType == "ps3") {
+        sGuiInputConfigList[4] = {"Back",  false, "SELECT",    ":/graphics/help/button_back_PS3.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "START",     ":/graphics/help/button_start_PS3.svg"};
+        sGuiInputConfigList[6] = {"A",     false, "CROSS",     ":/graphics/help/mbuttons_a_PS.svg"};
+        sGuiInputConfigList[7] = {"B",     false, "CIRCLE",    ":/graphics/help/mbuttons_b_PS.svg"};
+        sGuiInputConfigList[8] = {"X",     true,  "SQUARE",    ":/graphics/help/mbuttons_x_PS.svg"};
+        sGuiInputConfigList[9] = {"Y",     true,  "TRIANGLE",  ":/graphics/help/mbuttons_y_PS.svg"};
     }
     else if (controllerType == "ps4") {
         sGuiInputConfigList[4] = {"Back",  false, "SHARE",     ":/graphics/help/button_back_PS4.svg"};
@@ -264,9 +272,9 @@ void GuiInputConfig::populateConfigList()
 void GuiInputConfig::update(int deltaTime)
 {
     if (mConfiguringRow && mHoldingInput && sGuiInputConfigList[mHeldInputId].skippable) {
-        int prevSec = mHeldTime / 1000;
+        int prevSec {mHeldTime / 1000};
         mHeldTime += deltaTime;
-        int curSec = mHeldTime / 1000;
+        int curSec {mHeldTime / 1000};
 
         if (mHeldTime >= HOLD_TO_SKIP_MS) {
             setNotDefined(mMappings.at(mHeldInputId));
