@@ -101,7 +101,7 @@ void HelpComponent::assignIcons()
                                     ":/graphics/help/button_start_switch.svg" :
                                     mStyle.mCustomButtons.button_start_switch;
     }
-    else if (controllerType == "ps3") {
+    else if (controllerType == "ps123") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
                                 ":/graphics/help/button_a_PS.svg" :
                                 mStyle.mCustomButtons.button_a_PS;
@@ -114,12 +114,12 @@ void HelpComponent::assignIcons()
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
                                 ":/graphics/help/button_y_PS.svg" :
                                 mStyle.mCustomButtons.button_y_PS;
-        sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS3.empty() ?
-                                   ":/graphics/help/button_back_PS3.svg" :
-                                   mStyle.mCustomButtons.button_back_PS3;
-        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS3.empty() ?
-                                    ":/graphics/help/button_start_PS3.svg" :
-                                    mStyle.mCustomButtons.button_start_PS3;
+        sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS123.empty() ?
+                                   ":/graphics/help/button_back_PS123.svg" :
+                                   mStyle.mCustomButtons.button_back_PS123;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS123.empty() ?
+                                    ":/graphics/help/button_start_PS123.svg" :
+                                    mStyle.mCustomButtons.button_start_PS123;
     }
     else if (controllerType == "ps4") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?

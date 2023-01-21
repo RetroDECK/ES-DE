@@ -140,10 +140,10 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         mCustomButtons.button_x_PS = elem->get<std::string>(PREFIX "button_x_PS");
     if (elem->has(PREFIX "button_y_PS"))
         mCustomButtons.button_y_PS = elem->get<std::string>(PREFIX "button_y_PS");
-    if (elem->has(PREFIX "button_back_PS3"))
-        mCustomButtons.button_back_PS3 = elem->get<std::string>(PREFIX "button_back_PS3");
-    if (elem->has(PREFIX "button_start_PS3"))
-        mCustomButtons.button_start_PS3 = elem->get<std::string>(PREFIX "button_start_PS3");
+    if (elem->has(PREFIX "button_back_PS123"))
+        mCustomButtons.button_back_PS123 = elem->get<std::string>(PREFIX "button_back_PS123");
+    if (elem->has(PREFIX "button_start_PS123"))
+        mCustomButtons.button_start_PS123 = elem->get<std::string>(PREFIX "button_start_PS123");
     if (elem->has(PREFIX "button_back_PS4"))
         mCustomButtons.button_back_PS4 = elem->get<std::string>(PREFIX "button_back_PS4");
     if (elem->has(PREFIX "button_start_PS4"))

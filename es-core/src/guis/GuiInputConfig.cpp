@@ -218,9 +218,9 @@ void GuiInputConfig::populateConfigList()
         sGuiInputConfigList[9] = {"X",     true,  "X",         ":/graphics/help/mbuttons_x_switch.svg"};
         sGuiInputConfigList[8] = {"Y",     true,  "Y",         ":/graphics/help/mbuttons_y_switch.svg"};
     }
-    else if (controllerType == "ps3") {
-        sGuiInputConfigList[4] = {"Back",  false, "SELECT",    ":/graphics/help/button_back_PS3.svg"};
-        sGuiInputConfigList[5] = {"Start", false, "START",     ":/graphics/help/button_start_PS3.svg"};
+    else if (controllerType == "ps123") {
+        sGuiInputConfigList[4] = {"Back",  false, "SELECT",    ":/graphics/help/button_back_PS123.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "START",     ":/graphics/help/button_start_PS123.svg"};
         sGuiInputConfigList[6] = {"A",     false, "CROSS",     ":/graphics/help/mbuttons_a_PS.svg"};
         sGuiInputConfigList[7] = {"B",     false, "CIRCLE",    ":/graphics/help/mbuttons_b_PS.svg"};
         sGuiInputConfigList[8] = {"X",     true,  "SQUARE",    ":/graphics/help/mbuttons_x_PS.svg"};
