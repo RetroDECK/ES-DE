@@ -52,6 +52,14 @@ struct HelpStyle {
         std::string button_back_SNES;
         std::string button_start_SNES;
 
+        // Switch Pro
+        std::string button_a_switch;
+        std::string button_b_switch;
+        std::string button_x_switch;
+        std::string button_y_switch;
+        std::string button_back_switch;
+        std::string button_start_switch;
+
         // PlayStation
         std::string button_a_PS;
         std::string button_b_PS;

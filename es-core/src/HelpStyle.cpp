@@ -117,6 +117,20 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
     if (elem->has(PREFIX "button_start_SNES"))
         mCustomButtons.button_start_SNES = elem->get<std::string>(PREFIX "button_start_SNES");
 
+    // Switch Pro.
+    if (elem->has(PREFIX "button_a_switch"))
+        mCustomButtons.button_a_switch = elem->get<std::string>(PREFIX "button_a_switch");
+    if (elem->has(PREFIX "button_b_switch"))
+        mCustomButtons.button_b_switch = elem->get<std::string>(PREFIX "button_b_switch");
+    if (elem->has(PREFIX "button_x_switch"))
+        mCustomButtons.button_x_switch = elem->get<std::string>(PREFIX "button_x_switch");
+    if (elem->has(PREFIX "button_y_switch"))
+        mCustomButtons.button_y_switch = elem->get<std::string>(PREFIX "button_y_switch");
+    if (elem->has(PREFIX "button_back_switch"))
+        mCustomButtons.button_back_switch = elem->get<std::string>(PREFIX "button_back_switch");
+    if (elem->has(PREFIX "button_start_switch"))
+        mCustomButtons.button_start_switch = elem->get<std::string>(PREFIX "button_start_switch");
+
     // PlayStation.
     if (elem->has(PREFIX "button_a_PS"))
         mCustomButtons.button_a_PS = elem->get<std::string>(PREFIX "button_a_PS");

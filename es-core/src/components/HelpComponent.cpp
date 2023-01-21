@@ -81,6 +81,26 @@ void HelpComponent::assignIcons()
                                     ":/graphics/help/button_start_SNES.svg" :
                                     mStyle.mCustomButtons.button_start_SNES;
     }
+    else if (controllerType == "switchpro") {
+        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_switch.empty() ?
+                                ":/graphics/help/button_a_switch.svg" :
+                                mStyle.mCustomButtons.button_a_switch;
+        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_switch.empty() ?
+                                ":/graphics/help/button_b_switch.svg" :
+                                mStyle.mCustomButtons.button_b_switch;
+        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_switch.empty() ?
+                                ":/graphics/help/button_x_switch.svg" :
+                                mStyle.mCustomButtons.button_x_switch;
+        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_switch.empty() ?
+                                ":/graphics/help/button_y_switch.svg" :
+                                mStyle.mCustomButtons.button_y_switch;
+        sIconPathMap["back"] = mStyle.mCustomButtons.button_back_switch.empty() ?
+                                   ":/graphics/help/button_back_switch.svg" :
+                                   mStyle.mCustomButtons.button_back_switch;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_switch.empty() ?
+                                    ":/graphics/help/button_start_switch.svg" :
+                                    mStyle.mCustomButtons.button_start_switch;
+    }
     else if (controllerType == "ps3") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
                                 ":/graphics/help/button_a_PS.svg" :

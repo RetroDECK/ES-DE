@@ -205,10 +205,18 @@ void GuiInputConfig::populateConfigList()
     if (controllerType == "snes") {
         sGuiInputConfigList[4] = {"Back",  false, "SELECT",    ":/graphics/help/button_back_SNES.svg"};
         sGuiInputConfigList[5] = {"Start", false, "START",     ":/graphics/help/button_start_SNES.svg"};
-        sGuiInputConfigList[6] = {"A",     false, "B",         ":/graphics/help/mbuttons_a_SNES.svg"};
-        sGuiInputConfigList[7] = {"B",     false, "A",         ":/graphics/help/mbuttons_b_SNES.svg"};
-        sGuiInputConfigList[8] = {"X",     true,  "Y",         ":/graphics/help/mbuttons_x_SNES.svg"};
-        sGuiInputConfigList[9] = {"Y",     true,  "X",         ":/graphics/help/mbuttons_y_SNES.svg"};
+        sGuiInputConfigList[6] = {"A",     false, "B",         ":/graphics/help/mbuttons_b_SNES.svg"};
+        sGuiInputConfigList[7] = {"B",     false, "A",         ":/graphics/help/mbuttons_a_SNES.svg"};
+        sGuiInputConfigList[8] = {"X",     true,  "Y",         ":/graphics/help/mbuttons_y_SNES.svg"};
+        sGuiInputConfigList[9] = {"Y",     true,  "X",         ":/graphics/help/mbuttons_x_SNES.svg"};
+    }
+    else if (controllerType == "switchpro") {
+        sGuiInputConfigList[4] = {"Back",  false, "MINUS",     ":/graphics/help/button_back_switch.svg"};
+        sGuiInputConfigList[5] = {"Start", false, "PLUS",      ":/graphics/help/button_start_switch.svg"};
+        sGuiInputConfigList[7] = {"A",     false, "A",         ":/graphics/help/mbuttons_a_switch.svg"};
+        sGuiInputConfigList[6] = {"B",     false, "B",         ":/graphics/help/mbuttons_b_switch.svg"};
+        sGuiInputConfigList[9] = {"X",     true,  "X",         ":/graphics/help/mbuttons_x_switch.svg"};
+        sGuiInputConfigList[8] = {"Y",     true,  "Y",         ":/graphics/help/mbuttons_y_switch.svg"};
     }
     else if (controllerType == "ps3") {
         sGuiInputConfigList[4] = {"Back",  false, "SELECT",    ":/graphics/help/button_back_PS3.svg"};

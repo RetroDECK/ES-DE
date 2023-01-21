@@ -1090,6 +1090,7 @@ void GuiMenu::openInputDeviceOptions()
     inputControllerType->add("PLAYSTATION 3", "ps3", selectedPlayer == "ps3");
     inputControllerType->add("PLAYSTATION 4", "ps4", selectedPlayer == "ps4");
     inputControllerType->add("PLAYSTATION 5", "ps5", selectedPlayer == "ps5");
+    inputControllerType->add("SWITCH PRO", "switchpro", selectedPlayer == "switchpro");
     inputControllerType->add("SNES", "snes", selectedPlayer == "snes");
     // If there are no objects returned, then there must be a manually modified entry in the
     // configuration file. Simply set the controller type to "xbox" in this case.
