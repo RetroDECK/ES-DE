@@ -74,12 +74,12 @@ void HelpComponent::assignIcons()
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_SNES.empty() ?
                                 ":/graphics/help/button_y_SNES.svg" :
                                 mStyle.mCustomButtons.button_y_SNES;
-        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_SNES.empty() ?
-                                    ":/graphics/help/button_start_SNES.svg" :
-                                    mStyle.mCustomButtons.button_start_SNES;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_SNES.empty() ?
                                    ":/graphics/help/button_back_SNES.svg" :
                                    mStyle.mCustomButtons.button_back_SNES;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_SNES.empty() ?
+                                    ":/graphics/help/button_start_SNES.svg" :
+                                    mStyle.mCustomButtons.button_start_SNES;
     }
     else if (controllerType == "ps3") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
@@ -94,12 +94,12 @@ void HelpComponent::assignIcons()
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
                                 ":/graphics/help/button_y_PS.svg" :
                                 mStyle.mCustomButtons.button_y_PS;
-        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS3.empty() ?
-                                    ":/graphics/help/button_start_PS3.svg" :
-                                    mStyle.mCustomButtons.button_start_PS3;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS3.empty() ?
                                    ":/graphics/help/button_back_PS3.svg" :
                                    mStyle.mCustomButtons.button_back_PS3;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS3.empty() ?
+                                    ":/graphics/help/button_start_PS3.svg" :
+                                    mStyle.mCustomButtons.button_start_PS3;
     }
     else if (controllerType == "ps4") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
@@ -114,12 +114,12 @@ void HelpComponent::assignIcons()
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
                                 ":/graphics/help/button_y_PS.svg" :
                                 mStyle.mCustomButtons.button_y_PS;
-        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS4.empty() ?
-                                    ":/graphics/help/button_start_PS4.svg" :
-                                    mStyle.mCustomButtons.button_start_PS4;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS4.empty() ?
                                    ":/graphics/help/button_back_PS4.svg" :
                                    mStyle.mCustomButtons.button_back_PS4;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS4.empty() ?
+                                    ":/graphics/help/button_start_PS4.svg" :
+                                    mStyle.mCustomButtons.button_start_PS4;
     }
     else if (controllerType == "ps5") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
@@ -134,12 +134,12 @@ void HelpComponent::assignIcons()
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
                                 ":/graphics/help/button_y_PS.svg" :
                                 mStyle.mCustomButtons.button_y_PS;
-        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS5.empty() ?
-                                    ":/graphics/help/button_start_PS5.svg" :
-                                    mStyle.mCustomButtons.button_start_PS5;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS5.empty() ?
                                    ":/graphics/help/button_back_PS5.svg" :
                                    mStyle.mCustomButtons.button_back_PS5;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS5.empty() ?
+                                    ":/graphics/help/button_start_PS5.svg" :
+                                    mStyle.mCustomButtons.button_start_PS5;
     }
     else if (controllerType == "xbox360") {
 
@@ -155,12 +155,12 @@ void HelpComponent::assignIcons()
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_XBOX.empty() ?
                                 ":/graphics/help/button_y_XBOX.svg" :
                                 mStyle.mCustomButtons.button_y_XBOX;
-        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_XBOX360.empty() ?
-                                    ":/graphics/help/button_start_XBOX360.svg" :
-                                    mStyle.mCustomButtons.button_start_XBOX360;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_XBOX360.empty() ?
                                    ":/graphics/help/button_back_XBOX360.svg" :
                                    mStyle.mCustomButtons.button_back_XBOX360;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_XBOX360.empty() ?
+                                    ":/graphics/help/button_start_XBOX360.svg" :
+                                    mStyle.mCustomButtons.button_start_XBOX360;
     }
     else {
         // Xbox One and later.
@@ -176,12 +176,12 @@ void HelpComponent::assignIcons()
         sIconPathMap["y"] = mStyle.mCustomButtons.button_y_XBOX.empty() ?
                                 ":/graphics/help/button_y_XBOX.svg" :
                                 mStyle.mCustomButtons.button_y_XBOX;
-        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_XBOX.empty() ?
-                                    ":/graphics/help/button_start_XBOX.svg" :
-                                    mStyle.mCustomButtons.button_start_XBOX;
         sIconPathMap["back"] = mStyle.mCustomButtons.button_back_XBOX.empty() ?
                                    ":/graphics/help/button_back_XBOX.svg" :
                                    mStyle.mCustomButtons.button_back_XBOX;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_XBOX.empty() ?
+                                    ":/graphics/help/button_start_XBOX.svg" :
+                                    mStyle.mCustomButtons.button_start_XBOX;
     }
 
     // Invalidate cache for icons that have changed.

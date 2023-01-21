@@ -112,10 +112,10 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         mCustomButtons.button_x_SNES = elem->get<std::string>(PREFIX "button_x_SNES");
     if (elem->has(PREFIX "button_y_SNES"))
         mCustomButtons.button_y_SNES = elem->get<std::string>(PREFIX "button_y_SNES");
-    if (elem->has(PREFIX "button_start_SNES"))
-        mCustomButtons.button_start_SNES = elem->get<std::string>(PREFIX "button_start_SNES");
     if (elem->has(PREFIX "button_back_SNES"))
         mCustomButtons.button_back_SNES = elem->get<std::string>(PREFIX "button_back_SNES");
+    if (elem->has(PREFIX "button_start_SNES"))
+        mCustomButtons.button_start_SNES = elem->get<std::string>(PREFIX "button_start_SNES");
 
     // PlayStation.
     if (elem->has(PREFIX "button_a_PS"))
@@ -126,18 +126,18 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         mCustomButtons.button_x_PS = elem->get<std::string>(PREFIX "button_x_PS");
     if (elem->has(PREFIX "button_y_PS"))
         mCustomButtons.button_y_PS = elem->get<std::string>(PREFIX "button_y_PS");
-    if (elem->has(PREFIX "button_start_PS3"))
-        mCustomButtons.button_start_PS3 = elem->get<std::string>(PREFIX "button_start_PS3");
     if (elem->has(PREFIX "button_back_PS3"))
         mCustomButtons.button_back_PS3 = elem->get<std::string>(PREFIX "button_back_PS3");
-    if (elem->has(PREFIX "button_start_PS4"))
-        mCustomButtons.button_start_PS4 = elem->get<std::string>(PREFIX "button_start_PS4");
+    if (elem->has(PREFIX "button_start_PS3"))
+        mCustomButtons.button_start_PS3 = elem->get<std::string>(PREFIX "button_start_PS3");
     if (elem->has(PREFIX "button_back_PS4"))
         mCustomButtons.button_back_PS4 = elem->get<std::string>(PREFIX "button_back_PS4");
-    if (elem->has(PREFIX "button_start_PS5"))
-        mCustomButtons.button_start_PS5 = elem->get<std::string>(PREFIX "button_start_PS5");
+    if (elem->has(PREFIX "button_start_PS4"))
+        mCustomButtons.button_start_PS4 = elem->get<std::string>(PREFIX "button_start_PS4");
     if (elem->has(PREFIX "button_back_PS5"))
         mCustomButtons.button_back_PS5 = elem->get<std::string>(PREFIX "button_back_PS5");
+    if (elem->has(PREFIX "button_start_PS5"))
+        mCustomButtons.button_start_PS5 = elem->get<std::string>(PREFIX "button_start_PS5");
 
     // XBOX.
     if (elem->has(PREFIX "button_a_XBOX"))
@@ -148,12 +148,12 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         mCustomButtons.button_x_XBOX = elem->get<std::string>(PREFIX "button_x_XBOX");
     if (elem->has(PREFIX "button_y_XBOX"))
         mCustomButtons.button_y_XBOX = elem->get<std::string>(PREFIX "button_y_XBOX");
-    if (elem->has(PREFIX "button_start_XBOX"))
-        mCustomButtons.button_start_XBOX = elem->get<std::string>(PREFIX "button_start_XBOX");
     if (elem->has(PREFIX "button_back_XBOX"))
         mCustomButtons.button_back_XBOX = elem->get<std::string>(PREFIX "button_back_XBOX");
-    if (elem->has(PREFIX "button_start_XBOX360"))
-        mCustomButtons.button_start_XBOX360 = elem->get<std::string>(PREFIX "button_start_XBOX360");
+    if (elem->has(PREFIX "button_start_XBOX"))
+        mCustomButtons.button_start_XBOX = elem->get<std::string>(PREFIX "button_start_XBOX");
     if (elem->has(PREFIX "button_back_XBOX360"))
         mCustomButtons.button_back_XBOX360 = elem->get<std::string>(PREFIX "button_back_XBOX360");
+    if (elem->has(PREFIX "button_start_XBOX360"))
+        mCustomButtons.button_start_XBOX360 = elem->get<std::string>(PREFIX "button_start_XBOX360");
 }
