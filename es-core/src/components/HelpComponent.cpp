@@ -81,6 +81,26 @@ void HelpComponent::assignIcons()
                                    ":/graphics/help/button_back_SNES.svg" :
                                    mStyle.mCustomButtons.button_back_SNES;
     }
+    else if (controllerType == "ps3") {
+        sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
+                                ":/graphics/help/button_a_PS.svg" :
+                                mStyle.mCustomButtons.button_a_PS;
+        sIconPathMap["b"] = mStyle.mCustomButtons.button_b_PS.empty() ?
+                                ":/graphics/help/button_b_PS.svg" :
+                                mStyle.mCustomButtons.button_b_PS;
+        sIconPathMap["x"] = mStyle.mCustomButtons.button_x_PS.empty() ?
+                                ":/graphics/help/button_x_PS.svg" :
+                                mStyle.mCustomButtons.button_x_PS;
+        sIconPathMap["y"] = mStyle.mCustomButtons.button_y_PS.empty() ?
+                                ":/graphics/help/button_y_PS.svg" :
+                                mStyle.mCustomButtons.button_y_PS;
+        sIconPathMap["start"] = mStyle.mCustomButtons.button_start_PS3.empty() ?
+                                    ":/graphics/help/button_start_PS3.svg" :
+                                    mStyle.mCustomButtons.button_start_PS3;
+        sIconPathMap["back"] = mStyle.mCustomButtons.button_back_PS3.empty() ?
+                                   ":/graphics/help/button_back_PS3.svg" :
+                                   mStyle.mCustomButtons.button_back_PS3;
+    }
     else if (controllerType == "ps4") {
         sIconPathMap["a"] = mStyle.mCustomButtons.button_a_PS.empty() ?
                                 ":/graphics/help/button_a_PS.svg" :
@@ -169,9 +189,8 @@ void HelpComponent::assignIcons()
     while (it != sIconPathMap.end()) {
         if (sIconPathMapOld.find(it->first) != sIconPathMapOld.end()) {
             if (sIconPathMapOld[it->first] != sIconPathMap[it->first]) {
-                if (mIconCache.find(it->first) != mIconCache.end()) {
+                if (mIconCache.find(it->first) != mIconCache.end())
                     mIconCache.erase(mIconCache.find(it->first));
-                }
             }
         }
         ++it;

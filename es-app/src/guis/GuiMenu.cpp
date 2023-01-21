@@ -1087,6 +1087,7 @@ void GuiMenu::openInputDeviceOptions()
     std::string selectedPlayer {Settings::getInstance()->getString("InputControllerType")};
     inputControllerType->add("XBOX", "xbox", selectedPlayer == "xbox");
     inputControllerType->add("XBOX 360", "xbox360", selectedPlayer == "xbox360");
+    inputControllerType->add("PLAYSTATION 3", "ps3", selectedPlayer == "ps3");
     inputControllerType->add("PLAYSTATION 4", "ps4", selectedPlayer == "ps4");
     inputControllerType->add("PLAYSTATION 5", "ps5", selectedPlayer == "ps5");
     inputControllerType->add("SNES", "snes", selectedPlayer == "snes");

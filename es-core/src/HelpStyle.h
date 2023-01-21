@@ -57,6 +57,8 @@ struct HelpStyle {
         std::string button_b_PS;
         std::string button_x_PS;
         std::string button_y_PS;
+        std::string button_start_PS3;
+        std::string button_back_PS3;
         std::string button_start_PS4;
         std::string button_back_PS4;
         std::string button_start_PS5;
