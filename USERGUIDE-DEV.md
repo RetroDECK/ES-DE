@@ -2506,7 +2506,7 @@ Settings related to the input devices, i.e. the keyboard and controllers.
 
 **Controller type**
 
-This setting gives the ability to choose between the controller types _Xbox, Xbox 360, PlayStation 4, PlayStation 5_ and _SNES_ (Super Nintendo). Doing so alters the help icons and help text as well as the icons and text for the input device configurator. The setting is only cosmetic and does not change the controller behavior or the controller button mappings.
+This setting gives the ability to choose between the controller types _Xbox, Xbox 360, PlayStation 1/2/3, PlayStation 4, PlayStation 5, Switch Pro_ and _SNES_. Doing so alters the help icons and help text as well as the icons and text for the input device configurator. The setting is only cosmetic and does not change the controller behavior or the controller button mappings.
 
 **Only accept input from first controller**
 

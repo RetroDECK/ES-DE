@@ -667,7 +667,7 @@ The structure of the file is simple, as can be seen in this example:
 ```
 The file format is hopefully mostly self-explanatory; this example provides three aspect ratios, two color schemes, one transition animation profile and three variants, one of which is a variant trigger override. The `<label>` tag for the variants and transitions is the text that will show up in the _UI Settings_ menu, assuming `<selectable>` has been set to true. The same is true for color schemes, although these will always show up in the GUI and can't be disabled.
 
-The optional `<themeName>` tag defines the name that will show up for the _Theme set_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEMESET-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu. Legacy theme sets are also clearly marked with the _[LEGACY]_ suffix.
+The optional `<themeName>` tag defines the name that will show up in the _Theme set_ option in the _UI Settings_ menu. If no such tag is present, then the physical directory name will be displayed instead, for example _MYTHEMESET-ES-DE_. Note that theme names will always be converted to uppercase characters when displayed in the menu. Legacy theme sets are also clearly marked with a _[LEGACY]_ suffix.
 
 The variant, color scheme and transitions names as well as their labels can be set to arbitrary values, but the name has to be unique. If two entries are declared with the same name, a warning will be generated on startup and the duplicate entry will not get loaded. Variants, color schemes and transition animations will be listed in the _UI Settings_ menu in the order that they are defined in capabilities.xml.
 
@@ -2491,20 +2491,6 @@ Properties:
       `button_lt`,
       `button_rt`,
       `button_ltrt`,
-      `button_a_SNES`,
-      `button_b_SNES`,
-      `button_x_SNES`,
-      `button_y_SNES`,
-      `button_back_SNES`,
-      `button_start_SNES`,
-      `button_a_PS`,
-      `button_b_PS`,
-      `button_x_PS`,
-      `button_y_PS`,
-      `button_back_PS4`,
-      `button_start_PS4`,
-      `button_back_PS5`,
-      `button_start_PS5`,
       `button_a_XBOX`,
       `button_b_XBOX`,
       `button_x_XBOX`,
@@ -2512,4 +2498,26 @@ Properties:
       `button_back_XBOX`,
       `button_start_XBOX`,
       `button_back_XBOX360`,
-      `button_start_XBOX360`
+      `button_start_XBOX360`,
+      `button_a_PS`,
+      `button_b_PS`,
+      `button_x_PS`,
+      `button_y_PS`,
+      `button_back_PS123`,
+      `button_start_PS123`,
+      `button_back_PS4`,
+      `button_start_PS4`,
+      `button_back_PS5`,
+      `button_start_PS5`,
+      `button_a_switch`,
+      `button_b_switch`,
+      `button_x_switch`,
+      `button_y_switch`,
+      `button_back_switch`,
+      `button_start_switch`,
+      `button_a_SNES`,
+      `button_b_SNES`,
+      `button_x_SNES`,
+      `button_y_SNES`,
+      `button_back_SNES`,
+      `button_start_SNES`

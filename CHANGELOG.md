@@ -221,6 +221,8 @@ Overall application speed and performance has been greatly improved with faster 
 * (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
 * Added the build date to to main menu for alpha and dev builds
 * Added a left trigger + right trigger help system icon and removed the deprecated hotkey icon
+* Added PlayStation 1/2/3 and Switch Pro controller type support
+* Renamed some SNES controller button assets to be more intuitive
 * Added an arcade twin stick controller badge icon
 * (slate-es-de) Recreated the Nintendo GameCube controller as the old graphics had some issues and was not accurate
 * Added Nintendo GameCube, Sega Master System and Sega Dreamcast controller badge icons
