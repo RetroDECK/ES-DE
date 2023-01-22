@@ -135,8 +135,8 @@ bool Window::init()
 
     mSplashTextScanning = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
         "Scanning game files...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
-    mSplashTextPopulating = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
-        "Populating systems...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+    mSplashTextPopulating = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache("Loading systems...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
     mSplashTextReloading = std::unique_ptr<TextCache>(
         mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
 
