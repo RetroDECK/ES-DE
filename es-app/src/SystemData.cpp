@@ -749,6 +749,8 @@ bool SystemData::loadConfig()
                 sSystemVector.emplace_back(newSys);
             }
         }
+        if (splashScreen)
+            Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.5f);
     }
 
     // Sort systems by sortName, which will normally be the same as the full name.
