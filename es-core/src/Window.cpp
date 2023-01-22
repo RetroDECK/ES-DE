@@ -153,10 +153,10 @@ bool Window::init()
         progressBarRect.barWidth = mRenderer->getScreenHeight() * 0.53f;
     else
         progressBarRect.barWidth = mRenderer->getScreenWidth() * 0.53f;
-    progressBarRect.barHeight = mDefaultFonts.at(1)->getLetterHeight() * 1.3f;
+    progressBarRect.barHeight = mDefaultFonts.at(1)->getLetterHeight() * 1.1f;
     progressBarRect.barPosX =
         (mRenderer->getScreenWidth() / 2.0f) - (progressBarRect.barWidth / 2.0f);
-    progressBarRect.barPosY = mSplashTextPositions.y + (progressBarRect.barHeight * 1.65f);
+    progressBarRect.barPosY = mSplashTextPositions.y + (progressBarRect.barHeight * 2.0f);
     progressBarRect.color = DEFAULT_TEXTCOLOR;
     mProgressBarRectangles.emplace_back(progressBarRect);
 
@@ -173,7 +173,7 @@ bool Window::init()
     progressBarRect.barHeight -= borderThickness * 2.0f;
     progressBarRect.barPosX += borderThickness;
     progressBarRect.barPosY += borderThickness;
-    progressBarRect.color = 0xA1001DFF;
+    progressBarRect.color = 0x79010FFF;
     mProgressBarRectangles.emplace_back(progressBarRect);
 
     mBackgroundOverlay->setImage(":/graphics/frame.png");
