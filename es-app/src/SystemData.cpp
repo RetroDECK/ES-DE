@@ -513,7 +513,8 @@ bool SystemData::loadConfig()
         const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
         float systemCount {0.0f};
         float loadedSystems {0.0f};
-        long unsigned int lastTime {0};
+        Uint64 lastTime {0};
+        Uint64 accumulator {0};
 
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
@@ -534,13 +535,14 @@ bool SystemData::loadConfig()
             path = system.child("path").text().get();
 
             if (splashScreen) {
-                const long unsigned int curTime {SDL_GetTicks64()};
-                const long unsigned int deltaTime {curTime - lastTime};
+                const Uint64 curTime {SDL_GetTicks64()};
+                accumulator += curTime - lastTime;
                 lastTime = curTime;
                 ++loadedSystems;
                 // This prevents Renderer::swapBuffers() from being called excessively which
                 // could lead to significantly longer application startup times.
-                if (deltaTime > 15) {
+                if (accumulator > 15) {
+                    accumulator = 0;
                     const float progress {glm::mix(0.0f, 0.5f, loadedSystems / systemCount)};
                     Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING,
                                                               progress);
