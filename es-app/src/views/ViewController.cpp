@@ -1104,6 +1104,9 @@ void ViewController::preload()
 {
     unsigned int systemCount {static_cast<unsigned int>(SystemData::sSystemVector.size())};
 
+    if (Settings::getInstance()->getBool("SplashScreen"))
+        mWindow->renderSplashScreen(Window::SplashScreenState::POPULATING, 0.5f);
+
     // This reduces the amount of texture pop-in when loading theme extras.
     if (!SystemData::sSystemVector.empty())
         getSystemListView();

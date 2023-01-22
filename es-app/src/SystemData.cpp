@@ -25,6 +25,8 @@
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
 
+#include <SDL2/SDL_timer.h>
+
 #include <fstream>
 #include <pugixml.hpp>
 #include <random>
@@ -511,6 +513,7 @@ bool SystemData::loadConfig()
         const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
         float systemCount {0.0f};
         float loadedSystems {0.0f};
+        long unsigned int lastTime {0};
 
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
@@ -531,10 +534,17 @@ bool SystemData::loadConfig()
             path = system.child("path").text().get();
 
             if (splashScreen) {
+                const long unsigned int curTime {SDL_GetTicks64()};
+                const long unsigned int deltaTime {curTime - lastTime};
+                lastTime = curTime;
                 ++loadedSystems;
-                const float progress {glm::mix(0.0f, 0.5f, loadedSystems / systemCount)};
-                Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING,
-                                                          progress);
+                // This prevents Renderer::swapBuffers() from being called excessively which
+                // could lead to significantly longer application startup times.
+                if (deltaTime > 15) {
+                    const float progress {glm::mix(0.0f, 0.5f, loadedSystems / systemCount)};
+                    Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING,
+                                                              progress);
+                }
             }
 
             auto nameFindFunc = [&] {

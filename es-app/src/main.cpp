@@ -707,15 +707,7 @@ int main(int argc, char* argv[])
     AudioManager::getInstance();
     MameNames::getInstance();
     ThemeData::populateThemeSets();
-    // We need to temporarily disable VSync as the splash screen may otherwise slow down
-    // application startup significantly due to excessive swapBuffers() calls.
-    const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
-    const bool vSync {Settings::getInstance()->getBool("VSync")};
-    if (splashScreen && vSync)
-        SDL_GL_SetSwapInterval(0);
     loadSystemsReturnCode loadSystemsStatus {loadSystemConfigFile()};
-    if (splashScreen && vSync)
-        SDL_GL_SetSwapInterval(1);
 
     if (loadSystemsStatus) {
         // If there was an issue parsing the es_systems.xml file, display an error message.
