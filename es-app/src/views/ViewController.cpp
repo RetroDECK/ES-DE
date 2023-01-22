@@ -1122,7 +1122,8 @@ void ViewController::preload()
         getGamelistView(*it)->preloadGamelist();
     }
 
-    ThemeData::setThemeTransitions();
+    if (SystemData::sSystemVector.size() > 0)
+        ThemeData::setThemeTransitions();
 
     // Load navigation sounds, either from the theme if it supports it, or otherwise from
     // the bundled fallback sound files.
