@@ -786,7 +786,7 @@ void ThemeData::populateThemeSets()
                 if (!capabilities.legacyTheme) {
                     int aspectRatios {0};
                     if (capabilities.aspectRatios.size() > 0)
-                        aspectRatios = capabilities.aspectRatios.size() - 1;
+                        aspectRatios = static_cast<int>(capabilities.aspectRatios.size()) - 1;
                     LOG(LogDebug) << "Theme set includes support for "
                                   << capabilities.variants.size() << " variant"
                                   << (capabilities.variants.size() != 1 ? "s" : "") << ", "
