@@ -1102,7 +1102,6 @@ void GuiMenu::openInputDeviceOptions()
             Settings::getInstance()->getString("InputControllerType")) {
             Settings::getInstance()->setString("InputControllerType",
                                                inputControllerType->getSelected());
-            s->setNeedsReloadHelpPrompts();
             s->setNeedsSaving();
         }
     });

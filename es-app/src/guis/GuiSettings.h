@@ -45,7 +45,6 @@ public:
     void setMenuPosition(glm::vec3 position) { mMenu.setPosition(position); }
 
     void setNeedsSaving(bool state = true) { mNeedsSaving = state; }
-    void setNeedsReloadHelpPrompts() { mNeedsReloadHelpPrompts = true; }
     void setNeedsCollectionsUpdate() { mNeedsCollectionsUpdate = true; }
     void setNeedsSorting() { mNeedsSorting = true; }
     void setNeedsSortingCollections() { mNeedsSortingCollections = true; }
@@ -70,7 +69,6 @@ private:
     SystemData* mGoToSystem;
 
     bool mNeedsSaving;
-    bool mNeedsReloadHelpPrompts;
     bool mNeedsCollectionsUpdate;
     bool mNeedsSorting;
     bool mNeedsSortingCollections;

@@ -26,7 +26,6 @@ GuiSettings::GuiSettings(std::string title)
     : mMenu {title}
     , mGoToSystem {nullptr}
     , mNeedsSaving {false}
-    , mNeedsReloadHelpPrompts {false}
     , mNeedsCollectionsUpdate {false}
     , mNeedsSorting {false}
     , mNeedsSortingCollections {false}
@@ -60,9 +59,6 @@ void GuiSettings::save()
 
     if (mNeedsSaving)
         Settings::getInstance()->saveFile();
-
-    if (mNeedsReloadHelpPrompts)
-        mWindow->reloadHelpPrompts();
 
     if (mNeedsCollectionsUpdate) {
         CollectionSystemsManager::getInstance()->loadEnabledListFromSettings();
