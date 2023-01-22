@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Window.cpp
 //
-//  Window management, screensaver management, and help prompts.
+//  Window management, screensaver management, help prompts and splash screen.
 //  The input stack starts here as well, as this is the first instance called by InputManager.
 //
 
@@ -25,6 +25,8 @@
 
 Window::Window() noexcept
     : mRenderer {Renderer::getInstance()}
+    , mSplashTextPositions {0.0f, 0.0f, 0.0f, 0.0f}
+    , mBackgroundOverlayOpacity {1.0f}
     , mScreensaver {nullptr}
     , mMediaViewer {nullptr}
     , mLaunchScreen {nullptr}
@@ -47,23 +49,19 @@ Window::Window() noexcept
     , mInvalidateCacheTimer {0}
     , mVideoPlayerCount {0}
     , mTopScale {0.5f}
+    , mRenderedHelpPrompts {false}
     , mChangedThemeSet {false}
 {
 }
 
 Window::~Window()
 {
-    delete mBackgroundOverlay;
-    delete mSplash;
-
     // Delete all our GUIs.
     while (peekGui())
         delete peekGui();
 
     if (mInfoPopup)
         delete mInfoPopup;
-
-    delete mHelp;
 }
 
 Window* Window::getInstance()
@@ -112,10 +110,10 @@ bool Window::init()
 
     ResourceManager::getInstance().reloadAll();
 
-    mHelp = new HelpComponent;
-    mSplash = new ImageComponent;
+    mHelp = std::make_unique<HelpComponent>();
+    mSplash = std::make_unique<ImageComponent>(false, false);
 
-    mBackgroundOverlay = new ImageComponent;
+    mBackgroundOverlay = std::make_unique<ImageComponent>(false, false);
     mBackgroundOverlayOpacity = 0.0f;
 
     // Keep a reference to the default fonts, so they don't keep getting destroyed/recreated.
@@ -134,6 +132,49 @@ bool Window::init()
     mSplash->setImage(":/graphics/splash.svg");
     mSplash->setPosition((mRenderer->getScreenWidth() - mSplash->getSize().x) / 2.0f,
                          (mRenderer->getScreenHeight() - mSplash->getSize().y) / 2.0f * 0.6f);
+
+    mSplashTextScanning = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
+        "Scanning game files...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+    mSplashTextPopulating = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
+        "Populating systems...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+    mSplashTextReloading = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+
+    mSplashTextPositions.x =
+        (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
+    mSplashTextPositions.z =
+        (mRenderer->getScreenWidth() - mSplashTextPopulating->metrics.size.x) / 2.0f;
+    mSplashTextPositions.w =
+        (mRenderer->getScreenWidth() - mSplashTextReloading->metrics.size.x) / 2.0f;
+    mSplashTextPositions.y = mRenderer->getScreenHeight() * 0.745f;
+
+    ProgressBarRectangle progressBarRect;
+    if (mRenderer->getScreenWidth() > mRenderer->getScreenHeight())
+        progressBarRect.barWidth = mRenderer->getScreenHeight() * 0.53f;
+    else
+        progressBarRect.barWidth = mRenderer->getScreenWidth() * 0.53f;
+    progressBarRect.barHeight = mDefaultFonts.at(1)->getLetterHeight() * 1.3f;
+    progressBarRect.barPosX =
+        (mRenderer->getScreenWidth() / 2.0f) - (progressBarRect.barWidth / 2.0f);
+    progressBarRect.barPosY = mSplashTextPositions.y + (progressBarRect.barHeight * 1.65f);
+    progressBarRect.color = DEFAULT_TEXTCOLOR;
+    mProgressBarRectangles.emplace_back(progressBarRect);
+
+    const float borderThickness {std::ceil(2.0f * mRenderer->getScreenHeightModifier())};
+
+    progressBarRect.barWidth -= borderThickness * 2.0f;
+    progressBarRect.barHeight -= borderThickness * 2.0f;
+    progressBarRect.barPosX += borderThickness;
+    progressBarRect.barPosY += borderThickness;
+    progressBarRect.color = 0x000000FF;
+    mProgressBarRectangles.emplace_back(progressBarRect);
+
+    progressBarRect.barWidth -= borderThickness * 2.0f;
+    progressBarRect.barHeight -= borderThickness * 2.0f;
+    progressBarRect.barPosX += borderThickness;
+    progressBarRect.barPosY += borderThickness;
+    progressBarRect.color = 0xA1001DFF;
+    mProgressBarRectangles.emplace_back(progressBarRect);
 
     mBackgroundOverlay->setImage(":/graphics/frame.png");
     mBackgroundOverlay->setResize(mRenderer->getScreenWidth(), mRenderer->getScreenHeight());
@@ -605,23 +646,50 @@ void Window::render()
     }
 }
 
-void Window::renderLoadingScreen(std::string text)
+void Window::renderSplashScreen(SplashScreenState state, float progress)
 {
     glm::mat4 trans {mRenderer->getIdentity()};
     mRenderer->setMatrix(trans);
     mRenderer->drawRect(0.0f, 0.0f, mRenderer->getScreenWidth(), mRenderer->getScreenHeight(),
                         0x000000FF, 0x000000FF);
     mSplash->render(trans);
-
-    auto& font = mDefaultFonts.at(1);
-    TextCache* cache {font->buildTextCache(text, 0.0f, 0.0f, 0x656565FF)};
-
-    float x {std::round((mRenderer->getScreenWidth() - cache->metrics.size.x) / 2.0f)};
-    float y {std::round(mRenderer->getScreenHeight() * 0.835f)};
-    trans = glm::translate(trans, glm::round(glm::vec3 {x, y, 0.0f}));
     mRenderer->setMatrix(trans);
-    font->renderTextCache(cache);
-    delete cache;
+
+    if (state != SplashScreenState::RELOADING) {
+        // We need to render three rectangles: border, black center and actual progress bar.
+        for (size_t i {0}; i < mProgressBarRectangles.size(); ++i) {
+            const float rectWidth {i == mProgressBarRectangles.size() - 1 ? progress : 1.0f};
+            mRenderer->drawRect(
+                mProgressBarRectangles.at(i).barPosX, mProgressBarRectangles.at(i).barPosY,
+                mProgressBarRectangles.at(i).barWidth * rectWidth,
+                mProgressBarRectangles.at(i).barHeight, mProgressBarRectangles.at(i).color,
+                mProgressBarRectangles.at(i).color);
+        }
+    }
+
+    float textPosX {0.0f};
+    float textPosY {mSplashTextPositions.y};
+
+    if (state == SplashScreenState::SCANNING) {
+        textPosX = mSplashTextPositions.x;
+    }
+    else if (state == SplashScreenState::POPULATING) {
+        textPosX = mSplashTextPositions.z;
+    }
+    else if (state == SplashScreenState::RELOADING) {
+        textPosX = mSplashTextPositions.w;
+        textPosY += mDefaultFonts.at(1)->getLetterHeight();
+    }
+
+    trans = glm::translate(trans, glm::round(glm::vec3 {textPosX, textPosY, 0.0f}));
+    mRenderer->setMatrix(trans);
+
+    if (state == SplashScreenState::SCANNING)
+        mDefaultFonts.at(1)->renderTextCache(mSplashTextScanning.get());
+    else if (state == SplashScreenState::POPULATING)
+        mDefaultFonts.at(1)->renderTextCache(mSplashTextPopulating.get());
+    else if (state == SplashScreenState::RELOADING)
+        mDefaultFonts.at(1)->renderTextCache(mSplashTextReloading.get());
 
     mRenderer->swapBuffers();
 }
@@ -705,14 +773,6 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
               });
 
     mHelp->setPrompts(addPrompts);
-}
-
-void Window::reloadHelpPrompts()
-{
-    if (mHelp) {
-        delete mHelp;
-        mHelp = new HelpComponent;
-    }
 }
 
 void Window::stopInfoPopup()

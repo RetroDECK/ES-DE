@@ -241,7 +241,7 @@ void ViewController::goToStart(bool playTransition)
 
 void ViewController::ReloadAndGoToStart()
 {
-    mWindow->renderLoadingScreen("Loading...");
+    mWindow->renderSplashScreen(Window::SplashScreenState::RELOADING, 0.0f);
     reloadAll();
     if (mState.viewing == GAMELIST) {
         goToSystemView(SystemData::sSystemVector.front(), false);
@@ -1108,13 +1108,15 @@ void ViewController::preload()
     if (!SystemData::sSystemVector.empty())
         getSystemListView();
 
-    for (auto it = SystemData::sSystemVector.cbegin(); it != SystemData::sSystemVector.cend();
-         ++it) {
+    float loadedSystems {0.0f};
+
+    for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
+         it != SystemData::sSystemVector.cend(); ++it) {
         if (Settings::getInstance()->getBool("SplashScreen")) {
-            mWindow->renderLoadingScreen(
-                "Loading '" + (*it)->getFullName() + "' (" +
-                std::to_string(std::distance(SystemData::sSystemVector.cbegin(), it) + 1) + "/" +
-                std::to_string(systemCount) + ")");
+            ++loadedSystems;
+            const float progress {
+                glm::mix(0.5f, 1.0f, loadedSystems / static_cast<float>(systemCount))};
+            mWindow->renderSplashScreen(Window::SplashScreenState::POPULATING, progress);
         }
         (*it)->getIndex()->resetFilters();
         getGamelistView(*it)->preloadGamelist();

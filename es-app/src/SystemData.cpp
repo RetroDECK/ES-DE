@@ -508,6 +508,15 @@ bool SystemData::loadConfig()
             return true;
         }
 
+        const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
+        float systemCount {0.0f};
+        float loadedSystems {0.0f};
+
+        for (pugi::xml_node system {systemList.child("system")}; system;
+             system = system.next_sibling("system")) {
+            ++systemCount;
+        }
+
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
             std::string name;
@@ -520,6 +529,13 @@ bool SystemData::loadConfig()
             fullname = Utils::String::replace(system.child("fullname").text().get(), "\n", "");
             sortName = system.child("systemsortname").text().get();
             path = system.child("path").text().get();
+
+            if (splashScreen) {
+                ++loadedSystems;
+                const float progress {glm::mix(0.0f, 0.5f, loadedSystems / systemCount)};
+                Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING,
+                                                          progress);
+            }
 
             auto nameFindFunc = [&] {
                 for (auto system : sSystemVector) {
@@ -581,7 +597,7 @@ bool SystemData::loadConfig()
             }
 
             // Convert extensions list from a string into a vector of strings.
-            std::vector<std::string> extensions = readList(system.child("extension").text().get());
+            std::vector<std::string> extensions {readList(system.child("extension").text().get())};
 
             // Load all launch command tags for the system and if there are multiple tags, then
             // the label attribute needs to be set on all entries as it's a requirement for the

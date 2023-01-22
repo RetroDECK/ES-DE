@@ -531,16 +531,15 @@ int main(int argc, char* argv[])
     // This is a workaround to disable the incredibly annoying save state functionality in
     // macOS which forces a restore of the previous window state. The problem is that this
     // removes the splash screen on startup and it may have other adverse effects as well.
-    std::string saveStateDir = Utils::FileSystem::expandHomePath(
-        "~/Library/Saved Application State/org.es-de.EmulationStation.savedState");
+    std::string saveStateDir {Utils::FileSystem::expandHomePath(
+        "~/Library/Saved Application State/org.es-de.EmulationStation.savedState")};
     // Deletion of the state files should normally not be required as there shouldn't be any
     // files to begin with. But maybe the files can still be created for unknown reasons
     // as macOS really really loves to restore windows. Let's therefore include this deletion
     // step as an extra precaution.
     if (Utils::FileSystem::exists(saveStateDir)) {
-        for (std::string stateFile : Utils::FileSystem::getDirContent(saveStateDir)) {
+        for (std::string stateFile : Utils::FileSystem::getDirContent(saveStateDir))
             Utils::FileSystem::removeFile(stateFile);
-        }
     }
     else {
         Utils::FileSystem::createDirectory(saveStateDir);
@@ -683,8 +682,6 @@ int main(int argc, char* argv[])
 
     window->pushGui(ViewController::getInstance());
 
-    bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
-
     InputManager::getInstance().parseEvent(event);
     if (event.type == SDL_QUIT)
         return 1;
@@ -707,15 +704,18 @@ int main(int argc, char* argv[])
     }
 #endif
 
-    if (splashScreen) {
-        std::string progressText {"Loading system config..."};
-        window->renderLoadingScreen(progressText);
-    }
-
     AudioManager::getInstance();
     MameNames::getInstance();
     ThemeData::populateThemeSets();
+    // We need to temporarily disable VSync as the splash screen may otherwise slow down
+    // application startup significantly due to excessive swapBuffers() calls.
+    const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
+    const bool vSync {Settings::getInstance()->getBool("VSync")};
+    if (splashScreen && vSync)
+        SDL_GL_SetSwapInterval(0);
     loadSystemsReturnCode loadSystemsStatus {loadSystemConfigFile()};
+    if (splashScreen && vSync)
+        SDL_GL_SetSwapInterval(1);
 
     if (loadSystemsStatus) {
         // If there was an issue parsing the es_systems.xml file, display an error message.
@@ -751,9 +751,6 @@ int main(int argc, char* argv[])
         LOG(LogInfo) << "Finished loading theme set \"" << ThemeData::getCurrentThemeSetName()
                      << "\"";
     }
-
-    if (splashScreen)
-        window->renderLoadingScreen("Done");
 
     // Open the input configuration GUI if the flag to force this was passed from the command line.
     if (!loadSystemsStatus) {

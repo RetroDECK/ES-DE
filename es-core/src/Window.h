@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition
 //  Window.h
 //
-//  Window management, screensaver management, and help prompts.
+//  Window management, screensaver management, help prompts and splash screen.
 //  The input stack starts here as well, as this is the first instance called by InputManager.
 //
 
@@ -92,13 +92,18 @@ public:
 
     void normalizeNextUpdate() { mNormalizeNextUpdate = true; }
 
-    void renderLoadingScreen(std::string text);
+    enum class SplashScreenState {
+        SCANNING,
+        POPULATING,
+        RELOADING
+    };
+
+    void renderSplashScreen(SplashScreenState state, float progress);
     // The list scroll overlay is triggered from IList when the highest scrolling tier is reached.
     void renderListScrollOverlay(const float opacity, const std::string& text);
 
     void renderHelpPromptsEarly(); // Used to render HelpPrompts before a fade.
     void setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpStyle& style);
-    void reloadHelpPrompts();
 
     // GuiInfoPopup notifications.
     void queueInfoPopup(const std::string& message, const int& duration)
@@ -150,10 +155,24 @@ private:
     // Returns true if at least one component on the stack is processing.
     bool isProcessing();
 
+    struct ProgressBarRectangle {
+        float barWidth;
+        float barHeight;
+        float barPosX;
+        float barPosY;
+        unsigned int color;
+    };
+
     Renderer* mRenderer;
-    HelpComponent* mHelp;
-    ImageComponent* mBackgroundOverlay;
-    ImageComponent* mSplash;
+    std::unique_ptr<HelpComponent> mHelp;
+    std::unique_ptr<ImageComponent> mBackgroundOverlay;
+    std::unique_ptr<ImageComponent> mSplash;
+    std::unique_ptr<TextCache> mSplashTextScanning;
+    std::unique_ptr<TextCache> mSplashTextPopulating;
+    std::unique_ptr<TextCache> mSplashTextReloading;
+    glm::vec4 mSplashTextPositions;
+    std::vector<ProgressBarRectangle> mProgressBarRectangles;
+
     float mBackgroundOverlayOpacity;
     std::vector<GuiComponent*> mGuiStack;
     std::vector<std::shared_ptr<Font>> mDefaultFonts;

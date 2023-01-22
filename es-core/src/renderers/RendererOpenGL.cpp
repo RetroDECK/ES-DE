@@ -340,6 +340,7 @@ void RendererOpenGL::setSwapInterval()
             LOG(LogInfo) << "Enabling VSync...";
         }
         else {
+            Settings::getInstance()->setBool("VSync", false);
             LOG(LogWarning) << "Could not enable VSync: " << SDL_GetError();
         }
     }
