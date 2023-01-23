@@ -268,10 +268,10 @@ void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
 
     search.system->getIndex()->addToIndex(search.game);
 
-    mSearchQueue.pop();
     ++mCurrentGame;
     ++mTotalSuccessful;
     CollectionSystemsManager::getInstance()->refreshCollectionSystems(search.game);
+    mSearchQueue.pop();
     doNextSearch();
 }
 
