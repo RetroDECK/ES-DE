@@ -39,6 +39,11 @@ struct ScraperSearchParams {
 
     std::string nameOverride;
     bool automaticMode;
+
+    ScraperSearchParams()
+        : automaticMode {false}
+    {
+    }
 };
 
 struct ScraperSearchResult {
