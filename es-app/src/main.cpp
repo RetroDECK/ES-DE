@@ -471,8 +471,8 @@ loadSystemsReturnCode loadSystemConfigFile()
         return INVALID_FILE;
 
     if (SystemData::sSystemVector.size() == 0) {
-        LOG(LogError) << "No game files were found, make sure that the system directories are "
-                         "setup correctly and that the file extensions are supported";
+        LOG(LogInfo) << "No game files were found, make sure that the system directories are "
+                        "setup correctly and that the file extensions are supported";
         return NO_ROMS;
     }
 
