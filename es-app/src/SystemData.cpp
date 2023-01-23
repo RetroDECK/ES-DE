@@ -460,8 +460,33 @@ bool SystemData::loadConfig()
 
     const std::vector<std::string>& configPaths {getConfigPath(true)};
     const std::string& rompath {FileData::getROMDirectory()};
-
     bool onlyProcessCustomFile {false};
+
+    const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
+    float systemCount {0.0f};
+    float loadedSystems {0.0f};
+
+    // This is only done to get the total system count, for calculating the progress bar position.
+    for (auto& configPath : configPaths) {
+        pugi::xml_document doc;
+#if defined(_WIN64)
+        const pugi::xml_parse_result& res {
+            doc.load_file(Utils::String::stringToWideString(configPath).c_str())};
+#else
+        const pugi::xml_parse_result& res {doc.load_file(configPath.c_str())};
+#endif
+        if (!res)
+            break;
+        const pugi::xml_node& systemList {doc.child("systemList")};
+        if (!systemList)
+            continue;
+        for (pugi::xml_node system {systemList.child("system")}; system;
+             system = system.next_sibling("system")) {
+            ++systemCount;
+        }
+        if (doc.child("loadExclusive"))
+            break;
+    }
 
     for (auto& configPath : configPaths) {
         // If the loadExclusive tag is present in the custom es_systems.xml file, then skip
@@ -510,16 +535,8 @@ bool SystemData::loadConfig()
             return true;
         }
 
-        const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
-        float systemCount {0.0f};
-        float loadedSystems {0.0f};
         uint64_t lastTime {0};
         uint64_t accumulator {0};
-
-        for (pugi::xml_node system {systemList.child("system")}; system;
-             system = system.next_sibling("system")) {
-            ++systemCount;
-        }
 
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
@@ -749,9 +766,10 @@ bool SystemData::loadConfig()
                 sSystemVector.emplace_back(newSys);
             }
         }
-        if (splashScreen)
-            Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.5f);
     }
+
+    if (splashScreen)
+        Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.5f);
 
     // Sort systems by sortName, which will normally be the same as the full name.
     std::sort(std::begin(sSystemVector), std::end(sSystemVector), [](SystemData* a, SystemData* b) {
@@ -818,7 +836,7 @@ std::vector<std::string> SystemData::getConfigPath(bool legacyWarning)
         }
     }
 
-    std::string path = customSystemsDirectory + "/es_systems.xml";
+    std::string path {customSystemsDirectory + "/es_systems.xml"};
 
     if (Utils::FileSystem::exists(path)) {
         LOG(LogInfo) << "Found custom systems configuration file";

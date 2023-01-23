@@ -1300,6 +1300,8 @@ void CollectionSystemsManager::removeCollectionsFromDisplayedSystems()
 
     // Remove all custom collections in bundle.
     // This should not delete the objects from memory!
+    if (mCustomCollectionsBundle == nullptr)
+        return;
     FileData* customRoot {mCustomCollectionsBundle->getRootFolder()};
     std::vector<FileData*> mChildren {customRoot->getChildren()};
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it) {
