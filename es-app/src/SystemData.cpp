@@ -513,8 +513,8 @@ bool SystemData::loadConfig()
         const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
         float systemCount {0.0f};
         float loadedSystems {0.0f};
-        Uint64 lastTime {0};
-        Uint64 accumulator {0};
+        uint64_t lastTime {0};
+        uint64_t accumulator {0};
 
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
@@ -535,7 +535,7 @@ bool SystemData::loadConfig()
             path = system.child("path").text().get();
 
             if (splashScreen) {
-                const Uint64 curTime {SDL_GetTicks64()};
+                const uint64_t curTime {SDL_GetTicks64()};
                 accumulator += curTime - lastTime;
                 lastTime = curTime;
                 ++loadedSystems;
