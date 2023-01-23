@@ -1112,6 +1112,9 @@ void ViewController::preload()
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
+        const std::string entryType {(*it)->isCustomCollection() ? "custom collection" : "system"};
+        LOG(LogDebug) << "ViewController::preload(): Populating gamelist for " << entryType << " \""
+                      << (*it)->getName() << "\"";
         if (Settings::getInstance()->getBool("SplashScreen")) {
             ++loadedSystems;
             const float progress {
@@ -1218,8 +1221,13 @@ void ViewController::reloadAll()
     getSystemListView();
 
     // Restore cursor positions for all systems.
-    for (auto it = cursorMap.cbegin(); it != cursorMap.cend(); ++it)
+    for (auto it = cursorMap.cbegin(); it != cursorMap.cend(); ++it) {
+        const std::string entryType {(*it).first->isCustomCollection() ? "custom collection" :
+                                                                         "system"};
+        LOG(LogDebug) << "ViewController::reloadAll(): Populating gamelist for " << entryType
+                      << " \"" << (*it).first->getName() << "\"";
         getGamelistView(it->first)->setCursor(it->second);
+    }
 
     // Update mCurrentView since the pointers changed.
     if (mState.viewing == GAMELIST) {
