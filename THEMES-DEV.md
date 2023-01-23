@@ -1971,7 +1971,8 @@ Properties:
 * `horizontalAlignment` - type: STRING.
     - Valid values are `left` or `right`
 * `direction` - type: STRING
-    - Valid values are "row" or "column". Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction.
+    - Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction.
+    - Valid values are `row` or `column`
     - Default is `row`
 * `lines` - type: UNSIGNED_INTEGER
     - The number of lines available.
@@ -1980,8 +1981,7 @@ Properties:
     - Number of badges that fit on a line. When more badges are available a new line will be started.
     - Default is `4`
 * `itemMargin` - type: NORMALIZED_PAIR
-    - The horizontal and vertical margins between badges - `x y`
-    - If one of the axis is set to `-1` the margin of the other axis (in pixels) will be used, which makes it possible to get identical spacing between all items regardless of screen aspect ratio.
+    - The horizontal and vertical margins between badges. If one of the axis is set to `-1` then the margin of the other axis (in pixels) will be used, which makes it possible to get identical spacing between all items regardless of the screen aspect ratio.
     - Minimum value per axis is `0` and maximum value per axis is `0.2`
     - Default is `0.01 0.01`.
 * `slots` - type: STRING

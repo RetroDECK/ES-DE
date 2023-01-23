@@ -36,6 +36,7 @@ Overall application speed and performance has been greatly improved with faster 
 * gamelist.xml files are no longer loaded from the ROMs/system directories (although old behavior can be retained via an option in es_settings.xml)
 * Added support for always grouping custom collections under the custom collections system regardless of theme set support
 * Added support for mixed-case custom collection names
+* Added a startup progress bar to the splash screen
 * Expanded the quick system select menu option from an on/off entry to a selection of different button combinations
 * Changed the order of the help system entries Y, X, B and A to instead be listed as A, B, X and Y
 * Changed the start button for the screensaver from "Back" to "X"
@@ -77,7 +78,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added the .car and .rom file extensions to the a5200 system
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
-* Added the .m3u file extension to the pcfx system
+* Added the .m3u file extension to the pcfx and pc98 systems
 * Removed the .7z and .zip file extensions from the 3do, neogeocd, neogeocdjp and switch systems
 * Removed the .ccd and .cue file extensions from the fbneo system
 * Removed the .ccd, .cue and .iso file extensions from the neogeo system
@@ -179,6 +180,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added scraping of box back covers when using TheGamesDB
 * If a wheel (marquee) image on ScreenScraper falls back to another region, then the wheel-hd image is now used instead if it matches the set region
 * Removed scraping of arcade controller information using ScreenScraper as they have ruined this functionality
+* Newline characters are now removed from game names when scraping with ScreenScraper (these occur in some very rare instances)
 * Added a ScreenScraper-specific option to remove dots from game name searches when using the multi-scraper in automatic mode
 * Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor
