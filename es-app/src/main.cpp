@@ -681,6 +681,7 @@ int main(int argc, char* argv[])
     }
 
     window->pushGui(ViewController::getInstance());
+    window->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
 
     InputManager::getInstance().parseEvent(event);
     if (event.type == SDL_QUIT)
