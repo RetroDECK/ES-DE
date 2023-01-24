@@ -42,7 +42,7 @@
 GuiMenu::GuiMenu()
     : mMenu {"MAIN MENU"}
 {
-    bool isFullUI = UIModeController::getInstance()->isUIModeFull();
+    bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
 
     if (isFullUI)
         addEntry("SCRAPER", 0x777777FF, true, [this] { openScraperOptions(); });
@@ -73,7 +73,8 @@ GuiMenu::GuiMenu()
     addChild(&mMenu);
     addVersionInfo();
     setSize(mMenu.getSize());
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f, Renderer::getScreenHeight() * 0.13f);
+    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
+                std::round(Renderer::getScreenHeight() * 0.13f));
 }
 
 GuiMenu::~GuiMenu()
