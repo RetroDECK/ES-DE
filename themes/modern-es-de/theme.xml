@@ -412,6 +412,7 @@
                 <maxSize>0.277 0.39</maxSize>
                 <origin>0.5 0.5</origin>
                 <imageType>image</imageType>
+                <scrollFadeIn>true</scrollFadeIn>
             </image>
         </view>
     </variant>
