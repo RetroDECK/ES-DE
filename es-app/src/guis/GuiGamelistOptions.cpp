@@ -178,7 +178,8 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
 
     if (UIModeController::getInstance()->isUIModeFull() &&
         (mIsCustomCollection || mIsCustomCollectionGroup)) {
-        if (CollectionSystemsManager::getInstance()->getEditingCollection() != system->getName()) {
+        if (CollectionSystemsManager::getInstance()->getEditingCollection() !=
+            getGamelist()->getCursor()->getSystem()->getName()) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>("ADD/REMOVE GAMES TO THIS COLLECTION",
                                                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
