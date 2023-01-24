@@ -134,7 +134,7 @@ bool Window::init()
                          (mRenderer->getScreenHeight() - mSplash->getSize().y) / 2.0f * 0.6f);
 
     mSplashTextScanning = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
-        "Scanning game files...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+        "Searching for games...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
     mSplashTextPopulating = std::unique_ptr<TextCache>(
         mDefaultFonts.at(1)->buildTextCache("Loading systems...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
     mSplashTextReloading = std::unique_ptr<TextCache>(
