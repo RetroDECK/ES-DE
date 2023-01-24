@@ -788,7 +788,8 @@ void GuiMetaDataEd::save()
         GamelistFileParser::updateGamelist(mScraperParams.system);
 
     // Enter game in index.
-    mScraperParams.system->getIndex()->addToIndex(mScraperParams.game);
+    if (mScraperParams.game->getType() == GAME)
+        mScraperParams.system->getIndex()->addToIndex(mScraperParams.game);
 
     // If it's a folder that has been updated, we need to manually sort the gamelist
     // as CollectionSystemsManager ignores folders.
