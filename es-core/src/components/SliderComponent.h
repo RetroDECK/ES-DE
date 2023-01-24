@@ -46,6 +46,7 @@ private:
     float mSingleIncrement;
     float mMoveRate;
     float mBarHeight;
+    float mBarPosY;
     int mMoveAccumulator;
 
     ImageComponent mKnob;
