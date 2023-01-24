@@ -78,7 +78,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added the .car and .rom file extensions to the a5200 system
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
-* Added the .m3u file extension to the pcfx and pc98 systems
+* Added the .m3u file extension to the pc98 and pcfx systems
 * Removed the .7z and .zip file extensions from the 3do, neogeocd, neogeocdjp and switch systems
 * Removed the .ccd and .cue file extensions from the fbneo system
 * Removed the .ccd, .cue and .iso file extensions from the neogeo system
@@ -279,6 +279,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Multiple levels of symlinking in the ROMs directory tree could crash the application on startup
 * Adding a dot (.) to the es_systems.xml extension tag (to setup extensionless entries) led to a crash if the system contained folders
 * Enabling collections from the Game Collection Settings menu could crash the application in some rare cases
+* There was a use after free issue in the multi-scraper which could in theory crash the application
 * Parsing of .desktop files on Unix did not properly handle escaping of % characters which made game launching fail for some RPCS3 games
 * For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
@@ -293,6 +294,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
 * Custom collections editing mode did not end when switching UI modes
+* Editing a folder using the metadata editor added any new values to the filter index, even though it shouldn't be possible to filter folders directly
+* There were multiple issues with filtering games inside folders (too many games filtered, inconsistent behavior etc.)
 * The outermost logos would sometimes glitch out during carousel transitions
 * Horizontal and vertical gradients were mixed up (showing the opposite gradient type if set in a theme)
 * The VideoComponent static images were not fading out smoothly on gamelist fast-scrolling
