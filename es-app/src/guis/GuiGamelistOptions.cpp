@@ -76,7 +76,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         // Jump to letter quick selector.
         row.elements.clear();
 
-        // The letter index is generated in FileData during gamelist sorting.
+        // The letter index is generated in GamelistBase when populating the system.
         mFirstLetterIndex = getGamelist()->getFirstLetterIndex();
 
         // Don't include the folder name starting characters if folders are sorted on top
@@ -109,9 +109,9 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         mJumpToLetterList->setKeyRepeat(true, 650, 200);
 
         // Populate the quick selector.
-        for (unsigned int i = 0; i < mFirstLetterIndex.size(); ++i) {
+        for (unsigned int i {0}; i < mFirstLetterIndex.size(); ++i) {
             mJumpToLetterList->add(mFirstLetterIndex[i], mFirstLetterIndex[i], 0);
-            if (mFirstLetterIndex[i] == mCurrentFirstCharacter)
+            if (mFirstLetterIndex[i] == mCurrentFirstCharacter || mFirstLetterIndex.size() == 1)
                 mJumpToLetterList->selectEntry(i);
         }
 
@@ -122,19 +122,19 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
         if (!mIsCustomCollectionGroup) {
             // Sort list by selected sort type (persistent throughout the program session).
             mListSort = std::make_shared<SortList>(getHelpStyle(), "SORT GAMES BY", false);
-            FileData* root;
+            FileData* root {nullptr};
             if (mIsCustomCollection)
                 root = getGamelist()->getCursor()->getSystem()->getRootFolder();
             else
                 root = mSystem->getRootFolder();
 
             std::string sortType {root->getSortTypeString()};
-            unsigned int numSortTypes = static_cast<unsigned int>(FileSorts::SortTypes.size());
+            unsigned int numSortTypes {static_cast<unsigned int>(FileSorts::SortTypes.size())};
             // If it's not a collection, then hide the System sort options.
             if (!root->getSystem()->isCollection())
                 numSortTypes -= 2;
 
-            for (unsigned int i = 0; i < numSortTypes; ++i) {
+            for (unsigned int i {0}; i < numSortTypes; ++i) {
                 const FileData::SortType& sort {FileSorts::SortTypes.at(i)};
                 if (sort.description == sortType)
                     mListSort->add(sort.description, &sort, true);
@@ -293,7 +293,7 @@ GuiGamelistOptions::~GuiGamelistOptions()
         return;
 
     if (!mFromPlaceholder) {
-        FileData* root;
+        FileData* root {nullptr};
 
         if (mIsCustomCollection)
             root = getGamelist()->getCursor()->getSystem()->getRootFolder();
@@ -316,9 +316,20 @@ GuiGamelistOptions::~GuiGamelistOptions()
             if (mJumpToLetterList->getSelected() == ViewController::FAVORITE_CHAR ||
                 mJumpToLetterList->getSelected() == ViewController::FOLDER_CHAR)
                 jumpToFirstRow();
-            else
+            else if (getGamelist()->getCursor()->getType() != PLACEHOLDER)
                 jumpToLetter();
         }
+    }
+
+    // If inside a folder and all its content has been filtered out, then jump to the first entry.
+    if (getGamelist()->getCursor()->getType() == PLACEHOLDER &&
+        mSystem->getThemeFolder() != "custom-collections") {
+        auto children = mSystem->getRootFolder()->getChildren();
+        auto filteredChildren = mSystem->getRootFolder()->getFilteredChildren();
+        if (filteredChildren.size() > 0)
+            getGamelist()->setCursor(filteredChildren.front());
+        else if (children.size() > 0)
+            getGamelist()->setCursor(children.front());
     }
 
     if (mSystem->getRootFolder()->getChildren().size() != 0 && mSystem->getName() != "recent" &&
@@ -328,7 +339,7 @@ GuiGamelistOptions::~GuiGamelistOptions()
 
 void GuiGamelistOptions::openGamelistFilter()
 {
-    GuiGamelistFilter* ggf;
+    GuiGamelistFilter* ggf {nullptr};
 
     auto filtersChangedFunc = [this](bool filtersChanged) {
         if (!mFiltersChanged)
@@ -426,7 +437,7 @@ void GuiGamelistOptions::openMetaDataEd()
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
 
         // Manually reset all the metadata values, set the name to the actual file/folder name.
-        const std::vector<MetaDataDecl>& mdd = file->metadata.getMDD();
+        const std::vector<MetaDataDecl>& mdd {file->metadata.getMDD()};
         for (auto it = mdd.cbegin(); it != mdd.cend(); ++it) {
             if (it->key == "name") {
                 if (file->isArcadeGame()) {
@@ -504,7 +515,7 @@ void GuiGamelistOptions::jumpToLetter()
     const std::vector<FileData*>& files {
         getGamelist()->getCursor()->getParent()->getChildrenListToDisplay()};
 
-    for (unsigned int i = 0; i < files.size(); ++i) {
+    for (unsigned int i {0}; i < files.size(); ++i) {
         if (mFavoritesSorting && (mFirstLetterIndex.front() == ViewController::FAVORITE_CHAR ||
                                   mFirstLetterIndex.front() == ViewController::FOLDER_CHAR)) {
             if (Utils::String::getFirstCharacter(files.at(i)->getSortName()) == letter &&

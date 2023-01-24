@@ -67,6 +67,7 @@ public:
         return mChildrenByFilename;
     }
     const std::vector<FileData*>& getChildren() const { return mChildren; }
+    const std::vector<FileData*>& getFilteredChildren() const { return mFilteredChildren; }
     SystemData* getSystem() const { return mSystem; }
     SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
 
