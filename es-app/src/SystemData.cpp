@@ -464,7 +464,7 @@ bool SystemData::loadConfig()
 
     const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
     float systemCount {0.0f};
-    float loadedSystems {0.0f};
+    float parsedSystems {0.0f};
 
     // This is only done to get the total system count, for calculating the progress bar position.
     for (auto& configPath : configPaths) {
@@ -555,12 +555,12 @@ bool SystemData::loadConfig()
                 const uint64_t curTime {SDL_GetTicks64()};
                 accumulator += curTime - lastTime;
                 lastTime = curTime;
-                ++loadedSystems;
+                ++parsedSystems;
                 // This prevents Renderer::swapBuffers() from being called excessively which
                 // could lead to significantly longer application startup times.
                 if (accumulator > 15) {
                     accumulator = 0;
-                    const float progress {glm::mix(0.0f, 0.5f, loadedSystems / systemCount)};
+                    const float progress {glm::mix(0.0f, 0.5f, parsedSystems / systemCount)};
                     Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING,
                                                               progress);
                 }
@@ -770,6 +770,11 @@ bool SystemData::loadConfig()
 
     if (splashScreen)
         Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.5f);
+
+    LOG(LogInfo) << "Parsed configuration for " << systemCount << " system"
+                 << (systemCount == 1 ? ", loaded " : "s, loaded ") << sSystemVector.size()
+                 << " system" << (sSystemVector.size() == 1 ? "" : "s")
+                 << " (collections not included)";
 
     // Sort systems by sortName, which will normally be the same as the full name.
     std::sort(std::begin(sSystemVector), std::end(sSystemVector), [](SystemData* a, SystemData* b) {
