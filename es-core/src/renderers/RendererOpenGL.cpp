@@ -337,7 +337,7 @@ void RendererOpenGL::setSwapInterval()
         // Adaptive VSync seems to be nonfunctional or having issues on some hardware
         // and drivers, so only attempt to apply regular VSync.
         if (SDL_GL_SetSwapInterval(1) == 0) {
-            LOG(LogInfo) << "Enabling VSync...";
+            LOG(LogInfo) << "VSync: enabled";
         }
         else {
             Settings::getInstance()->setBool("VSync", false);
@@ -346,7 +346,7 @@ void RendererOpenGL::setSwapInterval()
     }
     else {
         SDL_GL_SetSwapInterval(0);
-        LOG(LogInfo) << "Disabling VSync...";
+        LOG(LogInfo) << "VSync: disabled";
     }
 }
 
