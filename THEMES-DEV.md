@@ -8,6 +8,14 @@ Before your start, make sure to download the _Theme engine examples_ theme set t
 
 https://gitlab.com/es-de/themes/theme-engine-examples-es-de
 
+To test whether your theme set includes support for all ES-DE systems, download one of the following archives which contain ROMs directory structures fully populated with dummy files:
+
+[ROMs_ALL_Unix.zip](tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
+[ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
+[ROMs_ALL_Windows.zip](tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
+
+If you unzip and temporarily replace your ROMs directory with one of these, every system will be enabled on startup.
+
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
 Table of contents:
