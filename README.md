@@ -46,8 +46,8 @@ The latest stable version is 1.2.6 (released 2022-08-03)
 
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download)|
 | Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/48555328/download)|
+| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download)|
 | macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-1.2.6-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239039/download)|
 | macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239145/download)|
 | Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.6-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239111/download)|
@@ -59,18 +59,18 @@ The latest stable version is 1.2.6 (released 2022-08-03)
 | Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.6-armv7l.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239061/download)|
 | Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.6-aarch64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48238997/download)|
 
-The latest prerelease version is 2.0.0-alpha-2022-12-22
+The latest prerelease version is 2.0.0-beta-2023-01-27
 
 | Package              | Operating systems                                       | Architecture | Download link  |
 | :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689065/download)|
-| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689081/download)|
-| macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-2.0.0-alpha-2022-12-22-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/63688995/download)|
-| macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689044/download)|
-| Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-2.0.0-alpha-2022-12-22-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689033/download)|
-| Fedora RPM package   | Fedora Workstation 37, possibly others                  | x64 (x86)    | [emulationstation-de-2.0.0-alpha-2022-12-22-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689089/download)|
-| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/64535341/download)|
-| Linux AppImage       | Steam Deck / SteamOS 3.x specific                       | x64 (x86)    | [EmulationStation-DE-2.0.0-alpha-2022-12-22-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/63689122/download)|
+| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759587/download)|
+| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759574/download)|
+| macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-2.0.0-beta-2023-01-27-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759479/download)|
+| macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759558/download)|
+| Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-2.0.0-beta-2023-01-27-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759536/download)|
+| Fedora RPM package   | Fedora Workstation 37, possibly others                  | x64 (x86)    | [emulationstation-de-2.0.0-beta-2023-01-27-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759592/download)|
+| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759522/download)|
+| Linux AppImage       | Steam Deck / SteamOS 3.x specific                       | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759612/download)|
 
 Version 1.2.0 (released 2021-12-28) will be the last legacy release for macOS
 

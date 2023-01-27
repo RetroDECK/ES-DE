@@ -6,8 +6,8 @@
         "version": "1.2.6",
         "date": "2022-08-03",
         "urls": {
-            "WindowsInstaller": "https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download",
             "WindowsPortable": "https://gitlab.com/es-de/emulationstation-de/-/package_files/48555328/download",
+            "WindowsInstaller": "https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download",
             "macOSApple": "https://gitlab.com/es-de/emulationstation-de/-/package_files/48239039/download",
             "macOSIntel": "https://gitlab.com/es-de/emulationstation-de/-/package_files/48239145/download",
             "LinuxDEB": "https://gitlab.com/es-de/emulationstation-de/-/package_files/48239111/download",
@@ -21,14 +21,14 @@
         "version": "2.0.0-alpha-2022-12-22",
         "date": "2022-12-22",
         "urls": {
-            "WindowsInstaller": "https://gitlab.com/es-de/emulationstation-de/-/package_files/63689065/download",
-            "WindowsPortable": "https://gitlab.com/es-de/emulationstation-de/-/package_files/63689081/download",
-            "macOSApple": "https://gitlab.com/es-de/emulationstation-de/-/package_files/63688995/download",
-            "macOSIntel": "https://gitlab.com/es-de/emulationstation-de/-/package_files/63689044/download",
-            "LinuxDEB": "https://gitlab.com/es-de/emulationstation-de/-/package_files/63689033/download",
-            "LinuxRPM": "https://gitlab.com/es-de/emulationstation-de/-/package_files/63689089/download",
-            "LinuxAppImage": "https://gitlab.com/es-de/emulationstation-de/-/package_files/64535341/download",
-            "LinuxSteamDeckAppImage": "https://gitlab.com/es-de/emulationstation-de/-/package_files/63689122/download"
+            "WindowsPortable": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759587/download",
+            "WindowsInstaller": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759574/download",
+            "macOSApple": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759479/download",
+            "macOSIntel": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759558/download",
+            "LinuxDEB": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759536/download",
+            "LinuxRPM": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759592/download",
+            "LinuxAppImage": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759522/download",
+            "LinuxSteamDeckAppImage": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759612/download"
         }
     }
 }
