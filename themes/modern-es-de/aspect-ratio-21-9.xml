@@ -20,7 +20,7 @@
             <size>0.023 0.047</size>
         </image>
         <image name="selectionBoxBottom">
-            <pos>0.5 0.689</pos>
+            <pos>0.5 0.6895</pos>
             <size>0.16078571 0.003</size>
         </image>
         <image name="selectionBoxTop">
