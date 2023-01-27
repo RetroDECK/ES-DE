@@ -1108,22 +1108,40 @@ void ViewController::preload()
     if (!SystemData::sSystemVector.empty())
         getSystemListView();
 
+    const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
     float loadedSystems {0.0f};
+    unsigned int lastTime {0};
+    unsigned int accumulator {0};
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
         const std::string entryType {(*it)->isCustomCollection() ? "custom collection" : "system"};
         LOG(LogDebug) << "ViewController::preload(): Populating gamelist for " << entryType << " \""
                       << (*it)->getName() << "\"";
-        if (Settings::getInstance()->getBool("SplashScreen")) {
+        if (splashScreen) {
+            const unsigned int curTime {SDL_GetTicks()};
+            accumulator += curTime - lastTime;
+            lastTime = curTime;
             ++loadedSystems;
-            const float progress {
-                glm::mix(0.5f, 1.0f, loadedSystems / static_cast<float>(systemCount))};
-            mWindow->renderSplashScreen(Window::SplashScreenState::POPULATING, progress);
+            // This prevents Renderer::swapBuffers() from being called excessively which
+            // could lead to significantly longer application startup times.
+            if (accumulator > 20) {
+                accumulator = 0;
+                const float progress {
+                    glm::mix(0.5f, 1.0f, loadedSystems / static_cast<float>(systemCount))};
+                mWindow->renderSplashScreen(Window::SplashScreenState::POPULATING, progress);
+                lastTime += SDL_GetTicks() - curTime;
+            }
         }
         (*it)->getIndex()->resetFilters();
         getGamelistView(*it)->preloadGamelist();
     }
+
+    if (splashScreen && SystemData::sSystemVector.size() > 0)
+        Window::getInstance()->renderSplashScreen(Window::SplashScreenState::POPULATING, 1.0f);
+
+    // Short delay so that the full progress bar is always visible before proceeding.
+    SDL_Delay(100);
 
     if (SystemData::sSystemVector.size() > 0)
         ThemeData::setThemeTransitions();

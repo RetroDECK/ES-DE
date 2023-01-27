@@ -535,8 +535,8 @@ bool SystemData::loadConfig()
             return true;
         }
 
-        uint64_t lastTime {0};
-        uint64_t accumulator {0};
+        unsigned int lastTime {0};
+        unsigned int accumulator {0};
 
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
@@ -552,17 +552,18 @@ bool SystemData::loadConfig()
             path = system.child("path").text().get();
 
             if (splashScreen) {
-                const uint64_t curTime {SDL_GetTicks64()};
+                const unsigned int curTime {SDL_GetTicks()};
                 accumulator += curTime - lastTime;
                 lastTime = curTime;
                 ++parsedSystems;
                 // This prevents Renderer::swapBuffers() from being called excessively which
                 // could lead to significantly longer application startup times.
-                if (accumulator > 15) {
+                if (accumulator > 40) {
                     accumulator = 0;
                     const float progress {glm::mix(0.0f, 0.5f, parsedSystems / systemCount)};
                     Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING,
                                                               progress);
+                    lastTime += SDL_GetTicks() - curTime;
                 }
             }
 
@@ -768,8 +769,12 @@ bool SystemData::loadConfig()
         }
     }
 
-    if (splashScreen)
-        Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.5f);
+    if (splashScreen) {
+        if (sSystemVector.size() > 0)
+            Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.5f);
+        else
+            Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 1.0f);
+    }
 
     LOG(LogInfo) << "Parsed configuration for " << systemCount << " system"
                  << (systemCount == 1 ? ", loaded " : "s, loaded ") << sSystemVector.size()
