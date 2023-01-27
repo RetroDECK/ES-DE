@@ -137,7 +137,8 @@ HttpReq::HttpReq(const std::string& url)
 
     // Set curl restrict redirect protocols.
 
-#if LIBCURL_VERSION_MAJOR < 7 || (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 85)
+#if defined(__APPLE__) || LIBCURL_VERSION_MAJOR < 7 ||                                             \
+    (LIBCURL_VERSION_MAJOR == 7 && LIBCURL_VERSION_MINOR < 85)
     err = curl_easy_setopt(mHandle, CURLOPT_REDIR_PROTOCOLS, CURLPROTO_HTTP | CURLPROTO_HTTPS);
 #else
     err = curl_easy_setopt(mHandle, CURLOPT_REDIR_PROTOCOLS_STR, "http,https");
