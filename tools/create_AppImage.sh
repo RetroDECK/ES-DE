@@ -49,6 +49,38 @@ if [ ! -f external/SDL/build/${SDL_SHARED_LIBRARY} ]; then
     git clone https://github.com/libsdl-org/SDL.git
     cd SDL
     git checkout $SDL_RELEASE_TAG
+
+# Temporary workaround until a proper fix has been implemented in the SDL library:
+# https://github.com/libsdl-org/SDL/issues/7160
+cat << EOF | git apply
+diff --git a/src/video/SDL_video.c b/src/video/SDL_video.c
+index 0809706c2..bbabfcaa7 100644
+--- a/src/video/SDL_video.c
++++ b/src/video/SDL_video.c
+@@ -4342,17 +4342,20 @@ SDL_GetWindowWMInfo(SDL_Window * window, struct SDL_SysWMinfo *info)
+ void
+ SDL_StartTextInput(void)
+ {
++/*
+     SDL_Window *window;
+-
++*/
+     /* First, enable text events */
+     (void)SDL_EventState(SDL_TEXTINPUT, SDL_ENABLE);
+     (void)SDL_EventState(SDL_TEXTEDITING, SDL_ENABLE);
+
+     /* Then show the on-screen keyboard, if any */
++/*
+     window = SDL_GetFocusWindow();
+     if (window && _this && _this->ShowScreenKeyboard) {
+         _this->ShowScreenKeyboard(_this, window);
+     }
++*/
+
+     /* Finally start the text input system */
+     if (_this && _this->StartTextInput) {
+EOF
+
     mkdir build
     cd build
     cmake -DCMAKE_BUILD_TYPE=Release -S .. -B .
