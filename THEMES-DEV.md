@@ -1508,6 +1508,10 @@ Properties:
 * `text` - type: STRING
     - A string literal to display if there is no `staticImage` or `defaultImage` property defined or if no image is found. This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
     - Default is the full system name.
+* `textRelativeScale` - type: FLOAT.
+    - This property makes it possible to size the text relative to the overall item size.
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is `1`
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
@@ -2064,6 +2068,36 @@ Properties:
     - Default is `0.5`
 * `customFolderLinkIcon` - type: PATH
     - Folder link icon override.
+* `badgeIconColor` - type: COLOR
+    - Applies a color shift to the badge icon by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Default is `FFFFFFFF` (no color shift applied)
+* `badgeIconColorEnd` - type: COLOR
+    - Works in the exact same way as `badgeIconColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `badgeIconColor`
+* `badgeIconGradientType` - type: STRING
+    - The direction to apply the color shift gradient if both `badgeIconColor` and `badgeIconColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `controllerIconColor` - type: COLOR
+    - Applies a color shift to the controller icon by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Default is `FFFFFFFF` (no color shift applied)
+* `controllerIconColorEnd` - type: COLOR
+    - Works in the exact same way as `controllerIconColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `controllerIconColor`
+* `controllerIconGradientType` - type: STRING
+    - The direction to apply the color shift gradient if both `controllerIconColor` and `controllerIconColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `folderLinkIconColor` - type: COLOR
+    - Applies a color shift to the folder link icon by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the image by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel.
+    - Default is `FFFFFFFF` (no color shift applied)
+* `folderLinkIconColorEnd` - type: COLOR
+    - Works in the exact same way as `folderLinkIconColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `folderLinkIconColor`
+* `folderLinkIconGradientType` - type: STRING
+    - The direction to apply the color shift gradient if both `folderLinkIconColor` and `folderLinkIconColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
 * `opacity` - type: FLOAT
     - Controls the level of transparency. If set to `0` the element will be disabled.
     - Minimum value is `0` and maximum value is `1`
@@ -2441,6 +2475,8 @@ Properties:
 The helpsystem is a special element that displays a context-sensitive list of actions the user can take at any time. You should try and keep the position constant throughout every screen. Note that this element does not have a zIndex value, instead it's always rendered on top of all other elements.
 
 It's possible to set this element as right-aligned or center-aligned using a combination of the `pos` and `origin` properties. For example `<pos>1 1</pos>` and `<origin>1 1</origin>` will place it in the lower right corner of the screen.
+
+Keep in mind that the width of this element can vary depending on a number of factors, for example the _Toggle favorites_ and _Random system or game_ buttons can be enabled or disabled via the _UI Settings_ menu. Test extensively with the menu system as well, especially the virtual keyboard which displays a number of helpsystem entries.
 
 Supported views:
 * `system`

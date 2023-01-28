@@ -101,6 +101,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
+* Added the ability to color shift badge icons, badge controller icons and badge folder link icons
 * Adjusted the splash screen sizing to be more consistent across various screen aspect ratios
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (4.6 on the Steam Deck) and OpenGL ES 3.0 respectively
