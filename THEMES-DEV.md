@@ -1256,7 +1256,7 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `linear`
 * `imageColor` - type: COLOR
-    - Applies a color shift to the images defined by `staticImage`, `imageType` and `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Applies a color shift to the images defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
     - Default is `FFFFFFFF` (no color shift applied)
 * `imageColorEnd` - type: COLOR
     - Works in the exact same way as `imageColor` but can be set as the end color to apply a color shift gradient.
@@ -1455,12 +1455,23 @@ Properties:
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
 * `imageColor` - type: COLOR
-    - Applies a color shift to the images defined by `staticImage`, `imageType` and `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Applies a color shift to the images defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Default is `FFFFFFFF` (no color shift applied)
 * `imageColorEnd` - type: COLOR
     - Works in the exact same way as `imageColor` but can be set as the end color to apply a color shift gradient.
     - Default is the same value as `imageColor`
 * `imageGradientType` - type: STRING
     - The direction to apply the color gradient if both `imageColor` and `imageColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `imageSelectedColor` - type: COLOR
+    - Applies a color shift to the currently selected item's image as defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Default is the same value as `imageColor`
+* `imageSelectedColorEnd` - type: COLOR
+    - Works in the exact same way as `imageSelectedColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `imageSelectedColor`
+* `imageSelectedGradientType` - type: STRING
+    - The direction to apply the color gradient if both `imageSelectedColor` and `imageSelectedColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `imageBrightness` - type: FLOAT
@@ -1516,6 +1527,12 @@ Properties:
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
     - Default is `FFFFFF00`
+* `textSelectedColor` - type: COLOR
+    - Sets the text color for the currently selected item.
+    - Default is the same value as `textColor`
+* `textSelectedBackgroundColor` - type: COLOR
+    - Sets the text background color for the currently selected item.
+    - Default is the same value as `textBackgroundColor`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
