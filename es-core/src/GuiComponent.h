@@ -251,6 +251,7 @@ public:
     virtual unsigned int getColorShift() const { return mColorShift; }
     virtual float getLineSpacing() { return 0.0f; }
     virtual void setColor(unsigned int color) { mColor = color; }
+    virtual void setBackgroundColor(unsigned int color) {};
     virtual void setColorShift(unsigned int color)
     {
         mColorShift = color;

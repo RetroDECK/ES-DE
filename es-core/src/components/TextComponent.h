@@ -44,7 +44,7 @@ public:
     void setLineSpacing(float spacing);
     float getLineSpacing() override { return mLineSpacing; }
     void setNoTopMargin(bool margin);
-    void setBackgroundColor(unsigned int color);
+    void setBackgroundColor(unsigned int color) override;
     void setRenderBackground(bool render) { mRenderBackground = render; }
 
     void render(const glm::mat4& parentTrans) override;

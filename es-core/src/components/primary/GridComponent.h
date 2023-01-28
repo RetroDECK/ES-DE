@@ -156,6 +156,10 @@ private:
     unsigned int mImageColor;
     unsigned int mImageColorEnd;
     bool mImageColorGradientHorizontal;
+    unsigned int mImageSelectedColor;
+    unsigned int mImageSelectedColorEnd;
+    bool mImageSelectedColorGradientHorizontal;
+    bool mHasImageSelectedColor;
     float mImageBrightness;
     float mImageSaturation;
     std::unique_ptr<ImageComponent> mBackgroundImage;
@@ -176,6 +180,9 @@ private:
     float mTextRelativeScale;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
+    unsigned int mTextSelectedColor;
+    unsigned int mTextSelectedBackgroundColor;
+    bool mHasTextSelectedColor;
     std::shared_ptr<Font> mFont;
     LetterCase mLetterCase;
     LetterCase mLetterCaseAutoCollections;
@@ -216,6 +223,10 @@ GridComponent<T>::GridComponent()
     , mImageColor {0xFFFFFFFF}
     , mImageColorEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
+    , mImageSelectedColor {0xFFFFFFFF}
+    , mImageSelectedColorEnd {0xFFFFFFFF}
+    , mImageSelectedColorGradientHorizontal {true}
+    , mHasImageSelectedColor {false}
     , mImageBrightness {0.0f}
     , mImageSaturation {1.0f}
     , mBackgroundRelativeScale {1.0f}
@@ -232,6 +243,9 @@ GridComponent<T>::GridComponent()
     , mTextRelativeScale {1.0f}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
+    , mTextSelectedColor {0x000000FF}
+    , mTextSelectedBackgroundColor {0xFFFFFF00}
+    , mHasTextSelectedColor {false}
     , mLetterCase {LetterCase::NONE}
     , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
     , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
@@ -289,6 +303,8 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
     }
     else if (entry.data.defaultImagePath != "" &&
              ResourceManager::getInstance().fileExists(entry.data.defaultImagePath)) {
+        if (!mGamelistView)
+            entry.data.imagePath = "";
         auto defaultImage = std::make_shared<ImageComponent>(false, dynamic);
         defaultImage->setLinearInterpolation(true);
         defaultImage->setMipmapping(true);
@@ -316,6 +332,9 @@ void GridComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeData>& 
         // For the gamelist view the default image is applied in onDemandTextureLoad().
         if (!mGamelistView)
             entry.data.item = defaultImage;
+    }
+    else if (!mGamelistView) {
+        entry.data.imagePath = "";
     }
 
     if (!entry.data.item) {
@@ -763,7 +782,37 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
 
         mEntries.at(*it).data.item->setScale(scale);
         mEntries.at(*it).data.item->setOpacity(opacity);
-        mEntries.at(*it).data.item->render(trans);
+        if (cursorEntry && (mHasTextSelectedColor || mHasImageSelectedColor)) {
+            if (mHasTextSelectedColor && mEntries.at(*it).data.imagePath == "" &&
+                mEntries.at(*it).data.defaultImagePath == "") {
+                mEntries.at(*it).data.item->setColor(mTextSelectedColor);
+                mEntries.at(*it).data.item->setBackgroundColor(mTextSelectedBackgroundColor);
+                mEntries.at(*it).data.item->render(trans);
+                mEntries.at(*it).data.item->setColor(mTextColor);
+                mEntries.at(*it).data.item->setBackgroundColor(mTextBackgroundColor);
+            }
+            else if (mHasImageSelectedColor) {
+                mEntries.at(*it).data.item->setColorShift(mImageSelectedColor);
+                if (mImageSelectedColorEnd != mImageSelectedColor)
+                    mEntries.at(*it).data.item->setColorShiftEnd(mImageSelectedColorEnd);
+                if (mImageSelectedColorGradientHorizontal != mImageColorGradientHorizontal)
+                    mEntries.at(*it).data.item->setColorGradientHorizontal(
+                        mImageSelectedColorGradientHorizontal);
+                mEntries.at(*it).data.item->render(trans);
+                if (mImageSelectedColorGradientHorizontal != mImageColorGradientHorizontal)
+                    mEntries.at(*it).data.item->setColorGradientHorizontal(
+                        mImageColorGradientHorizontal);
+                mEntries.at(*it).data.item->setColorShift(mImageColor);
+                if (mImageColorEnd != mImageColor)
+                    mEntries.at(*it).data.item->setColorShiftEnd(mImageColorEnd);
+            }
+            else {
+                mEntries.at(*it).data.item->render(trans);
+            }
+        }
+        else {
+            mEntries.at(*it).data.item->render(trans);
+        }
         mEntries.at(*it).data.item->setScale(1.0f);
         mEntries.at(*it).data.item->setOpacity(1.0f);
 
@@ -1098,6 +1147,34 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    mImageSelectedColor = mImageColor;
+    mImageSelectedColorEnd = mImageColorEnd;
+
+    if (elem->has("imageSelectedColor")) {
+        mImageSelectedColor = elem->get<unsigned int>("imageSelectedColor");
+        mImageSelectedColorEnd = mImageSelectedColor;
+        mHasImageSelectedColor = true;
+    }
+    if (elem->has("imageSelectedColorEnd")) {
+        mImageSelectedColorEnd = elem->get<unsigned int>("imageSelectedColorEnd");
+        mHasImageSelectedColor = true;
+    }
+    if (elem->has("imageSelectedGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("imageSelectedGradientType")};
+        if (gradientType == "horizontal") {
+            mImageSelectedColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            mImageSelectedColorGradientHorizontal = false;
+        }
+        else {
+            mImageSelectedColorGradientHorizontal = true;
+            LOG(LogWarning) << "GridComponent: Invalid theme configuration, property "
+                               "\"imageSelectedGradientType\" for element \""
+                            << element.substr(5) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
     if (elem->has("imageBrightness"))
         mImageBrightness = glm::clamp(elem->get<float>("imageBrightness"), -2.0f, 2.0f);
 
@@ -1116,6 +1193,18 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mTextColor = elem->get<unsigned int>("textColor");
     if (elem->has("textBackgroundColor"))
         mTextBackgroundColor = elem->get<unsigned int>("textBackgroundColor");
+
+    mTextSelectedColor = mTextColor;
+    mTextSelectedBackgroundColor = mTextBackgroundColor;
+
+    if (elem->has("textSelectedColor")) {
+        mTextSelectedColor = elem->get<unsigned int>("textSelectedColor");
+        mHasTextSelectedColor = true;
+    }
+    if (elem->has("textSelectedBackgroundColor")) {
+        mTextSelectedBackgroundColor = elem->get<unsigned int>("textSelectedBackgroundColor");
+        mHasTextSelectedColor = true;
+    }
 
     if (elem->has("lineSpacing"))
         mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
