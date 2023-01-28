@@ -77,8 +77,8 @@ std::ostringstream& Log::get(LogLevel level)
 
 Log::~Log()
 {
-    mOutStringStream << std::endl;
     std::unique_lock<std::mutex> lock {sLogMutex};
+    mOutStringStream << std::endl;
 
     if (!sFile.is_open()) {
         // Not open yet, print to stdout.
