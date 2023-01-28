@@ -293,6 +293,84 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    unsigned int badgeIconColorShift {0xFFFFFFFF};
+    unsigned int badgeIconColorShiftEnd {0xFFFFFFFF};
+    bool badgeIconColorGradientHorizontal {true};
+
+    if (elem->has("badgeIconColor")) {
+        badgeIconColorShift = elem->get<unsigned int>("badgeIconColor");
+        badgeIconColorShiftEnd = badgeIconColorShift;
+    }
+    if (elem->has("badgeIconColorEnd"))
+        badgeIconColorShiftEnd = elem->get<unsigned int>("badgeIconColorEnd");
+    if (elem->has("badgeIconGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("badgeIconGradientType")};
+        if (gradientType == "horizontal") {
+            badgeIconColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            badgeIconColorGradientHorizontal = false;
+        }
+        else {
+            badgeIconColorGradientHorizontal = true;
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, property "
+                               "\"badgeIconGradientType\" for element \""
+                            << element.substr(7) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
+    unsigned int controllerIconColorShift {0xFFFFFFFF};
+    unsigned int controllerIconColorShiftEnd {0xFFFFFFFF};
+    bool controllerIconColorGradientHorizontal {true};
+
+    if (elem->has("controllerIconColor")) {
+        controllerIconColorShift = elem->get<unsigned int>("controllerIconColor");
+        controllerIconColorShiftEnd = controllerIconColorShift;
+    }
+    if (elem->has("controllerIconColorEnd"))
+        controllerIconColorShiftEnd = elem->get<unsigned int>("controllerIconColorEnd");
+    if (elem->has("controllerIconGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("controllerIconGradientType")};
+        if (gradientType == "horizontal") {
+            controllerIconColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            controllerIconColorGradientHorizontal = false;
+        }
+        else {
+            controllerIconColorGradientHorizontal = true;
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, property "
+                               "\"controllerIconGradientType\" for element \""
+                            << element.substr(7) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
+    unsigned int folderLinkIconColorShift {0xFFFFFFFF};
+    unsigned int folderLinkIconColorShiftEnd {0xFFFFFFFF};
+    bool folderLinkIconColorGradientHorizontal {true};
+
+    if (elem->has("folderLinkIconColor")) {
+        folderLinkIconColorShift = elem->get<unsigned int>("folderLinkIconColor");
+        folderLinkIconColorShiftEnd = folderLinkIconColorShift;
+    }
+    if (elem->has("folderLinkIconColorEnd"))
+        folderLinkIconColorShiftEnd = elem->get<unsigned int>("folderLinkIconColorEnd");
+    if (elem->has("folderLinkIconGradientType")) {
+        const std::string& gradientType {elem->get<std::string>("folderLinkIconGradientType")};
+        if (gradientType == "horizontal") {
+            folderLinkIconColorGradientHorizontal = true;
+        }
+        else if (gradientType == "vertical") {
+            folderLinkIconColorGradientHorizontal = false;
+        }
+        else {
+            folderLinkIconColorGradientHorizontal = true;
+            LOG(LogWarning) << "BadgeComponent: Invalid theme configuration, property "
+                               "\"folderLinkIconGradientType\" for element \""
+                            << element.substr(7) << "\" defined as \"" << gradientType << "\"";
+        }
+    }
+
     if (elem->has("slots")) {
         // Replace possible whitespace separators with commas.
         std::string slotsTag {Utils::String::toLower(elem->get<std::string>("slots"))};
@@ -336,6 +414,11 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 item.baseImage = badgeImage;
                 item.overlayImage = ImageComponent {false, false};
 
+                item.baseImage.setColorShift(badgeIconColorShift);
+                item.baseImage.setColorShiftEnd(badgeIconColorShiftEnd);
+                if (badgeIconColorGradientHorizontal != true)
+                    item.baseImage.setColorGradientHorizontal(badgeIconColorGradientHorizontal);
+
                 if (slot == "folder") {
                     std::string folderLinkPath {":/graphics/badge_folderlink_overlay.svg"};
 
@@ -355,6 +438,11 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                     }
 
                     item.overlayImage.setImage(folderLinkPath);
+                    item.overlayImage.setColorShift(folderLinkIconColorShift);
+                    item.overlayImage.setColorShiftEnd(folderLinkIconColorShiftEnd);
+                    if (folderLinkIconColorGradientHorizontal != true)
+                        item.overlayImage.setColorGradientHorizontal(
+                            folderLinkIconColorGradientHorizontal);
 
                     if (elem->has("folderLinkPos")) {
                         glm::vec2 folderLinkPos {elem->get<glm::vec2>("folderLinkPos")};
@@ -374,6 +462,11 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                         controllerPos.x = glm::clamp(controllerPos.x, -1.0f, 2.0f);
                         controllerPos.y = glm::clamp(controllerPos.y, -1.0f, 2.0f);
                         item.overlayPosition = controllerPos;
+                        item.overlayImage.setColorShift(controllerIconColorShift);
+                        item.overlayImage.setColorShiftEnd(controllerIconColorShiftEnd);
+                        if (controllerIconColorGradientHorizontal != true)
+                            item.overlayImage.setColorGradientHorizontal(
+                                controllerIconColorGradientHorizontal);
                     }
 
                     if (elem->has("controllerSize"))
