@@ -14,13 +14,13 @@
     <view name="system">
         <carousel name="systemCarousel">
             <maxItemCount>4</maxItemCount>
-            <itemSize>0.224 0.397</itemSize>
+            <itemSize>0.224 0.396</itemSize>
         </carousel>
         <image name="arrowBlock">
             <size>0.023 0.047</size>
         </image>
         <image name="selectionBox">
-            <size>0.2316 0</size>
+            <size>0.2314 0</size>
         </image>
     </view>
 
