@@ -121,31 +121,10 @@
                 <letterCase>none</letterCase>
             </text>
             <!-- Blue selection box -->
-            <image name="selectionBoxBottom">
+            <image name="selectionBox">
+                <pos>0.5 0.5</pos>
                 <origin>0.5 0.5</origin>
-                <path>./assets/box.png</path>
-                <tile>false</tile>
-                <color>${highlightColor}</color>
-                <zIndex>70</zIndex>
-            </image>
-            <image name="selectionBoxTop">
-                <origin>0.5 0.5</origin>
-                <path>./assets/box.png</path>
-                <tile>false</tile>
-                <color>${highlightColor}</color>
-                <zIndex>70</zIndex>
-            </image>
-            <image name="selectionBoxLeft">
-                <origin>0.5 0.5</origin>
-                <path>./assets/box.png</path>
-                <tile>false</tile>
-                <color>${highlightColor}</color>
-                <zIndex>70</zIndex>
-            </image>
-            <image name="selectionBoxRight">
-                <origin>0.5 0.5</origin>
-                <path>./assets/box.png</path>
-                <tile>false</tile>
+                <path>./assets/selection_box.png</path>
                 <color>${highlightColor}</color>
                 <zIndex>70</zIndex>
             </image>

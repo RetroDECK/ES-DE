@@ -19,21 +19,8 @@
         <image name="arrowBlock">
             <size>0.023 0.047</size>
         </image>
-        <image name="selectionBoxBottom">
-            <pos>0.5 0.6895</pos>
-            <size>0.16078571 0.003</size>
-        </image>
-        <image name="selectionBoxTop">
-            <pos>0.5 0.311</pos>
-            <size>0.16078571 0.003</size>
-        </image>
-        <image name="selectionBoxLeft">
-            <pos>0.420 0.5</pos>
-            <size>0.00128571 0.381</size>
-        </image>
-        <image name="selectionBoxRight">
-            <pos>0.58 0.5</pos>
-            <size>0.00128571 0.381</size>
+        <image name="selectionBox">
+            <size>0.16 0</size>
         </image>
     </view>
 
