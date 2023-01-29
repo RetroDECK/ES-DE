@@ -1141,23 +1141,10 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("type")) {
         std::string type {elem->get<std::string>("type")};
-        if (type == "horizontal_wheel") {
+        if (mLegacyMode && type == "horizontal_wheel")
             type = "horizontalWheel";
-            if (!mLegacyMode) {
-                LOG(LogWarning)
-                    << "CarouselComponent: Property value \"horizontal_wheel\" has been "
-                       "deprecated and will be removed in a future release, use "
-                       "\"horizontalWheel\" instead";
-            }
-        }
-        else if (type == "vertical_wheel") {
+        else if (mLegacyMode && type == "vertical_wheel")
             type = "verticalWheel";
-            if (!mLegacyMode) {
-                LOG(LogWarning) << "CarouselComponent: Property value \"vertical_wheel\" has been "
-                                   "deprecated and will be removed in a future release, use "
-                                   "\"verticalWheel\" instead";
-            }
-        }
 
         if (type == "horizontal") {
             mType = CarouselType::HORIZONTAL;
