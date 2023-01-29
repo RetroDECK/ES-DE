@@ -1261,7 +1261,7 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL) {
             if (elem->has("selectedItemMargins")) {
                 const glm::vec2 selectedItemMargins {
-                    glm::clamp(elem->get<glm::vec2>("selectedItemMargins"), 0.0f, 1.0f)};
+                    glm::clamp(elem->get<glm::vec2>("selectedItemMargins"), -1.0f, 1.0f)};
                 if (mType == CarouselType::HORIZONTAL)
                     mSelectedItemMargins = selectedItemMargins * Renderer::getScreenWidth();
                 else
