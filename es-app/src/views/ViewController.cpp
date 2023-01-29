@@ -207,13 +207,6 @@ void ViewController::goToStart(bool playTransition)
     if (mRenderer->getSDLWindow() == nullptr)
         return;
 
-#if defined(__APPLE__)
-    // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
-    // best user experience is to simply disable them on this OS.
-    if (mState.viewing == NOTHING)
-        playTransition = false;
-#endif
-
     // If the system view does not exist, then create it. We do this here as it would
     // otherwise not be done if jumping directly into a specific game system on startup.
     if (!mSystemListView)
@@ -395,21 +388,12 @@ void ViewController::goToSystemView(SystemData* system, bool playTransition)
         }
     }
 
-    if (applicationStartup) {
-#if defined(__APPLE__)
-        // The startup animations are very choppy on macOS as of moving to SDL 2.0.18 so the
-        // best user experience is to simply disable them on this OS.
-        playViewTransition(ViewTransition::STARTUP_TO_SYSTEM, true);
-#else
+    if (applicationStartup)
         playViewTransition(ViewTransition::STARTUP_TO_SYSTEM);
-#endif
-    }
-    else if (playTransition) {
+    else if (playTransition)
         playViewTransition(ViewTransition::GAMELIST_TO_SYSTEM);
-    }
-    else {
+    else
         playViewTransition(ViewTransition::GAMELIST_TO_SYSTEM, true);
-    }
 }
 
 void ViewController::goToSystem(SystemData* system, bool animate)
