@@ -25,6 +25,7 @@
 #include "views/GamelistView.h"
 #include "views/ViewController.h"
 
+#include <SDL2/SDL_events.h>
 #include <SDL2/SDL_timer.h>
 
 #include <fstream>
@@ -537,9 +538,14 @@ bool SystemData::loadConfig()
 
         unsigned int lastTime {0};
         unsigned int accumulator {0};
+        SDL_Event event {};
 
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
+            // Parse events so that the OS doesn't think the application is hanging on startup,
+            // this is required as the main application loop hasn't started yet.
+            while (SDL_PollEvent(&event)) {};
+
             std::string name;
             std::string fullname;
             std::string sortName;

@@ -1112,9 +1112,14 @@ void ViewController::preload()
     float loadedSystems {0.0f};
     unsigned int lastTime {0};
     unsigned int accumulator {0};
+    SDL_Event event {};
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
+        // Parse events so that the OS doesn't think the application is hanging on startup,
+        // this is required as the main application loop hasn't started yet.
+        while (SDL_PollEvent(&event)) {};
+
         const std::string entryType {(*it)->isCustomCollection() ? "custom collection" : "system"};
         LOG(LogDebug) << "ViewController::preload(): Populating gamelist for " << entryType << " \""
                       << (*it)->getName() << "\"";

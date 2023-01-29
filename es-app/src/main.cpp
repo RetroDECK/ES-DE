@@ -685,15 +685,7 @@ int main(int argc, char* argv[])
     if (Settings::getInstance()->getBool("SplashScreen"))
         window->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
 
-    InputManager::getInstance().parseEvent(event);
-    if (event.type == SDL_QUIT)
-        return 1;
-
-#if !defined(__APPLE__)
-    // This hides the mouse cursor during startup, i.e. before we have begun to capture SDL events.
-    // On macOS this causes the mouse cursor to jump back to the Dock so don't do it on this OS.
-    SDL_SetRelativeMouseMode(SDL_TRUE);
-#endif
+    while (SDL_PollEvent(&event)) {};
 
 #if defined(_WIN64)
     // Hide taskbar if the setting for this is enabled.
@@ -768,12 +760,6 @@ int main(int argc, char* argv[])
                         std::chrono::system_clock::now() - applicationStartTime)
                         .count()
                  << " ms";
-
-#if !defined(__APPLE__)
-    // Now that we've finished loading, disable the relative mouse mode or otherwise mouse
-    // input wouldn't work in any games that are launched.
-    SDL_SetRelativeMouseMode(SDL_FALSE);
-#endif
 
     // Main application loop.
 
