@@ -43,7 +43,7 @@ public:
     const std::string& getAlignment() const { return mAlignment; }
     void setAlignment(const std::string& value)
     {
-        assert(value == "left" || value == "right");
+        assert(value == "left" || value == "right" || value == "center");
         mAlignment = value;
         mLayoutValid = false;
     }

@@ -187,11 +187,13 @@ void FlexboxComponent::calculateLayout()
     int pos {0};
     float lastY {0.0f};
     float itemsOnLastRow {0};
+    int visibleItemCount {0};
 
     // Position items on the grid.
     for (auto& item : mItems) {
         if (!item.visible)
             continue;
+        ++visibleItemCount;
 
         if (mDirection == "row" && pos > 0) {
             if (itemPositions[pos - 1].y < itemPositions[pos].y) {
@@ -243,6 +245,60 @@ void FlexboxComponent::calculateLayout()
             glm::vec3 currPos {item.baseImage.getPosition()};
             if (currPos.y == lastY) {
                 const float offset {(grid.x - itemsOnLastRow) * (maxItemSize.x + mItemMargin.x)};
+                item.baseImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
+                if (item.overlayImage.getTexture() != nullptr) {
+                    currPos = item.overlayImage.getPosition();
+                    item.overlayImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
+                }
+            }
+        }
+    }
+
+    if (visibleItemCount > 0 && mAlignment == "center") {
+        if (mDirection == "row") {
+            const int gridX {static_cast<int>(grid.x)};
+            const int fullRows {visibleItemCount / gridX};
+            int offsetCounter {0};
+            float offset {std::round(
+                (mSize.x - ((maxItemSize.x + mItemMargin.x) * grid.x) + mItemMargin.x) / 2.0f)};
+            // Center items if they don't fill a single row.
+            if (fullRows == 0) {
+                const int compCount {gridX - visibleItemCount};
+                offset += (maxItemSize.x * compCount) / 2.0f;
+                offset += (mItemMargin.x / 2.0f) * compCount;
+            }
+            for (auto& item : mItems) {
+                if (!item.visible)
+                    continue;
+                // Move items on full rows using the general centering offset.
+                glm::vec3 currPos {item.baseImage.getPosition()};
+                item.baseImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
+                if (item.overlayImage.getTexture() != nullptr) {
+                    currPos = item.overlayImage.getPosition();
+                    item.overlayImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
+                }
+                ++offsetCounter;
+                // Items on the last non-full row will need to be moved according to how many
+                // items less than a full row there are.
+                if (offsetCounter == fullRows * gridX) {
+                    const int compCount {gridX - (visibleItemCount - offsetCounter)};
+                    offset += (maxItemSize.x * compCount) / 2.0f;
+                    offset += (mItemMargin.x / 2.0f) * compCount;
+                }
+            }
+        }
+        else if (mDirection == "column") {
+            const int gridY {static_cast<int>(grid.y)};
+            int columnCount {visibleItemCount / gridY};
+            if (visibleItemCount % gridY != 0)
+                ++columnCount;
+            const float offset {std::round(
+                (mSize.x - ((maxItemSize.x + mItemMargin.x) * columnCount) + mItemMargin.x) /
+                2.0f)};
+            for (auto& item : mItems) {
+                if (!item.visible)
+                    continue;
+                glm::vec3 currPos {item.baseImage.getPosition()};
                 item.baseImage.setPosition(currPos.x + offset, currPos.y, currPos.z);
                 if (item.overlayImage.getTexture() != nullptr) {
                     currPos = item.overlayImage.getPosition();

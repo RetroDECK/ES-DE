@@ -215,7 +215,8 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("horizontalAlignment")) {
         const std::string horizontalAlignment {elem->get<std::string>("horizontalAlignment")};
-        if (horizontalAlignment != "left" && horizontalAlignment != "right") {
+        if (horizontalAlignment != "left" && horizontalAlignment != "center" &&
+            horizontalAlignment != "right") {
             LOG(LogWarning)
                 << "BadgeComponent: Invalid theme configuration, property \"horizontalAlignment\" "
                    "for element \""
