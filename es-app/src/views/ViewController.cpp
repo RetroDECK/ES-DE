@@ -1100,7 +1100,7 @@ void ViewController::preload()
 
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
-        // Parse events so that the OS doesn't think the application is hanging on startup,
+        // Poll events so that the OS doesn't think the application is hanging on startup,
         // this is required as the main application loop hasn't started yet.
         while (SDL_PollEvent(&event)) {};
 

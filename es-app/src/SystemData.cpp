@@ -542,7 +542,7 @@ bool SystemData::loadConfig()
 
         for (pugi::xml_node system {systemList.child("system")}; system;
              system = system.next_sibling("system")) {
-            // Parse events so that the OS doesn't think the application is hanging on startup,
+            // Poll events so that the OS doesn't think the application is hanging on startup,
             // this is required as the main application loop hasn't started yet.
             while (SDL_PollEvent(&event)) {};
 
