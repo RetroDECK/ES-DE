@@ -688,7 +688,7 @@ Unlike the types just mentioned, aspectRatio entries can not be set to arbitrary
 | 3:2              | 3:2_vertical   | 2160x1440                                      |
 | 4:3              | 4:3_vertical   | 320x240, 640x480, 800x600, 1024x768, 1600x1200 |
 | 5:4              | 5:4_vertical   | 1280x1024                                      |
-| 21:9             | 21:9_vertical  | 2560x1080, 2560x1440, 3840x1600, 5120x1440     |
+| 21:9             | 21:9_vertical  | 2560x1080, 3840x1600, 5120x2160                |
 | 32:9             | 32:9_vertical  | 3840x1080, 5120x1440                           |
 
 The 21:9 and 32:9 aspect ratios are approximate as monitors of slightly different ratios are collectively marketed using these numbers.
@@ -1223,9 +1223,9 @@ Properties:
     - Valid values are `centered`, `ascending`, `ascendingRaised`, `descending` or `descendingRaised`
     - Default is `centered`
 * `selectedItemMargins` - type: NORMALIZED_PAIR
-    - By default items are evenly spaced across the carousel area, but this property makes it possible to define margins (extra space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation.
+    - By default items are evenly spaced across the carousel area, but this property makes it possible to define margins (extra space or less space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation.
     - This property can only be used when `type` is `horizontal` or `vertical`
-    - Minimum value per margin is `0` and maximum value per margin is `1`
+    - Minimum value per margin is `-1` and maximum value per margin is `1`
     - Default is `0 0`
 * `itemSize` - type: NORMALIZED_PAIR
     - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
@@ -1998,7 +1998,7 @@ Properties:
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`.
 * `horizontalAlignment` - type: STRING.
-    - Valid values are `left` or `right`
+    - Valid values are `left`, `center` or `right`
 * `direction` - type: STRING
     - Controls the primary layout direction (line axis) for the badges. Lines will fill up in the specified direction.
     - Valid values are `row` or `column`

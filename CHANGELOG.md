@@ -28,6 +28,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Renamed the default theme set from rbsimple-DE to slate-es-de
 * Ported modern-DE to the new theme engine and renamed it to modern-es-de
 * Added variant trigger (override) support to replicate the legacy theme engine automatic view style switching
+* Events are now parsed during startup which avoids issues with the OS thinking the application has hung when loading
 * Replaced the NanoSVG library with LunaSVG for greatly improved SVG rendering capabilities
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
@@ -102,6 +103,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
 * Added the ability to color shift badge icons, badge controller icons and badge folder link icons
+* Added the ability to center-align badges
 * Adjusted the splash screen sizing to be more consistent across various screen aspect ratios
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (4.6 on the Steam Deck) and OpenGL ES 3.0 respectively
@@ -126,6 +128,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
 * Added an "Ignore keyboard input" option to the input device settings menu
 * (Unix) Set the "Disable desktop composition" option as disabled by default as it caused issues with some GPU drivers
+* (macOS) Enabled startup animations which were previously disabled specifically for this operating system
 * The media viewer now always loads all images upfront to avoid audio stutter when browsing the files
 * Added support for defining which types of game media to use for all image elements (and also for the video component static image)
 * Added a legacy (backward compatibility) mode for still supporting older RetroPie EmulationStation themes
