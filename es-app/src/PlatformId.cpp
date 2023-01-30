@@ -17,7 +17,7 @@ namespace PlatformIds
     std::vector<std::string> platformNames {
         "unknown", // Nothing set.
 
-        "3do",                  // 3DO
+        "3do",                  // 3DO Interactive Multiplayer
         "ags",                  // Adventure Game Studio game engine
         "amiga",                // Commodore Amiga
         "amigacd32",            // Commodore Amiga CD32
@@ -37,19 +37,19 @@ namespace PlatformIds
         "atarilynx",            // Atari Lynx
         "atarist",              // Atari ST/STE/Falcon
         "atarixe",              // Atari XE
-        "atomiswave",           // Atomiswave
-        "bbcmicro",             // BBC Micro
+        "atomiswave",           // Sammy Corporation Atomiswave
+        "bbcmicro",             // Acorn Computers BBC Micro
         "c64",                  // Commodore 64
         "cavestory",            // Cave Story (NXEngine)
         "cdimono1",             // Philips CD-i
         "cdtv",                 // Commodore CDTV
         "channelf",             // Fairchild Channel F
         "coco",                 // Tandy Color Computer
-        "colecovision",         // ColecoVision
+        "colecovision",         // Coleco ColecoVision
         "crvision",             // VTech CreatiVision
         "daphne",               // Daphne Arcade Laserdisc Emulator
         "dos",                  // DOS (PC)
-        "dragon32",             // Dragon 32
+        "dragon32",             // Dragon Data Dragon 32
         "dreamcast",            // Sega Dreamcast
         "easyrpg",              // EasyRPG eame engine
         "famicom",              // Nintendo Family Computer
@@ -88,12 +88,12 @@ namespace PlatformIds
         "ngp",                  // SNK Neo Geo Pocket
         "ngpc",                 // SNK Neo Geo Pocket Color
         "odyssey2",             // Magnavox Odyssey2
-        "openbor",              // OpenBOR game engine
+        "openbor",              // OpenBOR Game Engine
         "oric",                 // Tangerine Computer Systems Oric
         "palm",                 // Palm OS
         "pc",                   // IBM PC
-        "pc88",                 // NEC PC-8800 series
-        "pc98",                 // NEC PC-9800 series
+        "pc88",                 // NEC PC-8800 Series
+        "pc98",                 // NEC PC-9800 Series
         "pcengine",             // NEC PC Engine / TurboGrafx-16
         "pcenginecd",           // NEC PC Engine CD / TurboGrafx-CD
         "pcfx",                 // NEC PC-FX
@@ -107,7 +107,7 @@ namespace PlatformIds
         "psvita",               // Sony PlayStation Vita
         "psx",                  // Sony PlayStation 1
         "residualvm",           // ResidualVM game engine
-        "samcoupe",             // SAM Coupé
+        "samcoupe",             // MGT SAM Coupé
         "satellaview",          // Nintendo Satellaview
         "saturn",               // Sega Saturn
         "scummvm",              // ScummVM game engine
@@ -126,8 +126,8 @@ namespace PlatformIds
         "ti99",                 // Texas Instruments TI-99
         "tic80",                // TIC-80 game engine
         "trs-80",               // Tandy TRS-80
-        "uzebox",               // Uzebox
-        "vectrex",              // Vectrex
+        "uzebox",               // Uzebox Open Source Console
+        "vectrex",              // Smith Engineering Vectrex
         "vic20",                // Commodore VIC-20
         "videopac",             // Philips Videopac G7000 (Magnavox Odyssey2)
         "virtualboy",           // Nintendo Virtual Boy
