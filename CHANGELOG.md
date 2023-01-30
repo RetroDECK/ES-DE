@@ -43,6 +43,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Changed the start button for the screensaver from "Back" to "X"
 * Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
 * Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
+* Added support for the Microsoft Windows (windows) game system
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
 * Added ares standalone as an alternative emulator for many systems
@@ -51,6 +52,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added SameBoy standalone as an alternative emulator for the gb and gbc systems
 * Added Gearboy standalone as an alternative emulator for the gb and gbc systems on Unix and Windows
 * Added puNES standalone as an alternative emulator for the famicom and nes systems on Unix and Windows
+* Added Hatari standalone as an alternative emulator for the atarist system
 * (Linux) Added support for the Sega Model 3 (model3) game system by adding the Supermodel standalone emulator
 * (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
 * (Linux) Added support for the mGBA Qt and Snes9x GTK standalone emulators
@@ -74,6 +76,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added MAME standalone as an alternative emulator for the atarijaguar system
 * (Windows) Added BigPEmu standalone as an alternative emulator for the atarijaguar system
 * Reverted the atarijaguarcd system to placeholder status as no emulators including Virtual Jaguar run these games properly
+* Added the pcwindows platform to the ports system to improve scraping
 * Added the . (dot) file extension to the xbox360 system on Windows to support extensionless XBLA games
 * Added the .d64 file extension to the n64 and n64dd systems
 * Added the .car and .rom file extensions to the a5200 system
@@ -185,6 +188,7 @@ Overall application speed and performance has been greatly improved with faster 
 * If a wheel (marquee) image on ScreenScraper falls back to another region, then the wheel-hd image is now used instead if it matches the set region
 * Removed scraping of arcade controller information using ScreenScraper as they have ruined this functionality
 * Newline characters are now removed from game names when scraping with ScreenScraper (these occur in some very rare instances)
+* Hex-encoded ampersand characters in game names are now converted correctly when scraping with ScreenScraper
 * Added a ScreenScraper-specific option to remove dots from game name searches when using the multi-scraper in automatic mode
 * Moved the option "Scrape actual folders" higher up in the scraper options menu
 * Added the ability to set a manual sortname specifically for custom collections using the metadata editor

@@ -2162,9 +2162,11 @@ Properties:
     - Valid values:
     - `name` - Short system name as defined in es_systems.xml.
     - `fullname` - Full system name as defined in es_systems.xml.
-    - `gamecount` - Number of games available for the system. Number of favorites are printed inside brackets if applicable.
+    - `gamecount` - Number of games available for the system. Number of favorites is printed inside brackets if applicable.
     - `gamecountGames` - Number of games available for the system. Does not include the favorites count.
+    - `gamecountGamesNoText` - Same as the above but with the text _game_ or _games_ omitted, i.e. only the number is shown.
     - `gamecountFavorites` - Number of favorite games for the system, may be blank if favorites is not applicable.
+    - `gamecountFavoritesNoText` - Same as the above but with the text _favorite_ or _favorites_ omitted, i.e. only the number is shown.
 * `metadata` - type: STRING
     - This translates to the metadata values that are available for the game. To use this property from the `system` view, you will first need to add a `gameselector` element. You can only define a single metadata value per text element.
      - Valid values:
