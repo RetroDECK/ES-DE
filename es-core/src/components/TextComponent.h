@@ -95,8 +95,13 @@ protected:
 private:
     void onColorChanged();
 
-    static inline std::vector<std::string> supportedSystemdataTypes {
-        "name", "fullname", "gamecount", "gamecountGames", "gamecountFavorites"};
+    static inline std::vector<std::string> supportedSystemdataTypes {"name",
+                                                                     "fullname",
+                                                                     "gamecount",
+                                                                     "gamecountGames",
+                                                                     "gamecountGamesNoText",
+                                                                     "gamecountFavorites",
+                                                                     "gamecountFavoritesNoText"};
 
     static inline std::vector<std::string> supportedMetadataTypes {
         "name",           "description",      "rating",

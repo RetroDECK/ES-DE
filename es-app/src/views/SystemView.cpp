@@ -850,22 +850,19 @@ void SystemView::populate()
 
 void SystemView::updateGameCount()
 {
-    std::pair<unsigned int, unsigned int> gameCount =
-        mPrimary->getSelected()->getDisplayedGameCount();
+    std::pair<unsigned int, unsigned int> gameCount {
+        mPrimary->getSelected()->getDisplayedGameCount()};
     std::stringstream ss;
     std::stringstream ssGames;
     std::stringstream ssFavorites;
     bool games {false};
+    const bool favoriteSystem {mPrimary->getSelected()->getName() == "favorites"};
+    const bool recentSystem {mPrimary->getSelected()->getName() == "recent"};
 
-    if (!mPrimary->getSelected()->isGameSystem()) {
-        ss << "Configuration";
-    }
-    else if (mPrimary->getSelected()->isCollection() &&
-             (mPrimary->getSelected()->getName() == "favorites")) {
+    if (mPrimary->getSelected()->isCollection() && favoriteSystem) {
         ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s");
     }
-    else if (mPrimary->getSelected()->isCollection() &&
-             (mPrimary->getSelected()->getName() == "recent")) {
+    else if (mPrimary->getSelected()->isCollection() && recentSystem) {
         // The "recent" gamelist has probably been trimmed after sorting, so we'll cap it at
         // its maximum limit of 50 games.
         ss << (gameCount.first > 50 ? 50 : gameCount.first) << " Game"
@@ -883,21 +880,29 @@ void SystemView::updateGameCount()
         mLegacySystemInfo->setText(ss.str());
     }
     else {
-        for (auto& gameCount : mSystemElements[mPrimary->getCursor()].gameCountComponents) {
-            if (gameCount->getThemeSystemdata() == "gamecount") {
-                gameCount->setValue(ss.str());
+        for (auto& gameCountComp : mSystemElements[mPrimary->getCursor()].gameCountComponents) {
+            if (gameCountComp->getThemeSystemdata() == "gamecount") {
+                gameCountComp->setValue(ss.str());
             }
-            else if (gameCount->getThemeSystemdata() == "gamecountGames") {
+            else if (gameCountComp->getThemeSystemdata() == "gamecountGames") {
                 if (games)
-                    gameCount->setValue(ssGames.str());
+                    gameCountComp->setValue(ssGames.str());
                 else
-                    gameCount->setValue(ss.str());
+                    gameCountComp->setValue(ss.str());
             }
-            else if (gameCount->getThemeSystemdata() == "gamecountFavorites") {
-                gameCount->setValue(ssFavorites.str());
+            else if (gameCountComp->getThemeSystemdata() == "gamecountGamesNoText") {
+                gameCountComp->setValue(std::to_string(gameCount.first));
+            }
+            else if (gameCountComp->getThemeSystemdata() == "gamecountFavorites") {
+                gameCountComp->setValue(ssFavorites.str());
+            }
+            else if (gameCountComp->getThemeSystemdata() == "gamecountFavoritesNoText") {
+                if (!favoriteSystem && !recentSystem) {
+                    gameCountComp->setValue(std::to_string(gameCount.second));
+                }
             }
             else {
-                gameCount->setValue(gameCount->getThemeSystemdata());
+                gameCountComp->setValue(gameCountComp->getThemeSystemdata());
             }
         }
     }
