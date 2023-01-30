@@ -12,11 +12,11 @@
 * atarijaguarcd: Atari Jaguar CD - consolegame.svg, controller.svg
 * atarist: Atari ST - controller.svg
 * atarixe: Atari XE - consolegame.svg, controller.svg
-* atomiswave: Atomiswave - consolegame.svg
+* atomiswave: Sammy Corporation Atomiswave - consolegame.svg
 * auto-allgames - customized colors, consolegame.svg, (uses temporary art)
 * auto-favorites - customized colors, consolegame.svg, (uses temporary art)
 * auto-lastplayed - customized colors, consolegame.svg, (uses temporary art)
-* bbcmicro: BBC Micro - consolegame.svg, controller.svg
+* bbcmicro: Acorn Computers BBC Micro - consolegame.svg, controller.svg
 * cdimono1: Philips CD-i - consolegame.svg, controller.svg
 * cdtv: Commodore CDTV - consolegame.svg, controller.svg
 * chailove: Löve game engine - consolegame.svg, controller.svg
@@ -26,7 +26,7 @@
 * custom-collections - customized colors, consolegame.svg, (uses temporary art)
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, controller.svg
 * desktop: Desktop applications - consolegame.svg, controller.svg
-* dragon32: Dragon 32 - consolegame.svg, controller.svg
+* dragon32: Dragon Data Dragon 32 - consolegame.svg, controller.svg
 * easyrpg: EasyRPG Game Engine - consolegame.svg, controller.svg
 * epic: Epic Games Store - consolegame.svg, controller.svg
 * flash: Adobe Flash - consolegame.svg, controller.svg
@@ -39,6 +39,7 @@
 * macintosh: Apple Macintosh - consolegame.svg, controller.svg
 * megaduck: Creatronic Mega Duck - consolegame.svg
 * mess: MESS (Multi Emulator Super System) - consolegame.svg, controller.svg
+* microsoft: Microsoft Windows - consolegame.svg, controller.svg
 * model2: Sega Model 2 - consolegame.svg, controller.svg
 * model3: Sega Model 3 - consolegame.svg, controller.svg
 * moto: Thomson MO/TO series - consolegame.svg, controller.svg
@@ -60,7 +61,7 @@
 * pokemini: Nintendo Pokémon Mini - consolegame.svg, controller.svg
 * ports: Source ports - consolegame.svg, controller.svg
 * ps4: Sony PlayStation 4 - consolegame.svg, controller.svg
-* samcoupe: SAM Coupé - consolegame.svg
+* samcoupe: MGT SAM Coupé - consolegame.svg
 * satellaview: Nintendo Satellaview - consolegame.svg
 * sgb: Nintendo Super Game Boy - consolegame.svg
 * solarus: Solarus game engine - consolegame.svg
@@ -76,7 +77,7 @@
 * to8: Thomson TO8 - consolegame.svg, controller.svg
 * trs-80: Tandy TRS 80 - consolegame.svg, controller.svg
 * uzebox: Uzebox - consolegame.svg
-* vectrex: Vectrex - consolegame.svg (needs simplification as it takes a long time to rasterize)
+* vectrex: Smith Engineering Vectrex - consolegame.svg (needs simplification as it takes a long time to rasterize)
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
 * virtualboy: Nintendo Virtual Boy - consolegame.svg (needs simplification as it takes a long time to rasterize)
 * x1:  Sharp X1 - consolegame.svg
