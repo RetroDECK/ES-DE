@@ -351,6 +351,8 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
                                                            {region, "wor", "us", "ss", "eu", "jp"})
                                   .text()
                                   .get()};
+        // Game names sometimes contain ampersands encoded as hex codes.
+        gameName = Utils::String::replace(gameName, "&#x26;", "&");
         // In some very rare cases game names contain newline characters that we need to remove.
         result.mdl.set("name", Utils::String::replace(gameName, "\n", ""));
         LOG(LogDebug) << "ScreenScraperRequest::processGame(): Name: " << result.mdl.get("name");
