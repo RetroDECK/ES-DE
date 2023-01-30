@@ -209,7 +209,8 @@
         <fullname>Atari ST</fullname>
         <path>%ROMPATH%\atarist</path>
         <extension>.st .ST .msa .MSA .stx .STX .dim .DIM .ipf .IPF .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\hatari_libretro.dll %ROM%</command>
+        <command label="Hatari">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\hatari_libretro.dll %ROM%</command>
+        <command label="Hatari (Standalone)">%EMULATOR_HATARI% %ROM%</command>
         <platform>atarist</platform>
         <theme>atarist</theme>
     </system>
@@ -1160,7 +1161,7 @@
         <path>%ROMPATH%\ports</path>
         <extension>.bat .BAT .lnk .LNK</extension>
         <command>%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
-        <platform>pc</platform>
+        <platform>pc, pcwindows</platform>
         <theme>ports</theme>
     </system>
     <system>

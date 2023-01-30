@@ -254,6 +254,16 @@
             <entry>~/bin/gearboy/gearboy</entry>
         </rule>
     </emulator>
+    <emulator name="HATARI">
+        <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
+        <rule type="systempath">
+            <entry>hatari</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/org.tuxfamily.hatari</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.tuxfamily.hatari</entry>
+        </rule>
+    </emulator>
     <emulator name="HYPSEUS-SINGE">
         <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
         <rule type="systempath">

@@ -283,6 +283,17 @@
             <entry>%ESPATH%\..\Gearboy\Gearboy.exe</entry>
         </rule>
     </emulator>
+    <emulator name="HATARI">
+        <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
+        <rule type="systempath">
+            <entry>hatari.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\hatari\hatari.exe</entry>
+            <entry>%ESPATH%\hatari\hatari.exe</entry>
+            <entry>%ESPATH%\..\hatari\hatari.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="HYPSEUS-SINGE">
         <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
         <rule type="systempath">

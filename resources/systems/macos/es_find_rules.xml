@@ -117,6 +117,14 @@
             <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
+    <emulator name="HATARI">
+        <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
+        <rule type="staticpath">
+            <entry>/Applications/Hatari.app/Contents/MacOS/hatari</entry>
+            <entry>/opt/homebrew/bin/hatari</entry>
+            <entry>/usr/local/bin/hatari</entry>
+        </rule>
+    </emulator>
     <emulator name="HYPSEUS-SINGE">
         <!-- Hypseus Singe, fork of arcade LaserDisc emulator Daphne -->
         <rule type="systempath">
