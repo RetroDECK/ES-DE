@@ -1641,6 +1641,16 @@
         <theme>wiiu</theme>
     </system>
     <system>
+        <name>windows</name>
+        <fullname>Microsoft Windows</fullname>
+        <path>%ROMPATH%/windows</path>
+        <extension>.desktop .sh</extension>
+        <command label="Suspend ES-DE">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Keep ES-DE running">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>windows</theme>
+    </system>
+    <system>
         <name>wonderswan</name>
         <fullname>Bandai WonderSwan</fullname>
         <path>%ROMPATH%/wonderswan</path>

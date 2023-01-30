@@ -1644,6 +1644,16 @@
         <theme>wiiu</theme>
     </system>
     <system>
+        <name>windows</name>
+        <fullname>Microsoft Windows</fullname>
+        <path>%ROMPATH%\windows</path>
+        <extension>.bat .BAT .lnk .LNK</extension>
+        <command label="Suspend ES-DE">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Keep ES-DE running">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>windows</theme>
+    </system>
+    <system>
         <name>wonderswan</name>
         <fullname>Bandai WonderSwan</fullname>
         <path>%ROMPATH%\wonderswan</path>
