@@ -26,6 +26,7 @@ namespace PlatformIds
         APPLE_IIGS,
         ARCADE,
         ARCADIA_2001,
+        ARDUBOY,
         BALLY_ASTROCADE,
         ATARI_2600,
         ATARI_5200,
