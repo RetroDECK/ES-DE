@@ -38,13 +38,13 @@ fi
 chmod a+x linuxdeploy-x86_64.AppImage
 
 if [ ! -f external/SDL/build/${SDL_SHARED_LIBRARY} ]; then
-    echo
-    echo "Building the SDL library..."
-    cd external
-    rm -rf SDL
-    git clone https://github.com/libsdl-org/SDL.git
-    cd SDL
-    git checkout $SDL_RELEASE_TAG
+  echo
+  echo "Building the SDL library..."
+  cd external
+  rm -rf SDL
+  git clone https://github.com/libsdl-org/SDL.git
+  cd SDL
+  git checkout $SDL_RELEASE_TAG
 
 # Temporary workaround until a proper fix has been implemented in the SDL library:
 # https://github.com/libsdl-org/SDL/issues/7160
@@ -77,14 +77,21 @@ index 0809706c2..bbabfcaa7 100644
      if (_this && _this->StartTextInput) {
 EOF
 
-    mkdir build
-    cd build
-    cmake -DCMAKE_BUILD_TYPE=Release -S .. -B .
-    make -j${JOBS}
-    cd ../../..
-else
+  mkdir build
+  cd build
+  cmake -DCMAKE_BUILD_TYPE=Release -S .. -B .
+
+  if [ $(grep PKG_PIPEWIRE_VERSION:INTERNAL= CMakeCache.txt) = "PKG_PIPEWIRE_VERSION:INTERNAL=" ]; then
     echo
-    echo -e "The SDL library has already been built, skipping this step\n"
+    echo -e "The SDL library is not configured with PipeWire support, aborting."
+    exit
+  fi
+
+  make -j${JOBS}
+  cd ../../..
+else
+  echo
+  echo -e "The SDL library has already been built, skipping this step\n"
 fi
 
 rm -rf ./AppDir
