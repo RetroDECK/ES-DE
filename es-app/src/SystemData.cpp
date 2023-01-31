@@ -1290,6 +1290,16 @@ FileData* SystemData::getRandomGame(const FileData* currentGame, bool gameSelect
     else {
         if (gameSelectorMode) {
             gameList = mRootFolder->getFilesRecursive(GAME, false, false);
+            if (Settings::getInstance()->getString("UIMode") == "kid") {
+                // Doing some extra work here instead of in FileData is OK as it's only needed
+                // for the rare combination of a gameselector being present while in kid mode.
+                for (auto it = gameList.begin(); it != gameList.end();) {
+                    if (!(*it)->getKidgame())
+                        it = gameList.erase(it);
+                    else
+                        ++it;
+                }
+            }
         }
         else {
             gameList = ViewController::getInstance()
