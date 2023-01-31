@@ -827,8 +827,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
             }
         }
     }
-    else {
-        // Variant triggers.
+    else if (Settings::getInstance()->getBool("ThemeVariantTriggers")) {
         const auto overrides = system->getTheme()->getCurrentThemeSetSelectedVariantOverrides();
 
         if (!overrides.empty()) {

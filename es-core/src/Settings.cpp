@@ -203,6 +203,7 @@ void Settings::setDefaults()
 #endif
     mBoolMap["ScreensaverVideoBlur"] = {false, false};
 
+    mBoolMap["ThemeVariantTriggers"] = {true, true};
     mBoolMap["MenuBlurBackground"] = {true, true};
     mBoolMap["GamelistVideoPillarbox"] = {true, true};
     mBoolMap["GamelistVideoScanlines"] = {false, false};

@@ -685,6 +685,21 @@ void GuiMenu::openUIOptions()
     screensaverRow.makeAcceptInputHandler(std::bind(&GuiMenu::openScreensaverOptions, this));
     s->addRow(screensaverRow);
 
+    // Enable theme variant triggers.
+    auto themeVariantTriggers = std::make_shared<SwitchComponent>();
+    themeVariantTriggers->setState(Settings::getInstance()->getBool("ThemeVariantTriggers"));
+    s->addWithLabel("ENABLE THEME VARIANT TRIGGERS", themeVariantTriggers);
+    s->addSaveFunc([themeVariantTriggers, s] {
+        if (themeVariantTriggers->getState() !=
+            Settings::getInstance()->getBool("ThemeVariantTriggers")) {
+            Settings::getInstance()->setBool("ThemeVariantTriggers",
+                                             themeVariantTriggers->getState());
+            s->setNeedsSaving();
+            s->setNeedsReloading();
+            s->setInvalidateCachedBackground();
+        }
+    });
+
     // Blur background when the menu is open.
     auto menuBlurBackground = std::make_shared<SwitchComponent>();
     menuBlurBackground->setState(Settings::getInstance()->getBool("MenuBlurBackground"));
