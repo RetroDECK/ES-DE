@@ -22,6 +22,7 @@ public:
         , mGameSelection {GameSelection::RANDOM}
         , mNeedsRefresh {false}
         , mGameCount {1}
+        , mAllowDuplicates {false}
     {
         mSystem->getRootFolder()->setUpdateListCallback([&]() { mNeedsRefresh = true; });
     }
@@ -64,11 +65,12 @@ public:
                          Settings::getInstance()->getBool("ForceKid"))};
 
         if (mGameSelection == GameSelection::RANDOM) {
-            int tries {8};
+            int tries {mSystem->getRootFolder()->getGameCount().first < 6 ? 12 : 8};
             for (int i {0}; i < mGameCount; ++i) {
                 if (mSystem->getRootFolder()->getGameCount().first == 0)
                     break;
-                if (mSystem->getRootFolder()->getGameCount().first == mGames.size())
+                if (!mAllowDuplicates &&
+                    mSystem->getRootFolder()->getGameCount().first == mGames.size())
                     break;
                 FileData* randomGame {nullptr};
 
@@ -83,6 +85,10 @@ public:
                         --i;
                         --tries;
                     }
+                    else if (mAllowDuplicates && randomGame != nullptr) {
+                        mGames.emplace_back(randomGame);
+                    }
+
                     continue;
                 }
 
@@ -160,6 +166,9 @@ public:
 
         if (elem->has("gameCount"))
             mGameCount = glm::clamp(static_cast<int>(elem->get<unsigned int>("gameCount")), 1, 30);
+
+        if (elem->has("allowDuplicates"))
+            mAllowDuplicates = elem->get<bool>("allowDuplicates");
     }
 
 private:
@@ -170,6 +179,7 @@ private:
     GameSelection mGameSelection;
     bool mNeedsRefresh;
     int mGameCount;
+    bool mAllowDuplicates;
 };
 
 #endif // ES_CORE_COMPONENTS_GAME_SELECTOR_COMPONENT_H
