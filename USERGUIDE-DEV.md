@@ -2324,6 +2324,10 @@ Submenu containing all the settings for the media viewer. These are described in
 
 Submenu containing all the settings for the screensaver. These are described in detailed below.
 
+**Enable theme variant triggers**
+
+Non-legacy theme sets can optionally contain variant trigger configuration which changes the layout on a per-gamelist basis if there is no game media available, or if there is no game videos available. This option makes it possible to disable that functionality and always apply the default configuration for the selected variant.
+
 **Blur background when menu is open**
 
 This option will blur the background behind the menu slightly. Normally this can be left enabled, but if you have a really slow GPU, disabling this option may make the application feel a bit more responsive.
@@ -3069,6 +3073,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W*] | Mednafen **(Standalone)** [UW*],<br>MAME **(Standalone)** [UMW*] | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME **(Standalone)** [UMW*]      |                                   | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)** [UMW*],<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW*],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)** [UMW*],<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W*],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>Supermodel **(Standalone)** [UW*],<br>Supermodel [Fullscreen] **(Standalone)** [UW*] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)** [UMW*]      |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** [UMW*] | Yes          | Single archive or ROM file |
@@ -3125,6 +3130,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | megacd                | Sega Mega-CD                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
 | megacdjp              | Sega Mega-CD [Japan]                           | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ares **(Standalone)** [UMW*] | Yes          |                                      |
 | megadrive             | Sega Mega Drive                                | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file |
+| megadrivejp           | Sega Mega Drive [Japan]                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           | Single archive or ROM file |
 | megaduck              | Creatronic Mega Duck                           | SameDuck                          |                                   | No           | Single archive or ROM file |
 | mess                  | Multi Emulator Super System                    | MESS 2015                         |                                   |              |                                      |
 | model2                | Sega Model 2                                   | Model 2 Emulator **(Standalone)** [W*],<br>MAME - Current [UM] | Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W*],<br>MAME - Current [W],<br>MAME **(Standalone)** [UMW*] | Yes for MAME | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
@@ -3205,7 +3211,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)** [UMW*]  | No           |                                      |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)** [UMW*],<br>PrimeHack **(Standalone)** [UW*] | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)** [UMW*]      |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
-| windows               | Microsoft Windows                              | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | Shortcut (.desktop/.app/.lnk) file |
+| windows               | Microsoft Windows                              | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | Shortcut (.desktop/.app/.lnk) file or script |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           |                                      |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)** [UMW*],<br>ares **(Standalone)** [UMW*] | No           |                                      |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file |

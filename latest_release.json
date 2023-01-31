@@ -18,8 +18,8 @@
     },
     "prerelease": {
         "comment": "The fields below will be blank if there is no prerelease available",
-        "version": "2.0.0-alpha-2022-12-22",
-        "date": "2022-12-22",
+        "version": "2.0.0-beta-2023-01-27",
+        "date": "2023-01-27",
         "urls": {
             "WindowsPortable": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759587/download",
             "WindowsInstaller": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759574/download",
@@ -27,7 +27,7 @@
             "macOSIntel": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759558/download",
             "LinuxDEB": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759536/download",
             "LinuxRPM": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759592/download",
-            "LinuxAppImage": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759522/download",
+            "LinuxAppImage": "https://gitlab.com/es-de/emulationstation-de/-/package_files/67103985/download",
             "LinuxSteamDeckAppImage": "https://gitlab.com/es-de/emulationstation-de/-/package_files/66759612/download"
         }
     }

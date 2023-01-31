@@ -2473,6 +2473,8 @@ Elements from this group provide special functionality not covered by the primar
 
 Selects games from the gamelists when navigating the `system` view. This makes it possible to display game media and game metadata directly from this view. It's possible to make separate gameselector configurations per game system, so that for instance a random game could be displayed for one system and the most recently played game could be displayed for another system. It's also possible to define multiple gameselector elements with different selection criterias per game system which makes it possible to for example set a random fan art background image and at the same time display a box cover image of the most recently played game. The gameselector logic can be used for the `image`, `video`, `text`, `datetime` and `rating` elements.
 
+Note that any games that have the metadata option _Exclude from game counter_ set will be excluded by the gameselector. Also note that setting `gameCount` to a high value may introduce significant lag into the application for large systems, so try to keep this as low as possible and make thorough performance testing with huge game libraries.
+
 Supported views:
 * `system`
 
@@ -2485,9 +2487,12 @@ Properties:
     - Valid values are `random`, `lastplayed` or `mostplayed`
     - Default is `random`
 * `gameCount` - type: UNSIGNED_INTEGER
-    - How many games to select. This property is only intended for future use.
     - Minimum value is `1` and maximum value is `30`
     - Default is `1`
+* `allowDuplicates` - type: BOOLEAN
+    - If set to true then the same game may appear multiple times, i.e. the amount of entries defined by `gameCount` are always fully populated. This only applies to entries higher than the amount of available games for a system, for example if a system contains 3 games and `gameCount` has been set to `5`, then the first three entries will not contain any duplicate entries, but the last two will.
+    - This property can only be used when `selection` is `random`
+    - Default is `false`
 
 #### helpsystem
 

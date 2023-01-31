@@ -43,6 +43,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Changed the start button for the screensaver from "Back" to "X"
 * Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
 * Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
+* Added support for the Arduboy Miniature Game System (arduboy)
+* Added support for the Sega Mega Drive (megadrivejp) game system (Japanese region)
 * Added support for the Microsoft Windows (windows) game system
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
