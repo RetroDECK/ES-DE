@@ -52,6 +52,7 @@ namespace
         {CAVESTORY, 135},
         {COLECOVISION, 48},
         {VTECH_CREATIVISION, 241},
+        {VTECH_VSMILE, 120},
         {COMMODORE_64, 66},
         {COMMODORE_CDTV, 129},
         {COMMODORE_VIC20, 73},

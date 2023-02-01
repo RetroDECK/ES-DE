@@ -131,6 +131,7 @@ namespace PlatformIds
         COMMODORE_VIC20,
         PHILIPS_VIDEOPAC,
         NINTENDO_VIRTUAL_BOY,
+        VTECH_VSMILE,
         NINTENDO_WII,
         NINTENDO_WII_U,
         BANDAI_WONDERSWAN,

@@ -1641,6 +1641,15 @@
         <theme>virtualboy</theme>
     </system>
     <system>
+        <name>vsmile</name>
+        <fullname>VTech V.Smile</fullname>
+        <path>%ROMPATH%/vsmile</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/vsmile vsmile -cart %ROM%</command>
+        <platform>vsmile</platform>
+        <theme>vsmile</theme>
+    </system>
+    <system>
         <name>wii</name>
         <fullname>Nintendo Wii</fullname>
         <path>%ROMPATH%/wii</path>

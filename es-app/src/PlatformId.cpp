@@ -132,6 +132,7 @@ namespace PlatformIds
         "vic20",                // Commodore VIC-20
         "videopac",             // Philips Videopac G7000 (Magnavox Odyssey2)
         "virtualboy",           // Nintendo Virtual Boy
+        "vsmile",               // VTech V.Smile
         "wii",                  // Nintendo Wii
         "wiiu",                 // Nintendo Wii U
         "wonderswan",           // Bandai WonderSwan
