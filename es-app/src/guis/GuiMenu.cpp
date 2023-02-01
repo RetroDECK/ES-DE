@@ -393,6 +393,23 @@ void GuiMenu::openUIOptions()
             }
             if (themeTransitions->getSelectedObjects().size() == 0)
                 themeTransitions->selectEntry(0);
+
+            if (themeTransitions->getNumEntries() == 1) {
+                themeTransitions->setEnabled(false);
+                themeTransitions->setOpacity(DISABLED_OPACITY);
+                themeTransitions->getParent()
+                    ->getChild(themeTransitions->getChildIndex() - 1)
+                    ->setOpacity(DISABLED_OPACITY);
+            }
+            else {
+                themeTransitions->setEnabled(true);
+                themeTransitions->setOpacity(1.0f);
+                themeTransitions->getParent()
+                    ->getChild(themeTransitions->getChildIndex() - 1)
+                    ->setOpacity(1.0f);
+            }
+
+            LOG(LogError) << "SELECTABLE ENTRIES: " << themeTransitions->getNumEntries();
         }
     };
 
@@ -915,12 +932,6 @@ void GuiMenu::openUIOptions()
             gamelistViewStyle->getParent()
                 ->getChild(gamelistViewStyle->getChildIndex() - 1)
                 ->setOpacity(DISABLED_OPACITY);
-
-            themeTransitions->setEnabled(true);
-            themeTransitions->setOpacity(1.0f);
-            themeTransitions->getParent()
-                ->getChild(themeTransitions->getChildIndex() - 1)
-                ->setOpacity(1.0f);
 
             legacyThemeTransitions->setEnabled(false);
             legacyThemeTransitions->setOpacity(DISABLED_OPACITY);

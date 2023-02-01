@@ -156,6 +156,8 @@ public:
         return GuiComponent::input(config, input);
     }
 
+    const int getNumEntries() { return mEntries.size(); }
+
     std::vector<T> getSelectedObjects()
     {
         std::vector<T> ret;
