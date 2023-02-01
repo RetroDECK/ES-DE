@@ -5,6 +5,7 @@
 * amstradcpc - Amstrad CPC - controller.svg
 * android: Google Android - consolegame.svg, controller.svg
 * apple2gs: Apple IIGS - consolegame.svg, controller.svg
+* arduboy: Arduboy Miniature Game System - consolegame.svg, controller.svg
 * astrocade: Bally Astrocade - consolegame.svg, controller.svg
 * atari5200: Atari 5200 - consolegame.svg, controller.svg
 * atari800: Atari 800 - consolegame.svg, controller.svg
@@ -23,6 +24,9 @@
 * channelf: Fairchild Channel F - consolegame.svg, controller.svg
 * coco: Tandy Color Computer - consolegame.svg, controller.svg
 * cps: Capcom Play System - consolegame.svg, controller.svg
+* cps1: Capcom Play System I - consolegame.svg, controller.svg
+* cps2: Capcom Play System II - consolegame.svg, controller.svg
+* cps3: Capcom Play System III - consolegame.svg, controller.svg
 * custom-collections - customized colors, consolegame.svg, (uses temporary art)
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, controller.svg
 * desktop: Desktop applications - consolegame.svg, controller.svg
