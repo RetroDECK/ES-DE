@@ -255,6 +255,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"secondaryColor", COLOR},
        {"selectedColor", COLOR},
        {"selectedSecondaryColor", COLOR},
+       {"selectedBackgroundColor", COLOR},
+       {"selectedSecondaryBackgroundColor", COLOR},
        {"fontPath", PATH},
        {"fontSize", FLOAT},
        {"scrollSound", PATH},                      // For backward compatibility with legacy themes.

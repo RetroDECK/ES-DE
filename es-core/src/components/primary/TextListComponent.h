@@ -142,6 +142,8 @@ private:
     unsigned int mSecondaryColor;
     unsigned int mSelectedColor;
     unsigned int mSelectedSecondaryColor;
+    unsigned int mSelectedBackgroundColor;
+    unsigned int mSelectedSecondaryBackgroundColor;
     PrimaryAlignment mAlignment;
     float mHorizontalMargin;
     LetterCase mLetterCase;
@@ -180,6 +182,8 @@ TextListComponent<T>::TextListComponent()
     , mSecondaryColor {0x00FF00FF}
     , mSelectedColor {0x0000FFFF}
     , mSelectedSecondaryColor {0x00FF00FF}
+    , mSelectedBackgroundColor {0x00000000}
+    , mSelectedSecondaryBackgroundColor {0x00000000}
     , mAlignment {PrimaryAlignment::ALIGN_CENTER}
     , mHorizontalMargin {0.0f}
     , mLetterCase {LetterCase::NONE}
@@ -407,12 +411,17 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
 
     for (int i = startEntry; i < listCutoff; ++i) {
         Entry& entry {mEntries.at(i)};
-        unsigned int color {0};
+        unsigned int color {0x00000000};
+        unsigned int backgroundColor {0x00000000};
 
-        if (entry.data.entryType == TextListEntryType::PRIMARY)
+        if (entry.data.entryType == TextListEntryType::PRIMARY) {
             color = (mCursor == i ? mSelectedColor : mPrimaryColor);
-        else
+            backgroundColor = (mCursor == i ? mSelectedBackgroundColor : 0x00000000);
+        }
+        else {
             color = (mCursor == i ? mSelectedSecondaryColor : mSecondaryColor);
+            backgroundColor = (mCursor == i ? mSelectedSecondaryBackgroundColor : 0x00000000);
+        }
 
         if (!entry.data.textCache) {
             entry.data.textCache =
@@ -470,6 +479,13 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             mLoopScroll = false;
 
         mRenderer->setMatrix(drawTrans);
+
+        if (i == mCursor && backgroundColor != 0x00000000) {
+            mRenderer->drawRect(mSelectorHorizontalOffset, 0.0f,
+                                entry.data.textCache->metrics.size.x, mSelectorHeight,
+                                backgroundColor, backgroundColor);
+        }
+
         font->renderTextCache(entry.data.textCache.get());
 
         // Render currently selected row again if text is moved far enough for it to repeat.
@@ -479,6 +495,11 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
             drawTrans = glm::translate(
                 drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f});
             mRenderer->setMatrix(drawTrans);
+            if (i == mCursor && backgroundColor != 0x00000000) {
+                mRenderer->drawRect(mSelectorHorizontalOffset, 0.0f,
+                                    entry.data.textCache->metrics.size.x, mSelectorHeight,
+                                    backgroundColor, backgroundColor);
+            }
             font->renderTextCache(entry.data.textCache.get());
         }
         y += entrySize;
@@ -545,6 +566,13 @@ void TextListComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mSelectedSecondaryColor = elem->get<unsigned int>("selectedSecondaryColor");
         else
             mSelectedSecondaryColor = mSelectedColor;
+        if (elem->has("selectedBackgroundColor"))
+            mSelectedBackgroundColor = elem->get<unsigned int>("selectedBackgroundColor");
+        if (elem->has("selectedSecondaryBackgroundColor"))
+            mSelectedSecondaryBackgroundColor =
+                elem->get<unsigned int>("selectedSecondaryBackgroundColor");
+        else
+            mSelectedSecondaryBackgroundColor = mSelectedBackgroundColor;
     }
 
     setFont(Font::getFromTheme(elem, properties, mFont, 0.0f, false, mLegacyMode));
