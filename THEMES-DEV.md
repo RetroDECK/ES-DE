@@ -402,6 +402,8 @@ As can be seen here, the overall variant trigger configuration needs to be enclo
 
 Note that variant triggers will only apply to the gamelist view and not the system view. Also be aware that it will add a potentially noticeable application slowdown as game media files need to be scanned for at various points when using the application, as well as during startup. The impact of the performance penalty depends on multiple factors such as the game collection size, how many games have been scraped, as well as disk I/O and filesystem performance. So only use variant triggers if really necessary for your theme design. As well, specifying many values for the `mediaType` tag will lead to more files potentially being scanned which could introduce further lag and latency.
 
+As a final note, variant triggers can also be globally disabled by the user via the _Enable theme variant triggers_ option in the _UI Settings menu_. Not everyone may want the variant auto-switching to take place, and if all systems contain scraped media then disabling the functionality will eliminate the performance penalty described above.
+
 ## Color schemes
 
 Color schemes are essentially a collection of variables that can be selected between from the _UI Settings_ menu. This makes it possible to define different values that will be applied to the overall theme configuration based on this menu selection. Only variables can be used for the color schemes, but since variables can be used for almost everything this makes the functionality very flexible. In most cases you'll probably want to apply different color values to `<color>` properties and similar, but it's also possible to apply different images, animations, fonts etc. per color scheme.
@@ -1632,6 +1634,12 @@ Properties:
 * `selectedSecondaryColor` - type: COLOR
     - Color of the highlighted entry of the secondary entry type.
     - Default is the same value as `selectedColor`
+* `selectedBackgroundColor` - type: COLOR
+    - Background color of the highlighted entry of the primary entry type.
+    - Default is `00000000`
+* `selectedSecondaryBackgroundColor` - type: COLOR
+    - Background color of the highlighted entry of the secondary entry type.
+    - Default is the same value as `selectedBackgroundColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
     - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
@@ -2243,7 +2251,9 @@ Properties:
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
 * `color` - type: COLOR
+    - Default is `000000FF`
 * `backgroundColor` - type: COLOR
+    - Default is `00000000`
 * `letterCase` - type: STRING
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained)
