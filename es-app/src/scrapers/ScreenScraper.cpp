@@ -277,13 +277,15 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
     // returned instead of a valid game name, and retrying a second time returns the proper
     // name. But it's basically impossible to know which is the case, and we really can't
     // compensate for errors in the scraper service.
-    for (auto it = results.cbegin(); it != results.cend(); ++it) {
-        std::string gameName {Utils::String::toUpper((*it).mdl.get("name"))};
+    for (auto it = results.cbegin(); it != results.cend();) {
+        const std::string gameName {Utils::String::toUpper((*it).mdl.get("name"))};
         if (gameName.substr(0, 12) == "ZZZ(NOTGAME)") {
             LOG(LogWarning) << "ScreenScraperRequest - Received \"ZZZ(notgame)\" as game name, "
                                "ignoring response";
-            results.pop_back();
-            return;
+            it = results.erase(it);
+        }
+        else {
+            ++it;
         }
     }
 }
