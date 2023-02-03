@@ -46,7 +46,11 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
     bool isScrolling() { return mPrimary->isScrolling(); }
-    void stopScrolling() { mPrimary->stopScrolling(); }
+    void stopScrolling()
+    {
+        mPrimary->stopScrolling();
+        mCamOffset = static_cast<float>(mPrimary->getCursor());
+    }
     bool isSystemAnimationPlaying(unsigned char slot) { return mPrimary->isAnimationPlaying(slot); }
     void finishSystemAnimation(unsigned char slot)
     {
