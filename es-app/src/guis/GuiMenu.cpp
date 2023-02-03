@@ -145,9 +145,6 @@ void GuiMenu::openUIOptions()
                 // if the user is editing a custom collection when switching theme sets.
                 if (CollectionSystemsManager::getInstance()->isEditing())
                     CollectionSystemsManager::getInstance()->exitEditMode();
-                // TODO: Eliminate this extra reload or only execute it when switching from
-                // a legacy theme to a non-legacy theme.
-                ViewController::getInstance()->reloadAll();
                 s->setNeedsSaving();
                 s->setNeedsReloading();
                 s->setNeedsGoToStart();
@@ -408,8 +405,6 @@ void GuiMenu::openUIOptions()
                     ->getChild(themeTransitions->getChildIndex() - 1)
                     ->setOpacity(1.0f);
             }
-
-            LOG(LogError) << "SELECTABLE ENTRIES: " << themeTransitions->getNumEntries();
         }
     };
 
