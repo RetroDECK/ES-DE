@@ -74,7 +74,7 @@ See the question above for a possible solution. Another approach would be to hid
 
 ## When I hide a game using the metadata editor it's not really getting hidden, is this a bug?
 
-No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower text opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
+No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
 
 ## I'm using Linux or macOS and I can't find the .emulationstation directory, where is it located?
 

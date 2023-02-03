@@ -1629,16 +1629,16 @@ Properties:
     - Color of the secondary entry type. For the `gamelist` view this means folder entries and for the `system` view this property is not used.
     - Default is `00FF00FF`
 * `selectedColor` - type: COLOR
-    - Color of the highlighted entry of the primary entry type.
+    - Color of the highlighted entry for the primary entry type.
     - Default is the same value as `primaryColor`
 * `selectedSecondaryColor` - type: COLOR
-    - Color of the highlighted entry of the secondary entry type.
+    - Color of the highlighted entry for the secondary entry type.
     - Default is the same value as `selectedColor`
 * `selectedBackgroundColor` - type: COLOR
-    - Background color of the highlighted entry of the primary entry type.
+    - Background color of the highlighted entry for the primary entry type.
     - Default is `00000000`
 * `selectedSecondaryBackgroundColor` - type: COLOR
-    - Background color of the highlighted entry of the secondary entry type.
+    - Background color of the highlighted entry for the secondary entry type.
     - Default is the same value as `selectedBackgroundColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT

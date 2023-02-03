@@ -45,12 +45,14 @@ Overall application speed and performance has been greatly improved with faster 
 * Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
 * Added support for the Arduboy Miniature Game System (arduboy)
 * Added support for the Capcom Play System I, II and III (cps1, cps2 and cps3) game systems
+* Added support for the LCD Handheld Games (lcdgames) game system
 * Added support for the Sega Mega Drive (megadrivejp) game system (Japanese region)
+* Added support for the VTech V.Smile (vsmile) game system
 * Added support for the Microsoft Windows (windows) game system
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
 * Added ares standalone as an alternative emulator for many systems
-* Added MAME standalone as an alternative emulator for the gameandwatch system
+* Added MAME standalone as the default emulator for the gameandwatch system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
 * Added SameBoy standalone as an alternative emulator for the gb and gbc systems
 * Added Gearboy standalone as an alternative emulator for the gb and gbc systems on Unix and Windows
@@ -293,6 +295,7 @@ Overall application speed and performance has been greatly improved with faster 
 * There was a use after free issue in the multi-scraper which could in theory crash the application
 * Parsing of .desktop files on Unix did not properly handle escaping of % characters which made game launching fail for some RPCS3 games
 * For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
+* Invalid ScreenScraper game entries were sometimes not filtered out from server responses
 * During some menu operations that reloaded the gamelist view, the cached background could miss some components as they were not rendered in time
 * Text wrapping did not work correctly for text that typically does not contain spaces, like Japanese
 * Changing some values using the metadata editor could lead to an incorrect sort order if the changes were done from within a grouped custom collection
