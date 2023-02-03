@@ -39,6 +39,7 @@
 * intellivision: Intellivision - consolegame.svg, controller.svg
 * j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, controller.svg
 * kodi: Kodi home theatre software - consolegame.svg, controller.svg
+* lcdgames : LCD Handheld Games - consolegame.svg
 * lutris: Lutris open gaming platform - consolegame.svg, controller.svg
 * macintosh: Apple Macintosh - consolegame.svg, controller.svg
 * megaduck: Creatronic Mega Duck - consolegame.svg

@@ -18,7 +18,7 @@ namespace PlatformIds
         "unknown", // Nothing set.
 
         "3do",                  // 3DO Interactive Multiplayer
-        "ags",                  // Adventure Game Studio game engine
+        "ags",                  // Adventure Game Studio Game Engine
         "amiga",                // Commodore Amiga
         "amigacd32",            // Commodore Amiga CD32
         "amstradcpc",           // Amstrad CPC
@@ -66,8 +66,9 @@ namespace PlatformIds
         "genesis",              // Sega Genesis
         "gx4000",               // Amstrad GX4000
         "intellivision",        // Mattel Electronics Intellivision
-        "love",                 // ChaiLove game engine
-        "lutro",                // Lutro game engine
+        "lcdgames",             // LCD Handheld Games
+        "love",                 // ChaiLove Game Engine
+        "lutro",                // Lutro Game Engine
         "macintosh",            // Apple Macintosh
         "mastersystem",         // Sega Master System
         "megadrive",            // Sega Mega Drive
@@ -78,7 +79,7 @@ namespace PlatformIds
         "msx",                  // MSX
         "msx2",                 // MSX2
         "msxturbor",            // MSX Turbo R
-        "mugen",                // M.U.G.E.N game engine
+        "mugen",                // M.U.G.E.N Game Engine
         "n3ds",                 // Nintendo 3DS
         "n64",                  // Nintendo 64
         "naomi",                // Sega NAOMI
@@ -107,25 +108,25 @@ namespace PlatformIds
         "psp",                  // Sony PlayStation Portable
         "psvita",               // Sony PlayStation Vita
         "psx",                  // Sony PlayStation 1
-        "residualvm",           // ResidualVM game engine
+        "residualvm",           // ResidualVM Game Engine
         "samcoupe",             // MGT SAM Coupé
         "satellaview",          // Nintendo Satellaview
         "saturn",               // Sega Saturn
-        "scummvm",              // ScummVM game engine
+        "scummvm",              // ScummVM Game Engine
         "sega32x",              // Sega Mega Drive 32X
         "segacd",               // Sega CD
         "sg-1000",              // Sega SG-1000
         "snes",                 // Nintendo SNES (Super Nintendo)
-        "solarus",              // Solarus game engine
+        "solarus",              // Solarus Game Engine
         "spectravideo",         // Spectravideo
         "steam",                // Valve Steam
-        "stratagus",            // Stratagus game engine
+        "stratagus",            // Stratagus Game Engine
         "sufami",               // Bandai SuFami Turbo
         "supergrafx",           // NEC SuperGrafx
         "supervision",          // Watara Supervision
         "switch",               // Nintendo Switch
         "ti99",                 // Texas Instruments TI-99
-        "tic80",                // TIC-80 game engine
+        "tic80",                // TIC-80 Game Engine
         "trs-80",               // Tandy TRS-80
         "uzebox",               // Uzebox Open Source Console
         "vectrex",              // Smith Engineering Vectrex

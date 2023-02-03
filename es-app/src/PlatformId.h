@@ -65,6 +65,7 @@ namespace PlatformIds
         SEGA_GENESIS,
         AMSTRAD_GX4000,
         INTELLIVISION,
+        LCD_GAMES,
         GAMEENGINE_LOVE,
         GAMEENGINE_LUTRO,
         APPLE_MACINTOSH,

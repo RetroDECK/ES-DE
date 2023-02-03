@@ -63,6 +63,7 @@ namespace
         {GAMEENGINE_LUTRO, 206},
         {APPLE_MACINTOSH, 146},
         {GOOGLE_ANDROID, 63},
+        {LCD_GAMES, 75},
         {MICROSOFT_XBOX, 32},
         {MICROSOFT_XBOX_360, 33},
         {MOONLIGHT, 138},
