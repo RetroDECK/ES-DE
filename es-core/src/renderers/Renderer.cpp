@@ -119,7 +119,30 @@ bool Renderer::createWindow()
     mScreenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ?
                          Settings::getInstance()->getInt("ScreenOffsetY") :
                          0;
-    mScreenRotated = Settings::getInstance()->getBool("ScreenRotate");
+    mScreenRotation = Settings::getInstance()->getInt("ScreenRotate");
+
+    // In case someone manually added an invalid value to es_settings.xml.
+    if (mScreenRotation != 0 && mScreenRotation != 90 && mScreenRotation != 180 &&
+        mScreenRotation != 270) {
+        LOG(LogWarning) << "Invalid screen rotation value " << mScreenRotation
+                        << " defined, changing it to 0/disabled";
+        mScreenRotation = 0;
+    }
+
+    LOG(LogInfo) << "Screen rotation: "
+                 << (mScreenRotation == 0 ? "disabled" :
+                                            std::to_string(mScreenRotation) + " degrees");
+
+    if (mScreenRotation == 90 || mScreenRotation == 270) {
+        const int tempVal {sScreenWidth};
+        sScreenWidth = sScreenHeight;
+        sScreenHeight = tempVal;
+    }
+
+    if (sScreenHeight > sScreenWidth)
+        sIsVerticalOrientation = true;
+    else
+        sIsVerticalOrientation = false;
 
     // Prevent the application window from minimizing when switching windows (when launching
     // games or when manually switching windows using the task switcher).
@@ -224,6 +247,11 @@ bool Renderer::createWindow()
     sScreenWidthModifier = static_cast<float>(sScreenWidth) / 1920.0f;
     sScreenAspectRatio = static_cast<float>(sScreenWidth) / static_cast<float>(sScreenHeight);
 
+    if (sIsVerticalOrientation)
+        sScreenResolutionModifier = sScreenWidth / 1080.0f;
+    else
+        sScreenResolutionModifier = sScreenHeight / 1080.0f;
+
     LOG(LogInfo) << "Setting up OpenGL...";
 
     if (!createContext())
@@ -265,18 +293,41 @@ bool Renderer::init()
     viewport.y = mWindowHeight - mScreenOffsetY - sScreenHeight;
     viewport.w = sScreenWidth;
     viewport.h = sScreenHeight;
-    projection = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
-                            static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
-    projection = glm::rotate(projection, glm::radians(180.0f), {0.0f, 0.0f, 1.0f});
-    mProjectionMatrixRotated =
-        glm::translate(projection, {sScreenWidth * -1.0f, sScreenHeight * -1.0f, 0.0f});
+
+    projection = glm::ortho(0.0f, static_cast<float>(sScreenHeight),
+                            static_cast<float>(sScreenWidth), 0.0f, -1.0f, 1.0f);
+
+    if (mScreenRotation == 0) {
+        mProjectionMatrix = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
+                                       static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
+    }
+    else if (mScreenRotation == 90) {
+        projection = glm::ortho(0.0f, static_cast<float>(sScreenHeight),
+                                static_cast<float>(sScreenWidth), 0.0f, -1.0f, 1.0f);
+        projection = glm::rotate(projection, glm::radians(90.0f), {0.0f, 0.0f, 1.0f});
+        mProjectionMatrix = glm::translate(projection, {0.0f, sScreenHeight * -1.0f, 0.0f});
+    }
+    else if (mScreenRotation == 180) {
+        projection = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
+                                static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
+        projection = glm::rotate(projection, glm::radians(180.0f), {0.0f, 0.0f, 1.0f});
+        mProjectionMatrix =
+            glm::translate(projection, {sScreenWidth * -1.0f, sScreenHeight * -1.0f, 0.0f});
+    }
+    else if (mScreenRotation == 270) {
+        projection = glm::ortho(0.0f, static_cast<float>(sScreenHeight),
+                                static_cast<float>(sScreenWidth), 0.0f, -1.0f, 1.0f);
+        projection = glm::rotate(projection, glm::radians(270.0f), {0.0f, 0.0f, 1.0f});
+        mProjectionMatrix = glm::translate(projection, {sScreenWidth * -1.0f, 0.0f, 0.0f});
+    }
+
+    mProjectionMatrixNormal = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
+                                         static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
 
     viewport.x = mScreenOffsetX;
     viewport.y = mScreenOffsetY;
     viewport.w = sScreenWidth;
     viewport.h = sScreenHeight;
-    mProjectionMatrix = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
-                                   static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
 
     // This is required to avoid a brief white screen flash during startup on some systems.
     drawRect(0.0f, 0.0f, static_cast<float>(getScreenWidth()),
@@ -301,12 +352,20 @@ void Renderer::pushClipRect(const glm::ivec2& pos, const glm::ivec2& size)
     if (box.h == 0)
         box.h = sScreenHeight - box.y;
 
-    if (mScreenRotated) {
-        box = Rect {mWindowWidth - mScreenOffsetX - box.x - box.w,
-                    mWindowHeight - mScreenOffsetY - box.y - box.h, box.w, box.h};
+    if (mScreenRotation == 0) {
+        box = {mScreenOffsetX + box.x, mScreenOffsetY + box.y, box.w, box.h};
     }
-    else {
-        box = Rect {mScreenOffsetX + box.x, mScreenOffsetY + box.y, box.w, box.h};
+    else if (mScreenRotation == 90) {
+        box = {mScreenOffsetX + mWindowWidth - (box.y + box.h), mScreenOffsetY + box.x, box.h,
+               box.w};
+    }
+    else if (mScreenRotation == 270) {
+        box = {mScreenOffsetX + box.y, mScreenOffsetY + mWindowHeight - (box.x + box.w), box.h,
+               box.w};
+    }
+    else if (mScreenRotation == 180) {
+        box = {mWindowWidth - mScreenOffsetX - box.x - box.w,
+               mWindowHeight - mScreenOffsetY - box.y - box.h, box.w, box.h};
     }
 
     // Make sure the box fits within mClipStack.top(), and clip further accordingly.
@@ -328,7 +387,6 @@ void Renderer::pushClipRect(const glm::ivec2& pos, const glm::ivec2& size)
         box.h = 0;
 
     mClipStack.push(box);
-
     setScissor(box);
 }
 

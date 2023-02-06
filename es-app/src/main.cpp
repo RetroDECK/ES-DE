@@ -297,14 +297,14 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: No screenrotate value supplied\n";
                 return false;
             }
-            std::string rotateValue {argv[i + 1]};
-            if (rotateValue != "on" && rotateValue != "off" && rotateValue != "1" &&
-                rotateValue != "0") {
+            const std::string rotateValue {argv[i + 1]};
+            if (rotateValue != "0" && rotateValue != "90" && rotateValue != "180" &&
+                rotateValue != "270") {
                 std::cerr << "Error: Invalid screenrotate value supplied\n";
                 return false;
             }
-            bool screenRotate {(rotateValue == "on" || rotateValue == "1") ? true : false};
-            Settings::getInstance()->setBool("ScreenRotate", screenRotate);
+            Settings::getInstance()->setInt("ScreenRotate", atoi(argv[i + 1]));
+            settingsNeedSaving = true;
             ++i;
         }
         else if (strcmp(argv[i], "--vsync") == 0) {
@@ -401,28 +401,28 @@ bool parseArgs(int argc, char* argv[])
 "Usage: emulationstation [options]\n"
 "EmulationStation Desktop Edition, Emulator Frontend\n\n"
 "Options:\n"
-"  --display [index 1-4]           Display/monitor to use\n"
-"  --resolution [width] [height]   Application resolution\n"
-"  --screenrotate [1/on or 0/off]  Rotate application screen 180 degrees\n"
-"  --vsync [1/on or 0/off]         Turn VSync on or off (default is on)\n"
-"  --max-vram [size]               Max VRAM to use (in mebibytes) before swapping\n"
+"  --display [1 to 4]                  Display/monitor to use\n"
+"  --resolution [width] [height]       Application resolution\n"
+"  --screenrotate [0, 90, 180 or 270]  Rotate screen contents within application window\n"
+"  --vsync [1/on or 0/off]             Turn VSync on or off (default is on)\n"
+"  --max-vram [size]                   Max VRAM to use (in mebibytes) before swapping\n"
 #if !defined(USE_OPENGLES)
-"  --anti-aliasing [0, 2 or 4]     Set MSAA anti-aliasing to disabled, 2x or 4x\n"
+"  --anti-aliasing [0, 2 or 4]         Set MSAA anti-aliasing to disabled, 2x or 4x\n"
 #endif
-"  --no-splash                     Don't show the splash screen during startup\n"
-"  --gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml\n"
-"  --ignore-gamelist               Ignore the gamelist.xml files (useful for troubleshooting)\n"
-"  --show-hidden-files             Show hidden files and folders\n"
-"  --show-hidden-games             Show hidden games\n"
-"  --force-full                    Force the UI mode to Full\n"
-"  --force-kiosk                   Force the UI mode to Kiosk\n"
-"  --force-kid                     Force the UI mode to Kid\n"
-"  --force-input-config            Force configuration of input device\n"
-"  --create-system-dirs            Create game system directories\n"
-"  --home [path]                   Directory to use as home path\n"
-"  --debug                         Print debug information\n"
-"  --version, -v                   Display version information\n"
-"  --help, -h                      Summon a sentient, angry tuba\n";
+"  --no-splash                         Don't show the splash screen during startup\n"
+"  --gamelist-only                     Skip automatic game ROM search, only read from gamelist.xml\n"
+"  --ignore-gamelist                   Ignore the gamelist.xml files (useful for troubleshooting)\n"
+"  --show-hidden-files                 Show hidden files and folders\n"
+"  --show-hidden-games                 Show hidden games\n"
+"  --force-full                        Force the UI mode to Full\n"
+"  --force-kiosk                       Force the UI mode to Kiosk\n"
+"  --force-kid                         Force the UI mode to Kid\n"
+"  --force-input-config                Force configuration of input devices\n"
+"  --create-system-dirs                Create game system directories\n"
+"  --home [path]                       Directory to use as home path\n"
+"  --debug                             Print debug information\n"
+"  --version, -v                       Display version information\n"
+"  --help, -h                          Summon a sentient, angry tuba\n";
             // clang-format on
             return false; // Exit after printing help.
         }

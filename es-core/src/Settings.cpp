@@ -31,7 +31,6 @@ namespace
         "IgnoreGamelist",       // --ignore-gamelist
         "SplashScreen",         // --no-splash
         "Debug",                // --debug
-        "ScreenRotate",         // --screenrotate [1/on or 0/off]
         "VSync",                // --vsync [1/on or 0/off]
         "ForceFull",            // --force-full
         "ForceKiosk",           // --force-kiosk
@@ -246,10 +245,11 @@ void Settings::setDefaults()
 #else
     mIntMap["MaxVRAM"] = {512, 512};
 #endif
-    mIntMap["DisplayIndex"] = {1, 1};
 #if !defined(USE_OPENGLES)
     mIntMap["AntiAliasing"] = {0, 0};
 #endif
+    mIntMap["DisplayIndex"] = {1, 1};
+    mIntMap["ScreenRotate"] = {0, 0};
 #if defined(__APPLE__)
     mStringMap["KeyboardQuitShortcut"] = {"CmdQ", "CmdQ"};
 #else
@@ -295,7 +295,6 @@ void Settings::setDefaults()
     mBoolMap["ForceKiosk"] = {false, false};
     mBoolMap["IgnoreGamelist"] = {false, false};
     mBoolMap["SplashScreen"] = {true, true};
-    mBoolMap["ScreenRotate"] = {false, false};
     mBoolMap["VSync"] = {true, true};
     mIntMap["WindowWidth"] = {0, 0};
     mIntMap["WindowHeight"] = {0, 0};

@@ -160,7 +160,7 @@ bool Window::init()
     progressBarRect.color = DEFAULT_TEXTCOLOR;
     mProgressBarRectangles.emplace_back(progressBarRect);
 
-    const float borderThickness {std::ceil(2.0f * mRenderer->getScreenHeightModifier())};
+    const float borderThickness {std::ceil(2.0f * mRenderer->getScreenResolutionModifier())};
 
     progressBarRect.barWidth -= borderThickness * 2.0f;
     progressBarRect.barHeight -= borderThickness * 2.0f;
@@ -502,21 +502,21 @@ void Window::render()
                 Renderer::postProcessingParams backgroundParameters;
 
                 if (Settings::getInstance()->getBool("MenuBlurBackground")) {
-                    float heightModifier {mRenderer->getScreenHeightModifier()};
+                    const float resolutionModifier {mRenderer->getScreenResolutionModifier()};
                     // clang-format off
-                    if (heightModifier < 1)
+                    if (resolutionModifier < 1)
                         backgroundParameters.blurPasses = 2;        // Below 1080
-                    else if (heightModifier >= 4)
+                    else if (resolutionModifier >= 4)
                         backgroundParameters.blurPasses = 12;       // 8K
-                    else if (heightModifier >= 2.9)
+                    else if (resolutionModifier >= 2.9)
                         backgroundParameters.blurPasses = 10;       // 6K
-                    else if (heightModifier >= 2.6)
+                    else if (resolutionModifier >= 2.6)
                         backgroundParameters.blurPasses = 8;        // 5K
-                    else if (heightModifier >= 2)
+                    else if (resolutionModifier >= 2)
                         backgroundParameters.blurPasses = 5;        // 4K
-                    else if (heightModifier >= 1.3)
+                    else if (resolutionModifier >= 1.3)
                         backgroundParameters.blurPasses = 3;        // 1440
-                    else if (heightModifier >= 1)
+                    else if (resolutionModifier >= 1)
                         backgroundParameters.blurPasses = 2;        // 1080
                     // clang-format on
 
@@ -535,9 +535,16 @@ void Window::render()
                                                     &processedTexture[0]);
                 }
 
-                mPostprocessedBackground->initFromPixels(
-                    &processedTexture[0], static_cast<size_t>(mRenderer->getScreenWidth()),
-                    static_cast<size_t>(mRenderer->getScreenHeight()));
+                if (mRenderer->getScreenRotation() == 0 || mRenderer->getScreenRotation() == 180) {
+                    mPostprocessedBackground->initFromPixels(
+                        &processedTexture[0], static_cast<size_t>(mRenderer->getScreenWidth()),
+                        static_cast<size_t>(mRenderer->getScreenHeight()));
+                }
+                else {
+                    mPostprocessedBackground->initFromPixels(
+                        &processedTexture[0], static_cast<size_t>(mRenderer->getScreenHeight()),
+                        static_cast<size_t>(mRenderer->getScreenWidth()));
+                }
 
                 mBackgroundOverlay->setImage(mPostprocessedBackground);
 

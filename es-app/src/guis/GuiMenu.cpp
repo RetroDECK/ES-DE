@@ -1303,6 +1303,29 @@ void GuiMenu::openOtherOptions()
         }
     });
 
+    // Screen contents rotation.
+    auto screenRotate =
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "ROTATE SCREEN", false);
+    const std::string& selectedScreenRotate {
+        std::to_string(Settings::getInstance()->getInt("ScreenRotate"))};
+    screenRotate->add("DISABLED", "0", selectedScreenRotate == "0");
+    screenRotate->add("90 DEGREES", "90", selectedScreenRotate == "90");
+    screenRotate->add("180 DEGREES", "180", selectedScreenRotate == "180");
+    screenRotate->add("270 DEGREES", "270", selectedScreenRotate == "270");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set screen rotation to "0" in this case.
+    if (screenRotate->getSelectedObjects().size() == 0)
+        screenRotate->selectEntry(0);
+    s->addWithLabel("ROTATE SCREEN (REQUIRES RESTART)", screenRotate);
+    s->addSaveFunc([screenRotate, s] {
+        if (screenRotate->getSelected() !=
+            std::to_string(Settings::getInstance()->getInt("ScreenRotate"))) {
+            Settings::getInstance()->setInt("ScreenRotate",
+                                            atoi(screenRotate->getSelected().c_str()));
+            s->setNeedsSaving();
+        }
+    });
+
     // Keyboard quit shortcut.
     auto keyboardQuitShortcut = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "KEYBOARD QUIT SHORTCUT", false);

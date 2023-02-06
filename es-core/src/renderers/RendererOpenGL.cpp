@@ -269,13 +269,22 @@ bool RendererOpenGL::createContext()
     uint8_t data[4] {255, 255, 255, 255};
     mWhiteTexture = createTexture(TextureType::BGRA, false, false, false, true, 1, 1, data);
 
-    mPostProcTexture1 = createTexture(TextureType::BGRA, false, false, false, false,
-                                      static_cast<unsigned int>(getScreenWidth()),
-                                      static_cast<unsigned int>(getScreenHeight()), nullptr);
+    unsigned int textureWidth {0};
+    unsigned int textureHeight {0};
 
-    mPostProcTexture2 = createTexture(TextureType::BGRA, false, false, false, false,
-                                      static_cast<unsigned int>(getScreenWidth()),
-                                      static_cast<unsigned int>(getScreenHeight()), nullptr);
+    if (getScreenRotation() == 0 || getScreenRotation() == 180) {
+        textureWidth = static_cast<unsigned int>(getScreenWidth());
+        textureHeight = static_cast<unsigned int>(getScreenHeight());
+    }
+    else {
+        textureWidth = static_cast<unsigned int>(getScreenHeight());
+        textureHeight = static_cast<unsigned int>(getScreenWidth());
+    }
+
+    mPostProcTexture1 = createTexture(TextureType::BGRA, false, false, false, false, textureWidth,
+                                      textureHeight, nullptr);
+    mPostProcTexture2 = createTexture(TextureType::BGRA, false, false, false, false, textureWidth,
+                                      textureHeight, nullptr);
 
     // Attach textures to the shader framebuffers.
     GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mShaderFBO1));
@@ -494,6 +503,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
                                         GL_DYNAMIC_DRAW));
             mBlurHorizontalShader->setTextureSize({width, height});
+            mBlurHorizontalShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
             mLastShader = mBlurHorizontalShader;
         }
@@ -511,6 +521,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             GL_CHECK_ERROR(glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * numVertices, vertices,
                                         GL_DYNAMIC_DRAW));
             mBlurVerticalShader->setTextureSize({width, height});
+            mBlurVerticalShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
             mLastShader = mBlurVerticalShader;
         }
@@ -521,12 +532,12 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             mScanlinelShader = getShaderProgram(Shader::SCANLINES);
         float shaderWidth {width * 1.2f};
         // Scale the scanlines relative to screen resolution.
-        float screenHeightModifier {getScreenHeightModifier()};
+        float resolutionModifier {getScreenResolutionModifier()};
         float relativeHeight {height / getScreenHeight()};
         float shaderHeight {0.0f};
         if (relativeHeight == 1.0f) {
             // Full screen.
-            float modifier {1.30f - (0.1f * screenHeightModifier)};
+            float modifier {1.30f - (0.1f * resolutionModifier)};
             shaderHeight = height * modifier;
         }
         else {
@@ -535,7 +546,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             // scanlines to videos with non-standard aspect ratios.
             float relativeWidth {width / getScreenWidth()};
             float relativeAdjustment {(relativeWidth + relativeHeight) / 2.0f};
-            float modifier {1.41f + relativeAdjustment / 7.0f - (0.14f * screenHeightModifier)};
+            float modifier {1.41f + relativeAdjustment / 7.0f - (0.14f * resolutionModifier)};
             shaderHeight = height * modifier;
         }
         if (mScanlinelShader) {
@@ -550,6 +561,7 @@ void RendererOpenGL::drawTriangleStrips(const Vertex* vertices,
             mScanlinelShader->setBrightness(vertices->brightness);
             mScanlinelShader->setSaturation(vertices->saturation);
             mScanlinelShader->setTextureSize({shaderWidth, shaderHeight});
+            mScanlinelShader->setFlags(vertices->shaderFlags);
             GL_CHECK_ERROR(glDrawArrays(GL_TRIANGLE_STRIP, 0, numVertices));
             mLastShader = mScanlinelShader;
         }
@@ -566,6 +578,7 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     float heightf {getScreenHeight()};
     GLuint width {static_cast<GLuint>(widthf)};
     GLuint height {static_cast<GLuint>(heightf)};
+    const int screenRotation {getScreenRotation()};
 
     // Set vertex positions and texture coordinates to full screen as all
     // post-processing is applied to the complete screen area.
@@ -581,6 +594,9 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     vertices->dimming = parameters.dimming;
     vertices->shaderFlags = ShaderFlags::POST_PROCESSING | ShaderFlags::PREMULTIPLIED;
 
+    if (screenRotation == 90 || screenRotation == 270)
+        vertices->shaderFlags |= ShaderFlags::ROTATED;
+
     if (shaders & Shader::CORE)
         shaderList.push_back(Shader::CORE);
     if (shaders & Shader::BLUR_HORIZONTAL)
@@ -595,16 +611,52 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
 
     GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mShaderFBO1));
 
-    // Blit the screen contents to mPostProcTexture.
-    GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT,
-                                     GL_NEAREST));
+    int shaderCalls {0};
+    bool evenBlurPasses {true};
 
-    GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mShaderFBO2));
+    for (size_t i {0}; i < shaderList.size(); ++i) {
+        if (shaderList[i] == Renderer::Shader::BLUR_HORIZONTAL ||
+            shaderList[i] == Renderer::Shader::BLUR_VERTICAL) {
+            shaderCalls += parameters.blurPasses;
+            if (parameters.blurPasses % 2 != 0)
+                evenBlurPasses = false;
+        }
+        else {
+            ++shaderCalls;
+        }
+    }
+
+    // Blit the screen contents to mPostProcTexture.
+    if (screenRotation == 0) {
+        GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
+                                         GL_COLOR_BUFFER_BIT, GL_NEAREST));
+    }
+    else if (screenRotation == 90 || screenRotation == 270) {
+        if (!evenBlurPasses || !textureRGBA)
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, height, width, 0, 0, height, width,
+                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+        else
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, height, width, height, width, 0, 0,
+                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+        // If not rendering to a texture, apply shaders without any rotation applied.
+        if (!textureRGBA)
+            mTrans = getProjectionMatrixNormal() * getIdentity();
+    }
+    else {
+        if ((shaderCalls + (textureRGBA ? 1 : 0)) % 2 == 0)
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
+                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+        else
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, width, height, 0, 0,
+                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+    }
+
+    if (shaderCalls > 1)
+        GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, mShaderFBO2));
 
     bool firstFBO {true};
-    int drawCalls {0};
 
-    for (size_t i = 0; i < shaderList.size(); ++i) {
+    for (size_t i {0}; i < shaderList.size(); ++i) {
         vertices->shaders = shaderList[i];
         int shaderPasses {1};
         // For the blur shaders there is an optional variable to set the number of passes
@@ -614,27 +666,17 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
             shaderPasses = parameters.blurPasses;
         }
 
-        for (int p = 0; p < shaderPasses; ++p) {
-            if (textureRGBA == nullptr && i == shaderList.size() - 1 && p == shaderPasses - 1) {
-                // If the screen is rotated and we're at an even number of drawcalls, then
-                // set the projection to a non-rotated state before making the last drawcall
-                // as the image would otherwise get rendered upside down.
-                if (getScreenRotated() && drawCalls % 2 == 0) {
-                    mTrans = getIdentity();
-                    mTrans[3] = glm::round(mTrans[3]);
-                    mTrans = getProjectionMatrixNormal() * mTrans;
-                }
-                // If it's the last shader pass, then render directly to the default framebuffer
-                // to avoid having to make an expensive glBlitFramebuffer() call.
+        for (int p {0}; p < shaderPasses; ++p) {
+            if (!textureRGBA && i == shaderList.size() - 1 && p == shaderPasses - 1) {
                 GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
                 drawTriangleStrips(vertices, 4, BlendFactor::SRC_ALPHA,
                                    BlendFactor::ONE_MINUS_SRC_ALPHA);
                 break;
             }
-            // Apply/render the shaders.
+
             drawTriangleStrips(vertices, 4, BlendFactor::SRC_ALPHA,
                                BlendFactor::ONE_MINUS_SRC_ALPHA);
-            ++drawCalls;
+
             if (firstFBO) {
                 bindTexture(mPostProcTexture2);
                 GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, mShaderFBO2));
@@ -663,16 +705,22 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
             GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, mShaderFBO2));
 
 #if defined(USE_OPENGLES)
-        GL_CHECK_ERROR(
-            glReadPixels(0, 0, width, height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, textureRGBA));
+        if (screenRotation == 0 || screenRotation == 180)
+            GL_CHECK_ERROR(
+                glReadPixels(0, 0, width, height, GL_BGRA_EXT, GL_UNSIGNED_BYTE, textureRGBA));
+        else
+            GL_CHECK_ERROR(
+                glReadPixels(0, 0, height, width, GL_BGRA_EXT, GL_UNSIGNED_BYTE, textureRGBA));
 #else
-        GL_CHECK_ERROR(glReadPixels(0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, textureRGBA));
+        if (screenRotation == 0 || screenRotation == 180)
+            GL_CHECK_ERROR(
+                glReadPixels(0, 0, width, height, GL_BGRA, GL_UNSIGNED_BYTE, textureRGBA));
+        else
+            GL_CHECK_ERROR(
+                glReadPixels(0, 0, height, width, GL_BGRA, GL_UNSIGNED_BYTE, textureRGBA));
 #endif
         GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
     }
-
-    if (getScreenRotated())
-        setMatrix(getIdentity());
 
     GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
 }

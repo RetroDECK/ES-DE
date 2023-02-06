@@ -52,7 +52,8 @@ public:
         PREMULTIPLIED   = 0x00000001,
         FONT_TEXTURE    = 0x00000002,
         POST_PROCESSING = 0x00000004,
-        CLIPPING        = 0x00000008
+        CLIPPING        = 0x00000008,
+        ROTATED         = 0x00000010  // Screen rotated 90 or 270 degrees.
     };
     // clang-format on
 
@@ -155,16 +156,11 @@ public:
                   const BlendFactor srcBlendFactor = BlendFactor::SRC_ALPHA,
                   const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA);
 
-    const glm::mat4& getProjectionMatrix()
-    {
-        if (mScreenRotated)
-            return mProjectionMatrixRotated;
-        else
-            return mProjectionMatrix;
-    }
-    const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrix; }
+    const glm::mat4& getProjectionMatrix() { return mProjectionMatrix; }
+    const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrixNormal; }
     SDL_Window* getSDLWindow() { return mSDLWindow; }
-    const bool getScreenRotated() { return mScreenRotated; }
+    const int getScreenRotation() { return mScreenRotation; }
+    const bool getIsVerticalOrientation() { return sIsVerticalOrientation; }
     const float getWindowWidth() { return static_cast<float>(mWindowWidth); }
     const float getWindowHeight() { return static_cast<float>(mWindowHeight); }
     static const float getScreenWidth() { return static_cast<float>(sScreenWidth); }
@@ -172,6 +168,7 @@ public:
     static const float getScreenWidthModifier() { return sScreenWidthModifier; }
     static const float getScreenHeightModifier() { return sScreenHeightModifier; }
     static const float getScreenAspectRatio() { return sScreenAspectRatio; }
+    static const float getScreenResolutionModifier() { return sScreenResolutionModifier; }
 
     static constexpr glm::mat4 getIdentity() { return glm::mat4 {1.0f}; }
     glm::mat4 mTrans {getIdentity()};
@@ -215,19 +212,21 @@ private:
     std::stack<Rect> mClipStack;
     SDL_Window* mSDLWindow {nullptr};
     glm::mat4 mProjectionMatrix {};
-    glm::mat4 mProjectionMatrixRotated {};
+    glm::mat4 mProjectionMatrixNormal {};
     int mWindowWidth {0};
     int mWindowHeight {0};
     static inline int sScreenWidth {0};
     static inline int sScreenHeight {0};
     int mScreenOffsetX {0};
     int mScreenOffsetY {0};
-    bool mScreenRotated {0};
-    bool mInitialCursorState {1};
+    int mScreenRotation {0};
+    bool mInitialCursorState {true};
+    static inline bool sIsVerticalOrientation {false};
     // Screen resolution modifiers relative to the 1920x1080 reference.
     static inline float sScreenHeightModifier {0.0f};
     static inline float sScreenWidthModifier {0.0f};
     static inline float sScreenAspectRatio {0.0f};
+    static inline float sScreenResolutionModifier {0.0f};
 };
 
 #endif // ES_CORE_RENDERER_RENDERER_H

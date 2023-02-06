@@ -60,14 +60,13 @@ uniform vec2 textureSize;
 uniform float opacity;
 uniform float brightness;
 uniform float saturation;
+uniform uint shaderFlags;
 uniform sampler2D textureSampler;
 in vec2 texCoord;
 in vec2 onex;
 in vec2 oney;
 in vec4 colorShift;
 out vec4 FragColor;
-
-#define SourceSize vec4(textureSize, 1.0 / textureSize)
 
 #ifdef PARAMETER_UNIFORM
 uniform float SPOT_WIDTH;
@@ -95,8 +94,25 @@ uniform float OutputGamma;
     w = 1.0 - w * w;                                                                               \
     w = w * w;
 
+// shaderFlags:
+// 0x00000001 - Premultiplied alpha (BGRA)
+// 0x00000002 - Font texture
+// 0x00000004 - Post processing
+// 0x00000008 - Clipping
+// 0x00000010 - Screen rotated 90 or 270 degrees
+
 void main()
 {
+    bool rotated = false;
+    if (0x0u != (shaderFlags & 0x10u))
+        rotated = true;
+
+    vec4 SourceSize;
+    if (rotated)
+        SourceSize = vec4(textureSize.yx, 1.0 / textureSize.yx);
+    else
+        SourceSize = vec4(textureSize.xy, 1.0 / textureSize.xy);
+
     vec2 coords = (texCoord * SourceSize.xy);
     vec2 pixel_center = floor(coords) + vec2(0.5, 0.5);
     vec2 texture_coords = pixel_center * SourceSize.zw;
@@ -127,7 +143,11 @@ void main()
     color = color + colorNB * vec4(h_weight_01);
 
     // Vertical blending.
-    float dy = coords.y - pixel_center.y;
+    float dy;
+    if (rotated)
+        dy = coords.x - pixel_center.x;
+    else
+        dy = coords.y - pixel_center.y;
     float v_weight_00 = dy / SPOT_HEIGHT;
     WEIGHT(v_weight_00);
     color *= vec4(v_weight_00);

@@ -30,15 +30,28 @@ void main()
 precision mediump float;
 #endif
 
+uniform uint shaderFlags;
 uniform vec2 textureSize;
 uniform sampler2D textureSampler;
 in vec2 texCoord;
 out vec4 FragColor;
 
-#define SourceSize vec4(textureSize, 1.0 / textureSize)
+// shaderFlags:
+// 0x00000001 - Premultiplied alpha (BGRA)
+// 0x00000002 - Font texture
+// 0x00000004 - Post processing
+// 0x00000008 - Clipping
+// 0x00000010 - Screen rotated 90 or 270 degrees
 
 void main()
 {
+    vec4 SourceSize;
+
+    if (0x0u != (shaderFlags & 0x10u))
+        SourceSize = vec4(textureSize.yx, 1.0 / textureSize.yx);
+    else
+        SourceSize = vec4(textureSize.xy, 1.0 / textureSize.xy);
+
     vec2 PIXEL_SIZE = vec2(SourceSize.z, SourceSize.w);
 
     float sampleOffsets[5] = float[5](0.0, 1.4347826, 3.3478260, 5.2608695, 7.1739130);
