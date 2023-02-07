@@ -704,70 +704,78 @@ int main(int argc, char* argv[])
     ThemeData::populateThemeSets();
     loadSystemsReturnCode loadSystemsStatus {loadSystemConfigFile()};
 
-    if (loadSystemsStatus) {
-        // If there was an issue parsing the es_systems.xml file, display an error message.
-        // If there were no game files found, give the option to the user to quit or to
-        // configure a different ROM directory as well as to generate the game systems
-        // directory structure.
-        if (loadSystemsStatus == INVALID_FILE) {
-            ViewController::getInstance()->invalidSystemsFileDialog();
+    if (!SystemData::sStartupExitSignal) {
+        if (loadSystemsStatus) {
+            // If there was an issue parsing the es_systems.xml file, display an error message.
+            // If there were no game files found, give the option to the user to quit or to
+            // configure a different ROM directory as well as to generate the game systems
+            // directory structure.
+            if (loadSystemsStatus == INVALID_FILE) {
+                ViewController::getInstance()->invalidSystemsFileDialog();
+            }
+            else if (loadSystemsStatus == NO_ROMS) {
+                ViewController::getInstance()->noGamesDialog();
+            }
         }
-        else if (loadSystemsStatus == NO_ROMS) {
-            ViewController::getInstance()->noGamesDialog();
+
+        // Check if any of the enabled systems have an invalid alternative emulator entry,
+        // which means that a label is present in the gamelist.xml file which is not matching
+        // any command tag in es_systems.xml.
+        for (auto system : SystemData::sSystemVector) {
+            if (system->getAlternativeEmulator().substr(0, 9) == "<INVALID>") {
+                ViewController::getInstance()->invalidAlternativeEmulatorDialog();
+                break;
+            }
         }
+
+        // Don't generate controller events while we're loading.
+        SDL_GameControllerEventState(SDL_DISABLE);
+
+        // Preload system view and all gamelist views.
+        ViewController::getInstance()->preload();
     }
 
-    // Check if any of the enabled systems has an invalid alternative emulator entry,
-    // which means that a label is present in the gamelist.xml file which is not matching
-    // any command tag in es_systems.xml.
-    for (auto system : SystemData::sSystemVector) {
-        if (system->getAlternativeEmulator().substr(0, 9) == "<INVALID>") {
-            ViewController::getInstance()->invalidAlternativeEmulatorDialog();
-            break;
+    if (!SystemData::sStartupExitSignal) {
+        if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK) {
+            LOG(LogInfo) << "Finished loading theme set \"" << ThemeData::getCurrentThemeSetName()
+                         << "\"";
         }
-    }
 
-    // Don't generate controller events while we're loading.
-    SDL_GameControllerEventState(SDL_DISABLE);
-
-    // Preload what we can right away instead of waiting for the user to select it.
-    // This makes for no delays when accessing content, but a longer startup time.
-    ViewController::getInstance()->preload();
-
-    if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK) {
-        LOG(LogInfo) << "Finished loading theme set \"" << ThemeData::getCurrentThemeSetName()
-                     << "\"";
-    }
-
-    // Open the input configuration GUI if the flag to force this was passed from the command line.
-    if (!loadSystemsStatus) {
-        if (forceInputConfig) {
-            window->pushGui(new GuiDetectDevice(
-                false, true, [] { ViewController::getInstance()->goToStart(true); }));
+        // Open the input configuration GUI if the force flag was passed from the command line.
+        if (!loadSystemsStatus) {
+            if (forceInputConfig) {
+                window->pushGui(new GuiDetectDevice(
+                    false, true, [] { ViewController::getInstance()->goToStart(true); }));
+            }
+            else {
+                ViewController::getInstance()->goToStart(true);
+            }
         }
-        else {
-            ViewController::getInstance()->goToStart(true);
-        }
-    }
 
-    // Generate controller events since we're done loading.
-    SDL_GameControllerEventState(SDL_ENABLE);
+        // Generate controller events since we're done loading.
+        SDL_GameControllerEventState(SDL_ENABLE);
 
-    lastTime = SDL_GetTicks();
+        lastTime = SDL_GetTicks();
 
-    LOG(LogInfo) << "Application startup time: "
-                 << std::chrono::duration_cast<std::chrono::milliseconds>(
-                        std::chrono::system_clock::now() - applicationStartTime)
-                        .count()
-                 << " ms";
+        LOG(LogInfo) << "Application startup time: "
+                     << std::chrono::duration_cast<std::chrono::milliseconds>(
+                            std::chrono::system_clock::now() - applicationStartTime)
+                            .count()
+                     << " ms";
 
-    // Main application loop.
+        // Main application loop.
 
+        if (!SystemData::sStartupExitSignal) {
 #if defined(__EMSCRIPTEN__)
-    emscripten_set_main_loop(&applicationLoop, 0, 1);
+            emscripten_set_main_loop(&applicationLoop, 0, 1);
 #else
-    applicationLoop();
+            applicationLoop();
 #endif
+        }
+    }
+    else {
+        LOG(LogInfo) << "Exit signal received, aborting application startup";
+    }
 
     while (window->peekGui() != ViewController::getInstance())
         delete window->peekGui();

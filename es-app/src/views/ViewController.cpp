@@ -1101,7 +1101,13 @@ void ViewController::preload()
          it != SystemData::sSystemVector.cend(); ++it) {
         // Poll events so that the OS doesn't think the application is hanging on startup,
         // this is required as the main application loop hasn't started yet.
-        while (SDL_PollEvent(&event)) {};
+        while (SDL_PollEvent(&event)) {
+            InputManager::getInstance().parseEvent(event);
+            if (event.type == SDL_QUIT) {
+                SystemData::sStartupExitSignal = true;
+                return;
+            }
+        };
 
         const std::string entryType {(*it)->isCustomCollection() ? "custom collection" : "system"};
         LOG(LogDebug) << "ViewController::preload(): Populating gamelist for " << entryType << " \""

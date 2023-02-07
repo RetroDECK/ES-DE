@@ -114,8 +114,9 @@ public:
     // Generates the game system directories and information files based on es_systems.xml.
     static bool createSystemDirectories();
 
-    static std::vector<SystemData*> sSystemVector;
-    static std::unique_ptr<FindRules> sFindRules;
+    static inline std::vector<SystemData*> sSystemVector;
+    static inline std::unique_ptr<FindRules> sFindRules;
+    static inline bool sStartupExitSignal {false};
 
     const bool isCollection() const { return mIsCollectionSystem; }
     const bool isCustomCollection() const { return mIsCustomCollectionSystem; }

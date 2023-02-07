@@ -15,6 +15,7 @@
 #include "FileFilterIndex.h"
 #include "FileSorts.h"
 #include "GamelistFileParser.h"
+#include "InputManager.h"
 #include "Log.h"
 #include "Settings.h"
 #include "ThemeData.h"
@@ -31,9 +32,6 @@
 #include <fstream>
 #include <pugixml.hpp>
 #include <random>
-
-std::vector<SystemData*> SystemData::sSystemVector;
-std::unique_ptr<FindRules> SystemData::sFindRules;
 
 FindRules::FindRules()
 {
@@ -544,7 +542,13 @@ bool SystemData::loadConfig()
              system = system.next_sibling("system")) {
             // Poll events so that the OS doesn't think the application is hanging on startup,
             // this is required as the main application loop hasn't started yet.
-            while (SDL_PollEvent(&event)) {};
+            while (SDL_PollEvent(&event)) {
+                InputManager::getInstance().parseEvent(event);
+                if (event.type == SDL_QUIT) {
+                    sStartupExitSignal = true;
+                    return true;
+                }
+            };
 
             std::string name;
             std::string fullname;
