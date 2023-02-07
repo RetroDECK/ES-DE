@@ -123,11 +123,11 @@ bool Window::init()
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
     }
 
-    if (mRenderer->getScreenWidth() > mRenderer->getScreenHeight())
+    if (mRenderer->getIsVerticalOrientation())
+        mSplash->setResize(mRenderer->getScreenWidth() * 0.8f, 0.0f);
+    else
         mSplash->setResize(0.0f, glm::clamp(mRenderer->getScreenHeight() * 0.62f, 0.0f,
                                             mRenderer->getScreenWidth() * 0.42f));
-    else
-        mSplash->setResize(mRenderer->getScreenWidth() * 0.8f, 0.0f);
 
     mSplash->setImage(":/graphics/splash.svg");
     mSplash->setPosition((mRenderer->getScreenWidth() - mSplash->getSize().x) / 2.0f,
@@ -146,13 +146,15 @@ bool Window::init()
         (mRenderer->getScreenWidth() - mSplashTextPopulating->metrics.size.x) / 2.0f;
     mSplashTextPositions.w =
         (mRenderer->getScreenWidth() - mSplashTextReloading->metrics.size.x) / 2.0f;
-    mSplashTextPositions.y = mRenderer->getScreenHeight() * 0.745f;
+    mSplashTextPositions.y =
+        mRenderer->getScreenHeight() * (mRenderer->getIsVerticalOrientation() ? 0.620f : 0.745f);
 
     ProgressBarRectangle progressBarRect;
-    if (mRenderer->getScreenWidth() > mRenderer->getScreenHeight())
-        progressBarRect.barWidth = mRenderer->getScreenHeight() * 0.53f;
-    else
+    if (mRenderer->getIsVerticalOrientation())
         progressBarRect.barWidth = mRenderer->getScreenWidth() * 0.53f;
+    else
+        progressBarRect.barWidth = mRenderer->getScreenHeight() * 0.53f;
+
     progressBarRect.barHeight = mDefaultFonts.at(1)->getLetterHeight() * 1.1f;
     progressBarRect.barPosX =
         (mRenderer->getScreenWidth() / 2.0f) - (progressBarRect.barWidth / 2.0f);

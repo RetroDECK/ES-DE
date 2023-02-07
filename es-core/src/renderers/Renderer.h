@@ -160,9 +160,9 @@ public:
     const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrixNormal; }
     SDL_Window* getSDLWindow() { return mSDLWindow; }
     const int getScreenRotation() { return mScreenRotation; }
-    const bool getIsVerticalOrientation() { return sIsVerticalOrientation; }
     const float getWindowWidth() { return static_cast<float>(mWindowWidth); }
     const float getWindowHeight() { return static_cast<float>(mWindowHeight); }
+    static const bool getIsVerticalOrientation() { return sIsVerticalOrientation; }
     static const float getScreenWidth() { return static_cast<float>(sScreenWidth); }
     static const float getScreenHeight() { return static_cast<float>(sScreenHeight); }
     static const float getScreenWidthModifier() { return sScreenWidthModifier; }

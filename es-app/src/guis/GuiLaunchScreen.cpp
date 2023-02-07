@@ -103,10 +103,11 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
 
     float maxWidthModifier {glm::clamp(0.78f * aspectValue, 0.78f, 0.90f)};
-    float minWidthModifier {glm::clamp(0.50f * aspectValue, 0.50f, 0.65f)};
+    float minWidthModifier {glm::clamp(0.50f * aspectValue, 0.50f,
+                                       (mRenderer->getIsVerticalOrientation() ? 0.80f : 0.65f))};
 
-    float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
-    float minWidth {Renderer::getScreenWidth() * minWidthModifier};
+    float maxWidth {mRenderer->getScreenWidth() * maxWidthModifier};
+    float minWidth {mRenderer->getScreenWidth() * minWidthModifier};
 
     float fontWidth {Font::get(gameNameFontSize *
                                std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth()))
@@ -118,10 +119,18 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
 
     float width {glm::clamp(fontWidth, minWidth, maxWidth)};
 
-    if (mImagePath != "")
-        setSize(width, Renderer::getScreenHeight() * 0.60f);
-    else
-        setSize(width, Renderer::getScreenHeight() * 0.38f);
+    if (mImagePath != "") {
+        if (mRenderer->getIsVerticalOrientation())
+            setSize(width, mRenderer->getScreenWidth() * 0.60f);
+        else
+            setSize(width, mRenderer->getScreenHeight() * 0.60f);
+    }
+    else {
+        if (mRenderer->getIsVerticalOrientation())
+            setSize(width, mRenderer->getScreenWidth() * 0.38f);
+        else
+            setSize(width, mRenderer->getScreenHeight() * 0.38f);
+    }
 
     // Set row heights.
     if (mImagePath != "")
@@ -160,11 +169,13 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // width so that the sizes look somewhat consistent regardless of the aspect ratio
     // of the images.
     if (mImagePath != "") {
+        const float multiplier {mRenderer->getIsVerticalOrientation() ? 0.20f : 0.25f};
         mMarquee->setLinearInterpolation(true);
         mMarquee->setImage(game->getMarqueePath(), false);
-        mMarquee->cropTransparentPadding(Renderer::getScreenWidth() *
-                                             (0.25f * (1.778f / Renderer::getScreenAspectRatio())),
-                                         mGrid->getRowHeight(3));
+        mMarquee->cropTransparentPadding(
+            mRenderer->getScreenWidth() *
+                (multiplier * (1.778f / mRenderer->getScreenAspectRatio())),
+            mGrid->getRowHeight(3));
 
         mMarquee->setOrigin(0.5f, 0.5f);
         glm::vec3 currentPos {mMarquee->getPosition()};

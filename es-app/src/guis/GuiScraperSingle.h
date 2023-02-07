@@ -36,8 +36,9 @@ private:
     bool mClose;
     void close();
 
-    ComponentGrid mGrid;
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
+    ComponentGrid mGrid;
 
     std::shared_ptr<TextComponent> mGameName;
     std::shared_ptr<ImageComponent> mScrollUp;

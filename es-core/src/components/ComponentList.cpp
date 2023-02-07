@@ -30,9 +30,12 @@ ComponentList::ComponentList()
 {
     // Adjust the padding relative to the aspect ratio and screen resolution to make it look
     // coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
     mHorizontalPadding =
-        TOTAL_HORIZONTAL_PADDING_PX * aspectValue * Renderer::getScreenWidthModifier();
+        TOTAL_HORIZONTAL_PADDING_PX * aspectValue * mRenderer->getScreenWidthModifier();
+
+    if (mRenderer->getIsVerticalOrientation())
+        mHorizontalPadding *= 0.7f;
 }
 
 void ComponentList::addRow(const ComponentListRow& row, bool setCursorHere)
@@ -403,12 +406,12 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw separators.
     float y {0.0f};
     for (unsigned int i = 0; i < mEntries.size(); ++i) {
-        mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * Renderer::getScreenHeightModifier(),
+        mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenHeightModifier(),
                             0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
         y += getRowHeight(mEntries.at(i).data);
     }
 
-    mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * Renderer::getScreenHeightModifier(), 0xC6C7C6FF,
+    mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenHeightModifier(), 0xC6C7C6FF,
                         0xC6C7C6FF, false, mOpacity, mDimming);
     mRenderer->popClipRect();
 }

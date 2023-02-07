@@ -75,6 +75,7 @@ private:
     std::shared_ptr<ButtonComponent> mShiftButton;
     std::shared_ptr<ButtonComponent> mAltButton;
 
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
     HelpStyle mHelpStyle;

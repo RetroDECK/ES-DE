@@ -25,7 +25,8 @@
 
 GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches,
                                  bool approveResults)
-    : mBackground {":/graphics/frame.svg"}
+    : mRenderer {Renderer::getInstance()}
+    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {2, 6}}
     , mSearchQueue {searches}
     , mApproveResults {approveResults}
@@ -147,20 +148,24 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
-    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth()};
+    float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+    float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * mRenderer->getScreenWidth()};
 
-    float height {(mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) +
+    const float titleHeight {mRenderer->getIsVerticalOrientation() ?
+                                 mRenderer->getScreenWidth() * 0.0637f :
+                                 mRenderer->getScreenHeight() * 0.0637f};
+
+    float height {(mTitle->getFont()->getLetterHeight() + titleHeight) +
                   mSystem->getFont()->getLetterHeight() +
                   mSubtitle->getFont()->getHeight() * 1.75f + mButtonGrid->getSize().y +
                   Font::get(FONT_SIZE_MEDIUM)->getHeight() * 7.0f};
 
     // TODO: Temporary hack, see below.
-    height -= 7.0f * Renderer::getScreenHeightModifier();
+    height -= 7.0f * mRenderer->getScreenResolutionModifier();
 
     setSize(width, height);
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     doNextSearch();
 }
@@ -178,12 +183,12 @@ GuiScraperMulti::~GuiScraperMulti()
 
 void GuiScraperMulti::onSizeChanged()
 {
-    mGrid.setRowHeightPerc(
-        0, (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) /
-               mSize.y / 2.0f);
-    mGrid.setRowHeightPerc(
-        1, (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) /
-               mSize.y / 2.0f);
+    const float screenSize {mRenderer->getIsVerticalOrientation() ? mRenderer->getScreenWidth() :
+                                                                    mRenderer->getScreenHeight()};
+    mGrid.setRowHeightPerc(0, (mTitle->getFont()->getLetterHeight() + screenSize * 0.0637f) /
+                                  mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(1, (mTitle->getFont()->getLetterHeight() + screenSize * 0.0637f) /
+                                  mSize.y / 2.0f);
     mGrid.setRowHeightPerc(2, (mSystem->getFont()->getLetterHeight()) / mSize.y, false);
     mGrid.setRowHeightPerc(3, mSubtitle->getFont()->getHeight() * 1.75f / mSize.y, false);
     mGrid.setRowHeightPerc(4, ((Font::get(FONT_SIZE_MEDIUM)->getHeight() * 7.0f)) / mSize.y, false);
@@ -191,8 +196,8 @@ void GuiScraperMulti::onSizeChanged()
     // TODO: Replace this temporary hack with a proper solution. There is some kind of rounding
     // issue somewhere that causes a small alignment error. This code partly compensates for this
     // at higher resolutions than 1920x1080.
-    if (Renderer::getScreenHeightModifier() > 1.0f)
-        mSize.y -= 3.0f * Renderer::getScreenHeightModifier();
+    if (mRenderer->getScreenResolutionModifier() > 1.0f)
+        mSize.y -= 3.0f * mRenderer->getScreenResolutionModifier();
 
     mGrid.setColWidthPerc(1, 0.04f);
 

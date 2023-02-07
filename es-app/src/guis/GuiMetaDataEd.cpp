@@ -31,7 +31,10 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 
-#define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.060f)
+#define TITLE_HEIGHT                                                                               \
+    (mTitle->getFont()->getLetterHeight() + (Renderer::getIsVerticalOrientation() ?                \
+                                                 Renderer::getScreenWidth() * 0.060f :             \
+                                                 Renderer::getScreenHeight() * 0.060f))
 
 GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                              const std::vector<MetaDataDecl>& mdd,

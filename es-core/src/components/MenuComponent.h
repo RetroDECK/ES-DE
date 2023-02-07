@@ -81,6 +81,7 @@ private:
     void updateGrid();
     float getButtonGridHeight() const;
 
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
 

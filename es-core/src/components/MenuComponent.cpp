@@ -14,10 +14,14 @@
 #define BUTTON_GRID_VERT_PADDING Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.915f
 #define BUTTON_GRID_HORIZ_PADDING Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 0.283f
 
-#define TITLE_HEIGHT (mTitle->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f)
+#define TITLE_HEIGHT                                                                               \
+    (mTitle->getFont()->getLetterHeight() + (Renderer::getIsVerticalOrientation() ?                \
+                                                 Renderer::getScreenWidth() * 0.0637f :            \
+                                                 Renderer::getScreenHeight() * 0.0637f))
 
 MenuComponent::MenuComponent(std::string title, const std::shared_ptr<Font>& titleFont)
-    : mGrid {glm::ivec2 {2, 4}}
+    : mRenderer {Renderer::getInstance()}
+    , mGrid {glm::ivec2 {2, 4}}
     , mNeedsSaving {false}
 {
     addChild(&mBackground);
@@ -90,15 +94,16 @@ float MenuComponent::getButtonGridHeight() const
 
 void MenuComponent::updateSize()
 {
-    const float maxHeight {Renderer::getScreenHeight() * 0.80f};
+    const float maxHeight {mRenderer->getScreenHeight() *
+                           (mRenderer->getIsVerticalOrientation() ? 0.70f : 0.80f)};
     float height {TITLE_HEIGHT + mList->getTotalRowHeight() + getButtonGridHeight() +
-                  (2.0f * Renderer::getScreenHeightModifier())};
+                  (2.0f * mRenderer->getScreenResolutionModifier())};
     if (height > maxHeight) {
         height = TITLE_HEIGHT + getButtonGridHeight();
         int i {0};
         while (i < mList->size()) {
             // Add the separator height to the row height so that it also gets properly rendered.
-            float rowHeight {mList->getRowHeight(i) + (1.0f * Renderer::getScreenHeightModifier())};
+            float rowHeight {mList->getRowHeight(i) + mRenderer->getScreenResolutionModifier()};
             if (height + rowHeight < maxHeight)
                 height += rowHeight;
             else
@@ -107,7 +112,8 @@ void MenuComponent::updateSize()
         }
     }
 
-    float width {std::min(Renderer::getScreenHeight() * 1.05f, Renderer::getScreenWidth() * 0.90f)};
+    float width {
+        std::min(mRenderer->getScreenHeight() * 1.05f, mRenderer->getScreenWidth() * 0.90f)};
     setSize(width, height);
 }
 

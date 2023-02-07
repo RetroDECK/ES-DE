@@ -41,6 +41,7 @@ private:
     void doNextSearch();
     void finish();
 
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
 

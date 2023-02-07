@@ -192,7 +192,7 @@ void GuiScraperSearch::onSizeChanged()
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT)
         mGrid.setColWidthPerc(2, 0.33f);
     else
-        mGrid.setColWidthPerc(2, 0.30f);
+        mGrid.setColWidthPerc(2, (mRenderer->getIsVerticalOrientation() ? 0.34f : 0.30f));
 
     // Row heights.
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT) // Show name.
@@ -250,13 +250,19 @@ void GuiScraperSearch::resizeMetadata()
             it->first->setFont(fontLbl);
             it->first->setSize(0, 0);
             if (it->first->getSize().x > maxLblWidth)
-                maxLblWidth = it->first->getSize().x + (16.0f * Renderer::getScreenWidthModifier());
+                maxLblWidth =
+                    it->first->getSize().x + (16.0f * (mRenderer->getIsVerticalOrientation() ?
+                                                           mRenderer->getScreenHeightModifier() :
+                                                           mRenderer->getScreenWidthModifier()));
         }
 
         for (unsigned int i = 0; i < mMD_Pairs.size(); ++i)
             mMD_Grid->setRowHeightPerc(
-                i * 2, (fontLbl->getLetterHeight() + (2.0f * Renderer::getScreenHeightModifier())) /
-                           mMD_Grid->getSize().y);
+                i * 2,
+                (fontLbl->getLetterHeight() + (2.0f * (mRenderer->getIsVerticalOrientation() ?
+                                                           mRenderer->getScreenWidthModifier() :
+                                                           mRenderer->getScreenHeightModifier()))) /
+                    mMD_Grid->getSize().y);
 
         // Update component fonts.
         mMD_ReleaseDate->setFont(fontComp);

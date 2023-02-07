@@ -7,12 +7,14 @@
 //  Has a default mode and a complex mode, both with various options passed as arguments.
 //
 
-#define KEYBOARD_HEIGHT Renderer::getScreenHeight() * 0.60f
+#define KEYBOARD_HEIGHT                                                                            \
+    (Renderer::getIsVerticalOrientation() ? Renderer::getScreenWidth() * 0.60f :                   \
+                                            Renderer::getScreenHeight() * 0.60f)
 
 #define KEYBOARD_PADDINGX (Renderer::getScreenWidth() * 0.02f)
 #define KEYBOARD_PADDINGY (Renderer::getScreenWidth() * 0.01f)
 
-#define BUTTON_GRID_HORIZ_PADDING (10.0f * Renderer::getScreenHeightModifier())
+#define BUTTON_GRID_HORIZ_PADDING (10.0f * Renderer::getScreenResolutionModifier())
 
 #define NAVIGATION_REPEAT_START_DELAY 400
 #define NAVIGATION_REPEAT_SPEED 70 // Lower is faster.
@@ -86,7 +88,8 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     const std::string& loadBtnHelpText,
     const std::string& clearBtnHelpText,
     const std::string& cancelBtnHelpText)
-    : mBackground {":/graphics/frame.svg"}
+    : mRenderer {Renderer::getInstance()}
+    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, (infoString != "" && defaultValue != "" ? 8 : 6)}}
     , mHelpStyle {helpstyle}
     , mInitValue {initValue}
@@ -241,7 +244,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     // If the multiLine option has been set, then include three lines of text on screen.
     if (multiLine) {
         textHeight *= 3.0f;
-        textHeight += 2.0f * Renderer::getScreenHeightModifier();
+        textHeight += 2.0f * mRenderer->getScreenResolutionModifier();
     }
 
     mText->setSize(0.0f, textHeight);
@@ -264,16 +267,16 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     });
 
     // Adapt width to the geometry of the display. The 1.778 aspect ratio is the 16:9 reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
-    float width = glm::clamp(0.78f * aspectValue, 0.35f, 0.90f) * Renderer::getScreenWidth();
+    float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+    float width {glm::clamp(0.78f * aspectValue, 0.35f, 0.90f) * mRenderer->getScreenWidth()};
 
     // The combination of multiLine and complex mode is not supported as there is currently
     // no need for that.
     if (mMultiLine) {
         setSize(width, KEYBOARD_HEIGHT + textHeight - mText->getFont()->getHeight());
 
-        setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                    (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+        setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                    (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
     }
     else {
         if (mComplexMode)
@@ -281,8 +284,8 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
         else
             setSize(width, KEYBOARD_HEIGHT);
 
-        setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                    (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+        setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                    (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
     }
 
     if (!multiLine)
@@ -313,7 +316,8 @@ void GuiTextEditKeyboardPopup::onSizeChanged()
 
     // Add a small margin between buttons.
     mKeyboardGrid->setSize(mSize.x - KEYBOARD_PADDINGX - KEYBOARD_PADDINGX,
-                           sz.y - KEYBOARD_PADDINGY + 70.0f * Renderer::getScreenHeightModifier());
+                           sz.y - KEYBOARD_PADDINGY +
+                               70.0f * mRenderer->getScreenResolutionModifier());
     mKeyboardGrid->setPosition(KEYBOARD_PADDINGX, pos.y);
 }
 

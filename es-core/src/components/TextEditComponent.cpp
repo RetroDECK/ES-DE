@@ -34,7 +34,7 @@ TextEditComponent::TextEditComponent()
     mBox.setSharpCorners(true);
     addChild(&mBox);
     onFocusLost();
-    setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()));
+    setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier()));
 }
 
 void TextEditComponent::onFocusGained()
@@ -57,7 +57,7 @@ void TextEditComponent::onSizeChanged()
 
     mBox.fitTo(
         mSize, glm::vec3 {},
-        glm::vec2 {-34.0f, -32.0f - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())});
+        glm::vec2 {-34.0f, -32.0f - (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier())});
     onTextChanged(); // Wrap point probably changed.
 }
 
@@ -311,7 +311,7 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
 
     glm::ivec2 clipPos {static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)};
     // Use "text area" size for clipping.
-    glm::vec3 dimScaled {};
+    glm::vec3 dimScaled {0.0f, 0.0f, 0.0f};
     dimScaled.x = std::fabs(trans[3].x + getTextAreaSize().x);
     dimScaled.y = std::fabs(trans[3].y + getTextAreaSize().y);
 
@@ -329,31 +329,31 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
     mRenderer->popClipRect();
 
     // Draw cursor.
-    float cursorHeight {mFont->getHeight() * 0.8f};
+    const float cursorHeight {mFont->getHeight() * 0.8f};
 
     if (!mEditing) {
         mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
-                            2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0xC7C7C7FF,
-                            0xC7C7C7FF);
+                            2.0f * mRenderer->getScreenResolutionModifier(), cursorHeight,
+                            0xC7C7C7FF, 0xC7C7C7FF);
     }
 
     if (mEditing && mBlinkTime < BLINKTIME / 2) {
         mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
-                            2.0f * Renderer::getScreenWidthModifier(), cursorHeight, 0x777777FF,
-                            0x777777FF);
+                            2.0f * mRenderer->getScreenResolutionModifier(), cursorHeight,
+                            0x777777FF, 0x777777FF);
     }
 }
 
 glm::vec2 TextEditComponent::getTextAreaPos() const
 {
-    return glm::vec2 {(TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()) / 2.0f,
-                      (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier()) / 2.0f};
+    return glm::vec2 {(TEXT_PADDING_HORIZ * mRenderer->getScreenResolutionModifier()) / 2.0f,
+                      (TEXT_PADDING_VERT * mRenderer->getScreenResolutionModifier()) / 2.0f};
 }
 
 glm::vec2 TextEditComponent::getTextAreaSize() const
 {
-    return glm::vec2 {mSize.x - (TEXT_PADDING_HORIZ * Renderer::getScreenWidthModifier()),
-                      mSize.y - (TEXT_PADDING_VERT * Renderer::getScreenHeightModifier())};
+    return glm::vec2 {mSize.x - (TEXT_PADDING_HORIZ * mRenderer->getScreenResolutionModifier()),
+                      mSize.y - (TEXT_PADDING_VERT * mRenderer->getScreenResolutionModifier())};
 }
 
 std::vector<HelpPrompt> TextEditComponent::getHelpPrompts()

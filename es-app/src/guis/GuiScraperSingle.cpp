@@ -21,8 +21,9 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
                                    std::function<void(const ScraperSearchResult&)> doneFunc,
                                    bool& savedMediaAndAborted)
     : mClose {false}
-    , mGrid {glm::ivec2 {2, 6}}
+    , mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
+    , mGrid {glm::ivec2 {2, 6}}
     , mSearchParams {params}
     , mSavedMediaAndAborted {savedMediaAndAborted}
 {
@@ -119,17 +120,18 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
-    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * Renderer::getScreenWidth()};
+    const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    const float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.95f) * mRenderer->getScreenWidth()};
+    const float screenSize {mRenderer->getIsVerticalOrientation() ? mRenderer->getScreenWidth() :
+                                                                    mRenderer->getScreenHeight()};
 
-    float height {
-        (mGameName->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) +
-        mSystemName->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.04f +
-        mButtonGrid->getSize().y + Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f};
+    const float height {(mGameName->getFont()->getLetterHeight() + screenSize * 0.0637f) +
+                        mSystemName->getFont()->getLetterHeight() + screenSize * 0.04f +
+                        mButtonGrid->getSize().y + Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f};
 
     setSize(width, height);
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     mGrid.resetCursor();
     mSearch->search(params); // Start the search.
@@ -137,17 +139,22 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
 
 void GuiScraperSingle::onSizeChanged()
 {
-    mGrid.setRowHeightPerc(
-        0, (mGameName->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) /
-               mSize.y / 2.0f);
-    mGrid.setRowHeightPerc(
-        1, (mGameName->getFont()->getLetterHeight() + Renderer::getScreenHeight() * 0.0637f) /
-               mSize.y / 2.0f);
+    const float gameNameHeight {mRenderer->getIsVerticalOrientation() ?
+                                    mRenderer->getScreenWidth() * 0.0637f :
+                                    mRenderer->getScreenHeight() * 0.0637f};
+
+    mGrid.setRowHeightPerc(0, (mGameName->getFont()->getLetterHeight() + gameNameHeight) / mSize.y /
+                                  2.0f);
+    mGrid.setRowHeightPerc(1, (mGameName->getFont()->getLetterHeight() + gameNameHeight) / mSize.y /
+                                  2.0f);
     mGrid.setRowHeightPerc(2, mSystemName->getFont()->getLetterHeight() / mSize.y, false);
     mGrid.setRowHeightPerc(3, 0.04f, false);
     mGrid.setRowHeightPerc(4, (Font::get(FONT_SIZE_MEDIUM)->getHeight() * 8.0f) / mSize.y, false);
 
-    mGrid.setColWidthPerc(1, 0.04f);
+    if (mRenderer->getIsVerticalOrientation())
+        mGrid.setColWidthPerc(1, 0.05f);
+    else
+        mGrid.setColWidthPerc(1, 0.04f);
 
     mGrid.setSize(glm::round(mSize));
     mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
