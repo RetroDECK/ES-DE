@@ -1459,8 +1459,7 @@ std::vector<std::string> CollectionSystemsManager::getCollectionsFromConfigFolde
                 if (std::find(filenames.cbegin(), filenames.cend(),
                               Utils::String::toLower(filename)) != filenames.cend()) {
                     LOG(LogWarning)
-                        << "CollectionSystemsManager::getCollectionsFromConfigFolder():"
-                           " Found a custom collection configuration file name conflict (mixed "
+                        << "Found a custom collection configuration file name conflict (mixed "
                            "case filenames), skipping file \""
                         << filename << "\"";
                     continue;
@@ -1477,8 +1476,7 @@ std::vector<std::string> CollectionSystemsManager::getCollectionsFromConfigFolde
                                 return system->getThemeFolder() == Utils::String::toLower(filename);
                             }) != SystemData::sSystemVector.cend()) {
                         LOG(LogWarning)
-                            << "CollectionSystemsManager::getCollectionsFromConfigFolder():"
-                               " Custom collection name conflicts with a theme folder for one of "
+                            << "Custom collection name conflicts with a theme folder for one of "
                                "the systems defined in es_systems.xml, skipping file \""
                             << origFilename << "\"";
                         continue;
