@@ -369,6 +369,14 @@
                 <scrollFadeIn>true</scrollFadeIn>
             </video>
         </view>
+        <aspectRatio name="4:3_vertical">
+            <view name="gamelist">
+                <video name="gameVideo">
+                    <pos>0.708 0.38</pos>
+                    <maxSize>0.506 0.29</maxSize>
+                </video>
+            </view>
+        </aspectRatio>
     </variant>
 
     <variant name="withoutVideos">
@@ -382,6 +390,164 @@
                 <scrollFadeIn>true</scrollFadeIn>
             </image>
         </view>
+        <aspectRatio name="4:3_vertical">
+            <view name="gamelist">
+                <image name="gameImage">
+                    <pos>0.708 0.38</pos>
+                    <maxSize>0.506 0.29</maxSize>
+                </image>
+            </view>
+        </aspectRatio>
+    </variant>
+
+    <variant name="withVideos, withoutVideos">
+        <aspectRatio name="4:3_vertical">
+            <view name="system, gamelist">
+                <helpsystem name="help">
+                    <pos>0.012 0.975</pos>
+                    <fontSize>0.019</fontSize>
+                </helpsystem>
+            </view>
+            <view name="system">
+                <carousel name="systemCarousel">
+                    <pos>0 0.40</pos>
+                    <size>1 0.20</size>
+                    <itemSize>0.24 0.11</itemSize>
+                </carousel>
+                <image name="consolegame">
+                    <pos>0.02 0.367</pos>
+                    <maxSize>0.4 0.2</maxSize>
+                </image>
+                <image name="controller">
+                    <pos>0.77 0.367</pos>
+                    <maxSize>0.12 0.17</maxSize>
+                </image>
+                <text name="gameCounter">
+                    <pos>0.5 0.622</pos>
+                    <size>1 0.046</size>
+                    <fontSize>0.028</fontSize>
+                </text>
+                <text name="info1, info2, info3, info4, info5,info6, info7, info8, info9, info10">
+                    <size>0.70 0.03</size>
+                    <fontSize>0.019</fontSize>
+                </text>
+                <text name="info1">
+                    <pos>0.05 0.675</pos>
+                </text>
+                <text name="info2">
+                    <pos>0.05 0.696</pos>
+                </text>
+                <text name="info3">
+                    <pos>0.05 0.717</pos>
+                </text>
+                <text name="info4">
+                    <pos>0.05 0.738</pos>
+                </text>
+                <text name="info5">
+                    <pos>0.05 0.779</pos>
+                </text>
+                <text name="info6">
+                    <pos>0.05 0.800</pos>
+                </text>
+                <text name="info7">
+                    <pos>0.05 0.821</pos>
+                </text>
+                <text name="info8">
+                    <pos>0.05 0.842</pos>
+                </text>
+                <text name="info9">
+                    <pos>0.05 0.863</pos>
+                </text>
+                <text name="info10">
+                    <pos>0.05 0.884</pos>
+                </text>
+            </view>
+            <view name="gamelist">
+                <textlist name="gamelistTextlist">
+                    <fontSize>0.0198</fontSize>
+                </textlist>
+                <image name="consolegame">
+                    <maxSize>0.35 0.12</maxSize>
+                </image>
+                <image name="logo">
+                    <maxSize>0.30 0.10</maxSize>
+                </image>
+                <text name="collectionsSystemName">
+                    <visible>false</visible>
+                </text>
+                <text name="customCollectionsSystemName">
+                    <pos>0.78 0.12</pos>
+                    <size>0.32 0.05</size>
+                </text>
+                <text name="customCollectionsHeader">
+                    <pos>0.78 0.15</pos>
+                    <size>0.32 0.05</size>
+                    <fontSize>0.04</fontSize>
+                </text>
+                <text name="labelReleasedate, labelDeveloper, labelPublisher, labelGenre,
+                            labelPlayers, labelLastplayed, developer, publisher, genre, players">
+                    <size>0.155 0.02</size>
+                </text>
+                <text name="labelReleasedate">
+                    <pos>0.454 0.535</pos>
+                </text>
+                <datetime name="releasedate">
+                    <pos>0.454 0.558</pos>
+                    <size>0.155 0.02</size>
+                </datetime>
+                <text name="labelDeveloper">
+                    <pos>0.62 0.535</pos>
+                </text>
+                <text name="developer">
+                    <pos>0.62 0.558</pos>
+                </text>
+                <text name="labelPublisher">
+                    <pos>0.79 0.535</pos>
+                </text>
+                <text name="publisher">
+                    <pos>0.79 0.558</pos>
+                </text>
+                <text name="labelGenre">
+                    <pos>0.454 0.59</pos>
+                </text>
+                <text name="genre">
+                    <pos>0.454 0.613</pos>
+                </text>
+                <text name="labelPlayers">
+                    <pos>0.62 0.59</pos>
+                </text>
+                <text name="players">
+                    <pos>0.62 0.613</pos>
+                </text>
+                <text name="labelLastplayed">
+                    <pos>0.79 0.59</pos>
+                </text>
+                <datetime name="lastplayed">
+                    <pos>0.79 0.613</pos>
+                    <size>0.155 0.02</size>
+                </datetime>
+                <text name="description">
+                    <pos>0.454 0.655</pos>
+                    <size>0.384 0.262</size>
+                </text>
+                <rating name="rating">
+                    <size>0 0.02</size>
+                </rating>
+                <gamelistinfo name="gamelistInfo">
+                    <pos>0.723 0.192</pos>
+                    <size>0.24 0.042</size>
+                    <fontSize>0.02</fontSize>
+                </gamelistinfo>
+                <badges name="badges">
+                    <pos>0.96 0.655</pos>
+                    <size>0.11 0.235</size>
+                    <origin>1 0</origin>
+                    <direction>row</direction>
+                    <lines>4</lines>
+                    <itemsPerLine>2</itemsPerLine>
+                </badges>
+            </view>
+        </aspectRatio>
     </variant>
 
     <variant name="withVideos, withoutVideos">
@@ -441,6 +607,38 @@
     </variant>
 
     <variant name="noGameMedia">
+        <aspectRatio name="4:3">
+            <view name="system, gamelist">
+                <helpsystem name="help">
+                    <pos>0.012 0.955</pos>
+                    <fontSize>0.034</fontSize>
+                </helpsystem>
+            </view>
+        </aspectRatio>
+        <aspectRatio name="4:3_vertical">
+            <view name="system, gamelist">
+                <helpsystem name="help">
+                    <pos>0.012 0.975</pos>
+                    <fontSize>0.019</fontSize>
+                </helpsystem>
+            </view>
+            <view name="gamelist">
+                <textlist name="gamelistTextlist">
+                    <fontSize>0.0198</fontSize>
+                </textlist>
+                <image name="consolegame">
+                    <maxSize>0.35 0.12</maxSize>
+                </image>
+                <image name="logo">
+                    <maxSize>0.30 0.10</maxSize>
+                </image>
+                <text name="customCollectionsHeaderNoMedia">
+                    <pos>0.78 0.15</pos>
+                    <size>0.32 0.05</size>
+                    <fontSize>0.04</fontSize>
+                </text>
+            </view>
+        </aspectRatio>
         <view name="gamelist">
             <textlist name="gamelistTextlist">
                 <pos>0.04 0.201</pos>

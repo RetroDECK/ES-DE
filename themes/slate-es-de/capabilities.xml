@@ -7,6 +7,7 @@
 
     <aspectRatio>16:9</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
+    <aspectRatio>4:3_vertical</aspectRatio>
 
     <colorScheme name="dark">
         <label>Dark mode</label>
