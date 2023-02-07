@@ -284,13 +284,10 @@ void Screensaver::renderScreensaver()
         if (static_cast<int>(mState) >= STATE_FADE_IN_VIDEO) {
             if (mImageScreensaver->hasImage()) {
                 mImageScreensaver->setOpacity(1.0f - mOpacity);
-                glm::mat4 trans {Renderer::getIdentity()};
                 mImageScreensaver->render(trans);
             }
         }
     }
-
-    mRenderer->setMatrix(trans);
 
     if (isScreensaverActive()) {
         if (mScreensaverType == "slideshow") {
@@ -299,6 +296,7 @@ void Screensaver::renderScreensaver()
                     mRenderer->shaderPostprocessing(Renderer::Shader::SCANLINES);
                 if (Settings::getInstance()->getBool("ScreensaverSlideshowGameInfo") &&
                     mGameOverlay) {
+                    mRenderer->setMatrix(mRenderer->getIdentity());
                     if (mGameOverlayRectangleCoords.size() == 4) {
                         mRenderer->drawRect(
                             mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
@@ -350,6 +348,7 @@ void Screensaver::renderScreensaver()
                     mRenderer->shaderPostprocessing(shaders, videoParameters);
 
                 if (Settings::getInstance()->getBool("ScreensaverVideoGameInfo") && mGameOverlay) {
+                    mRenderer->setMatrix(mRenderer->getIdentity());
                     if (mGameOverlayRectangleCoords.size() == 4) {
                         mRenderer->drawRect(
                             mGameOverlayRectangleCoords[0], mGameOverlayRectangleCoords[1],
