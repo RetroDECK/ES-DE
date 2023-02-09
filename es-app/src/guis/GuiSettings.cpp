@@ -23,7 +23,8 @@
 #include <SDL2/SDL.h>
 
 GuiSettings::GuiSettings(std::string title)
-    : mMenu {title}
+    : mRenderer {Renderer::getInstance()}
+    , mMenu {title}
     , mGoToSystem {nullptr}
     , mNeedsSaving {false}
     , mNeedsCollectionsUpdate {false}
@@ -213,12 +214,13 @@ void GuiSettings::addEditableTextComponent(const std::string label,
         row.makeAcceptInputHandler([this, label, ed, updateVal, isPassword] {
             // Never display the value if it's a password, instead set it to blank.
             if (isPassword)
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), label, "", updateVal,
-                                                              false, "SAVE", "SAVE CHANGES?"));
+                mWindow->pushGui(
+                    new GuiTextEditKeyboardPopup(getHelpStyle(), getMenu().getPosition().y, label,
+                                                 "", updateVal, false, "SAVE", "SAVE CHANGES?"));
             else
-                mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), label, ed->getValue(),
-                                                              updateVal, false, "SAVE",
-                                                              "SAVE CHANGES?"));
+                mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                    getHelpStyle(), getMenu().getPosition().y, label, ed->getValue(), updateVal,
+                    false, "SAVE", "SAVE CHANGES?"));
         });
     }
     else {

@@ -77,6 +77,7 @@ std::vector<std::vector<const char*>> kbLastRowLoad {
 
 GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     const HelpStyle& helpstyle,
+    const float verticalPosition,
     const std::string& title,
     const std::string& initValue,
     const std::function<void(const std::string&)>& okCallback,
@@ -104,6 +105,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     , mDeleteRepeat {false}
     , mShift {false}
     , mAlt {false}
+    , mVerticalPosition {verticalPosition}
     , mDeleteRepeatTimer {0}
     , mNavigationRepeatTimer {0}
     , mNavigationRepeatDirX {0}
@@ -129,7 +131,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     mHorizontalKeyCount = static_cast<int>(kbLayout[0].size());
 
     mKeyboardGrid = std::make_shared<ComponentGrid>(
-        glm::ivec2(mHorizontalKeyCount, static_cast<int>(kbLayout.size()) / 3));
+        glm::ivec2 {mHorizontalKeyCount, static_cast<int>(kbLayout.size()) / 3});
 
     mText = std::make_shared<TextEditComponent>();
     mText->setValue(initValue);
@@ -137,7 +139,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     // Header.
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
 
-    int yPos = 1;
+    int yPos {1};
 
     if (mComplexMode) {
         mInfoString = std::make_shared<TextComponent>(infoString, Font::get(FONT_SIZE_MEDIUM),
@@ -157,19 +159,19 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     std::vector<std::vector<std::shared_ptr<ButtonComponent>>> buttonList;
 
     // Create keyboard.
-    for (int i = 0; i < static_cast<int>(kbLayout.size()) / 4; ++i) {
+    for (int i {0}; i < static_cast<int>(kbLayout.size()) / 4; ++i) {
         std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
-        for (int j = 0; j < static_cast<int>(kbLayout[i].size()); ++j) {
-            std::string lower = kbLayout[4 * i][j];
+        for (int j {0}; j < static_cast<int>(kbLayout[i].size()); ++j) {
+            std::string lower {kbLayout[4 * i][j]};
             if (lower.empty() || lower == "-rowspan-" || lower == "-colspan-")
                 continue;
 
-            std::string upper = kbLayout[4 * i + 1][j];
-            std::string alted = kbLayout[4 * i + 2][j];
-            std::string altshifted = kbLayout[4 * i + 3][j];
+            std::string upper {kbLayout[4 * i + 1][j]};
+            std::string alted {kbLayout[4 * i + 2][j]};
+            std::string altshifted {kbLayout[4 * i + 3][j]};
 
-            std::shared_ptr<ButtonComponent> button = nullptr;
+            std::shared_ptr<ButtonComponent> button;
 
             if (lower == "DEL") {
                 lower = DELETE_SYMBOL;
@@ -211,12 +213,12 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
             }
 
             button->setPadding(
-                glm::vec4(BUTTON_GRID_HORIZ_PADDING / 4.0f, BUTTON_GRID_HORIZ_PADDING / 4.0f,
-                          BUTTON_GRID_HORIZ_PADDING / 4.0f, BUTTON_GRID_HORIZ_PADDING / 4.0f));
+                glm::vec4 {BUTTON_GRID_HORIZ_PADDING / 4.0f, BUTTON_GRID_HORIZ_PADDING / 4.0f,
+                           BUTTON_GRID_HORIZ_PADDING / 4.0f, BUTTON_GRID_HORIZ_PADDING / 4.0f});
             buttons.push_back(button);
 
-            int colSpan = 1;
-            for (int cs = j + 1; cs < static_cast<int>(kbLayout[i].size()); ++cs) {
+            int colSpan {1};
+            for (int cs {j + 1}; cs < static_cast<int>(kbLayout[i].size()); ++cs) {
                 if (std::string(kbLayout[4 * i][cs]) == "-colspan-")
                     ++colSpan;
                 else
@@ -224,7 +226,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
             }
 
             int rowSpan = 1;
-            for (int cs = (4 * i) + 4; cs < static_cast<int>(kbLayout.size()); cs += 4) {
+            for (int cs {(4 * i) + 4}; cs < static_cast<int>(kbLayout.size()); cs += 4) {
                 if (std::string(kbLayout[cs][j]) == "-rowspan-")
                     ++rowSpan;
                 else
@@ -240,7 +242,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
 
     mGrid.setEntry(mKeyboardGrid, glm::ivec2 {0, yPos + 1}, true, true, glm::ivec2 {1, 4});
 
-    float textHeight = mText->getFont()->getHeight();
+    float textHeight {mText->getFont()->getHeight()};
     // If the multiLine option has been set, then include three lines of text on screen.
     if (multiLine) {
         textHeight *= 3.0f;
@@ -268,15 +270,20 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
 
     // Adapt width to the geometry of the display. The 1.778 aspect ratio is the 16:9 reference.
     float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
-    float width {glm::clamp(0.78f * aspectValue, 0.35f, 0.90f) * mRenderer->getScreenWidth()};
+    const float maxWidthMultiplier {mRenderer->getIsVerticalOrientation() ? 0.95f : 0.90f};
+    float width {glm::clamp(0.78f * aspectValue, 0.35f, maxWidthMultiplier) *
+                 mRenderer->getScreenWidth()};
 
     // The combination of multiLine and complex mode is not supported as there is currently
     // no need for that.
     if (mMultiLine) {
         setSize(width, KEYBOARD_HEIGHT + textHeight - mText->getFont()->getHeight());
 
-        setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
-                    (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
+        if (mVerticalPosition == 0.0f)
+            setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                        (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
+        else
+            setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f, mVerticalPosition);
     }
     else {
         if (mComplexMode)
@@ -284,8 +291,11 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
         else
             setSize(width, KEYBOARD_HEIGHT);
 
-        setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
-                    (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
+        if (mVerticalPosition == 0.0f)
+            setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                        (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
+        else
+            setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f, mVerticalPosition);
     }
 
     if (!multiLine)
@@ -294,7 +304,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
 
 void GuiTextEditKeyboardPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
     mText->setSize(mSize.x - KEYBOARD_PADDINGX - KEYBOARD_PADDINGX, mText->getSize().y);
 
     // Update grid.
@@ -345,8 +355,8 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
     }
 
     // Ignore whatever key is mapped to the back button so it can be used for text input.
-    bool keyboardBack {config->getDeviceId() == DEVICE_KEYBOARD && mText->isEditing() &&
-                       config->isMappedLike("b", input)};
+    const bool keyboardBack {config->getDeviceId() == DEVICE_KEYBOARD && mText->isEditing() &&
+                             config->isMappedLike("b", input)};
 
     // Pressing back (or the escape key if using keyboard input) closes us.
     if ((config->getDeviceId() == DEVICE_KEYBOARD && input.value && input.id == SDLK_ESCAPE) ||
@@ -391,7 +401,7 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
             mDeleteRepeat = true;
             mDeleteRepeatTimer = -(DELETE_REPEAT_START_DELAY - DELETE_REPEAT_SPEED);
 
-            bool editing = mText->isEditing();
+            const bool editing {mText->isEditing()};
             if (!editing)
                 mText->startEditing();
 
@@ -410,7 +420,7 @@ bool GuiTextEditKeyboardPopup::input(InputConfig* config, Input input)
 
     // Right shoulder button inserts a blank space.
     if (config->isMappedTo("rightshoulder", input) && input.value) {
-        bool editing = mText->isEditing();
+        const bool editing {mText->isEditing()};
         if (!editing)
             mText->startEditing();
 
@@ -527,7 +537,7 @@ void GuiTextEditKeyboardPopup::updateDeleteRepeat(int deltaTime)
     mDeleteRepeatTimer += deltaTime;
 
     while (mDeleteRepeatTimer >= DELETE_REPEAT_SPEED) {
-        bool editing = mText->isEditing();
+        bool editing {mText->isEditing()};
         if (!editing)
             mText->startEditing();
 
@@ -595,7 +605,7 @@ void GuiTextEditKeyboardPopup::shiftKeys()
     }
     else {
         for (auto& kb : mKeyboardButtons) {
-            const std::string& text = mShift ? kb.shiftedKey : kb.key;
+            const std::string& text {mShift ? kb.shiftedKey : kb.key};
             auto sz = kb.button->getSize();
             kb.button->setText(text, text, false);
             kb.button->setSize(sz);
@@ -628,7 +638,7 @@ void GuiTextEditKeyboardPopup::altKeys()
     }
     else {
         for (auto& kb : mKeyboardButtons) {
-            const std::string& text = mAlt ? kb.altedKey : kb.key;
+            const std::string& text {mAlt ? kb.altedKey : kb.key};
             auto sz = kb.button->getSize();
             kb.button->setText(text, text, false);
             kb.button->setSize(sz);
@@ -639,7 +649,7 @@ void GuiTextEditKeyboardPopup::altKeys()
 void GuiTextEditKeyboardPopup::altShiftKeys()
 {
     for (auto& kb : mKeyboardButtons) {
-        const std::string& text = kb.altshiftedKey;
+        const std::string& text {kb.altshiftedKey};
         auto sz = kb.button->getSize();
         kb.button->setText(text, text, false);
         kb.button->setSize(sz);
@@ -652,7 +662,7 @@ std::shared_ptr<ButtonComponent> GuiTextEditKeyboardPopup::makeButton(
     const std::string& altedKey,
     const std::string& altshiftedKey)
 {
-    std::shared_ptr<ButtonComponent> button = std::make_shared<ButtonComponent>(
+    std::shared_ptr<ButtonComponent> button {std::make_shared<ButtonComponent>(
         key, key,
         [this, key, shiftedKey, altedKey, altshiftedKey] {
             if (key == (OK_SYMBOL) || key.find("OK") != std::string::npos) {
@@ -702,9 +712,9 @@ std::shared_ptr<ButtonComponent> GuiTextEditKeyboardPopup::makeButton(
 
             mText->stopEditing();
         },
-        false, true);
+        false, true)};
 
-    KeyboardButton kb(button, key, shiftedKey, altedKey, altshiftedKey);
+    KeyboardButton kb {button, key, shiftedKey, altedKey, altshiftedKey};
     mKeyboardButtons.push_back(kb);
     return button;
 }

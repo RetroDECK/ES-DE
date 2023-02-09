@@ -22,6 +22,7 @@ public:
 private:
     void createCustomCollection(std::string inName);
 
+    Renderer* mRenderer;
     std::shared_ptr<OptionListComponent<std::string>> mCollectionSystemsAuto;
     std::shared_ptr<OptionListComponent<std::string>> mCollectionSystemsCustom;
 

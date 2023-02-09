@@ -1179,11 +1179,22 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
     // the input device settings menu later on.
     settings->setNeedsSaving(false);
 
-    std::string message {"THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY\n"
-                         "CONFIGURED, BUT USING THIS CONFIGURATION TOOL\n"
-                         "YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS\n"
-                         "(THIS WILL NOT AFFECT THE HELP PROMPTS)\n"
-                         "CONTINUE?"};
+    std::string message;
+    if (Renderer::getIsVerticalOrientation()) {
+        message = "THE KEYBOARD AND CONTROLLERS ARE\n"
+                  "AUTOMATICALLY CONFIGURED, BUT USING\n"
+                  "THIS CONFIGURATION TOOL YOU CAN\n"
+                  "OVERRIDE THE DEFAULT BUTTON MAPPINGS\n"
+                  "(THIS WILL NOT AFFECT THE HELP PROMPTS)\n"
+                  "CONTINUE?";
+    }
+    else {
+        message = "THE KEYBOARD AND CONTROLLERS ARE AUTOMATICALLY\n"
+                  "CONFIGURED, BUT USING THIS CONFIGURATION TOOL\n"
+                  "YOU CAN OVERRIDE THE DEFAULT BUTTON MAPPINGS\n"
+                  "(THIS WILL NOT AFFECT THE HELP PROMPTS)\n"
+                  "CONTINUE?";
+    }
 
     Window* window {mWindow};
     window->pushGui(new GuiMsgBox(
@@ -1228,14 +1239,15 @@ void GuiMenu::openOtherOptions()
         ViewController::getInstance()->reloadAll();
         mWindow->invalidateCachedBackground();
     };
-    rowMediaDir.makeAcceptInputHandler([this, titleMediaDir, mediaDirectoryStaticText,
+    rowMediaDir.makeAcceptInputHandler([this, s, titleMediaDir, mediaDirectoryStaticText,
                                         defaultDirectoryText, initValueMediaDir, updateValMediaDir,
                                         multiLineMediaDir] {
         if (Settings::getInstance()->getBool("VirtualKeyboard")) {
             mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                getHelpStyle(), titleMediaDir, Settings::getInstance()->getString("MediaDirectory"),
-                updateValMediaDir, multiLineMediaDir, "SAVE", "SAVE CHANGES?",
-                mediaDirectoryStaticText, defaultDirectoryText, "load default directory"));
+                getHelpStyle(), s->getMenu().getPosition().y, titleMediaDir,
+                Settings::getInstance()->getString("MediaDirectory"), updateValMediaDir,
+                multiLineMediaDir, "SAVE", "SAVE CHANGES?", mediaDirectoryStaticText,
+                defaultDirectoryText, "load default directory"));
         }
         else {
             mWindow->pushGui(new GuiTextEditPopup(

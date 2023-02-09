@@ -923,8 +923,8 @@ void GuiScraperSearch::openInputScreen(ScraperSearchParams& params)
         searchString = Utils::String::replace(searchString, "_", " ");
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
-        mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), "REFINE SEARCH", searchString,
-                                                      searchForFunc, false, "SEARCH",
+        mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), 0.0f, "REFINE SEARCH",
+                                                      searchString, searchForFunc, false, "SEARCH",
                                                       "SEARCH USING REFINED NAME?"));
     }
     else {

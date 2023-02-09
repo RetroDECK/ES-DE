@@ -118,9 +118,11 @@ void GuiGamelistFilter::addFiltersToMenu()
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
         row.makeAcceptInputHandler([this, updateVal] {
-            mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), "GAME NAME",
-                                                          mTextFilterField->getValue(), updateVal,
-                                                          false, "OK", "APPLY CHANGES?"));
+            const float verticalPosition {
+                Renderer::getIsVerticalOrientation() ? mMenu.getPosition().y : 0.0f};
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                getHelpStyle(), verticalPosition, "GAME NAME", mTextFilterField->getValue(),
+                updateVal, false, "OK", "APPLY CHANGES?"));
         });
     }
     else {

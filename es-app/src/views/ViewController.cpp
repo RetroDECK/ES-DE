@@ -12,6 +12,7 @@
 
 #include "views/ViewController.h"
 
+#include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "InputManager.h"
 #include "Log.h"
@@ -59,11 +60,11 @@ ViewController* ViewController::getInstance()
 
 void ViewController::invalidSystemsFileDialog()
 {
-    std::string errorMessage = "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE.\n"
-                               "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN\n"
-                               "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX.\n"
-                               "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE\n"
-                               "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE\n"
+    std::string errorMessage = "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "
+                               "IF YOU HAVE A CUSTOMIZED es_systems.xml FILE, THEN "
+                               "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
+                               "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
+                               "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE "
                                "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO.";
 
     mWindow->pushGui(new GuiMsgBox(
@@ -78,11 +79,11 @@ void ViewController::invalidSystemsFileDialog()
 
 void ViewController::noGamesDialog()
 {
-    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN\n"
-                           "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE\n"
-                           "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM\n"
-                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL\n"
-                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME\n"
+    mNoGamesErrorMessage = "NO GAME FILES WERE FOUND. EITHER PLACE YOUR GAMES IN "
+                           "THE CURRENTLY CONFIGURED ROM DIRECTORY OR CHANGE "
+                           "ITS PATH USING THE BUTTON BELOW. OPTIONALLY THE ROM "
+                           "DIRECTORY STRUCTURE CAN BE GENERATED WHICH WILL "
+                           "CREATE A TEXT FILE FOR EACH SYSTEM PROVIDING SOME "
                            "INFORMATION SUCH AS THE SUPPORTED FILE EXTENSIONS.\n"
                            "THIS IS THE CURRENTLY CONFIGURED ROM DIRECTORY:\n";
 
@@ -103,7 +104,7 @@ void ViewController::noGamesDialog()
 #endif
             if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                    HelpStyle(), "ENTER ROM DIRECTORY PATH", currentROMDirectory,
+                    HelpStyle(), 0.0f, "ENTER ROM DIRECTORY PATH", currentROMDirectory,
                     [this](const std::string& newROMDirectory) {
                         Settings::getInstance()->setString("ROMDirectory",
                                                            Utils::String::trim(newROMDirectory));

@@ -19,6 +19,7 @@ class GuiTextEditKeyboardPopup : public GuiComponent
 {
 public:
     GuiTextEditKeyboardPopup(const HelpStyle& helpstyle,
+                             const float verticalPosition,
                              const std::string& title,
                              const std::string& initValue,
                              const std::function<void(const std::string&)>& okCallback,
@@ -100,6 +101,8 @@ private:
     bool mDeleteRepeat;
     bool mShift;
     bool mAlt;
+
+    float mVerticalPosition;
 
     int mHorizontalKeyCount;
     int mDeleteRepeatTimer;

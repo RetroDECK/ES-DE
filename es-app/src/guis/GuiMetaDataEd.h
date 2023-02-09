@@ -46,6 +46,7 @@ private:
     void fetchDone(const ScraperSearchResult& result);
     void close();
 
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
 

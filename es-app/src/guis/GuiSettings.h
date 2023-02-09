@@ -64,6 +64,7 @@ public:
     HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
+    Renderer* mRenderer;
     MenuComponent mMenu;
     std::vector<std::function<void()>> mSaveFuncs;
     SystemData* mGoToSystem;

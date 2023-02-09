@@ -42,7 +42,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
-    : mBackground {":/graphics/frame.svg"}
+    : mRenderer {Renderer::getInstance()}
+    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {2, 6}}
     , mScraperParams {scraperParams}
     , mControllerBadges {BadgeComponent::getGameControllers()}
@@ -160,7 +161,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             }
             case MD_RATING: {
                 auto spacer = std::make_shared<GuiComponent>();
-                spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0.0f);
+                spacer->setSize(mRenderer->getScreenWidth() * 0.0025f, 0.0f);
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<RatingComponent>(true, true);
@@ -176,7 +177,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             }
             case MD_DATE: {
                 auto spacer = std::make_shared<GuiComponent>();
-                spacer->setSize(Renderer::getScreenWidth() * 0.0025f, 0.0f);
+                spacer->setSize(mRenderer->getScreenWidth() * 0.0025f, 0.0f);
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<DateTimeEditComponent>(true);
@@ -195,7 +196,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
-                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
+                spacer->setSize(mRenderer->getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
@@ -258,9 +259,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         s->addRow(row, false);
                     }
 
-                    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-                    float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
-                    float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
+                    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+                    const float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                    const float maxWidth {mRenderer->getScreenWidth() * maxWidthModifier};
 
                     s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
                     s->setMenuPosition(
@@ -277,7 +278,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
-                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
+                spacer->setSize(mRenderer->getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
@@ -389,10 +390,10 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                                 s->addRow(row, false);
                         }
 
-                        const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+                        const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
                         const float maxWidthModifier {
                             glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
-                        const float maxWidth {static_cast<float>(Renderer::getScreenWidth()) *
+                        const float maxWidth {static_cast<float>(mRenderer->getScreenWidth()) *
                                               maxWidthModifier};
 
                         s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
@@ -413,7 +414,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
-                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
+                spacer->setSize(mRenderer->getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
@@ -510,9 +511,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         s->addRow(row, false);
                     }
 
-                    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-                    float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
-                    float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
+                    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+                    const float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                    const float maxWidth {mRenderer->getScreenWidth() * maxWidthModifier};
 
                     s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
                     s->setMenuPosition(
@@ -529,7 +530,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
-                spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
+                spacer->setSize(mRenderer->getScreenWidth() * 0.005f, 0.0f);
                 row.addElement(spacer, false);
 
                 auto bracket = std::make_shared<ImageComponent>();
@@ -586,9 +587,11 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
                 if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                     row.makeAcceptInputHandler([this, title, ed, updateVal, multiLine] {
+                        const float verticalPosition {
+                            mRenderer->getIsVerticalOrientation() ? mPosition.y : 0.0f};
                         mWindow->pushGui(new GuiTextEditKeyboardPopup(
-                            getHelpStyle(), title, ed->getValue(), updateVal, multiLine, "apply",
-                            "APPLY CHANGES?", "", ""));
+                            getHelpStyle(), verticalPosition, title, ed->getValue(), updateVal,
+                            multiLine, "apply", "APPLY CHANGES?", "", ""));
                     });
                 }
                 else {
@@ -699,7 +702,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     mGrid.setEntry(mButtons, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Resize + center.
-    float width {std::min(Renderer::getScreenHeight() * 1.05f, Renderer::getScreenWidth() * 0.90f)};
+    float width {std::min(mRenderer->getScreenHeight() * 1.05f,
+                          mRenderer->getScreenWidth() *
+                              (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.90f))};
 
     // Set height explicitly to ten rows for the component list.
     float height {mList->getRowHeight(0) * 10.0f + mTitle->getSize().y + mSubtitle->getSize().y +
@@ -723,8 +728,8 @@ void GuiMetaDataEd::onSizeChanged()
     mGrid.setSize(mSize);
     mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
 
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     // Add some extra margins to the file/folder name.
     const float newSizeX {mSize.x * 0.96f};

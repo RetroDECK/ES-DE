@@ -21,6 +21,7 @@
 
 GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     : GuiSettings {title}
+    , mRenderer {Renderer::getInstance()}
     , mAddedCustomCollection {false}
     , mDeletedCustomCollection {false}
 {
@@ -217,9 +218,11 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
 
     if (Settings::getInstance()->getBool("VirtualKeyboard")) {
         row.makeAcceptInputHandler([this, createCollectionCall] {
-            mWindow->pushGui(new GuiTextEditKeyboardPopup(getHelpStyle(), "New Collection Name", "",
-                                                          createCollectionCall, false, "CREATE",
-                                                          "CREATE COLLECTION?"));
+            const float verticalPosition {
+                mRenderer->getIsVerticalOrientation() ? getMenu().getPosition().y : 0.0f};
+            mWindow->pushGui(new GuiTextEditKeyboardPopup(
+                getHelpStyle(), verticalPosition, "New Collection Name", "", createCollectionCall,
+                false, "CREATE", "CREATE COLLECTION?"));
         });
     }
     else {
@@ -304,8 +307,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
         // Make the menu slightly wider to fit the scroll indicators.
         glm::vec2 menuSize {ss->getMenuSize()};
         glm::vec3 menuPos {ss->getMenuPosition()};
-        ss->setMenuSize(glm::vec2 {menuSize.x * 1.08f, menuSize.y});
-        menuPos.x = (Renderer::getScreenWidth() - ss->getMenuSize().x) / 2.0f;
+        const float maxWidthModifier {mRenderer->getIsVerticalOrientation() ? 1.0f : 1.08f};
+        ss->setMenuSize(glm::vec2 {menuSize.x * maxWidthModifier, menuSize.y});
+        menuPos.x = (mRenderer->getScreenWidth() - ss->getMenuSize().x) / 2.0f;
         ss->setMenuPosition(menuPos);
         mWindow->pushGui(ss);
     });
