@@ -13,22 +13,22 @@
 #define PREFIX "button_"
 
 HelpStyle::HelpStyle()
-    : position {Renderer::getScreenWidth() * 0.012f, Renderer::getScreenHeight() * 0.9515f}
-    , origin {glm::vec2 {}}
+    : position {Renderer::getScreenWidth() * 0.012f,
+                Renderer::getScreenHeight() *
+                    (Renderer::getIsVerticalOrientation() ? 0.975f : 0.9515f)}
+    , origin {glm::vec2 {0.0f, 0.0f}}
     , textColor {0x777777FF}
     , textColorDimmed {0x777777FF}
     , iconColor {0x777777FF}
     , iconColorDimmed {0x777777FF}
+    , font {Renderer::getIsVerticalOrientation() ? Font::get(0.025f * Renderer::getScreenWidth()) :
+                                                   Font::get(FONT_SIZE_SMALL)}
     , entrySpacing {0.00833f}
     , iconTextSpacing {0.00416f}
     , opacity {1.0f}
     , legacyTheme {false}
     , letterCase {"uppercase"}
 {
-    if (FONT_SIZE_SMALL != 0)
-        font = Font::get(FONT_SIZE_SMALL);
-    else
-        font = nullptr;
 }
 
 void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::string& view)
