@@ -33,16 +33,14 @@
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 #include "views/GamelistView.h"
-#include "views/ViewController.h"
 
 #include <fstream>
 #include <pugixml.hpp>
 #include <random>
 
-#define LAST_PLAYED_MAX 50
-
 CollectionSystemsManager::CollectionSystemsManager() noexcept
     : mWindow {Window::getInstance()}
+    , mApplicationStartup {false}
 {
     // clang-format off
     CollectionSystemDecl systemDecls[] {
@@ -191,6 +189,7 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
 
 void CollectionSystemsManager::loadCollectionSystems()
 {
+    mApplicationStartup = true;
     initAutoCollectionSystems();
     CollectionSystemDecl decl {mCollectionSystemDeclsIndex[myCollectionsName]};
     mCustomCollectionsBundle = createNewCollectionEntry(decl.name, decl, false);
@@ -205,6 +204,8 @@ void CollectionSystemsManager::loadCollectionSystems()
         // Add to the main System Vector, and create Views as needed.
         updateSystemsList();
     }
+
+    mApplicationStartup = false;
 }
 
 void CollectionSystemsManager::loadEnabledListFromSettings()
@@ -258,6 +259,9 @@ void CollectionSystemsManager::updateSystemsList()
 
     // Add auto enabled collections.
     addEnabledCollectionsToDisplayedSystems(&mAutoCollectionSystemsData);
+
+    if (mApplicationStartup)
+        return;
 
     // Create views for collections, before reload.
     for (auto sysIt = SystemData::sSystemVector.cbegin(); // Line break.
@@ -1196,13 +1200,14 @@ void CollectionSystemsManager::populateAutoCollection(CollectionSystemData* sysD
         rootFolder->sort(rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                          Settings::getInstance()->getBool("FavoritesFirst"));
 
-    if (sysDecl.type == AUTO_LAST_PLAYED)
+    if (!mApplicationStartup && sysDecl.type == AUTO_LAST_PLAYED)
         trimCollectionCount(rootFolder, LAST_PLAYED_MAX);
 
     // For the 'recent' collection we need to populate the gamelist once more as the
     // collection was trimmed down to 50 items. If we don't do this, the game count will
     // not be correct as it would include all the games prior to trimming.
-    if (rootFolder->getName() == "recent" && !rootFolder->getChildrenRecursive().empty()) {
+    if (!mApplicationStartup && rootFolder->getName() == "recent" &&
+        !rootFolder->getChildrenRecursive().empty()) {
         // The following is needed to avoid a crash when repopulating the system as the previous
         // cursor pointer may point to a random memory address.
         auto recentGamelist =
@@ -1348,10 +1353,13 @@ void CollectionSystemsManager::addEnabledCollectionsToDisplayedSystems(
                         rootFolder->getSortTypeFromString(rootFolder->getSortTypeString()),
                         Settings::getInstance()->getBool("FavFirstCustom"));
                     // Jump to the first row of the game list, assuming it's not empty.
-                    GamelistView* gameList {
-                        ViewController::getInstance()->getGamelistView((it->second.system)).get()};
-                    if (!gameList->getCursor()->isPlaceHolder()) {
-                        gameList->setCursor(gameList->getFirstEntry());
+                    if (!mApplicationStartup) {
+                        GamelistView* gameList {ViewController::getInstance()
+                                                    ->getGamelistView((it->second.system))
+                                                    .get()};
+                        if (!gameList->getCursor()->isPlaceHolder()) {
+                            gameList->setCursor(gameList->getFirstEntry());
+                        }
                     }
                     it->second.system->setIsGroupedCustomCollection(false);
                 }

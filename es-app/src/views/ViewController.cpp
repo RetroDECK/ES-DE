@@ -1144,11 +1144,14 @@ void ViewController::preload()
     // Load navigation sounds, either from the theme if it supports it, or otherwise from
     // the bundled fallback sound files.
     bool themeSoundSupport {false};
-    for (SystemData* system : SystemData::sSystemVector) {
+    for (auto system : SystemData::sSystemVector) {
         if (system->getTheme()->hasView("all")) {
             NavigationSounds::getInstance().loadThemeNavigationSounds(system->getTheme().get());
             themeSoundSupport = true;
-            break;
+        }
+        if (system->getRootFolder()->getName() == "recent") {
+            CollectionSystemsManager::getInstance()->trimCollectionCount(system->getRootFolder(),
+                                                                         LAST_PLAYED_MAX);
         }
     }
     if (!SystemData::sSystemVector.empty() && !themeSoundSupport)

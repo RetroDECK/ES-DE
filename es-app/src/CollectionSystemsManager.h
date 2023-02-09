@@ -22,7 +22,10 @@
 #ifndef ES_APP_COLLECTION_SYSTEM_MANAGER_H
 #define ES_APP_COLLECTION_SYSTEM_MANAGER_H
 
+#define LAST_PLAYED_MAX 50
+
 #include "utils/StringUtil.h"
+#include "views/ViewController.h"
 
 #include <map>
 #include <string>
@@ -136,6 +139,11 @@ public:
 
     static inline std::string myCollectionsName = "collections";
 
+protected:
+    void trimCollectionCount(FileData* rootFolder, int limit);
+
+    friend ViewController;
+
 private:
     CollectionSystemsManager() noexcept;
 
@@ -146,6 +154,7 @@ private:
     Window* mWindow;
     bool mIsEditingCustom;
     bool mHasEnabledCustomCollection;
+    bool mApplicationStartup;
     std::string mEditingCollection;
     CollectionSystemData* mEditingCollectionSystemData;
     SystemData* mCustomCollectionsBundle;
@@ -180,7 +189,6 @@ private:
     std::vector<std::string> getCollectionThemeFolders(bool custom);
     // Return the theme folders in use for the user-defined custom collections.
     std::vector<std::string> getUserCollectionThemeFolders();
-    void trimCollectionCount(FileData* rootFolder, int limit);
     // Return whether a specific folder exists in the theme.
     const bool themeFolderExists(const std::string& folder);
     const bool includeFileInAutoCollections(FileData* file);
