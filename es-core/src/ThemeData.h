@@ -256,16 +256,17 @@ public:
     static void populateThemeSets();
     const static std::map<std::string, ThemeSet, StringComparator>& getThemeSets()
     {
-        return mThemeSets;
+        return sThemeSets;
     }
     const static std::string getThemeFromCurrentSet(const std::string& system);
     const static std::string getAspectRatioLabel(const std::string& aspectRatio);
-    const static std::string getCurrentThemeSetName() { return mCurrentThemeSet->first; }
+    const static std::string getCurrentThemeSetName() { return sCurrentThemeSet->first; }
     static void setThemeTransitions();
 
     const bool isLegacyTheme() { return mLegacyTheme; }
     const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<std::string>>>
     getCurrentThemeSetSelectedVariantOverrides();
+    const static void themeLoadedLogOutput();
 
     enum ElementPropertyType {
         NORMALIZED_RECT,
@@ -320,9 +321,9 @@ private:
     static std::map<std::string, std::map<std::string, std::string>> sPropertyAttributeMap;
     static std::map<std::string, std::map<std::string, ElementPropertyType>> sElementMap;
 
-    static inline std::map<std::string, ThemeSet, StringComparator> mThemeSets;
-    static inline std::map<std::string, ThemeSet, StringComparator>::iterator mCurrentThemeSet {};
-    static inline std::string mVariantDefinedTransitions;
+    static inline std::map<std::string, ThemeSet, StringComparator> sThemeSets;
+    static inline std::map<std::string, ThemeSet, StringComparator>::iterator sCurrentThemeSet {};
+    static inline std::string sVariantDefinedTransitions;
 
     std::map<std::string, ThemeView> mViews;
     std::deque<std::string> mPaths;
@@ -331,7 +332,8 @@ private:
     std::string mSelectedVariant;
     std::string mOverrideVariant;
     std::string mSelectedColorScheme;
-    std::string mSelectedAspectRatio;
+    static inline std::string sSelectedAspectRatio;
+    static inline bool sAspectRatioMatch {false};
     bool mLegacyTheme;
     bool mCustomCollection;
 };

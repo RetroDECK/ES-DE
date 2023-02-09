@@ -536,8 +536,8 @@ ThemeData::ThemeData()
     : mLegacyTheme {false}
     , mCustomCollection {false}
 {
-    mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
-    mVariantDefinedTransitions = "";
+    sCurrentThemeSet = sThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
+    sVariantDefinedTransitions = "";
 }
 
 void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
@@ -575,8 +575,8 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     if (!root)
         throw error << ": Missing <theme> tag";
 
-    if (mCurrentThemeSet != mThemeSets.cend())
-        mLegacyTheme = mCurrentThemeSet->second.capabilities.legacyTheme;
+    if (sCurrentThemeSet != sThemeSets.cend())
+        mLegacyTheme = sCurrentThemeSet->second.capabilities.legacyTheme;
 
     // The resolution tag introduced in RetroPie EmulationStation in 2020 is a very bad idea
     // as it changes sizing of components from relative values to absolute pixel values.
@@ -601,8 +601,8 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
     }
 
     if (!mLegacyTheme) {
-        if (mCurrentThemeSet->second.capabilities.variants.size() > 0) {
-            for (auto& variant : mCurrentThemeSet->second.capabilities.variants)
+        if (sCurrentThemeSet->second.capabilities.variants.size() > 0) {
+            for (auto& variant : sCurrentThemeSet->second.capabilities.variants)
                 mVariants.emplace_back(variant.name);
 
             if (std::find(mVariants.cbegin(), mVariants.cend(),
@@ -620,8 +620,8 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
             }
         }
 
-        if (mCurrentThemeSet->second.capabilities.colorSchemes.size() > 0) {
-            for (auto& colorScheme : mCurrentThemeSet->second.capabilities.colorSchemes)
+        if (sCurrentThemeSet->second.capabilities.colorSchemes.size() > 0) {
+            for (auto& colorScheme : sCurrentThemeSet->second.capabilities.colorSchemes)
                 mColorSchemes.emplace_back(colorScheme.name);
 
             if (std::find(mColorSchemes.cbegin(), mColorSchemes.cend(),
@@ -632,31 +632,35 @@ void ThemeData::loadFile(const std::map<std::string, std::string>& sysDataMap,
                 mSelectedColorScheme = mColorSchemes.front();
         }
 
-        if (mCurrentThemeSet->second.capabilities.aspectRatios.size() > 0) {
-            if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
-                          mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
-                          Settings::getInstance()->getString("ThemeAspectRatio")) !=
-                mCurrentThemeSet->second.capabilities.aspectRatios.cend())
-                mSelectedAspectRatio = Settings::getInstance()->getString("ThemeAspectRatio");
-            else
-                mSelectedAspectRatio = mCurrentThemeSet->second.capabilities.aspectRatios.front();
+        sAspectRatioMatch = false;
 
-            if (mSelectedAspectRatio == "automatic") {
+        if (sCurrentThemeSet->second.capabilities.aspectRatios.size() > 0) {
+            if (std::find(sCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
+                          sCurrentThemeSet->second.capabilities.aspectRatios.cend(),
+                          Settings::getInstance()->getString("ThemeAspectRatio")) !=
+                sCurrentThemeSet->second.capabilities.aspectRatios.cend())
+                sSelectedAspectRatio = Settings::getInstance()->getString("ThemeAspectRatio");
+            else
+                sSelectedAspectRatio = sCurrentThemeSet->second.capabilities.aspectRatios.front();
+
+            if (sSelectedAspectRatio == "automatic") {
                 // Auto-detect the closest aspect ratio based on what's available in the theme set.
-                mSelectedAspectRatio = "16:9";
+                sSelectedAspectRatio = "16:9";
                 const float screenAspectRatio {Renderer::getScreenAspectRatio()};
                 float diff {std::fabs(sAspectRatioMap["16:9"] - screenAspectRatio)};
 
-                for (auto& aspectRatio : mCurrentThemeSet->second.capabilities.aspectRatios) {
+                for (auto& aspectRatio : sCurrentThemeSet->second.capabilities.aspectRatios) {
                     if (aspectRatio == "automatic")
                         continue;
 
                     if (sAspectRatioMap.find(aspectRatio) != sAspectRatioMap.end()) {
                         const float newDiff {
                             std::fabs(sAspectRatioMap[aspectRatio] - screenAspectRatio)};
+                        if (newDiff < 0.01f)
+                            sAspectRatioMatch = true;
                         if (newDiff < diff) {
                             diff = newDiff;
-                            mSelectedAspectRatio = aspectRatio;
+                            sSelectedAspectRatio = aspectRatio;
                         }
                     }
                 }
@@ -742,7 +746,7 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
 
 void ThemeData::populateThemeSets()
 {
-    assert(mThemeSets.empty());
+    assert(sThemeSets.empty());
 
     LOG(LogInfo) << "Checking for available theme sets...";
 
@@ -815,39 +819,39 @@ void ThemeData::populateThemeSets()
                                   << (capabilities.transitions.size() != 1 ? "s" : "");
                 }
                 ThemeSet set {*it, capabilities};
-                mThemeSets[set.getName()] = set;
+                sThemeSets[set.getName()] = set;
             }
         }
     }
 
-    if (mThemeSets.empty()) {
+    if (sThemeSets.empty()) {
         LOG(LogWarning) << "Couldn't find any theme sets, creating dummy entry";
         ThemeSet set {"no-theme-sets", ThemeCapability()};
-        mThemeSets[set.getName()] = set;
-        mCurrentThemeSet = mThemeSets.begin();
+        sThemeSets[set.getName()] = set;
+        sCurrentThemeSet = sThemeSets.begin();
     }
 }
 
 const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
 {
-    if (mThemeSets.empty())
+    if (sThemeSets.empty())
         getThemeSets();
 
-    if (mThemeSets.empty())
+    if (sThemeSets.empty())
         // No theme sets available.
         return "";
 
     std::map<std::string, ThemeSet, StringComparator>::const_iterator set {
-        mThemeSets.find(Settings::getInstance()->getString("ThemeSet"))};
-    if (set == mThemeSets.cend()) {
+        sThemeSets.find(Settings::getInstance()->getString("ThemeSet"))};
+    if (set == sThemeSets.cend()) {
         // Currently configured theme set is missing, attempt to load the default theme set
         // slate-es-de instead, and if that's also missing then pick the first available set.
         bool defaultSetFound {true};
 
-        set = mThemeSets.find("slate-es-de");
+        set = sThemeSets.find("slate-es-de");
 
-        if (set == mThemeSets.cend()) {
-            set = mThemeSets.cbegin();
+        if (set == sThemeSets.cend()) {
+            set = sThemeSets.cbegin();
             defaultSetFound = false;
         }
 
@@ -857,7 +861,7 @@ const std::string ThemeData::getThemeFromCurrentSet(const std::string& system)
                         << "theme set \"" << set->first << "\" instead";
 
         Settings::getInstance()->setString("ThemeSet", set->first);
-        mCurrentThemeSet = mThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
+        sCurrentThemeSet = sThemeSets.find(Settings::getInstance()->getString("ThemeSet"));
     }
 
     return set->second.getThemePath(system);
@@ -889,7 +893,7 @@ void ThemeData::setThemeTransitions()
     int transitionAnim {ViewTransitionAnimation::INSTANT};
     setTransitionsFunc(transitionAnim);
 
-    if (mCurrentThemeSet->second.capabilities.legacyTheme) {
+    if (sCurrentThemeSet->second.capabilities.legacyTheme) {
         const std::string& legacyTransitionsSetting {
             Settings::getInstance()->getString("LegacyThemeTransitions")};
         if (legacyTransitionsSetting == "builtin-slide")
@@ -905,27 +909,27 @@ void ThemeData::setThemeTransitions()
         size_t profileEntry {0};
 
         if (transitionsSetting == "automatic") {
-            if (mVariantDefinedTransitions != "")
-                profile = mVariantDefinedTransitions;
-            else if (!mCurrentThemeSet->second.capabilities.transitions.empty())
-                profile = mCurrentThemeSet->second.capabilities.transitions.front().name;
+            if (sVariantDefinedTransitions != "")
+                profile = sVariantDefinedTransitions;
+            else if (!sCurrentThemeSet->second.capabilities.transitions.empty())
+                profile = sCurrentThemeSet->second.capabilities.transitions.front().name;
         }
         else {
             profile = transitionsSetting;
         }
 
         auto it = std::find_if(
-            mCurrentThemeSet->second.capabilities.transitions.cbegin(),
-            mCurrentThemeSet->second.capabilities.transitions.cend(),
+            sCurrentThemeSet->second.capabilities.transitions.cbegin(),
+            sCurrentThemeSet->second.capabilities.transitions.cend(),
             [&profile](const ThemeTransitions transitions) { return transitions.name == profile; });
-        if (it != mCurrentThemeSet->second.capabilities.transitions.cend())
+        if (it != sCurrentThemeSet->second.capabilities.transitions.cend())
             profileEntry = static_cast<size_t>(
-                std::distance(mCurrentThemeSet->second.capabilities.transitions.cbegin(), it) + 1);
+                std::distance(sCurrentThemeSet->second.capabilities.transitions.cbegin(), it) + 1);
 
         if (profileEntry != 0 &&
-            mCurrentThemeSet->second.capabilities.transitions.size() > profileEntry - 1) {
+            sCurrentThemeSet->second.capabilities.transitions.size() > profileEntry - 1) {
             auto transitionMap =
-                mCurrentThemeSet->second.capabilities.transitions[profileEntry - 1].animations;
+                sCurrentThemeSet->second.capabilities.transitions[profileEntry - 1].animations;
             if (transitionMap.find(ViewTransition::SYSTEM_TO_SYSTEM) != transitionMap.end())
                 Settings::getInstance()->setInt("TransitionsSystemToSystem",
                                                 transitionMap[ViewTransition::SYSTEM_TO_SYSTEM]);
@@ -948,10 +952,10 @@ void ThemeData::setThemeTransitions()
         }
         else if (transitionsSetting == "builtin-slide" || transitionsSetting == "builtin-fade") {
             if (std::find(
-                    mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
-                    mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend(),
+                    sCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cbegin(),
+                    sCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend(),
                     transitionsSetting) ==
-                mCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend()) {
+                sCurrentThemeSet->second.capabilities.suppressedTransitionProfiles.cend()) {
                 if (transitionsSetting == "builtin-slide") {
                     transitionAnim = static_cast<int>(ViewTransitionAnimation::SLIDE);
                 }
@@ -968,15 +972,34 @@ const std::map<ThemeTriggers::TriggerType, std::pair<std::string, std::vector<st
 ThemeData::getCurrentThemeSetSelectedVariantOverrides()
 {
     const auto variantIter = std::find_if(
-        mCurrentThemeSet->second.capabilities.variants.cbegin(),
-        mCurrentThemeSet->second.capabilities.variants.cend(),
+        sCurrentThemeSet->second.capabilities.variants.cbegin(),
+        sCurrentThemeSet->second.capabilities.variants.cend(),
         [this](ThemeVariant currVariant) { return currVariant.name == mSelectedVariant; });
 
-    if (variantIter != mCurrentThemeSet->second.capabilities.variants.cend() &&
+    if (variantIter != sCurrentThemeSet->second.capabilities.variants.cend() &&
         !(*variantIter).overrides.empty())
         return (*variantIter).overrides;
     else
         return ThemeVariant().overrides;
+}
+
+const void ThemeData::themeLoadedLogOutput()
+{
+    if (sCurrentThemeSet->second.capabilities.legacyTheme) {
+        LOG(LogInfo) << "Finished loading legacy theme set \"" << sCurrentThemeSet->first << "\"";
+    }
+    else {
+        LOG(LogInfo) << "Finished loading theme set \"" << sCurrentThemeSet->first << "\"";
+        if (sSelectedAspectRatio != "") {
+            const bool autoDetect {Settings::getInstance()->getString("ThemeAspectRatio") ==
+                                   "automatic"};
+            const std::string match {sAspectRatioMatch ? "exact match " : "closest match "};
+
+            LOG(LogInfo) << "Aspect ratio " << (autoDetect ? "automatically " : "manually ")
+                         << "set to " << (autoDetect ? match : "") << "\""
+                         << Utils::String::replace(sSelectedAspectRatio, "_", " ") << "\"";
+        }
+    }
 }
 
 unsigned int ThemeData::getHexColor(const std::string& str)
@@ -1581,7 +1604,7 @@ void ThemeData::parseFeatures(const pugi::xml_node& root)
 
 void ThemeData::parseVariants(const pugi::xml_node& root)
 {
-    if (mCurrentThemeSet == mThemeSets.end())
+    if (sCurrentThemeSet == sThemeSets.end())
         return;
 
     if (mSelectedVariant == "")
@@ -1627,7 +1650,7 @@ void ThemeData::parseVariants(const pugi::xml_node& root)
 
 void ThemeData::parseColorSchemes(const pugi::xml_node& root)
 {
-    if (mCurrentThemeSet == mThemeSets.end())
+    if (sCurrentThemeSet == sThemeSets.end())
         return;
 
     if (mSelectedColorScheme == "")
@@ -1666,10 +1689,10 @@ void ThemeData::parseColorSchemes(const pugi::xml_node& root)
 
 void ThemeData::parseAspectRatios(const pugi::xml_node& root)
 {
-    if (mCurrentThemeSet == mThemeSets.end())
+    if (sCurrentThemeSet == sThemeSets.end())
         return;
 
-    if (mSelectedAspectRatio == "")
+    if (sSelectedAspectRatio == "")
         return;
 
     ThemeException error;
@@ -1691,14 +1714,14 @@ void ThemeData::parseAspectRatios(const pugi::xml_node& root)
             prevOff = nameAttr.find_first_not_of(delim, off);
             off = nameAttr.find_first_of(delim, prevOff);
 
-            if (std::find(mCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
-                          mCurrentThemeSet->second.capabilities.aspectRatios.cend(),
-                          viewKey) == mCurrentThemeSet->second.capabilities.aspectRatios.cend()) {
+            if (std::find(sCurrentThemeSet->second.capabilities.aspectRatios.cbegin(),
+                          sCurrentThemeSet->second.capabilities.aspectRatios.cend(),
+                          viewKey) == sCurrentThemeSet->second.capabilities.aspectRatios.cend()) {
                 throw error << ": <aspectRatio> value \"" << viewKey
                             << "\" is not defined in capabilities.xml";
             }
 
-            if (mSelectedAspectRatio == viewKey) {
+            if (sSelectedAspectRatio == viewKey) {
                 parseVariables(node);
                 parseColorSchemes(node);
                 parseIncludes(node);
@@ -1717,15 +1740,15 @@ void ThemeData::parseTransitions(const pugi::xml_node& root)
     const pugi::xml_node& transitions {root.child("transitions")};
     if (transitions != nullptr) {
         const std::string& transitionsValue {transitions.text().as_string()};
-        if (std::find_if(mCurrentThemeSet->second.capabilities.transitions.cbegin(),
-                         mCurrentThemeSet->second.capabilities.transitions.cend(),
+        if (std::find_if(sCurrentThemeSet->second.capabilities.transitions.cbegin(),
+                         sCurrentThemeSet->second.capabilities.transitions.cend(),
                          [&transitionsValue](const ThemeTransitions transitions) {
                              return transitions.name == transitionsValue;
-                         }) == mCurrentThemeSet->second.capabilities.transitions.cend()) {
+                         }) == sCurrentThemeSet->second.capabilities.transitions.cend()) {
             throw error << ": <transitions> value \"" << transitionsValue
                         << "\" is not matching any defined transitions";
         }
-        mVariantDefinedTransitions = transitionsValue;
+        sVariantDefinedTransitions = transitionsValue;
     }
 }
 

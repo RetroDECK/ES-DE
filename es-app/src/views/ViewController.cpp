@@ -1270,7 +1270,7 @@ void ViewController::reloadAll()
     if (!SystemData::sSystemVector.empty() && !themeSoundSupport)
         NavigationSounds::getInstance().loadThemeNavigationSounds(nullptr);
 
-    LOG(LogInfo) << "Finished loading theme set \"" << ThemeData::getCurrentThemeSetName() << "\"";
+    ThemeData::themeLoadedLogOutput();
 
     mCurrentView->onShow();
     updateHelpPrompts();

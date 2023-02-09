@@ -736,10 +736,8 @@ int main(int argc, char* argv[])
     }
 
     if (!SystemData::sStartupExitSignal) {
-        if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK) {
-            LOG(LogInfo) << "Finished loading theme set \"" << ThemeData::getCurrentThemeSetName()
-                         << "\"";
-        }
+        if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK)
+            ThemeData::themeLoadedLogOutput();
 
         // Open the input configuration GUI if the force flag was passed from the command line.
         if (!loadSystemsStatus) {
