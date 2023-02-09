@@ -896,7 +896,10 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         const glm::vec2& itemSize {elem->get<glm::vec2>("itemSize")};
         if (!(itemSize.x == -1 && itemSize.y == -1)) {
             if (itemSize.x == -1) {
-                mItemSize.y = glm::clamp(itemSize.y, 0.05f, 1.0f) * mRenderer->getScreenHeight();
+                mItemSize.y =
+                    glm::clamp(itemSize.y, 0.05f, 1.0f) * (mRenderer->getIsVerticalOrientation() ?
+                                                               mRenderer->getScreenWidth() :
+                                                               mRenderer->getScreenHeight());
                 mItemSize.x = mItemSize.y;
             }
             else if (itemSize.y == -1) {
