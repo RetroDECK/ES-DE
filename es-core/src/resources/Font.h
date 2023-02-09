@@ -21,10 +21,12 @@
 
 class TextCache;
 
-#define FONT_SIZE_MINI 0.030f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
-#define FONT_SIZE_SMALL 0.035f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
-#define FONT_SIZE_MEDIUM 0.045f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
-#define FONT_SIZE_LARGE 0.085f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())
+#define FONT_SIZE_MINI Font::getMiniFont()
+#define FONT_SIZE_SMALL Font::getSmallFont()
+#define FONT_SIZE_MEDIUM Font::getMediumFont()
+#define FONT_SIZE_MEDIUM_FIXED Font::getMediumFixedFont()
+#define FONT_SIZE_LARGE Font::getLargeFont()
+#define FONT_SIZE_LARGE_FIXED Font::getLargeFixedFont()
 
 #define FONT_PATH_LIGHT ":/fonts/Akrobat-Regular.ttf"
 #define FONT_PATH_REGULAR ":/fonts/Akrobat-SemiBold.ttf"
@@ -39,6 +41,45 @@ public:
     static std::shared_ptr<Font> get(float size,
                                      const std::string& path = getDefaultPath(),
                                      const bool linearMagnify = false);
+    static float getMiniFont()
+    {
+        static float sMiniFont {0.030f *
+                                std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        return sMiniFont;
+    }
+    static float getSmallFont()
+    {
+        static float sSmallFont {0.035f *
+                                 std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        return sSmallFont;
+    }
+    static float getMediumFont()
+    {
+        static float sMediumFont {
+            (Renderer::getIsVerticalOrientation() ? 0.040f : 0.045f) *
+            std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        return sMediumFont;
+    }
+    static float getMediumFixedFont()
+    {
+        // Fixed size regardless of screen orientation.
+        static float sMediumFixedFont {
+            0.045f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        return sMediumFixedFont;
+    }
+    static float getLargeFont()
+    {
+        static float sLargeFont {(Renderer::getIsVerticalOrientation() ? 0.080f : 0.085f) *
+                                 std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        return sLargeFont;
+    }
+    static float getLargeFixedFont()
+    {
+        // Fixed size regardless of screen orientation.
+        static float sLargeFixedFont {
+            0.085f * std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())};
+        return sLargeFixedFont;
+    }
 
     // Returns the expected size of a string when rendered. Extra spacing is applied to the Y axis.
     glm::vec2 sizeText(std::string text, float lineSpacing = 1.5f);

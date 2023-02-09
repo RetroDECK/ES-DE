@@ -435,14 +435,16 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
     if (!(properties & FONT_PATH) && !(properties & FONT_SIZE))
         return orig;
 
-    float size {static_cast<float>(orig ? orig->mFontSize : FONT_SIZE_MEDIUM)};
+    float size {static_cast<float>(orig ? orig->mFontSize : FONT_SIZE_MEDIUM_FIXED)};
     std::string path {orig ? orig->mPath : getDefaultPath()};
 
-    float screenHeight {static_cast<float>(Renderer::getScreenHeight())};
+    const float screenSize {Renderer::getIsVerticalOrientation() ?
+                                static_cast<float>(Renderer::getScreenWidth()) :
+                                static_cast<float>(Renderer::getScreenHeight())};
 
     if (properties & FONT_SIZE && elem->has("fontSize")) {
-        size = glm::clamp(screenHeight * elem->get<float>("fontSize"), screenHeight * 0.001f,
-                          screenHeight * 1.5f);
+        size = glm::clamp(screenSize * elem->get<float>("fontSize"), screenSize * 0.001f,
+                          screenSize * 1.5f);
         // This is used by the carousel where the itemScale property also scales the font size.
         size *= sizeMultiplier;
     }
