@@ -174,7 +174,7 @@ void GamelistView::legacyPopulateFields()
     mTextComponents.push_back(std::make_unique<TextComponent>());
     mTextComponents.back()->setThemeMetadata("text_md_name");
     mTextComponents.back()->setPosition(mSize.x, mSize.y);
-    mTextComponents.back()->setFont(Font::get(FONT_SIZE_MEDIUM));
+    mTextComponents.back()->setFont(Font::get(FONT_SIZE_MEDIUM_FIXED));
     mTextComponents.back()->setHorizontalAlignment(ALIGN_CENTER);
     mTextComponents.back()->setColor(0xAAAAAAFF);
     mTextComponents.back()->setDefaultZIndex(40.0f);

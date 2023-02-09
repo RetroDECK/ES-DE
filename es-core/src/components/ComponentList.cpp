@@ -30,7 +30,7 @@ ComponentList::ComponentList()
 {
     // Adjust the padding relative to the aspect ratio and screen resolution to make it look
     // coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
     mHorizontalPadding =
         TOTAL_HORIZONTAL_PADDING_PX * aspectValue * mRenderer->getScreenWidthModifier();
 
@@ -140,7 +140,7 @@ void ComponentList::update(int deltaTime)
     const float totalHeight {getTotalRowHeight()};
 
     // Scroll indicator logic, used by ScrollIndicatorComponent.
-    bool scrollIndicatorChanged = false;
+    bool scrollIndicatorChanged {false};
 
     if (totalHeight > mSize.y) {
         if (mCameraOffset == 0) {
@@ -218,7 +218,7 @@ void ComponentList::onCursorChanged(const CursorState& state)
     // Update the selector bar position.
     // In the future this might be animated.
     mSelectorBarOffset = 0;
-    for (int i = 0; i < mCursor; ++i)
+    for (int i {0}; i < mCursor; ++i)
         mSelectorBarOffset += getRowHeight(mEntries.at(i).data);
 
     updateCameraOffset();
@@ -244,8 +244,8 @@ void ComponentList::updateCameraOffset()
     // Move the camera to scroll.
     const float totalHeight {getTotalRowHeight()};
     if (totalHeight > mSize.y) {
-        float target {mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f -
-                      (mSize.y / 2.0f)};
+        const float target {mSelectorBarOffset + getRowHeight(mEntries.at(mCursor).data) / 2.0f -
+                            (mSize.y / 2.0f)};
 
         // Clamp the camera to prevent a fraction of a row from being displayed.
         mCameraOffset = 0.0f;
@@ -288,7 +288,14 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans {parentTrans * getTransform()};
 
+    // TODO: Fix the rounding error properly instead of working around it.
+    const float roundErrorComp {
+        static_cast<float>(static_cast<int>(mSize.y) %
+                           static_cast<int>(getRowHeight(mEntries.at(0).data))) -
+        2.0f};
+
     // Clip everything to be inside our bounds.
+    glm::vec3 dim {mSize.x, mSize.y - roundErrorComp, 0.0f};
     glm::vec3 dim {mSize.x, mSize.y, 0.0f};
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
@@ -309,7 +316,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
     bool drawAll {false};
-    for (size_t i = 0; i < mEntries.size(); ++i) {
+    for (size_t i {0}; i < mEntries.size(); ++i) {
 
         if (mLoopRows && mFocused && mLoopOffset > 0) {
             loopTrans =
@@ -405,7 +412,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     // Draw separators.
     float y {0.0f};
-    for (unsigned int i = 0; i < mEntries.size(); ++i) {
+    for (unsigned int i {0}; i < mEntries.size(); ++i) {
         mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenHeightModifier(),
                             0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
         y += getRowHeight(mEntries.at(i).data);
@@ -420,7 +427,7 @@ float ComponentList::getRowHeight(const ComponentListRow& row) const
 {
     // Returns the highest component height found in the row.
     float height {0.0f};
-    for (unsigned int i = 0; i < row.elements.size(); ++i) {
+    for (unsigned int i {0}; i < row.elements.size(); ++i) {
         if (row.elements.at(i).component->getSize().y > height)
             height = row.elements.at(i).component->getSize().y;
     }
@@ -448,7 +455,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
     float rowHeight {getRowHeight(row)};
     float x {mHorizontalPadding / 2.0f};
 
-    for (unsigned int i = 0; i < row.elements.size(); ++i) {
+    for (unsigned int i {0}; i < row.elements.size(); ++i) {
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.

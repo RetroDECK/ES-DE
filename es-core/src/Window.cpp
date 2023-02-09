@@ -120,7 +120,9 @@ bool Window::init()
     if (mDefaultFonts.empty()) {
         mDefaultFonts.push_back(Font::get(FONT_SIZE_SMALL));
         mDefaultFonts.push_back(Font::get(FONT_SIZE_MEDIUM));
+        mDefaultFonts.push_back(Font::get(FONT_SIZE_MEDIUM_FIXED));
         mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE));
+        mDefaultFonts.push_back(Font::get(FONT_SIZE_LARGE_FIXED));
     }
 
     if (mRenderer->getIsVerticalOrientation())
