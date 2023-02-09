@@ -296,7 +296,6 @@ void ComponentList::render(const glm::mat4& parentTrans)
 
     // Clip everything to be inside our bounds.
     glm::vec3 dim {mSize.x, mSize.y - roundErrorComp, 0.0f};
-    glm::vec3 dim {mSize.x, mSize.y, 0.0f};
     dim.x = (trans[0].x * dim.x + trans[3].x) - trans[3].x;
     dim.y = (trans[1].y * dim.y + trans[3].y) - trans[3].y;
 
