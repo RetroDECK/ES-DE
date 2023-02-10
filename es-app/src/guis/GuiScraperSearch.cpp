@@ -34,23 +34,23 @@
 #include "resources/Font.h"
 #include "utils/StringUtil.h"
 
-#define FAILED_VERIFICATION_RETRIES 8
-
 GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     : mRenderer {Renderer::getInstance()}
     , mGrid {glm::ivec2 {5, 3}}
     , mSearchType {type}
     , mScrapeCount {scrapeCount}
     , mRefinedSearch {false}
+    , mBlockAccept {false}
+    , mAcceptedResult {false}
     , mFoundGame {false}
     , mScrapeRatings {false}
+    , mRetrySearch {false}
+    , mRetryCount {0}
+    , mRetryTimer {glm::clamp(
+          Settings::getInstance()->getInt("ScraperRetryOnErrorTimer") * 1000, 1000, 60000)}
+    , mRetryAccumulator {0}
 {
     addChild(&mGrid);
-
-    mBlockAccept = false;
-    mAcceptedResult = false;
-    mRetrySearch = false;
-    mRetryCount = 0;
 
     mWindow->setAllowTextScrolling(true);
 
@@ -498,21 +498,14 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
 
 void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status status)
 {
-    // This is a workaround for a somehow frequently recurring issue with screenscraper.fr
-    // where requests to download the thumbnails are randomly met with TLS verification errors.
-    // It's unclear why it only happens to the thumbnail requests, but it usually goes away
-    // after a few days or so. If this issue occurs and the corresponding setting has been
-    // enabled, we'll retry the search automatically up to FAILED_VERIFICATION_RETRIES number
-    // of times. Usually a few retries is enough to get the thumbnail to download. If not,
-    // the error dialog will be presented to the user, and if the "Retry" button is pressed,
-    // a new round of retries will take place.
-    if (status == HttpReq::REQ_FAILED_VERIFICATION && mRetryCount < FAILED_VERIFICATION_RETRIES &&
-        Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
+    const int retries {
+        glm::clamp(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"), 1, 20)};
+    if (Settings::getInstance()->getBool("ScraperRetryOnError") && mRetryCount < retries) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mRetrySearch = true;
         ++mRetryCount;
         LOG(LogError) << "GuiScraperSearch: Attempting automatic retry " << mRetryCount << " of "
-                      << FAILED_VERIFICATION_RETRIES;
+                      << retries;
         return;
     }
     else {
@@ -688,16 +681,20 @@ void GuiScraperSearch::update(int deltaTime)
 {
     GuiComponent::update(deltaTime);
 
-    // There was a failure and we're attempting an automatic retry.
+    if (mBlockAccept)
+        mBusyAnim.update(deltaTime);
+
     if (mRetrySearch) {
+        // There was an error and we're attempting an automatic retry.
+        mRetryAccumulator += deltaTime;
+        if (mRetryAccumulator < mRetryTimer)
+            return;
         mRetrySearch = false;
+        mRetryAccumulator = 0;
         stop();
         search(mLastSearch);
         return;
     }
-
-    if (mBlockAccept)
-        mBusyAnim.update(deltaTime);
 
     // Check if the thumbnail for the currently selected game has finished downloading.
     if (mScraperResults.size() > 0) {

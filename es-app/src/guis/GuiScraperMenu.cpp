@@ -942,29 +942,18 @@ void GuiScraperMenu::openOtherOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
-    // Retry search on peer verification errors (TLS/certificate issues).
-    auto scraperRetryPeerVerification = std::make_shared<SwitchComponent>();
-    scraperRetryPeerVerification->setState(
-        Settings::getInstance()->getBool("ScraperRetryPeerVerification"));
-    s->addWithLabel("AUTO-RETRY ON PEER VERIFICATION ERRORS", scraperRetryPeerVerification);
-    s->addSaveFunc([scraperRetryPeerVerification, s] {
-        if (scraperRetryPeerVerification->getState() !=
-            Settings::getInstance()->getBool("ScraperRetryPeerVerification")) {
-            Settings::getInstance()->setBool("ScraperRetryPeerVerification",
-                                             scraperRetryPeerVerification->getState());
+    // Automatic retry on error.
+    auto scraperRetryOnError = std::make_shared<SwitchComponent>();
+    scraperRetryOnError->setState(Settings::getInstance()->getBool("ScraperRetryOnError"));
+    s->addWithLabel("AUTOMATIC RETRY ON ERROR", scraperRetryOnError);
+    s->addSaveFunc([scraperRetryOnError, s] {
+        if (scraperRetryOnError->getState() !=
+            Settings::getInstance()->getBool("ScraperRetryOnError")) {
+            Settings::getInstance()->setBool("ScraperRetryOnError",
+                                             scraperRetryOnError->getState());
             s->setNeedsSaving();
         }
     });
-
-    // The TLS/certificate issue is not present for TheGamesDB, so gray out the option if this
-    // scraper is selected.
-    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
-        scraperRetryPeerVerification->setEnabled(false);
-        scraperRetryPeerVerification->setOpacity(DISABLED_OPACITY);
-        scraperRetryPeerVerification->getParent()
-            ->getChild(scraperRetryPeerVerification->getChildIndex() - 1)
-            ->setOpacity(DISABLED_OPACITY);
-    }
 
     // Switch callbacks.
     auto interactiveToggleFunc = [scraperSemiautomatic]() {

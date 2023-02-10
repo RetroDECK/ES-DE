@@ -171,7 +171,9 @@ private:
     bool mScrapeRatings;
 
     bool mRetrySearch;
-    unsigned int mRetryCount;
+    int mRetryCount;
+    int mRetryTimer;
+    int mRetryAccumulator;
 
     std::unique_ptr<ScraperSearchHandle> mSearchHandle;
     std::unique_ptr<ScraperSearchHandle> mMDRetrieveURLsHandle;

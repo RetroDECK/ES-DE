@@ -148,7 +148,7 @@ void Settings::setDefaults()
     mBoolMap["ScraperConvertUnderscores"] = {true, true};
     mBoolMap["ScraperAutomaticRemoveDots"] = {true, true};
     mBoolMap["ScraperRegionFallback"] = {true, true};
-    mBoolMap["ScraperRetryPeerVerification"] = {false, false};
+    mBoolMap["ScraperRetryOnError"] = {true, true};
 
     // UI settings.
     mStringMap["ThemeSet"] = {"slate-es-de", "slate-es-de"};
@@ -319,8 +319,10 @@ void Settings::setDefaults()
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
     mIntMap["LottieMaxFileCache"] = {150, 150};
     mIntMap["LottieMaxTotalCache"] = {1024, 1024};
-    mIntMap["ScraperConnectionTimeout"] = {60, 60};
+    mIntMap["ScraperConnectionTimeout"] = {30, 30};
     mIntMap["ScraperTransferTimeout"] = {120, 120};
+    mIntMap["ScraperRetryOnErrorCount"] = {5, 5};
+    mIntMap["ScraperRetryOnErrorTimer"] = {5, 5};
 
     //
     // Hardcoded or program-internal settings.
