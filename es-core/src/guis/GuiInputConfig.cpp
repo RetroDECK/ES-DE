@@ -187,7 +187,8 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
     float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
     float width {glm::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth()};
 
-    setSize(width, Renderer::getScreenHeight() * 0.75f);
+    setSize(width, (Renderer::getIsVerticalOrientation() ? Renderer::getScreenWidth() * 0.75f :
+                                                           Renderer::getScreenHeight() * 0.75f));
     setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
                 (Renderer::getScreenHeight() - mSize.y) / 2.0f);
 }

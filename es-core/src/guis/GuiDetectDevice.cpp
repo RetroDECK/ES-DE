@@ -22,6 +22,7 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
                                  const std::function<void()>& doneCallback)
     : mFirstRun {firstRun}
     , mForcedConfig {forcedConfig}
+    , mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, 5}}
 {
@@ -81,12 +82,14 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    float width {glm::clamp(0.60f * aspectValue, 0.50f, 0.80f) * Renderer::getScreenWidth()};
+    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+    const float width {glm::clamp(0.60f * aspectValue, 0.50f,
+                                  (mRenderer->getIsVerticalOrientation() ? 0.85f : 0.80f)) *
+                       mRenderer->getScreenWidth()};
 
-    setSize(width, Renderer::getScreenHeight() * 0.5f);
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+    setSize(width, mRenderer->getScreenHeight() * 0.5f);
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 }
 
 void GuiDetectDevice::onSizeChanged()

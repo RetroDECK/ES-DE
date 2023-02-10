@@ -30,6 +30,7 @@ private:
     InputConfig* mHoldingConfig;
     int mHoldTime;
 
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
 

@@ -60,7 +60,7 @@ void NinePatchComponent::buildVertices()
     else {
         // Scale the corner size relative to the screen resolution (using the medium sized
         // default font as size reference).
-        relCornerSize = mCornerSize * (Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() *
+        relCornerSize = mCornerSize * (Font::get(FONT_SIZE_MEDIUM_FIXED)->getLetterHeight() *
                                        (mSharpCorners == true ? 0.0568f : 0.09f) / 2.0f);
     }
 

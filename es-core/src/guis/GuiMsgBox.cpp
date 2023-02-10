@@ -25,7 +25,8 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
                      const std::function<void()>& func3,
                      bool disableBackButton,
                      bool deleteOnButtonPress)
-    : mBackground {":/graphics/frame.svg"}
+    : mRenderer {Renderer::getInstance()}
+    , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, 2}}
     , mHelpStyle {helpstyle}
     , mDisableBackButton {disableBackButton}
@@ -33,12 +34,13 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
 {
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
-    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
 
-    float width {
-        floorf(glm::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth())};
-    float minWidth {
-        floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * Renderer::getScreenWidth())};
+    const float maxWidthMultiplier {mRenderer->getIsVerticalOrientation() ? 0.90f : 0.80f};
+    float width {floorf(glm::clamp(0.60f * aspectValue, 0.60f, maxWidthMultiplier) *
+                        mRenderer->getScreenWidth())};
+    const float minWidth {
+        floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * mRenderer->getScreenWidth())};
 
     mMsg = std::make_shared<TextComponent>(text, Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
                                            ALIGN_CENTER);
@@ -85,14 +87,14 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
 
     // Now that we know width, we can find height.
     mMsg->setSize(width, 0.0f); // mMsg->getSize.y() now returns the proper length.
-    const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
-                                     mMsg->getSize().y * VERTICAL_PADDING_MODIFIER);
-    setSize(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier()),
+    const float msgHeight {std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
+                                    mMsg->getSize().y * VERTICAL_PADDING_MODIFIER)};
+    setSize(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f * mRenderer->getScreenWidthModifier()),
             msgHeight + mButtonGrid->getSize().y);
 
     // Center for good measure.
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     addChild(&mBackground);
     addChild(&mGrid);
@@ -101,18 +103,19 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
 void GuiMsgBox::changeText(const std::string& newText)
 {
     mMsg->setText(newText);
-    glm::vec2 newSize = mMsg->getFont()->sizeText(newText);
+    glm::vec2 newSize {mMsg->getFont()->sizeText(newText)};
     newSize.y *= VERTICAL_PADDING_MODIFIER;
     mMsg->setSize(newSize);
 
     // Adjust the width depending on the aspect ratio of the screen, to make the screen look
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
     // reference.
-    float aspectValue = 1.778f / Renderer::getScreenAspectRatio();
+    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
 
-    float width =
-        floorf(glm::clamp(0.60f * aspectValue, 0.60f, 0.80f) * Renderer::getScreenWidth());
-    float minWidth = Renderer::getScreenWidth() * 0.3f;
+    const float maxWidthMultiplier {mRenderer->getIsVerticalOrientation() ? 0.90f : 0.80f};
+    float width {floorf(glm::clamp(0.60f * aspectValue, 0.60f, maxWidthMultiplier) *
+                        mRenderer->getScreenWidth())};
+    const float minWidth {mRenderer->getScreenWidth() * 0.3f};
 
     // Decide final width.
     if (mMsg->getSize().x < width && mButtonGrid->getSize().x < width) {
@@ -130,8 +133,8 @@ void GuiMsgBox::changeText(const std::string& newText)
     newSize.y *= VERTICAL_PADDING_MODIFIER;
     mMsg->setSize(newSize);
 
-    const float msgHeight = std::max(Font::get(FONT_SIZE_LARGE)->getHeight(), mMsg->getSize().y);
-    setSize(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier()),
+    const float msgHeight {std::max(Font::get(FONT_SIZE_LARGE)->getHeight(), mMsg->getSize().y)};
+    setSize(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f * mRenderer->getScreenWidthModifier()),
             msgHeight + mButtonGrid->getSize().y);
 }
 
@@ -181,7 +184,7 @@ void GuiMsgBox::deleteMeAndCall(const std::function<void()>& func)
 
 std::vector<HelpPrompt> GuiMsgBox::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts = mGrid.getHelpPrompts();
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
 
     if (!mDisableBackButton)
         prompts.push_back(HelpPrompt("b", "Back"));

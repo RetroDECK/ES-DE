@@ -171,7 +171,7 @@ TextListComponent<T>::TextListComponent()
     , mLoopScroll {false}
     , mGamelistView {std::is_same_v<T, FileData*> ? true : false}
     , mLegacyMode {false}
-    , mFont {Font::get(FONT_SIZE_MEDIUM)}
+    , mFont {Font::get(FONT_SIZE_MEDIUM_FIXED)}
     , mSelectorHeight {mFont->getSize() * 1.5f}
     , mSelectorHorizontalOffset {0.0f}
     , mSelectorVerticalOffset {0.0f}

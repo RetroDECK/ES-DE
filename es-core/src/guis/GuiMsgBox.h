@@ -42,6 +42,7 @@ public:
 private:
     void deleteMeAndCall(const std::function<void()>& func);
 
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
 

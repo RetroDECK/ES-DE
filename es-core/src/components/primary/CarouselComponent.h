@@ -235,7 +235,7 @@ CarouselComponent<T>::CarouselComponent()
     , mColorGradientHorizontal {true}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
-    , mFont {Font::get(FONT_SIZE_LARGE)}
+    , mFont {Font::get(FONT_SIZE_LARGE_FIXED)}
     , mLetterCase {LetterCase::NONE}
     , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
     , mLetterCaseCustomCollections {LetterCase::UNDEFINED}
