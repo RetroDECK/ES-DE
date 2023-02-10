@@ -245,7 +245,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     row.addElement(deleteCollection, true);
     row.addElement(bracketDeleteCollection, false);
     row.makeAcceptInputHandler([this, customSystems] {
-        auto ss = new GuiSettings("SELECT COLLECTION TO DELETE");
+        auto ss = new GuiSettings("COLLECTION TO DELETE");
         std::shared_ptr<OptionListComponent<std::string>> customCollections {
             std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "", true)};
         for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
@@ -304,11 +304,8 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             row.addElement(customCollection, true);
             ss->addRow(row);
         }
-        // Make the menu slightly wider to fit the scroll indicators.
         glm::vec2 menuSize {ss->getMenuSize()};
         glm::vec3 menuPos {ss->getMenuPosition()};
-        const float maxWidthModifier {mRenderer->getIsVerticalOrientation() ? 1.0f : 1.08f};
-        ss->setMenuSize(glm::vec2 {menuSize.x * maxWidthModifier, menuSize.y});
         menuPos.x = (mRenderer->getScreenWidth() - ss->getMenuSize().x) / 2.0f;
         ss->setMenuPosition(menuPos);
         mWindow->pushGui(ss);

@@ -203,7 +203,8 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
     // reference.
     float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    float maxWidthModifier {glm::clamp(0.77f * aspectValue, 0.50f, 0.92f)};
+    float maxWidthModifier {glm::clamp(0.77f * aspectValue, 0.50f,
+                                       (Renderer::getIsVerticalOrientation() ? 0.94f : 0.92f))};
     float maxWidth {Renderer::getScreenWidth() * maxWidthModifier};
 
     // Set the width of the selector window to the menu width, unless the system full name is

@@ -28,8 +28,9 @@ public:
               const std::function<void()>& func2 = nullptr,
               const std::string& name3 = "",
               const std::function<void()>& func3 = nullptr,
-              bool disableBackButton = false,
-              bool deleteOnButtonPress = true);
+              const bool disableBackButton = false,
+              const bool deleteOnButtonPress = true,
+              const float maxWidthMultiplier = 0.0f);
 
     void changeText(const std::string& newText);
 
@@ -53,6 +54,7 @@ private:
     std::function<void()> mAcceleratorFunc;
     bool mDisableBackButton;
     bool mDeleteOnButtonPress;
+    float mMaxWidthMultiplier;
 };
 
 #endif // ES_CORE_GUIS_GUI_MSG_BOX_H

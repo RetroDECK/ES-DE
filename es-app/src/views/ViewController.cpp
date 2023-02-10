@@ -74,7 +74,10 @@ void ViewController::invalidSystemsFileDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        "", nullptr, "", nullptr, true));
+        "", nullptr, "", nullptr, true, true,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.85f :
+             0.55f * (1.778f / mRenderer->getScreenAspectRatio()))));
 }
 
 void ViewController::noGamesDialog()
@@ -120,7 +123,7 @@ void ViewController::noGamesDialog()
                                                        "ROM DIRECTORY SETTING SAVED, RESTART\n"
                                                        "THE APPLICATION TO RESCAN THE SYSTEMS",
                                                        "OK", nullptr, "", nullptr, "", nullptr,
-                                                       true));
+                                                       true, true));
                     },
                     false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
                     currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
@@ -187,7 +190,10 @@ void ViewController::noGamesDialog()
             quit.type = SDL_QUIT;
             SDL_PushEvent(&quit);
         },
-        true, false);
+        true, false,
+        (mRenderer->getIsVerticalOrientation() ?
+             0.90f :
+             0.62f * (1.778f / mRenderer->getScreenAspectRatio())));
 
     mWindow->pushGui(mNoGamesMessageBox);
 }

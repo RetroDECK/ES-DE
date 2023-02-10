@@ -54,6 +54,7 @@ private:
     unsigned int mGamesSkipped;
     unsigned int mGamesFailed;
 
+    Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
 

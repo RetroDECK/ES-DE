@@ -14,6 +14,7 @@
 
 GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     : mGameQueue {gameQueue}
+    , mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {6, 13}}
 {
@@ -77,8 +78,10 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
     mGrid.setEntry(mOverwrittenVal, glm::ivec2 {2, 5}, false, true, glm::ivec2 {1, 1});
 
     // Skipping label.
-    mSkippedLbl = std::make_shared<TextComponent>("Skipped (existing):", Font::get(FONT_SIZE_SMALL),
-                                                  0x888888FF, ALIGN_LEFT);
+    const std::string skipLabel {mRenderer->getIsVerticalOrientation() ? "Skipped:" :
+                                                                         "Skipped (existing):"};
+    mSkippedLbl = std::make_shared<TextComponent>(skipLabel, Font::get(FONT_SIZE_SMALL), 0x888888FF,
+                                                  ALIGN_LEFT);
     mGrid.setEntry(mSkippedLbl, glm::ivec2 {1, 6}, false, true, glm::ivec2 {1, 1});
 
     // Skipping value/counter.
@@ -175,12 +178,13 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
 
     // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 95% of the screen
     // width rather than the 85% allowed for wider displays.
-    float width {Renderer::getScreenWidth() *
-                 ((Renderer::getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f)};
+    float width {mRenderer->getScreenWidth() *
+                 ((mRenderer->getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f)};
 
-    setSize(width, Renderer::getScreenHeight() * 0.75f);
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                (Renderer::getScreenHeight() - mSize.y) / 2.0f);
+    setSize(width,
+            mRenderer->getScreenHeight() * (mRenderer->getIsVerticalOrientation() ? 0.52f : 0.75f));
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 }
 
 GuiOfflineGenerator::~GuiOfflineGenerator()
@@ -221,9 +225,11 @@ void GuiOfflineGenerator::onSizeChanged()
 
     // Adjust the width slightly depending on the aspect ratio of the screen to make sure
     // that the label does not get abbreviated.
-    if (Renderer::getScreenAspectRatio() <= 1.4f)
-        mGrid.setColWidthPerc(3, 0.13f);
-    else if (Renderer::getScreenAspectRatio() <= 1.6f)
+    if (mRenderer->getIsVerticalOrientation())
+        mGrid.setColWidthPerc(3, 0.17f);
+    else if (mRenderer->getScreenAspectRatio() <= 1.4f)
+        mGrid.setColWidthPerc(3, 0.14f);
+    else if (mRenderer->getScreenAspectRatio() <= 1.6f)
         mGrid.setColWidthPerc(3, 0.12f);
     else
         mGrid.setColWidthPerc(3, 0.113f);

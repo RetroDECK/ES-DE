@@ -260,7 +260,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     }
 
                     const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
-                    const float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                    const float maxWidthModifier {
+                        glm::clamp(0.64f * aspectValue, 0.42f,
+                                   (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.92f))};
                     const float maxWidth {mRenderer->getScreenWidth() * maxWidthModifier};
 
                     s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});
@@ -512,7 +514,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     }
 
                     const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
-                    const float maxWidthModifier {glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                    const float maxWidthModifier {
+                        glm::clamp(0.64f * aspectValue, 0.42f,
+                                   (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.92f))};
                     const float maxWidth {mRenderer->getScreenWidth() * maxWidthModifier};
 
                     s->setMenuSize(glm::vec2 {maxWidth, s->getMenuSize().y});

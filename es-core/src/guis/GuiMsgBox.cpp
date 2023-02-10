@@ -23,22 +23,26 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
                      const std::function<void()>& func2,
                      const std::string& name3,
                      const std::function<void()>& func3,
-                     bool disableBackButton,
-                     bool deleteOnButtonPress)
+                     const bool disableBackButton,
+                     const bool deleteOnButtonPress,
+                     const float maxWidthMultiplier)
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {1, 2}}
     , mHelpStyle {helpstyle}
     , mDisableBackButton {disableBackButton}
     , mDeleteOnButtonPress {deleteOnButtonPress}
+    , mMaxWidthMultiplier {maxWidthMultiplier}
 {
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
     // regardless of screen type. The 1.778 aspect ratio value is the 16:9 reference.
     const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
 
-    const float maxWidthMultiplier {mRenderer->getIsVerticalOrientation() ? 0.90f : 0.80f};
-    float width {floorf(glm::clamp(0.60f * aspectValue, 0.60f, maxWidthMultiplier) *
-                        mRenderer->getScreenWidth())};
+    if (mMaxWidthMultiplier == 0.0f)
+        mMaxWidthMultiplier = mRenderer->getIsVerticalOrientation() ? 0.90f : 0.80f;
+
+    float width {std::floor(glm::clamp(0.60f * aspectValue, 0.60f, mMaxWidthMultiplier) *
+                            mRenderer->getScreenWidth())};
     const float minWidth {
         floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * mRenderer->getScreenWidth())};
 
@@ -110,10 +114,12 @@ void GuiMsgBox::changeText(const std::string& newText)
     // Adjust the width depending on the aspect ratio of the screen, to make the screen look
     // somewhat coherent regardless of screen type. The 1.778 aspect ratio value is the 16:9
     // reference.
-    float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
 
-    const float maxWidthMultiplier {mRenderer->getIsVerticalOrientation() ? 0.90f : 0.80f};
-    float width {floorf(glm::clamp(0.60f * aspectValue, 0.60f, maxWidthMultiplier) *
+    if (mMaxWidthMultiplier == 0.0f)
+        mMaxWidthMultiplier = mRenderer->getIsVerticalOrientation() ? 0.90f : 0.80f;
+
+    float width {floorf(glm::clamp(0.60f * aspectValue, 0.60f, mMaxWidthMultiplier) *
                         mRenderer->getScreenWidth())};
     const float minWidth {mRenderer->getScreenWidth() * 0.3f};
 

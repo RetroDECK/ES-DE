@@ -412,13 +412,13 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Draw separators.
     float y {0.0f};
     for (unsigned int i {0}; i < mEntries.size(); ++i) {
-        mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenHeightModifier(),
+        mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
                             0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
         y += getRowHeight(mEntries.at(i).data);
     }
 
-    mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenHeightModifier(), 0xC6C7C6FF,
-                        0xC6C7C6FF, false, mOpacity, mDimming);
+    mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
+                        0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
     mRenderer->popClipRect();
 }
 

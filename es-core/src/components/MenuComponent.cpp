@@ -112,8 +112,9 @@ void MenuComponent::updateSize()
         }
     }
 
-    float width {
-        std::min(mRenderer->getScreenHeight() * 1.05f, mRenderer->getScreenWidth() * 0.90f)};
+    float width {std::min(mRenderer->getScreenHeight() * 1.05f,
+                          mRenderer->getScreenWidth() *
+                              (mRenderer->getIsVerticalOrientation() ? 0.94f : 0.90f))};
     setSize(width, height);
 }
 
