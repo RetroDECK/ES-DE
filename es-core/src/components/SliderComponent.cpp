@@ -29,8 +29,11 @@ SliderComponent::SliderComponent(float min, float max, float increment, const st
     // Some sane default value.
     mValue = (max + min) / 2.0f;
 
-    mKnob.setOrigin(0.5f, 0.5f);
+    mKnob.setOrigin(0.5f, 0.0f);
     mKnob.setImage(":/graphics/slider_knob.svg");
+
+    mKnobDisabled.setOrigin(0.5f, 0.0f);
+    mKnobDisabled.setImage(":/graphics/slider_knob_disabled.svg");
 
     setSize(mWindow->peekGui()->getSize().x * 0.26f,
             Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
@@ -38,6 +41,10 @@ SliderComponent::SliderComponent(float min, float max, float increment, const st
 
 bool SliderComponent::input(InputConfig* config, Input input)
 {
+    // Ignore input if the component has been disabled.
+    if (!mEnabled)
+        return false;
+
     if (input.value != 0) {
         if (config->isMappedLike("left", input)) {
             if (input.value)
@@ -97,10 +104,14 @@ void SliderComponent::render(const glm::mat4& parentTrans)
     if (mTextCache)
         mFont->renderTextCache(mTextCache.get());
 
-    mRenderer->drawRect(mKnob.getSize().x / 2.0f, mBarPosY, width, mBarHeight, 0x777777FF,
-                        0x777777FF);
+    mRenderer->drawRect(mKnob.getSize().x / 2.0f, mBarPosY, width, mBarHeight,
+                        0x77777700 | static_cast<unsigned int>(mOpacity * 255.0f),
+                        0x77777700 | static_cast<unsigned int>(mOpacity * 255.0f));
 
-    mKnob.render(trans);
+    if (mOpacity > DISABLED_OPACITY)
+        mKnob.render(trans);
+    else
+        mKnobDisabled.render(trans);
 
     GuiComponent::renderChildren(trans);
 }
@@ -118,9 +129,7 @@ void SliderComponent::setValue(float value)
 
 void SliderComponent::onSizeChanged()
 {
-    if (!mSuffix.empty())
-        mFont = Font::get(mSize.y, FONT_PATH_LIGHT);
-
+    mFont = Font::get(mSize.y, FONT_PATH_LIGHT);
     onValueChanged();
 }
 
@@ -183,11 +192,16 @@ void SliderComponent::onValueChanged()
     // For smooth outer boundaries.
     // const float val {glm::smoothstep(mMin, mMax, mValue)};
 
-    mKnob.setOrigin(glm::vec2 {0.5f, 0.0f});
     const float posY {(mSize.y - mKnob.getSize().y) / 2.0f};
     mKnob.setPosition(val * barLength + mKnob.getSize().x / 2.0f, posY);
 
+    mKnobDisabled.setResize(mKnob.getSize());
+    mKnobDisabled.setPosition(mKnob.getPosition());
+
     mBarPosY = (mSize.y - mBarHeight) / 2.0f;
+
+    if (mChangedValueCallback)
+        mChangedValueCallback();
 }
 
 std::vector<HelpPrompt> SliderComponent::getHelpPrompts()
