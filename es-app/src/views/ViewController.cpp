@@ -1151,7 +1151,7 @@ void ViewController::preload()
     // the bundled fallback sound files.
     bool themeSoundSupport {false};
     for (auto system : SystemData::sSystemVector) {
-        if (system->getTheme()->hasView("all")) {
+        if (!themeSoundSupport && system->getTheme()->hasView("all")) {
             NavigationSounds::getInstance().loadThemeNavigationSounds(system->getTheme().get());
             themeSoundSupport = true;
         }
