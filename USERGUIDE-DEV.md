@@ -2214,6 +2214,14 @@ The region to scrape for. This affects game names, game media and release dates.
 
 Multiple languages are supported by ScreenScraper, and this affects translations of game genres and game descriptions. As the option name implies this is the preferred language only as not all games have had their metadata translated. Unfortunately some less used languages have quite few games translated, but hopefully this will improve over time as there's an ongoing community effort to make more translations. If the preferred language is not available for a game, ES-DE will fall back to using the English metadata.
 
+**Automatic retries on error**
+
+How many times to automatically retry scraping if an error is encountered, from 1 to 10 tries.
+
+**Retry attempt timer**
+
+How long to wait between each scraper retry, from 1 to 30 seconds.
+
 **Overwrite files and data**
 
 Affects both overwriting of metadata as well as actual game media files on the filesystem. Even with this option disabled, metadata entries which are set to their default values will be populated by the scraper. In other words, this option only affects overwriting of previously scraped data, or data manually entered via the metadata editor. Game names are considered as set to their default values if either corresponding to the physical game file on disk minus the extension (e.g. the entry _Commando_ if the file is named _Commando.zip_), or for arcade games if corresponding to the MAME names as defined in the bundled mamenames.xml. Note that this setting does not affect generated miximages, that is instead controlled by the setting _Overwrite miximages (scraper/offline generator)_ found in the miximage settings menu.
@@ -2257,10 +2265,6 @@ ScreenScraper has issues with some game names containing dots, such as _Super Ma
 **Enable fallback to additional regions** _(ScreenScraper only)_
 
 When a certain game media file does not exist for the selected region, ES-DE automatically performs a fallback to the regions _world_, _USA_, _Japan_, _EU_, and _custom_ in this specific order. If this setting is enabled then an additional fallback is performed to all other country-specific regions. This makes it possible to scrape media for some games only released in specific countries like Brazil or South Korea. It may also make it possible to scrape some game media that have been uploaded to ScreenScraper using the wrong region. The special _ss/ScreenScraper_ region is also enabled via this option, and among other things it contains media for games that never had official releases. This is relevant for instance for OpenBOR and PICO-8 games where 3D boxes and other images may become available. The drawback of this setting is that you may get inaccurate data such as box art in the wrong language or unofficial box art for arcade games, so you may want to experiment with this option on a per-system basis.
-
-**Auto-retry on peer verification errors** _(ScreenScraper only)_
-
-ScreenScraper sometimes has issues with its TLS certificates which causes searches to randomly fail. It's normally resolved within a few days, but in the meanwhile activating this setting will have the scraper automatically make up to eight additional attempts when this error occurs. That is normally enough to complete the search, but if not, just press _Retry_ in the error dialog and ES-DE will try eight more times. This setting applies to both the single-game scraper and the multi-scraper. The following error notification dialog and corresponding es_log.txt entry is displayed when this error occurs: "Error downloading thumbnail: SSL peer certificate or SSH remote key was not OK".
 
 ### UI settings
 
@@ -2592,6 +2596,10 @@ Sets the level of anti-aliasing for the application. You can select between _dis
 **Display/monitor index (requires restart)**
 
 This option sets the display to use for ES-DE for multi-monitor setups. The possible values are the monitor index numbers 1, 2, 3 or 4. If a value is set here for a display that does not actually exist, then ES-DE will set it to 1 upon startup. Index 1 is the primary display for the computer. It's also possible to override the setting by passing the --display command line argument. Doing so will also overwrite the display index setting in es_settings.xml. The Display/monitor index option only changes the display used by ES-DE; the emulators need to be configured separately (which can easily be done globally if using RetroArch).
+
+**Rotate screen (requires restart)**
+
+Rotates the application screen within the application window, i.e. it will not affect the actual window size but rather the contents within the window. Applied clockwise in 90 degree steps. Intended for Tate mode (vertical orientation) setups where you do not want to rotate the display on the operating system level. If you want to also rotate the entire application window you'll need to supply a resolution manually using the --resolution command line option.
 
 **Keyboard quit shortcut**
 

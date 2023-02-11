@@ -1057,26 +1057,26 @@ The input configuration is described in the [User guide](USERGUIDE-DEV.md#input-
 You can use **--help** or **-h** to view the list of command line options, as shown here.
 
 ```
---display [index 1-4]           Display/monitor to use
---resolution [width] [height]   Application resolution
---screenrotate [1/on or 0/off]  Rotate application screen 180 degrees
---vsync [1/on or 0/off]         Turn VSync on or off (default is on)
---max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---anti-aliasing [0, 2 or 4]     Set MSAA anti-aliasing to disabled, 2x or 4x
---no-splash                     Don't show the splash screen during startup
---gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist               Ignore the gamelist.xml files (useful for troubleshooting)
---show-hidden-files             Show hidden files and folders
---show-hidden-games             Show hidden games
---force-full                    Force the UI mode to Full
---force-kiosk                   Force the UI mode to Kiosk
---force-kid                     Force the UI mode to Kid
---force-input-config            Force configuration of input device
---create-system-dirs            Create game system directories
---home [path]                   Directory to use as home path
---debug                         Print debug information
---version, -v                   Display version information
---help, -h                      Summon a sentient, angry tuba
+--display [1 to 4]                  Display/monitor to use
+--resolution [width] [height]       Application resolution
+--screenrotate [0, 90, 180 or 270]  Rotate screen contents within application window
+--vsync [1/on or 0/off]             Turn VSync on or off (default is on)
+--max-vram [size]                   Max VRAM to use (in mebibytes) before swapping
+--anti-aliasing [0, 2 or 4]         Set MSAA anti-aliasing to disabled, 2x or 4x
+--no-splash                         Don't show the splash screen during startup
+--gamelist-only                     Skip automatic game ROM search, only read from gamelist.xml
+--ignore-gamelist                   Ignore the gamelist.xml files (useful for troubleshooting)
+--show-hidden-files                 Show hidden files and folders
+--show-hidden-games                 Show hidden games
+--force-full                        Force the UI mode to Full
+--force-kiosk                       Force the UI mode to Kiosk
+--force-kid                         Force the UI mode to Kid
+--force-input-config                Force configuration of input devices
+--create-system-dirs                Create game system directories
+--home [path]                       Directory to use as home path
+--debug                             Print debug information
+--version, -v                       Display version information
+--help, -h                          Summon a sentient, angry tuba
 ```
 
 _The --anti-aliasing option is not available if ES-DE is built using the OpenGL ES renderer._
@@ -1090,6 +1090,7 @@ Running with the --create-system-dirs option will generate all the game system d
 For the following options, the es_settings.xml file is immediately updated/saved when passing the parameter:
 ```
 --display
+--screenrotate
 --max-vram
 --anti-aliasing
 --gamelist-only
@@ -1135,7 +1136,7 @@ If using the regular desktop OpenGL renderer, the allowed values are 3.3 (defaul
 
 **ScraperConnectionTimeout**
 
-Sets the server connection timeout for the scraper. Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 60 seconds.
+Sets the server connection timeout for the scraper. Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 30 seconds.
 
 **ScraperTransferTimeout**
 

@@ -1187,7 +1187,8 @@ Properties:
     - Valid values are `horizontal`, `vertical`, `horizontalWheel` or `verticalWheel`
     - Default is `horizontal`
 * `staticImage` - type: PATH
-    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
+    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - This property can only be used in the `system` view.
 * `imageType` - type: STRING
     - This displays a game image of a certain media type, and can only be used in the `gamelist` view. Optionally two types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined, and any superfluous entries will be ignored. Note that defining two entries can lead to quite a performance penalty so in general it's recommended to define a single value and instead use `defaultImage` as a fallback in case no image is found.
     - Valid values:
@@ -1206,29 +1207,29 @@ Properties:
     - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
 * `maxItemCount` - type: FLOAT
     - Sets the number of carousel items to display.
-    - This property can only be used when `type` is `horizontal` or `vertical`
     - Minimum value is `0.5` and maximum value is `30`
     - Default is `3`
+    - This property can only be used when `type` is `horizontal` or `vertical`
 * `itemsBeforeCenter` - type: UNSIGNED_INTEGER
     - Sets the number of items before the center position (the currently selected item). By setting this property and `itemsAfterCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
-    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
+    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
 * `itemsAfterCenter` - type: UNSIGNED_INTEGER
     - Sets the number of items after the center position (the currently selected item). By setting this property and `itemsBeforeCenter` to different values an asymmetric wheel can be configured. Combine with `itemRotation` to control how many entries to display in the carousel.
-    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
     - Minimum value is `0` and maximum value is `20`
     - Default is `8`
+    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
 * `itemStacking` - type: STRING
     - Controls how to stack overlapping items. When set to `centered` the selected item will be raised and items further from the selected item (to the left/right or above/below depending on the carousel orientation) will be progressively rendered lower than the items closer to the center. If set to `ascending` then items will be rendered progressively higher from left to right or from top to bottom depending on the carousel orientation. If set to `descending` the opposite takes place with items being progressively rendered lower from left to right or top to bottom depending on the carousel orientation. Finally `ascendingRaised` and `descendingRaised` work identically to `ascending` and `descending` with the only difference that the currently selected item will be raised above the other items.
-    - This property can only be used when `type` is `horizontal` or `vertical`
     - Valid values are `centered`, `ascending`, `ascendingRaised`, `descending` or `descendingRaised`
     - Default is `centered`
+    - This property can only be used when `type` is `horizontal` or `vertical`
 * `selectedItemMargins` - type: NORMALIZED_PAIR
     - By default items are evenly spaced across the carousel area, but this property makes it possible to define margins (extra space or less space) around the currently selected item. The first value in the pair defines the margin to the left of the item if it's a horizontal carousel or above the item if it's a vertical carousel, and the second value of the pair sets the right or bottom margin for the selected item depending on the carousel orientation.
-    - This property can only be used when `type` is `horizontal` or `vertical`
     - Minimum value per margin is `-1` and maximum value per margin is `1`
     - Default is `0 0`
+    - This property can only be used when `type` is `horizontal` or `vertical`
 * `itemSize` - type: NORMALIZED_PAIR
     - Size of the item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. Both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`
@@ -1239,20 +1240,20 @@ Properties:
     - Default is `1.2`
 * `itemRotation` - type: FLOAT
     - Angle in degrees that items should be rotated. This value should be positive if the `itemRotationOrigin` X axis has a negative value, and it should be negative if the `itemRotationOrigin` X axis has a positive value, otherwise the wheel will rotate in the wrong direction.
-    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
     - Default is `7.5`
+    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
 * `itemRotationOrigin` - type: NORMALIZED_PAIR
     - Point around which the items will be rotated. The X axis of this property is the distance from the left side of the item to the center of the wheel in multiples of the size defined by the `itemSize` X axis. So if for instance the itemSize X axis is set to 0.2 and itemRotationOrigin is set to -2, then the center of the wheel will be at a -0.4 distance from the left side of the item. In other words, if specifying a negative number the item will be located on the right side of the carousel, i.e. the wheel will be to the left and if specifying a positive number the wheel will be to the right. Note again that this is calculated from the left side of the item, so to get an identically sized wheel as the -2 wheel just mentioned you need to define 3 as the value rather than 2 if you want the wheel to the right side of the item. This is not an error but due to the way that coordinates are calculated. The Y axis should normally be left at `0.5` or you may get some weird results. It is however possible to use this axis value creatively if you know what you are doing.
-    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
     - Default is `-3 0.5`
+    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
 * `itemAxisHorizontal` - type: BOOLEAN
     - Wheel carousel items are normally rotated towards the center of the wheel as defined by `itemRotation` and `itemRotationOrigin`. But if enabling this property the items will not get rotated along their own axis, meaning they will retain their original horizontal orientation regardless of their position along the wheel. Make sure that `itemVerticalAlignment` is set to `center` when using this property or you'll get strange alignment issues.
-    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
     - Default is `false`
+    - This property can only be used when `type` is `horizontalWheel` or `verticalWheel`
 * `itemAxisRotation` - type: FLOAT
     - Angle in degrees that items should be rotated around their own axis. Note that this does not work well with reflections as these are rotated too which does not look right.
-    - This property can only be used when `type` is `horizontal` or `vertical`
     - Default is `0`
+    - This property can only be used when `type` is `horizontal` or `vertical`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
@@ -1281,24 +1282,24 @@ Properties:
     - Default is `animate`
 * `itemHorizontalAlignment` - type: STRING
     - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the X axis.
-    - This property can only be used when `type` is `vertical` or `verticalWheel`
     - Valid values are `left`, `center` or `right`
     - Default is `center`
+    - This property can only be used when `type` is `vertical` or `verticalWheel`
 * `itemVerticalAlignment` - type: STRING
     - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the Y axis. Make sure to set this to `center` if you've enabled `itemAxisHorizontal`
-    - This property can only be used when `type` is `horizontal`, `horizontalWheel` or `verticalWheel`
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
+    - This property can only be used when `type` is `horizontal`, `horizontalWheel` or `verticalWheel`
 * `wheelHorizontalAlignment` - type: STRING
     - Sets the horizontal alignment of the actual carousel inside the overall element area. Note that the positioning is calculated before `itemAxisHorizontal` is applied.
-    - This property can only be used when `type` is `verticalWheel`
     - Valid values are `left`, `center` or `right`
     - Default is `center`
+    - This property can only be used when `type` is `verticalWheel`
 * `wheelVerticalAlignment` - type: STRING
     - Sets the vertical alignment of the actual carousel inside the overall element area. Note that the positioning is calculated before `itemAxisHorizontal` is applied.
-    - This property can only be used when `type` is `horizontalWheel`
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
+    - This property can only be used when `type` is `horizontalWheel`
 * `horizontalOffset` - type: FLOAT
     - Offsets the carousel horizontally inside its designated area, as defined by the `size` property. The value of this property is relative to the width of the carousel (with `1` being equivalent to its entire width). This property can for example be used to add a margin if using `itemHorizontalAlignment` or to offset the selected item of horizontal carousels to a non-centered position.
     - Minimum value is `-1.0` and maximum value is `1`
@@ -1309,18 +1310,18 @@ Properties:
     - Default is `0`
 * `reflections` - type: BOOLEAN
     - Enables reflections beneath the carousel items. It's probably a good idea to combine this with the `verticalOffset` property to define how much of the reflections should be visible.
-    - This property can only be used when `type` is `horizontal`
     - Default is `false`
+    - This property can only be used when `type` is `horizontal`
 * `reflectionsOpacity` - type: FLOAT
     - Defines the base opacity for the reflections.
-    - This property can only be used when `type` is `horizontal`
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
+    - This property can only be used when `type` is `horizontal`
 * `reflectionsFalloff` - type: FLOAT
     - Defines the reflections opacity falloff, starting from the item's base opacity and ending at complete transparency. The value is set relative to the item height, so `1` will fade the bottom of the item to full transparency, `2` will fade to full transparency at half the item height and `0.5` will place the full transparency point at twice the item height.
-    - This property can only be used when `type` is `horizontal`
     - Minimum value is `0` and maximum value is `10`
     - Default is `1`
+    - This property can only be used when `type` is `horizontal`
 * `unfocusedItemOpacity` - type: FLOAT
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
@@ -1336,8 +1337,9 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `text` - type: STRING
-    - A string literal to display if there is no `staticImage` or `defaultImage` property defined and if no image is found. This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
+    - A string literal to display if there is no `staticImage` or `defaultImage` property defined and if no image is found.
     - Default is the full system name.
+    - This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
 * `textColor` - type: COLOR
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
@@ -1345,7 +1347,7 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area. This property value is effectively multiplied by the `itemScale` value for the currently selected item (but if this property is omitted then the default value will not get multiplied by `itemScale`).
+    - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area. This property value is effectively multiplied by the `itemScale` value for the currently selected item (but if this property is omitted then the default value will not get multiplied by `itemScale`).
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.085`
 * `letterCase` - type: STRING
@@ -1353,9 +1355,10 @@ Properties:
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained).
 * `letterCaseAutoCollections` - type: STRING
-    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default. This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
+    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is the same value as `letterCase`
+    - This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
 * `letterCaseCustomCollections` - type: STRING
     - Sets the letter case specifically for custom collections entries. Be cautious about using this property as it will override whatever lettercase the user has defined for their custom collection names. This property takes precedence over `letterCase` if that has also been defined.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
@@ -1366,17 +1369,17 @@ Properties:
     - Default is `1.5`
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). This assumes a fallback to text is made.
-    - This property can only be used in the `gamelist` view.
     - Default is `true`
+    - This property can only be used in the `gamelist` view.
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
-    - This property can only be used in the `gamelist` view and only when `systemNameSuffix` is `true`
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
+    - This property can only be used in the `gamelist` view and only when `systemNameSuffix` is `true`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the carousel are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the carousel will be dimmed to black and elements above the carousel will be faded to transparent.
-    - This property can only be used in the `system` view.
     - Default is `false`
+    - This property can only be used in the `system` view.
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
@@ -1405,7 +1408,8 @@ Properties:
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
 * `staticImage` - type: PATH
-    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif). This property can only be used in the `system` view.
+    - Path to a static image file. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - This property can only be used in the `system` view.
 * `imageType` - type: STRING
     - This displays a game image of a certain media type, and can only be used in the `gamelist` view. Optionally two types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined, and any superfluous entries will be ignored. Note that defining two entries can lead to quite a performance penalty so in general it's recommended to define a single value and instead use `defaultImage` as a fallback in case no image is found.
     - Valid values:
@@ -1519,8 +1523,9 @@ Properties:
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `text` - type: STRING
-    - A string literal to display if there is no `staticImage` or `defaultImage` property defined or if no image is found. This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
+    - A string literal to display if there is no `staticImage` or `defaultImage` property defined or if no image is found.
     - Default is the full system name.
+    - This property can only be used in the `system` view as for the gamelist view the game name is always used as fallback.
 * `textRelativeScale` - type: FLOAT.
     - This property makes it possible to size the text relative to the overall item size.
     - Minimum value is `0.2` and maximum value is `1`
@@ -1538,7 +1543,7 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.045`
 * `letterCase` - type: STRING
@@ -1546,9 +1551,10 @@ Properties:
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained).
 * `letterCaseAutoCollections` - type: STRING
-    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default. This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
+    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is the same value as `letterCase`
+    - This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
 * `letterCaseCustomCollections` - type: STRING
     - Sets the letter case specifically for custom collections entries. Be cautious about using this property as it will override whatever lettercase the user has defined for their custom collection names. This property takes precedence over `letterCase` if that has also been defined.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
@@ -1559,17 +1565,17 @@ Properties:
     - Default is `1.5`
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). This assumes a fallback to text is made.
-    - This property can only be used in the `gamelist` view.
     - Default is `true`
+    - This property can only be used in the `gamelist` view.
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
-    - This property can only be used in the `gamelist` view and only when `systemNameSuffix` is `true`
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
+    - This property can only be used in the `gamelist` view and only when `systemNameSuffix` is `true`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the grid are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the grid will be dimmed to black and elements above the grid will be faded to transparent.
-    - This property can only be used in the `system` view.
     - Default is `false`
+    - This property can only be used in the `system` view.
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
@@ -1642,7 +1648,7 @@ Properties:
     - Default is the same value as `selectedBackgroundColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Default is `0.045`
 * `horizontalAlignment` - type: STRING
     - Controls alignment on the X axis.
@@ -1656,9 +1662,10 @@ Properties:
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is `none` (original letter case is retained).
 * `letterCaseAutoCollections` - type: STRING
-    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default. This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
+    - Sets the letter case specifically for automatic collection entries (_all games_, _favorites_ and _last played_) which have their names spelled in lowercase by default.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
     - Default is the same value as `letterCase`
+    - This property can only be used in the `system` view and it will take precedence over `letterCase` if that has also been defined.
 * `letterCaseCustomCollections` - type: STRING
     - Sets the letter case specifically for custom collections entries. Be cautious about using this property as it will override whatever lettercase the user has defined for their custom collection names. This property takes precedence over `letterCase` if that has also been defined.
     - Valid values are `none`, `uppercase`, `lowercase` or `capitalize`
@@ -1677,8 +1684,8 @@ Properties:
     - Default is `symbols`
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections).
-    - This property can only be used in the `gamelist` view.
     - Default is `true`
+    - This property can only be used in the `gamelist` view.
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
     - This property can only be used in the `gamelist` view and only when `systemNameSuffix` is `true`
@@ -1686,8 +1693,8 @@ Properties:
     - Default is `uppercase`
 * `fadeAbovePrimary` - type: BOOLEAN
     - When using fade transitions, all elements in the `system` view with a zIndex value higher than the textlist are by default still rendered during transitions. If this property is enabled then all such elements will instead be faded out. Note that elements below the textlist will be dimmed to black and elements above the textlist will be faded to transparent.
-    - This property can only be used in the `system` view.
     - Default is `false`
+    - This property can only be used in the `system` view.
 * `zIndex` - type: FLOAT
     - z-index value for element. Elements will be rendered in order of zIndex value from low to high.
     - Default is `50`
@@ -1955,9 +1962,9 @@ Properties:
     - Default is `normal`
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
-    - This property can only be used for GIF animations.
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
+    - This property can only be used for GIF animations.
 * `brightness` - type: FLOAT
     - Controls the relative level of brightness. This is intended primarily for fine adjustments.
     - Minimum value is `-2` and maximum value is `2`
@@ -2166,7 +2173,8 @@ Properties:
 * `text` - type: STRING
     - A string literal to display.
 * `systemdata` - type: STRING
-    - This translates to some system data including values defined in es_systems.xml as well as some statistics. This property can only be used in the `system` view and you can only define a single value per element.
+    - This translates to some system data including values defined in es_systems.xml as well as some statistics.
+    - This property can only be used in the `system` view and you can only define a single value per element.
     - Valid values:
     - `name` - Short system name as defined in es_systems.xml.
     - `fullname` - Full system name as defined in es_systems.xml.
@@ -2200,13 +2208,13 @@ Properties:
     - This property makes it possible to override the default "unknown" text that is displayed if `metadata` has been set to `developer`, `publisher`, `genre` or `players` and there is no metadata available for the defined type. Any string can be used but you can't set it to a blank value. If you don't want to display anything when there is no metadata available, then set this property to `:space:` in which case a blankspace will be used. This property has no effect on the metadata editor where "unknown" will still be shown for blank values.
 * `systemNameSuffix` - type: BOOLEAN
     - Whether to add the system name in square brackets after the game name when inside a collection system (automatic as well as custom collections). If `metadata` has been set to `description` then this property will only apply when inside the root of the grouped custom collections system where a summary of available games for the currently selected collection is displayed.
-    - This property can only be used when `metadata` has been set to `name` or `description`
     - Default is `true`
+    - This property can only be used when `metadata` has been set to `name` or `description`
 * `letterCaseSystemNameSuffix` - type: STRING
     - Sets the letter case for the system name suffix.
-    - This property can only be used when `systemNameSuffix` is `true`, and if `metadata` has been set to `description` then it only applies if `letterCase` is also set to `none`
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
+    - This property can only be used when `systemNameSuffix` is `true`, and if `metadata` has been set to `description` then it only applies if `letterCase` is also set to `none`
 * `metadataElement` - type: BOOLEAN
     - By default game metadata and media are faded out during gamelist fast-scrolling. They are also hidden when enabling the _Hide metadata fields_ setting in the metadata editor. This includes the text metadata fields (except `systemName`, `systemFullname`, `sourceSystemName` and `sourceSystemFullname`), ratings and badges. Using this property it's possible to explicitly define additional text elements that should be treated as if they were game metadata entries. This is for example useful for hiding and fading out text labels or icons for the various metadata types like genre, publisher, players etc. Note that it's not possible to disable the metadata hiding functionality for the default metadata fields as that would break basic application behavior. Also note that there is a slight exception to the hiding logic for text containers with the metadata value set to `description`. In this case the element is by default not hidden when enabling the _Hide metadata fields_ setting. To also hide such containers, set this property to true.
     - Default is `false`
@@ -2219,8 +2227,8 @@ Properties:
     - Default is `0`
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container.
-    - This property can only be used in the `gamelist` view.
     - Default is `true` if `metadata` is set to `description`, otherwise `false`
+    - This property can only be used in the `gamelist` view.
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`
@@ -2239,7 +2247,7 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
     - Default is `0.045`
 * `horizontalAlignment` - type: STRING
@@ -2250,6 +2258,7 @@ Properties:
     - Controls alignment on the Y axis.
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
+    - This property can only be used if `container` is `false`
 * `color` - type: COLOR
     - Default is `000000FF`
 * `backgroundColor` - type: COLOR
@@ -2317,7 +2326,7 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
     - Default is `0.045`
 * `horizontalAlignment` - type: STRING
@@ -2390,7 +2399,7 @@ Properties:
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf).
 * `fontSize` - type: FLOAT
-    - Size of the font as a percentage of screen height (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
+    - Size of the font as a percentage of screen height for horizontally oriented screens or screen width for vertically oriented screens (e.g. for a value of `0.1`, the text's height would be 10% of the screen height). This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size. The font is allowed to overflow the height of the element by 100%, i.e. `fontSize` can be set to twice that of the y axis of the `size` property. Any value above that will be clamped.
     - Default is `0.045`
 * `horizontalAlignment` - type: STRING
@@ -2501,8 +2510,8 @@ Properties:
     - Default is `1`
 * `allowDuplicates` - type: BOOLEAN
     - If set to true then the same game may appear multiple times, i.e. the amount of entries defined by `gameCount` are always fully populated. This only applies to entries higher than the amount of available games for a system, for example if a system contains 3 games and `gameCount` has been set to `5`, then the first three entries will not contain any duplicate entries, but the last two will.
-    - This property can only be used when `selection` is `random`
     - Default is `false`
+    - This property can only be used when `selection` is `random`
 
 #### helpsystem
 
@@ -2521,7 +2530,7 @@ Instances per view:
 
 Properties:
 * `pos` - type: NORMALIZED_PAIR
-    - Default is `0.012 0.9515`
+    - Default is `0.012 0.9515` for horizontally oriented screens and `0.012 0.975` for vertically oriented screens
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
     - Minimum value per axis is `0` and maximum value per axis is `1`
@@ -2540,7 +2549,7 @@ Properties:
 * `fontSize` - type: FLOAT
     - This property implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element. This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
-    - Default is `0.035`
+    - Default is `0.035` for horizontally oriented screens and `0.025` for vertically oriented screens
 * `entrySpacing` - type: FLOAT
     - Spacing between the help element pairs.
     - Minimum value is `0` and maximum value is `0.04`

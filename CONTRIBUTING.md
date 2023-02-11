@@ -68,6 +68,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
 * Multiple new components (carousel support for the Gamelist view, grid component etc.)
+* Support for Tate mode, i.e. portrait orientation for arcade cabinets and similar
 * Lottie animation (vector graphics) and GIF animation support
 * OpenGL ES 3.0 renderer for use on the Raspberry Pi
 * Replace the OpenGL fixed function pipeline renderer with a shader-based renderer
@@ -94,7 +95,6 @@ The roadmap is under constant review so expect it to change from time to time. S
 * Reduced amount of gamelist reloading to retain cached textures and improve overall performance
 * Add "time played" counter per game, similar to how it works in Steam
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
-* Support for portrait orientation, e.g. for Tate Mode arcade cabinets
 * Replace the built-in Unicode functions and lookup tables with those of the ICU library
 * Add text kerning support using the HarfBuzz library
 

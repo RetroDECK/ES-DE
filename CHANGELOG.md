@@ -12,7 +12,7 @@ The 2.0 release introduces multiple fundamental changes to the application, most
 
 Theme variants, color schemes, aspect ratios and transitions can now be defined by the theme author and are user-selectable from within the menu system. In addition to all this new theme functionality the application is still backward compatible with legacy theme sets.
 
-The renderer has been modernized and rewritten and while still using OpenGL it's now fully shader-based instead of using a fixed function pipeline as was the case in previous releases. Rendering performance has been greatly improved in some areas such as post processing (used for the video player scanline and blur shaders among other things). A new SVG rendering library named LunaSVG has been introduced which offers much better file compatibility than before, while doing it with better performance.
+The renderer has been modernized and rewritten and while still using OpenGL it's now fully shader-based instead of using a fixed function pipeline as was the case in previous releases. Tate mode (vertical screen orientation) support has been added including the ability to rotate the screen contents within the application window. Rendering performance has been greatly improved in some areas such as post processing (used for the video player scanline and blur shaders among other things). A new SVG rendering library named LunaSVG has been introduced which offers much better file compatibility than before, while doing it with better performance.
 
 Overall application speed and performance has been greatly improved with faster startup times, less latency and lower CPU utilization. Many bugs have been fixed and multiple quality of life improvements have been made. Support for a lot more standalone emulators is also included with this release, see below for more details.
 
@@ -187,6 +187,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added a metadataElement theme property to the image, video, animation and text element types to control fading and hiding of arbitrary elements
 * Added the rendering of a green rectangle around the CarouselComponent when pressing Ctrl+i in debug mode
 * Changed the color of the rectangle from blue to green for TextListComponent when pressing Ctrl+t in debug mode
+* Added scraper settings for defining a retry count and a retry timer in case of errors
 * Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
@@ -203,7 +204,9 @@ Overall application speed and performance has been greatly improved with faster 
 * Reduced CPU usage significantly by only rendering the necessary systems in SystemView
 * Added support for dimming components (fade to black)
 * Added logging of the display refresh rate on startup
-* Added a command line option to rotate the application screen 180 degrees
+* Added support for rotating the application screen contents 0, 90, 180 or 270 degrees
+* Made many improvements to GUI sizing and positioning when running in vertical screen resolutions
+* The application startup can now be aborted via an OS signal or using the configured keyboard quit shortcut
 * Improved the behavior and consistency for the virtual keyboard when using non-standard keyboard mappings
 * Improved the theme loading error logging to make it consistent and easier to understand
 * Added a log warning for unthemed systems during theme set loading
