@@ -25,6 +25,9 @@
     <aspectRatio name="16:9">
         <include>./aspect-ratio-16-9.xml</include>
     </aspectRatio>
+    <aspectRatio name="16:9_vertical">
+        <include>./aspect-ratio-16-9-vertical.xml</include>
+    </aspectRatio>
     <aspectRatio name="4:3">
         <include>./aspect-ratio-4-3.xml</include>
     </aspectRatio>

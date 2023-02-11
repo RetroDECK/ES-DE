@@ -6,6 +6,7 @@
     <themeName>Slate</themeName>
 
     <aspectRatio>16:9</aspectRatio>
+    <aspectRatio>16:9_vertical</aspectRatio>
     <aspectRatio>4:3</aspectRatio>
     <aspectRatio>4:3_vertical</aspectRatio>
 

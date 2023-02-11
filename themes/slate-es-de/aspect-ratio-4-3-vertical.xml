@@ -54,31 +54,31 @@
                 <pos>0.05 0.675</pos>
             </text>
             <text name="info2">
-                <pos>0.05 0.696</pos>
+                <pos>0.05 0.694</pos>
             </text>
             <text name="info3">
-                <pos>0.05 0.717</pos>
+                <pos>0.05 0.713</pos>
             </text>
             <text name="info4">
-                <pos>0.05 0.738</pos>
+                <pos>0.05 0.732</pos>
             </text>
             <text name="info5">
-                <pos>0.05 0.779</pos>
+                <pos>0.05 0.770</pos>
             </text>
             <text name="info6">
-                <pos>0.05 0.800</pos>
+                <pos>0.05 0.789</pos>
             </text>
             <text name="info7">
-                <pos>0.05 0.821</pos>
+                <pos>0.05 0.808</pos>
             </text>
             <text name="info8">
-                <pos>0.05 0.842</pos>
+                <pos>0.05 0.827</pos>
             </text>
             <text name="info9">
-                <pos>0.05 0.863</pos>
+                <pos>0.05 0.846</pos>
             </text>
             <text name="info10">
-                <pos>0.05 0.884</pos>
+                <pos>0.05 0.865</pos>
             </text>
         </view>
 
