@@ -47,7 +47,7 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     , mRetrySearch {false}
     , mRetryCount {0}
     , mRetryTimer {glm::clamp(
-          Settings::getInstance()->getInt("ScraperRetryOnErrorTimer") * 1000, 1000, 60000)}
+          Settings::getInstance()->getInt("ScraperRetryOnErrorTimer") * 1000, 1000, 30000)}
     , mRetryAccumulator {0}
 {
     addChild(&mGrid);
@@ -499,8 +499,8 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
 void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status status)
 {
     const int retries {
-        glm::clamp(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"), 1, 20)};
-    if (Settings::getInstance()->getBool("ScraperRetryOnError") && mRetryCount < retries) {
+        glm::clamp(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"), 0, 10)};
+    if (retries > 0 && mRetryCount < retries) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mRetrySearch = true;
         ++mRetryCount;

@@ -14,6 +14,7 @@
 #include "FileSorts.h"
 #include "SystemData.h"
 #include "components/OptionListComponent.h"
+#include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOfflineGenerator.h"
@@ -758,6 +759,42 @@ void GuiScraperMenu::openOtherOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
+    // Automatic retries on error.
+    auto scraperRetryOnErrorCount = std::make_shared<SliderComponent>(0.0f, 10.0f, 1.0f);
+    scraperRetryOnErrorCount->setValue(
+        static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorCount")));
+    s->addWithLabel("AUTOMATIC RETRIES ON ERROR", scraperRetryOnErrorCount);
+    s->addSaveFunc([scraperRetryOnErrorCount, s] {
+        if (scraperRetryOnErrorCount->getValue() !=
+            static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"))) {
+            Settings::getInstance()->setInt("ScraperRetryOnErrorCount",
+                                            static_cast<int>(scraperRetryOnErrorCount->getValue()));
+            s->setNeedsSaving();
+        }
+    });
+
+    // Retry attempt timer.
+    auto scraperRetryOnErrorTimer = std::make_shared<SliderComponent>(1.0f, 30.0f, 1.0f, "s");
+    scraperRetryOnErrorTimer->setValue(
+        static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorTimer")));
+    s->addWithLabel("RETRY ATTEMPT TIMER", scraperRetryOnErrorTimer);
+    s->addSaveFunc([scraperRetryOnErrorTimer, s] {
+        if (scraperRetryOnErrorTimer->getValue() !=
+            static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorTimer"))) {
+            Settings::getInstance()->setInt("ScraperRetryOnErrorTimer",
+                                            static_cast<int>(scraperRetryOnErrorTimer->getValue()));
+            s->setNeedsSaving();
+        }
+    });
+
+    if (scraperRetryOnErrorCount->getValue() == 0.0f) {
+        scraperRetryOnErrorTimer->setEnabled(false);
+        scraperRetryOnErrorTimer->setOpacity(DISABLED_OPACITY);
+        scraperRetryOnErrorTimer->getParent()
+            ->getChild(scraperRetryOnErrorTimer->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     // Overwrite files and data.
     auto scraperOverwriteData = std::make_shared<SwitchComponent>();
     scraperOverwriteData->setState(Settings::getInstance()->getBool("ScraperOverwriteData"));
@@ -942,18 +979,23 @@ void GuiScraperMenu::openOtherOptions()
             ->setOpacity(DISABLED_OPACITY);
     }
 
-    // Automatic retry on error.
-    auto scraperRetryOnError = std::make_shared<SwitchComponent>();
-    scraperRetryOnError->setState(Settings::getInstance()->getBool("ScraperRetryOnError"));
-    s->addWithLabel("AUTOMATIC RETRY ON ERROR", scraperRetryOnError);
-    s->addSaveFunc([scraperRetryOnError, s] {
-        if (scraperRetryOnError->getState() !=
-            Settings::getInstance()->getBool("ScraperRetryOnError")) {
-            Settings::getInstance()->setBool("ScraperRetryOnError",
-                                             scraperRetryOnError->getState());
-            s->setNeedsSaving();
+    // Slider callback.
+    auto scraperRetryCountFunc = [scraperRetryOnErrorCount, scraperRetryOnErrorTimer]() {
+        if (scraperRetryOnErrorCount->getValue() == 0.0f) {
+            scraperRetryOnErrorTimer->setEnabled(false);
+            scraperRetryOnErrorTimer->setOpacity(DISABLED_OPACITY);
+            scraperRetryOnErrorTimer->getParent()
+                ->getChild(scraperRetryOnErrorTimer->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
         }
-    });
+        else {
+            scraperRetryOnErrorTimer->setEnabled(true);
+            scraperRetryOnErrorTimer->setOpacity(1.0f);
+            scraperRetryOnErrorTimer->getParent()
+                ->getChild(scraperRetryOnErrorTimer->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+    };
 
     // Switch callbacks.
     auto interactiveToggleFunc = [scraperSemiautomatic]() {
@@ -990,6 +1032,7 @@ void GuiScraperMenu::openOtherOptions()
         }
     };
 
+    scraperRetryOnErrorCount->setCallback(scraperRetryCountFunc);
     scraperInteractive->setCallback(interactiveToggleFunc);
     scraperRespectExclusions->setCallback(excludeRecursivelyToggleFunc);
 
