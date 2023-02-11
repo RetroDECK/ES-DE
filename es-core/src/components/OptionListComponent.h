@@ -156,7 +156,7 @@ public:
         return GuiComponent::input(config, input);
     }
 
-    const int getNumEntries() { return mEntries.size(); }
+    const int getNumEntries() { return static_cast<int>(mEntries.size()); }
 
     std::vector<T> getSelectedObjects()
     {
