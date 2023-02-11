@@ -288,7 +288,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bracket->setImage(":/graphics/arrow.svg");
                 row.addElement(bracket, false);
 
-                const std::string title {it->displayPrompt};
+                const std::string title {mRenderer->getIsVerticalOrientation() ? "select emulator" :
+                                                                                 it->displayPrompt};
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
@@ -394,7 +395,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
                         const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
                         const float maxWidthModifier {
-                            glm::clamp(0.64f * aspectValue, 0.42f, 0.92f)};
+                            glm::clamp(0.64f * aspectValue, 0.42f,
+                                       (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.92f))};
                         const float maxWidth {static_cast<float>(mRenderer->getScreenWidth()) *
                                               maxWidthModifier};
 
