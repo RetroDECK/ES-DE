@@ -135,8 +135,8 @@ bool Renderer::createWindow()
         mWindowHeight = displayMode.h;
         mPaddingWidth = displayMode.w - sScreenWidth;
         mPaddingHeight = displayMode.h - sScreenHeight;
-        mScreenOffsetX -= mPaddingWidth / 2.0;
-        mScreenOffsetY -= mPaddingHeight / 2.0;
+        mScreenOffsetX -= mPaddingWidth / 2;
+        mScreenOffsetY -= mPaddingHeight / 2;
         fullscreenPadding = true;
     }
 
@@ -259,6 +259,11 @@ bool Renderer::createWindow()
     mWindowHeight *= scaleFactor;
     sScreenWidth *= scaleFactor;
     sScreenHeight *= scaleFactor;
+    mPaddingWidth *= scaleFactor;
+    mPaddingHeight *= scaleFactor;
+    mScreenOffsetX *= scaleFactor;
+    mScreenOffsetY *= scaleFactor;
+
 #else
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                  << std::to_string(displayMode.h);
