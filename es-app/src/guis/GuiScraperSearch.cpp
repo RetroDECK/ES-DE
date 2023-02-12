@@ -504,8 +504,8 @@ void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status s
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mRetrySearch = true;
         ++mRetryCount;
-        LOG(LogError) << "GuiScraperSearch: Attempting automatic retry " << mRetryCount << " of "
-                      << retries;
+        LOG(LogInfo) << "GuiScraperSearch: Attempting automatic retry " << mRetryCount << " of "
+                     << retries;
         return;
     }
     else {
