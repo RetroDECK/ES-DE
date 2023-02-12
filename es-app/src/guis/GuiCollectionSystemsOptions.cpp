@@ -304,7 +304,6 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             row.addElement(customCollection, true);
             ss->addRow(row);
         }
-        glm::vec2 menuSize {ss->getMenuSize()};
         glm::vec3 menuPos {ss->getMenuPosition()};
         menuPos.x = (mRenderer->getScreenWidth() - ss->getMenuSize().x) / 2.0f;
         ss->setMenuPosition(menuPos);
