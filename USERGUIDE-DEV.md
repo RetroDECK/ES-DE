@@ -2216,7 +2216,7 @@ Multiple languages are supported by ScreenScraper, and this affects translations
 
 **Automatic retries on error**
 
-How many times to automatically retry scraping if an error is encountered, from 1 to 10 tries.
+How many times to automatically retry scraping if an error is encountered, from 0 to 10.
 
 **Retry attempt timer**
 

@@ -68,7 +68,7 @@ The roadmap is under constant review so expect it to change from time to time. S
 
 * New theme engine with generalized views (only System and Gamelist) and theme variants support
 * Multiple new components (carousel support for the Gamelist view, grid component etc.)
-* Support for Tate mode, i.e. portrait orientation for arcade cabinets and similar
+* Support for Tate mode, i.e. vertical screen orientation for arcade cabinets and similar
 * Lottie animation (vector graphics) and GIF animation support
 * OpenGL ES 3.0 renderer for use on the Raspberry Pi
 * Replace the OpenGL fixed function pipeline renderer with a shader-based renderer

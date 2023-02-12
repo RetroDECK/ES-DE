@@ -1057,33 +1057,34 @@ The input configuration is described in the [User guide](USERGUIDE-DEV.md#input-
 You can use **--help** or **-h** to view the list of command line options, as shown here.
 
 ```
---display [1 to 4]                  Display/monitor to use
---resolution [width] [height]       Application resolution
---screenrotate [0, 90, 180 or 270]  Rotate screen contents within application window
---vsync [1/on or 0/off]             Turn VSync on or off (default is on)
---max-vram [size]                   Max VRAM to use (in mebibytes) before swapping
---anti-aliasing [0, 2 or 4]         Set MSAA anti-aliasing to disabled, 2x or 4x
---no-splash                         Don't show the splash screen during startup
---gamelist-only                     Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist                   Ignore the gamelist.xml files (useful for troubleshooting)
---show-hidden-files                 Show hidden files and folders
---show-hidden-games                 Show hidden games
---force-full                        Force the UI mode to Full
---force-kiosk                       Force the UI mode to Kiosk
---force-kid                         Force the UI mode to Kid
---force-input-config                Force configuration of input devices
---create-system-dirs                Create game system directories
---home [path]                       Directory to use as home path
---debug                             Print debug information
---version, -v                       Display version information
---help, -h                          Summon a sentient, angry tuba
+--display [1 to 4]                    Display/monitor to use
+--resolution [width] [height]         Application resolution
+--screenoffset [horiz.] [vert.]       Offset screen contents within application window
+--screenrotate [0, 90, 180 or 270]    Rotate screen contents within application window
+--fullscreen-padding [1/on or 0/off]  Padding if --resolution is lower than display resolution
+--vsync [1/on or 0/off]               Turn VSync on or off (default is on)
+--max-vram [size]                     Max VRAM to use (in mebibytes) before swapping
+--no-splash                           Don't show the splash screen during startup
+--gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml
+--ignore-gamelist                     Ignore the gamelist.xml files
+--show-hidden-files                   Show hidden files and folders
+--show-hidden-games                   Show hidden games
+--force-full                          Force the UI mode to Full
+--force-kiosk                         Force the UI mode to Kiosk
+--force-kid                           Force the UI mode to Kid
+--force-input-config                  Force configuration of input devices
+--create-system-dirs                  Create game system directories
+--home [path]                         Directory to use as home path
+--debug                               Print debug information
+--version, -v                         Display version information
+--help, -h                            Summon a sentient, angry tuba
 ```
 
 _The --anti-aliasing option is not available if ES-DE is built using the OpenGL ES renderer._
 
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its application home directory. Be aware that this option completely replaces what is considered the home directory, meaning the default ROM directory ~/ROMs would be resolved to ~/games/emulation/ROMs. The same is true for the emulator core locations if es_find_rules.xml is configured to look for them relative to the home directory. So of course RetroArch and other emulators would also need to be configured to use ~/games/emulation as its base directory in this instance.
 
-Setting the resolution to a lower or higher value than the display resolution will add a border to the application window.
+Setting --resolution to a lower or higher value than the display resolution will add a border to the application window. The exception is if defining a lower resolution than the display resolution in combination with the --fullscreen-padding flag as this will pad the screen contents on a black background. This can be combined with the --screenoffset option for exact positioning on displays where bezels or similar may obstruct part of the viewable area.
 
 Running with the --create-system-dirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
 
