@@ -38,6 +38,7 @@ public:
     void destroyContext() override;
 
     void setMatrix(const glm::mat4& matrix) override;
+    void setViewport(const Rect& viewport) override;
     void setScissor(const Rect& scissor) override;
     void setSwapInterval() override;
     void swapBuffers() override;

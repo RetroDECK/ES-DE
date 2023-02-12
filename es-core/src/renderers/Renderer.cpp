@@ -101,25 +101,49 @@ bool Renderer::createWindow()
     displayMode.h = displayBounds.h;
 #endif
 
-    mWindowWidth = Settings::getInstance()->getInt("WindowWidth") ?
-                       Settings::getInstance()->getInt("WindowWidth") :
-                       displayMode.w;
-    mWindowHeight = Settings::getInstance()->getInt("WindowHeight") ?
-                        Settings::getInstance()->getInt("WindowHeight") :
-                        displayMode.h;
     sScreenWidth = Settings::getInstance()->getInt("ScreenWidth") ?
                        Settings::getInstance()->getInt("ScreenWidth") :
-                       mWindowWidth;
+                       displayMode.w;
     sScreenHeight = Settings::getInstance()->getInt("ScreenHeight") ?
                         Settings::getInstance()->getInt("ScreenHeight") :
-                        mWindowHeight;
-    mScreenOffsetX = Settings::getInstance()->getInt("ScreenOffsetX") ?
-                         Settings::getInstance()->getInt("ScreenOffsetX") :
-                         0;
-    mScreenOffsetY = Settings::getInstance()->getInt("ScreenOffsetY") ?
-                         Settings::getInstance()->getInt("ScreenOffsetY") :
-                         0;
+                        displayMode.h;
+    mScreenOffsetX = glm::clamp((Settings::getInstance()->getInt("ScreenOffsetX") ?
+                                     Settings::getInstance()->getInt("ScreenOffsetX") :
+                                     0),
+                                -(displayMode.w / 2), displayMode.w / 2);
+    mScreenOffsetY = glm::clamp((Settings::getInstance()->getInt("ScreenOffsetY") ?
+                                     Settings::getInstance()->getInt("ScreenOffsetY") :
+                                     0),
+                                -(displayMode.w / 2), displayMode.h / 2);
     mScreenRotation = Settings::getInstance()->getInt("ScreenRotate");
+
+    if (mScreenOffsetX != 0 || mScreenOffsetY != 0) {
+        LOG(LogInfo) << "Screen offset: " << mScreenOffsetX << " horizontal, " << mScreenOffsetY
+                     << " vertical";
+    }
+    else {
+        LOG(LogInfo) << "Screen offset: disabled";
+    }
+
+    mPaddingWidth = 0;
+    mPaddingHeight = 0;
+    bool fullscreenPadding {false};
+
+    if (Settings::getInstance()->getBool("FullscreenPadding") && sScreenWidth <= displayMode.w &&
+        sScreenHeight <= displayMode.h) {
+        mWindowWidth = displayMode.w;
+        mWindowHeight = displayMode.h;
+        mPaddingWidth = displayMode.w - sScreenWidth;
+        mPaddingHeight = displayMode.h - sScreenHeight;
+        mScreenOffsetX -= mPaddingWidth / 2.0f;
+        mScreenOffsetY -= mPaddingHeight / 2.0f;
+        fullscreenPadding = true;
+    }
+
+    if (!fullscreenPadding) {
+        mWindowWidth = sScreenWidth;
+        mWindowHeight = sScreenHeight;
+    }
 
     // In case someone manually added an invalid value to es_settings.xml.
     if (mScreenRotation != 0 && mScreenRotation != 90 && mScreenRotation != 180 &&
@@ -158,7 +182,7 @@ bool Renderer::createWindow()
         SDL_SetHint(SDL_HINT_VIDEO_X11_NET_WM_BYPASS_COMPOSITOR, "0");
 #endif
 
-    bool userResolution = false;
+    bool userResolution {false};
     // Check if the user has changed the resolution from the command line.
     if (mWindowWidth != displayMode.w || mWindowHeight != displayMode.h)
         userResolution = true;
@@ -219,17 +243,17 @@ bool Renderer::createWindow()
     // display so that the full application window is used for rendering.
     int width {0};
     SDL_GL_GetDrawableSize(mSDLWindow, &width, nullptr);
-    int scaleFactor = static_cast<int>(width / mWindowWidth);
+    int scaleFactor {static_cast<int>(width / sScreenWidth)};
 
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                  << std::to_string(displayMode.h) << " (physical resolution "
                  << std::to_string(displayMode.w * scaleFactor) << "x"
                  << std::to_string(displayMode.h * scaleFactor) << ")";
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(mWindowWidth) << "x"
-                 << std::to_string(mWindowHeight) << " (physical resolution "
-                 << std::to_string(mWindowWidth * scaleFactor) << "x"
-                 << std::to_string(mWindowHeight * scaleFactor) << ")";
+    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
+                 << std::to_string(sScreenHeight) << " (physical resolution "
+                 << std::to_string(sScreenWidth * scaleFactor) << "x"
+                 << std::to_string(sScreenHeight * scaleFactor) << ")";
 
     mWindowWidth *= scaleFactor;
     mWindowHeight *= scaleFactor;
@@ -239,8 +263,8 @@ bool Renderer::createWindow()
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                  << std::to_string(displayMode.h);
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(mWindowWidth) << "x"
-                 << std::to_string(mWindowHeight);
+    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
+                 << std::to_string(sScreenHeight);
 #endif
 
     sScreenHeightModifier = static_cast<float>(sScreenHeight) / 1080.0f;
@@ -251,6 +275,23 @@ bool Renderer::createWindow()
         sScreenResolutionModifier = sScreenWidth / 1080.0f;
     else
         sScreenResolutionModifier = sScreenHeight / 1080.0f;
+
+    if (Settings::getInstance()->getBool("FullscreenPadding")) {
+        if (!fullscreenPadding) {
+            LOG(LogWarning) << "Fullscreen padding can't be applied when --resolution is set "
+                               "higher than the display resolution";
+            LOG(LogInfo) << "Screen mode: windowed";
+        }
+        else {
+            LOG(LogInfo) << "Screen mode: fullscreen padding";
+        }
+    }
+    else if (userResolution) {
+        LOG(LogInfo) << "Screen mode: windowed";
+    }
+    else {
+        LOG(LogInfo) << "Screen mode: fullscreen";
+    }
 
     LOG(LogInfo) << "Setting up OpenGL...";
 
@@ -287,27 +328,30 @@ bool Renderer::init()
         return false;
 
     glm::mat4 projection {getIdentity()};
-    Rect viewport {0, 0, 0, 0};
-
-    viewport.x = mWindowWidth - mScreenOffsetX - sScreenWidth;
-    viewport.y = mWindowHeight - mScreenOffsetY - sScreenHeight;
-    viewport.w = sScreenWidth;
-    viewport.h = sScreenHeight;
-
-    projection = glm::ortho(0.0f, static_cast<float>(sScreenHeight),
-                            static_cast<float>(sScreenWidth), 0.0f, -1.0f, 1.0f);
 
     if (mScreenRotation == 0) {
+        mViewport.x = mWindowWidth + mScreenOffsetX - sScreenWidth;
+        mViewport.y = mWindowHeight + mScreenOffsetY - sScreenHeight;
+        mViewport.w = sScreenWidth;
+        mViewport.h = sScreenHeight;
         mProjectionMatrix = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
                                        static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
     }
     else if (mScreenRotation == 90) {
+        mViewport.x = mWindowWidth + mScreenOffsetX - sScreenHeight;
+        mViewport.y = mWindowHeight + mScreenOffsetY - sScreenWidth;
+        mViewport.w = sScreenHeight;
+        mViewport.h = sScreenWidth;
         projection = glm::ortho(0.0f, static_cast<float>(sScreenHeight),
                                 static_cast<float>(sScreenWidth), 0.0f, -1.0f, 1.0f);
         projection = glm::rotate(projection, glm::radians(90.0f), {0.0f, 0.0f, 1.0f});
         mProjectionMatrix = glm::translate(projection, {0.0f, sScreenHeight * -1.0f, 0.0f});
     }
     else if (mScreenRotation == 180) {
+        mViewport.x = mWindowWidth + mScreenOffsetX - sScreenWidth;
+        mViewport.y = mWindowHeight + mScreenOffsetY - sScreenHeight;
+        mViewport.w = sScreenWidth;
+        mViewport.h = sScreenHeight;
         projection = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
                                 static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
         projection = glm::rotate(projection, glm::radians(180.0f), {0.0f, 0.0f, 1.0f});
@@ -315,6 +359,10 @@ bool Renderer::init()
             glm::translate(projection, {sScreenWidth * -1.0f, sScreenHeight * -1.0f, 0.0f});
     }
     else if (mScreenRotation == 270) {
+        mViewport.x = mWindowWidth + mScreenOffsetX - sScreenHeight;
+        mViewport.y = mWindowHeight + mScreenOffsetY - sScreenWidth;
+        mViewport.w = sScreenHeight;
+        mViewport.h = sScreenWidth;
         projection = glm::ortho(0.0f, static_cast<float>(sScreenHeight),
                                 static_cast<float>(sScreenWidth), 0.0f, -1.0f, 1.0f);
         projection = glm::rotate(projection, glm::radians(270.0f), {0.0f, 0.0f, 1.0f});
@@ -323,11 +371,7 @@ bool Renderer::init()
 
     mProjectionMatrixNormal = glm::ortho(0.0f, static_cast<float>(sScreenWidth),
                                          static_cast<float>(sScreenHeight), 0.0f, -1.0f, 1.0f);
-
-    viewport.x = mScreenOffsetX;
-    viewport.y = mScreenOffsetY;
-    viewport.w = sScreenWidth;
-    viewport.h = sScreenHeight;
+    setViewport(mViewport);
 
     // This is required to avoid a brief white screen flash during startup on some systems.
     drawRect(0.0f, 0.0f, static_cast<float>(getScreenWidth()),
@@ -353,19 +397,20 @@ void Renderer::pushClipRect(const glm::ivec2& pos, const glm::ivec2& size)
         box.h = sScreenHeight - box.y;
 
     if (mScreenRotation == 0) {
-        box = {mScreenOffsetX + box.x, mScreenOffsetY + box.y, box.w, box.h};
+        box = {mScreenOffsetX + box.x + mPaddingWidth, mScreenOffsetY + box.y + mPaddingHeight,
+               box.w, box.h};
     }
     else if (mScreenRotation == 90) {
         box = {mScreenOffsetX + mWindowWidth - (box.y + box.h), mScreenOffsetY + box.x, box.h,
-               box.w};
+               box.w + mPaddingHeight};
     }
     else if (mScreenRotation == 270) {
-        box = {mScreenOffsetX + box.y, mScreenOffsetY + mWindowHeight - (box.x + box.w), box.h,
-               box.w};
+        box = {mScreenOffsetX + box.y + mPaddingWidth,
+               mScreenOffsetY + mWindowHeight - (box.x + box.w), box.h, box.w};
     }
     else if (mScreenRotation == 180) {
-        box = {mWindowWidth - mScreenOffsetX - box.x - box.w,
-               mWindowHeight - mScreenOffsetY - box.y - box.h, box.w, box.h};
+        box = {mWindowWidth + mScreenOffsetX - box.x - box.w,
+               mWindowHeight + mScreenOffsetY - box.y - box.h, box.w, box.h};
     }
 
     // Make sure the box fits within mClipStack.top(), and clip further accordingly.
@@ -400,7 +445,7 @@ void Renderer::popClipRect()
     mClipStack.pop();
 
     if (mClipStack.empty())
-        setScissor(Rect {0, 0, 0, 0});
+        setScissor(Rect());
     else
         setScissor(mClipStack.top());
 }

@@ -118,6 +118,19 @@ public:
     };
 
     struct Rect {
+        int x;
+        int y;
+        int w;
+        int h;
+
+        Rect()
+            : x(0)
+            , y(0)
+            , w(0)
+            , h(0)
+        {
+        }
+
         Rect(const int xValue, const int yValue, const int wValue, const int hValue)
             : x(xValue)
             , y(yValue)
@@ -125,10 +138,6 @@ public:
             , h(hValue)
         {
         }
-        int x;
-        int y;
-        int w;
-        int h;
     };
 
     static Renderer* getInstance();
@@ -160,8 +169,6 @@ public:
     const glm::mat4& getProjectionMatrixNormal() { return mProjectionMatrixNormal; }
     SDL_Window* getSDLWindow() { return mSDLWindow; }
     const int getScreenRotation() { return mScreenRotation; }
-    const float getWindowWidth() { return static_cast<float>(mWindowWidth); }
-    const float getWindowHeight() { return static_cast<float>(mWindowHeight); }
     static const bool getIsVerticalOrientation() { return sIsVerticalOrientation; }
     static const float getScreenWidth() { return static_cast<float>(sScreenWidth); }
     static const float getScreenHeight() { return static_cast<float>(sScreenHeight); }
@@ -204,21 +211,28 @@ public:
         const BlendFactor srcBlendFactor = BlendFactor::ONE,
         const BlendFactor dstBlendFactor = BlendFactor::ONE_MINUS_SRC_ALPHA) = 0;
     virtual void setMatrix(const glm::mat4& matrix) = 0;
+    virtual void setViewport(const Rect& viewport) = 0;
     virtual void setScissor(const Rect& scissor) = 0;
     virtual void setSwapInterval() = 0;
     virtual void swapBuffers() = 0;
+
+protected:
+    Rect mViewport;
+    int mWindowWidth {0};
+    int mWindowHeight {0};
+    int mPaddingWidth {0};
+    int mPaddingHeight {0};
+    int mScreenOffsetX {0};
+    int mScreenOffsetY {0};
 
 private:
     std::stack<Rect> mClipStack;
     SDL_Window* mSDLWindow {nullptr};
     glm::mat4 mProjectionMatrix {};
     glm::mat4 mProjectionMatrixNormal {};
-    int mWindowWidth {0};
-    int mWindowHeight {0};
+
     static inline int sScreenWidth {0};
     static inline int sScreenHeight {0};
-    int mScreenOffsetX {0};
-    int mScreenOffsetY {0};
     int mScreenRotation {0};
     bool mInitialCursorState {true};
     static inline bool sIsVerticalOrientation {false};

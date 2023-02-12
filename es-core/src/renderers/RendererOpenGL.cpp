@@ -228,15 +228,13 @@ bool RendererOpenGL::createContext()
     LOG(LogInfo) << "GL renderer: " << renderer;
     LOG(LogInfo) << "GL version: " << version;
 #if defined(USE_OPENGLES)
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL ES " << mMajorGLVersion << "."
-                 << mMinorGLVersion;
+    LOG(LogInfo) << "Application renderer: OpenGL ES " << mMajorGLVersion << "." << mMinorGLVersion;
 #else
 #if defined(_WIN64)
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL " << mMajorGLVersion << "."
-                 << mMinorGLVersion << " with GLEW";
+    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "." << mMinorGLVersion
+                 << " with GLEW";
 #else
-    LOG(LogInfo) << "EmulationStation renderer: OpenGL " << mMajorGLVersion << "."
-                 << mMinorGLVersion;
+    LOG(LogInfo) << "Application renderer: OpenGL " << mMajorGLVersion << "." << mMinorGLVersion;
 #endif
 #endif
 
@@ -326,6 +324,13 @@ void RendererOpenGL::setMatrix(const glm::mat4& matrix)
     mTrans = getProjectionMatrix() * matrix;
 }
 
+void RendererOpenGL::setViewport(const Rect& viewport)
+{
+    // glViewport starts at the bottom left of the window.
+    GL_CHECK_ERROR(
+        glViewport(viewport.x, mWindowHeight - viewport.y - viewport.h, viewport.w, viewport.h));
+}
+
 void RendererOpenGL::setScissor(const Rect& scissor)
 {
     if ((scissor.x == 0) && (scissor.y == 0) && (scissor.w == 0) && (scissor.h == 0)) {
@@ -334,7 +339,7 @@ void RendererOpenGL::setScissor(const Rect& scissor)
     else {
         // glScissor starts at the bottom left of the window.
         GL_CHECK_ERROR(glScissor(scissor.x,
-                                 static_cast<GLint>(getWindowHeight()) - scissor.y - scissor.h,
+                                 static_cast<GLint>(mWindowHeight) - scissor.y - scissor.h,
                                  scissor.w, scissor.h));
         GL_CHECK_ERROR(glEnable(GL_SCISSOR_TEST));
     }
@@ -579,6 +584,15 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     GLuint width {static_cast<GLuint>(widthf)};
     GLuint height {static_cast<GLuint>(heightf)};
     const int screenRotation {getScreenRotation()};
+    const bool offsetOrPadding {mScreenOffsetX != 0 || mScreenOffsetY != 0 || mPaddingWidth != 0 ||
+                                mPaddingHeight != 0};
+
+    if (offsetOrPadding) {
+        Rect viewportTemp {mViewport};
+        viewportTemp.x -= mScreenOffsetX + mPaddingWidth;
+        viewportTemp.y -= mScreenOffsetY;
+        setViewport(viewportTemp);
+    }
 
     // Set vertex positions and texture coordinates to full screen as all
     // post-processing is applied to the complete screen area.
@@ -628,15 +642,20 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
 
     // Blit the screen contents to mPostProcTexture.
     if (screenRotation == 0) {
-        GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
-                                         GL_COLOR_BUFFER_BIT, GL_NEAREST));
+        GL_CHECK_ERROR(glBlitFramebuffer(
+            0, 0, width + mPaddingWidth, height - mScreenOffsetY, -mScreenOffsetX - mPaddingWidth,
+            mScreenOffsetY, width - mScreenOffsetX, height, GL_COLOR_BUFFER_BIT, GL_NEAREST));
     }
     else if (screenRotation == 90 || screenRotation == 270) {
         if (!evenBlurPasses || !textureRGBA)
-            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, height, width, 0, 0, height, width,
-                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, height + mPaddingWidth, width - mScreenOffsetY,
+                                             -mScreenOffsetX - mPaddingWidth, mScreenOffsetY,
+                                             height - mScreenOffsetX, width, GL_COLOR_BUFFER_BIT,
+                                             GL_NEAREST));
         else
-            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, height, width, height, width, 0, 0,
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, height + mPaddingWidth, width - mScreenOffsetY,
+                                             height + mScreenOffsetX + mPaddingWidth,
+                                             width - mScreenOffsetY, mScreenOffsetX, 0,
                                              GL_COLOR_BUFFER_BIT, GL_NEAREST));
         // If not rendering to a texture, apply shaders without any rotation applied.
         if (!textureRGBA)
@@ -644,11 +663,15 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     }
     else {
         if ((shaderCalls + (textureRGBA ? 1 : 0)) % 2 == 0)
-            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height,
-                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width + mPaddingWidth, height - mScreenOffsetY,
+                                             -mScreenOffsetX - mPaddingWidth, mScreenOffsetY,
+                                             width - mScreenOffsetX, height, GL_COLOR_BUFFER_BIT,
+                                             GL_NEAREST));
         else
-            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width, height, width, height, 0, 0,
-                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+            GL_CHECK_ERROR(glBlitFramebuffer(
+                0, 0, width + mPaddingWidth, height + (mPaddingHeight / 2),
+                width + mScreenOffsetX + mPaddingWidth, height - mScreenOffsetY, mScreenOffsetX,
+                -(mPaddingHeight / 2) - mScreenOffsetY, GL_COLOR_BUFFER_BIT, GL_NEAREST));
     }
 
     if (shaderCalls > 1)
@@ -669,6 +692,8 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
         for (int p {0}; p < shaderPasses; ++p) {
             if (!textureRGBA && i == shaderList.size() - 1 && p == shaderPasses - 1) {
                 GL_CHECK_ERROR(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0));
+                if (offsetOrPadding)
+                    setViewport(mViewport);
                 drawTriangleStrips(vertices, 4, BlendFactor::SRC_ALPHA,
                                    BlendFactor::ONE_MINUS_SRC_ALPHA);
                 break;
@@ -723,4 +748,7 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
     }
 
     GL_CHECK_ERROR(glBindFramebuffer(GL_READ_FRAMEBUFFER, 0));
+
+    if (offsetOrPadding)
+        setViewport(mViewport);
 }

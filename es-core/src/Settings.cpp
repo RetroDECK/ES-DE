@@ -26,22 +26,18 @@ namespace
     std::vector<std::string> settingsSkipSaving {
         // clang-format off
         // These options can be set using command-line arguments:
-        "WindowWidth",          // Set via --resolution [width] [height]
-        "WindowHeight",         // set via --resolution [width] [height]
+        "ScreenWidth",          // Set via --resolution [width] [height]
+        "ScreenHeight",         // set via --resolution [width] [height]
+        "ScreenOffsetX",        // Set via --screenoffset [horiz.] [vert.]
+        "ScreenOffsetY",        // Set via --screenoffset [horiz.] [vert.]
+        "FullscreenPadding",    // Set via --fullscreen-padding [1/on or 0/off]
+        "VSync",                // --vsync [1/on or 0/off]
         "IgnoreGamelist",       // --ignore-gamelist
         "SplashScreen",         // --no-splash
-        "Debug",                // --debug
-        "VSync",                // --vsync [1/on or 0/off]
         "ForceFull",            // --force-full
         "ForceKiosk",           // --force-kiosk
         "ForceKid",             // --force-kid
-
-        // These command-line argument options are not shown in the --help text and are intended
-        // for debugging and testing purposes:
-        "ScreenWidth",          // Set via --screensize [width] [height]
-        "ScreenHeight",         // set via --screensize [width] [height]
-        "ScreenOffsetX",        // Set via --screenoffset [X] [Y]
-        "ScreenOffsetY",        // Set via --screenoffset [X] [Y]
+        "Debug",                // --debug
 
         // These options are only used internally during the application session:
         "DebugGrid",
@@ -137,7 +133,7 @@ void Settings::setDefaults()
 
     mStringMap["ScraperRegion"] = {"eu", "eu"};
     mStringMap["ScraperLanguage"] = {"en", "en"};
-    mIntMap["ScraperRetryOnErrorCount"] = {3, 3};
+    mIntMap["ScraperRetryOnErrorCount"] = {5, 5};
     mIntMap["ScraperRetryOnErrorTimer"] = {3, 3};
     mBoolMap["ScraperOverwriteData"] = {true, true};
     mBoolMap["ScraperHaltOnInvalidMedia"] = {true, true};
@@ -297,11 +293,8 @@ void Settings::setDefaults()
     mBoolMap["IgnoreGamelist"] = {false, false};
     mBoolMap["SplashScreen"] = {true, true};
     mBoolMap["VSync"] = {true, true};
-    mIntMap["WindowWidth"] = {0, 0};
-    mIntMap["WindowHeight"] = {0, 0};
+    mBoolMap["FullscreenPadding"] = {false, false};
     mIntMap["ScreenWidth"] = {0, 0};
-
-    // Undocumented options.
     mIntMap["ScreenHeight"] = {0, 0};
     mIntMap["ScreenOffsetX"] = {0, 0};
     mIntMap["ScreenOffsetY"] = {0, 0};

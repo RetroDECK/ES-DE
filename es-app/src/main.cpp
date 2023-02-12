@@ -266,17 +266,6 @@ bool parseArgs(int argc, char* argv[])
                           << " supplied\n";
                 return false;
             }
-            Settings::getInstance()->setInt("WindowWidth", width);
-            Settings::getInstance()->setInt("WindowHeight", height);
-            i += 2;
-        }
-        else if (strcmp(argv[i], "--screensize") == 0) {
-            if (i >= argc - 2) {
-                std::cerr << "Error: Invalid screensize values supplied\n";
-                return false;
-            }
-            int width {atoi(argv[i + 1])};
-            int height {atoi(argv[i + 2])};
             Settings::getInstance()->setInt("ScreenWidth", width);
             Settings::getInstance()->setInt("ScreenHeight", height);
             i += 2;
@@ -307,18 +296,34 @@ bool parseArgs(int argc, char* argv[])
             settingsNeedSaving = true;
             ++i;
         }
+        else if (strcmp(argv[i], "--fullscreen-padding") == 0) {
+            if (i >= argc - 1) {
+                std::cerr << "Error: No fullscreen-padding value supplied\n";
+                return false;
+            }
+            std::string fullscreenPaddingValue {argv[i + 1]};
+            if (fullscreenPaddingValue != "on" && fullscreenPaddingValue != "off" &&
+                fullscreenPaddingValue != "1" && fullscreenPaddingValue != "0") {
+                std::cerr << "Error: Invalid fullscreen-padding value supplied\n";
+                return false;
+            }
+            const bool fullscreenPadding {
+                (fullscreenPaddingValue == "on" || fullscreenPaddingValue == "1") ? true : false};
+            Settings::getInstance()->setBool("FullscreenPadding", fullscreenPadding);
+            ++i;
+        }
         else if (strcmp(argv[i], "--vsync") == 0) {
             if (i >= argc - 1) {
                 std::cerr << "Error: No VSync value supplied\n";
                 return false;
             }
-            std::string vSyncValue = argv[i + 1];
+            std::string vSyncValue {argv[i + 1]};
             if (vSyncValue != "on" && vSyncValue != "off" && vSyncValue != "1" &&
                 vSyncValue != "0") {
                 std::cerr << "Error: Invalid VSync value supplied\n";
                 return false;
             }
-            bool vSync {(vSyncValue == "on" || vSyncValue == "1") ? true : false};
+            const bool vSync {(vSyncValue == "on" || vSyncValue == "1") ? true : false};
             Settings::getInstance()->setBool("VSync", vSync);
             ++i;
         }
@@ -327,7 +332,7 @@ bool parseArgs(int argc, char* argv[])
                 std::cerr << "Error: Invalid VRAM value supplied\n";
                 return false;
             }
-            int maxVRAM {atoi(argv[i + 1])};
+            const int maxVRAM {atoi(argv[i + 1])};
             Settings::getInstance()->setInt("MaxVRAM", maxVRAM);
             settingsNeedSaving = true;
             ++i;
@@ -401,28 +406,30 @@ bool parseArgs(int argc, char* argv[])
 "Usage: emulationstation [options]\n"
 "EmulationStation Desktop Edition, Emulator Frontend\n\n"
 "Options:\n"
-"  --display [1 to 4]                  Display/monitor to use\n"
-"  --resolution [width] [height]       Application resolution\n"
-"  --screenrotate [0, 90, 180 or 270]  Rotate screen contents within application window\n"
-"  --vsync [1/on or 0/off]             Turn VSync on or off (default is on)\n"
-"  --max-vram [size]                   Max VRAM to use (in mebibytes) before swapping\n"
+"  --display [1 to 4]                    Display/monitor to use\n"
+"  --resolution [width] [height]         Application resolution\n"
+"  --screenoffset [horiz.] [vert.]       Offset screen contents within application window\n"
+"  --screenrotate [0, 90, 180 or 270]    Rotate screen contents within application window\n"
+"  --fullscreen-padding [1/on or 0/off]  Padding if --resolution is lower than display resolution\n"
+"  --vsync [1/on or 0/off]               Turn VSync on or off (default is on)\n"
+"  --max-vram [size]                     Max VRAM to use (in mebibytes) before swapping\n"
 #if !defined(USE_OPENGLES)
-"  --anti-aliasing [0, 2 or 4]         Set MSAA anti-aliasing to disabled, 2x or 4x\n"
+"  --anti-aliasing [0, 2 or 4]           Set MSAA anti-aliasing to disabled, 2x or 4x\n"
 #endif
-"  --no-splash                         Don't show the splash screen during startup\n"
-"  --gamelist-only                     Skip automatic game ROM search, only read from gamelist.xml\n"
-"  --ignore-gamelist                   Ignore the gamelist.xml files (useful for troubleshooting)\n"
-"  --show-hidden-files                 Show hidden files and folders\n"
-"  --show-hidden-games                 Show hidden games\n"
-"  --force-full                        Force the UI mode to Full\n"
-"  --force-kiosk                       Force the UI mode to Kiosk\n"
-"  --force-kid                         Force the UI mode to Kid\n"
-"  --force-input-config                Force configuration of input devices\n"
-"  --create-system-dirs                Create game system directories\n"
-"  --home [path]                       Directory to use as home path\n"
-"  --debug                             Print debug information\n"
-"  --version, -v                       Display version information\n"
-"  --help, -h                          Summon a sentient, angry tuba\n";
+"  --no-splash                           Don't show the splash screen during startup\n"
+"  --gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml\n"
+"  --ignore-gamelist                     Ignore the gamelist.xml files\n"
+"  --show-hidden-files                   Show hidden files and folders\n"
+"  --show-hidden-games                   Show hidden games\n"
+"  --force-full                          Force the UI mode to Full\n"
+"  --force-kiosk                         Force the UI mode to Kiosk\n"
+"  --force-kid                           Force the UI mode to Kid\n"
+"  --force-input-config                  Force configuration of input devices\n"
+"  --create-system-dirs                  Create game system directories\n"
+"  --home [path]                         Directory to use as home path\n"
+"  --debug                               Print debug information\n"
+"  --version, -v                         Display version information\n"
+"  --help, -h                            Summon a sentient, angry tuba\n";
             // clang-format on
             return false; // Exit after printing help.
         }
@@ -601,8 +608,8 @@ int main(int argc, char* argv[])
     // TODO: Remove when application window resizing has been implemented.
     Settings::getInstance()->setBool("Debug", true);
     Log::setReportingLevel(LogDebug);
-    Settings::getInstance()->setInt("WindowWidth", 1280);
-    Settings::getInstance()->setInt("WindowHeight", 720);
+    Settings::getInstance()->setInt("ScreenWidth", 1280);
+    Settings::getInstance()->setInt("ScreenHeight", 720);
 #endif
 
     // Check if the configuration file exists, and if not, create it.
@@ -613,7 +620,7 @@ int main(int argc, char* argv[])
         Settings::getInstance()->saveFile();
     }
     else if (settingsNeedSaving) {
-        LOG(LogInfo) << "Saving settings that were modified by the passed command line options...";
+        LOG(LogInfo) << "Saving settings that were modified by command line options...";
         Settings::getInstance()->saveFile();
     }
 

@@ -601,8 +601,8 @@ void Screensaver::generateOverlayInfo()
     if (mGameName == "" || mSystemName == "")
         return;
 
-    float posX {mRenderer->getWindowWidth() * 0.023f};
-    float posY {mRenderer->getWindowHeight() * 0.02f};
+    float posX {mRenderer->getScreenWidth() * 0.023f};
+    float posY {mRenderer->getScreenHeight() * 0.02f};
 
     std::string favoriteChar;
     if (mCurrentGame && mCurrentGame->getFavorite())
@@ -629,7 +629,7 @@ void Screensaver::generateOverlayInfo()
     else
         textSizeX = mGameOverlayFont[0].get()->sizeText(systemName).x;
 
-    float marginX {mRenderer->getWindowWidth() * 0.01f};
+    float marginX {mRenderer->getScreenWidth() * 0.01f};
 
     mGameOverlayRectangleCoords.clear();
     mGameOverlayRectangleCoords.push_back(posX - marginX);
