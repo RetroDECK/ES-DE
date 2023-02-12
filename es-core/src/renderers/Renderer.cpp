@@ -135,8 +135,8 @@ bool Renderer::createWindow()
         mWindowHeight = displayMode.h;
         mPaddingWidth = displayMode.w - sScreenWidth;
         mPaddingHeight = displayMode.h - sScreenHeight;
-        mScreenOffsetX -= mPaddingWidth / 2.0f;
-        mScreenOffsetY -= mPaddingHeight / 2.0f;
+        mScreenOffsetX -= mPaddingWidth / 2.0;
+        mScreenOffsetY -= mPaddingHeight / 2.0;
         fullscreenPadding = true;
     }
 
@@ -243,7 +243,7 @@ bool Renderer::createWindow()
     // display so that the full application window is used for rendering.
     int width {0};
     SDL_GL_GetDrawableSize(mSDLWindow, &width, nullptr);
-    int scaleFactor {static_cast<int>(width / sScreenWidth)};
+    int scaleFactor {static_cast<int>(width / mWindowWidth)};
 
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                  << std::to_string(displayMode.h) << " (physical resolution "
