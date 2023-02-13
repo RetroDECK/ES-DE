@@ -786,10 +786,12 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             if (mHasTextSelectedColor && mEntries.at(*it).data.imagePath == "" &&
                 mEntries.at(*it).data.defaultImagePath == "") {
                 mEntries.at(*it).data.item->setColor(mTextSelectedColor);
-                mEntries.at(*it).data.item->setBackgroundColor(mTextSelectedBackgroundColor);
+                if (mTextSelectedBackgroundColor != mTextBackgroundColor)
+                    mEntries.at(*it).data.item->setBackgroundColor(mTextSelectedBackgroundColor);
                 mEntries.at(*it).data.item->render(trans);
                 mEntries.at(*it).data.item->setColor(mTextColor);
-                mEntries.at(*it).data.item->setBackgroundColor(mTextBackgroundColor);
+                if (mTextSelectedBackgroundColor != mTextBackgroundColor)
+                    mEntries.at(*it).data.item->setBackgroundColor(mTextBackgroundColor);
             }
             else if (mHasImageSelectedColor) {
                 mEntries.at(*it).data.item->setColorShift(mImageSelectedColor);
