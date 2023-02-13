@@ -476,7 +476,7 @@ void BadgeComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                 }
                 mFlexboxItems.emplace_back(std::move(item));
             }
-            else {
+            else if (slot != "all") {
                 LOG(LogError) << "Invalid badge slot \"" << slot << "\" defined";
             }
         }
