@@ -1205,6 +1205,10 @@ Properties:
     - Default is `marquee`
 * `defaultImage` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `defaultFolderImage` - type: PATH
+    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found and the item is a folder. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Default is the same value as `defaultImage`
+    - This property can only be used in the `gamelist` view.
 * `maxItemCount` - type: FLOAT
     - Sets the number of carousel items to display.
     - Minimum value is `0.5` and maximum value is `30`
@@ -1266,6 +1270,16 @@ Properties:
     - Default is the same value as `imageColor`
 * `imageGradientType` - type: STRING
     - The direction to apply the color gradient if both `imageColor` and `imageColorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
+* `imageSelectedColor` - type: COLOR
+    - Applies a color shift to the currently selected item's image as defined by `staticImage`, `imageType` or `defaultImage` by multiplying each pixel's color by this color value. For example, an all-white image with `FF0000` applied would become completely red. You can also control the transparency of the images by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `imageSaturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Default is the same value as `imageColor`
+* `imageSelectedColorEnd` - type: COLOR
+    - Works in the exact same way as `imageSelectedColor` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `imageSelectedColor`
+* `imageSelectedGradientType` - type: STRING
+    - The direction to apply the color gradient if both `imageSelectedColor` and `imageSelectedColorEnd` have been defined.
     - Valid values are `horizontal` or `vertical`
     - Default is `horizontal`
 * `imageBrightness` - type: FLOAT
@@ -1344,6 +1358,12 @@ Properties:
     - Default is `000000FF`
 * `textBackgroundColor` - type: COLOR
     - Default is `FFFFFF00`
+* `textSelectedColor` - type: COLOR
+    - Sets the text color for the currently selected item.
+    - Default is the same value as `textColor`
+* `textSelectedBackgroundColor` - type: COLOR
+    - Sets the text background color for the currently selected item.
+    - Default is the same value as `textBackgroundColor`
 * `fontPath` - type: PATH
     - Path to a TrueType font (.ttf) used as fallback if there is no `staticImage` / `imageType` image defined or found, and if `defaultImage` has not been defined.
 * `fontSize` - type: FLOAT
@@ -1386,8 +1406,6 @@ Properties:
 
 #### grid
 
-**The grid component is currently in active development which means that properties and values may change without prior warning up until the final 2.0.0 release.**
-
 An X*Y grid for navigating and selecting games or systems using the left/right and up/down buttons. The layout including the amount of columns and rows is automatically calculated based on the relevant property values.
 
 Supported views:
@@ -1426,6 +1444,10 @@ Properties:
     - Default is `marquee`
 * `defaultImage` - type: PATH
     - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+* `defaultFolderImage` - type: PATH
+    - Path to the default image file which will be displayed if the image defined via the `staticImage` or `imageType` property is not found and the item is a folder. Most common extensions are supported (including .svg, .jpg, .png, and unanimated .gif).
+    - Default is the same value as `defaultImage`
+    - This property can only be used in the `gamelist` view.
 * `itemSize` - type: NORMALIZED_PAIR
     - Size of the overall item prior to multiplication by the `itemScale` value, i.e. the size of all unselected items. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis, resulting in a perfectly square item. If not using this approach then both axes need to be defined.
     - Minimum value per axis is `0.05` and maximum value per axis is `1`

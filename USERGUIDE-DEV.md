@@ -287,8 +287,6 @@ If you want to create your own portable intallation from scratch or customize th
 
 ## Specific notes for macOS
 
-**Note:** Apple once again broke OpenGL VSync with their latest OS release Ventura. Last time this happened was with Monterey, and it was later fixed via the 12.1 OS update. It's unclear if and when Apple will fix the latest issue. As such a workaround has been implemented in ES-DE 2.0.0-alpha so make sure to use this version if you're on Ventura or otherwise the application will be very slow and sluggish.
-
 As macOS does not support Vulkan some emulators are not available, and some that do exist have not been updated for this operating system in recent years. But emulator support is steadily improving and native M1/ARM releases are also getting more common. One issue though is that some emulators are not codesigned and notarized so macOS refuses to run them by default. You can override the operating system's security settings however, which will work around this problem. Some emulators are also available via the [Homebrew](https://brew.sh) package manager and in many instances ES-DE includes support for these releases using the bundled configuration.
 
 Lack of controller support is a bit of a problem on macOS, and in some instances controller drivers are available but quite buggy. In general it seems as if Sony PlayStation controllers are better supported than Microsoft Xbox controllers. For third party controllers you need to investigate the macOS support as it seems to differ quite a lot.

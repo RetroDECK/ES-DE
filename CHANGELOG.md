@@ -205,7 +205,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for dimming components (fade to black)
 * Added support for rotating the application screen contents 0, 90, 180 or 270 degrees
 * Added support for offsetting the screen contents within the application window
-* Added support for running the application at a lower resolution in padded fullscreen mode
+* Added support for running the application at a lower resolution in fullscreen padded mode
 * Added logging of the display refresh rate on startup
 * Made many improvements to GUI sizing and positioning when running in vertical screen resolutions
 * The application startup can now be aborted via an OS signal or using the configured keyboard quit shortcut
