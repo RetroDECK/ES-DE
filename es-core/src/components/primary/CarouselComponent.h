@@ -1155,7 +1155,36 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             if (mReflectionsFalloff > 0.0f)
                 comp->setReflectionsFalloff(comp->getSize().y / mReflectionsFalloff);
             comp->setFlipY(true);
-            comp->render(reflectionTrans);
+            if (renderItem.index == mCursor && mHasImageSelectedColor) {
+                comp->setColorShift(mImageSelectedColorGradientHorizontal ? mImageSelectedColor :
+                                                                            mImageSelectedColorEnd);
+                if (mImageSelectedColorEnd != mImageSelectedColor)
+                    comp->setColorShiftEnd(mImageSelectedColorGradientHorizontal ?
+                                               mImageSelectedColorEnd :
+                                               mImageSelectedColor);
+                if (mImageSelectedColorGradientHorizontal != mImageColorGradientHorizontal)
+                    comp->setColorGradientHorizontal(mImageSelectedColorGradientHorizontal);
+                comp->render(reflectionTrans);
+                if (mImageSelectedColorGradientHorizontal != mImageColorGradientHorizontal)
+                    comp->setColorGradientHorizontal(mImageColorGradientHorizontal);
+                comp->setColorShift(mImageColorShift);
+                if (mImageColorShiftEnd != mImageColorShift)
+                    comp->setColorShiftEnd(mImageColorShiftEnd);
+            }
+            else {
+                if ((mImageColorShift != 0xFFFFFFFF || mImageColorShiftEnd != 0xFFFFFFFF) &&
+                    !mImageColorGradientHorizontal) {
+                    // We need to reverse the color shift if a vertical gradient is applied.
+                    comp->setColorShift(mImageColorShiftEnd);
+                    comp->setColorShiftEnd(mImageColorShift);
+                    comp->render(reflectionTrans);
+                    comp->setColorShift(mImageColorShift);
+                    comp->setColorShiftEnd(mImageColorShiftEnd);
+                }
+                else {
+                    comp->render(reflectionTrans);
+                }
+            }
             comp->setFlipY(false);
             comp->setReflectionsFalloff(0.0f);
         }
