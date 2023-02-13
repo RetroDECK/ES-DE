@@ -72,7 +72,9 @@ public:
         return mLetterCaseSystemNameSuffix;
     }
     const std::string& getDefaultGridImage() const { return mDefaultImage; }
+    const std::string& getDefaultGridFolderImage() const { return mDefaultFolderImage; }
     void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
+    void setDefaultFolderImage(std::string defaultImage) { mDefaultFolderImage = defaultImage; }
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
@@ -144,6 +146,7 @@ private:
 
     std::vector<std::string> mImageTypes;
     std::string mDefaultImage;
+    std::string mDefaultFolderImage;
     glm::vec2 mItemSize;
     float mItemScale;
     glm::vec2 mItemSpacing;

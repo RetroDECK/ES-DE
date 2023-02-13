@@ -135,6 +135,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"staticImage", PATH},
        {"imageType", STRING},
        {"defaultImage", PATH},
+       {"defaultFolderImage", PATH},
        {"maxItemCount", FLOAT},
        {"maxLogoCount", FLOAT},                    // For backward compatibility with legacy themes.
        {"itemsBeforeCenter", UNSIGNED_INTEGER},
@@ -199,6 +200,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"staticImage", PATH},
        {"imageType", STRING},
        {"defaultImage", PATH},
+       {"defaultFolderImage", PATH},
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
        {"itemSpacing", NORMALIZED_PAIR},

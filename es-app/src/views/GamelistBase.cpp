@@ -600,14 +600,17 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     auto theme = mRoot->getSystem()->getTheme();
     std::string name;
     std::string defaultImage;
+    std::string defaultFolderImage;
 
     if (mCarousel != nullptr) {
         defaultImage = mCarousel->getDefaultCarouselImage();
+        defaultFolderImage = mCarousel->getDefaultCarouselFolderImage();
         if (!ResourceManager::getInstance().fileExists(defaultImage))
             defaultImage = "";
     }
     else if (mGrid != nullptr) {
         defaultImage = mGrid->getDefaultGridImage();
+        defaultFolderImage = mGrid->getDefaultGridFolderImage();
         if (!ResourceManager::getInstance().fileExists(defaultImage))
             defaultImage = "";
     }
@@ -642,8 +645,15 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 if (isCollection && mSystemNameSuffix)
                     nameSuffixFunc(it, carouselEntry.name);
 
-                if (defaultImage != "")
+                if ((*it)->getType() == FOLDER) {
+                    if (defaultFolderImage != "")
+                        carouselEntry.data.defaultImagePath = defaultFolderImage;
+                    else if (defaultImage != "")
+                        carouselEntry.data.defaultImagePath = defaultImage;
+                }
+                else if (defaultImage != "") {
                     carouselEntry.data.defaultImagePath = defaultImage;
+                }
 
                 mCarousel->addEntry(carouselEntry, theme);
             }
@@ -662,8 +672,15 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
                 if (isCollection && mSystemNameSuffix)
                     nameSuffixFunc(it, gridEntry.name);
 
-                if (defaultImage != "")
+                if ((*it)->getType() == FOLDER) {
+                    if (defaultFolderImage != "")
+                        gridEntry.data.defaultImagePath = defaultFolderImage;
+                    else if (defaultImage != "")
+                        gridEntry.data.defaultImagePath = defaultImage;
+                }
+                else if (defaultImage != "") {
                     gridEntry.data.defaultImagePath = defaultImage;
+                }
 
                 mGrid->addEntry(gridEntry, theme);
             }

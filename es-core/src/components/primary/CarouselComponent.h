@@ -62,7 +62,9 @@ public:
     void onDemandTextureLoad() override;
     const CarouselType getType() { return mType; }
     const std::string& getDefaultCarouselImage() const { return mDefaultImage; }
+    const std::string& getDefaultCarouselFolderImage() const { return mDefaultFolderImage; }
     void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
+    void setDefaultFolderImage(std::string defaultImage) { mDefaultFolderImage = defaultImage; }
     bool isScrolling() const override { return List::isScrolling(); }
     const LetterCase getLetterCase() const override { return mLetterCase; }
     const LetterCase getLetterCaseAutoCollections() const override
@@ -143,6 +145,7 @@ private:
     CarouselType mType;
     std::vector<std::string> mImageTypes;
     std::string mDefaultImage;
+    std::string mDefaultFolderImage;
     float mMaxItemCount;
     int mItemsBeforeCenter;
     int mItemsAfterCenter;

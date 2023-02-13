@@ -176,6 +176,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mCarousel = std::make_unique<CarouselComponent<FileData*>>();
                     if (element.second.has("defaultImage"))
                         mCarousel->setDefaultImage(element.second.get<std::string>("defaultImage"));
+                    if (element.second.has("defaultFolderImage"))
+                        mCarousel->setDefaultFolderImage(
+                            element.second.get<std::string>("defaultFolderImage"));
                     mPrimary = mCarousel.get();
                 }
                 mPrimary->setCursorChangedCallback(
@@ -189,6 +192,9 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                     mGrid = std::make_unique<GridComponent<FileData*>>();
                     if (element.second.has("defaultImage"))
                         mGrid->setDefaultImage(element.second.get<std::string>("defaultImage"));
+                    if (element.second.has("defaultFolderImage"))
+                        mGrid->setDefaultFolderImage(
+                            element.second.get<std::string>("defaultFolderImage"));
                     mPrimary = mGrid.get();
                 }
                 mPrimary->setCursorChangedCallback(
