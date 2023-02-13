@@ -158,6 +158,10 @@ private:
     unsigned int mImageColorShift;
     unsigned int mImageColorShiftEnd;
     bool mImageColorGradientHorizontal;
+    unsigned int mImageSelectedColor;
+    unsigned int mImageSelectedColorEnd;
+    bool mImageSelectedColorGradientHorizontal;
+    bool mHasImageSelectedColor;
     float mImageBrightness;
     float mImageSaturation;
     bool mInstantItemTransitions;
@@ -176,6 +180,9 @@ private:
     bool mColorGradientHorizontal;
     unsigned int mTextColor;
     unsigned int mTextBackgroundColor;
+    unsigned int mTextSelectedColor;
+    unsigned int mTextSelectedBackgroundColor;
+    bool mHasTextSelectedColor;
     std::shared_ptr<Font> mFont;
     LetterCase mLetterCase;
     LetterCase mLetterCaseAutoCollections;
@@ -217,6 +224,10 @@ CarouselComponent<T>::CarouselComponent()
     , mImageColorShift {0xFFFFFFFF}
     , mImageColorShiftEnd {0xFFFFFFFF}
     , mImageColorGradientHorizontal {true}
+    , mImageSelectedColor {0xFFFFFFFF}
+    , mImageSelectedColorEnd {0xFFFFFFFF}
+    , mImageSelectedColorGradientHorizontal {true}
+    , mHasImageSelectedColor {false}
     , mImageBrightness {0.0f}
     , mImageSaturation {1.0f}
     , mInstantItemTransitions {false}
@@ -235,6 +246,9 @@ CarouselComponent<T>::CarouselComponent()
     , mColorGradientHorizontal {true}
     , mTextColor {0x000000FF}
     , mTextBackgroundColor {0xFFFFFF00}
+    , mTextSelectedColor {0x000000FF}
+    , mTextSelectedBackgroundColor {0xFFFFFF00}
+    , mHasTextSelectedColor {false}
     , mFont {Font::get(FONT_SIZE_LARGE_FIXED)}
     , mLetterCase {LetterCase::NONE}
     , mLetterCaseAutoCollections {LetterCase::UNDEFINED}
@@ -258,7 +272,6 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     if (legacyMode) {
         const ThemeData::ThemeElement* itemElem {
             theme->getElement("system", "image_logo", "image")};
-
         if (itemElem) {
             std::string path;
             if (itemElem->has("path"))
@@ -322,6 +335,9 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             // For the gamelist view the default image is applied in onDemandTextureLoad().
             if (!mGamelistView)
                 entry.data.item = defaultImage;
+        }
+        else if (!mGamelistView) {
+            entry.data.imagePath = "";
         }
     }
 
@@ -1092,7 +1108,37 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
         comp->setScale(renderItem.scale);
         comp->setOpacity(renderItem.opacity * metadataOpacity);
-        comp->render(renderItem.trans);
+        if (renderItem.index == mCursor && (mHasImageSelectedColor || mHasTextSelectedColor)) {
+            if (mHasTextSelectedColor && mEntries.at(renderItem.index).data.imagePath == "" &&
+                mEntries.at(renderItem.index).data.defaultImagePath == "") {
+                comp->setColor(mTextSelectedColor);
+                if (mTextSelectedBackgroundColor != mTextBackgroundColor)
+                    comp->setBackgroundColor(mTextSelectedBackgroundColor);
+                comp->render(renderItem.trans);
+                comp->setColor(mTextColor);
+                if (mTextSelectedBackgroundColor != mTextBackgroundColor)
+                    comp->setBackgroundColor(mTextBackgroundColor);
+            }
+            else if (mHasImageSelectedColor) {
+                comp->setColorShift(mImageSelectedColor);
+                if (mImageSelectedColorEnd != mImageSelectedColor)
+                    comp->setColorShiftEnd(mImageSelectedColorEnd);
+                if (mImageSelectedColorGradientHorizontal != mImageColorGradientHorizontal)
+                    comp->setColorGradientHorizontal(mImageSelectedColorGradientHorizontal);
+                comp->render(renderItem.trans);
+                if (mImageSelectedColorGradientHorizontal != mImageColorGradientHorizontal)
+                    comp->setColorGradientHorizontal(mImageColorGradientHorizontal);
+                comp->setColorShift(mImageColorShift);
+                if (mImageColorShiftEnd != mImageColorShift)
+                    comp->setColorShiftEnd(mImageColorShiftEnd);
+            }
+            else {
+                comp->render(renderItem.trans);
+            }
+        }
+        else {
+            comp->render(renderItem.trans);
+        }
 
         // TODO: Rewrite to use "real" reflections instead of this hack.
         // Don't attempt to add reflections for text entries.
@@ -1302,6 +1348,34 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("itemScale"))
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
+
+        mImageSelectedColor = mImageColorShift;
+        mImageSelectedColorEnd = mImageColorShiftEnd;
+
+        if (elem->has("imageSelectedColor")) {
+            mImageSelectedColor = elem->get<unsigned int>("imageSelectedColor");
+            mImageSelectedColorEnd = mImageSelectedColor;
+            mHasImageSelectedColor = true;
+        }
+        if (elem->has("imageSelectedColorEnd")) {
+            mImageSelectedColorEnd = elem->get<unsigned int>("imageSelectedColorEnd");
+            mHasImageSelectedColor = true;
+        }
+        if (elem->has("imageSelectedGradientType")) {
+            const std::string& gradientType {elem->get<std::string>("imageSelectedGradientType")};
+            if (gradientType == "horizontal") {
+                mImageSelectedColorGradientHorizontal = true;
+            }
+            else if (gradientType == "vertical") {
+                mImageSelectedColorGradientHorizontal = false;
+            }
+            else {
+                mImageSelectedColorGradientHorizontal = true;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"imageSelectedGradientType\" for element \""
+                                << element.substr(9) << "\" defined as \"" << gradientType << "\"";
+            }
+        }
 
         if (elem->has("imageBrightness"))
             mImageBrightness = glm::clamp(elem->get<float>("imageBrightness"), -2.0f, 2.0f);
@@ -1558,6 +1632,18 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mTextColor = elem->get<unsigned int>("textColor");
     if (elem->has("textBackgroundColor"))
         mTextBackgroundColor = elem->get<unsigned int>("textBackgroundColor");
+
+    mTextSelectedColor = mTextColor;
+    mTextSelectedBackgroundColor = mTextBackgroundColor;
+
+    if (elem->has("textSelectedColor")) {
+        mTextSelectedColor = elem->get<unsigned int>("textSelectedColor");
+        mHasTextSelectedColor = true;
+    }
+    if (elem->has("textSelectedBackgroundColor")) {
+        mTextSelectedBackgroundColor = elem->get<unsigned int>("textSelectedBackgroundColor");
+        mHasTextSelectedColor = true;
+    }
 
     if (elem->has("lineSpacing"))
         mLineSpacing = glm::clamp(elem->get<float>("lineSpacing"), 0.5f, 3.0f);
