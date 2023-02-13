@@ -34,6 +34,7 @@
 #include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
+#include "guis/GuiThemeDownloader.h"
 #include "utils/PlatformUtil.h"
 
 #include <SDL2/SDL_events.h>
@@ -106,6 +107,18 @@ void GuiMenu::openUIOptions()
 
     auto themeSet =
         std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
+
+    // TODO: Enable and possibly move somewhere else when the theme downloader is implemented.
+    //    ComponentListRow themeDownloaderInputRow;
+    //    themeDownloaderInputRow.elements.clear();
+    //    themeDownloaderInputRow.addElement(std::make_shared<TextComponent>("THEME DOWNLOADER",
+    //                                                                  Font::get(FONT_SIZE_MEDIUM),
+    //                                                                  0x777777FF),
+    //                                       true);
+    //    themeDownloaderInputRow.addElement(makeArrow(), false);
+    //    themeDownloaderInputRow.makeAcceptInputHandler(
+    //        std::bind(&GuiMenu::openThemeDownloader, this, s));
+    //    s->addRow(themeDownloaderInputRow);
 
     // Theme set.
     if (!themeSets.empty()) {
@@ -1656,6 +1669,11 @@ void GuiMenu::addVersionInfo()
 
     mVersion.setHorizontalAlignment(ALIGN_CENTER);
     addChild(&mVersion);
+}
+
+void GuiMenu::openThemeDownloader(GuiSettings* settings)
+{
+    mWindow->pushGui(new GuiThemeDownloader());
 }
 
 void GuiMenu::openMediaViewerOptions()
