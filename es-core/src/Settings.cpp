@@ -373,18 +373,18 @@ void Settings::saveFile()
 
 void Settings::loadFile()
 {
-    const std::string configFile =
-        Utils::FileSystem::getHomePath() + "/.emulationstation/es_settings.xml";
+    const std::string configFile {Utils::FileSystem::getHomePath() +
+                                  "/.emulationstation/es_settings.xml"};
 
     if (!Utils::FileSystem::exists(configFile))
         return;
 
     pugi::xml_document doc;
 #if defined(_WIN64)
-    pugi::xml_parse_result result =
-        doc.load_file(Utils::String::stringToWideString(configFile).c_str());
+    pugi::xml_parse_result result {
+        doc.load_file(Utils::String::stringToWideString(configFile).c_str())};
 #else
-    pugi::xml_parse_result result = doc.load_file(configFile.c_str());
+    pugi::xml_parse_result result {doc.load_file(configFile.c_str())};
 #endif
     if (!result) {
         LOG(LogError) << "Couldn't parse the es_settings.xml file: " << result.description();
