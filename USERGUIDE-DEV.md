@@ -427,6 +427,34 @@ A solution to this is to use the custom event scripts functionality to set a tem
 
 On macOS it's problematic to change screen resolutions on the fly or on a per-application basis as Apple has seemingly disabled most of this functionality in recent operating system releases. The only real option here is to lower the display resolution prior to launching ES-DE.
 
+## Advanced display configuration
+
+ES-DE supports a number of advanced settings to fine-tune the display output. By default the application will run in fullscreen mode at the native display resolution, but using the --resolution command line option it's possible to set this to any arbitrary resolution. By default this will change ES-DE into running in windowed mode, but if also using the --fullscreen-padding command line option the window will be fullscreen with the application contents centered, padded on a black background. This can be useful for displays where a bezel or similar covers parts of the monitor, and it can be combined with the --screenoffset command line option to adjust the positioning within the application window.
+
+Tate mode (vertical screen orientation) is also fully supported including both running at a vertical resolution as set on the OS level, or to rotate the screen contents within the application window and keep the display resolution at its non-rotated default state. The latter is sometimes required as some emulators don't work well on rotated screen layouts. Screen rotation can be applied either via the --screenrotate command line option or it can be configured from inside the _Other settings_ menu.
+
+Below are some examples. For consistency it's assumed that the display resolution is set to 1920x1080 although in practice it's perhaps more likely that a lower resolution CRT monitor is used for some of these scenarios.
+
+Running at a lower application resolution in a window:
+```
+emulationstation --resolution 1280 720
+```
+
+Running at a lower application resolution in padded fullscreen mode:
+```
+emulationstation --resolution 1824 1026 --fullscreen-padding 1
+```
+
+Same as above but also offsetting the screen slighty to the left and downwards:
+```
+emulationstation --resolution 1824 1026 --fullscreen-padding 1 --screenoffset -40 22
+```
+
+Rotate application screen contents 90 degrees while running at the native 1920x1080 screen resolution:
+```
+emulationstation --screenrotate 90
+```
+
 ## Input device configuration
 
 ES-DE automatically configures the keyboard and any connected controllers using default button mappings, and normally no additional setup is required. But if you would like to apply custom button mappings for your devices or if you have an unusual device which isn't automatically configured, you can run the _Configure keyboard and controllers_ tool from the _Input device settings_ entry on the main menu.
@@ -1482,7 +1510,7 @@ So to clarify it's `Super Mario 64.v64` that has to be launched. Compressing thi
 
 For RMG you should use the exact same IPL file as for ParaLLEl N64 but it has to be named `IPL.n64` and you can browse to its location from the emulator settings menu.
 
-Following this setup you will be able to launch games with the .ndd and .d64 file extensions, meaning it works similar to ParaLLEl N64 with the exception that zipped files are not supported.
+Following this setup you will be able to launch games with the .ndd, .d64 and .zip file extensions, meaning it works similar to ParaLLEl N64 with the exception that .7z archives are not supported.
 
 #### Nintendo Wii U
 
@@ -2638,6 +2666,10 @@ It's possible to trigger custom scripts for a number of actions in ES-DE, as is 
 **Only show ROMs from gamelist.xml files**
 
 If enabled, only ROMs that have metadata saved to the gamelist.xml files will be shown in ES-DE. This option is intended primarily for testing and debugging purposes so it should normally not be enabled.
+
+**Strip extra MAME name info (requires restart)**
+
+MAME short names for all arcade systems are automatically expanded to their full game names using a bundled MAME driver file. By default any extra information from this file that is located inside brackets is removed, which includes information like region, version/revision, license, release date and more. By setting this option to disabled that information is retained. Note that this is only applicable for any game names which have not been scraped as the scaper will overwrite the expanded information with whatever value the scraper service returns. It is however possible to disable scraping of game names altogether as covered elsewhere in this guide.
 
 **Disable desktop composition (requires restart)** _(Unix and X11/Xorg only)_
 

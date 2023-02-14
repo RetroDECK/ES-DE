@@ -88,6 +88,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
 * Added the .m3u file extension to the pc98 and pcfx systems
+* Added the .minipsf file extension to the psx system
 * Removed the .7z and .zip file extensions from the 3do, neogeocd, neogeocdjp and switch systems
 * Removed the .ccd and .cue file extensions from the fbneo system
 * Removed the .ccd, .cue and .iso file extensions from the neogeo system
@@ -155,6 +156,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Removed the "Use plain ASCII for special gamelist characters" menu option as it's now theme-controlled
 * Removed the "Enable menu scroll indicators" menu option
 * Removed the "Show system names in collections" menu option
+* Added a menu option to retain extra MAME name information (region, version/revision, license, release date etc.) for unscraped game names
 * Added theme support for appending system names to game names in collection systems
 * Changed the badges default lines property value from 2 to 3
 * Made it possible to set any text element as a scrollable container using either metadata values or literal strings
@@ -265,6 +267,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Added carousel theme support for controlling item stacking for overlapping items
 * Added carousel theme support for defining margins around the currently selected item
 * Added carousel theme support for rotating items around their own axis (although not supported for wheel carousels)
+* Added carousel theme support for color shifting the selected item
+* Added carousel theme support for offsetting items to achieve a diagonal layout
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
 * Removed support for the thumbnail game media type
 * Changed all occurances of "GameList" to "Gamelist" throughout the codebase
@@ -289,6 +293,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Removed the deprecated tools/update_theme_formatversion.sh script
 * Lots of general code cleanup and refactoring
 * (Windows) Added error handling to StringUtil::stringToWideString() and StringUtil::wideStringToString() to perform an emergency shutdown if needed
+* Updated the MAME index files to include ROMs up to MAME version 0.251
 * Changed tools/create_AppImage.sh to not include version information in the AppImage filename
 * Updated and improved the theming documentation
 

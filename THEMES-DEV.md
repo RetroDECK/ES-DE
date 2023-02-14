@@ -1294,6 +1294,11 @@ Properties:
     - How to render item transitions when navigating the carousel. By default a slide, scale and opacity fade animation will be played when moving between items (the latter two assuming `itemScale` and `unfocusedItemOpacity` have not been set to `1`) but if this property is set to `instant` then transitions will be immediate.
     - Valid values are `animate` or `instant`
     - Default is `animate`
+* `itemDiagonalOffset` - type: FLOAT
+    - Offsets all items to the left/right or above/below the selected item (depending on the carousel orientation) to achieve a diagonal layout. The defined value is the per-item offset (screen height percentage if `type` is `horizontal` or screen width percentage if `type` is `vertical`)
+    - Minimum value is `-0.5` and maximum value is `0.5`
+    - Default is `0`
+    - This property can only be used when `type` is `horizontal` or `vertical`
 * `itemHorizontalAlignment` - type: STRING
     - Sets `staticImage` / `imageType` and `text` alignment relative to the carousel on the X axis.
     - Valid values are `left`, `center` or `right`
