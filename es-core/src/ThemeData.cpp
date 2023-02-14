@@ -158,6 +158,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"imageBrightness", FLOAT},
        {"imageSaturation", FLOAT},
        {"itemTransitions", STRING},
+       {"itemDiagonalOffset", FLOAT},
        {"itemHorizontalAlignment", STRING},
        {"itemVerticalAlignment", STRING},
        {"wheelHorizontalAlignment", STRING},

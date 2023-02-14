@@ -167,6 +167,7 @@ private:
     bool mHasImageSelectedColor;
     float mImageBrightness;
     float mImageSaturation;
+    float mItemDiagonalOffset;
     bool mInstantItemTransitions;
     Alignment mItemHorizontalAlignment;
     Alignment mItemVerticalAlignment;
@@ -233,6 +234,7 @@ CarouselComponent<T>::CarouselComponent()
     , mHasImageSelectedColor {false}
     , mImageBrightness {0.0f}
     , mImageSaturation {1.0f}
+    , mItemDiagonalOffset {0.0f}
     , mInstantItemTransitions {false}
     , mItemHorizontalAlignment {ALIGN_CENTER}
     , mItemVerticalAlignment {ALIGN_CENTER}
@@ -1109,6 +1111,16 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                 metadataOpacity = 0.7f;
         }
 
+        const glm::vec3 origPos {comp->getPosition()};
+        if (mItemDiagonalOffset != 0.0f) {
+            if (mType == CarouselType::HORIZONTAL)
+                comp->setPosition(
+                    origPos.x, origPos.y - (mItemDiagonalOffset * renderItem.distance), origPos.z);
+            else
+                comp->setPosition(origPos.x - (mItemDiagonalOffset * renderItem.distance),
+                                  origPos.y, origPos.z);
+        }
+
         comp->setScale(renderItem.scale);
         comp->setOpacity(renderItem.opacity * metadataOpacity);
         if (renderItem.index == mCursor && (mHasImageSelectedColor || mHasTextSelectedColor)) {
@@ -1142,6 +1154,9 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         else {
             comp->render(renderItem.trans);
         }
+
+        if (mItemDiagonalOffset != 0.0f)
+            comp->setPosition(origPos);
 
         // TODO: Rewrite to use "real" reflections instead of this hack.
         // Don't attempt to add reflections for text entries.
@@ -1414,6 +1429,16 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("imageSaturation"))
             mImageSaturation = glm::clamp(elem->get<float>("imageSaturation"), 0.0f, 1.0f);
+
+        if (elem->has("itemDiagonalOffset") &&
+            (mType == CarouselType::HORIZONTAL || mType == CarouselType::VERTICAL)) {
+            const float diagonalOffset {
+                glm::clamp(elem->get<float>("itemDiagonalOffset"), -0.5f, 0.5f)};
+            if (mType == CarouselType::HORIZONTAL)
+                mItemDiagonalOffset = diagonalOffset * Renderer::getScreenHeight();
+            else
+                mItemDiagonalOffset = diagonalOffset * Renderer::getScreenWidth();
+        }
 
         if (elem->has("imageInterpolation")) {
             const std::string& imageInterpolation {elem->get<std::string>("imageInterpolation")};
