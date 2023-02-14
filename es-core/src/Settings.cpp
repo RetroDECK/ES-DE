@@ -270,6 +270,7 @@ void Settings::setDefaults()
     mBoolMap["ShowHiddenGames"] = {true, true};
     mBoolMap["CustomEventScripts"] = {false, false};
     mBoolMap["ParseGamelistOnly"] = {false, false};
+    mBoolMap["MAMENameStripExtraInfo"] = {true, true};
 #if defined(__unix__)
     mBoolMap["DisableComposition"] = {false, false};
 #endif

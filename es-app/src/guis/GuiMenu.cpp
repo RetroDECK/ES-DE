@@ -1523,6 +1523,19 @@ void GuiMenu::openOtherOptions()
         }
     });
 
+    // Strip extra MAME name info.
+    auto mameNameStripExtraInfo = std::make_shared<SwitchComponent>();
+    mameNameStripExtraInfo->setState(Settings::getInstance()->getBool("MAMENameStripExtraInfo"));
+    s->addWithLabel("STRIP EXTRA MAME NAME INFO (REQUIRES RESTART)", mameNameStripExtraInfo);
+    s->addSaveFunc([mameNameStripExtraInfo, s] {
+        if (Settings::getInstance()->getBool("MAMENameStripExtraInfo") !=
+            mameNameStripExtraInfo->getState()) {
+            Settings::getInstance()->setBool("MAMENameStripExtraInfo",
+                                             mameNameStripExtraInfo->getState());
+            s->setNeedsSaving();
+        }
+    });
+
 #if defined(__unix__)
     // Whether to disable desktop composition.
     auto disableComposition = std::make_shared<SwitchComponent>();

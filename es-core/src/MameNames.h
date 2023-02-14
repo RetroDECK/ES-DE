@@ -12,6 +12,7 @@
 #ifndef ES_CORE_MAMENAMES_H
 #define ES_CORE_MAMENAMES_H
 
+#include "Settings.h"
 #include "utils/StringUtil.h"
 
 #include <algorithm>
@@ -36,7 +37,11 @@ public:
 
     std::string getCleanName(const std::string& mameName)
     {
-        return Utils::String::removeParenthesis(getRealName(mameName));
+        static const bool stripInfo {Settings::getInstance()->getBool("MAMENameStripExtraInfo")};
+        if (stripInfo)
+            return Utils::String::removeParenthesis(getRealName(mameName));
+        else
+            return getRealName(mameName);
     }
 
     const bool isBios(const std::string& biosName)
