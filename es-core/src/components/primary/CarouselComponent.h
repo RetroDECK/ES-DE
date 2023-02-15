@@ -1123,7 +1123,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
         comp->setScale(renderItem.scale);
         comp->setOpacity(renderItem.opacity * metadataOpacity);
-        if (renderItem.index == mCursor && (mHasImageSelectedColor || mHasTextSelectedColor)) {
+        if (renderItem.index == mCursor && std::abs(renderItem.distance) < 1.0f &&
+            (mHasImageSelectedColor || mHasTextSelectedColor)) {
             if (mHasTextSelectedColor && mEntries.at(renderItem.index).data.imagePath == "" &&
                 mEntries.at(renderItem.index).data.defaultImagePath == "") {
                 comp->setColor(mTextSelectedColor);
