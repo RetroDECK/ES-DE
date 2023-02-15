@@ -40,7 +40,6 @@ public:
     void setOpacity(float opacity) override
     {
         mOpacity = opacity;
-        mKnob.setOpacity(opacity);
         mTextCache->setOpacity(opacity);
     }
 

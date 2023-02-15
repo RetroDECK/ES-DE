@@ -26,17 +26,19 @@ SliderComponent::SliderComponent(float min, float max, float increment, const st
 {
     assert((min - max) != 0.0f);
 
+    setSize(mWindow->peekGui()->getSize().x * 0.26f,
+            Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
+
     // Some sane default value.
     mValue = (max + min) / 2.0f;
 
+    mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
     mKnob.setOrigin(0.5f, 0.0f);
     mKnob.setImage(":/graphics/slider_knob.svg");
 
+    mKnobDisabled.setResize(0.0f, std::round(mSize.y * 0.7f));
     mKnobDisabled.setOrigin(0.5f, 0.0f);
     mKnobDisabled.setImage(":/graphics/slider_knob_disabled.svg");
-
-    setSize(mWindow->peekGui()->getSize().x * 0.26f,
-            Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
 }
 
 bool SliderComponent::input(InputConfig* config, Input input)

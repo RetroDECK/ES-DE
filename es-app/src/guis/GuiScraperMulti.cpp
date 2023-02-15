@@ -84,14 +84,15 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
     // Set up scroll indicators.
     mScrollUp = std::make_shared<ImageComponent>();
     mScrollDown = std::make_shared<ImageComponent>();
-    mScrollIndicator =
-        std::make_shared<ScrollIndicatorComponent>(mResultList, mScrollUp, mScrollDown);
 
     mScrollUp->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
     mScrollUp->setOrigin(0.0f, -0.35f);
 
     mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
     mScrollDown->setOrigin(0.0f, 0.35f);
+
+    mScrollIndicator =
+        std::make_shared<ScrollIndicatorComponent>(mResultList, mScrollUp, mScrollDown);
 
     mGrid.setEntry(mScrollUp, glm::ivec2 {1, 0}, false, false, glm::ivec2 {1, 1});
     mGrid.setEntry(mScrollDown, glm::ivec2 {1, 1}, false, false, glm::ivec2 {1, 1});

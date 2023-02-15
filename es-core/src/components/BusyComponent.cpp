@@ -27,7 +27,6 @@ BusyComponent::BusyComponent()
     , mGrid {glm::ivec2 {5, 3}}
 {
     mAnimation = std::make_shared<AnimatedImageComponent>();
-    mAnimation->load(&BUSY_ANIMATION_DEF);
     mText = std::make_shared<TextComponent>("WORKING...", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
 
     // Col 0 = animation, col 1 = spacer, col 2 = text.
@@ -61,6 +60,8 @@ void BusyComponent::onSizeChanged()
     mBackground.fitTo(glm::vec2 {mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3),
                                  textHeight + (2.0f * Renderer::getScreenResolutionModifier())},
                       mAnimation->getPosition(), glm::vec2 {});
+
+    mAnimation->load(&BUSY_ANIMATION_DEF);
 }
 
 void BusyComponent::reset()
