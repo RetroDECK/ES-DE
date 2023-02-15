@@ -282,7 +282,9 @@ float TextureData::sourceHeight()
 void TextureData::setSourceSize(float width, float height)
 {
     if (mScalable) {
-        if (mSourceWidth != width || mSourceHeight != height) {
+        // Ugly hack to make sure SVG images matching the temporary size 64x64 get rasterized.
+        const bool tempSizeMatch {mPendingRasterization && width == 64 && height == 64};
+        if (tempSizeMatch || mSourceWidth != width || mSourceHeight != height) {
             mSourceWidth = width;
             mSourceHeight = height;
             releaseVRAM();

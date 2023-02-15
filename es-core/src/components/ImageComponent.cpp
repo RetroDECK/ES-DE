@@ -64,12 +64,14 @@ void ImageComponent::setImage(const std::string& path, bool tile)
 
     // Create an initial blank texture if needed.
     if (path.empty() || !ResourceManager::getInstance().fileExists(path)) {
-        if (mDefaultPath.empty() || !ResourceManager::getInstance().fileExists(mDefaultPath))
+        if (mDefaultPath.empty() || !ResourceManager::getInstance().fileExists(mDefaultPath)) {
             mTexture.reset();
-        else
+        }
+        else {
             mTexture = TextureResource::get(mDefaultPath, tile, mForceLoad, mDynamic,
                                             mLinearInterpolation, mMipmapping);
-        resize(true);
+            resize(true);
+        }
     }
     else {
         // For raster images we just load and resize but for SVG images we first need to resize
