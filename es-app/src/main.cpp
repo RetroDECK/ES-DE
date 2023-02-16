@@ -397,7 +397,8 @@ bool parseArgs(int argc, char* argv[])
             Log::setReportingLevel(LogDebug);
         }
         else if (strcmp(argv[i], "--version") == 0 || strcmp(argv[i], "-v") == 0) {
-            std::cout << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << "\n";
+            std::cout << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << " (r"
+                      << PROGRAM_RELEASE_NUMBER << ")\n";
             return false;
         }
         else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0) {
@@ -582,9 +583,8 @@ int main(int argc, char* argv[])
     // Start the logger.
     Log::init();
     Log::open();
-    LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << ", built "
-                 << PROGRAM_BUILT_STRING;
-
+    LOG(LogInfo) << "EmulationStation Desktop Edition v" << PROGRAM_VERSION_STRING << " (r"
+                 << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
     if (portableMode) {
         LOG(LogInfo) << "Running in portable mode";
     }
