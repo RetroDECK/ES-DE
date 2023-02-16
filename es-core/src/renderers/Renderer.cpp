@@ -250,7 +250,7 @@ bool Renderer::createWindow()
                  << std::to_string(displayMode.w * scaleFactor) << "x"
                  << std::to_string(displayMode.h * scaleFactor) << ")";
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
+    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(sScreenWidth) << "x"
                  << std::to_string(sScreenHeight) << " (physical resolution "
                  << std::to_string(sScreenWidth * scaleFactor) << "x"
                  << std::to_string(sScreenHeight * scaleFactor) << ")";
@@ -268,7 +268,7 @@ bool Renderer::createWindow()
     LOG(LogInfo) << "Display resolution: " << std::to_string(displayMode.w) << "x"
                  << std::to_string(displayMode.h);
     LOG(LogInfo) << "Display refresh rate: " << std::to_string(displayMode.refresh_rate) << " Hz";
-    LOG(LogInfo) << "Application resolution: " << std::to_string(sScreenWidth) << "x"
+    LOG(LogInfo) << "EmulationStation resolution: " << std::to_string(sScreenWidth) << "x"
                  << std::to_string(sScreenHeight);
 #endif
 
