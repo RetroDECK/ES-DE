@@ -17,16 +17,13 @@
 
 #include <assert.h>
 
-CURLM* HttpReq::s_multi_handle;
-std::map<CURL*, HttpReq*> HttpReq::s_requests;
-
 std::string HttpReq::urlEncode(const std::string& s)
 {
     const std::string unreserved {
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~"};
 
     std::string escaped {""};
-    for (size_t i = 0; i < s.length(); ++i) {
+    for (size_t i {0}; i < s.length(); ++i) {
         if (unreserved.find_first_of(s[i]) != std::string::npos) {
             escaped.push_back(s[i]);
         }
@@ -55,8 +52,8 @@ HttpReq::HttpReq(const std::string& url)
     // The multi-handle is cleaned up via a call from GuiScraperSearch after the scraping
     // has been completed for a game, meaning the handle is valid for all curl requests
     // performed for the current game.
-    if (!s_multi_handle)
-        s_multi_handle = curl_multi_init();
+    if (!sMultiHandle)
+        sMultiHandle = curl_multi_init();
 
     mHandle = curl_easy_init();
 
@@ -96,7 +93,7 @@ HttpReq::HttpReq(const std::string& url)
         connectionTimeout =
             static_cast<long>(Settings::getInstance()->getDefaultInt("ScraperConnectionTimeout"));
 
-    // Set connection timeout (default is 300 seconds).
+    // Set connection timeout (default is 30 seconds).
     err = curl_easy_setopt(mHandle, CURLOPT_CONNECTTIMEOUT, connectionTimeout);
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
@@ -111,7 +108,7 @@ HttpReq::HttpReq(const std::string& url)
         transferTimeout =
             static_cast<long>(Settings::getInstance()->getDefaultInt("ScraperTransferTimeout"));
 
-    // Set transfer timeout (default is 0/infinity).
+    // Set transfer timeout (default is 120 seconds).
     err = curl_easy_setopt(mHandle, CURLOPT_TIMEOUT, transferTimeout);
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
@@ -151,15 +148,15 @@ HttpReq::HttpReq(const std::string& url)
     }
 
     // Tell curl how to write the data.
-    err = curl_easy_setopt(mHandle, CURLOPT_WRITEFUNCTION, &HttpReq::write_content);
+    err = curl_easy_setopt(mHandle, CURLOPT_WRITEFUNCTION, &HttpReq::writeContent);
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
         onError(curl_easy_strerror(err));
         return;
     }
 
-    // Give curl a pointer to this HttpReq so we know where to write the
-    // data *to* in our write function.
+    // Give curl a pointer to this HttpReq so we know where to write the data to in our
+    // write function.
     err = curl_easy_setopt(mHandle, CURLOPT_WRITEDATA, this);
     if (err != CURLE_OK) {
         mStatus = REQ_IO_ERROR;
@@ -168,22 +165,22 @@ HttpReq::HttpReq(const std::string& url)
     }
 
     // Add the handle to our multi.
-    CURLMcode merr = curl_multi_add_handle(s_multi_handle, mHandle);
+    CURLMcode merr = curl_multi_add_handle(sMultiHandle, mHandle);
     if (merr != CURLM_OK) {
         mStatus = REQ_IO_ERROR;
         onError(curl_multi_strerror(merr));
         return;
     }
 
-    s_requests[mHandle] = this;
+    sRequests[mHandle] = this;
 }
 
 HttpReq::~HttpReq()
 {
     if (mHandle) {
-        s_requests.erase(mHandle);
+        sRequests.erase(mHandle);
 
-        CURLMcode merr {curl_multi_remove_handle(s_multi_handle, mHandle)};
+        CURLMcode merr {curl_multi_remove_handle(sMultiHandle, mHandle)};
 
         if (merr != CURLM_OK) {
             LOG(LogError) << "Error removing curl_easy handle from curl_multi: "
@@ -197,19 +194,19 @@ HttpReq::~HttpReq()
 HttpReq::Status HttpReq::status()
 {
     if (mStatus == REQ_IN_PROGRESS) {
-        int handle_count;
-        CURLMcode merr {curl_multi_perform(s_multi_handle, &handle_count)};
+        int handleCount {0};
+        CURLMcode merr {curl_multi_perform(sMultiHandle, &handleCount)};
         if (merr != CURLM_OK && merr != CURLM_CALL_MULTI_PERFORM) {
             mStatus = REQ_IO_ERROR;
             onError(curl_multi_strerror(merr));
             return mStatus;
         }
 
-        int msgs_left;
+        int msgsLeft;
         CURLMsg* msg;
-        while ((msg = curl_multi_info_read(s_multi_handle, &msgs_left)) != nullptr) {
+        while ((msg = curl_multi_info_read(sMultiHandle, &msgsLeft)) != nullptr) {
             if (msg->msg == CURLMSG_DONE) {
-                HttpReq* req = s_requests[msg->easy_handle];
+                HttpReq* req {sRequests[msg->easy_handle]};
 
                 if (req == nullptr) {
                     LOG(LogError) << "Cannot find easy handle!";
@@ -243,7 +240,7 @@ std::string HttpReq::getContent() const
 // Used as a curl callback.
 // size = size of an element, nmemb = number of elements.
 // Return value is number of elements successfully read.
-size_t HttpReq::write_content(void* buff, size_t size, size_t nmemb, void* req_ptr)
+size_t HttpReq::writeContent(void* buff, size_t size, size_t nmemb, void* req_ptr)
 {
     std::stringstream& ss {static_cast<HttpReq*>(req_ptr)->mContent};
     ss.write(static_cast<char*>(buff), size * nmemb);

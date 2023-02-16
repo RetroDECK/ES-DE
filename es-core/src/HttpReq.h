@@ -63,21 +63,18 @@ public:
 
     static void cleanupCurlMulti()
     {
-        if (s_multi_handle != nullptr) {
-            curl_multi_cleanup(s_multi_handle);
-            s_multi_handle = nullptr;
+        if (sMultiHandle != nullptr) {
+            curl_multi_cleanup(sMultiHandle);
+            sMultiHandle = nullptr;
         }
     }
 
 private:
-    static size_t write_content(void* buff, size_t size, size_t nmemb, void* req_ptr);
+    static size_t writeContent(void* buff, size_t size, size_t nmemb, void* req_ptr);
     void onError(const std::string& msg) { mErrorMsg = msg; }
 
-    // God dammit libcurl why can't you have some way to check the status of an
-    // individual handle why do I have to handle ALL messages at once.
-    static std::map<CURL*, HttpReq*> s_requests;
-
-    static CURLM* s_multi_handle;
+    static inline std::map<CURL*, HttpReq*> sRequests;
+    static inline CURLM* sMultiHandle;
 
     Status mStatus;
     CURL* mHandle;
