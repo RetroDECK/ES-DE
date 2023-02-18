@@ -438,7 +438,7 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
-                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.26.1)
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.26.3)
 elseif(EMSCRIPTEN)
     set(COMMON_INCLUDE_DIRS ${COMMON_INCLUDE_DIRS}
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/curl/include
