@@ -5,6 +5,7 @@
 //
 //  Functions to read from and write to the configuration file es_settings.xml.
 //  The default values for the application settings are defined here as well.
+//  This class is not thread safe.
 //
 
 #include "Settings.h"
@@ -40,6 +41,7 @@ namespace
         "Debug",                // --debug
 
         // These options are only used internally during the application session:
+        "PortableMode",
         "DebugGrid",
         "DebugText",
         "DebugImage",
@@ -253,6 +255,8 @@ void Settings::setDefaults()
     mStringMap["KeyboardQuitShortcut"] = {"AltF4", "AltF4"};
 #endif
     mStringMap["SaveGamelistsMode"] = {"always", "always"};
+    mStringMap["ApplicationUpdaterFrequency"] = {"always", "always"};
+    mBoolMap["ApplicationUpdaterPrereleases"] = {false, false};
 #if defined(_WIN64)
     mBoolMap["HideTaskbar"] = {false, false};
 #endif
@@ -322,6 +326,8 @@ void Settings::setDefaults()
     //
 
     mStringMap["ApplicationVersion"] = {"", ""};
+    mStringMap["ApplicationUpdaterLastCheck"] = {"", ""};
+    mBoolMap["PortableMode"] = {false, false};
     mBoolMap["DebugGrid"] = {false, false};
     mBoolMap["DebugText"] = {false, false};
     mBoolMap["DebugImage"] = {false, false};

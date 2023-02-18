@@ -1408,6 +1408,48 @@ void GuiMenu::openOtherOptions()
         }
     });
 
+#if defined(APPLICATION_UPDATER)
+    // Application updater frequency.
+    auto applicationUpdaterFrequency = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "APPLICATION UPDATES", false);
+    const std::string& selectedUpdaterFrequency {
+        Settings::getInstance()->getString("ApplicationUpdaterFrequency")};
+    applicationUpdaterFrequency->add("ALWAYS", "always", selectedUpdaterFrequency == "always");
+    applicationUpdaterFrequency->add("DAILY", "daily", selectedUpdaterFrequency == "daily");
+    applicationUpdaterFrequency->add("WEEKLY", "weekly", selectedUpdaterFrequency == "weekly");
+    applicationUpdaterFrequency->add("MONTHLY", "monthly", selectedUpdaterFrequency == "monthly");
+    applicationUpdaterFrequency->add("NEVER", "never", selectedUpdaterFrequency == "never");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set updater frequency to "always" in this case.
+    if (applicationUpdaterFrequency->getSelectedObjects().size() == 0)
+        applicationUpdaterFrequency->selectEntry(0);
+    s->addWithLabel("CHECK FOR APPLICATION UPDATES", applicationUpdaterFrequency);
+    s->addSaveFunc([applicationUpdaterFrequency, s] {
+        if (applicationUpdaterFrequency->getSelected() !=
+            Settings::getInstance()->getString("ApplicationUpdaterFrequency")) {
+            Settings::getInstance()->setString("ApplicationUpdaterFrequency",
+                                               applicationUpdaterFrequency->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
+#if defined(APPLICATION_UPDATER) && !defined(IS_PRERELEASE)
+    // Whether to include prereleases when checking for application updates.
+    auto applicationUpdaterPrereleases = std::make_shared<SwitchComponent>();
+    applicationUpdaterPrereleases->setState(
+        Settings::getInstance()->getBool("ApplicationUpdaterPrereleases"));
+    s->addWithLabel("INCLUDE PRERELEASES IN UPDATE CHECKS", applicationUpdaterPrereleases);
+    s->addSaveFunc([applicationUpdaterPrereleases, s] {
+        if (applicationUpdaterPrereleases->getState() !=
+            Settings::getInstance()->getBool("ApplicationUpdaterPrereleases")) {
+            Settings::getInstance()->setBool("ApplicationUpdaterPrereleases",
+                                             applicationUpdaterPrereleases->getState());
+            s->setNeedsSaving();
+        }
+    });
+#endif
+
 #if defined(_WIN64)
     // Hide taskbar during the program session.
     auto hide_taskbar = std::make_shared<SwitchComponent>();
@@ -1591,6 +1633,29 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
+#if defined(APPLICATION_UPDATER) && !defined(IS_PRERELEASE)
+    auto applicationUpdaterFrequencyFunc = [applicationUpdaterFrequency,
+                                            applicationUpdaterPrereleases](const std::string&) {
+        if (applicationUpdaterFrequency->getSelected() == "never") {
+            applicationUpdaterPrereleases->setEnabled(false);
+            applicationUpdaterPrereleases->setOpacity(DISABLED_OPACITY);
+            applicationUpdaterPrereleases->getParent()
+                ->getChild(applicationUpdaterPrereleases->getChildIndex() - 1)
+                ->setOpacity(DISABLED_OPACITY);
+        }
+        else {
+            applicationUpdaterPrereleases->setEnabled(true);
+            applicationUpdaterPrereleases->setOpacity(1.0f);
+            applicationUpdaterPrereleases->getParent()
+                ->getChild(applicationUpdaterPrereleases->getChildIndex() - 1)
+                ->setOpacity(1.0f);
+        }
+    };
+
+    applicationUpdaterFrequencyFunc(std::string());
+    applicationUpdaterFrequency->setCallback(applicationUpdaterFrequencyFunc);
+#endif
+
     s->setSize(mSize);
     mWindow->pushGui(s);
 }
@@ -1673,7 +1738,7 @@ void GuiMenu::addVersionInfo()
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
     mVersion.setColor(0x5E5E5EFF);
 
-#if defined(MENU_BUILD_DATE)
+#if defined(IS_PRERELEASE)
     mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
                      " (Built " + __DATE__ + ")");
 #else

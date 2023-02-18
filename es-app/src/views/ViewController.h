@@ -36,6 +36,7 @@ public:
     void invalidSystemsFileDialog();
     void noGamesDialog();
     void invalidAlternativeEmulatorDialog();
+    void updateAvailableDialog(const std::string& message);
 
     // Try to completely populate the GamelistView map.
     // Caches things so there's no pauses during transitions.

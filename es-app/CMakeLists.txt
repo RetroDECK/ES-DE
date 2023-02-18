@@ -10,6 +10,7 @@
 project(emulationstation-de)
 
 set(ES_HEADERS
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationUpdater.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/EmulationStation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.h
@@ -58,6 +59,7 @@ set(ES_HEADERS
 )
 
 set(ES_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ApplicationUpdater.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/CollectionSystemsManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/FileFilterIndex.cpp

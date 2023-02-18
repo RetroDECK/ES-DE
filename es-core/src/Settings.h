@@ -5,6 +5,7 @@
 //
 //  Functions to read from and write to the configuration file es_settings.xml.
 //  The default values for the application settings are defined here as well.
+//  This class is not thread safe.
 //
 
 #ifndef ES_CORE_SETTINGS_H

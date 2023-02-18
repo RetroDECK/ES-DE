@@ -32,20 +32,22 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Utils
                               ${CMAKE_CURRENT_SOURCE_DIR}/CMake/Packages)
 
 # Define the options.
-option(GL "Set to ON if targeting Desktop OpenGL" ${GL})
-option(GLES "Set to ON if targeting OpenGL ES" ${GLES})
-option(APPIMAGE_BUILD "Set to ON when building as an AppImage" ${APPIMAGE_BUILD})
-option(FLATPAK_BUILD "Set to ON when building as a Flatpak" ${FLATPAK_BUILD})
-option(STEAM_DECK "Set to ON to enable a Valve Steam Deck specific build" ${STEAM_DECK})
-option(RETRODECK "Set to ON to enable a RetroDECK specific build" ${RETRODECK})
-option(RPI "Set to ON to enable a Raspberry Pi specific build" ${RPI})
-option(BUNDLED_CERTS "Set to ON to use bundled TLS/SSL certificates" ${BUNDLED_CERTS})
-option(CEC "Set to ON to enable CEC" ${CEC})
-option(VIDEO_HW_DECODING "Set to ON to enable FFmpeg HW decoding" ${VIDEO_HW_DECODING})
-option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" ${CLANG_TIDY})
-option(ASAN "Set to ON to build with AddressSanitizer" ${ASAN})
-option(TSAN "Set to ON to build with ThreadSanitizer" ${TSAN})
-option(UBSAN "Set to ON to build with UndefinedBehaviorSanitizer" ${UBSAN})
+option(GL "Set to ON if targeting Desktop OpenGL" ON)
+option(GLES "Set to ON if targeting OpenGL ES" OFF)
+option(APPLICATION_UPDATER "Set to OFF to build without the application updater" ON)
+option(APPIMAGE_BUILD "Set to ON when building as an AppImage" OFF)
+option(AUR_BUILD "Set to ON when building for the AUR" OFF)
+option(FLATPAK_BUILD "Set to ON when building as a Flatpak" OFF)
+option(STEAM_DECK "Set to ON to enable a Valve Steam Deck specific build" OFF)
+option(RETRODECK "Set to ON to enable a RetroDECK specific build" OFF)
+option(RPI "Set to ON to enable a Raspberry Pi specific build" OFF)
+option(BUNDLED_CERTS "Set to ON to use bundled TLS/SSL certificates" OFF)
+option(CEC "Set to ON to enable CEC" OFF)
+option(VIDEO_HW_DECODING "Set to ON to enable FFmpeg HW decoding" OFF)
+option(CLANG_TIDY "Set to ON to build using the clang-tidy static analyzer" OFF)
+option(ASAN "Set to ON to build with AddressSanitizer" OFF)
+option(TSAN "Set to ON to build with ThreadSanitizer" OFF)
+option(UBSAN "Set to ON to build with UndefinedBehaviorSanitizer" OFF)
 
 if(CLANG_TIDY)
     find_program(CLANG_TIDY_BINARY NAMES clang-tidy)
@@ -287,7 +289,7 @@ if(GLES)
     message("-- Building with OpenGL ES renderer")
 endif()
 
-if (APPIMAGE_BUILD AND FLATPAK_BUILD)
+if(APPIMAGE_BUILD AND FLATPAK_BUILD)
     message(FATAL_ERROR "-- APPIMAGE_BUILD and FLATPAK_BUILD can't be combined")
 endif()
 
@@ -305,6 +307,10 @@ if(FLATPAK_BUILD)
     endif()
     add_compile_definitions(FLATPAK_BUILD)
     message("-- Building as a Flatpak")
+endif()
+
+if(AUR_BUILD)
+    message("-- Building for the AUR")
 endif()
 
 if(STEAM_DECK AND RETRODECK)
@@ -339,13 +345,44 @@ if(VIDEO_HW_DECODING)
     message("-- Building with FFmpeg HW decoding")
 endif()
 
+if(AUR_BUILD OR FLATPAK_BUILD OR RETRODECK OR RPI)
+    set(APPLICATION_UPDATER OFF)
+endif()
+
+if(CMAKE_SYSTEM_NAME MATCHES FreeBSD OR CMAKE_SYSTEM_NAME MATCHES NetBSD OR CMAKE_SYSTEM_NAME MATCHES OpenBSD)
+    set(APPLICATION_UPDATER OFF)
+endif()
+
+if(APPLICATION_UPDATER)
+    add_compile_definitions(APPLICATION_UPDATER)
+else()
+    message("-- Building without application updater")
+endif()
+
+# This is needed to identify the package type for the application updater.
+if(CMAKE_SYSTEM_NAME MATCHES Linux)
+    if(LINUX_CPACK_GENERATOR MATCHES DEB)
+        add_compile_definitions(LINUX_DEB_PACKAGE)
+    elseif(LINUX_CPACK_GENERATOR MATCHES RPM)
+        add_compile_definitions(LINUX_RPM_PACKAGE)
+    endif()
+endif()
+
+if(APPLE)
+    if(CMAKE_SYSTEM_PROCESSOR MATCHES arm)
+        add_compile_definitions(MACOS_APPLE_CPU)
+    else()
+        add_compile_definitions(MACOS_INTEL_CPU)
+    endif()
+endif()
+
 if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
     add_compile_definitions(LEGACY_MACOS)
 endif()
 
-# If it's an alpha, beta or dev build, then display the build date in the main menu.
+# Affects the application updater and is used for displaying version info in the main menu.
 if(ES_VERSION MATCHES alpha OR ES_VERSION MATCHES beta OR ES_VERSION MATCHES dev)
-    add_compile_definitions(MENU_BUILD_DATE)
+    add_compile_definitions(IS_PRERELEASE)
 endif()
 
 # GLM library options.

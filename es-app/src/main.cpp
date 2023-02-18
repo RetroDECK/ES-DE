@@ -17,6 +17,7 @@
 //  environment and starts listening to SDL events.
 //
 
+#include "ApplicationUpdater.h"
 #include "AudioManager.h"
 #include "CollectionSystemsManager.h"
 #include "EmulationStation.h"
@@ -62,6 +63,9 @@ namespace
     Window* window {nullptr};
     int lastTime {0};
 
+#if defined(APPLICATION_UPDATER)
+    bool noUpdateCheck {false};
+#endif
     bool forceInputConfig {false};
     bool createSystemDirectories {false};
     bool settingsNeedSaving {false};
@@ -361,6 +365,11 @@ bool parseArgs(int argc, char* argv[])
         else if (strcmp(argv[i], "--no-splash") == 0) {
             Settings::getInstance()->setBool("SplashScreen", false);
         }
+#if defined(APPLICATION_UPDATER)
+        else if (strcmp(argv[i], "--no-update-check") == 0) {
+            noUpdateCheck = true;
+        }
+#endif
         else if (strcmp(argv[i], "--gamelist-only") == 0) {
             Settings::getInstance()->setBool("ParseGamelistOnly", true);
             settingsNeedSaving = true;
@@ -418,6 +427,9 @@ bool parseArgs(int argc, char* argv[])
 "  --anti-aliasing [0, 2 or 4]           Set MSAA anti-aliasing to disabled, 2x or 4x\n"
 #endif
 "  --no-splash                           Don't show the splash screen during startup\n"
+#if defined(APPLICATION_UPDATER)
+"  --no-update-check                     Don't check for application updates during startup\n"
+#endif
 "  --gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml\n"
 "  --ignore-gamelist                     Ignore the gamelist.xml files\n"
 "  --show-hidden-files                   Show hidden files and folders\n"
@@ -587,6 +599,10 @@ int main(int argc, char* argv[])
                  << PROGRAM_RELEASE_NUMBER << "), built " << PROGRAM_BUILT_STRING;
     if (portableMode) {
         LOG(LogInfo) << "Running in portable mode";
+        Settings::getInstance()->setBool("PortableMode", true);
+    }
+    else {
+        Settings::getInstance()->setBool("PortableMode", false);
     }
 
     // Always close the log on exit.
@@ -676,6 +692,15 @@ int main(int argc, char* argv[])
 
     renderer = Renderer::getInstance();
     window = Window::getInstance();
+
+#if defined(APPLICATION_UPDATER)
+    std::unique_ptr<ApplicationUpdater> applicationUpdater;
+    if (!noUpdateCheck) {
+        applicationUpdater = std::make_unique<ApplicationUpdater>();
+        applicationUpdater->checkForUpdates();
+    }
+#endif
+
     ViewController::getInstance();
     CollectionSystemsManager::getInstance();
     Screensaver screensaver;
@@ -743,9 +768,14 @@ int main(int argc, char* argv[])
     }
 
     if (!SystemData::sStartupExitSignal) {
-        if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK)
+        std::string updaterResults;
+        if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK) {
             ThemeData::themeLoadedLogOutput();
-
+#if defined(APPLICATION_UPDATER)
+            if (!noUpdateCheck)
+                applicationUpdater->getResults(updaterResults);
+#endif
+        }
         // Open the input configuration GUI if the force flag was passed from the command line.
         if (!loadSystemsStatus) {
             if (forceInputConfig) {
@@ -762,11 +792,21 @@ int main(int argc, char* argv[])
 
         lastTime = SDL_GetTicks();
 
+#if defined(APPLICATION_UPDATER)
+        if (!noUpdateCheck)
+            applicationUpdater.reset();
+#endif
+
         LOG(LogInfo) << "Application startup time: "
                      << std::chrono::duration_cast<std::chrono::milliseconds>(
                             std::chrono::system_clock::now() - applicationStartTime)
                             .count()
                      << " ms";
+
+#if defined(APPLICATION_UPDATER)
+        if (updaterResults != "")
+            ViewController::getInstance()->updateAvailableDialog(updaterResults);
+#endif
 
         // Main application loop.
 

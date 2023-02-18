@@ -6,6 +6,7 @@
 //  HTTP request functions.
 //  Used by Scraper, GamesDBJSONScraper, GamesDBJSONScraperResources and
 //  ScreenScraper to download game information and media files.
+//  Also used by ApplicationUpdater to check for application updates.
 //
 
 #ifndef ES_CORE_HTTP_REQ_H
