@@ -693,14 +693,6 @@ int main(int argc, char* argv[])
     renderer = Renderer::getInstance();
     window = Window::getInstance();
 
-#if defined(APPLICATION_UPDATER)
-    std::unique_ptr<ApplicationUpdater> applicationUpdater;
-    if (!noUpdateCheck) {
-        applicationUpdater = std::make_unique<ApplicationUpdater>();
-        applicationUpdater->checkForUpdates();
-    }
-#endif
-
     ViewController::getInstance();
     CollectionSystemsManager::getInstance();
     Screensaver screensaver;
@@ -711,6 +703,14 @@ int main(int argc, char* argv[])
         LOG(LogError) << "Window failed to initialize";
         return 1;
     }
+
+#if defined(APPLICATION_UPDATER)
+    std::unique_ptr<ApplicationUpdater> applicationUpdater;
+    if (!noUpdateCheck) {
+        applicationUpdater = std::make_unique<ApplicationUpdater>();
+        applicationUpdater->checkForUpdates();
+    }
+#endif
 
     window->pushGui(ViewController::getInstance());
 
