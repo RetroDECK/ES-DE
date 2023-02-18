@@ -27,7 +27,7 @@ public:
     void checkForUpdates();
     void updaterThread();
     bool downloadFile();
-    void update() override;
+    void update();
     void parseFile();
     void compareVersions();
     void getResults(std::string& results);
