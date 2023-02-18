@@ -213,7 +213,7 @@ void ViewController::updateAvailableDialog(const std::string& message)
     mWindow->pushGui(new GuiMsgBox(getHelpStyle(), message, "OK", nullptr, "", nullptr, "", nullptr,
                                    true, true,
                                    (mRenderer->getIsVerticalOrientation() ?
-                                        0.85f :
+                                        0.70f :
                                         0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
 }
 
