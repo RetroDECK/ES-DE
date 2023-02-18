@@ -62,7 +62,7 @@ void GuiThemeDownloader::parseThemesList()
     for (auto& themeObject : themeObjects) {
         if (doc.HasMember(themeObject.c_str()) && doc[themeObject.c_str()].IsArray()) {
             const rapidjson::Value& themeSets {doc[themeObject.c_str()]};
-            for (size_t i {0}; i < themeSets.Size(); ++i) {
+            for (int i {0}; i < static_cast<int>(themeSets.Size()); ++i) {
                 ThemeEntry themeEntry;
                 const rapidjson::Value& theme {themeSets[i]};
 
@@ -80,31 +80,31 @@ void GuiThemeDownloader::parseThemesList()
 
                 if (theme.HasMember("variants") && theme["variants"].IsArray()) {
                     const rapidjson::Value& variants {theme["variants"]};
-                    for (size_t i {0}; i < variants.Size(); ++i)
+                    for (int i {0}; i < static_cast<int>(variants.Size()); ++i)
                         themeEntry.variants.emplace_back(variants[i].GetString());
                 }
 
                 if (theme.HasMember("colorSchemes") && theme["colorSchemes"].IsArray()) {
                     const rapidjson::Value& colorSchemes {theme["colorSchemes"]};
-                    for (size_t i {0}; i < colorSchemes.Size(); ++i)
+                    for (int i {0}; i < static_cast<int>(colorSchemes.Size()); ++i)
                         themeEntry.colorSchemes.emplace_back(colorSchemes[i].GetString());
                 }
 
                 if (theme.HasMember("aspectRatios") && theme["aspectRatios"].IsArray()) {
                     const rapidjson::Value& aspectRatios {theme["aspectRatios"]};
-                    for (size_t i {0}; i < aspectRatios.Size(); ++i)
+                    for (int i {0}; i < static_cast<int>(aspectRatios.Size()); ++i)
                         themeEntry.aspectRatios.emplace_back(aspectRatios[i].GetString());
                 }
 
                 if (theme.HasMember("transitions") && theme["transitions"].IsArray()) {
                     const rapidjson::Value& transitions {theme["transitions"]};
-                    for (size_t i {0}; i < transitions.Size(); ++i)
+                    for (int i {0}; i < static_cast<int>(transitions.Size()); ++i)
                         themeEntry.transitions.emplace_back(transitions[i].GetString());
                 }
 
                 if (theme.HasMember("screenshots") && theme["screenshots"].IsArray()) {
                     const rapidjson::Value& screenshots {theme["screenshots"]};
-                    for (size_t i {0}; i < screenshots.Size(); ++i) {
+                    for (int i {0}; i < static_cast<int>(screenshots.Size()); ++i) {
                         Screenshot screenshotEntry;
                         if (screenshots[i].HasMember("image") && screenshots[i]["image"].IsString())
                             screenshotEntry.image = screenshots[i]["image"].GetString();
