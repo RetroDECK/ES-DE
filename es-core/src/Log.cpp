@@ -4,6 +4,7 @@
 //  Log.cpp
 //
 //  Log output.
+//  This class is thread safe.
 //
 
 #include "Log.h"

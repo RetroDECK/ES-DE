@@ -4,6 +4,7 @@
 //  Log.h
 //
 //  Log output.
+//  This class is thread safe.
 //
 
 #ifndef ES_CORE_LOG_H
