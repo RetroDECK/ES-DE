@@ -359,7 +359,7 @@ else()
     message("-- Building without application updater")
 endif()
 
-# This is needed to identify the package type for the application updater.
+# This is needed by the application updater to identify the package type.
 if(CMAKE_SYSTEM_NAME MATCHES Linux)
     if(LINUX_CPACK_GENERATOR MATCHES DEB)
         add_compile_definitions(LINUX_DEB_PACKAGE)
