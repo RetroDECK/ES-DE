@@ -124,13 +124,13 @@ cmake .
 make
 ```
 
-To make a build specifically for the Valve Steam Deck, run this:
+By default the application updater will be built which checks for new releases on startup, to disable this functionality run the following:
 ```
-cmake -DSTEAM_DECK=on .
+cmake -DAPPLICATION_UPDATER=off .
 make
 ```
 
-This will change some Steam Deck-specific settings like increasing the default VRAM limit.
+Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or BSD Unix.
 
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
@@ -1064,7 +1064,9 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --fullscreen-padding [1/on or 0/off]  Padding if --resolution is lower than display resolution
 --vsync [1/on or 0/off]               Turn VSync on or off (default is on)
 --max-vram [size]                     Max VRAM to use (in mebibytes) before swapping
+--anti-aliasing [0, 2 or 4]           Set MSAA anti-aliasing to disabled, 2x or 4x
 --no-splash                           Don't show the splash screen during startup
+--no-update-check                     Don't check for application updates during startup
 --gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml
 --ignore-gamelist                     Ignore the gamelist.xml files
 --show-hidden-files                   Show hidden files and folders
@@ -1080,11 +1082,13 @@ You can use **--help** or **-h** to view the list of command line options, as sh
 --help, -h                            Summon a sentient, angry tuba
 ```
 
-_The --anti-aliasing option is not available if ES-DE is built using the OpenGL ES renderer._
+_The --anti-aliasing option is not available if ES-DE is built using the OpenGL ES renderer and the --no-update-check option is not available for builds where the application updater is disabled._
 
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its application home directory. Be aware that this option completely replaces what is considered the home directory, meaning the default ROM directory ~/ROMs would be resolved to ~/games/emulation/ROMs. The same is true for the emulator core locations if es_find_rules.xml is configured to look for them relative to the home directory. So of course RetroArch and other emulators would also need to be configured to use ~/games/emulation as its base directory in this instance.
 
 Setting --resolution to a lower or higher value than the display resolution will add a border to the application window. The exception is if defining a lower resolution than the display resolution in combination with the --fullscreen-padding flag as this will pad the screen contents on a black background. This can be combined with the --screenoffset option for exact positioning on displays where bezels or similar may obstruct part of the viewable area.
+
+The --no-update-check option only disabled the application updater for the current startup. To permanently disable this functionality use the _Check for application updates_ option in the _Other settings_ menu. The command line option is primarily intended for the unlikely event that the application updater breaks the application and makes it impossible to start.
 
 Running with the --create-system-dirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
 

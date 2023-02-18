@@ -29,6 +29,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Ported modern-DE to the new theme engine and renamed it to modern-es-de
 * Added variant trigger (override) support to replicate the legacy theme engine automatic view style switching
 * Events are now parsed during startup which avoids issues with the OS thinking the application has hung when loading
+* Added an application updater that checks for new releases on startup (currently only provides notifications)
 * Replaced the NanoSVG library with LunaSVG for greatly improved SVG rendering capabilities
 * Added support for caching of SVG images
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
@@ -294,6 +295,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Lots of general code cleanup and refactoring
 * (Windows) Added error handling to StringUtil::stringToWideString() and StringUtil::wideStringToString() to perform an emergency shutdown if needed
 * Updated the MAME index files to include ROMs up to MAME version 0.251
+* Added a program release number in addition to the version number
 * Changed tools/create_AppImage.sh to not include version information in the AppImage filename
 * Updated and improved the theming documentation
 

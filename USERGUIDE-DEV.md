@@ -429,9 +429,9 @@ On macOS it's problematic to change screen resolutions on the fly or on a per-ap
 
 ## Advanced display configuration
 
-ES-DE supports a number of advanced settings to fine-tune the display output. By default the application will run in fullscreen mode at the native display resolution, but using the --resolution command line option it's possible to set this to any arbitrary resolution. By default this will change ES-DE into running in windowed mode, but if also using the --fullscreen-padding command line option the window will be fullscreen with the application contents centered, padded on a black background. This can be useful for displays where a bezel or similar covers parts of the monitor, and it can be combined with the --screenoffset command line option to adjust the positioning within the application window.
+ES-DE supports a number of advanced settings to fine-tune the display output. By default the application will run in fullscreen mode at the native display resolution, but using the --resolution command line option it's possible to set this to an arbitrary resolution. By default this will change ES-DE into running in windowed mode, but if also using the --fullscreen-padding command line option the window will be fullscreen with the application contents centered, padded on a black background. This can be useful for displays where a bezel or similar covers parts of the monitor, and it can be combined with the --screenoffset command line option to adjust the positioning within the application window.
 
-Tate mode (vertical screen orientation) is also fully supported including both running at a vertical resolution as set on the OS level, or to rotate the screen contents within the application window and keep the display resolution at its non-rotated default state. The latter is sometimes required as some emulators don't work well on rotated screen layouts. Screen rotation can be applied either via the --screenrotate command line option or it can be configured from inside the _Other settings_ menu.
+Tate mode (vertical screen orientation) is also fully supported including both running at a vertical resolution as set on the OS level, or to rotate the screen contents within the application window and keep the display resolution at its non-rotated default state. The latter is sometimes required as some emulators don't work well on rotated screen layouts. Screen rotation can be applied either via the --screenrotate command line option or via the corresponding setting in the _Other settings_ menu.
 
 Below are some examples. For consistency it's assumed that the display resolution is set to 1920x1080 although in practice it's perhaps more likely that a lower resolution CRT monitor is used for some of these scenarios.
 
@@ -2634,6 +2634,14 @@ This gives the choice of which key combination to use to quit the application. T
 **When to save game metadata**
 
 The metadata for a game is updated by scraping or by manual editing using the metadata editor, but also when launching it as this updates the _Times played_ counter and the _Last played_ timestamp. This setting enables you to define when to write such metadata changes to the gamelist.xml files. Setting the option to _Never_ will disable writing to these files altogether, except for some special conditions such as when a game is manually deleted using the metadata editor, when scraping using the multi-scraper (the multi-scraper will always save any updates immediately to the gamelist.xml files) or when changing the system-wide alternative emulator. In theory _On exit_ will give some small performance gains, but it's normally recommended to leave the setting at its default value which is _Always_. Note that with the settings set to _Never_, any updates such as the _Last played_ date will still be shown on screen, but during the next application startup, any values previously saved to the gamelist.xml files will be read in again. As well, when changing this setting to _Always_ from either of the two other options, any pending changes will be immediately written to the gamelist.xml files.
+
+**Check for application updates** _Not available for some builds_
+
+By default a check for new ES-DE versions will be done on every application startup and a notification will be displayed if there is a new release available for download. Using this setting the frequency of these checks can be set to _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_. This setting is not available on some platforms and package formats such as the Linux AUR release and the semi-official BSD Unix and Raspberry Pi releases where pre-built packages are not provided.
+
+**Include prereleases in update checks** _Not available (always enabled) for prereleases_
+
+For platforms and package formats where the previous setting above is available there is also the option of whether to include prereleases when checking for application updates. Note that this is always enabled when running an ES-DE prerelease so in this case the setting will not be available in the menu.
 
 **Hide taskbar (requires restart)** _(Windows only)_
 
