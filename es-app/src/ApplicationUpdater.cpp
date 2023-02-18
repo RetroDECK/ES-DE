@@ -29,6 +29,7 @@ ApplicationUpdater::ApplicationUpdater()
     : mTimer {0}
     , mMaxTime {0}
     , mAbortDownload {false}
+    , mApplicationShutdown {false}
     , mCheckedForUpdate {false}
 {
     mUrl = "https://gitlab.com/api/v4/projects/18817634/repository/files/latest_release.json/"
@@ -38,6 +39,7 @@ ApplicationUpdater::ApplicationUpdater()
 ApplicationUpdater::~ApplicationUpdater()
 {
     // This is needed if getResults() was never called.
+    mApplicationShutdown = true;
     if (mThread)
         mThread->join();
 }
@@ -77,8 +79,9 @@ void ApplicationUpdater::checkForUpdates()
         mThread = std::make_unique<std::thread>(&ApplicationUpdater::updaterThread, this);
     }
     else {
-        LOG(LogDebug) << "ApplicationUpdater::checkForUpdates(): Skipping check as not enough time "
-                         "has passed since the last run";
+        LOG(LogInfo) << "Skipping application update check as not enough time has passed "
+                        "since the last run (configured to check \""
+                     << updateFrequency << "\")";
     }
 }
 
@@ -104,11 +107,11 @@ bool ApplicationUpdater::downloadFile()
             update();
         }
         catch (std::runtime_error& e) {
-            LOG(LogWarning) << "ApplicationUpdater: Couldn't download \"latest_release.json\": "
-                            << e.what();
+            mLogWarning = "ApplicationUpdater: Couldn't download \"latest_release.json\": " +
+                          std::string {e.what()};
             return true;
         }
-        if (mStatus == ASYNC_DONE)
+        if (mStatus == ASYNC_DONE || mApplicationShutdown)
             break;
         mTimer = SDL_GetTicks();
     };
@@ -117,11 +120,10 @@ bool ApplicationUpdater::downloadFile()
         rapidjson::Document doc;
         const std::string& fileContents {mRequest->getContent()};
         doc.Parse(&fileContents[0], fileContents.length());
-        if (doc.HasMember("error") && doc["error"].IsString()) {
-            LOG(LogWarning)
-                << "ApplicationUpdater: Couldn't download \"latest_release.json\", received "
-                   "server error response \""
-                << doc["error"].GetString() << "\"";
+        if (!doc.HasParseError() && doc.HasMember("message") && doc["message"].IsString()) {
+            mLogWarning = "ApplicationUpdater: Couldn't download \"latest_release.json\", received "
+                          "server response \"" +
+                          std::string {doc["message"].GetString()} + "\"";
             return true;
         }
         LOG(LogDebug)
@@ -131,12 +133,15 @@ bool ApplicationUpdater::downloadFile()
             parseFile();
         }
         catch (std::runtime_error& e) {
-            LOG(LogError) << "ApplicationUpdater: Couldn't parse \"latest_release.json\": "
-                          << e.what();
+            mLogError = "ApplicationUpdater: Couldn't parse \"latest_release.json\": " +
+                        std::string {e.what()};
             return true;
         }
     }
-    else if (mAbortDownload) {
+    else if (mApplicationShutdown) {
+        return true;
+    }
+    else if (mTimer - startTime - 10 > MAX_DOWNLOAD_TIME * 1000) {
         LOG(LogWarning) << "ApplicationUpdater: Aborted download of \"latest_release.json\" after "
                         << mTimer - startTime << " milliseconds as the application has started up";
         return true;
@@ -284,8 +289,9 @@ void ApplicationUpdater::compareVersions()
 #endif
     }
 
+    bool newVersion {false};
+
     for (auto& releaseType : releaseTypes) {
-        bool newVersion {false};
         // If the version does not follow the semantic versioning scheme then always consider it to
         // be a new release as perhaps the version scheme will be changed sometime in the future.
         if (count_if(releaseType->version.cbegin(), releaseType->version.cend(),
@@ -362,11 +368,14 @@ void ApplicationUpdater::compareVersions()
             // Cut the message to 280 characters so we don't make the message box exceedingly large.
             message = message.substr(0, 280);
 
-            LOG(LogInfo) << "ApplicationUpdater: A new "
-                         << (releaseType == &mStableRelease ? "stable release" : "prerelease")
-                         << " is available for download at https://es-de.org: "
-                         << releaseType->version << " (r" << releaseType->releaseNum
-                         << "), release date: " << releaseType->date;
+            mLogInfo = "A new ";
+            mLogInfo.append(releaseType == &mStableRelease ? "stable release" : "prerelease")
+                .append(" is available for download at https://es-de.org: ")
+                .append(releaseType->version)
+                .append(" (r")
+                .append(releaseType->releaseNum)
+                .append("), release date: ")
+                .append(releaseType->date);
 
             mResults.append("New ")
                 .append(releaseType == &mStableRelease ? "release " : "prerelease ")
@@ -384,6 +393,9 @@ void ApplicationUpdater::compareVersions()
             mResults = Utils::String::toUpper(mResults);
             break;
         }
+    }
+    if (!newVersion) {
+        mLogInfo = "No application updates available";
     }
     mCheckedForUpdate = true;
 }
@@ -403,5 +415,17 @@ void ApplicationUpdater::getResults(std::string& results)
                 Utils::Time::DateTime(Utils::Time::now()).getIsoString());
             Settings::getInstance()->saveFile();
         }
+    }
+
+    // We output these messages here instead of immediately when they occur so that they will
+    // always be printed at the end of the application startup.
+    if (mLogError != "") {
+        LOG(LogError) << mLogError;
+    }
+    if (mLogWarning != "") {
+        LOG(LogWarning) << mLogWarning;
+    }
+    if (mLogInfo != "") {
+        LOG(LogInfo) << mLogInfo;
     }
 }

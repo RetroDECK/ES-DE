@@ -51,9 +51,13 @@ private:
 
     std::string mUrl;
     std::string mResults;
+    std::string mLogInfo;
+    std::string mLogWarning;
+    std::string mLogError;
     unsigned int mTimer;
     unsigned int mMaxTime;
     std::atomic<bool> mAbortDownload;
+    std::atomic<bool> mApplicationShutdown;
     bool mCheckedForUpdate;
 
     std::unique_ptr<std::thread> mThread;
