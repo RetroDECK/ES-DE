@@ -76,6 +76,10 @@ void ApplicationUpdater::checkForUpdates()
         LOG(LogInfo) << "Checking for application updates...";
         mThread = std::make_unique<std::thread>(&ApplicationUpdater::updaterThread, this);
     }
+    else {
+        LOG(LogDebug) << "ApplicationUpdater::checkForUpdates(): Skipping check as not enough time "
+                         "has passed since the last run";
+    }
 }
 
 void ApplicationUpdater::updaterThread()
