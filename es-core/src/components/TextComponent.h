@@ -104,12 +104,10 @@ private:
                                                                      "gamecountFavoritesNoText"};
 
     static inline std::vector<std::string> supportedMetadataTypes {
-        "name",           "description",      "rating",
-        "developer",      "publisher",        "genre",
-        "players",        "favorite",         "completed",
-        "kidgame",        "broken",           "playcount",
-        "controller",     "altemulator",      "systemName",
-        "systemFullname", "sourceSystemName", "sourceSystemFullname"};
+        "name",       "description",    "rating",           "developer",           "publisher",
+        "genre",      "players",        "favorite",         "completed",           "kidgame",
+        "broken",     "playcount",      "controller",       "altemulator",         "emulator",
+        "systemName", "systemFullname", "sourceSystemName", "sourceSystemFullname"};
 
     Renderer* mRenderer;
     std::string mDefaultValue;

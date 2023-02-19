@@ -1296,6 +1296,17 @@ void SystemView::updateGameSelectors()
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("playcount"));
             else if (metadata == "altemulator")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("altemulator"));
+            else if (metadata == "emulator")
+                text->setValue(
+                    games.at(gameSelectorEntry)->metadata.get("altemulator") != "" ?
+                        games.at(gameSelectorEntry)->metadata.get("altemulator") :
+                        (games.at(gameSelectorEntry)->getSystem()->getAlternativeEmulator() != "" ?
+                             games.at(gameSelectorEntry)->getSystem()->getAlternativeEmulator() :
+                             games.at(gameSelectorEntry)
+                                 ->getSystem()
+                                 ->getSystemEnvData()
+                                 ->mLaunchCommands.front()
+                                 .second));
             else if (metadata == "systemName")
                 text->setValue(games.at(gameSelectorEntry)->getSystem()->getName());
             else if (metadata == "systemFullname")

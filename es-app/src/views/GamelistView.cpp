@@ -894,6 +894,15 @@ void GamelistView::updateView(const CursorState& state)
                 return file->metadata.get("playcount");
             else if (metadata == "altemulator")
                 return file->metadata.get("altemulator");
+            else if (metadata == "emulator")
+                return (file->metadata.get("altemulator") != "" ?
+                            file->metadata.get("altemulator") :
+                            (file->getSystem()->getAlternativeEmulator() != "" ?
+                                 file->getSystem()->getAlternativeEmulator() :
+                                 file->getSystem()
+                                     ->getSystemEnvData()
+                                     ->mLaunchCommands.front()
+                                     .second));
             else if (metadata == "systemName")
                 return file->getSystem()->getName();
             else if (metadata == "systemFullname")
