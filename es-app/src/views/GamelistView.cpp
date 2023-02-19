@@ -204,7 +204,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 addChild(mPrimary);
             }
             if (element.second.type == "image" &&
-                (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 // If this is the startup system, then forceload the images to avoid texture pop-in.
                 if (isStartupSystem)
                     mImageComponents.push_back(std::make_unique<ImageComponent>(true));
@@ -219,7 +219,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 addChild(mImageComponents.back().get());
             }
             else if (element.second.type == "video" &&
-                     (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                     !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 if (element.second.has("path")) {
                     mStaticVideoComponents.push_back(std::make_unique<VideoFFmpegComponent>());
                     mStaticVideoComponents.back()->setDefaultZIndex(30.0f);
@@ -242,7 +242,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 }
             }
             else if (element.second.type == "animation" && element.second.has("path") &&
-                     (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                     !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 const std::string extension {
                     Utils::FileSystem::getExtension(element.second.get<std::string>("path"))};
                 if (extension == ".json") {
@@ -274,7 +274,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 }
             }
             else if (element.second.type == "badges" &&
-                     (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                     !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 mBadgeComponents.push_back(std::make_unique<BadgeComponent>());
                 mBadgeComponents.back()->setDefaultZIndex(35.0f);
                 mBadgeComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
@@ -282,7 +282,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 addChild(mBadgeComponents.back().get());
             }
             else if (element.second.type == "text" &&
-                     (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                     !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 // Set as container by default if metadata type is "description".
                 bool container {false};
                 if (element.second.has("container")) {
@@ -328,7 +328,7 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 }
             }
             else if (element.second.type == "datetime" &&
-                     (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                     !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 mDateTimeComponents.push_back(std::make_unique<DateTimeComponent>());
                 mDateTimeComponents.back()->setDefaultZIndex(40.0f);
                 mDateTimeComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
@@ -337,14 +337,14 @@ void GamelistView::onThemeChanged(const std::shared_ptr<ThemeData>& theme)
                 addChild(mDateTimeComponents.back().get());
             }
             else if (element.second.type == "gamelistinfo" &&
-                     (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                     !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 mGamelistInfoComponents.push_back(std::make_unique<TextComponent>());
                 mGamelistInfoComponents.back()->setDefaultZIndex(45.0f);
                 mGamelistInfoComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);
                 addChild(mGamelistInfoComponents.back().get());
             }
             else if (element.second.type == "rating" &&
-                     (!(element.second.has("visible") && !element.second.get<bool>("visible")))) {
+                     !(element.second.has("visible") && !element.second.get<bool>("visible"))) {
                 mRatingComponents.push_back(std::make_unique<RatingComponent>());
                 mRatingComponents.back()->setDefaultZIndex(45.0f);
                 mRatingComponents.back()->applyTheme(theme, "gamelist", element.first, ALL);

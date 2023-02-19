@@ -584,8 +584,8 @@ void SystemView::populate()
                         }
                     }
                     else if (element.second.type == "image" &&
-                             (!(element.second.has("visible") &&
-                                !element.second.get<bool>("visible")))) {
+                             !(element.second.has("visible") &&
+                               !element.second.get<bool>("visible"))) {
                         // If this is the first system then forceload to avoid texture pop-in.
                         if (it == SystemData::sSystemVector.front())
                             elements.imageComponents.emplace_back(
@@ -600,8 +600,8 @@ void SystemView::populate()
                         elements.children.emplace_back(elements.imageComponents.back().get());
                     }
                     else if (element.second.type == "video" &&
-                             (!(element.second.has("visible") &&
-                                !element.second.get<bool>("visible")))) {
+                             !(element.second.has("visible") &&
+                               !element.second.get<bool>("visible"))) {
                         elements.videoComponents.emplace_back(
                             std::make_unique<VideoFFmpegComponent>());
                         elements.videoComponents.back()->setDefaultZIndex(30.0f);
@@ -611,8 +611,8 @@ void SystemView::populate()
                         elements.children.emplace_back(elements.videoComponents.back().get());
                     }
                     else if (element.second.type == "animation" && element.second.has("path") &&
-                             (!(element.second.has("visible") &&
-                                !element.second.get<bool>("visible")))) {
+                             !(element.second.has("visible") &&
+                               !element.second.get<bool>("visible"))) {
                         const std::string extension {Utils::FileSystem::getExtension(
                             element.second.get<std::string>("path"))};
                         if (extension == ".json") {
@@ -645,8 +645,8 @@ void SystemView::populate()
                         }
                     }
                     else if (element.second.type == "text" &&
-                             (!(element.second.has("visible") &&
-                                !element.second.get<bool>("visible")))) {
+                             !(element.second.has("visible") &&
+                               !element.second.get<bool>("visible"))) {
                         if (element.second.has("systemdata") &&
                             element.second.get<std::string>("systemdata").substr(0, 9) ==
                                 "gamecount") {
@@ -669,8 +669,8 @@ void SystemView::populate()
                         }
                     }
                     else if (element.second.type == "datetime" &&
-                             (!(element.second.has("visible") &&
-                                !element.second.get<bool>("visible")))) {
+                             !(element.second.has("visible") &&
+                               !element.second.get<bool>("visible"))) {
                         elements.dateTimeComponents.emplace_back(
                             std::make_unique<DateTimeComponent>());
                         elements.dateTimeComponents.back()->setDefaultZIndex(40.0f);
@@ -680,8 +680,8 @@ void SystemView::populate()
                         elements.children.emplace_back(elements.dateTimeComponents.back().get());
                     }
                     else if (element.second.type == "rating" &&
-                             (!(element.second.has("visible") &&
-                                !element.second.get<bool>("visible")))) {
+                             !(element.second.has("visible") &&
+                               !element.second.get<bool>("visible"))) {
                         elements.ratingComponents.emplace_back(std::make_unique<RatingComponent>());
                         elements.ratingComponents.back()->setDefaultZIndex(45.0f);
                         elements.ratingComponents.back()->applyTheme(theme, "system", element.first,
