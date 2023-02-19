@@ -1300,10 +1300,13 @@ void SystemView::updateGameSelectors()
                 text->setValue(
                     games.at(gameSelectorEntry)->metadata.get("altemulator") != "" ?
                         games.at(gameSelectorEntry)->metadata.get("altemulator") :
-                        (games.at(gameSelectorEntry)->getSystem()->getAlternativeEmulator() != "" ?
-                             games.at(gameSelectorEntry)->getSystem()->getAlternativeEmulator() :
+                        (games.at(gameSelectorEntry)->getSourceSystem()->getAlternativeEmulator() !=
+                                 "" ?
                              games.at(gameSelectorEntry)
-                                 ->getSystem()
+                                 ->getSourceSystem()
+                                 ->getAlternativeEmulator() :
+                             games.at(gameSelectorEntry)
+                                 ->getSourceSystem()
                                  ->getSystemEnvData()
                                  ->mLaunchCommands.front()
                                  .second));

@@ -12,15 +12,13 @@
 #define ES_APP_FILE_DATA_H
 
 #include "MetaData.h"
+#include "SystemData.h"
+#include "Window.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
 
 #include <functional>
 #include <unordered_map>
-
-class SystemData;
-class Window;
-struct SystemEnvironmentData;
 
 enum FileType {
     GAME = 1, // Cannot have children.
@@ -69,6 +67,10 @@ public:
     const std::vector<FileData*>& getChildren() const { return mChildren; }
     const std::vector<FileData*>& getFilteredChildren() const { return mFilteredChildren; }
     SystemData* getSystem() const { return mSystem; }
+    SystemData* getSourceSystem()
+    {
+        return (mSourceFileData != nullptr ? mSourceFileData->mSystem : mSystem);
+    }
     SystemEnvironmentData* getSystemEnvData() const { return mEnvData; }
 
     // These functions are used by GameSelectorComponent.

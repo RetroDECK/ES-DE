@@ -895,14 +895,16 @@ void GamelistView::updateView(const CursorState& state)
             else if (metadata == "altemulator")
                 return file->metadata.get("altemulator");
             else if (metadata == "emulator")
-                return (file->metadata.get("altemulator") != "" ?
-                            file->metadata.get("altemulator") :
-                            (file->getSystem()->getAlternativeEmulator() != "" ?
-                                 file->getSystem()->getAlternativeEmulator() :
-                                 file->getSystem()
-                                     ->getSystemEnvData()
-                                     ->mLaunchCommands.front()
-                                     .second));
+                return (file->getType() == FOLDER) ?
+                           "" :
+                           (file->metadata.get("altemulator") != "" ?
+                                file->metadata.get("altemulator") :
+                                (file->getSourceSystem()->getAlternativeEmulator() != "" ?
+                                     file->getSourceSystem()->getAlternativeEmulator() :
+                                     file->getSourceSystem()
+                                         ->getSystemEnvData()
+                                         ->mLaunchCommands.front()
+                                         .second));
             else if (metadata == "systemName")
                 return file->getSystem()->getName();
             else if (metadata == "systemFullname")
