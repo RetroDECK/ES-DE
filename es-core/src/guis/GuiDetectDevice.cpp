@@ -107,6 +107,8 @@ bool GuiDetectDevice::input(InputConfig* config, Input input)
 {
     if (!mFirstRun && input.device == DEVICE_KEYBOARD && input.type == TYPE_KEY && input.value &&
         input.id == SDLK_ESCAPE) {
+        if (mDoneCallback)
+            mDoneCallback();
         // Cancel the configuration.
         delete this; // Delete GUI element.
         return true;
