@@ -583,9 +583,10 @@ void SystemView::populate()
                                 itemText = element.second.get<std::string>("text");
                         }
                     }
-                    else if (element.second.type == "image") {
-                        // If this is the first system, then forceload the images to avoid texture
-                        // pop-in.
+                    else if (element.second.type == "image" &&
+                             (!(element.second.has("visible") &&
+                                !element.second.get<bool>("visible")))) {
+                        // If this is the first system then forceload to avoid texture pop-in.
                         if (it == SystemData::sSystemVector.front())
                             elements.imageComponents.emplace_back(
                                 std::make_unique<ImageComponent>(true));
@@ -596,24 +597,22 @@ void SystemView::populate()
                         elements.imageComponents.back()->setDefaultZIndex(30.0f);
                         elements.imageComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);
-                        if (elements.imageComponents.back()->getThemeOpacity() != 0.0f)
-                            elements.children.emplace_back(elements.imageComponents.back().get());
-                        else
-                            elements.imageComponents.pop_back();
+                        elements.children.emplace_back(elements.imageComponents.back().get());
                     }
-                    else if (element.second.type == "video") {
+                    else if (element.second.type == "video" &&
+                             (!(element.second.has("visible") &&
+                                !element.second.get<bool>("visible")))) {
                         elements.videoComponents.emplace_back(
                             std::make_unique<VideoFFmpegComponent>());
                         elements.videoComponents.back()->setDefaultZIndex(30.0f);
                         elements.videoComponents.back()->setStaticVideo();
                         elements.videoComponents.back()->applyTheme(theme, "system", element.first,
                                                                     ThemeFlags::ALL);
-                        if (elements.videoComponents.back()->getThemeOpacity() != 0.0f)
-                            elements.children.emplace_back(elements.videoComponents.back().get());
-                        else
-                            elements.videoComponents.pop_back();
+                        elements.children.emplace_back(elements.videoComponents.back().get());
                     }
-                    else if (element.second.type == "animation" && element.second.has("path")) {
+                    else if (element.second.type == "animation" && element.second.has("path") &&
+                             (!(element.second.has("visible") &&
+                                !element.second.get<bool>("visible")))) {
                         const std::string extension {Utils::FileSystem::getExtension(
                             element.second.get<std::string>("path"))};
                         if (extension == ".json") {
@@ -622,11 +621,8 @@ void SystemView::populate()
                             elements.lottieAnimComponents.back()->setDefaultZIndex(35.0f);
                             elements.lottieAnimComponents.back()->applyTheme(
                                 theme, "system", element.first, ThemeFlags::ALL);
-                            if (elements.lottieAnimComponents.back()->getThemeOpacity() != 0.0f)
-                                elements.children.emplace_back(
-                                    elements.lottieAnimComponents.back().get());
-                            else
-                                elements.lottieAnimComponents.pop_back();
+                            elements.children.emplace_back(
+                                elements.lottieAnimComponents.back().get());
                         }
                         else if (extension == ".gif") {
                             elements.GIFAnimComponents.emplace_back(
@@ -634,11 +630,7 @@ void SystemView::populate()
                             elements.GIFAnimComponents.back()->setDefaultZIndex(35.0f);
                             elements.GIFAnimComponents.back()->applyTheme(
                                 theme, "system", element.first, ThemeFlags::ALL);
-                            if (elements.GIFAnimComponents.back()->getThemeOpacity() != 0.0f)
-                                elements.children.emplace_back(
-                                    elements.GIFAnimComponents.back().get());
-                            else
-                                elements.GIFAnimComponents.pop_back();
+                            elements.children.emplace_back(elements.GIFAnimComponents.back().get());
                         }
                         else if (extension == ".") {
                             LOG(LogWarning)
@@ -652,7 +644,9 @@ void SystemView::populate()
                                 << extension << "\"";
                         }
                     }
-                    else if (element.second.type == "text") {
+                    else if (element.second.type == "text" &&
+                             (!(element.second.has("visible") &&
+                                !element.second.get<bool>("visible")))) {
                         if (element.second.has("systemdata") &&
                             element.second.get<std::string>("systemdata").substr(0, 9) ==
                                 "gamecount") {
@@ -662,11 +656,8 @@ void SystemView::populate()
                                 elements.gameCountComponents.back()->setDefaultZIndex(40.0f);
                                 elements.gameCountComponents.back()->applyTheme(
                                     theme, "system", element.first, ThemeFlags::ALL);
-                                if (elements.gameCountComponents.back()->getThemeOpacity() != 0.0f)
-                                    elements.children.emplace_back(
-                                        elements.gameCountComponents.back().get());
-                                else
-                                    elements.gameCountComponents.pop_back();
+                                elements.children.emplace_back(
+                                    elements.gameCountComponents.back().get());
                             }
                         }
                         else {
@@ -674,42 +665,31 @@ void SystemView::populate()
                             elements.textComponents.back()->setDefaultZIndex(40.0f);
                             elements.textComponents.back()->applyTheme(
                                 theme, "system", element.first, ThemeFlags::ALL);
-                            if (elements.textComponents.back()->getThemeOpacity() != 0.0f)
-                                elements.children.emplace_back(
-                                    elements.textComponents.back().get());
-                            else
-                                elements.textComponents.pop_back();
+                            elements.children.emplace_back(elements.textComponents.back().get());
                         }
                     }
-                    else if (element.second.type == "datetime") {
+                    else if (element.second.type == "datetime" &&
+                             (!(element.second.has("visible") &&
+                                !element.second.get<bool>("visible")))) {
                         elements.dateTimeComponents.emplace_back(
                             std::make_unique<DateTimeComponent>());
                         elements.dateTimeComponents.back()->setDefaultZIndex(40.0f);
                         elements.dateTimeComponents.back()->applyTheme(
                             theme, "system", element.first, ThemeFlags::ALL);
-                        if (elements.dateTimeComponents.back()->getThemeOpacity() != 0.0f) {
-                            elements.dateTimeComponents.back()->setVisible(false);
-                            elements.children.emplace_back(
-                                elements.dateTimeComponents.back().get());
-                        }
-                        else {
-                            elements.dateTimeComponents.pop_back();
-                        }
+                        elements.dateTimeComponents.back()->setVisible(false);
+                        elements.children.emplace_back(elements.dateTimeComponents.back().get());
                     }
-                    else if (element.second.type == "rating") {
+                    else if (element.second.type == "rating" &&
+                             (!(element.second.has("visible") &&
+                                !element.second.get<bool>("visible")))) {
                         elements.ratingComponents.emplace_back(std::make_unique<RatingComponent>());
                         elements.ratingComponents.back()->setDefaultZIndex(45.0f);
                         elements.ratingComponents.back()->applyTheme(theme, "system", element.first,
                                                                      ThemeFlags::ALL);
-                        if (elements.ratingComponents.back()->getThemeOpacity() != 0.0f) {
-                            elements.ratingComponents.back()->setVisible(false);
-                            elements.ratingComponents.back()->setOpacity(
-                                elements.ratingComponents.back()->getOpacity());
-                            elements.children.emplace_back(elements.ratingComponents.back().get());
-                        }
-                        else {
-                            elements.ratingComponents.pop_back();
-                        }
+                        elements.ratingComponents.back()->setVisible(false);
+                        elements.ratingComponents.back()->setOpacity(
+                            elements.ratingComponents.back()->getOpacity());
+                        elements.children.emplace_back(elements.ratingComponents.back().get());
                     }
                 }
             }
