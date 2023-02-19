@@ -229,6 +229,9 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.flycast.Flycast</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.flycast.Flycast</entry>
+            <entry>~/Applications/flycast*.AppImage</entry>
+            <entry>~/.local/bin/flycast*.AppImage</entry>
+            <entry>~/bin/flycast*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="FS-UAE">
