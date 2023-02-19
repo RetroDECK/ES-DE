@@ -184,7 +184,7 @@
         <name>atarijaguar</name>
         <fullname>Atari Jaguar</fullname>
         <path>%ROMPATH%/atarijaguar</path>
-        <extension>.j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG .7z .7Z .zip .ZIP</extension>
+        <extension>.abs .ABS .bin .BIN .cdi .CDI .cof .COF .j64 .J64 .jag .JAG .prg .PRG .rom .ROM .7z .7Z .zip .ZIP</extension>
         <command label="Virtual Jaguar">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/virtualjaguar_libretro.so %ROM%</command>
         <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/atarijaguar jaguar -cart %ROM%</command>
         <platform>atarijaguar, atarijaguarcd</platform>
