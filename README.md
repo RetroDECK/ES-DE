@@ -42,43 +42,9 @@ The following operating systems have been tested (all for the x86 architecture u
 
 ### Download
 
-The latest stable version is 1.2.6 (released 2022-08-03)
+The latest stable version is 1.2.6 (released 2022-08-03) and the latest prerelease is 2.0.0-beta-2023-02-20
 
-| Package              | Operating systems                                       | Architecture | Download link  |
-| :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/48555328/download)|
-| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239196/download)|
-| macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-1.2.6-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239039/download)|
-| macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-1.2.6-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239145/download)|
-| Debian DEB package   | Ubuntu 20.04 to 22.04, Linux Mint 20, possibly others   | x64 (x86)    | [emulationstation-de-1.2.6-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239111/download)|
-| Fedora RPM package   | Fedora Workstation 36, possibly others                  | x64 (x86)    | [emulationstation-de-1.2.6-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239313/download)|
-| Arch User Repository | Arch Linux, Manjaro, possibly others                    | x64 (x86)    | [https://aur.archlinux.org/packages/emulationstation-de](https://aur.archlinux.org/packages/emulationstation-de)|
-| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239389/download)|
-| Linux AppImage       | Current Linux distributions with libc 2.35 or later     | x64 (x86)    | [EmulationStation-DE-x64_Current.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239574/download)|
-| Linux AppImage       | Steam Deck / SteamOS 3.x specific                       | x64 (x86)    | [EmulationStation-DE-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239682/download)|
-| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 32-bit   | [emulationstation-de-1.2.6-armv7l.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48239061/download)|
-| Debian DEB package   | Raspberry Pi OS (Raspian)                               | ARM 64-bit   | [emulationstation-de-1.2.6-aarch64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/48238997/download)|
-
-The latest prerelease version is 2.0.0-beta-2023-01-27
-
-| Package              | Operating systems                                       | Architecture | Download link  |
-| :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| Windows portable     | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64_Portable.zip](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759587/download)|
-| Windows installer    | Windows 11, 10 and 8.1                                  | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64.exe](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759574/download)|
-| macOS DMG installer  | macOS 11 "Big Sur" to 13 "Ventura"                      | arm64 (M1)   | [EmulationStation-DE-2.0.0-beta-2023-01-27-arm64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759479/download)|
-| macOS DMG installer  | macOS 10.14 "Mojave" to 13 "Ventura"                    | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759558/download)|
-| Debian DEB package   | Ubuntu 22.04, Linux Mint 20, possibly others            | x64 (x86)    | [emulationstation-de-2.0.0-beta-2023-01-27-x64.deb](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759536/download)|
-| Fedora RPM package   | Fedora Workstation 37, possibly others                  | x64 (x86)    | [emulationstation-de-2.0.0-beta-2023-01-27-x64.rpm](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759592/download)|
-| Linux AppImage       | Most Linux distributions                                | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/67103985/download)|
-| Linux AppImage       | Steam Deck / SteamOS 3.x specific                       | x64 (x86)    | [EmulationStation-DE-2.0.0-beta-2023-01-27-x64_SteamDeck.AppImage](https://gitlab.com/es-de/emulationstation-de/-/package_files/66759612/download)|
-
-Version 1.2.0 (released 2021-12-28) will be the last legacy release for macOS
-
-| Package              | Operating systems                                       | Architecture | Download link  |
-| :------------------- | :------------------------------------------------------ | :----------- | :------------- |
-| macOS DMG installer  | Legacy macOS 10.11 "El Capitan" to 10.13 "High Sierra"  | x64 (x86)    | [EmulationStation-DE-1.2.0-x64_legacy.dmg](https://gitlab.com/es-de/emulationstation-de/-/package_files/25023954/download)|
-
-All previous releases can be downloaded from [here](https://gitlab.com/es-de/emulationstation-de/-/packages).
+Visit https://es-de.org/ to download ES-DE or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find all previous releases.
 
 If using FreeBSD, NetBSD or OpenBSD you will need to build ES-DE from source code for the time being, as explained in [INSTALL.md](INSTALL.md).
 
