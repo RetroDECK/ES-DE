@@ -715,7 +715,11 @@
         <name>macintosh</name>
         <fullname>Apple Macintosh</fullname>
         <path>%ROMPATH%/macintosh</path>
-        <extension>.game .GAME</extension>
+        <extension>.dsk .DSK .game .GAME</extension>
+        <command label="MAME Mac SE Bootable (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/macintosh macse -flop1 %ROM%</command>
+        <command label="MAME Mac SE Boot Disk (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/macintosh macse -flop1 %GAMEDIR%/boot.dsk -flop2 %ROM%</command>
+        <command label="MAME Mac Plus Bootable (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/macintosh macplus -flop1 %ROM%</command>
+        <command label="MAME Mac Plus Boot Disk (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/macintosh macplus -flop1 %GAMEDIR%/boot.dsk -flop2 %ROM%</command>
         <command label="Basilisk II (Standalone)">%EMULATOR_BASILISKII% --nogui true</command>
         <command label="SheepShaver (Standalone)">%EMULATOR_SHEEPSHAVER% --nogui true</command>
         <platform>macintosh</platform>
