@@ -15,7 +15,7 @@
         <fullname>Adventure Game Studio Game Engine</fullname>
         <path>%ROMPATH%/ags</path>
         <extension>.desktop</extension>
-        <command>%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Native binary">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>ags</platform>
         <theme>ags</theme>
     </system>
@@ -166,7 +166,7 @@
         <fullname>Atari 7800 ProSystem</fullname>
         <path>%ROMPATH%/atari7800</path>
         <extension>.a78 .A78 .bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/prosystem_libretro.so %ROM%</command>
+        <command label="ProSystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/prosystem_libretro.so %ROM%</command>
         <platform>atari7800</platform>
         <theme>atari7800</theme>
     </system>
@@ -268,7 +268,7 @@
         <fullname>Cave Story (NXEngine)</fullname>
         <path>%ROMPATH%/cavestory</path>
         <extension>.exe .EXE .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nxengine_libretro.so %ROM%</command>
+        <command label="NXEngine">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/nxengine_libretro.so %ROM%</command>
         <platform>cavestory</platform>
         <theme>cavestory</theme>
     </system>
@@ -297,7 +297,7 @@
         <fullname>ChaiLove Game Engine</fullname>
         <path>%ROMPATH%/chailove</path>
         <extension>.chai .CHAI .chailove .CHAILOVE .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/chailove_libretro.so %ROM%</command>
+        <command label="ChaiLove">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/chailove_libretro.so %ROM%</command>
         <platform>love</platform>
         <theme>chailove</theme>
     </system>
@@ -306,7 +306,7 @@
         <fullname>Fairchild Channel F</fullname>
         <path>%ROMPATH%/channelf</path>
         <extension>.bin .BIN .chf .CHF .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/freechaf_libretro.so %ROM%</command>
+        <command label="FreeChaF">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/freechaf_libretro.so %ROM%</command>
         <platform>channelf</platform>
         <theme>channelf</theme>
     </system>
@@ -483,7 +483,7 @@
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%/epic</path>
         <extension>.desktop .sh</extension>
-        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Epic Games Store (Standalone)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pcwindows</platform>
         <theme>epic</theme>
     </system>
@@ -681,7 +681,7 @@
         <fullname>Mattel Electronics Intellivision</fullname>
         <path>%ROMPATH%/intellivision</path>
         <extension>.int .INT .bin .BIN .rom .ROM .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/freeintv_libretro.so %ROM%</command>
+        <command label="FreeIntv">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/freeintv_libretro.so %ROM%</command>
         <platform>intellivision</platform>
         <theme>intellivision</theme>
     </system>
@@ -699,7 +699,7 @@
         <fullname>Kodi Home Theatre Software</fullname>
         <path>%ROMPATH%/kodi</path>
         <extension>.desktop .sh</extension>
-        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Kodi (Standalone)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc</platform>
         <theme>kodi</theme>
     </system>
@@ -719,7 +719,7 @@
         <fullname>Lutris Open Gaming Platform</fullname>
         <path>%ROMPATH%/lutris</path>
         <extension>.desktop .sh</extension>
-        <command>%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Lutris (Standalone)">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc, pcwindows</platform>
         <theme>lutris</theme>
     </system>
@@ -728,7 +728,7 @@
         <fullname>Lutro Game Engine</fullname>
         <path>%ROMPATH%/lutro</path>
         <extension>.lua .LUA .lutro .LUTRO .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/lutro_libretro.so %ROM%</command>
+        <command label="Lutro">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/lutro_libretro.so %ROM%</command>
         <platform>lutro</platform>
         <theme>lutro</theme>
     </system>
@@ -868,7 +868,7 @@
         <fullname>Multi Emulator Super System</fullname>
         <path>%ROMPATH%/mess</path>
         <extension>.chd .CHD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mess2015_libretro.so %ROM%</command>
+        <command label="MESS 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mess2015_libretro.so %ROM%</command>
         <platform>mess</platform>
         <theme>mess</theme>
     </system>
@@ -906,7 +906,7 @@
         <fullname>Thomson MO/TO Series</fullname>
         <path>%ROMPATH%/moto</path>
         <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/theodore_libretro.so %ROM%</command>
+        <command label="Theodore">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/theodore_libretro.so %ROM%</command>
         <platform>moto</platform>
         <theme>moto</theme>
     </system>
@@ -965,7 +965,7 @@
         <fullname>M.U.G.E.N Game Engine</fullname>
         <path>%ROMPATH%/mugen</path>
         <extension>.mugen</extension>
-        <command>%STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="Ikemen GO (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>mugen</platform>
         <theme>mugen</theme>
     </system>
@@ -974,7 +974,7 @@
         <fullname>Othello Multivision</fullname>
         <path>%ROMPATH%/multivision</path>
         <extension>.bin .BIN .gg .GG .rom .ROM .sg .SG .sms .SMS .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearsystem_libretro.so %ROM%</command>
+        <command label="Gearsystem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gearsystem_libretro.so %ROM%</command>
         <platform>sg-1000</platform>
         <theme>multivision</theme>
     </system>
@@ -1128,7 +1128,7 @@
         <fullname>Magnavox Odyssey2</fullname>
         <path>%ROMPATH%/odyssey2</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/o2em_libretro.so %ROM%</command>
+        <command label="O2EM">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/o2em_libretro.so %ROM%</command>
         <platform>odyssey2</platform>
         <theme>odyssey2</theme>
     </system>
@@ -1137,7 +1137,7 @@
         <fullname>OpenBOR Game Engine</fullname>
         <path>%ROMPATH%/openbor</path>
         <extension>.AppImage</extension>
-        <command>%STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="OpenBOR (Standalone)">%STARTDIR%=%GAMEDIR% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>openbor</platform>
         <theme>openbor</theme>
     </system>
@@ -1155,7 +1155,7 @@
         <fullname>Palm OS</fullname>
         <path>%ROMPATH%/palm</path>
         <extension>.prc .PRC .pqa .PQA .img .IMG .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mu_libretro.so %ROM%</command>
+        <command label="Mu">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mu_libretro.so %ROM%</command>
         <platform>palm</platform>
         <theme>palm</theme>
     </system>
@@ -1177,7 +1177,7 @@
         <fullname>NEC PC-8800 Series</fullname>
         <path>%ROMPATH%/pc88</path>
         <extension>.d88 .D88 .u88 .U88 .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quasi88_libretro.so %ROM%</command>
+        <command label="QUASI88">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/quasi88_libretro.so %ROM%</command>
         <platform>pc88</platform>
         <theme>pc88</theme>
     </system>
@@ -1240,7 +1240,7 @@
         <fullname>Nintendo Pokémon Mini</fullname>
         <path>%ROMPATH%/pokemini</path>
         <extension>.min .MIN .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pokemini_libretro.so %ROM%</command>
+        <command label="PokeMini">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/pokemini_libretro.so %ROM%</command>
         <platform>pokemini</platform>
         <theme>pokemini</theme>
     </system>
@@ -1249,7 +1249,7 @@
         <fullname>Ports</fullname>
         <path>%ROMPATH%/ports</path>
         <extension>.desktop .sh</extension>
-        <command>%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Various">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc, pcwindows</platform>
         <theme>ports</theme>
     </system>
@@ -1322,7 +1322,7 @@
         <fullname>MGT SAM Coupé</fullname>
         <path>%ROMPATH%/samcoupe</path>
         <extension>.dsk .DSK .mgt .MGT .sbt .SBT .sad .SAD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_SIMCOUPE% %ROM%</command>
+        <command label="SimCoupé (Standalone)">%EMULATOR_SIMCOUPE% %ROM%</command>
         <platform>samcoupe</platform>
         <theme>samcoupe</theme>
     </system>
@@ -1506,7 +1506,7 @@
         <fullname>Solarus Game Engine</fullname>
         <path>%ROMPATH%/solarus</path>
         <extension>.solarus</extension>
-        <command>%EMULATOR_SOLARUS% %ROM%</command>
+        <command label="Solarus (Standalone)">%EMULATOR_SOLARUS% %ROM%</command>
         <platform>solarus</platform>
         <theme>solarus</theme>
     </system>
@@ -1515,7 +1515,7 @@
         <fullname>Spectravideo</fullname>
         <path>%ROMPATH%/spectravideo</path>
         <extension>.rom .ROM .ri .RI .mx1 .MX1 .mx2 .MX2 .col .COL .dsk .DSK .cas .CAS .sg .SG .sc .SC .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.so %ROM%</command>
+        <command label="blueMSX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/bluemsx_libretro.so %ROM%</command>
         <platform>spectravideo</platform>
         <theme>spectravideo</theme>
     </system>
@@ -1524,7 +1524,7 @@
         <fullname>Valve Steam</fullname>
         <path>%ROMPATH%/steam</path>
         <extension>.desktop .sh</extension>
-        <command>%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Steam (Standalone)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>steam</platform>
         <theme>steam</theme>
     </system>
@@ -1639,7 +1639,7 @@
         <fullname>TIC-80 Game Engine</fullname>
         <path>%ROMPATH%/tic80</path>
         <extension>.tic .TIC</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/tic80_libretro.so %ROM%</command>
+        <command label="TIC-80">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/tic80_libretro.so %ROM%</command>
         <platform>tic80</platform>
         <theme>tic80</theme>
     </system>
@@ -1648,7 +1648,7 @@
         <fullname>Thomson TO8</fullname>
         <path>%ROMPATH%/to8</path>
         <extension>.fd .FD .sap .SAP .k7 .K7 .m7 .M7 .m5 .M5 .rom .ROM .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/theodore_libretro.so %ROM%</command>
+        <command label="Theodore">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/theodore_libretro.so %ROM%</command>
         <platform>moto</platform>
         <theme>to8</theme>
     </system>
@@ -1668,7 +1668,7 @@
         <fullname>Uzebox Open Source Console</fullname>
         <path>%ROMPATH%/uzebox</path>
         <extension>.uze .UZE .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/uzem_libretro.so %ROM%</command>
+        <command label="Uzem">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/uzem_libretro.so %ROM%</command>
         <platform>uzebox</platform>
         <theme>uzebox</theme>
     </system>
@@ -1677,7 +1677,7 @@
         <fullname>Smith Engineering Vectrex</fullname>
         <path>%ROMPATH%/vectrex</path>
         <extension>.bin .BIN .vec .VEC .gam .GAM .vc .VC .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vecx_libretro.so %ROM%</command>
+        <command label="vecx">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vecx_libretro.so %ROM%</command>
         <platform>vectrex</platform>
         <theme>vectrex</theme>
     </system>
@@ -1696,7 +1696,7 @@
         <fullname>Philips Videopac G7000</fullname>
         <path>%ROMPATH%/videopac</path>
         <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/o2em_libretro.so %ROM%</command>
+        <command label="O2EM">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/o2em_libretro.so %ROM%</command>
         <platform>videopac</platform>
         <theme>videopac</theme>
     </system>
@@ -1776,7 +1776,7 @@
         <fullname>Sharp X1</fullname>
         <path>%ROMPATH%/x1</path>
         <extension>.dx1 .DX1 .2d .2D .2hd .2HD .tfd .TFD .d88 .D88 .88d .88D .hdm .HDM .xdf .XDF .dup .DUP .tap .TAP .cmd .CMD .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/x1_libretro.so %ROM%</command>
+        <command label="x1">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/x1_libretro.so %ROM%</command>
         <platform>x1</platform>
         <theme>x1</theme>
     </system>
@@ -1785,7 +1785,7 @@
         <fullname>Sharp X68000</fullname>
         <path>%ROMPATH%/x68000</path>
         <extension>.dim .DIM .img .IMG .d88 .D88 .88d .88D .hdm .HDM .dup .DUP .2hd .2HD .xdf .XDF .hdf .HDF .cmd .CMD .m3u .M3U .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/px68k_libretro.so %ROM%</command>
+        <command label="PX68k">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/px68k_libretro.so %ROM%</command>
         <platform>x68000</platform>
         <theme>x68000</theme>
     </system>
@@ -1821,7 +1821,7 @@
         <fullname>Sinclair ZX81</fullname>
         <path>%ROMPATH%/zx81</path>
         <extension>.tzx .TZX .p .P .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/81_libretro.so %ROM%</command>
+        <command label="EightyOne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/81_libretro.so %ROM%</command>
         <platform>zx81</platform>
         <theme>zx81</theme>
     </system>
@@ -1830,7 +1830,7 @@
         <fullname>Sinclair ZX Spectrum</fullname>
         <path>%ROMPATH%/zxspectrum</path>
         <extension>.tzx .TZX .tap .TAP .z80 .Z80 .rzx .RZX .scl .SCL .trd .TRD .sh .SH .sna .SNA .szx .SZX .udi .UDI .mgt .MGT .img .IMG .dsk .DSK .gz .GZ .7z .7Z .zip .ZIP</extension>
-        <command>%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fuse_libretro.so %ROM%</command>
+        <command label="Fuse">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/fuse_libretro.so %ROM%</command>
         <platform>zxspectrum</platform>
         <theme>zxspectrum</theme>
     </system>

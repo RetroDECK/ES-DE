@@ -489,6 +489,9 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
             <entry>~/.local/share/flatpak/exports/bin/com.github.Rosalie241.RMG</entry>
+            <entry>~/Applications/RMG*.AppImage</entry>
+            <entry>~/.local/bin/RMG*.AppImage</entry>
+            <entry>~/bin/RMG*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="RPCS3">
