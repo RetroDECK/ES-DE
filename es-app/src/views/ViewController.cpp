@@ -210,6 +210,9 @@ void ViewController::invalidAlternativeEmulatorDialog()
 
 void ViewController::updateAvailableDialog(const std::string& message)
 {
+    if (isAnimationPlaying(0))
+        finishAnimation(0);
+
     mWindow->pushGui(new GuiMsgBox(getHelpStyle(), message, "OK", nullptr, "", nullptr, "", nullptr,
                                    true, true,
                                    (mRenderer->getIsVerticalOrientation() ?
