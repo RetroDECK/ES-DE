@@ -52,6 +52,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for the Microsoft Windows (windows) game system
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
+* Added MAME standalone as the default emulator for the macintosh system (Mac SE and Mac Plus diskette images)
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as the default emulator for the gameandwatch system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
@@ -63,6 +64,7 @@ Overall application speed and performance has been greatly improved with faster 
 * (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
 * (Linux) Added support for the mGBA Qt and Snes9x GTK standalone emulators
 * (Linux) Added support for the official xemu AppImage release
+* (Linux) Added support for the AppImage release of Flycast
 * Added support for the Sega Model 2 (model2) game system on Linux on macOS by adding the MAME - Current RetroArch core
 * Added MAME standalone as an alternative emulator for the model2 system
 * (Windows) Added the MAME - Current RetroArch core as an alternative emulator for the model2 system
@@ -80,14 +82,16 @@ Overall application speed and performance has been greatly improved with faster 
 * Added CPCemu standalone as an alternative emulator for the amstradcpc system
 * Added MAME standalone as an alternative emulator for the gx4000 system
 * Added MAME standalone as an alternative emulator for the atarijaguar system
-* (Windows) Added BigPEmu standalone as an alternative emulator for the atarijaguar system
-* Reverted the atarijaguarcd system to placeholder status as no emulators including Virtual Jaguar run these games properly
+* (Windows) Added BigPEmu standalone as an alternative emulator for the atarijaguar and atarijaguarcd systems
+* Reverted the atarijaguarcd system to placeholder status on Unix and macOS as no emulators including Virtual Jaguar run these games properly
 * Added the pcwindows platform to the ports system to improve scraping
+* Added the .cdi file extension to the atarijaguar and atarijaguarcd systems
 * Added the . (dot) file extension to the xbox360 system on Windows to support extensionless XBLA games
 * Added the .d64 file extension to the n64 and n64dd systems
 * Added the .car and .rom file extensions to the a5200 system
 * Added the .car file extension to the atari800 system
 * Added the .bin file extension to the gx4000 system
+* Added the .dsk file extension to the macintosh system
 * Added the .m3u file extension to the pc98 and pcfx systems
 * Added the .minipsf file extension to the psx system
 * Removed the .7z and .zip file extensions from the 3do, neogeocd, neogeocdjp and switch systems
@@ -221,7 +225,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Added opacity support to the scanline shader
 * Added the rlottie library as a Git subtree
 * Updated to build correctly with FFmpeg 5.1
-* Updated SDL to 2.26.1, FFmpeg to 5.1.2, FreeType to 2.12.1 and pugixml to 1.12.1 on Windows and macOS
+* Updated FFmpeg to 5.1.2, FreeType to 2.12.1 and pugixml to 1.12.1 on Windows and macOS
+* Updated SDL to 2.26.3 on Windows, macOS and the Linux AppImage builds
 * Updated curl to 7.86.0 on Windows
 * Added a workaround for playing broken video files with invalid PTS values
 * Refactored the rendering code from a shared namespace into proper classes
@@ -305,6 +310,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Adding a dot (.) to the es_systems.xml extension tag (to setup extensionless entries) led to a crash if the system contained folders
 * Enabling collections from the Game Collection Settings menu could crash the application in some rare cases
 * There was a use after free issue in the multi-scraper which could in theory crash the application
+* Running with the --force-input-config command line option and aborting the input configuration would lead to a black screen and eventually a crash
 * Parsing of .desktop files on Unix did not properly handle escaping of % characters which made game launching fail for some RPCS3 games
 * For the cps system, MAME standalone was configured with the wrong system directory for the -rompath option, pointing to "arcade" instead of "cps"
 * Invalid ScreenScraper game entries were sometimes not filtered out from server responses

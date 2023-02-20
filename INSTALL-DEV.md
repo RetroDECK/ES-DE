@@ -159,6 +159,12 @@ To enable AddressSanitizer which helps with identifying memory issues like corru
 cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
 make
 ```
+Due to buggy AMD GPU drivers it could be a good idea to use the `LSAN_suppressions` file included in the repository to avoid reports of a lot of irrelevant issue, for example:
+```
+LSAN_OPTIONS="suppressions=LSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
+```
+
+This applies to LeakSanitizer specifically, which is integrated into AddressSanitizer.
 
 To enable ThreadSanitizer which helps with identifying data races and other thread-related issues, build with the TSAN option:
 ```

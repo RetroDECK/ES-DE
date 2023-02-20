@@ -18,6 +18,8 @@ If you unzip and temporarily replace your ROMs directory with one of these, ever
 
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
+A general comment regarding SVG graphic files is that fonts are not supported by the LunaSVG library so these need to be converted to paths in order for them to get rendered inside ES-DE. In Inkscape the relevant command is named _Object to Path_ but there should be equivalent functionality in other vector graphics editors.
+
 Table of contents:
 
 [[_TOC_]]
@@ -2227,6 +2229,7 @@ Properties:
     - `playcount` - How many times the game has been played.
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
+    - `emulator` - The emulator used to launch the game, could as such be a per-game alternative emulator entry, a system wide alternative emulator entry or the system's default emulator. This requires that the command tag in es_systems.xml has a label defined, otherwise this value will be blank. Folders will always have blank values as these can't be launched directly.
     - `systemName` - The short system name of the game.
     - `systemFullname` - The full system name of the game.
     - `sourceSystemName` - The source short system name of the game. For regular systems this value will be identical to `systemName` but for collections it will show the actual system that the game is located in instead of the collection system name.
