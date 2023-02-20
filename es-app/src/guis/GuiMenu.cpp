@@ -1634,25 +1634,25 @@ void GuiMenu::openOtherOptions()
 #endif
 
 #if defined(APPLICATION_UPDATER) && !defined(IS_PRERELEASE)
-    auto applicationUpdaterFrequencyFunc = [applicationUpdaterFrequency,
-                                            applicationUpdaterPrereleases](const std::string&) {
-        if (applicationUpdaterFrequency->getSelected() == "never") {
-            applicationUpdaterPrereleases->setEnabled(false);
-            applicationUpdaterPrereleases->setOpacity(DISABLED_OPACITY);
-            applicationUpdaterPrereleases->getParent()
-                ->getChild(applicationUpdaterPrereleases->getChildIndex() - 1)
-                ->setOpacity(DISABLED_OPACITY);
-        }
-        else {
-            applicationUpdaterPrereleases->setEnabled(true);
-            applicationUpdaterPrereleases->setOpacity(1.0f);
-            applicationUpdaterPrereleases->getParent()
-                ->getChild(applicationUpdaterPrereleases->getChildIndex() - 1)
-                ->setOpacity(1.0f);
-        }
-    };
+    auto applicationUpdaterFrequencyFunc =
+        [applicationUpdaterPrereleases](const std::string& frequency) {
+            if (frequency == "never") {
+                applicationUpdaterPrereleases->setEnabled(false);
+                applicationUpdaterPrereleases->setOpacity(DISABLED_OPACITY);
+                applicationUpdaterPrereleases->getParent()
+                    ->getChild(applicationUpdaterPrereleases->getChildIndex() - 1)
+                    ->setOpacity(DISABLED_OPACITY);
+            }
+            else {
+                applicationUpdaterPrereleases->setEnabled(true);
+                applicationUpdaterPrereleases->setOpacity(1.0f);
+                applicationUpdaterPrereleases->getParent()
+                    ->getChild(applicationUpdaterPrereleases->getChildIndex() - 1)
+                    ->setOpacity(1.0f);
+            }
+        };
 
-    applicationUpdaterFrequencyFunc(std::string());
+    applicationUpdaterFrequencyFunc(applicationUpdaterFrequency->getSelected());
     applicationUpdaterFrequency->setCallback(applicationUpdaterFrequencyFunc);
 #endif
 
