@@ -249,7 +249,7 @@ public:
 
     void setOverrideMultiText(const std::string& text) { mOverrideMultiText = text; }
     void clearEntries() { mEntries.clear(); }
-    void setCallback(const std::function<void(const std::string&)>& callbackFunc)
+    void setCallback(const std::function<void(const T& object)>& callbackFunc)
     {
         mSelectedChangedCallback = callbackFunc;
     }
