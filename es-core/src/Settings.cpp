@@ -135,7 +135,7 @@ void Settings::setDefaults()
 
     mStringMap["ScraperRegion"] = {"eu", "eu"};
     mStringMap["ScraperLanguage"] = {"en", "en"};
-    mIntMap["ScraperRetryOnErrorCount"] = {5, 5};
+    mIntMap["ScraperRetryOnErrorCount"] = {3, 3};
     mIntMap["ScraperRetryOnErrorTimer"] = {3, 3};
     mBoolMap["ScraperOverwriteData"] = {true, true};
     mBoolMap["ScraperHaltOnInvalidMedia"] = {true, true};
