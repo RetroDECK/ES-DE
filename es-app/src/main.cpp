@@ -661,7 +661,12 @@ int main(int argc, char* argv[])
     const std::string gamelistsDir {Utils::FileSystem::getHomePath() +
                                     "/.emulationstation/gamelists"};
     if (!Utils::FileSystem::exists(gamelistsDir)) {
+#if defined(_WIN64)
+        LOG(LogInfo) << "Creating gamelists directory \""
+                     << Utils::String::replace(gamelistsDir, "/", "\\") << "\"...";
+#else
         LOG(LogInfo) << "Creating gamelists directory \"" << gamelistsDir << "\"...";
+#endif
         Utils::FileSystem::createDirectory(gamelistsDir);
         if (!Utils::FileSystem::exists(gamelistsDir)) {
             LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
@@ -672,7 +677,12 @@ int main(int argc, char* argv[])
     // is rather a convenience in case the user wants to add additional themes.
     const std::string themesDir {Utils::FileSystem::getHomePath() + "/.emulationstation/themes"};
     if (!Utils::FileSystem::exists(themesDir)) {
+#if defined(_WIN64)
+        LOG(LogInfo) << "Creating themes directory \""
+                     << Utils::String::replace(themesDir, "/", "\\") << "\"...";
+#else
         LOG(LogInfo) << "Creating themes directory \"" << themesDir << "\"...";
+#endif
         Utils::FileSystem::createDirectory(themesDir);
         if (!Utils::FileSystem::exists(themesDir)) {
             LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
@@ -683,7 +693,12 @@ int main(int argc, char* argv[])
     // for custom event scripts so it's also created as a convenience.
     const std::string scriptsDir {Utils::FileSystem::getHomePath() + "/.emulationstation/scripts"};
     if (!Utils::FileSystem::exists(scriptsDir)) {
+#if defined(_WIN64)
+        LOG(LogInfo) << "Creating scripts directory \""
+                     << Utils::String::replace(scriptsDir, "/", "\\") << "\"...";
+#else
         LOG(LogInfo) << "Creating scripts directory \"" << scriptsDir << "\"...";
+#endif
         Utils::FileSystem::createDirectory(scriptsDir);
         if (!Utils::FileSystem::exists(scriptsDir)) {
             LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
