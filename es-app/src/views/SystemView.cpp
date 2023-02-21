@@ -56,6 +56,7 @@ SystemView::~SystemView()
 void SystemView::onShow()
 {
     finishAnimation(0);
+    stopViewVideos();
     mFadeOpacity = 0.0f;
     mTransitionAnim = false;
 }
@@ -274,7 +275,7 @@ void SystemView::onCursorChanged(const CursorState& state)
 
     if (mLastCursor >= 0 && mLastCursor <= static_cast<int>(mSystemElements.size())) {
         for (auto& video : mSystemElements[mLastCursor].videoComponents)
-            video->stopVideoPlayer();
+            video->pauseVideoPlayer();
     }
 
     // This is needed to avoid erratic camera movements during extreme navigation input when using
