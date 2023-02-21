@@ -46,13 +46,16 @@ out vec4 FragColor;
 void main()
 {
     vec4 SourceSize;
+    vec2 PIXEL_SIZE;
 
-    if (0x0u != (shaderFlags & 0x10u))
-        SourceSize = vec4(textureSize.yx, 1.0 / textureSize.yx);
-    else
+    if (0x0u != (shaderFlags & 0x10u)) {
+        SourceSize = vec4(textureSize.yx, 1.0 / textureSize.xy);
+        PIXEL_SIZE = vec2(SourceSize.w, SourceSize.z);
+    }
+    else {
         SourceSize = vec4(textureSize.xy, 1.0 / textureSize.xy);
-
-    vec2 PIXEL_SIZE = vec2(SourceSize.z, SourceSize.w);
+        PIXEL_SIZE = vec2(SourceSize.z, SourceSize.w);
+    }
 
     float sampleOffsets[5] = float[5](0.0, 1.4347826, 3.3478260, 5.2608695, 7.1739130);
     float sampleWeights[5] =
