@@ -750,16 +750,6 @@ int main(int argc, char* argv[])
             }
         }
 
-        // Check if any of the enabled systems have an invalid alternative emulator entry,
-        // which means that a label is present in the gamelist.xml file which is not matching
-        // any command tag in es_systems.xml.
-        for (auto system : SystemData::sSystemVector) {
-            if (system->getAlternativeEmulator().substr(0, 9) == "<INVALID>") {
-                ViewController::getInstance()->invalidAlternativeEmulatorDialog();
-                break;
-            }
-        }
-
         // Don't generate controller events while we're loading.
         SDL_GameControllerEventState(SDL_DISABLE);
 
@@ -776,14 +766,17 @@ int main(int argc, char* argv[])
                 applicationUpdater->getResults(updaterResults);
 #endif
         }
-        // Open the input configuration GUI if the force flag was passed from the command line.
-        if (!loadSystemsStatus) {
-            if (forceInputConfig) {
-                window->pushGui(new GuiDetectDevice(
-                    false, true, [] { ViewController::getInstance()->goToStart(true); }));
-            }
-            else {
-                ViewController::getInstance()->goToStart(true);
+
+        if (!loadSystemsStatus)
+            ViewController::getInstance()->goToStart(true);
+
+        // Check if any of the enabled systems have an invalid alternative emulator entry,
+        // which means that a label is present in the gamelist.xml file which is not matching
+        // any command tag in es_systems.xml.
+        for (auto system : SystemData::sSystemVector) {
+            if (system->getAlternativeEmulator().substr(0, 9) == "<INVALID>") {
+                ViewController::getInstance()->invalidAlternativeEmulatorDialog();
+                break;
             }
         }
 
@@ -807,6 +800,12 @@ int main(int argc, char* argv[])
         if (updaterResults != "")
             ViewController::getInstance()->updateAvailableDialog(updaterResults);
 #endif
+
+        // Open the input configuration GUI if the force flag was passed from the command line.
+        if (forceInputConfig) {
+            ViewController::getInstance()->cancelViewTransitions();
+            window->pushGui(new GuiDetectDevice(false, true, nullptr));
+        }
 
         // Main application loop.
 

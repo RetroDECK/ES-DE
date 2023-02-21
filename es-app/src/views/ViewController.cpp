@@ -65,7 +65,7 @@ void ViewController::invalidSystemsFileDialog()
                                "SOMETHING IS LIKELY WRONG WITH YOUR XML SYNTAX. "
                                "IF YOU DON'T HAVE A CUSTOM SYSTEMS FILE, THEN THE "
                                "EMULATIONSTATION INSTALLATION IS BROKEN. SEE THE "
-                               "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO.";
+                               "APPLICATION LOG FILE es_log.txt FOR ADDITIONAL INFO";
 
     mWindow->pushGui(new GuiMsgBox(
         HelpStyle(), errorMessage.c_str(), "QUIT",
@@ -200,19 +200,20 @@ void ViewController::noGamesDialog()
 
 void ViewController::invalidAlternativeEmulatorDialog()
 {
-    mWindow->pushGui(new GuiMsgBox(getHelpStyle(), "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
-                                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
-                                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
-                                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
-                                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
-                                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU"));
+    cancelViewTransitions();
+    mWindow->pushGui(new GuiMsgBox(getHelpStyle(),
+                                   "AT LEAST ONE OF YOUR SYSTEMS HAS AN\n"
+                                   "INVALID ALTERNATIVE EMULATOR CONFIGURED\n"
+                                   "WITH NO MATCHING ENTRY IN THE SYSTEMS\n"
+                                   "CONFIGURATION FILE, PLEASE REVIEW YOUR\n"
+                                   "SETUP USING THE 'ALTERNATIVE EMULATORS'\n"
+                                   "INTERFACE IN THE 'OTHER SETTINGS' MENU",
+                                   "OK", nullptr, "", nullptr, "", nullptr, true, true));
 }
 
 void ViewController::updateAvailableDialog(const std::string& message)
 {
-    if (isAnimationPlaying(0))
-        finishAnimation(0);
-
+    cancelViewTransitions();
     mWindow->pushGui(new GuiMsgBox(getHelpStyle(), message, "OK", nullptr, "", nullptr, "", nullptr,
                                    true, true,
                                    (mRenderer->getIsVerticalOrientation() ?
