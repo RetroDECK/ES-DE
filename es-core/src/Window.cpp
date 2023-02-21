@@ -505,7 +505,10 @@ void Window::render()
                 // of iterations relative to the screen resolution.
                 Renderer::postProcessingParams backgroundParameters;
 
-                if (Settings::getInstance()->getBool("MenuBlurBackground")) {
+                // TODO: Add support for non-blurred background when rotating screen 90 or 270
+                // degrees.
+                if (Settings::getInstance()->getBool("MenuBlurBackground") ||
+                    mRenderer->getScreenRotation() == 90 || mRenderer->getScreenRotation() == 270) {
                     const float resolutionModifier {mRenderer->getScreenResolutionModifier()};
                     // clang-format off
                     if (resolutionModifier < 1)

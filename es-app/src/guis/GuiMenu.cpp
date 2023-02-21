@@ -728,16 +728,29 @@ void GuiMenu::openUIOptions()
 
     // Blur background when the menu is open.
     auto menuBlurBackground = std::make_shared<SwitchComponent>();
-    menuBlurBackground->setState(Settings::getInstance()->getBool("MenuBlurBackground"));
-    s->addWithLabel("BLUR BACKGROUND WHEN MENU IS OPEN", menuBlurBackground);
-    s->addSaveFunc([menuBlurBackground, s] {
-        if (menuBlurBackground->getState() !=
-            Settings::getInstance()->getBool("MenuBlurBackground")) {
-            Settings::getInstance()->setBool("MenuBlurBackground", menuBlurBackground->getState());
-            s->setNeedsSaving();
-            s->setInvalidateCachedBackground();
-        }
-    });
+    if (mRenderer->getScreenRotation() == 90 || mRenderer->getScreenRotation() == 270) {
+        // TODO: Add support for non-blurred background when rotating screen 90 or 270 degrees.
+        menuBlurBackground->setState(true);
+        s->addWithLabel("BLUR BACKGROUND WHEN MENU IS OPEN", menuBlurBackground);
+        menuBlurBackground->setEnabled(false);
+        menuBlurBackground->setOpacity(DISABLED_OPACITY);
+        menuBlurBackground->getParent()
+            ->getChild(menuBlurBackground->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+    else {
+        menuBlurBackground->setState(Settings::getInstance()->getBool("MenuBlurBackground"));
+        s->addWithLabel("BLUR BACKGROUND WHEN MENU IS OPEN", menuBlurBackground);
+        s->addSaveFunc([menuBlurBackground, s] {
+            if (menuBlurBackground->getState() !=
+                Settings::getInstance()->getBool("MenuBlurBackground")) {
+                Settings::getInstance()->setBool("MenuBlurBackground",
+                                                 menuBlurBackground->getState());
+                s->setNeedsSaving();
+                s->setInvalidateCachedBackground();
+            }
+        });
+    }
 
     // Display pillarboxes (and letterboxes) for videos in the gamelists.
     auto gamelistVideoPillarbox = std::make_shared<SwitchComponent>();

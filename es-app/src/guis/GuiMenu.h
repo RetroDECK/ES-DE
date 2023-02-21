@@ -46,6 +46,7 @@ private:
     void openOtherOptions();
     void openQuitMenu();
 
+    Renderer* mRenderer;
     MenuComponent mMenu;
     TextComponent mVersion;
 };
