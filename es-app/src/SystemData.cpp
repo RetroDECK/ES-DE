@@ -464,6 +464,7 @@ bool SystemData::loadConfig()
     const bool splashScreen {Settings::getInstance()->getBool("SplashScreen")};
     float systemCount {0.0f};
     float parsedSystems {0.0f};
+    unsigned int gameCount {0};
 
     // This is only done to get the total system count, for calculating the progress bar position.
     for (auto& configPath : configPaths) {
@@ -775,6 +776,7 @@ bool SystemData::loadConfig()
             }
             else {
                 sSystemVector.emplace_back(newSys);
+                gameCount += newSys->getRootFolder()->getGameCount().first;
             }
         }
     }
@@ -790,6 +792,7 @@ bool SystemData::loadConfig()
                  << (systemCount == 1 ? ", loaded " : "s, loaded ") << sSystemVector.size()
                  << " system" << (sSystemVector.size() == 1 ? "" : "s")
                  << " (collections not included)";
+    LOG(LogInfo) << "Total game count: " << gameCount;
 
     // Sort systems by sortName, which will normally be the same as the full name.
     std::sort(std::begin(sSystemVector), std::end(sSystemVector), [](SystemData* a, SystemData* b) {
