@@ -664,16 +664,19 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
             mTrans = getProjectionMatrixNormal() * getIdentity();
     }
     else {
-        if ((shaderCalls + (textureRGBA ? 1 : 0)) % 2 == 0)
+        if ((shaderCalls + (textureRGBA ? 1 : 0)) % 2 == 0 && !(textureRGBA && shaderCalls == 1))
             GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width + mPaddingWidth, height - mScreenOffsetY,
                                              -mScreenOffsetX - mPaddingWidth, mScreenOffsetY,
                                              width - mScreenOffsetX, height, GL_COLOR_BUFFER_BIT,
                                              GL_NEAREST));
         else
-            GL_CHECK_ERROR(glBlitFramebuffer(
-                0, 0, width + mPaddingWidth, height + (mPaddingHeight / 2),
-                width + mScreenOffsetX + mPaddingWidth, height - mScreenOffsetY, mScreenOffsetX,
-                -(mPaddingHeight / 2) - mScreenOffsetY, GL_COLOR_BUFFER_BIT, GL_NEAREST));
+            GL_CHECK_ERROR(glBlitFramebuffer(0, 0, width + mPaddingWidth, height - mScreenOffsetY,
+                                             width + mScreenOffsetX + mPaddingWidth,
+                                             height - mScreenOffsetY, mScreenOffsetX, 0,
+                                             GL_COLOR_BUFFER_BIT, GL_NEAREST));
+        // For correct rendering if the blurred background is disabled when opening menus.
+        if (textureRGBA && shaderCalls == 1)
+            mTrans = getProjectionMatrixNormal() * getIdentity();
     }
 
     if (shaderCalls > 1)
@@ -703,6 +706,9 @@ void RendererOpenGL::shaderPostprocessing(unsigned int shaders,
 
             drawTriangleStrips(vertices, 4, BlendFactor::SRC_ALPHA,
                                BlendFactor::ONE_MINUS_SRC_ALPHA);
+
+            if (shaderCalls == 1)
+                break;
 
             if (firstFBO) {
                 bindTexture(mPostProcTexture2);
