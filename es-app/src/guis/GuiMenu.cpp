@@ -41,7 +41,8 @@
 #include <algorithm>
 
 GuiMenu::GuiMenu()
-    : mMenu {"MAIN MENU"}
+    : mRenderer {Renderer::getInstance()}
+    , mMenu {"MAIN MENU"}
 {
     bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
 
@@ -74,8 +75,8 @@ GuiMenu::GuiMenu()
     addChild(&mMenu);
     addVersionInfo();
     setSize(mMenu.getSize());
-    setPosition((Renderer::getScreenWidth() - mSize.x) / 2.0f,
-                std::round(Renderer::getScreenHeight() * 0.13f));
+    setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
+                std::round(mRenderer->getScreenHeight() * 0.13f));
 }
 
 GuiMenu::~GuiMenu()
@@ -1193,7 +1194,7 @@ void GuiMenu::openConfigInput(GuiSettings* settings)
     settings->setNeedsSaving(false);
 
     std::string message;
-    if (Renderer::getIsVerticalOrientation()) {
+    if (mRenderer->getIsVerticalOrientation()) {
         message = "THE KEYBOARD AND CONTROLLERS ARE\n"
                   "AUTOMATICALLY CONFIGURED, BUT USING\n"
                   "THIS CONFIGURATION TOOL YOU CAN\n"
@@ -1434,7 +1435,18 @@ void GuiMenu::openOtherOptions()
     });
 #endif
 
-#if defined(APPLICATION_UPDATER) && !defined(IS_PRERELEASE)
+#if defined(APPLICATION_UPDATER)
+#if defined(IS_PRERELEASE)
+    // Add a dummy entry to indicate that this setting is always enabled when running a prerelease.
+    auto applicationUpdaterPrereleases = std::make_shared<SwitchComponent>();
+    applicationUpdaterPrereleases->setState(true);
+    s->addWithLabel("INCLUDE PRERELEASES IN UPDATE CHECKS", applicationUpdaterPrereleases);
+    applicationUpdaterPrereleases->setEnabled(false);
+    applicationUpdaterPrereleases->setOpacity(DISABLED_OPACITY);
+    applicationUpdaterPrereleases->getParent()
+        ->getChild(applicationUpdaterPrereleases->getChildIndex() - 1)
+        ->setOpacity(DISABLED_OPACITY);
+#else
     // Whether to include prereleases when checking for application updates.
     auto applicationUpdaterPrereleases = std::make_shared<SwitchComponent>();
     applicationUpdaterPrereleases->setState(
@@ -1448,6 +1460,7 @@ void GuiMenu::openOtherOptions()
             s->setNeedsSaving();
         }
     });
+#endif
 #endif
 
 #if defined(_WIN64)
