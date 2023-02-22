@@ -849,7 +849,7 @@ void GamelistView::updateView(const CursorState& state)
             else if (metadata == "altemulator")
                 return file->metadata.get("altemulator");
             else if (metadata == "emulator")
-                return (file->getType() == FOLDER) ?
+                return (file->getType() == FOLDER || file->getType() == PLACEHOLDER) ?
                            "" :
                            (file->metadata.get("altemulator") != "" ?
                                 file->metadata.get("altemulator") :
