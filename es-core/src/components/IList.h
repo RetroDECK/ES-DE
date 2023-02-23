@@ -25,39 +25,6 @@ enum class ListLoopType {
     LIST_NEVER_LOOP
 };
 
-struct ScrollTier {
-    int length; // How long we stay on this tier before going to the next.
-    int scrollDelay; // How long between scrolls.
-};
-
-struct ScrollTierList {
-    const int count;
-    const ScrollTier* tiers;
-};
-
-// Default scroll tiers.
-// clang-format off
-const ScrollTier QUICK_SCROLL_TIERS[] = {
-    {500, 500},
-    {1200, 114},
-    {0, 16}
-};
-const ScrollTierList LIST_SCROLL_STYLE_QUICK = {
-    3,
-    QUICK_SCROLL_TIERS
-};
-
-const ScrollTier SLOW_SCROLL_TIERS[] = {
-    {500, 500},
-    {0, 200}
-};
-
-const ScrollTierList LIST_SCROLL_STYLE_SLOW = {
-    2,
-    SLOW_SCROLL_TIERS
-};
-// clang-format on
-
 template <typename EntryData, typename UserData> class IList : public virtual GuiComponent
 {
 public:
@@ -68,9 +35,54 @@ public:
     };
 
 protected:
+    struct ScrollTier {
+        int length; // How long we stay on this tier before going to the next.
+        int scrollDelay; // How long between scrolls.
+    };
+
+    struct ScrollTierList {
+        int count;
+        const ScrollTier* tiers;
+    };
+
+    // Default scroll tiers.
+    // clang-format off
+    static inline const ScrollTier QUICK_SCROLL_TIERS[3] {
+        {500, 500},
+        {1200, 114},
+        {0, 16}
+    };
+
+    static inline const ScrollTierList LIST_SCROLL_STYLE_QUICK {
+        3,
+        QUICK_SCROLL_TIERS
+    };
+
+    static inline const ScrollTier MEDIUM_SCROLL_TIERS[3] {
+        {500, 500},
+        {1100, 180},
+        {0, 80}
+    };
+
+    static inline const ScrollTierList LIST_SCROLL_STYLE_MEDIUM {
+        3,
+        MEDIUM_SCROLL_TIERS
+    };
+
+    static inline const ScrollTier SLOW_SCROLL_TIERS[2] {
+        {500, 500},
+        {0, 200}
+    };
+
+    static inline const ScrollTierList LIST_SCROLL_STYLE_SLOW {
+        2,
+        SLOW_SCROLL_TIERS
+    };
+    // clang-format on
+
     Window* mWindow;
     std::vector<Entry> mEntries;
-    const ScrollTierList& mTierList;
+    ScrollTierList mTierList;
     const ListLoopType mLoopType;
     int mCursor;
     int mLastCursor;

@@ -199,7 +199,7 @@ private:
 
 template <typename T>
 CarouselComponent<T>::CarouselComponent()
-    : IList<CarouselEntry, T> {LIST_SCROLL_STYLE_SLOW,
+    : IList<CarouselEntry, T> {IList<CarouselEntry, T>::LIST_SCROLL_STYLE_SLOW,
                                (std::is_same_v<T, SystemData*> ?
                                     ListLoopType::LIST_ALWAYS_LOOP :
                                     ListLoopType::LIST_PAUSE_AT_END_ON_JUMP)}
@@ -1614,6 +1614,9 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("unfocusedItemOpacity"))
             mUnfocusedItemOpacity =
                 glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
+
+        if (elem->has("fastScrolling") && elem->get<bool>("fastScrolling"))
+            List::mTierList = IList<CarouselEntry, T>::LIST_SCROLL_STYLE_MEDIUM;
     }
 
     // Legacy themes.

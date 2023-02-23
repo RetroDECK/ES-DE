@@ -159,8 +159,9 @@ private:
 
 template <typename T>
 TextListComponent<T>::TextListComponent()
-    : IList<TextListData, T> {(std::is_same_v<T, SystemData*> ? LIST_SCROLL_STYLE_SLOW :
-                                                                LIST_SCROLL_STYLE_QUICK),
+    : IList<TextListData, T> {(std::is_same_v<T, SystemData*> ?
+                                   IList<TextListData, T>::LIST_SCROLL_STYLE_SLOW :
+                                   IList<TextListData, T>::LIST_SCROLL_STYLE_QUICK),
                               ListLoopType::LIST_PAUSE_AT_END}
     , mRenderer {Renderer::getInstance()}
     , mCamOffset {0.0f}

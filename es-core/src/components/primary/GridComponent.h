@@ -198,7 +198,8 @@ private:
 
 template <typename T>
 GridComponent<T>::GridComponent()
-    : IList<GridEntry, T> {LIST_SCROLL_STYLE_SLOW, ListLoopType::LIST_PAUSE_AT_END}
+    : IList<GridEntry, T> {IList<GridEntry, T>::LIST_SCROLL_STYLE_SLOW,
+                           ListLoopType::LIST_PAUSE_AT_END}
     , mRenderer {Renderer::getInstance()}
     , mEntryOffset {0.0f}
     , mScrollPos {0.0f}
