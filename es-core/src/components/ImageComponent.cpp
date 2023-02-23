@@ -513,6 +513,12 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         setImage(path, tile);
     }
 
+    if (elem->has("flipHorizontal"))
+        setFlipX(elem->get<bool>("flipHorizontal"));
+
+    if (elem->has("flipVertical"))
+        setFlipY(elem->get<bool>("flipVertical"));
+
     bool updateAlignment {false};
 
     if (elem->has("tileHorizontalAlignment")) {
@@ -729,21 +735,33 @@ void ImageComponent::updateVertices()
         const float pxA {mSize.x / mTileWidth};
         const float pyA {mSize.y / mTileHeight};
 
-        if (mTileHorizontalAlignment == Alignment::ALIGN_RIGHT) {
+        if (mTileHorizontalAlignment == (mFlipX ? Alignment::ALIGN_LEFT : Alignment::ALIGN_RIGHT)) {
             float offsetX {pxA - std::floor(pxA)};
             if (offsetX != 0.0f) {
                 const float moveX {(mTileWidth * offsetX) / mSize.x};
-                topLeftAlign.x -= moveX * pxA;
-                bottomRightAlign.x -= moveX;
+                if (mFlipX) {
+                    topLeftAlign.x += moveX * pxA;
+                    bottomRightAlign.x += moveX;
+                }
+                else {
+                    topLeftAlign.x -= moveX * pxA;
+                    bottomRightAlign.x -= moveX;
+                }
             }
         }
 
-        if (mTileVerticalAlignment == Alignment::ALIGN_TOP) {
+        if (mTileVerticalAlignment == (mFlipY ? Alignment::ALIGN_BOTTOM : Alignment::ALIGN_TOP)) {
             float offsetY {pyA - std::floor(pyA)};
             if (offsetY != 0.0f) {
                 const float moveY {(mTileHeight * offsetY) / mSize.y};
-                topLeftAlign.y += moveY * pyA;
-                bottomRightAlign.y += moveY * pyA;
+                if (mFlipY) {
+                    topLeftAlign.y -= moveY * pyA;
+                    bottomRightAlign.y -= moveY * pyA;
+                }
+                else {
+                    topLeftAlign.y += moveY * pyA;
+                    bottomRightAlign.y += moveY * pyA;
+                }
             }
         }
 

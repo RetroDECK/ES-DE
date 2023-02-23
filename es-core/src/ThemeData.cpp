@@ -290,6 +290,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},
        {"rotationOrigin", NORMALIZED_PAIR},
+       {"flipHorizontal", BOOLEAN},
+       {"flipVertical", BOOLEAN},
        {"path", PATH},
        {"default", PATH},
        {"imageType", STRING},
