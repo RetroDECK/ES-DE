@@ -2,7 +2,7 @@
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
-If creating theme sets specifically for ES-DE, please add `-es-de` to the theme name, as in `slate-es-de`. Because ES-DE theme engine functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. It would be confusing and annoying for users that attempt to use ES-DE theme sets in older EmulationStation forks as they would get unthemed systems, crashes, error messages and so on. At least the -es-de extension is a visual indicator that it's an ES-DE specific theme set.
+If creating theme sets specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Because ES-DE theme engine functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. At least the -es-de extension is an indicator that it's an ES-DE specific theme set. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting theme sets from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
 
 Before your start, make sure to download the _Theme engine examples_ theme set that contains a number of example variants for things like vertical and horizontal carousels, wheel carousels, system view textlists, grids etc:
 
@@ -19,6 +19,8 @@ If you unzip and temporarily replace your ROMs directory with one of these, ever
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
 A general comment regarding SVG graphic files is that fonts are not supported by the LunaSVG library so these need to be converted to paths in order for them to get rendered inside ES-DE. In Inkscape the relevant command is named _Object to Path_ but there should be equivalent functionality in other vector graphics editors.
+
+Another general remark is that Linux almost always uses case-sensitive file systems (that's sometimes true for macOS as well). Therefore it's a good idea to always name files with lowercase characters only. Also make sure to regularly test on Linux if that's not your primary operating system.
 
 Table of contents:
 
@@ -1012,7 +1014,9 @@ System variables are system specific and are derived from values defined in es_s
 `system.fullName` expands to the full system name as defined by the `fullname` tag in es_systems.xml\
 `system.theme` expands to the theme directory as defined by the `theme` tag in es_systems.xml
 
-The `.autoCollections`, `.customCollections` and `.noCollections` versions of these variables make it possible to differentiate between regular systems, automatic collections (_all games_, _favorites_ and _last played_) and custom collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems.
+If using variables to load theme assets like images and videos, then use the `.name` versions of these variables as short system names should be stable and not change over time. The `.fullName` values could change in future ES-DE releases or they could be user-customized which would break your theme set.
+
+The `.autoCollections`, `.customCollections` and `.noCollections` versions of the variables make it possible to differentiate between regular systems, automatic collections (_all games_, _favorites_ and _last played_) and custom collections. This can for example be used to apply different formatting to the names of the collections as opposed to regular systems.
 
 The below example capitalizes the names of the auto collections while leaving custom collections and regular systems at their default formatting (as they are defined by the user and es_systems.xml respectively). The reason this works is that the .autoCollections, .customCollections and .noCollections variables are mutually exclusive, i.e. a system is either a real system or an automatic collection or a custom collection and never more than one of these.
 
@@ -1347,6 +1351,9 @@ Properties:
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
+* `fastScrolling` - type: BOOLEAN
+    - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). Be aware of possible performance implications when enabling this property, for gamelist views it's probably mostly useful for text-based carousels as streaming carousel images at the higher scrolling speed is likely to lead to stuttering on slower machines. Similarly, using this property in the system view together with gameselector configuration may lead to quite a lot of lag on weaker machines.
+    - Default is `false`
 * `color` - type: COLOR
     - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.
     - Default is `FFFFFFD8`
@@ -1762,6 +1769,12 @@ Properties:
     - Point around which the image will be rotated.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0.5 0.5`
+* `flipHorizontal` - type: BOOLEAN
+    - Flips the image texture horizontally.
+    - Default is `false`
+* `flipVertical` - type: BOOLEAN
+    - Flips the image texture vertically.
+    - Default is `false`
 * `path` - type: PATH
     - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
 * `default` - type: PATH

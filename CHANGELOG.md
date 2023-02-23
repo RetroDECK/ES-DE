@@ -113,6 +113,7 @@ Overall application speed and performance has been greatly improved with faster 
 * (macOS) Added an additional find rule entry for DOSBox-X as the binary name has been changed
 * (Linux) Added Flatpak support for Mednafen using the Mednaffe package
 * (Linux) Added Flatpak support for Solarus using the Solarus Launcher package
+* (Linux) Added a --fullscreen flag to the lightspark emulator for the flash game system
 * Added support for folder links, used for launching game files inside folders without having to enter them
 * Added a folder badge, including a folder link overlay in case a link has been configured
 * Added a collection badge, shown when editing custom collections to indicate that a game is part of the collection
@@ -134,6 +135,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added on-demand texture loading to the carousel
 * Improved the renderer scaling accuracy
 * Added new tileSize, tileHorizontalAlignment and tileVerticalAlignment properties to the image element for better tiling support
+* Added two new flipHorizontal and flipVertical properties to the image element
 * Added support for substituting the emulator binary in staticpath rules with an explicit command (useful for launching specific binaries in Flatpaks)
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
 * Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
@@ -270,6 +272,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added carousel theme support for defining image brightness
 * Added carousel theme support for defining image saturation
 * Added carousel theme support for setting item transitions to "slide" or "instant"
+* Added carousel theme support for enabling faster scrolling speed with a third scroll tier
 * Added carousel theme support for controlling item stacking for overlapping items
 * Added carousel theme support for defining margins around the currently selected item
 * Added carousel theme support for rotating items around their own axis (although not supported for wheel carousels)

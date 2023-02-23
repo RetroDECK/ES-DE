@@ -2391,9 +2391,9 @@ Submenu containing all the settings for the screensaver. These are described in 
 
 Non-legacy theme sets can optionally contain variant trigger configuration which changes the layout on a per-gamelist basis if there is no game media available, or if there is no game videos available. This option makes it possible to disable that functionality and always apply the default configuration for the selected variant.
 
-**Blur background when menu is open**
+**Blur background when menu is open** _Always applied if screen is rotated 90 or 270 degrees_
 
-This option will blur the background behind the menu slightly. Normally this can be left enabled, but if you have a really slow GPU, disabling this option may make the application feel a bit more responsive.
+This option will blur the background behind the menu slightly. Normally this can be left enabled, but if you have a really slow GPU, disabling this option may make the application feel a bit more responsive. For technical reasons this setting is always enabled if the screen is rotated 90 or 270 degrees, and in this case the menu option will also be grayed out.
 
 **Display pillarboxes for gamelist videos** _Only for legacy theme sets_
 
@@ -2672,7 +2672,7 @@ By default a check for new ES-DE versions will be done on every application star
 
 **Include prereleases in update checks** _Not available (always enabled) for prereleases_
 
-For platforms and package formats where the previous setting above is available there is also the option of whether to include prereleases when checking for application updates. Note that this is always enabled when running an ES-DE prerelease so in this case the setting will not be present in the menu.
+For platforms and package formats where the previous setting above is available there is also the option of whether to include prereleases when checking for application updates. Note that this is always enabled when running an ES-DE prerelease so in this case the setting will be grayed out in the menu.
 
 **Hide taskbar (requires restart)** _(Windows only)_
 
