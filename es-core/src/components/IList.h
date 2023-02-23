@@ -119,10 +119,10 @@ public:
 
     void stopScrolling()
     {
+        mTitleOverlayOpacity = 0.0f;
+
         if (mScrollVelocity == 0)
             return;
-
-        mTitleOverlayOpacity = 0.0f;
 
         listInput(0);
         if (mScrollVelocity == 0)
