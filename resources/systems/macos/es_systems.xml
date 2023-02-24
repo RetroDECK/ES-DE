@@ -239,8 +239,8 @@
         <name>bbcmicro</name>
         <fullname>Acorn Computers BBC Micro</fullname>
         <path>%ROMPATH%/bbcmicro</path>
-        <extension>.7z .7Z .zip .ZIP</extension>
-        <command>PLACEHOLDER %ROM%</command>
+        <extension>.dsd .DSD .img .IMG .ssd .SSD .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/bbcmicro bbcb -autoboot_delay "2" -autoboot_command "*cat\n\n*exec !boot\n" -flop1 %ROM%</command>
         <platform>bbcmicro</platform>
         <theme>bbcmicro</theme>
     </system>

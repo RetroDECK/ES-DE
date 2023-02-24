@@ -57,6 +57,7 @@ namespace
         {ATARI_LYNX, "4924"},
         {ATARI_ST, "4937"},
         {ATARI_XE, "30"},
+        {BBC_MICRO, "5013"},
         {CAVESTORY, "1"},
         {COLECOVISION, "31"},
         {COMMODORE_64, "40"},
