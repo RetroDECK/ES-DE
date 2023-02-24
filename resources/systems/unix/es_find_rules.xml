@@ -246,6 +246,19 @@
             <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE</entry>
         </rule>
     </emulator>
+    <emulator name="GARGOYLE">
+        <!-- Interactive fiction player Gargoyle -->
+        <rule type="systempath">
+            <entry>gargoyle</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.github.garglk.Gargoyle</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.garglk.Gargoyle</entry>
+            <entry>~/Applications/Gargoyle*.AppImage</entry>
+            <entry>~/.local/bin/Gargoyle*.AppImage</entry>
+            <entry>~/bin/Gargoyle*.AppImage</entry>
+        </rule>
+    </emulator>
     <emulator name="GEARBOY">
         <!-- Nintendo Game Boy and Game Boy Color emulator Gearboy -->
         <rule type="systempath">

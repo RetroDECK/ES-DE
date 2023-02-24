@@ -117,6 +117,12 @@
             <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
+    <emulator name="GARGOYLE">
+        <!-- Interactive fiction player Gargoyle -->
+        <rule type="staticpath">
+            <entry>/Applications/Gargoyle.app/Contents/MacOS/Gargoyle</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="staticpath">

@@ -46,6 +46,7 @@ Emulators\EasyRPG\Player.exe
 Emulators\fbneo\fbneo64.exe
 Emulators\fbneo\fbneo.exe
 Emulators\flycast\flycast.exe
+Emulators\gargoyle\gargoyle.exe
 Emulators\Gearboy\Gearboy.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
