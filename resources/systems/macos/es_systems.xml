@@ -1665,6 +1665,15 @@
         <theme>vsmile</theme>
     </system>
     <system>
+        <name>wasm4</name>
+        <fullname>WASM-4 Fantasy Console</fullname>
+        <path>%ROMPATH%/wasm4</path>
+        <extension>.wasm .WASM</extension>
+        <command label="WASM-4">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/wasm4_libretro.dylib %ROM%</command>
+        <platform>wasm4</platform>
+        <theme>wasm4</theme>
+    </system>
+    <system>
         <name>wii</name>
         <fullname>Nintendo Wii</fullname>
         <path>%ROMPATH%/wii</path>

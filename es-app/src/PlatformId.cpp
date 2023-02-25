@@ -134,6 +134,7 @@ namespace PlatformIds
         "videopac",             // Philips Videopac G7000 (Magnavox Odyssey2)
         "virtualboy",           // Nintendo Virtual Boy
         "vsmile",               // VTech V.Smile
+        "wasm4",                // WASM-4 Fantasy Console
         "wii",                  // Nintendo Wii
         "wiiu",                 // Nintendo Wii U
         "wonderswan",           // Bandai WonderSwan

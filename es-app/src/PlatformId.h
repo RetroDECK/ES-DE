@@ -133,6 +133,7 @@ namespace PlatformIds
         PHILIPS_VIDEOPAC,
         NINTENDO_VIRTUAL_BOY,
         VTECH_VSMILE,
+        GAMEENGINE_WASM4,
         NINTENDO_WII,
         NINTENDO_WII_U,
         BANDAI_WONDERSWAN,
