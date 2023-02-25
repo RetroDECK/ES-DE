@@ -380,21 +380,12 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
     else
         entry.data.item->setOrigin(0.5f, 0.5f);
 
-    if (mItemVerticalAlignment == ALIGN_TOP) {
-        if (mType == CarouselType::HORIZONTAL_WHEEL)
-            entry.data.item->setOrigin(1.0f, entry.data.item->getOrigin().y);
-        else
-            entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.0f);
-    }
-    else if (mItemVerticalAlignment == ALIGN_BOTTOM) {
-        if (mType == CarouselType::HORIZONTAL_WHEEL)
-            entry.data.item->setOrigin(0.0f, entry.data.item->getOrigin().y);
-        else
-            entry.data.item->setOrigin(entry.data.item->getOrigin().x, 1.0f);
-    }
-    else {
+    if (mItemVerticalAlignment == ALIGN_TOP)
+        entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.0f);
+    else if (mItemVerticalAlignment == ALIGN_BOTTOM)
+        entry.data.item->setOrigin(entry.data.item->getOrigin().x, 1.0f);
+    else
         entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.5f);
-    }
 
     glm::vec2 denormalized {glm::round(mItemSize * entry.data.item->getOrigin())};
     entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
@@ -437,21 +428,12 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
     else
         entry.data.item->setOrigin(0.5f, 0.5f);
 
-    if (mItemVerticalAlignment == ALIGN_TOP) {
-        if (mType == CarouselType::HORIZONTAL_WHEEL)
-            entry.data.item->setOrigin(1.0f, entry.data.item->getOrigin().y);
-        else
-            entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.0f);
-    }
-    else if (mItemVerticalAlignment == ALIGN_BOTTOM) {
-        if (mType == CarouselType::HORIZONTAL_WHEEL)
-            entry.data.item->setOrigin(0.0f, entry.data.item->getOrigin().y);
-        else
-            entry.data.item->setOrigin(entry.data.item->getOrigin().x, 1.0f);
-    }
-    else {
+    if (mItemVerticalAlignment == ALIGN_TOP)
+        entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.0f);
+    else if (mItemVerticalAlignment == ALIGN_BOTTOM)
+        entry.data.item->setOrigin(entry.data.item->getOrigin().x, 1.0f);
+    else
         entry.data.item->setOrigin(entry.data.item->getOrigin().x, 0.5f);
-    }
 
     glm::vec2 denormalized {glm::round(mItemSize * entry.data.item->getOrigin())};
     entry.data.item->setPosition(glm::vec3 {denormalized.x, denormalized.y, 0.0f});
@@ -723,7 +705,12 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
     glm::vec2 itemSpacing {0.0f, 0.0f};
     float xOff {0.0f};
     float yOff {0.0f};
-    float scaleSize {mItemSize.x * mItemScale - mItemSize.x};
+    float scaleSize {0.0f};
+
+    if (mType == CarouselType::HORIZONTAL_WHEEL)
+        scaleSize = mItemSize.y * mItemScale - mItemSize.y;
+    else
+        scaleSize = mItemSize.x * mItemScale - mItemSize.x;
 
     if (isWheel) {
         // Alignment of the actual carousel inside to the overall component area.
@@ -747,14 +734,14 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                         yOff += scaleSize / 2.0f;
                 }
                 else if (mWheelVerticalAlignment == ALIGN_TOP) {
-                    yOff = mItemSize.x;
+                    yOff = mItemSize.x - ((mItemSize.x - mItemSize.y) / 2.0f);
                     if (mItemVerticalAlignment == ALIGN_CENTER)
                         yOff += scaleSize / 2.0f;
                     else if (mItemVerticalAlignment == ALIGN_BOTTOM)
                         yOff += scaleSize;
                 }
                 else if (mWheelVerticalAlignment == ALIGN_BOTTOM) {
-                    yOff = mSize.y;
+                    yOff = mSize.y + ((mItemSize.x - mItemSize.y) / 2.0f);
                     if (mItemVerticalAlignment == ALIGN_CENTER)
                         yOff -= scaleSize / 2.0f;
                     else if (mItemVerticalAlignment == ALIGN_TOP)
@@ -1066,8 +1053,6 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                 if (mType == CarouselType::HORIZONTAL_WHEEL) {
                     // For horizontal wheels we need to rotate all items 90 degrees around their
                     // own axis.
-                    renderItem.trans[3].x = positionCalc[3].x;
-                    renderItem.trans[3].y = positionCalc[3].y;
                     const float xOffTransRotate {-(mItemSize.x / 2.0f)};
                     const float yOffTransRotate {-(mItemSize.y / 2.0f)};
 
@@ -1081,6 +1066,22 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
                     renderItem.trans = glm::translate(
                         renderItem.trans, glm::vec3 {xOffTransRotate, yOffTransRotate, 0.0f});
                 }
+            }
+            else if (mType == CarouselType::HORIZONTAL_WHEEL) {
+                renderItem.trans = positionCalc;
+                renderItem.trans = positionCalc;
+                const float xOffTransRotate {-(mItemSize.x / 2.0f)};
+                const float yOffTransRotate {-(mItemSize.y / 2.0f)};
+
+                renderItem.trans =
+                    glm::translate(renderItem.trans, glm::vec3 {xOffTransRotate * -1.0f,
+                                                                yOffTransRotate * -1.0f, 0.0f});
+
+                renderItem.trans = glm::rotate(renderItem.trans, glm::radians(90.0f),
+                                               glm::vec3 {0.0f, 0.0f, 1.0f});
+
+                renderItem.trans = glm::translate(
+                    renderItem.trans, glm::vec3 {xOffTransRotate, yOffTransRotate, 0.0f});
             }
             else {
                 renderItem.trans = positionCalc;
