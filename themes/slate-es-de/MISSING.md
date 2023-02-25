@@ -86,6 +86,7 @@
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
 * virtualboy: Nintendo Virtual Boy - consolegame.svg (needs simplification as it takes a long time to rasterize)
 * vsmile: VTech V.Smile - consolegame.svg, controller.svg
+* wasm4: WASM-4 Fantasy Console - consolegame.svg, controller.svg
 * x1:  Sharp X1 - consolegame.svg
 * x68000: Sharp X68000 - consolegame.svg (image of actual console)
 * zmachine: Infocom Z-machine - consolegame.svg

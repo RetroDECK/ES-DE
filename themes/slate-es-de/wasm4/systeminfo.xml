@@ -1,0 +1,19 @@
+<theme>
+    <view name="system">
+        <text name="info1">
+            <text>WASM-4 is an open source fantasy console for creating tiny</text>
+        </text>
+        <text name="info2">
+            <text>games running at a resolution of 128×128 pixels and 4 colors.</text>
+        </text>
+        <text name="info3">
+            <text>It's language agnostic so games can be written in a variety</text>
+        </text>
+        <text name="info4">
+            <text>of programming languages.</text>
+        </text>
+        <text name="info5">
+            <text>It was originally released in 2021.</text>
+        </text>
+    </view>
+</theme>
