@@ -61,10 +61,10 @@ public:
     Entry& getEntry(int index) { return mEntries.at(index); }
     void onDemandTextureLoad() override;
     const CarouselType getType() { return mType; }
-    const std::string& getDefaultCarouselImage() const { return mDefaultImage; }
-    const std::string& getDefaultCarouselFolderImage() const { return mDefaultFolderImage; }
-    void setDefaultImage(std::string defaultImage) { mDefaultImage = defaultImage; }
-    void setDefaultFolderImage(std::string defaultImage) { mDefaultFolderImage = defaultImage; }
+    const std::string& getDefaultCarouselImage() const { return mDefaultImagePath; }
+    const std::string& getDefaultCarouselFolderImage() const { return mDefaultFolderImagePath; }
+    void setDefaultImage(std::string defaultImage) { mDefaultImagePath = defaultImage; }
+    void setDefaultFolderImage(std::string defaultImage) { mDefaultFolderImagePath = defaultImage; }
     bool isScrolling() const override { return List::isScrolling(); }
     const LetterCase getLetterCase() const override { return mLetterCase; }
     const LetterCase getLetterCaseAutoCollections() const override
@@ -144,8 +144,9 @@ private:
 
     CarouselType mType;
     std::vector<std::string> mImageTypes;
-    std::string mDefaultImage;
-    std::string mDefaultFolderImage;
+    std::string mDefaultImagePath;
+    std::string mDefaultFolderImagePath;
+    std::shared_ptr<ImageComponent> mDefaultImage;
     float mMaxItemCount;
     int mItemsBeforeCenter;
     int mItemsAfterCenter;
@@ -319,27 +320,29 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
         }
         else if (entry.data.defaultImagePath != "" &&
                  ResourceManager::getInstance().fileExists(entry.data.defaultImagePath)) {
-            auto defaultImage = std::make_shared<ImageComponent>(false, dynamic);
-            defaultImage->setLinearInterpolation(mLinearInterpolation);
-            defaultImage->setMipmapping(true);
-            defaultImage->setMaxSize(
-                glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
-            defaultImage->setImage(entry.data.defaultImagePath);
-            defaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
-            if (mImageBrightness != 0.0)
-                defaultImage->setBrightness(mImageBrightness);
-            if (mImageSaturation != 1.0)
-                defaultImage->setSaturation(mImageSaturation);
-            if (mImageColorShift != 0xFFFFFFFF)
-                defaultImage->setColorShift(mImageColorShift);
-            if (mImageColorShiftEnd != mImageColorShift)
-                defaultImage->setColorShiftEnd(mImageColorShiftEnd);
-            if (!mImageColorGradientHorizontal)
-                defaultImage->setColorGradientHorizontal(false);
-            defaultImage->setRotateByTargetSize(true);
+            if (mDefaultImage.get() == nullptr || !mGamelistView) {
+                mDefaultImage = std::make_shared<ImageComponent>(false, dynamic);
+                mDefaultImage->setLinearInterpolation(mLinearInterpolation);
+                mDefaultImage->setMipmapping(true);
+                mDefaultImage->setMaxSize(
+                    glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+                mDefaultImage->setImage(entry.data.defaultImagePath);
+                mDefaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
+                if (mImageBrightness != 0.0)
+                    mDefaultImage->setBrightness(mImageBrightness);
+                if (mImageSaturation != 1.0)
+                    mDefaultImage->setSaturation(mImageSaturation);
+                if (mImageColorShift != 0xFFFFFFFF)
+                    mDefaultImage->setColorShift(mImageColorShift);
+                if (mImageColorShiftEnd != mImageColorShift)
+                    mDefaultImage->setColorShiftEnd(mImageColorShiftEnd);
+                if (!mImageColorGradientHorizontal)
+                    mDefaultImage->setColorGradientHorizontal(false);
+                mDefaultImage->setRotateByTargetSize(true);
+            }
             // For the gamelist view the default image is applied in onDemandTextureLoad().
             if (!mGamelistView)
-                entry.data.item = defaultImage;
+                entry.data.item = mDefaultImage;
         }
         else if (!mGamelistView) {
             entry.data.imagePath = "";
