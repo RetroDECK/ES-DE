@@ -98,7 +98,7 @@ void ScrollableContainer::applyTheme(const std::shared_ptr<ThemeData>& theme,
     GuiComponent::applyTheme(theme, view, element, properties);
 
     const ThemeData::ThemeElement* elem {theme->getElement(view, element, "text")};
-    if (!elem || !elem->has("container"))
+    if (!elem)
         return;
 
     if (elem->has("containerVerticalSnap"))
