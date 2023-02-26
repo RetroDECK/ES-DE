@@ -791,16 +791,16 @@ int main(int argc, char* argv[])
 
         lastTime = SDL_GetTicks();
 
+#if defined(APPLICATION_UPDATER)
+        if (ApplicationUpdater::getInstance().getResults())
+            ViewController::getInstance()->updateAvailableDialog();
+#endif
+
         LOG(LogInfo) << "Application startup time: "
                      << std::chrono::duration_cast<std::chrono::milliseconds>(
                             std::chrono::system_clock::now() - applicationStartTime)
                             .count()
                      << " ms";
-
-#if defined(APPLICATION_UPDATER)
-        if (ApplicationUpdater::getInstance().getResults())
-            ViewController::getInstance()->updateAvailableDialog();
-#endif
 
         // Open the input configuration GUI if the force flag was passed from the command line.
         if (forceInputConfig) {
