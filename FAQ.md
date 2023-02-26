@@ -102,7 +102,7 @@ ES-DE uses the RetroPie naming conventions. In most cases the ROM directories ar
 
 ## Can ES-DE update itself automatically when a new release becomes available?
 
-This functionality is planned but not yet implemented. It will probably be rolled out in two steps, with the first step being a notitication that a new release is available, and at a later stage adding complete in-application update support. For the time being you therefore need to regularly check the https://es-de.org website or join the ES-DE [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/) where new releases are announced. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release).
+ES-DE 2.0.0 includes a check for new versions and will show a notification window on startup if there is a new release available for download. As a second step downloading of the new version will be implemented and on some platforms automatic updating will be added as well. It's however unlikely that automatic upgrading will be feasible for all package formats. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release). If you find the update notification messages annoying you can change the frequency of update checks between _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_ from the _Other settings_ menu.
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 
