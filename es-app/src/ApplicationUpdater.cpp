@@ -4,7 +4,7 @@
 //  ApplicationUpdater.cpp
 //
 //  Checks for application updates.
-//  In the future updates will also be downloaded and possibly installed.
+//  In the future updates will also be downloaded, and installed on some platforms.
 //
 
 #include "ApplicationUpdater.h"
@@ -12,6 +12,7 @@
 #include "EmulationStation.h"
 #include "Log.h"
 #include "Settings.h"
+#include "resources/ResourceManager.h"
 #include "utils/StringUtil.h"
 #include "utils/TimeUtil.h"
 
@@ -23,17 +24,39 @@
 #include <algorithm>
 #include <deque>
 
+#define LOCAL_TESTING_FILE false
 #define MAX_DOWNLOAD_TIME 1
 
 ApplicationUpdater::ApplicationUpdater()
-    : mTimer {0}
+    : mPackageType {PackageType::UNKNOWN}
+    , mTimer {0}
     , mMaxTime {0}
     , mAbortDownload {false}
     , mApplicationShutdown {false}
     , mCheckedForUpdate {false}
+    , mNewVersion {false}
 {
     mUrl = "https://gitlab.com/api/v4/projects/18817634/repository/files/latest_release.json/"
            "raw?ref=master";
+
+#if defined(_WIN64)
+    if (Settings::getInstance()->getBool("PortableMode"))
+        mPackageType = PackageType::WINDOWS_PORTABLE;
+    else
+        mPackageType = PackageType::WINDOWS_INSTALLER;
+#elif defined(MACOS_APPLE_CPU)
+    mPackageType = PackageType::MACOS_APPLE;
+#elif defined(MACOS_INTEL_CPU)
+    mPackageType = PackageType::MACOS_INTEL;
+#elif defined(STEAM_DECK)
+    mPackageType = PackageType::LINUX_STEAM_DECK_APPIMAGE;
+#elif defined(APPIMAGE_BUILD)
+    mPackageType = PackageType::LINUX_APPIMAGE;
+#elif defined(LINUX_RPM_PACKAGE)
+    mPackageType = PackageType::LINUX_RPM;
+#elif defined(LINUX_DEB_PACKAGE)
+    mPackageType = PackageType::LINUX_DEB;
+#endif
 }
 
 ApplicationUpdater::~ApplicationUpdater()
@@ -42,6 +65,12 @@ ApplicationUpdater::~ApplicationUpdater()
     mApplicationShutdown = true;
     if (mThread)
         mThread->join();
+}
+
+ApplicationUpdater& ApplicationUpdater::getInstance()
+{
+    static ApplicationUpdater instance;
+    return instance;
 }
 
 void ApplicationUpdater::checkForUpdates()
@@ -176,10 +205,25 @@ void ApplicationUpdater::update()
 void ApplicationUpdater::parseFile()
 {
     assert(mRequest->status() == HttpReq::REQ_SUCCESS);
-
-    const std::string fileContents {mRequest->getContent()};
     rapidjson::Document doc;
+
+#if (LOCAL_TESTING_FILE)
+    LOG(LogWarning) << "ApplicationUpdater: Using local \"latest_release.json\" testing file";
+
+    const std::string localReleaseFile {Utils::FileSystem::getHomePath() +
+                                        "/.emulationstation/latest_release.json"};
+
+    if (!Utils::FileSystem::exists(localReleaseFile))
+        throw std::runtime_error("Local testing file not found");
+
+    const ResourceData& localReleaseFileData {
+        ResourceManager::getInstance().getFileData(localReleaseFile)};
+    doc.Parse(reinterpret_cast<const char*>(localReleaseFileData.ptr.get()),
+              localReleaseFileData.length);
+#else
+    const std::string fileContents {mRequest->getContent()};
     doc.Parse(&fileContents[0], fileContents.length());
+#endif
 
     if (doc.HasParseError())
         throw std::runtime_error(rapidjson::GetParseError_En(doc.GetParseError()));
@@ -289,14 +333,14 @@ void ApplicationUpdater::compareVersions()
 #endif
     }
 
-    bool newVersion {false};
+    mNewVersion = false;
 
     for (auto& releaseType : releaseTypes) {
         // If the version does not follow the semantic versioning scheme then always consider it to
         // be a new release as perhaps the version scheme will be changed sometime in the future.
         if (count_if(releaseType->version.cbegin(), releaseType->version.cend(),
                      [](char c) { return c == '.'; }) != 2) {
-            newVersion = true;
+            mNewVersion = true;
         }
         else {
             std::vector<std::string> fileVersion {
@@ -328,45 +372,35 @@ void ApplicationUpdater::compareVersions()
                 ++versionWeight;
 
             if (versionWeight > 0)
-                newVersion = true;
+                mNewVersion = true;
         }
-        if (newVersion) {
-            std::string message;
 
+        if (mNewVersion) {
             for (auto& package : releaseType->packages) {
-#if defined(_WIN64)
-                if (Settings::getInstance()->getBool("PortableMode")) {
-                    if (package.name == "WindowsPortable")
-                        message = package.message;
-                }
-                else {
-                    if (package.name == "WindowsInstaller")
-                        message = package.message;
-                }
-#elif defined(MACOS_APPLE_CPU)
-                if (package.name == "macOSApple")
-                    message = package.message;
-#elif defined(MACOS_INTEL_CPU)
-                if (package.name == "macOSIntel")
-                    message = package.message;
-#elif defined(STEAM_DECK)
-                if (package.name == "LinuxSteamDeckAppImage")
-                    message = package.message;
-#elif defined(APPIMAGE_BUILD)
-                if (package.name == "LinuxAppImage")
-                    message = package.message;
-#elif defined(LINUX_DEB_PACKAGE)
-                if (package.name == "LinuxDEB")
-                    message = package.message;
-#elif defined(LINUX_RPM_PACKAGE)
-                if (package.name == "LinuxRPM")
-                    message = package.message;
-#endif
-                auto tempVar = package;
+                if (mPackageType == PackageType::WINDOWS_PORTABLE &&
+                    package.name == "WindowsPortable")
+                    mPackage = package;
+                else if (mPackageType == PackageType::WINDOWS_INSTALLER &&
+                         package.name == "WindowsInstaller")
+                    mPackage = package;
+                else if (mPackageType == PackageType::MACOS_APPLE && package.name == "macOSApple")
+                    mPackage = package;
+                else if (mPackageType == PackageType::MACOS_INTEL && package.name == "macOSIntel")
+                    mPackage = package;
+                else if (mPackageType == PackageType::LINUX_DEB && package.name == "LinuxDEB")
+                    mPackage = package;
+                else if (mPackageType == PackageType::LINUX_RPM && package.name == "LinuxRPM")
+                    mPackage = package;
+                else if (mPackageType == PackageType::LINUX_APPIMAGE &&
+                         package.name == "LinuxAppImage")
+                    mPackage = package;
+                else if (mPackageType == PackageType::LINUX_STEAM_DECK_APPIMAGE &&
+                         package.name == "LinuxSteamDeckAppImage")
+                    mPackage = package;
             }
 
             // Cut the message to 280 characters so we don't make the message box exceedingly large.
-            message = message.substr(0, 280);
+            mPackage.message = mPackage.message.substr(0, 280);
 
             mLogInfo = "A new ";
             mLogInfo.append(releaseType == &mStableRelease ? "stable release" : "prerelease")
@@ -387,20 +421,20 @@ void ApplicationUpdater::compareVersions()
                 .append("can now be downloaded from\n")
                 .append("https://es-de.org/");
 
-            if (message != "")
-                mResults.append("\n").append(message);
+            if (mPackage.message != "")
+                mResults.append("\n").append(mPackage.message);
 
             mResults = Utils::String::toUpper(mResults);
             break;
         }
     }
-    if (!newVersion) {
+    if (!mNewVersion) {
         mLogInfo = "No application updates available";
     }
     mCheckedForUpdate = true;
 }
 
-void ApplicationUpdater::getResults(std::string& results)
+bool ApplicationUpdater::getResults()
 {
     mAbortDownload = true;
 
@@ -408,8 +442,6 @@ void ApplicationUpdater::getResults(std::string& results)
         mThread->join();
         mThread.reset();
         if (mCheckedForUpdate) {
-            if (mResults != "")
-                results = mResults;
             Settings::getInstance()->setString(
                 "ApplicationUpdaterLastCheck",
                 Utils::Time::DateTime(Utils::Time::now()).getIsoString());
@@ -428,4 +460,11 @@ void ApplicationUpdater::getResults(std::string& results)
     if (mLogInfo != "") {
         LOG(LogInfo) << mLogInfo;
     }
+
+    if (mNewVersion && mPackage.name == "") {
+        LOG(LogWarning)
+            << "ApplicationUpdater: Couldn't find a package type matching current platform";
+    }
+
+    return mNewVersion;
 }

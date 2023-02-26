@@ -4,7 +4,7 @@
 //  ApplicationUpdater.h
 //
 //  Checks for application updates.
-//  In the future updates will also be downloaded and possibly installed.
+//  In the future updates will also be downloaded, and installed on some platforms.
 //
 
 #ifndef ES_APP_APPLICATION_UPDATER_H
@@ -21,8 +21,8 @@
 class ApplicationUpdater : public AsyncHandle
 {
 public:
-    ApplicationUpdater();
-    ~ApplicationUpdater();
+    virtual ~ApplicationUpdater();
+    static ApplicationUpdater& getInstance();
 
     void checkForUpdates();
     void updaterThread();
@@ -30,9 +30,8 @@ public:
     void update();
     void parseFile();
     void compareVersions();
-    void getResults(std::string& results);
+    bool getResults();
 
-private:
     struct Package {
         std::string name;
         std::string filename;
@@ -40,6 +39,12 @@ private:
         std::string md5;
         std::string message;
     };
+
+    const std::string& getResultsString() { return mResults; }
+    const Package& getPackageInfo() { return mPackage; }
+
+private:
+    ApplicationUpdater();
 
     struct Release {
         std::string releaseType;
@@ -49,6 +54,20 @@ private:
         std::vector<Package> packages;
     };
 
+    enum class PackageType {
+        WINDOWS_PORTABLE,
+        WINDOWS_INSTALLER,
+        MACOS_APPLE,
+        MACOS_INTEL,
+        LINUX_DEB,
+        LINUX_RPM,
+        LINUX_APPIMAGE,
+        LINUX_STEAM_DECK_APPIMAGE,
+        UNKNOWN
+    };
+
+    PackageType mPackageType;
+    Package mPackage;
     std::string mUrl;
     std::string mResults;
     std::string mLogInfo;
@@ -59,6 +78,7 @@ private:
     std::atomic<bool> mAbortDownload;
     std::atomic<bool> mApplicationShutdown;
     bool mCheckedForUpdate;
+    bool mNewVersion;
 
     std::unique_ptr<std::thread> mThread;
     std::unique_ptr<HttpReq> mRequest;

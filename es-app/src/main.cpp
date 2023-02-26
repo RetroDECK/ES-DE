@@ -720,11 +720,8 @@ int main(int argc, char* argv[])
     }
 
 #if defined(APPLICATION_UPDATER)
-    std::unique_ptr<ApplicationUpdater> applicationUpdater;
-    if (!noUpdateCheck) {
-        applicationUpdater = std::make_unique<ApplicationUpdater>();
-        applicationUpdater->checkForUpdates();
-    }
+    if (!noUpdateCheck)
+        ApplicationUpdater::getInstance().checkForUpdates();
 #endif
 
     window->pushGui(ViewController::getInstance());
@@ -773,14 +770,8 @@ int main(int argc, char* argv[])
     }
 
     if (!SystemData::sStartupExitSignal) {
-        std::string updaterResults;
-        if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK) {
+        if (loadSystemsStatus == loadSystemsReturnCode::LOADING_OK)
             ThemeData::themeLoadedLogOutput();
-#if defined(APPLICATION_UPDATER)
-            if (!noUpdateCheck)
-                applicationUpdater->getResults(updaterResults);
-#endif
-        }
 
         if (!loadSystemsStatus)
             ViewController::getInstance()->goToStart(true);
@@ -800,11 +791,6 @@ int main(int argc, char* argv[])
 
         lastTime = SDL_GetTicks();
 
-#if defined(APPLICATION_UPDATER)
-        if (!noUpdateCheck)
-            applicationUpdater.reset();
-#endif
-
         LOG(LogInfo) << "Application startup time: "
                      << std::chrono::duration_cast<std::chrono::milliseconds>(
                             std::chrono::system_clock::now() - applicationStartTime)
@@ -812,8 +798,8 @@ int main(int argc, char* argv[])
                      << " ms";
 
 #if defined(APPLICATION_UPDATER)
-        if (updaterResults != "")
-            ViewController::getInstance()->updateAvailableDialog(updaterResults);
+        if (ApplicationUpdater::getInstance().getResults())
+            ViewController::getInstance()->updateAvailableDialog();
 #endif
 
         // Open the input configuration GUI if the force flag was passed from the command line.

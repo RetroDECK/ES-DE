@@ -12,6 +12,7 @@
 
 #include "views/ViewController.h"
 
+#include "ApplicationUpdater.h"
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"
 #include "InputManager.h"
@@ -211,10 +212,23 @@ void ViewController::invalidAlternativeEmulatorDialog()
                                    "OK", nullptr, "", nullptr, "", nullptr, true, true));
 }
 
-void ViewController::updateAvailableDialog(const std::string& message)
+void ViewController::updateAvailableDialog()
 {
     cancelViewTransitions();
-    mWindow->pushGui(new GuiMsgBox(getHelpStyle(), message, "OK", nullptr, "", nullptr, "", nullptr,
+
+    std::string results {ApplicationUpdater::getInstance().getResultsString()};
+    ApplicationUpdater::Package package {ApplicationUpdater::getInstance().getPackageInfo()};
+
+    if (package.name != "") {
+        LOG(LogDebug) << "ViewController::updateAvailableDialog(): Package filename \""
+                      << package.filename << "\"";
+        LOG(LogDebug) << "ViewController::updateAvailableDialog(): Package url \"" << package.url
+                      << "\"";
+        LOG(LogDebug) << "ViewController::updateAvailableDialog(): Package md5 \"" << package.md5
+                      << "\"";
+    }
+
+    mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, "OK", nullptr, "", nullptr, "", nullptr,
                                    true, true,
                                    (mRenderer->getIsVerticalOrientation() ?
                                         0.70f :
