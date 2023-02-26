@@ -691,6 +691,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | xbox         | xemu        | xemu*.AppImage                  |
 | wii          | Dolphin     | Dolphin_Emulator*.AppImage      |
 | wiiu         | Cemu        | Cemu*.AppImage                  |
+| zmachine     | Gargoyle    | Gargoyle*.AppImage              |
 
 _RMG = Rosalie's Mupen GUI_
 
@@ -3176,7 +3177,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | atarist               | Atari ST [also STE and Falcon]                 | Hatari                            | Hatari **(Standalone)**           | Yes          | Single archive or image file for single-diskette games, .m3u playlist for multi-diskette games |
 | atarixe               | Atari XE                                       | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
 | atomiswave            | Sammy Corporation Atomiswave                   | Flycast                           | Flycast **(Standalone)**          |              |                                      |
-| bbcmicro              | Acorn Computers BBC Micro                      | _Placeholder_                     |                                   |              |                                      |
+| bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64sc Accurate **(Standalone)**,<br>VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | cavestory             | Cave Story (NXEngine)                          | NXEngine                          |                                   |              |                                      |
 | cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015                          | Yes          | Single .bin/.cue pair                |
@@ -3305,6 +3306,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | videopac              | Philips Videopac G7000                         | O2EM                              |                                   |              |                                      |
 | virtualboy            | Nintendo Virtual Boy                           | Beetle VB                         | Mednafen **(Standalone)**         | No           |                                      |
 | vsmile                | VTech V.Smile                                  | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
+| wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW] | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
 | windows               | Microsoft Windows                              | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | Shortcut (.desktop/.app/.lnk) file or script |
@@ -3314,6 +3316,6 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | x68000                | Sharp X68000                                   | PX68k                             |                                   | Yes          |                                      |
 | xbox                  | Microsoft Xbox                                 | xemu **(Standalone)**             | Cxbx-Reloaded **(Standalone)** [W] | Yes for xemu | Single .iso file for xemu or unpacked .iso directory for Cxbx-Reloaded |
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W]        |                                   | No           |                                      |
-| zmachine              | Infocom Z-machine                              | _Placeholder_                     |                                   |              |                                      |
+| zmachine              | Infocom Z-machine                              | Gargoyle **(Standalone)**         |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
 | zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              |                                   | No           |                                      |

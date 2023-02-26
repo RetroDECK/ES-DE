@@ -45,12 +45,15 @@ Overall application speed and performance has been greatly improved with faster 
 * Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
 * Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
 * Added support for the Arduboy Miniature Game System (arduboy)
+* Added support for the Acorn Computers BBC Micro (bbcmicro) game system by adding the MAME standalone emulator
 * Added support for the Capcom Play System I, II and III (cps1, cps2 and cps3) game systems
 * Added support for the LCD Handheld Games (lcdgames) game system
 * Added support for the Sega Mega Drive (megadrivejp) game system (Japanese region)
 * Added support for the VTech V.Smile (vsmile) game system
+* Added support for the WASM-4 Fantasy Console (wasm4) game system
 * Added support for the Microsoft Windows (windows) game system
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
+* Added support for the Infocom Z-machine (zmachine) game system by adding the Gargoyle standalone emulator
 * (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
 * Added MAME standalone as the default emulator for the macintosh system (Mac SE and Mac Plus diskette images)
 * Added ares standalone as an alternative emulator for many systems
@@ -85,7 +88,7 @@ Overall application speed and performance has been greatly improved with faster 
 * (Windows) Added BigPEmu standalone as an alternative emulator for the atarijaguar and atarijaguarcd systems
 * Reverted the atarijaguarcd system to placeholder status on Unix and macOS as no emulators including Virtual Jaguar run these games properly
 * Added the pcwindows platform to the ports system to improve scraping
-* Added the .cdi file extension to the atarijaguar and atarijaguarcd systems
+* Added the .cdi and .cue file extensions to the atarijaguar and atarijaguarcd systems
 * Added the . (dot) file extension to the xbox360 system on Windows to support extensionless XBLA games
 * Added the .d64 file extension to the n64 and n64dd systems
 * Added the .car and .rom file extensions to the a5200 system

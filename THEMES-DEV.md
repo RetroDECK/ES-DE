@@ -1321,7 +1321,7 @@ Properties:
     - Default is `center`
     - This property can only be used when `type` is `verticalWheel`
 * `wheelVerticalAlignment` - type: STRING
-    - Sets the vertical alignment of the actual carousel inside the overall element area. Note that the positioning is calculated before `itemAxisHorizontal` is applied.
+    - Sets the vertical alignment of the actual carousel inside the overall element area.
     - Valid values are `top`, `center` or `bottom`
     - Default is `center`
     - This property can only be used when `type` is `horizontalWheel`
@@ -2397,6 +2397,7 @@ Properties:
     - %H: The hour (24-hour clock) [00,23]
     - %M: The minute [00,59]
     - %S: The second [00,59]
+    - Default is the ISO 8601 standard notation `%Y-%m-%d`
 * `displayRelative` - type: BOOLEAN.
     - Renders the datetime as a relative string (e.g. 'x days ago').
     - Default is `false` if `metadata` has been set to `releasedate` and `true` if `metadata` has been set to `lastplayed`
