@@ -6,18 +6,21 @@ ES-DE release:
 
 Instructions:
 
+If upgrading from a previous release, then don't unpack this ZIP archive on top of your old installation.
+Instead first rename your old ES-DE directory, for example to EmulationStation-DE_OLD and follow the instructions below.
+
 1) The ROMs_ALL directory contains all the systems that ES-DE supports, but to decrease application startup time, only copy the systems you need to the ROMs directory.
 2) Copy your games into the respective folders in the ROMs directory.
 3) Place your emulators inside the Emulators directory.
-4) Optionally copy your existing gamelists, scraped/downloaded media, custom collections, custom systems and themes to the .emulationstation directory.
+4) Optionally move your existing gamelists, scraped/downloaded media, custom collections, custom systems and themes to the .emulationstation directory.
 5) Start ES-DE using EmulationStation.exe and enjoy some retrogaming!
 
 In case of issues, check .emulationstation\es_log.txt for clues as to what went wrong.
 Starting EmulationStation.exe with the --debug flag will provide even more details.
 
 This portable release contains a specific es_find_rules.xml file that will only look for emulators inside the portable directory tree.
-If you would like to use the default configuration file instead which will also look for emulators elsewhere on your system then go to resources\systems\windows\
-and delete the es_find_rules.xml file and rename es_find_rules_default.xml to es_find_rules.xml
+If you would like to use the installer release configuration file instead which will also look for emulators elsewhere on your system then go to
+resources\systems\windows\ and delete the es_find_rules.xml file and rename es_find_rules_installer.xml to es_find_rules.xml
 
 See resources\systems\windows\es_find_rules.xml for more details about the emulators listed below.
 
