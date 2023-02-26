@@ -116,9 +116,10 @@ void ApplicationUpdater::checkForUpdates()
 
 void ApplicationUpdater::updaterThread()
 {
-    if (!downloadFile()) {
+    if (!downloadFile())
         compareVersions();
-    }
+
+    mRequest.reset();
 }
 
 bool ApplicationUpdater::downloadFile()
