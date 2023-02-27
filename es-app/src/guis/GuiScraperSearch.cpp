@@ -653,6 +653,10 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
     renderChildren(trans);
     mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00000009, 0x00000009);
 
+    // Slight adjustment upwards so the busy grid is not rendered precisely at the text edge.
+    trans = glm::translate(
+        trans, glm::vec3 {0.0f, -(mRenderer->getScreenResolutionModifier() * 10.0f), 0.0f});
+
     if (mBlockAccept) {
         mRenderer->setMatrix(trans);
         mBusyAnim.render(trans);
