@@ -1015,7 +1015,7 @@ bool ViewController::input(InputConfig* config, Input input)
     // Open the main menu.
     if (!(UIModeController::getInstance()->isUIModeKid() &&
           !Settings::getInstance()->getBool("EnableMenuKidMode")) &&
-        config->isMappedTo("start", input) && input.value != 0) {
+        config->isMappedTo("start", input) && input.value != 0 && mCurrentView != nullptr) {
         // If we don't stop the scrolling here, it will continue to
         // run after closing the menu.
         if (mSystemListView->isScrolling())
