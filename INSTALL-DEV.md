@@ -1,8 +1,6 @@
 # EmulationStation Desktop Edition (ES-DE) v2.0 (development version) - Building and advanced configuration
 
-**Note:** This is a quite technical document intended for those that are interested in compiling ES-DE from source code, or would like to customize the configuration. If you just want to start using the software, check out [USERGUIDE-DEV.md](USERGUIDE-DEV.md) instead.
-
-Also note that this document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [INSTALL.md](INSTALL.md) instead.
+This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [INSTALL.md](INSTALL.md) instead.
 
 Table of contents:
 
@@ -278,28 +276,7 @@ On Linux, if you're not building a package and instead intend to install using `
 
 **Compilers**
 
-Both Clang/LLVM and GCC work fine for building ES-DE.
-
-I did some small benchmarks comparing Clang 10.0 to GCC 9.3.0 with the ES-DE v1.1 codebase on an Intel Xeon W-2245 @ 3.90GHz running Kubuntu 20.04.2 LTS and it's pretty interesting.
-
-Advantages with Clang (vs GCC):
-* 8% smaller binary size for a release build
-* 31% smaller binary size for a debug build
-* 16% faster compile time for a release build
-* 25% faster compile time for a debug build
-* 13% faster application startup time for a release build
-* 4% faster application startup time for a debug build
-
-*Release build: Optimizations enabled, debug info disabled, binary stripped.* \
-*Debug build: Optimizations disabled, debug info enabled, binary not stripped.*
-
-This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCode that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance std::string variables.
-
-It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 25% slower. The same goes for the binary size, instead of 31% smaller it's now 5% larger. The compilation time is still less than GCC but only by 10% instead of 25%.
-
-But I'm expecting this issue to be resolved in the future so the workaround can be removed.
-
-It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
+Both Clang/LLVM and GCC work fine for building ES-DE, and on Ubuntu it's easy to switch between the two using `update-alternatives`:
 
 ```
 myusername@computer:~$ sudo update-alternatives --config c++

@@ -30,24 +30,6 @@ There are also installation videos available at the ES-DE YouTube channel:\
 
 To install ES-DE, just download the package or installer from [https://es-de.org](https://es-de.org) and follow the brief instructions below.
 
-The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
-
-* Windows 11, 10 and 8.1
-* macOS 10.14 "Mojave" to 13 "Ventura" (M1 and Intel)
-* macOS 10.11 "El Capitan" (legacy release)
-* Ubuntu 20.04 to 22.04
-* Linux Mint 20
-* Manjaro 21
-* Fedora 36 Workstation
-* SteamOS 3
-* elementary OS 6
-* Raspberry Pi OS 10 and 11 (armv7l and aarch64)
-* FreeBSD 13.0
-* NetBSD 9.1
-* OpenBSD 6.8
-
-Additional known issues are detailed in [CHANGELOG.md](CHANGELOG.md#known-issues).
-
 As for display resolutions, the minimum pixel value is 224 and the maximum is 7680. This means that you can run ES-DE at for instance 320x224 all the way up to 7680x4320 (8K UHD). Vertical screen orientation is also supported, as well as ultra-wide resolutions like 3840x1440. Note that there could be some minor visual glitches when running in vertical orientation (this will be fixed in future ES-DE releases) and for the best experience you will probably need to use a customized theme set when running at extreme or unusual resolutions.
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.

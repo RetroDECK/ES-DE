@@ -102,6 +102,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Removed the .ccd, .cue and .iso file extensions from the neogeo system
 * Added the FinalBurn Neo RetroArch core as an alternative emulator for the neogeocd and neogeocdjp systems
 * Added MAME standalone as an alternative emulator for the neogeo, neogeocd and neogeocdjp systems
+* (Linux) Changed to find rule wildcard matching for the RetroArch, Basilisk II, DuckStation and SheepShaver AppImages
 * (Linux) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame, neogeo, neogeocd and neogeocdjp systems
 * (Windows) Added FinalBurn Neo standalone as an alternative emulator for the arcade, cps, fbneo, mame and neogeo system
 * Set DOSBox-X and DOSBox Staging to start in the game directory so per-game dosbox.conf files can be used
@@ -1146,23 +1147,3 @@ Many bugs have been fixed, and numerous features that were only partially implem
 * The SliderComponent knob position was set incorrectly if the minimum value was not zero
 * The debug overlays didn't work for all image and text components
 * Lots and lots of additional small bugs and inconsistencies fixed
-
-## Known issues
-
-**The issues below are relevant for ES-DE v1.2.4**
-
-* When using Windows with some AMD GPUs, ES-DE may only display a black screen on startup or when launching a game. This can be seen on for instance the Steam Deck, AYA NEO and ONEXPLAYER 8.4. The issue seems to be caused by buggy GPU drivers, and can be worked around by specifying a resolution for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for instance `EmulationStation.exe --resolution 1281 800`
-
-* On Windows when using high DPI displays, if not running ES-DE on the primary monitor and the display where it runs does not have the same scaling percentage as the primary monitor, then the ES-DE resolution will not be properly set. The application will still work and if running in fullscreen mode it may not even be noticeable. This issue is probably caused by a bug in SDL where the primary display scaling is always used for calculating the display bounds. If using the same scaling percentage across all monitors, or if not using high DPI monitors at all, then this issue is not relevant.
-
-* On Windows installing DS4Windows will break controller input in ES-DE for unknown reasons. Uninstalling this software should resolve the issue. On Windows 11 both DualShock 4 (PS4) and DualSense (PS5) controllers have been tested wired and via Bluetooth and both work fine in both ES-DE and RetroArch without any special drivers or configuration.
-
-* On macOS, the RetroArch setting "Start in Fullscreen mode" must be enabled or ES-DE will not be able to switch to the emulator window when a game is launched. Possibly it's the same issue with other emulators as well.
-
-* On Raspberry Pi OS 10, Sony DualShock 4 controllers have problems with some button presses that don't register correctly. The issue appears resolved in Raspberry Pi OS 11.
-
-* On Raspberry Pi OS 11 there are various graphics issues and sometimes the application or emulator completely freezes which requires a power cycle of the machine. This is seemingly due to GPU driver bugs and we can only wait for OS updates to address these problems. These issues have not been encountered on Raspberry Pi OS 10.
-
-* There is some screen tearing present on Unix/Linux which is especially visible during horizontal slide transitions. The problem exists on both x86 and ARM as well as on Intel, AMD and Nvidia GPUs and on the Broadcom VideoCore. The problem seems to be Xorg-related as tearing has not been observed when using Wayland (and it's not present on macOS or Windows either).
-
-* Sometimes when RetroArch has been upgraded to a newer version, it apparently requires a startup to get properly initialized. When ES-DE starts RetroArch it always does so by passing some specific emulator core parameters, which does not seem to initialize RetroArch after such an upgrade. What happens in this case is that the RetroArch loading screen will be shown and then it will quit right back to ES-DE. If confirmed to be the case, this is not an ES-DE issue but a RetroArch issue and starting RetroArch separately once should fix the problem (at least until the next upgrade).

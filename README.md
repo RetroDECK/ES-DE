@@ -5,88 +5,64 @@ EmulationStation Desktop Edition is a frontend for browsing and launching games 
 Web site:\
 [https://es-de.org](https://es-de.org)
 
-YouTube channel with installation instruction videos:\
-[https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
-
 Discord server:\
 [https://discord.gg/EVVX4DqWAP](https://discord.gg/EVVX4DqWAP)
 
 Reddit (r/EmulationStation_DE):\
 [https://www.reddit.com/r/EmulationStation_DE](https://www.reddit.com/r/EmulationStation_DE)
 
-Although there are multiple forks of EmulationStation in existence, the goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
+YouTube channel with installation instruction videos:\
+[https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
 
-The software comes preconfigured for use with [RetroArch](https://www.retroarch.com) and a large selection of standalone emulators. It's also fully customizable so you can easily expand it to include emulators or applications not covered by the bundled configuration.
+The goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
+
+It comes preconfigured for use with [RetroArch](https://www.retroarch.com) and a large selection of standalone emulators. It's also fully customizable so you can easily expand it to include emulators or applications not covered by the bundled configuration.
 
 You can find the complete list of supported systems and emulators [here](USERGUIDE.md#supported-game-systems).
 
-Two comprehensive theme sets, **Slate** (Rbsimple in the 1.x releases) and **Modern** are bundled with the application.
-
-See the [official list](https://gitlab.com/es-de/themes/themes-list) of recommended theme sets if you would like to install additional themes.
-
-The following operating systems have been tested (all for the x86 architecture unless otherwise stated):
-
-* Windows 11, 10 and 8.1
-* macOS 10.14 "Mojave" to 13 "Ventura" (M1 and Intel)
-* macOS 10.11 "El Capitan" (legacy release)
-* Ubuntu 20.04 to 22.04
-* Linux Mint 20
-* Manjaro 21
-* Fedora 37 Workstation
-* SteamOS 3
-* elementary OS 6
-* Raspberry Pi OS 10 and 11 (armv7l and aarch64)
-* FreeBSD 13.0
-* NetBSD 9.1
-* OpenBSD 6.8
+Two theme sets (Slate and Modern) are bundled with the application, and additional themes can be found on the [official themes list](https://gitlab.com/es-de/themes/themes-list).
 
 ### Download
 
-The latest stable version is 1.2.6 (released 2022-08-03) and the latest prerelease is 2.0.0-beta-2023-02-26
+The latest stable version is **1.2.6** (released 2022-08-03) and the latest prerelease is **2.0.0-beta-2023-02-26**
 
 Visit https://es-de.org/ to download ES-DE or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find all previous releases.
 
-If using FreeBSD, NetBSD or OpenBSD you will need to build ES-DE from source code for the time being, as explained in [INSTALL.md](INSTALL.md).
-
-Prebuilt packages for the Raspberry Pi will be dropped as of ES-DE 2.0.0 but this platform will still be semi-officially supported as it's tested from time to time to make sure building doesn't fail.
+If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
 
 # Additional information
 
-[FAQ.md](FAQ.md) covers a number of Frequently Asked Questions and is recommended reading before diving into the other documents listed below.
+[FAQ.md](FAQ.md) -  Frequently Asked Questions
 
-[USERGUIDE.md](USERGUIDE.md) is a comprehensive guide on how to use ES-DE and it also contains a complete reference to all application settings.
+[USERGUIDE.md](USERGUIDE.md) / [USERGUIDE-DEV.md](USERGUIDE-DEV.md) - Comprehensive guide and reference for all application settings
 
-[USERGUIDE-DEV.md](USERGUIDE-DEV.md) is the prerelease version of the above document, use this if you're running ES-DE 2.0.0.
+[INSTALL.md](INSTALL.md) / [INSTALL-DEV.md](INSTALL-DEV.md) - Building from source code and advanced configuration topics
 
-[INSTALL.md](INSTALL.md) provides details on how to build the application from source code, and also discusses some more advanced configuration topics.
+[THEMES.md](THEMES.md) / [THEMES-DEV.md](THEMES-DEV.md) - Guide and reference for theme development
 
-[INSTALL-DEV.md](INSTALL-DEV.md) is the prerelease version of the above document, use this if you're running ES-DE 2.0.0.
+[CHANGELOG.md](CHANGELOG.md) - Detailed list of changes per release
 
-[THEMES.md](THEMES.md) is a guide on how theming works which is useful for those who would like to develop a new theme, or perhaps customize an existing theme.
+[ROADMAP.md](ROADMAP.md) - High level release plan
 
-[THEMES-DEV.md](THEMES-DEV.md) is the prerelease version of the above document, use this if you're interested in creating themes for the new theme engine in ES-DE 2.0.0.
+[CONTRIBUTING.md](CONTRIBUTING.md) - Information on how to contribute to the project
 
-[CREDITS.md](CREDITS.md) is an attempt to credit the individuals and projects which made ES-DE possible.
-
-[CONTRIBUTING.md](CONTRIBUTING.md) contains information on how to contribute to ES-DE, and it also contains the roadmap for future releases.
-
-[CHANGELOG.md](CHANGELOG.md) contains detailed information about all releases. This covers features, improvements, bug fixes and known issues.
+[CREDITS.md](CREDITS.md) - An attempt to credit the individuals and projects which made ES-DE possible
 
 # Some feature highlights
 
-Here are some highlights of what ES-DE provides, displayed using the default theme set Slate. There are of course many more features available, as covered in the  [User guide](USERGUIDE.md).
+Here are some highlights, displayed using the default Slate theme set.
 
 ![alt text](images/es-de_system_view.png "ES-DE System View")
 _The **System view**, which is the default starting point for the application, it's here that you browse through your game systems._
 
 ![alt text](images/es-de_gamelist_view.png "ES-DE Gamelist View")
-_The **Gamelist view**, it's here that you browse the actual games per system. Note the support for mixing files and folders, and as well that a few badges are displayed indicating that the selected game is a favorite, that it's suitable for children and that it's controlled using a joystick. There is a game counter to the upper right as well, displaying the total number of games and the number of favorite games for this system._
+_The **Gamelist view**, it's here that you browse the actual games per system._
 
 ![alt text](images/es-de_folder_support.png "ES-DE Folder Support")
-_Another example of the gamelist view, displaying advanced folder support. You can scrape folders for game info and game media, sort folders as you would files, mark them as favorites etc. In this example ES-DE has been configured to sort favorite games above non-favorites._
+_Another example of the gamelist view, displaying advanced folder support. You can scrape folders for game info and game media, sort folders as you would files, mark them as favorites etc._
 
 ![alt text](images/es-de_custom_collections.png "ES-DE Custom Collections")
-_Games can be grouped into your own custom collections, in this example they're defined as game genres but you can name them anything you like. All gamelist views including the custom collections support both game images or game videos. By default the Slate theme will display the game image for a short moment before starting to play the video._
+_Games can be grouped into your own custom collections, in this example they're defined as genres._
 
 ![alt text](images/es-de_scraper_running.png "ES-DE Scraper Running")
 _This is a view of the built-in scraper which downloads game info and game media from either [screenscraper.fr](https://screenscraper.fr) or [thegamesdb.net](https://thegamesdb.net). It's possible to scrape a single game, or to run the multi-scraper which can scrape a complete game system or even your entire collection._
@@ -95,13 +71,10 @@ _This is a view of the built-in scraper which downloads game info and game media
 _There are many settings for the scraper including options to define which type of info and media to download. The above screenshot shows only a portion of these settings._
 
 ![alt text](images/es-de_metadata_editor.png "ES-DE Metadata Editor")
-_In addition to the scraper there is a fully-featured metadata editor that can be used to modify information on a per-game basis. Here you can also toggle some additional flags which the scraper does not set, such as if the game is a favorite or if you have completed it. Most of these flags can also be filtered in the gamelist view, letting you for instance only display games that you have not played through._
+_In addition to the scraper there is a fully-featured metadata editor that can be used to modify information on a per-game basis._
 
 ![alt text](images/es-de_screensaver.png "ES-DE Screensaver")
-_There are four types of built-in screensavers available, including a slideshow and the video screensaver shown in action above. These screensavers start after a configurable number of minutes of inactivity, and randomly display game media that you have previously scraped. If the corresponding option has been enabled, you can jump to the game from the screensaver, or even launch it directly. There is shader support in ES-DE to render scanlines and screen blur on top of the videos (for the slideshow screensaver, scanline rendering is provided)._
+_There are four built-in screensaver types, including a slideshow and a video screensaver that display random games from your collection._
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_ES-DE is fully themeable, so if you prefer another look than what the default theme Slate offers, it's possible to apply another theme set. The image above is of the Modern theme that is also bundled with the application. Note that although ES-DE is backward compatible with older RetroPie EmulationStation themes, some newer features which are specific to ES-DE will not work, at least not until the theme authors update their themes._
-
-![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
-_A lot of effort has been spent on making ES-DE easy to setup and use. The above screenshot shows the dialog if starting the application without any game files present in the default ROM directory. ES-DE also ships with a comprehensive game systems configuration file, so unless you really want to customize your setup, you should not need to tinker with the configuration._
+_ES-DE is fully themeable, so if you prefer another look than what the default theme Slate offers, it's possible to apply another theme set. The image above is of the Modern theme that is also bundled with the application._
