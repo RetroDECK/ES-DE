@@ -17,9 +17,9 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.libretro.RetroArch</entry>
-            <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
-            <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
-            <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
+            <entry>~/Applications/RetroArch-Linux*.AppImage</entry>
+            <entry>~/.local/bin/RetroArch-Linux*.AppImage</entry>
+            <entry>~/bin/RetroArch-Linux*.AppImage</entry>
         </rule>
     </emulator>
     <core name="RETROARCH">
@@ -69,9 +69,9 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/net.cebix.basilisk</entry>
             <entry>~/.local/share/flatpak/exports/bin/net.cebix.basilisk</entry>
-            <entry>~/Applications/BasiliskII-x86_64.AppImage</entry>
-            <entry>~/.local/bin/BasiliskII-x86_64.AppImage</entry>
-            <entry>~/bin/BasiliskII-x86_64.AppImage</entry>
+            <entry>~/Applications/BasiliskII*.AppImage</entry>
+            <entry>~/.local/bin/BasiliskII*.AppImage</entry>
+            <entry>~/bin/BasiliskII*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="BLASTEM">
@@ -190,12 +190,12 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.duckstation.DuckStation</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.duckstation.DuckStation</entry>
-            <entry>~/Applications/duckstation-nogui-x64.AppImage</entry>
-            <entry>~/.local/bin/duckstation-nogui-x64.AppImage</entry>
-            <entry>~/bin/duckstation-nogui-x64.AppImage</entry>
-            <entry>~/Applications/duckstation-qt-x64.AppImage</entry>
-            <entry>~/.local/bin/duckstation-qt-x64.AppImage</entry>
-            <entry>~/bin/duckstation-qt-x64.AppImage</entry>
+            <entry>~/Applications/duckstation-nogui*.AppImage</entry>
+            <entry>~/.local/bin/duckstation-nogui*.AppImage</entry>
+            <entry>~/bin/duckstation-nogui*.AppImage</entry>
+            <entry>~/Applications/duckstation-qt*.AppImage</entry>
+            <entry>~/.local/bin/duckstation-qt*.AppImage</entry>
+            <entry>~/bin/duckstation-qt*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="EASYRPG">
@@ -586,9 +586,9 @@
             <entry>SheepShaver</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/SheepShaver-x86_64.AppImage</entry>
-            <entry>~/.local/bin/SheepShaver-x86_64.AppImage</entry>
-            <entry>~/bin/SheepShaver-x86_64.AppImage</entry>
+            <entry>~/Applications/SheepShaver*.AppImage</entry>
+            <entry>~/.local/bin/SheepShaver*.AppImage</entry>
+            <entry>~/bin/SheepShaver*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="SIMCOUPE">
