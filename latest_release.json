@@ -125,7 +125,7 @@
                 "filename": "EmulationStation-DE-2.0.0-beta-2023-02-26-x64_SteamDeck.AppImage",
                 "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/69883540/download",
                 "md5": "5488121f2f1a5f9fe87993a4eec5667d",
-                "message": "Or if you've used EmuDeck to install ES-DE you can update to the latest release via their installer"
+                "message": ""
             }
         ]
     }
