@@ -507,7 +507,11 @@ void MediaDownloadHandle::update()
         if (emptyImage) {
             LOG(LogWarning) << "ScreenScraper: Image does not seem to contain any data, not saving "
                                "it to disk: \""
+#if defined(_WIN64)
+                            << Utils::String::replace(mSavePath, "/", "\\") << "\"";
+#else
                             << mSavePath << "\"";
+#endif
             setStatus(ASYNC_DONE);
             return;
         }

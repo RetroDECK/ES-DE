@@ -1236,7 +1236,12 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
         LOG(LogInfo) << "Couldn't find custom collection config file \"" << path << "\"";
         return;
     }
+#if defined(_WIN64)
+    LOG(LogInfo) << "Parsing custom collection file \"" << Utils::String::replace(path, "/", "\\")
+                 << "\"...";
+#else
     LOG(LogInfo) << "Parsing custom collection file \"" << path << "\"...";
+#endif
 
     FileData* rootFolder {newSys->getRootFolder()};
     FileFilterIndex* index {newSys->getIndex()};
