@@ -54,7 +54,6 @@ private:
 
     std::shared_ptr<TextComponent> mTitle;
     std::vector<ThemeEntry> mThemeSets;
-    std::vector<ThemeEntry> mLegacyThemeSets;
 };
 
 #endif // ES_APP_GUIS_GUI_THEME_DOWNLOADER_H
