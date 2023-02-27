@@ -1003,6 +1003,11 @@ bool SystemData::createSystemDirectories()
                 commands.emplace_back(entry.text().get());
             }
             platform = Utils::String::toLower(system.child("platform").text().get());
+            const bool multiplePlatforms {
+                std::find_if(platform.cbegin(), platform.cend(), [](char character) {
+                    return (std::isspace(character) || character == ',');
+                }) != platform.cend()};
+
             themeFolder = system.child("theme").text().as_string(name.c_str());
 
             // Check that the %ROMPATH% variable is actually used for the path element.
@@ -1082,7 +1087,8 @@ bool SystemData::createSystemDirectories()
                     systemInfoFile << (*it) << std::endl;
                 systemInfoFile << std::endl;
             }
-            systemInfoFile << "Platform (for scraping):" << std::endl;
+            systemInfoFile << "Platform" << (multiplePlatforms ? "s" : "")
+                           << " (for scraping):" << std::endl;
             systemInfoFile << platform << std::endl << std::endl;
             systemInfoFile << "Theme folder:" << std::endl;
             systemInfoFile << themeFolder << std::endl;
