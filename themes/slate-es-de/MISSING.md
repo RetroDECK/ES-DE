@@ -27,6 +27,7 @@
 * cps1: Capcom Play System I - consolegame.svg, controller.svg
 * cps2: Capcom Play System II - consolegame.svg, controller.svg
 * cps3: Capcom Play System III - consolegame.svg, controller.svg
+* crvision: VTech CreatiVision - consolegame.svg, controller.svg
 * custom-collections - customized colors, consolegame.svg, (uses temporary art)
 * daphne: Daphne Arcade Laserdisc Emulator - consolegame.svg, controller.svg
 * desktop: Desktop applications - consolegame.svg, controller.svg
