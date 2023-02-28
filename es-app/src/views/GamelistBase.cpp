@@ -548,6 +548,188 @@ void GamelistBase::enterDirectory(FileData* cursor)
     }
 }
 
+void GamelistBase::addPlaceholder(FileData* firstEntry)
+{
+    // Empty list, add a placeholder.
+    FileData* placeholder {nullptr};
+
+    if (firstEntry && firstEntry->getSystem()->isGroupedCustomCollection())
+        placeholder = firstEntry->getSystem()->getPlaceholder();
+    else
+        placeholder = this->mRoot->getSystem()->getPlaceholder();
+
+    auto letterCaseFunc = [this](std::string& name) {
+        const LetterCase letterCase {mPrimary->getLetterCase()};
+        if (letterCase == LetterCase::UPPERCASE)
+            name = Utils::String::toUpper(name);
+        else if (letterCase == LetterCase::LOWERCASE)
+            name = Utils::String::toLower(name);
+        else if (letterCase == LetterCase::CAPITALIZE)
+            name = Utils::String::toCapitalized(name);
+    };
+
+    if (mTextList != nullptr) {
+        TextListComponent<FileData*>::Entry textListEntry;
+        textListEntry.name = placeholder->getName();
+        letterCaseFunc(textListEntry.name);
+        textListEntry.object = placeholder;
+        textListEntry.data.entryType = TextListEntryType::SECONDARY;
+        mTextList->addEntry(textListEntry);
+    }
+    else if (mCarousel != nullptr) {
+        CarouselComponent<FileData*>::Entry carouselEntry;
+        carouselEntry.name = placeholder->getName();
+        letterCaseFunc(carouselEntry.name);
+        carouselEntry.object = placeholder;
+        mCarousel->addEntry(carouselEntry, mRoot->getSystem()->getTheme());
+    }
+    else if (mGrid != nullptr) {
+        GridComponent<FileData*>::Entry gridEntry;
+        gridEntry.name = placeholder->getName();
+        letterCaseFunc(gridEntry.name);
+        gridEntry.object = placeholder;
+        mGrid->addEntry(gridEntry, mRoot->getSystem()->getTheme());
+    }
+}
+
+void GamelistBase::remove(FileData* game, bool deleteFile)
+{
+    // Optionally delete the game file on the filesystem.
+    if (deleteFile)
+        Utils::FileSystem::removeFile(game->getPath());
+
+    FileData* parent {game->getParent()};
+    // Select next element in list, or previous if none.
+    if (getCursor() == game) {
+        std::vector<FileData*> siblings {parent->getChildrenListToDisplay()};
+        auto gameIter = std::find(siblings.cbegin(), siblings.cend(), game);
+        unsigned int gamePos {
+            static_cast<unsigned int>(std::distance(siblings.cbegin(), gameIter))};
+        if (gameIter != siblings.cend()) {
+            if ((gamePos + 1) < siblings.size())
+                setCursor(siblings.at(gamePos + 1));
+            else if (gamePos > 1)
+                setCursor(siblings.at(gamePos - 1));
+        }
+    }
+
+    mPrimary->remove(game);
+
+    if (mPrimary->size() == 0)
+        addPlaceholder(nullptr);
+
+    // If a game has been deleted, immediately remove the entry from gamelist.xml
+    // regardless of the value of the setting SaveGamelistsMode.
+    game->setDeletionFlag(true);
+    parent->getSystem()->writeMetaData();
+
+    // Remove before repopulating (removes from parent), then update the view.
+    delete game;
+
+    if (deleteFile) {
+        parent->sort(parent->getSortTypeFromString(parent->getSortTypeString()),
+                     Settings::getInstance()->getBool("FavoritesFirst"));
+        onFileChanged(parent, false);
+    }
+}
+
+void GamelistBase::removeMedia(FileData* game)
+{
+    std::string systemMediaDir {FileData::getMediaDirectory() + game->getSystem()->getName()};
+    std::string mediaType;
+    std::string path;
+
+    // Stop the video player, especially important on Windows as the file would otherwise be locked.
+    stopViewVideos();
+
+    // If there are no media files left in the directory after the deletion, then remove
+    // the directory too. Remove any empty parent directories as well.
+    auto removeEmptyDirFunc = [](std::string systemMediaDir, std::string mediaType,
+                                 std::string path) {
+        std::string parentPath {Utils::FileSystem::getParent(path)};
+        while (parentPath != systemMediaDir + "/" + mediaType) {
+            if (Utils::FileSystem::getDirContent(parentPath).size() == 0) {
+                Utils::FileSystem::removeDirectory(parentPath);
+                parentPath = Utils::FileSystem::getParent(parentPath);
+            }
+            else {
+                break;
+            }
+        }
+    };
+
+    // Remove all game media files on the filesystem.
+    while (Utils::FileSystem::exists(game->getVideoPath())) {
+        mediaType = "videos";
+        path = game->getVideoPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getMiximagePath())) {
+        mediaType = "miximages";
+        path = game->getMiximagePath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getScreenshotPath())) {
+        mediaType = "screenshots";
+        path = game->getScreenshotPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getTitleScreenPath())) {
+        mediaType = "titlescreens";
+        path = game->getTitleScreenPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getCoverPath())) {
+        mediaType = "covers";
+        path = game->getCoverPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getBackCoverPath())) {
+        mediaType = "backcovers";
+        path = game->getBackCoverPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getFanArtPath())) {
+        mediaType = "fanart";
+        path = game->getFanArtPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getMarqueePath())) {
+        mediaType = "marquees";
+        path = game->getMarqueePath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->get3DBoxPath())) {
+        mediaType = "3dboxes";
+        path = game->get3DBoxPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
+    while (Utils::FileSystem::exists(game->getPhysicalMediaPath())) {
+        mediaType = "physicalmedia";
+        path = game->getPhysicalMediaPath();
+        Utils::FileSystem::removeFile(path);
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+}
+
 void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* firstEntry)
 {
     mFirstGameEntry = nullptr;
@@ -767,50 +949,6 @@ void GamelistBase::populateList(const std::vector<FileData*>& files, FileData* f
     generateFirstLetterIndex(files);
 }
 
-void GamelistBase::addPlaceholder(FileData* firstEntry)
-{
-    // Empty list, add a placeholder.
-    FileData* placeholder {nullptr};
-
-    if (firstEntry && firstEntry->getSystem()->isGroupedCustomCollection())
-        placeholder = firstEntry->getSystem()->getPlaceholder();
-    else
-        placeholder = this->mRoot->getSystem()->getPlaceholder();
-
-    auto letterCaseFunc = [this](std::string& name) {
-        const LetterCase letterCase {mPrimary->getLetterCase()};
-        if (letterCase == LetterCase::UPPERCASE)
-            name = Utils::String::toUpper(name);
-        else if (letterCase == LetterCase::LOWERCASE)
-            name = Utils::String::toLower(name);
-        else if (letterCase == LetterCase::CAPITALIZE)
-            name = Utils::String::toCapitalized(name);
-    };
-
-    if (mTextList != nullptr) {
-        TextListComponent<FileData*>::Entry textListEntry;
-        textListEntry.name = placeholder->getName();
-        letterCaseFunc(textListEntry.name);
-        textListEntry.object = placeholder;
-        textListEntry.data.entryType = TextListEntryType::SECONDARY;
-        mTextList->addEntry(textListEntry);
-    }
-    else if (mCarousel != nullptr) {
-        CarouselComponent<FileData*>::Entry carouselEntry;
-        carouselEntry.name = placeholder->getName();
-        letterCaseFunc(carouselEntry.name);
-        carouselEntry.object = placeholder;
-        mCarousel->addEntry(carouselEntry, mRoot->getSystem()->getTheme());
-    }
-    else if (mGrid != nullptr) {
-        GridComponent<FileData*>::Entry gridEntry;
-        gridEntry.name = placeholder->getName();
-        letterCaseFunc(gridEntry.name);
-        gridEntry.object = placeholder;
-        mGrid->addEntry(gridEntry, mRoot->getSystem()->getTheme());
-    }
-}
-
 void GamelistBase::generateFirstLetterIndex(const std::vector<FileData*>& files)
 {
     std::string firstChar;
@@ -907,144 +1045,6 @@ void GamelistBase::generateGamelistInfo(FileData* cursor, FileData* firstEntry)
 
     if (firstEntry->getParent() && firstEntry->getParent()->getType() == FOLDER)
         mIsFolder = true;
-}
-
-void GamelistBase::remove(FileData* game, bool deleteFile)
-{
-    // Optionally delete the game file on the filesystem.
-    if (deleteFile)
-        Utils::FileSystem::removeFile(game->getPath());
-
-    FileData* parent {game->getParent()};
-    // Select next element in list, or previous if none.
-    if (getCursor() == game) {
-        std::vector<FileData*> siblings {parent->getChildrenListToDisplay()};
-        auto gameIter = std::find(siblings.cbegin(), siblings.cend(), game);
-        unsigned int gamePos {
-            static_cast<unsigned int>(std::distance(siblings.cbegin(), gameIter))};
-        if (gameIter != siblings.cend()) {
-            if ((gamePos + 1) < siblings.size())
-                setCursor(siblings.at(gamePos + 1));
-            else if (gamePos > 1)
-                setCursor(siblings.at(gamePos - 1));
-        }
-    }
-
-    mPrimary->remove(game);
-
-    if (mPrimary->size() == 0)
-        addPlaceholder(nullptr);
-
-    // If a game has been deleted, immediately remove the entry from gamelist.xml
-    // regardless of the value of the setting SaveGamelistsMode.
-    game->setDeletionFlag(true);
-    parent->getSystem()->writeMetaData();
-
-    // Remove before repopulating (removes from parent), then update the view.
-    delete game;
-
-    if (deleteFile) {
-        parent->sort(parent->getSortTypeFromString(parent->getSortTypeString()),
-                     Settings::getInstance()->getBool("FavoritesFirst"));
-        onFileChanged(parent, false);
-    }
-}
-
-void GamelistBase::removeMedia(FileData* game)
-{
-    std::string systemMediaDir {FileData::getMediaDirectory() + game->getSystem()->getName()};
-    std::string mediaType;
-    std::string path;
-
-    // Stop the video player, especially important on Windows as the file would otherwise be locked.
-    stopViewVideos();
-
-    // If there are no media files left in the directory after the deletion, then remove
-    // the directory too. Remove any empty parent directories as well.
-    auto removeEmptyDirFunc = [](std::string systemMediaDir, std::string mediaType,
-                                 std::string path) {
-        std::string parentPath {Utils::FileSystem::getParent(path)};
-        while (parentPath != systemMediaDir + "/" + mediaType) {
-            if (Utils::FileSystem::getDirContent(parentPath).size() == 0) {
-                Utils::FileSystem::removeDirectory(parentPath);
-                parentPath = Utils::FileSystem::getParent(parentPath);
-            }
-            else {
-                break;
-            }
-        }
-    };
-
-    // Remove all game media files on the filesystem.
-    while (Utils::FileSystem::exists(game->getVideoPath())) {
-        mediaType = "videos";
-        path = game->getVideoPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getMiximagePath())) {
-        mediaType = "miximages";
-        path = game->getMiximagePath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getScreenshotPath())) {
-        mediaType = "screenshots";
-        path = game->getScreenshotPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getTitleScreenPath())) {
-        mediaType = "titlescreens";
-        path = game->getTitleScreenPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getCoverPath())) {
-        mediaType = "covers";
-        path = game->getCoverPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getBackCoverPath())) {
-        mediaType = "backcovers";
-        path = game->getBackCoverPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getFanArtPath())) {
-        mediaType = "fanart";
-        path = game->getFanArtPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getMarqueePath())) {
-        mediaType = "marquees";
-        path = game->getMarqueePath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->get3DBoxPath())) {
-        mediaType = "3dboxes";
-        path = game->get3DBoxPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
-
-    while (Utils::FileSystem::exists(game->getPhysicalMediaPath())) {
-        mediaType = "physicalmedia";
-        path = game->getPhysicalMediaPath();
-        Utils::FileSystem::removeFile(path);
-        removeEmptyDirFunc(systemMediaDir, mediaType, path);
-    }
 }
 
 std::string GamelistBase::getQuickSystemSelectLeftButton()
