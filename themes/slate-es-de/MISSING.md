@@ -5,6 +5,7 @@
 * amstradcpc - Amstrad CPC - controller.svg
 * android: Google Android - consolegame.svg, controller.svg
 * apple2gs: Apple IIGS - consolegame.svg, controller.svg
+* arcadia: Emerson Arcadia 2001 - consolegame.svg, controller.svg
 * arduboy: Arduboy Miniature Game System - consolegame.svg, controller.svg
 * astrocade: Bally Astrocade - consolegame.svg, controller.svg
 * atari5200: Atari 5200 - consolegame.svg, controller.svg
