@@ -58,6 +58,7 @@ namespace
         {ATARI_ST, "4937"},
         {ATARI_XE, "30"},
         {BBC_MICRO, "5013"},
+        {CASIO_PV1000, "4964"},
         {CAVESTORY, "1"},
         {COLECOVISION, "31"},
         {COMMODORE_64, "40"},

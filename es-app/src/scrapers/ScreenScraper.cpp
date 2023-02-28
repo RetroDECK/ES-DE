@@ -49,6 +49,7 @@ namespace
         {ATARI_XE, 43},
         {ATOMISWAVE, 53},
         {BBC_MICRO, 37},
+        {CASIO_PV1000, 74},
         {CAVESTORY, 135},
         {COLECOVISION, 48},
         {VTECH_CREATIVISION, 241},

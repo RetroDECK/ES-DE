@@ -1278,6 +1278,15 @@
         <theme>psx</theme>
     </system>
     <system>
+        <name>pv1000</name>
+        <fullname>Casio PV-1000</fullname>
+        <path>%ROMPATH%/pv1000</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/pv1000 pv1000 -cart %ROM%</command>
+        <platform>pv1000</platform>
+        <theme>pv1000</theme>
+    </system>
+    <system>
         <name>samcoupe</name>
         <fullname>MGT SAM Coupé</fullname>
         <path>%ROMPATH%/samcoupe</path>

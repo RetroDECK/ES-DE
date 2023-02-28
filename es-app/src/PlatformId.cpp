@@ -108,6 +108,7 @@ namespace PlatformIds
         "psp",                  // Sony PlayStation Portable
         "psvita",               // Sony PlayStation Vita
         "psx",                  // Sony PlayStation 1
+        "pv1000",               // Casio PV-1000
         "residualvm",           // ResidualVM Game Engine
         "samcoupe",             // MGT SAM Coupé
         "satellaview",          // Nintendo Satellaview
