@@ -44,11 +44,14 @@ Overall application speed and performance has been greatly improved with faster 
 * Changed the start button for the screensaver from "Back" to "X"
 * Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
 * Changed the menu header for the gamelist options menu from "Options" to "Gamelist options"
+* Added support for the Emerson Arcadia 2001 (arcadia) game system
 * Added support for the Arduboy Miniature Game System (arduboy)
 * Added support for the Acorn Computers BBC Micro (bbcmicro) game system by adding the MAME standalone emulator
 * Added support for the Capcom Play System I, II and III (cps1, cps2 and cps3) game systems
+* Added support for the VTech CreatiVision (crvision) game system
 * Added support for the LCD Handheld Games (lcdgames) game system
 * Added support for the Sega Mega Drive (megadrivejp) game system (Japanese region)
+* Added support for the Casio PV-1000 (pv1000) game system
 * Added support for the VTech V.Smile (vsmile) game system
 * Added support for the WASM-4 Fantasy Console (wasm4) game system
 * Added support for the Microsoft Windows (windows) game system

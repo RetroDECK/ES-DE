@@ -22,7 +22,7 @@ You can find the complete list of supported systems and emulators [here](USERGUI
 
 Two theme sets (Slate and Modern) are bundled with the application, and additional themes can be found on the [official themes list](https://gitlab.com/es-de/themes/themes-list).
 
-### Download
+## Download
 
 The latest stable version is **1.2.6** (released 2022-08-03) and the latest prerelease is **2.0.0-beta-2023-02-26**
 
@@ -30,7 +30,7 @@ Visit https://es-de.org/ to download ES-DE or go to the [package registry](https
 
 If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
 
-# Additional information
+## Additional information
 
 [FAQ.md](FAQ.md) -  Frequently Asked Questions
 
@@ -48,7 +48,7 @@ If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you
 
 [CREDITS.md](CREDITS.md) - An attempt to credit the individuals and projects which made ES-DE possible
 
-# Some feature highlights
+## Some feature highlights
 
 Here are some highlights, displayed using the default Slate theme set.
 
@@ -74,7 +74,7 @@ _There are many settings for the scraper including options to define which type 
 _In addition to the scraper there is a fully-featured metadata editor that can be used to modify information on a per-game basis._
 
 ![alt text](images/es-de_screensaver.png "ES-DE Screensaver")
-_There are four built-in screensaver types, including a slideshow and a video screensaver that display random games from your collection._
+_There are four built-in screensavers, including a slideshow and a video screensaver that display random games from your collection._
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_ES-DE is fully themeable, so if you prefer another look than what the default theme Slate offers, it's possible to apply another theme set. The image above is of the Modern theme that is also bundled with the application._
+_ES-DE is fully themeable, in case you prefer another look than what the default theme Slate offers. The screenshot above depicts the Modern theme that is also bundled with the application._

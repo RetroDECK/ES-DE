@@ -1926,6 +1926,8 @@ When scraping in interactive mode it's recommended to keep the _Auto-accept sing
 
 Under normal circumstances the scraper service will only return games for the platforms used for searching, but sometimes when it's not sure about the results it will also include games from other platforms. If this happens, these additional platform names will be displayed within square brackets after the game name in the result list. And if a game system is configured for multiple platforms, then the specific platform returned per result will always be displayed within square brackets. The exception for these two scenarios is if the multi-scraper is running in fully automatic mode as the additional platform information is then always omitted. Note that the additional platform information will not be included in the scraped game name, it's only used for clarification within the scraper result list.
 
+It's also possible to apply a filter for which games to scrape, which is very useful if for example continuing scraping a system that was previously not fully completed, or for re-scraping after new games have been added. This is accomplished using the _Scrape these games_ option on the main scraper menu. Possible values are _All games, Favorite games, No metadata, No game image, No game video_ or _Folders only_.
+
 By default, ES-DE will search using the metadata name of the game. If no name has previously been defined via scraping or via manually entering it using the metadata editor, the name used for searching will correspond to the physical filename minus all text inside either normal brackets `()` or square brackets `[]`. So for example the physical filename `Mygame (U) [v2].zip` will be stripped to simply `Mygame` when performing the scraper search.
 
 By disabling the option _Search using metadata name_, the physical filename will be used even if there is a scraped or manually entered name for the game.
@@ -2037,7 +2039,7 @@ Scraper service selection, currently ScreenScraper.fr and TheGamesDB.net are sup
 
 **Scrape these games**
 
-Criteria for what games to include. It can be set to _All games, Favorite games, No metadata, No game image, No game video_ or _Folders only_.
+Criteria for what games to include. It can be set to _All games, Favorite games, No metadata, No game image, No game video_ or _Folders only_. The _No metadata_ option checks if the game has a description and the _No game image_ checks for a miximage, then screenshot, then title screen and last box cover and if any of these images exist then the game is considered as already scraped.
 
 **Scrape these systems**
 
@@ -3021,11 +3023,11 @@ The **Default emulator** column lists the primary emulator as configured in es_s
 
 The **Alternative emulators** column lists additional emulators configured in es_systems.xml that can be selected per system and per game. In the same manner as the _Default emulator_ column, differences between Unix, macOS and Windows are marked using square brackets.
 
-The **Needs BIOS** column indicates if additional BIOS/system ROMs are required. Additional details should be covered by the emulator documentation.
+The **Needs BIOS** column indicates if any BIOS/system ROMs are required. Additional details should be covered by the emulator documentation.
 
-As for file extensions, normally those configured should cover everything that all emulators combined support for a given system.
+As for file extensions, normally those configured in ES-DE should cover everything that all emulators combined support for a given system.
 
-In general .zip or .7z files are recommended for smaller-sized games like those from older systems (assuming the emulator supports it). But for disc-based systems it's not a good approach as uncompressing these large files lead to slow game launches. For such systems it's instead generally recommended to use CHD files as this format offers compression without delaying game launches. The CHD format is also supported by most emulators.
+In general .zip or .7z files are recommended for smaller-sized games like those from older systems (assuming the emulator supports it). But for disc-based systems it's not a good approach as decompression of these large files lead to delayed game launches. For such systems it's instead generally recommended to use CHD files as this format offers effective compression while providing decompression on the fly. The CHD format is also supported by most emulators.
 
 On Windows the following emulators provide a way to inform ES-DE where they have been installed, meaning you don't need to add them to your Path environment variable as described elsewhere in this guide (this is only relevant for the installer release of ES-DE, not the portable release):
 * BlueStacks
@@ -3042,7 +3044,7 @@ On Windows the following emulators provide a way to inform ES-DE where they have
 Default emulator/Alternative emulators columns: \
 **[U]**: Unix, **[M]**: macOS, **[W]**: Windows
 
-All emulators are RetroArch cores unless marked as **(Standalone**)
+All emulators are RetroArch cores unless marked as **(Standalone)**
 
 The **@** symbol indicates that the emulator is _deprecated_ and will be removed in a future ES-DE release.
 
@@ -3059,6 +3061,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W] | Mednafen **(Standalone)** [UW],<br>MAME **(Standalone)** | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME **(Standalone)**             |                                   | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
 | arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arcadia               | Emerson Arcadia 2001                           | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file           |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)**             |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
 | atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>ares **(Standalone)** | No           | Single archive or ROM file |
@@ -3084,6 +3087,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | cps1                  | Capcom Play System I                           | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-1 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps2                  | Capcom Play System II                          | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-2 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | cps3                  | Capcom Play System III                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>FB Alpha 2012 CPS-3 | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| crvision              | VTech CreatiVision                             | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file           |
 | daphne                | Daphne Arcade LaserDisc Emulator               | Hypseus [Daphne] **(Standalone)** [UW] | Hypseus [Singe] **(Standalone)** [UW] | Yes for Daphne games | See the specific _Hypseus Singe (Daphne)_ section elsewhere in this guide |
 | desktop               | Desktop Applications                           | _Suspend ES-DE_                   | _Keep ES-DE running_              |              | See the specific _Ports and desktop applications_ section elsewhere in this guide |
 | doom                  | Doom                                           | PrBoom                            | Boom 3 [UW],<br>Boom 3 xp [UW],<br>_Shortcut or script_ | No           |                                      |
@@ -3164,6 +3168,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file      |
 | psvita                | Sony PlayStation Vita                          | Vita3K **(Standalone)** [UW]      |                                   | Yes          | See the specific _Sony PlayStation Vita_ section elsewhere in this guide |
 | psx                   | Sony PlayStation                               | Beetle PSX                        | Beetle PSX HW,<br>PCSX ReARMed,<br>SwanStation,<br>DuckStation **(Standalone)**,<br>Mednafen **(Standalone)** | Yes          | .chd file for single-disc games, .m3u playlist for multi-disc games |
+| pv1000                | Casio PV-1000                                  | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file |
 | samcoupe              | MGT SAM Coupé                                  | SimCoupé **(Standalone)**         |                                   | No           | Single archive or ROM file |
 | satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Mesen-S |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |

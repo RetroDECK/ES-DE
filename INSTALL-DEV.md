@@ -159,7 +159,7 @@ make
 ```
 Due to buggy AMD GPU drivers it could be a good idea to use the `LSAN_suppressions` file included in the repository to avoid reports of a lot of irrelevant issue, for example:
 ```
-LSAN_OPTIONS="suppressions=LSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
+LSAN_OPTIONS="suppressions=tools/LSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
 ```
 
 This applies to LeakSanitizer specifically, which is integrated into AddressSanitizer.
@@ -172,7 +172,7 @@ make
 
 It could also be a good idea to use the `TSAN_suppressions` file included in the repository to suppress issues reported by some third party libraries, for example:
 ```
-TSAN_OPTIONS="suppressions=TSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
+TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
 ```
 
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:

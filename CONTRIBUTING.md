@@ -10,11 +10,11 @@ Development is tracked using a Kanban board which is publicly visible at the pro
 
 [https://gitlab.com/es-de/emulationstation-de/-/boards](https://gitlab.com/es-de/emulationstation-de/-/boards)
 
-Development takes place in the `master` branch, and bug fixes/point releases are handled in the `stable` branches (only the latest stable version is maintained).
+Development takes place in the master branch, and bug fixes/point releases are handled in the stable branches (only the latest stable version is maintained).
 
 ### Coding style
 
-Code formatting is applied automatically using clang-format, so to understand the exact formatting rules, refer to the .clang-format file in the root of the ES-DE repository. You can read in [INSTALL.md](INSTALL.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
+Code formatting is applied automatically using clang-format, so to understand the exact formatting rules refer to the .clang-format file in the root of the ES-DE repository. You can read in [INSTALL.md](INSTALL.md#using-clang-format-for-automatic-code-formatting) how clang-format is installed and used.
 
 But as clang-format won't change actual code content or fix all code style choices, here are some additional key points:
 

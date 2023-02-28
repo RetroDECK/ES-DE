@@ -2,7 +2,7 @@
 
 This roadmap is under constant review so expect it to change from time to time.
 
-A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards) board and for previous releases the [Changelog](CHANGELOG.md) contains all relevant details.
+A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards) board, and for previous releases the [Changelog](CHANGELOG.md) contains all relevant details.
 
 #### _v1.0_
 

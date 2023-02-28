@@ -119,6 +119,15 @@ https://gitlab.com/recalbox/recalbox-themes
 Carbon (some graphics taken from this theme) \
 https://github.com/RetroPie/es-theme-carbon
 
+Some logotype graphics by Dan Patrick
+
+# Modern theme set
+
+Nintendo Switch Theme for RetroPie (Modern is based on this theme): \
+https://github.com/lilbud/es-theme-switch
+
+Some logotype graphics by Dan Patrick
+
 # Sounds
 
 Used by the default Slate theme as well as for fallback sounds (for themes that lack navigation sounds).
