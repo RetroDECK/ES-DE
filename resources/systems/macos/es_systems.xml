@@ -394,6 +394,15 @@
         <theme>cps3</theme>
     </system>
     <system>
+        <name>crvision</name>
+        <fullname>VTech CreatiVision</fullname>
+        <path>%ROMPATH%/crvision</path>
+        <extension>.bin .BIN .rom .ROM .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/crvision crvision -cart %ROM%</command>
+        <platform>crvision</platform>
+        <theme>crvision</theme>
+    </system>
+    <system>
         <name>daphne</name>
         <fullname>Daphne Arcade LaserDisc Emulator</fullname>
         <path>%ROMPATH%/daphne</path>

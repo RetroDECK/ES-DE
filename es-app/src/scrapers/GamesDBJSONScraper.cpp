@@ -137,6 +137,7 @@ namespace
         {SINCLAIR_ZX81_SINCLAR, "5010"},
         {VIDEOPAC_ODYSSEY2, "4927"},
         {VECTREX, "4939"},
+        {VTECH_CREATIVISION, "5005"},
         {VTECH_VSMILE, "4988"},
         {WATARA_SUPERVISION, "4959"},
         {TANDY_COLOR_COMPUTER, "4941"},
