@@ -169,6 +169,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"reflectionsOpacity", FLOAT},
        {"reflectionsFalloff", FLOAT},
        {"unfocusedItemOpacity", FLOAT},
+       {"imageFit", STRING},
        {"fastScrolling", BOOLEAN},
        {"defaultLogo", PATH},                      // For backward compatibility with legacy themes.
        {"logoSize", NORMALIZED_PAIR},              // For backward compatibility with legacy themes.
@@ -286,6 +287,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
      {"image",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
+       {"cropSize", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"rotation", FLOAT},

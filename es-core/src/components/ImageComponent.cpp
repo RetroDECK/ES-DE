@@ -467,6 +467,12 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             imageMaxSize.y = glm::clamp(imageMaxSize.y, 0.001f, 3.0f);
             setMaxSize(imageMaxSize * scale);
         }
+        else if (elem->has("cropSize")) {
+            glm::vec2 imageCropSize {elem->get<glm::vec2>("cropSize")};
+            imageCropSize.x = glm::clamp(imageCropSize.x, 0.001f, 3.0f);
+            imageCropSize.y = glm::clamp(imageCropSize.y, 0.001f, 3.0f);
+            setCroppedSize(imageCropSize * scale);
+        }
     }
 
     if (elem->has("interpolation")) {
