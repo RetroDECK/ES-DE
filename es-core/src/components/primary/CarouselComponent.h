@@ -130,6 +130,12 @@ private:
     const size_t getNumEntries() override { return mEntries.size(); }
     const bool getFadeAbovePrimary() const override { return mFadeAbovePrimary; }
 
+    enum class ImageFit {
+        CONTAIN,
+        FILL,
+        COVER
+    };
+
     Renderer* mRenderer;
     std::function<void(CursorState state)> mCursorChangedCallback;
     std::function<void()> mCancelTransitionsCallback;
@@ -180,6 +186,7 @@ private:
     float mReflectionsOpacity;
     float mReflectionsFalloff;
     float mUnfocusedItemOpacity;
+    ImageFit mImagefit;
     unsigned int mCarouselColor;
     unsigned int mCarouselColorEnd;
     bool mColorGradientHorizontal;
@@ -247,6 +254,7 @@ CarouselComponent<T>::CarouselComponent()
     , mReflectionsOpacity {0.5f}
     , mReflectionsFalloff {1.0f}
     , mUnfocusedItemOpacity {0.5f}
+    , mImagefit {ImageFit::CONTAIN}
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
     , mColorGradientHorizontal {true}
@@ -302,7 +310,13 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
             auto item = std::make_shared<ImageComponent>(false, dynamic);
             item->setLinearInterpolation(mLinearInterpolation);
             item->setMipmapping(true);
-            item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+            if (mImagefit == ImageFit::CONTAIN)
+                item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+            else if (mImagefit == ImageFit::FILL)
+                item->setResize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+            else if (mImagefit == ImageFit::COVER)
+                item->setCroppedSize(
+                    glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
             item->setImage(entry.data.imagePath);
             item->applyTheme(theme, "system", "", ThemeFlags::ALL);
             if (mImageBrightness != 0.0)
@@ -324,8 +338,15 @@ void CarouselComponent<T>::addEntry(Entry& entry, const std::shared_ptr<ThemeDat
                 mDefaultImage = std::make_shared<ImageComponent>(false, dynamic);
                 mDefaultImage->setLinearInterpolation(mLinearInterpolation);
                 mDefaultImage->setMipmapping(true);
-                mDefaultImage->setMaxSize(
-                    glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+                if (mImagefit == ImageFit::CONTAIN)
+                    mDefaultImage->setMaxSize(
+                        glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+                else if (mImagefit == ImageFit::FILL)
+                    mDefaultImage->setResize(
+                        glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+                else if (mImagefit == ImageFit::COVER)
+                    mDefaultImage->setCroppedSize(
+                        glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
                 mDefaultImage->setImage(entry.data.defaultImagePath);
                 mDefaultImage->applyTheme(theme, "system", "", ThemeFlags::ALL);
                 if (mImageBrightness != 0.0)
@@ -400,7 +421,12 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
         auto item = std::make_shared<ImageComponent>(false, true);
         item->setLinearInterpolation(mLinearInterpolation);
         item->setMipmapping(true);
-        item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+        if (mImagefit == ImageFit::CONTAIN)
+            item->setMaxSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+        else if (mImagefit == ImageFit::FILL)
+            item->setResize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
+        else if (mImagefit == ImageFit::COVER)
+            item->setCroppedSize(glm::round(mItemSize * (mItemScale >= 1.0f ? mItemScale : 1.0f)));
         item->setImage(entry.data.imagePath);
         item->applyTheme(theme, "system", "", ThemeFlags::ALL);
         if (mImageBrightness != 0.0)
@@ -1400,6 +1426,25 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
         if (elem->has("itemScale"))
             mItemScale = glm::clamp(elem->get<float>("itemScale"), 0.2f, 3.0f);
+
+        if (elem->has("imageFit")) {
+            const std::string& imageFit {elem->get<std::string>("imageFit")};
+            if (imageFit == "contain") {
+                mImagefit = ImageFit::CONTAIN;
+            }
+            else if (imageFit == "fill") {
+                mImagefit = ImageFit::FILL;
+            }
+            else if (imageFit == "cover") {
+                mImagefit = ImageFit::COVER;
+            }
+            else {
+                mImagefit = ImageFit::CONTAIN;
+                LOG(LogWarning) << "CarouselComponent: Invalid theme configuration, property "
+                                   "\"imageFit\" for element \""
+                                << element.substr(9) << "\" defined as \"" << imageFit << "\"";
+            }
+        }
 
         mImageSelectedColor = mImageColorShift;
         mImageSelectedColorEnd = mImageColorShiftEnd;
