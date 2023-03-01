@@ -1264,6 +1264,10 @@ Properties:
     - Angle in degrees that items should be rotated around their own axis. Note that this does not work well with reflections as these are rotated too which does not look right.
     - Default is `0`
     - This property can only be used when `type` is `horizontal` or `vertical`
+* `imageFit` - type: STRING
+    - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
+    - Valid values are `contain`, `fill` or `cover`
+    - Default is `contain`
 * `imageInterpolation` - type: STRING
     - Interpolation method to use when scaling images. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother. The effect of this property is primarily visible for raster graphic images, but it has a limited effect also when using scalable vector graphics (SVG) images as these are rasterized at a set resolution and then scaled using the GPU.
     - Valid values are `nearest` or `linear`
@@ -1351,10 +1355,6 @@ Properties:
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
-* `imageFit` - type: STRING
-    - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
-    - Valid values are `contain`, `fill` or `cover`
-    - Default is `contain`
 * `fastScrolling` - type: BOOLEAN
     - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). Be aware of possible performance implications when enabling this property, for gamelist views it's probably mostly useful for text-based carousels as streaming carousel images at the higher scrolling speed is likely to lead to stuttering on slower machines. Similarly, using this property in the system view together with gameselector configuration may lead to quite a lot of lag on weaker machines.
     - Default is `false`
@@ -1763,7 +1763,7 @@ Properties:
     - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`
 * `cropSize` - type: NORMALIZED_PAIR
-    - The image will be resized and cropped to the exact size defined by this property while maintaining its aspect ratio. The crop will always be applied centered.
+    - The image will be resized and cropped to the exact size defined by this property while maintaining its aspect ratio. The crop is always applied centered.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
@@ -1878,7 +1878,7 @@ Properties:
     - The static image and video will be resized as large as possible so that they fit within this size while maintaining their aspect ratios. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`
 * `cropSize` - type: NORMALIZED_PAIR
-    - The static image and video will be resized and cropped to the exact size defined by this property while maintaining their aspect ratios. The crop will always be applied centered. Can't be combined with the `scanlines` property.
+    - The static image and video will be resized and cropped to the exact size defined by this property while maintaining their aspect ratios. The crop is always applied centered. Can't be combined with the `scanlines` property.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
