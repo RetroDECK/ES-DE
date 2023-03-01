@@ -37,6 +37,7 @@
 * epic: Epic Games Store - consolegame.svg, controller.svg
 * flash: Adobe Flash - consolegame.svg, controller.svg
 * fmtowns: Fujitsu FM Towns - consolegame.svg, controller.svg
+* gamecom: Tiger Electronics Game.com - consolegame.svg
 * gx4000: Amstrad GX4000 - consolegame.svg, controller.svg
 * intellivision: Intellivision - consolegame.svg, controller.svg
 * j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, controller.svg
