@@ -77,4 +77,4 @@ _In addition to the scraper there is a fully-featured metadata editor that can b
 _There are four built-in screensavers, including a slideshow and a video screensaver that display random games from your collection._
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
-_ES-DE is fully themeable, in case you prefer another look than what the default theme Slate offers. The screenshot above depicts the Modern theme that is also bundled with the application._
+_ES-DE is fully themeable, in case you prefer another look than what the default theme Slate offers. The screenshot above shows the Modern theme that is also bundled with the application._

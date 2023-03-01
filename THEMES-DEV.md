@@ -1351,6 +1351,10 @@ Properties:
     - Sets the opacity for the items that are not currently focused.
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
+* `imageFit` - type: STRING
+    - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`
+    - Valid values are `contain`, `fill` or `cover`
+    - Default is `contain`
 * `fastScrolling` - type: BOOLEAN
     - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). Be aware of possible performance implications when enabling this property, for gamelist views it's probably mostly useful for text-based carousels as streaming carousel images at the higher scrolling speed is likely to lead to stuttering on slower machines. Similarly, using this property in the system view together with gameselector configuration may lead to quite a lot of lag on weaker machines.
     - Default is `false`
@@ -1753,10 +1757,13 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case. This property takes precedence over `maxSize` if both properties are defined.
+    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.001 0.001` in this case. This property takes precedence over `maxSize` and `cropSize` if either or both of those have also been defined.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
-    - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis (e.g. with a game's image metadata). Although this property is possible to combine with the `tile` property that does not make a whole lot of sense, instead use the `size` property for tiled images.
+    - The image will be resized as large as possible so that it fits within this size while maintaining its aspect ratio. Use this instead of `size` when you don't know what kind of image you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
+    - Minimum value per axis is `0.001` and maximum value per axis is `3`
+* `cropSize` - type: NORMALIZED_PAIR
+    - The image will be resized and cropped to the exact size defined by this property while maintaining its aspect ratio. The crop will always be applied centered.
     - Minimum value per axis is `0.001` and maximum value per axis is `3`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
@@ -1802,7 +1809,7 @@ Properties:
     - Minimum value is `0` and maximum value is the value of the `gameselector` element property `gameCount` minus 1. If a value outside this range is defined, then it will be automatically clamped to a valid value.
     - Default is `0`
 * `tile` - type: BOOLEAN
-    - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds.
+    - If true, the image will be tiled instead of stretched to fit its size. Useful for backgrounds. Do not combine with the `maxSize` or `cropSize` properties, instead always use `size` when tiling.
     - Default is `false`
 * `tileSize` - type: NORMALIZED_PAIR
     - Size of the individual images making up the tile as opposed to the overall size for the element which is defined by the `size` property. If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the image's aspect ratio. Setting both axes to 0 is an error and tiling will be disabled in this case. If this property is omitted, then the size will be set to the actual image dimensions. For SVG images this means whatever canvas size has been defined inside the file.
@@ -1865,10 +1872,13 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
 * `size` - type: NORMALIZED_PAIR
-    - If only one axis is specified (and the other is zero), then the other will be automatically calculated in accordance with the static image's aspect ratio and the video's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.01 0.01` in this case. This property takes precedence over `maxSize` if both properties are defined.
+    - If only one axis is specified (and the other is zero), then the other axis will be automatically calculated in accordance with the static image's aspect ratio and the video's aspect ratio. Setting both axes to 0 is an error and the size will be clamped to `0.01 0.01` in this case. This property takes precedence over `maxSize` and `cropSize` if either or both of those have also been defined.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`. If specifying a value outside the allowed range then no attempt will be made to preserve the aspect ratio.
 * `maxSize` - type: NORMALIZED_PAIR
-    - The static image and video will be resized as large as possible so that they fit within this size while maintaining their aspect ratios. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis (e.g. with a game's video metadata).
+    - The static image and video will be resized as large as possible so that they fit within this size while maintaining their aspect ratios. Use this instead of `size` when you don't know what kind of video you're using so it doesn't get grossly oversized on one axis. This property takes precedence over `cropSize` if that has also been defined.
+    - Minimum value per axis is `0.01` and maximum value per axis is `2`
+* `cropSize` - type: NORMALIZED_PAIR
+    - The static image and video will be resized and cropped to the exact size defined by this property while maintaining their aspect ratios. The crop will always be applied centered. Can't be combined with the `scanlines` property.
     - Minimum value per axis is `0.01` and maximum value per axis is `2`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen. If the position and size attributes are themeable, origin is implied.
@@ -1927,7 +1937,7 @@ Properties:
     - Minimum value per axis is `0.2` and maximum value per axis is `1`
     - Default is `0.85 0.90`
 * `scanlines` - type: BOOLEAN
-    - Whether to use a shader to render scanlines.
+    - Whether to use a shader to render scanlines. Can't be combined with the `cropSize` property.
     - Default is `false`
 * `delay` - type: FLOAT
     - Delay in seconds before video will start playing. During the delay period the game image defined via the `imageType` property will be displayed. If that property is not set, then the `delay` property will be ignored.

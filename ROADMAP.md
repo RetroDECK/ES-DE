@@ -65,6 +65,7 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Removal of legacy theme support
 * Background music
 * Proper audio mixer
+* Controller button mappings from inside ES-DE (similar to pad2key in Batocera)
 * Reorganize the menus, possibly adding basic/advanced modes
 * Reduced amount of gamelist reloading to retain cached textures and improve overall performance
 * Add "time played" counter per game, similar to how it works in Steam

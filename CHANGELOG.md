@@ -12,9 +12,9 @@ The 2.0 release introduces multiple fundamental changes to the application, most
 
 Theme variants, color schemes, aspect ratios and transitions can now be defined by the theme author and are user-selectable from within the menu system. In addition to all this new theme functionality the application is still backward compatible with legacy theme sets.
 
-The renderer has been modernized and rewritten and while still using OpenGL it's now fully shader-based instead of using a fixed function pipeline as was the case in previous releases. Tate mode (vertical screen orientation) support has been added including the ability to rotate the screen contents within the application window. Rendering performance has been greatly improved in some areas such as post processing (used for the video player scanline and blur shaders among other things). A new SVG rendering library named LunaSVG has been introduced which offers much better file compatibility than before, while doing it with better performance.
+The renderer has been modernized and rewritten and while still using OpenGL it's now fully shader-based instead of using a fixed function pipeline as was the case in previous releases. Tate mode (vertical screen orientation) support has been added including the ability to rotate screen contents within the application window. Rendering performance has been greatly improved in some areas such as post processing (used for video player scanline and blur shaders among other things). A new SVG rendering library named LunaSVG has been introduced which offers much better file compatibility than before, while doing it with better performance.
 
-Overall application speed and performance has been greatly improved with faster startup times, less latency and lower CPU utilization. Many bugs have been fixed and multiple quality of life improvements have been made. Support for a lot more standalone emulators is also included with this release, see below for more details.
+Overall application speed and performance has been greatly improved with faster startup times, less latency and lower CPU utilization. Many bugs have been fixed and multiple quality of life improvements have been made. Support for a lot more systems and standalone emulators has also been included with this release, see below for more details.
 
 ### Detailed list of changes
 
@@ -25,8 +25,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Added a new grid component that is usable in both the system and gamelist views
 * Made gamelist theming much more flexible by allowing any number of elements of any types to be defined
 * Deprecated multiple older theming concepts like features, extras and hardcoded metadata attributes
-* Renamed the default theme set from rbsimple-DE to slate-es-de
-* Ported modern-DE to the new theme engine and renamed it to modern-es-de
+* Renamed the default theme set from rbsimple-DE to Slate (slate-es-de)
+* Ported modern-DE to the new theme engine and renamed it to Modern (modern-es-de)
 * Added variant trigger (override) support to replicate the legacy theme engine automatic view style switching
 * Events are now parsed during startup which avoids issues with the OS thinking the application has hung when loading
 * Added an application updater that checks for new releases on startup (currently only provides notifications)
@@ -35,7 +35,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for sizing SVG images arbitrarily (overriding the image aspect ratio by stretching and squashing)
 * Added support for 2x and 4x MSAA anti-aliasing (OpenGL renderer only)
 * (Windows) Made game launching more seamless by making the application window one pixel wider instead of one pixel less in height
-* gamelist.xml files are no longer loaded from the ROMs/system directories (although old behavior can be retained via an option in es_settings.xml)
+* gamelist.xml files are no longer loaded from the ROMs/system directories (although old behavior can be retained via an es_settings.xml option)
 * Added support for always grouping custom collections under the custom collections system regardless of theme set support
 * Added support for mixed-case custom collection names
 * Added a startup progress bar to the splash screen
@@ -58,8 +58,8 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * Added support for the Infocom Z-machine (zmachine) game system by adding the Gargoyle standalone emulator
 * (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
-* Added MAME standalone as the default emulator for the macintosh system (Mac SE and Mac Plus diskette images)
 * Added ares standalone as an alternative emulator for many systems
+* Added MAME standalone as the default emulator for the macintosh system (Mac SE and Mac Plus diskette images)
 * Added MAME standalone as the default emulator for the gameandwatch system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
 * Added SameBoy standalone as an alternative emulator for the gb and gbc systems
@@ -130,7 +130,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Modernized the OpenGL renderer by replacing the fixed function pipeline with shaders
 * Unified the desktop OpenGL and OpenGL ES renderers and upgraded to OpenGL 3.3 (4.6 on the Steam Deck) and OpenGL ES 3.0 respectively
 * Changed the renderer pixel format from RGBA to BGRA
-* Changed to premultiplied alpha for images as well as for GIF and Lottie animations
+* Changed to premultiplied alpha for images as well as for GIF and Lottie animations, leading to a significant speed increase
 * OpenGL: Added an OpenGLVersion setting for choosing between OpenGL 3.3, 4.2 and 4.6 (has to be manually set in es_settings.xml)
 * OpenGL ES: Added an OpenGLVersion setting for choosing between OpenGL ES 3.0, 3.1 and 3.2 (has to be manually set in es_settings.xml)
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
@@ -142,10 +142,9 @@ Overall application speed and performance has been greatly improved with faster 
 * Added on-demand texture loading to the carousel
 * Improved the renderer scaling accuracy
 * Added new tileSize, tileHorizontalAlignment and tileVerticalAlignment properties to the image element for better tiling support
-* Added two new flipHorizontal and flipVertical properties to the image element
 * Added support for substituting the emulator binary in staticpath rules with an explicit command (useful for launching specific binaries in Flatpaks)
 * The actual names for emulators with find rule entries are now displayed in the error popup window if they're not found during game launch
-* Reorganized the UI Settings menu a bit and added entries to set the variant and aspect ratio for newer theme sets
+* Reorganized the UI Settings menu a bit and added entries to set the variant, color scheme, aspect ratio and transitions for newer theme sets
 * Removed the "Preload gamelists on startup" setting
 * Removed the "Play videos immediately (override theme)" setting
 * Renamed the sound menu option "Play audio for videos in the gamelist view" to "Play audio for gamelist and system view videos"
@@ -185,26 +184,27 @@ Overall application speed and performance has been greatly improved with faster 
 * Added theme support for enabling or disabling audio playback for videos
 * Added theme support for color shifting videos (and the static image)
 * Added theme support for setting separate textColorDimmed and iconColorDimmed properties for the system and gamelist views
-* Added support for nesting of theme variables
+* Added a new cropSize property to the image and video elements to crop images and videos to the defined size
+* Added two new flipHorizontal and flipVertical properties to the image element
+* Added support for nesting theme variables
 * Added support for defining multiple theme "variables" tags in the same XML file
 * Added support for overriding/redefining variables
 * When encountering missing theme include files defined by variables, a debug message is now printed instead of throwing an error
 * When encountering missing theme files defined by element path properties, a debug message is now printed instead of a warning
-* Added two DebugSkipMissingThemeFiles and DebugSkipMissingThemeFilesCustomCollections settings which need to be manually set in es_settings.xml
+* Added two DebugSkipMissingThemeFiles and DebugSkipMissingThemeFilesCustomCollections settings (which need to be manually set in es_settings.xml)
 * Prevented loading of theme sets using the "resolution" tag introduced by RetroPie in 2020 as it's a very bad idea to use this logic
 * Added support for vertical abbreviations of multiline text entries
 * Disabled the pillarboxes and scanline rendering menu options when using a non-legacy theme set
 * Improved theme element placement by replacing the "alignment" and "logoAlignment" properties with specific horizontal and vertical properties
 * Made it possible to use almost all game metadata field when theming text elements
 * Made it possible to set the image interpolation method (nearest neighbor or linear filtering) per image from the theme configuration
-* Added support for resizing and cropping images to fill the entire defined area (cover fitting)
 * Changed the helpsystem properties entrySpacing and iconTextSpacing from fixed pixel values to relative values
 * Added support for using unsigned integers for theme properties
 * Added a metadataElement theme property to the image, video, animation and text element types to control fading and hiding of arbitrary elements
-* Added the rendering of a green rectangle around the CarouselComponent when pressing Ctrl+i in debug mode
-* Changed the color of the rectangle from blue to green for TextListComponent when pressing Ctrl+t in debug mode
+* Added the rendering of a green rectangle around the CarouselComponent when pressing Ctrl+i while in debug mode
+* Changed the color of the rectangle from blue to green for TextListComponent when pressing Ctrl+t while in debug mode
 * Added scraper settings for defining a retry count and a retry timer in case of errors
-* Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for the system
+* Added scraper support for displaying the returned platform if it does not match the game platform, or if multiple platforms are defined for a system
 * Added scraping of fan art and updated the media viewer to display these images
 * Added scraping of box back covers when using TheGamesDB
 * If a wheel (marquee) image on ScreenScraper falls back to another region, then the wheel-hd image is now used instead if it matches the set region
@@ -253,27 +253,28 @@ Overall application speed and performance has been greatly improved with faster 
 * When building as an AppImage the "data" directory (e.g. /usr/share/emulationstation) is now excluded when looking for resources and themes
 * Added libGLdispatch.so.0 to the AppImage to fix a crash introduced by a Mesa library update
 * Updated the CImg library to commit 4d061dcd67c08e9a36a01875e78b53ee86501dd7
-* Large refactoring to improve thread safety and improve singleton pattern usage
+* Large refactoring to improve thread safety and singleton pattern usage
 * Made the logging thread safe
-* (Windows) Changed many logging entries to use backslashes instead of forward slashes as directory separators
-* Added the build date to to main menu for alpha and dev builds
+* (Windows) Changed many log entries to use backslashes instead of forward slashes as directory separators
+* Added the build date to to main menu for alpha, beta and dev builds
 * Added a left trigger + right trigger help system icon and removed the deprecated hotkey icon
 * Added PlayStation 1/2/3 and Switch Pro controller type support
 * Renamed some SNES controller button assets to be more intuitive
-* Added an arcade twin stick controller badge icon
 * (slate-es-de) Recreated the Nintendo GameCube controller as the old graphics had some issues and was not accurate
 * Added Nintendo GameCube, Sega Master System and Sega Dreamcast controller badge icons
+* Added an arcade twin stick controller badge icon
 * Moved all Platform functions to the utility namespace instead of using the global namespace
 * Implemented proper XML attribute support in ThemeData that eliminates the risk of name collisions
 * Added size restrictions to images and fonts so incorrect theme configuration would not lead to crashes or excessive memory utilization
 * Made animations on the carousel better looking by using a new non-linear interpolation method
-* Migrated the carousel code from SystemView to a separate new CarouselComponent
+* Migrated the carousel code from SystemView to a separate CarouselComponent
 * Changed the carousel properties to be more generic by renaming "logo" to "item", e.g. itemSize, maxItemCount etc.
 * Added the properties "itemsBeforeCenter" and "itemsAfterCenter" to define entries for carousels of the wheel type
-* Added a wheelHorizontalAlignment property for aligning the carousel within the overall element area (horizontal/vertical wheel only)
-* Added reflections support to the carousel
 * Added support for horizontal wheel carousels
+* Added two wheelHorizontalAlignment and wheelVerticalAlignment properties for aligning wheel carousels within the overall element area
+* Added reflections support to the carousel
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
+* Added a new imageFit property to the carousel to allow items to be stretched/squashed or cropped to the defined item size
 * Added carousel theme support for setting the opacity for unfocused entries
 * Added carousel theme support for applying image color shifts
 * Added carousel theme support for defining image brightness
@@ -282,7 +283,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added carousel theme support for enabling faster scrolling speed with a third scroll tier
 * Added carousel theme support for controlling item stacking for overlapping items
 * Added carousel theme support for defining margins around the currently selected item
-* Added carousel theme support for rotating items around their own axis (although not supported for wheel carousels)
+* Added carousel theme support for rotating items around their own axis (not supported for wheel carousels)
 * Added carousel theme support for color shifting the selected item
 * Added carousel theme support for offsetting items to achieve a diagonal layout
 * Added a fadeAbovePrimary property to control whether elements above the system view carousel and textlist should be rendered during fade transitions
@@ -332,7 +333,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Incorrect folder paths were displayed in the metadata editor if the setting "Only show ROMs from gamelist.xml files" was enabled
 * Games located in subdirectories were not added back to custom collections when disabling the "Exclude from game counter" metadata option
 * Enabling and then disabling the "Exclude from game counter" metadata option would remove a game from all currently disabled custom collections
-* Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of text lists
+* Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of textlists
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
 * Custom collections editing mode did not end when switching UI modes
@@ -367,7 +368,7 @@ Overall application speed and performance has been greatly improved with faster 
 * The SliderComponent knob was not consistently positioned
 * The device text flickered in GuiDetectDevice when configuring a controller
 * The selector bar was not aligned correctly during menu scale-up animations
-* The bottom menu selector bar was not getting rendered when running at really low resolutions like 320x240
+* The bottom menu separator bar was not getting rendered when running at really low resolutions like 320x240
 * Doing a manual reload using Ctrl+r in debug mode would sometimes not update modified image files
 * Abbreviations of long words in multiline text entries sometimes exceeded the designated text area
 * Navigation sounds would sometimes not play when browsing game media in the media viewer
