@@ -66,6 +66,7 @@ void VideoFFmpegComponent::setResize(const float width, const float height)
     // This resize function is used when stretching videos to full screen in the video screensaver.
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = false;
+    mTargetIsCrop = false;
     mStaticImage.setResize(mTargetSize);
     resize();
 }
@@ -76,7 +77,17 @@ void VideoFFmpegComponent::setMaxSize(float width, float height)
     // and the gamelist videos.
     mTargetSize = glm::vec2 {width, height};
     mTargetIsMax = true;
+    mTargetIsCrop = false;
     mStaticImage.setMaxSize(width, height);
+    resize();
+}
+
+void VideoFFmpegComponent::setCroppedSize(const glm::vec2& size)
+{
+    mTargetSize = size;
+    mTargetIsMax = false;
+    mTargetIsCrop = true;
+    mStaticImage.setCroppedSize(size);
     resize();
 }
 
@@ -105,6 +116,25 @@ void VideoFFmpegComponent::resize()
         }
 
         mSize.x = (mSize.y / textureSize.y) * textureSize.x;
+    }
+    else if (mTargetIsCrop) {
+        // Size texture to allow for cropped video to fill the entire area.
+        const float cropFactor {
+            std::max(mTargetSize.x / textureSize.x, mTargetSize.y / textureSize.y)};
+        mSize = textureSize * cropFactor;
+
+        if (std::round(mSize.y) > std::round(mTargetSize.y)) {
+            const float cropSize {1.0f - (mTargetSize.y / mSize.y)};
+            mTopLeftCrop.y = cropSize / 2.0f;
+            mBottomRightCrop.y = 1.0f - (cropSize / 2.0f);
+            mSize.y = mSize.y - (mSize.y * cropSize);
+        }
+        else {
+            const float cropSize {1.0f - (mTargetSize.x / mSize.x)};
+            mTopLeftCrop.x = cropSize / 2.0f;
+            mBottomRightCrop.x = 1.0f - (cropSize / 2.0f);
+            mSize.x = mSize.x - (mSize.x * cropSize);
+        }
     }
     else {
         // If both components are set, we just stretch.
@@ -159,10 +189,10 @@ void VideoFFmpegComponent::render(const glm::mat4& parentTrans)
             return;
 
         // clang-format off
-        vertices[0] = {{0.0f + mRectangleOffset.x,    0.0f + mRectangleOffset.y     }, {0.0f, 0.0f}, 0xFFFFFFFF};
-        vertices[1] = {{0.0f + mRectangleOffset.x,    mSize.y + mRectangleOffset.y  }, {0.0f, 1.0f}, 0xFFFFFFFF};
-        vertices[2] = {{mSize.x + mRectangleOffset.x, 0.0f + + mRectangleOffset.y   }, {1.0f, 0.0f}, 0xFFFFFFFF};
-        vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
+        vertices[0] = {{0.0f + mRectangleOffset.x,    0.0f + mRectangleOffset.y     }, {mTopLeftCrop.x,            1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[1] = {{0.0f + mRectangleOffset.x,    mSize.y + mRectangleOffset.y  }, {mTopLeftCrop.x,            1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
+        vertices[2] = {{mSize.x + mRectangleOffset.x, 0.0f + + mRectangleOffset.y   }, {mBottomRightCrop.x * 1.0f, 1.0f - mBottomRightCrop.y}, 0xFFFFFFFF};
+        vertices[3] = {{mSize.x + mRectangleOffset.x, mSize.y + + mRectangleOffset.y}, {mBottomRightCrop.x * 1.0f, 1.0f - mTopLeftCrop.y    }, 0xFFFFFFFF};
         // clang-format on
 
         vertices[0].color = mColorShift;

@@ -46,6 +46,9 @@ public:
     // This can be set before or after a video is loaded.
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     void setMaxSize(float width, float height) override;
+    // Resize and crop the video so it fills the entire area.
+    void setCroppedSize(const glm::vec2& size) override;
+
     // Basic video controls.
     void stopVideoPlayer(bool muteAudio = true) override;
     void pauseVideoPlayer() override;

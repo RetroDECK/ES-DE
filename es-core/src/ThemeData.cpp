@@ -317,6 +317,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
      {"video",
       {{"pos", NORMALIZED_PAIR},
        {"size", NORMALIZED_PAIR},
+       {"cropSize", NORMALIZED_PAIR},
        {"maxSize", NORMALIZED_PAIR},
        {"origin", NORMALIZED_PAIR},
        {"path", PATH},

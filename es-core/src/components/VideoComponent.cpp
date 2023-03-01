@@ -28,6 +28,8 @@ VideoComponent::VideoComponent()
     , mTargetSize {0.0f, 0.0f}
     , mVideoAreaPos {0.0f, 0.0f}
     , mVideoAreaSize {0.0f, 0.0f}
+    , mTopLeftCrop {0.0f, 0.0f}
+    , mBottomRightCrop {1.0f, 1.0f}
     , mPillarboxThreshold {0.85f, 0.90f}
     , mStartTime {0}
     , mIsPlaying {false}
@@ -36,6 +38,7 @@ VideoComponent::VideoComponent()
     , mMediaViewerMode {false}
     , mScreensaverMode {false}
     , mTargetIsMax {false}
+    , mTargetIsCrop {false}
     , mPlayAudio {true}
     , mDrawPillarboxes {true}
     , mRenderScanlines {false}
@@ -153,6 +156,13 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             videoMaxSize.y = glm::clamp(videoMaxSize.y, 0.01f, 2.0f);
             setMaxSize(videoMaxSize * scale);
             mVideoAreaSize = videoMaxSize * scale;
+        }
+        else if (elem->has("cropSize")) {
+            glm::vec2 videoCropSize {elem->get<glm::vec2>("cropSize")};
+            videoCropSize.x = glm::clamp(videoCropSize.x, 0.01f, 2.0f);
+            videoCropSize.y = glm::clamp(videoCropSize.y, 0.01f, 2.0f);
+            setCroppedSize(videoCropSize * scale);
+            mVideoAreaSize = videoCropSize * scale;
         }
     }
 
@@ -302,8 +312,17 @@ void VideoComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         mPillarboxThreshold.y = glm::clamp(pillarboxThreshold.y, 0.2f, 1.0f);
     }
 
-    if (elem->has("scanlines"))
-        mRenderScanlines = elem->get<bool>("scanlines");
+    if (elem->has("scanlines")) {
+        if (elem->has("cropSize") && elem->get<bool>("scanlines")) {
+            LOG(LogWarning) << "VideoComponent: Invalid theme configuration, property "
+                               "\"cropSize\" for element \""
+                            << element.substr(6)
+                            << "\" can't be combined with the \"scanlines\" property";
+        }
+        else {
+            mRenderScanlines = elem->get<bool>("scanlines");
+        }
+    }
 
     if (elem->has("scrollFadeIn") && elem->get<bool>("scrollFadeIn"))
         mComponentThemeFlags |= ComponentThemeFlags::SCROLL_FADE_IN;

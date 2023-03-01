@@ -83,6 +83,8 @@ public:
     // Never breaks the aspect ratio. setMaxSize() and setResize() are mutually exclusive.
     virtual void setMaxSize(float width, float height) = 0;
     void setMaxSize(const glm::vec2& size) { setMaxSize(size.x, size.y); }
+    // Resize and crop the video so it fills the entire area.
+    virtual void setCroppedSize(const glm::vec2& size) = 0;
 
     // Basic video controls.
     void startVideoPlayer();
@@ -109,6 +111,8 @@ protected:
     glm::vec2 mTargetSize;
     glm::vec2 mVideoAreaPos;
     glm::vec2 mVideoAreaSize;
+    glm::vec2 mTopLeftCrop;
+    glm::vec2 mBottomRightCrop;
     glm::vec2 mPillarboxThreshold;
     std::shared_ptr<TextureResource> mTexture;
     std::string mStaticImagePath;
@@ -126,6 +130,7 @@ protected:
     bool mMediaViewerMode;
     bool mScreensaverMode;
     bool mTargetIsMax;
+    bool mTargetIsCrop;
     bool mPlayAudio;
     bool mDrawPillarboxes;
     bool mRenderScanlines;
