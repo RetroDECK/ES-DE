@@ -58,6 +58,7 @@ namespace PlatformIds
         "flash",                // Adobe Flash
         "fmtowns",              // Fujitsu FM Towns
         "gameandwatch",         // Nintendo Game and Watch
+        "gamecom",              // Tiger Electronics Game.com
         "gamegear",             // Sega Game Gear
         "gb",                   // Nintendo Game Boy
         "gba",                  // Nintendo Game Boy Advance

@@ -135,6 +135,7 @@ namespace
         {BANDAI_WONDERSWAN_COLOR, "4926"},
         {SINCLAIR_ZX_SPECTRUM, "4913"},
         {SINCLAIR_ZX81_SINCLAR, "5010"},
+        {TIGER_GAME_COM, "4940"},
         {VIDEOPAC_ODYSSEY2, "4927"},
         {VECTREX, "4939"},
         {VTECH_CREATIVISION, "5005"},

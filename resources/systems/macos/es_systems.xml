@@ -574,6 +574,15 @@
         <theme>gameandwatch</theme>
     </system>
     <system>
+        <name>gamecom</name>
+        <fullname>Tiger Electronics Game.com</fullname>
+        <path>%ROMPATH%/gamecom</path>
+        <extension>.tgc .TGC .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/gamecom gamecom -cartridge1 %ROM%</command>
+        <platform>gamecom</platform>
+        <theme>gamecom</theme>
+    </system>
+    <system>
         <name>gamegear</name>
         <fullname>Sega Game Gear</fullname>
         <path>%ROMPATH%/gamegear</path>

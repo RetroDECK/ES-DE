@@ -57,6 +57,7 @@ namespace PlatformIds
         ADOBE_FLASH,
         FUJITSU_FM_TOWNS,
         NINTENDO_GAME_AND_WATCH,
+        TIGER_GAME_COM,
         SEGA_GAME_GEAR,
         NINTENDO_GAME_BOY,
         NINTENDO_GAME_BOY_ADVANCE,
