@@ -202,6 +202,9 @@ void ImageComponent::coverFitCrop()
 {
     assert(mTargetIsCrop);
 
+    mTopLeftCrop = {0.0f, 0.0f};
+    mBottomRightCrop = {1.0f, 1.0f};
+
     if (std::round(mSize.y) > std::round(mTargetSize.y)) {
         const float cropSize {1.0f - (mTargetSize.y / mSize.y)};
         cropTop(cropSize / 2.0f);
