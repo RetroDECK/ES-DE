@@ -213,6 +213,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemTransitions", STRING},
        {"rowTransitions", STRING},
        {"unfocusedItemOpacity", FLOAT},
+       {"unfocusedItemSaturation", FLOAT},
+       {"unfocusedItemDimming", FLOAT},
        {"imageFit", STRING},
        {"imageRelativeScale", FLOAT},
        {"imageColor", COLOR},

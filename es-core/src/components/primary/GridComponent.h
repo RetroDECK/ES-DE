@@ -155,6 +155,8 @@ private:
     bool mInstantItemTransitions;
     bool mInstantRowTransitions;
     float mUnfocusedItemOpacity;
+    float mUnfocusedItemSaturation;
+    float mUnfocusedItemDimming;
     ImageFit mImagefit;
     float mImageRelativeScale;
     unsigned int mImageColor;
@@ -223,6 +225,8 @@ GridComponent<T>::GridComponent()
     , mInstantItemTransitions {false}
     , mInstantRowTransitions {false}
     , mUnfocusedItemOpacity {1.0f}
+    , mUnfocusedItemSaturation {1.0f}
+    , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
     , mImageRelativeScale {1.0f}
     , mImageColor {0xFFFFFFFF}
@@ -688,6 +692,8 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
 
     float scale {1.0f};
     float opacity {1.0f};
+    float saturation {1.0f};
+    float dimming {1.0f};
 
     trans[3].y -= (mItemSize.y + mItemSpacing.y) * mScrollPos;
 
@@ -739,18 +745,24 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
         }
 
         opacity = mUnfocusedItemOpacity * metadataOpacity;
+        saturation = mUnfocusedItemSaturation;
+        dimming = mUnfocusedItemDimming;
 
         if (*it == static_cast<size_t>(mCursor)) {
             cursorEntry = true;
             scale = glm::mix(1.0f, mItemScale, mTransitionFactor);
             opacity = glm::mix(mUnfocusedItemOpacity * metadataOpacity, 1.0f * metadataOpacity,
                                mTransitionFactor);
+            saturation = glm::mix(mUnfocusedItemSaturation, 1.0f, mTransitionFactor);
+            dimming = glm::mix(mUnfocusedItemDimming, 1.0f, mTransitionFactor);
         }
         else if (*it == static_cast<size_t>(mLastCursor)) {
             lastCursorEntry = true;
             scale = glm::mix(mItemScale, 1.0f, mTransitionFactor);
             opacity = glm::mix(1.0f * metadataOpacity, mUnfocusedItemOpacity * metadataOpacity,
                                mTransitionFactor);
+            saturation = glm::mix(1.0f, mUnfocusedItemSaturation, mTransitionFactor);
+            dimming = glm::mix(1.0f, mUnfocusedItemDimming, mTransitionFactor);
         }
 
         if (cursorEntry && mSelectorLayer == SelectorLayer::BOTTOM)
@@ -760,6 +772,10 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             mBackgroundImage->setPosition(mEntries.at(*it).data.item->getPosition());
             mBackgroundImage->setScale(scale);
             mBackgroundImage->setOpacity(opacity);
+            if (mUnfocusedItemSaturation != 1.0f)
+                mBackgroundImage->setSaturation(saturation);
+            if (mUnfocusedItemDimming != 1.0f)
+                mBackgroundImage->setDimming(dimming);
             mBackgroundImage->render(trans);
         }
         else if (mHasBackgroundColor) {
@@ -790,6 +806,10 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
 
         mEntries.at(*it).data.item->setScale(scale);
         mEntries.at(*it).data.item->setOpacity(opacity);
+        if (mUnfocusedItemSaturation != 1.0f)
+            mEntries.at(*it).data.item->setSaturation(saturation);
+        if (mUnfocusedItemDimming != 1.0f)
+            mEntries.at(*it).data.item->setDimming(dimming);
         if (cursorEntry && (mHasTextSelectedColor || mHasImageSelectedColor)) {
             if (mHasTextSelectedColor && mEntries.at(*it).data.imagePath == "" &&
                 mEntries.at(*it).data.defaultImagePath == "") {
@@ -1196,6 +1216,13 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
+
+    if (elem->has("unfocusedItemSaturation"))
+        mUnfocusedItemSaturation =
+            glm::clamp(elem->get<float>("unfocusedItemSaturation"), 0.0f, 1.0f);
+
+    if (elem->has("unfocusedItemDimming"))
+        mUnfocusedItemDimming = glm::clamp(elem->get<float>("unfocusedItemDimming"), 0.0f, 1.0f);
 
     mFont = Font::getFromTheme(elem, properties, mFont, 0.0f, (mItemScale > 1.0f));
 
