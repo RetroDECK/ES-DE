@@ -79,8 +79,8 @@ void main()
         sampledColor.rgb *= sampledColor.a;
     }
 
-    // Saturation.
-    if (saturation != 1.0) {
+    // Saturation, except for font textures.
+    if (saturation != 1.0 && 0x0u == (shaderFlags & 0x2u)) {
         vec3 grayscale;
         // Premultiplied textures are all in BGRA format.
         if (0x0u != (shaderFlags & 0x01u))
@@ -103,6 +103,13 @@ void main()
     }
     else {
         sampledColor *= color;
+    }
+
+    // Saturation for font textures.
+    if (saturation != 1.0 && 0x0u != (shaderFlags & 0x2u)) {
+        vec3 grayscale = vec3(dot(sampledColor.rgb, vec3(0.299, 0.587, 0.114)));
+        vec3 blendedColor = mix(grayscale, sampledColor.rgb, saturation);
+        sampledColor = vec4(blendedColor, sampledColor.a);
     }
 
     // When post-processing we drop the alpha channel to avoid strange issues with some

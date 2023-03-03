@@ -62,6 +62,7 @@ public:
     float const getColorOpacity() const override { return mColorOpacity; }
 
     void setOpacity(float opacity) override;
+    void setSaturation(float saturation) override;
     void setDimming(float dimming) override;
 
     void setSelectable(bool status) { mSelectable = status; }

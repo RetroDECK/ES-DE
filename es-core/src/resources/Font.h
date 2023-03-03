@@ -238,6 +238,7 @@ public:
 
     void setColor(unsigned int color);
     void setOpacity(float opacity);
+    void setSaturation(float saturation);
     void setDimming(float dimming);
 
     friend Font;

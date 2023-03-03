@@ -115,6 +115,13 @@ void TextComponent::setOpacity(float opacity)
         mTextCache->setOpacity(mThemeOpacity);
 }
 
+void TextComponent::setSaturation(float saturation)
+{
+    mSaturation = saturation;
+    if (mTextCache)
+        mTextCache->setSaturation(saturation);
+}
+
 void TextComponent::setDimming(float dimming)
 {
     mDimming = dimming;

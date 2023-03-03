@@ -826,6 +826,14 @@ void TextCache::setOpacity(float opacity)
     }
 }
 
+void TextCache::setSaturation(float saturation)
+{
+    for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it) {
+        for (auto it2 = it->verts.begin(); it2 != it->verts.end(); ++it2)
+            it2->saturation = saturation;
+    }
+}
+
 void TextCache::setDimming(float dimming)
 {
     for (auto it = vertexLists.begin(); it != vertexLists.end(); ++it) {
