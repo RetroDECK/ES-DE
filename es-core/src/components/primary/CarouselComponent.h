@@ -186,6 +186,8 @@ private:
     float mReflectionsOpacity;
     float mReflectionsFalloff;
     float mUnfocusedItemOpacity;
+    float mUnfocusedItemSaturation;
+    float mUnfocusedItemDimming;
     ImageFit mImagefit;
     unsigned int mCarouselColor;
     unsigned int mCarouselColorEnd;
@@ -254,6 +256,8 @@ CarouselComponent<T>::CarouselComponent()
     , mReflectionsOpacity {0.5f}
     , mReflectionsFalloff {1.0f}
     , mUnfocusedItemOpacity {0.5f}
+    , mUnfocusedItemSaturation {1.0f}
+    , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
     , mCarouselColor {0}
     , mCarouselColorEnd {0}
@@ -906,6 +910,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         float distance;
         float scale;
         float opacity;
+        float saturation;
+        float dimming;
         glm::mat4 trans;
     };
 
@@ -971,6 +977,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             itemTrans = glm::rotate(itemTrans, glm::radians(-90.0f), glm::vec3 {0.0f, 0.0f, 1.0f});
 
         float opacity {0.0f};
+        float saturation {0.0f};
+        float dimming {0.0f};
 
         if (distance == 0.0f || mUnfocusedItemOpacity == 1.0f) {
             opacity = 1.0f;
@@ -979,8 +987,30 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             opacity = mUnfocusedItemOpacity;
         }
         else {
-            float maxDiff {1.0f - mUnfocusedItemOpacity};
+            const float maxDiff {1.0f - mUnfocusedItemOpacity};
             opacity = mUnfocusedItemOpacity + (maxDiff - (maxDiff * fabsf(distance)));
+        }
+
+        if (distance == 0.0f || mUnfocusedItemSaturation == 1.0f) {
+            saturation = 1.0f;
+        }
+        else if (fabsf(distance) >= 1.0f) {
+            saturation = mUnfocusedItemSaturation;
+        }
+        else {
+            const float maxDiff {1.0f - mUnfocusedItemSaturation};
+            saturation = mUnfocusedItemSaturation + (maxDiff - (maxDiff * fabsf(distance)));
+        }
+
+        if (distance == 0.0f || mUnfocusedItemDimming == 1.0f) {
+            dimming = 1.0f;
+        }
+        else if (fabsf(distance) >= 1.0f) {
+            dimming = mUnfocusedItemDimming;
+        }
+        else {
+            const float maxDiff {1.0f - mUnfocusedItemDimming};
+            dimming = mUnfocusedItemDimming + (maxDiff - (maxDiff * fabsf(distance)));
         }
 
         renderStruct renderItem;
@@ -988,6 +1018,8 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
         renderItem.distance = distance;
         renderItem.scale = scale;
         renderItem.opacity = opacity;
+        renderItem.saturation = saturation;
+        renderItem.dimming = dimming;
         renderItem.trans = itemTrans;
 
         renderItems.emplace_back(renderItem);
@@ -1153,6 +1185,10 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
         comp->setScale(renderItem.scale);
         comp->setOpacity(renderItem.opacity * metadataOpacity);
+        if (mUnfocusedItemSaturation != 1.0f)
+            comp->setSaturation(renderItem.saturation);
+        if (mUnfocusedItemDimming != 1.0f)
+            comp->setDimming(renderItem.dimming);
         if (renderItem.index == mCursor && std::abs(renderItem.distance) < 1.0f &&
             (mHasImageSelectedColor || mHasTextSelectedColor)) {
             if (mHasTextSelectedColor && mEntries.at(renderItem.index).data.imagePath == "" &&
@@ -1198,6 +1234,10 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             float falloff {glm::clamp(mReflectionsFalloff, 0.0f, 1.0f)};
             falloff = mReflectionsOpacity * (1.0f - falloff);
             comp->setOpacity(comp->getOpacity() * mReflectionsOpacity);
+            if (mUnfocusedItemSaturation != 1.0f)
+                comp->setSaturation(renderItem.saturation);
+            if (mUnfocusedItemDimming != 1.0f)
+                comp->setDimming(renderItem.dimming);
             if (mReflectionsFalloff > 0.0f)
                 comp->setReflectionsFalloff(comp->getSize().y / mReflectionsFalloff);
             comp->setFlipY(true);
@@ -1663,6 +1703,14 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("unfocusedItemOpacity"))
             mUnfocusedItemOpacity =
                 glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
+
+        if (elem->has("unfocusedItemSaturation"))
+            mUnfocusedItemSaturation =
+                glm::clamp(elem->get<float>("unfocusedItemSaturation"), 0.0f, 1.0f);
+
+        if (elem->has("unfocusedItemDimming"))
+            mUnfocusedItemDimming =
+                glm::clamp(elem->get<float>("unfocusedItemDimming"), 0.0f, 1.0f);
 
         if (elem->has("fastScrolling") && elem->get<bool>("fastScrolling"))
             List::mTierList = IList<CarouselEntry, T>::LIST_SCROLL_STYLE_MEDIUM;

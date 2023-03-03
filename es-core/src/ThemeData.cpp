@@ -170,6 +170,8 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"reflectionsOpacity", FLOAT},
        {"reflectionsFalloff", FLOAT},
        {"unfocusedItemOpacity", FLOAT},
+       {"unfocusedItemSaturation", FLOAT},
+       {"unfocusedItemDimming", FLOAT},
        {"fastScrolling", BOOLEAN},
        {"defaultLogo", PATH},                      // For backward compatibility with legacy themes.
        {"logoSize", NORMALIZED_PAIR},              // For backward compatibility with legacy themes.
