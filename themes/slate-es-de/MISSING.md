@@ -70,6 +70,7 @@
 * ports: Source ports - consolegame.svg, controller.svg
 * ps4: Sony PlayStation 4 - consolegame.svg, controller.svg
 * pv1000: Casio PV-1000 - consolegame.svg, controller.svg
+* quake: Quake - consolegame.svg, controller.svg
 * samcoupe: MGT SAM Coupé - consolegame.svg
 * satellaview: Nintendo Satellaview - consolegame.svg
 * sgb: Nintendo Super Game Boy - consolegame.svg
