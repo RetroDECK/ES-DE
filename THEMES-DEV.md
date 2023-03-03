@@ -1352,9 +1352,17 @@ Properties:
     - Default is `1`
     - This property can only be used when `type` is `horizontal`
 * `unfocusedItemOpacity` - type: FLOAT
-    - Sets the opacity for the items that are not currently focused.
+    - Sets the opacity for all items except the currently selected entry.
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
+* `unfocusedItemSaturation` - type: FLOAT
+    - Sets the saturation for all items except the currently selected entry.
+    - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
+    - Default is `1`
+* `unfocusedItemDimming` - type: FLOAT
+    - Sets the dimming for all items except the currently selected entry.
+    - Minimum value is `0` (pure black) and maximum value is `1` (no adjustment)
+    - Default is `1`
 * `fastScrolling` - type: BOOLEAN
     - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). Be aware of possible performance implications when enabling this property, for gamelist views it's probably mostly useful for text-based carousels as streaming carousel images at the higher scrolling speed is likely to lead to stuttering on slower machines. Similarly, using this property in the system view together with gameselector configuration may lead to quite a lot of lag on weaker machines.
     - Default is `false`
@@ -1489,8 +1497,16 @@ Properties:
     - Valid values are `animate` or `instant`
     - Default is `animate`
 * `unfocusedItemOpacity` - type: FLOAT
-    - Sets the opacity for the items that are not currently focused.
+    - Sets the opacity for all items except the currently selected entry.
     - Minimum value is `0.1` and maximum value is `1`
+    - Default is `1`
+* `unfocusedItemSaturation` - type: FLOAT
+    - Sets the saturation for all items except the currently selected entry.
+    - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
+    - Default is `1`
+* `unfocusedItemDimming` - type: FLOAT
+    - Sets the dimming for all items except the currently selected entry.
+    - Minimum value is `0` (pure black) and maximum value is `1` (no adjustment)
     - Default is `1`
 * `imageFit` - type: STRING
     - Controls how to fit the image within the aspect ratio defined by `itemSize`. To scale and preserve the original aspect ratio, set the value to `contain`, to stretch/squash the image to fill the entire area set it to `fill` and to crop the image to fill the entire area set it to `cover`

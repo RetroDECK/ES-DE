@@ -49,9 +49,11 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for the Acorn Computers BBC Micro (bbcmicro) game system by adding the MAME standalone emulator
 * Added support for the Capcom Play System I, II and III (cps1, cps2 and cps3) game systems
 * Added support for the VTech CreatiVision (crvision) game system
+* Added support for the Tiger Electronics Game.com (gamecom) game system
 * Added support for the LCD Handheld Games (lcdgames) game system
 * Added support for the Sega Mega Drive (megadrivejp) game system (Japanese region)
 * Added support for the Casio PV-1000 (pv1000) game system
+* Added support for the Quake (quake) game system
 * Added support for the VTech V.Smile (vsmile) game system
 * Added support for the WASM-4 Fantasy Console (wasm4) game system
 * Added support for the Microsoft Windows (windows) game system
@@ -136,6 +138,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
 * Implemented dynamic texture allocation to the font code to reduce memory usage and avoid missing glyphs
+* Added support for changing font texture saturation
 * Large optimizations to the text wrapping code (generallly 300-400% faster)
 * Added support for linear interpolation for font texture magnifications
 * Added support for texture mipmapping with trilinear filtering
@@ -275,7 +278,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added reflections support to the carousel
 * Added a new itemAxisHorizontal property to the carousel to keep wheel items horizontal at all times
 * Added a new imageFit property to the carousel to allow items to be stretched/squashed or cropped to the defined item size
-* Added carousel theme support for setting the opacity for unfocused entries
+* Added carousel theme support for setting the opacity, saturation and dimming for unfocused items
 * Added carousel theme support for applying image color shifts
 * Added carousel theme support for defining image brightness
 * Added carousel theme support for defining image saturation
