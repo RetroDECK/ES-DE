@@ -29,7 +29,7 @@ class GuiMetaDataEd : public GuiComponent
 public:
     GuiMetaDataEd(MetaDataList* md,
                   const std::vector<MetaDataDecl>& mdd,
-                  ScraperSearchParams params,
+                  const ScraperSearchParams params,
                   std::function<void()> savedCallback,
                   std::function<void()> clearGameFunc,
                   std::function<void()> deleteGameFunc);

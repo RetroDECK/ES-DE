@@ -38,7 +38,7 @@
 
 GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                              const std::vector<MetaDataDecl>& mdd,
-                             ScraperSearchParams scraperParams,
+                             const ScraperSearchParams scraperParams,
                              std::function<void()> saveCallback,
                              std::function<void()> clearGameFunc,
                              std::function<void()> deleteGameFunc)
@@ -433,14 +433,15 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 if (originalValue != "")
                     mInvalidFolderLinkEntry = true;
 
-                for (auto child : mScraperParams.game->getChildrenRecursive()) {
+                for (auto child : scraperParams.game->getChildrenRecursive()) {
                     if (child->getType() == GAME && child->getCountAsGame() &&
                         !child->getHidden()) {
                         children.emplace_back(child);
                         std::string filePath {child->getPath()};
-                        std::string systemPath {child->getSystem()->getRootFolder()->getPath() +
-                                                "/" + mScraperParams.game->getFileName() + "/"};
-                        if (Utils::String::replace(filePath, systemPath, "") == originalValue)
+                        filePath = Utils::String::replace(filePath,
+                                                          scraperParams.game->getPath() + "/", "");
+                        if (Utils::String::replace(filePath, scraperParams.game->getPath() + "/",
+                                                   "") == originalValue)
                             mInvalidFolderLinkEntry = false;
                     }
                 }
@@ -456,7 +457,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 #endif
 
                 // OK callback (apply new value to ed).
-                auto updateVal = [this, ed, originalValue](const std::string& newVal) {
+                auto updateVal = [this, ed, originalValue,
+                                  scraperParams](const std::string& newVal) {
                     mInvalidFolderLinkEntry = false;
                     ed->setValue(newVal);
                     if (newVal == originalValue)
@@ -465,7 +467,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         ed->setColor(TEXTCOLOR_USERMARKED);
                 };
 
-                row.makeAcceptInputHandler([this, children, title, ed, updateVal] {
+                row.makeAcceptInputHandler([this, children, title, ed, updateVal, scraperParams] {
                     GuiSettings* s {new GuiSettings(title)};
 
                     for (auto child : children) {
@@ -474,10 +476,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         ComponentListRow row;
 
                         std::string filePath {child->getPath()};
-                        std::string systemPath {child->getSystem()->getRootFolder()->getPath() +
-                                                "/" + mScraperParams.game->getFileName() + "/"};
-
-                        filePath = Utils::String::replace(filePath, systemPath, "");
+                        filePath = Utils::String::replace(filePath,
+                                                          scraperParams.game->getPath() + "/", "");
 
                         std::shared_ptr<TextComponent> labelText {std::make_shared<TextComponent>(
                             label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
@@ -548,7 +548,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 bool multiLine {it->type == MD_MULTILINE_STRING};
                 const std::string title {it->displayPrompt};
 
-                gamePath = Utils::FileSystem::getStem(mScraperParams.game->getPath());
+                gamePath = Utils::FileSystem::getStem(scraperParams.game->getPath());
 
                 // OK callback (apply new value to ed).
                 auto updateVal = [ed, currentKey, originalValue, gamePath,
