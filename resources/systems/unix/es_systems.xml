@@ -1354,6 +1354,21 @@
         <theme>pv1000</theme>
     </system>
     <system>
+        <name>quake</name>
+        <fullname>Quake</fullname>
+        <path>%ROMPATH%/quake</path>
+        <extension>.desktop .pak .PAK .pk3 .PK3 .sh</extension>
+        <command label="TyrQuake">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/tyrquake_libretro.so %ROM%</command>
+        <command label="vitaQuake 2">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake2_libretro.so %ROM%</command>
+        <command label="vitaQuake 2 [Rogue]">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake2-rogue_libretro.so %ROM%</command>
+        <command label="vitaQuake 2 [Xatrix]">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake2-xatrix_libretro.so %ROM%</command>
+        <command label="vitaQuake 2 [Zaero]">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake2-zaero_libretro.so %ROM%</command>
+        <command label="vitaQuake 3">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vitaquake3_libretro.so %ROM%</command>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>pc, pcwindows</platform>
+        <theme>quake</theme>
+    </system>
+    <system>
         <name>samcoupe</name>
         <fullname>MGT SAM Coupé</fullname>
         <path>%ROMPATH%/samcoupe</path>
