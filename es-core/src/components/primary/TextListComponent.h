@@ -282,17 +282,17 @@ template <typename T> void TextListComponent<T>::update(int deltaTime)
         mLoopOffset2 = 0;
 
         // If we're not scrolling and this object's text exceeds our size, then loop it.
-        const float textLength {mFont
-                                    ->sizeText(Utils::String::toUpper(
-                                        mEntries.at(static_cast<unsigned int>(mCursor)).name))
-                                    .x};
         const float limit {mSize.x - mHorizontalMargin * 2.0f};
+        float length {0.0f};
 
-        if (textLength > limit) {
+        if (mEntries.at(static_cast<unsigned int>(mCursor)).data.textCache != nullptr)
+            length = mEntries.at(static_cast<unsigned int>(mCursor)).data.textCache->getSize().x;
+
+        if (length != 0.0f && length > limit) {
             // Loop the text.
             const float speed {mFont->sizeText("ABCDEFGHIJKLMNOPQRSTUVWXYZ").x * 0.247f};
             const float delay {3000.0f};
-            const float scrollLength {textLength};
+            const float scrollLength {length};
             const float returnLength {speed * 1.5f};
             const float scrollTime {(scrollLength * 1000.0f) / speed};
             const float returnTime {(returnLength * 1000.0f) / speed};

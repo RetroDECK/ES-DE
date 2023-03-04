@@ -234,12 +234,17 @@ public:
     struct CacheMetrics {
         glm::vec2 size;
         int maxGlyphHeight;
+
+        CacheMetrics()
+            : size {0.0f, 0.0f}
+            , maxGlyphHeight {0} {};
     } metrics;
 
     void setColor(unsigned int color);
     void setOpacity(float opacity);
     void setSaturation(float saturation);
     void setDimming(float dimming);
+    const glm::vec2& getSize() { return metrics.size; }
 
     friend Font;
 
