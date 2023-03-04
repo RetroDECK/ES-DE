@@ -212,6 +212,12 @@
             <entry>/usr/local/bin/ppsspp</entry>
         </rule>
     </emulator>
+    <emulator name="PRBOOM-PLUS">
+        <!-- Doom engine source port PrBoom+ -->
+        <rule type="systempath">
+            <entry>/Applications/PrBoom-Plus.app/Contents/MacOS/PrBoom-Plus</entry>
+        </rule>
+    </emulator>
     <emulator name="REDREAM">
         <!-- Sega Dreamcast emulator Redream -->
         <rule type="staticpath">

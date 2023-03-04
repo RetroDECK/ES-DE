@@ -490,6 +490,17 @@
             <entry>%ESPATH%\..\PPSSPP\PPSSPPWindows64.exe</entry>
         </rule>
     </emulator>
+    <emulator name="PRBOOM-PLUS">
+        <!-- Doom engine source port PrBoom+ -->
+        <rule type="systempath">
+            <entry>prboom-plus.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\prboom-plus\prboom-plus.exe</entry>
+            <entry>%ESPATH%\prboom-plus\prboom-plus.exe</entry>
+            <entry>%ESPATH%\..\prboom-plus\prboom-plus.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="PRIMEHACK">
         <!-- PrimeHack, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">

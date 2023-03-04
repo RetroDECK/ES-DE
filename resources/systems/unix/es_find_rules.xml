@@ -460,6 +460,12 @@
             <entry>~/.local/share/flatpak/exports/bin/org.ppsspp.PPSSPP</entry>
         </rule>
     </emulator>
+    <emulator name="PRBOOM-PLUS">
+        <!-- Doom engine source port PrBoom+ -->
+        <rule type="systempath">
+            <entry>prboom-plus</entry>
+        </rule>
+    </emulator>
     <emulator name="PRIMEHACK">
         <!-- PrimeHack, fork of Nintendo GameCube and Wii emulator Dolphin -->
         <rule type="systempath">

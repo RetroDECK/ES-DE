@@ -68,6 +68,7 @@ Emulators\PCSX2-Qt\pcsx2-qtx64-avx2.exe
 Emulators\PICO-8\pico8.exe
 Emulators\Play\Play.exe
 Emulators\PPSSPP\PPSSPPWindows64.exe
+Emulators\prboom-plus\prboom-plus.exe
 Emulators\PrimeHack\Dolphin.exe
 Emulators\Project64\Project64.exe
 Emulators\punes\punes64.exe
