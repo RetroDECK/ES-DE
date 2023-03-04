@@ -1356,7 +1356,7 @@ Properties:
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `0.5`
 * `unfocusedItemSaturation` - type: FLOAT
-    - Sets the saturation for all items except the currently selected entry.
+    - Sets the saturation for all items except the currently selected entry. This property takes precedence over `imageSaturation` if that has also been defined.
     - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
     - Default is `1`
 * `unfocusedItemDimming` - type: FLOAT
@@ -1501,7 +1501,7 @@ Properties:
     - Minimum value is `0.1` and maximum value is `1`
     - Default is `1`
 * `unfocusedItemSaturation` - type: FLOAT
-    - Sets the saturation for all items except the currently selected entry.
+    - Sets the saturation for all items except the currently selected entry. This property takes precedence over `imageSaturation` if that has also been defined.
     - Minimum value is `0` (grayscale) and maximum value is `1` (original file saturation).
     - Default is `1`
 * `unfocusedItemDimming` - type: FLOAT
@@ -1989,6 +1989,8 @@ Properties:
 
 GIF and Lottie (vector graphics) animations. The animation type is automatically selected based on the file extension with `.gif` for GIF animations and `.json` for Lottie animations. Note that Lottie animations take a lot of memory and CPU resources if scaled up to large sizes so it's adviced to not add too many of these to the same view and to not make them too large. GIF animations on the other hand are not as demanding except if they're really long and/or of high resolution.
 
+Also be aware that the [rlottie](https://github.com/Samsung/rlottie) library used by ES-DE is not compatible with all Lottie animations out there so you may need to convert them to a format that rlottie can read, or use some other animations altogether.
+
 Supported views:
 * `system `
 * `gamelist`
@@ -2028,6 +2030,10 @@ Properties:
     - The direction that the animation should be played.
     - Valid values are `normal` (forwards), `reverse` (backwards), `alternate` (bouncing forwards/backwards) and `alternateReverse` (bouncing backwards/forwards, i.e. starting with playing backwards).
     - Default is `normal`
+* `iterationCount` - type: UNSIGNED_INTEGER
+    - Number of times to play the animation until next time it's reset. Animation resets are triggered by various events like navigating between systems and gamelists, reloading a gamelist etc.
+    - Minimum value is `0` and maximum value is `10`
+    - Default is `0` (infinite amount of times)
 * `interpolation` - type: STRING
     - Interpolation method to use when scaling. Nearest neighbor (`nearest`) preserves sharp pixels and linear filtering (`linear`) makes the image smoother.
     - Valid values are `nearest` or `linear`

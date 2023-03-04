@@ -63,6 +63,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as the default emulator for the macintosh system (Mac SE and Mac Plus diskette images)
 * Added MAME standalone as the default emulator for the gameandwatch system
+* Added PrBoom+ standalone as an alternative emulator for the doom system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
 * Added SameBoy standalone as an alternative emulator for the gb and gbc systems
 * Added Gearboy standalone as an alternative emulator for the gb and gbc systems on Unix and Windows
@@ -339,6 +340,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Navigation sounds for the trigger buttons would play when repeatedly pressed at the start or end of textlists
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
+* Textlist entries would sometimes scroll horizontally even though they fit inside the element width
 * Custom collections editing mode did not end when switching UI modes
 * Editing a folder using the metadata editor added any new values to the filter index, even though it shouldn't be possible to filter folders directly
 * There were multiple issues with filtering games inside folders (too many games filtered, inconsistent behavior etc.)
