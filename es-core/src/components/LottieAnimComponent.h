@@ -58,7 +58,7 @@ private:
     std::vector<uint8_t> mPictureRGBA;
     std::unordered_map<size_t, std::vector<uint8_t>> mFrameCache;
     // Set a 1024 MiB total Lottie animation cache as default.
-    static inline size_t mMaxTotalFrameCache = 1024 * 1024 * 1024;
+    static inline size_t mMaxTotalFrameCache {1024 * 1024 * 1024};
     static inline size_t mTotalFrameCache;
     bool mCacheFrames;
     size_t mMaxCacheSize;
@@ -87,6 +87,10 @@ private:
     bool mExternalPause;
     bool mAlternate;
     bool mTargetIsMax;
+
+    unsigned int mColorShift;
+    unsigned int mColorShiftEnd;
+    bool mColorGradientHorizontal;
 };
 
 #endif // ES_CORE_COMPONENTS_LOTTIE_ANIM_COMPONENT_H

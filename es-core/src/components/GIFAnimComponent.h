@@ -101,6 +101,10 @@ private:
     bool mExternalPause;
     bool mAlternate;
     bool mTargetIsMax;
+
+    unsigned int mColorShift;
+    unsigned int mColorShiftEnd;
+    bool mColorGradientHorizontal;
 };
 
 #endif // ES_CORE_COMPONENTS_GIF_ANIM_COMPONENT_H

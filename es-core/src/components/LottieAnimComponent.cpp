@@ -38,6 +38,9 @@ LottieAnimComponent::LottieAnimComponent()
     , mExternalPause {false}
     , mAlternate {false}
     , mTargetIsMax {false}
+    , mColorShift {0xFFFFFFFF}
+    , mColorShiftEnd {0xFFFFFFFF}
+    , mColorGradientHorizontal {true}
 {
     // Get an empty texture for rendering the animation.
     mTexture = TextureResource::get("");
@@ -313,6 +316,30 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
+    if (properties & COLOR) {
+        if (elem->has("color")) {
+            mColorShift = elem->get<unsigned int>("color");
+            mColorShiftEnd = mColorShift;
+        }
+        if (elem->has("colorEnd"))
+            mColorShiftEnd = elem->get<unsigned int>("colorEnd");
+        if (elem->has("gradientType")) {
+            const std::string& gradientType {elem->get<std::string>("gradientType")};
+            if (gradientType == "horizontal") {
+                mColorGradientHorizontal = true;
+            }
+            else if (gradientType == "vertical") {
+                mColorGradientHorizontal = false;
+            }
+            else {
+                mColorGradientHorizontal = true;
+                LOG(LogWarning) << "LottieAnimComponent: Invalid theme configuration, property "
+                                   "\"gradientType\" for element \""
+                                << element.substr(10) << "\" defined as \"" << gradientType << "\"";
+            }
+        }
+    }
+
     if (elem->has("path"))
         setAnimation(elem->get<std::string>("path"));
 }
@@ -503,10 +530,10 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
         Renderer::Vertex vertices[4];
 
         // clang-format off
-        vertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, 0xFFFFFFFF};
-        vertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, 0xFFFFFFFF};
-        vertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, 0xFFFFFFFF};
-        vertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, 0xFFFFFFFF};
+        vertices[0] = {{0.0f,    0.0f   }, {0.0f, 0.0f}, mColorShift};
+        vertices[1] = {{0.0f,    mSize.y}, {0.0f, 1.0f}, mColorGradientHorizontal ? mColorShift : mColorShiftEnd};
+        vertices[2] = {{mSize.x, 0.0f   }, {1.0f, 0.0f}, mColorGradientHorizontal ? mColorShiftEnd : mColorShift};
+        vertices[3] = {{mSize.x, mSize.y}, {1.0f, 1.0f}, mColorShiftEnd};
         // clang-format on
 
         // Round vertices.
