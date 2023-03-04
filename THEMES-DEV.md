@@ -2033,6 +2033,16 @@ Properties:
     - Valid values are `nearest` or `linear`
     - Default is `nearest`
     - This property can only be used for GIF animations.
+* `color` - type: COLOR
+    - Applies a color shift to the animation by multiplying each pixel's color by this color value. For example, an all-white animation with `FF0000` applied would become completely red. You can also control the transparency of the animation by setting the value to for example `FFFFFFAA`. This keeps all pixels at their normal color and only affects the alpha channel. This property is applied after `saturation` so by setting that property to `0` it's possible to colorize rather than color shift.
+    - Default is `FFFFFFFF` (no color shift applied)
+* `colorEnd` - type: COLOR
+    - Works in the exact same way as `color` but can be set as the end color to apply a color shift gradient.
+    - Default is the same value as `color`
+* `gradientType` - type: STRING
+    - The direction to apply the color shift gradient if both `color` and `colorEnd` have been defined.
+    - Valid values are `horizontal` or `vertical`
+    - Default is `horizontal`
 * `brightness` - type: FLOAT
     - Controls the relative level of brightness. This is intended primarily for fine adjustments.
     - Minimum value is `-2` and maximum value is `2`

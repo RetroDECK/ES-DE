@@ -138,7 +138,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Greatly improved the performance of shader post-processing such as scanlines and blur rendering
 * Greatly improved application startup speed by avoiding a lot of unnecessary SVG rasterizations
 * Implemented dynamic texture allocation to the font code to reduce memory usage and avoid missing glyphs
-* Added support for changing font texture saturation
+* Added support for changing the saturation for font textures
 * Large optimizations to the text wrapping code (generallly 300-400% faster)
 * Added support for linear interpolation for font texture magnifications
 * Added support for texture mipmapping with trilinear filtering
