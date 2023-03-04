@@ -156,6 +156,7 @@ private:
     bool mInstantRowTransitions;
     float mUnfocusedItemOpacity;
     float mUnfocusedItemSaturation;
+    bool mHasUnfocusedItemSaturation;
     float mUnfocusedItemDimming;
     ImageFit mImagefit;
     float mImageRelativeScale;
@@ -226,6 +227,7 @@ GridComponent<T>::GridComponent()
     , mInstantRowTransitions {false}
     , mUnfocusedItemOpacity {1.0f}
     , mUnfocusedItemSaturation {1.0f}
+    , mHasUnfocusedItemSaturation {false}
     , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
     , mImageRelativeScale {1.0f}
@@ -745,7 +747,8 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
         }
 
         opacity = mUnfocusedItemOpacity * metadataOpacity;
-        saturation = mUnfocusedItemSaturation;
+        if (mHasUnfocusedItemSaturation)
+            saturation = mUnfocusedItemSaturation;
         dimming = mUnfocusedItemDimming;
 
         if (*it == static_cast<size_t>(mCursor)) {
@@ -753,7 +756,9 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             scale = glm::mix(1.0f, mItemScale, mTransitionFactor);
             opacity = glm::mix(mUnfocusedItemOpacity * metadataOpacity, 1.0f * metadataOpacity,
                                mTransitionFactor);
-            saturation = glm::mix(mUnfocusedItemSaturation, 1.0f, mTransitionFactor);
+            if (mHasUnfocusedItemSaturation)
+                saturation =
+                    glm::mix(mUnfocusedItemSaturation, mImageSaturation, mTransitionFactor);
             dimming = glm::mix(mUnfocusedItemDimming, 1.0f, mTransitionFactor);
         }
         else if (*it == static_cast<size_t>(mLastCursor)) {
@@ -761,7 +766,9 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             scale = glm::mix(mItemScale, 1.0f, mTransitionFactor);
             opacity = glm::mix(1.0f * metadataOpacity, mUnfocusedItemOpacity * metadataOpacity,
                                mTransitionFactor);
-            saturation = glm::mix(1.0f, mUnfocusedItemSaturation, mTransitionFactor);
+            if (mHasUnfocusedItemSaturation)
+                saturation =
+                    glm::mix(mImageSaturation, mUnfocusedItemSaturation, mTransitionFactor);
             dimming = glm::mix(1.0f, mUnfocusedItemDimming, mTransitionFactor);
         }
 
@@ -772,7 +779,7 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             mBackgroundImage->setPosition(mEntries.at(*it).data.item->getPosition());
             mBackgroundImage->setScale(scale);
             mBackgroundImage->setOpacity(opacity);
-            if (mUnfocusedItemSaturation != 1.0f)
+            if (mHasUnfocusedItemSaturation)
                 mBackgroundImage->setSaturation(saturation);
             if (mUnfocusedItemDimming != 1.0f)
                 mBackgroundImage->setDimming(dimming);
@@ -806,7 +813,7 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
 
         mEntries.at(*it).data.item->setScale(scale);
         mEntries.at(*it).data.item->setOpacity(opacity);
-        if (mUnfocusedItemSaturation != 1.0f)
+        if (mHasUnfocusedItemSaturation)
             mEntries.at(*it).data.item->setSaturation(saturation);
         if (mUnfocusedItemDimming != 1.0f)
             mEntries.at(*it).data.item->setDimming(dimming);
@@ -1217,9 +1224,11 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (elem->has("unfocusedItemOpacity"))
         mUnfocusedItemOpacity = glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
 
-    if (elem->has("unfocusedItemSaturation"))
+    if (elem->has("unfocusedItemSaturation")) {
         mUnfocusedItemSaturation =
             glm::clamp(elem->get<float>("unfocusedItemSaturation"), 0.0f, 1.0f);
+        mHasUnfocusedItemSaturation = true;
+    }
 
     if (elem->has("unfocusedItemDimming"))
         mUnfocusedItemDimming = glm::clamp(elem->get<float>("unfocusedItemDimming"), 0.0f, 1.0f);

@@ -187,6 +187,7 @@ private:
     float mReflectionsFalloff;
     float mUnfocusedItemOpacity;
     float mUnfocusedItemSaturation;
+    bool mHasUnfocusedItemSaturation;
     float mUnfocusedItemDimming;
     ImageFit mImagefit;
     unsigned int mCarouselColor;
@@ -257,6 +258,7 @@ CarouselComponent<T>::CarouselComponent()
     , mReflectionsFalloff {1.0f}
     , mUnfocusedItemOpacity {0.5f}
     , mUnfocusedItemSaturation {1.0f}
+    , mHasUnfocusedItemSaturation {false}
     , mUnfocusedItemDimming {1.0f}
     , mImagefit {ImageFit::CONTAIN}
     , mCarouselColor {0}
@@ -991,15 +993,17 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             opacity = mUnfocusedItemOpacity + (maxDiff - (maxDiff * fabsf(distance)));
         }
 
-        if (distance == 0.0f || mUnfocusedItemSaturation == 1.0f) {
-            saturation = 1.0f;
-        }
-        else if (fabsf(distance) >= 1.0f) {
-            saturation = mUnfocusedItemSaturation;
-        }
-        else {
-            const float maxDiff {1.0f - mUnfocusedItemSaturation};
-            saturation = mUnfocusedItemSaturation + (maxDiff - (maxDiff * fabsf(distance)));
+        if (mHasUnfocusedItemSaturation) {
+            if (distance == 0.0f) {
+                saturation = mImageSaturation;
+            }
+            else if (fabsf(distance) >= 1.0f) {
+                saturation = mUnfocusedItemSaturation;
+            }
+            else {
+                const float maxDiff {mImageSaturation - mUnfocusedItemSaturation};
+                saturation = mUnfocusedItemSaturation + (maxDiff - (maxDiff * fabsf(distance)));
+            }
         }
 
         if (distance == 0.0f || mUnfocusedItemDimming == 1.0f) {
@@ -1185,7 +1189,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
 
         comp->setScale(renderItem.scale);
         comp->setOpacity(renderItem.opacity * metadataOpacity);
-        if (mUnfocusedItemSaturation != 1.0f)
+        if (mHasUnfocusedItemSaturation)
             comp->setSaturation(renderItem.saturation);
         if (mUnfocusedItemDimming != 1.0f)
             comp->setDimming(renderItem.dimming);
@@ -1234,7 +1238,7 @@ template <typename T> void CarouselComponent<T>::render(const glm::mat4& parentT
             float falloff {glm::clamp(mReflectionsFalloff, 0.0f, 1.0f)};
             falloff = mReflectionsOpacity * (1.0f - falloff);
             comp->setOpacity(comp->getOpacity() * mReflectionsOpacity);
-            if (mUnfocusedItemSaturation != 1.0f)
+            if (mHasUnfocusedItemSaturation)
                 comp->setSaturation(renderItem.saturation);
             if (mUnfocusedItemDimming != 1.0f)
                 comp->setDimming(renderItem.dimming);
@@ -1704,9 +1708,11 @@ void CarouselComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mUnfocusedItemOpacity =
                 glm::clamp(elem->get<float>("unfocusedItemOpacity"), 0.1f, 1.0f);
 
-        if (elem->has("unfocusedItemSaturation"))
+        if (elem->has("unfocusedItemSaturation")) {
             mUnfocusedItemSaturation =
                 glm::clamp(elem->get<float>("unfocusedItemSaturation"), 0.0f, 1.0f);
+            mHasUnfocusedItemSaturation = true;
+        }
 
         if (elem->has("unfocusedItemDimming"))
             mUnfocusedItemDimming =
