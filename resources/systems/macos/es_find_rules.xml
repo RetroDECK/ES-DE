@@ -214,7 +214,7 @@
     </emulator>
     <emulator name="PRBOOM-PLUS">
         <!-- Doom engine source port PrBoom+ -->
-        <rule type="systempath">
+        <rule type="staticpath">
             <entry>/Applications/PrBoom-Plus.app/Contents/MacOS/PrBoom-Plus</entry>
         </rule>
     </emulator>
