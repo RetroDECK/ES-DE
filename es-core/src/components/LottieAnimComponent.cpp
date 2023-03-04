@@ -37,6 +37,8 @@ LottieAnimComponent::LottieAnimComponent()
     , mPause {false}
     , mExternalPause {false}
     , mAlternate {false}
+    , mIterationCount {0}
+    , mPlayCount {0}
     , mTargetIsMax {false}
     , mColorShift {0xFFFFFFFF}
     , mColorShiftEnd {0xFFFFFFFF}
@@ -230,7 +232,9 @@ void LottieAnimComponent::setAnimation(const std::string& path)
 void LottieAnimComponent::resetFileAnimation()
 {
     mExternalPause = false;
+    mPlayCount = 0;
     mTimeAccumulator = 0;
+    mDirection = mStartDirection;
     mFrameNum = mStartDirection == "reverse" ? mTotalFrames - 1 : 0;
 
     if (mAnimation != nullptr) {
@@ -314,6 +318,12 @@ void LottieAnimComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
             mStartDirection = "normal";
             mAlternate = false;
         }
+    }
+
+    if (elem->has("iterationCount")) {
+        mIterationCount = glm::clamp(elem->get<unsigned int>("iterationCount"), 0u, 10u);
+        if (mAlternate)
+            mIterationCount *= 2;
     }
 
     if (properties & COLOR) {
@@ -437,6 +447,7 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
 
             mTimeAccumulator = 0;
             mSkippedFrames = 0;
+            ++mPlayCount;
 
             if (mDirection == "reverse" && mAlternate)
                 mFrameNum = mTotalFrames - 2;
@@ -446,6 +457,12 @@ void LottieAnimComponent::render(const glm::mat4& parentTrans)
                 mFrameNum = 1;
             else
                 mFrameNum = 0;
+
+            if (mIterationCount != 0 && mPlayCount >= mIterationCount) {
+                mPlayCount = 0;
+                mExternalPause = true;
+                mFrameNum = mTotalFrames;
+            }
 
             if (DEBUG_ANIMATION)
                 mAnimationStartTime = std::chrono::system_clock::now();

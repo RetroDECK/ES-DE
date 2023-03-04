@@ -360,6 +360,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"path", PATH},
        {"speed", FLOAT},
        {"direction", STRING},
+       {"iterationCount", UNSIGNED_INTEGER},
        {"interpolation", STRING},
        {"color", COLOR},
        {"colorEnd", COLOR},

@@ -100,6 +100,8 @@ private:
     bool mPause;
     bool mExternalPause;
     bool mAlternate;
+    int mIterationCount;
+    int mPlayCount;
     bool mTargetIsMax;
 
     unsigned int mColorShift;
