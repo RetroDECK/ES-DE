@@ -105,12 +105,13 @@ protected:
 
 private:
     void populate();
-    void updateGameCount();
+    void updateGameCount(SystemData* system = nullptr);
     void updateGameSelectors();
     void legacyApplyTheme(const std::shared_ptr<ThemeData>& theme);
     void renderElements(const glm::mat4& parentTrans, bool abovePrimary);
 
     struct SystemViewElements {
+        SystemData* system;
         HelpStyle helpStyle;
         std::string name;
         std::string fullName;

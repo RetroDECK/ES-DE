@@ -496,6 +496,7 @@ void SystemView::populate()
 
         if (mLegacyMode) {
             SystemViewElements elements;
+            elements.system = it;
             elements.name = it->getName();
             elements.legacyExtras = ThemeData::makeExtras(theme, "system");
 
@@ -510,6 +511,7 @@ void SystemView::populate()
 
         if (!mLegacyMode) {
             SystemViewElements elements;
+            elements.system = it;
             if (theme->hasView("system")) {
                 elements.name = it->getName();
                 elements.fullName = it->getFullName();
@@ -796,6 +798,9 @@ void SystemView::populate()
             entry.data.entryType = TextListEntryType::PRIMARY;
             mTextList->addEntry(entry);
         }
+
+        // Update the game counter here so the text doesn't pop in during initial navigation.
+        updateGameCount(it);
     }
 
     if (mGrid != nullptr)
@@ -829,21 +834,22 @@ void SystemView::populate()
                             "TransitionsSystemToSystem")) == ViewTransitionAnimation::FADE);
 }
 
-void SystemView::updateGameCount()
+void SystemView::updateGameCount(SystemData* system)
 {
-    std::pair<unsigned int, unsigned int> gameCount {
-        mPrimary->getSelected()->getDisplayedGameCount()};
+    SystemData* sourceSystem {system == nullptr ? mPrimary->getSelected() : system};
+
+    std::pair<unsigned int, unsigned int> gameCount {sourceSystem->getDisplayedGameCount()};
     std::stringstream ss;
     std::stringstream ssGames;
     std::stringstream ssFavorites;
     bool games {false};
-    const bool favoriteSystem {mPrimary->getSelected()->getName() == "favorites"};
-    const bool recentSystem {mPrimary->getSelected()->getName() == "recent"};
+    const bool favoriteSystem {sourceSystem->getName() == "favorites"};
+    const bool recentSystem {sourceSystem->getName() == "recent"};
 
-    if (mPrimary->getSelected()->isCollection() && favoriteSystem) {
+    if (sourceSystem->isCollection() && favoriteSystem) {
         ss << gameCount.first << " Game" << (gameCount.first == 1 ? " " : "s");
     }
-    else if (mPrimary->getSelected()->isCollection() && recentSystem) {
+    else if (sourceSystem->isCollection() && recentSystem) {
         // The "recent" gamelist has probably been trimmed after sorting, so we'll cap it at
         // its maximum limit of 50 games.
         ss << (gameCount.first > 50 ? 50 : gameCount.first) << " Game"
@@ -861,7 +867,11 @@ void SystemView::updateGameCount()
         mLegacySystemInfo->setText(ss.str());
     }
     else {
-        for (auto& gameCountComp : mSystemElements[mPrimary->getCursor()].gameCountComponents) {
+        auto elementsIt = std::find_if(mSystemElements.cbegin(), mSystemElements.cend(),
+                                       [sourceSystem](const SystemViewElements& systemElements) {
+                                           return systemElements.system == sourceSystem;
+                                       });
+        for (auto& gameCountComp : (*elementsIt).gameCountComponents) {
             if (gameCountComp->getThemeSystemdata() == "gamecount") {
                 gameCountComp->setValue(ss.str());
             }
