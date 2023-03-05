@@ -292,7 +292,10 @@ protected:
         while (mScrollTier < mTierList.count - 1 &&
                mScrollTierAccumulator >= mTierList.tiers[mScrollTier].length) {
             mScrollTierAccumulator -= mTierList.tiers[mScrollTier].length;
-            ++mScrollTier;
+            // This is required for the carousel as the highest tier introduces weird behavior
+            // if there are only two entries.
+            if (!(mScrollTier > 0 && mEntries.size() < 3))
+                ++mScrollTier;
         }
 
         // Actually perform the scrolling.
