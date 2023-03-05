@@ -1214,9 +1214,9 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
             std::shared_ptr<GamelistView> newView {getGamelistView(system)};
 
             // To counter having come from a placeholder.
-            if (!cursor->isPlaceHolder()) {
+            if (!cursor->isPlaceHolder() && cursor->getParent() != nullptr)
                 newView->setCursor(cursor);
-            }
+
             if (isCurrent)
                 mCurrentView = newView;
 
