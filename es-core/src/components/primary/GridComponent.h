@@ -410,6 +410,9 @@ void GridComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<ThemeData
 template <typename T> void GridComponent<T>::onDemandTextureLoad()
 {
     if constexpr (std::is_same_v<T, FileData*>) {
+        if (size() == 0)
+            return;
+
         if (mImageTypes.empty())
             mImageTypes.emplace_back("marquee");
 

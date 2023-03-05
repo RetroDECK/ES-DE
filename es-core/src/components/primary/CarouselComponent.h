@@ -474,6 +474,9 @@ void CarouselComponent<T>::updateEntry(Entry& entry, const std::shared_ptr<Theme
 template <typename T> void CarouselComponent<T>::onDemandTextureLoad()
 {
     if constexpr (std::is_same_v<T, FileData*>) {
+        if (size() == 0)
+            return;
+
         if (mImageTypes.empty())
             mImageTypes.emplace_back("marquee");
 
@@ -1981,7 +1984,7 @@ template <typename T> void CarouselComponent<T>::onCursorChanged(const CursorSta
 
     GuiComponent::setAnimation(anim, 0, nullptr, false, 0);
 
-    if (mCursorChangedCallback && !mEntries.empty())
+    if (mCursorChangedCallback)
         mCursorChangedCallback(state);
 }
 
