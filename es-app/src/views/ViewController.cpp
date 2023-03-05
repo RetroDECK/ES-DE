@@ -1213,8 +1213,9 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
             system->getIndex()->setKidModeFilters();
             std::shared_ptr<GamelistView> newView {getGamelistView(system)};
 
-            // To counter having come from a placeholder.
-            if (!cursor->isPlaceHolder() && cursor->getParent() != nullptr)
+            // Make sure we don't attempt to set the cursor to a nonexistent entry.
+            auto children = system->getRootFolder()->getChildrenRecursive();
+            if (std::find(children.cbegin(), children.cend(), cursor) != children.cend())
                 newView->setCursor(cursor);
 
             if (isCurrent)
