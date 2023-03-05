@@ -1364,7 +1364,7 @@ Properties:
     - Minimum value is `0` (pure black) and maximum value is `1` (no adjustment)
     - Default is `1`
 * `fastScrolling` - type: BOOLEAN
-    - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). Be aware of possible performance implications when enabling this property, for gamelist views it's probably mostly useful for text-based carousels as streaming carousel images at the higher scrolling speed is likely to lead to stuttering on slower machines. Similarly, using this property in the system view together with gameselector configuration may lead to quite a lot of lag on weaker machines.
+    - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). This requires that the carousel has three or more entries, otherwise the highest scrolling tier will never be triggered. Be aware of possible performance implications when enabling this property, for gamelist views it's probably mostly useful for text-based carousels as streaming carousel images at the higher scrolling speed is likely to lead to stuttering on slower machines. Similarly, using this property in the system view together with gameselector configuration may lead to quite a lot of lag on weaker machines.
     - Default is `false`
 * `color` - type: COLOR
     - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.

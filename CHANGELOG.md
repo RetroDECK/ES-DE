@@ -341,6 +341,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Slide and fade transitions would sometimes stop working after changing theme sets
 * Using fade transitions, when holding a direction button to scroll the system view carousel, the key repeat would cause an unwanted background rendering
 * Textlist entries would sometimes scroll horizontally even though they fit inside the element width
+* A star was included in the quick selector for gamelists that had a mix of files and folders but where only folders were marked as favorites
 * Custom collections editing mode did not end when switching UI modes
 * Editing a folder using the metadata editor added any new values to the filter index, even though it shouldn't be possible to filter folders directly
 * There were multiple issues with filtering games inside folders (too many games filtered, inconsistent behavior etc.)
