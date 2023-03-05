@@ -1221,6 +1221,12 @@ void ViewController::reloadGamelistView(GamelistView* view, bool reloadTheme)
                 mCurrentView = newView;
 
             newView->populateCursorHistory(cursorHistoryTemp);
+            // This is required to get the game count updated if the favorite metadata value has
+            // been changed for any game that is part of a custom collection.
+            if (system->isCollection() && system->getName() == "collections") {
+                std::pair<unsigned int, unsigned int> gameCount {0, 0};
+                system->getRootFolder()->countGames(gameCount);
+            }
             updateHelpPrompts();
             break;
         }
