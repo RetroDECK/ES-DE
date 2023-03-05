@@ -956,6 +956,7 @@ void GamelistBase::generateFirstLetterIndex(const std::vector<FileData*>& files)
     bool onlyFavorites {true};
     bool onlyFolders {true};
     bool hasFavorites {false};
+    bool hasFolderFavorites {false};
     bool hasFolders {false};
     bool favoritesSorting {false};
 
@@ -980,7 +981,7 @@ void GamelistBase::generateFirstLetterIndex(const std::vector<FileData*>& files)
     for (auto it = files.begin(); it != files.end(); ++it) {
         if ((*it)->getType() == FOLDER && (*it)->getFavorite() && favoritesSorting &&
             !onlyFavorites) {
-            hasFavorites = true;
+            hasFolderFavorites = true;
         }
         else if ((*it)->getType() == FOLDER && foldersOnTop && !onlyFolders) {
             hasFolders = true;
@@ -1001,7 +1002,7 @@ void GamelistBase::generateFirstLetterIndex(const std::vector<FileData*>& files)
 
     // If there are any favorites and/or folders in the list, insert their respective
     // Unicode characters at the beginning of the vector.
-    if (hasFavorites)
+    if (hasFavorites || (hasFolderFavorites && onlyFolders))
         mFirstLetterIndex.insert(mFirstLetterIndex.begin(), ViewController::FAVORITE_CHAR);
 
     if (hasFolders)
