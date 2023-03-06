@@ -119,12 +119,13 @@ bool SystemView::input(InputConfig* config, Input input)
             NavigationSounds::getInstance().playThemeNavigationSound(SELECTSOUND);
             return true;
         }
-        if (Settings::getInstance()->getBool("RandomAddButton") &&
+        if (Settings::getInstance()->getString("RandomEntryButton") == "gamessystems" &&
             (config->isMappedTo("leftthumbstickclick", input) ||
              config->isMappedTo("rightthumbstickclick", input))) {
             // Get a random system and jump to it.
             NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
             mPrimary->stopScrolling();
+            ViewController::getInstance()->cancelViewTransitions();
             mPrimary->setCursor(SystemData::getRandomSystem(mPrimary->getSelected()));
             return true;
         }
@@ -215,7 +216,7 @@ std::vector<HelpPrompt> SystemView::getHelpPrompts()
 
     prompts.push_back(HelpPrompt("a", "select"));
 
-    if (Settings::getInstance()->getBool("RandomAddButton"))
+    if (Settings::getInstance()->getString("RandomEntryButton") == "gamessystems")
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (Settings::getInstance()->getBool("ScreensaverControls"))

@@ -216,7 +216,8 @@ bool GamelistBase::input(InputConfig* config, Input input)
                 return true;
             }
         }
-        else if (Settings::getInstance()->getBool("RandomAddButton") &&
+        else if ((Settings::getInstance()->getString("RandomEntryButton") == "games" ||
+                  Settings::getInstance()->getString("RandomEntryButton") == "gamessystems") &&
                  (config->isMappedTo("leftthumbstickclick", input) ||
                   config->isMappedTo("rightthumbstickclick", input))) {
             if (mRoot->getSystem()->isGameSystem() && getCursor()->getType() != PLACEHOLDER) {

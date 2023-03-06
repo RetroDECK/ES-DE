@@ -163,6 +163,7 @@ void Settings::setDefaults()
     mStringMap["MenuOpeningEffect"] = {"scale-up", "scale-up"};
     mStringMap["LaunchScreenDuration"] = {"normal", "normal"};
     mStringMap["UIMode"] = {"full", "full"};
+    mStringMap["RandomEntryButton"] = {"games", "games"};
 
     // UI settings -> media viewer settings.
     mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
@@ -211,7 +212,6 @@ void Settings::setDefaults()
     mBoolMap["ListScrollOverlay"] = {false, false};
     mBoolMap["VirtualKeyboard"] = {true, true};
     mBoolMap["FavoritesAddButton"] = {true, true};
-    mBoolMap["RandomAddButton"] = {false, false};
     mBoolMap["GamelistFilters"] = {true, true};
     mBoolMap["ShowHelpPrompts"] = {true, true};
 

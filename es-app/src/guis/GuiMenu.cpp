@@ -691,6 +691,29 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Random entry button.
+    auto randomEntryButton = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "RANDOM ENTRY BUTTON", false);
+    const std::string selectedRandomEntryButton {
+        Settings::getInstance()->getString("RandomEntryButton")};
+    randomEntryButton->add("GAMES ONLY", "games", selectedRandomEntryButton == "games");
+    randomEntryButton->add("GAMES AND SYSTEMS", "gamessystems",
+                           selectedRandomEntryButton == "gamessystems");
+    randomEntryButton->add("DISABLED", "disabled", selectedRandomEntryButton == "disabled");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the random entry button to "games" in this case.
+    if (randomEntryButton->getSelectedObjects().size() == 0)
+        randomEntryButton->selectEntry(0);
+    s->addWithLabel("RANDOM ENTRY BUTTON", randomEntryButton);
+    s->addSaveFunc([randomEntryButton, s] {
+        if (randomEntryButton->getSelected() !=
+            Settings::getInstance()->getString("RandomEntryButton")) {
+            Settings::getInstance()->setString("RandomEntryButton",
+                                               randomEntryButton->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
     // Media viewer.
     ComponentListRow mediaViewerRow;
     mediaViewerRow.elements.clear();
@@ -850,17 +873,6 @@ void GuiMenu::openUIOptions()
         if (Settings::getInstance()->getBool("FavoritesAddButton") !=
             favoritesAddButton->getState()) {
             Settings::getInstance()->setBool("FavoritesAddButton", favoritesAddButton->getState());
-            s->setNeedsSaving();
-        }
-    });
-
-    // Enable the thumbstick click buttons for jumping to a random system or game.
-    auto randomAddButton = std::make_shared<SwitchComponent>();
-    randomAddButton->setState(Settings::getInstance()->getBool("RandomAddButton"));
-    s->addWithLabel("ENABLE RANDOM SYSTEM OR GAME BUTTON", randomAddButton);
-    s->addSaveFunc([randomAddButton, s] {
-        if (Settings::getInstance()->getBool("RandomAddButton") != randomAddButton->getState()) {
-            Settings::getInstance()->setBool("RandomAddButton", randomAddButton->getState());
             s->setNeedsSaving();
         }
     });

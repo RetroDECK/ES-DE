@@ -455,7 +455,9 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
 
     if (!UIModeController::getInstance()->isUIModeKid())
         prompts.push_back(HelpPrompt("back", "options"));
-    if (mRoot->getSystem()->isGameSystem() && Settings::getInstance()->getBool("RandomAddButton"))
+    if (mRoot->getSystem()->isGameSystem() &&
+        (Settings::getInstance()->getString("RandomEntryButton") == "games" ||
+         Settings::getInstance()->getString("RandomEntryButton") == "gamessystems"))
         prompts.push_back(HelpPrompt("thumbstickclick", "random"));
 
     if (mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
