@@ -40,6 +40,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for mixed-case custom collection names
 * Added a startup progress bar to the splash screen
 * Expanded the quick system select menu option from an on/off entry to a selection of different button combinations
+* Expanded the random system or game button from an on/off entry to a selection between "Games only", "Games and systems" or "Disabled"
 * Changed the order of the help system entries Y, X, B and A to instead be listed as A, B, X and Y
 * Changed the start button for the screensaver from "Back" to "X"
 * Changed the help system description for the "A" button in the gamelist view from "Launch" to "Select"
@@ -63,12 +64,15 @@ Overall application speed and performance has been greatly improved with faster 
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as the default emulator for the macintosh system (Mac SE and Mac Plus diskette images)
 * Added MAME standalone as the default emulator for the gameandwatch system
+* Added Stella standalone as an alternative emulator for the atari2600 system
+* Added Gopher2600 standalone as an alternative emulator for the atari2600 system on Unix and Windows
 * Added PrBoom+ standalone as an alternative emulator for the doom system
 * Added openMSX standalone as an alternative emulator for the colecovision, msx, msx1, msx2 and msxturbor systems
 * Added SameBoy standalone as an alternative emulator for the gb and gbc systems
 * Added Gearboy standalone as an alternative emulator for the gb and gbc systems on Unix and Windows
 * Added puNES standalone as an alternative emulator for the famicom and nes systems on Unix and Windows
 * Added Hatari standalone as an alternative emulator for the atarist system
+* Added Fuse standalone as an alternative emulator for the zxspectrum system
 * (Linux) Added support for the Sega Model 3 (model3) game system by adding the Supermodel standalone emulator
 * (Linux) Added Supermodel standalone as an alternative emulator for the arcade and mame systems
 * (Linux) Added support for the mGBA Qt and Snes9x GTK standalone emulators

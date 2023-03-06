@@ -389,7 +389,7 @@ ES-DE automatically configures the keyboard and any connected controllers using 
 
 You can also force a run of this tool directly on startup via the command line argument `--force-input-config`.
 
-The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions. Note that custom button mappings will not change the help prompts.
+The actual procedure to map the inputs should be self-explanatory, just follow the on-screen instructions. Note that custom button mappings will not change the help system entries.
 
 Any custom configuration is applied per unique device ID (GUID). So if two identical controllers are used with ES-DE, both will have the same configuration applied. If connecting controllers of the same type but of different revisions, the GUID may differ and therefore the custom configuration would need to be applied to each device individually.
 
@@ -482,7 +482,7 @@ Jumps to the first or last entries in carousels, grids and textlists as well as 
 **Left and right thumbstick click**\
 _(F2 / F3)_
 
-Jumps to a random game or system depending on whether pressed when in the system view or gamelist view. Only available if the _Enable random system or game button_ option has been enabled.
+Jumps to a random game or system depending on whether pressed when in the system view or gamelist view. Only applicable if the _Random entry button_ option has been configured accordingly.
 
 **A button**\
 _(Enter)_
@@ -623,28 +623,29 @@ So placing a manually downloaded emulator binary in either of these directories 
 
 The following manually downloaded emulators are supported when using the bundled configuration:
 
-| System name                      | Emulator      | Filename configuration          |
-| :------------------------------- | :------------ | :------------------------------ |
-| amstradcpc                       | CPCemu        | cpcemu/cpcemu                   |
-| apple2                           | LinApple      | linapple/linapple               |
-| coco/dragon32/tanodragon         | XRoar         | xroar/xroar                     |
-| daphne                           | Hypseus Singe | hypseus-singe/hypseus.bin       |
-| dreamcast                        | Redream       | redream/redream                 |
-| easyrpg                          | EasyRPG       | easyrpg/easyrpg-player          |
-| fbneo/neogeo/neogeocd/neogeocdjp | FinalBurn Neo | fbneo/fbneo                     |
-| flash                            | Lightspark    | lightspark/lightspark           |
-| flash                            | Ruffle        | ruffle/ruffle                   |
-| fmtowns                          | Tsugaru       | tsugaru/Tsugaru_CUI             |
-| gb/gbc                           | Gearboy       | gearboy/gearboy                 |
-| model3                           | Supermodel    | Supermodel/supermodel           |
-| famicom/nes                      | puNES         | punes/punes                     |
-| oric                             | Oricutron     | oricutron/Oricutron             |
-| pico8                            | PICO-8        | pico-8/pico8                    |
-| psvita                           | Vita3K        | Vita3K/Vita3K                   |
-| samcoupe                         | SimCoupé      | simcoupe/simcoupe               |
-| switch                           | Ryujinx       | publish/Ryujinx                 |
-| trs-80                           | sdl2trs       | sdl2trs/sdl2trs                 |
-| wiiu                             | Cemu          | Cemu/Cemu                       |
+| System name                      | Emulator      | Filename configuration            |
+| :------------------------------- | :------------ | :-------------------------------- |
+| amstradcpc                       | CPCemu        | cpcemu/cpcemu                     |
+| apple2                           | LinApple      | linapple/linapple                 |
+| atari2600                        | Gopher2600    | gopher2600/gopher2600_linux_amd64 |
+| coco/dragon32/tanodragon         | XRoar         | xroar/xroar                       |
+| daphne                           | Hypseus Singe | hypseus-singe/hypseus.bin         |
+| dreamcast                        | Redream       | redream/redream                   |
+| easyrpg                          | EasyRPG       | easyrpg/easyrpg-player            |
+| fbneo/neogeo/neogeocd/neogeocdjp | FinalBurn Neo | fbneo/fbneo                       |
+| flash                            | Lightspark    | lightspark/lightspark             |
+| flash                            | Ruffle        | ruffle/ruffle                     |
+| fmtowns                          | Tsugaru       | tsugaru/Tsugaru_CUI               |
+| gb/gbc                           | Gearboy       | gearboy/gearboy                   |
+| model3                           | Supermodel    | Supermodel/supermodel             |
+| famicom/nes                      | puNES         | punes/punes                       |
+| oric                             | Oricutron     | oricutron/Oricutron               |
+| pico8                            | PICO-8        | pico-8/pico8                      |
+| psvita                           | Vita3K        | Vita3K/Vita3K                     |
+| samcoupe                         | SimCoupé      | simcoupe/simcoupe                 |
+| switch                           | Ryujinx       | publish/Ryujinx                   |
+| trs-80                           | sdl2trs       | sdl2trs/sdl2trs                   |
+| wiiu                             | Cemu          | Cemu/Cemu                         |
 
 Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -2293,6 +2294,10 @@ This configures for how long to display the game launch screen when starting a g
 
 Sets the user interface mode for the application to _Full, Kiosk_ or _Kid_. See the description [above](USERGUIDE-DEV.md#ui-modes) in this document for additional information.
 
+**Random entry button**
+
+Whether to enable the selection of a random entry in the system or gamelist view via a button press, by default mapped to the click button of either thumbstick. The options are _Games only, Games and systems_ or _Disabled_. The help system will also visually indicate the status of this setting.
+
 **Media viewer settings**
 
 Submenu containing all the settings for the media viewer. These are described in detail below.
@@ -2340,10 +2345,6 @@ This enables a virtual (on-screen) keyboard that can be used at various places t
 **Enable toggle favorites button**
 
 This setting enables the _Y_ button for quickly toggling a game as favorite. Although this may be convenient at times, it's also quite easy to accidentally remove a favorite tagging of a game when using the application more casually. As such it could sometimes make sense to disable this functionality. It's of course still possible to mark a game as favorite using the metadata editor when this setting is disabled. The option does not affect the use of the _Y_ button to add or remove games when editing custom collections.
-
-**Enable random system or game button**
-
-This enables or disables the ability to jump to a random system or game. It's mapped to the thumbstick click button, either the left or right thumbstick will work. The help prompts will also visually indicate whether this option is enabled or not.
 
 **Enable gamelist filters**
 
@@ -3064,7 +3065,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | arcadia               | Emerson Arcadia 2001                           | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file           |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)**             |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
-| atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| atari2600             | Atari 2600                                     | Stella                            | Stella 2014,<br>Stella **(Standalone)**,<br>Gopher2600 **(Standalone)** [UW],<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | atari5200             | Atari 5200                                     | a5200                             | Atari800,<br>Atari800 **(Standalone)** | Yes          | Single archive or ROM file |
 | atari7800             | Atari 7800 ProSystem                           | ProSystem                         |                                   | Yes          | Single archive or ROM file |
 | atari800              | Atari 800                                      | Atari800                          | Atari800 **(Standalone)**         | No           |                                      |
@@ -3219,4 +3220,4 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W]        |                                   | No           |                                      |
 | zmachine              | Infocom Z-machine                              | Gargoyle **(Standalone)**         |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
-| zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              |                                   | No           |                                      |
+| zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Fuse **(Standalone)**             | No           |                                      |
