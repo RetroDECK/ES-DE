@@ -158,6 +158,7 @@
         <command label="Stella">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\stella_libretro.dll %ROM%</command>
         <command label="Stella 2014">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\stella2014_libretro.dll %ROM%</command>
         <command label="Stella (Standalone)">%EMULATOR_STELLA% %ROM%</command>
+        <command label="Gopher2600 (Standalone)">%EMULATOR_GOPHER2600% %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Atari 2600" %ROM%</command>
         <platform>atari2600</platform>
         <theme>atari2600</theme>

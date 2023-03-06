@@ -281,6 +281,14 @@
             <entry>~/bin/gearboy/gearboy</entry>
         </rule>
     </emulator>
+    <emulator name="GOPHER2600">
+        <!-- Atari 2600 emulator Gopher2600 -->
+        <rule type="staticpath">
+            <entry>~/Applications/gopher2600/gopher2600_linux_amd64</entry>
+            <entry>~/.local/bin/gopher2600/gopher2600_linux_amd64</entry>
+            <entry>~/bin/gopher2600/gopher2600_linux_amd64</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="systempath">

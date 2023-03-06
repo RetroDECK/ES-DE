@@ -52,6 +52,7 @@ Emulators\flycast\flycast.exe
 Emulators\Fuse\fuse.exe
 Emulators\gargoyle\gargoyle.exe
 Emulators\Gearboy\Gearboy.exe
+Emulators\gopher2600\gopher2600_windows_amd64.exe
 Emulators\hatari\hatari.exe
 Emulators\Hypseus Singe\hypseus.exe
 Emulators\KEmulator\KEmulator.exe

@@ -208,6 +208,14 @@
             <entry>%ESPATH%\..\Gearboy\Gearboy.exe</entry>
         </rule>
     </emulator>
+    <emulator name="GOPHER2600">
+        <!-- Atari 2600 emulator Gopher2600 -->
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\gopher2600\gopher2600_windows_amd64.exe</entry>
+            <entry>%ESPATH%\gopher2600\gopher2600_windows_amd64.exe</entry>
+            <entry>%ESPATH%\..\gopher2600\gopher2600_windows_amd64.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="HATARI">
         <!-- Atari ST/STE/TT/Falcon emulator Hatari -->
         <rule type="staticpath">
