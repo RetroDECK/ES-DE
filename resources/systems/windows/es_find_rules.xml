@@ -720,6 +720,17 @@
             <entry>D:\Program Files (x86)\Steam\steam.exe</entry>
         </rule>
     </emulator>
+    <emulator name="STELLA">
+        <!-- Atari 2600 emulator Stella -->
+        <rule type="systempath">
+            <entry>Stella.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Stella\64-bit\Stella.exe</entry>
+            <entry>%ESPATH%\Stella\64-bit\Stella.exe</entry>
+            <entry>%ESPATH%\..\Stella\64-bit\Stella.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="SUPERMODEL">
         <!-- Sega Model 3 emulator Supermodel -->
         <rule type="systempath">

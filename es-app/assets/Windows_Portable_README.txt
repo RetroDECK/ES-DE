@@ -87,6 +87,7 @@ Emulators\simple64\simple64-gui.exe
 Emulators\snes9x\snes9x-x64.exe
 Emulators\solarus\solarus-run.exe
 Emulators\SSF\SSF.exe
+Emulators\Stella\64-bit\Stella.exe
 Emulators\Supermodel\Supermodel.exe
 Emulators\Triforce\DolphinWX.exe
 Emulators\tsugaru\Tsugaru_CUI.exe

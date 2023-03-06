@@ -658,6 +658,17 @@
             <entry>steam</entry>
         </rule>
     </emulator>
+    <emulator name="STELLA">
+        <!-- Atari 2600 emulator Stella -->
+        <rule type="systempath">
+            <entry>stella</entry>
+            <entry>io.github.stella_emu.Stella</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/io.github.stella_emu.Stella</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.stella_emu.Stella</entry>
+        </rule>
+    </emulator>
     <emulator name="SUPERMODEL">
         <!-- Sega Model 3 emulator Supermodel -->
         <rule type="systempath">

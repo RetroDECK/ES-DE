@@ -300,6 +300,14 @@
             <entry>/Applications/Steam.app/Contents/MacOS/steam_osx</entry>
         </rule>
     </emulator>
+    <emulator name="STELLA">
+        <!-- Atari 2600 emulator Stella -->
+        <rule type="staticpath">
+            <entry>/Applications/Stella.app/Contents/MacOS/Stella</entry>
+            <entry>/opt/homebrew/bin/Stella</entry>
+            <entry>/usr/local/bin/Stella</entry>
+        </rule>
+    </emulator>
     <emulator name="VBA-M">
         <!-- Nintendo Game Boy Advance emulator VBA-M -->
         <rule type="staticpath">
