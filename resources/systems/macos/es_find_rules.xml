@@ -117,6 +117,13 @@
             <entry>/usr/local/bin/fs-uae</entry>
         </rule>
     </emulator>
+    <emulator name="FUSE">
+        <!-- Sinclair ZX Spectrum emulator Fuse -->
+        <rule type="staticpath">
+            <entry>/opt/homebrew/bin/fuse</entry>
+            <entry>/usr/local/bin/fuse</entry>
+        </rule>
+    </emulator>
     <emulator name="GARGOYLE">
         <!-- Interactive fiction player Gargoyle -->
         <rule type="staticpath">

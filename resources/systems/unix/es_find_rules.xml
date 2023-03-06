@@ -246,6 +246,17 @@
             <entry>~/.local/share/flatpak/exports/bin/net.fsuae.FS-UAE</entry>
         </rule>
     </emulator>
+    <emulator name="FUSE">
+        <!-- Sinclair ZX Spectrum emulator Fuse -->
+        <rule type="systempath">
+            <entry>fuse</entry>
+            <entry>net.sf.fuse_emulator</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>/var/lib/flatpak/exports/bin/net.sf.fuse_emulator</entry>
+            <entry>~/.local/share/flatpak/exports/bin/net.sf.fuse_emulator</entry>
+        </rule>
+    </emulator>
     <emulator name="GARGOYLE">
         <!-- Interactive fiction player Gargoyle -->
         <rule type="systempath">

@@ -272,6 +272,17 @@
             <entry>%ESPATH%\..\FS-UAE\Windows\x86-64\fs-uae.exe</entry>
         </rule>
     </emulator>
+    <emulator name="FUSE">
+        <!-- Sinclair ZX Spectrum emulator Fuse -->
+        <rule type="systempath">
+            <entry>fuse.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Fuse\fuse.exe</entry>
+            <entry>%ESPATH%\Fuse\fuse.exe</entry>
+            <entry>%ESPATH%\..\Fuse\fuse.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="GARGOYLE">
         <!-- Interactive fiction player Gargoyle -->
         <rule type="systempath">
