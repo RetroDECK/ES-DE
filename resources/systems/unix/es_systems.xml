@@ -674,9 +674,9 @@
         <path>%ROMPATH%/gc</path>
         <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dolphin_libretro.so %ROM%</command>
-        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% -b -e %ROM%</command>
-        <command label="PrimeHack (Standalone)">%EMULATOR_PRIMEHACK% -b -e %ROM%</command>
-        <command label="Triforce (Standalone)">%EMULATOR_TRIFORCE% -b -e %ROM%</command>
+        <command label="Dolphin (Standalone)">%INJECT%=%BASENAME%.prefix %EMULATOR_DOLPHIN% -b -e %ROM%</command>
+        <command label="PrimeHack (Standalone)">%INJECT%=%BASENAME%.prefix %EMULATOR_PRIMEHACK% -b -e %ROM%</command>
+        <command label="Triforce (Standalone)">%INJECT%=%BASENAME%.prefix %EMULATOR_TRIFORCE% -b -e %ROM%</command>
         <platform>gc</platform>
         <theme>gc</theme>
     </system>
@@ -1632,7 +1632,7 @@
         <fullname>Nintendo Switch</fullname>
         <path>%ROMPATH%/switch</path>
         <extension>.nca .NCA .nro .NRO .nso .NSO .nsp .NSP .xci .XCI</extension>
-        <command label="Yuzu (Standalone)">%EMULATOR_YUZU% -f -g %ROM%</command>
+        <command label="Yuzu (Standalone)">%INJECT%=%BASENAME%.prefix %EMULATOR_YUZU% -f -g %ROM%</command>
         <command label="Ryujinx (Standalone)">%EMULATOR_RYUJINX% %ROM%</command>
         <platform>switch</platform>
         <theme>switch</theme>
@@ -1788,8 +1788,8 @@
         <path>%ROMPATH%/wii</path>
         <extension>.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP</extension>
         <command label="Dolphin">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dolphin_libretro.so %ROM%</command>
-        <command label="Dolphin (Standalone)">%EMULATOR_DOLPHIN% -b -e %ROM%</command>
-        <command label="PrimeHack (Standalone)">%EMULATOR_PRIMEHACK% -b -e %ROM%</command>
+        <command label="Dolphin (Standalone)">%INJECT%=%BASENAME%.prefix %EMULATOR_DOLPHIN% -b -e %ROM%</command>
+        <command label="PrimeHack (Standalone)">%INJECT%=%BASENAME%.prefix %EMULATOR_PRIMEHACK% -b -e %ROM%</command>
         <platform>wii</platform>
         <theme>wii</theme>
     </system>
@@ -1857,7 +1857,7 @@
         <fullname>Microsoft Xbox</fullname>
         <path>%ROMPATH%/xbox</path>
         <extension>.iso .ISO</extension>
-        <command label="xemu (Standalone)">%EMULATOR_XEMU% -dvd_path %ROM%</command>
+        <command label="xemu (Standalone)">%INJECT%=%BASENAME%.prefix %EMULATOR_XEMU% -dvd_path %ROM%</command>
         <platform>xbox</platform>
         <theme>xbox</theme>
     </system>
