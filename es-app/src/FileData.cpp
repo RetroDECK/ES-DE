@@ -1353,8 +1353,7 @@ void FileData::launchGame()
 #endif
         if (Utils::FileSystem::isRegularFile(injectFile) ||
             Utils::FileSystem::isSymlink(injectFile)) {
-            LOG(LogDebug) << "FileData::launchGame(): Injecting arguments from file \""
-                          << injectFile << "\"";
+            LOG(LogDebug) << "FileData::launchGame(): Injecting from file \"" << injectFile << "\"";
             std::string arguments;
             std::ifstream injectFileStream;
             injectFileStream.open(injectFile);
@@ -1368,16 +1367,17 @@ void FileData::launchGame()
             }
             else if (arguments.size() > 4096) {
                 LOG(LogWarning)
-                    << "FileData::launchGame(): Arguments file exceeding maximum allowed size of "
-                       "4096 bytes, skipping injection";
+                    << "FileData::launchGame(): Injection file exceeding maximum allowed size of "
+                       "4096 bytes, skipping \""
+                    << injectFile << "\"";
             }
             else {
                 command.insert(injectPos, arguments + " ");
             }
         }
         else {
-            LOG(LogDebug) << "FileData::launchGame(): Arguments file \"" << injectFile
-                          << "\" does not exist, skipping injection";
+            LOG(LogDebug) << "FileData::launchGame(): File \"" << injectFile
+                          << "\" does not exist, nothing to inject";
         }
     }
 
