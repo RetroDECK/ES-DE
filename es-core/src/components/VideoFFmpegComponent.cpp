@@ -124,13 +124,13 @@ void VideoFFmpegComponent::resize()
         mSize = textureSize * cropFactor;
 
         if (std::round(mSize.y) > std::round(mTargetSize.y)) {
-            const float cropSize {1.0f - (mTargetSize.y / mSize.y)};
+            const float cropSize {1.0f - (mTargetSize.y / std::round(mSize.y))};
             mTopLeftCrop.y = cropSize / 2.0f;
             mBottomRightCrop.y = 1.0f - (cropSize / 2.0f);
             mSize.y = mSize.y - (mSize.y * cropSize);
         }
         else {
-            const float cropSize {1.0f - (mTargetSize.x / mSize.x)};
+            const float cropSize {1.0f - (mTargetSize.x / std::round(mSize.x))};
             mTopLeftCrop.x = cropSize / 2.0f;
             mBottomRightCrop.x = 1.0f - (cropSize / 2.0f);
             mSize.x = mSize.x - (mSize.x * cropSize);
