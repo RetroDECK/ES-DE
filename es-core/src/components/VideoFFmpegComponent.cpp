@@ -21,7 +21,8 @@
 #include <algorithm>
 #include <iomanip>
 
-#if LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28
+#if LIBAVUTIL_VERSION_MAJOR >= 58 ||                                                               \
+    (LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28)
 // FFmpeg 5.1 and above.
 #define CHANNELS ch_layout.nb_channels
 #else
@@ -502,7 +503,10 @@ bool VideoFFmpegComponent::setupAudioFilters()
     int returnValue {0};
     std::string errorMessage(512, '\0');
     const int outSampleRates[] {AudioManager::getInstance().sAudioFormat.freq, -1};
-    const enum AVSampleFormat outSampleFormats[] {AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_NONE};
+    const enum AVSampleFormat outSampleFormats[] {
+        AV_SAMPLE_FMT_FLT,
+        AV_SAMPLE_FMT_NONE
+    };
 
     mAFilterInputs = avfilter_inout_alloc();
     mAFilterOutputs = avfilter_inout_alloc();
@@ -533,7 +537,8 @@ bool VideoFFmpegComponent::setupAudioFilters()
 
     std::string channelLayout(128, '\0');
 
-#if LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28
+#if LIBAVUTIL_VERSION_MAJOR >= 58 ||                                                               \
+    (LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28)
     // FFmpeg 5.1 and above.
     AVChannelLayout chLayout {};
     av_channel_layout_from_mask(&chLayout, mAudioCodecContext->ch_layout.u.mask);
@@ -687,7 +692,11 @@ void VideoFFmpegComponent::readFrames()
                                             destFrame->chroma_location =
                                                 mVideoFrame->chroma_location;
                                             destFrame->pkt_pos = mVideoFrame->pkt_pos;
+#if LIBAVUTIL_VERSION_MAJOR < 58
                                             destFrame->pkt_duration = mVideoFrame->pkt_duration;
+#else
+                                            destFrame->duration = mVideoFrame->duration;
+#endif
                                             destFrame->pkt_size = mVideoFrame->pkt_size;
                                         }
                                     }
@@ -781,9 +790,14 @@ void VideoFFmpegComponent::getProcessedFrames()
         const double pts {static_cast<double>(mVideoFrameResampled->pkt_dts) *
                           av_q2d(mVideoStream->time_base)};
 
-        // Needs to be adjusted if changing the rate?
+// Needs to be adjusted if changing the rate?
+#if LIBAVUTIL_VERSION_MAJOR < 58
         const double frameDuration {static_cast<double>(mVideoFrameResampled->pkt_duration) *
                                     av_q2d(mVideoStream->time_base)};
+#else
+        const double frameDuration {static_cast<double>(mVideoFrameResampled->duration) *
+                                    av_q2d(mVideoStream->time_base)};
+#endif
 
         currFrame.pts = pts;
         currFrame.frameDuration = frameDuration;
@@ -1441,8 +1455,10 @@ void VideoFFmpegComponent::startVideoStream()
                 return;
             }
 
+#if LIBAVUTIL_VERSION_MAJOR < 58
             if (mVideoCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
                 mVideoCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
+#endif
 
             if (avcodec_parameters_to_context(mVideoCodecContext, mVideoStream->codecpar)) {
                 LOG(LogError) << "VideoFFmpegComponent::startVideoStream(): "
@@ -1484,8 +1500,10 @@ void VideoFFmpegComponent::startVideoStream()
 
                 mAudioCodecContext = avcodec_alloc_context3(mAudioCodec);
 
+#if LIBAVUTIL_VERSION_MAJOR < 58
                 if (mAudioCodec->capabilities & AV_CODEC_CAP_TRUNCATED)
                     mAudioCodecContext->flags |= AV_CODEC_FLAG_TRUNCATED;
+#endif
 
                 // Some formats want separate stream headers.
                 if (mAudioCodecContext->flags & AVFMT_GLOBALHEADER)
