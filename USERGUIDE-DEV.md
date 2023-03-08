@@ -159,7 +159,7 @@ Just run the installer for the new release. A question will be asked whether you
 
 **Windows portable**
 
-Refer to the README.txt file inside the ES-DE ZIP archive as it contains instructions on how to safely perform the upgrade.
+Refer to the README.txt file inside the ES-DE ZIP archive as it contains instructions on how to safely perform the upgrade. Just make sure to not unpack this archive on top of the old installation as that may lead to all sorts of problems.
 
 ## Placing games into non-standard directories
 

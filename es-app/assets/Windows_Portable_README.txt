@@ -12,7 +12,7 @@ Instead first rename your old ES-DE directory, for example to EmulationStation-D
 1) The ROMs_ALL directory contains all the systems that ES-DE supports, but to decrease application startup time, only copy the systems you need to the ROMs directory.
 2) Copy your games into the respective folders in the ROMs directory.
 3) Place your emulators inside the Emulators directory.
-4) Optionally move your existing gamelists, scraped/downloaded media, custom collections, custom systems, scripts and themes to the .emulationstation directory.
+4) Optionally move your existing settings, gamelists, scraped/downloaded media, custom collections, custom systems, scripts and themes to the .emulationstation directory.
 5) Start ES-DE using EmulationStation.exe and enjoy some retrogaming!
 
 In case of issues, check .emulationstation\es_log.txt for clues as to what went wrong.

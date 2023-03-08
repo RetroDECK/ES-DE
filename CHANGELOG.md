@@ -78,6 +78,7 @@ Overall application speed and performance has been greatly improved with faster 
 * (Linux) Added support for the mGBA Qt and Snes9x GTK standalone emulators
 * (Linux) Added support for the official xemu AppImage release
 * (Linux) Added support for the AppImage release of Flycast
+* (Linux) Added .esprefix file injections to the Dolphin, PrimeHack, Triforce, Yuzu and xemu standalone emulators
 * Added support for the Sega Model 2 (model2) game system on Linux on macOS by adding the MAME - Current RetroArch core
 * Added MAME standalone as an alternative emulator for the model2 system
 * (Windows) Added the MAME - Current RetroArch core as an alternative emulator for the model2 system
