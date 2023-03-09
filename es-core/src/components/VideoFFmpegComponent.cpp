@@ -503,10 +503,12 @@ bool VideoFFmpegComponent::setupAudioFilters()
     int returnValue {0};
     std::string errorMessage(512, '\0');
     const int outSampleRates[] {AudioManager::getInstance().sAudioFormat.freq, -1};
+    // clang-format off
     const enum AVSampleFormat outSampleFormats[] {
         AV_SAMPLE_FMT_FLT,
         AV_SAMPLE_FMT_NONE
     };
+    // clang-format on
 
     mAFilterInputs = avfilter_inout_alloc();
     mAFilterOutputs = avfilter_inout_alloc();
