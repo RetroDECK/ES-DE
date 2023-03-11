@@ -417,6 +417,9 @@
             <entry>%ESPATH%\Emulators\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
+            <entry>%ESPATH%\Emulators\ryujinx\Ryujinx.Ava.exe</entry>
+            <entry>%ESPATH%\ryujinx\Ryujinx.Ava.exe</entry>
+            <entry>%ESPATH%\..\ryujinx\Ryujinx.Ava.exe</entry>
         </rule>
     </emulator>
     <emulator name="SAMEBOY">

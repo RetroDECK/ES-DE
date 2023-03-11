@@ -79,6 +79,7 @@ Emulators\RMG\RMG.exe
 Emulators\RPCS3\rpcs3.exe
 Emulators\ruffle\ruffle.exe
 Emulators\ryujinx\Ryujinx.exe
+Emulators\ryujinx\Ryujinx.Ava.exe
 Emulators\sameboy\sameboy.exe
 Emulators\scummvm\scummvm.exe
 Emulators\sdl2trs\sdl2trs64.exe

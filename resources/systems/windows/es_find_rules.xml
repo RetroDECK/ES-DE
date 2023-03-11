@@ -606,11 +606,15 @@
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">
             <entry>Ryujinx.exe</entry>
+            <entry>Ryujinx.Ava.exe</entry>
         </rule>
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\ryujinx\Ryujinx.exe</entry>
             <entry>%ESPATH%\..\ryujinx\Ryujinx.exe</entry>
+            <entry>%ESPATH%\Emulators\ryujinx\Ryujinx.Ava.exe</entry>
+            <entry>%ESPATH%\ryujinx\Ryujinx.Ava.exe</entry>
+            <entry>%ESPATH%\..\ryujinx\Ryujinx.Ava.exe</entry>
         </rule>
     </emulator>
     <emulator name="SAMEBOY">

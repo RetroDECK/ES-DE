@@ -562,6 +562,7 @@
         <!-- Nintendo Switch emulator Ryujinx -->
         <rule type="systempath">
             <entry>Ryujinx</entry>
+            <entry>Ryujinx.Ava</entry>
             <entry>org.ryujinx.Ryujinx</entry>
         </rule>
         <rule type="staticpath">
@@ -570,6 +571,9 @@
             <entry>~/Applications/publish/Ryujinx</entry>
             <entry>~/.local/bin/publish/Ryujinx</entry>
             <entry>~/bin/publish/Ryujinx</entry>
+            <entry>~/Applications/publish/Ryujinx.Ava</entry>
+            <entry>~/.local/bin/publish/Ryujinx.Ava</entry>
+            <entry>~/bin/publish/Ryujinx.Ava</entry>
         </rule>
     </emulator>
     <emulator name="SAMEBOY">
