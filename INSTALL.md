@@ -1,12 +1,10 @@
-# EmulationStation Desktop Edition (ES-DE) v1.2 - Building and advanced configuration
-
-**Note:** This is a quite technical document intended for those that are interested in compiling ES-DE from source code, or would like to customize the configuration. If you just want to start using the software, check out [USERGUIDE.md](USERGUIDE.md) instead.
+# EmulationStation Desktop Edition (ES-DE) v2.0 - Building and advanced configuration
 
 Table of contents:
 
 [[_TOC_]]
 
-## Development Environment
+## Development environment
 
 ES-DE is developed and compiled using Clang/LLVM and GCC on Unix, Clang/LLVM on macOS and MSVC and GCC (MinGW) on Windows.
 
@@ -27,11 +25,6 @@ All of the required packages can be installed with apt-get:
 sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev
 ```
 
-If building with the optional VLC video player, the following packages are also needed:
-```
-sudo apt-get install vlc libvlc-dev
-```
-
 **Fedora**
 
 On Fedora you first need to install the RPM Fusion repository:
@@ -44,13 +37,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
-```
-If building with the optional VLC video player, the following packages are also needed:
-
-
-```
-sudo dnf install vlc vlc-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
 ```
 
 **Manjaro**
@@ -61,21 +48,11 @@ Use pacman to install all the required packages:
 sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml
 ```
 
-If building with the optional VLC video player, the following package is also needed:
-```
-sudo pacman -S vlc
-```
-
 **Raspberry Pi OS (Raspian)**
 
 All of the required packages can be installed with apt-get:
 ```
 sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libcurl4-gnutls-dev libpugixml-dev
-```
-
-If building with the optional VLC video player, the following packages are also needed:
-```
-sudo apt-get install vlc libvlc-dev
 ```
 
 To build with CEC support you also need to install these packages:
@@ -85,18 +62,15 @@ sudo apt-get install libcec-dev libp8-platform-dev
 
 The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible.
 
-Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required.
+Note that low-level ALSA sound support has been removed from ES-DE which means that a sound server like PulseAudio or PipeWire is required. Likewise a display server (Xorg or Wayland) is required, direct framebuffer access is not supported.
+
+Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by default.
 
 **FreeBSD**
 
 Use pkg to install the dependencies:
 ```
 pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage pugixml
-```
-
-If building with the optional VLC video player, the following package is also needed:
-```
-pkg install vlc
 ```
 
 Clang/LLVM and curl should already be included in the base OS installation.
@@ -108,11 +82,6 @@ Use pkgin to install the dependencies:
 pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml
 ```
 
-If building with the optional VLC video player, the following package is also needed:
-```
-pkgin vlc
-```
-
 NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
 
 **OpenBSD**
@@ -120,11 +89,6 @@ NetBSD ships with GCC by default, and although you should be able to use Clang/L
 Use pkg_add to install the dependencies:
 ```
 pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage
-```
-
-If building with the optional VLC video player, the following package is also needed:
-```
-pkg_add vlc
 ```
 
 In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
@@ -156,18 +120,20 @@ cmake .
 make
 ```
 
+By default the application updater will be built which checks for new releases on startup, to disable this functionality run the following:
+```
+cmake -DAPPLICATION_UPDATER=off .
+make
+```
+
+Note that the application updater is always disabled when building for the AUR, RetroDECK, Raspberry Pi or BSD Unix.
+
 By default the master branch will be used, which is where development takes place. To instead build a stable release, switch to the `stable-x.x` branch for the version, for example:
 
 ```
 cd emulationstation-de
 git checkout stable-1.2
 cmake .
-make
-```
-
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
-```
-cmake -DVLC_PLAYER=on .
 make
 ```
 
@@ -189,11 +155,22 @@ To enable AddressSanitizer which helps with identifying memory issues like corru
 cmake -DCMAKE_BUILD_TYPE=Debug -DASAN=on .
 make
 ```
+Due to buggy AMD GPU drivers it could be a good idea to use the `LSAN_suppressions` file included in the repository to avoid reports of a lot of irrelevant issue, for example:
+```
+LSAN_OPTIONS="suppressions=tools/LSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
+```
 
-To enable ThreadSanitizer which helps with identifying data races for multi-threaded code, build with the TSAN option:
+This applies to LeakSanitizer specifically, which is integrated into AddressSanitizer.
+
+To enable ThreadSanitizer which helps with identifying data races and other thread-related issues, build with the TSAN option:
 ```
 cmake -DCMAKE_BUILD_TYPE=Debug -DTSAN=on .
 make
+```
+
+It could also be a good idea to use the `TSAN_suppressions` file included in the repository to suppress issues reported by some third party libraries, for example:
+```
+TSAN_OPTIONS="suppressions=tools/TSAN_suppressions" ./emulationstation --debug --resolution 2560 1440
 ```
 
 To enable UndefinedBehaviorSanitizer which helps with identifying bugs that may otherwise be hard to find, build with the UBSAN option:
@@ -269,12 +246,13 @@ make
 ```
 You will most likely need to install additional packages to get this to build. On Debian-based systems these are _libcec-dev_ and _libp8-platform-dev_. Note that the CEC support is currently untested.
 
-To build with the GLES renderer, run the following:
+To build with the GLES 3.0 renderer, run the following:
 ```
 cmake -DGLES=on .
 make
 ```
-The GLES renderer is quite limited as there is no shader support for it, so ES-DE will definitely not look as pretty as when using the default OpenGL renderer. This option is basically deprecated as the releases for all supported platforms are built using the desktop OpenGL renderer (including the Raspberry Pi).
+
+This renderer is generally only needed on the Raspberry Pi and the desktop OpenGL renderer should otherwise be used.
 
 Running multiple compile jobs in parallel is a good thing as it speeds up the build time a lot (scaling almost linearly). Here's an example telling make to run 6 parallel jobs:
 
@@ -296,28 +274,7 @@ On Linux, if you're not building a package and instead intend to install using `
 
 **Compilers**
 
-Both Clang/LLVM and GCC work fine for building ES-DE.
-
-I did some small benchmarks comparing Clang 10.0 to GCC 9.3.0 with the ES-DE v1.1 codebase on an Intel Xeon W-2245 @ 3.90GHz running Kubuntu 20.04.2 LTS and it's pretty interesting.
-
-Advantages with Clang (vs GCC):
-* 8% smaller binary size for a release build
-* 31% smaller binary size for a debug build
-* 16% faster compile time for a release build
-* 25% faster compile time for a debug build
-* 13% faster application startup time for a release build
-* 4% faster application startup time for a debug build
-
-*Release build: Optimizations enabled, debug info disabled, binary stripped.* \
-*Debug build: Optimizations disabled, debug info enabled, binary not stripped.*
-
-This Clang debug build is LLVM "native", i.e. intended to be debugged using the LLVM project debugger LLDB. The problem is that this is still not well integrated with VSCode that I use for development so I need to keep using GDB. But this is problematic as the libstd++ data required by GDB is missing in the binary, making it impossible to see the values of for instance std::string variables.
-
-It's possible to activate the additional debug info needed by GDB by using the flag `-D_GLIBCXX_DEBUG`. I've added this to CMakeLists.txt when using Clang, but this bloats the binary and makes the code much slower. Actually, instead of a 4% faster application startup, it's now 25% slower. The same goes for the binary size, instead of 31% smaller it's now 5% larger. The compilation time is still less than GCC but only by 10% instead of 25%.
-
-But I'm expecting this issue to be resolved in the future so the workaround can be removed.
-
-It's by the way very easy to switch between LLVM and GCC using Ubuntu, just use the `update-alternatives` command:
+Both Clang/LLVM and GCC work fine for building ES-DE, and on Ubuntu it's easy to switch between the two using `update-alternatives`:
 
 ```
 myusername@computer:~$ sudo update-alternatives --config c++
@@ -494,12 +451,6 @@ Install the required tools:
 brew install clang-format cmake pkg-config nasm yasm
 ```
 
-If building with the optional VLC video player, then run this as well:
-
-```
-brew install --cask vlc
-```
-
 **Developer mode**
 
 Enable developer mode to avoid annoying password requests when attaching the debugger to a process:
@@ -515,7 +466,7 @@ To clone the source repository, run the following:
 git clone https://gitlab.com/es-de/emulationstation-de.git
 ```
 
-For macOS all dependencies are built in-tree in the `external` directory tree. There are two scripts in the tools directory that automate this entirely and they are executed such as this:
+On macOS all dependencies are built in-tree in the `external` directory tree. There are two scripts in the tools directory that automate this entirely and they are executed such as this:
 
 ```
 cd emulationstation-de
@@ -552,12 +503,6 @@ By default the master branch will be used, which is where development takes plac
 cd emulationstation-de
 git checkout stable-1.2
 cmake .
-make
-```
-
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option:
-```
-cmake -DVLC_PLAYER=on .
 make
 ```
 
@@ -600,11 +545,6 @@ export ASAN_OPTIONS=detect_container_overflow=0
 
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
-After building ES-DE and trying to execute the application, there could be issues with finding the dynamic link libraries for VLC (assuming VLC was enabled for the build) as these are not installed into a standard location but rather into the /Applications folder. As such, you may need to set the DYLD_LIBRARY_PATH environment variable to find the VLC libraries. Note that this is not intended or required for the release build that will be shipped in a DMG installer or if you manually install ES-DE using _make install_. It's only needed to be able to run the binary from the build directory. You should add this to your shell profile file to avoid having to set it each time you open a new terminal window:
-```
-export DYLD_LIBRARY_PATH=/Applications/VLC.app/Contents/MacOS/lib
-```
-
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
 **Building for the M1 (ARM) processor**
@@ -634,40 +574,13 @@ You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the
 
 As macOS does not have any package manager which would have handled the library dependencies, we need to bundle the required shared libraries with the application. This is almost completely automated by the build scripts.
 
-The only exceptions are these libraries for the optional VLC video player:
-```
-libvlc.dylib
-libvlccore.dylib
-```
-
-If building the VLC video player, copy these files from the /Applications/VLC.app/Contents/MacOS/lib/ directory to the emulationstation-de build folder.
-
-In addition to these you need to create a `plugins` directory and copy over the following libraries, which are located in /Applications/VLC.app/Contents/MacOS/plugins/:
-
-```
-libadummy_plugin.dylib
-libamem_plugin.dylib
-libaudio_format_plugin.dylib
-libauhal_plugin.dylib
-libavcodec_plugin.dylib
-libconsole_logger_plugin.dylib
-libfilesystem_plugin.dylib
-libfreetype_plugin.dylib
-libswscale_plugin.dylib
-libtrivial_channel_mixer_plugin.dylib
-libvmem_plugin.dylib
-libwave_plugin.dylib
-libx264_plugin.dylib
-libx265_plugin.dylib
-```
-
-On macOS you can install the application as a normal user, i.e. no root privileges are required. Simply run the following:
+You can install the application as a normal user, i.e. no root privileges are required. Simply run the following:
 
 ```
 make install
 ```
 
-This will be the directory structure for the installation (the VLC-related files are optional):
+This will be the directory structure for the installation:
 
 ```
 /Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
@@ -682,8 +595,6 @@ This will be the directory structure for the installation (the VLC-related files
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpostproc.55.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswresample.3.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswscale.5.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlc.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvlccore.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbis.0.4.9.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbisenc.2.0.12.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/plugins/*
@@ -730,9 +641,9 @@ CPack: - package: /Users/myusername/emulationstation-de/EmulationStation-DE-1.2.
 
 Both MSVC and MinGW (GCC) work fine for building ES-DE on Windows.
 
-Although I would prefer to exclude support for MSVC, this compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. But for release builds MinGW is very fast and ES-DE starts around 18% faster when built with MinGW meaning this compiler probably generates more efficient code overall. As well MSVC requires a lot more junk DLL files to be distributed with the application so it's not a good candidate for the final release build.
+Although I would prefer to exclude support for MSVC, this compiler simply works much better when developing as it's much faster than MinGW when linking debug builds and when actually debugging. But for release builds MinGW is very fast and ES-DE starts around 18% faster when built with MinGW, meaning this compiler probably generates more efficient code overall. As well MSVC requires a lot more DLL files to be distributed with the application and the console window is always displayed on startup for some reason.
 
-For this reason I think MSVC makes sense for development and MinGW for the releases.
+For these reasons I think MSVC makes sense for development and MinGW for the releases.
 
 **MSVC setup**
 
@@ -788,7 +699,7 @@ Note that most GDB builds for Windows have broken Python support so that pretty 
 **Other preparations**
 
 In order to get clang-format onto the system you need to download and install Clang: \
-[https://llvm.org/builds](https://llvm.org/builds)
+[https://releases.llvm.org](https://releases.llvm.org)
 
 Just run the installer and make sure to select the option _Add LLVM to the system PATH for current user_.
 
@@ -800,90 +711,9 @@ It's strongly recommended to set line breaks to Unix-style (line feed only) dire
 
 In the descriptions below it's assumed that all build steps for MinGW/GCC will be done in the Git Bash shell, and all the build steps for MSVC will be done in the MSVC developer console (x64 Native Tools Command Prompt for VS).
 
+**Cloning and setting up dependencies**
 
-**Download the dependency packages**
-
-FFmpeg (choose the n4.4 package with win64-gpl-shared in the filename, the snapshot version will not work) \
-[https://github.com/BtbN/FFmpeg-Builds/releases](https://github.com/BtbN/FFmpeg-Builds/releases)
-
-FreeImage (binary distribution) \
-[https://sourceforge.net/projects/freeimage](https://sourceforge.net/projects/freeimage)
-
-curl (Windows 64 bit binary, select the MinGW version even if using MSVC) \
-[https://curl.haxx.se/download.html](https://curl.haxx.se/download.html)
-
-SDL2 (development libraries, MinGW or VC/MSVC) \
-[https://www.libsdl.org/download-2.0.php](https://www.libsdl.org/download-2.0.php)
-
-libVLC (both win64 binary and source distributions)  - optional, if building with the VLC video player\
-[https://ftp.lysator.liu.se/pub/videolan/vlc](https://ftp.lysator.liu.se/pub/videolan/vlc)
-
-Uncompress the files from the above packages to a suitable directory, for example `C:\Programming\Dependencies`
-
-Append `_src` or something appropriate to the VLC source distribution directory as it has the same name as the binary distribution.
-
-GLEW\
-[http://glew.sourceforge.net](http://glew.sourceforge.net)
-
-If using MinGW, this library needs to be compiled from source as the pre-built libraries don't seem to work with GCC. The GitHub repo seems to be somewhat broken as well, therefore the manual download is required. It's recommended to get the source in zip format and uncompress it to the same directory as the other libraries listed above.
-
-Then simply build the required glew32.dll library:
-
-```
-unzip glew-2.1.0.zip
-cd glew-2.1.0
-make
-```
-You will probably see a huge amount of compiler warnings, and the glewinfo.exe tool may fail to build, but we don't need it so it's not an issue.
-
-If using MSVC, simply download the binary distribution of GLEW.
-
-The following packages are not readily available for Windows, so clone the repos and build them yourself:
-
-[FreeType](https://www.freetype.org)
-```
-git clone git://git.savannah.gnu.org/freetype/freetype2.git
-cd freetype2
-git checkout VER-2-10-4
-mkdir build
-cd build
-```
-
-MSVC:
-```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON ..
-nmake
-```
-
-MinGW:
-```
-cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON ..
-make
-```
-
-[pugixml](https://pugixml.org)
-```
-git clone https://github.com/zeux/pugixml.git
-cd pugixml
-git checkout v1.10
-```
-
-MSVC:
-
-```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON .
-nmake
-```
-
-MinGW:
-```
-cmake -G "MinGW Makefiles" -DBUILD_SHARED_LIBS=ON .
-make
-```
-
-**Clone the ES-DE repository**
-
-This works the same as on Unix or macOS, just run the following:
+To clone the source repository, run the following:
 
 ```
 git clone https://gitlab.com/es-de/emulationstation-de.git
@@ -896,222 +726,80 @@ cd emulationstation-de
 git checkout stable-1.2
 ```
 
-**Setup the include directories**
+On Windows all dependencies are kept in-tree in the `external` directory tree. Most of the libraries can be downloaded in binary form, but a few need to be built from source code. There are four scripts in the tools directory that automate this entirely. Two of them are used for the MSVC compiler and the other two for MinGW.
 
-As there is no standardized include directory structure in Windows, you need to provide the include files manually.
-
-Make a directory in your build environment tree, for instance under `C:\Programming\include`
-
-Copy the include files for curl, FFmpeg, FreeImage, FreeType, GLEW, pugixml, SDL2 and optionally VLC to this directory.
-
-You may need to create the SDL2 directory manually and copy the header files there.
-
-For FFmpeg, copy the directories libavcodec, libavfilter, libavformat and libavutil.
-
-It should look something like this:
-
+For MSVC, you run them like this:
 ```
-$ ls -1 include/
-curl/
-FreeImage.h
-freetype/
-ft2build.h
-GL/
-libavcodec/
-libavfilter/
-libavformat/
-libavutil/
-pugiconfig.hpp
-pugixml.hpp
-SDL2/
-vlc/            (only if building with the VLC video player)
+cd emulationstation-de
+tools\Windows_dependencies_setup_MSVC.bat
+tools\Windows_dependencies_build_MSVC.bat
 ```
 
-**Copy the required library files to the ES-DE build directory**
-
-As there's no package manager in Windows and no way to handle dependencies, we need to ship all the required shared libraries with the application.
-
-Copy the files to the `emulationstation-de` build directory. Most of them will come from the packages that were provided in the previous steps of this guide.
-
-**Required files for MSVC:**
+And for MinGW like the following:
 ```
-avcodec-58.dll
-avcodec.lib
-avfilter.lib
-avfilter-7.dll
-avformat-58.dll
-avformat.lib
-avutil-56.dll
-avutil.lib
-postproc-55.dll
-swresample-3.dll
-swresample.lib
-swscale-5.dll
-swscale.lib
-FreeImage.dll
-FreeImage.lib
-freetype.dll
-freetype.lib
-glew32.dll
-glew32.lib
-libcurl-x64.dll
-libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
-libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-libvlc.dll                (only if building with the VLC video player)
-libvlccore.dll            (only if building with the VLC video player)
-pugixml.dll
-pugixml.lib
-SDL2.dll
-SDL2.lib
-SDL2main.lib
-MSVCP140.dll              (from Windows\System32)
-VCOMP140.DLL              (from Windows\System32)
-VCRUNTIME140.dll          (from Windows\System32)
-VCRUNTIME140_1.dll        (from Windows\System32)
+cd emulationstation-de
+tools/Windows_dependencies_setup_MinGW.sh
+tools/Windows_dependencies_build_MinGW.sh
 ```
 
-In addition to these files, you need libcurl-x64.lib and libvlc.lib (if building with the VLC video player), but these are not available for download so you need to generate them yourself from their corresponding DLL files. Do this inside the respective library directory and not within the emulationstation-de folder.
+Re-running the setup script will delete and download all dependencies again, and re-running the build script will clean and rebuild from scratch. You can of course also manually recompile an individual library if needed.
 
-libcurl-x64.lib:
-```
-dumpbin /exports libcurl-x64.dll > exports.txt
-echo LIBRARY libcurl-x64 > libcurl-x64.def
-echo EXPORTS >> libcurl-x64.def
-for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libcurl-x64.def
-lib /def:libcurl-x64.def /out:libcurl-x64.lib /machine:x64
-```
+The setup scripts for both MSVC and MinGW will download and launch an installer for OpenSSL for Windows if this has not already been installed on the build machine. Just run through the installer using the default settings and everything should work fine.
 
-libvlc.lib:
-```
-dumpbin /exports libvlc.dll > exports.txt
-echo LIBRARY libvlc > libvlc.def
-echo EXPORTS >> libvlc.def
-for /f "skip=19 tokens=4" %A in (exports.txt) do echo %A >> libvlc.def
-lib /def:libvlc.def /out:libvlc.lib /machine:x64
-```
-
-**Required files for MinGW:**
-
-```
-avcodec-58.dll
-avfilter-7.dll
-avformat-58.dll
-avutil-56.dll
-postproc-55.dll
-swresample-3.dll
-swscale-5.dll
-FreeImage.dll
-glew32.dll
-libcrypto-1_1-x64.dll     (from the OpenSSL package, located in Git MinGW/MSYS2 under \mingw64\bin)
-libcurl-x64.dll
-libfreetype.dll
-libpugixml.dll
-libSDL2main.a
-libssl-1_1-x64.dll        (from the OpenSSL package, located in Git MinGW under \mingw64\bin)
-libvlc.dll                (only if building with the VLC video player)
-libvlccore.dll            (only if building with the VLC video player)
-SDL2.dll
-vcomp140.dll              (From Visual C++ Redistributable for Visual Studio 2015, 32-bit version)
-```
-
-**Additional files for both MSVC and MinGW if building with the VLC video player**
-
-In addition to the files above, you need to copy some libraries from the VLC `plugins` folder. This contains a subdirectory structure but there is no requirement to retain this as libVLC apparently looks recursively for the .dll files.
-
-The following libraries seem to be required to play most video and audio formats:
-
-```
-access\libfilesystem_plugin.dll
-audio_filter\libaudio_format_plugin.dll
-audio_filter\libtrivial_channel_mixer_plugin.dll
-audio_output\libadummy_plugin.dll
-audio_output\libamem_plugin.dll
-audio_output\libdirectsound_plugin.dll
-audio_output\libmmdevice_plugin.dll
-audio_output\libwasapi_plugin.dll
-audio_output\libwaveout_plugin.dll
-codec\libavcodec_plugin.dll
-codec\libx264_plugin.dll
-codec\libx265_plugin.dll
-logger\libconsole_logger_plugin.dll
-video_chroma\libswscale_plugin.dll
-video_output\libvmem_plugin.dll
-```
-
-The reason to not simply copy all plugins is that the combined size of these is around 120 MB (as of VLC version 3.0.11) and the size of the selected files listed above is around 22 MB, which is more reasonable.
-
-Place the files in the `emulationstation-de\plugins\` directory.
+Following these preparations, ES-DE should be ready to be compiled.
 
 **Building ES-DE using MSVC**
-
-There is a bug in libVLC when building using MSVC, so three lines need to be commented out from `libvlc_media.h`. The compiler error messages will provide you with the line numbers, but they involve the callback `libvlc_media_read_cb`.
-
-After doing this, ES-DE should build correctly.
 
 For a release build:
 
 ```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../include .
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release .
 nmake
 ```
 
 Or for a debug build:
 ```
-cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include .
+cmake -G "NMake Makefiles" .
 nmake
 ```
 
+For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
+
 To enable AddressSanitizer which helps with identifying memory issues like corruption bugs and buffer overflows, build with the ASAN option:
 ```
-cmake -G "NMake Makefiles" -DWIN32_INCLUDE_DIR=../include -DASAN=on .
+cmake -G "NMake Makefiles" -DASAN=on .
 nmake
 ```
 
 ThreadSanitizer and UndefinedBehaviorSanitizer aren't available for the MSVC compiler.
 
-For some annoying reason MSVC is the only compiler that creates a debug build by default and where you need to explicitly set the build type to Release.
+There are a number of compiler warnings for the bundled rlottie library when building with MSVC. Unfortunately these need to be resolved upstream, but everything should still work fine so the warnings can be ignored for now.
 
 Unfortunately nmake does not support parallel compiles so it's very slow. There are third party solutions to get multi-core building working with MSVC, but I've not investigated this in depth.
 
 Be aware that MSVC links against different VC++ libraries for debug and release builds (e.g. MSVCP140.dll or MSVCP140d.dll), so any NSIS package made from a debug build will not work on computers without the MSVC development environment installed.
-
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
-```
-cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DWIN32_INCLUDE_DIR=../include -DVLC_PLAYER=on .
-nmake
-```
 
 **Building ES-DE using MinGW**
 
 For a release build:
 
 ```
-cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include .
+cmake -G "MinGW Makefiles" .
 make
 ```
 
 Or for a debug build:
 
 ```
-cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DCMAKE_BUILD_TYPE=Debug .
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug .
 make
 ```
 
 Unfortunately AddressSanitizer, ThreadSanitizer and UndefinedBehaviorSanitizer do not seem to be supported with MinGW.
 
-For some reason defining the `../include` path doesn't work when running CMake from PowerShell (and no, changing to backslash doesn't help). Instead use Bash, by running from a Git Bash shell.
-
-The make command works fine directly in PowerShell though so it can be run from the VSCode terminal.
-
-To build ES-DE with the VLC video player in addition to the default FFmpeg player, enable the VLC_PLAYER option, for example:
-```
-cmake -G "MinGW Makefiles" -DWIN32_INCLUDE_DIR=../include -DVLC_PLAYER=on .
-make
-```
-
 You run a parallel build using multiple CPU cores with the `-j` flag, for example, `make -j6`.
 
-Note that compilation time is much longer than on Unix or macOS, and linking time is unendurable for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
+Note that compilation time is much longer than on Unix or macOS, and linking is incredibly slow for a debug build (around 10 times longer compared to Linux). The debug binary is also much larger than on Unix.
 
 **TLS/SSL certificates**
 
@@ -1163,7 +851,6 @@ A theme is not mandatory to start the application, but ES-DE will be basically u
 
 As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
-
 ## Using clang-format for automatic code formatting
 
 The entire ES-DE codebase is formatted using clang-format and all new code must be formatted using this tool before being committed.
@@ -1178,7 +865,11 @@ To format a file from the command line, simply run:
 
 The -i flag will make an inplace edit of the file.
 
+Alternatively the `tools/reformat_codebase.sh` script can be executed to format the entire codebase in one go.
+
 But the recommended approach is to run clang-format from within the editor. If using VSCode, there is an extension available named Clang-Format. After installing this, simply open a source file, right click and choose `Format Document` or use the applicable keyboard shortcut. The first time you do this, you will have to make a choice to perform the formatting using clang-format. The rest should be completely automatic.
+
+Whatever you do, don't set up your editor to run clang-format on commit because if something goes wrong (which has happened in the past) you will potentially commit a lot of garbage which could take some effort to clean up. Adding to this, string literals can get strange formatting from time to time and there are occasionally clang-format bugs that may cause other problems. So always review the formatted code manually before commit.
 
 In some instances you may want to avoid getting code formatted, and you can accomplish this by simply enclosing the lines with the two comments "clang-format off" and "clang-format on", such as this:
 
@@ -1298,7 +989,6 @@ git diff mamedevices
 
 The reason to not simply replace the BIOS and devices files with the new version is that we want to retain entries from all older MAME versions as otherwise older ROM sets used on older MAME versions would have missing information. This is so as the MAME project sometimes removes older entries when they're reorganizing the ROM sets. By merging the files we retain backward compatibility but still support the latest MAME version. To clarify, this of course does not affect the emulation itself, but rather the filtering of BIOS and device files inside ES-DE. The mamenames.xml file containing the translation of MAME ROM names to the full game names does not suffer from this problem as it's cumulative, which is why it is simply overwritten.
 
-
 ## Configuration
 
 **~/.emulationstation/es_settings.xml**
@@ -1343,42 +1033,52 @@ But if you have customized your button layout and your controller or keyboard st
 
 The input configuration is described in the [User guide](USERGUIDE.md#input-device-configuration).
 
-
 ## Command line options
 
 You can use **--help** or **-h** to view the list of command line options, as shown here.
 
 ```
---display [index 1-4]           Display/monitor to use
---resolution [width] [height]   Application resolution
---vsync [1/on or 0/off]         Turn VSync on or off (default is on)
---max-vram [size]               Max VRAM to use (in mebibytes) before swapping
---no-splash                     Don't show the splash screen during startup
---gamelist-only                 Skip automatic game ROM search, only read from gamelist.xml
---ignore-gamelist               Ignore the gamelist files (useful for troubleshooting)
---show-hidden-files             Show hidden files and folders
---show-hidden-games             Show hidden games
---force-full                    Force the UI mode to Full
---force-kiosk                   Force the UI mode to Kiosk
---force-kid                     Force the UI mode to Kid
---force-input-config            Force configuration of input device
---create-system-dirs            Create game system directories
---home [path]                   Directory to use as home path
---debug                         Print debug information
---version, -v                   Display version information
---help, -h                      Summon a sentient, angry tuba
+--display [1 to 4]                    Display/monitor to use
+--resolution [width] [height]         Application resolution
+--screenoffset [horiz.] [vert.]       Offset screen contents within application window
+--screenrotate [0, 90, 180 or 270]    Rotate screen contents within application window
+--fullscreen-padding [1/on or 0/off]  Padding if --resolution is lower than display resolution
+--vsync [1/on or 0/off]               Turn VSync on or off (default is on)
+--max-vram [size]                     Max VRAM to use (in mebibytes) before swapping
+--anti-aliasing [0, 2 or 4]           Set MSAA anti-aliasing to disabled, 2x or 4x
+--no-splash                           Don't show the splash screen during startup
+--no-update-check                     Don't check for application updates during startup
+--gamelist-only                       Skip automatic game ROM search, only read from gamelist.xml
+--ignore-gamelist                     Ignore the gamelist.xml files
+--show-hidden-files                   Show hidden files and folders
+--show-hidden-games                   Show hidden games
+--force-full                          Force the UI mode to Full
+--force-kiosk                         Force the UI mode to Kiosk
+--force-kid                           Force the UI mode to Kid
+--force-input-config                  Force configuration of input devices
+--create-system-dirs                  Create game system directories
+--home [path]                         Directory to use as home path
+--debug                               Print debug information
+--version, -v                         Display version information
+--help, -h                            Summon a sentient, angry tuba
 ```
+
+_The --anti-aliasing option is not available if ES-DE is built using the OpenGL ES renderer and the --no-update-check option is not available for builds where the application updater is disabled._
 
 As you can see above, you can override the home directory path using the `--home` flag. So by running for instance the command `emulationstation --home ~/games/emulation`, ES-DE will use `~/games/emulation/.emulationstation` as its application home directory. Be aware that this option completely replaces what is considered the home directory, meaning the default ROM directory ~/ROMs would be resolved to ~/games/emulation/ROMs. The same is true for the emulator core locations if es_find_rules.xml is configured to look for them relative to the home directory. So of course RetroArch and other emulators would also need to be configured to use ~/games/emulation as its base directory in this instance.
 
-Setting the resolution to a lower or higher value than the display resolution will add a border to the application window.
+Setting --resolution to a lower or higher value than the display resolution will add a border to the application window. The exception is if defining a lower resolution than the display resolution in combination with the --fullscreen-padding flag as this will pad the screen contents on a black background. This can be combined with the --screenoffset option for exact positioning on displays where bezels or similar may obstruct part of the viewable area.
+
+The --no-update-check option only disabled the application updater for the current startup. To permanently disable this functionality use the _Check for application updates_ option in the _Other settings_ menu. The command line option is primarily intended for the unlikely event that the application updater breaks the application and makes it impossible to start.
 
 Running with the --create-system-dirs option will generate all the game system directories in the ROMs folder. This is equivalent to starting ES-DE with no game ROMs present and pressing the _Create directories_ button. Detailed output for the directory creation will be available in es_log.txt and the application will quit immediately after the directories have been created.
 
 For the following options, the es_settings.xml file is immediately updated/saved when passing the parameter:
 ```
 --display
+--screenrotate
 --max-vram
+--anti-aliasing
 --gamelist-only
 --show-hidden-files
 --show-hidden-games
@@ -1387,6 +1087,50 @@ For the following options, the es_settings.xml file is immediately updated/saved
 As well, passing the option --ignore-gamelist will disable the ParseGamelistOnly setting controlled by --gamelist-only and immediately save the es_settings.xml file. If passing both the --ignore-gamelist and --gamelist-only parameters then --ignore-gamelist will take precedence and --gamelist-only will be ignored.
 
 The --ignore-gamelist option is only active during the program session and is not saved to es_settings.xml. But --gamelist-only is however saved, so in order to return to the normal operation of parsing the gamelist.xml files after starting ES-DE with the --gamelist-only option, you will need to disable the setting _Only show ROMs from gamelist.xml files_ in the _Other settings_ menu (or manually change the ParseGamelistOnly entry in es_settings.xml).
+
+## Settings not configurable via the GUI
+
+There are some settings which are not configurable via the GUI as modifying these should normally not be required. To still change these, edit the es_settings.xml file directly.
+
+**DebugSkipInputLogging**
+
+Enabling this will skip all input event logging (button and key presses). Default value is false.
+
+**DebugSkipMissingThemeFiles**
+
+Enabling this will skip all debug messages about missing files when loading a theme set. Default value is false.
+
+**DebugSkipMissingThemeFilesCustomCollections**
+
+Enabling this will skip all debug messages about missing files specifically for custom collections when loading a theme set. Note that DebugSkipMissingThemeFiles takes precedence, so if that setting is set to true then the DebugSkipMissingThemeFilesCustomCollections setting will be ignored. Default value is true.
+
+**LegacyGamelistFileLocation**
+
+As of ES-DE 2.0.0 any gamelist.xml files stored in the game system directories (e.g. under `~/ROMs/`) will not get loaded, they are instead required to be placed in the `~/.emulationstation/gamelists/` directory tree. By setting this option to `true` it's however possible to retain the old behavior of first looking for gamelist.xml files in the system directories on startup. Note that even if this setting is enabled ES-DE will still always create new gamelist.xml files under `~/.emulationstation/gamelists/` which was the case also for the 1.x.x releases.
+
+**LottieMaxFileCache**
+
+Sets the maximum per-file animation cache for Lottie animations. Minimum value is 0 MiB and maximum value is 1024 MiB. Default value is 150 MiB.
+
+**LottieMaxTotalCache**
+
+Sets the maximum total animation cache for Lottie animations. Minimum value is 0 MiB and maximum value is 4096 MiB. Default value is 1024 MiB.
+
+**OpenGLVersion**
+
+If using the regular desktop OpenGL renderer, the allowed values are 3.3 (default on all builds except the Steam Deck), 4.2 and 4.6 (default on the Steam Deck). If using the OpenGL ES renderer, the allowed values are 3.0 (default), 3.1 and 3.2.
+
+**ScraperConnectionTimeout**
+
+Sets the server connection timeout for the scraper. Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 30 seconds.
+
+**ScraperTransferTimeout**
+
+Sets the transfer timeout per HTTPS request. Minimum value is 0 seconds (infinity) and maximum value is 300 seconds. Default value is 120 seconds.
+
+**UIMode_passkey**
+
+The passkey to use to change from the _Kiosk_ or _Kid_ UI modes to the _Full_ UI mode.
 
 ## es_systems.xml
 
@@ -1399,6 +1143,8 @@ To accomplish this, ES-DE supports customizations via a separate es_systems.xml 
 This custom file functionality is designed to be complementary to the bundled es_systems.xml file, meaning you should only add entries to the custom configuration file for game systems that you actually want to add or override. So to for example customize a single system, this file should only contain a single `<system>` tag. The structure of the custom file is identical to the bundled file with the exception of an additional optional tag named `<loadExclusive/>`. If this is placed in the custom es_systems.xml file, ES-DE will not load the bundled file. This is normally not recommended and should only be used for special situations. At the end of this section you can find an example of a custom es_systems.xml file.
 
 The bundled es_systems.xml file is located in the resources directory that is part of the application installation. For example this could be `/usr/share/emulationstation/resources/systems/unix/es_systems.xml` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/resources/systems/macos/es_systems.xml` on macOS or `C:\Program Files\EmulationStation-DE\resources\systems\windows\es_systems.xml` on Windows. The actual location may differ from these examples of course, depending on where ES-DE has been installed.
+
+If you're using the AppImage release of ES-DE then the bundled es_systems.xml file is embedded in the AppImage together with the rest of the resources.
 
 It doesn't matter in which order you define the systems as they will be sorted by the `<fullname>` tag or by the optional `<systemsortname>` tag when displayed inside the application. But it's still a good idea to add the systems in alphabetical order to make the configuration file easier to maintain.
 
@@ -1413,6 +1159,8 @@ Wildcards are supported for emulator binaries, but not for directories:
 <!-- This is NOT supported -->
 <command>~/App*/yuzu*.AppImage %ROM%</command>
 ```
+
+There is a special case when it comes to file extensions where it's possible to use extensionless files if required. To accomplish this simply add a dot (.) to the list of extensions in the `<extension>` tag. Obviously this makes it impossible to use the _directories interpreted as files_ functionality as there is no file extension, but apart from that everything should work the same as for regular files.
 
 Keep in mind that you have to set up your emulators separately from ES-DE as the es_systems.xml file assumes that your emulator environment is properly configured.
 
@@ -1444,8 +1192,8 @@ Below is an overview of the file layout with various examples. For the command t
         All subdirectories (and non-recursive links) will be included. -->
         <path>%ROMPATH%/snes</path>
 
-        <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t").
-        The extensions are case sensitive and they must begin with a dot. -->
+        <!-- A list of extensions to search for, delimited by any of the whitespace characters (", \r\n\t"). Extensions are
+        case sensitive and they must begin with a dot. It's also possible to add just a dot to include extensionless files. -->
         <extension>.smc .SMC .sfc .SFC .swc .SWC .fig .FIG .bs .BS .bin .BIN .mgd .MGD .7z .7Z .zip .ZIP</extension>
 
         <!-- The command executed when a game is launched. Various variables are replaced if found for a command tag as explained below.
@@ -1487,7 +1235,7 @@ Below is an overview of the file layout with various examples. For the command t
 
         <!-- Another example for Windows. As can be seen here, the absolute path to the emulator has been defined, and there are spaces
         in the directory name, so it needs to be surrounded by quotation marks. Quotation marks around the %EMUPATH% entry are optional
-        but in this example they're added. -->
+        but for this example they're added. -->
         <command>"C:\My Games\RetroArch\retroarch.exe" -L "%EMUPATH%\cores\snes9x_libretro.dll" %ROM%</command>
 
         <!-- An example for use in a portable Windows emulator installation, for instance on a USB memory stick. The %ESPATH% variable is
@@ -1544,7 +1292,7 @@ The following variables are expanded for the `command` tag:
 
 `%STARTDIR%` - The directory to start in when launching the emulator. Must be defined as a pair separated by an equal sign. This is normally not required, but some emulators and game engines like standalone MAME and OpenBOR will not work properly unless you're in the correct directory when launching a game. Either an absolute path can be used, such as `%STARTDIR%=C:\Games\mame` or some variables are available that provide various functions. The `%EMUDIR%` variable can be used to start in the directory where the emulator binary is located, i.e. `%STARTDIR%=%EMUDIR%`, the `%GAMEDIR%` variable can be used to start in the directory where the game file is located, i.e. `%STARTDIR%=%GAMEDIR%` and the `%GAMEENTRYDIR%` variable can be used which works identically to `%GAMEDIR%` with the exception that it will interpret the actual game entry as the start directory. This is useful in very rare situations like for the EasyRPG Player where the game directories are interpreted as files but where the game engine must still be started from inside the game directory. If an absolute path is set that contains blankspaces, then it must be surrounded by quotation marks, for example `%STARTDIR%="C:\Retro games\mame"`. If the directory defined by this variable does not exist, it will be created on game launch. The variable can be placed anywhere in the launch command if the %EMULATOR_ variable is used, otherwise it has to be placed after the emulator binary.
 
-`%INJECT%` - This allows the injection of launch arguments stored in a text file on the filesystem. This is for example required by the Hypseus Singe (arcade LaserDisc) emulator. The variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands`. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the tilde ~ symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"` The variable can be placed anywhere in the launch command and the arguments will be injected at that position. The specified file is optional, if it does not exist or if there are insufficient permissions to read the file content, then it will simply be skipped. For safety reasons the arguments file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped.
+`%INJECT%` - This allows the injection of launch arguments or environment variables stored in a text file on the filesystem. The %INJECT% variable must be defined as a pair separated by an equal sign, for example `%INJECT%=game.commands`. The `%BASENAME%` variable can also be used in conjunction with this variable, such as `%INJECT%=%BASENAME%.commands`. By default a path relative to the game file will be assumed but it's also possible to use an absolute path or the ~ (tilde) symbol which will expand to the home directory. If a path contains spaces it needs to be surrounded by quotation marks, such as `%INJECT%="C:\My games\ROMs\daphne\%BASENAME%.daphne\%BASENAME%.commands"`. The variable can be placed anywhere in the launch command and the file contents will be injected at that position. The specified file is optional, if it does not exist, is empty, or if there are insufficient permissions to read the file, then it will simply be skipped. For safety reasons the injection file can only have a maximum size of 4096 bytes and if it's larger than this it will be skipped and a warning will be written to es_log.txt.
 
 `%EMUPATH%` - Replaced with the path to the emulator binary. This variable is used for manually specifying emulator core locations, and a check for the existence of the core file will be done on game launch and an error displayed if it can't be found. Normally %EMUPATH% should not be used as the %CORE_ variable is the recommended method for defining core locations.
 
@@ -1780,6 +1528,17 @@ The other rules are probably self-explanatory with `systempath` searching the PA
 </rule>
 ```
 
+There is also support for substituting the emulator binary in a staticpath rule with an explicit command. To accomplish this add a pipe (|) character after the emulator entry followed by the command to execute. This is for example useful for Flatpaks when you want to check the presence of a package while still launching a specific command inside the package using the --command option. For example:
+
+``` xml
+<rule type="staticpath">
+    <entry>/var/lib/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+    <entry>~/.local/share/flatpak/exports/bin/com.github.AmatCoder.mednaffe|flatpak run --command=mednafen com.github.AmatCoder.mednaffe</entry>
+</rule>
+```
+
+This will execute the regular logic of checking if the Mednaffe Flatpak is installed but will actually run the command after the pipe character when launching the game. Note that no checks or controls are in place for the explicitly defined command, it's just blindly executed.
+
 The winregistrypath rules are always processed first, followed by winregistryvalue, then systempath and finally staticpath. This is done regardless of which order they are defined in the es_find_rules.xml file.
 
 As for `corepath` this rule is simply a path to search for the emulator core.
@@ -1977,7 +1736,8 @@ There are two basic categories of metadata, `game` and `folders` and the metdata
 **\<game\>**
 * `path` - string, the path to the game file, either relative to the %ROMPATH% variable or as an absolute path on the filesystem
 * `name` - string, the displayed name for the game
-* `sortname` - string, used in sorting the gamelist in a system, instead of `name`
+* `sortname` - string, used for sorting the system gamelist, instead of using `name`
+* `collectionsortname` - string, used for sorting the gamelist for custom collections, instead of using `name` or `sortname`
 * `desc` - string, a description of the game, longer descriptions will automatically scroll, so don't worry about the size
 * `rating` - float, the rating for the game, expressed as a floating point number between 0 and 1. Fractional values will be rounded to 0.1 increments (half-stars) during processing
 * `releasedate` - datetime, the date the game was released, displayed as date only, time is ignored
@@ -2017,7 +1777,8 @@ For folders, most of the fields are identical although some are removed. In the 
 * `nomultiscrape`
 * `hidemetadata`
 * `controller`
-* `lastplayed` - statistic, for folders this is inherited by the latest game file launched inside the folder.
+* `folderlink` - string, points to a file inside the game's folder structure that will be launched instead of entering the folder
+* `lastplayed` - statistic, datetime, for folders this is inherited by the latest game file launched inside the folder.
 
 **Additional gamelist.xml information**
 
@@ -2033,7 +1794,6 @@ For folders, most of the fields are identical although some are removed. In the 
 
 * The switch `--ignore-gamelist` can be used to ignore the gamelist upon start of the application (mostly useful for debugging purposes)
 
-
 ## Debug mode
 
 By passing the --debug command line option, ES-DE will increase the logging to include a lot of additional debug output which is useful both for development and in order to pinpoint issues as a user.
@@ -2041,11 +1801,11 @@ In addition to this extra logging, a few key combinations are enabled when in de
 
 **Ctrl + i**
 
-This will draw a semi-transparent red frame behind all image and animation components.
+This will draw a semi-transparent red frame behind all image and animation components. It will also draw a green frame around the carousel and grid.
 
 **Ctrl + t**
 
-This will draw a semi-transparent blue frame around all text components.
+This will draw a semi-transparent blue frame around all text components. It will also draw a green frame around the textlist.
 
 **Ctrl + g**
 
@@ -2140,7 +1900,7 @@ Just make sure to not place the portable installation on a network share that us
 
 There are numerous locations throughout ES-DE where custom scripts can be executed if the option to do so has been enabled in the settings. You'll find the option _Enable custom event scripts_ on the Main menu under _Other settings_. By default this setting is deactivated so make sure to enable it to use this feature.
 
-The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files. It will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
+The approach is quite straightforward, ES-DE will look for any files inside a script directory that corresponds to the event that is triggered and will then execute all these files. If you want to have the scripts executed in a certain order you can name them accordingly as they will be sorted and executed in lexicographic order. The sorting is case-sensitive on Unix/Linux and case-insensitive on macOS and Windows. ES-DE will wait for each script to finish its execution before moving on to the next one, so the application will suspend briefly when whatever the script is doing is executing. If you want to avoid this you can setup a wrapper script that executes another script outside the ES-DE scripts directory as a background process. Refer to your operating system documentation on how to accomplish this.
 
 There are up to four parameters that will be passed to these scripts, as detailed below:
 

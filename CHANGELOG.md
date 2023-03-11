@@ -2,9 +2,9 @@
 
 [[_TOC_]]
 
-## Version 2.0.0 (in development)
+## Version 2.0.0
 
-**Release date:** TBD
+**Release date:** 2023-03-11
 
 ### Release overview
 
@@ -60,6 +60,7 @@ Overall application speed and performance has been greatly improved with faster 
 * Added support for the Microsoft Windows (windows) game system
 * Added support for the Nintendo Wii U (wiiu) game system on Linux and macOS by adding the Cemu standalone emulator
 * Added support for the Infocom Z-machine (zmachine) game system by adding the Gargoyle standalone emulator
+* Added support for the Ava release of Ryujinx for the switch system on Linux and Windows
 * (macOS) Added support for the Nintendo Switch (switch) game system by adding the Ryujinx standalone emulator
 * Added ares standalone as an alternative emulator for many systems
 * Added MAME standalone as the default emulator for the macintosh system (Mac SE and Mac Plus diskette images)

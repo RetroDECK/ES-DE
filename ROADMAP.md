@@ -38,15 +38,15 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 
 #### v2.0 (in progress)
 
-* New theme engine with generalized views (only System and Gamelist) and theme variants support
-* Multiple new components (carousel support for the Gamelist view, grid component etc.)
-* Support for Tate mode, i.e. vertical screen orientation for arcade cabinets and similar
-* Lottie animation (vector graphics) and GIF animation support
-* OpenGL ES 3.0 renderer for use on the Raspberry Pi
-* Replace the OpenGL fixed function pipeline renderer with a shader-based renderer
-* Replace NanoSVG with a more capable SVG rendering library
-* Improve text and font functions, e.g. dynamic texture allocation and faster and cleaner text wrapping
-* Improve the performance of the GLSL shader post-processing
+* _New theme engine with generalized views (only System and Gamelist) and theme variants support_
+* _Multiple new components (carousel support for the Gamelist view, grid component etc.)_
+* _Support for Tate mode, i.e. vertical screen orientation for arcade cabinets and similar_
+* _Lottie animation (vector graphics) and GIF animation support_
+* _OpenGL ES 3.0 renderer for use on the Raspberry Pi_
+* _Replace the OpenGL fixed function pipeline renderer with a shader-based renderer_
+* _Replace NanoSVG with a more capable SVG rendering library_
+* _Improve text and font functions, e.g. dynamic texture allocation and faster and cleaner text wrapping_
+* _Improve GLSL shader post-processing performance_
 
 #### v2.1
 
@@ -85,7 +85,7 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 
 #### v2.4
 
-* Touch screen support
+* Mouse/touch screen support
 * Animated menu elements like switches and tick boxes
 * Migration tools for importing game metadata and media from other frontend applications
 * Audit tools to clean up orphaned gamelist entries, media files etc.

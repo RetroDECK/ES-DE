@@ -644,22 +644,17 @@ The following manually downloaded emulators are supported when using the bundled
 | psvita                           | Vita3K        | Vita3K/Vita3K                     |
 | samcoupe                         | SimCoupé      | simcoupe/simcoupe                 |
 | switch                           | Ryujinx       | publish/Ryujinx                   |
+| switch                           | Ryujinx       | publish/Ryujinx.Ava               |
 | trs-80                           | sdl2trs       | sdl2trs/sdl2trs                   |
 | wiiu                             | Cemu          | Cemu/Cemu                         |
 
-Note that the Ryujinx binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
-```
-cd ~/Applications/publish
-chmod +x ./Ryujinx
-```
-
-The same is true for Vita3K:
+Note that the Vita3K binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
 cd ~/Applications/Vita3K
 chmod +x ./Vita3K
 ```
 
-And also for Cemu:
+The same is true for Cemu:
 ```
 cd ~/Applications/Cemu
 chmod +x ./Cemu
