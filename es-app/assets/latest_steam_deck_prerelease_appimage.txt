@@ -1,3 +1,2 @@
 # URL for the latest Steam Deck prerelease AppImage, used by EmuDeck (www.emudeck.com)
-# ES-DE release 2.0.0-beta-2023-03-05
-https://gitlab.com/es-de/emulationstation-de/-/package_files/70665047/download
+# No prerelease is currently available
