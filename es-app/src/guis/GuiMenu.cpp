@@ -66,10 +66,14 @@ GuiMenu::GuiMenu()
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
+#if defined(__APPLE__)
+        addEntry("QUIT EMULATIONSTATION", 0x777777FF, false, [this] { openQuitMenu(); });
+#else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
             addEntry("QUIT", 0x777777FF, true, [this] { openQuitMenu(); });
         else
             addEntry("QUIT EMULATIONSTATION", 0x777777FF, false, [this] { openQuitMenu(); });
+#endif
     }
 
     addChild(&mMenu);
