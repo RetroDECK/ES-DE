@@ -14,8 +14,8 @@ v2.0 maintenance release.
 
 ### Bug fixes
 
-* Fixed several container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
-* Fixed a container overflow in ViewController that could lead to rare crashes when running on an ARM processor
+* Fixed several potential container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
+* Fixed a potential container overflow in ViewController that could lead to rare crashes when running on an ARM processor
 * (macOS) When opening the main menu an error message was logged about accessing a nonexistent ShowQuitMenu setting
 
 ## Version 2.0.0

@@ -2,7 +2,7 @@
 
 ## What is this project and how is it related to other EmulationStation forks?
 
-This project started in 2020 as a fork of RetroPie EmulationStation and it has been in very active development ever since. Large parts of the application have been rewritten and much functionality has been added, so overall it's a quite different application by now. It's a completely independent project from all other EmulationStation forks.
+This project started in 2020 as a fork of RetroPie EmulationStation and it has been in very active development ever since. Large parts of the application have been rewritten and much functionality has been added, so overall it's a quite different application by now.
 
 ## What's the correct name? EmulationStation, ES-DE, Emulation Station, EmuStation etc?
 
@@ -14,17 +14,17 @@ ES-DE is available for free, and will continue to be available for free. It's re
 
 ## Which operating systems are supported?
 
-ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distributions, including SteamOS (Steam Deck). The Raspberry Pi 4/400 is also supported.
+ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc.
 
 ## What is the relationship between ES-DE and EmuDeck?
 
-ES-DE and [EmuDeck](http://www.emudeck.com) are completely separate projects, but we collaborate to give the best possible user experience. EmuDeck is an installer that downloads emulators and applies configuration to these, and it can also download and install ES-DE. EmuDeck is not needed to run ES-DE, but on the Steam Deck it provides a convenient way of setting up an emulator environment for people not experienced with making this type of installation and configuration on their own. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed using EmuDeck.
+ES-DE and [EmuDeck](http://www.emudeck.com) are completely separate projects, but we collaborate to give the best possible user experience. EmuDeck is an installer that downloads emulators and applies configuration to these, and it can also download and install ES-DE. EmuDeck is not needed to run ES-DE, but on the Steam Deck it provides a convenient way of setting up an emulator environment. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed using EmuDeck.
 
 ## What is the relationship between ES-DE and RetroDECK?
 
 ES-DE and [RetroDECK](http://retrodeck.net) are completely separate projects, but we collaborate to give the best possible user experience. RetroDECK bundles ES-DE with all emulators in the same Flatpak so you don't need to update emulators separately or set Flatpak permissions manually. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed via RetroDECK.
 
-## What systems/platforms and emulators are supported by ES-DE?
+## What game systems/platforms and emulators are supported by ES-DE?
 
 See the _Supported game systems_ section at the bottom of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing all supported systems/platforms and emulators.
 
@@ -46,7 +46,7 @@ You're probably missing the OpenGL drivers required to run ES-DE. Try to downloa
 
 ## I'm on Windows and there is only a black screen shown on startup or when launching a game, is there a way to fix this?
 
-This behavior has been observed for some specific AMD GPUs, in some instances there is only a black screen on startup and in some instances the application starts and runs correctly but launching a game only shows a black screen. The issue is seemingly caused by GPU driver bugs and it only affects Windows as Linux works fine with the same hardware. The workaround is to make ES-DE run in windowed mode. You accomplish this by using the --resolution flag and setting the width to one pixel wider than your screen resolution. So if for instance running at a 1280x800 display resolution, run ES-DE such as this: `EmulationStation.exe --resolution 1281 800`
+This behavior has been observed for some specific AMD GPUs in the past. In some instances there is only a black screen on startup and in some instances the application starts and runs correctly but launching a game only shows a black screen. The issue is seemingly caused by GPU driver bugs and it only affects Windows as Linux works fine with the same hardware. The workaround is to make ES-DE run in windowed mode. You accomplish this by using the --resolution flag and setting the width to one pixel wider than your screen resolution. So if for instance running at a 1280x800 display resolution, run ES-DE such as this: `EmulationStation.exe --resolution 1281 800`
 
 ## The emulators don't seem to be properly configured?
 
@@ -90,25 +90,25 @@ This release of RetroArch has multiple technical issues so it's not officially s
 
 ## How do I add more themes?
 
-Refer to the official list of [recommended theme sets](https://gitlab.com/es-de/themes/themes-list) for a selection of high-quality themes. There are also some brief instructions there on how to download and install them. More comprehensive documentation is available in the _Themes_ section of the [User guide](USERGUIDE.md#themes). In addition to the recommended theme sets you'll be able to find a lot of additional themes if doing a web search as almost all RetroPie-compatible themes can be used with ES-DE. Just be aware that many of these do not include support for modern systems like PlayStation 3 and Nintendo Switch so those platforms may look a bit ugly depending on how the theme has been written.
+Refer to the official list of [recommended theme sets](https://gitlab.com/es-de/themes/themes-list) for a selection of high-quality themes. There are also some brief instructions there on how to download and install them. More comprehensive documentation is available in the _Themes_ section of the [User guide](USERGUIDE.md#themes). A built-in theme downloader is also planned for a future release.
 
 ## The themes I've added don't seem to work?
 
-Only RetroPie EmulationStation themes are supported, you can't use themes that were specifically developed for Batocera or Recalbox EmulationStation. A very few RetroPie themes like es-theme-carbon-2021 will not work either due to technical reasons. Refer to the official list of [recommended theme sets](https://gitlab.com/es-de/themes/themes-list) for a selection of high-quality themes that have been thoroughly tested with ES-DE.
+Most themes from Batocera, Recalbox and similar EmulationStation forks can't be used as ES-DE has a different theme engine than those applications. For the time being RetroPie themes can be used, but support for these legacy themes will be removed in a future version.
 
 ## I used to be a Batocera/Recalbox user and ES-DE can't seem to find some of my games?
 
-ES-DE uses the RetroPie naming conventions. In most cases the ROM directories are identical but for historical reasons some of them unfortunately don't match. For example Nintendo GameCube is called _gc_ in RetroPie and ES-DE while being named _gamecube_ in Batocera and Recalbox. The same is true for some other systems like n3ds vs. 3ds for Nintendo 3DS. See the _Supported game systems_ section at the bottom of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing the system names that ES-DE expects.
+ES-DE uses mostly the same system names as these other frontends, but there are some exceptions for historical reasons. For example Nintendo GameCube is called _gc_ ES-DE while being named _gamecube_ in Batocera and Recalbox. The same is true for some other systems like _n3ds_ vs. _3ds_ for Nintendo 3DS. See the _Supported game systems_ section at the bottom of the [User guide](USERGUIDE.md#supported-game-systems) where there's a table listing the system names that ES-DE expects.
 
 ## Can ES-DE update itself automatically when a new release becomes available?
 
-ES-DE 2.0.0 includes a check for new versions and will show a notification window on startup if there is a new release available for download. As a second step downloading of the new version will be implemented and on some platforms automatic updating will be added as well. It's however unlikely that automatic upgrading will be feasible for all package formats. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release). If you find the update notification messages annoying you can change the frequency of update checks between _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_ from the _Other settings_ menu.
+ES-DE includes a check for new versions and will show a notification window on startup if there is a new release available for download. As a second step downloading of the new version will be implemented and on some platforms automatic updating will be added as well. It's however unlikely that automatic upgrading will be feasible for all package formats. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release). If you find the update notification messages annoying you can change the frequency of update checks between _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_ from the _Other settings_ menu.
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 
 ES-DE works very differently compared to all other EmulationStation forks when it comes to handling of game media. There are no links in the gamelist.xml files, instead media files are simply matched against the ROM/game file names which makes for a much simpler, faster and completely portable setup. Migrating game media from other EmulationStation forks (and potentially from other frontends as well) can be accomplished quite easily. See the next question below for more information. Make sure to also read the _Migrating from other EmulationStation forks_ section of the [User guide](USERGUIDE.md#migrating-from-other-emulationstation-forks) to avoid data loss if running ES-DE with existing data from another EmulationStation fork.
 
-## It seems like gamelist.xml files in the ROMs directory tree are no longer getting loaded in ES-DE 2.0?
+## It seems like gamelist.xml files in the ROMs directory tree are no longer getting loaded as of ES-DE 2.0?
 
 Yes, to optionally read gamelist.xml files from the ROMs directory tree in previous releases was a mistake as it has caused a lot of confusion as well as invalid bug reports. As such the logic has now been changed to only read these files from .emulationstation/gamelists/ which is where they belong. If you insist on retaining the old logic you can do so by manually setting LegacyGamelistFileLocation to true in es_settings.xml as explained [here](INSTALL-DEV.md#settings-not-configurable-via-the-gui), but it's definitely not recommended.
 
@@ -118,7 +118,7 @@ This issue can occur occassionally as the ScreenScraper servers sometimes return
 
 ## Can I use an external scraper application instead of the built-in scraper?
 
-Yes to a certain extent this is supported and at least [Skraper](https://www.skraper.net) and [Skyscraper](https://github.com/detain/skyscraper) have been used by some people. Few if any dedicated scraper applications are yet updated specifically to support ES-DE though, so you may need to do some manual renaming and moving of files and directories. See the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details about this.
+Yes to a certain extent this is supported and at least [Skraper](https://www.skraper.net) and [Skyscraper](https://github.com/detain/skyscraper) have been used by some people. Make sure to read the _Manually copying game media files_ section of the [User guide](USERGUIDE.md#manually-copying-game-media-files) for more details of where ES-DE expects game media to be stored.
 
 ## My controller isn't working in ES-DE, is there a way to fix this?
 
@@ -132,8 +132,8 @@ The second reason for double input is buggy controller drivers. This seems to on
 
 ## I'm missing a feature, how can I make a request to have it added?
 
-First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](CONTRIBUTING.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/).
+First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](ROADMAP.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/).
 
 ## I want to setup a gaming appliance based on the Raspberry Pi, can I use ES-DE for this?
 
-While there is a release of ES-DE for the Raspberry Pi 4/400, this requires a desktop environment to run. So ES-DE can not be used as a drop-in replacement for RetroPie or Batocera EmulationStation. It's however still possible to get an appliance-like experience with ES-DE if the necessary setup is performed. But that's the case not only for the Raspberry Pi of course but for all supported operating systems.
+This is not the goal of ES-DE, the application requires a desktop environment to run. If you want to run a frontend on a single-board computer or similar then there are better options out there. But many people run ES-DE on arcade cabinets and similar which is definitely possible, it just requires a desktop-class operating system.
