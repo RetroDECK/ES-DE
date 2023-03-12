@@ -36,7 +36,7 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * _Add GLM library dependency for matrix and vector operations, decommission the built-in functions_
 * _AppImage and AUR releases on Linux_
 
-#### v2.0 (in progress)
+#### v2.0 (in development)
 
 * _New theme engine with generalized views (only System and Gamelist) and theme variants support_
 * _Multiple new components (carousel support for the Gamelist view, grid component etc.)_

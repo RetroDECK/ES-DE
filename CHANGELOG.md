@@ -2,6 +2,20 @@
 
 [[_TOC_]]
 
+## Version 2.0.1 (in development)
+
+### Release overview
+
+### Detailed list of changes
+
+### Bug fixes
+
+* Fixed several container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
+* Fixed a container overflow in ViewController that could lead to rare crashes when running on an ARM processor
+* (macOS) When opening the main menu an error message was logged about accessing a nonexistent ShowQuitMenu setting
+
+**Release date:** TBD
+
 ## Version 2.0.0
 
 **Release date:** 2023-03-11

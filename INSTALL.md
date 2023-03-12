@@ -538,11 +538,6 @@ export UBSAN_OPTIONS=print_stacktrace=1
 
 These tools aren't very useful without debug symbols so only use them for a Debug or Profiling build. Note that ASAN and TSAN can't be combined.
 
-Specifically on macOS it seems as if AddressSanitizer generates a lot of false positives regarding container overflows, so it may be necessary to ignore these:
-```
-export ASAN_OPTIONS=detect_container_overflow=0
-```
-
 Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up the compilation time if you have cores to spare.
 
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
