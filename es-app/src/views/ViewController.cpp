@@ -885,7 +885,7 @@ std::shared_ptr<GamelistView> ViewController::getGamelistView(SystemData* system
             if (overrides.find(ThemeTriggers::TriggerType::NO_MEDIA) != overrides.end()) {
                 noMediaTriggerType = ThemeTriggers::TriggerType::NO_MEDIA;
 
-                for (auto& imageType : overrides.at(ThemeTriggers::TriggerType::NO_MEDIA).second) {
+                for (auto imageType : overrides.at(ThemeTriggers::TriggerType::NO_MEDIA).second) {
                     for (auto it = files.cbegin(); it != files.cend(); ++it) {
                         if (imageType == "miximage") {
                             if (!(*it)->getMiximagePath().empty()) {
