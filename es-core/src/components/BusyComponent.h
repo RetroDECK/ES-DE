@@ -12,6 +12,7 @@
 #include "GuiComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/NinePatchComponent.h"
+#include "components/TextComponent.h"
 
 class AnimatedImageComponent;
 class TextComponent;
@@ -21,6 +22,7 @@ class BusyComponent : public GuiComponent
 public:
     BusyComponent();
 
+    void setText(const std::string& text) { mText->setText(text, true); }
     void onSizeChanged() override;
 
     void reset(); // Reset to frame 0.

@@ -10,7 +10,6 @@
 
 #include "components/AnimatedImageComponent.h"
 #include "components/ImageComponent.h"
-#include "components/TextComponent.h"
 
 // Animation definition.
 AnimationFrame BUSY_ANIMATION_FRAMES[] {
