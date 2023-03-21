@@ -63,6 +63,7 @@ if exist CMakeCache.txt (
 cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF ..
 nmake
 copy /Y git2.dll ..\..\..\
+copy /Y git2.lib ..\..\..\
 cd ..\..
 
 echo:
