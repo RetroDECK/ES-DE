@@ -803,6 +803,13 @@ void ThemeData::populateThemeSets()
         for (Utils::FileSystem::StringList::const_iterator it = dirContent.cbegin();
              it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isDirectory(*it)) {
+                const std::string themeDirName {Utils::FileSystem::getFileName(*it)};
+                if (themeDirName == "themes-list" ||
+                    (themeDirName.length() >= 8 &&
+                     Utils::String::toLower(themeDirName.substr(themeDirName.length() - 8, 8)) ==
+                         "disabled"))
+                    continue;
+
 #if defined(_WIN64)
                 LOG(LogDebug) << "Loading theme set capabilities for \""
                               << Utils::String::replace(*it, "/", "\\") << "\"...";
