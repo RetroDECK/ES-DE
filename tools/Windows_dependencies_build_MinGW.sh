@@ -57,6 +57,22 @@ strip libfreetype.dll
 cp libfreetype.dll ../../..
 cd ../..
 
+echo -e "\nBuilding libgit2"
+
+if [ ! -d libgit2/build ]; then
+  echo "libgit2 directory is missing, aborting."
+  exit
+fi
+
+cd libgit2/build
+rm -f CMakeCache.txt
+cmake -G "MinGW Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF ..
+make clean
+make -j${JOBS}
+strip libgit2.dll
+cp libgit2.dll ../../..
+cd ../..
+
 echo -e "\nBuilding pugixml"
 
 if [ ! -d pugixml ]; then

@@ -139,6 +139,7 @@ if(WIN32)
                       ../swscale-6.dll
                       ../FreeImage.dll
                       ../freetype.dll
+                      ../git2.dll
                       ../glew32.dll
                       ../libcrypto-1_1-x64.dll
                       ../libcurl-x64.dll
@@ -165,6 +166,7 @@ if(WIN32)
                       ../libcrypto-1_1-x64.dll
                       ../libcurl-x64.dll
                       ../libfreetype.dll
+                      ../libgit2.dll
                       ../liblunasvg.dll
                       ../libpugixml.dll
                       ../librlottie.dll

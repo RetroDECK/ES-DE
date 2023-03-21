@@ -119,6 +119,26 @@ copy /Y FreeImage\Dist\x64\FreeImage.dll ..
 copy /Y FreeImage\Dist\x64\FreeImage.lib ..
 
 echo:
+echo Setting up libgit2
+
+if exist libgit2\ (
+  rmdir /S /Q libgit2
+)
+
+git clone https://github.com/libgit2/libgit2.git
+
+if not exist libgit2\ (
+  echo libgit2 directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd libgit2
+git checkout v1.6.3
+mkdir build
+cd ..
+
+echo:
 echo Setting up pugixml
 
 if exist pugixml\ (

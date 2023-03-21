@@ -438,6 +438,7 @@ elseif(WIN32)
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/FreeImage/Dist/x64
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/freetype/include
+                            ${CMAKE_CURRENT_SOURCE_DIR}/external/libgit2/include
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/pugixml/src
                             ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL2-2.26.3)
 elseif(EMSCRIPTEN)
@@ -499,6 +500,7 @@ elseif(WIN32)
                              ${PROJECT_SOURCE_DIR}/swresample.lib
                              ${PROJECT_SOURCE_DIR}/swscale.lib
                              ${PROJECT_SOURCE_DIR}/FreeImage.lib
+                             ${PROJECT_SOURCE_DIR}/git2.lib
                              ${PROJECT_SOURCE_DIR}/glew32.lib
                              ${PROJECT_SOURCE_DIR}/libcurl-x64.lib
                              ${PROJECT_SOURCE_DIR}/freetype.lib
@@ -516,6 +518,7 @@ elseif(WIN32)
                              ${PROJECT_SOURCE_DIR}/swresample-4.dll
                              ${PROJECT_SOURCE_DIR}/swscale-6.dll
                              ${PROJECT_SOURCE_DIR}/FreeImage.dll
+                             ${PROJECT_SOURCE_DIR}/libgit2.dll
                              ${PROJECT_SOURCE_DIR}/glew32.dll
                              ${PROJECT_SOURCE_DIR}/libcurl-x64.dll
                              ${PROJECT_SOURCE_DIR}/libfreetype.dll

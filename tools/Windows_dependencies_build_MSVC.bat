@@ -46,6 +46,25 @@ copy /Y freetype.dll ..\..\..\
 copy /Y freetype.lib ..\..\..\
 cd ..\..
 
+echo Building libgit2
+
+if not exist libgit2\build\ (
+  echo libgit2 directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+cd libgit2\build
+if exist CMakeCache.txt (
+  nmake clean
+  del CMakeCache.txt
+)
+
+cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF ..
+nmake
+copy /Y git2.dll ..\..\..\
+cd ..\..
+
 echo:
 echo Building pugixml
 
