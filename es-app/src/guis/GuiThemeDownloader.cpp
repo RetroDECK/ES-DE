@@ -4,20 +4,25 @@
 //  GuiThemeDownloader.cpp
 //
 //  Theme downloader.
-//  Currently only a skeleton with some JSON configuration parsing.
 //
 
 #include "guis/GuiThemeDownloader.h"
 
+#include "EmulationStation.h"
 #include "resources/ResourceManager.h"
 
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 
+#define DEBUG_CLONING false
+
 GuiThemeDownloader::GuiThemeDownloader()
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {3, 2}}
+    , mFetching {false}
+    , mLatestThemesList {false}
+    , mHasLocalChanges {false}
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -34,14 +39,324 @@ GuiThemeDownloader::GuiThemeDownloader()
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
-    parseThemesList();
+    mBusyAnim.setSize(mSize);
+    mBusyAnim.setText("100%");
+    mBusyAnim.onSizeChanged();
+
+    git_libgit2_init();
+
+    // The promise/future mechanism is used as signaling for the thread to indicate that
+    // repository fetching has been completed.
+    std::promise<bool>().swap(mPromise);
+    mFuture = mPromise.get_future();
+
+    std::string repositoryName {"themes-list"};
+    std::string url {"https://gitlab.com/es-de/themes/themes-list.git"};
+
+    mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
+                               std::make_pair(repositoryName, url), true);
+}
+
+GuiThemeDownloader::~GuiThemeDownloader()
+{
+    if (mFetchThread.joinable())
+        mFetchThread.join();
+
+    git_libgit2_shutdown();
+}
+
+bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> repoInfo,
+                                         bool allowReset)
+{
+    int errorCode {0};
+    std::string repositoryName {repoInfo.first};
+    std::string url {repoInfo.second};
+    std::string path {Utils::FileSystem::getHomePath() + "/.emulationstation/themes/" +
+                      repositoryName};
+    mErrorMessage = "";
+
+    const bool isThemesList {repositoryName == "themes-list"};
+    git_repository* repository {nullptr};
+
+    auto fetchProgressFunc = [](const git_indexer_progress* stats, void* payload) -> int {
+        (void)payload;
+        if (stats->received_objects == stats->total_objects) {
+#if (DEBUG_CLONING)
+            LOG(LogDebug) << "Indexed deltas: " << stats->indexed_deltas
+                          << " Total deltas: " << stats->total_deltas;
+#endif
+            mReceivedObjectsProgress = 1.0f;
+            if (stats->total_deltas > 0) {
+                mResolveDeltaProgress = static_cast<float>(stats->indexed_deltas) /
+                                        static_cast<float>(stats->total_deltas);
+            }
+        }
+        else if (stats->total_objects > 0) {
+#if (DEBUG_CLONING)
+            LOG(LogDebug) << "Received objects: " << stats->received_objects
+                          << " Total objects: " << stats->total_objects
+                          << " Indexed objects: " << stats->indexed_objects
+                          << " Received bytes: " << stats->received_bytes;
+#endif
+            if (stats->total_objects > 0) {
+                mReceivedObjectsProgress = static_cast<float>(stats->received_objects) /
+                                           static_cast<float>(stats->total_objects);
+            }
+        }
+        return 0;
+    };
+
+    if (Utils::FileSystem::exists(path)) {
+        errorCode = git_repository_open(&repository, &path[0]);
+        if (errorCode != 0 && isThemesList) {
+            if (renameDirectory(path)) {
+                LOG(LogError) << "Couldn't rename \"" << path << "\", permission problems?";
+                mWindow->pushGui(new GuiMsgBox(
+                    getHelpStyle(), "COULDN'T RENAME DIRECTORY\n" + path + "\nPERMISSION PROBLEMS?",
+                    "OK", [] { return; }, "", nullptr, "", nullptr, true));
+                return true;
+            }
+        }
+    }
+
+    if (!Utils::FileSystem::exists(path)) {
+        // Repository does not exist, so clone it.
+        git_clone_options cloneOptions;
+        git_clone_options_init(&cloneOptions, GIT_CLONE_OPTIONS_VERSION);
+
+        cloneOptions.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
+        cloneOptions.fetch_opts.callbacks.transfer_progress = fetchProgressFunc;
+
+        mReceivedObjectsProgress = 0.0f;
+        mResolveDeltaProgress = 0.0f;
+
+        mFetching = true;
+        errorCode = git_clone(&repository, &url[0], &path[0], &cloneOptions);
+        git_repository_free(repository);
+
+        if (errorCode != 0) {
+            const git_error* gitError {git_error_last()};
+            LOG(LogWarning) << "GuiThemeDownloader: Git returned error code " << errorCode
+                            << ", error message: \"" << gitError->message << "\"";
+            mErrorMessage = gitError->message;
+            git_error_clear();
+            mPromise.set_value(true);
+            return true;
+        }
+
+        if (isThemesList)
+            mLatestThemesList = true;
+    }
+    else {
+        mHasLocalChanges = false;
+        git_remote* gitRemote {nullptr};
+
+        try {
+            mFetching = true;
+            errorCode = git_repository_open(&repository, &path[0]);
+
+            if (errorCode != 0)
+                throw std::runtime_error("Couldn't open local repository, ");
+            errorCode = git_remote_lookup(&gitRemote, repository, "origin");
+            if (errorCode != 0)
+                throw std::runtime_error("Couldn't get information about origin, ");
+
+            // int state {git_repository_state(repository)};
+            // if (state != GIT_REPOSITORY_STATE_NONE) {
+            //     //
+            // }
+
+            git_fetch_options fetchOptions;
+            git_fetch_options_init(&fetchOptions, GIT_FETCH_OPTIONS_VERSION);
+            errorCode = git_remote_fetch(gitRemote, nullptr, &fetchOptions, nullptr);
+
+            if (errorCode != 0)
+                throw std::runtime_error("Couldn't pull latest commits, ");
+
+            git_annotated_commit* annotated {nullptr};
+            git_object* object {nullptr};
+
+            if (git_repository_head_detached(repository)) {
+                LOG(LogWarning) << "Repository \"" << repositoryName
+                                << "\" has HEAD detached, resetting it";
+                git_buf buffer {};
+                errorCode = git_remote_default_branch(&buffer, gitRemote);
+                if (errorCode == 0) {
+                    git_reference* oldTargetRef;
+                    git_repository_head(&oldTargetRef, repository);
+
+                    const std::string branchName {buffer.ptr, buffer.size};
+                    errorCode = git_revparse_single(&object, repository, branchName.c_str());
+
+                    git_checkout_options checkoutOptions;
+                    git_checkout_options_init(&checkoutOptions, GIT_CHECKOUT_OPTIONS_VERSION);
+                    checkoutOptions.checkout_strategy = GIT_CHECKOUT_SAFE;
+                    errorCode = git_checkout_tree(repository, object, &checkoutOptions);
+                    errorCode = git_repository_set_head(repository, branchName.c_str());
+
+                    git_reference_free(oldTargetRef);
+                }
+                git_buf_dispose(&buffer);
+            }
+
+            errorCode = git_revparse_single(&object, repository, "FETCH_HEAD");
+            errorCode = git_annotated_commit_lookup(&annotated, repository, git_object_id(object));
+
+            git_merge_analysis_t mergeAnalysis {};
+            git_merge_preference_t mergePreference {};
+
+            errorCode = git_merge_analysis(&mergeAnalysis, &mergePreference, repository,
+                                           (const git_annotated_commit**)(&annotated), 1);
+
+            if (errorCode != 0) {
+                git_object_free(object);
+                git_annotated_commit_free(annotated);
+                throw std::runtime_error("Couldn't run Git merge analysis, ");
+            }
+
+            if (mergeAnalysis & GIT_MERGE_ANALYSIS_UP_TO_DATE) {
+                LOG(LogInfo) << "Repository \"" << repositoryName << "\" already up to date";
+                git_annotated_commit_free(annotated);
+                git_object_free(object);
+                mPromise.set_value(true);
+                if (isThemesList)
+                    mLatestThemesList = true;
+                return false;
+            }
+
+            if (!(mergeAnalysis & GIT_MERGE_ANALYSIS_FASTFORWARD)) {
+                if (allowReset) {
+                    LOG(LogWarning) << "Repository \"" << repositoryName
+                                    << "\" has diverged from origin, performing hard reset";
+                    git_object* objectHead {nullptr};
+                    errorCode = git_revparse_single(&objectHead, repository, "HEAD");
+                    errorCode = git_reset(repository, objectHead, GIT_RESET_HARD, nullptr);
+                    git_object_free(objectHead);
+                }
+                else {
+                    LOG(LogWarning) << "Repository \"" << repositoryName
+                                    << "\" has diverged from origin, can't fast-forward";
+                    git_annotated_commit_free(annotated);
+                    git_object_free(object);
+                    mPromise.set_value(true);
+                    mHasLocalChanges = true;
+                    return true;
+                }
+            }
+
+            git_status_list* status {nullptr};
+            git_status_options statusOptions;
+            git_status_options_init(&statusOptions, GIT_STATUS_OPTIONS_VERSION);
+
+            // We don't include untracked files (GIT_STATUS_OPT_INCLUDE_UNTRACKED) as this makes
+            // it possible to add custom files to the repository without overwriting these when
+            // pulling theme updates.
+            statusOptions.show = GIT_STATUS_SHOW_INDEX_AND_WORKDIR;
+            statusOptions.flags =
+                GIT_STATUS_OPT_RENAMES_HEAD_TO_INDEX | GIT_STATUS_OPT_SORT_CASE_SENSITIVELY;
+
+            errorCode = git_status_list_new(&status, repository, &statusOptions);
+            const size_t statusEntryCount {git_status_list_entrycount(status)};
+
+            if (statusEntryCount != 0) {
+                if (allowReset) {
+                    LOG(LogWarning) << "Repository \"" << repositoryName
+                                    << "\" contains local changes, performing hard reset";
+                    git_object* objectHead {nullptr};
+                    errorCode = git_revparse_single(&objectHead, repository, "HEAD");
+                    errorCode = git_reset(repository, objectHead, GIT_RESET_HARD, nullptr);
+                    git_object_free(objectHead);
+                }
+                else {
+                    LOG(LogWarning) << "Repository \"" << repositoryName
+                                    << "\" contains local changes, can't fast-forward";
+                    git_status_list_free(status);
+                    git_annotated_commit_free(annotated);
+                    git_object_free(object);
+                    mPromise.set_value(true);
+                    mHasLocalChanges = true;
+                    return true;
+                }
+            }
+
+            git_status_list_free(status);
+
+            LOG(LogInfo) << "Performing Git fast-forward of repository \"" << repositoryName
+                         << "\"";
+
+            git_reference* oldTargetRef {nullptr};
+            git_repository_head(&oldTargetRef, repository);
+
+            const git_oid* objectID {nullptr};
+            objectID = git_annotated_commit_id(annotated);
+
+            git_object_lookup(&object, repository, objectID, GIT_OBJECT_COMMIT);
+            git_reference* newTargetRef {nullptr};
+
+            git_checkout_options checkoutOptions;
+            git_checkout_options_init(&checkoutOptions, GIT_CHECKOUT_OPTIONS_VERSION);
+            checkoutOptions.checkout_strategy = GIT_CHECKOUT_SAFE;
+
+            git_checkout_tree(repository, object, &checkoutOptions);
+            errorCode = git_reference_set_target(&newTargetRef, oldTargetRef, objectID, nullptr);
+
+            git_reference_free(oldTargetRef);
+            git_reference_free(newTargetRef);
+            git_annotated_commit_free(annotated);
+            git_object_free(object);
+
+            if (errorCode != 0)
+                throw std::runtime_error("Couldn't fast-forward repository, ");
+
+            if (isThemesList)
+                mLatestThemesList = true;
+
+            if (gitRemote != nullptr)
+                git_remote_disconnect(gitRemote);
+        }
+        catch (std::runtime_error& runtimeError) {
+            const git_error* gitError {git_error_last()};
+            LOG(LogError) << "GuiThemeDownloader: " << runtimeError.what() << gitError->message;
+            mErrorMessage = gitError->message;
+            git_error_clear();
+            if (gitRemote != nullptr)
+                git_remote_disconnect(gitRemote);
+            mPromise.set_value(true);
+            return true;
+        }
+    }
+
+    mPromise.set_value(true);
+    return false;
+}
+
+bool GuiThemeDownloader::renameDirectory(const std::string& path)
+{
+    LOG(LogInfo) << "Renaming directory " << path;
+    int index {1};
+
+    if (!Utils::FileSystem::exists(path + "_DISABLED"))
+        return Utils::FileSystem::renameFile(path, path + "_DISABLED", false);
+
+    // This will hopefully never be needed as it should only occur if a theme has been downloaded
+    // manually multiple times and the theme downloader has been ran multiple times as well.
+    for (; index < 10; ++index) {
+        if (!Utils::FileSystem::exists(path + "_" + std::to_string(index) + "_DISABLED"))
+            return Utils::FileSystem::renameFile(
+                path, path + "_" + std::to_string(index) + "_DISABLED", false);
+    }
+
+    return true;
 }
 
 void GuiThemeDownloader::parseThemesList()
 {
-    // Obviously a temporary location for testing purposes...
+    // Temporary location for testing purposes.
+    //    const std::string themesFile {Utils::FileSystem::getHomePath() +
+    //                                  "/.emulationstation/themes.json"};
+
     const std::string themesFile {Utils::FileSystem::getHomePath() +
-                                  "/.emulationstation/themes.json"};
+                                  "/.emulationstation/themes/themes-list/themes.json"};
 
     if (!Utils::FileSystem::exists(themesFile)) {
         LOG(LogInfo) << "GuiThemeDownloader: No themes.json file found";
@@ -55,6 +370,19 @@ void GuiThemeDownloader::parseThemesList()
     if (doc.HasParseError()) {
         LOG(LogWarning) << "GuiThemeDownloader: Couldn't parse the themes.json file";
         return;
+    }
+
+    if (doc.HasMember("latestStableRelease") && doc["latestStableRelease"].IsString()) {
+        const int latestStableRelease {std::stoi(doc["latestStableRelease"].GetString())};
+        if (latestStableRelease > PROGRAM_RELEASE_NUMBER) {
+            LOG(LogWarning) << "Not running the most current application release, theme "
+                               "downloading is not recommended";
+            mWindow->pushGui(new GuiMsgBox(
+                getHelpStyle(),
+                "IT SEEMS AS IF YOU'RE NOT RUNNING THE LATEST ES-DE RELEASE, PLEASE UPGRADE BEFORE "
+                "PROCEEDING AS THESE THEMES MAY NOT BE COMPATIBLE WITH YOUR VERSION",
+                "OK", [] { return; }, "", nullptr, "", nullptr, true));
+        }
     }
 
     if (doc.HasMember("themeSets") && doc["themeSets"].IsArray()) {
@@ -118,7 +446,59 @@ void GuiThemeDownloader::parseThemesList()
         }
     }
 
+    mWindow->queueInfoPopup("PARSED " + std::to_string(mThemeSets.size()) + " THEME SETS", 6000);
     LOG(LogInfo) << "GuiThemeDownloader: Parsed " << mThemeSets.size() << " theme sets";
+}
+
+void GuiThemeDownloader::update(int deltaTime)
+{
+    if (mFuture.valid()) {
+        // Only wait one millisecond as this update() function runs very frequently.
+        if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
+            if (mFetchThread.joinable()) {
+                mFetchThread.join();
+                mFetching = false;
+                if (mHasLocalChanges) {
+                    LOG(LogError) << "Repository has local changes";
+                    mHasLocalChanges = false;
+                }
+                if (mErrorMessage != "") {
+                    std::string errorMessage {"ERROR: "};
+                    errorMessage.append(Utils::String::toUpper(mErrorMessage));
+                    mWindow->queueInfoPopup(errorMessage, 6000);
+                    LOG(LogError) << "Error: " << mErrorMessage;
+                }
+                if (mLatestThemesList)
+                    parseThemesList();
+            }
+        }
+    }
+
+    if (mFetching) {
+        int progress {mReceivedObjectsProgress != 1.0f ? 0 : 100};
+        if (mReceivedObjectsProgress != 1.0f) {
+            progress = std::round(static_cast<int>(
+                glm::mix(0.0f, 100.0f, static_cast<float>(mReceivedObjectsProgress))));
+            const std::string progressText {std::to_string(progress) + "%"};
+            mBusyAnim.setText(progressText);
+        }
+        else if (mReceivedObjectsProgress != 0.0f) {
+            progress = std::round(static_cast<int>(
+                glm::mix(0.0f, 100.0f, static_cast<float>(mResolveDeltaProgress))));
+            const std::string progressText {std::to_string(progress) + "%"};
+            mBusyAnim.setText(progressText);
+        }
+        mBusyAnim.update(deltaTime);
+    }
+}
+
+void GuiThemeDownloader::render(const glm::mat4& parentTrans)
+{
+    glm::mat4 trans {parentTrans * getTransform()};
+
+    renderChildren(trans);
+    if (mFetching)
+        mBusyAnim.render(trans);
 }
 
 void GuiThemeDownloader::onSizeChanged()
