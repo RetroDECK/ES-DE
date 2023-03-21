@@ -164,6 +164,20 @@ EOF
 fi
 cd ../..
 
+echo "\nSetting up libgit2"
+rm -rf libgit2
+git clone https://github.com/libgit2/libgit2.git
+
+if [ ! -d libgit2 ]; then
+  echo "libgit2 directory is missing, aborting."
+  exit
+fi
+
+cd libgit2
+git checkout v1.6.3
+mkdir build
+cd ..
+
 echo "\nSetting up pugixml"
 rm -rf pugixml
 git clone https://github.com/zeux/pugixml.git

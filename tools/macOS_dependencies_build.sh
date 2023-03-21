@@ -80,6 +80,21 @@ make -j${JOBS}
 cp libfreeimage.a ../../..
 cd ../..
 
+echo "\nBuilding libgit2"
+
+if [ ! -d libgit2/build ]; then
+  echo "libgit2 directory is missing, aborting."
+  exit
+fi
+
+cd libgit2/build
+rm -f CMakeCache.txt
+cmake -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF ..
+make clean
+make -j${JOBS}
+cp libgit2.1.6.3.dylib ../../../libgit2.1.6.dylib
+cd ../..
+
 echo "\nBuilding pugixml"
 
 if [ ! -d pugixml ]; then
