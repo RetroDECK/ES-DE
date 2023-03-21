@@ -134,6 +134,7 @@ elseif(NOT EMSCRIPTEN)
     find_package(FFmpeg REQUIRED)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
+    find_package(Libgit2 REQUIRED)
     find_package(Pugixml REQUIRED)
     find_package(SDL2 REQUIRED)
 endif()
@@ -451,6 +452,7 @@ else()
                             ${FFMPEG_INCLUDE_DIRS}
                             ${FreeImage_INCLUDE_DIRS}
                             ${FREETYPE_INCLUDE_DIRS}
+                            ${GIT2_INCLUDE_PATH}
                             ${PUGIXML_INCLUDE_DIRS}
                             ${SDL2_INCLUDE_DIR})
 endif()
@@ -563,6 +565,7 @@ else()
                          ${FFMPEG_LIBRARIES}
                          ${FreeImage_LIBRARIES}
                          ${FREETYPE_LIBRARIES}
+                         ${GIT2_LIBRARY}
                          ${PUGIXML_LIBRARIES}
                          ${SDL2_LIBRARY})
 endif()
