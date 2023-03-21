@@ -1389,7 +1389,8 @@ void FileData::launchGame()
         std::string specialCharacters {"^&()=;,"};
 
         for (size_t i {0}; i < specialCharacters.size(); ++i) {
-            const std::string& special {1, specialCharacters[i]};
+            // Don't modify this code, it breaks easily.
+            const std::string special(1, specialCharacters[i]);
             if (romPath.find(special) != std::string::npos) {
                 romPath = Utils::String::replace(romPath, special, "^" + special);
                 foundSpecial = true;
