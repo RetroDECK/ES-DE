@@ -9,6 +9,7 @@
 #include "guis/GuiThemeDownloader.h"
 
 #include "EmulationStation.h"
+#include "components/MenuComponent.h"
 #include "resources/ResourceManager.h"
 
 #include "rapidjson/document.h"
@@ -19,7 +20,7 @@
 GuiThemeDownloader::GuiThemeDownloader()
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
-    , mGrid {glm::ivec2 {3, 2}}
+    , mGrid {glm::ivec2 {3, 3}}
     , mFetching {false}
     , mLatestThemesList {false}
     , mHasLocalChanges {false}
@@ -32,8 +33,16 @@ GuiThemeDownloader::GuiThemeDownloader()
                                              0x555555FF, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {1, 0}, false, true, glm::ivec2 {1, 1});
 
+    mList = std::make_shared<ComponentList>();
+    mGrid.setEntry(mList, glm::ivec2 {0, 1}, true, true, glm::ivec2 {3, 1});
+
+    std::vector<std::shared_ptr<ButtonComponent>> buttons;
+    buttons.push_back(std::make_shared<ButtonComponent>("Exit", "Exit", [&] { delete this; }));
+    mButtons = makeButtonGrid(buttons);
+    mGrid.setEntry(mButtons, glm::ivec2 {1, 2}, true, false, glm::ivec2 {1, 1});
+
     float width {mRenderer->getScreenWidth() * 0.85f};
-    float height {mRenderer->getScreenHeight() * 0.70f};
+    float height {mRenderer->getScreenHeight() * 0.90f};
 
     setSize(width, height);
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
@@ -70,15 +79,19 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
 {
     int errorCode {0};
     std::string repositoryName {repoInfo.first};
-    std::string url {repoInfo.second};
-    std::string path {Utils::FileSystem::getHomePath() + "/.emulationstation/themes/" +
-                      repositoryName};
+    const std::string url {repoInfo.second};
+    const std::string path {Utils::FileSystem::getHomePath() + "/.emulationstation/themes/" +
+                            repositoryName};
     mErrorMessage = "";
 
     const bool isThemesList {repositoryName == "themes-list"};
     git_repository* repository {nullptr};
 
+#if LIBGIT2_VER_MAJOR >= 1
     auto fetchProgressFunc = [](const git_indexer_progress* stats, void* payload) -> int {
+#else
+    auto fetchProgressFunc = [](const git_transfer_progress* stats, void* payload) -> int {
+#endif
         (void)payload;
         if (stats->received_objects == stats->total_objects) {
 #if (DEBUG_CLONING)
@@ -121,8 +134,12 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
 
     if (!Utils::FileSystem::exists(path)) {
         // Repository does not exist, so clone it.
+#if LIBGIT2_VER_MAJOR >= 1
         git_clone_options cloneOptions;
         git_clone_options_init(&cloneOptions, GIT_CLONE_OPTIONS_VERSION);
+#else
+        git_clone_options cloneOptions = GIT_CLONE_OPTIONS_INIT;
+#endif
 
         cloneOptions.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
         cloneOptions.fetch_opts.callbacks.transfer_progress = fetchProgressFunc;
@@ -161,13 +178,17 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
             if (errorCode != 0)
                 throw std::runtime_error("Couldn't get information about origin, ");
 
-            // int state {git_repository_state(repository)};
-            // if (state != GIT_REPOSITORY_STATE_NONE) {
-            //     //
-            // }
+                // int state {git_repository_state(repository)};
+                // if (state != GIT_REPOSITORY_STATE_NONE) {
+                //     //
+                // }
 
+#if LIBGIT2_VER_MAJOR >= 1
             git_fetch_options fetchOptions;
             git_fetch_options_init(&fetchOptions, GIT_FETCH_OPTIONS_VERSION);
+#else
+            git_fetch_options fetchOptions = GIT_FETCH_OPTIONS_INIT;
+#endif
             errorCode = git_remote_fetch(gitRemote, nullptr, &fetchOptions, nullptr);
 
             if (errorCode != 0)
@@ -187,9 +208,12 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
 
                     const std::string branchName {buffer.ptr, buffer.size};
                     errorCode = git_revparse_single(&object, repository, branchName.c_str());
-
+#if LIBGIT2_VER_MAJOR >= 1
                     git_checkout_options checkoutOptions;
                     git_checkout_options_init(&checkoutOptions, GIT_CHECKOUT_OPTIONS_VERSION);
+#else
+                    git_checkout_options checkoutOptions = GIT_CHECKOUT_OPTIONS_INIT;
+#endif
                     checkoutOptions.checkout_strategy = GIT_CHECKOUT_SAFE;
                     errorCode = git_checkout_tree(repository, object, &checkoutOptions);
                     errorCode = git_repository_set_head(repository, branchName.c_str());
@@ -245,8 +269,12 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
             }
 
             git_status_list* status {nullptr};
+#if LIBGIT2_VER_MAJOR >= 1
             git_status_options statusOptions;
             git_status_options_init(&statusOptions, GIT_STATUS_OPTIONS_VERSION);
+#else
+            git_status_options statusOptions = GIT_STATUS_OPTIONS_INIT;
+#endif
 
             // We don't include untracked files (GIT_STATUS_OPT_INCLUDE_UNTRACKED) as this makes
             // it possible to add custom files to the repository without overwriting these when
@@ -293,8 +321,12 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
             git_object_lookup(&object, repository, objectID, GIT_OBJECT_COMMIT);
             git_reference* newTargetRef {nullptr};
 
+#if LIBGIT2_VER_MAJOR >= 1
             git_checkout_options checkoutOptions;
             git_checkout_options_init(&checkoutOptions, GIT_CHECKOUT_OPTIONS_VERSION);
+#else
+            git_checkout_options checkoutOptions = GIT_CHECKOUT_OPTIONS_INIT;
+#endif
             checkoutOptions.checkout_strategy = GIT_CHECKOUT_SAFE;
 
             git_checkout_tree(repository, object, &checkoutOptions);
@@ -400,9 +432,6 @@ void GuiThemeDownloader::parseThemesList()
             if (theme.HasMember("url") && theme["url"].IsString())
                 themeEntry.url = theme["url"].GetString();
 
-            if (theme.HasMember("bundled") && theme["bundled"].IsBool())
-                themeEntry.bundled = theme["bundled"].GetBool();
-
             if (theme.HasMember("variants") && theme["variants"].IsArray()) {
                 const rapidjson::Value& variants {theme["variants"]};
                 for (int i {0}; i < static_cast<int>(variants.Size()); ++i)
@@ -448,6 +477,28 @@ void GuiThemeDownloader::parseThemesList()
 
     mWindow->queueInfoPopup("PARSED " + std::to_string(mThemeSets.size()) + " THEME SETS", 6000);
     LOG(LogInfo) << "GuiThemeDownloader: Parsed " << mThemeSets.size() << " theme sets";
+
+    populateGUI();
+}
+
+void GuiThemeDownloader::populateGUI()
+{
+    for (auto& theme : mThemeSets) {
+        ComponentListRow row;
+        std::shared_ptr<TextComponent> themeName {std::make_shared<TextComponent>(
+            Utils::String::toUpper(theme.name), Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+
+        row.addElement(themeName, false);
+
+        row.makeAcceptInputHandler([this, theme] {
+            std::promise<bool>().swap(mPromise);
+            mFuture = mPromise.get_future();
+            mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
+                                       std::make_pair(theme.reponame, theme.url), true);
+        });
+        mList->addRow(row);
+    }
+    updateHelpPrompts();
 }
 
 void GuiThemeDownloader::update(int deltaTime)
@@ -468,7 +519,7 @@ void GuiThemeDownloader::update(int deltaTime)
                     mWindow->queueInfoPopup(errorMessage, 6000);
                     LOG(LogError) << "Error: " << mErrorMessage;
                 }
-                if (mLatestThemesList)
+                if (mThemeSets.empty() && mLatestThemesList)
                     parseThemesList();
             }
         }
@@ -507,6 +558,8 @@ void GuiThemeDownloader::onSizeChanged()
                                                                     mRenderer->getScreenHeight()};
     mGrid.setRowHeightPerc(0, (mTitle->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y /
                                   2.0f);
+    mGrid.setRowHeightPerc(1, 0.7f);
+    // mGrid.setRowHeightPerc(1, ((mList->getRowHeight(0) * 5.0f)) / mSize.y);
 
     mGrid.setColWidthPerc(0, 0.04f);
     mGrid.setColWidthPerc(2, 0.04f);
@@ -522,15 +575,13 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         return true;
     }
 
-    return true;
-    // return GuiComponent::input(config, input);
+    return mGrid.input(config, input);
 }
 
 std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts;
-    //    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "back (cancel)"));
+    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
+    prompts.push_back(HelpPrompt("b", "exit"));
 
     return prompts;
 }

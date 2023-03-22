@@ -11,7 +11,9 @@
 
 #include "GuiComponent.h"
 #include "components/BusyComponent.h"
+#include "components/ButtonComponent.h"
 #include "components/ComponentGrid.h"
+#include "components/ComponentList.h"
 #include "components/NinePatchComponent.h"
 #include "components/TextComponent.h"
 #include "renderers/Renderer.h"
@@ -24,6 +26,7 @@
 #include <git2/reset.h>
 #include <git2/revparse.h>
 #include <git2/status.h>
+#include <git2/version.h>
 
 #include <atomic>
 #include <future>
@@ -39,6 +42,8 @@ public:
     bool renameDirectory(const std::string& path);
     void parseThemesList();
 
+    void populateGUI();
+
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 
@@ -52,6 +57,9 @@ private:
     Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
+    std::shared_ptr<ComponentList> mList;
+    std::shared_ptr<ComponentGrid> mButtons;
+    BusyComponent mBusyAnim;
 
     std::string mErrorMessage;
     std::thread mFetchThread;
@@ -72,7 +80,6 @@ private:
         std::string name;
         std::string reponame;
         std::string url;
-        bool bundled {false};
         std::vector<std::string> variants;
         std::vector<std::string> colorSchemes;
         std::vector<std::string> aspectRatios;
@@ -82,8 +89,6 @@ private:
 
     std::shared_ptr<TextComponent> mTitle;
     std::vector<ThemeEntry> mThemeSets;
-
-    BusyComponent mBusyAnim;
 };
 
 #endif // ES_APP_GUIS_GUI_THEME_DOWNLOADER_H
