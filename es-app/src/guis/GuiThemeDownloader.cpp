@@ -528,14 +528,14 @@ void GuiThemeDownloader::update(int deltaTime)
     if (mFetching) {
         int progress {mReceivedObjectsProgress != 1.0f ? 0 : 100};
         if (mReceivedObjectsProgress != 1.0f) {
-            progress = std::round(static_cast<int>(
-                glm::mix(0.0f, 100.0f, static_cast<float>(mReceivedObjectsProgress))));
+            progress = static_cast<int>(
+                std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mReceivedObjectsProgress))));
             const std::string progressText {std::to_string(progress) + "%"};
             mBusyAnim.setText(progressText);
         }
         else if (mReceivedObjectsProgress != 0.0f) {
-            progress = std::round(static_cast<int>(
-                glm::mix(0.0f, 100.0f, static_cast<float>(mResolveDeltaProgress))));
+            progress = static_cast<int>(
+                std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mResolveDeltaProgress))));
             const std::string progressText {std::to_string(progress) + "%"};
             mBusyAnim.setText(progressText);
         }
