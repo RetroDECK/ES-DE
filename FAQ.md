@@ -110,7 +110,7 @@ ES-DE works very differently compared to all other EmulationStation forks when i
 
 ## It seems like gamelist.xml files in the ROMs directory tree are no longer getting loaded as of ES-DE 2.0?
 
-Yes, to optionally read gamelist.xml files from the ROMs directory tree in previous releases was a mistake as it has caused a lot of confusion as well as invalid bug reports. As such the logic has now been changed to only read these files from .emulationstation/gamelists/ which is where they belong. If you insist on retaining the old logic you can do so by manually setting LegacyGamelistFileLocation to true in es_settings.xml as explained [here](INSTALL-DEV.md#settings-not-configurable-via-the-gui), but it's definitely not recommended.
+Yes, to optionally read gamelist.xml files from the ROMs directory tree in previous releases was a mistake as it has caused a lot of confusion as well as invalid bug reports. As such the logic has now been changed to only read these files from .emulationstation/gamelists/ which is where they belong. If you insist on retaining the old logic you can do so by manually setting LegacyGamelistFileLocation to true in es_settings.xml as explained [here](INSTALL.md#settings-not-configurable-via-the-gui), but it's definitely not recommended.
 
 ## Why do I sometimes get error messages when scraping stating that files are less than 350 bytes in size?
 

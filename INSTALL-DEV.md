@@ -23,8 +23,9 @@ There are some dependencies that need to be fulfilled in order to build ES-DE. T
 **Debian/Ubuntu**
 
 All of the required packages can be installed with apt-get:
+
 ```
-sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev
+sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev
 ```
 
 **Fedora**
@@ -39,7 +40,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
 ```
 
 **Manjaro**
@@ -47,14 +48,14 @@ sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ff
 Use pacman to install all the required packages:
 
 ```
-sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 pugixml
+sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml
 ```
 
 **Raspberry Pi OS (Raspian)**
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libcurl4-gnutls-dev libpugixml-dev
+sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev
 ```
 
 To build with CEC support you also need to install these packages:
@@ -72,7 +73,7 @@ Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by defaul
 
 Use pkg to install the dependencies:
 ```
-pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage pugixml
+pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage libgit2 pugixml
 ```
 
 Clang/LLVM and curl should already be included in the base OS installation.
@@ -81,7 +82,7 @@ Clang/LLVM and curl should already be included in the base OS installation.
 
 Use pkgin to install the dependencies:
 ```
-pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage pugixml
+pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage libgit2 pugixml
 ```
 
 NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
@@ -90,7 +91,7 @@ NetBSD ships with GCC by default, and although you should be able to use Clang/L
 
 Use pkg_add to install the dependencies:
 ```
-pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage
+pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage libgit2
 ```
 
 In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.

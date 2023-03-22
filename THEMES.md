@@ -6,11 +6,19 @@ Before your start, make sure to download the _Theme engine examples_ theme set t
 
 https://gitlab.com/es-de/themes/theme-engine-examples-es-de
 
+More themes to use as a starting point can be found on the official themes list:
+
+https://gitlab.com/es-de/themes/themes-list
+
+There is also some documentation written by lilbud covering general tips and tricks as well as how to port themes from the legacy RetroPie theme engine to ES-DE:
+
+https://github.com/lilbud/es-de-theme-stuff
+
 To test whether your theme set includes support for all ES-DE systems, download one of the following archives which contain ROMs directory structures fully populated with dummy files:
 
-[ROMs_ALL_Unix.zip](tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
-[ROMs_ALL_macOS.zip](tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
-[ROMs_ALL_Windows.zip](tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
+[ROMs_ALL_Unix.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.0/tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
+[ROMs_ALL_macOS.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.0/tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
+[ROMs_ALL_Windows.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.0/tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
 
 If you unzip and temporarily replace your ROMs directory with one of these, every system will be enabled on startup.
 

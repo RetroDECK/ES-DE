@@ -47,10 +47,10 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * _Replace NanoSVG with a more capable SVG rendering library_
 * _Improve text and font functions, e.g. dynamic texture allocation and faster and cleaner text wrapping_
 * _Improve GLSL shader post-processing performance_
+* Theme downloader
 
 #### v2.1
 
-* Theme downloader
 * Theme engine composite element support for enabling advanced and finely controlled layouts
 * Theme engine element animation support (storyboards)
 * New texture/cache manager with improved memory management and performance

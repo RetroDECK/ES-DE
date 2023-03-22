@@ -12,8 +12,13 @@ v2.0 maintenance release.
 
 ### Detailed list of changes
 
+* Any theme directories with names ending with "disabled" (regardless of case) are now ignored
+* Added support for changing the BusyComponent text dynamically
+* Added the libgit2 library as a dependency
+
 ### Bug fixes
 
+* (Windows) Fixed a regression that made .bat and .lnk files with some special characters impossible to launch
 * Fixed several potential container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
 * Fixed a potential container overflow in ViewController that could lead to rare crashes when running on an ARM processor
 * (macOS) When opening the main menu an error message was logged about accessing a nonexistent ShowQuitMenu setting
