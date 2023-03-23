@@ -305,8 +305,8 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
 
             if (statusEntryCount != 0) {
                 if (allowReset) {
-                    LOG(LogWarning) << "Repository \"" << mRepositoryName
-                                    << "\" contains local changes, performing hard reset";
+                    LOG(LogInfo) << "Repository \"" << mRepositoryName
+                                 << "\" contains local changes, performing hard reset";
                     git_object* objectHead {nullptr};
                     errorCode = git_revparse_single(&objectHead, repository, "HEAD");
                     errorCode = git_reset(repository, objectHead, GIT_RESET_HARD, nullptr);
@@ -515,7 +515,7 @@ void GuiThemeDownloader::populateGUI()
             std::promise<bool>().swap(mPromise);
             mFuture = mPromise.get_future();
             mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
-                                       std::make_pair(theme.reponame, theme.url), true);
+                                       std::make_pair(theme.reponame, theme.url), false);
         });
         mList->addRow(row);
     }
@@ -551,6 +551,25 @@ void GuiThemeDownloader::update(int deltaTime)
                                 mFetchThread =
                                     std::thread(&GuiThemeDownloader::fetchRepository, this,
                                                 std::make_pair(mRepositoryName, mUrl), false);
+                            },
+                            "ABORT", [] { return; }, "", nullptr, true, true,
+                            (mRenderer->getIsVerticalOrientation() ?
+                                 0.75f :
+                                 0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                    }
+                    else if (mRepositoryError == RepositoryError::HAS_LOCAL_CHANGES) {
+                        mWindow->pushGui(new GuiMsgBox(
+                            getHelpStyle(),
+                            "THEME REPOSITORY \"" + mRepositoryName +
+                                "\" CONTAINS LOCAL CHANGES. PROCEED TO OVERWRITE YOUR CHANGES "
+                                "OR ABORT TO SKIP ALL UPDATES FOR THIS THEME",
+                            "PROCEED",
+                            [this] {
+                                std::promise<bool>().swap(mPromise);
+                                mFuture = mPromise.get_future();
+                                mFetchThread =
+                                    std::thread(&GuiThemeDownloader::fetchRepository, this,
+                                                std::make_pair(mRepositoryName, mUrl), true);
                             },
                             "ABORT", [] { return; }, "", nullptr, true, true,
                             (mRenderer->getIsVerticalOrientation() ?
