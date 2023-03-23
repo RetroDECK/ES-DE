@@ -12,6 +12,10 @@ v2.0 maintenance release.
 
 ### Detailed list of changes
 
+* Added "Shortcut or script" as an alternative emulator for the arcade and mame systems
+* (Unix) Added the .desktop and .sh file extensions to the arcade and mame systems
+* (macOS) Added the .app and .sh file extensions to the arcade and mame systems
+* (Windows) Added the .bat and .lnk file extensions to the arcade and mame systems
 * Any theme directories with names ending with "disabled" (regardless of case) are now ignored
 * Added support for changing the BusyComponent text dynamically
 * Added the libgit2 library as a dependency
