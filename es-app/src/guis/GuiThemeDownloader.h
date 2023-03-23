@@ -61,13 +61,26 @@ private:
     std::shared_ptr<ComponentGrid> mButtons;
     BusyComponent mBusyAnim;
 
+    enum class RepositoryError {
+        NO_ERROR,
+        MANUALLY_DOWNLOADED,
+        NOT_A_REPOSITORY,
+        INVALID_ORIGIN,
+        HAS_DIVERGED,
+        HAS_LOCAL_CHANGES
+    };
+
+    RepositoryError mRepositoryError;
+    std::string mRepositoryName;
+    std::string mUrl;
+    std::string mPath;
+    std::string mManualPathSuffix;
     std::string mErrorMessage;
     std::thread mFetchThread;
     std::promise<bool> mPromise;
     std::future<bool> mFuture;
     std::atomic<bool> mFetching;
     std::atomic<bool> mLatestThemesList;
-    bool mHasLocalChanges;
     static inline std::atomic<float> mReceivedObjectsProgress {0.0f};
     static inline std::atomic<float> mResolveDeltaProgress {0.0f};
 
