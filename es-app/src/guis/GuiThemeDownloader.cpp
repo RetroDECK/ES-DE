@@ -21,7 +21,7 @@ GuiThemeDownloader::GuiThemeDownloader()
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {3, 3}}
-    , mRepositoryError {RepositoryError::NO_ERROR}
+    , mRepositoryError {RepositoryError::NO_REPO_ERROR}
     , mFetching {false}
     , mLatestThemesList {false}
 {
@@ -81,7 +81,7 @@ bool GuiThemeDownloader::fetchRepository(std::pair<std::string, std::string> rep
     mRepositoryName = repoInfo.first;
     mUrl = repoInfo.second;
     mPath = Utils::FileSystem::getHomePath() + "/.emulationstation/themes/" + mRepositoryName;
-    mRepositoryError = RepositoryError::NO_ERROR;
+    mRepositoryError = RepositoryError::NO_REPO_ERROR;
     mErrorMessage = "";
     mManualPathSuffix = "";
 
@@ -533,7 +533,7 @@ void GuiThemeDownloader::update(int deltaTime)
                 if (mRepositoryError == RepositoryError::HAS_LOCAL_CHANGES) {
                     LOG(LogError) << "Repository has local changes";
                 }
-                if (mRepositoryError != RepositoryError::NO_ERROR) {
+                if (mRepositoryError != RepositoryError::NO_REPO_ERROR) {
                     if (mRepositoryError == RepositoryError::NOT_A_REPOSITORY ||
                         mRepositoryError == RepositoryError::MANUALLY_DOWNLOADED) {
                         mWindow->pushGui(new GuiMsgBox(

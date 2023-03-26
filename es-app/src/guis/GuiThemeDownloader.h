@@ -62,7 +62,7 @@ private:
     BusyComponent mBusyAnim;
 
     enum class RepositoryError {
-        NO_ERROR,
+        NO_REPO_ERROR,
         MANUALLY_DOWNLOADED,
         NOT_A_REPOSITORY,
         INVALID_ORIGIN,
