@@ -243,13 +243,7 @@ void ScrollableContainer::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     glm::ivec2 clipPos {static_cast<int>(trans[3].x), static_cast<int>(trans[3].y)};
-
-    glm::vec3 dimScaled {0.0f, 0.0f, 0.0f};
-    dimScaled.x = std::fabs(trans[3].x + mSize.x);
-    dimScaled.y = std::fabs(trans[3].y + mAdjustedHeight);
-
-    glm::ivec2 clipDim {static_cast<int>(dimScaled.x - trans[3].x),
-                        static_cast<int>(dimScaled.y - trans[3].y)};
+    glm::ivec2 clipDim {mSize.x, mAdjustedHeight};
 
     // By effectively clipping the upper and lower boundaries of the container we mostly avoid
     // scrolling outside the vertical starting and ending positions.
