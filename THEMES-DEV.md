@@ -2321,7 +2321,6 @@ Properties:
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container.
     - Default is `true` if `metadata` is set to `description`, otherwise `false`
-    - This property can only be used in the `gamelist` view.
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`

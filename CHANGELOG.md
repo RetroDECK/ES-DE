@@ -12,10 +12,12 @@ v2.0 maintenance release.
 
 ### Detailed list of changes
 
+* Added scrollable text container support to the system view
 * Added "Shortcut or script" as an alternative emulator for the arcade and mame systems
 * (Unix) Added the .desktop and .sh file extensions to the arcade and mame systems
 * (macOS) Added the .app and .sh file extensions to the arcade and mame systems
 * (Windows) Added the .bat and .lnk file extensions to the arcade and mame systems
+* Added the .app file extensions to the nds system (for DSiWare games)
 * Any theme directories with names ending with "disabled" (regardless of case) are now ignored
 * Added support for changing the BusyComponent text dynamically
 * Added the libgit2 library as a dependency
@@ -26,6 +28,7 @@ v2.0 maintenance release.
 * Fixed several potential container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
 * Fixed a potential container overflow in ViewController that could lead to rare crashes when running on an ARM processor
 * (macOS) When opening the main menu an error message was logged about accessing a nonexistent ShowQuitMenu setting
+* The scissor box size in ScrollableContainer was sometimes not calculated correctly
 
 ## Version 2.0.0
 
