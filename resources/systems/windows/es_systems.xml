@@ -1074,7 +1074,7 @@
         <name>nds</name>
         <fullname>Nintendo DS</fullname>
         <path>%ROMPATH%\nds</path>
-        <extension>.bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
+        <extension>.app .APP .bin .BIN .nds .NDS .7z .7Z .zip .ZIP</extension>
         <command label="DeSmuME">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume_libretro.dll %ROM%</command>
         <command label="DeSmuME 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\desmume2015_libretro.dll %ROM%</command>
         <command label="melonDS">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\melonds_libretro.dll %ROM%</command>
