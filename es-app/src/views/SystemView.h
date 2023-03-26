@@ -18,6 +18,7 @@
 #include "components/GameSelectorComponent.h"
 #include "components/LottieAnimComponent.h"
 #include "components/RatingComponent.h"
+#include "components/ScrollableContainer.h"
 #include "components/TextComponent.h"
 #include "components/VideoFFmpegComponent.h"
 #include "components/primary/CarouselComponent.h"
@@ -123,6 +124,8 @@ private:
         std::vector<std::unique_ptr<VideoFFmpegComponent>> videoComponents;
         std::vector<std::unique_ptr<LottieAnimComponent>> lottieAnimComponents;
         std::vector<std::unique_ptr<GIFAnimComponent>> GIFAnimComponents;
+        std::vector<std::unique_ptr<ScrollableContainer>> containerComponents;
+        std::vector<std::unique_ptr<TextComponent>> containerTextComponents;
         std::vector<std::unique_ptr<TextComponent>> gameCountComponents;
         std::vector<std::unique_ptr<TextComponent>> textComponents;
         std::vector<std::unique_ptr<DateTimeComponent>> dateTimeComponents;

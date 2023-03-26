@@ -160,6 +160,9 @@ void SystemView::update(int deltaTime)
     for (auto& anim : mSystemElements[mPrimary->getCursor()].GIFAnimComponents)
         anim->update(deltaTime);
 
+    for (auto& container : mSystemElements[mPrimary->getCursor()].containerComponents)
+        container->update(deltaTime);
+
     GuiComponent::update(deltaTime);
 }
 
@@ -278,6 +281,9 @@ void SystemView::onCursorChanged(const CursorState& state)
         for (auto& video : mSystemElements[mLastCursor].videoComponents)
             video->pauseVideoPlayer();
     }
+
+    for (auto& container : mSystemElements[mPrimary->getCursor()].containerComponents)
+        container->reset();
 
     // This is needed to avoid erratic camera movements during extreme navigation input when using
     // slide transitions. This should very rarely occur during normal application usage.
@@ -651,9 +657,19 @@ void SystemView::populate()
                     else if (element.second.type == "text" &&
                              !(element.second.has("visible") &&
                                !element.second.get<bool>("visible"))) {
+                        // Set as container by default if metadata type is "description".
+                        bool container {false};
+                        if (element.second.has("container")) {
+                            container = element.second.get<bool>("container");
+                        }
+                        else if (element.second.has("metadata") &&
+                                 element.second.get<std::string>("metadata") == "description") {
+                            container = true;
+                        }
                         if (element.second.has("systemdata") &&
                             element.second.get<std::string>("systemdata").substr(0, 9) ==
                                 "gamecount") {
+                            // A container can't be used if systemdata is set to a gamecount value.
                             if (element.second.has("systemdata")) {
                                 elements.gameCountComponents.emplace_back(
                                     std::make_unique<TextComponent>());
@@ -665,11 +681,39 @@ void SystemView::populate()
                             }
                         }
                         else {
-                            elements.textComponents.emplace_back(std::make_unique<TextComponent>());
-                            elements.textComponents.back()->setDefaultZIndex(40.0f);
-                            elements.textComponents.back()->applyTheme(
-                                theme, "system", element.first, ThemeFlags::ALL);
-                            elements.children.emplace_back(elements.textComponents.back().get());
+                            if (container) {
+                                elements.containerComponents.push_back(
+                                    std::make_unique<ScrollableContainer>());
+                                elements.containerComponents.back()->setDefaultZIndex(40.0f);
+                                elements.containerTextComponents.push_back(
+                                    std::make_unique<TextComponent>());
+                                elements.containerTextComponents.back()->setDefaultZIndex(40.0f);
+                                elements.containerComponents.back()->addChild(
+                                    elements.containerTextComponents.back().get());
+                                elements.containerComponents.back()->applyTheme(
+                                    theme, "system", element.first,
+                                    ThemeFlags::POSITION | ThemeFlags::SIZE | ThemeFlags::Z_INDEX |
+                                        ThemeFlags::VISIBLE);
+                                elements.containerComponents.back()->setAutoScroll(true);
+                                elements.containerTextComponents.back()->setSize(
+                                    elements.containerComponents.back()->getSize().x, 0.0f);
+                                elements.containerTextComponents.back()->applyTheme(
+                                    theme, "system", element.first,
+                                    ThemeFlags::ALL ^ ThemeFlags::POSITION ^ ThemeFlags::ORIGIN ^
+                                        ThemeFlags::Z_INDEX ^ ThemeFlags::SIZE ^
+                                        ThemeFlags::VISIBLE ^ ThemeFlags::ROTATION);
+                                elements.children.emplace_back(
+                                    elements.containerComponents.back().get());
+                            }
+                            else {
+                                elements.textComponents.emplace_back(
+                                    std::make_unique<TextComponent>());
+                                elements.textComponents.back()->setDefaultZIndex(40.0f);
+                                elements.textComponents.back()->applyTheme(
+                                    theme, "system", element.first, ThemeFlags::ALL);
+                                elements.children.emplace_back(
+                                    elements.textComponents.back().get());
+                            }
                         }
                     }
                     else if (element.second.type == "datetime" &&
@@ -708,6 +752,12 @@ void SystemView::populate()
                                  return b->getZIndex() > a->getZIndex();
                              });
             std::stable_sort(elements.textComponents.begin(), elements.textComponents.end(),
+                             [](const std::unique_ptr<TextComponent>& a,
+                                const std::unique_ptr<TextComponent>& b) {
+                                 return b->getZIndex() > a->getZIndex();
+                             });
+            std::stable_sort(elements.containerTextComponents.begin(),
+                             elements.containerTextComponents.end(),
                              [](const std::unique_ptr<TextComponent>& a,
                                 const std::unique_ptr<TextComponent>& b) {
                                  return b->getZIndex() > a->getZIndex();
@@ -816,6 +866,16 @@ void SystemView::populate()
                     text->setValue(elements.fullName);
                 else
                     text->setValue(text->getThemeSystemdata());
+            }
+        }
+        for (auto& containerText : elements.containerTextComponents) {
+            if (containerText->getThemeSystemdata() != "") {
+                if (containerText->getThemeSystemdata() == "name")
+                    containerText->setValue(elements.name);
+                else if (containerText->getThemeSystemdata() == "fullname")
+                    containerText->setValue(elements.fullName);
+                else
+                    containerText->setValue(containerText->getThemeSystemdata());
             }
         }
     }
@@ -1192,9 +1252,10 @@ void SystemView::updateGameSelectors()
         }
     }
 
-    for (auto& text : mSystemElements[cursor].textComponents) {
+    auto textSelectorFunc = [this, cursor,
+                             multipleSelectors](std::unique_ptr<TextComponent>& text) {
         if (text->getThemeMetadata() == "")
-            continue;
+            return;
         GameSelectorComponent* gameSelector {nullptr};
         if (multipleSelectors) {
             const std::string& textSelector {text->getThemeGameSelector()};
@@ -1316,7 +1377,13 @@ void SystemView::updateGameSelectors()
         else {
             text->setValue("");
         }
-    }
+    };
+
+    for (auto& text : mSystemElements[cursor].textComponents)
+        textSelectorFunc(text);
+
+    for (auto& containerText : mSystemElements[cursor].containerTextComponents)
+        textSelectorFunc(containerText);
 
     for (auto& dateTime : mSystemElements[cursor].dateTimeComponents) {
         if (dateTime->getThemeMetadata() == "")
