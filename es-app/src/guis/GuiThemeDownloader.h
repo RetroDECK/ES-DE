@@ -38,12 +38,6 @@ public:
     GuiThemeDownloader();
     ~GuiThemeDownloader();
 
-    bool fetchRepository(std::pair<std::string, std::string> repoInfo, bool allowReset = false);
-    bool renameDirectory(const std::string& path);
-    void parseThemesList();
-
-    void populateGUI();
-
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
 
@@ -54,12 +48,61 @@ public:
     HelpStyle getHelpStyle() override { return ViewController::getInstance()->getViewHelpStyle(); }
 
 private:
+    struct Screenshot {
+        std::string image;
+        std::string caption;
+    };
+
+    struct ThemeEntry {
+        std::string name;
+        std::string reponame;
+        std::string url;
+        std::string manualExtension;
+        std::vector<std::string> variants;
+        std::vector<std::string> colorSchemes;
+        std::vector<std::string> aspectRatios;
+        std::vector<std::string> transitions;
+        std::vector<Screenshot> screenshots;
+        bool invalidRepository;
+        bool manuallyDownloaded;
+        bool hasLocalChanges;
+        bool isCloned;
+        ThemeEntry()
+            : invalidRepository {false}
+            , manuallyDownloaded {false}
+            , hasLocalChanges {false}
+            , isCloned {false}
+        {
+        }
+    };
+
+    bool fetchThemesList();
+    bool fetchRepository(const std::string& repositoryName,
+                         const std::string& url,
+                         bool allowReset = false);
+    bool cloneRepository(const std::string& repositoryName, const std::string& url);
+
+    bool checkLocalChanges(git_repository* repository, bool hasFetched = false);
+    void resetRepository(git_repository* repository);
+    void makeInventory();
+    bool renameDirectory(const std::string& path);
+    void parseThemesList();
+
+    void populateGUI();
+    void updateGUI();
+
     Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
     std::shared_ptr<ComponentList> mList;
     std::shared_ptr<ComponentGrid> mButtons;
     BusyComponent mBusyAnim;
+
+    struct ThemeGUIEntry {
+        std::shared_ptr<TextComponent> themeName;
+    };
+
+    std::vector<ThemeGUIEntry> mThemeGUIEntries;
 
     enum class RepositoryError {
         NO_REPO_ERROR,
@@ -71,10 +114,6 @@ private:
     };
 
     RepositoryError mRepositoryError;
-    std::string mRepositoryName;
-    std::string mUrl;
-    std::string mPath;
-    std::string mManualPathSuffix;
     std::string mErrorMessage;
     std::thread mFetchThread;
     std::promise<bool> mPromise;
@@ -83,22 +122,6 @@ private:
     std::atomic<bool> mLatestThemesList;
     static inline std::atomic<float> mReceivedObjectsProgress {0.0f};
     static inline std::atomic<float> mResolveDeltaProgress {0.0f};
-
-    struct Screenshot {
-        std::string image;
-        std::string caption;
-    };
-
-    struct ThemeEntry {
-        std::string name;
-        std::string reponame;
-        std::string url;
-        std::vector<std::string> variants;
-        std::vector<std::string> colorSchemes;
-        std::vector<std::string> aspectRatios;
-        std::vector<std::string> transitions;
-        std::vector<Screenshot> screenshots;
-    };
 
     std::shared_ptr<TextComponent> mTitle;
     std::vector<ThemeEntry> mThemeSets;
