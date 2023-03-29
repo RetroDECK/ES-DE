@@ -20,7 +20,7 @@
 GuiThemeDownloader::GuiThemeDownloader()
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
-    , mGrid {glm::ivec2 {3, 3}}
+    , mGrid {glm::ivec2 {8, 8}}
     , mRepositoryError {RepositoryError::NO_REPO_ERROR}
     , mFetching {false}
     , mLatestThemesList {false}
@@ -28,31 +28,118 @@ GuiThemeDownloader::GuiThemeDownloader()
     addChild(&mBackground);
     addChild(&mGrid);
 
+    const float fontSizeSmall {mRenderer->getIsVerticalOrientation() ? FONT_SIZE_MINI :
+                                                                       FONT_SIZE_SMALL};
+
     // Set up grid.
+    mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 2}, false, false,
+                   glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+
     mTitle = std::make_shared<TextComponent>("THEME DOWNLOADER", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, glm::ivec2 {1, 0}, false, true, glm::ivec2 {1, 1});
+    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {8, 2});
+
+    mVariantsLabel =
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mVariantsLabel, glm::ivec2 {1, 2}, false, true, glm::ivec2 {1, 1},
+                   GridFlags::BORDER_TOP);
+
+    mColorSchemesLabel =
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mColorSchemesLabel, glm::ivec2 {1, 3}, false, true, glm::ivec2 {1, 1});
+
+    mAspectRatiosLabel =
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mAspectRatiosLabel, glm::ivec2 {3, 2}, false, true, glm::ivec2 {1, 1},
+                   GridFlags::BORDER_TOP);
+
+    mFutureUseLabel =
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mFutureUseLabel, glm::ivec2 {3, 3}, false, true, glm::ivec2 {1, 1});
+
+    mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {5, 2}, false, false,
+                   glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+
+    mVariantCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
+                                                    0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mVariantCount, glm::ivec2 {2, 2}, false, true, glm::ivec2 {1, 1},
+                   GridFlags::BORDER_TOP);
+
+    mColorSchemesCount = std::make_shared<TextComponent>(
+        "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mColorSchemesCount, glm::ivec2 {2, 3}, false, true, glm::ivec2 {1, 1});
+
+    mAspectRatiosCount = std::make_shared<TextComponent>(
+        "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mAspectRatiosCount, glm::ivec2 {4, 2}, false, true, glm::ivec2 {1, 1},
+                   GridFlags::BORDER_TOP);
+
+    mFutureUseCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
+                                                      0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mFutureUseCount, glm::ivec2 {4, 3}, false, true, glm::ivec2 {1, 1});
+
+    mDownloadStatus = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
+                                                      0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mDownloadStatus, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1});
+
+    mLocalChanges = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
+                                                    0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mLocalChanges, glm::ivec2 {3, 4}, false, true, glm::ivec2 {2, 1});
+
+    mScreenshot = std::make_shared<ImageComponent>();
+    mGrid.setEntry(mScreenshot, glm::ivec2 {1, 5}, false, true, glm::ivec2 {4, 1});
+
+    mAuthor = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI, FONT_PATH_LIGHT),
+                                              0x555555FF, ALIGN_LEFT);
+    mGrid.setEntry(mAuthor, glm::ivec2 {1, 6}, false, true, glm::ivec2 {4, 1});
 
     mList = std::make_shared<ComponentList>();
-    mGrid.setEntry(mList, glm::ivec2 {0, 1}, true, true, glm::ivec2 {3, 1});
+    mGrid.setEntry(mList, glm::ivec2 {6, 2}, true, true, glm::ivec2 {2, 5},
+                   GridFlags::BORDER_TOP | GridFlags::BORDER_LEFT | GridFlags::BORDER_BOTTOM);
+
+    // Set up scroll indicators.
+    mScrollUp = std::make_shared<ImageComponent>();
+    mScrollDown = std::make_shared<ImageComponent>();
+
+    mScrollUp->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollUp->setOrigin(0.0f, -0.35f);
+
+    mScrollDown->setResize(0.0f, mTitle->getFont()->getLetterHeight() / 2.0f);
+    mScrollDown->setOrigin(0.0f, 0.35f);
+
+    mScrollIndicator = std::make_shared<ScrollIndicatorComponent>(mList, mScrollUp, mScrollDown);
+
+    mGrid.setEntry(mScrollUp, glm::ivec2 {7, 0}, false, false, glm::ivec2 {1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2 {7, 1}, false, false, glm::ivec2 {1, 1});
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     // buttons.push_back(
     //    std::make_shared<ButtonComponent>("Update all", "Update all", [&] { delete this; }));
     buttons.push_back(std::make_shared<ButtonComponent>("Exit", "Exit", [&] { delete this; }));
     mButtons = makeButtonGrid(buttons);
-    mGrid.setEntry(mButtons, glm::ivec2 {1, 2}, true, false, glm::ivec2 {1, 1});
+    mGrid.setEntry(mButtons, glm::ivec2 {0, 7}, true, false, glm::ivec2 {8, 1},
+                   GridFlags::BORDER_TOP);
 
-    float width {mRenderer->getScreenWidth() * 0.85f};
-    float height {mRenderer->getScreenHeight() * 0.90f};
+    // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
+    // the 16:9 reference.
+    const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    const float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.98f) * mRenderer->getScreenWidth()};
+    setSize(width,
+            mTitle->getSize().y +
+                (FONT_SIZE_MEDIUM * 1.5f * (mRenderer->getIsVerticalOrientation() ? 10.0f : 9.0f)) +
+                mButtons->getSize().y);
 
-    setSize(width, height);
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     mBusyAnim.setSize(mSize);
     mBusyAnim.setText("100%");
     mBusyAnim.onSizeChanged();
+
+    mList->setCursorChangedCallback([this](CursorState state) {
+        if (state == CursorState::CURSOR_SCROLLING || state == CursorState::CURSOR_STOPPED)
+            updateInfoPane();
+    });
 
     git_libgit2_init();
 
@@ -61,6 +148,7 @@ GuiThemeDownloader::GuiThemeDownloader()
     std::promise<bool>().swap(mPromise);
     mFuture = mPromise.get_future();
 
+    mThemeDirectory = Utils::FileSystem::getHomePath() + "/.emulationstation/themes/";
     fetchThemesList();
 }
 
@@ -77,8 +165,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
                                          bool allowReset)
 {
     int errorCode {0};
-    const std::string path {Utils::FileSystem::getHomePath() + "/.emulationstation/themes/" +
-                            repositoryName};
+    const std::string path {mThemeDirectory + repositoryName};
     mRepositoryError = RepositoryError::NO_REPO_ERROR;
     mErrorMessage = "";
 
@@ -282,10 +369,9 @@ void GuiThemeDownloader::resetRepository(git_repository* repository)
 
 void GuiThemeDownloader::makeInventory()
 {
-    std::string themeDir {Utils::FileSystem::getHomePath() + "/.emulationstation/themes/"};
-
     for (auto& theme : mThemeSets) {
-        const std::string path {themeDir + theme.reponame};
+        const std::string path {mThemeDirectory + theme.reponame};
+        theme.newEntry = false;
         theme.invalidRepository = false;
         theme.manuallyDownloaded = false;
         theme.hasLocalChanges = false;
@@ -346,8 +432,7 @@ void GuiThemeDownloader::parseThemesList()
     //    const std::string themesFile {Utils::FileSystem::getHomePath() +
     //                                  "/.emulationstation/themes.json"};
 
-    const std::string themesFile {Utils::FileSystem::getHomePath() +
-                                  "/.emulationstation/themes/themes-list/themes.json"};
+    const std::string themesFile {mThemeDirectory + "themes-list/themes.json"};
 
     if (!Utils::FileSystem::exists(themesFile)) {
         LOG(LogInfo) << "GuiThemeDownloader: No themes.json file found";
@@ -390,6 +475,12 @@ void GuiThemeDownloader::parseThemesList()
 
             if (theme.HasMember("url") && theme["url"].IsString())
                 themeEntry.url = theme["url"].GetString();
+
+            if (theme.HasMember("author") && theme["author"].IsString())
+                themeEntry.author = theme["author"].GetString();
+
+            if (theme.HasMember("newEntry") && theme["newEntry"].IsBool())
+                themeEntry.newEntry = theme["newEntry"].GetBool();
 
             if (theme.HasMember("variants") && theme["variants"].IsArray()) {
                 const rapidjson::Value& variants {theme["variants"]};
@@ -440,14 +531,18 @@ void GuiThemeDownloader::parseThemesList()
 
 void GuiThemeDownloader::populateGUI()
 {
+    if (mThemeSets.empty())
+        return;
+
     for (auto& theme : mThemeSets) {
         std::string themeName {Utils::String::toUpper(theme.name)};
+        if (theme.isCloned)
+            themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (theme.manuallyDownloaded || theme.invalidRepository)
-            themeName.append("  - manual or invalid");
-        else if (theme.hasLocalChanges)
-            themeName.append("  - local changes");
-        else if (!theme.isCloned)
-            themeName.append("  - not cloned");
+            themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
+        if (theme.hasLocalChanges)
+            themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
+
         ComponentListRow row;
         std::shared_ptr<TextComponent> themeNameElement {
             std::make_shared<TextComponent>(themeName, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
@@ -469,9 +564,7 @@ void GuiThemeDownloader::populateGUI()
                         theme.reponame + theme.manualExtension + "_DISABLED\"",
                     "PROCEED",
                     [this, theme] {
-                        renameDirectory(Utils::FileSystem::getHomePath() +
-                                        "/.emulationstation/themes/" + theme.reponame +
-                                        theme.manualExtension);
+                        renameDirectory(mThemeDirectory + theme.reponame + theme.manualExtension);
                         std::promise<bool>().swap(mPromise);
                         mFuture = mPromise.get_future();
                         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
@@ -513,22 +606,69 @@ void GuiThemeDownloader::populateGUI()
         });
         mList->addRow(row);
     }
+
+    mVariantsLabel->setText("VARIANTS:");
+    mColorSchemesLabel->setText(mRenderer->getIsVerticalOrientation() ? "COL. SCHEMES:" :
+                                                                        "COLOR SCHEMES:");
+    mAspectRatiosLabel->setText("ASPECT RATIOS:");
+
+    updateInfoPane();
     updateHelpPrompts();
 }
 
 void GuiThemeDownloader::updateGUI()
 {
+    updateInfoPane();
+
     for (size_t i {0}; i < mThemeSets.size(); ++i) {
         std::string themeName {Utils::String::toUpper(mThemeSets[i].name)};
+        if (mThemeSets[i].isCloned)
+            themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (mThemeSets[i].manuallyDownloaded || mThemeSets[i].invalidRepository)
-            themeName.append("  - manual or invalid");
-        else if (mThemeSets[i].hasLocalChanges)
-            themeName.append("  - local changes");
-        else if (!mThemeSets[i].isCloned)
-            themeName.append("  - not cloned");
+            themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
+        if (mThemeSets[i].hasLocalChanges)
+            themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
 
         mThemeGUIEntries[i].themeName->setText(themeName);
     }
+}
+
+void GuiThemeDownloader::updateInfoPane()
+{
+    assert(static_cast<size_t>(mList->size()) == mThemeSets.size());
+    if (!mThemeSets[mList->getCursorId()].screenshots.empty())
+        mScreenshot->setImage(mThemeDirectory + "themes-list/" +
+                              mThemeSets[mList->getCursorId()].screenshots.front().image);
+
+    if (mThemeSets[mList->getCursorId()].isCloned) {
+        mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " INSTALLED");
+        mDownloadStatus->setColor(0x449944FF);
+    }
+    else if (mThemeSets[mList->getCursorId()].invalidRepository ||
+             mThemeSets[mList->getCursorId()].manuallyDownloaded) {
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " MANUAL DOWNLOAD");
+        mDownloadStatus->setColor(0x992222FF);
+    }
+    else {
+        mDownloadStatus->setText("NOT INSTALLED");
+        mDownloadStatus->setColor(0x999999FF);
+    }
+
+    if (mThemeSets[mList->getCursorId()].hasLocalChanges) {
+        mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " LOCAL CHANGES");
+        mLocalChanges->setColor(0x992222FF);
+    }
+    else {
+        mLocalChanges->setText("");
+    }
+
+    mVariantCount->setText(std::to_string(mThemeSets[mList->getCursorId()].variants.size()));
+    mColorSchemesCount->setText(
+        std::to_string(mThemeSets[mList->getCursorId()].colorSchemes.size()));
+    mAspectRatiosCount->setText(
+        std::to_string(mThemeSets[mList->getCursorId()].aspectRatios.size()));
+    mAuthor->setText("CREATED BY " +
+                     Utils::String::toUpper(mThemeSets[mList->getCursorId()].author));
 }
 
 void GuiThemeDownloader::update(int deltaTime)
@@ -574,13 +714,22 @@ void GuiThemeDownloader::update(int deltaTime)
         }
         mBusyAnim.update(deltaTime);
     }
+
+    GuiComponent::update(deltaTime);
 }
 
 void GuiThemeDownloader::render(const glm::mat4& parentTrans)
 {
     glm::mat4 trans {parentTrans * getTransform()};
-
     renderChildren(trans);
+
+    if (mGrayRectangleCoords.size() == 4) {
+        mRenderer->setMatrix(parentTrans * getTransform());
+        mRenderer->drawRect(mGrayRectangleCoords[0], mGrayRectangleCoords[1],
+                            mGrayRectangleCoords[2], mGrayRectangleCoords[3], 0x00000009,
+                            0x00000009);
+    }
+
     if (mFetching)
         mBusyAnim.render(trans);
 }
@@ -590,15 +739,41 @@ void GuiThemeDownloader::onSizeChanged()
     const float screenSize {mRenderer->getIsVerticalOrientation() ? mRenderer->getScreenWidth() :
                                                                     mRenderer->getScreenHeight()};
     mGrid.setRowHeightPerc(0, (mTitle->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y /
-                                  2.0f);
-    mGrid.setRowHeightPerc(1, 0.7f);
-    // mGrid.setRowHeightPerc(1, ((mList->getRowHeight(0) * 5.0f)) / mSize.y);
+                                  4.0f);
+    mGrid.setRowHeightPerc(1, (mTitle->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y /
+                                  4.0f);
+    mGrid.setRowHeightPerc(2, (mVariantsLabel->getFont()->getLetterHeight() + screenSize * 0.08f) /
+                                  mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(3,
+                           (mColorSchemesLabel->getFont()->getLetterHeight() + screenSize * 0.06f) /
+                               mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(4, (mDownloadStatus->getFont()->getLetterHeight() + screenSize * 0.08f) /
+                                  mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(5, 0.5f);
+    mGrid.setRowHeightPerc(6, (mAuthor->getFont()->getLetterHeight() + screenSize * 0.06f) /
+                                  mSize.y / 2.0f);
 
-    mGrid.setColWidthPerc(0, 0.04f);
-    mGrid.setColWidthPerc(2, 0.04f);
+    mGrid.setColWidthPerc(0, 0.01f);
+    mGrid.setColWidthPerc(1, 0.18f);
+    mGrid.setColWidthPerc(2, 0.05f);
+    mGrid.setColWidthPerc(3, 0.18f);
+    mGrid.setColWidthPerc(4, 0.04f);
+    mGrid.setColWidthPerc(5, 0.005f);
+    mGrid.setColWidthPerc(7, 0.04f);
 
     mGrid.setSize(mSize);
     mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
+    mScreenshot->setMaxSize(mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3) +
+                                mGrid.getColWidth(4),
+                            mGrid.getRowHeight(5));
+
+    mGrayRectangleCoords.clear();
+    mGrayRectangleCoords.emplace_back(0.0f);
+    mGrayRectangleCoords.emplace_back(mList->getPosition().y);
+    mGrayRectangleCoords.emplace_back(mSize.x);
+    mGrayRectangleCoords.emplace_back(mGrid.getRowHeight(2) + mGrid.getRowHeight(3) +
+                                      mGrid.getRowHeight(4) + mGrid.getRowHeight(5) +
+                                      mGrid.getRowHeight(6));
 }
 
 bool GuiThemeDownloader::input(InputConfig* config, Input input)
@@ -623,8 +798,7 @@ bool GuiThemeDownloader::fetchThemesList()
 {
     const std::string repositoryName {"themes-list"};
     const std::string url {"https://gitlab.com/es-de/themes/themes-list.git"};
-    const std::string path {Utils::FileSystem::getHomePath() +
-                            "/.emulationstation/themes/themes-list"};
+    const std::string path {mThemeDirectory + "themes-list"};
 
     if (Utils::FileSystem::exists(path)) {
         git_repository* repository {nullptr};
@@ -663,8 +837,7 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
 {
     int errorCode {0};
     git_repository* repository {nullptr};
-    const std::string path {Utils::FileSystem::getHomePath() + "/.emulationstation/themes/" +
-                            repositoryName};
+    const std::string path {mThemeDirectory + repositoryName};
 
 #if LIBGIT2_VER_MAJOR >= 1
     auto fetchProgressFunc = [](const git_indexer_progress* stats, void* payload) -> int {

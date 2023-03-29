@@ -14,7 +14,9 @@
 #include "components/ButtonComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/ComponentList.h"
+#include "components/ImageComponent.h"
 #include "components/NinePatchComponent.h"
+#include "components/ScrollIndicatorComponent.h"
 #include "components/TextComponent.h"
 #include "renderers/Renderer.h"
 #include "views/ViewController.h"
@@ -58,17 +60,20 @@ private:
         std::string reponame;
         std::string url;
         std::string manualExtension;
+        std::string author;
         std::vector<std::string> variants;
         std::vector<std::string> colorSchemes;
         std::vector<std::string> aspectRatios;
         std::vector<std::string> transitions;
         std::vector<Screenshot> screenshots;
+        bool newEntry;
         bool invalidRepository;
         bool manuallyDownloaded;
         bool hasLocalChanges;
         bool isCloned;
         ThemeEntry()
-            : invalidRepository {false}
+            : newEntry {false}
+            , invalidRepository {false}
             , manuallyDownloaded {false}
             , hasLocalChanges {false}
             , isCloned {false}
@@ -90,6 +95,7 @@ private:
 
     void populateGUI();
     void updateGUI();
+    void updateInfoPane();
 
     Renderer* mRenderer;
     NinePatchComponent mBackground;
@@ -114,6 +120,7 @@ private:
     };
 
     RepositoryError mRepositoryError;
+    std::string mThemeDirectory;
     std::string mErrorMessage;
     std::thread mFetchThread;
     std::promise<bool> mPromise;
@@ -122,9 +129,26 @@ private:
     std::atomic<bool> mLatestThemesList;
     static inline std::atomic<float> mReceivedObjectsProgress {0.0f};
     static inline std::atomic<float> mResolveDeltaProgress {0.0f};
-
-    std::shared_ptr<TextComponent> mTitle;
     std::vector<ThemeEntry> mThemeSets;
+
+    std::shared_ptr<ImageComponent> mScrollUp;
+    std::shared_ptr<ImageComponent> mScrollDown;
+    std::shared_ptr<ScrollIndicatorComponent> mScrollIndicator;
+    std::vector<float> mGrayRectangleCoords;
+
+    std::shared_ptr<ImageComponent> mScreenshot;
+    std::shared_ptr<TextComponent> mDownloadStatus;
+    std::shared_ptr<TextComponent> mLocalChanges;
+    std::shared_ptr<TextComponent> mTitle;
+    std::shared_ptr<TextComponent> mVariantsLabel;
+    std::shared_ptr<TextComponent> mColorSchemesLabel;
+    std::shared_ptr<TextComponent> mAspectRatiosLabel;
+    std::shared_ptr<TextComponent> mFutureUseLabel;
+    std::shared_ptr<TextComponent> mAuthor;
+    std::shared_ptr<TextComponent> mVariantCount;
+    std::shared_ptr<TextComponent> mColorSchemesCount;
+    std::shared_ptr<TextComponent> mAspectRatiosCount;
+    std::shared_ptr<TextComponent> mFutureUseCount;
 };
 
 #endif // ES_APP_GUIS_GUI_THEME_DOWNLOADER_H
