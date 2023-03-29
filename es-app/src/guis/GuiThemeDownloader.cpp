@@ -133,7 +133,7 @@ GuiThemeDownloader::GuiThemeDownloader()
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     mBusyAnim.setSize(mSize);
-    mBusyAnim.setText("100%");
+    mBusyAnim.setText("DOWNLOADING THEMES LIST 100%");
     mBusyAnim.onSizeChanged();
 
     mList->setCursorChangedCallback([this](CursorState state) {
@@ -167,7 +167,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
     int errorCode {0};
     const std::string path {mThemeDirectory + repositoryName};
     mRepositoryError = RepositoryError::NO_REPO_ERROR;
-    mErrorMessage = "";
+    mMessage = "";
 
     const bool isThemesList {repositoryName == "themes-list"};
     git_repository* repository {nullptr};
@@ -265,6 +265,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
 
         if (mergeAnalysis & GIT_MERGE_ANALYSIS_UP_TO_DATE) {
             LOG(LogInfo) << "Repository \"" << repositoryName << "\" already up to date";
+            if (repositoryName != "themes-list")
+                mMessage = "THEME ALREADY UP TO DATE";
             git_annotated_commit_free(annotated);
             git_object_free(object);
             mPromise.set_value(true);
@@ -318,13 +320,16 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
     catch (std::runtime_error& runtimeError) {
         const git_error* gitError {git_error_last()};
         LOG(LogError) << "GuiThemeDownloader: " << runtimeError.what() << gitError->message;
-        mErrorMessage = gitError->message;
+        mMessage = gitError->message;
         git_error_clear();
         if (gitRemote != nullptr)
             git_remote_disconnect(gitRemote);
         mPromise.set_value(true);
         return true;
     }
+
+    if (repositoryName != "themes-list")
+        mMessage = "THEME HAS BEEN UPDATED";
 
     mPromise.set_value(true);
     return false;
@@ -525,7 +530,6 @@ void GuiThemeDownloader::parseThemesList()
         }
     }
 
-    mWindow->queueInfoPopup("PARSED " + std::to_string(mThemeSets.size()) + " THEME SETS", 6000);
     LOG(LogInfo) << "GuiThemeDownloader: Parsed " << mThemeSets.size() << " theme sets";
 }
 
@@ -569,6 +573,8 @@ void GuiThemeDownloader::populateGUI()
                         mFuture = mPromise.get_future();
                         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
                                                    theme.reponame, theme.url);
+                        mStatusType = StatusType::STATUS_DOWNLOADING;
+                        mStatusText = "DOWNLOADING THEME";
                     },
                     "ABORT", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
@@ -587,6 +593,8 @@ void GuiThemeDownloader::populateGUI()
                         mFuture = mPromise.get_future();
                         mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
                                                    theme.reponame, theme.url, true);
+                        mStatusType = StatusType::STATUS_UPDATING;
+                        mStatusText = "UPDATING THEME";
                     },
                     "ABORT", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
@@ -597,11 +605,15 @@ void GuiThemeDownloader::populateGUI()
                 mFuture = mPromise.get_future();
                 mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
                                            theme.reponame, theme.url, false);
+                mStatusType = StatusType::STATUS_UPDATING;
+                mStatusText = "UPDATING THEME";
             }
             else {
                 mFuture = mPromise.get_future();
                 mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
                                            theme.reponame, theme.url);
+                mStatusType = StatusType::STATUS_DOWNLOADING;
+                mStatusText = "DOWNLOADING THEME";
             }
         });
         mList->addRow(row);
@@ -681,9 +693,10 @@ void GuiThemeDownloader::update(int deltaTime)
                 mFetching = false;
                 if (mRepositoryError != RepositoryError::NO_REPO_ERROR) {
                     std::string errorMessage {"ERROR: "};
-                    errorMessage.append(Utils::String::toUpper(mErrorMessage));
+                    errorMessage.append(Utils::String::toUpper(mMessage));
                     mWindow->queueInfoPopup(errorMessage, 6000);
-                    LOG(LogError) << "Error: " << mErrorMessage;
+                    LOG(LogError) << "Error: " << mMessage;
+                    mMessage = "";
                 }
                 if (mThemeSets.empty() && mLatestThemesList) {
                     parseThemesList();
@@ -700,19 +713,36 @@ void GuiThemeDownloader::update(int deltaTime)
 
     if (mFetching) {
         int progress {mReceivedObjectsProgress != 1.0f ? 0 : 100};
+        if (mStatusType != StatusType::STATUS_NO_CHANGE) {
+            if (mStatusType == StatusType::STATUS_DOWNLOADING)
+                mBusyAnim.setText(mStatusText + " 100%");
+            else if (mStatusType == StatusType::STATUS_UPDATING)
+                mBusyAnim.setText(mStatusText);
+            mBusyAnim.onSizeChanged();
+            mStatusType = StatusType::STATUS_NO_CHANGE;
+        }
         if (mReceivedObjectsProgress != 1.0f) {
             progress = static_cast<int>(
                 std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mReceivedObjectsProgress))));
-            const std::string progressText {std::to_string(progress) + "%"};
-            mBusyAnim.setText(progressText);
+            if (mStatusText.substr(0, 11) == "DOWNLOADING")
+                mBusyAnim.setText(mStatusText + " " + std::to_string(progress) + "%");
+            else
+                mBusyAnim.setText(mStatusText);
         }
         else if (mReceivedObjectsProgress != 0.0f) {
             progress = static_cast<int>(
                 std::round(glm::mix(0.0f, 100.0f, static_cast<float>(mResolveDeltaProgress))));
-            const std::string progressText {std::to_string(progress) + "%"};
-            mBusyAnim.setText(progressText);
+            if (mStatusText.substr(0, 11) == "DOWNLOADING")
+                mBusyAnim.setText(mStatusText + " " + std::to_string(progress) + "%");
+            else
+                mBusyAnim.setText(mStatusText);
         }
         mBusyAnim.update(deltaTime);
+    }
+
+    if (mMessage != "") {
+        mWindow->queueInfoPopup(mMessage, 6000);
+        mMessage = "";
     }
 
     GuiComponent::update(deltaTime);
@@ -783,7 +813,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         return true;
     }
 
-    return mGrid.input(config, input);
+    return GuiComponent::input(config, input);
 }
 
 std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
@@ -823,10 +853,14 @@ bool GuiThemeDownloader::fetchThemesList()
 
         mFetchThread =
             std::thread(&GuiThemeDownloader::fetchRepository, this, repositoryName, url, false);
+        mStatusType = StatusType::STATUS_UPDATING;
+        mStatusText = "UPDATING THEMES LIST";
     }
     else {
         LOG(LogInfo) << "GuiThemeDownloader: Creating initial themes list repository clone";
         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this, repositoryName, url);
+        mStatusType = StatusType::STATUS_DOWNLOADING;
+        mStatusText = "DOWNLOADING THEMES LIST";
         return false;
     }
 
@@ -892,7 +926,7 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
         const git_error* gitError {git_error_last()};
         LOG(LogWarning) << "GuiThemeDownloader: Git returned error code " << errorCode
                         << ", error message: \"" << gitError->message << "\"";
-        mErrorMessage = gitError->message;
+        mMessage = gitError->message;
         git_error_clear();
         mPromise.set_value(true);
         return true;

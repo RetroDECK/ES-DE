@@ -110,6 +110,12 @@ private:
 
     std::vector<ThemeGUIEntry> mThemeGUIEntries;
 
+    enum class StatusType {
+        STATUS_NO_CHANGE,
+        STATUS_DOWNLOADING,
+        STATUS_UPDATING
+    };
+
     enum class RepositoryError {
         NO_REPO_ERROR,
         MANUALLY_DOWNLOADED,
@@ -121,7 +127,7 @@ private:
 
     RepositoryError mRepositoryError;
     std::string mThemeDirectory;
-    std::string mErrorMessage;
+    std::string mMessage;
     std::thread mFetchThread;
     std::promise<bool> mPromise;
     std::future<bool> mFuture;
@@ -130,6 +136,8 @@ private:
     static inline std::atomic<float> mReceivedObjectsProgress {0.0f};
     static inline std::atomic<float> mResolveDeltaProgress {0.0f};
     std::vector<ThemeEntry> mThemeSets;
+    StatusType mStatusType;
+    std::string mStatusText;
 
     std::shared_ptr<ImageComponent> mScrollUp;
     std::shared_ptr<ImageComponent> mScrollDown;
