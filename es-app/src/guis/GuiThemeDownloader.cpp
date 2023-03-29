@@ -263,6 +263,12 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
             }
         }
 
+        if (allowReset && checkLocalChanges(repository)) {
+            LOG(LogInfo) << "Repository \"" << repositoryName
+                         << "\" contains local changes, performing hard reset";
+            resetRepository(repository);
+        }
+
         if (mergeAnalysis & GIT_MERGE_ANALYSIS_UP_TO_DATE) {
             LOG(LogInfo) << "Repository \"" << repositoryName << "\" already up to date";
             if (repositoryName != "themes-list")
@@ -273,12 +279,6 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
             if (isThemesList)
                 mLatestThemesList = true;
             return false;
-        }
-
-        if (allowReset && checkLocalChanges(repository)) {
-            LOG(LogInfo) << "Repository \"" << repositoryName
-                         << "\" contains local changes, performing hard reset";
-            resetRepository(repository);
         }
 
         LOG(LogInfo) << "Performing Git fast-forward of repository \"" << repositoryName << "\"";
