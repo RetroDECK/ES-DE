@@ -208,9 +208,8 @@ void GuiScraperSearch::onSizeChanged()
 
     const float thumbnailCellScale {0.93f};
 
-    // Limit thumbnail size using setMaxHeight - we do this instead of letting mGrid
-    // call setSize because it maintains the aspect ratio.
-    // We also pad a little so it doesn't rub up against the metadata labels.
+    // Limit the thumbnail size using setMaxSize so the aspect ratio is maintained, and also
+    // add some padding
     mResultThumbnail->setMaxSize(mGrid.getColWidth(1) * thumbnailCellScale, mGrid.getRowHeight(1));
 
     // Metadata.
