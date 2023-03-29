@@ -134,6 +134,7 @@ public:
 
     // Font Awesome symbols.
 #if defined(_MSC_VER) // MSVC compiler.
+    static inline const std::string BRANCH_CHAR {Utils::String::wideStringToString(L"\uf18c")};
     static inline const std::string CONTROLLER_CHAR {Utils::String::wideStringToString(L"\uf11b")};
     static inline const std::string CROSSEDCIRCLE_CHAR {
         Utils::String::wideStringToString(L"\uf05e")};
@@ -146,6 +147,7 @@ public:
     static inline const std::string KEYBOARD_CHAR {Utils::String::wideStringToString(L"\uf11c")};
     static inline const std::string TICKMARK_CHAR {Utils::String::wideStringToString(L"\uf14A")};
 #else
+    static inline const std::string BRANCH_CHAR {"\uf18c"};
     static inline const std::string CONTROLLER_CHAR {"\uf11b"};
     static inline const std::string CROSSEDCIRCLE_CHAR {"\uf05e"};
     static inline const std::string EXCLAMATION_CHAR {"\uf06a"};

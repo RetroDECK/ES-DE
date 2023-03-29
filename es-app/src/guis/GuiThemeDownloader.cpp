@@ -113,9 +113,7 @@ GuiThemeDownloader::GuiThemeDownloader()
     mGrid.setEntry(mScrollDown, glm::ivec2 {7, 1}, false, false, glm::ivec2 {1, 1});
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
-    // buttons.push_back(
-    //    std::make_shared<ButtonComponent>("Update all", "Update all", [&] { delete this; }));
-    buttons.push_back(std::make_shared<ButtonComponent>("Exit", "Exit", [&] { delete this; }));
+    buttons.push_back(std::make_shared<ButtonComponent>("CLOSE", "CLOSE", [&] { delete this; }));
     mButtons = makeButtonGrid(buttons);
     mGrid.setEntry(mButtons, glm::ivec2 {0, 7}, true, false, glm::ivec2 {8, 1},
                    GridFlags::BORDER_TOP);
@@ -376,7 +374,6 @@ void GuiThemeDownloader::makeInventory()
 {
     for (auto& theme : mThemeSets) {
         const std::string path {mThemeDirectory + theme.reponame};
-        theme.newEntry = false;
         theme.invalidRepository = false;
         theme.manuallyDownloaded = false;
         theme.hasLocalChanges = false;
@@ -530,7 +527,8 @@ void GuiThemeDownloader::parseThemesList()
         }
     }
 
-    LOG(LogInfo) << "GuiThemeDownloader: Parsed " << mThemeSets.size() << " theme sets";
+    LOG(LogDebug) << "GuiThemeDownloader::parseThemesList(): Parsed " << mThemeSets.size()
+                  << " theme sets";
 }
 
 void GuiThemeDownloader::populateGUI()
@@ -540,6 +538,8 @@ void GuiThemeDownloader::populateGUI()
 
     for (auto& theme : mThemeSets) {
         std::string themeName {Utils::String::toUpper(theme.name)};
+        if (theme.newEntry && !theme.isCloned)
+            themeName.append(" ").append(ViewController::BRANCH_CHAR);
         if (theme.isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (theme.manuallyDownloaded || theme.invalidRepository)
@@ -634,6 +634,8 @@ void GuiThemeDownloader::updateGUI()
 
     for (size_t i {0}; i < mThemeSets.size(); ++i) {
         std::string themeName {Utils::String::toUpper(mThemeSets[i].name)};
+        if (mThemeSets[i].newEntry && !mThemeSets[i].isCloned)
+            themeName.append(" ").append(ViewController::BRANCH_CHAR);
         if (mThemeSets[i].isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (mThemeSets[i].manuallyDownloaded || mThemeSets[i].invalidRepository)
@@ -662,10 +664,12 @@ void GuiThemeDownloader::updateInfoPane()
         mDownloadStatus->setColor(0x992222FF);
     }
     else {
-        mDownloadStatus->setText("NOT INSTALLED");
+        if (mThemeSets[mList->getCursorId()].newEntry)
+            mDownloadStatus->setText("NOT INSTALLED (NEW)");
+        else
+            mDownloadStatus->setText("NOT INSTALLED");
         mDownloadStatus->setColor(0x999999FF);
     }
-
     if (mThemeSets[mList->getCursorId()].hasLocalChanges) {
         mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " LOCAL CHANGES");
         mLocalChanges->setColor(0x992222FF);
