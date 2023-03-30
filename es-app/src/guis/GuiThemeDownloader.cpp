@@ -143,10 +143,12 @@ GuiThemeDownloader::GuiThemeDownloader()
     });
 
     mViewerIndicatorLeft = std::make_shared<TextComponent>(
-        "\uf104", Font::get(FONT_SIZE_LARGE * 1.2f, FONT_PATH_BOLD), 0xCCCCCCFF, ALIGN_CENTER);
+        ViewController::ARROW_LEFT_CHAR, Font::get(FONT_SIZE_LARGE * 1.2f, FONT_PATH_BOLD),
+        0xCCCCCCFF, ALIGN_CENTER);
 
     mViewerIndicatorRight = std::make_shared<TextComponent>(
-        "\uf105", Font::get(FONT_SIZE_LARGE * 1.2f, FONT_PATH_BOLD), 0xCCCCCCFF, ALIGN_CENTER);
+        ViewController::ARROW_RIGHT_CHAR, Font::get(FONT_SIZE_LARGE * 1.2f, FONT_PATH_BOLD),
+        0xCCCCCCFF, ALIGN_CENTER);
 
     git_libgit2_init();
 
@@ -277,7 +279,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
         }
 
         if (mergeAnalysis & GIT_MERGE_ANALYSIS_UP_TO_DATE) {
-            LOG(LogInfo) << "Repository \"" << repositoryName << "\" already up to date";
+            LOG(LogInfo) << "GuiThemeDownloader: Repository \"" << repositoryName
+                         << "\" already up to date";
             if (repositoryName != "themes-list")
                 mMessage = "THEME ALREADY UP TO DATE";
             git_annotated_commit_free(annotated);
