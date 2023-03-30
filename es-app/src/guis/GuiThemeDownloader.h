@@ -96,6 +96,7 @@ private:
     void populateGUI();
     void updateGUI();
     void updateInfoPane();
+    void setupFullscreenViewer();
 
     Renderer* mRenderer;
     NinePatchComponent mBackground;
@@ -138,6 +139,8 @@ private:
     std::vector<ThemeEntry> mThemeSets;
     StatusType mStatusType;
     std::string mStatusText;
+    bool mFullscreenViewing;
+    size_t mFullscreenViewerIndex;
 
     std::shared_ptr<ImageComponent> mScrollUp;
     std::shared_ptr<ImageComponent> mScrollDown;
@@ -145,6 +148,10 @@ private:
     std::vector<float> mGrayRectangleCoords;
 
     std::shared_ptr<ImageComponent> mScreenshot;
+    std::vector<std::shared_ptr<ImageComponent>> mViewerScreenshots;
+    std::vector<std::shared_ptr<TextComponent>> mViewerCaptions;
+    std::shared_ptr<TextComponent> mViewerIndicatorLeft;
+    std::shared_ptr<TextComponent> mViewerIndicatorRight;
     std::shared_ptr<TextComponent> mDownloadStatus;
     std::shared_ptr<TextComponent> mLocalChanges;
     std::shared_ptr<TextComponent> mTitle;

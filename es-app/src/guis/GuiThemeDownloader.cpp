@@ -24,6 +24,8 @@ GuiThemeDownloader::GuiThemeDownloader()
     , mRepositoryError {RepositoryError::NO_REPO_ERROR}
     , mFetching {false}
     , mLatestThemesList {false}
+    , mFullscreenViewing {false}
+    , mFullscreenViewerIndex {0}
 {
     addChild(&mBackground);
     addChild(&mGrid);
@@ -87,6 +89,7 @@ GuiThemeDownloader::GuiThemeDownloader()
     mGrid.setEntry(mLocalChanges, glm::ivec2 {3, 4}, false, true, glm::ivec2 {2, 1});
 
     mScreenshot = std::make_shared<ImageComponent>();
+    mScreenshot->setLinearInterpolation(true);
     mGrid.setEntry(mScreenshot, glm::ivec2 {1, 5}, false, true, glm::ivec2 {4, 1});
 
     mAuthor = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI, FONT_PATH_LIGHT),
@@ -138,6 +141,12 @@ GuiThemeDownloader::GuiThemeDownloader()
         if (state == CursorState::CURSOR_SCROLLING || state == CursorState::CURSOR_STOPPED)
             updateInfoPane();
     });
+
+    mViewerIndicatorLeft = std::make_shared<TextComponent>(
+        "\uf104", Font::get(FONT_SIZE_LARGE * 1.2f, FONT_PATH_BOLD), 0xCCCCCCFF, ALIGN_CENTER);
+
+    mViewerIndicatorRight = std::make_shared<TextComponent>(
+        "\uf105", Font::get(FONT_SIZE_LARGE * 1.2f, FONT_PATH_BOLD), 0xCCCCCCFF, ALIGN_CENTER);
 
     git_libgit2_init();
 
@@ -687,6 +696,50 @@ void GuiThemeDownloader::updateInfoPane()
                      Utils::String::toUpper(mThemeSets[mList->getCursorId()].author));
 }
 
+void GuiThemeDownloader::setupFullscreenViewer()
+{
+    if (mThemeSets.empty())
+        return;
+
+    mViewerScreenshots.clear();
+    mViewerCaptions.clear();
+    mFullscreenViewerIndex = 0;
+    mFullscreenViewing = true;
+
+    for (auto& screenshot : mThemeSets[mList->getCursorId()].screenshots) {
+        auto image = std::make_shared<ImageComponent>(false, false);
+        image->setLinearInterpolation(true);
+        image->setMaxSize(mRenderer->getScreenWidth() * 0.86f,
+                          mRenderer->getScreenHeight() * 0.86f);
+        image->setImage(mThemeDirectory + "themes-list/" + screenshot.image);
+        // Center image on screen.
+        glm::vec3 imagePos {image->getPosition()};
+        imagePos.x = (mRenderer->getScreenWidth() - image->getSize().x) / 2.0f;
+        imagePos.y = (mRenderer->getScreenHeight() - image->getSize().y) / 2.0f;
+        image->setPosition(imagePos);
+        mViewerScreenshots.emplace_back(image);
+        auto caption = std::make_shared<TextComponent>(screenshot.caption,
+                                                       Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR),
+                                                       0xCCCCCCFF, ALIGN_LEFT);
+        glm::vec3 textPos {image->getPosition()};
+        textPos.y += image->getSize().y;
+        caption->setPosition(textPos);
+        mViewerCaptions.emplace_back(caption);
+    }
+
+    if (mViewerScreenshots.size() > 0) {
+        // Navigation indicators to the left and right of the screenshot.
+        glm::vec3 indicatorPos {mViewerScreenshots.front()->getPosition()};
+        indicatorPos.x -= mViewerIndicatorLeft->getSize().x * 2.0f;
+        indicatorPos.y += (mViewerScreenshots.front()->getSize().y / 2.0f) -
+                          (mViewerIndicatorLeft->getSize().y / 2.0f);
+        mViewerIndicatorLeft->setPosition(indicatorPos);
+        indicatorPos.x +=
+            mViewerScreenshots.front()->getSize().x + (mViewerIndicatorRight->getSize().x * 3.0f);
+        mViewerIndicatorRight->setPosition(indicatorPos);
+    }
+}
+
 void GuiThemeDownloader::update(int deltaTime)
 {
     if (mFuture.valid()) {
@@ -766,6 +819,18 @@ void GuiThemeDownloader::render(const glm::mat4& parentTrans)
 
     if (mFetching)
         mBusyAnim.render(trans);
+
+    if (mFullscreenViewing && mViewerScreenshots.size() > 0) {
+        mRenderer->setMatrix(parentTrans);
+        mRenderer->drawRect(0.0f, 0.0f, mRenderer->getScreenWidth(), mRenderer->getScreenHeight(),
+                            0x222222FF, 0x222222FF);
+        mViewerScreenshots[mFullscreenViewerIndex]->render(parentTrans);
+        mViewerCaptions[mFullscreenViewerIndex]->render(parentTrans);
+        if (mFullscreenViewerIndex != 0)
+            mViewerIndicatorLeft->render(parentTrans);
+        if (mFullscreenViewerIndex != mViewerCaptions.size() - 1)
+            mViewerIndicatorRight->render(parentTrans);
+    }
 }
 
 void GuiThemeDownloader::onSizeChanged()
@@ -812,8 +877,33 @@ void GuiThemeDownloader::onSizeChanged()
 
 bool GuiThemeDownloader::input(InputConfig* config, Input input)
 {
+    if (mFullscreenViewing && input.value) {
+        if (config->isMappedLike("left", input)) {
+            if (mFullscreenViewerIndex > 0)
+                --mFullscreenViewerIndex;
+            return true;
+        }
+        else if (config->isMappedLike("right", input)) {
+            if (mViewerScreenshots.size() > mFullscreenViewerIndex + 1)
+                ++mFullscreenViewerIndex;
+            return true;
+        }
+        else {
+            mViewerScreenshots.clear();
+            mViewerCaptions.clear();
+            mFullscreenViewing = false;
+            mFullscreenViewerIndex = 0;
+            return true;
+        }
+    }
+
     if (config->isMappedTo("b", input) && input.value) {
         delete this;
+        return true;
+    }
+
+    if (config->isMappedTo("x", input) && input.value && mGrid.getSelectedComponent() == mList) {
+        setupFullscreenViewer();
         return true;
     }
 
@@ -823,7 +913,17 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "exit"));
+    prompts.push_back(HelpPrompt("b", "close"));
+
+    if (mList->size() > 0) {
+        if (mGrid.getSelectedComponent() == mList)
+            prompts.push_back(HelpPrompt("x", "view screenshots"));
+
+        if (mThemeSets[mList->getCursorId()].isCloned)
+            prompts.push_back(HelpPrompt("a", "fetch updates"));
+        else
+            prompts.push_back(HelpPrompt("a", "download"));
+    }
 
     return prompts;
 }
