@@ -640,6 +640,7 @@ void GuiThemeDownloader::populateGUI()
 void GuiThemeDownloader::updateGUI()
 {
     updateInfoPane();
+    updateHelpPrompts();
 
     for (size_t i {0}; i < mThemeSets.size(); ++i) {
         std::string themeName {Utils::String::toUpper(mThemeSets[i].name)};
