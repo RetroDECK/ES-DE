@@ -495,10 +495,21 @@ std::vector<HelpPrompt> ComponentGrid::getHelpPrompts()
         }
     }
 
-    // There is currently no situation in the application where unfocusable cells are located
-    // next to each other horizontally, so this code is good enough. If this changes in the
-    // future, code similar to the the vertical cell handling above needs to be added.
-    bool canScrollHoriz {mGridSize.x > 1 && e->dim.x < mGridSize.x};
+    bool canScrollHoriz {false};
+
+    // Same as the above code section but for the X axis.
+    if (mGridSize.x > 1 && e->dim.x < mGridSize.x) {
+        if (e->pos.x - e->dim.x >= 0) {
+            const GridEntry* cell {getCellAt(glm::ivec2 {e->pos.x - e->dim.x, e->pos.y})};
+            if (cell != nullptr && cell->canFocus)
+                canScrollHoriz = true;
+        }
+        if (e->pos.x + e->dim.x < mGridSize.x) {
+            const GridEntry* cell {getCellAt(glm::ivec2 {e->pos.x + e->dim.x, e->pos.y})};
+            if (cell != nullptr && cell->canFocus)
+                canScrollHoriz = true;
+        }
+    }
 
     // Check existing capabilities as indicated by the help prompts, and if the prompts should
     // be combined into "up/down/left/right" then also remove the single-axis prompts.
