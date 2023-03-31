@@ -9,6 +9,7 @@
 #include "guis/GuiThemeDownloader.h"
 
 #include "EmulationStation.h"
+#include "ThemeData.h"
 #include "components/MenuComponent.h"
 #include "resources/ResourceManager.h"
 
@@ -25,6 +26,7 @@ GuiThemeDownloader::GuiThemeDownloader()
     , mFetching {false}
     , mLatestThemesList {false}
     , mAttemptedFetch {false}
+    , mHasThemeUpdates {false}
     , mFullscreenViewing {false}
     , mFullscreenViewerIndex {0}
 {
@@ -173,6 +175,11 @@ GuiThemeDownloader::~GuiThemeDownloader()
         mFetchThread.join();
 
     git_libgit2_shutdown();
+
+    if (mHasThemeUpdates) {
+        LOG(LogInfo) << "GuiThemeDownloader: There are updates, repopulating theme sets";
+        ThemeData::populateThemeSets();
+    }
 }
 
 bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
@@ -240,6 +247,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
                 git_reference_free(oldTargetRef);
             }
             git_buf_dispose(&buffer);
+            if (repositoryName != "themes-list")
+                mHasThemeUpdates = true;
         }
 
         errorCode = git_revparse_single(&object, repository, "FETCH_HEAD");
@@ -266,6 +275,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
                 errorCode = git_revparse_single(&objectHead, repository, "HEAD");
                 errorCode = git_reset(repository, objectHead, GIT_RESET_HARD, nullptr);
                 git_object_free(objectHead);
+                if (repositoryName != "themes-list")
+                    mHasThemeUpdates = true;
             }
             else {
                 LOG(LogWarning) << "Repository \"" << repositoryName
@@ -282,6 +293,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
             LOG(LogInfo) << "Repository \"" << repositoryName
                          << "\" contains local changes, performing hard reset";
             resetRepository(repository);
+            if (repositoryName != "themes-list")
+                mHasThemeUpdates = true;
         }
 
         if (mergeAnalysis & GIT_MERGE_ANALYSIS_UP_TO_DATE) {
@@ -344,8 +357,10 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
         return true;
     }
 
-    if (repositoryName != "themes-list")
+    if (repositoryName != "themes-list") {
         mMessage = "THEME HAS BEEN UPDATED";
+        mHasThemeUpdates = true;
+    }
 
     mPromise.set_value(true);
     return false;
@@ -1086,6 +1101,9 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
         mPromise.set_value(true);
         return true;
     }
+
+    if (repositoryName != "themes-list")
+        mHasThemeUpdates = true;
 
     mLatestThemesList = true;
     mPromise.set_value(true);

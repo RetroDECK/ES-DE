@@ -768,8 +768,7 @@ const ThemeData::ThemeElement* ThemeData::getElement(const std::string& view,
 
 void ThemeData::populateThemeSets()
 {
-    assert(sThemeSets.empty());
-
+    sThemeSets.clear();
     LOG(LogInfo) << "Checking for available theme sets...";
 
     // Check for themes first under the home directory, then under the data installation
