@@ -18,10 +18,11 @@
 
 #define DEBUG_CLONING false
 
-GuiThemeDownloader::GuiThemeDownloader()
+GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {2, 4}}
+    , mUpdateCallback(updateCallback)
     , mRepositoryError {RepositoryError::NO_REPO_ERROR}
     , mFetching {false}
     , mLatestThemesList {false}
@@ -179,6 +180,9 @@ GuiThemeDownloader::~GuiThemeDownloader()
     if (mHasThemeUpdates) {
         LOG(LogInfo) << "GuiThemeDownloader: There are updates, repopulating theme sets";
         ThemeData::populateThemeSets();
+        ViewController::getInstance()->reloadAll();
+        if (mUpdateCallback)
+            mUpdateCallback();
     }
 }
 
@@ -1104,8 +1108,10 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
         return true;
     }
 
-    if (repositoryName != "themes-list")
+    if (repositoryName != "themes-list") {
+        LOG(LogInfo) << "GuiThemeDownloader: Downloaded theme \"" << repositoryName << "\"";
         mHasThemeUpdates = true;
+    }
 
     mLatestThemesList = true;
     mPromise.set_value(true);

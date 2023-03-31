@@ -37,7 +37,7 @@
 class GuiThemeDownloader : public GuiComponent
 {
 public:
-    GuiThemeDownloader();
+    GuiThemeDownloader(std::function<void()> updateCallback);
     ~GuiThemeDownloader();
 
     void update(int deltaTime) override;
@@ -105,6 +105,7 @@ private:
     std::shared_ptr<ComponentList> mList;
     std::shared_ptr<ComponentGrid> mButtons;
     BusyComponent mBusyAnim;
+    std::function<void()> mUpdateCallback;
 
     struct ThemeGUIEntry {
         std::shared_ptr<TextComponent> themeName;

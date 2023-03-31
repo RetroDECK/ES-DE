@@ -113,17 +113,17 @@ void GuiMenu::openUIOptions()
     auto themeSet =
         std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "THEME SET", false);
 
-    // TODO: Enable and possibly move somewhere else when the theme downloader is implemented.
-    //    ComponentListRow themeDownloaderInputRow;
-    //    themeDownloaderInputRow.elements.clear();
-    //    themeDownloaderInputRow.addElement(std::make_shared<TextComponent>("THEME DOWNLOADER",
-    //                                                                  Font::get(FONT_SIZE_MEDIUM),
-    //                                                                  0x777777FF),
-    //                                       true);
-    //    themeDownloaderInputRow.addElement(makeArrow(), false);
-    //    themeDownloaderInputRow.makeAcceptInputHandler(
-    //        std::bind(&GuiMenu::openThemeDownloader, this, s));
-    //    s->addRow(themeDownloaderInputRow);
+    ComponentListRow themeDownloaderInputRow;
+    themeDownloaderInputRow.elements.clear();
+    themeDownloaderInputRow.addElement(
+        std::make_shared<TextComponent>("THEME DOWNLOADER (EXPERIMENTAL)",
+                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+        true);
+    themeDownloaderInputRow.addElement(makeArrow(), false);
+
+    themeDownloaderInputRow.makeAcceptInputHandler(
+        std::bind(&GuiMenu::openThemeDownloader, this, s));
+    s->addRow(themeDownloaderInputRow);
 
     // Theme set.
     if (!themeSets.empty()) {
@@ -1793,7 +1793,13 @@ void GuiMenu::addVersionInfo()
 
 void GuiMenu::openThemeDownloader(GuiSettings* settings)
 {
-    mWindow->pushGui(new GuiThemeDownloader());
+    auto updateFunc = [&, settings]() {
+        LOG(LogDebug) << "GuiMenu::openThemeDownloader(): Theme sets were updated, reloading menu";
+        delete settings;
+        openUIOptions();
+    };
+
+    mWindow->pushGui(new GuiThemeDownloader(updateFunc));
 }
 
 void GuiMenu::openMediaViewerOptions()
