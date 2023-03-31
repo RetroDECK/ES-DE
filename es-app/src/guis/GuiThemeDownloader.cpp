@@ -899,6 +899,9 @@ void GuiThemeDownloader::onSizeChanged()
 
 bool GuiThemeDownloader::input(InputConfig* config, Input input)
 {
+    if (mFetching && input.value)
+        return false;
+
     if (mFullscreenViewing && input.value) {
         if (config->isMappedLike("left", input)) {
             if (mFullscreenViewerIndex > 0)
@@ -919,7 +922,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         }
     }
 
-    if (config->isMappedTo("b", input) && input.value && !mFetching) {
+    if (config->isMappedTo("b", input) && input.value) {
         delete this;
         return true;
     }
