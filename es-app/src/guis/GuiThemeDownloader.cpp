@@ -24,6 +24,7 @@ GuiThemeDownloader::GuiThemeDownloader()
     , mRepositoryError {RepositoryError::NO_REPO_ERROR}
     , mFetching {false}
     , mLatestThemesList {false}
+    , mAttemptedFetch {false}
     , mFullscreenViewing {false}
     , mFullscreenViewerIndex {0}
 {
@@ -164,7 +165,6 @@ GuiThemeDownloader::GuiThemeDownloader()
     mFuture = mPromise.get_future();
 
     mThemeDirectory = Utils::FileSystem::getHomePath() + "/.emulationstation/themes/";
-    fetchThemesList();
 }
 
 GuiThemeDownloader::~GuiThemeDownloader()
@@ -752,6 +752,13 @@ void GuiThemeDownloader::setupFullscreenViewer()
 
 void GuiThemeDownloader::update(int deltaTime)
 {
+    if (!mAttemptedFetch) {
+        // We need to run this here instead of from the constructor so that GuiMsgBox will be
+        // on top of the GUI stack if it needs to be displayed.
+        mAttemptedFetch = true;
+        fetchThemesList();
+    }
+
     if (mFuture.valid()) {
         // Only wait one millisecond as this update() function runs very frequently.
         if (mFuture.wait_for(std::chrono::milliseconds(1)) == std::future_status::ready) {
@@ -912,7 +919,7 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         }
     }
 
-    if (config->isMappedTo("b", input) && input.value) {
+    if (config->isMappedTo("b", input) && input.value && !mFetching) {
         delete this;
         return true;
     }
@@ -980,11 +987,33 @@ bool GuiThemeDownloader::fetchThemesList()
         mStatusText = "UPDATING THEMES LIST";
     }
     else {
-        LOG(LogInfo) << "GuiThemeDownloader: Creating initial themes list repository clone";
-        mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this, repositoryName, url);
-        mStatusType = StatusType::STATUS_DOWNLOADING;
-        mStatusText = "DOWNLOADING THEMES LIST";
-        return false;
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(),
+            "IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. "
+            "AS SUCH THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
+            "WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY UPDATED FILES WILL "
+            "BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE THAT YOU CAN'T "
+            "ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA CORRUPTION.",
+            "PROCEED",
+            [this, repositoryName, url] {
+                LOG(LogInfo) << "GuiThemeDownloader: Creating initial themes list repository clone";
+                mFetchThread =
+                    std::thread(&GuiThemeDownloader::cloneRepository, this, repositoryName, url);
+                mStatusType = StatusType::STATUS_DOWNLOADING;
+                mStatusText = "DOWNLOADING THEMES LIST";
+                return false;
+            },
+            "ABORT",
+            [&] {
+                delete this;
+                return false;
+            },
+            "", nullptr, true, true,
+            (mRenderer->getIsVerticalOrientation() ?
+                 0.85f :
+                 0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
+
+        std::string teststring;
     }
 
     return false;

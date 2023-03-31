@@ -135,6 +135,7 @@ private:
     std::future<bool> mFuture;
     std::atomic<bool> mFetching;
     std::atomic<bool> mLatestThemesList;
+    bool mAttemptedFetch;
     static inline std::atomic<float> mReceivedObjectsProgress {0.0f};
     static inline std::atomic<float> mResolveDeltaProgress {0.0f};
     std::vector<ThemeEntry> mThemeSets;
