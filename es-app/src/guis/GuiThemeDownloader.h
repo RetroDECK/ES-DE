@@ -101,6 +101,7 @@ private:
     Renderer* mRenderer;
     NinePatchComponent mBackground;
     ComponentGrid mGrid;
+    std::shared_ptr<ComponentGrid> mCenterGrid;
     std::shared_ptr<ComponentList> mList;
     std::shared_ptr<ComponentGrid> mButtons;
     BusyComponent mBusyAnim;

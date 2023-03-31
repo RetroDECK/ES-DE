@@ -20,7 +20,7 @@
 GuiThemeDownloader::GuiThemeDownloader()
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
-    , mGrid {glm::ivec2 {8, 8}}
+    , mGrid {glm::ivec2 {2, 4}}
     , mRepositoryError {RepositoryError::NO_REPO_ERROR}
     , mFetching {false}
     , mLatestThemesList {false}
@@ -33,72 +33,79 @@ GuiThemeDownloader::GuiThemeDownloader()
     const float fontSizeSmall {mRenderer->getIsVerticalOrientation() ? FONT_SIZE_MINI :
                                                                        FONT_SIZE_SMALL};
 
-    // Set up grid.
-    mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 2}, false, false,
-                   glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
-
+    // Set up main grid.
     mTitle = std::make_shared<TextComponent>("THEME DOWNLOADER", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {8, 2});
+    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
+
+    // We need a center grid embedded within the main grid in order for navigation and helpsystem
+    // entries to work and display correctly.
+    mCenterGrid = std::make_shared<ComponentGrid>(glm::ivec2 {8, 5});
+    mCenterGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 0}, false, false,
+                          glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
     mVariantsLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mVariantsLabel, glm::ivec2 {1, 2}, false, true, glm::ivec2 {1, 1},
-                   GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mVariantsLabel, glm::ivec2 {1, 0}, false, true, glm::ivec2 {1, 1},
+                          GridFlags::BORDER_TOP);
 
     mColorSchemesLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mColorSchemesLabel, glm::ivec2 {1, 3}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mColorSchemesLabel, glm::ivec2 {1, 1}, false, true, glm::ivec2 {1, 1});
 
     mAspectRatiosLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mAspectRatiosLabel, glm::ivec2 {3, 2}, false, true, glm::ivec2 {1, 1},
-                   GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mAspectRatiosLabel, glm::ivec2 {3, 0}, false, true, glm::ivec2 {1, 1},
+                          GridFlags::BORDER_TOP);
 
     mFutureUseLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mFutureUseLabel, glm::ivec2 {3, 3}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mFutureUseLabel, glm::ivec2 {3, 1}, false, true, glm::ivec2 {1, 1});
 
-    mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {5, 2}, false, false,
-                   glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+    mCenterGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {5, 0}, false, false,
+                          glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
     mVariantCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
                                                     0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mVariantCount, glm::ivec2 {2, 2}, false, true, glm::ivec2 {1, 1},
-                   GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mVariantCount, glm::ivec2 {2, 0}, false, true, glm::ivec2 {1, 1},
+                          GridFlags::BORDER_TOP);
 
     mColorSchemesCount = std::make_shared<TextComponent>(
         "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mColorSchemesCount, glm::ivec2 {2, 3}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mColorSchemesCount, glm::ivec2 {2, 1}, false, true, glm::ivec2 {1, 1});
 
     mAspectRatiosCount = std::make_shared<TextComponent>(
         "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mAspectRatiosCount, glm::ivec2 {4, 2}, false, true, glm::ivec2 {1, 1},
-                   GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mAspectRatiosCount, glm::ivec2 {4, 0}, false, true, glm::ivec2 {1, 1},
+                          GridFlags::BORDER_TOP);
 
     mFutureUseCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
                                                       0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mFutureUseCount, glm::ivec2 {4, 3}, false, true, glm::ivec2 {1, 1});
+    mCenterGrid->setEntry(mFutureUseCount, glm::ivec2 {4, 1}, false, true, glm::ivec2 {1, 1});
 
     mDownloadStatus = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
                                                       0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mDownloadStatus, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1});
+    mCenterGrid->setEntry(mDownloadStatus, glm::ivec2 {1, 2}, false, true, glm::ivec2 {2, 1});
 
     mLocalChanges = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
                                                     0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mLocalChanges, glm::ivec2 {3, 4}, false, true, glm::ivec2 {2, 1});
+    mCenterGrid->setEntry(mLocalChanges, glm::ivec2 {3, 2}, false, true, glm::ivec2 {2, 1});
 
     mScreenshot = std::make_shared<ImageComponent>();
     mScreenshot->setLinearInterpolation(true);
-    mGrid.setEntry(mScreenshot, glm::ivec2 {1, 5}, false, true, glm::ivec2 {4, 1});
+    mCenterGrid->setEntry(mScreenshot, glm::ivec2 {1, 3}, false, true, glm::ivec2 {4, 1});
 
     mAuthor = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI, FONT_PATH_LIGHT),
                                               0x555555FF, ALIGN_LEFT);
-    mGrid.setEntry(mAuthor, glm::ivec2 {1, 6}, false, true, glm::ivec2 {4, 1});
+    mCenterGrid->setEntry(mAuthor, glm::ivec2 {1, 4}, false, true, glm::ivec2 {4, 1},
+                          GridFlags::BORDER_BOTTOM);
 
     mList = std::make_shared<ComponentList>();
-    mGrid.setEntry(mList, glm::ivec2 {6, 2}, true, true, glm::ivec2 {2, 5},
-                   GridFlags::BORDER_TOP | GridFlags::BORDER_LEFT | GridFlags::BORDER_BOTTOM);
+    mCenterGrid->setEntry(mList, glm::ivec2 {6, 0}, true, true, glm::ivec2 {2, 5},
+                          GridFlags::BORDER_TOP | GridFlags::BORDER_LEFT |
+                              GridFlags::BORDER_BOTTOM);
+
+    mGrid.setEntry(mCenterGrid, glm::ivec2 {0, 2}, true, false, glm::ivec2 {2, 1});
 
     // Set up scroll indicators.
     mScrollUp = std::make_shared<ImageComponent>();
@@ -112,19 +119,18 @@ GuiThemeDownloader::GuiThemeDownloader()
 
     mScrollIndicator = std::make_shared<ScrollIndicatorComponent>(mList, mScrollUp, mScrollDown);
 
-    mGrid.setEntry(mScrollUp, glm::ivec2 {7, 0}, false, false, glm::ivec2 {1, 1});
-    mGrid.setEntry(mScrollDown, glm::ivec2 {7, 1}, false, false, glm::ivec2 {1, 1});
+    mGrid.setEntry(mScrollUp, glm::ivec2 {1, 0}, false, false, glm::ivec2 {1, 1});
+    mGrid.setEntry(mScrollDown, glm::ivec2 {1, 1}, false, false, glm::ivec2 {1, 1});
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(std::make_shared<ButtonComponent>("CLOSE", "CLOSE", [&] { delete this; }));
     mButtons = makeButtonGrid(buttons);
-    mGrid.setEntry(mButtons, glm::ivec2 {0, 7}, true, false, glm::ivec2 {8, 1},
-                   GridFlags::BORDER_TOP);
+    mGrid.setEntry(mButtons, glm::ivec2 {0, 3}, true, false, glm::ivec2 {2, 1});
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
     const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    const float width {glm::clamp(0.95f * aspectValue, 0.70f, 0.98f) * mRenderer->getScreenWidth()};
+    const float width {glm::clamp(0.95f * aspectValue, 0.65f, 0.98f) * mRenderer->getScreenWidth()};
     setSize(width,
             mTitle->getSize().y +
                 (FONT_SIZE_MEDIUM * 1.5f * (mRenderer->getIsVerticalOrientation() ? 10.0f : 9.0f)) +
@@ -845,38 +851,43 @@ void GuiThemeDownloader::onSizeChanged()
                                   4.0f);
     mGrid.setRowHeightPerc(1, (mTitle->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y /
                                   4.0f);
-    mGrid.setRowHeightPerc(2, (mVariantsLabel->getFont()->getLetterHeight() + screenSize * 0.08f) /
-                                  mSize.y / 2.0f);
-    mGrid.setRowHeightPerc(3,
-                           (mColorSchemesLabel->getFont()->getLetterHeight() + screenSize * 0.06f) /
-                               mSize.y / 2.0f);
-    mGrid.setRowHeightPerc(4, (mDownloadStatus->getFont()->getLetterHeight() + screenSize * 0.08f) /
-                                  mSize.y / 2.0f);
-    mGrid.setRowHeightPerc(5, 0.5f);
-    mGrid.setRowHeightPerc(6, (mAuthor->getFont()->getLetterHeight() + screenSize * 0.06f) /
-                                  mSize.y / 2.0f);
+    mGrid.setRowHeightPerc(3, mButtons->getSize().y / mSize.y);
 
-    mGrid.setColWidthPerc(0, 0.01f);
-    mGrid.setColWidthPerc(1, 0.18f);
-    mGrid.setColWidthPerc(2, 0.05f);
-    mGrid.setColWidthPerc(3, 0.18f);
-    mGrid.setColWidthPerc(4, 0.04f);
-    mGrid.setColWidthPerc(5, 0.005f);
-    mGrid.setColWidthPerc(7, 0.04f);
+    mCenterGrid->setRowHeightPerc(
+        0, (mVariantsLabel->getFont()->getLetterHeight() + screenSize * 0.08f) / mSize.y / 2.0f);
+    mCenterGrid->setRowHeightPerc(
+        1,
+        (mColorSchemesLabel->getFont()->getLetterHeight() + screenSize * 0.06f) / mSize.y / 2.0f);
+    mCenterGrid->setRowHeightPerc(
+        2, (mDownloadStatus->getFont()->getLetterHeight() + screenSize * 0.08f) / mSize.y / 2.0f);
+    mCenterGrid->setRowHeightPerc(3, 0.5f);
+    mCenterGrid->setRowHeightPerc(4, (mAuthor->getFont()->getLetterHeight() + screenSize * 0.06f) /
+                                         mSize.y / 2.0f);
+
+    mGrid.setColWidthPerc(1, 0.04f);
+    mCenterGrid->setColWidthPerc(0, 0.01f);
+    mCenterGrid->setColWidthPerc(1, 0.18f);
+    mCenterGrid->setColWidthPerc(2, 0.05f);
+    mCenterGrid->setColWidthPerc(3, 0.18f);
+    mCenterGrid->setColWidthPerc(4, 0.04f);
+    mCenterGrid->setColWidthPerc(5, 0.005f);
+    mCenterGrid->setColWidthPerc(7, 0.04f);
 
     mGrid.setSize(mSize);
+    mCenterGrid->setSize(glm::vec2 {mSize.x, mSize.y});
+    mCenterGrid->setPosition(glm::vec3 {0.0f, mGrid.getRowHeight(0) + mGrid.getRowHeight(1), 0.0f});
     mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
-    mScreenshot->setMaxSize(mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3) +
-                                mGrid.getColWidth(4),
-                            mGrid.getRowHeight(5));
+    mScreenshot->setMaxSize(mCenterGrid->getColWidth(1) + mCenterGrid->getColWidth(2) +
+                                mCenterGrid->getColWidth(3) + mCenterGrid->getColWidth(4),
+                            mCenterGrid->getRowHeight(3));
 
     mGrayRectangleCoords.clear();
     mGrayRectangleCoords.emplace_back(0.0f);
-    mGrayRectangleCoords.emplace_back(mList->getPosition().y);
+    mGrayRectangleCoords.emplace_back(mCenterGrid->getPosition().y);
     mGrayRectangleCoords.emplace_back(mSize.x);
-    mGrayRectangleCoords.emplace_back(mGrid.getRowHeight(2) + mGrid.getRowHeight(3) +
-                                      mGrid.getRowHeight(4) + mGrid.getRowHeight(5) +
-                                      mGrid.getRowHeight(6));
+    mGrayRectangleCoords.emplace_back(mCenterGrid->getRowHeight(0) + mCenterGrid->getRowHeight(1) +
+                                      mCenterGrid->getRowHeight(2) + mCenterGrid->getRowHeight(3) +
+                                      mCenterGrid->getRowHeight(4));
 }
 
 bool GuiThemeDownloader::input(InputConfig* config, Input input)
@@ -906,7 +917,8 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
         return true;
     }
 
-    if (config->isMappedTo("x", input) && input.value && mGrid.getSelectedComponent() == mList) {
+    if (config->isMappedTo("x", input) && input.value &&
+        mGrid.getSelectedComponent() == mCenterGrid) {
         setupFullscreenViewer();
         return true;
     }
@@ -920,13 +932,16 @@ std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
     prompts.push_back(HelpPrompt("b", "close"));
 
     if (mList->size() > 0) {
-        if (mGrid.getSelectedComponent() == mList)
+        if (mGrid.getSelectedComponent() == mCenterGrid)
             prompts.push_back(HelpPrompt("x", "view screenshots"));
 
         if (mThemeSets[mList->getCursorId()].isCloned)
             prompts.push_back(HelpPrompt("a", "fetch updates"));
         else
             prompts.push_back(HelpPrompt("a", "download"));
+    }
+    else {
+        prompts.clear();
     }
 
     return prompts;
