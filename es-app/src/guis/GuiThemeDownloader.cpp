@@ -436,6 +436,8 @@ void GuiThemeDownloader::makeInventory()
 
             if (checkLocalChanges(repository))
                 theme.hasLocalChanges = true;
+            else if (git_repository_head_detached(repository))
+                theme.hasLocalChanges = true;
 
             git_repository_free(repository);
         }
