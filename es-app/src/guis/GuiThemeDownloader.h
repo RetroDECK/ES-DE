@@ -68,12 +68,14 @@ private:
         std::vector<Screenshot> screenshots;
         bool newEntry;
         bool invalidRepository;
+        bool shallowRepository;
         bool manuallyDownloaded;
         bool hasLocalChanges;
         bool isCloned;
         ThemeEntry()
             : newEntry {false}
             , invalidRepository {false}
+            , shallowRepository {false}
             , manuallyDownloaded {false}
             , hasLocalChanges {false}
             , isCloned {false}
@@ -121,11 +123,9 @@ private:
 
     enum class RepositoryError {
         NO_REPO_ERROR,
-        MANUALLY_DOWNLOADED,
         NOT_A_REPOSITORY,
         INVALID_ORIGIN,
-        HAS_DIVERGED,
-        HAS_LOCAL_CHANGES
+        HAS_DIVERGED
     };
 
     RepositoryError mRepositoryError;

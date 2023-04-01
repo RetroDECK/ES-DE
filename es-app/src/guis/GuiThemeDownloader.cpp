@@ -99,7 +99,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     mScreenshot->setLinearInterpolation(true);
     mCenterGrid->setEntry(mScreenshot, glm::ivec2 {1, 3}, false, true, glm::ivec2 {4, 1});
 
-    mAuthor = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI, FONT_PATH_LIGHT),
+    mAuthor = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI * 0.9f, FONT_PATH_LIGHT),
                                               0x555555FF, ALIGN_LEFT);
     mCenterGrid->setEntry(mAuthor, glm::ivec2 {1, 4}, false, true, glm::ivec2 {4, 1},
                           GridFlags::BORDER_BOTTOM);
@@ -412,6 +412,7 @@ void GuiThemeDownloader::makeInventory()
     for (auto& theme : mThemeSets) {
         const std::string path {mThemeDirectory + theme.reponame};
         theme.invalidRepository = false;
+        theme.shallowRepository = false;
         theme.manuallyDownloaded = false;
         theme.hasLocalChanges = false;
         theme.isCloned = false;
@@ -432,6 +433,12 @@ void GuiThemeDownloader::makeInventory()
             errorCode = git_repository_open(&repository, &path[0]);
             if (errorCode != 0) {
                 theme.invalidRepository = true;
+                git_repository_free(repository);
+                continue;
+            }
+
+            if (git_repository_is_shallow(repository)) {
+                theme.shallowRepository = true;
                 git_repository_free(repository);
                 continue;
             }
@@ -581,7 +588,7 @@ void GuiThemeDownloader::populateGUI()
             themeName.append(" ").append(ViewController::BRANCH_CHAR);
         if (theme.isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
-        if (theme.manuallyDownloaded || theme.invalidRepository)
+        if (theme.manuallyDownloaded || theme.invalidRepository || theme.shallowRepository)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (theme.hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -603,6 +610,29 @@ void GuiThemeDownloader::populateGUI()
                     "IT SEEMS AS IF THIS THEME HAS BEEN MANUALLY DOWNLOADED INSTEAD OF VIA "
                     "THIS THEME DOWNLOADER. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME "
                     "DIRECTORY \"" +
+                        theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
+                        theme.reponame + theme.manualExtension + "_DISABLED\"",
+                    "PROCEED",
+                    [this, theme] {
+                        renameDirectory(mThemeDirectory + theme.reponame + theme.manualExtension);
+                        std::promise<bool>().swap(mPromise);
+                        mFuture = mPromise.get_future();
+                        mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
+                                                   theme.reponame, theme.url);
+                        mStatusType = StatusType::STATUS_DOWNLOADING;
+                        mStatusText = "DOWNLOADING THEME";
+                    },
+                    "ABORT", [] { return; }, "", nullptr, true, true,
+                    (mRenderer->getIsVerticalOrientation() ?
+                         0.75f :
+                         0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+            }
+            else if (theme.shallowRepository) {
+                mWindow->pushGui(new GuiMsgBox(
+                    getHelpStyle(),
+                    "IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT'S BEEN "
+                    "DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH DOWNLOAD "
+                    "IS REQUIRED AND THE OLD THEME DIRECTORY \"" +
                         theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
                         theme.reponame + theme.manualExtension + "_DISABLED\"",
                     "PROCEED",
@@ -678,7 +708,8 @@ void GuiThemeDownloader::updateGUI()
             themeName.append(" ").append(ViewController::BRANCH_CHAR);
         if (mThemeSets[i].isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
-        if (mThemeSets[i].manuallyDownloaded || mThemeSets[i].invalidRepository)
+        if (mThemeSets[i].manuallyDownloaded || mThemeSets[i].invalidRepository ||
+            mThemeSets[i].shallowRepository)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (mThemeSets[i].hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -701,6 +732,10 @@ void GuiThemeDownloader::updateInfoPane()
     else if (mThemeSets[mList->getCursorId()].invalidRepository ||
              mThemeSets[mList->getCursorId()].manuallyDownloaded) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " MANUAL DOWNLOAD");
+        mDownloadStatus->setColor(0x992222FF);
+    }
+    else if (mThemeSets[mList->getCursorId()].shallowRepository) {
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " SHALLOW REPO");
         mDownloadStatus->setColor(0x992222FF);
     }
     else {
