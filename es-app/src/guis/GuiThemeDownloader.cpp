@@ -305,6 +305,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
                 mMessage = "THEME ALREADY UP TO DATE";
             git_annotated_commit_free(annotated);
             git_object_free(object);
+            git_remote_free(gitRemote);
+            git_repository_free(repository);
             mPromise.set_value(true);
             if (isThemesList)
                 mLatestThemesList = true;
@@ -337,6 +339,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
         git_reference_free(oldTargetRef);
         git_reference_free(newTargetRef);
         git_annotated_commit_free(annotated);
+        // Not sure why you need to run this twice, but if you don't there will be a memory leak.
+        git_object_free(object);
         git_object_free(object);
 
         if (errorCode != 0)
@@ -344,9 +348,6 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
 
         if (isThemesList)
             mLatestThemesList = true;
-
-        if (gitRemote != nullptr)
-            git_remote_disconnect(gitRemote);
     }
     catch (std::runtime_error& runtimeError) {
         const git_error* gitError {git_error_last()};
@@ -354,8 +355,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
         mRepositoryError = RepositoryError::FETCH_ERROR;
         mMessage = gitError->message;
         git_error_clear();
-        if (gitRemote != nullptr)
-            git_remote_disconnect(gitRemote);
+        git_remote_free(gitRemote);
+        git_repository_free(repository);
         mPromise.set_value(true);
         return true;
     }
@@ -365,6 +366,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
         mHasThemeUpdates = true;
     }
 
+    git_remote_free(gitRemote);
+    git_repository_free(repository);
     mPromise.set_value(true);
     return false;
 }
@@ -1091,8 +1094,6 @@ bool GuiThemeDownloader::fetchThemesList()
             (mRenderer->getIsVerticalOrientation() ?
                  0.85f :
                  0.54f * (1.778f / mRenderer->getScreenAspectRatio()))));
-
-        std::string teststring;
     }
 
     return false;
