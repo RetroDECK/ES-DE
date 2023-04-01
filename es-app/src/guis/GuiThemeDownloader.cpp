@@ -491,7 +491,14 @@ void GuiThemeDownloader::parseThemesList()
     doc.Parse(reinterpret_cast<const char*>(themesFileData.ptr.get()), themesFileData.length);
 
     if (doc.HasParseError()) {
-        LOG(LogWarning) << "GuiThemeDownloader: Couldn't parse the themes.json file";
+        LOG(LogError) << "GuiThemeDownloader: Couldn't parse the themes.json file";
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(),
+            "COULDN'T PARSE THE THEMES LIST CONFIGURATION FILE, MAYBE THE LOCAL REPOSITORY IS "
+            "CORRUPT?",
+            "OK", [] { return; }, "", nullptr, "", nullptr, true));
+        mGrid.removeEntry(mCenterGrid);
+        mGrid.setCursorTo(mButtons);
         return;
     }
 
@@ -723,6 +730,8 @@ void GuiThemeDownloader::updateInfoPane()
     if (!mThemeSets[mList->getCursorId()].screenshots.empty())
         mScreenshot->setImage(mThemeDirectory + "themes-list/" +
                               mThemeSets[mList->getCursorId()].screenshots.front().image);
+    else
+        mScreenshot->setImage("");
 
     if (mThemeSets[mList->getCursorId()].isCloned) {
         mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " INSTALLED");
@@ -802,6 +811,9 @@ void GuiThemeDownloader::setupFullscreenViewer()
         indicatorPos.x +=
             mViewerScreenshots.front()->getSize().x + (mViewerIndicatorRight->getSize().x * 3.0f);
         mViewerIndicatorRight->setPosition(indicatorPos);
+    }
+    else {
+        mFullscreenViewing = false;
     }
 }
 
