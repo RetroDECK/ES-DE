@@ -788,6 +788,8 @@ void GuiThemeDownloader::setupFullscreenViewer()
         image->setLinearInterpolation(true);
         image->setMaxSize(mRenderer->getScreenWidth() * 0.86f,
                           mRenderer->getScreenHeight() * 0.86f);
+        if (!Utils::FileSystem::exists(mThemeDirectory + "themes-list/" + screenshot.image))
+            continue;
         image->setImage(mThemeDirectory + "themes-list/" + screenshot.image);
         // Center image on screen.
         glm::vec3 imagePos {image->getPosition()};
@@ -1073,8 +1075,8 @@ bool GuiThemeDownloader::fetchThemesList()
             getHelpStyle(),
             "IT SEEMS AS IF YOU'RE USING THE THEME DOWNLOADER FOR THE FIRST TIME. "
             "AS SUCH THE THEMES LIST REPOSITORY WILL BE DOWNLOADED WHICH WILL TAKE A LITTLE "
-            "WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY UPDATED FILES WILL "
-            "BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE THAT YOU CAN'T "
+            "WHILE. SUBSEQUENT RUNS WILL HOWEVER BE MUCH FASTER AS ONLY NEW OR MODIFIED FILES "
+            "WILL BE FETCHED. THE SAME IS TRUE FOR ANY THEMES YOU DOWNLOAD. NOTE THAT YOU CAN'T "
             "ABORT AN ONGOING DOWNLOAD AS THAT COULD LEAD TO DATA CORRUPTION.",
             "PROCEED",
             [this, repositoryName, url] {
