@@ -40,18 +40,18 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     // Set up main grid.
     mTitle = std::make_shared<TextComponent>("THEME DOWNLOADER", Font::get(FONT_SIZE_LARGE),
                                              0x555555FF, ALIGN_CENTER);
-    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
+    mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2},
+                   GridFlags::BORDER_BOTTOM);
 
     // We need a center grid embedded within the main grid in order for navigation and helpsystem
     // entries to work and display correctly.
     mCenterGrid = std::make_shared<ComponentGrid>(glm::ivec2 {8, 5});
     mCenterGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 0}, false, false,
-                          glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+                          glm::ivec2 {1, 5});
 
     mVariantsLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
-    mCenterGrid->setEntry(mVariantsLabel, glm::ivec2 {1, 0}, false, true, glm::ivec2 {1, 1},
-                          GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mVariantsLabel, glm::ivec2 {1, 0}, false, true, glm::ivec2 {1, 1});
 
     mColorSchemesLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
@@ -59,20 +59,18 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     mAspectRatiosLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
-    mCenterGrid->setEntry(mAspectRatiosLabel, glm::ivec2 {3, 0}, false, true, glm::ivec2 {1, 1},
-                          GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mAspectRatiosLabel, glm::ivec2 {3, 0}, false, true, glm::ivec2 {1, 1});
 
     mFutureUseLabel =
         std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
     mCenterGrid->setEntry(mFutureUseLabel, glm::ivec2 {3, 1}, false, true, glm::ivec2 {1, 1});
 
     mCenterGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {5, 0}, false, false,
-                          glm::ivec2 {1, 5}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
+                          glm::ivec2 {1, 5});
 
     mVariantCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
                                                     0x555555FF, ALIGN_LEFT);
-    mCenterGrid->setEntry(mVariantCount, glm::ivec2 {2, 0}, false, true, glm::ivec2 {1, 1},
-                          GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mVariantCount, glm::ivec2 {2, 0}, false, true, glm::ivec2 {1, 1});
 
     mColorSchemesCount = std::make_shared<TextComponent>(
         "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
@@ -80,8 +78,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     mAspectRatiosCount = std::make_shared<TextComponent>(
         "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
-    mCenterGrid->setEntry(mAspectRatiosCount, glm::ivec2 {4, 0}, false, true, glm::ivec2 {1, 1},
-                          GridFlags::BORDER_TOP);
+    mCenterGrid->setEntry(mAspectRatiosCount, glm::ivec2 {4, 0}, false, true, glm::ivec2 {1, 1});
 
     mFutureUseCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
                                                       0x555555FF, ALIGN_LEFT);
@@ -101,13 +98,11 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     mAuthor = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI * 0.9f, FONT_PATH_LIGHT),
                                               0x555555FF, ALIGN_LEFT);
-    mCenterGrid->setEntry(mAuthor, glm::ivec2 {1, 4}, false, true, glm::ivec2 {4, 1},
-                          GridFlags::BORDER_BOTTOM);
+    mCenterGrid->setEntry(mAuthor, glm::ivec2 {1, 4}, false, true, glm::ivec2 {4, 1});
 
     mList = std::make_shared<ComponentList>();
     mCenterGrid->setEntry(mList, glm::ivec2 {6, 0}, true, true, glm::ivec2 {2, 5},
-                          GridFlags::BORDER_TOP | GridFlags::BORDER_LEFT |
-                              GridFlags::BORDER_BOTTOM);
+                          GridFlags::BORDER_LEFT);
 
     mGrid.setEntry(mCenterGrid, glm::ivec2 {0, 2}, true, false, glm::ivec2 {2, 1});
 
@@ -129,7 +124,8 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(std::make_shared<ButtonComponent>("CLOSE", "CLOSE", [&] { delete this; }));
     mButtons = makeButtonGrid(buttons);
-    mGrid.setEntry(mButtons, glm::ivec2 {0, 3}, true, false, glm::ivec2 {2, 1});
+    mGrid.setEntry(mButtons, glm::ivec2 {0, 3}, true, false, glm::ivec2 {2, 1},
+                   GridFlags::BORDER_TOP);
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
@@ -184,11 +180,11 @@ GuiThemeDownloader::~GuiThemeDownloader()
         if (mUpdateCallback)
             mUpdateCallback();
     }
+
+    mWindow->stopInfoPopup();
 }
 
-bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
-                                         const std::string& url,
-                                         bool allowReset)
+bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool allowReset)
 {
     int errorCode {0};
     const std::string path {mThemeDirectory + repositoryName};
@@ -222,13 +218,14 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
         errorCode = git_remote_fetch(gitRemote, nullptr, &fetchOptions, nullptr);
 
         if (errorCode != 0)
-            throw std::runtime_error("Couldn't pull latest commits, ");
+            throw std::runtime_error("Couldn't fetch latest commits for \"" + repositoryName +
+                                     "\", ");
 
         git_annotated_commit* annotated {nullptr};
         git_object* object {nullptr};
 
         if (git_repository_head_detached(repository)) {
-            LOG(LogWarning) << "Repository \"" << repositoryName
+            LOG(LogWarning) << "GuiThemeDownloader: Repository \"" << repositoryName
                             << "\" has HEAD detached, resetting it";
             git_buf buffer {};
             errorCode = git_remote_default_branch(&buffer, gitRemote);
@@ -267,13 +264,13 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
         if (errorCode != 0) {
             git_object_free(object);
             git_annotated_commit_free(annotated);
-            throw std::runtime_error("Couldn't run Git merge analysis, ");
+            throw std::runtime_error("GuiThemeDownloader: Couldn't run Git merge analysis, ");
         }
 
         if (!(mergeAnalysis & GIT_MERGE_ANALYSIS_UP_TO_DATE) &&
             !(mergeAnalysis & GIT_MERGE_ANALYSIS_FASTFORWARD)) {
             if (allowReset) {
-                LOG(LogWarning) << "Repository \"" << repositoryName
+                LOG(LogWarning) << "GuiThemeDownloader: Repository \"" << repositoryName
                                 << "\" has diverged from origin, performing hard reset";
                 git_object* objectHead {nullptr};
                 errorCode = git_revparse_single(&objectHead, repository, "HEAD");
@@ -283,7 +280,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
                     mHasThemeUpdates = true;
             }
             else {
-                LOG(LogWarning) << "Repository \"" << repositoryName
+                LOG(LogWarning) << "GuiThemeDownloader: Repository \"" << repositoryName
                                 << "\" has diverged from origin, can't fast-forward";
                 git_annotated_commit_free(annotated);
                 git_object_free(object);
@@ -294,8 +291,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
         }
 
         if (allowReset && checkLocalChanges(repository)) {
-            LOG(LogInfo) << "Repository \"" << repositoryName
-                         << "\" contains local changes, performing hard reset";
+            LOG(LogWarning) << "GuiThemeDownloader: Repository \"" << repositoryName
+                            << "\" contains local changes, performing hard reset";
             resetRepository(repository);
             if (repositoryName != "themes-list")
                 mHasThemeUpdates = true;
@@ -314,7 +311,8 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
             return false;
         }
 
-        LOG(LogInfo) << "Performing Git fast-forward of repository \"" << repositoryName << "\"";
+        LOG(LogInfo) << "GuiThemeDownloader: Performing fast-forward of repository \""
+                     << repositoryName << "\"";
 
         git_reference* oldTargetRef {nullptr};
         git_repository_head(&oldTargetRef, repository);
@@ -353,6 +351,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName,
     catch (std::runtime_error& runtimeError) {
         const git_error* gitError {git_error_last()};
         LOG(LogError) << "GuiThemeDownloader: " << runtimeError.what() << gitError->message;
+        mRepositoryError = RepositoryError::FETCH_ERROR;
         mMessage = gitError->message;
         git_error_clear();
         if (gitRemote != nullptr)
@@ -661,7 +660,7 @@ void GuiThemeDownloader::populateGUI()
                         std::promise<bool>().swap(mPromise);
                         mFuture = mPromise.get_future();
                         mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
-                                                   theme.reponame, theme.url, true);
+                                                   theme.reponame, true);
                         mStatusType = StatusType::STATUS_UPDATING;
                         mStatusText = "UPDATING THEME";
                     },
@@ -672,8 +671,8 @@ void GuiThemeDownloader::populateGUI()
             }
             else if (theme.isCloned) {
                 mFuture = mPromise.get_future();
-                mFetchThread = std::thread(&GuiThemeDownloader::fetchRepository, this,
-                                           theme.reponame, theme.url, false);
+                mFetchThread =
+                    std::thread(&GuiThemeDownloader::fetchRepository, this, theme.reponame, false);
                 mStatusType = StatusType::STATUS_UPDATING;
                 mStatusText = "UPDATING THEME";
             }
@@ -823,17 +822,24 @@ void GuiThemeDownloader::update(int deltaTime)
                 mFetching = false;
                 if (mRepositoryError != RepositoryError::NO_REPO_ERROR) {
                     std::string errorMessage {"ERROR: "};
+                    if (mThemeSets.empty()) {
+                        errorMessage.append("COULDN'T DOWNLOAD THEMES LIST, ");
+                        mGrid.removeEntry(mCenterGrid);
+                        mGrid.setCursorTo(mButtons);
+                    }
                     errorMessage.append(Utils::String::toUpper(mMessage));
-                    mWindow->queueInfoPopup(errorMessage, 6000);
-                    LOG(LogError) << "Error: " << mMessage;
+                    mWindow->pushGui(new GuiMsgBox(
+                        getHelpStyle(), errorMessage, "OK", [] { return; }, "", nullptr, "",
+                        nullptr, true));
                     mMessage = "";
+                    getHelpPrompts();
                 }
                 if (mThemeSets.empty() && mLatestThemesList) {
                     parseThemesList();
                     makeInventory();
                     populateGUI();
                 }
-                else {
+                else if (!mThemeSets.empty()) {
                     makeInventory();
                     updateGUI();
                 }
@@ -870,7 +876,7 @@ void GuiThemeDownloader::update(int deltaTime)
         mBusyAnim.update(deltaTime);
     }
 
-    if (mMessage != "") {
+    if (mRepositoryError == RepositoryError::NO_REPO_ERROR && mMessage != "") {
         mWindow->queueInfoPopup(mMessage, 6000);
         mMessage = "";
     }
@@ -994,10 +1000,12 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
 
 std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
 {
-    std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
-    prompts.push_back(HelpPrompt("b", "close"));
+    std::vector<HelpPrompt> prompts;
 
     if (mList->size() > 0) {
+        prompts = mGrid.getHelpPrompts();
+        prompts.push_back(HelpPrompt("b", "close"));
+
         if (mGrid.getSelectedComponent() == mCenterGrid)
             prompts.push_back(HelpPrompt("x", "view screenshots"));
 
@@ -1007,7 +1015,7 @@ std::vector<HelpPrompt> GuiThemeDownloader::getHelpPrompts()
             prompts.push_back(HelpPrompt("a", "download"));
     }
     else {
-        prompts.clear();
+        prompts.push_back(HelpPrompt("b", "close"));
     }
 
     return prompts;
@@ -1041,7 +1049,7 @@ bool GuiThemeDownloader::fetchThemesList()
         git_repository_free(repository);
 
         mFetchThread =
-            std::thread(&GuiThemeDownloader::fetchRepository, this, repositoryName, url, false);
+            std::thread(&GuiThemeDownloader::fetchRepository, this, repositoryName, false);
         mStatusType = StatusType::STATUS_UPDATING;
         mStatusText = "UPDATING THEMES LIST";
     }
@@ -1135,8 +1143,10 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
 
     if (errorCode != 0) {
         const git_error* gitError {git_error_last()};
-        LOG(LogWarning) << "GuiThemeDownloader: Git returned error code " << errorCode
-                        << ", error message: \"" << gitError->message << "\"";
+        LOG(LogError) << "GuiThemeDownloader: Couldn't clone repository \"" << repositoryName
+                      << "\", error code: " << errorCode << ", error message: \""
+                      << gitError->message << "\"";
+        mRepositoryError = RepositoryError::CLONE_ERROR;
         mMessage = gitError->message;
         git_error_clear();
         mPromise.set_value(true);

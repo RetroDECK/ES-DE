@@ -1797,6 +1797,7 @@ void GuiMenu::openThemeDownloader(GuiSettings* settings)
         LOG(LogDebug) << "GuiMenu::openThemeDownloader(): Theme sets were updated, reloading menu";
         delete settings;
         openUIOptions();
+        mWindow->invalidateCachedBackground();
     };
 
     mWindow->pushGui(new GuiThemeDownloader(updateFunc));

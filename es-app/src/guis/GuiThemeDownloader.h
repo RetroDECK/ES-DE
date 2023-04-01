@@ -84,9 +84,7 @@ private:
     };
 
     bool fetchThemesList();
-    bool fetchRepository(const std::string& repositoryName,
-                         const std::string& url,
-                         bool allowReset = false);
+    bool fetchRepository(const std::string& repositoryName, bool allowReset = false);
     bool cloneRepository(const std::string& repositoryName, const std::string& url);
 
     bool checkLocalChanges(git_repository* repository, bool hasFetched = false);
@@ -125,7 +123,9 @@ private:
         NO_REPO_ERROR,
         NOT_A_REPOSITORY,
         INVALID_ORIGIN,
-        HAS_DIVERGED
+        HAS_DIVERGED,
+        CLONE_ERROR,
+        FETCH_ERROR
     };
 
     RepositoryError mRepositoryError;
