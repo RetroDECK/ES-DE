@@ -215,6 +215,9 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
 #else
         git_fetch_options fetchOptions = GIT_FETCH_OPTIONS_INIT;
 #endif
+        // Prune branches that are no longer present on remote.
+        fetchOptions.prune = GIT_FETCH_PRUNE;
+
         errorCode = git_remote_fetch(gitRemote, nullptr, &fetchOptions, nullptr);
 
         if (errorCode != 0)
@@ -639,7 +642,7 @@ void GuiThemeDownloader::populateGUI()
             else if (theme.shallowRepository) {
                 mWindow->pushGui(new GuiMsgBox(
                     getHelpStyle(),
-                    "IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT'S BEEN "
+                    "IT SEEMS AS IF THIS IS A SHALLOW REPOSITORY WHICH MEANS THAT IT HAS BEEN "
                     "DOWNLOADED USING SOME OTHER TOOL THAN THIS THEME DOWNLOADER. A FRESH DOWNLOAD "
                     "IS REQUIRED AND THE OLD THEME DIRECTORY \"" +
                         theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
@@ -693,6 +696,7 @@ void GuiThemeDownloader::populateGUI()
                 mStatusType = StatusType::STATUS_DOWNLOADING;
                 mStatusText = "DOWNLOADING THEME";
             }
+            mWindow->stopInfoPopup();
         });
         mList->addRow(row);
     }
