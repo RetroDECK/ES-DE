@@ -68,6 +68,7 @@ private:
         std::vector<Screenshot> screenshots;
         bool newEntry;
         bool invalidRepository;
+        bool corruptRepository;
         bool shallowRepository;
         bool manuallyDownloaded;
         bool hasLocalChanges;
@@ -75,6 +76,7 @@ private:
         ThemeEntry()
             : newEntry {false}
             , invalidRepository {false}
+            , corruptRepository {false}
             , shallowRepository {false}
             , manuallyDownloaded {false}
             , hasLocalChanges {false}
@@ -87,10 +89,11 @@ private:
     bool fetchRepository(const std::string& repositoryName, bool allowReset = false);
     bool cloneRepository(const std::string& repositoryName, const std::string& url);
 
-    bool checkLocalChanges(git_repository* repository, bool hasFetched = false);
+    bool checkLocalChanges(git_repository* repository);
+    bool checkCorruptRepository(git_repository* repository);
     void resetRepository(git_repository* repository);
     void makeInventory();
-    bool renameDirectory(const std::string& path);
+    bool renameDirectory(const std::string& path, const std::string& extension);
     void parseThemesList();
 
     void populateGUI();

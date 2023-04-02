@@ -375,7 +375,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
     return false;
 }
 
-bool GuiThemeDownloader::checkLocalChanges(git_repository* repository, bool hasFetched)
+bool GuiThemeDownloader::checkLocalChanges(git_repository* repository)
 {
     git_status_list* status {nullptr};
     size_t statusEntryCount {0};
@@ -404,6 +404,34 @@ bool GuiThemeDownloader::checkLocalChanges(git_repository* repository, bool hasF
     return (statusEntryCount != 0);
 }
 
+bool GuiThemeDownloader::checkCorruptRepository(git_repository* repository)
+{
+    // For the time being we only check if there are no tracked files in the repository. If there
+    // are none then it would indicate that it has not been properly cloned (for example if the
+    // ES-DE process was killed during the clone operation).
+    git_status_list* status {nullptr};
+    size_t statusEntryCount {0};
+    int errorCode {0};
+
+#if LIBGIT2_VER_MAJOR >= 1
+    git_status_options statusOptions;
+    git_status_options_init(&statusOptions, GIT_STATUS_OPTIONS_VERSION);
+#else
+    git_status_options statusOptions = GIT_STATUS_OPTIONS_INIT;
+#endif
+    statusOptions.show = GIT_STATUS_SHOW_INDEX_AND_WORKDIR;
+    statusOptions.flags = GIT_STATUS_OPT_RENAMES_HEAD_TO_INDEX |
+                          GIT_STATUS_OPT_SORT_CASE_SENSITIVELY | GIT_STATUS_OPT_INCLUDE_UNMODIFIED;
+
+    errorCode = git_status_list_new(&status, repository, &statusOptions);
+    if (errorCode == 0)
+        statusEntryCount = git_status_list_entrycount(status);
+
+    git_status_list_free(status);
+
+    return (statusEntryCount == 0);
+}
+
 void GuiThemeDownloader::resetRepository(git_repository* repository)
 {
     git_object* objectHead {nullptr};
@@ -417,6 +445,7 @@ void GuiThemeDownloader::makeInventory()
     for (auto& theme : mThemeSets) {
         const std::string path {mThemeDirectory + theme.reponame};
         theme.invalidRepository = false;
+        theme.corruptRepository = false;
         theme.shallowRepository = false;
         theme.manuallyDownloaded = false;
         theme.hasLocalChanges = false;
@@ -448,6 +477,12 @@ void GuiThemeDownloader::makeInventory()
                 continue;
             }
 
+            if (checkCorruptRepository(repository)) {
+                theme.corruptRepository = true;
+                git_repository_free(repository);
+                continue;
+            }
+
             theme.isCloned = true;
 
             if (checkLocalChanges(repository))
@@ -460,23 +495,37 @@ void GuiThemeDownloader::makeInventory()
     }
 }
 
-bool GuiThemeDownloader::renameDirectory(const std::string& path)
+bool GuiThemeDownloader::renameDirectory(const std::string& path, const std::string& extension)
 {
     LOG(LogInfo) << "Renaming directory " << path;
     int index {1};
+    bool renameStatus {false};
 
-    if (!Utils::FileSystem::exists(path + "_DISABLED"))
-        return Utils::FileSystem::renameFile(path, path + "_DISABLED", false);
-
-    // This will hopefully never be needed as it should only occur if a theme has been downloaded
-    // manually multiple times and the theme downloader has been ran multiple times as well.
-    for (; index < 10; ++index) {
-        if (!Utils::FileSystem::exists(path + "_" + std::to_string(index) + "_DISABLED"))
-            return Utils::FileSystem::renameFile(
-                path, path + "_" + std::to_string(index) + "_DISABLED", false);
+    if (!Utils::FileSystem::exists(path + extension)) {
+        renameStatus = Utils::FileSystem::renameFile(path, path + extension, false);
+    }
+    else {
+        // This will hopefully never be needed as it should only occur if a theme has been
+        // downloaded manually multiple times and the theme downloader has been ran multiple times
+        // as well.
+        for (; index < 10; ++index) {
+            if (!Utils::FileSystem::exists(path + "_" + std::to_string(index) + extension)) {
+                renameStatus = Utils::FileSystem::renameFile(
+                    path, path + "_" + std::to_string(index) + extension, false);
+                break;
+            }
+        }
     }
 
-    return true;
+    if (renameStatus) {
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(), "COULDN'T RENAME DIRECTORY \"" + path + "\", PERMISSION PROBLEMS?",
+            "OK", [] { return; }, "", nullptr, "", nullptr, true));
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 
 void GuiThemeDownloader::parseThemesList()
@@ -600,7 +649,8 @@ void GuiThemeDownloader::populateGUI()
             themeName.append(" ").append(ViewController::BRANCH_CHAR);
         if (theme.isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
-        if (theme.manuallyDownloaded || theme.invalidRepository || theme.shallowRepository)
+        if (theme.manuallyDownloaded || theme.invalidRepository || theme.corruptRepository ||
+            theme.shallowRepository)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (theme.hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -626,7 +676,39 @@ void GuiThemeDownloader::populateGUI()
                         theme.reponame + theme.manualExtension + "_DISABLED\"",
                     "PROCEED",
                     [this, theme] {
-                        renameDirectory(mThemeDirectory + theme.reponame + theme.manualExtension);
+                        if (renameDirectory(mThemeDirectory + theme.reponame +
+                                                theme.manualExtension,
+                                            "_DISABLED")) {
+                            return;
+                        }
+                        std::promise<bool>().swap(mPromise);
+                        mFuture = mPromise.get_future();
+                        mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
+                                                   theme.reponame, theme.url);
+                        mStatusType = StatusType::STATUS_DOWNLOADING;
+                        mStatusText = "DOWNLOADING THEME";
+                    },
+                    "ABORT", [] { return; }, "", nullptr, true, true,
+                    (mRenderer->getIsVerticalOrientation() ?
+                         0.75f :
+                         0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+            }
+            else if (theme.corruptRepository) {
+                mWindow->pushGui(new GuiMsgBox(
+                    getHelpStyle(),
+                    "IT SEEMS AS IF THIS THEME REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN CAUSED "
+                    "BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF THE ES-DE "
+                    "PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD THEME DIRECTORY "
+                    "\"" +
+                        theme.reponame + theme.manualExtension + "\" WILL BE RENAMED TO \"" +
+                        theme.reponame + theme.manualExtension + "_CORRUPT_DISABLED\"",
+                    "PROCEED",
+                    [this, theme] {
+                        if (renameDirectory(mThemeDirectory + theme.reponame +
+                                                theme.manualExtension,
+                                            "_CORRUPT_DISABLED")) {
+                            return;
+                        }
                         std::promise<bool>().swap(mPromise);
                         mFuture = mPromise.get_future();
                         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
@@ -649,7 +731,11 @@ void GuiThemeDownloader::populateGUI()
                         theme.reponame + theme.manualExtension + "_DISABLED\"",
                     "PROCEED",
                     [this, theme] {
-                        renameDirectory(mThemeDirectory + theme.reponame + theme.manualExtension);
+                        if (renameDirectory(mThemeDirectory + theme.reponame +
+                                                theme.manualExtension,
+                                            "_DISABLED")) {
+                            return;
+                        }
                         std::promise<bool>().swap(mPromise);
                         mFuture = mPromise.get_future();
                         mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
@@ -722,7 +808,7 @@ void GuiThemeDownloader::updateGUI()
         if (mThemeSets[i].isCloned)
             themeName.append(" ").append(ViewController::TICKMARK_CHAR);
         if (mThemeSets[i].manuallyDownloaded || mThemeSets[i].invalidRepository ||
-            mThemeSets[i].shallowRepository)
+            mThemeSets[i].corruptRepository || mThemeSets[i].shallowRepository)
             themeName.append(" ").append(ViewController::CROSSEDCIRCLE_CHAR);
         if (mThemeSets[i].hasLocalChanges)
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
@@ -747,6 +833,10 @@ void GuiThemeDownloader::updateInfoPane()
     else if (mThemeSets[mList->getCursorId()].invalidRepository ||
              mThemeSets[mList->getCursorId()].manuallyDownloaded) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " MANUAL DOWNLOAD");
+        mDownloadStatus->setColor(0x992222FF);
+    }
+    else if (mThemeSets[mList->getCursorId()].corruptRepository) {
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " CORRUPT");
         mDownloadStatus->setColor(0x992222FF);
     }
     else if (mThemeSets[mList->getCursorId()].shallowRepository) {
@@ -1051,28 +1141,49 @@ bool GuiThemeDownloader::fetchThemesList()
     if (Utils::FileSystem::exists(path)) {
         git_repository* repository {nullptr};
         int errorCode {git_repository_open(&repository, &path[0])};
-        if (errorCode != 0) {
-            if (renameDirectory(path)) {
-                git_repository_free(repository);
-                LOG(LogError) << "Couldn't rename \"" << path << "\", permission problems?";
-                mWindow->pushGui(new GuiMsgBox(
-                    getHelpStyle(), "COULDN'T RENAME DIRECTORY\n" + path + "\nPERMISSION PROBLEMS?",
-                    "OK", [] { return; }, "", nullptr, "", nullptr, true));
-                return true;
-            }
+
+        if (errorCode != 0 || checkCorruptRepository(repository)) {
+            mWindow->pushGui(new GuiMsgBox(
+                getHelpStyle(),
+                "IT SEEMS AS IF THE THEMES LIST REPOSITORY IS CORRUPT, WHICH COULD HAVE BEEN "
+                "CAUSED BY AN INTERRUPTION OF A PREVIOUS DOWNLOAD OR UPDATE, FOR EXAMPLE IF THE "
+                "ES-DE PROCESS WAS KILLED. A FRESH DOWNLOAD IS REQUIRED AND THE OLD DIRECTORY "
+                "\"themes-list\" WILL BE RENAMED TO \"themes-list_CORRUPT_DISABLED\"",
+                "PROCEED",
+                [this, repositoryName, url] {
+                    if (renameDirectory(mThemeDirectory + "themes-list", "_CORRUPT_DISABLED")) {
+                        mGrid.removeEntry(mCenterGrid);
+                        mGrid.setCursorTo(mButtons);
+                        return true;
+                    }
+                    LOG(LogInfo)
+                        << "GuiThemeDownloader: Creating initial themes list repository clone";
+                    mFetchThread = std::thread(&GuiThemeDownloader::cloneRepository, this,
+                                               repositoryName, url);
+                    mStatusType = StatusType::STATUS_DOWNLOADING;
+                    mStatusText = "DOWNLOADING THEMES LIST";
+                    return false;
+                },
+                "ABORT",
+                [&] {
+                    delete this;
+                    return false;
+                },
+                "", nullptr, true, true,
+                (mRenderer->getIsVerticalOrientation() ?
+                     0.75f :
+                     0.50f * (1.778f / mRenderer->getScreenAspectRatio()))));
         }
+        else {
+            // We always hard reset the themes list as it should never contain any local changes.
+            resetRepository(repository);
 
-        checkLocalChanges(repository);
-
-        // We always hard reset the themes list as it should never contain any local changes.
-        resetRepository(repository);
-
+            mFetchThread =
+                std::thread(&GuiThemeDownloader::fetchRepository, this, repositoryName, false);
+            mStatusType = StatusType::STATUS_UPDATING;
+            mStatusText = "UPDATING THEMES LIST";
+        }
         git_repository_free(repository);
-
-        mFetchThread =
-            std::thread(&GuiThemeDownloader::fetchRepository, this, repositoryName, false);
-        mStatusType = StatusType::STATUS_UPDATING;
-        mStatusText = "UPDATING THEMES LIST";
     }
     else {
         mWindow->pushGui(new GuiMsgBox(
