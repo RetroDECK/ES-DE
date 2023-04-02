@@ -840,7 +840,7 @@ void GuiThemeDownloader::updateInfoPane()
         mDownloadStatus->setColor(0x992222FF);
     }
     else if (mThemeSets[mList->getCursorId()].shallowRepository) {
-        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " SHALLOW REPO");
+        mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " SHALLOW");
         mDownloadStatus->setColor(0x992222FF);
     }
     else {
