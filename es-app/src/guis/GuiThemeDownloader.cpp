@@ -691,7 +691,7 @@ void GuiThemeDownloader::populateGUI()
                     "ABORT", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
-                         0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                         0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
             }
             else if (theme.corruptRepository) {
                 mWindow->pushGui(new GuiMsgBox(
@@ -719,7 +719,7 @@ void GuiThemeDownloader::populateGUI()
                     "ABORT", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
-                         0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                         0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
             }
             else if (theme.shallowRepository) {
                 mWindow->pushGui(new GuiMsgBox(
@@ -746,7 +746,7 @@ void GuiThemeDownloader::populateGUI()
                     "ABORT", [] { return; }, "", nullptr, true, true,
                     (mRenderer->getIsVerticalOrientation() ?
                          0.75f :
-                         0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+                         0.46f * (1.778f / mRenderer->getScreenAspectRatio()))));
             }
             else if (theme.hasLocalChanges) {
                 mWindow->pushGui(new GuiMsgBox(
