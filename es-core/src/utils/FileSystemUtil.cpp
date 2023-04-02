@@ -739,13 +739,11 @@ namespace Utils
             }
 
 #if defined(_WIN64)
-            _wrename(Utils::String::stringToWideString(sourcePath).c_str(),
-                     Utils::String::stringToWideString(destinationPath).c_str());
+            return _wrename(Utils::String::stringToWideString(sourcePath).c_str(),
+                            Utils::String::stringToWideString(destinationPath).c_str());
 #else
-            std::rename(sourcePath.c_str(), destinationPath.c_str());
+            return std::rename(sourcePath.c_str(), destinationPath.c_str());
 #endif
-
-            return false;
         }
 
         bool removeFile(const std::string& path)
