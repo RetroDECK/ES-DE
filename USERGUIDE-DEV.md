@@ -373,7 +373,7 @@ Running at a lower application resolution in padded fullscreen mode:
 emulationstation --resolution 1824 1026 --fullscreen-padding 1
 ```
 
-Same as above but also offsetting the screen slighty to the left and downwards:
+Same as above but also offsetting the screen slightly to the left and downwards:
 ```
 emulationstation --resolution 1824 1026 --fullscreen-padding 1 --screenoffset -40 22
 ```

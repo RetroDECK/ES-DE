@@ -2,7 +2,7 @@
 
 EmulationStation Desktop Edition is a frontend for browsing and launching games from your multi-platform game collection.
 
-Web site:\
+Website:\
 [https://es-de.org](https://es-de.org)
 
 Discord server:\

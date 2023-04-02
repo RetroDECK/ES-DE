@@ -44,6 +44,9 @@ http://glew.sourceforge.net
 GLM \
 https://github.com/g-truc/glm
 
+libgit2 \
+https://libgit2.org
+
 libvpx \
 https://github.com/webmproject/libvpx
 
