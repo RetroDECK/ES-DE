@@ -244,7 +244,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
 #else
                 git_checkout_options checkoutOptions = GIT_CHECKOUT_OPTIONS_INIT;
 #endif
-                checkoutOptions.checkout_strategy = GIT_CHECKOUT_SAFE;
+                checkoutOptions.checkout_strategy = GIT_CHECKOUT_FORCE;
                 errorCode = git_checkout_tree(repository, object, &checkoutOptions);
                 errorCode = git_repository_set_head(repository, branchName.c_str());
 
@@ -334,7 +334,7 @@ bool GuiThemeDownloader::fetchRepository(const std::string& repositoryName, bool
 #else
         git_checkout_options checkoutOptions = GIT_CHECKOUT_OPTIONS_INIT;
 #endif
-        checkoutOptions.checkout_strategy = GIT_CHECKOUT_SAFE;
+        checkoutOptions.checkout_strategy = GIT_CHECKOUT_FORCE;
 
         git_checkout_tree(repository, object, &checkoutOptions);
         errorCode = git_reference_set_target(&newTargetRef, oldTargetRef, objectID, nullptr);
@@ -1261,7 +1261,7 @@ bool GuiThemeDownloader::cloneRepository(const std::string& repositoryName, cons
     git_clone_options cloneOptions = GIT_CLONE_OPTIONS_INIT;
 #endif
 
-    cloneOptions.checkout_opts.checkout_strategy = GIT_CHECKOUT_SAFE;
+    cloneOptions.checkout_opts.checkout_strategy = GIT_CHECKOUT_FORCE;
     cloneOptions.fetch_opts.callbacks.transfer_progress = fetchProgressFunc;
 
     mReceivedObjectsProgress = 0.0f;
