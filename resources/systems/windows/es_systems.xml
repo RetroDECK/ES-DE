@@ -443,7 +443,7 @@
         <extension>.bat .BAT .lnk .LNK</extension>
         <command label="Suspend ES-DE">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <command label="Keep ES-DE running">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
-        <platform>pc</platform>
+        <platform>pcwindows</platform>
         <theme>desktop</theme>
     </system>
     <system>
@@ -732,7 +732,7 @@
         <path>%ROMPATH%\kodi</path>
         <extension>.bat .BAT .lnk .LNK</extension>
         <command label="Kodi (Standalone)">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
-        <platform>pc</platform>
+        <platform>pcwindows</platform>
         <theme>kodi</theme>
     </system>
     <system>

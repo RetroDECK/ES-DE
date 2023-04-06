@@ -440,7 +440,7 @@
         <extension>.desktop .sh</extension>
         <command label="Suspend ES-DE">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="Keep ES-DE running">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <platform>pc</platform>
+        <platform>pcwindows</platform>
         <theme>desktop</theme>
     </system>
     <system>
@@ -731,7 +731,7 @@
         <path>%ROMPATH%/kodi</path>
         <extension>.desktop .sh</extension>
         <command label="Kodi (Standalone)">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
-        <platform>pc</platform>
+        <platform>pcwindows</platform>
         <theme>kodi</theme>
     </system>
     <system>
