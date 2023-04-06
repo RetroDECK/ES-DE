@@ -789,7 +789,12 @@ void ThemeData::populateThemeSets()
     else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
              Utils::FileSystem::isSymlink(userThemeDirSetting)) {
         userThemeDirectory = userThemeDirSetting;
+#if defined(_WIN64)
+        LOG(LogInfo) << "Setting user theme directory to \""
+                     << Utils::String::replace(userThemeDirectory, "/", "\\") << "\"";
+#else
         LOG(LogInfo) << "Setting user theme directory to \"" << userThemeDirectory << "\"";
+#endif
     }
     else {
         LOG(LogWarning) << "Requested user theme directory \"" << userThemeDirSetting
