@@ -771,8 +771,32 @@ void ThemeData::populateThemeSets()
     sThemeSets.clear();
     LOG(LogInfo) << "Checking for available theme sets...";
 
-    // Check for themes first under the home directory, then under the data installation
-    // directory (Unix only) and last under the ES-DE binary directory.
+    // Check for themes first under the user theme directory (which is in the ES-DE home directory
+    // by default), then under the data installation directory (Unix only) and last under the ES-DE
+    // binary directory.
+    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
+                                           "/.emulationstation/themes"};
+    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+        Settings::getInstance()->getString("UserThemeDirectory"))};
+#if defined(_WIN64)
+    userThemeDirSetting = Utils::String::replace(userThemeDirSetting, "\\", "/");
+#endif
+    std::string userThemeDirectory;
+
+    if (userThemeDirSetting == "") {
+        userThemeDirectory = defaultUserThemeDir;
+    }
+    else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
+             Utils::FileSystem::isSymlink(userThemeDirSetting)) {
+        userThemeDirectory = userThemeDirSetting;
+        LOG(LogInfo) << "Setting user theme directory to \"" << userThemeDirectory << "\"";
+    }
+    else {
+        LOG(LogWarning) << "Requested user theme directory \"" << userThemeDirSetting
+                        << "\" does not exist or is not a directory, reverting to \""
+                        << defaultUserThemeDir << "\"";
+        userThemeDirectory = defaultUserThemeDir;
+    }
 
 #if defined(__unix__) || defined(__APPLE__)
 #if defined(APPIMAGE_BUILD)
@@ -790,7 +814,7 @@ void ThemeData::populateThemeSets()
 #elif defined(__unix__) && !defined(APPIMAGE_BUILD)
         Utils::FileSystem::getProgramDataPath() + "/themes",
 #endif
-        Utils::FileSystem::getHomePath() + "/.emulationstation/themes"
+        userThemeDirectory
     };
 
     for (size_t i {0}; i < pathCount; ++i) {

@@ -316,6 +316,7 @@ void Settings::setDefaults()
     mStringMap["OpenGLVersion"] = {"", ""};
     mStringMap["ROMDirectory"] = {"", ""};
     mStringMap["UIMode_passkey"] = {"uuddlrlrba", "uuddlrlrba"};
+    mStringMap["UserThemeDirectory"] = {"", ""};
     mIntMap["LottieMaxFileCache"] = {150, 150};
     mIntMap["LottieMaxTotalCache"] = {1024, 1024};
     mIntMap["ScraperConnectionTimeout"] = {30, 30};

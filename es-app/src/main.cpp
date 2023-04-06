@@ -673,19 +673,32 @@ int main(int argc, char* argv[])
         }
     }
 
-    // Create the themes directory in the application home folder. This is not required but
-    // is rather a convenience in case the user wants to add additional themes.
-    const std::string themesDir {Utils::FileSystem::getHomePath() + "/.emulationstation/themes"};
-    if (!Utils::FileSystem::exists(themesDir)) {
+    // Create the themes directory in the application home directory (or elsewhere if the
+    // UserThemeDirectory setting has been defined).
+    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
+                                           "/.emulationstation/themes"};
+    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+        Settings::getInstance()->getString("UserThemeDirectory"))};
 #if defined(_WIN64)
-        LOG(LogInfo) << "Creating themes directory \""
-                     << Utils::String::replace(themesDir, "/", "\\") << "\"...";
-#else
-        LOG(LogInfo) << "Creating themes directory \"" << themesDir << "\"...";
+    userThemeDirSetting = Utils::String::replace(userThemeDirSetting, "\\", "/");
 #endif
-        Utils::FileSystem::createDirectory(themesDir);
-        if (!Utils::FileSystem::exists(themesDir)) {
-            LOG(LogWarning) << "Couldn't create directory, permission problems?\n";
+    std::string userThemeDirectory;
+
+    if (userThemeDirSetting == "")
+        userThemeDirectory = defaultUserThemeDir;
+    else
+        userThemeDirectory = userThemeDirSetting;
+
+    if (!Utils::FileSystem::exists(userThemeDirectory)) {
+#if defined(_WIN64)
+        LOG(LogInfo) << "Creating user theme directory \""
+                     << Utils::String::replace(userThemeDirectory, "/", "\\") << "\"...";
+#else
+        LOG(LogInfo) << "Creating themes directory \"" << userThemeDirectory << "\"...";
+#endif
+        Utils::FileSystem::createDirectory(userThemeDirectory);
+        if (!Utils::FileSystem::exists(userThemeDirectory)) {
+            LOG(LogWarning) << "Couldn't create directory, permission problems?";
         }
     }
 

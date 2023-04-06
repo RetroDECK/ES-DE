@@ -163,7 +163,31 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     std::promise<bool>().swap(mPromise);
     mFuture = mPromise.get_future();
 
-    mThemeDirectory = Utils::FileSystem::getHomePath() + "/.emulationstation/themes/";
+    const std::string defaultUserThemeDir {Utils::FileSystem::getHomePath() +
+                                           "/.emulationstation/themes"};
+    std::string userThemeDirSetting {Utils::FileSystem::expandHomePath(
+        Settings::getInstance()->getString("UserThemeDirectory"))};
+#if defined(_WIN64)
+    mThemeDirectory = Utils::String::replace(mThemeDirectory, "\\", "/");
+#endif
+
+    if (userThemeDirSetting == "") {
+        mThemeDirectory = defaultUserThemeDir;
+    }
+    else if (Utils::FileSystem::isDirectory(userThemeDirSetting) ||
+             Utils::FileSystem::isSymlink(userThemeDirSetting)) {
+        mThemeDirectory = userThemeDirSetting;
+    }
+    else {
+        LOG(LogWarning) << "GuiThemeDownloader: Requested user theme directory \""
+                        << userThemeDirSetting
+                        << "\" does not exist or is not a directory, reverting to \""
+                        << defaultUserThemeDir << "\"";
+        mThemeDirectory = defaultUserThemeDir;
+    }
+
+    if (mThemeDirectory.back() != '/')
+        mThemeDirectory.append("/");
 }
 
 GuiThemeDownloader::~GuiThemeDownloader()
