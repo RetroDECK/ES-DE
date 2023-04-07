@@ -1135,6 +1135,10 @@ Sets the transfer timeout per HTTPS request. Minimum value is 0 seconds (infinit
 
 The passkey to use to change from the _Kiosk_ or _Kid_ UI modes to the _Full_ UI mode.
 
+**UserThemeDirectory**
+
+Sets the user theme directory. If left blank it will default to `~/.emulationstation/themes/`
+
 ## es_systems.xml
 
 The es_systems.xml file contains the game systems configuration data for ES-DE, written in XML format. This defines the system name, the full system name, the ROM path, the allowed file extensions, the launch command, the platform (for scraping) and the theme to use.

@@ -264,7 +264,7 @@ Lack of controller support is a bit of a problem on macOS, and in some instances
 
 One macOS-specific requirement is that the RetroArch setting _Start in Fullscreen mode_ is enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. This issue has not been observed with any other emulators.
 
-At the time of writing there is an additional issue with the M1 release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when closing an app_ under the General entry in the macOS System Preferences has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the M1 architecture).
+At the time of writing there is an additional issue with the ARM release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when closing an app_ under the General entry in the macOS System Preferences has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the ARM architecture).
 
 The first time you launch a RetroArch-emulated game from within ES-DE the operating system will present you with a security option with the following description:
 
@@ -274,7 +274,7 @@ If you don't allow this, you will not be able to place system BIOS ROMs in the R
 
 If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
 
-By default files and directories starting with a dot are hidden on macOS, so to show the .emulationstation directory in your home directory you need to enable hidden files in Finder. You do this using the keyboard combination Shift + Command + . (a dot).
+By default files and directories starting with a dot are hidden on macOS, so to show the .emulationstation directory in your home directory you need to enable hidden files in Finder. You do this using the keyboard combination Shift + Command + . (dot).
 
 A minor annoyance is that macOS creates metadata files starting with ._ in the filename when placing game/ROM files on some filesystem types such as exFAT. This means that you will see double entries inside ES-DE for all such games. To hide these extra files, the option _Show hidden files and folders (requires restart)_ in the _Other settings_ menu can be set to disabled.
 
@@ -510,7 +510,7 @@ Quits the application. This key combination can be changed to Ctrl + Q, Alt + Q 
 
 ## Themes
 
-ES-DE ships with the Slate and Modern theme sets and additional themes can be installed using the built-in theme downloader. More themes made specifically for ES-DE can be found on the Internet, and you can customize or create your own custom ones too.
+ES-DE ships with the Slate and Modern theme sets and additional themes can be installed using the built-in theme downloader. More themes made specifically for ES-DE can be found on the Internet, and you can customize or create your own ones too.
 
 You can also use most legacy RetroPie-compatible EmulationStation themes although support for these will be removed in a future release. Batocera and Recalbox themes are generally not compatible as these forks use a different theme engine than ES-DE.
 
@@ -545,7 +545,7 @@ If you have manually downloaded any of the themes from the [official themes list
 
 If you have customized a theme by for instance modifying any of its XML files, then this will be highlighted with an exclamation mark and the text _LOCAL CHANGES_ in the theme downloader interface. If you attempt to fetch updates for such a theme you will be asked a question of whether to overwrite your local changes, or whether to abort. If you have however added additional files to the theme that are not included in the theme repository, then these will not interfere and you can go ahead and fetch theme updates without any risk of having your local files being deleted. But there is a special (although unlikely) situation, if you add files that are not part of the theme repository but that are later added by the theme developer as well, then your local copies of any such files will be ovewritten when fetching theme updates.
 
-In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. It's named `themes-list` so by just deleting this directory you'll reset the theme downloader to its initial state.
+In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/.emulationstation/themes/themes-list`) you'll reset the theme downloader to its initial state.
 
 ![alt text](images/es-de_theme_downloader.png "ES-DE Theme Downloader")
 _This shows the theme downloader with a number of installed themes._
@@ -689,6 +689,10 @@ The following manually downloaded emulators are supported when using the bundled
 | switch                           | Ryujinx       | publish/Ryujinx.Ava               |
 | trs-80                           | sdl2trs       | sdl2trs/sdl2trs                   |
 | wiiu                             | Cemu          | Cemu/Cemu                         |
+| zxnext                           | #CSpect       | CSpect/CSpect.exe                 |
+| zxnext                           | ZEsarUX       | ZEsarUX/zesarux                   |
+
+#CSpect requires the Mono .NET framework to run, hence the .exe extension.
 
 Note that the Vita3K binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -1198,7 +1202,7 @@ Similarly on Linux, download the  [hypseus-singe_2.8.2a_ES-DE.tar.gz](https://gi
 
 If the Applications directory doesn't exist yet, then just go ahead and create it and then unpack the emulator inside it. Just be aware that the name has to start with a capital A.
 
-Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
+Although there is an official Hypseus Singe release available for macOS ARM this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
 
 After the emulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
 
@@ -1491,7 +1495,7 @@ So to clarify it's `Super Mario 64.v64` that has to be launched. Compressing thi
 
 For RMG you should use the exact same IPL file as for ParaLLEl N64 but it has to be named `IPL.n64` and you can browse to its location from the emulator settings menu.
 
-Following this setup you will be able to launch games with the .ndd, .d64 and .zip file extensions, meaning it works similar to ParaLLEl N64 with the exception that .7z archives are not supported.
+Following this setup you will be able to launch games with the .ndd, .d64, .7z and .zip file extensions.
 
 #### Nintendo Wii U
 
@@ -2278,6 +2282,10 @@ When a certain game media file does not exist for the selected region, ES-DE aut
 ### UI settings
 
 Various settings that affect the user interface.
+
+**Theme downloader**
+
+Starts the theme downloader, which is documented in detail [elsewhere](USERGUIDE-DEV.md#theme-downloader) in this document.
 
 **Theme set**
 
@@ -3225,4 +3233,5 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W]        |                                   | No           |                                      |
 | zmachine              | Infocom Z-machine                              | Gargoyle **(Standalone)**         |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
+| zxnext                | Sinclair ZX Spectrum Next                      | #CSpect **(Standalone)** [UW],<br>ZEsarUX **(Standalone)** [M] | ZEsarUX **(Standalone)** [UW] | No           | In separate folder interpreted as a file |
 | zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Fuse **(Standalone)**             | No           |                                      |

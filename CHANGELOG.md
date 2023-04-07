@@ -13,12 +13,17 @@ v2.0 maintenance release.
 ### Detailed list of changes
 
 * Added an experimental theme downloader
+* Added a setting to set the user theme directory to an arbitrary location (not configurable via the GUI)
 * Added scrollable text container support to the system view
+* Added support for the Sinclair ZX Spectrum Next (zxnext) game system
+* Added support for the Sinclair Spectrum ZX emulator ZEsarUX
+* Added support for the Sinclair Spectrum ZX Next emulator #CSpect on Linux and Windows
 * Added "Shortcut or script" as an alternative emulator for the arcade and mame systems
 * (Unix) Added the .desktop and .sh file extensions to the arcade and mame systems
 * (macOS) Added the .app and .sh file extensions to the arcade and mame systems
 * (Windows) Added the .bat and .lnk file extensions to the arcade and mame systems
 * Added the .app file extensions to the nds system
+* Changed the platform from pc to pcwindows for the desktop and kodi systems
 * Any theme directories with names ending with "disabled" (regardless of case) are now ignored
 * Added the libgit2 library as a dependency
 * Added support for changing the BusyComponent text dynamically

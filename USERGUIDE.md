@@ -262,7 +262,7 @@ Lack of controller support is a bit of a problem on macOS, and in some instances
 
 One macOS-specific requirement is that the RetroArch setting _Start in Fullscreen mode_ is enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. This issue has not been observed with any other emulators.
 
-At the time of writing there is an additional issue with the M1 release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when closing an app_ under the General entry in the macOS System Preferences has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the M1 architecture).
+At the time of writing there is an additional issue with the ARM release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when closing an app_ under the General entry in the macOS System Preferences has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the ARM architecture).
 
 The first time you launch a RetroArch-emulated game from within ES-DE the operating system will present you with a security option with the following description:
 
@@ -272,7 +272,7 @@ If you don't allow this, you will not be able to place system BIOS ROMs in the R
 
 If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
 
-By default files and directories starting with a dot are hidden on macOS, so to show the .emulationstation directory in your home directory you need to enable hidden files in Finder. You do this using the keyboard combination Shift + Command + . (a dot).
+By default files and directories starting with a dot are hidden on macOS, so to show the .emulationstation directory in your home directory you need to enable hidden files in Finder. You do this using the keyboard combination Shift + Command + . (dot).
 
 A minor annoyance is that macOS creates metadata files starting with ._ in the filename when placing game/ROM files on some filesystem types such as exFAT. This means that you will see double entries inside ES-DE for all such games. To hide these extra files, the option _Show hidden files and folders (requires restart)_ in the _Other settings_ menu can be set to disabled.
 
@@ -1186,7 +1186,7 @@ Similarly on Linux, download the  [hypseus-singe_2.8.2a_ES-DE.tar.gz](https://gi
 
 If the Applications directory doesn't exist yet, then just go ahead and create it and then unpack the emulator inside it. Just be aware that the name has to start with a capital A.
 
-Although there is an official Hypseus Singe release available for macOS M1 this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
+Although there is an official Hypseus Singe release available for macOS ARM this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
 
 After the emulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
 
@@ -1479,7 +1479,7 @@ So to clarify it's `Super Mario 64.v64` that has to be launched. Compressing thi
 
 For RMG you should use the exact same IPL file as for ParaLLEl N64 but it has to be named `IPL.n64` and you can browse to its location from the emulator settings menu.
 
-Following this setup you will be able to launch games with the .ndd, .d64 and .zip file extensions, meaning it works similar to ParaLLEl N64 with the exception that .7z archives are not supported.
+Following this setup you will be able to launch games with the .ndd, .d64, .7z and .zip file extensions.
 
 #### Nintendo Wii U
 
