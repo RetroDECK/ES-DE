@@ -39,6 +39,7 @@ Emulators\cemu\Cemu.exe
 Emulators\Citra\canary-mingw\citra-qt.exe
 Emulators\Citra\nightly-mingw\citra-qt.exe
 Emulators\cpcemu\cpcemu.exe
+Emulators\CSpect\CSpect.exe
 Emulators\Cxbx-Reloaded\cxbx.exe
 Emulators\Dolphin-x64\Dolphin.exe
 Emulators\dosbox-staging\dosbox.exe
@@ -103,3 +104,4 @@ Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe
 Emulators\xroar\xroar.exe
 Emulators\yuzu\yuzu-windows-msvc\yuzu.exe
+Emulators\ZEsarUX\zesarux.exe

@@ -1833,6 +1833,15 @@
         <theme>zx81</theme>
     </system>
     <system>
+        <name>zxnext</name>
+        <fullname>Sinclair ZX Spectrum Next</fullname>
+        <path>%ROMPATH%/zxnext</path>
+        <extension>.nex .NEX .sna .SNA</extension>
+        <command label="ZEsarUX (Standalone)">%STARTDIR%=%EMUDIR% %EMULATOR_ZESARUX% --machine tbblue --realvideo --enabletimexvideo --tbblue-fast-boot-mode --enable-esxdos-handler --esxdos-root-dir %GAMEDIR% %ROM%</command>
+        <platform>zxnext</platform>
+        <theme>zxnext</theme>
+    </system>
+    <system>
         <name>zxspectrum</name>
         <fullname>Sinclair ZX Spectrum</fullname>
         <path>%ROMPATH%/zxspectrum</path>

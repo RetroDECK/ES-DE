@@ -146,6 +146,7 @@ namespace PlatformIds
         MICROSOFT_XBOX_360,
         GAMEENGINE_Z_MACHINE,
         SINCLAIR_ZX81_SINCLAR,
+        SINCLAIR_ZX_SPECTRUM_NEXT,
         SINCLAIR_ZX_SPECTRUM,
 
         PLATFORM_IGNORE, // Do not allow scraping for this system.

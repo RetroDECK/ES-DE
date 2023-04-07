@@ -340,4 +340,10 @@
             <entry>/Applications/XRoar.app/Contents/MacOS/xroar</entry>
         </rule>
     </emulator>
+    <emulator name="ZESARUX">
+        <!-- Sinclair ZX Spectrum emulator ZEsarUX -->
+        <rule type="staticpath">
+            <entry>/Applications/ZEsarUX.app/Contents/MacOS/zesarux</entry>
+        </rule>
+    </emulator>
 </ruleList>

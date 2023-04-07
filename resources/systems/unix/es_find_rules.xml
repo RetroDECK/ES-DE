@@ -133,6 +133,14 @@
             <entry>~/bin/cpcemu/cpcemu</entry>
         </rule>
     </emulator>
+    <emulator name="CSPECT">
+        <!-- Sinclair ZX Spectrum Next emulator #CSpect -->
+        <rule type="staticpath">
+            <entry>~/Applications/CSpect/CSpect.exe</entry>
+            <entry>~/.local/bin/CSpect/CSpect.exe</entry>
+            <entry>~/bin/CSpect/CSpect.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="DESMUME">
         <!-- Nintendo DS emulator DeSmuME -->
         <rule type="systempath">
@@ -789,6 +797,17 @@
             <entry>~/Applications/yuzu*.AppImage</entry>
             <entry>~/.local/bin/yuzu*.AppImage</entry>
             <entry>~/bin/yuzu*.AppImage</entry>
+        </rule>
+    </emulator>
+    <emulator name="ZESARUX">
+        <!-- Sinclair ZX Spectrum emulator ZEsarUX -->
+        <rule type="systempath">
+            <entry>zesarux</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>~/Applications/ZEsarUX/zesarux</entry>
+            <entry>~/.local/bin/ZEsarUX/zesarux</entry>
+            <entry>~/bin/ZEsarUX/zesarux</entry>
         </rule>
     </emulator>
 </ruleList>

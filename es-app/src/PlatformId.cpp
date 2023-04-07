@@ -147,6 +147,7 @@ namespace PlatformIds
         "xbox360",              // Microsoft Xbox 360
         "zmachine",             // Infocom Z-machine
         "zx81",                 // Sinclair ZX81
+        "zxnext",               // Sinclair ZX Spectrum Next
         "zxspectrum",           // Sinclair ZX Spectrum
 
         "ignore",  // Do not allow scraping for this system.

@@ -162,6 +162,17 @@
             <entry>%ESPATH%\..\cpcemu\cpcemu.exe</entry>
         </rule>
     </emulator>
+    <emulator name="CSPECT">
+        <!-- Sinclair ZX Spectrum Next emulator #CSpect -->
+        <rule type="systempath">
+            <entry>CSpect.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\CSpect\CSpect.exe</entry>
+            <entry>%ESPATH%\CSpect\CSpect.exe</entry>
+            <entry>%ESPATH%\..\CSpect\CSpect.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="CXBX-RELOADED">
         <!-- Microsoft Xbox emulator Cxbx-Reloaded -->
         <rule type="systempath">
@@ -872,6 +883,17 @@
             <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+        </rule>
+    </emulator>
+    <emulator name="ZESARUX">
+        <!-- Sinclair ZX Spectrum emulator ZEsarUX -->
+        <rule type="systempath">
+            <entry>zesarux.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\ZEsarUX\zesarux.exe</entry>
+            <entry>%ESPATH%\ZEsarUX\zesarux.exe</entry>
+            <entry>%ESPATH%\..\ZEsarUX\zesarux.exe</entry>
         </rule>
     </emulator>
 </ruleList>
