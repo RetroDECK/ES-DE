@@ -95,3 +95,4 @@
 * x1:  Sharp X1 - consolegame.svg
 * x68000: Sharp X68000 - consolegame.svg (image of actual console)
 * zmachine: Infocom Z-machine - consolegame.svg
+* zxnext: Sinclair ZX Spectrum Next - consolegame.svg, controller.svg
