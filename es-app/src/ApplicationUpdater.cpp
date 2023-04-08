@@ -52,8 +52,6 @@ ApplicationUpdater::ApplicationUpdater()
     mPackageType = PackageType::LINUX_STEAM_DECK_APPIMAGE;
 #elif defined(APPIMAGE_BUILD)
     mPackageType = PackageType::LINUX_APPIMAGE;
-#elif defined(LINUX_RPM_PACKAGE)
-    mPackageType = PackageType::LINUX_RPM;
 #elif defined(LINUX_DEB_PACKAGE)
     mPackageType = PackageType::LINUX_DEB;
 #endif
@@ -389,8 +387,6 @@ void ApplicationUpdater::compareVersions()
                 else if (mPackageType == PackageType::MACOS_INTEL && package.name == "macOSIntel")
                     mPackage = package;
                 else if (mPackageType == PackageType::LINUX_DEB && package.name == "LinuxDEB")
-                    mPackage = package;
-                else if (mPackageType == PackageType::LINUX_RPM && package.name == "LinuxRPM")
                     mPackage = package;
                 else if (mPackageType == PackageType::LINUX_APPIMAGE &&
                          package.name == "LinuxAppImage")

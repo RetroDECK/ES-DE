@@ -60,7 +60,6 @@ private:
         MACOS_APPLE,
         MACOS_INTEL,
         LINUX_DEB,
-        LINUX_RPM,
         LINUX_APPIMAGE,
         LINUX_STEAM_DECK_APPIMAGE,
         UNKNOWN
