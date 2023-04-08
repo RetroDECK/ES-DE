@@ -18,12 +18,18 @@ v2.0 maintenance release.
 * Added support for the Sinclair ZX Spectrum Next (zxnext) game system
 * Added support for the Sinclair Spectrum ZX emulator ZEsarUX
 * Added support for the Sinclair Spectrum ZX Next emulator #CSpect on Linux and Windows
+* Added the PicoDrive RetroArch core as an alternative emulator for the gamegear system
+* Added the LRPS2 RetroArch core as the default emulator for the ps2 system on Linux and Windows
+* (macOS) Added the Mupen64Plus-Next RetroArch core as the default emulator for the n64 and n64dd systems
+* Set the Neko Project II RetroArch core to start in the game directory as it created a config file in the ES-DE binary directory
 * Added "Shortcut or script" as an alternative emulator for the arcade and mame systems
 * (Unix) Added the .desktop and .sh file extensions to the arcade and mame systems
 * (macOS) Added the .app and .sh file extensions to the arcade and mame systems
 * (Windows) Added the .bat and .lnk file extensions to the arcade and mame systems
 * Added the .app file extensions to the nds system
 * Changed the platform from pc to pcwindows for the desktop and kodi systems
+* (Linux) Dropped support for prebuilt RPM packages
+* Changed the color scheme names for the bundled Slate and Modern themes from "Dark mode" and "Light mode" to "Dark" and "Light"
 * Any theme directories with names ending with "disabled" (regardless of case) are now ignored
 * Added the libgit2 library as a dependency
 * Added support for changing the BusyComponent text dynamically
@@ -32,6 +38,8 @@ v2.0 maintenance release.
 ### Bug fixes
 
 * (Windows) Fixed a regression that made .bat and .lnk files with some special characters impossible to launch
+* Clearing or deleting a game could hang the application if the media files could not be deleted due to insufficient permissions
+* Multi-row text with blank lines that was not displayed in a scrollable container was sometimes not wrapped correctly
 * Fixed several potential container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
 * Fixed a potential container overflow in ViewController that could lead to rare crashes when running on an ARM processor
 * (macOS) When opening the main menu an error message was logged about accessing a nonexistent ShowQuitMenu setting
