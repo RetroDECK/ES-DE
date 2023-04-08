@@ -479,7 +479,12 @@ void GuiGamelistOptions::openMetaDataEd()
     };
 
     deleteGameBtnFunc = [this, file] {
+#if defined(_WIN64)
+        LOG(LogInfo) << "Deleting game file \""
+                     << Utils::String::replace(file->getFullPath(), "/", "\\")
+#else
         LOG(LogInfo) << "Deleting game file \"" << file->getFullPath()
+#endif
                      << "\", all its media files and its gamelist.xml entry";
         CollectionSystemsManager::getInstance()->deleteCollectionFiles(file);
         ViewController::getInstance()->getGamelistView(file->getSystem()).get()->removeMedia(file);
