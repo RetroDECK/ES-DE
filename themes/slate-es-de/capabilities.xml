@@ -11,11 +11,11 @@
     <aspectRatio>4:3_vertical</aspectRatio>
 
     <colorScheme name="dark">
-        <label>Dark mode</label>
+        <label>Dark</label>
     </colorScheme>
 
     <colorScheme name="light">
-        <label>Light mode</label>
+        <label>Light</label>
     </colorScheme>
 
     <transitions name="slide">
