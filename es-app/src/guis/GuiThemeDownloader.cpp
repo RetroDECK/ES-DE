@@ -16,6 +16,7 @@
 #include "rapidjson/document.h"
 #include "rapidjson/error/en.h"
 
+#define LOCAL_TESTING_FILE false
 #define DEBUG_CLONING false
 
 GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
@@ -554,14 +555,22 @@ bool GuiThemeDownloader::renameDirectory(const std::string& path, const std::str
 
 void GuiThemeDownloader::parseThemesList()
 {
-    // Temporary location for testing purposes.
-    //    const std::string themesFile {Utils::FileSystem::getHomePath() +
-    //                                  "/.emulationstation/themes.json"};
+#if (LOCAL_TESTING_FILE)
+    LOG(LogWarning) << "GuiThemeDownloader: Using local \"themes.json\" testing file";
 
+    const std::string themesFile {Utils::FileSystem::getHomePath() +
+                                  "/.emulationstation/themes.json"};
+#else
     const std::string themesFile {mThemeDirectory + "themes-list/themes.json"};
+#endif
 
     if (!Utils::FileSystem::exists(themesFile)) {
-        LOG(LogInfo) << "GuiThemeDownloader: No themes.json file found";
+        LOG(LogError) << "GuiThemeDownloader: No themes.json file found";
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(), "COULDN'T FIND THE THEMES LIST CONFIGURATION FILE", "OK",
+            [] { return; }, "", nullptr, "", nullptr, true));
+        mGrid.removeEntry(mCenterGrid);
+        mGrid.setCursorTo(mButtons);
         return;
     }
 
