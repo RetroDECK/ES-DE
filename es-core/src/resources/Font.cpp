@@ -279,14 +279,18 @@ std::string Font::wrapText(const std::string& text,
     std::vector<std::pair<size_t, float>> dotsSection;
     bool addDots {false};
 
-    for (size_t i = 0; i < text.length(); ++i) {
+    for (size_t i {0}; i < text.length(); ++i) {
         if (text[i] == '\n') {
             if (!multiLine) {
                 addDots = true;
                 break;
             }
-            wrappedText.append("\n");
             accumHeight += lineHeight;
+            if (maxHeight != 0.0f && accumHeight > maxHeight) {
+                addDots = true;
+                break;
+            }
+            wrappedText.append("\n");
             lineWidth = 0.0f;
             lastSpace = 0;
             continue;
