@@ -8,7 +8,7 @@
 
 ### Release overview
 
-v2.0 maintenance release.
+Catch-up release which implements some things that didn't make it into 2.0.0. Most notable is an experimental theme downloader using Git (or libgit2 to be more precise). Other changes include some additional theme engine functionality and support for the Sinclair ZX Spectrum Next game system. A number of bugs have also been fixed and the SDL library has been updated to 2.26.5 which fixes a regression on macOS which made some wireless controllers unusable.
 
 ### Detailed list of changes
 
@@ -32,6 +32,7 @@ v2.0 maintenance release.
 * (Linux) Dropped support for prebuilt RPM packages
 * Changed the color scheme names for the bundled Slate and Modern themes from "Dark mode" and "Light mode" to "Dark" and "Light"
 * Any theme directories with names ending with "disabled" (regardless of case) are now ignored
+* Updated SDL to 2.26.5 on Windows, macOS and the Linux AppImage builds
 * Added the libgit2 library as a dependency
 * Added support for changing the BusyComponent text dynamically
 * Added proper helpsystem handling to ComponentGrid for some previously unhandled horizontal grid layouts
