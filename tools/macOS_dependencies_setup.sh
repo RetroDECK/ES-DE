@@ -201,7 +201,7 @@ if [ ! -d SDL ]; then
 fi
 
 cd SDL
-git checkout release-2.26.3
+git checkout release-2.26.5
 ln -s include SDL2
 mkdir build
 cd ..

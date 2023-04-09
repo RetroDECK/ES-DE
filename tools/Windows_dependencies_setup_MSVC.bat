@@ -160,26 +160,26 @@ cd ..
 echo:
 echo Setting up SDL
 
-if exist SDL2-2.26.3\ (
-  rmdir /S /Q SDL2-2.26.3
+if exist SDL2-2.26.5\ (
+  rmdir /S /Q SDL2-2.26.5
 )
 
-curl -LO https://libsdl.org/release/SDL2-devel-2.26.3-VC.zip
+curl -LO https://libsdl.org/release/SDL2-devel-2.26.5-VC.zip
 
-7z x SDL2-devel-2.26.3-VC.zip
+7z x SDL2-devel-2.26.5-VC.zip
 
-if not exist SDL2-2.26.3\ (
+if not exist SDL2-2.26.5\ (
   echo SDL directory is missing, aborting.
   cd ..
   goto end
 )
 
-cd SDL2-2.26.3
+cd SDL2-2.26.5
 rename include SDL2
 cd ..
-copy /Y SDL2-2.26.3\lib\x64\SDL2.dll ..
-copy /Y SDL2-2.26.3\lib\x64\SDL2.lib ..
-copy /Y SDL2-2.26.3\lib\x64\SDL2main.lib ..
+copy /Y SDL2-2.26.5\lib\x64\SDL2.dll ..
+copy /Y SDL2-2.26.5\lib\x64\SDL2.lib ..
+copy /Y SDL2-2.26.5\lib\x64\SDL2main.lib ..
 
 echo:
 echo Setting up FFmpeg
