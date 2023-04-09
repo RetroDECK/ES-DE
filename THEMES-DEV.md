@@ -2624,33 +2624,52 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0.012 0.9515` for horizontally oriented screens and `0.012 0.975` for vertically oriented screens
+* `posDimmed` - type: NORMALIZED_PAIR
+    - Position when a menu is open (background is dimmed).
+    - Default is the same value as `pos`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `originDimmed` - type: NORMALIZED_PAIR
+    - Origin when a menu is open (background is dimmed).
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is the same value as `origin`
 * `textColor` - type: COLOR
     - Default is `777777FF`
 * `textColorDimmed` - type: COLOR
-    - Text color to use when the background is dimmed (when a menu is open).
-    - Default is the same value as textColor.
+    - Text color when a menu is open (background is dimmed).
+    - Default is the same value as `textColor`
 * `iconColor` - type: COLOR
     - Default is `777777FF`
 * `iconColorDimmed` - type: COLOR
-    - Icon color to use when the background is dimmed (when a menu is open).
-    - Default is the same value as iconColor.
+    - Icon color when a menu is open (background is dimmed).
+    - Default is the same value as `iconColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
     - This property implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element. This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.035` for horizontally oriented screens and `0.025` for vertically oriented screens
+* `fontSizeDimmed` - type: FLOAT
+    - Font size when a menu is open (background is dimmed).
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
+    - Default is the same value as `fontSize`
 * `entrySpacing` - type: FLOAT
     - Spacing between the help element pairs.
     - Minimum value is `0` and maximum value is `0.04`
     - Default is `0.00833`
+* `entrySpacingDimmed` - type: FLOAT
+    - Spacing between the help element pairs when a menu is open (background is dimmed).
+    - Minimum value is `0` and maximum value is `0.04`
+    - Default is the same value as `entrySpacing`
 * `iconTextSpacing` - type: FLOAT
     - Spacing between the icon and text within a help element pair.
     - Minimum value is `0` and maximum value is `0.04`
     - Default is `0.00416`
+* `iconTextSpacingDimmed` - type: FLOAT
+    - Spacing between the icon and text within a help element pair when a menu is open (background is dimmed).
+    - Minimum value is `0` and maximum value is `0.04`
+    - Default is the same value as `iconTextSpacing`
 * `letterCase` - type: STRING
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
@@ -2658,6 +2677,10 @@ Properties:
     - Controls the level of transparency.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `opacityDimmed` - type: FLOAT
+    - Controls the level of transparency when a menu is open (background is dimmed).
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is the same value as `opacity`
 * `customButtonIcon` - type: PATH
     - A button icon override. Specify the button type in the attribute `button`.
     - The available buttons are: \

@@ -15,6 +15,7 @@ v2.0 maintenance release.
 * Added an experimental theme downloader
 * Added a setting to set the user theme directory to an arbitrary location (not configurable via the GUI)
 * Added scrollable text container support to the system view
+* Added six new theme properties for sizing and placement of the helpsystem when a menu is open
 * Added support for the Sinclair ZX Spectrum Next (zxnext) game system
 * Added support for the Sinclair Spectrum ZX emulator ZEsarUX
 * Added support for the Sinclair Spectrum ZX Next emulator #CSpect on Linux and Windows
@@ -37,7 +38,7 @@ v2.0 maintenance release.
 
 ### Bug fixes
 
-* (Windows) Fixed a regression that made .bat and .lnk files with some special characters impossible to launch
+* (Windows) Fixed a regression that made .bat and .lnk files with some special characters in the filename impossible to launch
 * Clearing or deleting a game could hang the application if the media files could not be deleted due to insufficient permissions
 * Multi-row text with blank lines that was not displayed in a scrollable container was sometimes not wrapped correctly
 * Fixed several potential container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
