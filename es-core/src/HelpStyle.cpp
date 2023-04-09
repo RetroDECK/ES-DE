@@ -16,16 +16,24 @@ HelpStyle::HelpStyle()
     : position {Renderer::getScreenWidth() * 0.012f,
                 Renderer::getScreenHeight() *
                     (Renderer::getIsVerticalOrientation() ? 0.975f : 0.9515f)}
+    , positionDimmed {position}
     , origin {glm::vec2 {0.0f, 0.0f}}
+    , originDimmed {origin}
     , textColor {0x777777FF}
     , textColorDimmed {0x777777FF}
     , iconColor {0x777777FF}
     , iconColorDimmed {0x777777FF}
     , font {Renderer::getIsVerticalOrientation() ? Font::get(0.025f * Renderer::getScreenWidth()) :
                                                    Font::get(FONT_SIZE_SMALL)}
+    , fontDimmed {Renderer::getIsVerticalOrientation() ?
+                      Font::get(0.025f * Renderer::getScreenWidth()) :
+                      Font::get(FONT_SIZE_SMALL)}
     , entrySpacing {0.00833f}
+    , entrySpacingDimmed {entrySpacing}
     , iconTextSpacing {0.00416f}
+    , iconTextSpacingDimmed {iconTextSpacing}
     , opacity {1.0f}
+    , opacityDimmed {opacity}
     , legacyTheme {false}
     , letterCase {"uppercase"}
 {
@@ -43,8 +51,19 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
         position = elem->get<glm::vec2>("pos") *
                    glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
 
+    if (elem->has("posDimmed"))
+        positionDimmed = elem->get<glm::vec2>("posDimmed") *
+                         glm::vec2 {Renderer::getScreenWidth(), Renderer::getScreenHeight()};
+    else
+        positionDimmed = position;
+
     if (elem->has("origin"))
         origin = elem->get<glm::vec2>("origin");
+
+    if (elem->has("originDimmed"))
+        originDimmed = elem->get<glm::vec2>("originDimmed");
+    else
+        originDimmed = origin;
 
     if (elem->has("textColor"))
         textColor = elem->get<unsigned int>("textColor");
@@ -62,20 +81,44 @@ void HelpStyle::applyTheme(const std::shared_ptr<ThemeData>& theme, const std::s
     else
         iconColorDimmed = iconColor;
 
-    if (elem->has("fontPath") || elem->has("fontSize"))
+    if (elem->has("fontPath") || elem->has("fontSize")) {
         font = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false, theme->isLegacyTheme());
+        if (!elem->has("fontSizeDimmed"))
+            fontDimmed = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false,
+                                            theme->isLegacyTheme());
+    }
+
+    if (elem->has("fontSizeDimmed")) {
+        fontDimmed = Font::getFromTheme(elem, ThemeFlags::ALL, font, 0.0f, false,
+                                        theme->isLegacyTheme(), 1.0f, true);
+    }
 
     if (elem->has("entrySpacing"))
         entrySpacing = glm::clamp(elem->get<float>("entrySpacing"), 0.0f, 0.04f);
 
+    if (elem->has("entrySpacingDimmed"))
+        entrySpacingDimmed = glm::clamp(elem->get<float>("entrySpacingDimmed"), 0.0f, 0.04f);
+    else
+        entrySpacingDimmed = entrySpacing;
+
     if (elem->has("iconTextSpacing"))
         iconTextSpacing = glm::clamp(elem->get<float>("iconTextSpacing"), 0.0f, 0.04f);
+
+    if (elem->has("iconTextSpacingDimmed"))
+        iconTextSpacingDimmed = glm::clamp(elem->get<float>("iconTextSpacingDimmed"), 0.0f, 0.04f);
+    else
+        iconTextSpacingDimmed = iconTextSpacing;
 
     if (elem->has("letterCase"))
         letterCase = elem->get<std::string>("letterCase");
 
     if (elem->has("opacity"))
         opacity = glm::clamp(elem->get<float>("opacity"), 0.2f, 1.0f);
+
+    if (elem->has("opacityDimmed"))
+        opacityDimmed = glm::clamp(elem->get<float>("opacityDimmed"), 0.2f, 1.0f);
+    else
+        opacityDimmed = opacity;
 
     // Load custom button icons.
     // The names may look a bit strange when combined with the PREFIX string "button_" but it's

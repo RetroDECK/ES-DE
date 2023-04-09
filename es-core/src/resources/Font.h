@@ -138,7 +138,8 @@ public:
                                               const float maxHeight = 0.0f,
                                               const bool linearMagnify = false,
                                               const bool legacyTheme = false,
-                                              const float sizeMultiplier = 1.0f);
+                                              const float sizeMultiplier = 1.0f,
+                                              const bool fontSizeDimmed = false);
 
     // Returns an approximation of VRAM used by this font's texture (in bytes).
     size_t getMemUsage() const;

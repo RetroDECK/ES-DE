@@ -19,15 +19,21 @@ class ThemeData;
 
 struct HelpStyle {
     glm::vec2 position;
+    glm::vec2 positionDimmed;
     glm::vec2 origin;
+    glm::vec2 originDimmed;
     unsigned int textColor;
     unsigned int textColorDimmed;
     unsigned int iconColor;
     unsigned int iconColorDimmed;
     std::shared_ptr<Font> font;
+    std::shared_ptr<Font> fontDimmed;
     float entrySpacing;
+    float entrySpacingDimmed;
     float iconTextSpacing;
+    float iconTextSpacingDimmed;
     float opacity;
+    float opacityDimmed;
     bool legacyTheme;
     std::string letterCase;
 

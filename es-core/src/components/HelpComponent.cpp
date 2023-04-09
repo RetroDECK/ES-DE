@@ -243,7 +243,9 @@ void HelpComponent::updateGrid()
         return;
     }
 
-    std::shared_ptr<Font>& font {mStyle.font};
+    const bool isDimmed {mWindow->isBackgroundDimmed()};
+
+    std::shared_ptr<Font>& font {isDimmed ? mStyle.fontDimmed : mStyle.font};
     mGrid = std::make_shared<ComponentGrid>(glm::ivec2 {static_cast<int>(mPrompts.size()) * 5, 1});
 
     std::vector<std::shared_ptr<ImageComponent>> icons;
@@ -251,14 +253,13 @@ void HelpComponent::updateGrid()
 
     float width {0.0f};
     float height {font->getLetterHeight() * 1.25f};
-    bool isDimmed {mWindow->isBackgroundDimmed()};
 
     for (auto it = mPrompts.cbegin(); it != mPrompts.cend(); ++it) {
         auto icon = std::make_shared<ImageComponent>();
         icon->setImage(getIconTexture(it->first.c_str()), false);
         icon->setColorShift(isDimmed ? mStyle.iconColorDimmed : mStyle.iconColor);
         icon->setResize(0, height);
-        icon->setOpacity(mStyle.opacity);
+        icon->setOpacity(isDimmed ? mStyle.opacityDimmed : mStyle.opacity);
         icons.push_back(icon);
 
         // Apply text style and color from the theme to the label and add it to the label list.
@@ -271,12 +272,14 @@ void HelpComponent::updateGrid()
             lblInput = Utils::String::toUpper(lblInput);
         auto lbl = std::make_shared<TextComponent>(
             lblInput, font, isDimmed ? mStyle.textColorDimmed : mStyle.textColor);
-        lbl->setOpacity(mStyle.opacity);
+        lbl->setOpacity(isDimmed ? mStyle.opacityDimmed : mStyle.opacity);
         labels.push_back(lbl);
 
         width += icon->getSize().x + lbl->getSize().x +
-                 ((mStyle.iconTextSpacing * mRenderer->getScreenWidth() +
-                   mStyle.entrySpacing * mRenderer->getScreenWidth()));
+                 (((isDimmed ? mStyle.iconTextSpacingDimmed : mStyle.iconTextSpacing) *
+                       mRenderer->getScreenWidth() +
+                   (isDimmed ? mStyle.entrySpacingDimmed : mStyle.entrySpacing) *
+                       mRenderer->getScreenWidth()));
     }
 
     mGrid->setSize(width, height);
@@ -285,10 +288,14 @@ void HelpComponent::updateGrid()
         const int col {i * 5};
         mGrid->setColWidthPerc(col, icons.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(col + 1,
-                               (mStyle.iconTextSpacing * mRenderer->getScreenWidth()) / width);
+                               ((isDimmed ? mStyle.iconTextSpacingDimmed : mStyle.iconTextSpacing) *
+                                mRenderer->getScreenWidth()) /
+                                   width);
         mGrid->setColWidthPerc(col + 2, labels.at(i)->getSize().x / width);
         mGrid->setColWidthPerc(col + 3,
-                               (mStyle.entrySpacing * mRenderer->getScreenWidth()) / width);
+                               ((isDimmed ? mStyle.entrySpacingDimmed : mStyle.entrySpacing) *
+                                mRenderer->getScreenWidth()) /
+                                   width);
 
         mGrid->setEntry(icons.at(i), glm::ivec2 {col, 0}, false, false);
         mGrid->setEntry(labels.at(i), glm::ivec2 {col + 2, 0}, false, false);
@@ -300,6 +307,12 @@ void HelpComponent::updateGrid()
     if (mStyle.legacyTheme) {
         mGrid->setPosition({mStyle.position.x, mStyle.position.y, 0.0f});
     }
+    else if (isDimmed) {
+        mGrid->setPosition(
+            {mStyle.positionDimmed.x + ((mStyle.entrySpacingDimmed * mRenderer->getScreenWidth()) *
+                                        mStyle.originDimmed.x),
+             mStyle.positionDimmed.y, 0.0f});
+    }
     else {
         mGrid->setPosition(
             {mStyle.position.x +
@@ -307,7 +320,7 @@ void HelpComponent::updateGrid()
              mStyle.position.y, 0.0f});
     }
 
-    mGrid->setOrigin(mStyle.origin);
+    mGrid->setOrigin(isDimmed ? mStyle.originDimmed : mStyle.origin);
 }
 
 std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
@@ -336,10 +349,12 @@ std::shared_ptr<TextureResource> HelpComponent::getIconTexture(const char* name)
 
 void HelpComponent::setOpacity(float opacity)
 {
-    GuiComponent::setOpacity(opacity * mStyle.opacity);
+    GuiComponent::setOpacity(
+        opacity * (mWindow->isBackgroundDimmed() ? mStyle.opacityDimmed : mStyle.opacity));
 
     for (unsigned int i = 0; i < mGrid->getChildCount(); ++i)
-        mGrid->getChild(i)->setOpacity(opacity * mStyle.opacity);
+        mGrid->getChild(i)->setOpacity(
+            opacity * (mWindow->isBackgroundDimmed() ? mStyle.opacityDimmed : mStyle.opacity));
 }
 
 void HelpComponent::render(const glm::mat4& parentTrans)

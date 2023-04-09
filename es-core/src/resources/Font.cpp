@@ -431,7 +431,8 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                          const float maxHeight,
                                          const bool linearMagnify,
                                          const bool legacyTheme,
-                                         const float sizeMultiplier)
+                                         const float sizeMultiplier,
+                                         const bool fontSizeDimmed)
 {
     mLegacyTheme = legacyTheme;
 
@@ -446,7 +447,11 @@ std::shared_ptr<Font> Font::getFromTheme(const ThemeData::ThemeElement* elem,
                                 static_cast<float>(Renderer::getScreenWidth()) :
                                 static_cast<float>(Renderer::getScreenHeight())};
 
-    if (properties & FONT_SIZE && elem->has("fontSize")) {
+    if (fontSizeDimmed && properties & FONT_SIZE && elem->has("fontSizeDimmed")) {
+        size = glm::clamp(screenSize * elem->get<float>("fontSizeDimmed"), screenSize * 0.001f,
+                          screenSize * 1.5f);
+    }
+    else if (properties & FONT_SIZE && elem->has("fontSize")) {
         size = glm::clamp(screenSize * elem->get<float>("fontSize"), screenSize * 0.001f,
                           screenSize * 1.5f);
         // This is used by the carousel where the itemScale property also scales the font size.
