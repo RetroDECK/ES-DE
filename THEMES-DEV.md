@@ -1808,6 +1808,9 @@ Properties:
     - Default is `false`
 * `path` - type: PATH
     - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
+* `gameOverridePath` - type: PATH
+    - Defines a directory where per-game overrides for the static image defined by the `path` property are kept. Supported file extensions are .jpg, .png, .gif (unanimated) and .svg and they are searched for in this precise order. How this works is that the basename of the game file will be used to check for an image file in the defined path in a very similar fashion as to how downloaded media is searched. For example if `gameOverridePath` has been set to `./imageOverrides` a match for the game file `~/ROMs/arcade/aburner.zip` would be `./imageOverrides/arcade/aburner.png` (or any of the other supported file extensions). In this case the image defined by the `path` property will be replaced for this specific game. Note that only static images can be overridden, not scraped media.
+    - This property can only be used in the `gamelist` view and only if `imageType` is undefined.
 * `default` - type: PATH
     - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a valid `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING

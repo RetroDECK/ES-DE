@@ -16,6 +16,7 @@ Catch-up release which implements some things that didn't make it into 2.0.0. Mo
 * Added a setting to set the user theme directory to an arbitrary location (not configurable via the GUI)
 * Added scrollable text container support to the system view
 * Added six new theme properties for sizing and placement of the helpsystem when a menu is open
+* Added a new gameOverridePath property to the image element to enable per-game static image overrides
 * Added support for the Sinclair ZX Spectrum Next (zxnext) game system
 * Added support for the Sinclair Spectrum ZX emulator ZEsarUX
 * Added support for the Sinclair Spectrum ZX Next emulator #CSpect on Linux and Windows
@@ -42,6 +43,7 @@ Catch-up release which implements some things that didn't make it into 2.0.0. Mo
 * (Windows) Fixed a regression that made .bat and .lnk files with some special characters in the filename impossible to launch
 * Clearing or deleting a game could hang the application if the media files could not be deleted due to insufficient permissions
 * Multi-row text with blank lines that was not displayed in a scrollable container was sometimes not wrapped correctly
+* The default image element property could be used even if no imageType entries were defined
 * Fixed several potential container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
 * Fixed a potential container overflow in ViewController that could lead to rare crashes when running on an ARM processor
 * (macOS) When opening the main menu an error message was logged about accessing a nonexistent ShowQuitMenu setting
