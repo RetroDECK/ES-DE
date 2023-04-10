@@ -279,6 +279,7 @@ public:
     const std::string& getThemeGameSelector() const { return mThemeGameSelector; }
     const unsigned int getThemeGameSelectorEntry() const { return mThemeGameSelectorEntry; }
     virtual const std::string getDefaultImage() const { return ""; }
+    virtual void setGameOverrideImage(const std::string& basename, const std::string& system) {}
     const float getThemeOpacity() const { return mThemeOpacity; }
 
     virtual std::shared_ptr<Font> getFont() const { return nullptr; }

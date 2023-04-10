@@ -670,9 +670,8 @@ void GamelistView::updateView(const CursorState& state)
             }
         }
         else {
-            for (auto& image : mImageComponents) {
+            for (auto& image : mImageComponents)
                 setGameImage(file, image.get());
-            }
 
             for (auto& video : mVideoComponents) {
                 setGameImage(file, video.get());
@@ -1018,74 +1017,79 @@ void GamelistView::setGameImage(FileData* file, GuiComponent* comp)
             path = file->getImagePath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "miximage") {
             path = file->getMiximagePath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "marquee") {
             path = file->getMarqueePath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "screenshot") {
             path = file->getScreenshotPath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "titlescreen") {
             path = file->getTitleScreenPath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "cover") {
             path = file->getCoverPath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "backcover") {
             path = file->getBackCoverPath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "3dbox") {
             path = file->get3DBoxPath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "physicalmedia") {
             path = file->getPhysicalMediaPath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
         else if (imageType == "fanart") {
             path = file->getFanArtPath();
             if (path != "") {
                 comp->setImage(path);
-                break;
+                return;
             }
         }
     }
     // This is needed so the default image is set if no game media was found.
-    if (path == "" && (comp->getThemeImageTypes().size() > 0 || comp->getDefaultImage() != ""))
+    if (path == "" && (comp->getThemeImageTypes().size() > 0 || comp->getDefaultImage() != "")) {
         comp->setImage("");
+        return;
+    }
+
+    // Sets per-game overrides of static images using the game file basename.
+    comp->setGameOverrideImage(Utils::FileSystem::getStem(file->getPath()), file->getSystemName());
 }

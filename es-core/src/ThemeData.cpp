@@ -299,6 +299,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"flipHorizontal", BOOLEAN},
        {"flipVertical", BOOLEAN},
        {"path", PATH},
+       {"gameOverridePath", PATH},
        {"default", PATH},
        {"imageType", STRING},
        {"metadataElement", BOOLEAN},

@@ -128,6 +128,25 @@ void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture, b
         resize();
 }
 
+void ImageComponent::setGameOverrideImage(const std::string& basename, const std::string& system)
+{
+    if (mGameOverridePath == "")
+        return;
+
+    if (!Utils::FileSystem::exists(mGameOverridePath + system))
+        return;
+
+    const std::string imageFilePath {mGameOverridePath + system + "/" + basename};
+    for (auto& extension : sSupportedOverrideExtensions) {
+        if (Utils::FileSystem::exists(imageFilePath + extension)) {
+            setImage(imageFilePath + extension);
+            return;
+        }
+    }
+
+    setImage(mGameOverrideOriginalPath);
+}
+
 void ImageComponent::setResize(const float width, const float height)
 {
     mTargetSize = glm::vec2 {width, height};
@@ -494,7 +513,45 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (elem->has("default"))
+    if (properties && elem->has("imageType")) {
+        std::string imageTypes {elem->get<std::string>("imageType")};
+        for (auto& character : imageTypes) {
+            if (std::isspace(character))
+                character = ',';
+        }
+        imageTypes = Utils::String::replace(imageTypes, ",,", ",");
+        mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
+
+        if (mThemeImageTypes.empty()) {
+            LOG(LogError) << "ImageComponent: Invalid theme configuration, property \"imageType\" "
+                             "for element \""
+                          << element.substr(6) << "\" contains no values";
+        }
+
+        for (std::string& type : mThemeImageTypes) {
+            if (std::find(sSupportedImageTypes.cbegin(), sSupportedImageTypes.cend(), type) ==
+                sSupportedImageTypes.cend()) {
+                LOG(LogError)
+                    << "ImageComponent: Invalid theme configuration, property \"imageType\" "
+                       "for element \""
+                    << element.substr(6) << "\" defined as \"" << type << "\"";
+                mThemeImageTypes.clear();
+                break;
+            }
+        }
+
+        std::vector<std::string> sortedTypes {mThemeImageTypes};
+        std::stable_sort(sortedTypes.begin(), sortedTypes.end());
+
+        if (std::adjacent_find(sortedTypes.begin(), sortedTypes.end()) != sortedTypes.end()) {
+            LOG(LogError) << "ImageComponent: Invalid theme configuration, property \"imageType\" "
+                             "for element \""
+                          << element.substr(6) << "\" contains duplicate values";
+            mThemeImageTypes.clear();
+        }
+    }
+
+    if (!mThemeImageTypes.empty() && elem->has("default"))
         setDefaultImage(elem->get<std::string>("default"));
 
     bool tile {elem->has("tile") && elem->get<bool>("tile")};
@@ -567,42 +624,20 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
     if (tile && updateAlignment)
         updateVertices();
 
-    if (properties && elem->has("imageType")) {
-        std::string imageTypes {elem->get<std::string>("imageType")};
-        for (auto& character : imageTypes) {
-            if (std::isspace(character))
-                character = ',';
-        }
-        imageTypes = Utils::String::replace(imageTypes, ",,", ",");
-        mThemeImageTypes = Utils::String::delimitedStringToVector(imageTypes, ",");
+    // Per-game overrides of static images using the game file's basename. It's by design not
+    // possible to override scraped media.
+    if (mThemeImageTypes.empty() && elem->has("gameOverridePath")) {
+        mGameOverridePath = elem->get<std::string>("gameOverridePath");
+#if defined(_WIN64)
+        mBasenamePath = Utils::String::replace(mGameOverridePath, "\\", "/");
+#endif
+        if (mGameOverridePath.back() != '/')
+            mGameOverridePath.push_back('/');
 
-        if (mThemeImageTypes.empty()) {
-            LOG(LogError) << "ImageComponent: Invalid theme configuration, property \"imageType\" "
-                             "for element \""
-                          << element.substr(6) << "\" contains no values";
-        }
-
-        for (std::string& type : mThemeImageTypes) {
-            if (std::find(sSupportedImageTypes.cbegin(), sSupportedImageTypes.cend(), type) ==
-                sSupportedImageTypes.cend()) {
-                LOG(LogError)
-                    << "ImageComponent: Invalid theme configuration, property \"imageType\" "
-                       "for element \""
-                    << element.substr(6) << "\" defined as \"" << type << "\"";
-                mThemeImageTypes.clear();
-                break;
-            }
-        }
-
-        std::vector<std::string> sortedTypes {mThemeImageTypes};
-        std::stable_sort(sortedTypes.begin(), sortedTypes.end());
-
-        if (std::adjacent_find(sortedTypes.begin(), sortedTypes.end()) != sortedTypes.end()) {
-            LOG(LogError) << "ImageComponent: Invalid theme configuration, property \"imageType\" "
-                             "for element \""
-                          << element.substr(6) << "\" contains duplicate values";
-            mThemeImageTypes.clear();
-        }
+        if (elem->has("path"))
+            mGameOverrideOriginalPath = elem->get<std::string>("path");
+        else
+            mGameOverrideOriginalPath = "";
     }
 
     if (elem->has("metadataElement") && elem->get<bool>("metadataElement"))

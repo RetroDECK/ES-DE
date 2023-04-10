@@ -30,6 +30,9 @@ public:
     // Use an already existing texture.
     void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
 
+    // Sets per-game overrides of static images using the game file basename.
+    void setGameOverrideImage(const std::string& basename, const std::string& system) override;
+
     void setDynamic(bool state) { mDynamic = state; }
     void onSizeChanged() override { updateVertices(); }
 
@@ -143,7 +146,11 @@ private:
     bool mColorGradientHorizontal;
 
     std::string mDefaultPath;
+    std::string mGameOverridePath;
+    std::string mGameOverrideOriginalPath;
 
+    static inline std::vector<std::string> sSupportedOverrideExtensions {".jpg", ".png", ".gif",
+                                                                         ".svg"};
     static inline std::vector<std::string> sSupportedImageTypes {
         "image", "miximage",  "marquee", "screenshot",    "titlescreen",
         "cover", "backcover", "3dbox",   "physicalmedia", "fanart"};
