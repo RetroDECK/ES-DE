@@ -133,9 +133,6 @@ void ImageComponent::setGameOverrideImage(const std::string& basename, const std
     if (mGameOverridePath == "")
         return;
 
-    if (!Utils::FileSystem::exists(mGameOverridePath + system))
-        return;
-
     const std::string imageFilePath {mGameOverridePath + system + "/" + basename};
     for (auto& extension : sSupportedOverrideExtensions) {
         if (Utils::FileSystem::exists(imageFilePath + extension)) {
