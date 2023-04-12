@@ -1493,6 +1493,10 @@ Properties:
 * `itemSpacing` - type: NORMALIZED_PAIR
     - The horizontal and vertical space between items. This value is added to the unscaled item size, i.e. `itemSize` before it's been multiplied by `itemScale`. This means that if an axis is set to `0` then unscaled items will be perfectly adjacent to each other on that axis but if `itemScale` has been set to higher than `1` then the currently selected item will overlap adjacent items. If this property is omitted then spacing will be automatically calculated so that no overlaps occur during scaling. However you'd normally want to define and adjust this property for an optimal layout. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis. Note that all spacing calculations are based on the value defined by `itemSize` which may or may not be the same as the actual image sizes, depending on their aspect ratios and if the `imageFit` property is used.
     - Minimum value per axis is `0` and maximum value per axis is `0.1`
+* `scaleInwards` - type: BOOLEAN
+    - Enabling this property will scale items along the outer grid boundaries towards the center of the grid. This means that it's possible to fill the entire screen width or height while still allowing scaling to take place.
+    - Default is `false`
+    - This property can only be used if `itemScale` is higher than `1`
 * `fractionalRows` - type: BOOLEAN
     - Whether to allow rendering of fractional rows of items. If set to false then the effective area of the overall element size will be snapped to the item height multiplied by `itemScale`. Note that if setting `itemScale` too high relative to the `itemSpacing` Y axis value then fractional rows may still be rendered even if the `fractionalRows` property is set to false.
     - Default is `false`

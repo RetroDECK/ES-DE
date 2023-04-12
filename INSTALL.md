@@ -411,9 +411,9 @@ The process to create a Linux AppImage is completely automated. You simply run t
 tools/create_AppImage.sh
 ```
 
-This script has only been tested on Ubuntu (20.04 LTS and 22.04 LTS) and it's recommended to go for an older operating system when building the AppImage to achieve compatibility with a large number of distributions. This does come with some sacrifices though, such as the use of an older SDL version which may not support the latest game controllers.
+This script has only been tested on Ubuntu 20.04 LTS and 22.04 LTS. It's generally recommended to go for an older operating system when building the AppImage to achieve compatibility with a larger number of distributions. To build it you need the PipeWire development package installed. The name differs between releases, but for 22.04 LTS it's named _libpipewire-0.3-dev_.
 
-The script will delete CMakeCache.txt and run cmake with the BUNDLED_CERTS option, as otherwise scraping wouldn't work on Fedora (and probably not on openSUSE and a few other distributions as well).
+The script will delete CMakeCache.txt and run cmake with the BUNDLED_CERTS option, as otherwise scraping wouldn't work on some distributions.
 
 After creating the AppImage it's recommended to delete CMakeCache.txt manually so the BUNDLED_CERTS option is not accidentally enabled when building the other packages.
 

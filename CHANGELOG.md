@@ -16,6 +16,7 @@ Catch-up release which implements some things that didn't make it into 2.0.0. Mo
 * Added a setting to set the user theme directory to an arbitrary location (not configurable via the GUI)
 * Added scrollable text container support to the system view
 * Added six new theme properties for sizing and placement of the helpsystem when a menu is open
+* Added a scaleInwards property to the grid element to contain scaling within the element boundaries
 * Added a new gameOverridePath property to the image element to enable per-game static image overrides
 * Added support for the Sinclair ZX Spectrum Next (zxnext) game system
 * Added support for the Sinclair Spectrum ZX emulator ZEsarUX
@@ -29,6 +30,7 @@ Catch-up release which implements some things that didn't make it into 2.0.0. Mo
 * (macOS) Added the .app and .sh file extensions to the arcade and mame systems
 * (Windows) Added the .bat and .lnk file extensions to the arcade and mame systems
 * Added the .app file extensions to the nds system
+* Added the .7z and .zip file extensions to the 3do system
 * Changed the platform from pc to pcwindows for the desktop and kodi systems
 * (Linux) Dropped support for prebuilt RPM packages
 * Changed the color scheme names for the bundled Slate and Modern themes from "Dark mode" and "Light mode" to "Dark" and "Light"
@@ -42,6 +44,7 @@ Catch-up release which implements some things that didn't make it into 2.0.0. Mo
 
 * (Windows) Fixed a regression that made .bat and .lnk files with some special characters in the filename impossible to launch
 * Clearing or deleting a game could hang the application if the media files could not be deleted due to insufficient permissions
+* Using the cropSize property could lead to a crash under very rare circumstances
 * Multi-row text with blank lines that was not displayed in a scrollable container was sometimes not wrapped correctly
 * The default image element property could be used even if no imageType entries were defined
 * Fixed several potential container overflows in GuiTextEditKeyboardPopup that could lead to rare crashes when running on an ARM processor
