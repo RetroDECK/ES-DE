@@ -209,6 +209,7 @@ std::map<std::string, std::map<std::string, ThemeData::ElementPropertyType>>
        {"itemSize", NORMALIZED_PAIR},
        {"itemScale", FLOAT},
        {"itemSpacing", NORMALIZED_PAIR},
+       {"scaleInwards", BOOLEAN},
        {"fractionalRows", BOOLEAN},
        {"itemTransitions", STRING},
        {"rowTransitions", STRING},

@@ -151,6 +151,7 @@ private:
     glm::vec2 mItemSize;
     float mItemScale;
     glm::vec2 mItemSpacing;
+    bool mScaleInwards;
     bool mFractionalRows;
     bool mInstantItemTransitions;
     bool mInstantRowTransitions;
@@ -222,6 +223,7 @@ GridComponent<T>::GridComponent()
                             mRenderer->getScreenHeight() * 0.25f}}
     , mItemScale {1.05f}
     , mItemSpacing {0.0f, 0.0f}
+    , mScaleInwards {false}
     , mFractionalRows {false}
     , mInstantItemTransitions {false}
     , mInstantRowTransitions {false}
@@ -500,8 +502,10 @@ template <typename T> void GridComponent<T>::calculateLayout()
         mVerticalMargin = 0.0f;
     }
     else {
-        mHorizontalMargin = ((mItemSize.x * mItemScale) - mItemSize.x) / 2.0f;
-        mVerticalMargin = ((mItemSize.y * mItemScale) - mItemSize.y) / 2.0f;
+        mHorizontalMargin =
+            ((mItemSize.x * (mScaleInwards ? 1.0f : mItemScale)) - mItemSize.x) / 2.0f;
+        mVerticalMargin =
+            ((mItemSize.y * (mScaleInwards ? 1.0f : mItemScale)) - mItemSize.y) / 2.0f;
     }
 
     int columnCount {0};
@@ -702,43 +706,54 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
 
     trans[3].y -= (mItemSize.y + mItemSpacing.y) * mScrollPos;
 
-    auto selectorRenderFunc = [this, &trans](std::vector<size_t>::const_iterator it,
-                                             const float scale, const float opacity,
-                                             const bool cursorEntry, const bool lastCursorEntry) {
+    auto calculateOffsetPos = [this](const glm::vec3& itemPos, const glm::vec2& origin,
+                                     const float scale,
+                                     const float relativeScale) -> const glm::vec2 {
+        const float sizeX {mItemSize.x * scale * relativeScale};
+        const float sizeY {mItemSize.y * scale * relativeScale};
+        glm::vec2 position {0.0f, 0.0f};
+
+        position.x = itemPos.x - (mItemSize.x / 2.0f);
+        position.x -= ((mItemSize.x * scale) - mItemSize.x) * origin.x;
+        position.x += ((mItemSize.x * scale) - sizeX) / 2.0f;
+
+        position.y = itemPos.y - (mItemSize.y / 2.0f);
+        position.y -= ((mItemSize.y * scale) - mItemSize.y) * origin.y;
+        position.y += ((mItemSize.y * scale) - sizeY) / 2.0f;
+
+        return position;
+    };
+
+    auto selectorRenderFunc = [this, &trans, calculateOffsetPos](
+                                  std::vector<size_t>::const_iterator it, const glm::vec3& itemPos,
+                                  const float scale, glm::vec2 origin, glm::vec2 offset,
+                                  const float opacity) {
+        if (mSelectorImage == nullptr && !mHasSelectorColor)
+            return;
+
+        const glm::vec2 position {
+            calculateOffsetPos(itemPos, origin, scale, mSelectorRelativeScale)};
+
         if (mSelectorImage != nullptr) {
-            mSelectorImage->setPosition(mEntries.at(*it).data.item->getPosition());
+            mSelectorImage->setOrigin(0.0f, 0.0f);
+            mSelectorImage->setPosition(position.x, position.y);
             mSelectorImage->setScale(scale);
             mSelectorImage->setOpacity(opacity);
             mSelectorImage->render(trans);
         }
         else if (mHasSelectorColor) {
             // If a selector color is set but no selector image, then render a rectangle.
-            const float sizeX {mItemSize.x * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
-                               mSelectorRelativeScale};
-            const float sizeY {mItemSize.y * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
-                               mSelectorRelativeScale};
-            float posX {mEntries.at(*it).data.item->getPosition().x - mItemSize.x * 0.5f};
-            float posY {mEntries.at(*it).data.item->getPosition().y - mItemSize.y * 0.5f};
-
-            if (cursorEntry || lastCursorEntry) {
-                posX -= ((mItemSize.x * scale * mSelectorRelativeScale) - mItemSize.x) / 2.0f;
-                posY -= ((mItemSize.y * scale * mSelectorRelativeScale) - mItemSize.y) / 2.0f;
-            }
-            else {
-                posX -= ((mItemSize.x * mSelectorRelativeScale) - mItemSize.x) / 2.0f;
-                posY -= ((mItemSize.y * mSelectorRelativeScale) - mItemSize.y) / 2.0f;
-            }
-
+            const float sizeX {mItemSize.x * scale * mSelectorRelativeScale};
+            const float sizeY {mItemSize.y * scale * mSelectorRelativeScale};
             mRenderer->setMatrix(trans);
-            mRenderer->drawRect(posX, posY, sizeX, sizeY, mSelectorColor, mSelectorColorEnd,
-                                mSelectorColorGradientHorizontal, opacity);
+            mRenderer->drawRect(position.x, position.y, sizeX, sizeY, mSelectorColor,
+                                mSelectorColorEnd, mSelectorColorGradientHorizontal, opacity);
         }
     };
 
     for (auto it = renderEntries.cbegin(); it != renderEntries.cend(); ++it) {
         float metadataOpacity {1.0f};
         bool cursorEntry {false};
-        bool lastCursorEntry {false};
 
         if constexpr (std::is_same_v<T, FileData*>) {
             // If a game is marked as hidden, lower the opacity a lot.
@@ -765,7 +780,6 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             dimming = glm::mix(mUnfocusedItemDimming, 1.0f, mTransitionFactor);
         }
         else if (*it == static_cast<size_t>(mLastCursor)) {
-            lastCursorEntry = true;
             scale = glm::mix(mItemScale, 1.0f, mTransitionFactor);
             opacity = glm::mix(1.0f * metadataOpacity, mUnfocusedItemOpacity * metadataOpacity,
                                mTransitionFactor);
@@ -775,11 +789,56 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             dimming = glm::mix(1.0f, mUnfocusedItemDimming, mTransitionFactor);
         }
 
+        const glm::vec3 itemPos {mEntries.at(*it).data.item->getPosition()};
+        glm::vec2 originInwards {0.5f, 0.5f};
+        glm::vec2 offsetInwards {0.0f, 0.0f};
+
+        if (mScaleInwards && scale != 1.0f) {
+            if (static_cast<int>(*it) < mColumns) {
+                // First row.
+                originInwards.y = 0.0f;
+                offsetInwards.y = mItemSize.y / 2.0f;
+            }
+            if ((itemPos.y + (mItemSize.y / 2.0f) * mItemScale) > mSize.y) {
+                // Scaled image won't fit vertically at the bottom.
+                originInwards.y = 1.0f;
+                offsetInwards.y = -(mItemSize.y / 2.0f);
+            }
+            if (static_cast<int>(*it) % mColumns == 0) {
+                // Leftmost column.
+                originInwards.x = 0.0f;
+                offsetInwards.x = mItemSize.x / 2.0f;
+            }
+            if (static_cast<int>(*it) % mColumns == mColumns - 1) {
+                // Rightmost column.
+                originInwards.x = 1.0f;
+                offsetInwards.x = -(mItemSize.x / 2.0f);
+            }
+
+            const glm::vec2 position {
+                calculateOffsetPos(itemPos, originInwards, scale,
+                                   (mEntries.at(*it).data.imagePath.empty() &&
+                                            mEntries.at(*it).data.defaultImagePath.empty() ?
+                                        mTextRelativeScale :
+                                        mImageRelativeScale))};
+            mEntries.at(*it).data.item->setOrigin(0.0f, 0.0f);
+            mEntries.at(*it).data.item->setPosition(position.x, position.y);
+        }
+
         if (cursorEntry && mSelectorLayer == SelectorLayer::BOTTOM)
-            selectorRenderFunc(it, scale, opacity, cursorEntry, lastCursorEntry);
+            selectorRenderFunc(it, itemPos, scale, originInwards, offsetInwards, opacity);
+
+        glm::vec2 backgroundPos {
+            calculateOffsetPos(itemPos, originInwards, scale, mBackgroundRelativeScale)};
 
         if (mBackgroundImage != nullptr) {
-            mBackgroundImage->setPosition(mEntries.at(*it).data.item->getPosition());
+            if (mScaleInwards && scale != 1.0f) {
+                mBackgroundImage->setOrigin(0.0f, 0.0f);
+                mBackgroundImage->setPosition(backgroundPos.x, backgroundPos.y);
+            }
+            else {
+                mBackgroundImage->setPosition(mEntries.at(*it).data.item->getPosition());
+            }
             mBackgroundImage->setScale(scale);
             mBackgroundImage->setOpacity(opacity);
             if (mHasUnfocusedItemSaturation)
@@ -787,32 +846,20 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
             if (mUnfocusedItemDimming != 1.0f)
                 mBackgroundImage->setDimming(dimming);
             mBackgroundImage->render(trans);
+            if (mScaleInwards && scale != 1.0f)
+                mBackgroundImage->setOrigin(0.5f, 0.5f);
         }
         else if (mHasBackgroundColor) {
             // If a background color is set but no background image, then render a rectangle.
-            const float sizeX {mItemSize.x * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
-                               mBackgroundRelativeScale};
-            const float sizeY {mItemSize.y * (cursorEntry || lastCursorEntry ? scale : 1.0f) *
-                               mBackgroundRelativeScale};
-            float posX {mEntries.at(*it).data.item->getPosition().x - mItemSize.x * 0.5f};
-            float posY {mEntries.at(*it).data.item->getPosition().y - mItemSize.y * 0.5f};
-
-            if (cursorEntry || lastCursorEntry) {
-                posX -= ((mItemSize.x * scale * mBackgroundRelativeScale) - mItemSize.x) / 2.0f;
-                posY -= ((mItemSize.y * scale * mBackgroundRelativeScale) - mItemSize.y) / 2.0f;
-            }
-            else {
-                posX -= ((mItemSize.x * mBackgroundRelativeScale) - mItemSize.x) / 2.0f;
-                posY -= ((mItemSize.y * mBackgroundRelativeScale) - mItemSize.y) / 2.0f;
-            }
-
+            const float sizeX {mItemSize.x * scale * mBackgroundRelativeScale};
+            const float sizeY {mItemSize.y * scale * mBackgroundRelativeScale};
             mRenderer->setMatrix(trans);
-            mRenderer->drawRect(posX, posY, sizeX, sizeY, mBackgroundColor, mBackgroundColorEnd,
-                                mBackgroundColorGradientHorizontal, opacity);
+            mRenderer->drawRect(backgroundPos.x, backgroundPos.y, sizeX, sizeY, mBackgroundColor,
+                                mBackgroundColorEnd, mBackgroundColorGradientHorizontal, opacity);
         }
 
         if (cursorEntry && mSelectorLayer == SelectorLayer::MIDDLE)
-            selectorRenderFunc(it, scale, opacity, cursorEntry, lastCursorEntry);
+            selectorRenderFunc(it, itemPos, scale, originInwards, offsetInwards, opacity);
 
         mEntries.at(*it).data.item->setScale(scale);
         mEntries.at(*it).data.item->setOpacity(opacity);
@@ -857,7 +904,12 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
         mEntries.at(*it).data.item->setOpacity(1.0f);
 
         if (cursorEntry && mSelectorLayer == SelectorLayer::TOP)
-            selectorRenderFunc(it, scale, opacity, cursorEntry, lastCursorEntry);
+            selectorRenderFunc(it, itemPos, scale, originInwards, offsetInwards, opacity);
+
+        if (mScaleInwards && scale != 1.0f) {
+            mEntries.at(*it).data.item->setOrigin(0.5f, 0.5f);
+            mEntries.at(*it).data.item->setPosition(itemPos);
+        }
     }
 
     mRenderer->popClipRect();
@@ -958,6 +1010,9 @@ void GridComponent<T>::applyTheme(const std::shared_ptr<ThemeData>& theme,
 
     if (elem->has("imageRelativeScale"))
         mImageRelativeScale = glm::clamp(elem->get<float>("imageRelativeScale"), 0.2f, 1.0f);
+
+    mScaleInwards =
+        (mItemScale > 1.0f && elem->has("scaleInwards") && elem->get<bool>("scaleInwards"));
 
     if (elem->has("imageFit")) {
         const std::string& imageFit {elem->get<std::string>("imageFit")};
