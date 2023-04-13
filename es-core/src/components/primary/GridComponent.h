@@ -815,14 +815,18 @@ template <typename T> void GridComponent<T>::render(const glm::mat4& parentTrans
                 offsetInwards.x = -(mItemSize.x / 2.0f);
             }
 
+            const bool textEntry {mEntries.at(*it).data.imagePath.empty() &&
+                                  mEntries.at(*it).data.defaultImagePath.empty()};
             const glm::vec2 position {
                 calculateOffsetPos(itemPos, originInwards, scale,
-                                   (mEntries.at(*it).data.imagePath.empty() &&
-                                            mEntries.at(*it).data.defaultImagePath.empty() ?
-                                        mTextRelativeScale :
-                                        mImageRelativeScale))};
-            mEntries.at(*it).data.item->setOrigin(0.0f, 0.0f);
+                                   (textEntry ? mTextRelativeScale : mImageRelativeScale))};
+            const glm::vec2 offset {textEntry ? glm::vec2 {0.0f, 0.0f} :
+                                                mItemSize * mImageRelativeScale * scale};
+            if (textEntry)
+                mEntries.at(*it).data.item->setOrigin(0.0f, 0.0f);
             mEntries.at(*it).data.item->setPosition(position.x, position.y);
+            mEntries.at(*it).data.item->setPosition(position.x + (offset.x / 2.0f),
+                                                    position.y + (offset.y / 2.0f));
         }
 
         if (cursorEntry && mSelectorLayer == SelectorLayer::BOTTOM)
