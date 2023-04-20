@@ -888,7 +888,25 @@ void GamelistView::updateView(const CursorState& state)
                 continue;
             }
 
-            text->setValue(getMetadataValue());
+            if (metadata == "name" && file->getSystem()->isCollection() &&
+                text->getSystemNameSuffix()) {
+                const LetterCase letterCase {text->getLetterCaseSystemNameSuffix()};
+                std::string suffix {" ["};
+                if (letterCase == LetterCase::UPPERCASE)
+                    suffix.append(
+                        Utils::String::toUpper(file->getSourceFileData()->getSystem()->getName()));
+                else if (letterCase == LetterCase::CAPITALIZE)
+                    suffix.append(Utils::String::toCapitalized(
+                        file->getSourceFileData()->getSystem()->getName()));
+                else
+                    suffix.append(file->getSourceFileData()->getSystem()->getName());
+                suffix.append("]");
+
+                text->setValue(getMetadataValue() + suffix);
+            }
+            else {
+                text->setValue(getMetadataValue());
+            }
         }
 
         for (auto& text : mTextComponents) {
