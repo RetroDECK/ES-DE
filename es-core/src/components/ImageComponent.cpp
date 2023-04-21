@@ -548,7 +548,7 @@ void ImageComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
     }
 
-    if (!mThemeImageTypes.empty() && elem->has("default"))
+    if (elem->has("default"))
         setDefaultImage(elem->get<std::string>("default"));
 
     bool tile {elem->has("tile") && elem->get<bool>("tile")};
