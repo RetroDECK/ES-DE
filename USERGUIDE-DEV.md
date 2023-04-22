@@ -1193,52 +1193,23 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 
 Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is quite particular so make sure to read this section thoroughly to get it to work.
 
-The first step is to install the emulator. On Windows it's straightforward, download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
+The latest release can be downloaded from here:\
+https://github.com/DirtBagXon/hypseus-singe/releases
 
-Similarly on Linux, download the  [hypseus-singe_2.8.2a_ES-DE.tar.gz](https://gitlab.com/es-de/emulationstation-de/-/package_files/41533436/download) release that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
+The first step is to install the emulator. On Windows download the win64 release and unpack it and you're good to go.
+
+Similarly on Linux, download the ES-DE specific build that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
 ```
 /home/myusername/Applications/hypseus-singe/
 ```
 
-If the Applications directory doesn't exist yet, then just go ahead and create it and then unpack the emulator inside it. Just be aware that the name has to start with a capital A.
+If the Applications directory doesn't exist yet, then just go ahead and create it and unpack the emulator inside it. Just be aware that the name has to start with a capital A.
 
 Although there is an official Hypseus Singe release available for macOS ARM this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
 
 After the emulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
 
 Controller configuration using the `hypinput.ini` file is described in the official Hypseus Singe documentation, but the following example is usable with Xbox 360-compatible controllers:
-
-```
-[KEYBOARD]
-KEY_UP = SDLK_UP SDLK_r 5 -002
-KEY_DOWN = SDLK_DOWN SDLK_f 7 +002
-KEY_LEFT = SDLK_LEFT SDLK_d 8 -001
-KEY_RIGHT = SDLK_RIGHT SDLK_g 6 +001
-KEY_COIN1 = SDLK_5 0 1
-KEY_COIN2 = SDLK_6 0 0
-KEY_START1 = SDLK_1 0 4
-KEY_START2 = SDLK_2 0 0
-KEY_BUTTON1 = SDLK_LCTRL SDLK_a 14
-KEY_BUTTON2 = SDLK_LALT SDLK_s 15
-KEY_BUTTON3 = SDLK_SPACE SDLK_d 16
-KEY_SKILL1 = SDLK_LSHIFT SDLK_w 0
-KEY_SKILL2 = SDLK_z SDLK_i 0
-KEY_SKILL3 = SDLK_x SDLK_k 0
-KEY_SERVICE = SDLK_9 0 0
-KEY_TEST = SDLK_F2 0 0
-KEY_RESET = SDLK_0 0 0
-KEY_SCREENSHOT = SDLK_F12 0 0
-KEY_QUIT = SDLK_ESCAPE SDLK_q 17
-KEY_PAUSE = SDLK_p 0 0
-KEY_CONSOLE = SDLK_BACKSLASH 0 0
-KEY_TILT = SDLK_t 0 0
-END
-```
-
-With this configuration, pressing the _A_ and _Y_ buttons at the same time exits the emulator.
-
-Here's an alternative configuration as described in the following YouTube video: \
-https://www.youtube.com/watch?v=mO2UiI6byJo
 
 ```
 [KEYBOARD]
@@ -1267,7 +1238,12 @@ KEY_TILT = SDLK_t 0 0
 END
 ```
 
+With this configuration, pressing the _Back_ and _Start_ buttons (or equivalent on non-Xbox 360 controllers) at the same time exits the emulator.
+
 There are two types of games supported by Hypseus and these are _Daphne_ and _Singe_. It's beyond the scope of this document to describe these game formats in detail but there are many resources available online for this. The setup differs a bit between these two types however, and you need to use an alternative emulator entry in ES-DE to launch Singe games.
+
+In addition to the above instructions there's an unofficial YouTube video available on how to setup Hypseus Singe on the Steam Deck: \
+https://www.youtube.com/watch?v=mO2UiI6byJo
 
 **Daphne games**
 

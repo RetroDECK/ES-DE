@@ -26,7 +26,7 @@ If you unzip and temporarily replace your ROMs directory with one of these, ever
 
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
-A general comment regarding SVG graphic files is that fonts are not supported by the LunaSVG library so these need to be converted to paths in order for them to get rendered inside ES-DE. In Inkscape the relevant command is named _Object to Path_ but there should be equivalent functionality in other vector graphics editors.
+A general comment regarding SVG graphic files is that fonts are not supported by the LunaSVG library so these need to be converted to paths in order for them to get rendered inside ES-DE. In Inkscape the relevant command is named _Object to Path_ but there should be equivalent functionality in other vector graphics editors. Embedded bitmaps are also not supported but this is generally a good thing as it's sometimes abused by simply embedding a raster image inside an SVG file, which is very misleading.
 
 Another general remark is that Linux almost always uses case-sensitive file systems (that's sometimes true for macOS as well). Therefore it's a good idea to always name files with lowercase characters only. Also make sure to regularly test on Linux if that's not your primary operating system.
 
@@ -1816,7 +1816,7 @@ Properties:
     - Defines a directory where per-game overrides for the static image defined by the `path` property are kept. Supported file extensions are .jpg, .png, .gif (unanimated) and .svg and they are searched for in this precise order. How this works is that the basename of the game file will be used to check for an image file in the defined path in a very similar fashion as to how downloaded media is searched. For example if `gameOverridePath` has been set to `./imageOverrides` a match for the game file `~/ROMs/arcade/aburner.zip` would be `./imageOverrides/arcade/aburner.png` (or any of the other supported file extensions). In this case the image defined by the `path` property will be replaced for this specific game. Note that only static images can be overridden, not scraped media.
     - This property can only be used in the `gamelist` view and only if `imageType` is undefined.
 * `default` - type: PATH
-    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a valid `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default image file. This image will be displayed when the selected game does not have an image of the type(s) defined by `imageType` or if the static image defined by `path` is not found. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING
     - This displays a game image of a certain media type. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, then the space will be left blank unless the `default` property has been set. To use this property from the `system` view, you will first need to add a `gameselector` element. Defining duplicate values is considered an error and will result in the property getting ignored.
     - Valid values:
@@ -2242,7 +2242,7 @@ Properties:
 
 #### text
 
-Displays text. This can be literal strings or values based on game metadata or system variables, as described below. For the `gamelist` view it's also possible to place the text inside a scrollable container which is for example useful for longer texts like game descriptions.
+Displays text. This can be literal strings or values based on game metadata or system variables, as described below. It's also possible to place the text inside a scrollable container which is for example useful for longer texts like game and system descriptions.
 
 Supported views:
 * `system`
