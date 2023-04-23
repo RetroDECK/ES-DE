@@ -2242,7 +2242,7 @@ Properties:
 
 #### text
 
-Displays text. This can be literal strings or values based on game metadata or system variables, as described below. It's also possible to place the text inside a scrollable container which is for example useful for longer texts like game and system descriptions.
+Displays text. This can be literal strings or values based on game metadata or system variables, as described below. It's also possible to place text inside a scrollable container which is for example useful for longer texts like game and system descriptions.
 
 Supported views:
 * `system`

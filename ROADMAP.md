@@ -36,7 +36,7 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * _Add GLM library dependency for matrix and vector operations, decommission the built-in functions_
 * _AppImage and AUR releases on Linux_
 
-#### v2.0 (in development)
+#### v2.0
 
 * _New theme engine with generalized views (only System and Gamelist) and theme variants support_
 * _Multiple new components (carousel support for the Gamelist view, grid component etc.)_
@@ -47,9 +47,9 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * _Replace NanoSVG with a more capable SVG rendering library_
 * _Improve text and font functions, e.g. dynamic texture allocation and faster and cleaner text wrapping_
 * _Improve GLSL shader post-processing performance_
-* Theme downloader
+* _Theme downloader_
 
-#### v2.1
+#### v2.1 (in development)
 
 * Theme engine composite element support for enabling advanced and finely controlled layouts
 * Theme engine element animation support (storyboards)

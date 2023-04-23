@@ -24,7 +24,7 @@ If you unzip and temporarily replace your ROMs directory with one of these, ever
 
 It's recommended to use a proper code editor for theme development, such as [VSCode](https://code.visualstudio.com) with the [Red Hat XML extension](https://github.com/redhat-developer/vscode-xml).
 
-A general comment regarding SVG graphic files is that fonts are not supported by the LunaSVG library so these need to be converted to paths in order for them to get rendered inside ES-DE. In Inkscape the relevant command is named _Object to Path_ but there should be equivalent functionality in other vector graphics editors.
+A general comment regarding SVG graphic files is that fonts are not supported by the LunaSVG library so these need to be converted to paths in order for them to get rendered inside ES-DE. In Inkscape the relevant command is named _Object to Path_ but there should be equivalent functionality in other vector graphics editors. Embedded bitmaps are also not supported but this is generally a good thing as it's sometimes abused by simply embedding a raster image inside an SVG file, which is very misleading.
 
 Another general remark is that Linux almost always uses case-sensitive file systems (that's sometimes true for macOS as well). Therefore it's a good idea to always name files with lowercase characters only. Also make sure to regularly test on Linux if that's not your primary operating system.
 
@@ -1491,6 +1491,10 @@ Properties:
 * `itemSpacing` - type: NORMALIZED_PAIR
     - The horizontal and vertical space between items. This value is added to the unscaled item size, i.e. `itemSize` before it's been multiplied by `itemScale`. This means that if an axis is set to `0` then unscaled items will be perfectly adjacent to each other on that axis but if `itemScale` has been set to higher than `1` then the currently selected item will overlap adjacent items. If this property is omitted then spacing will be automatically calculated so that no overlaps occur during scaling. However you'd normally want to define and adjust this property for an optimal layout. If one of the axis is defined as `-1` then it will be set to the same pixel value as the other axis. Note that all spacing calculations are based on the value defined by `itemSize` which may or may not be the same as the actual image sizes, depending on their aspect ratios and if the `imageFit` property is used.
     - Minimum value per axis is `0` and maximum value per axis is `0.1`
+* `scaleInwards` - type: BOOLEAN
+    - Enabling this property will scale items along the outer grid boundaries towards the center of the grid. This means that it's possible to fill the entire screen width or height while still allowing scaling to take place.
+    - Default is `false`
+    - This property can only be used if `itemScale` is higher than `1`
 * `fractionalRows` - type: BOOLEAN
     - Whether to allow rendering of fractional rows of items. If set to false then the effective area of the overall element size will be snapped to the item height multiplied by `itemScale`. Note that if setting `itemScale` too high relative to the `itemSpacing` Y axis value then fractional rows may still be rendered even if the `fractionalRows` property is set to false.
     - Default is `false`
@@ -1806,8 +1810,11 @@ Properties:
     - Default is `false`
 * `path` - type: PATH
     - Explicit path to an image file. Most common extensions are supported (including .jpg, .png, and unanimated .gif). If `imageType` is also defined then this will take precedence as these two properties are not intended to be used together. If you need a fallback image in case of missing game media, use the `default` property instead.
+* `gameOverridePath` - type: PATH
+    - Defines a directory where per-game overrides for the static image defined by the `path` property are kept. Supported file extensions are .jpg, .png, .gif (unanimated) and .svg and they are searched for in this precise order. How this works is that the basename of the game file will be used to check for an image file in the defined path in a very similar fashion as to how downloaded media is searched. For example if `gameOverridePath` has been set to `./imageOverrides` a match for the game file `~/ROMs/arcade/aburner.zip` would be `./imageOverrides/arcade/aburner.png` (or any of the other supported file extensions). In this case the image defined by the `path` property will be replaced for this specific game. Note that only static images can be overridden, not scraped media.
+    - This property can only be used in the `gamelist` view and only if `imageType` is undefined.
 * `default` - type: PATH
-    - Path to a default image file. The default image will be displayed when the selected game does not have an image of the type defined by the `imageType` property (i.e. this `default` property does nothing unless a valid `imageType` property has been set). It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
+    - Path to a default image file. This image will be displayed when the selected game does not have an image of the type(s) defined by `imageType` or if the static image defined by `path` is not found. It's also applied to any custom collection that does not contain any games when browsing the grouped custom collections system.
 * `imageType` - type: STRING
     - This displays a game image of a certain media type. Multiple types can be defined, in which case the entries should be delimited by commas or by whitespace characters (tabs, spaces or line breaks). The media will be searched for in the order that the entries have been defined. If no image is found, then the space will be left blank unless the `default` property has been set. To use this property from the `system` view, you will first need to add a `gameselector` element. Defining duplicate values is considered an error and will result in the property getting ignored.
     - Valid values:
@@ -2233,7 +2240,7 @@ Properties:
 
 #### text
 
-Displays text. This can be literal strings or values based on game metadata or system variables, as described below. For the `gamelist` view it's also possible to place the text inside a scrollable container which is for example useful for longer texts like game descriptions.
+Displays text. This can be literal strings or values based on game metadata or system variables, as described below. It's also possible to place text inside a scrollable container which is for example useful for longer texts like game and system descriptions.
 
 Supported views:
 * `system`
@@ -2319,7 +2326,6 @@ Properties:
 * `container` - type: BOOLEAN
     - Whether the text should be placed inside a scrollable container.
     - Default is `true` if `metadata` is set to `description`, otherwise `false`
-    - This property can only be used in the `gamelist` view.
 * `containerVerticalSnap` - type: BOOLEAN
     - Whether the text should be vertically snapped to the font height. With this property enabled the container will have its height reduced as needed so that only complete rows of text are displayed at the start and end positions. This will not affect the "real" size of the container as set by the `size` property which means that the overall element placement will still be predictable if a vertical origin other than zero is used.
     - Default is `true`
@@ -2623,33 +2629,52 @@ Instances per view:
 Properties:
 * `pos` - type: NORMALIZED_PAIR
     - Default is `0.012 0.9515` for horizontally oriented screens and `0.012 0.975` for vertically oriented screens
+* `posDimmed` - type: NORMALIZED_PAIR
+    - Position when a menu is open (background is dimmed).
+    - Default is the same value as `pos`
 * `origin` - type: NORMALIZED_PAIR
     - Where on the element `pos` refers to. For example, an origin of `0.5 0.5` and a `pos` of `0.5 0.5` would place the element exactly in the middle of the screen.
     - Minimum value per axis is `0` and maximum value per axis is `1`
     - Default is `0 0`
+* `originDimmed` - type: NORMALIZED_PAIR
+    - Origin when a menu is open (background is dimmed).
+    - Minimum value per axis is `0` and maximum value per axis is `1`
+    - Default is the same value as `origin`
 * `textColor` - type: COLOR
     - Default is `777777FF`
 * `textColorDimmed` - type: COLOR
-    - Text color to use when the background is dimmed (when a menu is open).
-    - Default is the same value as textColor.
+    - Text color when a menu is open (background is dimmed).
+    - Default is the same value as `textColor`
 * `iconColor` - type: COLOR
     - Default is `777777FF`
 * `iconColorDimmed` - type: COLOR
-    - Icon color to use when the background is dimmed (when a menu is open).
-    - Default is the same value as iconColor.
+    - Icon color when a menu is open (background is dimmed).
+    - Default is the same value as `iconColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT
     - This property implicitly sets the icon size and is therefore the means to change the overall size of the helpsystem element. This calculation is based on the reference 'S' character so other glyphs may not fill this area, or they may exceed this area.
     - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
     - Default is `0.035` for horizontally oriented screens and `0.025` for vertically oriented screens
+* `fontSizeDimmed` - type: FLOAT
+    - Font size when a menu is open (background is dimmed).
+    - Minimum value is `0.001` and maximum value is `1.5`. Note that when running at a really low resolution, the minimum value may get clamped to a larger relative size.
+    - Default is the same value as `fontSize`
 * `entrySpacing` - type: FLOAT
     - Spacing between the help element pairs.
     - Minimum value is `0` and maximum value is `0.04`
     - Default is `0.00833`
+* `entrySpacingDimmed` - type: FLOAT
+    - Spacing between the help element pairs when a menu is open (background is dimmed).
+    - Minimum value is `0` and maximum value is `0.04`
+    - Default is the same value as `entrySpacing`
 * `iconTextSpacing` - type: FLOAT
     - Spacing between the icon and text within a help element pair.
     - Minimum value is `0` and maximum value is `0.04`
     - Default is `0.00416`
+* `iconTextSpacingDimmed` - type: FLOAT
+    - Spacing between the icon and text within a help element pair when a menu is open (background is dimmed).
+    - Minimum value is `0` and maximum value is `0.04`
+    - Default is the same value as `iconTextSpacing`
 * `letterCase` - type: STRING
     - Valid values are `uppercase`, `lowercase` or `capitalize`
     - Default is `uppercase`
@@ -2657,6 +2682,10 @@ Properties:
     - Controls the level of transparency.
     - Minimum value is `0.2` and maximum value is `1`
     - Default is `1`
+* `opacityDimmed` - type: FLOAT
+    - Controls the level of transparency when a menu is open (background is dimmed).
+    - Minimum value is `0.2` and maximum value is `1`
+    - Default is the same value as `opacity`
 * `customButtonIcon` - type: PATH
     - A button icon override. Specify the button type in the attribute `button`.
     - The available buttons are: \

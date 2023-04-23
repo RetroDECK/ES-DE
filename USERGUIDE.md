@@ -508,22 +508,13 @@ Quits the application. This key combination can be changed to Ctrl + Q, Alt + Q 
 
 ## Themes
 
-ES-DE is fully themeable. The application ships with the Slate and Modern theme sets and additional themes can be downloaded from the official themes list linked below. You can also use most legacy RetroPie-compatible EmulationStation themes although support for these will be removed in a future release. Batocera and Recalbox themes are generally not compatible as these forks use a different theme engine than ES-DE.
+ES-DE ships with the Slate and Modern theme sets and additional themes can be installed using the built-in theme downloader. More themes made specifically for ES-DE can be found on the Internet, and you can customize or create your own ones too.
+
+You can also use most legacy RetroPie-compatible EmulationStation themes although support for these will be removed in a future release. Batocera and Recalbox themes are generally not compatible as these forks use a different theme engine than ES-DE.
 
 The new theme engine introduced in ES-DE 2.0.0 adds several user-selectable options to the _UI Settings_ menu, most notable _Theme variant_ which is essentially a form of theme profiles that the theme author can optionally implement. This could be anything, like different ways to navigate the themes, different layouts etc. Additionally _Theme color scheme_ support has been added and as the name implies it lets the theme author implement multiple color schemes into their design. The other two new options _Theme aspect ratio_ and _Theme transitions_ are also important but you can normally leave them at their default _Automatic_ values, especially the _Theme aspect ratio_ option as it will be automatically detected.
 
-Themes are most easily installed to your ES-DE home directory, i.e. `~/.emulationstation/themes/`. By just adding the theme sets there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the .emulationstation folder can be found in the root of the EmulationStation-DE directory.
-
-To download a theme from its GitHub page, press the green _Code_ button in the upper right corner and choose _Download ZIP_. The process is identical on GitLab, but this site uses a button with a download symbol instead of a green button. You then simply unpack the file into `~/.emulationstation/themes/` and restart ES-DE.
-
-For this example, we've downloaded the [alekfull-nx-es-de](https://github.com/anthonycaccese/alekfull-nx-es-de) and [caralt-es-de](https://github.com/Weestuarty/caralt-es-de) themes and uncompressed them to the themes directory:
-
-```
-~/.emulationstation/themes/alekfull-nx-es-de
-~/.emulationstation/themes/caralt-es-de
-```
-
-We now have four entries in the _Theme set_ selector in the UI settings menu, i.e. _Alekfull NX, CarAlt, Modern_ and _Slate_.
+Themes are most easily installed using the built-in theme downloader, but you can also manually add them to your ES-DE home directory, i.e. `~/.emulationstation/themes/`. By just adding them there, one folder each, they will be found during startup and you can then choose between them via the _UI Settings_ menu on the main menu. If using the portable release of ES-DE on Windows, the .emulationstation folder can be found in the root of the EmulationStation-DE directory.
 
 Although you should place additional themes in your ES-DE home directory, the default Slate and Modern themes are located in the installation folder as they come bundled with the application. For example this could be `/usr/share/emulationstation/themes/` on Unix, `/Applications/EmulationStation Desktop Edition.app/Contents/Resources/themes/` on macOS or `C:\Program Files\EmulationStation-DE\themes\` on Windows. If using the portable ES-DE release on Windows, the themes folder will be located in the root of the EmulationStation-DE directory.
 
@@ -531,12 +522,31 @@ Note that if using the AppImage release on Linux, then there is no installation 
 
 If you would like to customize the Slate or Modern theme sets, simply make a copy of their directories to `~/.emulationstation/themes/` and then those copies will take precedence over the ones in the application installation directory.
 
-Refer to the official themes list for a selection of high-quality themes:
+Refer to the official themes list for a selection of high-quality themes (these are also available via the built-in theme downloader):
 
 https://gitlab.com/es-de/themes/themes-list
 
 ![alt text](images/es-de_ui_theme_support.png "ES-DE Theme Support")
 _This is a screenshot of the Modern theme that is bundled with ES-DE (in addition to the default Slate theme)._
+
+## Theme downloader
+
+There is a built-in theme downloader that can be accessed from the _UI Settings_ menu. It let's you download new themes and apply updates to installed themes.
+
+The basic functionality is hopefully largely self-explanatory, check the helpsystem text at the bottom of the screen for information on available actions. There are also popup dialogs displayed for actions that require user input or if there are any errors or issues.
+
+Information about each theme is displayed in the user interface including the available variants, color schemes and aspect ratios as well as a screenshot. You can also view additional screenshots in fullscreen mode by pressing the "X" button.
+
+Themes are downloaded from their respective GitHub or GitLab sites using _Git_ (or more specifically using _libgit2_) so apart from the initial download, subsequent updates should be fast as only new or modified files will be fetched. Compression is also applied during transfer to speed up things further. Due to the complex nature of Git repositories it's not possible to abort downloads as that could lead to data corruption. If that would still happen, such as if you have a power failure or kill the ES-DE process while a download is running, the theme downloader should detect the corrupt repository on next startup and display an error message. It will in this case also rename the theme directory by adding the _CORRUPT_DISABLED extension to it and start a new fresh download.
+
+If you have manually downloaded any of the themes from the [official themes list](https://gitlab.com/es-de/themes/themes-list) then these would need to be downloaded again as they will not contain the necessary information required by the theme downloader. A dialog will be presented to inform you about this and the theme directory will be renamed by adding the _DISABLED extension to its name. To conserve disk space it's a good idea to manually delete these _DISABLED directories outside of ES-DE.
+
+If you have customized a theme by for instance modifying any of its XML files, then this will be highlighted with an exclamation mark and the text _LOCAL CHANGES_ in the theme downloader interface. If you attempt to fetch updates for such a theme you will be asked a question of whether to overwrite your local changes, or whether to abort. If you have however added additional files to the theme that are not included in the theme repository, then these will not interfere and you can go ahead and fetch theme updates without any risk of having your local files being deleted. But there is a special (although unlikely) situation, if you add files that are not part of the theme repository but that are later added by the theme developer as well, then your local copies of any such files will be ovewritten when fetching theme updates.
+
+In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/.emulationstation/themes/themes-list`) you'll reset the theme downloader to its initial state.
+
+![alt text](images/es-de_theme_downloader.png "ES-DE Theme Downloader")
+_This shows the theme downloader with a number of installed themes._
 
 ## RetroArch setup
 
@@ -677,6 +687,10 @@ The following manually downloaded emulators are supported when using the bundled
 | switch                           | Ryujinx       | publish/Ryujinx.Ava               |
 | trs-80                           | sdl2trs       | sdl2trs/sdl2trs                   |
 | wiiu                             | Cemu          | Cemu/Cemu                         |
+| zxnext                           | #CSpect       | CSpect/CSpect.exe                 |
+| zxnext                           | ZEsarUX       | ZEsarUX/zesarux                   |
+
+#CSpect requires the Mono .NET framework to run, hence the .exe extension.
 
 Note that the Vita3K binary is not set as executable after unpacking the archive, so you need to do that once before ES-DE can run it:
 ```
@@ -1177,52 +1191,23 @@ To map the controller to the keyboard and to set a 33 MHz CPU speed, the file co
 
 Hypseus Singe is a fork of the Daphne arcade LaserDisc emulator that is still maintained. The setup is quite particular so make sure to read this section thoroughly to get it to work.
 
-The first step is to install the emulator. On Windows it's straightforward, download the win64 release from [https://github.com/DirtBagXon/hypseus-singe](https://github.com/DirtBagXon/hypseus-singe) and unpack it and you're good to go.
+The latest release can be downloaded from here:\
+https://github.com/DirtBagXon/hypseus-singe/releases
 
-Similarly on Linux, download the  [hypseus-singe_2.8.2a_ES-DE.tar.gz](https://gitlab.com/es-de/emulationstation-de/-/package_files/41533436/download) release that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
+The first step is to install the emulator. On Windows download the win64 release and unpack it and you're good to go.
+
+Similarly on Linux, download the ES-DE specific build that contains an AppImage of the emulator as well as some additional required files. It should be unpacked into the ~/Applications directory, such as:
 ```
 /home/myusername/Applications/hypseus-singe/
 ```
 
-If the Applications directory doesn't exist yet, then just go ahead and create it and then unpack the emulator inside it. Just be aware that the name has to start with a capital A.
+If the Applications directory doesn't exist yet, then just go ahead and create it and unpack the emulator inside it. Just be aware that the name has to start with a capital A.
 
 Although there is an official Hypseus Singe release available for macOS ARM this appears somehow broken so you may need to compile it yourself. This is a bit involved so it's beyond the scope of this document to describe it. For this reason macOS is not listed as supported but the configuration is still bundled so if you're persistent and manage to get the emulator to work, it will hopefully work from within ES-DE as well.
 
 After the emulator has been installed, copy the required BIOS ROMs into `Hypseus Singe\roms\` on Windows or `~/Applications/hypseus-singe/roms/` on Linux.
 
 Controller configuration using the `hypinput.ini` file is described in the official Hypseus Singe documentation, but the following example is usable with Xbox 360-compatible controllers:
-
-```
-[KEYBOARD]
-KEY_UP = SDLK_UP SDLK_r 5 -002
-KEY_DOWN = SDLK_DOWN SDLK_f 7 +002
-KEY_LEFT = SDLK_LEFT SDLK_d 8 -001
-KEY_RIGHT = SDLK_RIGHT SDLK_g 6 +001
-KEY_COIN1 = SDLK_5 0 1
-KEY_COIN2 = SDLK_6 0 0
-KEY_START1 = SDLK_1 0 4
-KEY_START2 = SDLK_2 0 0
-KEY_BUTTON1 = SDLK_LCTRL SDLK_a 14
-KEY_BUTTON2 = SDLK_LALT SDLK_s 15
-KEY_BUTTON3 = SDLK_SPACE SDLK_d 16
-KEY_SKILL1 = SDLK_LSHIFT SDLK_w 0
-KEY_SKILL2 = SDLK_z SDLK_i 0
-KEY_SKILL3 = SDLK_x SDLK_k 0
-KEY_SERVICE = SDLK_9 0 0
-KEY_TEST = SDLK_F2 0 0
-KEY_RESET = SDLK_0 0 0
-KEY_SCREENSHOT = SDLK_F12 0 0
-KEY_QUIT = SDLK_ESCAPE SDLK_q 17
-KEY_PAUSE = SDLK_p 0 0
-KEY_CONSOLE = SDLK_BACKSLASH 0 0
-KEY_TILT = SDLK_t 0 0
-END
-```
-
-With this configuration, pressing the _A_ and _Y_ buttons at the same time exits the emulator.
-
-Here's an alternative configuration as described in the following YouTube video: \
-https://www.youtube.com/watch?v=mO2UiI6byJo
 
 ```
 [KEYBOARD]
@@ -1251,7 +1236,12 @@ KEY_TILT = SDLK_t 0 0
 END
 ```
 
+With this configuration, pressing the _Back_ and _Start_ buttons (or equivalent on non-Xbox 360 controllers) at the same time exits the emulator.
+
 There are two types of games supported by Hypseus and these are _Daphne_ and _Singe_. It's beyond the scope of this document to describe these game formats in detail but there are many resources available online for this. The setup differs a bit between these two types however, and you need to use an alternative emulator entry in ES-DE to launch Singe games.
+
+In addition to the above instructions there's an unofficial YouTube video available on how to setup Hypseus Singe on the Steam Deck: \
+https://www.youtube.com/watch?v=mO2UiI6byJo
 
 **Daphne games**
 
@@ -2267,6 +2257,10 @@ When a certain game media file does not exist for the selected region, ES-DE aut
 
 Various settings that affect the user interface.
 
+**Theme downloader**
+
+Starts the theme downloader, which is documented in detail [elsewhere](USERGUIDE.md#theme-downloader) in this document.
+
 **Theme set**
 
 The theme set to use. Defaults to Slate which is shipped with the application. There are two types of theme sets; the new type which was introduced with ES-DE v2.0 and legacy themes that are supported for backward compatibility with RetroPie EmulationStation. The use of legacy themes is however discouraged as their functionality is very limited. As well the backward compabitility will likely be removed at some point in the future.
@@ -3054,7 +3048,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | android               | Google Android                                 | BlueStacks **(Standalone)** [W]   |                                   | No           | Shortcut (.lnk) file                |
 | apple2                | Apple II                                       | LinApple **(Standalone)** [U],<br>Mednafen **(Standalone)** [M],<br>AppleWin **(Standalone)** [W] | Mednafen **(Standalone)** [UW],<br>MAME **(Standalone)** | Yes for Mednafen and MAME | See the specific _Apple II_ section elsewhere in this guide |
 | apple2gs              | Apple IIGS                                     | MAME **(Standalone)**             |                                   | Yes          | See the specific _Apple IIGS_ section elsewhere in this guide |
-| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| arcade                | Arcade                                         | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW],<br>_Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | arcadia               | Emerson Arcadia 2001                           | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file           |
 | arduboy               | Arduboy Miniature Game System                  | Arduous                           |                                   | No           | Single archive or .hex file          |
 | astrocde              | Bally Astrocade                                | MAME - Current                    | MAME **(Standalone)**             |              | See the specific _Bally Astrocade_ section elsewhere in this guide |
@@ -3098,7 +3092,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fmtowns               | Fujitsu FM Towns                               | Tsugaru **(Standalone)** [UW]     |                                   | Yes          | See the specific _Fujitsu FM Towns_ section elsewhere in this guide |
 | gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file |
-| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>Mednafen **(Standalone)** |              |                                      |
+| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Mednafen **(Standalone)** |              |                                      |
 | gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file |
 | gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>VBA Next,<br>gpSP | No           | Single archive or ROM file |
 | gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file |
@@ -3112,7 +3106,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | lutris                | Lutris Open Gaming Platform                    | Lutris **(Standalone)** [U]       |                                   | No           | See the specific _Lutris_ section elsewhere in this guide |
 | lutro                 | Lutro Game Engine                              | Lutro                             |                                   |              |                                      |
 | macintosh             | Apple Macintosh                                | MAME Mac SE Bootable **(Standalone)** | MAME Mac SE Boot Disk **(Standalone)**,<br>MAME Mac Plus Bootable **(Standalone)**,<br>MAME Mac Plus Boot Disk **(Standalone)**,<br>Basilisk II **(Standalone)**,<br>SheepShaver **(Standalone)** | Yes          | See the specific _Apple Macintosh_ section elsewhere in this guide |
-| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW] | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
+| mame                  | Multiple Arcade Machine Emulator               | MAME - Current                    | MAME 2010,<br>MAME 2003-Plus,<br>MAME 2000,<br>MAME **(Standalone)**,<br>FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [UW],<br>FB Alpha 2012,<br>Flycast,<br>Flycast **(Standalone)**,<br>Kronos [UW],<br>Model 2 Emulator **(Standalone)** [W],<br>Model 2 Emulator [Suspend ES-DE] **(Standalone)** [W],<br>Supermodel **(Standalone)** [UW],<br>Supermodel [Fullscreen] **(Standalone)** [UW],<br>_Shortcut or script_ | Depends      | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | mame-advmame          | AdvanceMAME                                    | _Placeholder_                     |                                   | Depends      |                                      |
 | mame-mame4all         | MAME4ALL                                       | _Placeholder_                     |                                   | Depends      |                                      |
 | mastersystem          | Sega Master System                             | Genesis Plus GX                   | Genesis Plus GX Wide,<br>SMS Plus GX,<br>Gearsystem,<br>PicoDrive,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
@@ -3135,8 +3129,8 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | naomi                 | Sega NAOMI                                     | Flycast                           | Flycast **(Standalone)**          |              |                                      |
 | naomigd               | Sega NAOMI GD-ROM                              | Flycast                           | Flycast **(Standalone)**          |              |                                      |
 | n3ds                  | Nintendo 3DS                                   | Citra [UW],<br>Citra **(Standalone)** [M] | Citra 2018 [UW],<br>Citra **(Standalone)** [UW] | No           | Single ROM file       |
-| n64                   | Nintendo 64                                    | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M] | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64 [UW],<br>simple64 **(Standalone)** [UW],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>Project64 **(Standalone)** [W],<br>ares **(Standalone)**,<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file |
-| n64dd                 | Nintendo 64DD                                  | ParaLLEl N64                      | Mupen64Plus-Next [UW],<br>Rosalie's Mupen GUI **(Standalone)** [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
+| n64                   | Nintendo 64                                    | Mupen64Plus-Next                  | Mupen64Plus **(Standalone)**,<br>ParaLLEl N64,<br>simple64 **(Standalone)** [UW],<br>Rosalie's Mupen GUI **(Standalone)** [UW],<br>Project64 **(Standalone)** [W],<br>ares **(Standalone)**,<br>sixtyforce **(Standalone)** [M] | No           | Single archive or ROM file |
+| n64dd                 | Nintendo 64DD                                  | ParaLLEl N64 [UW],<br>Mupen64Plus-Next [M] | Mupen64Plus-Next [UW],<br>ParaLLEl N64 [M],<br>Rosalie's Mupen GUI **(Standalone)** [UW] | Yes          | See the specific _Nintendo 64DD_ section elsewhere in this guide |
 | nds                   | Nintendo DS                                    | DeSmuME                           | DeSmuME 2015,<br>DeSmuME **(Standalone)** [U],<br>melonDS,<br>melonDS **(Standalone)** | No           | Single archive or ROM file |
 | neogeo                | SNK Neo Geo                                    | FinalBurn Neo                     | FinalBurn Neo **(Standalone)** [UW],<br>MAME **(Standalone)** | Yes          | See the specific _Arcade and Neo Geo_ section elsewhere in this guide |
 | neogeocd              | SNK Neo Geo CD                                 | NeoCD                             | FinalBurn Neo,<br>FinalBurn Neo **(Standalone)** [U],<br>MAME **(Standalone)** | Yes          | .chd (NeoCD and MAME only) or .cue file |
@@ -3157,7 +3151,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pico8                 | PICO-8 Fantasy Console                         | PICO-8 **(Standalone)**           | PICO-8 Splore **(Standalone)**    | No           | See the specific _PICO-8_ section elsewhere in this guide |
 | pokemini              | Nintendo Pokémon Mini                          | PokeMini                          |                                   | No           |                                      |
 | ports                 | Ports                                          | _Various_                         |                                   | No           | See the specific _Ports and desktop applications_ section elsewhere in this guide |
-| ps2                   | Sony PlayStation 2                             | PCSX2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 **(Standalone)** [UW],<br>PCSX2 Legacy **(Standalone)**@,<br>Play! **(Standalone)**,<br>AetherSX2 **(Standalone)** [M] | Yes except for Play! |                                      |
+| ps2                   | Sony PlayStation 2                             | LRPS2 [UW],<br>PCSX2 **(Standalone)** [M] | PCSX2 [UW] @,<br>PCSX2 **(Standalone)** [UW],<br>PCSX2 Legacy **(Standalone)** @,<br>Play! **(Standalone)**,<br>AetherSX2 **(Standalone)** [M] | Yes except for Play! |                                      |
 | ps3                   | Sony PlayStation 3                             | RPCS3 Shortcut **(Standalone)**   | RPCS3 Directory **(Standalone)** | Yes    | See the specific _Sony PlayStation 3_ section elsewhere in this guide |
 | ps4                   | Sony PlayStation 4                             | _Placeholder_                     |                                   |              |                                      |
 | psp                   | Sony PlayStation Portable                      | PPSSPP                            | PPSSPP **(Standalone)**           | No           | Single disc image file      |
@@ -3213,4 +3207,5 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | xbox360               | Microsoft Xbox 360                             | xenia **(Standalone)** [W]        |                                   | No           |                                      |
 | zmachine              | Infocom Z-machine                              | Gargoyle **(Standalone)**         |                                   | No           |                                      |
 | zx81                  | Sinclair ZX81                                  | EightyOne                         |                                   |              |                                      |
+| zxnext                | Sinclair ZX Spectrum Next                      | #CSpect **(Standalone)** [UW],<br>ZEsarUX **(Standalone)** [M] | ZEsarUX **(Standalone)** [UW] | No           | In separate folder interpreted as a file |
 | zxspectrum            | Sinclair ZX Spectrum                           | Fuse                              | Fuse **(Standalone)**             | No           |                                      |

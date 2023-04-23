@@ -2,9 +2,9 @@
 
 [[_TOC_]]
 
-## Version 2.0.1 (in development)
+## Version 2.0.1
 
-**Release date:** TBD
+**Release date:** 2023-04-23
 
 ### Release overview
 
