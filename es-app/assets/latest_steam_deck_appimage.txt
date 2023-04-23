@@ -1,3 +1,3 @@
 # URL for the latest Steam Deck AppImage, used by EmuDeck (www.emudeck.com)
-# ES-DE release 2.0.0
-https://gitlab.com/es-de/emulationstation-de/-/package_files/71412485/download
+# ES-DE release 2.0.1
+https://gitlab.com/es-de/emulationstation-de/-/package_files/76389074/download
