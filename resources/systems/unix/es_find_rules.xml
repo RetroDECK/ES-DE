@@ -120,6 +120,9 @@
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/org.citra_emu.citra</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.citra_emu.citra</entry>
+            <entry>~/Applications/citra-linux-*.AppImage</entry>
+            <entry>~/.local/bin/citra-linux-*.AppImage</entry>
+            <entry>~/bin/citra-linux-*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="CPCEMU">
