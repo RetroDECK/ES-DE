@@ -1518,6 +1518,7 @@
         <path>%ROMPATH%\sgb</path>
         <extension>.gb .GB .gbc .GBC .sgb .SGB .7z .7Z .zip .ZIP</extension>
         <command label="Mesen-S">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mesen-s_libretro.dll %ROM%</command>
+        <command label="SameBoy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\sameboy_libretro.dll %ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mgba_libretro.dll %ROM%</command>
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
         <platform>gb</platform>
