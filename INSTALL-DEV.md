@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.0 (development version) - Building and advanced configuration
+# EmulationStation Desktop Edition (ES-DE) v2.1 (development version) - Building and advanced configuration
 
 This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [INSTALL.md](INSTALL.md) instead.
 

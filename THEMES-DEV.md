@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.0 (development version) - Themes
+# EmulationStation Desktop Edition (ES-DE) v2.1 (development version) - Themes
 
 **Note:** This document is only relevant for the current ES-DE development version, if you would like to see the documentation for the latest stable release, refer to [THEMES.md](THEMES.md) instead.
 
@@ -132,6 +132,14 @@ Note that the legacy theme engine had quite inaccurate text sizing and font rend
 * Carousel text entries did not multiply the font size by the itemScale (logoScale) property value
 * The defined line spacing was not always applied for automatically sized text elements
 * Font sizes were rounded to integers, leading to imprecise text sizing across different resolutions (the rounding was also done incorrectly)
+
+## System metadata repository
+
+There is a very useful system metadata repository available that you can use for populating information like descriptions, release dates, per-system color palettes etc. It can be found here:
+
+https://gitlab.com/es-de/themes/system-metadata
+
+By adding this to your theme, either via manually downloading and including it, or by adding it as a Git subtree, you'll be able to access its defined variables. Make sure to regularly check for updates as corrections and additions of new systems are done regularly. Also check the README.md file in that repository for more details on how to actually use the variables.
 
 ## Simple example
 
@@ -1372,7 +1380,7 @@ Properties:
     - Minimum value is `0` (pure black) and maximum value is `1` (no adjustment)
     - Default is `1`
 * `fastScrolling` - type: BOOLEAN
-    - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). This requires that the carousel has three or more entries, otherwise the highest scrolling tier will never be triggered. Be aware of possible performance implications when enabling this property, for gamelist views it's probably mostly useful for text-based carousels as streaming carousel images at the higher scrolling speed is likely to lead to stuttering on slower machines. Similarly, using this property in the system view together with gameselector configuration may lead to quite a lot of lag on weaker machines.
+    - Normally the carousel scrolls at a constant and somehow slow pace, but via this property it's possible to introduce faster scrolling with an additional higher scrolling tier similar to the gamelist textlist (although slightly slower than that). This requires that the carousel has three or more entries, otherwise the highest scrolling tier will never be triggered. Be aware of possible performance implications when enabling this property as images have to be streamed at a higher speed which may introduce stuttering on slower machines.
     - Default is `false`
 * `color` - type: COLOR
     - Color of the carousel background panel. Setting a value of `00000000` makes the background panel transparent.

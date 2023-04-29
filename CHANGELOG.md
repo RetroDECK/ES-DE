@@ -2,6 +2,18 @@
 
 [[_TOC_]]
 
+## Version 2.1.0 (in development)
+
+**Release date:** TBD
+
+### Detailed list of changes
+
+* Added the SameBoy RetroArch core as an alternative emulator for the sgb system
+* (Linux) Added support for the official Citra AppImage release
+* Changed the default OpenGL version from 4.6 to 3.3 when building for RetroDECK
+
+### Bug fixes
+
 ## Version 2.0.1
 
 **Release date:** 2023-04-23

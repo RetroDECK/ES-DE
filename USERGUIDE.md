@@ -231,6 +231,8 @@ In general it should be straightforward to run ES-DE on Windows. Almost all emul
 
 Just make sure to never place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations and extremely long startup times if you have a large collection. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
 
+Also make sure that you don't use the exFAT filesystem as its very poor disk I/O performance will make ES-DE run really slowly. Using this filesystem will make the theme downloader fail as well.
+
 In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start. For really old graphics cards the available drivers may not provide an OpenGL version that is modern enough for ES-DE to work, and in this case a last resort solution would be to install the _Mesa3D for Windows_ library which provides software-based OpenGL rendering. The 64-bit version of this library can be downloaded from [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag) and you simply extract the opengl32.dll file into the ES-DE installation directory. Just be aware that the performance may be quite bad.
 
 On some GPUs with buggy drivers, ES-DE may only display a black screen on startup or when launching a game. The problem can be worked around by specifying a window size for ES-DE that is a single pixel wider than the actual screen resolution. So for example for a 1280x800 display, the resolution can be set to 1281x800 and then rendering should work correctly. This is applied using the --resolution command line option, for example:
@@ -545,8 +547,10 @@ If you have customized a theme by for instance modifying any of its XML files, t
 
 In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/.emulationstation/themes/themes-list`) you'll reset the theme downloader to its initial state.
 
+Note that the exFAT filesystem can't be used as it makes the theme downloader fail. But using this filesystem is strongly discouraged anyway as it offers very poor disk I/O performance which makes ES-DE run really slowly.
+
 ![alt text](images/es-de_theme_downloader.png "ES-DE Theme Downloader")
-_This shows the theme downloader with a number of installed themes._
+_The theme downloader with a number of installed themes._
 
 ## RetroArch setup
 

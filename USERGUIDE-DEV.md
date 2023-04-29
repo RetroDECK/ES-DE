@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.0 (development version) - User guide
+# EmulationStation Desktop Edition (ES-DE) v2.1 (development version) - User guide
 
 This version of the user guide is only relevant for the current ES-DE development version, if you are using the latest stable release, refer to [USERGUIDE.md](USERGUIDE.md) instead.
 
@@ -232,6 +232,8 @@ Note that the above are only examples to illustrate the general approach, you ma
 In general it should be straightforward to run ES-DE on Windows. Almost all emulators are available on this operating system and driver quality and controller support is normally very good.
 
 Just make sure to never place games or other resources on network shares using the Microsoft SMB protocol as that will lead to unacceptable performance degradations and extremely long startup times if you have a large collection. See the point above on how to setup an NFS share if you insist on placing files or other resources on network drives.
+
+Also make sure that you don't use the exFAT filesystem as its very poor disk I/O performance will make ES-DE run really slowly. Using this filesystem will make the theme downloader fail as well.
 
 In order for ES-DE to run, graphics drivers with OpenGL support have to be installed. If not, the application simply won't start. For really old graphics cards the available drivers may not provide an OpenGL version that is modern enough for ES-DE to work, and in this case a last resort solution would be to install the _Mesa3D for Windows_ library which provides software-based OpenGL rendering. The 64-bit version of this library can be downloaded from [https://fdossena.com/?p=mesa/index.frag](https://fdossena.com/?p=mesa/index.frag) and you simply extract the opengl32.dll file into the ES-DE installation directory. Just be aware that the performance may be quite bad.
 
@@ -547,8 +549,10 @@ If you have customized a theme by for instance modifying any of its XML files, t
 
 In worst case there could be a situation where a repository is corrupted and the theme downloader can't properly identify or handle the corruption. In this case you will have to rename or delete that directory. This could also apply to the actual themes list repository. The latter is named _themes-list_ so by just deleting this directory (i.e. `~/.emulationstation/themes/themes-list`) you'll reset the theme downloader to its initial state.
 
+Note that the exFAT filesystem can't be used as it makes the theme downloader fail. But using this filesystem is strongly discouraged anyway as it offers very poor disk I/O performance which makes ES-DE run really slowly.
+
 ![alt text](images/es-de_theme_downloader.png "ES-DE Theme Downloader")
-_This shows the theme downloader with a number of installed themes._
+_The theme downloader with a number of installed themes._
 
 ## RetroArch setup
 
@@ -633,6 +637,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | gc           | Triforce    | dolphin-emu-triforce*.AppImage  |
 | macintosh    | Basilisk II | BasiliskII*.AppImage            |
 | macintosh    | SheepShaver | SheepShaver*.AppImage           |
+| n3ds         | Citra       | citra-linux-*.AppImage          |
 | n64          | RMG         | RMG*.AppImage                   |
 | n64dd        | RMG         | RMG*.AppImage                   |
 | ps2          | PCSX2       | pcsx2*-Qt.AppImage              |
@@ -3172,7 +3177,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | segacd                | Sega CD                                        | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>ares **(Standalone)** | Yes          |                                      |
 | sfc                   | Nintendo SFC (Super Famicom)                   | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | sg-1000               | Sega SG-1000                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>blueMSX,<br>ares **(Standalone)** | No           |                                      |
-| sgb                   | Nintendo Super Game Boy                        | Mesen-S                           | mGBA,<br>mGBA **(Standalone)**    |              |  Single archive or ROM file |
+| sgb                   | Nintendo Super Game Boy                        | Mesen-S                           | SameBoy,<br>mGBA,<br>mGBA **(Standalone)**    |              |  Single archive or ROM file |
 | snes                  | Nintendo SNES (Super Nintendo)                 | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | snesna                | Nintendo SNES (Super Nintendo) [North America] | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Beetle Supafaust [UW],<br>Mesen-S,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | solarus               | Solarus Game Engine                            | Solarus **(Standalone)**          |                                   | No           | Single .solarus game file |
