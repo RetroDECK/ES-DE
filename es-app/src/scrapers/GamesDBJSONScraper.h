@@ -30,7 +30,6 @@ void thegamesdb_generate_json_scraper_requests(
 class TheGamesDBJSONRequest : public ScraperHttpRequest
 {
 public:
-    // Constructor for a GetGamelist request.
     TheGamesDBJSONRequest(std::queue<std::unique_ptr<ScraperRequest>>& requestsWrite,
                           std::vector<ScraperSearchResult>& resultsWrite,
                           const std::string& url)
@@ -38,7 +37,7 @@ public:
         , mRequestQueue(&requestsWrite)
     {
     }
-    // Constructior for a GetGame request
+
     TheGamesDBJSONRequest(std::vector<ScraperSearchResult>& resultsWrite, const std::string& url)
         : ScraperHttpRequest(resultsWrite, url)
         , mRequestQueue(nullptr)
