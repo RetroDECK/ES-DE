@@ -41,147 +41,157 @@ FindRules::FindRules()
 
 void FindRules::loadFindRules()
 {
-    const std::string& customSystemsDirectory {Utils::FileSystem::getHomePath() +
-                                               "/.emulationstation/custom_systems"};
+    std::vector<std::string> paths;
+    std::string filePath {Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems" +
+                          "/es_find_rules.xml"};
 
-    std::string path {customSystemsDirectory + "/es_find_rules.xml"};
-
-    if (Utils::FileSystem::exists(path)) {
+    if (Utils::FileSystem::exists(filePath)) {
+        paths.emplace_back(filePath);
         LOG(LogInfo) << "Found custom find rules configuration file";
     }
-    else {
+
 #if defined(_WIN64)
-        path = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_find_rules.xml",
+    filePath = ResourceManager::getInstance().getResourcePath(":/systems/windows/es_find_rules.xml",
                                                               false);
 #elif defined(__APPLE__)
-        path = ResourceManager::getInstance().getResourcePath(":/systems/macos/es_find_rules.xml",
-                                                              false);
+    filePath =
+        ResourceManager::getInstance().getResourcePath(":/systems/macos/es_find_rules.xml", false);
 #else
-        path = ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml",
-                                                              false);
+    filePath =
+        ResourceManager::getInstance().getResourcePath(":/systems/unix/es_find_rules.xml", false);
 #endif
-    }
 
-    if (path == "") {
+    if (filePath == "" && paths.empty()) {
         LOG(LogWarning) << "No find rules configuration file found";
         return;
     }
 
+    if (filePath != "")
+        paths.emplace_back(filePath);
+
+    for (auto& path : paths) {
 #if defined(_WIN64)
-    LOG(LogInfo) << "Parsing find rules configuration file \""
-                 << Utils::String::replace(path, "/", "\\") << "\"...";
+        LOG(LogInfo) << "Parsing find rules configuration file \""
+                     << Utils::String::replace(path, "/", "\\") << "\"...";
 #else
-    LOG(LogInfo) << "Parsing find rules configuration file \"" << path << "\"...";
+        LOG(LogInfo) << "Parsing find rules configuration file \"" << path << "\"...";
 #endif
 
-    pugi::xml_document doc;
+        pugi::xml_document doc;
 #if defined(_WIN64)
-    const pugi::xml_parse_result& res {
-        doc.load_file(Utils::String::stringToWideString(path).c_str())};
+        const pugi::xml_parse_result& res {
+            doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
-    const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
+        const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
 #endif
 
-    if (!res) {
-        LOG(LogError) << "Couldn't parse es_find_rules.xml: " << res.description();
-        return;
-    }
-
-    // Actually read the file.
-    const pugi::xml_node& ruleList {doc.child("ruleList")};
-
-    if (!ruleList) {
-        LOG(LogError) << "es_find_rules.xml is missing the <ruleList> tag";
-        return;
-    }
-
-    EmulatorRules emulatorRules;
-    CoreRules coreRules;
-
-    for (pugi::xml_node emulator {ruleList.child("emulator")}; emulator;
-         emulator = emulator.next_sibling("emulator")) {
-        const std::string& emulatorName {emulator.attribute("name").as_string()};
-        if (emulatorName.empty()) {
-            LOG(LogWarning) << "Found emulator tag without name attribute, skipping entry";
+        if (!res) {
+            LOG(LogError) << "Couldn't parse es_find_rules.xml: " << res.description();
             continue;
         }
-        if (mEmulators.find(emulatorName) != mEmulators.end()) {
-            LOG(LogWarning) << "Found repeating emulator tag \"" << emulatorName
-                            << "\", skipping entry";
+
+        // Actually read the file.
+        const pugi::xml_node& ruleList {doc.child("ruleList")};
+
+        if (!ruleList) {
+            LOG(LogError) << "es_find_rules.xml is missing the <ruleList> tag";
             continue;
         }
-        for (pugi::xml_node rule = emulator.child("rule"); rule; rule = rule.next_sibling("rule")) {
-            const std::string& ruleType {rule.attribute("type").as_string()};
-            if (ruleType.empty()) {
-                LOG(LogWarning) << "Found rule tag without type attribute for emulator \""
-                                << emulatorName << "\", skipping entry";
+
+        EmulatorRules emulatorRules;
+        CoreRules coreRules;
+
+        for (pugi::xml_node emulator {ruleList.child("emulator")}; emulator;
+             emulator = emulator.next_sibling("emulator")) {
+            const std::string& emulatorName {emulator.attribute("name").as_string()};
+            if (emulatorName.empty()) {
+                LOG(LogWarning) << "Found emulator tag without name attribute, skipping entry";
                 continue;
             }
+            if (mEmulators.find(emulatorName) != mEmulators.end()) {
+                if (paths.size() == 1) {
+                    LOG(LogWarning) << "Found repeating emulator tag \"" << emulatorName
+                                    << "\", skipping entry";
+                }
+                continue;
+            }
+            for (pugi::xml_node rule = emulator.child("rule"); rule;
+                 rule = rule.next_sibling("rule")) {
+                const std::string& ruleType {rule.attribute("type").as_string()};
+                if (ruleType.empty()) {
+                    LOG(LogWarning) << "Found rule tag without type attribute for emulator \""
+                                    << emulatorName << "\", skipping entry";
+                    continue;
+                }
 #if defined(_WIN64)
-            if (ruleType != "winregistrypath" && ruleType != "winregistryvalue" &&
-                ruleType != "systempath" && ruleType != "staticpath") {
+                if (ruleType != "winregistrypath" && ruleType != "winregistryvalue" &&
+                    ruleType != "systempath" && ruleType != "staticpath") {
 #else
-            if (ruleType != "systempath" && ruleType != "staticpath") {
+                if (ruleType != "systempath" && ruleType != "staticpath") {
 #endif
-                LOG(LogWarning) << "Found invalid rule type \"" << ruleType << "\" for emulator \""
-                                << emulatorName << "\", skipping entry";
-                continue;
-            }
-            for (pugi::xml_node entry {rule.child("entry")}; entry;
-                 entry = entry.next_sibling("entry")) {
-                const std::string& entryValue {entry.text().get()};
-                if (ruleType == "systempath")
-                    emulatorRules.systemPaths.emplace_back(entryValue);
-                else if (ruleType == "staticpath")
-                    emulatorRules.staticPaths.emplace_back(entryValue);
+                    LOG(LogWarning) << "Found invalid rule type \"" << ruleType
+                                    << "\" for emulator \"" << emulatorName << "\", skipping entry";
+                    continue;
+                }
+                for (pugi::xml_node entry {rule.child("entry")}; entry;
+                     entry = entry.next_sibling("entry")) {
+                    const std::string& entryValue {entry.text().get()};
+                    if (ruleType == "systempath")
+                        emulatorRules.systemPaths.emplace_back(entryValue);
+                    else if (ruleType == "staticpath")
+                        emulatorRules.staticPaths.emplace_back(entryValue);
 #if defined(_WIN64)
-                else if (ruleType == "winregistrypath")
-                    emulatorRules.winRegistryPaths.emplace_back(entryValue);
-                else if (ruleType == "winregistryvalue")
-                    emulatorRules.winRegistryValues.emplace_back(entryValue);
+                    else if (ruleType == "winregistrypath")
+                        emulatorRules.winRegistryPaths.emplace_back(entryValue);
+                    else if (ruleType == "winregistryvalue")
+                        emulatorRules.winRegistryValues.emplace_back(entryValue);
 #endif
+                }
             }
+            mEmulators[emulatorName] = emulatorRules;
+            emulatorRules.systemPaths.clear();
+            emulatorRules.staticPaths.clear();
+#if defined(_WIN64)
+            emulatorRules.winRegistryPaths.clear();
+            emulatorRules.winRegistryValues.clear();
+#endif
         }
-        mEmulators[emulatorName] = emulatorRules;
-        emulatorRules.systemPaths.clear();
-        emulatorRules.staticPaths.clear();
-#if defined(_WIN64)
-        emulatorRules.winRegistryPaths.clear();
-        emulatorRules.winRegistryValues.clear();
-#endif
-    }
 
-    for (pugi::xml_node core {ruleList.child("core")}; core; core = core.next_sibling("core")) {
-        const std::string& coreName {core.attribute("name").as_string()};
-        if (coreName.empty()) {
-            LOG(LogWarning) << "Found core tag without name attribute, skipping entry";
-            continue;
-        }
-        if (mCores.find(coreName) != mCores.end()) {
-            LOG(LogWarning) << "Found repeating core tag \"" << coreName << "\", skipping entry";
-            continue;
-        }
-        for (pugi::xml_node rule {core.child("rule")}; rule; rule = rule.next_sibling("rule")) {
-            const std::string& ruleType {rule.attribute("type").as_string()};
-            if (ruleType.empty()) {
-                LOG(LogWarning) << "Found rule tag without type attribute for core \"" << coreName
-                                << "\", skipping entry";
+        for (pugi::xml_node core {ruleList.child("core")}; core; core = core.next_sibling("core")) {
+            const std::string& coreName {core.attribute("name").as_string()};
+            if (coreName.empty()) {
+                LOG(LogWarning) << "Found core tag without name attribute, skipping entry";
                 continue;
             }
-            if (ruleType != "corepath") {
-                LOG(LogWarning) << "Found invalid rule type \"" << ruleType << "\" for core \""
-                                << coreName << "\", skipping entry";
+            if (mCores.find(coreName) != mCores.end()) {
+                if (paths.size() == 1) {
+                    LOG(LogWarning)
+                        << "Found repeating core tag \"" << coreName << "\", skipping entry";
+                }
                 continue;
             }
-            for (pugi::xml_node entry {rule.child("entry")}; entry;
-                 entry = entry.next_sibling("entry")) {
-                const std::string& entryValue {entry.text().get()};
-                if (ruleType == "corepath")
-                    coreRules.corePaths.emplace_back(entryValue);
+            for (pugi::xml_node rule {core.child("rule")}; rule; rule = rule.next_sibling("rule")) {
+                const std::string& ruleType {rule.attribute("type").as_string()};
+                if (ruleType.empty()) {
+                    LOG(LogWarning) << "Found rule tag without type attribute for core \""
+                                    << coreName << "\", skipping entry";
+                    continue;
+                }
+                if (ruleType != "corepath") {
+                    LOG(LogWarning) << "Found invalid rule type \"" << ruleType << "\" for core \""
+                                    << coreName << "\", skipping entry";
+                    continue;
+                }
+                for (pugi::xml_node entry {rule.child("entry")}; entry;
+                     entry = entry.next_sibling("entry")) {
+                    const std::string& entryValue {entry.text().get()};
+                    if (ruleType == "corepath")
+                        coreRules.corePaths.emplace_back(entryValue);
+                }
             }
+            mCores[coreName] = coreRules;
+            coreRules.corePaths.clear();
         }
-        mCores[coreName] = coreRules;
-        coreRules.corePaths.clear();
     }
 }
 
