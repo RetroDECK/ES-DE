@@ -115,10 +115,10 @@ void GuiMenu::openUIOptions()
 
     ComponentListRow themeDownloaderInputRow;
     themeDownloaderInputRow.elements.clear();
-    themeDownloaderInputRow.addElement(
-        std::make_shared<TextComponent>("THEME DOWNLOADER (EXPERIMENTAL)",
-                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
-        true);
+    themeDownloaderInputRow.addElement(std::make_shared<TextComponent>("THEME DOWNLOADER",
+                                                                       Font::get(FONT_SIZE_MEDIUM),
+                                                                       0x777777FF),
+                                       true);
     themeDownloaderInputRow.addElement(makeArrow(), false);
 
     themeDownloaderInputRow.makeAcceptInputHandler(
