@@ -833,13 +833,15 @@ void SystemData::loadSortingConfig()
     }
 
     for (auto& path : paths) {
-        LOG(LogInfo) << "Parsing systems sorting file \"" << path << "\"...";
-
-        pugi::xml_document doc;
 #if defined(_WIN64)
+        LOG(LogInfo) << "Parsing systems sorting file \"" << Utils::String::replace(path, "/", "\\")
+                     << "\"...";
+        pugi::xml_document doc;
         const pugi::xml_parse_result& res {
             doc.load_file(Utils::String::stringToWideString(path).c_str())};
 #else
+        LOG(LogInfo) << "Parsing systems sorting file \"" << path << "\"...";
+        pugi::xml_document doc;
         const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
 #endif
         if (!res) {
