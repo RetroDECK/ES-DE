@@ -110,6 +110,8 @@ public:
     // Loads the systems configuration file(s) at getConfigPath() and creates the systems.
     static bool loadConfig();
     static std::vector<std::string> getConfigPath(bool legacyWarning);
+    // Parses an optional es_systems_sorting.xml file.
+    static void loadSortingConfig();
 
     // Generates the game system directories and information files based on es_systems.xml.
     static bool createSystemDirectories();

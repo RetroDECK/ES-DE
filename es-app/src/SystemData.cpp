@@ -734,14 +734,8 @@ bool SystemData::loadConfig()
                 continue;
             }
 
-            if (sortName == "") {
+            if (sortName == "")
                 sortName = fullname;
-            }
-            else {
-                LOG(LogDebug) << "SystemData::loadConfig(): System \"" << name
-                              << "\" has a <systemsortname> tag set, sorting as \"" << sortName
-                              << "\" instead of \"" << fullname << "\"";
-            }
 
             // Convert path to generic directory seperators.
             path = Utils::FileSystem::getGenericPath(path);
@@ -798,6 +792,8 @@ bool SystemData::loadConfig()
             Window::getInstance()->renderSplashScreen(Window::SplashScreenState::SCANNING, 1.0f);
     }
 
+    loadSortingConfig();
+
     LOG(LogInfo) << "Parsed configuration for " << systemCount << " system"
                  << (systemCount == 1 ? ", loaded " : "s, loaded ") << sSystemVector.size()
                  << " system" << (sSystemVector.size() == 1 ? "" : "s")
@@ -814,6 +810,69 @@ bool SystemData::loadConfig()
         CollectionSystemsManager::getInstance()->loadCollectionSystems();
 
     return false;
+}
+
+void SystemData::loadSortingConfig()
+{
+    std::vector<std::string> paths;
+    std::string filePath {ResourceManager::getInstance().getResourcePath(
+        ":/systems/sorting/es_systems_sorting.xml", false)};
+
+    if (Utils::FileSystem::exists(filePath))
+        paths.emplace_back(filePath);
+
+    filePath = Utils::FileSystem::getHomePath() + "/.emulationstation/custom_systems" +
+               "/es_systems_sorting.xml";
+
+    if (Utils::FileSystem::exists(filePath))
+        paths.emplace_back(filePath);
+
+    if (paths.empty()) {
+        LOG(LogDebug) << "No systems sorting file found";
+        return;
+    }
+
+    for (auto& path : paths) {
+        LOG(LogInfo) << "Parsing systems sorting file \"" << path << "\"...";
+
+        pugi::xml_document doc;
+#if defined(_WIN64)
+        const pugi::xml_parse_result& res {
+            doc.load_file(Utils::String::stringToWideString(path).c_str())};
+#else
+        const pugi::xml_parse_result& res {doc.load_file(path.c_str())};
+#endif
+        if (!res) {
+            LOG(LogError) << "Couldn't parse es_systems_sorting.xml: " << res.description();
+            continue;
+        }
+
+        const pugi::xml_node& systemList {doc.child("systemList")};
+        if (!systemList) {
+            LOG(LogError) << "es_systems_sorting.xml is missing the <systemList> tag";
+            continue;
+        }
+
+        std::string systemName;
+        std::string sortName;
+
+        for (pugi::xml_node system {systemList.child("system")}; system;
+             system = system.next_sibling("system")) {
+            sortName = system.child("systemsortname").text().get();
+
+            if (sortName == "")
+                continue;
+
+            systemName = Utils::String::replace(system.child("name").text().get(), "\n", "");
+
+            auto systemEntry = std::find_if(
+                sSystemVector.begin(), sSystemVector.end(),
+                [systemName](SystemData* system) { return system->getName() == systemName; });
+
+            if (systemEntry != SystemData::sSystemVector.end())
+                (*systemEntry)->mSortName = sortName;
+        }
+    }
 }
 
 std::string SystemData::getLaunchCommandFromLabel(const std::string& label)
