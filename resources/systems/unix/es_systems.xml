@@ -14,8 +14,8 @@
         <name>ags</name>
         <fullname>Adventure Game Studio Game Engine</fullname>
         <path>%ROMPATH%/ags</path>
-        <extension>.desktop</extension>
-        <command label="Native binary">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <extension>.desktop .sh</extension>
+        <command label="Native binary">%STARTDIR%=%GAMEDIR% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>ags</platform>
         <theme>ags</theme>
     </system>
