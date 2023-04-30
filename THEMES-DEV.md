@@ -141,6 +141,24 @@ https://gitlab.com/es-de/themes/system-metadata
 
 By adding this to your theme, either via manually downloading and including it, or by adding it as a Git subtree, you'll be able to access its defined variables. Make sure to regularly check for updates as corrections and additions of new systems are done regularly. Also check the README.md file in that repository for more details on how to actually use the variables.
 
+Here's how to add this repository as a subtree inside your theme's Git repository:
+```
+git remote add system-metadata https://gitlab.com/es-de/themes/system-metadata.git
+git subtree add --prefix=system-metadata --squash system-metadata master
+```
+
+To later pull in updates made to the system metadata repository, you'll run the following:
+```
+git subtree pull --prefix=system-metadata --squash system-metadata master
+```
+
+The directory name can be changed to whatever you like using the --prefix flag.
+
+Note that the remote is only present on your local repository, so if you clone a theme you'll need to manually add the system-metadata remote to be able to pull from the subtree, i.e. you'll need to run this command on a freshly cloned theme repository:
+```
+git remote add system-metadata https://gitlab.com/es-de/themes/system-metadata.git
+```
+
 ## Simple example
 
 Here is a very simple theme that changes the color of the game name text:

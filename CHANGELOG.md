@@ -8,8 +8,12 @@
 
 ### Detailed list of changes
 
+* Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
+* Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
+* Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
 * (Linux) Added support for the official Citra AppImage release
+* Removed the experimental status for the theme downloader
 * Changed the default OpenGL version from 4.6 to 3.3 when building for RetroDECK
 
 ### Bug fixes

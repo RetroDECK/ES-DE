@@ -854,6 +854,30 @@ A theme is not mandatory to start the application, but ES-DE will be basically u
 
 As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
+## Working with Git subtrees
+
+There are a couple of Git subtrees in the ES-DE repository for some bundled dependencies. In order to pull updates from these you'll need to add their respective remotes to your local ES-DE repository:
+
+```
+git remote add CImg-external https://github.com/dtschump/CImg.git
+git remote add glm-external https://github.com/g-truc/glm.git
+git remote add lunasvg-external https://github.com/sammycage/lunasvg.git
+git remote add rapidjson-external https://github.com/Tencent/rapidjson.git
+git remote add rlottie-external https://github.com/Samsung/rlottie.git
+```
+
+Following this, updates can be pulled like so (fetching up to the latest commit):
+```
+git subtree pull --prefix=external/glm --squash glm-external master
+```
+
+Or to pull at a specific commit:
+```
+git subtree add --prefix=external/glm --squash glm-external bf71a834948186f4097caa076cd2663c69a10e1e
+```
+
+Note that none of this is needed to build ES-DE, it's only needed when working on the project and updating any of the bundled dependencies.
+
 ## Using clang-format for automatic code formatting
 
 The entire ES-DE codebase is formatted using clang-format and all new code must be formatted using this tool before being committed.
@@ -1157,6 +1181,8 @@ It doesn't matter in which order you define the systems as they will be sorted b
 
 Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011.
 
+But instead of changing the sorting directly in the es_systems.xml file it could be a better idea to use the dedicated es_systems_sorting.xml file instead. How to do that is described later in this document.
+
 Wildcards are supported for emulator binaries, but not for directories:
 ```xml
 <!-- This is supported, first matching file will be selected -->
@@ -1432,11 +1458,41 @@ Here is yet another example with the addition of the `snes` system where some fi
 </systemList>
 ```
 
+## es_systems_sorting.xml
+
+This file makes it possible to apply a custom systems sorting without having to modify the es_systems.xml file directly. It should be placed in the custom_systems directory, e.g.  `~/.emulationstation/custom_systems/es_systems_sorting.xml`
+
+The structure of this file is essentially a simplified version of the es_systems.xml file, but with only the `<name>` and `<systemsortname>` tags present per system.
+
+Here's an example where three systems have been sorted by release year instead of the default full system name:
+
+```xml
+<?xml version="1.0"?>
+<systemList>
+    <system>
+        <name>amiga</name>
+        <systemsortname>1985</systemsortname>
+    </system>
+    <system>
+        <name>c64</name>
+        <systemsortname>1982</systemsortname>
+    </system>
+    <system>
+        <name>vic20</name>
+        <systemsortname>1980</systemsortname>
+    </system>
+</systemList>
+```
+
+You only need to include systems that you want to customize sorting for, and if there's also a systemsortname tag present in the es_systems.xml file for any system, then the es_systems_sorting.xml entry will take precedence.
+
+Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011.
+
 ## es_find_rules.xml
 
 This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.
 
-The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will override the bundled file.
+The file is located in the resources directory in the same location as the es_systems.xml file, but a customized copy can be placed in ~/.emulationstation/custom_systems, which will complement the bundled file.
 
 Here's an example es_find_rules.xml file for Unix (this is not the complete file shipped with ES-DE as that would be too large to include here):
 ```xml

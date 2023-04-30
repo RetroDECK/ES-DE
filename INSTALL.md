@@ -852,6 +852,30 @@ A theme is not mandatory to start the application, but ES-DE will be basically u
 
 As indicated above, the home directory will always take precedence and any resources or themes located there will override the ones in the path of the ES-DE executable.
 
+## Working with Git subtrees
+
+There are a couple of Git subtrees in the ES-DE repository for some bundled dependencies. In order to pull updates from these you'll need to add their respective remotes to your local ES-DE repository:
+
+```
+git remote add CImg-external https://github.com/dtschump/CImg.git
+git remote add glm-external https://github.com/g-truc/glm.git
+git remote add lunasvg-external https://github.com/sammycage/lunasvg.git
+git remote add rapidjson-external https://github.com/Tencent/rapidjson.git
+git remote add rlottie-external https://github.com/Samsung/rlottie.git
+```
+
+Following this, updates can be pulled like so (fetching up to the latest commit):
+```
+git subtree pull --prefix=external/glm --squash glm-external master
+```
+
+Or to pull at a specific commit:
+```
+git subtree add --prefix=external/glm --squash glm-external bf71a834948186f4097caa076cd2663c69a10e1e
+```
+
+Note that none of this is needed to build ES-DE, it's only needed when working on the project and updating any of the bundled dependencies.
+
 ## Using clang-format for automatic code formatting
 
 The entire ES-DE codebase is formatted using clang-format and all new code must be formatted using this tool before being committed.
