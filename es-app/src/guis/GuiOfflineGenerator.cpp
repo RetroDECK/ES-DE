@@ -201,7 +201,7 @@ GuiOfflineGenerator::~GuiOfflineGenerator()
 
 void GuiOfflineGenerator::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
 
     // Set row heights.
     mGrid.setRowHeightPerc(0, mTitle->getFont()->getLetterHeight() * 1.9725f / mSize.y, false);

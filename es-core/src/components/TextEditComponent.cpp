@@ -56,7 +56,7 @@ void TextEditComponent::onSizeChanged()
         return;
 
     mBox.fitTo(
-        mSize, glm::vec3 {},
+        mSize, glm::vec3 {0.0f, 0.0f, 0.0f},
         glm::vec2 {-34.0f, -32.0f - (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier())});
     onTextChanged(); // Wrap point probably changed.
 }

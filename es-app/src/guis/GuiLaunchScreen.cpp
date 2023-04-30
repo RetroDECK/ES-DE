@@ -192,7 +192,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     // Center on the X axis and keep slightly off-center on the Y axis.
     setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.25f);
 
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
     mBackground.setEdgeColor(0xEEEEEEFF);
 }
 

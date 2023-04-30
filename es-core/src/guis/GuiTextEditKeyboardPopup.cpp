@@ -304,7 +304,7 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
 
 void GuiTextEditKeyboardPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
     mText->setSize(mSize.x - KEYBOARD_PADDINGX - KEYBOARD_PADDINGX, mText->getSize().y);
 
     // Update grid.

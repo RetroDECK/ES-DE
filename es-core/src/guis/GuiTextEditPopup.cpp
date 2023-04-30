@@ -135,7 +135,7 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
 
 void GuiTextEditPopup::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
     mText->setSize(mSize.x - 40.0f * Renderer::getScreenHeightModifier(), mText->getSize().y);
 
     // Update grid.

@@ -94,9 +94,8 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
 
 void GuiDetectDevice::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
 
-    // Grid.
     mGrid.setSize(mSize);
     mGrid.setRowHeightPerc(0, mTitle->getFont()->getHeight() / mSize.y);
     mGrid.setRowHeightPerc(2, mMsg1->getFont()->getHeight() / mSize.y);

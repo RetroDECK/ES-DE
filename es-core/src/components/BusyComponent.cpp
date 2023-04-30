@@ -58,7 +58,7 @@ void BusyComponent::onSizeChanged()
                                16.0f * Renderer::getScreenResolutionModifier()});
     mBackground.fitTo(glm::vec2 {mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3),
                                  textHeight + (2.0f * Renderer::getScreenResolutionModifier())},
-                      mAnimation->getPosition(), glm::vec2 {});
+                      mAnimation->getPosition(), glm::vec2 {0.0f, 0.0f});
 
     mAnimation->load(&BUSY_ANIMATION_DEF);
 }

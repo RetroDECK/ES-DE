@@ -55,7 +55,7 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
     setPosition(posX, posY, 0);
 
     mFrame->setImagePath(":/graphics/frame.svg");
-    mFrame->fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mFrame->fitTo(mSize);
     addChild(mFrame);
 
     // We only initialize the actual time when we first start to render.

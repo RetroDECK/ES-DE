@@ -174,7 +174,7 @@ void GuiMsgBox::onSizeChanged()
                   mGrid.getRowHeight(0));
     mGrid.onSizeChanged();
 
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
 }
 
 void GuiMsgBox::deleteMeAndCall(const std::function<void()>& func)

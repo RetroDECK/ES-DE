@@ -203,7 +203,7 @@ void GuiScraperMulti::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.04f);
 
     mGrid.setSize(mSize);
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
 }
 
 void GuiScraperMulti::doNextSearch()

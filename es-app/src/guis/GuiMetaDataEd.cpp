@@ -733,7 +733,7 @@ void GuiMetaDataEd::onSizeChanged()
     mGrid.setColWidthPerc(1, 0.055f);
 
     mGrid.setSize(mSize);
-    mBackground.fitTo(mSize, glm::vec3 {}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
 
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);

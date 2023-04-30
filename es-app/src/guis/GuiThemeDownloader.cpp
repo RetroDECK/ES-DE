@@ -1089,7 +1089,7 @@ void GuiThemeDownloader::onSizeChanged()
     mGrid.setSize(mSize);
     mCenterGrid->setSize(glm::vec2 {mSize.x, mSize.y});
     mCenterGrid->setPosition(glm::vec3 {0.0f, mGrid.getRowHeight(0) + mGrid.getRowHeight(1), 0.0f});
-    mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
     mScreenshot->setMaxSize(mCenterGrid->getColWidth(1) + mCenterGrid->getColWidth(2) +
                                 mCenterGrid->getColWidth(3) + mCenterGrid->getColWidth(4),
                             mCenterGrid->getRowHeight(3));

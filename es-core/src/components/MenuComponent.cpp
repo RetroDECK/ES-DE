@@ -121,7 +121,7 @@ void MenuComponent::updateSize()
 
 void MenuComponent::onSizeChanged()
 {
-    mBackground.fitTo(mSize, glm::vec3 {0.0f, 0.0f, 0.0f}, glm::vec2 {-32.0f, -32.0f});
+    mBackground.fitTo(mSize);
 
     // Update grid row/column sizes.
     mGrid.setRowHeightPerc(0, TITLE_HEIGHT / mSize.y / 2.0f);

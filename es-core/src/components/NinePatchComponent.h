@@ -37,7 +37,9 @@ public:
     void render(const glm::mat4& parentTrans) override;
 
     void onSizeChanged() override { buildVertices(); }
-    void fitTo(glm::vec2 size, glm::vec3 position = {}, glm::vec2 padding = {});
+    void fitTo(glm::vec2 size,
+               glm::vec3 position = {0.0f, 0.0f, 0.0f},
+               glm::vec2 padding = {-32.0f, -32.0f});
 
     void setImagePath(const std::string& path);
     // Apply a color shift to the "edge" parts of the ninepatch.
