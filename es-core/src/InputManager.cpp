@@ -626,8 +626,18 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
     mJoysticks[joyID] = joy;
     mControllers[joyID] = controller;
 
-    char guid[65];
-    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), guid, 65);
+    std::string guid(65, '\0');
+    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), &guid[0], 64);
+    guid.erase(guid.find('\0'));
+
+    for (auto& inputConfig : mInputConfigs) {
+        // This can occur if there are SDL bugs or controller driver bugs.
+        if (inputConfig.second->getDeviceGUIDString().substr(0, 32) == guid.substr(0, 32)) {
+            LOG(LogWarning) << "Attempted to add an existing controller entry with GUID \"" << guid
+                            << "\", buggy drivers?";
+            return;
+        }
+    }
 
     mInputConfigs[joyID] =
         std::make_unique<InputConfig>(joyID, SDL_GameControllerName(mControllers[joyID]), guid);
@@ -668,9 +678,17 @@ void InputManager::removeControllerByJoystickID(Window* window, SDL_JoystickID j
 {
     assert(joyID != -1);
 
-    char guid[65];
+    std::string guid(65, '\0');
     SDL_Joystick* joy {SDL_JoystickFromInstanceID(joyID)};
-    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), guid, 65);
+    SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), &guid[0], 64);
+    guid.erase(guid.find('\0'));
+
+    if (guid.substr(0, 32) == "00000000000000000000000000000000") {
+        // This can occur if there are SDL bugs or controller driver bugs.
+        LOG(LogWarning)
+            << "Attempted to remove an invalid controller entry with zero GUID, buggy drivers?";
+        return;
+    }
 
     LOG(LogInfo) << "Removed controller \"" << SDL_GameControllerName(mControllers[joyID])
                  << "\" (GUID: " << guid << ", instance ID: " << joyID << ")";
