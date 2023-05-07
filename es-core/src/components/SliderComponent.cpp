@@ -35,10 +35,12 @@ SliderComponent::SliderComponent(float min, float max, float increment, const st
     mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
     mKnob.setOrigin(0.5f, 0.0f);
     mKnob.setImage(":/graphics/slider_knob.svg");
+    mKnob.setColorShift(mMenuColorSlider);
 
     mKnobDisabled.setResize(0.0f, std::round(mSize.y * 0.7f));
     mKnobDisabled.setOrigin(0.5f, 0.0f);
-    mKnobDisabled.setImage(":/graphics/slider_knob_disabled.svg");
+    mKnobDisabled.setImage(":/graphics/slider_knob.svg");
+    mKnobDisabled.setColorShift(mMenuColorSliderKnobDisabled);
 }
 
 bool SliderComponent::input(InputConfig* config, Input input)
@@ -106,9 +108,10 @@ void SliderComponent::render(const glm::mat4& parentTrans)
     if (mTextCache)
         mFont->renderTextCache(mTextCache.get());
 
-    mRenderer->drawRect(mKnob.getSize().x / 2.0f, mBarPosY, width, mBarHeight,
-                        0x77777700 | static_cast<unsigned int>(mOpacity * 255.0f),
-                        0x77777700 | static_cast<unsigned int>(mOpacity * 255.0f));
+    mRenderer->drawRect(
+        mKnob.getSize().x / 2.0f, mBarPosY, width, mBarHeight,
+        (mMenuColorSlider & 0xFFFFFF00) | static_cast<unsigned int>(mOpacity * 255.0f),
+        (mMenuColorSlider & 0xFFFFFF00) | static_cast<unsigned int>(mOpacity * 255.0f));
 
     if (mOpacity > DISABLED_OPACITY)
         mKnob.render(trans);
@@ -156,7 +159,7 @@ void SliderComponent::onValueChanged()
 
         glm::vec2 textSize {mFont->sizeText(max)};
         mTextCache = std::shared_ptr<TextCache>(mFont->buildTextCache(
-            val, mSize.x - textSize.x, (mSize.y - textSize.y) / 2.0f, 0x777777FF));
+            val, mSize.x - textSize.x, (mSize.y - textSize.y) / 2.0f, mMenuColorPrimary));
         mTextCache->metrics.size.x = textSize.x; // Fudge the width.
     }
 

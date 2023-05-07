@@ -13,11 +13,12 @@
 SwitchComponent::SwitchComponent(bool state)
     : mState {state}
     , mOriginalValue {state}
-    , mColorOriginalValue {DEFAULT_COLORSHIFT}
-    , mColorChangedValue {DEFAULT_COLORSHIFT}
+    , mColorOriginalValue {mMenuColorPrimary}
+    , mColorChangedValue {mMenuColorPrimary}
 {
     mImage.setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
     mImage.setImage(":/graphics/off.svg");
+    mImage.setColorShift(mMenuColorPrimary);
     mSize = mImage.getSize();
 }
 
@@ -43,7 +44,13 @@ bool SwitchComponent::input(InputConfig* config, Input input)
 void SwitchComponent::render(const glm::mat4& parentTrans)
 {
     glm::mat4 trans {parentTrans * getTransform()};
+    const float imageOpacity {mImage.getOpacity()};
+    const float opacity {
+        mState ? imageOpacity :
+                 (mState == mOriginalValue ? 0.5f * imageOpacity : 0.7f * imageOpacity)};
+    mImage.setOpacity(opacity);
     mImage.render(trans);
+    mImage.setOpacity(imageOpacity);
     renderChildren(trans);
 }
 

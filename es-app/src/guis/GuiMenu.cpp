@@ -44,35 +44,36 @@ GuiMenu::GuiMenu()
     : mRenderer {Renderer::getInstance()}
     , mMenu {"MAIN MENU"}
 {
-    bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
+    const bool isFullUI {UIModeController::getInstance()->isUIModeFull()};
 
     if (isFullUI)
-        addEntry("SCRAPER", 0x777777FF, true, [this] { openScraperOptions(); });
+        addEntry("SCRAPER", mMenuColorPrimary, true, [this] { openScraperOptions(); });
 
     if (isFullUI)
-        addEntry("UI SETTINGS", 0x777777FF, true, [this] { openUIOptions(); });
+        addEntry("UI SETTINGS", mMenuColorPrimary, true, [this] { openUIOptions(); });
 
-    addEntry("SOUND SETTINGS", 0x777777FF, true, [this] { openSoundOptions(); });
-
-    if (isFullUI)
-        addEntry("INPUT DEVICE SETTINGS", 0x777777FF, true, [this] { openInputDeviceOptions(); });
+    addEntry("SOUND SETTINGS", mMenuColorPrimary, true, [this] { openSoundOptions(); });
 
     if (isFullUI)
-        addEntry("GAME COLLECTION SETTINGS", 0x777777FF, true,
+        addEntry("INPUT DEVICE SETTINGS", mMenuColorPrimary, true,
+                 [this] { openInputDeviceOptions(); });
+
+    if (isFullUI)
+        addEntry("GAME COLLECTION SETTINGS", mMenuColorPrimary, true,
                  [this] { openCollectionSystemOptions(); });
 
     if (isFullUI)
-        addEntry("OTHER SETTINGS", 0x777777FF, true, [this] { openOtherOptions(); });
+        addEntry("OTHER SETTINGS", mMenuColorPrimary, true, [this] { openOtherOptions(); });
 
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
 #if defined(__APPLE__)
-        addEntry("QUIT EMULATIONSTATION", 0x777777FF, false, [this] { openQuitMenu(); });
+        addEntry("QUIT EMULATIONSTATION", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #else
         if (Settings::getInstance()->getBool("ShowQuitMenu"))
-            addEntry("QUIT", 0x777777FF, true, [this] { openQuitMenu(); });
+            addEntry("QUIT", mMenuColorPrimary, true, [this] { openQuitMenu(); });
         else
-            addEntry("QUIT EMULATIONSTATION", 0x777777FF, false, [this] { openQuitMenu(); });
+            addEntry("QUIT EMULATIONSTATION", mMenuColorPrimary, false, [this] { openQuitMenu(); });
 #endif
     }
 
@@ -117,9 +118,9 @@ void GuiMenu::openUIOptions()
     themeDownloaderInputRow.elements.clear();
     themeDownloaderInputRow.addElement(std::make_shared<TextComponent>("THEME DOWNLOADER",
                                                                        Font::get(FONT_SIZE_MEDIUM),
-                                                                       0x777777FF),
+                                                                       mMenuColorPrimary),
                                        true);
-    themeDownloaderInputRow.addElement(makeArrow(), false);
+    themeDownloaderInputRow.addElement(mMenu.makeArrow(), false);
 
     themeDownloaderInputRow.makeAcceptInputHandler(
         std::bind(&GuiMenu::openThemeDownloader, this, s));
@@ -565,6 +566,27 @@ void GuiMenu::openUIOptions()
         }
     });
 
+    // Menu color scheme.
+    auto menuColorScheme = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "MENU COLOR SCHEME", false);
+    const std::string selectedMenuColor {Settings::getInstance()->getString("MenuColorScheme")};
+    menuColorScheme->add("LIGHT", "light", selectedMenuColor == "light");
+    menuColorScheme->add("DARK", "dark", selectedMenuColor == "dark");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the menu color scheme to "light" in this case.
+    if (menuColorScheme->getSelectedObjects().size() == 0)
+        menuColorScheme->selectEntry(0);
+    s->addWithLabel("MENU COLOR SCHEME", menuColorScheme);
+    s->addSaveFunc([this, menuColorScheme, s] {
+        if (menuColorScheme->getSelected() !=
+            Settings::getInstance()->getString("MenuColorScheme")) {
+            Settings::getInstance()->setString("MenuColorScheme", menuColorScheme->getSelected());
+            s->setNeedsSaving();
+            ViewController::getInstance()->setMenuColors();
+            GuiMenu::close(false);
+        }
+    });
+
     // Open menu effect.
     auto menuOpeningEffect = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "MENU OPENING EFFECT", false);
@@ -721,20 +743,22 @@ void GuiMenu::openUIOptions()
     // Media viewer.
     ComponentListRow mediaViewerRow;
     mediaViewerRow.elements.clear();
-    mediaViewerRow.addElement(std::make_shared<TextComponent>(
-                                  "MEDIA VIEWER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+    mediaViewerRow.addElement(std::make_shared<TextComponent>("MEDIA VIEWER SETTINGS",
+                                                              Font::get(FONT_SIZE_MEDIUM),
+                                                              mMenuColorPrimary),
                               true);
-    mediaViewerRow.addElement(makeArrow(), false);
+    mediaViewerRow.addElement(mMenu.makeArrow(), false);
     mediaViewerRow.makeAcceptInputHandler(std::bind(&GuiMenu::openMediaViewerOptions, this));
     s->addRow(mediaViewerRow);
 
     // Screensaver.
     ComponentListRow screensaverRow;
     screensaverRow.elements.clear();
-    screensaverRow.addElement(std::make_shared<TextComponent>(
-                                  "SCREENSAVER SETTINGS", Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+    screensaverRow.addElement(std::make_shared<TextComponent>("SCREENSAVER SETTINGS",
+                                                              Font::get(FONT_SIZE_MEDIUM),
+                                                              mMenuColorPrimary),
                               true);
-    screensaverRow.addElement(makeArrow(), false);
+    screensaverRow.addElement(mMenu.makeArrow(), false);
     screensaverRow.makeAcceptInputHandler(std::bind(&GuiMenu::openScreensaverOptions, this));
     s->addRow(screensaverRow);
 
@@ -1203,9 +1227,9 @@ void GuiMenu::openInputDeviceOptions()
     configureInputRow.elements.clear();
     configureInputRow.addElement(
         std::make_shared<TextComponent>("CONFIGURE KEYBOARD AND CONTROLLERS",
-                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                        Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
         true);
-    configureInputRow.addElement(makeArrow(), false);
+    configureInputRow.addElement(mMenu.makeArrow(), false);
     configureInputRow.makeAcceptInputHandler(std::bind(&GuiMenu::openConfigInput, this, s));
     s->addRow(configureInputRow);
 
@@ -1254,21 +1278,22 @@ void GuiMenu::openOtherOptions()
     alternativeEmulatorsRow.elements.clear();
     alternativeEmulatorsRow.addElement(std::make_shared<TextComponent>("ALTERNATIVE EMULATORS",
                                                                        Font::get(FONT_SIZE_MEDIUM),
-                                                                       0x777777FF),
+                                                                       mMenuColorPrimary),
                                        true);
-    alternativeEmulatorsRow.addElement(makeArrow(), false);
+    alternativeEmulatorsRow.addElement(mMenu.makeArrow(), false);
     alternativeEmulatorsRow.makeAcceptInputHandler(
         std::bind([this] { mWindow->pushGui(new GuiAlternativeEmulators); }));
     s->addRow(alternativeEmulatorsRow);
 
     // Game media directory.
     ComponentListRow rowMediaDir;
-    auto mediaDirectory = std::make_shared<TextComponent>("GAME MEDIA DIRECTORY",
-                                                          Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto mediaDirectory = std::make_shared<TextComponent>(
+        "GAME MEDIA DIRECTORY", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
     auto bracketMediaDirectory = std::make_shared<ImageComponent>();
     bracketMediaDirectory->setResize(
         glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     bracketMediaDirectory->setImage(":/graphics/arrow.svg");
+    bracketMediaDirectory->setColorShift(mMenuColorPrimary);
     rowMediaDir.addElement(mediaDirectory, true);
     rowMediaDir.addElement(bracketMediaDirectory, false);
     std::string titleMediaDir {"ENTER GAME MEDIA DIRECTORY"};
@@ -1730,8 +1755,8 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        auto quitText = std::make_shared<TextComponent>("QUIT EMULATIONSTATION",
-                                                        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        auto quitText = std::make_shared<TextComponent>(
+            "QUIT EMULATIONSTATION", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         quitText->setSelectable(true);
         row.addElement(quitText, true);
         s->addRow(row);
@@ -1747,8 +1772,8 @@ void GuiMenu::openQuitMenu()
                 },
                 "NO", nullptr));
         });
-        auto rebootText = std::make_shared<TextComponent>("REBOOT SYSTEM",
-                                                          Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        auto rebootText = std::make_shared<TextComponent>(
+            "REBOOT SYSTEM", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         rebootText->setSelectable(true);
         row.addElement(rebootText, true);
         s->addRow(row);
@@ -1765,7 +1790,7 @@ void GuiMenu::openQuitMenu()
                 "NO", nullptr));
         });
         auto powerOffText = std::make_shared<TextComponent>(
-            "POWER OFF SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+            "POWER OFF SYSTEM", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         powerOffText->setSelectable(true);
         row.addElement(powerOffText, true);
         s->addRow(row);
@@ -1778,7 +1803,7 @@ void GuiMenu::openQuitMenu()
 void GuiMenu::addVersionInfo()
 {
     mVersion.setFont(Font::get(FONT_SIZE_SMALL));
-    mVersion.setColor(0x5E5E5EFF);
+    mVersion.setColor(mMenuColorTertiary);
 
 #if defined(IS_PRERELEASE)
     mVersion.setText("EMULATIONSTATION-DE  V" + Utils::String::toUpper(PROGRAM_VERSION_STRING) +
@@ -1836,7 +1861,7 @@ void GuiMenu::addEntry(const std::string& name,
     row.addElement(std::make_shared<TextComponent>(name, font, color), true);
 
     if (add_arrow) {
-        std::shared_ptr<ImageComponent> bracket {makeArrow()};
+        std::shared_ptr<ImageComponent> bracket {mMenu.makeArrow()};
         row.addElement(bracket, false);
     }
 

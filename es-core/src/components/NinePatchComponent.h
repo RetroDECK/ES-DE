@@ -29,10 +29,7 @@ class TextureResource;
 class NinePatchComponent : public GuiComponent
 {
 public:
-    NinePatchComponent(const std::string& path = "",
-                       unsigned int edgeColor = 0xFFFFFFFF,
-                       unsigned int centerColor = 0xFFFFFFFF);
-    virtual ~NinePatchComponent();
+    NinePatchComponent(const std::string& path = "");
 
     void render(const glm::mat4& parentTrans) override;
 
@@ -42,10 +39,7 @@ public:
                glm::vec2 padding = {-32.0f, -32.0f});
 
     void setImagePath(const std::string& path);
-    // Apply a color shift to the "edge" parts of the ninepatch.
-    void setEdgeColor(unsigned int edgeColor);
-    // Apply a color shift to the "center" part of the ninepatch.
-    void setCenterColor(unsigned int centerColor);
+    void setFrameColor(unsigned int frameColor);
 
     const glm::vec2& getCornerSize() const { return mCornerSize; }
     void setCornerSize(const glm::vec2& size)
@@ -60,13 +54,12 @@ private:
     void updateColors();
 
     Renderer* mRenderer;
-    Renderer::Vertex* mVertices;
+    std::unique_ptr<std::vector<Renderer::Vertex>> mVertices;
 
     std::string mPath;
     glm::vec2 mCornerSize;
     bool mSharpCorners;
-    unsigned int mEdgeColor;
-    unsigned int mCenterColor;
+    unsigned int mFrameColor;
     std::shared_ptr<TextureResource> mTexture;
 };
 

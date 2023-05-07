@@ -41,6 +41,7 @@ void TextEditComponent::onFocusGained()
 {
     mFocused = true;
     mBox.setImagePath(":/graphics/textinput_focused.svg");
+    mBox.setFrameColor(mMenuColorTextInputFrameFocused);
     startEditing();
 }
 
@@ -48,6 +49,7 @@ void TextEditComponent::onFocusLost()
 {
     mFocused = false;
     mBox.setImagePath(":/graphics/textinput.svg");
+    mBox.setFrameColor(mMenuColorTextInputFrameUnfocused);
 }
 
 void TextEditComponent::onSizeChanged()
@@ -270,7 +272,8 @@ void TextEditComponent::onTextChanged()
     mWrappedText =
         (isMultiline() ? mFont->wrapText(mText, getTextAreaSize().x, 0.0f, 1.5f, true) : mText);
     mTextCache = std::unique_ptr<TextCache>(mFont->buildTextCache(
-        mWrappedText, 0.0f, 0.0f, 0x77777700 | static_cast<unsigned char>(mOpacity * 255.0f)));
+        mWrappedText, 0.0f, 0.0f,
+        mMenuColorKeyboardText | static_cast<unsigned char>(mOpacity * 255.0f)));
 
     if (mCursor > static_cast<int>(mText.length()))
         mCursor = static_cast<int>(mText.length());
@@ -334,13 +337,13 @@ void TextEditComponent::render(const glm::mat4& parentTrans)
     if (!mEditing) {
         mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
                             2.0f * mRenderer->getScreenResolutionModifier(), cursorHeight,
-                            0xC7C7C7FF, 0xC7C7C7FF);
+                            mMenuColorKeyboardCursorUnfocused, mMenuColorKeyboardCursorUnfocused);
     }
 
     if (mEditing && mBlinkTime < BLINKTIME / 2) {
         mRenderer->drawRect(mCursorPos.x, mCursorPos.y + (mFont->getHeight() - cursorHeight) / 2.0f,
                             2.0f * mRenderer->getScreenResolutionModifier(), cursorHeight,
-                            0x777777FF, 0x777777FF);
+                            mMenuColorKeyboardCursorFocused, mMenuColorKeyboardCursorFocused);
     }
 }
 

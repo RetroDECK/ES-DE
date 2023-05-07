@@ -135,12 +135,12 @@ bool Window::init()
     mSplash->setPosition((mRenderer->getScreenWidth() - mSplash->getSize().x) / 2.0f,
                          (mRenderer->getScreenHeight() - mSplash->getSize().y) / 2.0f * 0.6f);
 
-    mSplashTextScanning = std::unique_ptr<TextCache>(mDefaultFonts.at(1)->buildTextCache(
-        "Searching for games...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+    mSplashTextScanning = std::unique_ptr<TextCache>(
+        mDefaultFonts.at(1)->buildTextCache("Searching for games...", 0.0f, 0.0f, 0x777777FF));
     mSplashTextPopulating = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache("Loading systems...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+        mDefaultFonts.at(1)->buildTextCache("Loading systems...", 0.0f, 0.0f, 0x777777FF));
     mSplashTextReloading = std::unique_ptr<TextCache>(
-        mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, DEFAULT_TEXTCOLOR));
+        mDefaultFonts.at(1)->buildTextCache("Reloading...", 0.0f, 0.0f, 0x777777FF));
 
     mSplashTextPositions.x =
         (mRenderer->getScreenWidth() - mSplashTextScanning->metrics.size.x) / 2.0f;
@@ -161,7 +161,7 @@ bool Window::init()
     progressBarRect.barPosX =
         (mRenderer->getScreenWidth() / 2.0f) - (progressBarRect.barWidth / 2.0f);
     progressBarRect.barPosY = mSplashTextPositions.y + (progressBarRect.barHeight * 2.0f);
-    progressBarRect.color = DEFAULT_TEXTCOLOR;
+    progressBarRect.color = 0x777777FF;
     mProgressBarRectangles.emplace_back(progressBarRect);
 
     const float borderThickness {std::ceil(2.0f * mRenderer->getScreenResolutionModifier())};
@@ -528,7 +528,10 @@ void Window::render()
                     // clang-format on
 
                     // Also dim the background slightly.
-                    backgroundParameters.dimming = 0.60f;
+                    if (Settings::getInstance()->getString("MenuColorScheme") == "dark")
+                        backgroundParameters.dimming = 0.80f;
+                    else
+                        backgroundParameters.dimming = 0.60f;
 
                     mRenderer->shaderPostprocessing(Renderer::Shader::CORE |
                                                         Renderer::Shader::BLUR_HORIZONTAL |

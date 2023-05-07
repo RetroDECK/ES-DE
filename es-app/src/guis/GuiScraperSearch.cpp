@@ -59,8 +59,8 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
                    glm::ivec2 {1, 3}, GridFlags::BORDER_TOP | GridFlags::BORDER_BOTTOM);
 
     // Selected result name.
-    mResultName =
-        std::make_shared<TextComponent>("Result name", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mResultName = std::make_shared<TextComponent>("Result name", Font::get(FONT_SIZE_MEDIUM),
+                                                  mMenuColorPrimary);
 
     // Selected result thumbnail.
     mResultThumbnail = std::make_shared<ImageComponent>();
@@ -75,15 +75,15 @@ GuiScraperSearch::GuiScraperSearch(SearchType type, unsigned int scrapeCount)
     else
         mDescContainer->setScrollParameters(6000.0f, 3000.0f, 0.8f);
 
-    mResultDesc =
-        std::make_shared<TextComponent>("Result desc", Font::get(FONT_SIZE_SMALL), 0x777777FF);
+    mResultDesc = std::make_shared<TextComponent>("Result desc", Font::get(FONT_SIZE_SMALL),
+                                                  mMenuColorPrimary);
     mDescContainer->addChild(mResultDesc.get());
     mDescContainer->setAutoScroll(true);
 
     // Metadata.
     auto font = Font::get(FONT_SIZE_SMALL); // Placeholder, gets replaced in onSizeChanged().
-    const unsigned int mdColor {0x777777FF};
-    const unsigned int mdLblColor {0x666666FF};
+    const unsigned int mdColor {mMenuColorPrimary};
+    const unsigned int mdLblColor {mMenuColorTertiary};
     mMD_Rating = std::make_shared<RatingComponent>(false, true);
     mMD_ReleaseDate = std::make_shared<DateTimeEditComponent>();
     mMD_ReleaseDate->setColor(mdColor);
@@ -381,7 +381,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
     mResultList->setLoopRows(true);
 
     auto font = Font::get(FONT_SIZE_MEDIUM);
-    unsigned int color {0x777777FF};
+    unsigned int color {mMenuColorPrimary};
     if (results.empty()) {
         // Check if the scraper used is still valid.
         if (!isValidConfiguredScraper()) {
@@ -650,7 +650,7 @@ void GuiScraperSearch::render(const glm::mat4& parentTrans)
     glm::mat4 trans {parentTrans * getTransform()};
 
     renderChildren(trans);
-    mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, 0x00000009, 0x00000009);
+    mRenderer->drawRect(0.0f, 0.0f, mSize.x, mSize.y, mMenuColorPanelDimmed, mMenuColorPanelDimmed);
 
     // Slight adjustment upwards so the busy grid is not rendered precisely at the text edge.
     trans = glm::translate(

@@ -33,6 +33,7 @@ public:
     static ViewController* getInstance();
 
     // These functions are called from main().
+    void setMenuColors();
     void invalidSystemsFileDialog();
     void noGamesDialog();
     void invalidAlternativeEmulatorDialog();

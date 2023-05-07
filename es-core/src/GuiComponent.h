@@ -17,14 +17,6 @@
 #include <functional>
 #include <memory>
 
-#define DEFAULT_TEXTCOLOR 0x777777FF
-#define DEFAULT_INVERTED_TEXTCOLOR 0x444444FF
-#define DEFAULT_INVERTED_IMAGECOLOR 0x666666FF
-#define DEFAULT_COLORSHIFT 0xFFFFFFFF
-#define ICONCOLOR_SCRAPERMARKED 0xFF7777FF
-#define ICONCOLOR_USERMARKED 0x7777FFFF
-#define TEXTCOLOR_SCRAPERMARKED 0x992222FF
-#define TEXTCOLOR_USERMARKED 0x222299FF
 #define DISABLED_OPACITY 0.314f
 
 class Animation;
@@ -354,6 +346,44 @@ protected:
     unsigned int mColorOriginalValue;
     unsigned int mColorChangedValue;
     unsigned int mComponentThemeFlags;
+
+    // Default values are for the "light" color scheme.
+    static inline unsigned int mMenuColorFrame {0xEFEFEFFF};
+    static inline unsigned int mMenuColorFrameLaunchScreen {0xDFDFDFFF};
+    static inline unsigned int mMenuColorFrameBusyComponent {0xFFFFFFFF};
+    static inline unsigned int mMenuColorPanelDimmed {0x00000009};
+
+    static inline unsigned int mMenuColorTitle {0x555555FF};
+    static inline unsigned int mMenuColorPrimary {0x777777FF};
+    static inline unsigned int mMenuColorSecondary {0x888888FF};
+    static inline unsigned int mMenuColorTertiary {0x666666FF};
+    static inline unsigned int mMenuColorRed {0x992222FF};
+    static inline unsigned int mMenuColorGreen {0x449944FF};
+    static inline unsigned int mMenuColorBlue {0x222299FF};
+
+    static inline unsigned int mMenuColorSelector {0xFFFFFFFF};
+    static inline unsigned int mMenuColorSeparators {0xC6C7C6FF};
+    static inline unsigned int mMenuColorBusyComponent {0xB8B8B8FF};
+    static inline unsigned int mMenuColorScrollIndicators {0x888888FF};
+    static inline unsigned int mMenuColorPopupText {0x444444FF};
+
+    static inline unsigned int mMenuColorButtonFocused {0x777777FF};
+    static inline unsigned int mMenuColorButtonTextFocused {0xFFFFFFFF};
+    static inline unsigned int mMenuColorButtonTextUnfocused {0x777777FF};
+    static inline unsigned int mMenuColorButtonFlatFocused {0x878787FF};
+    static inline unsigned int mMenuColorButtonFlatUnfocused {0xDADADAFF};
+
+    static inline unsigned int mMenuColorKeyboardModifier {0xF26767FF};
+    static inline unsigned int mMenuColorKeyboardCursorFocused {0x777777FF};
+    static inline unsigned int mMenuColorKeyboardCursorUnfocused {0xC7C7C7FF};
+    static inline unsigned int mMenuColorKeyboardText {0x77777700};
+    static inline unsigned int mMenuColorTextInputFrameFocused {0x777777FF};
+    static inline unsigned int mMenuColorTextInputFrameUnfocused {0xFFFFFFFF};
+
+    static inline unsigned int mMenuColorSlider {0x777777FF};
+    static inline unsigned int mMenuColorSliderKnobDisabled {0xC9C9C9FF};
+    static inline unsigned int mMenuColorDateTimeEditMarker {0x00000022};
+    static inline unsigned int mMenuColorDetectDeviceHeld {0x44444400};
 
     glm::vec3 mPosition;
     glm::vec2 mOrigin;

@@ -48,13 +48,13 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
     mGameName = std::make_shared<TextComponent>(
         scrapeName +
             ((mSearchParams.game->getType() == FOLDER) ? "  " + ViewController::FOLDER_CHAR : ""),
-        Font::get(FONT_SIZE_LARGE), 0x777777FF, ALIGN_CENTER);
-    mGameName->setColor(0x555555FF);
+        Font::get(FONT_SIZE_LARGE), mMenuColorPrimary, ALIGN_CENTER);
+    mGameName->setColor(mMenuColorTitle);
     mGrid.setEntry(mGameName, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
-    mSystemName =
-        std::make_shared<TextComponent>(Utils::String::toUpper(mSearchParams.system->getFullName()),
-                                        Font::get(FONT_SIZE_SMALL), 0x888888FF, ALIGN_CENTER);
+    mSystemName = std::make_shared<TextComponent>(
+        Utils::String::toUpper(mSearchParams.system->getFullName()), Font::get(FONT_SIZE_SMALL),
+        mMenuColorSecondary, ALIGN_CENTER);
     mGrid.setEntry(mSystemName, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
     // Row 3 is a spacer.
@@ -104,7 +104,7 @@ GuiScraperSingle::GuiScraperSingle(ScraperSearchParams& params,
         }
         delete this;
     }));
-    mButtonGrid = makeButtonGrid(buttons);
+    mButtonGrid = MenuComponent::makeButtonGrid(buttons);
 
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 

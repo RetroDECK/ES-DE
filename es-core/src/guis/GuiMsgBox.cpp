@@ -46,7 +46,7 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
     const float minWidth {
         floorf(glm::clamp(0.30f * aspectValue, 0.10f, 0.50f) * mRenderer->getScreenWidth())};
 
-    mMsg = std::make_shared<TextComponent>(text, Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
+    mMsg = std::make_shared<TextComponent>(text, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary,
                                            ALIGN_CENTER);
     mGrid.setEntry(mMsg, glm::ivec2 {0, 0}, false, false);
 
@@ -75,7 +75,7 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
     }
 
     // Put the buttons into a ComponentGrid.
-    mButtonGrid = makeButtonGrid(mButtons);
+    mButtonGrid = MenuComponent::makeButtonGrid(mButtons);
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 1}, true, false, glm::ivec2 {1, 1},
                    GridFlags::BORDER_TOP);
 

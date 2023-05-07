@@ -23,7 +23,7 @@ DateTimeEditComponent::DateTimeEditComponent(bool alignRight, DisplayMode dispMo
     , mKeyRepeatDir {0}
     , mKeyRepeatTimer {0}
     , mRelativeUpdateAccumulator {0}
-    , mColor {0x777777FF}
+    , mColor {mMenuColorPrimary}
     , mFont {Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT)}
     , mAlignRight {alignRight}
     , mUppercase {false}
@@ -201,7 +201,7 @@ void DateTimeEditComponent::render(const glm::mat4& parentTrans)
             if (mEditIndex >= 0 && static_cast<unsigned int>(mEditIndex) < mCursorBoxes.size())
                 mRenderer->drawRect(mCursorBoxes[mEditIndex][0], mCursorBoxes[mEditIndex][1],
                                     mCursorBoxes[mEditIndex][2], mCursorBoxes[mEditIndex][3],
-                                    0x00000022, 0x00000022);
+                                    mMenuColorDateTimeEditMarker, mMenuColorDateTimeEditMarker);
         }
     }
 }

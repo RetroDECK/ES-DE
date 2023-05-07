@@ -40,7 +40,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     // Set up main grid.
     mTitle = std::make_shared<TextComponent>("THEME DOWNLOADER", Font::get(FONT_SIZE_LARGE),
-                                             0x555555FF, ALIGN_CENTER);
+                                             mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2},
                    GridFlags::BORDER_BOTTOM);
 
@@ -51,46 +51,46 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
                           glm::ivec2 {1, 5});
 
     mVariantsLabel =
-        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mVariantsLabel, glm::ivec2 {1, 0}, false, true, glm::ivec2 {1, 1});
 
     mColorSchemesLabel =
-        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mColorSchemesLabel, glm::ivec2 {1, 1}, false, true, glm::ivec2 {1, 1});
 
     mAspectRatiosLabel =
-        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mAspectRatiosLabel, glm::ivec2 {3, 0}, false, true, glm::ivec2 {1, 1});
 
     mFutureUseLabel =
-        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), 0x555555FF, ALIGN_LEFT);
+        std::make_shared<TextComponent>("", Font::get(fontSizeSmall), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mFutureUseLabel, glm::ivec2 {3, 1}, false, true, glm::ivec2 {1, 1});
 
     mCenterGrid->setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {5, 0}, false, false,
                           glm::ivec2 {1, 5});
 
     mVariantCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
-                                                    0x555555FF, ALIGN_LEFT);
+                                                    mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mVariantCount, glm::ivec2 {2, 0}, false, true, glm::ivec2 {1, 1});
 
     mColorSchemesCount = std::make_shared<TextComponent>(
-        "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
+        "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mColorSchemesCount, glm::ivec2 {2, 1}, false, true, glm::ivec2 {1, 1});
 
     mAspectRatiosCount = std::make_shared<TextComponent>(
-        "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), 0x555555FF, ALIGN_LEFT);
+        "", Font::get(fontSizeSmall, FONT_PATH_LIGHT), mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mAspectRatiosCount, glm::ivec2 {4, 0}, false, true, glm::ivec2 {1, 1});
 
     mFutureUseCount = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_LIGHT),
-                                                      0x555555FF, ALIGN_LEFT);
+                                                      mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mFutureUseCount, glm::ivec2 {4, 1}, false, true, glm::ivec2 {1, 1});
 
     mDownloadStatus = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
-                                                      0x555555FF, ALIGN_LEFT);
+                                                      mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mDownloadStatus, glm::ivec2 {1, 2}, false, true, glm::ivec2 {2, 1});
 
     mLocalChanges = std::make_shared<TextComponent>("", Font::get(fontSizeSmall, FONT_PATH_BOLD),
-                                                    0x555555FF, ALIGN_LEFT);
+                                                    mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mLocalChanges, glm::ivec2 {3, 2}, false, true, glm::ivec2 {2, 1});
 
     mScreenshot = std::make_shared<ImageComponent>();
@@ -98,7 +98,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
     mCenterGrid->setEntry(mScreenshot, glm::ivec2 {1, 3}, false, true, glm::ivec2 {4, 1});
 
     mAuthor = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI * 0.9f, FONT_PATH_LIGHT),
-                                              0x555555FF, ALIGN_LEFT);
+                                              mMenuColorTitle, ALIGN_LEFT);
     mCenterGrid->setEntry(mAuthor, glm::ivec2 {1, 4}, false, true, glm::ivec2 {4, 1});
 
     mList = std::make_shared<ComponentList>();
@@ -124,7 +124,7 @@ GuiThemeDownloader::GuiThemeDownloader(std::function<void()> updateCallback)
 
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
     buttons.push_back(std::make_shared<ButtonComponent>("CLOSE", "CLOSE", [&] { delete this; }));
-    mButtons = makeButtonGrid(buttons);
+    mButtons = MenuComponent::makeButtonGrid(buttons);
     mGrid.setEntry(mButtons, glm::ivec2 {0, 3}, true, false, glm::ivec2 {2, 1},
                    GridFlags::BORDER_TOP);
 
@@ -689,8 +689,8 @@ void GuiThemeDownloader::populateGUI()
             themeName.append(" ").append(ViewController::EXCLAMATION_CHAR);
 
         ComponentListRow row;
-        std::shared_ptr<TextComponent> themeNameElement {
-            std::make_shared<TextComponent>(themeName, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+        std::shared_ptr<TextComponent> themeNameElement {std::make_shared<TextComponent>(
+            themeName, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
 
         ThemeGUIEntry guiEntry;
         guiEntry.themeName = themeNameElement;
@@ -861,31 +861,31 @@ void GuiThemeDownloader::updateInfoPane()
 
     if (mThemeSets[mList->getCursorId()].isCloned) {
         mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " INSTALLED");
-        mDownloadStatus->setColor(0x449944FF);
+        mDownloadStatus->setColor(mMenuColorGreen);
     }
     else if (mThemeSets[mList->getCursorId()].invalidRepository ||
              mThemeSets[mList->getCursorId()].manuallyDownloaded) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " MANUAL DOWNLOAD");
-        mDownloadStatus->setColor(0x992222FF);
+        mDownloadStatus->setColor(mMenuColorRed);
     }
     else if (mThemeSets[mList->getCursorId()].corruptRepository) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " CORRUPT");
-        mDownloadStatus->setColor(0x992222FF);
+        mDownloadStatus->setColor(mMenuColorRed);
     }
     else if (mThemeSets[mList->getCursorId()].shallowRepository) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " SHALLOW");
-        mDownloadStatus->setColor(0x992222FF);
+        mDownloadStatus->setColor(mMenuColorRed);
     }
     else {
         if (mThemeSets[mList->getCursorId()].newEntry)
             mDownloadStatus->setText("NOT INSTALLED (NEW)");
         else
             mDownloadStatus->setText("NOT INSTALLED");
-        mDownloadStatus->setColor(0x999999FF);
+        mDownloadStatus->setColor(mMenuColorSecondary);
     }
     if (mThemeSets[mList->getCursorId()].hasLocalChanges) {
         mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " LOCAL CHANGES");
-        mLocalChanges->setColor(0x992222FF);
+        mLocalChanges->setColor(mMenuColorRed);
     }
     else {
         mLocalChanges->setText("");
@@ -1036,8 +1036,8 @@ void GuiThemeDownloader::render(const glm::mat4& parentTrans)
     if (mGrayRectangleCoords.size() == 4) {
         mRenderer->setMatrix(parentTrans * getTransform());
         mRenderer->drawRect(mGrayRectangleCoords[0], mGrayRectangleCoords[1],
-                            mGrayRectangleCoords[2], mGrayRectangleCoords[3], 0x00000009,
-                            0x00000009);
+                            mGrayRectangleCoords[2], mGrayRectangleCoords[3], mMenuColorPanelDimmed,
+                            mMenuColorPanelDimmed);
     }
 
     if (mFetching)

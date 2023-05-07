@@ -15,5 +15,6 @@
      stroke="#777777"
      stroke-linejoin="round"
      stroke-width="4"
-     id="path2" />
+     id="path2"
+     style="stroke:#fefefe;stroke-opacity:1" />
 </svg>

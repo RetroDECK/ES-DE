@@ -311,6 +311,15 @@ void ComponentList::render(const glm::mat4& parentTrans)
     trans = glm::translate(trans, glm::vec3 {0.0f, -mCameraOffset, 0.0f});
 
     glm::mat4 loopTrans {trans};
+    const bool darkColorScheme {Settings::getInstance()->getString("MenuColorScheme") == "dark"};
+
+    // Draw selector bar if we're using the dark color scheme.
+    if (mFocused && mOpacity == 1.0f && darkColorScheme) {
+        const float selectedRowHeight {getRowHeight(mEntries.at(mCursor).data)};
+        mRenderer->setMatrix(trans);
+        mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight,
+                            mMenuColorSelector, mMenuColorSelector, false, mOpacity, mDimming);
+    }
 
     // Draw our entries.
     std::vector<GuiComponent*> drawAfterCursor;
@@ -362,9 +371,9 @@ void ComponentList::render(const glm::mat4& parentTrans)
                     }
                     else {
                         if (isTextComponent)
-                            it->component->setColor(DEFAULT_INVERTED_TEXTCOLOR);
+                            it->component->setColor(mMenuColorPrimary);
                         else
-                            it->component->setColorShift(DEFAULT_INVERTED_IMAGECOLOR);
+                            it->component->setColorShift(mMenuColorPrimary);
                         renderLoopFunc();
                         // Revert to the original color after rendering.
                         if (isTextComponent)
@@ -386,13 +395,13 @@ void ComponentList::render(const glm::mat4& parentTrans)
     // Custom rendering.
     mRenderer->setMatrix(trans);
 
-    // Draw selector bar.
-    if (mFocused) {
+    // Draw selector bar if we're using the light color scheme.
+    if (mFocused && !darkColorScheme) {
         const float selectedRowHeight {getRowHeight(mEntries.at(mCursor).data)};
 
         if (mOpacity == 1.0f) {
-            mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight, 0xFFFFFFFF,
-                                0xFFFFFFFF, false, mOpacity, mDimming,
+            mRenderer->drawRect(0.0f, mSelectorBarOffset, mSize.x, selectedRowHeight,
+                                mMenuColorSelector, mMenuColorSelector, false, mOpacity, mDimming,
                                 Renderer::BlendFactor::ONE_MINUS_DST_COLOR,
                                 Renderer::BlendFactor::ZERO);
 
@@ -413,12 +422,12 @@ void ComponentList::render(const glm::mat4& parentTrans)
     float y {0.0f};
     for (unsigned int i {0}; i < mEntries.size(); ++i) {
         mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
-                            0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
+                            mMenuColorSeparators, mMenuColorSeparators, false, mOpacity, mDimming);
         y += getRowHeight(mEntries.at(i).data);
     }
 
     mRenderer->drawRect(0.0f, y, mSize.x, 1.0f * mRenderer->getScreenResolutionModifier(),
-                        0xC6C7C6FF, 0xC6C7C6FF, false, mOpacity, mDimming);
+                        mMenuColorSeparators, mMenuColorSeparators, false, mOpacity, mDimming);
     mRenderer->popClipRect();
 }
 

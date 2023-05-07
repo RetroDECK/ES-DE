@@ -34,8 +34,9 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
     addChild(&mGrid);
 
     // Title.
-    mTitle = std::make_shared<TextComponent>(firstRun ? "WELCOME" : "CONFIGURE INPUT DEVICE",
-                                             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle =
+        std::make_shared<TextComponent>(firstRun ? "WELCOME" : "CONFIGURE INPUT DEVICE",
+                                        Font::get(FONT_SIZE_LARGE), mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {1, 1},
                    GridFlags::BORDER_BOTTOM);
 
@@ -52,26 +53,26 @@ GuiDetectDevice::GuiDetectDevice(bool firstRun,
         deviceInfo << " (ONLY ACCEPTING INPUT FROM FIRST CONTROLLER)";
 
     mDeviceInfo = std::make_shared<TextComponent>(deviceInfo.str(), Font::get(FONT_SIZE_SMALL),
-                                                  0x999999FF, ALIGN_CENTER);
+                                                  mMenuColorSecondary, ALIGN_CENTER);
     mGrid.setEntry(mDeviceInfo, glm::ivec2 {0, 1}, false, true);
 
     // Message.
     if (numDevices > 0) {
         mMsg1 = std::make_shared<TextComponent>(
             "HOLD A BUTTON ON YOUR GAMEPAD OR KEYBOARD TO CONFIGURE IT", Font::get(FONT_SIZE_SMALL),
-            0x777777FF, ALIGN_CENTER);
+            mMenuColorPrimary, ALIGN_CENTER);
     }
     else {
-        mMsg1 =
-            std::make_shared<TextComponent>("HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT",
-                                            Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+        mMsg1 = std::make_shared<TextComponent>("HOLD A BUTTON ON YOUR KEYBOARD TO CONFIGURE IT",
+                                                Font::get(FONT_SIZE_SMALL), mMenuColorPrimary,
+                                                ALIGN_CENTER);
     }
 
     mGrid.setEntry(mMsg1, glm::ivec2 {0, 2}, false, true);
 
     const std::string msg2str {firstRun ? "PRESS ESC TO SKIP (OR F4 TO QUIT AT ANY TIME)" :
                                           "PRESS ESC TO CANCEL"};
-    mMsg2 = std::make_shared<TextComponent>(msg2str, Font::get(FONT_SIZE_SMALL), 0x777777FF,
+    mMsg2 = std::make_shared<TextComponent>(msg2str, Font::get(FONT_SIZE_SMALL), mMenuColorPrimary,
                                             ALIGN_CENTER);
     mGrid.setEntry(mMsg2, glm::ivec2 {0, 3}, false, true);
 
@@ -156,7 +157,8 @@ void GuiDetectDevice::update(int deltaTime)
             mHoldTime -= deltaTime;
             // Fade in device name.
             const float t {std::fabs((static_cast<float>(mHoldTime) / HOLD_TIME) - 1.0f)};
-            mDeviceHeld->setColor(0x44444400 | static_cast<unsigned char>(t * 255.0f));
+            mDeviceHeld->setColor(mMenuColorDetectDeviceHeld |
+                                  static_cast<unsigned char>(t * 255.0f));
             if (mHoldTime <= 0) {
                 // A device was selected.
                 mWindow->pushGui(new GuiInputConfig(mHoldingConfig, true, mDoneCallback));

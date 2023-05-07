@@ -114,8 +114,8 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(Utils::String::toUpper(title),
-                                             Font::get(FONT_SIZE_LARGE), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        Utils::String::toUpper(title), Font::get(FONT_SIZE_LARGE), mMenuColorTitle, ALIGN_CENTER);
 
     std::vector<std::vector<std::string>> kbLayout;
 
@@ -143,11 +143,11 @@ GuiTextEditKeyboardPopup::GuiTextEditKeyboardPopup(
 
     if (mComplexMode) {
         mInfoString = std::make_shared<TextComponent>(infoString, Font::get(FONT_SIZE_MEDIUM),
-                                                      0x555555FF, ALIGN_CENTER);
+                                                      mMenuColorTitle, ALIGN_CENTER);
         mGrid.setEntry(mInfoString, glm::ivec2 {0, yPos}, false, true);
 
         mDefaultValue = std::make_shared<TextComponent>(defaultValue, Font::get(FONT_SIZE_SMALL),
-                                                        0x555555FF, ALIGN_CENTER);
+                                                        mMenuColorTitle, ALIGN_CENTER);
         mGrid.setEntry(mDefaultValue, glm::ivec2 {0, yPos + 1}, false, true);
         yPos += 2;
     }
@@ -585,12 +585,12 @@ void GuiTextEditKeyboardPopup::shiftKeys()
     mShift = !mShift;
 
     if (mShift) {
-        mShiftButton->setFlatColorFocused(0xF26767FF);
-        mShiftButton->setFlatColorUnfocused(0xF26767FF);
+        mShiftButton->setFlatColorFocused(mMenuColorKeyboardModifier);
+        mShiftButton->setFlatColorUnfocused(mMenuColorKeyboardModifier);
     }
     else {
-        mShiftButton->setFlatColorFocused(0x878787FF);
-        mShiftButton->setFlatColorUnfocused(0x60606025);
+        mShiftButton->setFlatColorFocused(mMenuColorButtonFlatFocused);
+        mShiftButton->setFlatColorUnfocused(mMenuColorButtonFlatUnfocused);
     }
 
     if (mAlt && mShift) {
@@ -618,12 +618,12 @@ void GuiTextEditKeyboardPopup::altKeys()
     mAlt = !mAlt;
 
     if (mAlt) {
-        mAltButton->setFlatColorFocused(0xF26767FF);
-        mAltButton->setFlatColorUnfocused(0xF26767FF);
+        mAltButton->setFlatColorFocused(mMenuColorKeyboardModifier);
+        mAltButton->setFlatColorUnfocused(mMenuColorKeyboardModifier);
     }
     else {
-        mAltButton->setFlatColorFocused(0x878787FF);
-        mAltButton->setFlatColorUnfocused(0x60606025);
+        mAltButton->setFlatColorFocused(mMenuColorButtonFlatFocused);
+        mAltButton->setFlatColorUnfocused(mMenuColorButtonFlatUnfocused);
     }
 
     if (mShift && mAlt) {

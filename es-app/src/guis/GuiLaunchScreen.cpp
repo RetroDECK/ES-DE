@@ -57,7 +57,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
         "LAUNCHING GAME",
         Font::get(titleFontSize *
                   std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())),
-        0x666666FF, ALIGN_CENTER);
+        mMenuColorTertiary, ALIGN_CENTER);
     mGrid->setEntry(mTitle, glm::ivec2 {1, 1}, false, true, glm::ivec2 {1, 1});
 
     // Spacer row.
@@ -77,12 +77,12 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
         "GAME NAME",
         Font::get(gameNameFontSize *
                   std::min(Renderer::getScreenHeight(), Renderer::getScreenWidth())),
-        0x444444FF, ALIGN_CENTER);
+        mMenuColorTitle, ALIGN_CENTER);
     mGrid->setEntry(mGameName, glm::ivec2 {1, 5}, false, true, glm::ivec2 {1, 1});
 
     // System name.
     mSystemName = std::make_shared<TextComponent>("SYSTEM NAME", Font::get(FONT_SIZE_MEDIUM),
-                                                  0x666666FF, ALIGN_CENTER);
+                                                  mMenuColorTertiary, ALIGN_CENTER);
     mGrid->setEntry(mSystemName, glm::ivec2 {1, 6}, false, true, glm::ivec2 {1, 1});
 
     // Spacer row.
@@ -193,7 +193,7 @@ void GuiLaunchScreen::displayLaunchScreen(FileData* game)
     setPosition(Renderer::getScreenWidth() / 2.0f, Renderer::getScreenHeight() / 2.25f);
 
     mBackground.fitTo(mSize);
-    mBackground.setEdgeColor(0xEEEEEEFF);
+    mBackground.setFrameColor(mMenuColorFrameLaunchScreen);
 }
 
 void GuiLaunchScreen::closeLaunchScreen()

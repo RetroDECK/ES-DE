@@ -17,8 +17,8 @@ RatingComponent::RatingComponent(bool colorizeChanges, bool linearInterpolation)
     : mRenderer {Renderer::getInstance()}
     , mValue {0.5f}
     , mImageRatio {1.0f}
-    , mColorOriginalValue {DEFAULT_COLORSHIFT}
-    , mColorChangedValue {DEFAULT_COLORSHIFT}
+    , mColorOriginalValue {mMenuColorPrimary}
+    , mColorChangedValue {mMenuColorPrimary}
     , mColorizeChanges {colorizeChanges}
     , mOverlay {true}
 {
@@ -29,11 +29,13 @@ RatingComponent::RatingComponent(bool colorizeChanges, bool linearInterpolation)
     mIconFilled.setTileSize(mSize.y, mSize.y);
     mIconFilled.setDynamic(false);
     mIconFilled.setLinearInterpolation(linearInterpolation);
+    mIconFilled.setColorShift(mMenuColorPrimary);
 
     mIconUnfilled.setResize(mSize, false);
     mIconUnfilled.setTileSize(mSize.y, mSize.y);
     mIconUnfilled.setDynamic(false);
     mIconUnfilled.setLinearInterpolation(linearInterpolation);
+    mIconUnfilled.setColorShift(mMenuColorPrimary);
 
     mIconFilled.setImage(std::string(":/graphics/star_filled.svg"), true);
     mIconUnfilled.setImage(std::string(":/graphics/star_unfilled.svg"), true);
@@ -63,7 +65,7 @@ void RatingComponent::setValue(const std::string& value)
         // This should only happen if an external scraper has been used or if the file has
         // been manually edited.
         if (mColorizeChanges && mValue != stof(value)) {
-            mOriginalValue = ICONCOLOR_USERMARKED;
+            mOriginalValue = mMenuColorBlue;
             mIconFilled.setColorShift(0x449944FF);
         }
 
@@ -266,6 +268,10 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         if (elem->has("color")) {
             mIconFilled.setColorShift(elem->get<unsigned int>("color"));
             mIconUnfilled.setColorShift(elem->get<unsigned int>("color"));
+        }
+        else {
+            mIconFilled.setColorShift(0xFFFFFFFF);
+            mIconFilled.setColorShift(0xFFFFFFFF);
         }
     }
 }

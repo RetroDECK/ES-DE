@@ -41,7 +41,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
 
         std::string name {(*it)->getName()};
         std::shared_ptr<TextComponent> systemText {
-            std::make_shared<TextComponent>(name, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+            std::make_shared<TextComponent>(name, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
 
         systemText->setSize(systemSizeX, systemText->getSize().y);
         row.addElement(systemText, false);
@@ -71,19 +71,20 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
         std::shared_ptr<TextComponent> labelText;
 
         if (label == (*it)->getSystemEnvData()->mLaunchCommands.front().second) {
-            labelText = std::make_shared<TextComponent>(
-                label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+            labelText =
+                std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT),
+                                                mMenuColorPrimary, ALIGN_RIGHT);
         }
         else {
             // Mark any non-default value with bold and add a gear symbol as well.
             labelText = std::make_shared<TextComponent>(
                 label + (!invalidEntry ? " " + ViewController::GEAR_CHAR : ""),
-                Font::get(FONT_SIZE_MEDIUM, FONT_PATH_BOLD), 0x777777FF, ALIGN_RIGHT);
+                Font::get(FONT_SIZE_MEDIUM, FONT_PATH_BOLD), mMenuColorPrimary, ALIGN_RIGHT);
         }
 
         // Mark invalid entries with red color.
         if (invalidEntry)
-            labelText->setColor(TEXTCOLOR_SCRAPERMARKED);
+            labelText->setColor(mMenuColorRed);
 
         mCommandRows[name] = labelText;
         labelText->setSize(mMenu.getSize().x - systemSizeX -
@@ -111,7 +112,7 @@ GuiAlternativeEmulators::GuiAlternativeEmulators()
         ComponentListRow row;
         std::shared_ptr<TextComponent> systemText {std::make_shared<TextComponent>(
             ViewController::EXCLAMATION_CHAR + " NO ALTERNATIVE EMULATORS DEFINED",
-            Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_CENTER)};
+            Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_CENTER)};
         row.addElement(systemText, true);
         mMenu.addRow(row);
     }
@@ -135,7 +136,7 @@ void GuiAlternativeEmulators::updateMenu(const std::string& systemName,
         mCommandRows[systemName].get()->setValue(label + " " + ViewController::GEAR_CHAR);
     }
 
-    mCommandRows[systemName].get()->setColor(DEFAULT_TEXTCOLOR);
+    mCommandRows[systemName].get()->setColor(mMenuColorPrimary);
 }
 
 void GuiAlternativeEmulators::selectorWindow(SystemData* system)
@@ -154,7 +155,7 @@ void GuiAlternativeEmulators::selectorWindow(SystemData* system)
             label = entry.second;
 
         std::shared_ptr<TextComponent> labelText = std::make_shared<TextComponent>(
-            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_LEFT);
+            label, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_LEFT);
         labelText->setSelectable(true);
 
         if (system->getSystemEnvData()->mLaunchCommands.front().second == label)

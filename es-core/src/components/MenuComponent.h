@@ -9,21 +9,16 @@
 #ifndef ES_CORE_COMPONENTS_MENU_COMPONENT_H
 #define ES_CORE_COMPONENTS_MENU_COMPONENT_H
 
+#include "components/ButtonComponent.h"
 #include "components/ComponentGrid.h"
 #include "components/ComponentList.h"
+#include "components/ImageComponent.h"
 #include "components/NinePatchComponent.h"
 #include "components/ScrollIndicatorComponent.h"
 #include "components/TextComponent.h"
 #include "utils/StringUtil.h"
 
 #include <cmath>
-
-class ButtonComponent;
-class ImageComponent;
-
-std::shared_ptr<ComponentGrid> makeButtonGrid(
-    const std::vector<std::shared_ptr<ButtonComponent>>& buttons);
-std::shared_ptr<ImageComponent> makeArrow();
 
 class MenuComponent : public GuiComponent
 {
@@ -51,7 +46,8 @@ public:
     {
         ComponentListRow row;
         row.addElement(std::make_shared<TextComponent>(Utils::String::toUpper(label),
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                       Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary),
                        true);
         row.addElement(comp, false, invert_when_selected);
         addRow(row, setCursorHere);
@@ -62,6 +58,11 @@ public:
     void addButton(const std::string& label,
                    const std::string& helpText,
                    const std::function<void()>& callback);
+
+    static std::shared_ptr<ComponentGrid> makeButtonGrid(
+        const std::vector<std::shared_ptr<ButtonComponent>>& buttons);
+
+    std::shared_ptr<ImageComponent> makeArrow();
 
     void setTitle(std::string title, const std::shared_ptr<Font>& font);
     std::shared_ptr<ComponentList> getList() { return mList; }

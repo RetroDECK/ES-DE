@@ -45,7 +45,7 @@ public:
     {
         auto font {Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT)};
         mText.setFont(font);
-        mText.setColor(0x777777FF);
+        mText.setColor(mMenuColorPrimary);
         mText.setHorizontalAlignment(ALIGN_CENTER);
         addChild(&mText);
 
@@ -54,14 +54,17 @@ public:
 
         if (mMultiSelect) {
             mRightArrow.setImage(":/graphics/arrow.svg");
+            mRightArrow.setColorShift(mMenuColorPrimary);
             addChild(&mRightArrow);
         }
         else {
             mLeftArrow.setImage(":/graphics/option_arrow.svg");
+            mLeftArrow.setColorShift(mMenuColorPrimary);
             mLeftArrow.setFlipX(true);
             addChild(&mLeftArrow);
 
             mRightArrow.setImage(":/graphics/option_arrow.svg");
+            mRightArrow.setColorShift(mMenuColorPrimary);
             addChild(&mRightArrow);
         }
 
@@ -431,7 +434,7 @@ private:
             for (auto it = mParent->mEntries.begin(); it != mParent->mEntries.end(); ++it) {
                 row.elements.clear();
                 auto textComponent = std::make_shared<TextComponent>(
-                    Utils::String::toUpper(it->name), font, 0x777777FF);
+                    Utils::String::toUpper(it->name), font, mMenuColorPrimary);
                 row.addElement(textComponent, true);
 
                 if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected) {
@@ -446,6 +449,7 @@ private:
                     auto checkbox = std::make_shared<ImageComponent>();
                     checkbox->setResize(0, font->getLetterHeight());
                     checkbox->setImage(it->selected ? CHECKED_PATH : UNCHECKED_PATH);
+                    checkbox->setColorShift(mMenuColorPrimary);
                     row.addElement(checkbox, false);
 
                     if (mParent->mMultiExclusiveSelect && hasSelectedRow && !(*it).selected)

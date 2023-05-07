@@ -59,6 +59,86 @@ ViewController* ViewController::getInstance()
     return &instance;
 }
 
+void ViewController::setMenuColors()
+{
+    if (Settings::getInstance()->getString("MenuColorScheme") == "dark") {
+        mMenuColorFrame = 0x191919FF;
+        mMenuColorFrameLaunchScreen = 0x121212FF;
+        mMenuColorFrameBusyComponent = 0x090909FF;
+        mMenuColorPanelDimmed = 0x00000032;
+
+        mMenuColorTitle = 0xA6A6A6FF;
+        mMenuColorPrimary = 0x909090FF;
+        mMenuColorSecondary = 0xA3A3A3FF;
+        mMenuColorTertiary = 0xA0A0A0FF;
+        mMenuColorRed = 0xCA3E3EFF;
+        mMenuColorGreen = 0x449944FF;
+        mMenuColorBlue = 0x4757ddff;
+
+        mMenuColorSelector = 0x070707FF;
+        mMenuColorSeparators = 0x303030FF;
+        mMenuColorBusyComponent = 0x888888FF;
+        mMenuColorScrollIndicators = 0x929292FF;
+        mMenuColorPopupText = 0xBBBBBBFF;
+
+        mMenuColorButtonFocused = 0x050505FF;
+        mMenuColorButtonTextFocused = 0xAFAFAFFF;
+        mMenuColorButtonTextUnfocused = 0x878787FF;
+        mMenuColorButtonFlatFocused = 0x090909FF;
+        mMenuColorButtonFlatUnfocused = 0x242424FF;
+
+        mMenuColorKeyboardModifier = 0xC62F2FFF;
+        mMenuColorKeyboardCursorFocused = 0xAAAAAAFF;
+        mMenuColorKeyboardCursorUnfocused = 0x666666FF;
+        mMenuColorKeyboardText = 0x92929200;
+        mMenuColorTextInputFrameFocused = 0x090909FF;
+        mMenuColorTextInputFrameUnfocused = 0x242424FF;
+
+        mMenuColorSlider = 0xAAAAAAFF;
+        mMenuColorSliderKnobDisabled = 0x464646FF;
+        mMenuColorDateTimeEditMarker = 0xFFFFFF22;
+        mMenuColorDetectDeviceHeld = 0x99999900;
+    }
+    else {
+        mMenuColorFrame = 0xEFEFEFFF;
+        mMenuColorFrameLaunchScreen = 0xDFDFDFFF;
+        mMenuColorFrameBusyComponent = 0xFFFFFFFF;
+        mMenuColorPanelDimmed = 0x00000009;
+
+        mMenuColorTitle = 0x555555FF;
+        mMenuColorPrimary = 0x777777FF;
+        mMenuColorSecondary = 0x888888FF;
+        mMenuColorTertiary = 0x666666FF;
+        mMenuColorRed = 0x992222FF;
+        mMenuColorGreen = 0x449944FF;
+        mMenuColorBlue = 0x222299FF;
+
+        mMenuColorSelector = 0xFFFFFFFF;
+        mMenuColorSeparators = 0xC6C7C6FF;
+        mMenuColorBusyComponent = 0xB8B8B8FF;
+        mMenuColorScrollIndicators = 0x888888FF;
+        mMenuColorPopupText = 0x444444FF;
+
+        mMenuColorButtonFocused = 0x777777FF;
+        mMenuColorButtonTextFocused = 0xFFFFFFFF;
+        mMenuColorButtonTextUnfocused = 0x777777FF;
+        mMenuColorButtonFlatFocused = 0x878787FF;
+        mMenuColorButtonFlatUnfocused = 0xDADADAFF;
+
+        mMenuColorKeyboardModifier = 0xF26767FF;
+        mMenuColorKeyboardCursorFocused = 0x777777FF;
+        mMenuColorKeyboardCursorUnfocused = 0xC7C7C7FF;
+        mMenuColorKeyboardText = 0x77777700;
+        mMenuColorTextInputFrameFocused = 0xFFFFFFFF;
+        mMenuColorTextInputFrameUnfocused = 0xFFFFFFFF;
+
+        mMenuColorSlider = 0x777777FF;
+        mMenuColorSliderKnobDisabled = 0xC9C9C9FF;
+        mMenuColorDateTimeEditMarker = 0x00000022;
+        mMenuColorDetectDeviceHeld = 0x44444400;
+    }
+}
+
 void ViewController::invalidSystemsFileDialog()
 {
     std::string errorMessage = "COULDN'T PARSE THE SYSTEMS CONFIGURATION FILE. "

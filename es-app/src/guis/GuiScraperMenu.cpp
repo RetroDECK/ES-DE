@@ -113,11 +113,11 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
     }
     mMenu.addWithLabel("SCRAPE THESE SYSTEMS", mSystems);
 
-    addEntry("ACCOUNT SETTINGS", 0x777777FF, true, [this] {
+    addEntry("ACCOUNT SETTINGS", mMenuColorPrimary, true, [this] {
         // Open the account options menu.
         openAccountOptions();
     });
-    addEntry("CONTENT SETTINGS", 0x777777FF, true, [this] {
+    addEntry("CONTENT SETTINGS", mMenuColorPrimary, true, [this] {
         // If the scraper service has been changed before entering this menu, then save the
         // settings so that the specific options supported by the respective scrapers
         // can be enabled or disabled.
@@ -125,11 +125,11 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
             mMenu.save();
         openContentOptions();
     });
-    addEntry("MIXIMAGE SETTINGS", 0x777777FF, true, [this] {
+    addEntry("MIXIMAGE SETTINGS", mMenuColorPrimary, true, [this] {
         // Open the miximage options menu.
         openMiximageOptions();
     });
-    addEntry("OTHER SETTINGS", 0x777777FF, true, [this] {
+    addEntry("OTHER SETTINGS", mMenuColorPrimary, true, [this] {
         // If the scraper service has been changed before entering this menu, then save the
         // settings so that the specific options supported by the respective scrapers
         // can be enabled or disabled.
@@ -168,8 +168,8 @@ void GuiScraperMenu::openAccountOptions()
     auto s = new GuiSettings("ACCOUNT SETTINGS");
 
     // ScreenScraper username.
-    auto scraperUsernameScreenScraper =
-        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
+    auto scraperUsernameScreenScraper = std::make_shared<TextComponent>(
+        "", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_RIGHT);
     s->addEditableTextComponent("SCREENSCRAPER USERNAME", scraperUsernameScreenScraper,
                                 Settings::getInstance()->getString("ScraperUsernameScreenScraper"));
     s->addSaveFunc([scraperUsernameScreenScraper, s] {
@@ -182,8 +182,8 @@ void GuiScraperMenu::openAccountOptions()
     });
 
     // ScreenScraper password.
-    auto scraperPasswordScreenScraper =
-        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
+    auto scraperPasswordScreenScraper = std::make_shared<TextComponent>(
+        "", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary, ALIGN_RIGHT);
     std::string passwordMasked;
     if (Settings::getInstance()->getString("ScraperPasswordScreenScraper") != "") {
         passwordMasked = "********";
@@ -631,9 +631,9 @@ void GuiScraperMenu::openMiximageOptions()
     offlineGeneratorRow.elements.clear();
     offlineGeneratorRow.addElement(std::make_shared<TextComponent>("OFFLINE GENERATOR",
                                                                    Font::get(FONT_SIZE_MEDIUM),
-                                                                   0x777777FF),
+                                                                   mMenuColorPrimary),
                                    true);
-    offlineGeneratorRow.addElement(makeArrow(), false);
+    offlineGeneratorRow.addElement(mMenu.makeArrow(), false);
     offlineGeneratorRow.makeAcceptInputHandler(
         std::bind(&GuiScraperMenu::openOfflineGenerator, this, s));
     s->addRow(offlineGeneratorRow);
@@ -1198,7 +1198,7 @@ void GuiScraperMenu::addEntry(const std::string& name,
     row.addElement(std::make_shared<TextComponent>(name, font, color), true);
 
     if (add_arrow) {
-        std::shared_ptr<ImageComponent> bracket {makeArrow()};
+        std::shared_ptr<ImageComponent> bracket {mMenu.makeArrow()};
         row.addElement(bracket, false);
     }
 

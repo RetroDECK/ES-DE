@@ -24,10 +24,10 @@ ButtonComponent::ButtonComponent(const std::string& text,
     , mFocused {false}
     , mEnabled {true}
     , mFlatStyle {flatStyle}
-    , mTextColorFocused {0xFFFFFFFF}
-    , mTextColorUnfocused {0x777777FF}
-    , mFlatColorFocused {0x878787FF}
-    , mFlatColorUnfocused {0x60606025}
+    , mTextColorFocused {mMenuColorButtonTextFocused}
+    , mTextColorUnfocused {mMenuColorButtonTextUnfocused}
+    , mFlatColorFocused {mMenuColorButtonFlatFocused}
+    , mFlatColorUnfocused {mMenuColorButtonFlatUnfocused}
 
 {
     mBox.setSharpCorners(true);
@@ -172,12 +172,10 @@ void ButtonComponent::updateImage()
 {
     if (!mEnabled || !mPressedFunc) {
         mBox.setImagePath(":/graphics/button_filled.svg");
-        mBox.setCenterColor(0x770000FF);
-        mBox.setEdgeColor(0x770000FF);
+        mBox.setFrameColor(0x770000FF);
         return;
     }
 
-    mBox.setCenterColor(0xFFFFFFFF);
-    mBox.setEdgeColor(0xFFFFFFFF);
+    mBox.setFrameColor(mMenuColorButtonFocused);
     mBox.setImagePath(mFocused ? ":/graphics/button_filled.svg" : ":/graphics/button.svg");
 }

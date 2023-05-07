@@ -157,10 +157,10 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     if (!mIsCustomCollectionGroup && system->getRootFolder()->getChildren().size() > 0) {
         if (system->getName() != "recent" && Settings::getInstance()->getBool("GamelistFilters")) {
             row.elements.clear();
-            row.addElement(std::make_shared<TextComponent>("FILTER GAMELIST",
-                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+            row.addElement(std::make_shared<TextComponent>(
+                               "FILTER GAMELIST", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                            true);
-            row.addElement(makeArrow(), false);
+            row.addElement(mMenu.makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openGamelistFilter, this));
             mMenu.addRow(row);
         }
@@ -171,7 +171,8 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
              !mIsCustomCollection) {
         row.elements.clear();
         row.addElement(std::make_shared<TextComponent>("THIS SYSTEM HAS NO GAMES",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                       Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary),
                        true);
         mMenu.addRow(row);
     }
@@ -182,7 +183,8 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
             getGamelist()->getCursor()->getSystem()->getName()) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>("ADD/REMOVE GAMES TO THIS COLLECTION",
-                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                           Font::get(FONT_SIZE_MEDIUM),
+                                                           mMenuColorPrimary),
                            true);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::startEditMode, this));
             mMenu.addRow(row);
@@ -198,7 +200,7 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
                     Utils::String::toUpper(
                         CollectionSystemsManager::getInstance()->getEditingCollection()) +
                     "' COLLECTION",
-                Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
             true);
         row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::exitEditMode, this));
         mMenu.addRow(row);
@@ -209,9 +211,10 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>("EDIT THIS FOLDER'S METADATA",
-                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                           Font::get(FONT_SIZE_MEDIUM),
+                                                           mMenuColorPrimary),
                            true);
-            row.addElement(makeArrow(), false);
+            row.addElement(mMenu.makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
             mMenu.addRow(row);
         }
@@ -221,9 +224,10 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
             !(mSystem->isCollection() && file->getType() == FOLDER)) {
             row.elements.clear();
             row.addElement(std::make_shared<TextComponent>("EDIT THIS GAME'S METADATA",
-                                                           Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                           Font::get(FONT_SIZE_MEDIUM),
+                                                           mMenuColorPrimary),
                            true);
-            row.addElement(makeArrow(), false);
+            row.addElement(mMenu.makeArrow(), false);
             row.makeAcceptInputHandler(std::bind(&GuiGamelistOptions::openMetaDataEd, this));
             mMenu.addRow(row);
         }
@@ -232,7 +236,8 @@ GuiGamelistOptions::GuiGamelistOptions(SystemData* system)
     if (file->getType() == FOLDER && file->metadata.get("folderlink") != "") {
         row.elements.clear();
         row.addElement(std::make_shared<TextComponent>("ENTER FOLDER (OVERRIDE FOLDER LINK)",
-                                                       Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                       Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary),
                        true);
         row.makeAcceptInputHandler([this, file] {
             mFolderLinkOverride = true;

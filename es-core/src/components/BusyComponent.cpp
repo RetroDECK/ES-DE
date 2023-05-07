@@ -11,22 +11,13 @@
 #include "components/AnimatedImageComponent.h"
 #include "components/ImageComponent.h"
 
-// Animation definition.
-AnimationFrame BUSY_ANIMATION_FRAMES[] {
-    {":/graphics/busy_0.svg", 300},
-    {":/graphics/busy_1.svg", 300},
-    {":/graphics/busy_2.svg", 300},
-    {":/graphics/busy_3.svg", 300},
-};
-
-const AnimationDef BUSY_ANIMATION_DEF = {BUSY_ANIMATION_FRAMES, 4, true};
-
 BusyComponent::BusyComponent()
     : mBackground {":/graphics/frame.png"}
     , mGrid {glm::ivec2 {5, 3}}
 {
     mAnimation = std::make_shared<AnimatedImageComponent>();
-    mText = std::make_shared<TextComponent>("WORKING...", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    mText = std::make_shared<TextComponent>("WORKING...", Font::get(FONT_SIZE_MEDIUM),
+                                            mMenuColorPrimary);
 
     // Col 0 = animation, col 1 = spacer, col 2 = text.
     mGrid.setEntry(mAnimation, glm::ivec2 {1, 1}, false, true);
@@ -59,8 +50,17 @@ void BusyComponent::onSizeChanged()
     mBackground.fitTo(glm::vec2 {mGrid.getColWidth(1) + mGrid.getColWidth(2) + mGrid.getColWidth(3),
                                  textHeight + (2.0f * Renderer::getScreenResolutionModifier())},
                       mAnimation->getPosition(), glm::vec2 {0.0f, 0.0f});
+    mBackground.setFrameColor(mMenuColorFrameBusyComponent);
 
-    mAnimation->load(&BUSY_ANIMATION_DEF);
+    AnimationFrame BUSY_ANIMATION_FRAMES[] {
+        {":/graphics/busy_0.svg", 300},
+        {":/graphics/busy_1.svg", 300},
+        {":/graphics/busy_2.svg", 300},
+        {":/graphics/busy_3.svg", 300},
+    };
+
+    const AnimationDef animationDef {BUSY_ANIMATION_FRAMES, 4, mMenuColorBusyComponent, true};
+    mAnimation->load(&animationDef);
 }
 
 void BusyComponent::reset()

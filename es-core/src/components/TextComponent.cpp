@@ -288,9 +288,8 @@ void TextComponent::onTextChanged()
             return;
     }
 
-    if (!mFont || text.empty() || mSize.x < 0.0f) {
+    if (!mFont || text.empty() || mSize.x < 0.0f)
         return;
-    }
 
     float lineHeight {0.0f};
     const bool isScrollable {mParent && mParent->isScrollable()};

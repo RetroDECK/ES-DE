@@ -40,7 +40,7 @@ void GuiGamelistFilter::initializeMenu()
     // Show filtered menu.
     row.elements.clear();
     row.addElement(std::make_shared<TextComponent>("RESET ALL FILTERS", Font::get(FONT_SIZE_MEDIUM),
-                                                   0x777777FF),
+                                                   mMenuColorPrimary),
                    true);
     row.makeAcceptInputHandler(std::bind(&GuiGamelistFilter::resetAllFilters, this));
     mMenu.addRow(row);
@@ -88,10 +88,10 @@ void GuiGamelistFilter::addFiltersToMenu()
 
     auto lbl = std::make_shared<TextComponent>(
         Utils::String::toUpper(ViewController::KEYBOARD_CHAR + " GAME NAME"),
-        Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
 
-    mTextFilterField =
-        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM), 0x777777FF, ALIGN_RIGHT);
+    mTextFilterField = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MEDIUM),
+                                                       mMenuColorPrimary, ALIGN_RIGHT);
 
     // Don't show the free text filter entry unless there are any games in the system.
     if (mSystem->getRootFolder()->getChildren().size() > 0) {
@@ -105,6 +105,7 @@ void GuiGamelistFilter::addFiltersToMenu()
         auto bracket = std::make_shared<ImageComponent>();
         bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
         bracket->setImage(":/graphics/arrow.svg");
+        bracket->setColorShift(mMenuColorPrimary);
         row.addElement(bracket, false);
 
         mTextFilterField->setValue(mFilterIndex->getTextFilter());

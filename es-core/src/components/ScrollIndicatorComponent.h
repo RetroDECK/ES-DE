@@ -11,10 +11,11 @@
 
 #define FADE_IN_TIME 90.0f
 
+#include "GuiComponent.h"
 #include "animations/LambdaAnimation.h"
 #include "components/ComponentList.h"
 
-class ScrollIndicatorComponent
+class ScrollIndicatorComponent : public GuiComponent
 {
 public:
     ScrollIndicatorComponent(std::shared_ptr<ComponentList> componentList,
@@ -26,6 +27,9 @@ public:
 
         scrollUp->setImage(":/graphics/scroll_up.svg");
         scrollDown->setImage(":/graphics/scroll_down.svg");
+
+        scrollUp->setColorShift(mMenuColorScrollIndicators);
+        scrollDown->setColorShift(mMenuColorScrollIndicators);
 
         scrollUp->setOpacity(0.0f);
         scrollDown->setOpacity(0.0f);

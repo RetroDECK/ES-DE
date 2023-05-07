@@ -82,18 +82,18 @@ GuiScreensaverOptions::GuiScreensaverOptions(const std::string& title)
     ComponentListRow row;
     row.elements.clear();
     row.addElement(std::make_shared<TextComponent>("SLIDESHOW SCREENSAVER SETTINGS",
-                                                   Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
-    row.addElement(makeArrow(), false);
+    row.addElement(getMenu().makeArrow(), false);
     row.makeAcceptInputHandler(
         std::bind(&GuiScreensaverOptions::openSlideshowScreensaverOptions, this));
     addRow(row);
 
     row.elements.clear();
     row.addElement(std::make_shared<TextComponent>("VIDEO SCREENSAVER SETTINGS",
-                                                   Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
                    true);
-    row.addElement(makeArrow(), false);
+    row.addElement(getMenu().makeArrow(), false);
     row.makeAcceptInputHandler(
         std::bind(&GuiScreensaverOptions::openVideoScreensaverOptions, this));
     addRow(row);
@@ -192,8 +192,8 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
     });
 
     // Custom image directory.
-    auto screensaverSlideshowImageDir =
-        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_RIGHT);
+    auto screensaverSlideshowImageDir = std::make_shared<TextComponent>(
+        "", Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_RIGHT);
     s->addEditableTextComponent(
         "CUSTOM IMAGE DIRECTORY", screensaverSlideshowImageDir,
         Settings::getInstance()->getString("ScreensaverSlideshowImageDir"),

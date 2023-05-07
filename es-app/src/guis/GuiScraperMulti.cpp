@@ -45,15 +45,15 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
 
     // Set up grid.
     mTitle = std::make_shared<TextComponent>("SCRAPING IN PROGRESS", Font::get(FONT_SIZE_LARGE),
-                                             0x555555FF, ALIGN_CENTER);
+                                             mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
-    mSystem = std::make_shared<TextComponent>("SYSTEM", Font::get(FONT_SIZE_MEDIUM), 0x777777FF,
-                                              ALIGN_CENTER);
+    mSystem = std::make_shared<TextComponent>("SYSTEM", Font::get(FONT_SIZE_MEDIUM),
+                                              mMenuColorPrimary, ALIGN_CENTER);
     mGrid.setEntry(mSystem, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
     mSubtitle = std::make_shared<TextComponent>("subtitle text", Font::get(FONT_SIZE_SMALL),
-                                                0x888888FF, ALIGN_CENTER);
+                                                mMenuColorSecondary, ALIGN_CENTER);
     mGrid.setEntry(mSubtitle, glm::ivec2 {0, 3}, false, true, glm::ivec2 {2, 1});
 
     if (mApproveResults && !Settings::getInstance()->getBool("ScraperSemiautomatic"))
@@ -144,7 +144,7 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
     buttons.push_back(std::make_shared<ButtonComponent>("STOP", "stop",
                                                         std::bind(&GuiScraperMulti::finish, this)));
 
-    mButtonGrid = makeButtonGrid(buttons);
+    mButtonGrid = MenuComponent::makeButtonGrid(buttons);
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is

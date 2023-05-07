@@ -53,8 +53,8 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
     // 0 is a spacer row.
     mGrid.setEntry(std::make_shared<GuiComponent>(), glm::ivec2 {0, 0}, false);
 
-    mTitle = std::make_shared<TextComponent>("CONFIGURING", Font::get(FONT_SIZE_LARGE), 0x555555FF,
-                                             ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>("CONFIGURING", Font::get(FONT_SIZE_LARGE),
+                                             mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 1}, false, true);
 
     std::stringstream ss;
@@ -64,12 +64,14 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
         ss << "CEC";
     else
         ss << "GAMEPAD " << (target->getDeviceId() + 1) << " (" << target->getDeviceName() << ")";
-    mSubtitle1 = std::make_shared<TextComponent>(
-        Utils::String::toUpper(ss.str()), Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
+    mSubtitle1 = std::make_shared<TextComponent>(Utils::String::toUpper(ss.str()),
+                                                 Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary,
+                                                 ALIGN_CENTER);
     mGrid.setEntry(mSubtitle1, glm::ivec2 {0, 2}, false, true);
 
-    mSubtitle2 = std::make_shared<TextComponent>(
-        "HOLD ANY BUTTON 1 SECOND TO SKIP", Font::get(FONT_SIZE_SMALL), 0x999999FF, ALIGN_CENTER);
+    mSubtitle2 = std::make_shared<TextComponent>("HOLD ANY BUTTON 1 SECOND TO SKIP",
+                                                 Font::get(FONT_SIZE_SMALL), mMenuColorSecondary,
+                                                 ALIGN_CENTER);
     // The opacity will be set to visible for any row that is skippable.
     mSubtitle2->setOpacity(0.0f);
 
@@ -86,7 +88,7 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
         auto icon = std::make_shared<ImageComponent>();
         icon->setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight() * 1.25f);
         icon->setImage(sGuiInputConfigList[i].icon);
-        icon->setColorShift(0x777777FF);
+        icon->setColorShift(mMenuColorPrimary);
         row.addElement(icon, false);
 
         // Spacer between icon and text.
@@ -95,11 +97,12 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
         row.addElement(spacer, false);
 
         auto text = std::make_shared<TextComponent>(sGuiInputConfigList[i].dispName,
-                                                    Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                                                    Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         row.addElement(text, true);
 
-        auto mapping = std::make_shared<TextComponent>(
-            "-NOT DEFINED-", Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT), 0x999999FF, ALIGN_RIGHT);
+        auto mapping = std::make_shared<TextComponent>("-NOT DEFINED-",
+                                                       Font::get(FONT_SIZE_MEDIUM, FONT_PATH_LIGHT),
+                                                       mMenuColorSecondary, ALIGN_RIGHT);
         setNotDefined(mapping); // Overrides the text and color set above.
         row.addElement(mapping, true);
         mMappings.push_back(mapping);
@@ -179,7 +182,7 @@ GuiInputConfig::GuiInputConfig(InputConfig* target,
     buttons.push_back(
         std::make_shared<ButtonComponent>("OK", "ok", [okFunction] { okFunction(); }));
 
-    mButtonGrid = makeButtonGrid(buttons);
+    mButtonGrid = MenuComponent::makeButtonGrid(buttons);
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 6}, true, false);
 
     // Adjust the width relative to the aspect ratio of the screen to make the GUI look coherent
@@ -298,7 +301,7 @@ void GuiInputConfig::update(int deltaTime)
                 std::stringstream ss;
                 ss << "HOLD FOR " << HOLD_TO_SKIP_MS / 1000 - curSec << "S TO SKIP";
                 text->setText(ss.str());
-                text->setColor(0x777777FF);
+                text->setColor(mMenuColorPrimary);
             }
         }
     }
@@ -342,25 +345,25 @@ void GuiInputConfig::rowDone()
 void GuiInputConfig::error(const std::shared_ptr<TextComponent>& text, const std::string& /*msg*/)
 {
     text->setText("ALREADY TAKEN");
-    text->setColor(0x656565FF);
+    text->setColor(mMenuColorPrimary);
 }
 
 void GuiInputConfig::setPress(const std::shared_ptr<TextComponent>& text)
 {
     text->setText("PRESS ANYTHING");
-    text->setColor(0x656565FF);
+    text->setColor(mMenuColorPrimary);
 }
 
 void GuiInputConfig::setNotDefined(const std::shared_ptr<TextComponent>& text)
 {
     text->setText("-NOT DEFINED-");
-    text->setColor(0x999999FF);
+    text->setColor(mMenuColorSecondary);
 }
 
 void GuiInputConfig::setAssignedTo(const std::shared_ptr<TextComponent>& text, Input input)
 {
     text->setText(Utils::String::toUpper(input.string()));
-    text->setColor(0x777777FF);
+    text->setColor(mMenuColorPrimary);
 }
 
 bool GuiInputConfig::assign(Input input, int inputId)

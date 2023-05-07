@@ -176,18 +176,18 @@ void GuiSettings::addEditableTextComponent(const std::string label,
     row.elements.clear();
 
     auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(label),
-                                               Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
-
+                                               Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
     row.addElement(lbl, true);
     row.addElement(ed, true);
 
     auto spacer = std::make_shared<GuiComponent>();
-    spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0);
+    spacer->setSize(Renderer::getScreenWidth() * 0.005f, 0.0f);
     row.addElement(spacer, false);
 
     auto bracket = std::make_shared<ImageComponent>();
     bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
     bracket->setImage(":/graphics/arrow.svg");
+    bracket->setColorShift(mMenuColorPrimary);
     row.addElement(bracket, false);
 
     // OK callback (apply new value to ed).

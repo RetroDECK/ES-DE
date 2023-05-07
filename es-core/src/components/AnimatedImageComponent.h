@@ -21,6 +21,7 @@ struct AnimationFrame {
 struct AnimationDef {
     AnimationFrame* frames;
     size_t frameCount;
+    unsigned int color;
     bool loop;
 };
 

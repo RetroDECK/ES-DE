@@ -432,7 +432,7 @@ void ComponentGrid::render(const glm::mat4& parentTrans)
     for (size_t i = 0; i < mSeparators.size(); ++i) {
         mRenderer->setMatrix(trans);
         mRenderer->drawRect(mSeparators[i][0], mSeparators[i][1], mSeparators[i][2],
-                            mSeparators[i][3], 0xC6C7C6FF, 0xC6C7C6FF);
+                            mSeparators[i][3], mMenuColorSeparators, mMenuColorSeparators);
     }
 }
 

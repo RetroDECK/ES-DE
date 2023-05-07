@@ -721,7 +721,7 @@ int main(int argc, char* argv[])
     renderer = Renderer::getInstance();
     window = Window::getInstance();
 
-    ViewController::getInstance();
+    ViewController::getInstance()->setMenuColors();
     CollectionSystemsManager::getInstance();
     Screensaver screensaver;
     MediaViewer mediaViewer;

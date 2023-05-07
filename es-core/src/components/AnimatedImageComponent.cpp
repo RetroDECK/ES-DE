@@ -34,6 +34,7 @@ void AnimatedImageComponent::load(const AnimationDef* def)
         auto img = std::unique_ptr<ImageComponent>(new ImageComponent);
         img->setResize(mSize);
         img->setImage(std::string(def->frames[i].path), false);
+        img->setColorShift(def->color);
 
         mFrames.push_back(ImageFrame(std::move(img), def->frames[i].time));
     }

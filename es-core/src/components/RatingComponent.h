@@ -34,6 +34,8 @@ public:
 
     void onSizeChanged() override;
     void setDimming(float dimming) override;
+    unsigned int getColorShift() const override { return mIconFilled.getColorShift(); }
+    void setColorShift(unsigned int color) override { mIconFilled.setColorShift(color); }
 
     void setOriginalColor(unsigned int color) override { mColorOriginalValue = color; }
     void setChangedColor(unsigned int color) override { mColorChangedValue = color; }

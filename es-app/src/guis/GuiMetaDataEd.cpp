@@ -71,7 +71,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
     addChild(&mGrid);
 
     mTitle = std::make_shared<TextComponent>("EDIT METADATA", Font::get(FONT_SIZE_LARGE),
-                                             0x555555FF, ALIGN_CENTER);
+                                             mMenuColorTitle, ALIGN_CENTER);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
     // Extract possible subfolders from the path.
@@ -93,7 +93,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         folderPath + Utils::FileSystem::getFileName(scraperParams.game->getPath()) + " [" +
             Utils::String::toUpper(scraperParams.system->getName()) + "]" +
             (scraperParams.game->getType() == FOLDER ? "  " + ViewController::FOLDER_CHAR : ""),
-        Font::get(FONT_SIZE_SMALL), 0x777777FF, ALIGN_CENTER);
+        Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_CENTER);
 
     mGrid.setEntry(mSubtitle, glm::ivec2 {0, 2}, false, true, glm::ivec2 {2, 1});
 
@@ -135,7 +135,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         if (!Settings::getInstance()->getBool("AlternativeEmulatorPerGame") &&
             it->type == MD_ALT_EMULATOR) {
             ed = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
-                                                 0x777777FF, ALIGN_RIGHT);
+                                                 mMenuColorPrimary, ALIGN_RIGHT);
             assert(ed);
             ed->setValue(mMetaData->get(it->key));
             mEditors.push_back(ed);
@@ -147,7 +147,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         // always looks for the help prompt at the back of the element stack.
         ComponentListRow row;
         auto lbl = std::make_shared<TextComponent>(Utils::String::toUpper(it->displayName),
-                                                   Font::get(FONT_SIZE_SMALL), 0x777777FF);
+                                                   Font::get(FONT_SIZE_SMALL), mMenuColorPrimary);
         row.addElement(lbl, true); // Label.
 
         switch (it->type) {
@@ -155,8 +155,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 ed = std::make_shared<SwitchComponent>();
                 // Make the switches slightly smaller.
                 ed->setSize(glm::ceil(ed->getSize() * 0.9f));
-
-                ed->setChangedColor(ICONCOLOR_USERMARKED);
+                ed->setChangedColor(mMenuColorBlue);
                 row.addElement(ed, false, true);
                 break;
             }
@@ -166,7 +165,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<RatingComponent>(true, true);
-                ed->setChangedColor(ICONCOLOR_USERMARKED);
+                ed->setChangedColor(mMenuColorBlue);
                 const float height {lbl->getSize().y * 0.71f};
                 ed->setSize(0.0f, height);
                 row.addElement(ed, false, true);
@@ -182,8 +181,8 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 row.addElement(spacer, false);
 
                 ed = std::make_shared<DateTimeEditComponent>(true);
-                ed->setOriginalColor(DEFAULT_TEXTCOLOR);
-                ed->setChangedColor(TEXTCOLOR_USERMARKED);
+                ed->setOriginalColor(mMenuColorPrimary);
+                ed->setChangedColor(mMenuColorBlue);
                 row.addElement(ed, false);
 
                 // Pass input to the actual DateTimeEditComponent instead of the spacer.
@@ -192,8 +191,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 break;
             }
             case MD_CONTROLLER: {
-                ed = std::make_shared<TextComponent>(
-                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+                ed =
+                    std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                    mMenuColorPrimary, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
@@ -203,6 +203,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 auto bracket = std::make_shared<ImageComponent>();
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 bracket->setImage(":/graphics/arrow.svg");
+                bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
                 const std::string title {it->displayPrompt};
@@ -211,9 +212,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 auto updateVal = [ed, originalValue](const std::string& newVal) {
                     ed->setValue(newVal);
                     if (newVal == BadgeComponent::getDisplayName(originalValue))
-                        ed->setColor(DEFAULT_TEXTCOLOR);
+                        ed->setColor(mMenuColorPrimary);
                     else
-                        ed->setColor(TEXTCOLOR_USERMARKED);
+                        ed->setColor(mMenuColorBlue);
                 };
 
                 row.makeAcceptInputHandler([this, title, ed, updateVal] {
@@ -225,7 +226,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         ComponentListRow row;
 
                         std::shared_ptr<TextComponent> labelText {std::make_shared<TextComponent>(
-                            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+                            label, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
                         labelText->setSelectable(true);
                         labelText->setValue(controller.displayName);
 
@@ -250,7 +251,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         ComponentListRow row;
                         std::shared_ptr<TextComponent> clearText {std::make_shared<TextComponent>(
                             ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
-                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+                            Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
                         clearText->setSelectable(true);
                         row.addElement(clearText, true);
                         row.makeAcceptInputHandler([s, ed] {
@@ -276,8 +277,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             case MD_ALT_EMULATOR: {
                 mInvalidEmulatorEntry = false;
 
-                ed = std::make_shared<TextComponent>(
-                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+                ed =
+                    std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                    mMenuColorPrimary, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
@@ -287,6 +289,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 auto bracket = std::make_shared<ImageComponent>();
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 bracket->setImage(":/graphics/arrow.svg");
+                bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
                 const std::string title {mRenderer->getIsVerticalOrientation() ? "select emulator" :
@@ -296,10 +299,10 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 auto updateVal = [this, ed, originalValue](const std::string& newVal) {
                     ed->setValue(newVal);
                     if (newVal == originalValue) {
-                        ed->setColor(DEFAULT_TEXTCOLOR);
+                        ed->setColor(mMenuColorPrimary);
                     }
                     else {
-                        ed->setColor(TEXTCOLOR_USERMARKED);
+                        ed->setColor(mMenuColorBlue);
                         mInvalidEmulatorEntry = false;
                     }
                 };
@@ -361,7 +364,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
 
                             std::shared_ptr<TextComponent> labelText {
                                 std::make_shared<TextComponent>(label, Font::get(FONT_SIZE_MEDIUM),
-                                                                0x777777FF)};
+                                                                mMenuColorPrimary)};
                             labelText->setSelectable(true);
 
                             if (scraperParams.system->getAlternativeEmulator() == "" &&
@@ -414,8 +417,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 break;
             }
             case MD_FOLDER_LINK: {
-                ed = std::make_shared<TextComponent>(
-                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+                ed =
+                    std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                    mMenuColorPrimary, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
@@ -425,6 +429,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 auto bracket = std::make_shared<ImageComponent>();
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 bracket->setImage(":/graphics/arrow.svg");
+                bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
                 const std::string title {it->displayPrompt};
@@ -462,9 +467,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                     mInvalidFolderLinkEntry = false;
                     ed->setValue(newVal);
                     if (newVal == originalValue)
-                        ed->setColor(DEFAULT_TEXTCOLOR);
+                        ed->setColor(mMenuColorPrimary);
                     else
-                        ed->setColor(TEXTCOLOR_USERMARKED);
+                        ed->setColor(mMenuColorBlue);
                 };
 
                 row.makeAcceptInputHandler([this, children, title, ed, updateVal, scraperParams] {
@@ -480,7 +485,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                                                           scraperParams.game->getPath() + "/", "");
 
                         std::shared_ptr<TextComponent> labelText {std::make_shared<TextComponent>(
-                            label, Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+                            label, Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
                         labelText->setSelectable(true);
                         labelText->setValue(filePath);
 
@@ -505,7 +510,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                         ComponentListRow row;
                         std::shared_ptr<TextComponent> clearText {std::make_shared<TextComponent>(
                             ViewController::CROSSEDCIRCLE_CHAR + " CLEAR ENTRY",
-                            Font::get(FONT_SIZE_MEDIUM), 0x777777FF)};
+                            Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary)};
                         clearText->setSelectable(true);
                         row.addElement(clearText, true);
                         row.makeAcceptInputHandler([this, s, ed] {
@@ -532,8 +537,9 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
             case MD_MULTILINE_STRING:
             default: {
                 // MD_STRING.
-                ed = std::make_shared<TextComponent>(
-                    "", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT), 0x777777FF, ALIGN_RIGHT);
+                ed =
+                    std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL, FONT_PATH_LIGHT),
+                                                    mMenuColorPrimary, ALIGN_RIGHT);
                 row.addElement(ed, true);
 
                 auto spacer = std::make_shared<GuiComponent>();
@@ -543,6 +549,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                 auto bracket = std::make_shared<ImageComponent>();
                 bracket->setResize(glm::vec2 {0.0f, lbl->getFont()->getLetterHeight()});
                 bracket->setImage(":/graphics/arrow.svg");
+                bracket->setColorShift(mMenuColorPrimary);
                 row.addElement(bracket, false);
 
                 bool multiLine {it->type == MD_MULTILINE_STRING};
@@ -570,25 +577,25 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
                                 ed->setValue(gamePath);
                         }
                         if (gamePath == originalValue)
-                            ed->setColor(DEFAULT_TEXTCOLOR);
+                            ed->setColor(mMenuColorPrimary);
                         else
-                            ed->setColor(TEXTCOLOR_USERMARKED);
+                            ed->setColor(mMenuColorBlue);
                     }
                     else if (newVal == "" &&
                              (currentKey == "developer" || currentKey == "publisher" ||
                               currentKey == "genre" || currentKey == "players")) {
                         ed->setValue("unknown");
                         if (originalValue == "unknown")
-                            ed->setColor(DEFAULT_TEXTCOLOR);
+                            ed->setColor(mMenuColorPrimary);
                         else
-                            ed->setColor(TEXTCOLOR_USERMARKED);
+                            ed->setColor(mMenuColorBlue);
                     }
                     else {
                         ed->setValue(newVal);
                         if (newVal == originalValue)
-                            ed->setColor(DEFAULT_TEXTCOLOR);
+                            ed->setColor(mMenuColorPrimary);
                         else
-                            ed->setColor(TEXTCOLOR_USERMARKED);
+                            ed->setColor(mMenuColorBlue);
                     }
                 };
 
@@ -705,7 +712,7 @@ GuiMetaDataEd::GuiMetaDataEd(MetaDataList* md,
         }
     }
 
-    mButtons = makeButtonGrid(buttons);
+    mButtons = MenuComponent::makeButtonGrid(buttons);
     mGrid.setEntry(mButtons, glm::ivec2 {0, 5}, true, false, glm::ivec2 {2, 1});
 
     // Resize + center.
@@ -905,7 +912,7 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
     offset = 0;
 
     // Update the list with the scraped metadata values.
-    for (unsigned int i = 0; i < mEditors.size(); ++i) {
+    for (unsigned int i {0}; i < mEditors.size(); ++i) {
         if (mMetaDataDecl.at(i).key == "collectionsortname" && !mIsCustomCollection)
             offset = 1;
 
@@ -919,9 +926,9 @@ void GuiMetaDataEd::fetchDone(const ScraperSearchResult& result)
 
         if (mEditors.at(i)->getValue() != metadata->get(key)) {
             if (key == "rating")
-                mEditors.at(i)->setOriginalColor(ICONCOLOR_SCRAPERMARKED);
+                mEditors.at(i)->setOriginalColor(mMenuColorRed);
             else
-                mEditors.at(i)->setColor(TEXTCOLOR_SCRAPERMARKED);
+                mEditors.at(i)->setColor(mMenuColorRed);
         }
         // Save all the keys that should be scraped.
         if (mMetaDataDecl.at(i + offset).shouldScrape)

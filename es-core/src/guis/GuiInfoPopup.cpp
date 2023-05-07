@@ -25,8 +25,8 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
     float maxWidth {Renderer::getScreenWidth() * 0.9f};
     float maxHeight {Renderer::getScreenHeight() * 0.2f};
 
-    std::shared_ptr<TextComponent> s {
-        std::make_shared<TextComponent>("", Font::get(FONT_SIZE_MINI), 0x444444FF, ALIGN_CENTER)};
+    std::shared_ptr<TextComponent> s {std::make_shared<TextComponent>(
+        "", Font::get(FONT_SIZE_MINI), mMenuColorPopupText, ALIGN_CENTER)};
 
     // We do this to force the text container to resize and return the actual expected popup size.
     s->setSize(0.0f, 0.0f);
@@ -115,7 +115,7 @@ bool GuiInfoPopup::updateState()
     mGrid->setOpacity(mAlpha);
 
     // Apply fade-in effect to popup frame.
-    mFrame->setEdgeColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha * 255.0f));
-    mFrame->setCenterColor(0xFFFFFF00 | static_cast<unsigned char>(mAlpha * 255.0f));
+    mFrame->setFrameColor((mMenuColorFrame & 0xFFFFFF00) |
+                          static_cast<unsigned char>(mAlpha * 255.0f));
     return true;
 }

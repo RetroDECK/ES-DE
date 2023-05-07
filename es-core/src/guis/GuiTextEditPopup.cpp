@@ -45,14 +45,14 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
     addChild(&mBackground);
     addChild(&mGrid);
 
-    mTitle = std::make_shared<TextComponent>(Utils::String::toUpper(title),
-                                             Font::get(FONT_SIZE_MEDIUM), 0x555555FF, ALIGN_CENTER);
+    mTitle = std::make_shared<TextComponent>(
+        Utils::String::toUpper(title), Font::get(FONT_SIZE_MEDIUM), mMenuColorTitle, ALIGN_CENTER);
 
     if (mComplexMode) {
         mInfoString = std::make_shared<TextComponent>(infoString, Font::get(FONT_SIZE_SMALL),
-                                                      0x555555FF, ALIGN_CENTER);
+                                                      mMenuColorTitle, ALIGN_CENTER);
         mDefaultValue = std::make_shared<TextComponent>(defaultValue, Font::get(FONT_SIZE_SMALL),
-                                                        0x555555FF, ALIGN_CENTER);
+                                                        mMenuColorTitle, ALIGN_CENTER);
     }
 
     mText = std::make_shared<TextEditComponent>();
@@ -79,7 +79,7 @@ GuiTextEditPopup::GuiTextEditPopup(const HelpStyle& helpstyle,
     buttons.push_back(
         std::make_shared<ButtonComponent>("CANCEL", "discard changes", [this] { delete this; }));
 
-    mButtonGrid = makeButtonGrid(buttons);
+    mButtonGrid = MenuComponent::makeButtonGrid(buttons);
 
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true);
 

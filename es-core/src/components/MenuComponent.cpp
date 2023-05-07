@@ -32,7 +32,7 @@ MenuComponent::MenuComponent(std::string title, const std::shared_ptr<Font>& tit
     // Set up title.
     mTitle = std::make_shared<TextComponent>();
     mTitle->setHorizontalAlignment(ALIGN_CENTER);
-    mTitle->setColor(0x555555FF);
+    mTitle->setColor(mMenuColorTitle);
     setTitle(title, titleFont);
     mGrid.setEntry(mTitle, glm::ivec2 {0, 0}, false, true, glm::ivec2 {2, 2});
 
@@ -165,7 +165,7 @@ void MenuComponent::updateGrid()
     }
 }
 
-std::shared_ptr<ComponentGrid> makeButtonGrid(
+std::shared_ptr<ComponentGrid> MenuComponent::makeButtonGrid(
     const std::vector<std::shared_ptr<ButtonComponent>>& buttons)
 {
     std::shared_ptr<ComponentGrid> buttonGrid {
@@ -190,10 +190,11 @@ std::shared_ptr<ComponentGrid> makeButtonGrid(
     return buttonGrid;
 }
 
-std::shared_ptr<ImageComponent> makeArrow()
+std::shared_ptr<ImageComponent> MenuComponent::makeArrow()
 {
     auto bracket = std::make_shared<ImageComponent>();
     bracket->setResize(0, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight());
     bracket->setImage(":/graphics/arrow.svg");
+    bracket->setColorShift(mMenuColorPrimary);
     return bracket;
 }

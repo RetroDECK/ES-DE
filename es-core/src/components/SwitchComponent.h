@@ -12,7 +12,6 @@
 #include "GuiComponent.h"
 #include "components/ImageComponent.h"
 
-// A simple "on/off" switch.
 class SwitchComponent : public GuiComponent
 {
 public:

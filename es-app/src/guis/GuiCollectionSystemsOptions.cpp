@@ -34,7 +34,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                     Utils::String::toUpper(
                         CollectionSystemsManager::getInstance()->getEditingCollection()) +
                     "' COLLECTION",
-                Font::get(FONT_SIZE_MEDIUM), 0x777777FF),
+                Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
             true);
         row.makeAcceptInputHandler([this] {
             CollectionSystemsManager::getInstance()->exitEditMode();
@@ -165,8 +165,9 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
         CollectionSystemsManager::getInstance()->getUnusedSystemsFromTheme()};
     if (unusedFolders.size() > 0) {
         ComponentListRow row;
-        auto themeCollection = std::make_shared<TextComponent>(
-            "CREATE NEW CUSTOM COLLECTION FROM THEME", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        auto themeCollection =
+            std::make_shared<TextComponent>("CREATE NEW CUSTOM COLLECTION FROM THEME",
+                                            Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
         auto bracketThemeCollection = std::make_shared<ImageComponent>();
         bracketThemeCollection->setResize(
             glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
@@ -186,7 +187,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
                     [this, name] { createCustomCollection(name); }};
                 row.makeAcceptInputHandler(createCollectionCall);
                 auto themeFolder = std::make_shared<TextComponent>(
-                    Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), 0x777777FF);
+                    Utils::String::toUpper(name), Font::get(FONT_SIZE_SMALL), mMenuColorPrimary);
                 themeFolder->setSelectable(true);
                 row.addElement(themeFolder, true);
                 ss->addRow(row);
@@ -198,12 +199,13 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
 
     // Create new custom collection.
     ComponentListRow row;
-    auto newCollection = std::make_shared<TextComponent>("CREATE NEW CUSTOM COLLECTION",
-                                                         Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+    auto newCollection = std::make_shared<TextComponent>(
+        "CREATE NEW CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
     auto bracketNewCollection = std::make_shared<ImageComponent>();
     bracketNewCollection->setResize(
         glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     bracketNewCollection->setImage(":/graphics/arrow.svg");
+    bracketNewCollection->setColorShift(mMenuColorPrimary);
     row.addElement(newCollection, true);
     row.addElement(bracketNewCollection, false);
     auto createCollectionCall = [this](const std::string& newVal) {
@@ -237,11 +239,12 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
     // Delete custom collection.
     row.elements.clear();
     auto deleteCollection = std::make_shared<TextComponent>(
-        "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+        "DELETE CUSTOM COLLECTION", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
     auto bracketDeleteCollection = std::make_shared<ImageComponent>();
     bracketDeleteCollection->setResize(
         glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
     bracketDeleteCollection->setImage(":/graphics/arrow.svg");
+    bracketDeleteCollection->setColorShift(mMenuColorPrimary);
     row.addElement(deleteCollection, true);
     row.addElement(bracketDeleteCollection, false);
     row.makeAcceptInputHandler([this, customSystems] {
@@ -299,7 +302,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
             };
             row.makeAcceptInputHandler(deleteCollectionCall);
             auto customCollection = std::make_shared<TextComponent>(
-                Utils::String::toUpper(name), Font::get(FONT_SIZE_MEDIUM), 0x777777FF);
+                Utils::String::toUpper(name), Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
             customCollection->setSelectable(true);
             row.addElement(customCollection, true);
             ss->addRow(row);
