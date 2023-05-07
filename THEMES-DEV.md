@@ -133,13 +133,17 @@ Note that the legacy theme engine had quite inaccurate text sizing and font rend
 * The defined line spacing was not always applied for automatically sized text elements
 * Font sizes were rounded to integers, leading to imprecise text sizing across different resolutions (the rounding was also done incorrectly)
 
-## System metadata repository
+## System metadata and logos repositories
 
-There is a very useful system metadata repository available that you can use for populating information like descriptions, release dates, per-system color palettes etc. It can be found here:
+There are two useful repositories hosted by the ES-DE project that provide system metadata and system logotypes. These greatly simplifies the work of adding support for all systems that ES-DE supports.
+
+**Metadata**
+
+The metadata repository provides descriptions, release dates, per-system color palettes etc. and it can be found here:
 
 https://gitlab.com/es-de/themes/system-metadata
 
-By adding this to your theme, either via manually downloading and including it, or by adding it as a Git subtree, you'll be able to access its defined variables. Make sure to regularly check for updates as corrections and additions of new systems are done regularly. Also check the README.md file in that repository for more details on how to actually use the variables.
+By adding this to your theme, either via manually downloading and including it, or by adding it as a Git subtree, you'll be able to access its defined variables. Make sure to regularly check for updates as corrections and additions of new systems are done continuously. Also check the README.md file in the repository for more details on how to actually use the variables.
 
 Here's how to add this repository as a subtree inside your theme's Git repository:
 ```
@@ -147,19 +151,42 @@ git remote add system-metadata https://gitlab.com/es-de/themes/system-metadata.g
 git subtree add --prefix=system-metadata --squash system-metadata master
 ```
 
-To later pull in updates made to the system metadata repository, you'll run the following:
+To later pull in repository updates you'll run the following:
 ```
 git subtree pull --prefix=system-metadata --squash system-metadata master
 ```
 
 The directory name can be changed to whatever you like using the --prefix flag.
 
-Note that the remote is only present on your local repository, so if you clone a theme you'll need to manually add the system-metadata remote to be able to pull from the subtree, i.e. you'll need to run this command on a freshly cloned theme repository:
+**Logos**
+
+Likewise there's a repository of system logotypes that can also be added and used in the same fashion as the metadata. It can be found here:
+
+https://gitlab.com/es-de/themes/system-logos
+
+Here's how to add this repository as a subtree inside your theme's Git repository:
 ```
-git remote add system-metadata https://gitlab.com/es-de/themes/system-metadata.git
+git remote add system-logos https://gitlab.com/es-de/themes/system-logos.git
+git subtree add --prefix=system-logos --squash system-logos master
 ```
 
-## Simple example
+To later pull in repository updates you'll run the following:
+```
+git subtree pull --prefix=system-logos --squash system-logos master
+```
+
+The directory name can be changed to whatever you like using the --prefix flag.
+
+**Adding remotes**
+
+Note that the remotes are only setup for your local repository, so if you clone a theme you'll need to manually add the system-metadata and/or system-logos remotes to be able to pull to these subtrees. That means you'll need to run the following commands on a freshly cloned theme repository:
+```
+git remote add system-metadata https://gitlab.com/es-de/themes/system-metadata.git
+git remote add system-logos https://gitlab.com/es-de/themes/system-logos.git
+```
+After doing this you'll be able to pull repository updates as described above.
+
+## Simple example theme
 
 Here is a very simple theme that changes the color of the game name text:
 

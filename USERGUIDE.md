@@ -262,9 +262,11 @@ As macOS does not support Vulkan some emulators are not available, and some that
 
 Lack of controller support is a bit of a problem on macOS, and in some instances controller drivers are available but quite buggy. In general it seems as if Sony PlayStation controllers are better supported than Microsoft Xbox controllers. For third party controllers you need to investigate the macOS support as it seems to differ quite a lot.
 
+There is a very annoying default configuration when using Sony controllers like the DualShock 4 and DualSense (and possibly others) where double tapping the Share button starts the screen recording functionality of the operating system. This normally presents a popup window for whether to approve the screen recording. To disable this functionality you need to create a custom controller profile and assign that to your specific controller. This is done via _System Settings_ and then the _Game Controllers_ entry. You'll find the relevant setting under the _Share Gestures_ section of the controller profile configuration screen. Refer to your operating system documentation for more details about this topic.
+
 One macOS-specific requirement is that the RetroArch setting _Start in Fullscreen mode_ is enabled or ES-DE will not be able to switch to the emulator window when launching games. As a workaround you can switch to the window manually using Command + Tab but it probably doesn't make sense to run emulators in windowed mode anyway. This issue has not been observed with any other emulators.
 
-At the time of writing there is an additional issue with the ARM release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when closing an app_ under the General entry in the macOS System Preferences has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the ARM architecture).
+At the time of writing there is an additional issue with the ARM release of RetroArch where ES-DE will not be able to consistently switch to its window on game launch if the setting _Close windows when quitting an application_ under the _Desktop & Dock_ entry in the macOS _System Settings_ has been set to disabled. This error does not occur for the Intel/x86 release of RetroArch or with any other standalone emulators (including those built specifically for the ARM architecture).
 
 The first time you launch a RetroArch-emulated game from within ES-DE the operating system will present you with a security option with the following description:
 
@@ -272,7 +274,7 @@ The first time you launch a RetroArch-emulated game from within ES-DE the operat
 
 If you don't allow this, you will not be able to place system BIOS ROMs in the RetroArch default system directory `~/Documents/RetroArch/system` even if you've already given RetroArch access to this folder. This is so because RetroArch runs as a subprocess to ES-DE and therefore inherits the security settings from the parent application. Attempting to launch a game without enabling the access will simply display an error message in the emulator that the BIOS files are missing. This of course only applies to emulators that require BIOS ROMs, all other games should work fine regardless of this security setting.
 
-If you accidentally refused ES-DE the folder access, you can fix this by opening _System Preferences_, selecting _Security & Privacy_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
+If you accidentally refused ES-DE the folder access, you can fix this by opening _System Settings_, selecting _Privacy & Security_ and within the GUI choose _Files and Folders_. The option you need to enable is _Documents Folder_ under _EmulationStation Desktop Edition_.
 
 By default files and directories starting with a dot are hidden on macOS, so to show the .emulationstation directory in your home directory you need to enable hidden files in Finder. You do this using the keyboard combination Shift + Command + . (dot).
 

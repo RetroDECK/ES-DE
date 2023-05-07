@@ -10,10 +10,14 @@
 
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
+* Added support for changing between light and dark color schemes for the menu system
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
 * Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
+* (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the windows system
+* (Linux) Added the .AppImage file extension to the windows system
 * (Linux) Added support for the official Citra AppImage release
 * Removed the experimental status for the theme downloader
+* Improved resilience to buggy controller drivers which would sometimes crash the application (mostly relevant for macOS)
 * Changed the default OpenGL version from 4.6 to 3.3 when building for RetroDECK
 
 ### Bug fixes
@@ -46,7 +50,7 @@ Catch-up release which implements some things that didn't make it into 2.0.0. Mo
 * (Unix) Added the .desktop and .sh file extensions to the arcade and mame systems
 * (macOS) Added the .app and .sh file extensions to the arcade and mame systems
 * (Windows) Added the .bat and .lnk file extensions to the arcade and mame systems
-* Added the .app file extensions to the nds system
+* Added the .app file extension to the nds system
 * Added the .7z and .zip file extensions to the 3do system
 * Changed the platform from pc to pcwindows for the desktop and kodi systems
 * (Linux) Dropped support for prebuilt RPM packages
