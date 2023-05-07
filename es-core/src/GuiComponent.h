@@ -380,7 +380,6 @@ protected:
     static inline unsigned int mMenuColorTextInputFrameFocused {0x777777FF};
     static inline unsigned int mMenuColorTextInputFrameUnfocused {0xFFFFFFFF};
 
-    static inline unsigned int mMenuColorSlider {0x777777FF};
     static inline unsigned int mMenuColorSliderKnobDisabled {0xC9C9C9FF};
     static inline unsigned int mMenuColorDateTimeEditMarker {0x00000022};
     static inline unsigned int mMenuColorDetectDeviceHeld {0x44444400};

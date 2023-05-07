@@ -35,7 +35,7 @@ SliderComponent::SliderComponent(float min, float max, float increment, const st
     mKnob.setResize(0.0f, std::round(mSize.y * 0.7f));
     mKnob.setOrigin(0.5f, 0.0f);
     mKnob.setImage(":/graphics/slider_knob.svg");
-    mKnob.setColorShift(mMenuColorSlider);
+    mKnob.setColorShift(mMenuColorPrimary);
 
     mKnobDisabled.setResize(0.0f, std::round(mSize.y * 0.7f));
     mKnobDisabled.setOrigin(0.5f, 0.0f);
@@ -110,8 +110,8 @@ void SliderComponent::render(const glm::mat4& parentTrans)
 
     mRenderer->drawRect(
         mKnob.getSize().x / 2.0f, mBarPosY, width, mBarHeight,
-        (mMenuColorSlider & 0xFFFFFF00) | static_cast<unsigned int>(mOpacity * 255.0f),
-        (mMenuColorSlider & 0xFFFFFF00) | static_cast<unsigned int>(mOpacity * 255.0f));
+        (mMenuColorPrimary & 0xFFFFFF00) | static_cast<unsigned int>(mOpacity * 255.0f),
+        (mMenuColorPrimary & 0xFFFFFF00) | static_cast<unsigned int>(mOpacity * 255.0f));
 
     if (mOpacity > DISABLED_OPACITY)
         mKnob.render(trans);
