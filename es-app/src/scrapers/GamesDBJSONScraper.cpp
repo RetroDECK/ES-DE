@@ -200,10 +200,11 @@ void thegamesdb_generate_json_scraper_requests(
         if (Settings::getInstance()->getBool("ScraperConvertUnderscores"))
             cleanName = Utils::String::replace(cleanName, "_", " ");
 
-        path += "/Games/ByGameName?" + apiKey +
-                "&fields=players,publishers,genres,overview,last_updated,rating,"
-                "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=" +
-                HttpReq::urlEncode(cleanName);
+        path.append("/Games/ByGameName?")
+            .append(apiKey)
+            .append("&fields=players,publishers,genres,overview,last_updated,rating,"
+                    "platform,coop,youtube,os,processor,ram,hdd,video,sound,alternates&name=")
+            .append(HttpReq::urlEncode(cleanName));
     }
 
     if (usingGameID) {
@@ -248,10 +249,10 @@ void thegamesdb_generate_json_scraper_requests(
     std::vector<ScraperSearchResult>& results)
 {
     resources.prepare();
-    std::string path = "https://api.thegamesdb.net/v1";
+    std::string path {"https://api.thegamesdb.net/v1"};
     const std::string apiKey {std::string("apikey=") + resources.getApiKey()};
 
-    path += "/Games/Images/GamesImages?" + apiKey + "&games_id=" + gameIDs;
+    path.append("/Games/Images/GamesImages?").append(apiKey).append("&games_id=").append(gameIDs);
 
     requests.push(
         std::unique_ptr<ScraperRequest>(new TheGamesDBJSONRequest(requests, results, path)));
@@ -290,9 +291,9 @@ namespace
         if (!v.IsArray())
             return "";
 
-        std::string out = "";
+        std::string out;
         bool first {true};
-        for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
+        for (int i {0}; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_developers_map.find(getIntOrThrow(v[i]));
 
             if (mapIt == resources.gamesdb_new_developers_map.cend())
@@ -314,7 +315,7 @@ namespace
 
         std::string out;
         bool first {true};
-        for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
+        for (int i {0}; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_publishers_map.find(getIntOrThrow(v[i]));
 
             if (mapIt == resources.gamesdb_new_publishers_map.cend())
@@ -336,7 +337,7 @@ namespace
 
         std::string out;
         bool first {true};
-        for (int i = 0; i < static_cast<int>(v.Size()); ++i) {
+        for (int i {0}; i < static_cast<int>(v.Size()); ++i) {
             auto mapIt = resources.gamesdb_new_genres_map.find(getIntOrThrow(v[i]));
 
             if (mapIt == resources.gamesdb_new_genres_map.cend())
@@ -432,7 +433,7 @@ void processMediaURLs(const Value& images,
         // Quite excessive testing for valid values, but you never know what the server has
         // returned and we don't want to crash the program due to malformed data.
         if (gameMedia.IsArray()) {
-            for (SizeType i = 0; i < gameMedia.Size(); ++i) {
+            for (SizeType i {0}; i < gameMedia.Size(); ++i) {
                 std::string mediatype;
                 std::string mediaside;
                 if (gameMedia[i]["type"].IsString())
@@ -477,7 +478,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     if (doc.HasParseError()) {
         std::string err {std::string("TheGamesDBJSONRequest - Error parsing JSON \n\t") +
                          GetParseError_En(doc.GetParseError())};
-        setError(err);
+        setError(err, true);
         LOG(LogError) << err;
         return;
     }
@@ -508,7 +509,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
         // Find how many more requests we can make before the scraper
         // request allowance counter is reset.
         if (doc.HasMember("remaining_monthly_allowance") && doc.HasMember("extra_allowance")) {
-            for (size_t i = 0; i < results.size(); ++i) {
+            for (size_t i {0}; i < results.size(); ++i) {
                 results[i].scraperRequestAllowance =
                     doc["remaining_monthly_allowance"].GetInt() + doc["extra_allowance"].GetInt();
             }
@@ -529,7 +530,7 @@ void TheGamesDBJSONRequest::process(const std::unique_ptr<HttpReq>& req,
     const Value& games {doc["data"]["games"]};
     resources.ensureResources();
 
-    for (int i = 0; i < static_cast<int>(games.Size()); ++i) {
+    for (int i {0}; i < static_cast<int>(games.Size()); ++i) {
         auto& v = games[i];
         try {
             processGame(v, results);

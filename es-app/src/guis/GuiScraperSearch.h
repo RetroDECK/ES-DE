@@ -108,6 +108,7 @@ private:
     void resizeMetadata();
 
     void onSearchError(const std::string& error,
+                       const bool retry,
                        HttpReq::Status status = HttpReq::REQ_UNDEFINED_ERROR);
     void onSearchDone(std::vector<ScraperSearchResult>& results);
 

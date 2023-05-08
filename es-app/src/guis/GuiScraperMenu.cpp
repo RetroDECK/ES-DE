@@ -419,6 +419,27 @@ void GuiScraperMenu::openContentOptions()
         }
     });
 
+    // Scrape game manuals.
+    auto scrapeManuals = std::make_shared<SwitchComponent>();
+    scrapeManuals->setState(Settings::getInstance()->getBool("ScrapeManuals"));
+    s->addWithLabel("GAME MANUALS", scrapeManuals);
+    s->addSaveFunc([scrapeManuals, s] {
+        if (scrapeManuals->getState() != Settings::getInstance()->getBool("ScrapeManuals")) {
+            Settings::getInstance()->setBool("ScrapeManuals", scrapeManuals->getState());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Game manuals are not supported by TheGamesDB, so gray out the option if this scraper
+    // is selected.
+    if (Settings::getInstance()->getString("Scraper") == "thegamesdb") {
+        scrapeManuals->setEnabled(false);
+        scrapeManuals->setOpacity(DISABLED_OPACITY);
+        scrapeManuals->getParent()
+            ->getChild(scrapeManuals->getChildIndex() - 1)
+            ->setOpacity(DISABLED_OPACITY);
+    }
+
     mWindow->pushGui(s);
 }
 
@@ -1123,6 +1144,11 @@ void GuiScraperMenu::start()
             break;
         }
         if (Settings::getInstance()->getBool("ScrapeFanArt")) {
+            contentToScrape = true;
+            break;
+        }
+        if (scraperService == "screenscraper" &&
+            Settings::getInstance()->getBool("ScrapeManuals")) {
             contentToScrape = true;
             break;
         }

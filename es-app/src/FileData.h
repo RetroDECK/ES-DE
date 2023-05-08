@@ -96,6 +96,7 @@ public:
     const std::string getScreenshotPath() const;
     const std::string getTitleScreenPath() const;
     const std::string getVideoPath() const;
+    const std::string getManualPath() const;
 
     const bool getDeletionFlag() const { return mDeletionFlag; }
     void setDeletionFlag(bool setting) { mDeletionFlag = setting; }

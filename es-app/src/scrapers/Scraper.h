@@ -81,6 +81,7 @@ struct ScraperSearchResult {
     std::string screenshotUrl;
     std::string titlescreenUrl;
     std::string videoUrl;
+    std::string manualUrl;
 
     // Needed to pre-set the image type.
     std::string box3DFormat;
@@ -92,6 +93,7 @@ struct ScraperSearchResult {
     std::string screenshotFormat;
     std::string titlescreenFormat;
     std::string videoFormat;
+    std::string manualFormat;
 
     // Indicates whether any new media files were downloaded and saved.
     bool savedNewMedia;

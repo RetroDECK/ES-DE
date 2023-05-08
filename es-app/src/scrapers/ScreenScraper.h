@@ -97,6 +97,7 @@ public:
         std::string media_titlescreen = "sstitle";
         std::string media_video = "video";
         std::string media_video_normalized = "video-normalized";
+        std::string media_manual = "manuel";
 
         bool isArcadeSystem;
         bool automaticMode;

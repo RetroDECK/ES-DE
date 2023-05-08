@@ -668,6 +668,14 @@ void GamelistBase::removeMedia(FileData* game)
         removeEmptyDirFunc(systemMediaDir, mediaType, path);
     }
 
+    while (Utils::FileSystem::exists(game->getManualPath())) {
+        mediaType = "manuals";
+        path = game->getManualPath();
+        if (Utils::FileSystem::removeFile(path))
+            break;
+        removeEmptyDirFunc(systemMediaDir, mediaType, path);
+    }
+
     while (Utils::FileSystem::exists(game->getMiximagePath())) {
         mediaType = "miximages";
         path = game->getMiximagePath();

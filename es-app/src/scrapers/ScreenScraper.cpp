@@ -266,7 +266,7 @@ void ScreenScraperRequest::process(const std::unique_ptr<HttpReq>& req,
 
         std::string err = ss.str();
         LOG(LogError) << err;
-        setError("ScreenScraper error: \n" + req->getContent());
+        setError("ScreenScraper error: \n" + req->getContent(), true);
 
         return;
     }
@@ -606,6 +606,9 @@ void ScreenScraperRequest::processGame(const pugi::xml_document& xmldoc,
             if (result.videoUrl == "")
                 processMedia(result, media_list, ssConfig.media_video_normalized, result.videoUrl,
                              result.videoFormat, region);
+            // Game manuals.
+            processMedia(result, media_list, ssConfig.media_manual, result.manualUrl,
+                         result.manualFormat, region);
         }
         result.mediaURLFetch = COMPLETED;
         out_results.emplace_back(result);

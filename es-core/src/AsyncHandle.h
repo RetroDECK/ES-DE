@@ -23,6 +23,7 @@ class AsyncHandle
 public:
     AsyncHandle()
         : mStatus(ASYNC_IN_PROGRESS)
+        , mRetry {true}
     {
     }
     virtual ~AsyncHandle() {}
@@ -35,6 +36,8 @@ public:
         update();
         return mStatus;
     }
+
+    const bool getRetry() { return mRetry; }
 
     // User-friendly string of our current status.
     // Will return error message if status() == SEARCH_ERROR.
@@ -54,14 +57,16 @@ public:
 
 protected:
     void setStatus(AsyncHandleStatus status) { mStatus = status; }
-    void setError(const std::string& error)
+    void setError(const std::string& error, bool retry)
     {
         setStatus(ASYNC_ERROR);
         mError = error;
+        mRetry = retry;
     }
 
     std::string mError;
     AsyncHandleStatus mStatus;
+    bool mRetry;
 };
 
 #endif // ES_CORE_ASYNC_HANDLE_H

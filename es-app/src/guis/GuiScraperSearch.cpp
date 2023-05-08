@@ -255,7 +255,7 @@ void GuiScraperSearch::resizeMetadata()
                                                            mRenderer->getScreenWidthModifier()));
         }
 
-        for (unsigned int i = 0; i < mMD_Pairs.size(); ++i)
+        for (unsigned int i {0}; i < mMD_Pairs.size(); ++i)
             mMD_Grid->setRowHeightPerc(
                 i * 2,
                 (fontLbl->getLetterHeight() + (2.0f * (mRenderer->getIsVerticalOrientation() ?
@@ -406,7 +406,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
         mFoundGame = true;
         ComponentListRow row;
 
-        for (size_t i = 0; i < results.size(); ++i) {
+        for (size_t i {0}; i < results.size(); ++i) {
             // If the platform IDs returned by the scraper do not match the platform IDs of the
             // scraped game, then add the additional platform information to the end of the game
             // name (within square brackets).
@@ -425,7 +425,7 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
                 }
             }
 
-            bool hasOtherPlatforms = false;
+            bool hasOtherPlatforms {false};
 
             for (auto& platformID : mLastSearch.system->getSystemEnvData()->mPlatformIds) {
                 if (!results.at(i).platformIDs.empty() &&
@@ -495,11 +495,13 @@ void GuiScraperSearch::onSearchDone(std::vector<ScraperSearchResult>& results)
     }
 }
 
-void GuiScraperSearch::onSearchError(const std::string& error, HttpReq::Status status)
+void GuiScraperSearch::onSearchError(const std::string& error,
+                                     const bool retry,
+                                     HttpReq::Status status)
 {
     const int retries {
         glm::clamp(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"), 0, 10)};
-    if (retries > 0 && mRetryCount < retries) {
+    if (retry && mSearchType != NEVER_AUTO_ACCEPT && retries > 0 && mRetryCount < retries) {
         LOG(LogError) << "GuiScraperSearch: " << Utils::String::replace(error, "\n", "");
         mRetrySearch = true;
         ++mRetryCount;
@@ -535,7 +537,7 @@ int GuiScraperSearch::getSelectedIndex()
 
 void GuiScraperSearch::updateInfoPane()
 {
-    int i = getSelectedIndex();
+    int i {getSelectedIndex()};
     if (mSearchType == ALWAYS_ACCEPT_FIRST_RESULT && mScraperResults.size())
         i = 0;
 
@@ -670,6 +672,8 @@ void GuiScraperSearch::returnResult(ScraperSearchResult result)
     // Resolve metadata image before returning.
     if (result.mediaFilesDownloadStatus != COMPLETED) {
         result.mediaFilesDownloadStatus = IN_PROGRESS;
+        LOG(LogDebug) << "GuiScraperSearch::returnResult(): Selected game \""
+                      << result.mdl.get("name") << "\"";
         mMDResolveHandle = resolveMetaDataAssets(result, mLastSearch);
         return;
     }
@@ -710,7 +714,8 @@ void GuiScraperSearch::update(int deltaTime)
     if (mSearchHandle && mSearchHandle->status() != ASYNC_IN_PROGRESS) {
         auto status = mSearchHandle->status();
         mScraperResults = mSearchHandle->getResults();
-        auto statusString = mSearchHandle->getStatusString();
+        const std::string statusString {mSearchHandle->getStatusString()};
+        const bool retryFlag {mSearchHandle->getRetry()};
 
         // We reset here because onSearchDone in auto mode can call mSkipCallback() which
         // can call another search() which will set our mSearchHandle to something important.
@@ -734,7 +739,7 @@ void GuiScraperSearch::update(int deltaTime)
             }
         }
         else if (status == ASYNC_ERROR) {
-            onSearchError(statusString);
+            onSearchError(statusString, retryFlag);
         }
     }
 
@@ -767,7 +772,8 @@ void GuiScraperSearch::update(int deltaTime)
             onSearchDone(results_scrape);
         }
         else if (mMDRetrieveURLsHandle->status() == ASYNC_ERROR) {
-            onSearchError(mMDRetrieveURLsHandle->getStatusString());
+            onSearchError(mMDRetrieveURLsHandle->getStatusString(),
+                          mMDRetrieveURLsHandle->getRetry());
             mMDRetrieveURLsHandle.reset();
         }
     }
@@ -823,7 +829,7 @@ void GuiScraperSearch::update(int deltaTime)
             }
         }
         else if (mMDResolveHandle->status() == ASYNC_ERROR) {
-            onSearchError(mMDResolveHandle->getStatusString());
+            onSearchError(mMDResolveHandle->getStatusString(), mMDResolveHandle->getRetry());
             mMDResolveHandle.reset();
         }
     }
@@ -850,7 +856,7 @@ void GuiScraperSearch::updateThumbnail()
     }
     else {
         mResultThumbnail->setImage("");
-        onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg(),
+        onSearchError("Error downloading thumbnail:\n " + it->second->getErrorMsg(), true,
                       it->second->status());
     }
 
@@ -954,7 +960,7 @@ bool GuiScraperSearch::saveMetadata(const ScraperSearchResult& result,
     if (defaultName == metadata.get("name"))
         hasDefaultName = true;
 
-    for (unsigned int i = 0; i < mMetaDataDecl.size(); ++i) {
+    for (unsigned int i {0}; i < mMetaDataDecl.size(); ++i) {
 
         // Skip elements that are tagged not to be scraped.
         if (!mMetaDataDecl.at(i).shouldScrape)

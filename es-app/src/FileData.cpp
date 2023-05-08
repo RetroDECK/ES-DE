@@ -322,6 +322,29 @@ const std::string FileData::getVideoPath() const
     return "";
 }
 
+const std::string FileData::getManualPath() const
+{
+    const std::vector<std::string> extList {".pdf"};
+    std::string subFolders;
+
+    // Extract possible subfolders from the path.
+    if (mEnvData->mStartPath != "")
+        subFolders =
+            Utils::String::replace(Utils::FileSystem::getParent(mPath), mEnvData->mStartPath, "");
+
+    const std::string tempPath {getMediaDirectory() + mSystemName + "/manuals" + subFolders + "/" +
+                                getDisplayName()};
+
+    // Look for manuals in the media directory.
+    for (size_t i {0}; i < extList.size(); ++i) {
+        std::string mediaPath {tempPath + extList[i]};
+        if (Utils::FileSystem::exists(mediaPath))
+            return mediaPath;
+    }
+
+    return "";
+}
+
 const std::vector<FileData*>& FileData::getChildrenListToDisplay()
 {
     FileFilterIndex* idx {mSystem->getIndex()};
