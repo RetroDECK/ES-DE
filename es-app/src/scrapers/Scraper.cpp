@@ -593,10 +593,20 @@ void MediaDownloadHandle::update()
     }
 
     if (mMediaType == "manuals") {
+#if defined(_WIN64)
+        LOG(LogDebug) << "Scraper::update(): Saving game manual \""
+                      << Utils::String::replace(mSavePath, "/", "\\") << "\"";
+#else
         LOG(LogDebug) << "Scraper::update(): Saving game manual \"" << mSavePath << "\"";
+#endif
     }
     else if (mMediaType == "videos") {
+#if defined(_WIN64)
+        LOG(LogDebug) << "Scraper::update(): Saving video \""
+                      << Utils::String::replace(mSavePath, "/", "\\") << "\"";
+#else
         LOG(LogDebug) << "Scraper::update(): Saving video \"" << mSavePath << "\"";
+#endif
     }
 
     // Resize it.
