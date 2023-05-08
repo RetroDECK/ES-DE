@@ -25,16 +25,10 @@
 
 #include <memory>
 #include <string>
+#include <cstdint>
 
-#if defined(_MSC_VER) && defined(LUNASVG_SHARED)
-#ifdef LUNASVG_EXPORT
-#define LUNASVG_API __declspec(dllexport)
-#else
-#define LUNASVG_API __declspec(dllimport)
-#endif
-#else
-#define LUNASVG_API
-#endif
+#include <lunasvg_export.h>
+#define LUNASVG_API LUNASVG_EXPORT
 
 namespace lunasvg {
 
