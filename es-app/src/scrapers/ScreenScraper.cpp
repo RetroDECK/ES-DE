@@ -682,8 +682,8 @@ bool ScreenScraperRequest::processMedia(ScraperSearchResult& result,
     }
     else {
         LOG(LogDebug) << "ScreenScraperRequest::processMedia(): "
-                         "Failed to find media XML node with name '"
-                      << mediaType << "'";
+                         "Failed to find media XML node with name \""
+                      << mediaType << "\"";
     }
 
     return regionFallback;
