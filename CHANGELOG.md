@@ -1,26 +1,29 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
-[[_TOC_]]
-
 ## Version 2.1.0 (in development)
 
 **Release date:** TBD
 
 ### Detailed list of changes
 
+* Added support for changing between light and dark color schemes for the menu system
+* Added an option to scrape game manuals using ScreenScraper
+* Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
-* Added support for changing between light and dark color schemes for the menu system
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
 * Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
 * (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the windows system
 * (Linux) Added the .AppImage file extension to the windows system
 * (Linux) Added support for the official Citra AppImage release
 * Removed the experimental status for the theme downloader
-* Improved resilience to buggy controller drivers which would sometimes crash the application (mostly relevant for macOS)
+* Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
+* Updated LunaSVG to commit f924651b85cac47dbe15f51a4aa320461fc1d07b to fix a GCC 13 build error
 * Changed the default OpenGL version from 4.6 to 3.3 when building for RetroDECK
 
 ### Bug fixes
+
+* The scraper auto-retry functionality was triggered when scraping manually
 
 ## Version 2.0.1
 

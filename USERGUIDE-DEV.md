@@ -1921,6 +1921,7 @@ Here's an overview of what's supported when using these scrapers:
 | 3D boxes                          | Yes           | No         |
 | Fan art                           | Yes           | Yes        |
 | Physical media                    | Yes           | No         |
+| Game manuals (PDF)                | Yes           | No         |
 
 The category **Other game metadata** includes Description, Release date, Developer, Publisher, Genre and Players.
 
@@ -2000,6 +2001,7 @@ The media directories per game system are:
 * backcovers
 * covers
 * fanart
+* manuals
 * marquees
 * miximages
 * physicalmedia
@@ -2138,6 +2140,10 @@ Images of cartridges, diskettes, tapes, CD-ROMs etc. that were used to distribut
 
 Fan art. These can get quite large so if you don't need them then disable this option to speed up the scraping process.
 
+**Game manuals** _(ScreenScraper only)_
+
+Manuals in PDF format. Note that these files can be quite large.
+
 #### Miximage settings
 
 These are the settings for the miximage generator, which can either be run from the scraper (single-game scraper or multi-scraper) or from the offline generator. The miximage combines the screenshot, marquee, box/cover and physical media images to make a composite picture that is displayed in the gamelist view. There are various settings for the generator.
@@ -2212,7 +2218,7 @@ Multiple languages are supported by ScreenScraper, and this affects translations
 
 **Automatic retries on error**
 
-How many times to automatically retry scraping if an error is encountered, from 0 to 10.
+How many times to automatically retry scraping if an error is encountered, from 0 to 10. Note that this is only applied when running in automatic or semi-automatic mode and not when for instance using the single-game scraper. It also doesn't apply to non-recoverable errors such as insufficient permissions or if the disk is full.
 
 **Retry attempt timer**
 
@@ -2309,6 +2315,10 @@ If set to _None_, the system view will be displayed. Any other value will jump t
 **Default sort order**
 
 The order in which to sort your gamelists. This can be overriden per game system using the gamelist options menu, but that override will only be persistent during the application session. The _System_ sorting can not be selected here as it's only applicable to collection systems.
+
+**Menu color scheme**
+
+Provides a selection between a _Light_ and a _Dark_ color scheme. This will affect the entire menu system as well as the launch screen.
 
 **Menu opening effect**
 

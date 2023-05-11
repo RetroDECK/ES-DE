@@ -58,6 +58,7 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Scraping of game manuals and maps plus a viewer for these (with PDF and raster image support)
 * Support for additional scraper services
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
+* _Selection between light and dark color schemes for the menu system_
 * RetroAchievements.org integration
 
 #### v2.2

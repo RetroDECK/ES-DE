@@ -133,9 +133,9 @@ Note that the legacy theme engine had quite inaccurate text sizing and font rend
 * The defined line spacing was not always applied for automatically sized text elements
 * Font sizes were rounded to integers, leading to imprecise text sizing across different resolutions (the rounding was also done incorrectly)
 
-## System metadata and logos repositories
+## System metadata and logo repositories
 
-There are two useful repositories hosted by the ES-DE project that provide system metadata and system logotypes. These greatly simplifies the work of adding support for all systems that ES-DE supports.
+There are two useful repositories hosted by the ES-DE project that provide system metadata and system logotypes. This greatly simplifies the work of adding support for all systems that ES-DE supports.
 
 **Metadata**
 
