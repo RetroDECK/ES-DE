@@ -42,6 +42,14 @@ endif()
 
 add_subdirectory(lunasvg EXCLUDE_FROM_ALL)
 
+# It's quite strange that this is needed but LunaSVG saves these artifacts to separate
+# subdirectories by default.
+set_target_properties(lunasvg
+    PROPERTIES
+    ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}
+    LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}
+    RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR})
+
 # Disable threading support for rlottie as this functionality actually leads to far worse
 # performance. As well there is a bug on Windows that makes rlottie hang forever on application
 # shutdown if compiled using MinGW with threading support enabled.
