@@ -5,7 +5,7 @@ EmulationStation Desktop Edition is a frontend for browsing and launching games 
 Website:\
 [https://es-de.org](https://es-de.org)
 
-Discord server:\
+Discord:\
 [https://discord.gg/EVVX4DqWAP](https://discord.gg/EVVX4DqWAP)
 
 The goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
@@ -34,9 +34,9 @@ If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you
 
 [THEMES.md](THEMES.md) / [THEMES-DEV.md](THEMES-DEV.md) - Guide and reference for theme development
 
-[CHANGELOG.md](CHANGELOG.md) - Detailed list of changes per release
+[CHANGELOG.md](CHANGELOG.md) - Detailed list of changes for all past releases and the in-development version
 
-[ROADMAP.md](ROADMAP.md) - High level release plan
+[ROADMAP.md](ROADMAP.md) - List of major features planned to be added in the future
 
 [CONTRIBUTING.md](CONTRIBUTING.md) - Information on how to contribute to the project
 
