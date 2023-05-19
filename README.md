@@ -8,12 +8,6 @@ Website:\
 Discord server:\
 [https://discord.gg/EVVX4DqWAP](https://discord.gg/EVVX4DqWAP)
 
-Reddit (r/EmulationStation_DE):\
-[https://www.reddit.com/r/EmulationStation_DE](https://www.reddit.com/r/EmulationStation_DE)
-
-YouTube channel with installation instruction videos:\
-[https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ](https://www.youtube.com/channel/UCosLuC9yIMQPKFBJXgDpvVQ)
-
 The goal of this edition is to make the software as easy as possible to install and use as a standalone application, and to support the major desktop operating systems, i.e. Windows, macOS and Unix/Linux. Since it's intended to be used as a desktop application rather than as the primary interface for the computer, there are no plans to provide system administration utilities or control over emulator settings from within ES-DE.
 
 It comes preconfigured for use with [RetroArch](https://www.retroarch.com) and a large selection of standalone emulators. It's also fully customizable so you can easily expand it to include emulators or applications not covered by the bundled configuration.

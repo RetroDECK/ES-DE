@@ -132,7 +132,7 @@ The second reason for double input is buggy controller drivers. This seems to on
 
 ## I'm missing a feature, how can I make a request to have it added?
 
-First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](ROADMAP.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server or [subreddit](https://www.reddit.com/r/EmulationStation_DE/).
+First check the project [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards/1823720) board which contains an overview of planned future features and changes and search for the functionality you would like to see added. Chances are there is already a card on the board describing precisely what you intended to request. You can also check the [Release roadmap](ROADMAP.md) which includes the planned implementation of major features. If you can't find the feature you're looking for, you can request it either via adding an issue directly to the Kanban board, or by asking for it in our [Discord](https://discord.gg/EVVX4DqWAP) server.
 
 ## I want to setup a gaming appliance based on the Raspberry Pi, can I use ES-DE for this?
 
