@@ -85,7 +85,7 @@ void TextureResource::initFromPixels(const unsigned char* dataRGBA, size_t width
     mTextureData->initFromRGBA(dataRGBA, width, height);
     // Cache the image dimensions.
     mSize = glm::ivec2 {static_cast<int>(width), static_cast<int>(height)};
-    mSourceSize = glm::vec2 {mTextureData->sourceWidth(), mTextureData->sourceHeight()};
+    mSourceSize = glm::vec2 {static_cast<float>(width), static_cast<float>(height)};
 }
 
 void TextureResource::initFromMemory(const char* data, size_t length)
