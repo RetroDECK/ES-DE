@@ -59,6 +59,12 @@ https://github.com/xiph/ogg
 Opus \
 https://gitlab.xiph.org/xiph/opus
 
+PoDoFo \
+https://github.com/podofo/podofo
+
+Poppler \
+https://poppler.freedesktop.org
+
 pugixml \
 https://pugixml.org
 
