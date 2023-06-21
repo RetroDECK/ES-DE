@@ -101,13 +101,12 @@ namespace Utils
                 command = "cd " + startDirectory + " && " + command;
 
             if (!(commandPipe = reinterpret_cast<FILE*>(popen(command.c_str(), "r")))) {
-                LOG(LogError) << "Couldn't open pipe to command.";
+                LOG(LogError) << "Couldn't open pipe to command";
                 return -1;
             }
 
-            while (fgets(buffer.data(), buffer.size(), commandPipe) != nullptr) {
+            while (fgets(buffer.data(), buffer.size(), commandPipe) != nullptr)
                 commandOutput += buffer.data();
-            }
 
             returnValue = pclose(commandPipe);
 
