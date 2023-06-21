@@ -21,6 +21,8 @@
 emulationstation
 EmulationStation
 EmulationStation.exe
+es-pdf-convert
+es-pdf-convert.exe
 
 # Emscripten build
 emulationstation.data
