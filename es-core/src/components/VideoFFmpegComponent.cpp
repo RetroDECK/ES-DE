@@ -6,8 +6,6 @@
 //  Video player based on FFmpeg.
 //
 
-#define DEBUG_VIDEO false
-
 #include "components/VideoFFmpegComponent.h"
 
 #include "AudioManager.h"
@@ -20,6 +18,8 @@
 
 #include <algorithm>
 #include <iomanip>
+
+#define DEBUG_VIDEO false
 
 #if LIBAVUTIL_VERSION_MAJOR >= 58 ||                                                               \
     (LIBAVUTIL_VERSION_MAJOR >= 57 && LIBAVUTIL_VERSION_MINOR >= 28)
