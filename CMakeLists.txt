@@ -135,6 +135,7 @@ elseif(NOT EMSCRIPTEN)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
     find_package(Libgit2 REQUIRED)
+    find_package(PoDoFo REQUIRED)
     find_package(Pugixml REQUIRED)
     find_package(SDL2 REQUIRED)
 endif()
@@ -455,6 +456,7 @@ else()
                             ${FreeImage_INCLUDE_DIRS}
                             ${FREETYPE_INCLUDE_DIRS}
                             ${GIT2_INCLUDE_PATH}
+                            ${PoDoFo_INCLUDE_DIRS}
                             ${PUGIXML_INCLUDE_DIRS}
                             ${SDL2_INCLUDE_DIR})
 endif()
@@ -571,6 +573,7 @@ else()
                          ${FreeImage_LIBRARIES}
                          ${FREETYPE_LIBRARIES}
                          ${GIT2_LIBRARY}
+                         ${PoDoFo_LIBRARIES}
                          ${PUGIXML_LIBRARIES}
                          ${SDL2_LIBRARY})
 endif()
@@ -626,10 +629,13 @@ set(EXECUTABLE_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 set(LIBRARY_OUTPUT_PATH ${dir} CACHE PATH "Build directory" FORCE)
 
 # Add each component.
+add_subdirectory(es-pdf-converter)
 add_subdirectory(external)
 add_subdirectory(es-core)
 add_subdirectory(es-app)
 
-# Make sure rlottie is built before es-core and set lottie2gif to not be built.
+# Make sure that es-pdf-convert is built first, and then that rlottie is built before es-core.
+# Also set lottie2gif to not be built.
+add_dependencies(lunasvg es-pdf-convert)
 add_dependencies(es-core rlottie)
 set_target_properties(lottie2gif PROPERTIES EXCLUDE_FROM_ALL 1 EXCLUDE_FROM_DEFAULT_BUILD 1)

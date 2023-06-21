@@ -25,6 +25,7 @@
 #include "Log.h"
 #include "MameNames.h"
 #include "MediaViewer.h"
+#include "PDFViewer.h"
 #include "Screensaver.h"
 #include "Scripting.h"
 #include "Settings.h"
@@ -725,6 +726,7 @@ int main(int argc, char* argv[])
     CollectionSystemsManager::getInstance();
     Screensaver screensaver;
     MediaViewer mediaViewer;
+    PDFViewer pdfViewer;
     GuiLaunchScreen guiLaunchScreen;
 
     if (!window->init()) {

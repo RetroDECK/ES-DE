@@ -29,6 +29,7 @@ Window::Window() noexcept
     , mBackgroundOverlayOpacity {1.0f}
     , mScreensaver {nullptr}
     , mMediaViewer {nullptr}
+    , mPDFViewer {nullptr}
     , mLaunchScreen {nullptr}
     , mInfoPopup {nullptr}
     , mListScrollOpacity {0.0f}
@@ -40,6 +41,7 @@ Window::Window() noexcept
     , mRenderScreensaver {false}
     , mRenderMediaViewer {false}
     , mRenderLaunchScreen {false}
+    , mRenderPDFViewer {false}
     , mGameLaunchedState {false}
     , mAllowTextScrolling {true}
     , mAllowFileAnimation {true}
@@ -219,13 +221,32 @@ void Window::input(InputConfig* config, Input input)
     }
 
     if (mMediaViewer && mRenderMediaViewer) {
-        if (config->isMappedLike("right", input) && input.value != 0)
+        if (config->isMappedLike("y", input) && input.value != 0) {
+            mMediaViewer->launchPDFViewer();
+            return;
+        }
+        else if (config->isMappedLike("right", input) && input.value != 0)
             mMediaViewer->showNext();
         else if (config->isMappedLike("left", input) && input.value != 0)
             mMediaViewer->showPrevious();
         else if (input.value != 0)
-            // Any other input than left or right stops the media viewer.
+            // Any other input stops the media viewer.
             stopMediaViewer();
+        return;
+    }
+
+    if (mPDFViewer && mRenderPDFViewer) {
+        if (config->isMappedLike("right", input) && input.value != 0)
+            mPDFViewer->showNextPage();
+        else if (config->isMappedLike("left", input) && input.value != 0)
+            mPDFViewer->showPreviousPage();
+        else if (config->isMappedLike("righttrigger", input) && input.value != 0)
+            mPDFViewer->showLastPage();
+        else if (config->isMappedLike("lefttrigger", input) && input.value != 0)
+            mPDFViewer->showFirstPage();
+        else if (input.value != 0)
+            // Any other input stops the PDF viewer.
+            stopPDFViewer();
         return;
     }
 
@@ -654,6 +675,9 @@ void Window::render()
     if (mRenderMediaViewer)
         mMediaViewer->render(trans);
 
+    if (mRenderPDFViewer)
+        mPDFViewer->render(trans);
+
     if (mRenderLaunchScreen)
         mLaunchScreen->render(trans);
 
@@ -856,6 +880,29 @@ void Window::stopMediaViewer()
     }
 
     mRenderMediaViewer = false;
+}
+
+void Window::startPDFViewer(FileData* game)
+{
+    if (mPDFViewer) {
+        if (mPDFViewer->startPDFViewer(game)) {
+            setAllowTextScrolling(false);
+            setAllowFileAnimation(false);
+
+            mRenderPDFViewer = true;
+        }
+    }
+}
+
+void Window::stopPDFViewer()
+{
+    if (mPDFViewer) {
+        mPDFViewer->stopPDFViewer();
+        setAllowTextScrolling(true);
+        setAllowFileAnimation(true);
+    }
+
+    mRenderPDFViewer = false;
 }
 
 void Window::displayLaunchScreen(FileData* game)

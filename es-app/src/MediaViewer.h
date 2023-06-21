@@ -21,6 +21,7 @@ public:
 
     bool startMediaViewer(FileData* game) override;
     void stopMediaViewer() override;
+    void launchPDFViewer() override;
 
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;

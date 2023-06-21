@@ -3,7 +3,7 @@
 #  EmulationStation Desktop Edition
 #  CMakeLists.txt (es-core)
 #
-#  CMake configuration for es-core.
+#  CMake configuration for es-core
 #
 
 project(core)

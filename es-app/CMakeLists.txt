@@ -3,7 +3,7 @@
 #  EmulationStation Desktop Edition
 #  CMakeLists.txt (es-app)
 #
-#  CMake configuration for es-app.
+#  CMake configuration for es-app
 #  Also contains the application packaging configuration.
 #
 
@@ -21,6 +21,7 @@ set(ES_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MiximageGenerator.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PDFViewer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screensaver.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/UIModeController.h
@@ -70,6 +71,7 @@ set(ES_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MetaData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/MiximageGenerator.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/PlatformId.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/PDFViewer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/Screensaver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/SystemData.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/UIModeController.cpp
@@ -228,6 +230,7 @@ elseif(APPLE)
     install(DIRECTORY ${CMAKE_SOURCE_DIR}/licenses DESTINATION ../Resources)
 else()
     install(TARGETS emulationstation RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
+    install(TARGETS es-pdf-convert RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
     if(CMAKE_SYSTEM_NAME MATCHES Linux)
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/emulationstation.6.gz
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/man/man6)

@@ -56,11 +56,26 @@ public:
     public:
         virtual bool startMediaViewer(FileData* game) = 0;
         virtual void stopMediaViewer() = 0;
+        virtual void launchPDFViewer() = 0;
 
         virtual void showNext() = 0;
         virtual void showPrevious() = 0;
 
         virtual void update(int deltaTime) = 0;
+        virtual void render(const glm::mat4& parentTrans) = 0;
+    };
+
+    class PDFViewer
+    {
+    public:
+        virtual bool startPDFViewer(FileData* game) = 0;
+        virtual void stopPDFViewer() = 0;
+
+        virtual void showNextPage() = 0;
+        virtual void showPreviousPage() = 0;
+        virtual void showFirstPage() = 0;
+        virtual void showLastPage() = 0;
+
         virtual void render(const glm::mat4& parentTrans) = 0;
     };
 
@@ -124,6 +139,11 @@ public:
     void setMediaViewer(MediaViewer* mediaViewer) { mMediaViewer = mediaViewer; }
     bool isMediaViewerActive() { return mRenderMediaViewer; }
 
+    void startPDFViewer(FileData* game);
+    void stopPDFViewer();
+    void setPDFViewer(PDFViewer* pdfViewer) { mPDFViewer = pdfViewer; }
+    bool isPDFViewerActive() { return mRenderPDFViewer; }
+
     void displayLaunchScreen(FileData* game);
     void closeLaunchScreen();
     void setLaunchScreen(GuiLaunchScreen* launchScreen) { mLaunchScreen = launchScreen; }
@@ -180,6 +200,7 @@ private:
 
     Screensaver* mScreensaver;
     MediaViewer* mMediaViewer;
+    PDFViewer* mPDFViewer;
     GuiLaunchScreen* mLaunchScreen;
     GuiInfoPopup* mInfoPopup;
 
@@ -200,6 +221,7 @@ private:
     bool mRenderScreensaver;
     bool mRenderMediaViewer;
     bool mRenderLaunchScreen;
+    bool mRenderPDFViewer;
     bool mGameLaunchedState;
     bool mAllowTextScrolling;
     bool mAllowFileAnimation;

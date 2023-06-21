@@ -47,6 +47,14 @@ void MediaViewer::stopMediaViewer()
     mImages.clear();
 }
 
+void MediaViewer::launchPDFViewer()
+{
+    if (mGame->getManualPath() != "") {
+        Window::getInstance()->stopMediaViewer();
+        Window::getInstance()->startPDFViewer(mGame);
+    }
+}
+
 void MediaViewer::update(int deltaTime)
 {
     if (mVideo)
