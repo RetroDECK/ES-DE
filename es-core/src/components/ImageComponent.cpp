@@ -128,6 +128,15 @@ void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture, b
         resize();
 }
 
+void ImageComponent::setRawImage(const unsigned char* data, float width, float height)
+{
+    mTexture.reset();
+    mTexture = TextureResource::get("");
+    mTexture->initFromPixels(data, width, height);
+
+    resize();
+}
+
 void ImageComponent::setGameOverrideImage(const std::string& basename, const std::string& system)
 {
     if (mGameOverridePath == "")
