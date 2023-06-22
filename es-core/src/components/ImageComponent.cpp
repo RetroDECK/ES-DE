@@ -128,7 +128,7 @@ void ImageComponent::setImage(const std::shared_ptr<TextureResource>& texture, b
         resize();
 }
 
-void ImageComponent::setRawImage(const unsigned char* data, float width, float height)
+void ImageComponent::setRawImage(const unsigned char* data, size_t width, size_t height)
 {
     mTexture.reset();
     mTexture = TextureResource::get("");

@@ -3,8 +3,7 @@
 //  EmulationStation Desktop Edition
 //  PDFViewer.cpp
 //
-//  Parses PDF documents using the PoDoFo library and renders pages using the Poppler
-//  library via the external es-pdf-convert binary.
+//  Parses and renders pages using the Poppler library via the external es-pdf-convert binary.
 //
 
 #include "PDFViewer.h"
@@ -12,6 +11,7 @@
 #include "Log.h"
 #include "Sound.h"
 #include "utils/FileSystemUtil.h"
+#include "utils/StringUtil.h"
 
 #define DEBUG_PDF_CONVERSION false
 
@@ -20,12 +20,16 @@ PDFViewer::PDFViewer()
 {
     Window::getInstance()->setPDFViewer(this);
     mTexture = TextureResource::get("");
-    mPages.clear();
-    mPageImage.reset();
 }
 
 bool PDFViewer::startPDFViewer(FileData* game)
 {
+    mESConvertPath = Utils::FileSystem::getExePath() + "/es-pdf-convert";
+    if (!Utils::FileSystem::exists(mESConvertPath)) {
+        LOG(LogError) << "Couldn't find PDF conversion binary es-pdf-convert";
+        return false;
+    }
+
     mManualPath = game->getManualPath();
 
     if (!Utils::FileSystem::exists(mManualPath)) {
@@ -35,67 +39,29 @@ bool PDFViewer::startPDFViewer(FileData* game)
 
     LOG(LogDebug) << "PDFViewer::startPDFViewer(): Opening document \"" << mManualPath << "\"";
 
-    PoDoFo::PdfMemDocument pdf;
     mPages.clear();
+    mPageImage.reset();
     mPageCount = 0;
     mCurrentPage = 0;
     mScaleFactor = 1.0f;
 
-    try {
-        pdf.Load(mManualPath.c_str());
-    }
-    catch (PoDoFo::PdfError& e) {
-        LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath << "\", PoDoFo error \""
-                      << e.what() << ": " << e.ErrorMessage(e.GetError()) << "\"";
+    if (!getDocumentInfo()) {
+        LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath;
         return false;
     }
 
-#if (DEBUG_PDF_CONVERSION)
-    PoDoFo::EPdfVersion versionEPdf {pdf.GetPdfVersion()};
-    std::string version {"unknown"};
+    mPageCount = mPages.size();
 
-    switch (versionEPdf) {
-        case 0:
-            version = "1.0";
-            break;
-        case 1:
-            version = "1.1";
-            break;
-        case 2:
-            version = "1.2";
-            break;
-        case 3:
-            version = "1.3";
-            break;
-        case 4:
-            version = "1.4";
-            break;
-        case 5:
-            version = "1.5";
-            break;
-        case 6:
-            version = "1.6";
-            break;
-        case 7:
-            version = "1.7";
-            break;
-        default:
-            version = "unknown";
-    };
+    for (int i {1}; i <= mPageCount; ++i) {
+        if (mPages.find(i) == mPages.end()) {
+            LOG(LogError) << "Couldn't read information for page " << i << ", invalid PDF file?";
+            return false;
+        }
 
-    LOG(LogDebug) << "PDF version: " << version;
-    LOG(LogDebug) << "Page count: " << pdf.GetPageCount();
-#endif
+        float width {mPages[i].width};
+        float height {mPages[i].height};
 
-    mPageCount = static_cast<int>(pdf.GetPageCount());
-
-    for (int i {0}; i < mPageCount; ++i) {
-        const int rotation {pdf.GetPage(i)->GetRotation()};
-        const PoDoFo::PdfRect cropBox {pdf.GetPage(i)->GetCropBox()};
-        float width {static_cast<float>(cropBox.GetWidth())};
-        float height {static_cast<float>(cropBox.GetHeight())};
-
-        if (rotation != 0 && rotation != 180)
+        if (!mPages[i].portraitOrientation)
             std::swap(width, height);
 
         // Maintain page aspect ratio.
@@ -113,18 +79,17 @@ bool PDFViewer::startPDFViewer(FileData* game)
             textureSize.x = std::min((textureSize.y / height) * width, targetSize.x);
         }
 
-        const int textureWidth {static_cast<int>(std::round(textureSize.x))};
-        const int textureHeight {static_cast<int>(std::round(textureSize.y))};
+        mPages[i].width = std::round(textureSize.x);
+        mPages[i].height = std::round(textureSize.y);
 
 #if (DEBUG_PDF_CONVERSION)
-        LOG(LogDebug) << "Page " << i + 1 << ": Rotation: " << rotation << " degrees / "
-                      << "Crop box width: " << width << " / "
-                      << "Crop box height: " << height << " / "
-                      << "Size ratio: " << width / height << " / "
-                      << "Texture size: " << textureWidth << "x" << textureHeight;
+        LOG(LogDebug) << "Page " << i << ": Orientation: "
+                      << (mPages[i].portraitOrientation ? "portrait" : "landscape") << " / "
+                      << "crop box width: " << width << " / "
+                      << "crop box height: " << height << " / "
+                      << "size ratio: " << width / height << " / "
+                      << "texture size: " << mPages[i].width << "x" << mPages[i].height;
 #endif
-
-        mPages[i + 1] = PageEntry {textureWidth, textureHeight, {}};
     }
 
     mCurrentPage = 1;
@@ -139,25 +104,61 @@ void PDFViewer::stopPDFViewer()
     mPageImage.reset();
 }
 
+bool PDFViewer::getDocumentInfo()
+{
+    FILE* commandPipe;
+    std::array<char, 512> buffer {};
+    std::string commandOutput;
+
+    std::string command {Utils::FileSystem::getEscapedPath(mESConvertPath)};
+    command.append(" -fileinfo ").append(Utils::FileSystem::getEscapedPath(mManualPath));
+
+    if (!(commandPipe = reinterpret_cast<FILE*>(popen(command.c_str(), "r")))) {
+        LOG(LogError) << "Couldn't open pipe to es-pdf-convert";
+        return false;
+    }
+
+    while (fread(buffer.data(), 1, 512, commandPipe)) {
+        for (int i {0}; i < 512; ++i) {
+            if (buffer[i] == '\0')
+                break;
+            commandOutput.append(1, buffer[i]);
+        }
+        buffer.fill('\0');
+    }
+
+    if (pclose(commandPipe) != 0)
+        return false;
+
+    const std::vector<std::string> pageRows {
+        Utils::String::delimitedStringToVector(commandOutput, "\n")};
+
+    for (auto& row : pageRows) {
+        const std::vector<std::string> rowValues {Utils::String::delimitedStringToVector(row, ";")};
+        if (rowValues.size() != 4)
+            continue;
+        mPages[atoi(&rowValues[0][0])] = PageEntry {static_cast<float>(atof(&rowValues[2][0])),
+                                                    static_cast<float>(atof(&rowValues[3][0])),
+                                                    (rowValues[1] == "portrait" ? true : false),
+                                                    {}};
+    }
+
+    return true;
+}
+
 void PDFViewer::convertPage(int pageNum)
 {
     assert(pageNum <= static_cast<int>(mPages.size()));
 
-    const std::string esConvertPath {Utils::FileSystem::getExePath() + "/es-pdf-convert"};
-    if (!Utils::FileSystem::exists(esConvertPath)) {
-        LOG(LogError) << "Couldn't find PDF conversion binary es-pdf-convert";
-        return;
-    }
-
-    std::string command {Utils::FileSystem::getEscapedPath(esConvertPath)};
-    command.append(" ")
+    std::string command {Utils::FileSystem::getEscapedPath(mESConvertPath)};
+    command.append(" -convert ")
         .append(Utils::FileSystem::getEscapedPath(mManualPath))
         .append(" ")
         .append(std::to_string(pageNum))
         .append(" ")
-        .append(std::to_string(mPages[pageNum].width))
+        .append(std::to_string(static_cast<int>(mPages[pageNum].width)))
         .append(" ")
-        .append(std::to_string(mPages[pageNum].height));
+        .append(std::to_string(static_cast<int>(mPages[pageNum].height)));
 
     if (mPages[pageNum].imageData.empty()) {
 #if (DEBUG_PDF_CONVERSION)
@@ -206,7 +207,8 @@ void PDFViewer::convertPage(int pageNum)
     mPageImage->setMaxSize(
         glm::vec2 {mPages[pageNum].width / mScaleFactor, mPages[pageNum].height / mScaleFactor});
     mPageImage->setRawImage(reinterpret_cast<const unsigned char*>(&mPages[pageNum].imageData[0]),
-                            mPages[pageNum].width, mPages[pageNum].height);
+                            static_cast<size_t>(mPages[pageNum].width),
+                            static_cast<size_t>(mPages[pageNum].height));
 
 #if (DEBUG_PDF_CONVERSION)
     LOG(LogDebug) << "ABGR32 data stream size: " << mPages[pageNum].imageData.size();

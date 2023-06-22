@@ -30,7 +30,7 @@ public:
     // Use an already existing texture.
     void setImage(const std::shared_ptr<TextureResource>& texture, bool resizeTexture = true);
     // Loads a texture using raw image pixel data.
-    void setRawImage(const unsigned char* data, float width, float height);
+    void setRawImage(const unsigned char* data, size_t width, size_t height);
 
     // Sets per-game overrides of static images using the game file basename.
     void setGameOverrideImage(const std::string& basename, const std::string& system) override;

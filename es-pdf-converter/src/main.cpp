@@ -21,43 +21,95 @@
 
 int main(int argc, char* argv[])
 {
-    if (argc != 5) {
-        std::cout << "Usage: es-pdf-convert <filename> <page number> <horizontal resolution> "
-                     "<vertical resolution>"
+    bool validArguments {true};
+    std::string mode;
+
+    if (argc < 3)
+        validArguments = false;
+    else
+        mode = argv[1];
+
+    if ((mode == "-fileinfo" && argc != 3) || (mode == "-convert" && argc != 6))
+        validArguments = false;
+
+    if (!validArguments) {
+        std::cout << "This binary is only intended to be executed by emulationstation (ES-DE)"
                   << std::endl;
         exit(-1);
     }
 
-    const std::string path {argv[1]};
-    const int pageNum {atoi(argv[2])};
-    const int width {atoi(argv[3])};
-    const int height {atoi(argv[4])};
+    const std::string path {argv[2]};
+    int pageNum {0};
+    int width {0};
+    int height {0};
 
-    if (width < 1 || width > 7680) {
-        std::cerr << "Invalid horizontal resolution defined: " << argv[3] << std::endl;
-        exit(-1);
+    if (mode == "-convert") {
+        pageNum = atoi(argv[3]);
+        width = atoi(argv[4]);
+        height = atoi(argv[5]);
+
+        if (width < 1 || width > 7680) {
+            std::cerr << "Invalid horizontal resolution defined: " << argv[3] << std::endl;
+            exit(-1);
+        }
+
+        if (height < 1 || height > 7680) {
+            std::cerr << "Invalid vertical resolution defined: " << argv[4] << std::endl;
+            exit(-1);
+        }
+
+        // std::cerr << "Converting file \"" << path << "\", page " << pageNum << " to resolution "
+        //          << width << "x" << height << " pixels" << std::endl;
     }
-
-    if (height < 1 || height > 7680) {
-        std::cerr << "Invalid vertical resolution defined: " << argv[4] << std::endl;
-        exit(-1);
-    }
-
-    // std::cerr << "Converting file \"" << path << "\", page " << pageNum << " to resolution "
-    //          << width << "x" << height << " pixels" << std::endl;
 
     const poppler::document* document {poppler::document::load_from_file(path)};
 
-    if (document == nullptr)
+    if (document == nullptr) {
+        std::cerr << "Error: Couldn't open document, invalid PDF file?" << std::endl;
         exit(-1);
+    }
 
-    if (pageNum < 1 || pageNum > document->pages()) {
+    const int pageCount {document->pages()};
+
+    if (mode == "-fileinfo") {
+        std::vector<std::string> pageInfo;
+        for (int i {0}; i < pageCount; ++i) {
+            std::string pageRow;
+            const poppler::page* page {document->create_page(i)};
+            if (page == nullptr) {
+                if (page == nullptr) {
+                    std::cerr << "Error: Couldn't read page " << i + 1 << std::endl;
+                    exit(-1);
+                }
+            }
+            const poppler::rectf pageRect {page->page_rect()};
+            pageRow.append(std::to_string(i + 1))
+                .append(";")
+                .append(page->orientation() == poppler::page::portrait ? "portrait" : "landscape")
+                .append(";")
+                .append(std::to_string(pageRect.width()))
+                .append(";")
+                .append(std::to_string(pageRect.height()));
+            pageInfo.emplace_back(pageRow);
+        }
+        for (auto& row : pageInfo)
+            std::cout << row << std::endl;
+        exit(0);
+    }
+
+    if (pageNum < 1 || pageNum > pageCount) {
         std::cerr << "Error: Requested page " << pageNum << " does not exist in document"
                   << std::endl;
         exit(-1);
     }
 
     const poppler::page* page {document->create_page(pageNum - 1)};
+
+    if (page == nullptr) {
+        std::cerr << "Error: Couldn't read page " << pageNum << std::endl;
+        exit(-1);
+    }
+
     poppler::page_renderer pageRenderer;
 
     pageRenderer.set_render_hint(poppler::page_renderer::text_antialiasing);

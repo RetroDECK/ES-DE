@@ -135,7 +135,6 @@ elseif(NOT EMSCRIPTEN)
     find_package(FreeImage REQUIRED)
     find_package(Freetype REQUIRED)
     find_package(Libgit2 REQUIRED)
-    find_package(PoDoFo REQUIRED)
     find_package(Pugixml REQUIRED)
     find_package(SDL2 REQUIRED)
 endif()
@@ -456,7 +455,6 @@ else()
                             ${FreeImage_INCLUDE_DIRS}
                             ${FREETYPE_INCLUDE_DIRS}
                             ${GIT2_INCLUDE_PATH}
-                            ${PoDoFo_INCLUDE_DIRS}
                             ${PUGIXML_INCLUDE_DIRS}
                             ${SDL2_INCLUDE_DIR})
 endif()
@@ -573,7 +571,6 @@ else()
                          ${FreeImage_LIBRARIES}
                          ${FREETYPE_LIBRARIES}
                          ${GIT2_LIBRARY}
-                         ${PoDoFo_LIBRARIES}
                          ${PUGIXML_LIBRARIES}
                          ${SDL2_LIBRARY})
 endif()

@@ -3,8 +3,7 @@
 //  EmulationStation Desktop Edition
 //  PDFViewer.h
 //
-//  Parses PDF documents using the PoDoFo library and renders pages using the Poppler
-//  library via the external es-pdf-convert binary.
+//  Parses and renders pages using the Poppler library via the external es-pdf-convert binary.
 //
 
 #ifndef ES_APP_PDF_VIEWER_H
@@ -13,8 +12,6 @@
 #include "FileData.h"
 #include "Window.h"
 #include "components/ImageComponent.h"
-
-#include <podofo/podofo.h>
 
 class PDFViewer : public Window::PDFViewer
 {
@@ -25,6 +22,7 @@ public:
     bool startPDFViewer(FileData* game) override;
     void stopPDFViewer() override;
 
+    bool getDocumentInfo();
     void convertPage(int pageNum);
 
     void render(const glm::mat4& parentTrans) override;
@@ -36,8 +34,9 @@ private:
     void showLastPage() override;
 
     struct PageEntry {
-        int width;
-        int height;
+        float width;
+        float height;
+        bool portraitOrientation;
         std::vector<char> imageData;
     };
 
@@ -46,11 +45,12 @@ private:
     std::unique_ptr<ImageComponent> mPageImage;
     std::map<int, PageEntry> mPages;
 
+    std::string mESConvertPath;
+    std::string mManualPath;
+
     float mScaleFactor;
     int mCurrentPage;
     int mPageCount;
-
-    std::string mManualPath;
 };
 
 #endif // ES_APP_PDF_VIEWER_H
