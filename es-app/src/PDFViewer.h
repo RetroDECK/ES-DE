@@ -17,7 +17,6 @@ class PDFViewer : public Window::PDFViewer
 {
 public:
     PDFViewer();
-    ~PDFViewer() { stopPDFViewer(); }
 
     bool startPDFViewer(FileData* game) override;
     void stopPDFViewer() override;

@@ -477,7 +477,7 @@ void Window::render()
         auto& bottom = mGuiStack.front();
         auto& top = mGuiStack.back();
 
-        if (mRenderMediaViewer || mRenderScreensaver) {
+        if (mRenderMediaViewer || mRenderPDFViewer || mRenderScreensaver) {
             bottom->cancelAllAnimations();
             bottom->stopAllAnimations();
         }
@@ -485,8 +485,8 @@ void Window::render()
         // Don't render the system view or gamelist view if the media viewer is active or if the
         // video or slideshow screensaver is running. The exception is if the fallback screensaver
         // is active due to a lack of videos or images.
-        bool renderBottom = true;
-        if (mRenderMediaViewer)
+        bool renderBottom {true};
+        if (mRenderMediaViewer || mRenderPDFViewer)
             renderBottom = false;
         else if (mRenderScreensaver && mScreensaver->isFallbackScreensaver())
             renderBottom = true;
@@ -653,9 +653,9 @@ void Window::render()
     unsigned int screensaverTimer {
         static_cast<unsigned int>(Settings::getInstance()->getInt("ScreensaverTimer"))};
     if (mTimeSinceLastInput >= screensaverTimer && screensaverTimer != 0) {
-        // If the media viewer is running or if a menu is open, reset the screensaver timer so
-        // that the screensaver won't start.
-        if (mRenderMediaViewer || mGuiStack.front() != mGuiStack.back())
+        // If the media viewer or PDF viewer is running, or if a menu is open, then reset the
+        // screensaver timer so that the screensaver won't start.
+        if (mRenderMediaViewer || mRenderPDFViewer || mGuiStack.front() != mGuiStack.back())
             mTimeSinceLastInput = 0;
         // If a game has been launched, reset the screensaver timer as we don't want to start
         // the screensaver in the background when running a game.

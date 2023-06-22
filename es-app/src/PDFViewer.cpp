@@ -12,6 +12,7 @@
 #include "Sound.h"
 #include "utils/FileSystemUtil.h"
 #include "utils/StringUtil.h"
+#include "views/ViewController.h"
 
 #include <array>
 
@@ -30,6 +31,8 @@ PDFViewer::PDFViewer()
 
 bool PDFViewer::startPDFViewer(FileData* game)
 {
+    ViewController::getInstance()->pauseViewVideos();
+
 #if defined(_WIN64)
     const std::string convertBinary {"/es-pdf-converter/es-pdf-convert.exe"};
 #else
@@ -42,6 +45,8 @@ bool PDFViewer::startPDFViewer(FileData* game)
 #else
         LOG(LogError) << "Couldn't find PDF conversion binary es-pdf-convert";
 #endif
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+        ViewController::getInstance()->stopViewVideos();
         return false;
     }
 
@@ -49,6 +54,8 @@ bool PDFViewer::startPDFViewer(FileData* game)
 
     if (!Utils::FileSystem::exists(mManualPath)) {
         LOG(LogError) << "No PDF manual found for game \"" << game->getName() << "\"";
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+        ViewController::getInstance()->stopViewVideos();
         return false;
     }
 
@@ -66,6 +73,8 @@ bool PDFViewer::startPDFViewer(FileData* game)
 
     if (!getDocumentInfo()) {
         LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath;
+        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+        ViewController::getInstance()->stopViewVideos();
         return false;
     }
 
@@ -74,6 +83,8 @@ bool PDFViewer::startPDFViewer(FileData* game)
     for (int i {1}; i <= mPageCount; ++i) {
         if (mPages.find(i) == mPages.end()) {
             LOG(LogError) << "Couldn't read information for page " << i << ", invalid PDF file?";
+            NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+            ViewController::getInstance()->stopViewVideos();
             return false;
         }
 
@@ -119,6 +130,8 @@ bool PDFViewer::startPDFViewer(FileData* game)
 void PDFViewer::stopPDFViewer()
 {
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
+    ViewController::getInstance()->stopViewVideos();
+
     mPages.clear();
     mPageImage.reset();
 }
