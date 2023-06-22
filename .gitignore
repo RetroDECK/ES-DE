@@ -78,6 +78,8 @@ TODO.md
 # MSVC
 EmulationStation.ilk
 EmulationStation.pdb
+es-pdf-convert.ilk
+es-pdf-convert.pdb
 lunasvg.exp
 lunasvg.ilk
 lunasvg.pdb

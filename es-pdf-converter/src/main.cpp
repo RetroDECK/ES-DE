@@ -3,7 +3,7 @@
 //  EmulationStation Desktop Edition (ES-DE) PDF converter
 //  main.cpp
 //
-//  Converts PDF document pages to raw ARGB32 image data for maximum performance.
+//  Converts PDF document pages to raw ARGB32 pixel data for maximum performance.
 //  This needs to be separated into its own binary to get around the restrictive GPL
 //  license used by the Poppler PDF rendering library.
 //
@@ -17,8 +17,55 @@
 #include "poppler-page.h"
 
 #include <cmath>
+#include <fstream>
 #include <iostream>
 
+#if defined(_WIN64)
+#include <fcntl.h>
+#include <io.h>
+#include <windows.h>
+
+int wmain(int argc, wchar_t* argv[])
+{
+    HANDLE stdoutHandle {GetStdHandle(STD_OUTPUT_HANDLE)};
+
+    if (stdoutHandle == INVALID_HANDLE_VALUE) {
+        std::cerr << "Error: Invalid stdout handle" << std::endl;
+        exit(-1);
+    }
+
+    // This is required as Windows is braindead and will otherwise add carriage return characters
+    // to the stream when it encounters newline characters, which breaks binary output.
+    _setmode(_fileno(stdout), O_BINARY);
+
+    bool validArguments {true};
+    std::wstring mode;
+
+    if (argc < 3)
+        validArguments = false;
+    else
+        mode = argv[1];
+
+    if ((mode == L"-fileinfo" && argc != 3) || (mode == L"-convert" && argc != 6))
+        validArguments = false;
+
+    if (!validArguments) {
+        std::cout << "This binary is only intended to be executed by EmulationStation.exe (ES-DE)"
+                  << std::endl;
+        exit(-1);
+    }
+
+    const std::wstring path {argv[2]};
+
+    int pageNum {0};
+    int width {0};
+    int height {0};
+
+    if (mode == L"-convert") {
+        pageNum = _wtoi(argv[3]);
+        width = _wtoi(argv[4]);
+        height = _wtoi(argv[5]);
+#else
 int main(int argc, char* argv[])
 {
     bool validArguments {true};
@@ -47,7 +94,7 @@ int main(int argc, char* argv[])
         pageNum = atoi(argv[3]);
         width = atoi(argv[4]);
         height = atoi(argv[5]);
-
+#endif
         if (width < 1 || width > 7680) {
             std::cerr << "Invalid horizontal resolution defined: " << argv[3] << std::endl;
             exit(-1);
@@ -62,7 +109,23 @@ int main(int argc, char* argv[])
         //          << width << "x" << height << " pixels" << std::endl;
     }
 
-    const poppler::document* document {poppler::document::load_from_file(path)};
+    std::ifstream file;
+
+    file.open(path, std::ifstream::binary);
+    if (file.fail()) {
+        std::cerr << "Error: Couldn't open PDF file, permission problems?" << std::endl;
+        exit(-1);
+    }
+
+    file.seekg(0, std::ios::end);
+    const long fileLength {static_cast<long>(file.tellg())};
+    file.seekg(0, std::ios::beg);
+    std::vector<char> fileData(fileLength);
+    file.read(&fileData[0], fileLength);
+    file.close();
+
+    const poppler::document* document {
+        poppler::document::load_from_raw_data(&fileData[0], fileLength)};
 
     if (document == nullptr) {
         std::cerr << "Error: Couldn't open document, invalid PDF file?" << std::endl;
@@ -70,8 +133,11 @@ int main(int argc, char* argv[])
     }
 
     const int pageCount {document->pages()};
-
+#if defined(_WIN64)
+    if (mode == L"-fileinfo") {
+#else
     if (mode == "-fileinfo") {
+#endif
         std::vector<std::string> pageInfo;
         for (int i {0}; i < pageCount; ++i) {
             std::string pageRow;

@@ -162,8 +162,8 @@ namespace Utils
                 si.dwFlags = STARTF_USESHOWWINDOW;
                 si.wShowWindow = SW_HIDE;
             }
-            bool processReturnValue = true;
-            DWORD errorCode = 0;
+            bool processReturnValue {true};
+            DWORD errorCode {0};
 
             std::wstring startDirectoryTemp {startDirectory};
             wchar_t* startDir {startDirectory == L"" ? nullptr : &startDirectoryTemp[0]};
@@ -206,7 +206,7 @@ namespace Utils
 
             // If the return value is false, then something failed.
             if (!processReturnValue) {
-                LPWSTR pBuffer = nullptr;
+                LPWSTR pBuffer {nullptr};
 
                 FormatMessageW(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ALLOCATE_BUFFER, nullptr,
                                GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
@@ -214,7 +214,7 @@ namespace Utils
 
                 errorCode = GetLastError();
 
-                std::string errorMessage = Utils::String::wideStringToString(pBuffer);
+                std::string errorMessage {Utils::String::wideStringToString(pBuffer)};
                 // Remove trailing newline from the error message.
                 if (errorMessage.size()) {
                     if (errorMessage.back() == '\n')
