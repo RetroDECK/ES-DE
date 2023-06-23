@@ -9,9 +9,14 @@
 project(es-pdf-convert)
 
 if(WIN32)
-   set(POPPLER_CPP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../external/poppler-23.05.0/Library/include/poppler/cpp)
-   set(POPPLER_CPP_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/poppler-cpp.lib)
-   else()
+    set(POPPLER_CPP_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../external/poppler/Library/include/poppler/cpp)
+    if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
+        set(POPPLER_CPP_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/poppler-cpp.lib)
+    else()
+        set(POPPLER_CPP_LIBRARY ${CMAKE_CURRENT_SOURCE_DIR}/libpoppler-cpp-0.dll)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -municode")
+    endif()
+else()
     find_package(Poppler REQUIRED COMPONENTS cpp)
 endif()
 

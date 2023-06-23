@@ -25,8 +25,15 @@
 #include <io.h>
 #include <windows.h>
 
+#if defined(_MSC_VER) // MSVC compiler.
 int wmain(int argc, wchar_t* argv[])
 {
+#else
+int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
+{
+    wchar_t** argv {__wargv};
+    int argc = __argc;
+#endif
     HANDLE stdoutHandle {GetStdHandle(STD_OUTPUT_HANDLE)};
 
     if (stdoutHandle == INVALID_HANDLE_VALUE) {
@@ -111,7 +118,7 @@ int main(int argc, char* argv[])
 
     std::ifstream file;
 
-    file.open(path, std::ifstream::binary);
+    file.open(path.c_str(), std::ifstream::binary);
     if (file.fail()) {
         std::cerr << "Error: Couldn't open PDF file, permission problems?" << std::endl;
         exit(-1);
