@@ -32,9 +32,10 @@ fi
 
 mv code libpng
 cd libpng
-git checkout v1.6.38
+git checkout v1.6.40
 cd ..
 
+echo
 echo "\nSetting up FreeType"
 rm -rf freetype
 git clone https://github.com/freetype/freetype.git
@@ -45,10 +46,85 @@ if [ ! -d freetype ]; then
 fi
 
 cd freetype
-git checkout VER-2-12-1
+git checkout VER-2-13-0
 mkdir build
 cd ..
 
+echo
+echo "Setting up Fontconfig"
+rm -rf fontconfig
+git clone https://gitlab.freedesktop.org/fontconfig/fontconfig.git
+
+if [ ! -d fontconfig ]; then
+  echo "fontconfig directory is missing, aborting."
+  exit
+fi
+
+cd fontconfig
+git checkout 2.14.2
+cd ..
+
+echo
+echo "Setting up libjpeg-turbo"
+rm -rf libjpeg-turbo
+git clone https://github.com/libjpeg-turbo/libjpeg-turbo.git
+
+if [ ! -d libjpeg-turbo ]; then
+  echo "libjpeg-turbo directory is missing, aborting."
+  exit
+fi
+
+cd libjpeg-turbo
+git checkout 2.1.91
+mkdir build
+cd ..
+
+echo
+echo "Setting up LibTIFF"
+rm -rf libtiff
+git clone https://gitlab.com/libtiff/libtiff.git
+
+if [ ! -d libtiff ]; then
+  echo "libtiff directory is missing, aborting."
+  exit
+fi
+
+cd libtiff
+git checkout v4.5.1
+mkdir build
+cd ..
+
+echo
+echo "Setting up OpenJPEG"
+rm -rf openjpeg
+git clone https://github.com/uclouvain/openjpeg.git
+
+if [ ! -d openjpeg ]; then
+  echo "openjpeg directory is missing, aborting."
+  exit
+fi
+
+cd openjpeg
+git checkout v2.5.0
+mkdir build
+cd ..
+
+echo
+echo "Setting up Poppler"
+rm -rf poppler
+git clone https://gitlab.freedesktop.org/poppler/poppler.git
+
+if [ ! -d poppler ]; then
+  echo "poppler directory is missing, aborting."
+  exit
+fi
+
+cd poppler
+git checkout poppler-23.06.0
+mkdir build
+cd ..
+
+echo
 echo "\nSetting up FreeImage"
 rm -rf freeimage
 mkdir freeimage
@@ -164,6 +240,7 @@ EOF
 fi
 cd ../..
 
+echo
 echo "\nSetting up libgit2"
 rm -rf libgit2
 git clone https://github.com/libgit2/libgit2.git
@@ -174,10 +251,11 @@ if [ ! -d libgit2 ]; then
 fi
 
 cd libgit2
-git checkout v1.6.3
+git checkout v1.6.4
 mkdir build
 cd ..
 
+echo
 echo "\nSetting up pugixml"
 rm -rf pugixml
 git clone https://github.com/zeux/pugixml.git
@@ -188,9 +266,10 @@ if [ ! -d pugixml ]; then
 fi
 
 cd pugixml
-git checkout v1.12.1
+git checkout v1.13
 cd ..
 
+echo
 echo "\nSetting up SDL"
 rm -rf SDL
 git clone https://github.com/libsdl-org/SDL.git
@@ -206,6 +285,7 @@ ln -s include SDL2
 mkdir build
 cd ..
 
+echo
 echo "\nSetting up libvpx"
 rm -rf libvpx
 git clone https://github.com/webmproject/libvpx.git
@@ -216,9 +296,10 @@ if [ ! -d libvpx ]; then
 fi
 
 cd libvpx
-git checkout v1.12.0
+git checkout v1.13.0
 cd ..
 
+echo
 echo "\nSetting up Ogg"
 rm -rf ogg
 git clone https://github.com/xiph/ogg.git
@@ -232,6 +313,7 @@ cd ogg
 git checkout v1.3.5
 cd ..
 
+echo
 echo "\nSetting up Vorbis"
 rm -rf vorbis
 git clone https://gitlab.xiph.org/xiph/vorbis.git
@@ -245,6 +327,7 @@ cd vorbis
 git checkout v1.3.7
 cd ..
 
+echo
 echo "\nSetting up Opus"
 rm -rf opus
 git clone https://gitlab.xiph.org/xiph/opus.git
@@ -258,6 +341,7 @@ cd opus
 git checkout v1.3.1
 cd ..
 
+echo
 echo "\nSetting up FFmpeg"
 rm -rf FFmpeg
 git clone https://github.com/FFmpeg/FFmpeg.git

@@ -263,6 +263,7 @@ elseif(APPLE)
     # to compensate for this. It's a bad solution to the problem and there must surely be a
     # better way to fix this.
     install(TARGETS EmulationStation RUNTIME DESTINATION ../MacOS)
+    install(TARGETS es-pdf-convert RUNTIME DESTINATION ../MacOS)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE.icns DESTINATION ../Resources)
     install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/assets/EmulationStation-DE_Info.plist DESTINATION .. RENAME Info.plist)
 
@@ -288,9 +289,21 @@ elseif(APPLE)
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libvorbisenc.2.0.12.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libfontconfig.1.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libfreetype.6.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libgit2.1.6.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libjpeg.62.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libopenjp2.7.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler-cpp.0.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libpoppler.129.dylib
+        PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
+    install(FILES ${CMAKE_SOURCE_DIR}/libtiff.6.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libSDL2-2.0.0.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
