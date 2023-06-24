@@ -131,6 +131,7 @@ endif()
 # Setup for installation and package generation.
 if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
+    install(TARGETS es-pdf-convert RUNTIME DESTINATION es-pdf-converter)
     if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
         install(FILES ../avcodec-59.dll
                       ../avfilter-8.dll
@@ -155,6 +156,25 @@ if(WIN32)
                       ../VCRUNTIME140.dll
                       ../VCRUNTIME140_1.dll
                       DESTINATION .)
+        install(FILES ../es-pdf-converter/charset.dll
+                      ../es-pdf-converter/deflate.dll
+                      ../es-pdf-converter/freetype.dll
+                      ../es-pdf-converter/iconv.dll
+                      ../es-pdf-converter/jpeg8.dll
+                      ../es-pdf-converter/lcms2.dll
+                      ../es-pdf-converter/Lerc.dll
+                      ../es-pdf-converter/libcrypto-3-x64.dll
+                      ../es-pdf-converter/libcurl.dll
+                      ../es-pdf-converter/liblzma.dll
+                      ../es-pdf-converter/libpng16.dll
+                      ../es-pdf-converter/libssh2.dll
+                      ../es-pdf-converter/openjp2.dll
+                      ../es-pdf-converter/poppler.dll
+                      ../es-pdf-converter/poppler-cpp.dll
+                      ../es-pdf-converter/tiff.dll
+                      ../es-pdf-converter/zlib.dll
+                      ../es-pdf-converter/zstd.dll
+                      DESTINATION es-pdf-converter)
     else()
         install(FILES ../avcodec-59.dll
                       ../avfilter-8.dll
@@ -176,6 +196,58 @@ if(WIN32)
                       ../SDL2.dll
                       ../vcomp140.dll
                       DESTINATION .)
+        install(FILES ../es-pdf-converter/libbrotlicommon.dll
+                      ../es-pdf-converter/libbrotlidec.dll
+                      ../es-pdf-converter/libbz2-1.dll
+                      ../es-pdf-converter/libcairo-2.dll
+                      ../es-pdf-converter/libcrypto-3-x64.dll
+                      ../es-pdf-converter/libcurl-4.dll
+                      ../es-pdf-converter/libdeflate.dll
+                      ../es-pdf-converter/libexpat-1.dll
+                      ../es-pdf-converter/libffi-8.dll
+                      ../es-pdf-converter/libfontconfig-1.dll
+                      ../es-pdf-converter/libfreetype-6.dll
+                      ../es-pdf-converter/libgcc_s_seh-1.dll
+                      ../es-pdf-converter/libgio-2.0-0.dll
+                      ../es-pdf-converter/libglib-2.0-0.dll
+                      ../es-pdf-converter/libgmodule-2.0-0.dll
+                      ../es-pdf-converter/libgobject-2.0-0.dll
+                      ../es-pdf-converter/libgraphite2.dll
+                      ../es-pdf-converter/libharfbuzz-0.dll
+                      ../es-pdf-converter/libiconv-2.dll
+                      ../es-pdf-converter/libidn2-0.dll
+                      ../es-pdf-converter/libintl-8.dll
+                      ../es-pdf-converter/libjbig-0.dll
+                      ../es-pdf-converter/libjpeg-8.dll
+                      ../es-pdf-converter/liblcms2-2.dll
+                      ../es-pdf-converter/libLerc.dll
+                      ../es-pdf-converter/liblzma-5.dll
+                      ../es-pdf-converter/libnghttp2-14.dll
+                      ../es-pdf-converter/libnspr4.dll
+                      ../es-pdf-converter/libopenjp2-7.dll
+                      ../es-pdf-converter/libpcre2-8-0.dll
+                      ../es-pdf-converter/libpixman-1-0.dll
+                      ../es-pdf-converter/libplc4.dll
+                      ../es-pdf-converter/libplds4.dll
+                      ../es-pdf-converter/libpng16-16.dll
+                      ../es-pdf-converter/libpoppler-129.dll
+                      ../es-pdf-converter/libpoppler-cpp-0.dll
+                      ../es-pdf-converter/libpoppler-glib-8.dll
+                      ../es-pdf-converter/libpsl-5.dll
+                      ../es-pdf-converter/libsharpyuv-0.dll
+                      ../es-pdf-converter/libssh2-1.dll
+                      ../es-pdf-converter/libssl-3-x64.dll
+                      ../es-pdf-converter/libstdc++-6.dll
+                      ../es-pdf-converter/libtiff-6.dll
+                      ../es-pdf-converter/libunistring-5.dll
+                      ../es-pdf-converter/libwebp-7.dll
+                      ../es-pdf-converter/libwinpthread-1.dll
+                      ../es-pdf-converter/libzstd.dll
+                      ../es-pdf-converter/nss3.dll
+                      ../es-pdf-converter/nssutil3.dll
+                      ../es-pdf-converter/smime3.dll
+                      ../es-pdf-converter/zlib1.dll
+                      DESTINATION es-pdf-converter)
     endif()
 
     install(FILES ../LICENSE DESTINATION .)
