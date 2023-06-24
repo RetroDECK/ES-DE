@@ -20,20 +20,22 @@ echo -e "Setting up dependencies in the ./external directory..."
 cd external
 
 echo -e "\nSetting up curl"
-rm -rf curl-*
+rm -rf curl*
 
-curl -O https://curl.se/windows/dl-7.86.0/curl-7.86.0-win64-mingw.zip
-unzip curl-7.86.0-win64-mingw.zip
+curl -O https://curl.se/windows/dl-8.1.2_3/curl-8.1.2_3-win64-mingw.zip
+unzip curl-8.1.2_3-win64-mingw.zip
 
-if [ ! -d curl-7.86.0-win64-mingw ]; then
+if [ ! -d curl-8.1.2_3-win64-mingw ]; then
   echo "curl directory is missing, aborting."
   exit
 fi
 
-cp -p curl-7.86.0-win64-mingw/bin/libcurl-x64.dll ..
+mv curl-8.1.2_3-win64-mingw curl
+
+cp -p curl/bin/libcurl-x64.dll ..
 
 echo -e "\nSetting up GLEW"
-rm -rf glew-*
+rm -rf glew*
 
 curl -LO https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0.zip
 unzip glew-2.1.0.zip
@@ -42,6 +44,8 @@ if [ ! -d glew-2.1.0 ]; then
   echo "GLEW directory is missing, aborting."
   exit
 fi
+
+mv glew-2.1.0 glew
 
 echo -e "\nSetting up FreeType"
 rm -rf freetype
@@ -54,7 +58,7 @@ if [ ! -d freetype ]; then
 fi
 
 cd freetype
-git checkout VER-2-12-1
+git checkout VER-2-13-0
 mkdir build
 cd ..
 
@@ -82,9 +86,22 @@ if [ ! -d libgit2 ]; then
 fi
 
 cd libgit2
-git checkout v1.6.3
+git checkout v1.6.4
 mkdir build
 cd ..
+
+echo -e "\nSetting up Poppler"
+rm -rf poppler*
+
+curl -JO https://gitlab.com/es-de/emulationstation-de/-/package_files/83268133/download
+unzip Poppler_Windows_MinGW_23.06.0-1.zip
+
+if [ ! -d poppler ]; then
+  echo "Poppler directory is missing, aborting."
+  exit
+fi
+
+cp -p poppler/Library/bin/*.dll ../es-pdf-converter
 
 echo -e "\nSetting up pugixml"
 rm -rf pugixml
@@ -97,11 +114,11 @@ if [ ! -d pugixml ]; then
 fi
 
 cd pugixml
-git checkout v1.12.1
+git checkout v1.13
 cd ..
 
 echo -e "\nSetting up SDL"
-rm -rf SDL2-*
+rm -rf SDL2*
 
 curl -O https://libsdl.org/release/SDL2-devel-2.26.5-mingw.tar.gz
 
@@ -114,12 +131,14 @@ if [ ! -d SDL2-2.26.5 ]; then
   exit
 fi
 
-mv SDL2-2.26.5/x86_64-w64-mingw32/include/SDL2 SDL2-2.26.5/
-cp -p SDL2-2.26.5/x86_64-w64-mingw32/lib/libSDL2main.a ..
-cp -p SDL2-2.26.5/x86_64-w64-mingw32/bin/SDL2.dll ..
+mv SDL2-2.26.5 SDL2
+
+mv SDL2/x86_64-w64-mingw32/include/SDL2 SDL2/
+cp -p SDL2/x86_64-w64-mingw32/lib/libSDL2main.a ..
+cp -p SDL2/x86_64-w64-mingw32/bin/SDL2.dll ..
 
 echo -e "\nSetting up FFmpeg"
-rm -rf ffmpeg-*
+rm -rf ffmpeg*
 
 # This package should be available for download for two years.
 curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-09-30-12-41/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
@@ -130,13 +149,15 @@ if [ ! -d ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1 ]; then
   exit
 fi
 
-cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avcodec-59.dll ..
-cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avfilter-8.dll ..
-cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avformat-59.dll ..
-cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/avutil-57.dll ..
-cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/postproc-56.dll ..
-cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/swresample-4.dll ..
-cp -p ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1/bin/swscale-6.dll ..
+mv ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1 ffmpeg
+
+cp -p ffmpeg/bin/avcodec-59.dll ..
+cp -p ffmpeg/bin/avfilter-8.dll ..
+cp -p ffmpeg/bin/avformat-59.dll ..
+cp -p ffmpeg/bin/avutil-57.dll ..
+cp -p ffmpeg/bin/postproc-56.dll ..
+cp -p ffmpeg/bin/swresample-4.dll ..
+cp -p ffmpeg/bin/swscale-6.dll ..
 
 echo -e "\nSetting up OpenSSL"
 

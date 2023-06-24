@@ -30,12 +30,12 @@ echo "Building all dependencies in the ./external directory..."
 
 echo -e "\nBuilding GLEW"
 
-if [ ! -d glew-2.1.0 ]; then
+if [ ! -d glew ]; then
   echo "GLEW directory is missing, aborting."
   exit
 fi
 
-cd glew-2.1.0
+cd glew
 make clean
 make -j${JOBS} 2>/dev/null
 cp lib/glew32.dll ../..

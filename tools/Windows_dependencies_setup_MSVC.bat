@@ -35,20 +35,26 @@ cd external
 
 echo Setting up curl
 
-if exist curl-7.86.0-win64-mingw\ (
-  rmdir /S /Q curl-7.86.0-win64-mingw
+if exist curl-8.1.2_3-win64-mingw\ (
+  rmdir /S /Q curl-8.1.2_3-win64-mingw
 )
 
-curl -O https://curl.se/windows/dl-7.86.0/curl-7.86.0-win64-mingw.zip
-7z x curl-7.86.0-win64-mingw.zip
+if exist curl\ (
+  rmdir /S /Q curl
+)
 
-if not exist curl-7.86.0-win64-mingw\bin\ (
+curl -O https://curl.se/windows/dl-8.1.2_3/curl-8.1.2_3-win64-mingw.zip
+7z x curl-8.1.2_3-win64-mingw.zip
+
+if not exist curl-8.1.2_3-win64-mingw\bin\ (
   echo curl directory is missing, aborting.
   cd ..
   goto end
 )
 
-cd curl-7.86.0-win64-mingw\bin
+rename curl-8.1.2_3-win64-mingw curl
+
+cd curl\bin
 
 dumpbin /exports libcurl-x64.dll > exports.txt
 echo LIBRARY libcurl-x64 > libcurl-x64.def
@@ -67,6 +73,10 @@ if exist glew-2.1.0\ (
   rmdir /S /Q glew-2.1.0
 )
 
+if exist glew\ (
+  rmdir /S /Q glew
+)
+
 curl -LO https://downloads.sourceforge.net/project/glew/glew/2.1.0/glew-2.1.0-win32.zip
 7z x glew-2.1.0-win32.zip
 
@@ -76,8 +86,10 @@ if not exist glew-2.1.0\ (
   goto end
 )
 
-copy /Y glew-2.1.0\bin\Release\x64\glew32.dll ..
-copy /Y glew-2.1.0\lib\Release\x64\glew32.lib ..
+rename glew-2.1.0 glew
+
+copy /Y glew\bin\Release\x64\glew32.dll ..
+copy /Y glew\lib\Release\x64\glew32.lib ..
 
 echo:
 echo Setting up FreeType
@@ -95,7 +107,7 @@ if not exist freetype\ (
 )
 
 cd freetype
-git checkout VER-2-12-1
+git checkout VER-2-13-0
 mkdir build
 cd ..
 
@@ -134,9 +146,50 @@ if not exist libgit2\ (
 )
 
 cd libgit2
-git checkout v1.6.3
+git checkout v1.6.4
 mkdir build
 cd ..
+
+echo:
+echo Setting up Poppler
+
+if exist poppler-23.05.0\ (
+  rmdir /S /Q poppler-23.05.0
+)
+
+if exist poppler\ (
+  rmdir /S /Q poppler
+)
+
+curl -LO https://github.com/oschwartz10612/poppler-windows/releases/download/v23.05.0-0/Release-23.05.0-0.zip
+7z x Release-23.05.0-0.zip
+
+if not exist poppler-23.05.0\Library\ (
+  echo Poppler directory is missing, aborting.
+  cd ..
+  goto end
+)
+
+rename poppler-23.05.0 poppler
+
+copy /Y poppler\Library\lib\poppler-cpp.lib ..\es-pdf-converter
+copy /Y poppler\Library\bin\charset.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\deflate.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\freetype.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\iconv.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\jpeg8.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\lcms2.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\Lerc.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\libcrypto-3-x64.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\libcurl.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\liblzma.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\libssh2.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\openjp2.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\poppler.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\poppler-cpp.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\tiff.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\zlib.dll ..\es-pdf-converter
+copy /Y poppler\Library\bin\zstd.dll ..\es-pdf-converter
 
 echo:
 echo Setting up pugixml
@@ -154,7 +207,7 @@ if not exist pugixml\ (
 )
 
 cd pugixml
-git checkout v1.12.1
+git checkout v1.13
 cd ..
 
 echo:
@@ -162,6 +215,10 @@ echo Setting up SDL
 
 if exist SDL2-2.26.5\ (
   rmdir /S /Q SDL2-2.26.5
+)
+
+if exist SDL2\ (
+  rmdir /S /Q SDL2
 )
 
 curl -LO https://libsdl.org/release/SDL2-devel-2.26.5-VC.zip
@@ -174,18 +231,24 @@ if not exist SDL2-2.26.5\ (
   goto end
 )
 
-cd SDL2-2.26.5
+rename SDL2-2.26.5 SDL2
+
+cd SDL2
 rename include SDL2
 cd ..
-copy /Y SDL2-2.26.5\lib\x64\SDL2.dll ..
-copy /Y SDL2-2.26.5\lib\x64\SDL2.lib ..
-copy /Y SDL2-2.26.5\lib\x64\SDL2main.lib ..
+copy /Y SDL2\lib\x64\SDL2.dll ..
+copy /Y SDL2\lib\x64\SDL2.lib ..
+copy /Y SDL2\lib\x64\SDL2main.lib ..
 
 echo:
 echo Setting up FFmpeg
 
 if exist ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\ (
   rmdir /S /Q ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1
+)
+
+if exist ffmpeg\ (
+  rmdir /S /Q ffmpeg
 )
 
 :: This package should be available for download for two years.
@@ -198,19 +261,21 @@ if not exist ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\ (
   goto end
 )
 
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avcodec-59.dll ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avfilter-8.dll ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avformat-59.dll ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\avutil-57.dll ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\postproc-56.dll ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\swresample-4.dll ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\bin\swscale-6.dll ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avcodec.lib ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avfilter.lib ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avformat.lib ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\avutil.lib ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\swresample.lib ..
-copy /Y ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\lib\swscale.lib ..
+rename ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1 ffmpeg
+
+copy /Y ffmpeg\bin\avcodec-59.dll ..
+copy /Y ffmpeg\bin\avfilter-8.dll ..
+copy /Y ffmpeg\bin\avformat-59.dll ..
+copy /Y ffmpeg\bin\avutil-57.dll ..
+copy /Y ffmpeg\bin\postproc-56.dll ..
+copy /Y ffmpeg\bin\swresample-4.dll ..
+copy /Y ffmpeg\bin\swscale-6.dll ..
+copy /Y ffmpeg\lib\avcodec.lib ..
+copy /Y ffmpeg\lib\avfilter.lib ..
+copy /Y ffmpeg\lib\avformat.lib ..
+copy /Y ffmpeg\lib\avutil.lib ..
+copy /Y ffmpeg\lib\swresample.lib ..
+copy /Y ffmpeg\lib\swscale.lib ..
 
 echo:
 echo Setting up OpenSSL
