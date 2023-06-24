@@ -15,7 +15,7 @@
 export MACOSX_DEPLOYMENT_TARGET=10.14
 
 # How many CPU threads to use for the compilation.
-JOBS=8
+JOBS=4
 
 if [ ! -f .clang-format ]; then
   echo "You need to run this script from the root of the repository."
@@ -146,8 +146,8 @@ fi
 
 cd poppler/build
 rm -f CMakeCache.txt
-PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig cmake  -S .. -B . -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$(pwd)/../../local_install -DENABLE_UTILS=off -DBUILD_CPP_TESTS=off -DENABLE_LIBCURL=off \
--DRUN_GPERF_IF_PRESENT=off -DENABLE_QT5=off -DENABLE_QT6=off -DENABLE_BOOST=off -DENABLE_GLIB=off -DENABLE_NSS3=off
+PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=$(pwd)/../../local_install \
+-DENABLE_UTILS=off -DBUILD_CPP_TESTS=off -DENABLE_LIBCURL=off -DRUN_GPERF_IF_PRESENT=off -DENABLE_QT5=off -DENABLE_QT6=off -DENABLE_BOOST=off -DENABLE_GLIB=off -DENABLE_NSS3=off -S .. -B .
 make clean
 make -j${JOBS}
 
