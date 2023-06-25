@@ -221,36 +221,50 @@ void Window::input(InputConfig* config, Input input)
     }
 
     if (mMediaViewer && mRenderMediaViewer) {
-        if (config->isMappedLike("up", input) && input.value != 0) {
+        if (config->isMappedLike("down", input) && input.value != 0) {
+            return;
+        }
+        else if (config->isMappedLike("up", input) && input.value != 0) {
             mMediaViewer->launchPDFViewer();
             return;
         }
-        else if (config->isMappedLike("right", input) && input.value != 0)
+        else if (config->isMappedLike("right", input) && input.value != 0) {
             mMediaViewer->showNext();
-        else if (config->isMappedLike("left", input) && input.value != 0)
+        }
+        else if (config->isMappedLike("left", input) && input.value != 0) {
             mMediaViewer->showPrevious();
-        else if (input.value != 0)
+        }
+        else if (input.value != 0) {
             // Any other input stops the media viewer.
             stopMediaViewer();
+        }
         return;
     }
 
     if (mPDFViewer && mRenderPDFViewer) {
-        if (config->isMappedLike("down", input) && input.value != 0) {
+        if (config->isMappedLike("up", input) && input.value != 0) {
+            return;
+        }
+        else if (config->isMappedLike("down", input) && input.value != 0) {
             mPDFViewer->launchMediaViewer();
             return;
         }
-        else if (config->isMappedLike("right", input) && input.value != 0)
+        else if (config->isMappedLike("right", input) && input.value != 0) {
             mPDFViewer->showNextPage();
-        else if (config->isMappedLike("left", input) && input.value != 0)
+        }
+        else if (config->isMappedLike("left", input) && input.value != 0) {
             mPDFViewer->showPreviousPage();
-        else if (config->isMappedLike("righttrigger", input) && input.value != 0)
+        }
+        else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
             mPDFViewer->showLastPage();
-        else if (config->isMappedLike("lefttrigger", input) && input.value != 0)
+        }
+        else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
             mPDFViewer->showFirstPage();
-        else if (input.value != 0)
+        }
+        else if (input.value != 0) {
             // Any other input stops the PDF viewer.
             stopPDFViewer();
+        }
         return;
     }
 
