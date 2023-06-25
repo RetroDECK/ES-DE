@@ -2,6 +2,8 @@
 
 ### Help needed
 
+**For the time being I'm not working that actively on the project so requests for help are currently suspended since I don't have time to train and collaborate with other people.**
+
 If you are experienced with developing cross-platform client applications in C++ then ES-DE could be an interesting project for you! Although the application does not have a huge codebase, it's fairly complex as it covers many different areas. To work on the project you need to be able to test your code on Linux, macOS and Windows.
 
 Merge requests are only accepted from project members so if you would like to contribute to ES-DE then please get in touch and we can discuss what you would like to work on. But please only consider joining if you intend to be contributing long term as the project is quite large in scope and to train someone to be a team member is a substantial time investment.

@@ -8,6 +8,8 @@
 
 * Added support for changing between light and dark color schemes for the menu system
 * Added an option to scrape game manuals using ScreenScraper
+* Added a PDF game manual viewer, accessible from the media viewer
+* Added a separate es-pdf-convert binary to render PDF pages using Poppler (needed due to the restrictive GPL license for this library)
 * Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
@@ -18,12 +20,22 @@
 * (Linux) Added support for the official Citra AppImage release
 * Removed the experimental status for the theme downloader
 * Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
+* Removed the custom SDL patch for the Linux AppImage builds that prevented the device virtual keyboard from being automatically displayed
+* If the SDL library release is higher than 2.28.0, then the automatic popup of the device's virtual keyboard is now disabled
+* The SDL library version is now printed to es_log.txt on application startup
+* Added a setRawImage function to ImageComponent to load raw pixel data into textures (needed by PDFViewer)
+* Added the Poppler PDF rendering library as a dependency
+* Updated FFmpeg to 6.0, FreeType to 2.13.0, libgit2 to 1.6.4 and pugixml to 1.13 on Windows and macOS
+* Updated SDL to 2.28.0 on Windows, macOS and the Linux AppImage builds
+* (Windows) Updated curl to 8.1.2
+* (Windows) Changed all dependencies to not include version numbers in their directory names to simplify future updates
 * Updated LunaSVG to commit f924651b85cac47dbe15f51a4aa320461fc1d07b to fix a GCC 13 build error
 * Changed the default OpenGL version from 4.6 to 3.3 when building for RetroDECK
 
 ### Bug fixes
 
 * The scraper auto-retry functionality was triggered when scraping manually
+* TextureResource::initFromPixels() was not setting the source size correctly
 
 ## Version 2.0.1
 

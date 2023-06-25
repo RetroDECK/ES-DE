@@ -456,7 +456,7 @@ Default keyboard mappings are shown in brackets.
 **Up and down**\
 _(Arrow up / Arrow down)_
 
-Navigates between system and game entries where these buttons are applicable, such as for textlists and vertical carousels. Also used in menus for general navigation.
+Navigates between system and game entries where these buttons are applicable, such as for textlists, grids and vertical carousels. Also used in menus for general navigation. For the media viewer it changes viewing mode between game media and PDF manuals.
 
 **Left and right**\
 _(Arrow left / Arrow right)_
@@ -2916,15 +2916,17 @@ This will remove the actual game file, its gamelist.xml entry, its entry in any 
 
 ## Game media viewer
 
-The game media viewer displays videos and images in fullscreen mode and is launched from the gamelist view by pressing the _X_ button.
+The game media viewer displays videos, images and PDF manuals in fullscreen mode and is launched from the gamelist view by pressing the _X_ button.
 
 If a game video is available, this will be played automatically when launching the viewer. The _left_ and _right_ buttons are used to navigate betweeen the game media files. By default the video will continue to play when browsing the images, but this can be changed with a setting as described earlier in this document.
 
 The media viewer can display the following media: _video, box cover, box back cover, title screen, screenshot_, _fan art_ and _miximage_.
 
+If the game has a downloaded PDF manual then you can view it by pressing the _up_ button which will change the media viewer to PDF viewing mode. To get back to displaying videos and images when in this mode, press the _down_ button. When viewing PDF manuals you navigate the pages with the _left_ and _right_ buttons and you can also jump to the first and last page using the trigger buttons.
+
 The other settings for the media viewer are similar to what is available for the screensavers; the audio can be enabled or disabled, the video can be stretched to fill the entire screen and scanlines and blur can be rendered on top of it. For screenshots and title screens, scanlines can be rendered. All these options are configurable via the _UI Settings_ menu.
 
-Pressing any other button than _left_ or _right_ closes the media viewer.
+Pressing any other button than those mentioned above closes the media viewer.
 
 ## Screensaver
 

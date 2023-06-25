@@ -25,7 +25,7 @@ There are some dependencies that need to be fulfilled in order to build ES-DE. T
 All of the required packages can be installed with apt-get:
 
 ```
-sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev
+sudo apt-get install build-essential clang-format git cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libfreetype6-dev libgit2-dev libcurl4-openssl-dev libpugixml-dev libasound2-dev libgl1-mesa-dev libpoppler-cpp-dev
 ```
 
 **Fedora**
@@ -40,7 +40,7 @@ https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -
 
 Then you can use dnf to install all the required packages:
 ```
-sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel
+sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ffmpeg-devel freeimage-devel freetype-devel libgit2-devel curl-devel pugixml-devel alsa-lib-devel mesa-libGL-devel poppler-cpp-devel
 ```
 
 **Manjaro**
@@ -48,14 +48,14 @@ sudo dnf install gcc-c++ clang-tools-extra cmake libasan rpm-build SDL2-devel ff
 Use pacman to install all the required packages:
 
 ```
-sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml
+sudo pacman -S gcc clang make cmake pkgconf sdl2 ffmpeg freeimage freetype2 libgit2 pugixml poppler
 ```
 
 **Raspberry Pi OS (Raspian)**
 
 All of the required packages can be installed with apt-get:
 ```
-sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev
+sudo apt-get install clang-format cmake libsdl2-dev libavcodec-dev libavfilter-dev libavformat-dev libavutil-dev libfreeimage-dev libgit2-dev libcurl4-gnutls-dev libpugixml-dev libpoppler-cpp-dev
 ```
 
 To build with CEC support you also need to install these packages:
@@ -73,7 +73,7 @@ Only the OpenGL ES 3.0 renderer works on Raspberry Pi and it's enabled by defaul
 
 Use pkg to install the dependencies:
 ```
-pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage libgit2 pugixml
+pkg install llvm-devel git pkgconf cmake sdl2 ffmpeg freeimage libgit2 pugixml poppler
 ```
 
 Clang/LLVM and curl should already be included in the base OS installation.
@@ -82,7 +82,7 @@ Clang/LLVM and curl should already be included in the base OS installation.
 
 Use pkgin to install the dependencies:
 ```
-pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage libgit2 pugixml
+pkgin install clang git cmake pkgconf SDL2 ffmpeg4 freeimage libgit2 pugixml poppler-cpp
 ```
 
 NetBSD ships with GCC by default, and although you should be able to use Clang/LLVM, it's probably easier to just stick to the default compiler environment. The reason why the clang package needs to be installed is to get clang-format onto the system.
@@ -91,7 +91,7 @@ NetBSD ships with GCC by default, and although you should be able to use Clang/L
 
 Use pkg_add to install the dependencies:
 ```
-pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage libgit2
+pkg_add clang-tools-extra cmake pkgconf sdl2 ffmpeg freeimage libgit2 poppler
 ```
 
 In the same manner as for FreeBSD, Clang/LLVM and curl should already be installed by default.
@@ -451,7 +451,7 @@ export PATH=/opt/homebrew/bin:$PATH
 Install the required tools:
 
 ```
-brew install clang-format cmake pkg-config nasm yasm
+brew install clang-format cmake pkg-config meson nasm yasm
 ```
 
 **Developer mode**
@@ -588,19 +588,25 @@ This will be the directory structure for the installation:
 ```
 /Applications/EmulationStation Desktop Edition.app/Contents/Info.plist
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/EmulationStation
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavcodec.58.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavfilter.7.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavformat.58.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavutil.56.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfdk-aac.2.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/es-pdf-convert
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libSDL2-2.0.0.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavcodec.60.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavfilter.9.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavformat.60.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libavutil.58.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfontconfig.1.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libfreetype.6.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpostproc.55.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswresample.3.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswscale.5.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libgit2.1.6.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libjpeg.62.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libopenjp2.7.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpoppler-cpp.0.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpoppler.129.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libpostproc.57.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswresample.4.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libswscale.7.dylib
+/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libtiff.6.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbis.0.4.9.dylib
 /Applications/EmulationStation Desktop Edition.app/Contents/MacOS/libvorbisenc.2.0.12.dylib
-/Applications/EmulationStation Desktop Edition.app/Contents/MacOS/plugins/*
 /Applications/EmulationStation Desktop Edition.app/Contents/Resources/EmulationStation-DE.icns
 /Applications/EmulationStation Desktop Edition.app/Contents/Resources/LICENSE
 /Applications/EmulationStation Desktop Edition.app/Contents/Resources/licenses/*
