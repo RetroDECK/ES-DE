@@ -221,7 +221,7 @@ void Window::input(InputConfig* config, Input input)
     }
 
     if (mMediaViewer && mRenderMediaViewer) {
-        if (config->isMappedLike("y", input) && input.value != 0) {
+        if (config->isMappedLike("up", input) && input.value != 0) {
             mMediaViewer->launchPDFViewer();
             return;
         }
@@ -236,7 +236,11 @@ void Window::input(InputConfig* config, Input input)
     }
 
     if (mPDFViewer && mRenderPDFViewer) {
-        if (config->isMappedLike("right", input) && input.value != 0)
+        if (config->isMappedLike("down", input) && input.value != 0) {
+            mPDFViewer->launchMediaViewer();
+            return;
+        }
+        else if (config->isMappedLike("right", input) && input.value != 0)
             mPDFViewer->showNextPage();
         else if (config->isMappedLike("left", input) && input.value != 0)
             mPDFViewer->showPreviousPage();

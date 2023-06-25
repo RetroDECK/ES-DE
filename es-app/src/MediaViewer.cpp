@@ -14,6 +14,7 @@
 
 MediaViewer::MediaViewer()
     : mRenderer {Renderer::getInstance()}
+    , mGame {nullptr}
 {
     Window::getInstance()->setMediaViewer(this);
 }

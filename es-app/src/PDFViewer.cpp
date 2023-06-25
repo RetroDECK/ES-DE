@@ -24,6 +24,7 @@
 
 PDFViewer::PDFViewer()
     : mRenderer {Renderer::getInstance()}
+    , mGame {nullptr}
 {
     Window::getInstance()->setPDFViewer(this);
     mTexture = TextureResource::get("");
@@ -50,10 +51,11 @@ bool PDFViewer::startPDFViewer(FileData* game)
         return false;
     }
 
-    mManualPath = game->getManualPath();
+    mGame = game;
+    mManualPath = mGame->getManualPath();
 
     if (!Utils::FileSystem::exists(mManualPath)) {
-        LOG(LogError) << "No PDF manual found for game \"" << game->getName() << "\"";
+        LOG(LogError) << "No PDF manual found for game \"" << mGame->getName() << "\"";
         NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
         ViewController::getInstance()->stopViewVideos();
         return false;
@@ -134,6 +136,12 @@ void PDFViewer::stopPDFViewer()
 
     mPages.clear();
     mPageImage.reset();
+}
+
+void PDFViewer::launchMediaViewer()
+{
+    Window::getInstance()->stopPDFViewer();
+    Window::getInstance()->startMediaViewer(mGame);
 }
 
 bool PDFViewer::getDocumentInfo()

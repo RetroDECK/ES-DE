@@ -20,6 +20,7 @@ public:
 
     bool startPDFViewer(FileData* game) override;
     void stopPDFViewer() override;
+    void launchMediaViewer() override;
 
     bool getDocumentInfo();
     void convertPage(int pageNum);
@@ -43,6 +44,7 @@ private:
     std::shared_ptr<TextureResource> mTexture;
     std::unique_ptr<ImageComponent> mPageImage;
     std::map<int, PageEntry> mPages;
+    FileData* mGame;
 
     std::string mESConvertPath;
     std::string mManualPath;

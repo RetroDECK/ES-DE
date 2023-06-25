@@ -70,6 +70,7 @@ public:
     public:
         virtual bool startPDFViewer(FileData* game) = 0;
         virtual void stopPDFViewer() = 0;
+        virtual void launchMediaViewer() = 0;
 
         virtual void showNextPage() = 0;
         virtual void showPreviousPage() = 0;
