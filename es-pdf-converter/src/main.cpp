@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
         validArguments = false;
 
     if (!validArguments) {
-#if defined(APPLE)
+#if defined(__APPLE__)
         std::cout << "This binary is only intended to be executed by EmulationStation (ES-DE)"
 #else
         std::cout << "This binary is only intended to be executed by emulationstation (ES-DE)"
