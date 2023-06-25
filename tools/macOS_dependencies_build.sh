@@ -295,7 +295,7 @@ if [ ! -d FFmpeg ]; then
 fi
 
 cd FFmpeg
-PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --enable-gpl --enable-shared --enable-libvorbis --enable-libopus --enable-libvpx --enable-postproc
+PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig ./configure --prefix=/usr/local --enable-rpath --install-name-dir=@rpath --disable-doc --disable-lzma --enable-gpl --enable-shared --enable-libvorbis --enable-libopus --enable-libvpx --enable-postproc
 
 make clean
 make -j${JOBS}
