@@ -43,6 +43,10 @@ if exist curl\ (
   rmdir /S /Q curl
 )
 
+if exist curl-8.1.2_3-win64-mingw.zip (
+  del curl-8.1.2_3-win64-mingw.zip
+)
+
 curl -O https://curl.se/windows/dl-8.1.2_3/curl-8.1.2_3-win64-mingw.zip
 7z x curl-8.1.2_3-win64-mingw.zip
 
@@ -75,6 +79,10 @@ if exist glew-2.1.0\ (
 
 if exist glew\ (
   rmdir /S /Q glew
+)
+
+if exist glew-2.1.0-win32.zip (
+  del glew-2.1.0-win32.zip
 )
 
 curl -LO https://downloads.sourceforge.net/project/glew/glew/2.1.0/glew-2.1.0-win32.zip
@@ -118,6 +126,10 @@ if exist FreeImage\ (
   rmdir /S /Q FreeImage
 )
 
+if exist FreeImage3180Win32Win64.zip (
+  del FreeImage3180Win32Win64.zip
+)
+
 curl -LO https://downloads.sourceforge.net/project/freeimage/Binary%%20Distribution/3.18.0/FreeImage3180Win32Win64.zip
 7z x FreeImage3180Win32Win64.zip
 
@@ -159,6 +171,10 @@ if exist poppler-23.05.0\ (
 
 if exist poppler\ (
   rmdir /S /Q poppler
+)
+
+if exist Release-23.05.0-0.zip (
+  del Release-23.05.0-0.zip
 )
 
 curl -LO https://github.com/oschwartz10612/poppler-windows/releases/download/v23.05.0-0/Release-23.05.0-0.zip
@@ -222,6 +238,10 @@ if exist SDL2\ (
   rmdir /S /Q SDL2
 )
 
+if exist SDL2-devel-2.28.0-VC.zip (
+  del SDL2-devel-2.28.0-VC.zip
+)
+
 curl -LO https://libsdl.org/release/SDL2-devel-2.28.0-VC.zip
 
 7z x SDL2-devel-2.28.0-VC.zip
@@ -252,6 +272,10 @@ if exist ffmpeg\ (
   rmdir /S /Q ffmpeg
 )
 
+if exist ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip (
+  del ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
+)
+
 :: This package should be available for download for two years.
 curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2023-05-31-12-47/ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
 7z x ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
@@ -280,6 +304,10 @@ copy /Y ffmpeg\lib\swscale.lib ..
 
 echo:
 echo Setting up OpenSSL
+
+if exist fWin64OpenSSL_Light-1_1_1m.exe (
+  del Win64OpenSSL_Light-1_1_1m.exe
+)
 
 if not exist "C:\Program Files\OpenSSL-Win64\libcrypto-1_1-x64.dll" (
   curl -O https://slproweb.com/download/Win64OpenSSL_Light-1_1_1m.exe

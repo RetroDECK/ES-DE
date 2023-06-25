@@ -63,7 +63,7 @@ mkdir build
 cd ..
 
 echo -e "\nSetting up FreeImage"
-rm -rf FreeImage
+rm -rf FreeImage*
 
 curl -LO https://downloads.sourceforge.net/project/freeimage/Binary%20Distribution/3.18.0/FreeImage3180Win32Win64.zip
 unzip FreeImage3180Win32Win64.zip
@@ -91,7 +91,7 @@ mkdir build
 cd ..
 
 echo -e "\nSetting up Poppler"
-rm -rf poppler*
+rm -rf [pP]oppler*
 
 curl -JO https://gitlab.com/es-de/emulationstation-de/-/package_files/83268133/download
 unzip Poppler_Windows_MinGW_23.06.0-1.zip
