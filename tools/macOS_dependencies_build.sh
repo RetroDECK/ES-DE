@@ -81,6 +81,12 @@ rm -rf builddir
 PKG_CONFIG_PATH=$(pwd)/../local_install/lib/pkgconfig meson setup --buildtype=release --prefix $(pwd)/../local_install builddir
 cd builddir
 meson compile
+
+# This will fail if there are spaces in the build path.
+cd src
+install_name_tool -change $(otool -L libfontconfig.1.dylib | grep libfreetype | cut -f1 -d' ' | sed 's/[[:blank:]]//g') @rpath/libfreetype.6.dylib libfontconfig.1.dylib
+cd ..
+
 meson install
 cp src/libfontconfig.1.dylib ../../../
 cd ../..
