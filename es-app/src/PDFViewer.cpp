@@ -74,7 +74,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
     mScaleFactor = 1.0f;
 
     if (!getDocumentInfo()) {
-        LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath;
+        LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath << "\"";
         NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
         ViewController::getInstance()->stopViewVideos();
         return false;
