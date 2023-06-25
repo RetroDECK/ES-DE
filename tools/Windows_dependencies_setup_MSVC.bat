@@ -244,8 +244,8 @@ copy /Y SDL2\lib\x64\SDL2main.lib ..
 echo:
 echo Setting up FFmpeg
 
-if exist ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\ (
-  rmdir /S /Q ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1
+if exist ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0\ (
+  rmdir /S /Q ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0
 )
 
 if exist ffmpeg\ (
@@ -253,24 +253,24 @@ if exist ffmpeg\ (
 )
 
 :: This package should be available for download for two years.
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-09-30-12-41/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
-7z x ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2023-05-31-12-47/ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
+7z x ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
 
-if not exist ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1\ (
+if not exist ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0\ (
   echo FFmpeg directory is missing, aborting.
   cd ..
   goto end
 )
 
-rename ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1 ffmpeg
+rename ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0 ffmpeg
 
-copy /Y ffmpeg\bin\avcodec-59.dll ..
-copy /Y ffmpeg\bin\avfilter-8.dll ..
-copy /Y ffmpeg\bin\avformat-59.dll ..
-copy /Y ffmpeg\bin\avutil-57.dll ..
-copy /Y ffmpeg\bin\postproc-56.dll ..
+copy /Y ffmpeg\bin\avcodec-60.dll ..
+copy /Y ffmpeg\bin\avfilter-9.dll ..
+copy /Y ffmpeg\bin\avformat-60.dll ..
+copy /Y ffmpeg\bin\avutil-58.dll ..
+copy /Y ffmpeg\bin\postproc-57.dll ..
 copy /Y ffmpeg\bin\swresample-4.dll ..
-copy /Y ffmpeg\bin\swscale-6.dll ..
+copy /Y ffmpeg\bin\swscale-7.dll ..
 copy /Y ffmpeg\lib\avcodec.lib ..
 copy /Y ffmpeg\lib\avfilter.lib ..
 copy /Y ffmpeg\lib\avformat.lib ..

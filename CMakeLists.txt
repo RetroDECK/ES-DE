@@ -482,12 +482,12 @@ endif()
 if(APPLE)
     set(COMMON_LIBRARIES ${COMMON_LIBRARIES}
                          ${CURL_LIBRARIES}
-                         ${PROJECT_SOURCE_DIR}/libavcodec.59.dylib
-                         ${PROJECT_SOURCE_DIR}/libavfilter.8.dylib
-                         ${PROJECT_SOURCE_DIR}/libavformat.59.dylib
-                         ${PROJECT_SOURCE_DIR}/libavutil.57.dylib
+                         ${PROJECT_SOURCE_DIR}/libavcodec.60.dylib
+                         ${PROJECT_SOURCE_DIR}/libavfilter.9.dylib
+                         ${PROJECT_SOURCE_DIR}/libavformat.60.dylib
+                         ${PROJECT_SOURCE_DIR}/libavutil.58.dylib
                          ${PROJECT_SOURCE_DIR}/libswresample.4.dylib
-                         ${PROJECT_SOURCE_DIR}/libswscale.6.dylib
+                         ${PROJECT_SOURCE_DIR}/libswscale.7.dylib
                          ${PROJECT_SOURCE_DIR}/libfreeimage.a
                          ${PROJECT_SOURCE_DIR}/libfreetype.6.dylib
                          ${PROJECT_SOURCE_DIR}/libgit2.1.6.dylib
@@ -513,12 +513,12 @@ elseif(WIN32)
                              ${PROJECT_SOURCE_DIR}/SDL2.lib
                              Winmm.dll)
     else()
-        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec-59.dll
-                             ${PROJECT_SOURCE_DIR}/avfilter-8.dll
-                             ${PROJECT_SOURCE_DIR}/avformat-59.dll
-                             ${PROJECT_SOURCE_DIR}/avutil-57.dll
+        set(COMMON_LIBRARIES ${PROJECT_SOURCE_DIR}/avcodec-60.dll
+                             ${PROJECT_SOURCE_DIR}/avfilter-9.dll
+                             ${PROJECT_SOURCE_DIR}/avformat-60.dll
+                             ${PROJECT_SOURCE_DIR}/avutil-58.dll
                              ${PROJECT_SOURCE_DIR}/swresample-4.dll
-                             ${PROJECT_SOURCE_DIR}/swscale-6.dll
+                             ${PROJECT_SOURCE_DIR}/swscale-7.dll
                              ${PROJECT_SOURCE_DIR}/FreeImage.dll
                              ${PROJECT_SOURCE_DIR}/libgit2.dll
                              ${PROJECT_SOURCE_DIR}/glew32.dll

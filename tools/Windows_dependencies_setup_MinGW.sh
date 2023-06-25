@@ -141,23 +141,23 @@ echo -e "\nSetting up FFmpeg"
 rm -rf ffmpeg*
 
 # This package should be available for download for two years.
-curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2022-09-30-12-41/ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
-unzip ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1.zip
+curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2023-05-31-12-47/ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
+unzip ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
 
-if [ ! -d ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1 ]; then
+if [ ! -d ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0 ]; then
   echo "FFmpeg directory is missing, aborting."
   exit
 fi
 
-mv ffmpeg-n5.1.2-1-g05d6157aab-win64-gpl-shared-5.1 ffmpeg
+mv ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0 ffmpeg
 
-cp -p ffmpeg/bin/avcodec-59.dll ..
-cp -p ffmpeg/bin/avfilter-8.dll ..
-cp -p ffmpeg/bin/avformat-59.dll ..
-cp -p ffmpeg/bin/avutil-57.dll ..
-cp -p ffmpeg/bin/postproc-56.dll ..
+cp -p ffmpeg/bin/avcodec-60.dll ..
+cp -p ffmpeg/bin/avfilter-9.dll ..
+cp -p ffmpeg/bin/avformat-60.dll ..
+cp -p ffmpeg/bin/avutil-58.dll ..
+cp -p ffmpeg/bin/postproc-57.dll ..
 cp -p ffmpeg/bin/swresample-4.dll ..
-cp -p ffmpeg/bin/swscale-6.dll ..
+cp -p ffmpeg/bin/swscale-7.dll ..
 
 echo -e "\nSetting up OpenSSL"
 

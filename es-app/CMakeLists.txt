@@ -133,13 +133,13 @@ if(WIN32)
     install(TARGETS EmulationStation RUNTIME DESTINATION .)
     install(TARGETS es-pdf-convert RUNTIME DESTINATION es-pdf-converter)
     if(CMAKE_CXX_COMPILER_ID MATCHES MSVC)
-        install(FILES ../avcodec-59.dll
-                      ../avfilter-8.dll
-                      ../avformat-59.dll
-                      ../avutil-57.dll
-                      ../postproc-56.dll
+        install(FILES ../avcodec-60.dll
+                      ../avfilter-9.dll
+                      ../avformat-60.dll
+                      ../avutil-58.dll
+                      ../postproc-57.dll
                       ../swresample-4.dll
-                      ../swscale-6.dll
+                      ../swscale-7.dll
                       ../FreeImage.dll
                       ../freetype.dll
                       ../git2.dll
@@ -176,13 +176,13 @@ if(WIN32)
                       ../es-pdf-converter/zstd.dll
                       DESTINATION es-pdf-converter)
     else()
-        install(FILES ../avcodec-59.dll
-                      ../avfilter-8.dll
-                      ../avformat-59.dll
-                      ../avutil-57.dll
-                      ../postproc-56.dll
+        install(FILES ../avcodec-60.dll
+                      ../avfilter-9.dll
+                      ../avformat-60.dll
+                      ../avutil-58.dll
+                      ../postproc-57.dll
                       ../swresample-4.dll
-                      ../swscale-6.dll
+                      ../swscale-7.dll
                       ../FreeImage.dll
                       ../glew32.dll
                       ../libcrypto-1_1-x64.dll
@@ -271,19 +271,19 @@ elseif(APPLE)
                                 GROUP_READ GROUP_EXECUTE
                                 WORLD_READ WORLD_EXECUTE)
 
-    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.59.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavcodec.60.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.8.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavfilter.9.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.59.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavformat.60.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.57.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libavutil.58.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.56.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libpostproc.57.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libswresample.4.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
-    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.6.dylib
+    install(FILES ${CMAKE_SOURCE_DIR}/libswscale.7.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)
     install(FILES ${CMAKE_SOURCE_DIR}/libvorbis.0.4.9.dylib
         PERMISSIONS ${APPLE_DYLIB_PERMISSIONS} DESTINATION ../MacOS)

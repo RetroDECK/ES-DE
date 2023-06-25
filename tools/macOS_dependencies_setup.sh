@@ -352,7 +352,7 @@ if [ ! -d FFmpeg ]; then
 fi
 
 cd FFmpeg
-git checkout n5.1.2
+git checkout n6.0
 
 echo
 echo "Done setting up all dependencies."
