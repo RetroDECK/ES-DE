@@ -759,6 +759,20 @@ int main(int argc, char* argv[])
 #endif
 
     AudioManager::getInstance();
+
+    SDL_version version;
+    SDL_GetVersion(&version);
+
+    LOG(LogInfo) << "SDL version: " << std::to_string(version.major) << "."
+                 << std::to_string(version.minor) << "." << std::to_string(version.patch);
+
+    if (version.major > 2 || (version.major == 2 && version.minor >= 28)) {
+        // This will prevent the popup virtual keyboard of any handheld device from being
+        // automatically displayed on top of the ES-DE virtual keyboard.
+#define SDL_HINT_ENABLE_SCREEN_KEYBOARD "SDL_ENABLE_SCREEN_KEYBOARD"
+        SDL_SetHint(SDL_HINT_ENABLE_SCREEN_KEYBOARD, "0");
+    }
+
     MameNames::getInstance();
     ThemeData::populateThemeSets();
     loadSystemsReturnCode loadSystemsStatus {loadSystemConfigFile()};
