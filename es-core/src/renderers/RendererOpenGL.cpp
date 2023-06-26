@@ -227,6 +227,19 @@ bool RendererOpenGL::createContext()
     LOG(LogInfo) << "GL vendor: " << vendor;
     LOG(LogInfo) << "GL renderer: " << renderer;
     LOG(LogInfo) << "GL version: " << version;
+
+#if defined(_WIN64)
+    // This is required to avoid a crash when attempting to call glActiveTexture() in case
+    // there is no support for OpenGL 3.3 by the driver. If 3.3 is the highest suppported
+    // version then SDL_GL_CreateContext() will fail if attempting to use version 4.2 or 4.6.
+    if (!GLEW_VERSION_3_3) {
+        LOG(LogError)
+            << "It seems as if your GPU driver lacks the required OpenGL support, either install a "
+               "capable driver or use the Mesa3D software renderer";
+        return false;
+    }
+#endif
+
 #if defined(USE_OPENGLES)
     LOG(LogInfo) << "EmulationStation renderer: OpenGL ES " << mMajorGLVersion << "."
                  << mMinorGLVersion;
