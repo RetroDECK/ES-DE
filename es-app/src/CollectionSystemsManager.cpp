@@ -1277,7 +1277,12 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
             CollectionFileData* newGame = new CollectionFileData(it->second, newSys);
             if (!newGame->getCountAsGame()) {
                 LOG(LogWarning)
+
+#if defined(_WIN64)
+                    << "File \"" << Utils::String::replace(gameKey, "/", "\\")
+#else
                     << "File \"" << gameKey
+#endif
                     << "\" does not exist, is hidden, or is not counted as a game, ignoring entry";
                 delete newGame;
             }
@@ -1288,7 +1293,11 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
         }
         else {
             LOG(LogWarning)
+#if defined(_WIN64)
+                << "File \"" << Utils::String::replace(gameKey, "/", "\\")
+#else
                 << "File \"" << gameKey
+#endif
                 << "\" does not exist, is hidden, or is not counted as a game, ignoring entry";
         }
     }
