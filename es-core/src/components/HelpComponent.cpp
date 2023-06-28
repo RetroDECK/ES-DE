@@ -37,6 +37,11 @@ void HelpComponent::assignIcons()
     sIconPathMap["up/down"] = mStyle.mCustomButtons.dpad_updown.empty() ?
                                   ":/graphics/help/dpad_updown.svg" :
                                   mStyle.mCustomButtons.dpad_updown;
+    sIconPathMap["up"] = mStyle.mCustomButtons.dpad_up.empty() ? ":/graphics/help/dpad_up.svg" :
+                                                                 mStyle.mCustomButtons.dpad_up;
+    sIconPathMap["down"] = mStyle.mCustomButtons.dpad_down.empty() ?
+                               ":/graphics/help/dpad_down.svg" :
+                               mStyle.mCustomButtons.dpad_down;
     sIconPathMap["left/right"] = mStyle.mCustomButtons.dpad_leftright.empty() ?
                                      ":/graphics/help/dpad_leftright.svg" :
                                      mStyle.mCustomButtons.dpad_leftright;

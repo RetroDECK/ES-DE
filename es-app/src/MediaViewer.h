@@ -11,7 +11,9 @@
 
 #include "FileData.h"
 #include "Window.h"
+#include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
+#include "components/TextComponent.h"
 #include "components/VideoComponent.h"
 
 class MediaViewer : public Window::MediaViewer
@@ -25,6 +27,13 @@ public:
 
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
+
+    enum class HelpInfoPosition {
+        TOP,
+        BOTTOM,
+        DISABLED
+    };
 
 private:
     void initiateViewer();
@@ -35,6 +44,8 @@ private:
 
     void showNext() override;
     void showPrevious() override;
+    void showFirst() override;
+    void showLast() override;
 
     Renderer* mRenderer;
     FileData* mGame;
@@ -42,7 +53,9 @@ private:
     bool mHasVideo;
     bool mHasImages;
     bool mDisplayingImage;
+    bool mHasManual;
 
+    float mFrameHeight;
     int mCurrentImageIndex;
     int mScreenshotIndex;
     int mTitleScreenIndex;
@@ -51,6 +64,11 @@ private:
     std::unique_ptr<VideoComponent> mVideo;
     std::vector<std::string> mImageFiles;
     std::vector<std::unique_ptr<ImageComponent>> mImages;
+
+    std::unique_ptr<HelpComponent> mHelp;
+    std::unique_ptr<TextComponent> mEntryNumText;
+    std::string mEntryCount;
+    HelpInfoPosition mHelpInfoPosition;
 };
 
 #endif // ES_APP_MEDIA_VIEWER_H

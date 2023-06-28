@@ -11,7 +11,9 @@
 
 #include "FileData.h"
 #include "Window.h"
+#include "components/HelpComponent.h"
 #include "components/ImageComponent.h"
+#include "components/TextComponent.h"
 
 class PDFViewer : public Window::PDFViewer
 {
@@ -26,6 +28,13 @@ public:
     void convertPage(int pageNum);
 
     void render(const glm::mat4& parentTrans) override;
+    std::vector<HelpPrompt> getHelpPrompts() override;
+
+    enum class HelpInfoPosition {
+        TOP,
+        BOTTOM,
+        DISABLED
+    };
 
 private:
     void showNextPage() override;
@@ -36,22 +45,29 @@ private:
     struct PageEntry {
         float width;
         float height;
-        bool portraitOrientation;
+        std::string orientation;
         std::vector<char> imageData;
     };
 
     Renderer* mRenderer;
-    std::shared_ptr<TextureResource> mTexture;
-    std::unique_ptr<ImageComponent> mPageImage;
-    std::map<int, PageEntry> mPages;
     FileData* mGame;
+
+    float mFrameHeight;
+    float mScaleFactor;
+    int mCurrentPage;
+    int mPageCount;
 
     std::string mESConvertPath;
     std::string mManualPath;
 
-    float mScaleFactor;
-    int mCurrentPage;
-    int mPageCount;
+    std::shared_ptr<TextureResource> mTexture;
+    std::unique_ptr<ImageComponent> mPageImage;
+    std::map<int, PageEntry> mPages;
+
+    std::unique_ptr<HelpComponent> mHelp;
+    std::unique_ptr<TextComponent> mEntryNumText;
+    std::string mEntryCount;
+    HelpInfoPosition mHelpInfoPosition;
 };
 
 #endif // ES_APP_PDF_VIEWER_H

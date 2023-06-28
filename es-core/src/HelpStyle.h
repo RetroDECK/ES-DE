@@ -40,6 +40,8 @@ struct HelpStyle {
     struct CustomButtonIcons {
         // Generic
         std::string dpad_updown;
+        std::string dpad_up;
+        std::string dpad_down;
         std::string dpad_leftright;
         std::string dpad_all;
         std::string thumbstick_click;

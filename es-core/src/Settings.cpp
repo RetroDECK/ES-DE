@@ -168,6 +168,7 @@ void Settings::setDefaults()
     mStringMap["RandomEntryButton"] = {"games", "games"};
 
     // UI settings -> media viewer settings.
+    mStringMap["MediaViewerHelpPrompts"] = {"top", "top"};
     mBoolMap["MediaViewerKeepVideoRunning"] = {true, true};
     mBoolMap["MediaViewerStretchVideos"] = {false, false};
 #if defined(RASPBERRY_PI)

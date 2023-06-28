@@ -228,11 +228,17 @@ void Window::input(InputConfig* config, Input input)
             mMediaViewer->launchPDFViewer();
             return;
         }
+        else if (config->isMappedLike("left", input) && input.value != 0) {
+            mMediaViewer->showPrevious();
+        }
         else if (config->isMappedLike("right", input) && input.value != 0) {
             mMediaViewer->showNext();
         }
-        else if (config->isMappedLike("left", input) && input.value != 0) {
-            mMediaViewer->showPrevious();
+        else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
+            mMediaViewer->showFirst();
+        }
+        else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
+            mMediaViewer->showLast();
         }
         else if (input.value != 0) {
             // Any other input stops the media viewer.
@@ -249,17 +255,17 @@ void Window::input(InputConfig* config, Input input)
             mPDFViewer->launchMediaViewer();
             return;
         }
-        else if (config->isMappedLike("right", input) && input.value != 0) {
-            mPDFViewer->showNextPage();
-        }
         else if (config->isMappedLike("left", input) && input.value != 0) {
             mPDFViewer->showPreviousPage();
         }
-        else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
-            mPDFViewer->showLastPage();
+        else if (config->isMappedLike("right", input) && input.value != 0) {
+            mPDFViewer->showNextPage();
         }
         else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
             mPDFViewer->showFirstPage();
+        }
+        else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
+            mPDFViewer->showLastPage();
         }
         else if (input.value != 0) {
             // Any other input stops the PDF viewer.
@@ -806,6 +812,8 @@ void Window::setHelpPrompts(const std::vector<HelpPrompt>& prompts, const HelpSt
               [](const HelpPrompt& a, const HelpPrompt& b) -> bool {
                   static const std::vector<std::string> map {"up/down/left/right",
                                                              "up/down",
+                                                             "up",
+                                                             "down",
                                                              "left/right",
                                                              "rt",
                                                              "lt",

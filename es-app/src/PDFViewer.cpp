@@ -25,6 +25,8 @@
 PDFViewer::PDFViewer()
     : mRenderer {Renderer::getInstance()}
     , mGame {nullptr}
+    , mFrameHeight {0.0f}
+    , mHelpInfoPosition {HelpInfoPosition::TOP}
 {
     Window::getInstance()->setPDFViewer(this);
     mTexture = TextureResource::get("");
@@ -93,7 +95,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
         float width {mPages[i].width};
         float height {mPages[i].height};
 
-        if (!mPages[i].portraitOrientation)
+        if (mPages[i].orientation != "portrait" && mPages[i].orientation != "upside_down")
             std::swap(width, height);
 
         // Maintain page aspect ratio.
@@ -115,8 +117,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
         mPages[i].height = std::round(textureSize.y);
 
 #if (DEBUG_PDF_CONVERSION)
-        LOG(LogDebug) << "Page " << i << ": Orientation: "
-                      << (mPages[i].portraitOrientation ? "portrait" : "landscape") << " / "
+        LOG(LogDebug) << "Page " << i << ": Orientation: " << mPages[i].orientation << " / "
                       << "crop box width: " << width << " / "
                       << "crop box height: " << height << " / "
                       << "size ratio: " << width / height << " / "
@@ -125,6 +126,45 @@ bool PDFViewer::startPDFViewer(FileData* game)
     }
 
     mCurrentPage = 1;
+
+    if (Settings::getInstance()->getString("MediaViewerHelpPrompts") == "disabled")
+        mHelpInfoPosition = HelpInfoPosition::DISABLED;
+    else if (Settings::getInstance()->getString("MediaViewerHelpPrompts") == "bottom")
+        mHelpInfoPosition = HelpInfoPosition::BOTTOM;
+    else
+        mHelpInfoPosition = HelpInfoPosition::TOP;
+
+    if (mHelpInfoPosition == HelpInfoPosition::DISABLED)
+        mFrameHeight = 0.0f;
+    else
+        mFrameHeight = Font::get(FONT_SIZE_SMALL)->getLetterHeight() * 1.8f;
+
+    HelpStyle style;
+    style.origin = {0.5f, 0.5f};
+    style.iconColor = 0xAAAAAAFF;
+    style.textColor = 0xAAAAAAFF;
+
+    mEntryCount = std::to_string(mPages.size());
+
+    mEntryNumText = std::make_unique<TextComponent>(
+        "1/" + mEntryCount, Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
+    mEntryNumText->setOrigin(0.0f, 0.5f);
+
+    if (mHelpInfoPosition == HelpInfoPosition::TOP) {
+        mEntryNumText->setPosition(mRenderer->getScreenWidth() * 0.01f, mFrameHeight / 2.0f);
+        style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f, mFrameHeight / 2.0f};
+    }
+    else if (mHelpInfoPosition == HelpInfoPosition::BOTTOM) {
+        mEntryNumText->setPosition(mRenderer->getScreenWidth() * 0.01f,
+                                   mRenderer->getScreenHeight() - (mFrameHeight / 2.0f));
+        style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f,
+                                    mRenderer->getScreenHeight() - (mFrameHeight / 2.0f)};
+    }
+
+    mHelp = std::make_unique<HelpComponent>();
+    mHelp->setStyle(style);
+    mHelp->setPrompts(getHelpPrompts());
+
     convertPage(mCurrentPage);
     return true;
 }
@@ -251,7 +291,7 @@ bool PDFViewer::getDocumentInfo()
             continue;
         mPages[atoi(&rowValues[0][0])] = PageEntry {static_cast<float>(atof(&rowValues[2][0])),
                                                     static_cast<float>(atof(&rowValues[3][0])),
-                                                    (rowValues[1] == "portrait" ? true : false),
+                                                    rowValues[1],
                                                     {}};
     }
 
@@ -394,13 +434,28 @@ void PDFViewer::convertPage(int pageNum)
 
     mPageImage.reset();
     mPageImage = std::make_unique<ImageComponent>(false, false);
-    mPageImage->setOrigin(0.5f, 0.5f);
-    mPageImage->setPosition(mRenderer->getScreenWidth() / 2.0f,
-                            mRenderer->getScreenHeight() / 2.0f);
-
     mPageImage->setFlipY(true);
-    mPageImage->setMaxSize(
-        glm::vec2 {mPages[pageNum].width / mScaleFactor, mPages[pageNum].height / mScaleFactor});
+    mPageImage->setOrigin(0.5f, 0.5f);
+    if (mHelpInfoPosition == HelpInfoPosition::TOP) {
+        mPageImage->setPosition(mRenderer->getScreenWidth() / 2.0f,
+                                (mRenderer->getScreenHeight() / 2.0f) + (mFrameHeight / 2.0f));
+    }
+    else if (mHelpInfoPosition == HelpInfoPosition::BOTTOM) {
+        mPageImage->setPosition(Renderer::getScreenWidth() / 2.0f,
+                                (Renderer::getScreenHeight() / 2.0f) - (mFrameHeight / 2.0f));
+    }
+    else {
+        mPageImage->setPosition(mRenderer->getScreenWidth() / 2.0f,
+                                mRenderer->getScreenHeight() / 2.0f);
+    }
+
+    float sizeReduction {0.0f};
+    if (mPages[pageNum].height > mRenderer->getScreenHeight() - mFrameHeight)
+        sizeReduction = mPages[pageNum].height - (mRenderer->getScreenHeight() - mFrameHeight);
+
+    mPageImage->setMaxSize(glm::vec2 {mPages[pageNum].width / mScaleFactor,
+                                      (mPages[pageNum].height / mScaleFactor) - sizeReduction});
+
     mPageImage->setRawImage(reinterpret_cast<const unsigned char*>(&mPages[pageNum].imageData[0]),
                             static_cast<size_t>(mPages[pageNum].width),
                             static_cast<size_t>(mPages[pageNum].height));
@@ -415,13 +470,35 @@ void PDFViewer::render(const glm::mat4& /*parentTrans*/)
     glm::mat4 trans {Renderer::getIdentity()};
     mRenderer->setMatrix(trans);
 
-    // Render a black background below the document.
+    // Render a black background below the game media.
     mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                         0x000000FF, 0x000000FF);
 
-    if (mPageImage != nullptr) {
+    if (mPageImage != nullptr)
         mPageImage->render(trans);
+
+    if (mHelpInfoPosition != HelpInfoPosition::DISABLED) {
+        // Render a dark gray frame behind the help info.
+        mRenderer->setMatrix(mRenderer->getIdentity());
+        mRenderer->drawRect(0.0f,
+                            (mHelpInfoPosition == HelpInfoPosition::TOP ?
+                                 0.0f :
+                                 Renderer::getScreenHeight() - mFrameHeight),
+                            Renderer::getScreenWidth(), mFrameHeight, 0x222222FF, 0x222222FF);
+        mHelp->render(trans);
+        mEntryNumText->render(trans);
     }
+}
+
+std::vector<HelpPrompt> PDFViewer::getHelpPrompts()
+{
+    std::vector<HelpPrompt> prompts;
+    prompts.push_back(HelpPrompt("left/right", "browse"));
+    prompts.push_back(HelpPrompt("down", "game media"));
+    prompts.push_back(HelpPrompt("lt", "first"));
+    prompts.push_back(HelpPrompt("rt", "last"));
+
+    return prompts;
 }
 
 void PDFViewer::showNextPage()
@@ -431,6 +508,7 @@ void PDFViewer::showNextPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     ++mCurrentPage;
+    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
     convertPage(mCurrentPage);
 }
 
@@ -441,6 +519,7 @@ void PDFViewer::showPreviousPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     --mCurrentPage;
+    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
     convertPage(mCurrentPage);
 }
 
@@ -451,6 +530,7 @@ void PDFViewer::showFirstPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = 1;
+    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
     convertPage(mCurrentPage);
 }
 
@@ -461,5 +541,6 @@ void PDFViewer::showLastPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = mPageCount;
+    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
     convertPage(mCurrentPage);
 }

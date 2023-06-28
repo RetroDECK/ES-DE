@@ -159,10 +159,20 @@ int main(int argc, char* argv[])
                     exit(-1);
                 }
             }
+            std::string orientation;
+            if (page->orientation() == poppler::page::portrait)
+                orientation = "portrait";
+            else if (page->orientation() == poppler::page::upside_down)
+                orientation = "upside_down";
+            else if (page->orientation() == poppler::page::seascape)
+                orientation = "seascape";
+            else
+                orientation = "landscape";
+
             const poppler::rectf pageRect {page->page_rect()};
             pageRow.append(std::to_string(i + 1))
                 .append(";")
-                .append(page->orientation() == poppler::page::portrait ? "portrait" : "landscape")
+                .append(orientation)
                 .append(";")
                 .append(std::to_string(pageRect.width()))
                 .append(";")
@@ -194,10 +204,10 @@ int main(int argc, char* argv[])
     // pageRenderer.set_render_hint(poppler::page_renderer::text_hinting);
 
     const poppler::rectf pageRect {page->page_rect()};
-    const bool portraitOrientation {page->orientation() == poppler::page::portrait};
+    const bool rotate {page->orientation() == poppler::page::portrait ||
+                       page->orientation() == poppler::page::upside_down};
     const double pageHeight {pageRect.height()};
-    const double sizeFactor {static_cast<double>(portraitOrientation ? height : width) /
-                             pageHeight};
+    const double sizeFactor {static_cast<double>(rotate ? height : width) / pageHeight};
 
     poppler::image image {pageRenderer.render_page(
         page, static_cast<int>(std::round(72.0 * sizeFactor)),

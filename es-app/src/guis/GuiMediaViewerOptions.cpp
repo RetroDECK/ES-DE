@@ -10,11 +10,34 @@
 #include "guis/GuiMediaViewerOptions.h"
 
 #include "Settings.h"
+#include "components/OptionListComponent.h"
 #include "components/SwitchComponent.h"
 
 GuiMediaViewerOptions::GuiMediaViewerOptions(const std::string& title)
     : GuiSettings {title}
 {
+
+    // Help prompts.
+    auto mediaViewerHelpPrompts =
+        std::make_shared<OptionListComponent<std::string>>(getHelpStyle(), "HELP PROMPTS", false);
+    std::string selectedHelpPrompts {Settings::getInstance()->getString("MediaViewerHelpPrompts")};
+    mediaViewerHelpPrompts->add("TOP", "top", selectedHelpPrompts == "top");
+    mediaViewerHelpPrompts->add("BOTTOM", "bottom", selectedHelpPrompts == "bottom");
+    mediaViewerHelpPrompts->add("DISABLED", "disabled", selectedHelpPrompts == "disabled");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the help prompts to "top" in this case.
+    if (mediaViewerHelpPrompts->getSelectedObjects().size() == 0)
+        mediaViewerHelpPrompts->selectEntry(0);
+    addWithLabel("HELP PROMPTS", mediaViewerHelpPrompts);
+    addSaveFunc([mediaViewerHelpPrompts, this] {
+        if (mediaViewerHelpPrompts->getSelected() !=
+            Settings::getInstance()->getString("MediaViewerHelpPrompts")) {
+            Settings::getInstance()->setString("MediaViewerHelpPrompts",
+                                               mediaViewerHelpPrompts->getSelected());
+            setNeedsSaving();
+        }
+    });
+
     // Keep videos running when viewing images.
     auto keepVideoRunning = std::make_shared<SwitchComponent>();
     keepVideoRunning->setState(Settings::getInstance()->getBool("MediaViewerKeepVideoRunning"));
