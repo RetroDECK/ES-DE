@@ -1119,6 +1119,14 @@ bool GuiThemeDownloader::input(InputConfig* config, Input input)
                 ++mFullscreenViewerIndex;
             return true;
         }
+        else if (config->isMappedLike("lefttrigger", input)) {
+            mFullscreenViewerIndex = 0;
+            return true;
+        }
+        else if (config->isMappedLike("righttrigger", input)) {
+            mFullscreenViewerIndex = mViewerScreenshots.size() - 1;
+            return true;
+        }
         else {
             mViewerScreenshots.clear();
             mViewerCaptions.clear();
