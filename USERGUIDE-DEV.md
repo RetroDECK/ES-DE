@@ -2396,6 +2396,10 @@ Activates or deactivates the built-in help system that provides contextual infor
 
 Settings for the media viewer that is accessible from the gamelist views.
 
+**Help prompts**
+
+Controls positioning of the navigation help prompts. The available options are _top_, _bottom_ or _disabled_.
+
 **Keep videos running when viewing images**
 
 With this option enabled, the video will continue to run when viewing the images for the game. If disabling this setting, the video will stop immediately when browsing to the first image, and it will restart when navigating back to the video.
@@ -2918,15 +2922,15 @@ This will remove the actual game file, its gamelist.xml entry, its entry in any 
 
 The game media viewer displays videos, images and PDF manuals in fullscreen mode and is launched from the gamelist view by pressing the _X_ button.
 
-If a game video is available, this will be played automatically when launching the viewer. The _left_ and _right_ buttons are used to navigate betweeen the game media files. By default the video will continue to play when browsing the images, but this can be changed with a setting as described earlier in this document.
+If a game video is available, then this will be played automatically when launching the viewer. The _left_ and _right_ buttons are used to navigate betweeen media files one at a time, and the trigger buttons can be used to jump to the first and last entries. By default the video will continue to play when browsing the images, but this can be changed with a setting as described earlier in this document.
 
-The media viewer can display the following media: _video, box cover, box back cover, title screen, screenshot_, _fan art_ and _miximage_.
+The following media can be displayed: _video, box cover, box back cover, title screen, screenshot_, _fan art_ and _miximage_.
 
-If the game has a downloaded PDF manual then you can view it by pressing the _up_ button which will change the media viewer to PDF viewing mode. To get back to displaying videos and images when in this mode, press the _down_ button. When viewing PDF manuals you navigate the pages with the _left_ and _right_ buttons and you can also jump to the first and last page using the trigger buttons.
-
-The other settings for the media viewer are similar to what is available for the screensavers; the audio can be enabled or disabled, the video can be stretched to fill the entire screen and scanlines and blur can be rendered on top of it. For screenshots and title screens, scanlines can be rendered. All these options are configurable via the _UI Settings_ menu.
+If the game has a downloaded PDF manual then you can view it by pressing the _up_ button which will change the media viewer to PDF viewing mode. To get back to displaying videos and images when in this mode, press the _down_ button. The navigation for this mode is identical to the game media mode.
 
 Pressing any other button than those mentioned above closes the media viewer.
+
+The settings for the media viewer are similar to what is available for the screensavers; the audio can be enabled or disabled, the video can be stretched to fill the entire screen and scanlines and blur can be rendered on top of it. For screenshots and title screens, scanline rendering can be enabled or disabled. It's also possible to change the positioning of the help prompts to the top or bottom, or to disable them entirely. All these options are configurable via the _UI Settings_ menu and are described in more detail elsewhere in this document.
 
 ## Screensaver
 

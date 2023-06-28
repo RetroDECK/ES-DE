@@ -550,10 +550,6 @@ Running `make -j6` (or whatever number of parallel jobs you prefer) speeds up th
 
 Running ES-DE from the build directory may be a bit flaky as there is no Info.plist file available which is required for setting the proper window mode and such. It's therefore recommended to run the application from the installation directory for any more in-depth testing. But normal debugging can of course be done from the build directory.
 
-**Building for the M1 (ARM) processor**
-
-The build steps detailed above should in theory work identically on an M1 processor but possibly some of the dependencies will not build correctly and may need manual patching. Cross-compiling using an Intel processor has been attempted but failed due to multiple issues with dependencies refusing to build.
-
 **Code signing**
 
 Due to the Apple notarization requirement implemented as of macOS 10.14.5 a build with simple code signing is needed for versions up to 10.13 and another build with both code signing and notarization is required for version 10.14 and higher.

@@ -6,10 +6,13 @@
 
 ### Detailed list of changes
 
-* Added support for changing between light and dark color schemes for the menu system
-* Added an option to scrape game manuals using ScreenScraper
 * Added a PDF game manual viewer, accessible from the media viewer
+* Added an option to scrape game manuals using ScreenScraper
 * Added a separate es-pdf-convert binary to render PDF pages using Poppler (needed due to the restrictive GPL license for this library)
+* Added help prompts to the media viewer
+* Added trigger button support to the media viewer for jumping to the first and last entries
+* Added trigger button support to the theme downloader screenshot viewer for jumping to the first and last entries
+* Added support for changing between light and dark color schemes for the menu system
 * Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
@@ -23,6 +26,7 @@
 * Removed the custom SDL patch for the Linux AppImage builds that prevented the device virtual keyboard from being automatically displayed
 * If the SDL library release is higher than 2.28.0, then the automatic popup of the device's virtual keyboard is now disabled
 * The SDL library version is now printed to es_log.txt on application startup
+* (Windows) A check is now performed on startup that OpenGL is actually supported by the GPU driver, to avoid crashes if it isn't
 * Added a setRawImage function to ImageComponent to load raw pixel data into textures (needed by PDFViewer)
 * Added the Poppler PDF rendering library as a dependency
 * Updated FFmpeg to 6.0, FreeType to 2.13.0, libgit2 to 1.6.4 and pugixml to 1.13 on Windows and macOS
@@ -34,6 +38,7 @@
 
 ### Bug fixes
 
+* (Windows) The log output time stamp was missing in es_log.txt when built using MinGW
 * The scraper auto-retry functionality was triggered when scraping manually
 * TextureResource::initFromPixels() was not setting the source size correctly
 
