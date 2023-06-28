@@ -419,7 +419,6 @@ set(COMMON_INCLUDE_DIRS ${CURL_INCLUDE_DIR}
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/CImg
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/glm
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/lunasvg/include
-                        ${CMAKE_CURRENT_SOURCE_DIR}/external/nanosvg/src
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rapidjson/include
                         ${CMAKE_CURRENT_SOURCE_DIR}/external/rlottie/inc
                         ${CMAKE_CURRENT_SOURCE_DIR}/es-core/src)
