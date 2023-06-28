@@ -209,9 +209,8 @@ int main(int argc, char* argv[])
     const double pageHeight {pageRect.height()};
     const double sizeFactor {static_cast<double>(rotate ? height : width) / pageHeight};
 
-    poppler::image image {pageRenderer.render_page(
-        page, static_cast<int>(std::round(72.0 * sizeFactor)),
-        static_cast<int>(std::round(72.0 * sizeFactor)), 0, 0, width, height)};
+    poppler::image image {
+        pageRenderer.render_page(page, 72.0 * sizeFactor, 72.0 * sizeFactor, 0, 0, width, height)};
 
     if (!image.is_valid()) {
         std::cerr << "Rendered image is invalid" << std::endl;
