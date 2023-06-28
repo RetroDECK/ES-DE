@@ -70,7 +70,7 @@ std::ostringstream& Log::get(LogLevel level)
     localtime_r(&t, &tm);
 #endif
     std::unique_lock<std::mutex> lock {sLogMutex};
-    mOutStringStream << std::put_time(&tm, "%b %d %T ") << mLogLevelMap[level] << ":\t";
+    mOutStringStream << std::put_time(&tm, "%b %d %H:%M:%S ") << mLogLevelMap[level] << ":\t";
     mMessageLevel = level;
 
     return mOutStringStream;
