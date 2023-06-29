@@ -264,7 +264,7 @@
             <badges name="badges">
                 <horizontalAlignment>left</horizontalAlignment>
                 <direction>row</direction>
-                <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
+                <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator, manual</slots>
                 <controllerPos>0.5 0.572</controllerPos>
                 <controllerSize>0.81</controllerSize>
                 <folderLinkPos>0.54 0.64</folderLinkPos>

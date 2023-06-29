@@ -155,9 +155,9 @@
             </gamelistinfo>
             <badges name="badges">
                 <pos>0.96 0.655</pos>
-                <size>0.11 0.235</size>
+                <size>0.11 0.245</size>
                 <origin>1 0</origin>
-                <lines>4</lines>
+                <lines>5</lines>
                 <itemsPerLine>2</itemsPerLine>
             </badges>
         </view>
