@@ -15,6 +15,7 @@
 #define SLOT_BROKEN "broken"
 #define SLOT_CONTROLLER "controller"
 #define SLOT_ALTEMULATOR "altemulator"
+#define SLOT_MANUAL "manual"
 
 #include "components/BadgeComponent.h"
 
@@ -74,7 +75,7 @@ BadgeComponent::BadgeComponent()
     : mFlexboxItems {}
     , mFlexboxComponent {mFlexboxItems}
     , mBadgeTypes {{SLOT_COLLECTION, SLOT_FOLDER, SLOT_FAVORITE, SLOT_COMPLETED, SLOT_KIDGAME,
-                    SLOT_BROKEN, SLOT_CONTROLLER, SLOT_ALTEMULATOR}}
+                    SLOT_BROKEN, SLOT_CONTROLLER, SLOT_ALTEMULATOR, SLOT_MANUAL}}
 {
     mBadgeIcons[SLOT_COLLECTION] = ":/graphics/badge_collection.svg";
     mBadgeIcons[SLOT_FOLDER] = ":/graphics/badge_folder.svg";
@@ -84,6 +85,7 @@ BadgeComponent::BadgeComponent()
     mBadgeIcons[SLOT_BROKEN] = ":/graphics/badge_broken.svg";
     mBadgeIcons[SLOT_CONTROLLER] = ":/graphics/badge_controller.svg";
     mBadgeIcons[SLOT_ALTEMULATOR] = ":/graphics/badge_altemulator.svg";
+    mBadgeIcons[SLOT_MANUAL] = ":/graphics/badge_manual.svg";
 }
 
 void BadgeComponent::populateGameControllers()

@@ -787,6 +787,10 @@ void GamelistView::updateView(const CursorState& state)
                     if (file->metadata.get(badge) != "")
                         badgeSlots.emplace_back(badgeInfo);
                 }
+                else if (badge == "manual") {
+                    if (file->getManualPath() != "")
+                        badgeSlots.emplace_back(badgeInfo);
+                }
                 else {
                     if (file->metadata.get(badge) == "true")
                         badgeSlots.emplace_back(badgeInfo);
