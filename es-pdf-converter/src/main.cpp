@@ -32,7 +32,7 @@ int wmain(int argc, wchar_t* argv[])
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
     wchar_t** argv {__wargv};
-    int argc = __argc;
+    int argc {__argc};
 #endif
     HANDLE stdoutHandle {GetStdHandle(STD_OUTPUT_HANDLE)};
 
