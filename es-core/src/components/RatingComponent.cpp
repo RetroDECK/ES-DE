@@ -271,7 +271,7 @@ void RatingComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
         }
         else {
             mIconFilled.setColorShift(0xFFFFFFFF);
-            mIconFilled.setColorShift(0xFFFFFFFF);
+            mIconUnfilled.setColorShift(0xFFFFFFFF);
         }
     }
 }
