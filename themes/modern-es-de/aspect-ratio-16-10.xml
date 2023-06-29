@@ -27,7 +27,7 @@
     <view name="gamelist">
         <badges name="badges">
             <lines>2</lines>
-            <itemsPerLine>4</itemsPerLine>
+            <itemsPerLine>5</itemsPerLine>
             <itemMargin>0.0028125 0.005</itemMargin>
         </badges>
     </view>

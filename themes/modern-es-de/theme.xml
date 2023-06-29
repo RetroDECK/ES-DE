@@ -327,11 +327,11 @@
                 <unfilledPath>./assets/${colorSchemeName}/star-unfilled.svg</unfilledPath>
             </rating>
             <badges name="badges">
-                <pos>0.8423 0.69</pos>
-                <size>0.1267 0.17335978655</size>
+                <pos>0.8423 0.685</pos>
+                <size>0.1267 0.185</size>
                 <origin>0 0</origin>
                 <direction>column</direction>
-                <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator</slots>
+                <slots>collection, folder, favorite, completed, kidgame, broken, controller, altemulator, manual</slots>
                 <controllerPos>0.165 0.5</controllerPos>
                 <controllerSize>0.2</controllerSize>
                 <customBadgeIcon badge="collection">./assets/${colorSchemeName}/badges/collection.svg</customBadgeIcon>
@@ -342,6 +342,7 @@
                 <customBadgeIcon badge="broken">./assets/${colorSchemeName}/badges/broken.svg</customBadgeIcon>
                 <customBadgeIcon badge="controller">./assets/${colorSchemeName}/badges/controller.svg</customBadgeIcon>
                 <customBadgeIcon badge="altemulator">./assets/${colorSchemeName}/badges/altemulator.svg</customBadgeIcon>
+                <customBadgeIcon badge="manual">./assets/${colorSchemeName}/badges/manual.svg</customBadgeIcon>
                 <customControllerIcon controller="gamepad_generic">./assets/controllers/generic.svg</customControllerIcon>
                 <customControllerIcon controller="gamepad_xbox">./assets/controllers/xbox.svg</customControllerIcon>
                 <customControllerIcon controller="gamepad_playstation">./assets/controllers/dualshock4.svg</customControllerIcon>
