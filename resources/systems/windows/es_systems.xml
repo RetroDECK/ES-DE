@@ -294,6 +294,7 @@
         <extension>.chd .CHD .cue .CUE .iso .ISO</extension>
         <command label="SAME CDi">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\same_cdi_libretro.dll %ROM%</command>
         <command label="CDi 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\cdi2015_libretro.dll %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\cdimono1 cdimono1 -cdrom %ROM%</command>
         <platform>cdimono1</platform>
         <theme>cdimono1</theme>
     </system>

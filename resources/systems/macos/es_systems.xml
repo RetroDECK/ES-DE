@@ -285,6 +285,7 @@
         <extension>.chd .CHD .cue .CUE .iso .ISO</extension>
         <command label="SAME CDi">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/same_cdi_libretro.dylib %ROM%</command>
         <command label="CDi 2015">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/cdi2015_libretro.dylib %ROM%</command>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/cdimono1 cdimono1 -cdrom %ROM%</command>
         <platform>cdimono1</platform>
         <theme>cdimono1</theme>
     </system>
