@@ -137,9 +137,10 @@ bool PDFViewer::startPDFViewer(FileData* game)
     if (mHelpInfoPosition == HelpInfoPosition::DISABLED)
         mFrameHeight = 0.0f;
     else
-        mFrameHeight = Font::get(FONT_SIZE_SMALL)->getLetterHeight() * 1.8f;
+        mFrameHeight = Font::get(FONT_SIZE_MINI)->getLetterHeight() * 1.9f;
 
     HelpStyle style;
+    style.font = Font::get(FONT_SIZE_MINI);
     style.origin = {0.5f, 0.5f};
     style.iconColor = 0xAAAAAAFF;
     style.textColor = 0xAAAAAAFF;
