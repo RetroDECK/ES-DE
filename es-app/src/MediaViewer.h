@@ -62,7 +62,7 @@ private:
 
     std::string mVideoFile;
     std::unique_ptr<VideoComponent> mVideo;
-    std::vector<std::string> mImageFiles;
+    std::vector<std::pair<std::string, std::string>> mImageFiles;
     std::vector<std::unique_ptr<ImageComponent>> mImages;
 
     std::unique_ptr<HelpComponent> mHelp;

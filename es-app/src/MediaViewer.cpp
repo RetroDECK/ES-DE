@@ -57,7 +57,8 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mEntryCount = std::to_string(mImages.size() + (mVideo == nullptr ? 0 : 1));
 
     mEntryNumText = std::make_unique<TextComponent>(
-        "1/" + mEntryCount, Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
+        "1/" + mEntryCount + (mHasVideo ? "   VIDEO" : mImageFiles[0].second),
+        Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
     mEntryNumText->setOrigin(0.0f, 0.5f);
 
     if (mHelpInfoPosition == HelpInfoPosition::TOP) {
@@ -210,31 +211,31 @@ void MediaViewer::findMedia()
     }
 
     if (!mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
-        mImageFiles.push_back(mediaFile);
+        mImageFiles.push_back(std::make_pair(mediaFile, "   SCREENSHOT"));
         mScreenshotIndex = 0;
     }
 
     if ((mediaFile = mGame->getCoverPath()) != "")
-        mImageFiles.push_back(mediaFile);
+        mImageFiles.push_back(std::make_pair(mediaFile, "   BOX COVER"));
 
     if ((mediaFile = mGame->getBackCoverPath()) != "")
-        mImageFiles.push_back(mediaFile);
+        mImageFiles.push_back(std::make_pair(mediaFile, "   BOX BACK COVER"));
 
     if ((mediaFile = mGame->getTitleScreenPath()) != "") {
-        mImageFiles.push_back(mediaFile);
+        mImageFiles.push_back(std::make_pair(mediaFile, "   TITLE SCREEN"));
         mTitleScreenIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if (mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
-        mImageFiles.push_back(mediaFile);
+        mImageFiles.push_back(std::make_pair(mediaFile, "   SCREENSHOT"));
         mScreenshotIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if ((mediaFile = mGame->getFanArtPath()) != "")
-        mImageFiles.push_back(mediaFile);
+        mImageFiles.push_back(std::make_pair(mediaFile, "   FAN ART"));
 
     if ((mediaFile = mGame->getMiximagePath()) != "")
-        mImageFiles.push_back(mediaFile);
+        mImageFiles.push_back(std::make_pair(mediaFile, "   MIXIMAGE"));
 
     if (!mImageFiles.empty())
         mHasImages = true;
@@ -261,7 +262,7 @@ void MediaViewer::loadImages()
         }
         mImages.back()->setMaxSize(Renderer::getScreenWidth(),
                                    Renderer::getScreenHeight() - mFrameHeight);
-        mImages.back()->setImage(file);
+        mImages.back()->setImage(file.first);
     }
 }
 
@@ -321,7 +322,7 @@ void MediaViewer::showNext()
 
     mDisplayingImage = true;
     mEntryNumText->setText(std::to_string(mCurrentImageIndex + 1 + (mHasVideo ? 1 : 0)) + "/" +
-                           mEntryCount);
+                           mEntryCount + mImageFiles[mCurrentImageIndex].second);
 }
 
 void MediaViewer::showPrevious()
@@ -334,13 +335,13 @@ void MediaViewer::showPrevious()
     }
     else if (mCurrentImageIndex == 0 && mHasVideo) {
         mDisplayingImage = false;
-        mEntryNumText->setText("1/" + mEntryCount);
+        mEntryNumText->setText("1/" + mEntryCount + "   VIDEO");
         playVideo();
         return;
     }
 
     mEntryNumText->setText(std::to_string(mCurrentImageIndex + (mHasVideo ? 1 : 0)) + "/" +
-                           mEntryCount);
+                           mEntryCount + mImageFiles[mCurrentImageIndex - 1].second);
     --mCurrentImageIndex;
 }
 
@@ -354,7 +355,8 @@ void MediaViewer::showFirst()
         return;
 
     mCurrentImageIndex = 0;
-    mEntryNumText->setText("1/" + mEntryCount);
+    mEntryNumText->setText("1/" + mEntryCount +
+                           (mHasVideo ? "   VIDEO" : mImageFiles[mCurrentImageIndex].second));
 
     if (mHasVideo) {
         mDisplayingImage = false;
@@ -372,7 +374,8 @@ void MediaViewer::showLast()
         return;
 
     mCurrentImageIndex = static_cast<int>(mImages.size()) - 1;
-    mEntryNumText->setText(mEntryCount + "/" + mEntryCount);
+    mEntryNumText->setText(mEntryCount + "/" + mEntryCount +
+                           mImageFiles[mCurrentImageIndex].second);
     mDisplayingImage = true;
 
     if (mVideo && !Settings::getInstance()->getBool("MediaViewerKeepVideoRunning"))
