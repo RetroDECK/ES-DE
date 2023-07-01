@@ -16,9 +16,9 @@ namespace Utils
                                cimg_library::CImg<unsigned char>& image)
         {
             // CImg does not interleave pixels as in BGRABGRABGRA so a conversion is required.
-            int counter = 0;
-            for (int r = 0; r < image.height(); ++r) {
-                for (int c = 0; c < image.width(); ++c) {
+            int counter {0};
+            for (int r {0}; r < image.height(); ++r) {
+                for (int c {0}; c < image.width(); ++c) {
                     image(c, r, 0, 0) = imageBGRA[counter + 0];
                     image(c, r, 0, 1) = imageBGRA[counter + 1];
                     image(c, r, 0, 2) = imageBGRA[counter + 2];
@@ -31,8 +31,8 @@ namespace Utils
         void convertCImgToBGRA(const cimg_library::CImg<unsigned char>& image,
                                std::vector<unsigned char>& imageBGRA)
         {
-            for (int r = image.height() - 1; r >= 0; --r) {
-                for (int c = 0; c < image.width(); ++c) {
+            for (int r {image.height() - 1}; r >= 0; --r) {
+                for (int c {0}; c < image.width(); ++c) {
                     imageBGRA.emplace_back((unsigned char)image(c, r, 0, 0));
                     imageBGRA.emplace_back((unsigned char)image(c, r, 0, 1));
                     imageBGRA.emplace_back((unsigned char)image(c, r, 0, 2));
@@ -45,9 +45,9 @@ namespace Utils
                                cimg_library::CImg<unsigned char>& image)
         {
             // CImg does not interleave pixels as in RGBARGBARGBA so a conversion is required.
-            int counter = 0;
-            for (int r = 0; r < image.height(); ++r) {
-                for (int c = 0; c < image.width(); ++c) {
+            int counter {0};
+            for (int r {0}; r < image.height(); ++r) {
+                for (int c {0}; c < image.width(); ++c) {
                     image(c, r, 0, 0) = imageRGBA[counter + 2];
                     image(c, r, 0, 1) = imageRGBA[counter + 1];
                     image(c, r, 0, 2) = imageRGBA[counter + 0];
@@ -60,8 +60,8 @@ namespace Utils
         void convertCImgToRGBA(const cimg_library::CImg<unsigned char>& image,
                                std::vector<unsigned char>& imageRGBA)
         {
-            for (int r = image.height() - 1; r >= 0; --r) {
-                for (int c = 0; c < image.width(); ++c) {
+            for (int r {image.height() - 1}; r >= 0; --r) {
+                for (int c {0}; c < image.width(); ++c) {
                     imageRGBA.emplace_back((unsigned char)image(c, r, 0, 2));
                     imageRGBA.emplace_back((unsigned char)image(c, r, 0, 1));
                     imageRGBA.emplace_back((unsigned char)image(c, r, 0, 0));
@@ -77,44 +77,44 @@ namespace Utils
             if (image.spectrum() != 4)
                 return;
 
-            double pixelValueSum = 0.0l;
-            int rowCounterTop = 0;
-            int rowCounterBottom = 0;
-            unsigned int columnCounterLeft = 0;
-            unsigned int columnCounterRight = 0;
+            double pixelValueSum {0.0};
+            int rowCounterTop {0};
+            int rowCounterBottom {0};
+            unsigned int columnCounterLeft {0};
+            unsigned int columnCounterRight {0};
 
             // Count the number of rows and columns that are completely transparent.
-            for (int i = image.height() - 1; i > 0; --i) {
+            for (int i {image.height() - 1}; i > 0; --i) {
                 cimg_library::CImg<unsigned char> imageRow = image.get_rows(i, i);
                 pixelValueSum = imageRow.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++rowCounterTop;
                 else
                     break;
             }
 
-            for (int i = 0; i < image.height(); ++i) {
+            for (int i {0}; i < image.height(); ++i) {
                 cimg_library::CImg<unsigned char> imageRow = image.get_rows(i, i);
                 pixelValueSum = imageRow.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++rowCounterBottom;
                 else
                     break;
             }
 
-            for (int i = 0; i < image.width(); ++i) {
+            for (int i {0}; i < image.width(); ++i) {
                 cimg_library::CImg<unsigned char> imageColumn = image.get_columns(i, i);
                 pixelValueSum = imageColumn.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++columnCounterLeft;
                 else
                     break;
             }
 
-            for (int i = image.width() - 1; i > 0; --i) {
+            for (int i {image.width() - 1}; i > 0; --i) {
                 cimg_library::CImg<unsigned char> imageColumn = image.get_columns(i, i);
                 pixelValueSum = imageColumn.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++columnCounterRight;
                 else
                     break;
@@ -132,44 +132,44 @@ namespace Utils
             if (image.spectrum() != 4)
                 return;
 
-            double pixelValueSum = 0.0l;
-            int rowCounterTop = 0;
-            int rowCounterBottom = 0;
-            unsigned int columnCounterLeft = 0;
-            unsigned int columnCounterRight = 0;
+            double pixelValueSum {0.0};
+            int rowCounterTop {0};
+            int rowCounterBottom {0};
+            unsigned int columnCounterLeft {0};
+            unsigned int columnCounterRight {0};
 
             // Count the number of rows and columns that are completely transparent.
-            for (int i = image.height() - 1; i > 0; --i) {
+            for (int i {image.height() - 1}; i > 0; --i) {
                 cimg_library::CImg<unsigned char> imageRow = image.get_rows(i, i);
                 pixelValueSum = imageRow.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++rowCounterTop;
                 else
                     break;
             }
 
-            for (int i = 0; i < image.height(); ++i) {
+            for (int i {0}; i < image.height(); ++i) {
                 cimg_library::CImg<unsigned char> imageRow = image.get_rows(i, i);
                 pixelValueSum = imageRow.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++rowCounterBottom;
                 else
                     break;
             }
 
-            for (int i = 0; i < image.width(); ++i) {
+            for (int i {0}; i < image.width(); ++i) {
                 cimg_library::CImg<unsigned char> imageColumn = image.get_columns(i, i);
                 pixelValueSum = imageColumn.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++columnCounterLeft;
                 else
                     break;
             }
 
-            for (int i = image.width() - 1; i > 0; --i) {
+            for (int i {image.width() - 1}; i > 0; --i) {
                 cimg_library::CImg<unsigned char> imageColumn = image.get_columns(i, i);
                 pixelValueSum = imageColumn.get_shared_channel(3).sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++columnCounterRight;
                 else
                     break;
@@ -191,27 +191,27 @@ namespace Utils
 
         void cropLetterboxes(cimg_library::CImg<unsigned char>& image)
         {
-            double pixelValueSum = 0.0l;
-            int rowCounterUpper = 0;
-            int rowCounterLower = 0;
+            double pixelValueSum {0.0};
+            int rowCounterUpper {0};
+            int rowCounterLower {0};
 
             // Count the number of rows that are pure black.
-            for (int i = image.height() - 1; i > 0; --i) {
+            for (int i {image.height() - 1}; i > 0; --i) {
                 cimg_library::CImg<unsigned char> imageRow = image.get_rows(i, i);
                 // Ignore the alpha channel.
                 imageRow.channels(0, 2);
                 pixelValueSum = imageRow.sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++rowCounterUpper;
                 else
                     break;
             }
 
-            for (int i = 0; i < image.height(); ++i) {
+            for (int i {0}; i < image.height(); ++i) {
                 cimg_library::CImg<unsigned char> imageRow = image.get_rows(i, i);
                 imageRow.channels(0, 2);
                 pixelValueSum = imageRow.sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++rowCounterLower;
                 else
                     break;
@@ -227,27 +227,27 @@ namespace Utils
 
         void cropPillarboxes(cimg_library::CImg<unsigned char>& image)
         {
-            double pixelValueSum = 0.0l;
-            unsigned int columnCounterLeft = 0;
-            unsigned int columnCounterRight = 0;
+            double pixelValueSum {0.0};
+            unsigned int columnCounterLeft {0};
+            unsigned int columnCounterRight {0};
 
             // Count the number of columns that are pure black.
-            for (int i = 0; i < image.width(); ++i) {
+            for (int i {0}; i < image.width(); ++i) {
                 cimg_library::CImg<unsigned char> imageColumn = image.get_columns(i, i);
                 // Ignore the alpha channel.
                 imageColumn.channels(0, 2);
                 pixelValueSum = imageColumn.sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++columnCounterLeft;
                 else
                     break;
             }
 
-            for (int i = image.width() - 1; i > 0; --i) {
+            for (int i {image.width() - 1}; i > 0; --i) {
                 cimg_library::CImg<unsigned char> imageColumn = image.get_columns(i, i);
                 imageColumn.channels(0, 2);
                 pixelValueSum = imageColumn.sum();
-                if (pixelValueSum == 0.0l)
+                if (pixelValueSum == 0.0)
                     ++columnCounterRight;
                 else
                     break;

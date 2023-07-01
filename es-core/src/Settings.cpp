@@ -121,6 +121,10 @@ void Settings::setDefaults()
     mBoolMap["ScrapeManuals"] = {true, true};
 
     mStringMap["MiximageResolution"] = {"1280x960", "1280x960"};
+    mStringMap["MiximageScreenshotHorizontalFit"] = {"crop", "crop"};
+    mStringMap["MiximageScreenshotVerticalFit"] = {"contain", "contain"};
+    mStringMap["MiximageScreenshotAspectThreshold"] = {"high", "high"};
+    mStringMap["MiximageScreenshotBlankAreasColor"] = {"black", "black"};
     mStringMap["MiximageScreenshotScaling"] = {"sharp", "sharp"};
     mStringMap["MiximageBoxSize"] = {"medium", "medium"};
     mStringMap["MiximagePhysicalMediaSize"] = {"medium", "medium"};

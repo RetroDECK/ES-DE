@@ -468,6 +468,92 @@ void GuiScraperMenu::openMiximageOptions()
         }
     });
 
+    // Horizontally oriented screenshots fit.
+    auto miximageHorizontalFit = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "HORIZONTAL SCREENSHOT FIT", false);
+    const std::string selectedHorizontalFit {
+        Settings::getInstance()->getString("MiximageScreenshotHorizontalFit")};
+    miximageHorizontalFit->add("contain", "contain", selectedHorizontalFit == "contain");
+    miximageHorizontalFit->add("crop", "crop", selectedHorizontalFit == "crop");
+    miximageHorizontalFit->add("stretch", "stretch", selectedHorizontalFit == "stretch");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the horizontal screenshot fit to "crop" in this case.
+    if (miximageHorizontalFit->getSelectedObjects().size() == 0)
+        miximageHorizontalFit->selectEntry(1);
+    s->addWithLabel("HORIZONTAL SCREENSHOT FIT", miximageHorizontalFit);
+    s->addSaveFunc([miximageHorizontalFit, s] {
+        if (miximageHorizontalFit->getSelected() !=
+            Settings::getInstance()->getString("MiximageScreenshotHorizontalFit")) {
+            Settings::getInstance()->setString("MiximageScreenshotHorizontalFit",
+                                               miximageHorizontalFit->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Vertically oriented screenshots fit.
+    auto miximageVerticalFit = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "VERTICAL SCREENSHOT FIT", false);
+    const std::string selectedVerticalFit {
+        Settings::getInstance()->getString("MiximageScreenshotVerticalFit")};
+    miximageVerticalFit->add("contain", "contain", selectedVerticalFit == "contain");
+    miximageVerticalFit->add("crop", "crop", selectedVerticalFit == "crop");
+    miximageVerticalFit->add("stretch", "stretch", selectedVerticalFit == "stretch");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the vertical screenshot fit to "contain" in this case.
+    if (miximageVerticalFit->getSelectedObjects().size() == 0)
+        miximageVerticalFit->selectEntry(0);
+    s->addWithLabel("VERTICAL SCREENSHOT FIT", miximageVerticalFit);
+    s->addSaveFunc([miximageVerticalFit, s] {
+        if (miximageVerticalFit->getSelected() !=
+            Settings::getInstance()->getString("MiximageScreenshotVerticalFit")) {
+            Settings::getInstance()->setString("MiximageScreenshotVerticalFit",
+                                               miximageVerticalFit->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Screenshots aspect ratio threshold.
+    auto miximageAspectThreshold = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "ASPECT RATIO THRESHOLD", false);
+    const std::string selectedAspectThreshold {
+        Settings::getInstance()->getString("MiximageScreenshotAspectThreshold")};
+    miximageAspectThreshold->add("high", "high", selectedAspectThreshold == "high");
+    miximageAspectThreshold->add("low", "low", selectedAspectThreshold == "low");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the screenshot aspect threshold to "high" in this case.
+    if (miximageAspectThreshold->getSelectedObjects().size() == 0)
+        miximageAspectThreshold->selectEntry(0);
+    s->addWithLabel("SCREENSHOT ASPECT RATIO THRESHOLD", miximageAspectThreshold);
+    s->addSaveFunc([miximageAspectThreshold, s] {
+        if (miximageAspectThreshold->getSelected() !=
+            Settings::getInstance()->getString("MiximageScreenshotAspectThreshold")) {
+            Settings::getInstance()->setString("MiximageScreenshotAspectThreshold",
+                                               miximageAspectThreshold->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
+    // Blank areas fill color.
+    auto miximageBlankAreasColor = std::make_shared<OptionListComponent<std::string>>(
+        getHelpStyle(), "BLANK AREAS FILL COLOR", false);
+    const std::string selectedBlankAreasColor {
+        Settings::getInstance()->getString("MiximageScreenshotBlankAreasColor")};
+    miximageBlankAreasColor->add("black", "black", selectedBlankAreasColor == "black");
+    miximageBlankAreasColor->add("frame", "frame", selectedBlankAreasColor == "frame");
+    // If there are no objects returned, then there must be a manually modified entry in the
+    // configuration file. Simply set the blank area fill color to "black" in this case.
+    if (miximageBlankAreasColor->getSelectedObjects().size() == 0)
+        miximageBlankAreasColor->selectEntry(0);
+    s->addWithLabel("BLANK AREAS FILL COLOR", miximageBlankAreasColor);
+    s->addSaveFunc([miximageBlankAreasColor, s] {
+        if (miximageBlankAreasColor->getSelected() !=
+            Settings::getInstance()->getString("MiximageScreenshotBlankAreasColor")) {
+            Settings::getInstance()->setString("MiximageScreenshotBlankAreasColor",
+                                               miximageBlankAreasColor->getSelected());
+            s->setNeedsSaving();
+        }
+    });
+
     // Screenshot scaling method.
     auto miximageScaling = std::make_shared<OptionListComponent<std::string>>(
         getHelpStyle(), "SCREENSHOT SCALING", false);

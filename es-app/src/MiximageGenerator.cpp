@@ -409,16 +409,100 @@ bool MiximageGenerator::generateImage()
     if (Settings::getInstance()->getBool("MiximageRemovePillarboxes"))
         Utils::CImg::cropPillarboxes(screenshotImage);
 
-    if (Settings::getInstance()->getString("MiximageScreenshotScaling") == "smooth") {
-        // Lanczos scaling is normally not recommended for low resolution graphics as
-        // it makes the pixels appear smooth when scaling, but for more modern game
-        // platforms it may be a good idea to use it.
-        screenshotImage.resize(screenshotWidth, screenshotHeight, 1, 4, 6);
+    const float fileAspect {static_cast<float>(fileWidth) / static_cast<float>(fileHeight)};
+
+    // Options for how to handle screenshots that are not closely matching the aspect ratio of
+    // the miximage. Can be set to contain, crop or stretch.
+    const bool containImage {
+        (fileAspect >= 1.0f &&
+         Settings::getInstance()->getString("MiximageScreenshotHorizontalFit") == "contain") ||
+        (fileAspect < 1.0f &&
+         Settings::getInstance()->getString("MiximageScreenshotVerticalFit") == "contain")};
+    const bool cropImage {
+        (fileAspect >= 1.0f &&
+         Settings::getInstance()->getString("MiximageScreenshotHorizontalFit") == "crop") ||
+        (fileAspect < 1.0f &&
+         Settings::getInstance()->getString("MiximageScreenshotVerticalFit") == "crop")};
+
+    // Define a threshold higher and lower than the 1.325 aspect ratio of the miximage to avoid
+    // fitting and cropping images which only deviate slightly.
+    const float miximageAspectRatio {1.325f};
+    const float maxAspectValue {
+        Settings::getInstance()->getString("MiximageScreenshotAspectThreshold") == "high" ? 1.6f :
+                                                                                            1.375f};
+    const float minAspectValue {
+        Settings::getInstance()->getString("MiximageScreenshotAspectThreshold") == "high" ? 1.05f :
+                                                                                            1.275f};
+
+    // Set the frame color based on an average of the screenshot contents.
+    unsigned char frameColor[] = {0, 0, 0, 0};
+
+    // Lanczos scaling (6) is normally not recommended for low resolution graphics as it makes the
+    // the pixels appear smooth when scaling, but for more modern game platforms it may be a good
+    // idea to use it. Box interpolation (1) gives completely sharp pixels, which is best suited
+    // for low resolution retro games.
+    const int scalingMethod {
+        Settings::getInstance()->getString("MiximageScreenshotScaling") == "smooth" ? 6 : 1};
+
+    if (cropImage && (fileAspect > maxAspectValue || fileAspect < minAspectValue)) {
+        if (fileWidth >= fileHeight && fileAspect > miximageAspectRatio) {
+            screenshotImage.resize(
+                static_cast<int>(std::round(static_cast<float>(screenshotHeight) * fileAspect)),
+                screenshotHeight, 1, 4, scalingMethod);
+            const int offsetX {(screenshotImage.width() - static_cast<int>(screenshotWidth)) / 2};
+            // Add -2 to the offset to avoid single-pixel black lines caused by inexact rounding.
+            screenshotImage.crop(offsetX, 0, 0, 3, screenshotWidth + offsetX, screenshotHeight - 2,
+                                 0, 0);
+        }
+        else {
+            screenshotImage.resize(
+                screenshotWidth,
+                static_cast<int>(std::round(static_cast<float>(screenshotWidth) / fileAspect)), 1,
+                4, scalingMethod);
+            const int offsetY {(screenshotImage.height() - static_cast<int>(screenshotHeight)) / 2};
+            screenshotImage.crop(0, offsetY, 0, 3, screenshotWidth - 2, screenshotHeight + offsetY,
+                                 0, 0);
+        }
     }
     else {
-        // Box interpolation gives completely sharp pixels, which is best suited for
-        // low resolution retro games.
-        screenshotImage.resize(screenshotWidth, screenshotHeight, 1, 4, 1);
+        screenshotImage.resize(screenshotWidth, screenshotHeight, 1, 4, scalingMethod);
+    }
+
+    if (containImage && (fileAspect > maxAspectValue || fileAspect < minAspectValue)) {
+        CImg<unsigned char> tempImage(fileWidth, fileHeight, 1, 4, 0);
+        sampleFrameColor(screenshotImage, frameColor);
+        tempImage = screenshotImage;
+        if (Settings::getInstance()->getString("MiximageScreenshotBlankAreasColor") == "frame") {
+            screenshotImage.get_shared_channel(0).fill(frameColor[0]);
+            screenshotImage.get_shared_channel(1).fill(frameColor[1]);
+            screenshotImage.get_shared_channel(2).fill(frameColor[2]);
+        }
+        else {
+            screenshotImage.fill(0);
+        }
+
+        if (fileWidth >= fileHeight && fileAspect > miximageAspectRatio) {
+            const float sizeRatio {static_cast<float>(screenshotWidth) /
+                                   static_cast<float>(fileWidth)};
+            const int resizeHeight {static_cast<int>(static_cast<float>(fileHeight) * sizeRatio)};
+            tempImage.resize(
+                screenshotWidth,
+                static_cast<int>(std::round(static_cast<float>(fileHeight) * sizeRatio)), 1, 4,
+                scalingMethod);
+            screenshotImage.draw_image(0, (screenshotHeight - resizeHeight) / 2, tempImage);
+        }
+        else {
+            const float sizeRatio {static_cast<float>(screenshotHeight) /
+                                   static_cast<float>(fileHeight)};
+            const int resizeWidth {static_cast<int>(static_cast<float>(fileWidth) * sizeRatio)};
+            tempImage.resize(
+                static_cast<int>(std::round(static_cast<float>(fileWidth) * sizeRatio)),
+                screenshotHeight, 1, 4, scalingMethod);
+            screenshotImage.draw_image((screenshotWidth - resizeWidth) / 2, 0, tempImage);
+        }
+    }
+    else {
+        sampleFrameColor(screenshotImage, frameColor);
     }
 
     // Remove any transparency information from the screenshot. There really should be no
@@ -454,8 +538,8 @@ bool MiximageGenerator::generateImage()
 
     CImg<unsigned char> frameImage(mWidth, mHeight, 1, 4, 0);
 
-    xPosScreenshot = canvasImage.width() / 2 - screenshotImage.width() / 2 + screenshotOffset;
-    yPosScreenshot = canvasImage.height() / 2 - screenshotImage.height() / 2;
+    xPosScreenshot = canvasImage.width() / 2 - screenshotWidth / 2 + screenshotOffset;
+    yPosScreenshot = canvasImage.height() / 2 - screenshotHeight / 2;
 
     if (mMarquee) {
         if (FreeImage_GetBPP(marqueeFile) != 32) {
@@ -616,10 +700,6 @@ bool MiximageGenerator::generateImage()
     frameImageAlpha.draw_image(xPosBox, yPosBox, boxImageAlpha);
     frameImageAlpha.draw_image(xPosPhysicalMedia, yPosPhysicalMedia, physicalMediaImageAlpha);
     frameImageAlpha.draw_image(xPosMarquee, yPosMarquee, marqueeImageAlpha);
-
-    // Set a frame color based on an average of the screenshot contents.
-    unsigned char frameColor[] = {0, 0, 0, 0};
-    sampleFrameColor(screenshotImage, frameColor);
 
     // Upper / lower frame.
     frameImage.draw_rectangle(xPosScreenshot + 2, yPosScreenshot - screenshotFrameWidth,
