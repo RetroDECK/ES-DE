@@ -2152,6 +2152,22 @@ These are the settings for the miximage generator, which can either be run from 
 
 It's possible to select betweeen the 1280x960, 1920x1440 and 640x480 resolutions for the generated miximages. It's normally recommended to use the default option 1280x960 which gives good image quality without slowing down ES-DE too much. But for very weak machines, 640x480 may be a better option. The 1920x1440 resolution is normally not recommended as it brings little quality improvements over 1280x960 and slows down the gamelist browsing.
 
+**Horizontal screenshot fit**
+
+For horizontally oriented screenshots which do not match the aspect ratio of the miximage frame, this option defines how to fit the image. Valid options are _contain_ which will keep the entire image within the frame while maintaining its aspect ratio, _crop_ which will crop the image so it fills the entire frame, and _stretch_ which will fill the entire frame while possibly breaking the aspect ratio of the image. Generally _crop_ is the best option for widescreen images like games running at 16:9 aspect ratios and similar.
+
+**Vertical screenshot fit**
+
+For vertically oriented screenshots which do not match the aspect ratio of the miximage frame, this option defines how to fit the image. Valid options are _contain_ which will keep the entire image within the frame while maintaining its aspect ratio, _crop_ which will crop the image so it fills the entire frame, and _stretch_ which will fill the entire frame while possibly breaking the aspect ratio of the image. Generally _contain_ is the best option for vertically oriented images like vertical arcade shooters and similar.
+
+**Screenshot aspect ratio threshold**
+
+This option defines the tolerated deviation from the miximage frame's aspect ratio before applying _crop_ and _contain_ to a screenshot. As such this option has no effect if _stretch_ has been selected as the screenshot fit. When set to _low_ only very small deviations are accepted which will more strictly enforce the aspect ratio of the screenshot with the drawback of possibly adding a small amount of crop and blank area around the image. It's usually best to keep this option set to _high_ which will stretch screenshots to a reasonable degree before applying any _crop_ or _contain_ fitting.
+
+**Blank areas fill color**
+
+When setting the screenshot fit to _contain_ there will be blank areas around the screenshot as it's fitted within the miximage frame. This option defines whether to fill this area with a _black_ color or if the _frame_ color should be used instead.
+
 **Screenshot scaling method**
 
 The _sharp_ scaling method uses nearest-neighbor interpolation which retains sharp pixels and looks better for most low-resolution retro games. The _smooth_ scaling method uses the Lanczos algorithm and produces smoother pixels. This may look better on some more modern games at higher resolutions. If unsure, use the _sharp_ method.
@@ -3090,7 +3106,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | bbcmicro              | Acorn Computers BBC Micro                      | MAME **(Standalone)**             |                                   | Yes          | Single archive or diskette image file |
 | c64                   | Commodore 64                                   | VICE x64sc Accurate               | VICE x64sc Accurate **(Standalone)**,<br>VICE x64 Fast,<br>VICE x64 SuperCPU,<br>VICE x128,<br>Frodo | No           | Single archive or image file for tape, cartridge or single-diskette games, .m3u playlist for multi-diskette games |
 | cavestory             | Cave Story (NXEngine)                          | NXEngine                          |                                   |              |                                      |
-| cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015                          | Yes          | Single .bin/.cue pair                |
+| cdimono1              | Philips CD-i                                   | SAME CDi                          | CDi 2015,<br>MAME **(Standalone)** | Yes          | Single .bin/.cue pair                |
 | cdtv                  | Commodore CDTV                                 | PUAE                              | PUAE 2021                         | Yes          |                                      |
 | chailove              | ChaiLove Game Engine                           | ChaiLove                          |                                   |              |                                      |
 | channelf              | Fairchild Channel F                            | FreeChaF                          |                                   |              |                                      |

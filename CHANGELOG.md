@@ -8,27 +8,33 @@
 
 * Added a PDF game manual viewer, accessible from the media viewer
 * Added an option to scrape game manuals using ScreenScraper
+* Added a game manual badge to indicate whether a game has a downloaded PDF manual
 * Added a separate es-pdf-convert binary to render PDF pages using Poppler (needed due to the restrictive GPL license for this library)
 * Added help prompts to the media viewer
 * Added trigger button support to the media viewer for jumping to the first and last entries
 * Added trigger button support to the theme downloader screenshot viewer for jumping to the first and last entries
+* Added options to the miximage generator for how to fit screenshots that do not match the aspect ratio of the miximage frame
 * Added support for changing between light and dark color schemes for the menu system
 * Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
+* Added MAME standalone as an alternative emulator for the cdimono1 system
 * Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
 * (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the windows system
 * (Linux) Added the .AppImage file extension to the windows system
 * (Linux) Added support for the official Citra AppImage release
+* (Windows) Added pcsx2-qt.exe as the primary executable name for the PCSX2 emulator
+* Added support for scraping the arduboy and ps4 systems using ScreenScraper
 * Removed the experimental status for the theme downloader
 * Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
 * Removed the custom SDL patch for the Linux AppImage builds that prevented the device virtual keyboard from being automatically displayed
-* If the SDL library release is higher than 2.28.0, then the automatic popup of the device's virtual keyboard is now disabled
+* If the SDL library release is 2.28.0 or higher, then the automatic popup of the device's virtual keyboard is now disabled
 * The SDL library version is now printed to es_log.txt on application startup
 * (Windows) A check is now performed on startup that OpenGL is actually supported by the GPU driver, to avoid crashes if it isn't
 * Added a setRawImage function to ImageComponent to load raw pixel data into textures (needed by PDFViewer)
 * Added the Poppler PDF rendering library as a dependency
+* Removed the unused graphics files resources/graphics/cartridge.svg and resources/graphics/folder.svg
 * Updated FFmpeg to 6.0, FreeType to 2.13.0, libgit2 to 1.6.4 and pugixml to 1.13 on Windows and macOS
 * Updated SDL to 2.28.0 on Windows, macOS and the Linux AppImage builds
 * (Windows) Updated curl to 8.1.2
