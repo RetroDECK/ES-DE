@@ -121,6 +121,20 @@ void GuiScreensaverOptions::openSlideshowScreensaverOptions()
         }
     });
 
+    // Only include favorite games.
+    auto screensaverSlideshowOnlyFavorites = std::make_shared<SwitchComponent>();
+    screensaverSlideshowOnlyFavorites->setState(
+        Settings::getInstance()->getBool("ScreensaverSlideshowOnlyFavorites"));
+    s->addWithLabel("ONLY INCLUDE FAVORITE GAMES", screensaverSlideshowOnlyFavorites);
+    s->addSaveFunc([screensaverSlideshowOnlyFavorites, s] {
+        if (screensaverSlideshowOnlyFavorites->getState() !=
+            Settings::getInstance()->getBool("ScreensaverSlideshowOnlyFavorites")) {
+            Settings::getInstance()->setBool("ScreensaverSlideshowOnlyFavorites",
+                                             screensaverSlideshowOnlyFavorites->getState());
+            s->setNeedsSaving();
+        }
+    });
+
     // Stretch images to screen resolution.
     auto screensaverStretchImages = std::make_shared<SwitchComponent>();
     screensaverStretchImages->setState(
@@ -227,6 +241,20 @@ void GuiScreensaverOptions::openVideoScreensaverOptions()
             Settings::getInstance()->setInt(
                 "ScreensaverSwapVideoTimeout",
                 static_cast<int>(std::round(screensaverSwapVideoTimeout->getValue()) * (1000)));
+            s->setNeedsSaving();
+        }
+    });
+
+    // Only include favorite games.
+    auto screensaverVideoOnlyFavorites = std::make_shared<SwitchComponent>();
+    screensaverVideoOnlyFavorites->setState(
+        Settings::getInstance()->getBool("ScreensaverVideoOnlyFavorites"));
+    s->addWithLabel("ONLY INCLUDE FAVORITE GAMES", screensaverVideoOnlyFavorites);
+    s->addSaveFunc([screensaverVideoOnlyFavorites, s] {
+        if (screensaverVideoOnlyFavorites->getState() !=
+            Settings::getInstance()->getBool("ScreensaverVideoOnlyFavorites")) {
+            Settings::getInstance()->setBool("ScreensaverVideoOnlyFavorites",
+                                             screensaverVideoOnlyFavorites->getState());
             s->setNeedsSaving();
         }
     });

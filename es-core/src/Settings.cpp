@@ -190,6 +190,7 @@ void Settings::setDefaults()
 
     // UI settings -> screensaver settings -> slideshow screensaver settings.
     mIntMap["ScreensaverSwapImageTimeout"] = {10000, 10000};
+    mBoolMap["ScreensaverSlideshowOnlyFavorites"] = {false, false};
     mBoolMap["ScreensaverStretchImages"] = {false, false};
     mBoolMap["ScreensaverSlideshowGameInfo"] = {true, true};
     mBoolMap["ScreensaverSlideshowScanlines"] = {true, true};
@@ -200,6 +201,7 @@ void Settings::setDefaults()
 
     // UI settings -> screensaver settings -> video screensaver settings.
     mIntMap["ScreensaverSwapVideoTimeout"] = {0, 0};
+    mBoolMap["ScreensaverVideoOnlyFavorites"] = {false, false};
     mBoolMap["ScreensaverStretchVideos"] = {false, false};
     mBoolMap["ScreensaverVideoGameInfo"] = {true, true};
 #if defined(RASPBERRY_PI)

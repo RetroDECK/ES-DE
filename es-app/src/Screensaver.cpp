@@ -433,6 +433,9 @@ void Screensaver::update(int deltaTime)
 
 void Screensaver::generateImageList()
 {
+    const bool favoritesOnly {
+        Settings::getInstance()->getBool("ScreensaverSlideshowOnlyFavorites")};
+
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
         // We only want nodes from game systems that are not collections.
@@ -445,6 +448,8 @@ void Screensaver::generateImageList()
             if (UIModeController::getInstance()->isUIModeKid() &&
                 (*it2)->metadata.get("kidgame") != "true")
                 continue;
+            if (favoritesOnly && (*it2)->metadata.get("favorite") != "true")
+                continue;
             std::string imagePath {(*it2)->getImagePath()};
             if (imagePath != "")
                 mImageFiles.push_back((*it2));
@@ -454,6 +459,8 @@ void Screensaver::generateImageList()
 
 void Screensaver::generateVideoList()
 {
+    const bool favoritesOnly {Settings::getInstance()->getBool("ScreensaverVideoOnlyFavorites")};
+
     for (auto it = SystemData::sSystemVector.cbegin(); // Line break.
          it != SystemData::sSystemVector.cend(); ++it) {
         // We only want nodes from game systems that are not collections.
@@ -465,6 +472,8 @@ void Screensaver::generateVideoList()
             // Only include games suitable for children if we're in Kid UI mode.
             if (UIModeController::getInstance()->isUIModeKid() &&
                 (*it2)->metadata.get("kidgame") != "true")
+                continue;
+            if (favoritesOnly && (*it2)->metadata.get("favorite") != "true")
                 continue;
             std::string videoPath {(*it2)->getVideoPath()};
             if (videoPath != "")
@@ -604,8 +613,15 @@ void Screensaver::generateOverlayInfo()
     float posX {mRenderer->getScreenWidth() * 0.023f};
     float posY {mRenderer->getScreenHeight() * 0.02f};
 
+    const bool favoritesOnly {
+        (mScreensaverType == "video" &&
+         Settings::getInstance()->getBool("ScreensaverVideoOnlyFavorites")) ||
+        (mScreensaverType == "slideshow" &&
+         Settings::getInstance()->getBool("ScreensaverSlideshowOnlyFavorites"))};
+
     std::string favoriteChar;
-    if (mCurrentGame && mCurrentGame->getFavorite())
+    // Don't add the favorites character if only displaying favorite games.
+    if (!favoritesOnly && mCurrentGame && mCurrentGame->getFavorite())
         favoriteChar.append("  ").append(ViewController::FAVORITE_CHAR);
 
     const std::string gameName {Utils::String::toUpper(mGameName) + favoriteChar};
