@@ -221,11 +221,11 @@ void GuiScraperMulti::doNextSearch()
     std::stringstream ss;
 
     if (mQueueCountPerSystem.size() > 1) {
-        const int gameCount {++mQueueCountPerSystem[mSearchQueue.front().system].first};
+        // const int gameCount {++mQueueCountPerSystem[mSearchQueue.front().system].first};
         const int totalGameCount {mQueueCountPerSystem[mSearchQueue.front().system].second};
-        mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()) +
-                         " [GAME " + std::to_string(gameCount) + " OF " +
-                         std::to_string(totalGameCount) + "]");
+        mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()) + " [" +
+                         std::to_string(totalGameCount) + " GAME" +
+                         (totalGameCount == 1 ? "]" : "S]"));
     }
     else {
         mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()));
