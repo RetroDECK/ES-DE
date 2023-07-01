@@ -48,8 +48,8 @@ private:
     void openOfflineGenerator(GuiSettings* settings);
     void openOtherOptions();
 
-    std::queue<ScraperSearchParams> getSearches(std::vector<SystemData*> systems,
-                                                GameFilterFunc selector);
+    std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>> getSearches(
+        std::vector<SystemData*> systems, GameFilterFunc selector);
 
     std::shared_ptr<OptionListComponent<std::string>> mScraper;
     std::shared_ptr<OptionListComponent<GameFilterFunc>> mFilters;

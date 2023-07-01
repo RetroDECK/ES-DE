@@ -23,12 +23,13 @@
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiScraperSearch.h"
 
-GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches,
-                                 bool approveResults)
+GuiScraperMulti::GuiScraperMulti(
+    const std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>>& searches,
+    bool approveResults)
     : mRenderer {Renderer::getInstance()}
     , mBackground {":/graphics/frame.svg"}
     , mGrid {glm::ivec2 {2, 6}}
-    , mSearchQueue {searches}
+    , mSearchQueue {searches.first}
     , mApproveResults {approveResults}
 {
     assert(mSearchQueue.size());
@@ -42,6 +43,9 @@ GuiScraperMulti::GuiScraperMulti(const std::queue<ScraperSearchParams>& searches
     mCurrentGame = 0;
     mTotalSuccessful = 0;
     mTotalSkipped = 0;
+
+    for (auto it = searches.second.begin(); it != searches.second.end(); ++it)
+        mQueueCountPerSystem[(*it).first] = std::make_pair(0, (*it).second);
 
     // Set up grid.
     mTitle = std::make_shared<TextComponent>("SCRAPING IN PROGRESS", Font::get(FONT_SIZE_LARGE),
@@ -215,8 +219,17 @@ void GuiScraperMulti::doNextSearch()
 
     // Update title.
     std::stringstream ss;
-    mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()));
 
+    if (mQueueCountPerSystem.size() > 1) {
+        const int gameCount {++mQueueCountPerSystem[mSearchQueue.front().system].first};
+        const int totalGameCount {mQueueCountPerSystem[mSearchQueue.front().system].second};
+        mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()) +
+                         " [GAME " + std::to_string(gameCount) + " OF " +
+                         std::to_string(totalGameCount) + "]");
+    }
+    else {
+        mSystem->setText(Utils::String::toUpper(mSearchQueue.front().system->getFullName()));
+    }
     std::string scrapeName;
 
     if (Settings::getInstance()->getBool("ScraperSearchMetadataName")) {
@@ -238,9 +251,9 @@ void GuiScraperMulti::doNextSearch()
     mResultList->resetScrollIndicatorStatus();
 
     // Extract possible subfolders from the path.
-    std::string folderPath =
+    std::string folderPath {
         Utils::String::replace(Utils::FileSystem::getParent(mSearchQueue.front().game->getPath()),
-                               mSearchQueue.front().system->getSystemEnvData()->mStartPath, "");
+                               mSearchQueue.front().system->getSystemEnvData()->mStartPath, "")};
 
     if (folderPath.size() >= 2) {
         folderPath.erase(0, 1);
@@ -265,7 +278,7 @@ void GuiScraperMulti::doNextSearch()
 
 void GuiScraperMulti::acceptResult(const ScraperSearchResult& result)
 {
-    ScraperSearchParams& search = mSearchQueue.front();
+    ScraperSearchParams& search {mSearchQueue.front()};
 
     search.system->getIndex()->removeFromIndex(search.game);
 

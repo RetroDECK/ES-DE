@@ -103,7 +103,7 @@ GuiScraperMenu::GuiScraperMenu(std::string title)
     // Add systems (all systems with an existing platform ID are listed).
     mSystems = std::make_shared<OptionListComponent<SystemData*>>(getHelpStyle(),
                                                                   "SCRAPE THESE SYSTEMS", true);
-    for (unsigned int i = 0; i < SystemData::sSystemVector.size(); ++i) {
+    for (unsigned int i {0}; i < SystemData::sSystemVector.size(); ++i) {
         if (!SystemData::sSystemVector[i]->hasPlatformId(PlatformIds::PLATFORM_IGNORE)) {
             mSystems->add(SystemData::sSystemVector[i]->getFullName(), SystemData::sSystemVector[i],
                           !SystemData::sSystemVector[i]->getPlatformIds().empty());
@@ -1260,10 +1260,9 @@ void GuiScraperMenu::start()
         return;
     }
 
-    std::queue<ScraperSearchParams> searches =
-        getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
+    auto searches = getSearches(mSystems->getSelectedObjects(), mFilters->getSelected());
 
-    if (searches.empty()) {
+    if (searches.first.empty()) {
         mWindow->pushGui(
             new GuiMsgBox(getHelpStyle(), "ALL GAMES WERE FILTERED, NOTHING TO SCRAPE"));
     }
@@ -1276,22 +1275,25 @@ void GuiScraperMenu::start()
     }
 }
 
-std::queue<ScraperSearchParams> GuiScraperMenu::getSearches(std::vector<SystemData*> systems,
-                                                            GameFilterFunc selector)
+std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>> GuiScraperMenu::getSearches(
+    std::vector<SystemData*> systems, GameFilterFunc selector)
 {
-    std::queue<ScraperSearchParams> queue;
+    std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>> queue;
+
     for (auto sys = systems.cbegin(); sys != systems.cend(); ++sys) {
         std::vector<FileData*> games {(*sys)->getRootFolder()->getScrapeFilesRecursive(
             Settings::getInstance()->getBool("ScraperIncludeFolders"),
             Settings::getInstance()->getBool("ScraperExcludeRecursively"),
             Settings::getInstance()->getBool("ScraperRespectExclusions"))};
+
         for (auto game = games.cbegin(); game != games.cend(); ++game) {
             if (selector((*sys), (*game))) {
                 ScraperSearchParams search;
                 search.game = *game;
                 search.system = *sys;
 
-                queue.push(search);
+                ++queue.second[*sys];
+                queue.first.push(search);
             }
         }
     }

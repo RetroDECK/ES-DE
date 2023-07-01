@@ -26,7 +26,9 @@ class TextComponent;
 class GuiScraperMulti : public GuiComponent
 {
 public:
-    GuiScraperMulti(const std::queue<ScraperSearchParams>& searches, bool approveResults);
+    GuiScraperMulti(
+        const std::pair<std::queue<ScraperSearchParams>, std::map<SystemData*, int>>& searches,
+        bool approveResults);
 
     virtual ~GuiScraperMulti();
 
@@ -56,6 +58,7 @@ private:
     std::shared_ptr<ComponentList> mResultList;
 
     std::queue<ScraperSearchParams> mSearchQueue;
+    std::map<SystemData*, std::pair<int, int>> mQueueCountPerSystem;
     std::vector<MetaDataDecl> mMetaDataDecl;
     unsigned int mTotalGames;
     unsigned int mCurrentGame;
