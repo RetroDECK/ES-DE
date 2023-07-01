@@ -43,13 +43,6 @@
                 "message": ""
             },
             {
-                "name": "LinuxRPM",
-                "filename": "placeholder",
-                "url": "placeholder",
-                "md5": "placeholder",
-                "message": "Note that RPM packages are no longer supplied, you will need to download the AppImage instead or build from source"
-            },
-            {
                 "name": "LinuxAppImage",
                 "filename": "EmulationStation-DE-x64.AppImage",
                 "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/76389058/download",
@@ -61,7 +54,7 @@
                 "filename": "EmulationStation-DE-x64_SteamDeck.AppImage",
                 "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/76389074/download",
                 "md5": "2cd4a5c2b06968a400120a884493f6f1",
-                "message": "Or if you've used EmuDeck to install ES-DE you can update to the latest release via their installer"
+                "message": ""
             }
         ]
     },
@@ -101,13 +94,6 @@
             },
             {
                 "name": "LinuxDEB",
-                "filename": "",
-                "url": "",
-                "md5": "",
-                "message": ""
-            },
-            {
-                "name": "LinuxRPM",
                 "filename": "",
                 "url": "",
                 "md5": "",
