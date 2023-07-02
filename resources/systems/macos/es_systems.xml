@@ -1472,7 +1472,7 @@
         <command label="SameBoy">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/sameboy_libretro.dylib %ROM%</command>
         <command label="mGBA">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mgba_libretro.dylib %ROM%</command>
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
-        <platform>gb</platform>
+        <platform>sgb</platform>
         <theme>sgb</theme>
     </system>
     <system>

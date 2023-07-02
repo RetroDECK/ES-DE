@@ -118,6 +118,7 @@ namespace PlatformIds
         "sega32x",              // Sega Mega Drive 32X
         "segacd",               // Sega CD
         "sg-1000",              // Sega SG-1000
+        "sgb",                  // Nintendo Super Game Boy
         "snes",                 // Nintendo SNES (Super Nintendo)
         "solarus",              // Solarus Game Engine
         "spectravideo",         // Spectravideo

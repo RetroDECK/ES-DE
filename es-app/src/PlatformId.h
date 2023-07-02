@@ -117,6 +117,7 @@ namespace PlatformIds
         SEGA_32X,
         SEGA_CD,
         SEGA_SG1000,
+        NINTENDO_SUPER_GAME_BOY,
         SUPER_NINTENDO,
         GAMEENGINE_SOLARUS,
         SPECTRAVIDEO,

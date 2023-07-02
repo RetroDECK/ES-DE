@@ -89,6 +89,7 @@ namespace
         {NINTENDO_GAME_BOY, "4"},
         {NINTENDO_GAME_BOY_ADVANCE, "5"},
         {NINTENDO_GAME_BOY_COLOR, "41"},
+        {NINTENDO_SUPER_GAME_BOY, "4"},
         {NINTENDO_GAMECUBE, "2"},
         {NINTENDO_WII, "9"},
         {NINTENDO_WII_U, "38"},

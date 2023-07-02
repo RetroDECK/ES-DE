@@ -87,6 +87,7 @@ namespace
         {NINTENDO_GAME_BOY, 9},
         {NINTENDO_GAME_BOY_ADVANCE, 12},
         {NINTENDO_GAME_BOY_COLOR, 10},
+        {NINTENDO_SUPER_GAME_BOY, 127},
         {NINTENDO_GAMECUBE, 13},
         {NINTENDO_WII, 16},
         {NINTENDO_WII_U, 18},
