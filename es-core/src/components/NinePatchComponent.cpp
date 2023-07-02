@@ -24,13 +24,45 @@ NinePatchComponent::NinePatchComponent(const std::string& path)
         buildVertices();
 }
 
-void NinePatchComponent::updateColors()
+void NinePatchComponent::render(const glm::mat4& parentTrans)
 {
-    if (mVertices == nullptr)
+    if (!isVisible())
         return;
 
-    for (int i {0}; i < 6 * 9; ++i)
-        (*mVertices)[i].color = mFrameColor;
+    glm::mat4 trans {parentTrans * getTransform()};
+
+    if (mTexture && mVertices != nullptr) {
+        mRenderer->setMatrix(trans);
+        (*mVertices)[0].opacity = mOpacity;
+        (*mVertices)[0].shaderFlags = Renderer::ShaderFlags::PREMULTIPLIED;
+        mTexture->bind();
+        mRenderer->drawTriangleStrips(&mVertices->at(0), 6 * 9);
+    }
+
+    renderChildren(trans);
+}
+
+void NinePatchComponent::fitTo(glm::vec2 size, glm::vec3 position, glm::vec2 padding)
+{
+    size += padding;
+    position[0] -= padding.x / 2.0f;
+    position[1] -= padding.y / 2.0f;
+
+    setSize(size + mCornerSize * 2.0f);
+    setPosition(position.x + glm::mix(-mCornerSize.x, mCornerSize.x, mOrigin.x),
+                position.y + glm::mix(-mCornerSize.y, mCornerSize.y, mOrigin.y));
+}
+
+void NinePatchComponent::setImagePath(const std::string& path)
+{
+    mPath = path;
+    buildVertices();
+}
+
+void NinePatchComponent::setFrameColor(unsigned int frameColor)
+{
+    mFrameColor = frameColor;
+    updateColors();
 }
 
 void NinePatchComponent::buildVertices()
@@ -111,43 +143,11 @@ void NinePatchComponent::buildVertices()
     updateColors();
 }
 
-void NinePatchComponent::render(const glm::mat4& parentTrans)
+void NinePatchComponent::updateColors()
 {
-    if (!isVisible())
+    if (mVertices == nullptr)
         return;
 
-    glm::mat4 trans {parentTrans * getTransform()};
-
-    if (mTexture && mVertices != nullptr) {
-        mRenderer->setMatrix(trans);
-        (*mVertices)[0].opacity = mOpacity;
-        (*mVertices)[0].shaderFlags = Renderer::ShaderFlags::PREMULTIPLIED;
-        mTexture->bind();
-        mRenderer->drawTriangleStrips(&mVertices->at(0), 6 * 9);
-    }
-
-    renderChildren(trans);
-}
-
-void NinePatchComponent::fitTo(glm::vec2 size, glm::vec3 position, glm::vec2 padding)
-{
-    size += padding;
-    position[0] -= padding.x / 2.0f;
-    position[1] -= padding.y / 2.0f;
-
-    setSize(size + mCornerSize * 2.0f);
-    setPosition(position.x + glm::mix(-mCornerSize.x, mCornerSize.x, mOrigin.x),
-                position.y + glm::mix(-mCornerSize.y, mCornerSize.y, mOrigin.y));
-}
-
-void NinePatchComponent::setImagePath(const std::string& path)
-{
-    mPath = path;
-    buildVertices();
-}
-
-void NinePatchComponent::setFrameColor(unsigned int frameColor)
-{
-    mFrameColor = frameColor;
-    updateColors();
+    for (int i {0}; i < 6 * 9; ++i)
+        (*mVertices)[i].color = mFrameColor;
 }
