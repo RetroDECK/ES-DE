@@ -29,6 +29,7 @@ namespace Utils
         std::string getPathToBinary(const std::string& executable);
         void setExePath(const std::string& path);
         std::string getExePath();
+        std::string getEsBinary();
         std::string getProgramDataPath();
         std::string getPreferredPath(const std::string& path);
         std::string getGenericPath(const std::string& path);

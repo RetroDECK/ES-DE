@@ -65,6 +65,7 @@ namespace Utils
     {
         static std::string homePath;
         static std::string exePath;
+        static std::string esBinary;
 
         StringList getDirContent(const std::string& path, const bool recursive)
         {
@@ -326,11 +327,15 @@ namespace Utils
             if (readlink("/proc/self/exe", &result[0], pathMax) != -1)
                 exePath = result;
 #endif
+            exePath.erase(std::find(exePath.begin(), exePath.end(), '\0'), exePath.end());
+            esBinary = exePath;
             exePath = getCanonicalPath(exePath);
 
             // Fallback to argv[0] if everything else fails.
-            if (exePath.empty())
+            if (exePath.empty()) {
+                esBinary = path;
                 exePath = getCanonicalPath(path);
+            }
             if (isRegularFile(exePath))
                 exePath = getParent(exePath);
         }
@@ -339,6 +344,12 @@ namespace Utils
         {
             // Return executable path.
             return exePath;
+        }
+
+        std::string getEsBinary()
+        {
+            // Return the absolute path to the ES-DE binary.
+            return esBinary;
         }
 
         std::string getProgramDataPath()
