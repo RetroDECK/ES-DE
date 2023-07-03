@@ -27,6 +27,7 @@
 #include "animations/Animation.h"
 #include "animations/LambdaAnimation.h"
 #include "animations/MoveCameraAnimation.h"
+#include "guis/GuiApplicationUpdater.h"
 #include "guis/GuiMenu.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
 #include "guis/GuiTextEditPopup.h"
@@ -306,11 +307,22 @@ void ViewController::updateAvailableDialog()
                       << "\"";
     }
 
-    mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, "OK", nullptr, "", nullptr, "", nullptr,
-                                   true, true,
-                                   (mRenderer->getIsVerticalOrientation() ?
-                                        0.70f :
-                                        0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+    if (package.name == "LinuxAppImage" || package.name == "LinuxSteamDeckAppImage") {
+        mWindow->pushGui(new GuiMsgBox(
+            getHelpStyle(), results, "UPDATE",
+            [this] { mWindow->pushGui(new GuiApplicationUpdater()); }, "CANCEL", [] { return; }, "",
+            nullptr, true, true,
+            (mRenderer->getIsVerticalOrientation() ?
+                 0.70f :
+                 0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+    }
+    else {
+        mWindow->pushGui(new GuiMsgBox(getHelpStyle(), results, "OK", nullptr, "", nullptr, "",
+                                       nullptr, true, true,
+                                       (mRenderer->getIsVerticalOrientation() ?
+                                            0.70f :
+                                            0.45f * (1.778f / mRenderer->getScreenAspectRatio()))));
+    }
 }
 
 void ViewController::goToStart(bool playTransition)

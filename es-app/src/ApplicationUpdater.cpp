@@ -396,6 +396,8 @@ void ApplicationUpdater::compareVersions()
                     mPackage = package;
             }
 
+            mPackage.version = releaseType->version;
+
             // Cut the message to 280 characters so we don't make the message box exceedingly large.
             mPackage.message = mPackage.message.substr(0, 280);
 
@@ -410,13 +412,12 @@ void ApplicationUpdater::compareVersions()
 
             mResults.append("New ")
                 .append(releaseType == &mStableRelease ? "release " : "prerelease ")
-                .append("available!\n")
-                .append(releaseType->version)
-                .append(" (")
-                .append(releaseType->date)
-                .append(")\n")
-                .append("can now be downloaded from\n")
-                .append("https://es-de.org/");
+                .append("available: ")
+                .append(releaseType->version);
+
+            if (mPackage.name != "LinuxAppImage" && mPackage.name != "LinuxSteamDeckAppImage")
+                mResults.append("\nIt can be downloaded from\n").append("https://es-de.org");
+            // mResults.append("\nFor more information visit\n").append("https://es-de.org");
 
             if (mPackage.message != "")
                 mResults.append("\n").append(mPackage.message);

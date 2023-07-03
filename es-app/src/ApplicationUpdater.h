@@ -34,6 +34,7 @@ public:
 
     struct Package {
         std::string name;
+        std::string version;
         std::string filename;
         std::string url;
         std::string md5;
