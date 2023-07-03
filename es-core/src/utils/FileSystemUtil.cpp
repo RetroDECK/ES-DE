@@ -338,6 +338,13 @@ namespace Utils
             }
             if (isRegularFile(exePath))
                 exePath = getParent(exePath);
+
+#if defined(APPIMAGE_BUILD)
+            // We need to check that the APPIMAGE variable is available as the APPIMAGE_BUILD
+            // build flag could have been passed without running as an actual AppImage.
+            if (getenv("APPIMAGE") != nullptr)
+                esBinary = getenv("APPIMAGE");
+#endif
         }
 
         std::string getExePath()
