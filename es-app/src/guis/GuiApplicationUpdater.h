@@ -4,6 +4,7 @@
 //  GuiApplicationUpdater.h
 //
 //  Installs application updates.
+//  Used in conjunction with ApplicationUpdater.
 //
 
 #ifndef ES_APP_GUIS_GUI_APPLICATION_UPDATER_H

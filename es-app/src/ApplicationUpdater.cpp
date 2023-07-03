@@ -4,7 +4,7 @@
 //  ApplicationUpdater.cpp
 //
 //  Checks for application updates.
-//  In the future updates will also be downloaded, and installed on some platforms.
+//  Used in conjunction with GuiApplicationUpdater.
 //
 
 #include "ApplicationUpdater.h"

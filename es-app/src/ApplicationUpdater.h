@@ -4,7 +4,7 @@
 //  ApplicationUpdater.h
 //
 //  Checks for application updates.
-//  In the future updates will also be downloaded, and installed on some platforms.
+//  Used in conjunction with GuiApplicationUpdater.
 //
 
 #ifndef ES_APP_APPLICATION_UPDATER_H

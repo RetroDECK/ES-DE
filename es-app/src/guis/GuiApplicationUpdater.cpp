@@ -4,6 +4,7 @@
 //  GuiApplicationUpdater.cpp
 //
 //  Installs application updates.
+//  Used in conjunction with ApplicationUpdater.
 //
 
 #include "GuiApplicationUpdater.h"
