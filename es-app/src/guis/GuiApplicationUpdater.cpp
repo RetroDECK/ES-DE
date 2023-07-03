@@ -226,6 +226,7 @@ bool GuiApplicationUpdater::downloadPackage()
 
     fileContents.clear();
 
+#if !defined(__APPLE__)
     std::filesystem::permissions(packageTempFile, std::filesystem::perms::owner_all |
                                                       std::filesystem::perms::group_all |
                                                       std::filesystem::perms::others_read |
@@ -241,6 +242,7 @@ bool GuiApplicationUpdater::downloadPackage()
         mMessage = "Error: " + errorMessage;
         return true;
     }
+#endif
 
     LOG(LogInfo) << "Successfully downloaded package file \"" << packageTempFile << "\"";
 
