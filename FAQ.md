@@ -18,7 +18,7 @@ ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distribut
 
 ## What is the relationship between ES-DE and EmuDeck?
 
-ES-DE and [EmuDeck](http://www.emudeck.com) are completely separate projects, but we collaborate to give the best possible user experience. EmuDeck is an installer that downloads emulators and applies configuration to these, and it can also download and install ES-DE. EmuDeck is not needed to run ES-DE, but on the Steam Deck it provides a convenient way of setting up an emulator environment. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed using EmuDeck.
+[EmuDeck](http://www.emudeck.com) is an installer that installs ES-DE and a number of emulators. It's a completely separate project and it's not required in order to use ES-DE.
 
 ## What is the relationship between ES-DE and RetroDECK?
 

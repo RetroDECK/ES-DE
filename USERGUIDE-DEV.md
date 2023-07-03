@@ -133,13 +133,20 @@ _This is the dialog shown if no game files were found. It lets you configure the
 
 ## Upgrading to a newer release
 
-**Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/.emulationstation/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your .emulationstation directory.
+**Note:** Before upgrading ES-DE, make sure that you have not made any system customizations anywhere in the installation directory structure as these files will be overwritten during the upgrade process. All customizations should go into ~/.emulationstation/custom_systems/ as described elsewhere in this guide. None of the upgrade methods mentioned below will ever touch any files inside your .emulationstation directory tree.
 
-It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed, so you may want to recreate the ROMs directory tree after you've completed the installation. The easiest way to do that is to start ES-DE once with the _--create-system-dirs_ command line option which will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
+As of ES-DE 2.1.0 there is a built-in application updater that can update the Linux AppImage releases. Later on this will hopefully be expanded to cover more package formats and operating systems. Its use is straightforward, just follow the on-screen instructions. The old AppImage file is retained by renaming it, adding the text _OLD_ and its version to the filename, for example `EmulationStation-DE-x64_SteamDeck.AppImage_OLD_2.1.0`
 
-**Linux .deb and .rpm packages**
+Note that the updater will keep whatever filename you had for your running AppImage file, which could potentially be confusing if you for example added version information to the filename. It's always recommend to keep the default AppImage filenames, i.e. `EmulationStation-DE-x64.AppImage` and `EmulationStation-DE-x64_SteamDeck.AppImage`
 
-Upgrading ES-DE using these packages is very straightforward, just run them through the package manager of your operating system and the process should be entirely automatic.
+Regardless of package format and operating system it's a good idea to update the ROMs directory tree after upgrading to a new version. It's possible that the new ES-DE release adds support for more systems and emulators compared to the version you previously had installed. The easiest way to do this is to start ES-DE once with the _--create-system-dirs_ command line option which will create any missing system directories and also update the systems.txt and systeminfo.txt files. This is a safe operation as it will not overwrite or delete your game files.
+
+![alt text](images/es-de_application_updater.png "ES-DE Application Updater")
+_This is what the application updater looks like when the update process has been completed._
+
+**Linux .deb packages**
+
+Upgrading ES-DE using this package type is very straightforward, just run it through the package manager of your operating system and the process should be entirely automatic.
 
 **Linux AUR**
 
@@ -147,7 +154,7 @@ AUR upgrades should be automatically handled via your package manager and it sho
 
 **Linux AppImage**
 
-As the ES-DE AppImages always retain their filenames between stable releases you only need to replace the previous AppImage with the new one and you're done. Just make sure to set the new AppImage as executable so it can be launched.
+Use the built-in application updater as described above.
 
 **macOS**
 
@@ -2460,6 +2467,10 @@ Options specific to the slideshow screensaver.
 
 For how long to display images before changing to the next game. Allowed range is between 2 and 120 seconds in 2-second increments. The default value is 10 seconds.
 
+**Only include favorite games**
+
+Whether to only include games marked as favorites.
+
 **Stretch images to screen resolution**
 
 This will fill the entire screen surface but will probably break the aspect ratio of the image.
@@ -2491,6 +2502,10 @@ Options specific to the video screensaver.
 **Swap videos after (seconds)**
 
 For how long to play videos before changing to the next game. Allowed range is between 0 and 120 seconds in 2-second increments. If set to 0 (which is the default value), the next game will be selected after the entire video has finished playing. If set to a higher value than the length of a game video, it will loop until reaching the swap time.
+
+**Only include favorite games**
+
+Whether to only include games marked as favorites.
 
 **Stretch videos to screen resolution**
 

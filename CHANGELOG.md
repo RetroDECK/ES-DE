@@ -10,12 +10,15 @@
 * Added an option to scrape game manuals using ScreenScraper
 * Added a game manual badge to indicate whether a game has a downloaded PDF manual
 * Added a separate es-pdf-convert binary to render PDF pages using Poppler (needed due to the restrictive GPL license for this library)
+* Added an application updater which downloads and installs ES-DE updates (currently only the AppImage releases are supported)
 * Added help prompts to the media viewer
 * Added trigger button support to the media viewer for jumping to the first and last entries
 * Added trigger button support to the theme downloader screenshot viewer for jumping to the first and last entries
 * Added options to the miximage generator for how to fit screenshots that do not match the aspect ratio of the miximage frame
 * Added support for changing between light and dark color schemes for the menu system
+* Added a per-system game count to the multi-scraper in addition to the total game count
 * Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
+* Added options to the video and slideshow screensavers to only include favorite games
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
@@ -26,6 +29,7 @@
 * (Linux) Added support for the official Citra AppImage release
 * (Windows) Added pcsx2-qt.exe as the primary executable name for the PCSX2 emulator
 * Added support for scraping the arduboy and ps4 systems using ScreenScraper
+* Added an sgb (Nintendo Super Game Boy) platform to improve scraping using ScreenScraper
 * Removed the experimental status for the theme downloader
 * Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
 * Removed the custom SDL patch for the Linux AppImage builds that prevented the device virtual keyboard from being automatically displayed
@@ -47,6 +51,7 @@
 * (Windows) The log output time stamp was missing in es_log.txt when built using MinGW
 * The scraper auto-retry functionality was triggered when scraping manually
 * TextureResource::initFromPixels() was not setting the source size correctly
+* The fallback to argv[0] in FileSystemUtil::setExePath() was not working correctly
 
 ## Version 2.0.1
 
