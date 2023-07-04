@@ -62,6 +62,12 @@ GuiComponent::~GuiComponent()
         getChild(i)->setParent(nullptr);
 }
 
+void GuiComponent::textInput(const std::string& text)
+{
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
+        (*it)->textInput(text);
+}
+
 bool GuiComponent::input(InputConfig* config, Input input)
 {
     for (unsigned int i = 0; i < getChildCount(); ++i) {
@@ -70,18 +76,6 @@ bool GuiComponent::input(InputConfig* config, Input input)
     }
 
     return false;
-}
-
-void GuiComponent::updateSelf(int deltaTime)
-{
-    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
-        advanceAnimation(i, deltaTime);
-}
-
-void GuiComponent::updateChildren(int deltaTime)
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->update(deltaTime);
 }
 
 void GuiComponent::update(int deltaTime)
@@ -97,12 +91,6 @@ void GuiComponent::render(const glm::mat4& parentTrans)
 
     glm::mat4 trans {parentTrans * getTransform()};
     renderChildren(trans);
-}
-
-void GuiComponent::renderChildren(const glm::mat4& transform) const
-{
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->render(transform);
 }
 
 void GuiComponent::setPosition(float x, float y, float z)
@@ -183,75 +171,6 @@ const int GuiComponent::getChildIndex() const
         return static_cast<int>(std::distance(getParent()->mChildren.begin(), it));
     else
         return -1;
-}
-
-void GuiComponent::setBrightness(float brightness)
-{
-    if (mBrightness == brightness)
-        return;
-
-    mBrightness = brightness;
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
-        (*it)->setBrightness(brightness);
-}
-
-void GuiComponent::setOpacity(float opacity)
-{
-    if (mOpacity == opacity)
-        return;
-
-    mOpacity = opacity;
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
-        (*it)->setOpacity(opacity);
-}
-
-void GuiComponent::setDimming(float dimming)
-{
-    if (mDimming == dimming)
-        return;
-
-    mDimming = dimming;
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
-        (*it)->setDimming(dimming);
-}
-
-const glm::mat4& GuiComponent::getTransform()
-{
-    mTransform = Renderer::getIdentity();
-    mTransform = glm::translate(mTransform, glm::round(mPosition));
-
-    if (mScale != 1.0f)
-        mTransform = glm::scale(mTransform, glm::vec3 {mScale});
-
-    if (mRotation != 0.0f) {
-        // Calculate offset as difference between origin and rotation origin.
-        glm::vec2 rotationSize {getRotationSize()};
-        float xOff {(mOrigin.x - mRotationOrigin.x) * rotationSize.x};
-        float yOff {(mOrigin.y - mRotationOrigin.y) * rotationSize.y};
-
-        // Transform to offset point.
-        if (xOff != 0.0f || yOff != 0.0f)
-            mTransform = glm::translate(mTransform, glm::vec3 {xOff * -1.0f, yOff * -1.0f, 0.0f});
-
-        // Apply rotation transform.
-        mTransform = glm::rotate(mTransform, mRotation, glm::vec3 {0.0f, 0.0f, 1.0f});
-
-        // Transform back to original point.
-        if (xOff != 0.0f || yOff != 0.0f)
-            mTransform = glm::translate(mTransform, glm::vec3 {xOff, yOff, 0.0f});
-    }
-
-    mTransform = glm::translate(
-        mTransform,
-        glm::round(glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f}));
-
-    return mTransform;
-}
-
-void GuiComponent::textInput(const std::string& text)
-{
-    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
-        (*it)->textInput(text);
 }
 
 void GuiComponent::setAnimation(Animation* anim,
@@ -343,6 +262,81 @@ void GuiComponent::cancelAllAnimations()
         cancelAnimation(i);
 }
 
+void GuiComponent::setBrightness(float brightness)
+{
+    if (mBrightness == brightness)
+        return;
+
+    mBrightness = brightness;
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
+        (*it)->setBrightness(brightness);
+}
+
+void GuiComponent::setOpacity(float opacity)
+{
+    if (mOpacity == opacity)
+        return;
+
+    mOpacity = opacity;
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
+        (*it)->setOpacity(opacity);
+}
+
+void GuiComponent::setDimming(float dimming)
+{
+    if (mDimming == dimming)
+        return;
+
+    mDimming = dimming;
+    for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
+        (*it)->setDimming(dimming);
+}
+
+const glm::mat4& GuiComponent::getTransform()
+{
+    mTransform = Renderer::getIdentity();
+    mTransform = glm::translate(mTransform, glm::round(mPosition));
+
+    if (mScale != 1.0f)
+        mTransform = glm::scale(mTransform, glm::vec3 {mScale});
+
+    if (mRotation != 0.0f) {
+        // Calculate offset as difference between origin and rotation origin.
+        glm::vec2 rotationSize {getRotationSize()};
+        float xOff {(mOrigin.x - mRotationOrigin.x) * rotationSize.x};
+        float yOff {(mOrigin.y - mRotationOrigin.y) * rotationSize.y};
+
+        // Transform to offset point.
+        if (xOff != 0.0f || yOff != 0.0f)
+            mTransform = glm::translate(mTransform, glm::vec3 {xOff * -1.0f, yOff * -1.0f, 0.0f});
+
+        // Apply rotation transform.
+        mTransform = glm::rotate(mTransform, mRotation, glm::vec3 {0.0f, 0.0f, 1.0f});
+
+        // Transform back to original point.
+        if (xOff != 0.0f || yOff != 0.0f)
+            mTransform = glm::translate(mTransform, glm::vec3 {xOff, yOff, 0.0f});
+    }
+
+    mTransform = glm::translate(
+        mTransform,
+        glm::round(glm::vec3 {mOrigin.x * mSize.x * -1.0f, mOrigin.y * mSize.y * -1.0f, 0.0f}));
+
+    return mTransform;
+}
+
+void GuiComponent::onShow()
+{
+    for (unsigned int i = 0; i < getChildCount(); ++i)
+        getChild(i)->onShow();
+}
+
+void GuiComponent::onHide()
+{
+    for (unsigned int i = 0; i < getChildCount(); ++i)
+        getChild(i)->onHide();
+}
+
 void GuiComponent::applyTheme(const std::shared_ptr<ThemeData>& theme,
                               const std::string& view,
                               const std::string& element,
@@ -417,14 +411,20 @@ void GuiComponent::updateHelpPrompts()
         mWindow->setHelpPrompts(prompts, getHelpStyle());
 }
 
-void GuiComponent::onShow()
+void GuiComponent::updateSelf(int deltaTime)
 {
-    for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onShow();
+    for (unsigned char i = 0; i < MAX_ANIMATIONS; ++i)
+        advanceAnimation(i, deltaTime);
 }
 
-void GuiComponent::onHide()
+void GuiComponent::updateChildren(int deltaTime)
 {
     for (unsigned int i = 0; i < getChildCount(); ++i)
-        getChild(i)->onHide();
+        getChild(i)->update(deltaTime);
+}
+
+void GuiComponent::renderChildren(const glm::mat4& transform) const
+{
+    for (unsigned int i = 0; i < getChildCount(); ++i)
+        getChild(i)->render(transform);
 }

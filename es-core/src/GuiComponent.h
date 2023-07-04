@@ -325,9 +325,9 @@ public:
     const static unsigned char MAX_ANIMATIONS = 4;
 
 protected:
-    void renderChildren(const glm::mat4& transform) const;
     void updateSelf(int deltaTime); // Updates animations.
     void updateChildren(int deltaTime); // Updates animations.
+    void renderChildren(const glm::mat4& transform) const;
 
     Window* mWindow;
 
