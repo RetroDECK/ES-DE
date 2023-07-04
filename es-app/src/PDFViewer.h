@@ -37,10 +37,19 @@ public:
     };
 
 private:
-    void showNextPage() override;
-    void showPreviousPage() override;
-    void showFirstPage() override;
-    void showLastPage() override;
+    void showNextPage();
+    void showPreviousPage();
+
+    void navigateUp() override;
+    void navigateDown() override;
+    void navigateLeft() override;
+    void navigateRight() override;
+
+    void navigateLeftShoulder() override;
+    void navigateRightShoulder() override;
+
+    void navigateLeftTrigger() override;
+    void navigateRightTrigger() override;
 
     struct PageEntry {
         float width;
@@ -56,11 +65,13 @@ private:
     float mScaleFactor;
     int mCurrentPage;
     int mPageCount;
+    float mZoom;
+    float mPanAmount;
+    glm::vec3 mPanOffset;
 
     std::string mESConvertPath;
     std::string mManualPath;
 
-    std::shared_ptr<TextureResource> mTexture;
     std::unique_ptr<ImageComponent> mPageImage;
     std::map<int, PageEntry> mPages;
 

@@ -249,23 +249,29 @@ void Window::input(InputConfig* config, Input input)
 
     if (mPDFViewer && mRenderPDFViewer) {
         if (config->isMappedLike("up", input) && input.value != 0) {
-            return;
+            mPDFViewer->navigateUp();
         }
         else if (config->isMappedLike("down", input) && input.value != 0) {
-            mPDFViewer->launchMediaViewer();
+            mPDFViewer->navigateDown();
             return;
         }
         else if (config->isMappedLike("left", input) && input.value != 0) {
-            mPDFViewer->showPreviousPage();
+            mPDFViewer->navigateLeft();
         }
         else if (config->isMappedLike("right", input) && input.value != 0) {
-            mPDFViewer->showNextPage();
+            mPDFViewer->navigateRight();
+        }
+        else if (config->isMappedLike("leftshoulder", input) && input.value != 0) {
+            mPDFViewer->navigateLeftShoulder();
+        }
+        else if (config->isMappedLike("rightshoulder", input) && input.value != 0) {
+            mPDFViewer->navigateRightShoulder();
         }
         else if (config->isMappedLike("lefttrigger", input) && input.value != 0) {
-            mPDFViewer->showFirstPage();
+            mPDFViewer->navigateLeftTrigger();
         }
         else if (config->isMappedLike("righttrigger", input) && input.value != 0) {
-            mPDFViewer->showLastPage();
+            mPDFViewer->navigateRightTrigger();
         }
         else if (input.value != 0) {
             // Any other input stops the PDF viewer.

@@ -75,10 +75,15 @@ public:
         virtual void stopPDFViewer() = 0;
         virtual void launchMediaViewer() = 0;
 
-        virtual void showNextPage() = 0;
-        virtual void showPreviousPage() = 0;
-        virtual void showFirstPage() = 0;
-        virtual void showLastPage() = 0;
+        virtual void navigateUp() = 0;
+        virtual void navigateDown() = 0;
+        virtual void navigateLeft() = 0;
+        virtual void navigateRight() = 0;
+
+        virtual void navigateLeftShoulder() = 0;
+        virtual void navigateRightShoulder() = 0;
+        virtual void navigateLeftTrigger() = 0;
+        virtual void navigateRightTrigger() = 0;
 
         virtual void render(const glm::mat4& parentTrans) = 0;
         virtual std::vector<HelpPrompt> getHelpPrompts() = 0;

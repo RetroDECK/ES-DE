@@ -29,7 +29,6 @@ PDFViewer::PDFViewer()
     , mHelpInfoPosition {HelpInfoPosition::TOP}
 {
     Window::getInstance()->setPDFViewer(this);
-    mTexture = TextureResource::get("");
 }
 
 bool PDFViewer::startPDFViewer(FileData* game)
@@ -74,6 +73,19 @@ bool PDFViewer::startPDFViewer(FileData* game)
     mPageCount = 0;
     mCurrentPage = 0;
     mScaleFactor = 1.0f;
+    mZoom = 1.0f;
+    mPanAmount = 0.0f;
+    mPanOffset = {0.0f, 0.0f, 0.0f};
+
+    // Increase the rasterization resolution when running at lower screen resolutions to make
+    // the texture look ok when zoomed in.
+    const float resolutionModifier {mRenderer->getScreenResolutionModifier()};
+    if (resolutionModifier < 1.0f)
+        mScaleFactor = 1.8f;
+    else if (resolutionModifier < 1.2f)
+        mScaleFactor = 1.3f;
+    else if (resolutionModifier < 1.4f)
+        mScaleFactor = 1.15f;
 
     if (!getDocumentInfo()) {
         LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath << "\"";
@@ -303,30 +315,31 @@ void PDFViewer::convertPage(int pageNum)
 {
     assert(pageNum <= static_cast<int>(mPages.size()));
 
+    if (mPages[pageNum].imageData.empty()) {
 #if defined(_WIN64)
-    std::wstring command {
-        Utils::String::stringToWideString(Utils::FileSystem::getEscapedPath(mESConvertPath))};
-    command.append(L" -convert ")
-        .append(Utils::String::stringToWideString(Utils::FileSystem::getEscapedPath(mManualPath)))
-        .append(L" ")
-        .append(std::to_wstring(pageNum))
-        .append(L" ")
-        .append(std::to_wstring(static_cast<int>(mPages[pageNum].width)))
-        .append(L" ")
-        .append(std::to_wstring(static_cast<int>(mPages[pageNum].height)));
+        std::wstring command {
+            Utils::String::stringToWideString(Utils::FileSystem::getEscapedPath(mESConvertPath))};
+        command.append(L" -convert ")
+            .append(
+                Utils::String::stringToWideString(Utils::FileSystem::getEscapedPath(mManualPath)))
+            .append(L" ")
+            .append(std::to_wstring(pageNum))
+            .append(L" ")
+            .append(std::to_wstring(static_cast<int>(mPages[pageNum].width)))
+            .append(L" ")
+            .append(std::to_wstring(static_cast<int>(mPages[pageNum].height)));
 #else
-    std::string command {Utils::FileSystem::getEscapedPath(mESConvertPath)};
-    command.append(" -convert ")
-        .append(Utils::FileSystem::getEscapedPath(mManualPath))
-        .append(" ")
-        .append(std::to_string(pageNum))
-        .append(" ")
-        .append(std::to_string(static_cast<int>(mPages[pageNum].width)))
-        .append(" ")
-        .append(std::to_string(static_cast<int>(mPages[pageNum].height)));
+        std::string command {Utils::FileSystem::getEscapedPath(mESConvertPath)};
+        command.append(" -convert ")
+            .append(Utils::FileSystem::getEscapedPath(mManualPath))
+            .append(" ")
+            .append(std::to_string(pageNum))
+            .append(" ")
+            .append(std::to_string(static_cast<int>(mPages[pageNum].width)))
+            .append(" ")
+            .append(std::to_string(static_cast<int>(mPages[pageNum].height)));
 #endif
 
-    if (mPages[pageNum].imageData.empty()) {
 #if (DEBUG_PDF_CONVERSION)
         LOG(LogDebug) << "Converting page: " << mCurrentPage;
 #if defined(_WIN64)
@@ -436,6 +449,7 @@ void PDFViewer::convertPage(int pageNum)
     mPageImage.reset();
     mPageImage = std::make_unique<ImageComponent>(false, false);
     mPageImage->setFlipY(true);
+    mPageImage->setLinearInterpolation(true);
     mPageImage->setOrigin(0.5f, 0.5f);
     if (mHelpInfoPosition == HelpInfoPosition::TOP) {
         mPageImage->setPosition(mRenderer->getScreenWidth() / 2.0f,
@@ -451,15 +465,19 @@ void PDFViewer::convertPage(int pageNum)
     }
 
     float sizeReduction {0.0f};
-    if (mPages[pageNum].height > mRenderer->getScreenHeight() - mFrameHeight)
-        sizeReduction = mPages[pageNum].height - (mRenderer->getScreenHeight() - mFrameHeight);
+    if (mPages[pageNum].height / mScaleFactor > mRenderer->getScreenHeight() - mFrameHeight)
+        sizeReduction =
+            (mPages[pageNum].height / mScaleFactor) - (mRenderer->getScreenHeight() - mFrameHeight);
 
-    mPageImage->setMaxSize(glm::vec2 {mPages[pageNum].width / mScaleFactor,
-                                      (mPages[pageNum].height / mScaleFactor) - sizeReduction});
+    mPageImage->setMaxSize(
+        glm::vec2 {(mPages[pageNum].width / mScaleFactor) * mZoom,
+                   ((mPages[pageNum].height / mScaleFactor) * mZoom) - sizeReduction});
 
     mPageImage->setRawImage(reinterpret_cast<const unsigned char*>(&mPages[pageNum].imageData[0]),
                             static_cast<size_t>(mPages[pageNum].width),
                             static_cast<size_t>(mPages[pageNum].height));
+
+    mPanAmount = std::min(mRenderer->getScreenWidth(), mRenderer->getScreenHeight()) * 0.1f;
 
 #if (DEBUG_PDF_CONVERSION)
     LOG(LogDebug) << "ABGR32 data stream size: " << mPages[pageNum].imageData.size();
@@ -475,8 +493,14 @@ void PDFViewer::render(const glm::mat4& /*parentTrans*/)
     mRenderer->drawRect(0.0f, 0.0f, Renderer::getScreenWidth(), Renderer::getScreenHeight(),
                         0x000000FF, 0x000000FF);
 
+    if (mZoom != 1.0f)
+        mPageImage->setPosition(mPageImage->getPosition() + (mPanOffset * mZoom));
+
     if (mPageImage != nullptr)
         mPageImage->render(trans);
+
+    if (mZoom != 1.0f)
+        mPageImage->setPosition(mPageImage->getPosition() - (mPanOffset * mZoom));
 
     if (mHelpInfoPosition != HelpInfoPosition::DISABLED) {
         // Render a dark gray frame behind the help info.
@@ -494,10 +518,18 @@ void PDFViewer::render(const glm::mat4& /*parentTrans*/)
 std::vector<HelpPrompt> PDFViewer::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts;
-    prompts.push_back(HelpPrompt("left/right", "browse"));
-    prompts.push_back(HelpPrompt("down", "game media"));
-    prompts.push_back(HelpPrompt("lt", "first"));
-    prompts.push_back(HelpPrompt("rt", "last"));
+    if (mZoom > 1.0f) {
+        prompts.push_back(HelpPrompt("up/down/left/right", "pan"));
+        prompts.push_back(HelpPrompt("ltrt", "reset"));
+    }
+    else {
+        prompts.push_back(HelpPrompt("left/right", "browse"));
+        prompts.push_back(HelpPrompt("down", "game media"));
+        prompts.push_back(HelpPrompt("lt", "first"));
+        prompts.push_back(HelpPrompt("rt", "last"));
+    }
+
+    prompts.push_back(HelpPrompt("lr", "zoom"));
 
     return prompts;
 }
@@ -524,10 +556,88 @@ void PDFViewer::showPreviousPage()
     convertPage(mCurrentPage);
 }
 
-void PDFViewer::showFirstPage()
+void PDFViewer::navigateUp()
 {
+    if (mZoom != 1.0f) {
+        if (mPanOffset.y * mZoom <= mPageImage->getSize().y / 2.0f)
+            mPanOffset.y += mPanAmount;
+    }
+}
+
+void PDFViewer::navigateDown()
+{
+    if (mZoom != 1.0f) {
+        if (mPanOffset.y * mZoom >= -(mPageImage->getSize().y / 2.0f))
+            mPanOffset.y -= mPanAmount;
+    }
+    else {
+        launchMediaViewer();
+    }
+}
+
+void PDFViewer::navigateLeft()
+{
+    if (mZoom != 1.0f) {
+        if (mPanOffset.x * mZoom <= mPageImage->getSize().x / 2.0f)
+            mPanOffset.x += mPanAmount;
+    }
+    else {
+        mPanOffset = {0.0f, 0.0f, 0.0f};
+        showPreviousPage();
+    }
+}
+
+void PDFViewer::navigateRight()
+{
+    if (mZoom != 1.0f) {
+        if (mPanOffset.x * mZoom > -(mPageImage->getSize().x / 2.0f))
+            mPanOffset.x -= mPanAmount;
+    }
+    else {
+        mPanOffset = {0.0f, 0.0f, 0.0f};
+        showNextPage();
+    }
+}
+
+void PDFViewer::navigateRightShoulder()
+{
+    if (mZoom <= 2.5f)
+        mZoom += 0.5f;
+
+    if (mZoom == 1.5f)
+        mHelp->setPrompts(getHelpPrompts());
+
+    convertPage(mCurrentPage);
+}
+
+void PDFViewer::navigateLeftShoulder()
+{
+    if (mZoom == 1.0f)
+        mPanOffset = {0.0f, 0.0f, 0.0f};
+
+    if (mZoom >= 1.5f)
+        mZoom -= 0.5f;
+
+    if (mZoom == 1.0f)
+        mHelp->setPrompts(getHelpPrompts());
+
+    convertPage(mCurrentPage);
+}
+
+void PDFViewer::navigateLeftTrigger()
+{
+    if (mZoom != 1.0f) {
+        mZoom = 1.0f;
+        mPanOffset = {0.0f, 0.0f, 0.0f};
+        mHelp->setPrompts(getHelpPrompts());
+        convertPage(mCurrentPage);
+        return;
+    }
+
     if (mCurrentPage == 1)
         return;
+
+    mPanOffset = {0.0f, 0.0f, 0.0f};
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = 1;
@@ -535,10 +645,20 @@ void PDFViewer::showFirstPage()
     convertPage(mCurrentPage);
 }
 
-void PDFViewer::showLastPage()
+void PDFViewer::navigateRightTrigger()
 {
+    if (mZoom != 1.0f) {
+        mZoom = 1.0f;
+        mPanOffset = {0.0f, 0.0f, 0.0f};
+        mHelp->setPrompts(getHelpPrompts());
+        convertPage(mCurrentPage);
+        return;
+    }
+
     if (mCurrentPage == mPageCount)
         return;
+
+    mPanOffset = {0.0f, 0.0f, 0.0f};
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = mPageCount;
