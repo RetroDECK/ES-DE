@@ -262,6 +262,10 @@
         <systemsortname>0000</systemsortname>
     </system>
     <system>
+        <name>lowresnx</name>
+        <systemsortname>2016</systemsortname>
+    </system>
+    <system>
         <name>lutris</name>
         <systemsortname>2010</systemsortname>
     </system>

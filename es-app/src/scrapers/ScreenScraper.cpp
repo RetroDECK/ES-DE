@@ -63,6 +63,7 @@ namespace
         {FUJITSU_FM_TOWNS, 253},
         {INTELLIVISION, 115},
         {GAMEENGINE_LUTRO, 206},
+        {GAMEENGINE_LOWRES_NX, 244},
         {GAMEENGINE_WASM4, 262},
         {APPLE_MACINTOSH, 146},
         {GOOGLE_ANDROID, 63},

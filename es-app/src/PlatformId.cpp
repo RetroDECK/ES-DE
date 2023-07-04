@@ -69,6 +69,7 @@ namespace PlatformIds
         "intellivision",        // Mattel Electronics Intellivision
         "lcdgames",             // LCD Handheld Games
         "love",                 // ChaiLove Game Engine
+        "lowresnx",             // LowRes NX Fantasy Console
         "lutro",                // Lutro Game Engine
         "macintosh",            // Apple Macintosh
         "mastersystem",         // Sega Master System
@@ -101,7 +102,7 @@ namespace PlatformIds
         "pcenginecd",           // NEC PC Engine CD / TurboGrafx-CD
         "pcfx",                 // NEC PC-FX
         "pcwindows",            // PC (Windows)
-        "pico8",                // PICO-8 Fantasy Console (game engine)
+        "pico8",                // PICO-8 Fantasy Console
         "pokemini",             // Nintendo Pokémon Mini
         "ps2",                  // Sony PlayStation 2
         "ps3",                  // Sony PlayStation 3

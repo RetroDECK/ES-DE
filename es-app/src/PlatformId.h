@@ -68,6 +68,7 @@ namespace PlatformIds
         INTELLIVISION,
         LCD_GAMES,
         GAMEENGINE_LOVE,
+        GAMEENGINE_LOWRES_NX,
         GAMEENGINE_LUTRO,
         APPLE_MACINTOSH,
         SEGA_MASTER_SYSTEM,

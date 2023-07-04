@@ -749,6 +749,15 @@
         <theme>lcdgames</theme>
     </system>
     <system>
+        <name>lowresnx</name>
+        <fullname>LowRes NX Fantasy Console</fullname>
+        <path>%ROMPATH%/lowresnx</path>
+        <extension>.nx .NX</extension>
+        <command label="LowRes NX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/lowresnx_libretro.so %ROM%</command>
+        <platform>lowresnx</platform>
+        <theme>lowresnx</theme>
+    </system>
+    <system>
         <name>lutris</name>
         <fullname>Lutris Open Gaming Platform</fullname>
         <path>%ROMPATH%/lutris</path>
