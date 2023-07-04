@@ -63,6 +63,7 @@ TextureResource::TextureResource(const std::string& path,
         // loaded and unloaded. This would normally be a video texture, where the player
         // reserves a texture to later be used for the video rendering.
         mTextureData = std::shared_ptr<TextureData>(new TextureData(tile));
+        mTextureData->setLinearMagnify(linearMagnify);
         mSize = glm::ivec2 {0.0f, 0.0f};
     }
     sAllTextures.insert(this);
