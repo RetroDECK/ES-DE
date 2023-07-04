@@ -1830,6 +1830,7 @@
         <command label="Beetle Cygne">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\mednafen_wswan_libretro.dll %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module wswan %ROM%</command>
         <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "WonderSwan" %ROM%</command>
+        <command label="ares [Benesse Pocket Challenge V2] (Standalone)">%EMULATOR_ARES% --fullscreen --system "Pocket Challenge V2" %ROM%</command>
         <platform>wonderswan</platform>
         <theme>wonderswan</theme>
     </system>
