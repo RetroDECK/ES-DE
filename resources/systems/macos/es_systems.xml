@@ -1012,6 +1012,7 @@
         <extension>.bin .BIN .d64 .D64 .n64 .N64 .ndd .NDD .u1 .U1 .v64 .V64 .z64 .Z64 .7z .7Z .zip .ZIP</extension>
         <command label="Mupen64Plus-Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/mupen64plus_next_libretro.dylib %ROM%</command>
         <command label="ParaLLEl N64">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/parallel_n64_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Nintendo 64DD" %ROM%</command>
         <platform>n64</platform>
         <theme>n64dd</theme>
     </system>
