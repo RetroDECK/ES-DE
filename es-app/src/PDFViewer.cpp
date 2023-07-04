@@ -89,7 +89,6 @@ bool PDFViewer::startPDFViewer(FileData* game)
 
     if (!getDocumentInfo()) {
         LOG(LogError) << "PDFViewer: Couldn't load file \"" << mManualPath << "\"";
-        NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
         ViewController::getInstance()->stopViewVideos();
         return false;
     }
@@ -99,7 +98,6 @@ bool PDFViewer::startPDFViewer(FileData* game)
     for (int i {1}; i <= mPageCount; ++i) {
         if (mPages.find(i) == mPages.end()) {
             LOG(LogError) << "Couldn't read information for page " << i << ", invalid PDF file?";
-            NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
             ViewController::getInstance()->stopViewVideos();
             return false;
         }

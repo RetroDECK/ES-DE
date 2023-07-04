@@ -923,6 +923,9 @@ void Window::startPDFViewer(FileData* game)
 
             mRenderPDFViewer = true;
         }
+        else {
+            queueInfoPopup("ERROR: COULDN'T RENDER PDF FILE", 4000);
+        }
     }
 }
 
