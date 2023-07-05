@@ -116,6 +116,7 @@ namespace PlatformIds
         "satellaview",          // Nintendo Satellaview
         "saturn",               // Sega Saturn
         "scummvm",              // ScummVM Game Engine
+        "scv",                  // Epoch Super Cassette Vision
         "sega32x",              // Sega Mega Drive 32X
         "segacd",               // Sega CD
         "sg-1000",              // Sega SG-1000

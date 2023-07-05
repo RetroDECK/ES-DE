@@ -510,6 +510,10 @@
         <systemsortname>ScummVM - 2001</systemsortname>
     </system>
     <system>
+        <name>scv</name>
+        <systemsortname>Epoch - 1984</systemsortname>
+    </system>
+    <system>
         <name>sega32x</name>
         <systemsortname>Sega - 1994</systemsortname>
     </system>

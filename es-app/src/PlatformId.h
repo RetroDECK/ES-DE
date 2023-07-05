@@ -115,6 +115,7 @@ namespace PlatformIds
         NINTENDO_SATELLAVIEW,
         SEGA_SATURN,
         GAMEENGINE_SCUMMVM,
+        EPOCH_SCV,
         SEGA_32X,
         SEGA_CD,
         SEGA_SG1000,

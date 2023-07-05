@@ -60,6 +60,7 @@ namespace
         {COMMODORE_VIC20, 73},
         {CREATRONIC_MEGA_DUCK, 90},
         {DAPHNE, 49},
+        {EPOCH_SCV, 67},
         {FUJITSU_FM_TOWNS, 253},
         {INTELLIVISION, 115},
         {GAMEENGINE_LUTRO, 206},

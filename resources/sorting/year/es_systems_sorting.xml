@@ -510,6 +510,10 @@
         <systemsortname>2001</systemsortname>
     </system>
     <system>
+        <name>scv</name>
+        <systemsortname>1984</systemsortname>
+    </system>
+    <system>
         <name>sega32x</name>
         <systemsortname>1994</systemsortname>
     </system>

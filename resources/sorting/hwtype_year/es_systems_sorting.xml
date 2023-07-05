@@ -510,6 +510,10 @@
         <systemsortname>Engine - 2001</systemsortname>
     </system>
     <system>
+        <name>scv</name>
+        <systemsortname>Console - 1984</systemsortname>
+    </system>
+    <system>
         <name>sega32x</name>
         <systemsortname>Peripheral - 1994</systemsortname>
     </system>

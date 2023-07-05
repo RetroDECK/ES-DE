@@ -510,6 +510,10 @@
         <systemsortname>ScummVM - Engine - 2001</systemsortname>
     </system>
     <system>
+        <name>scv</name>
+        <systemsortname>Epoch - Console - 1984</systemsortname>
+    </system>
+    <system>
         <name>sega32x</name>
         <systemsortname>Sega - Peripheral - 1994</systemsortname>
     </system>

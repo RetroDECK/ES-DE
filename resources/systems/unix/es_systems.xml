@@ -1449,6 +1449,15 @@
         <theme>scummvm</theme>
     </system>
     <system>
+        <name>scv</name>
+        <fullname>Epoch Super Cassette Vision</fullname>
+        <path>%ROMPATH%/scv</path>
+        <extension>.0 .bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/scv scv -cart %ROM%</command>
+        <platform>scv</platform>
+        <theme>scv</theme>
+    </system>
+    <system>
         <name>sega32x</name>
         <fullname>Sega Mega Drive 32X</fullname>
         <path>%ROMPATH%/sega32x</path>
