@@ -15,6 +15,7 @@
 MediaViewer::MediaViewer()
     : mRenderer {Renderer::getInstance()}
     , mGame {nullptr}
+    , mShowMediaTypes {false}
     , mFrameHeight {0.0f}
     , mHelpInfoPosition {HelpInfoPosition::TOP}
 {
@@ -28,6 +29,8 @@ bool MediaViewer::startMediaViewer(FileData* game)
     mCurrentImageIndex = 0;
     mScreenshotIndex = -1;
     mTitleScreenIndex = -1;
+
+    mShowMediaTypes = Settings::getInstance()->getBool("MediaViewerShowTypes");
 
     if (Settings::getInstance()->getString("MediaViewerHelpPrompts") == "disabled")
         mHelpInfoPosition = HelpInfoPosition::DISABLED;
@@ -57,18 +60,18 @@ bool MediaViewer::startMediaViewer(FileData* game)
 
     mEntryCount = std::to_string(mImages.size() + (mVideo == nullptr ? 0 : 1));
 
-    mEntryNumText = std::make_unique<TextComponent>(
-        "1/" + mEntryCount + (mHasVideo ? "   VIDEO" : mImageFiles[0].second),
-        Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
-    mEntryNumText->setOrigin(0.0f, 0.5f);
+    mMediaType =
+        std::make_unique<TextComponent>((mHasVideo ? "VIDEO" : mImageFiles[0].second),
+                                        Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
+    mMediaType->setOrigin(0.0f, 0.5f);
 
     if (mHelpInfoPosition == HelpInfoPosition::TOP) {
-        mEntryNumText->setPosition(mRenderer->getScreenWidth() * 0.01f, mFrameHeight / 2.0f);
+        mMediaType->setPosition(mRenderer->getScreenWidth() * 0.01f, mFrameHeight / 2.0f);
         style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f, mFrameHeight / 2.0f};
     }
     else if (mHelpInfoPosition == HelpInfoPosition::BOTTOM) {
-        mEntryNumText->setPosition(mRenderer->getScreenWidth() * 0.01f,
-                                   mRenderer->getScreenHeight() - (mFrameHeight / 2.0f));
+        mMediaType->setPosition(mRenderer->getScreenWidth() * 0.01f,
+                                mRenderer->getScreenHeight() - (mFrameHeight / 2.0f));
         style.position = glm::vec2 {mRenderer->getScreenWidth() / 2.0f,
                                     mRenderer->getScreenHeight() - (mFrameHeight / 2.0f)};
     }
@@ -171,7 +174,8 @@ void MediaViewer::render(const glm::mat4& /*parentTrans*/)
                                  Renderer::getScreenHeight() - mFrameHeight),
                             Renderer::getScreenWidth(), mFrameHeight, 0x222222FF, 0x222222FF);
         mHelp->render(trans);
-        mEntryNumText->render(trans);
+        if (mShowMediaTypes)
+            mMediaType->render(trans);
     }
 }
 
@@ -212,31 +216,31 @@ void MediaViewer::findMedia()
     }
 
     if (!mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
-        mImageFiles.push_back(std::make_pair(mediaFile, "   SCREENSHOT"));
+        mImageFiles.push_back(std::make_pair(mediaFile, "SCREENSHOT"));
         mScreenshotIndex = 0;
     }
 
     if ((mediaFile = mGame->getCoverPath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, "   BOX COVER"));
+        mImageFiles.push_back(std::make_pair(mediaFile, "BOX COVER"));
 
     if ((mediaFile = mGame->getBackCoverPath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, "   BOX BACK COVER"));
+        mImageFiles.push_back(std::make_pair(mediaFile, "BOX BACK COVER"));
 
     if ((mediaFile = mGame->getTitleScreenPath()) != "") {
-        mImageFiles.push_back(std::make_pair(mediaFile, "   TITLE SCREEN"));
+        mImageFiles.push_back(std::make_pair(mediaFile, "TITLE SCREEN"));
         mTitleScreenIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if (mHasVideo && (mediaFile = mGame->getScreenshotPath()) != "") {
-        mImageFiles.push_back(std::make_pair(mediaFile, "   SCREENSHOT"));
+        mImageFiles.push_back(std::make_pair(mediaFile, "SCREENSHOT"));
         mScreenshotIndex = static_cast<int>(mImageFiles.size() - 1);
     }
 
     if ((mediaFile = mGame->getFanArtPath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, "   FAN ART"));
+        mImageFiles.push_back(std::make_pair(mediaFile, "FAN ART"));
 
     if ((mediaFile = mGame->getMiximagePath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, "   MIXIMAGE"));
+        mImageFiles.push_back(std::make_pair(mediaFile, "MIXIMAGE"));
 
     if (!mImageFiles.empty())
         mHasImages = true;
@@ -322,8 +326,7 @@ void MediaViewer::showNext()
         ++mCurrentImageIndex;
 
     mDisplayingImage = true;
-    mEntryNumText->setText(std::to_string(mCurrentImageIndex + 1 + (mHasVideo ? 1 : 0)) + "/" +
-                           mEntryCount + mImageFiles[mCurrentImageIndex].second);
+    mMediaType->setText(mImageFiles[mCurrentImageIndex].second);
 }
 
 void MediaViewer::showPrevious()
@@ -336,13 +339,12 @@ void MediaViewer::showPrevious()
     }
     else if (mCurrentImageIndex == 0 && mHasVideo) {
         mDisplayingImage = false;
-        mEntryNumText->setText("1/" + mEntryCount + "   VIDEO");
+        mMediaType->setText("VIDEO");
         playVideo();
         return;
     }
 
-    mEntryNumText->setText(std::to_string(mCurrentImageIndex + (mHasVideo ? 1 : 0)) + "/" +
-                           mEntryCount + mImageFiles[mCurrentImageIndex - 1].second);
+    mMediaType->setText(mImageFiles[mCurrentImageIndex - 1].second);
     --mCurrentImageIndex;
 }
 
@@ -356,8 +358,7 @@ void MediaViewer::showFirst()
         return;
 
     mCurrentImageIndex = 0;
-    mEntryNumText->setText("1/" + mEntryCount +
-                           (mHasVideo ? "   VIDEO" : mImageFiles[mCurrentImageIndex].second));
+    mMediaType->setText((mHasVideo ? "VIDEO" : mImageFiles[mCurrentImageIndex].second));
 
     if (mHasVideo) {
         mDisplayingImage = false;
@@ -375,8 +376,7 @@ void MediaViewer::showLast()
         return;
 
     mCurrentImageIndex = static_cast<int>(mImages.size()) - 1;
-    mEntryNumText->setText(mEntryCount + "/" + mEntryCount +
-                           mImageFiles[mCurrentImageIndex].second);
+    mMediaType->setText(mImageFiles[mCurrentImageIndex].second);
     mDisplayingImage = true;
 
     if (mVideo && !Settings::getInstance()->getBool("MediaViewerKeepVideoRunning"))

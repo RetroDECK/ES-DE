@@ -54,6 +54,7 @@ private:
     bool mHasImages;
     bool mDisplayingImage;
     bool mHasManual;
+    bool mShowMediaTypes;
 
     float mFrameHeight;
     int mCurrentImageIndex;
@@ -66,7 +67,7 @@ private:
     std::vector<std::unique_ptr<ImageComponent>> mImages;
 
     std::unique_ptr<HelpComponent> mHelp;
-    std::unique_ptr<TextComponent> mEntryNumText;
+    std::unique_ptr<TextComponent> mMediaType;
     std::string mEntryCount;
     HelpInfoPosition mHelpInfoPosition;
 };

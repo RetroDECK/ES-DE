@@ -38,6 +38,19 @@ GuiMediaViewerOptions::GuiMediaViewerOptions(const std::string& title)
         }
     });
 
+    // Display media types.
+    auto mediaViewerShowTypes = std::make_shared<SwitchComponent>();
+    mediaViewerShowTypes->setState(Settings::getInstance()->getBool("MediaViewerShowTypes"));
+    addWithLabel("DISPLAY MEDIA TYPES", mediaViewerShowTypes);
+    addSaveFunc([mediaViewerShowTypes, this] {
+        if (mediaViewerShowTypes->getState() !=
+            Settings::getInstance()->getBool("MediaViewerShowTypes")) {
+            Settings::getInstance()->setBool("MediaViewerShowTypes",
+                                             mediaViewerShowTypes->getState());
+            setNeedsSaving();
+        }
+    });
+
     // Keep videos running when viewing images.
     auto keepVideoRunning = std::make_shared<SwitchComponent>();
     keepVideoRunning->setState(Settings::getInstance()->getBool("MediaViewerKeepVideoRunning"));
