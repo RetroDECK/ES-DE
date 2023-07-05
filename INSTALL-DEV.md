@@ -1490,6 +1490,17 @@ You only need to include systems that you want to customize sorting for, and if 
 
 Note that the `<systemsortname>` tags are sorted in [lexicographic order](https://en.wikipedia.org/wiki/Lexicographic_order) so 11 will be sorted above 2 but 002 will be sorted above 011.
 
+There are also four complete sorting files bundled with ES-DE, you can find them in the resources/sorting/ directory, or you can access them [here](https://gitlab.com/es-de/emulationstation-de/-/tree/master/resources/sorting).
+
+These files include all systems supported by ES-DE and provide the following sorting options:
+
+* Hardware type, release year
+* Manufacturer, hardware type, release year
+* Manufacturer, release year
+* Release year
+
+To use these es_systems_sorting.xml files, simply copy any of them to your custom_systems directory.
+
 ## es_find_rules.xml
 
 This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.

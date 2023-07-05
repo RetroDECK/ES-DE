@@ -20,9 +20,14 @@
 * Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
 * Added options to the video and slideshow screensavers to only include favorite games
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
+* Bundled four complete es_systems_sorting.xml files with the application (they can be found in the resources/sorting/ directory)
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
+* Added support for the LowRes NX Fantasy Console (lowresnx) game system
+* Added support for the Epoch Super Cassette Vision (scv) game system
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
-* Added MAME standalone as an alternative emulator for the cdimono1 system
+* Added MAME standalone as an alternative emulator for the amstradcpc, cdimono1 and x68000 systems
+* Added ares standalone as an alternative emulator for the n64dd system
+* Added ares [Benesse Pocket Challenge V2] standalone as an alternative emulator for the wonderswan system
 * Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
 * (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the windows system
 * (Linux) Added the .AppImage file extension to the windows system
@@ -31,6 +36,8 @@
 * Added support for scraping the arduboy and ps4 systems using ScreenScraper
 * Added an sgb (Nintendo Super Game Boy) platform to improve scraping using ScreenScraper
 * Removed the experimental status for the theme downloader
+* Simplified ApplicationUpdater by only using the release number when checking for updates
+* Added more error checking to ApplicationUpdater by checking for blank name, filename, url and md5 keys in latest_release.json
 * Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
 * Removed the custom SDL patch for the Linux AppImage builds that prevented the device virtual keyboard from being automatically displayed
 * If the SDL library release is 2.28.0 or higher, then the automatic popup of the device's virtual keyboard is now disabled
@@ -39,11 +46,14 @@
 * Added a setRawImage function to ImageComponent to load raw pixel data into textures (needed by PDFViewer)
 * Added the Poppler PDF rendering library as a dependency
 * Removed the unused graphics files resources/graphics/cartridge.svg and resources/graphics/folder.svg
+* Modified the resources/graphics/help/dpad_all.svg file to actually show all directions as available
 * Updated FFmpeg to 6.0, FreeType to 2.13.0, libgit2 to 1.6.4 and pugixml to 1.13 on Windows and macOS
 * Updated SDL to 2.28.0 on Windows, macOS and the Linux AppImage builds
 * (Windows) Updated curl to 8.1.2
 * (Windows) Changed all dependencies to not include version numbers in their directory names to simplify future updates
 * Updated LunaSVG to commit f924651b85cac47dbe15f51a4aa320461fc1d07b to fix a GCC 13 build error
+* Updated the MAME index files to include ROMs up to MAME version 0.256
+* Bundled the May 2023 release of the Mozilla TLS/SSL certificates
 * Changed the default OpenGL version from 4.6 to 3.3 when building for RetroDECK
 
 ### Bug fixes
