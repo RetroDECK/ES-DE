@@ -266,11 +266,19 @@ void ApplicationUpdater::parseFile()
                         throw std::runtime_error(
                             "Invalid file structure, package \"name\" key missing");
 
+                    if (package.name == "")
+                        throw std::runtime_error(
+                            "Invalid file contents, package \"name\" key is blank");
+
                     if (packageEntry.HasMember("filename") && packageEntry["filename"].IsString())
                         package.filename = packageEntry["filename"].GetString();
                     else
                         throw std::runtime_error(
                             "Invalid file structure, package \"filename\" key missing");
+
+                    if (package.filename == "")
+                        throw std::runtime_error(
+                            "Invalid file contents, package \"filename\" key is blank");
 
                     if (packageEntry.HasMember("url") && packageEntry["url"].IsString())
                         package.url = packageEntry["url"].GetString();
@@ -278,11 +286,19 @@ void ApplicationUpdater::parseFile()
                         throw std::runtime_error(
                             "Invalid file structure, package \"url\" key missing");
 
+                    if (package.url == "")
+                        throw std::runtime_error(
+                            "Invalid file contents, package \"url\" key is blank");
+
                     if (packageEntry.HasMember("md5") && packageEntry["md5"].IsString())
                         package.md5 = packageEntry["md5"].GetString();
                     else
                         throw std::runtime_error(
                             "Invalid file structure, package \"md5\" key missing");
+
+                    if (package.md5 == "")
+                        throw std::runtime_error(
+                            "Invalid file contents, package \"md5\" key is blank");
 
                     if (packageEntry.HasMember("message") && packageEntry["message"].IsString())
                         package.message = packageEntry["message"].GetString();
@@ -323,7 +339,7 @@ void ApplicationUpdater::compareVersions()
 {
     std::deque<Release*> releaseTypes {&mStableRelease};
 
-    if (mPrerelease.version != "") {
+    if (mPrerelease.releaseNum != "") {
 #if defined(IS_PRERELEASE)
         releaseTypes.emplace_front(&mPrerelease);
 #else
@@ -335,44 +351,12 @@ void ApplicationUpdater::compareVersions()
     mNewVersion = false;
 
     for (auto& releaseType : releaseTypes) {
-        // If the version does not follow the semantic versioning scheme then always consider it to
-        // be a new release as perhaps the version scheme will be changed sometime in the future.
-        if (count_if(releaseType->version.cbegin(), releaseType->version.cend(),
-                     [](char c) { return c == '.'; }) != 2) {
-            mNewVersion = true;
-        }
-        else {
-            std::vector<std::string> fileVersion {
-                Utils::String::delimitedStringToVector(releaseType->version, ".")};
+        // That these keys are blank is not technically wrong as the prerelease is optional,
+        // therefore we just check them here and not in the parseFile() function.
+        if (releaseType->version == "" || releaseType->releaseNum == "" || releaseType->date == "")
+            continue;
 
-            const size_t dashPos {fileVersion.back().find('-')};
-            if (dashPos != std::string::npos)
-                fileVersion.back() = fileVersion.back().substr(0, dashPos);
-
-            int versionWeight {0};
-
-            if (std::stoi(fileVersion.at(0)) > PROGRAM_VERSION_MAJOR)
-                versionWeight += 8;
-            else if (std::stoi(fileVersion.at(0)) < PROGRAM_VERSION_MAJOR)
-                versionWeight -= 8;
-
-            if (std::stoi(fileVersion.at(1)) > PROGRAM_VERSION_MINOR)
-                versionWeight += 4;
-            else if (std::stoi(fileVersion.at(1)) < PROGRAM_VERSION_MINOR)
-                versionWeight -= 4;
-
-            if (std::stoi(fileVersion.at(2)) > PROGRAM_VERSION_MAINTENANCE)
-                versionWeight += 2;
-            else if (std::stoi(fileVersion.at(2)) < PROGRAM_VERSION_MAINTENANCE)
-                versionWeight -= 2;
-
-            // If versions match precisely then fall back to using the release number.
-            if (versionWeight == 0 && std::stoi(releaseType->releaseNum) > PROGRAM_RELEASE_NUMBER)
-                ++versionWeight;
-
-            if (versionWeight > 0)
-                mNewVersion = true;
-        }
+        mNewVersion = (std::stoi(releaseType->releaseNum) > PROGRAM_RELEASE_NUMBER);
 
         if (mNewVersion) {
             for (auto& package : releaseType->packages) {
@@ -410,10 +394,18 @@ void ApplicationUpdater::compareVersions()
                 .append("), release date: ")
                 .append(releaseType->date);
 
-            mResults.append("New ")
-                .append(releaseType == &mStableRelease ? "release " : "prerelease ")
-                .append("available: ")
-                .append(releaseType->version);
+            mResults.append("New ");
+
+            if (releaseType == &mPrerelease) {
+                mResults.append("prerelease available:\n")
+                    .append(releaseType->version)
+                    .append(" (")
+                    .append(releaseType->date)
+                    .append(")");
+            }
+            else {
+                mResults.append("release available: ").append(releaseType->version);
+            }
 
             if (mPackage.name != "LinuxAppImage" && mPackage.name != "LinuxSteamDeckAppImage")
                 mResults.append("\nIt can be downloaded from\n").append("https://es-de.org");

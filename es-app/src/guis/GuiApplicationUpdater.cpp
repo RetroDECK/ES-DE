@@ -29,7 +29,6 @@ GuiApplicationUpdater::GuiApplicationUpdater()
     addChild(&mGrid);
 
     mPackage = ApplicationUpdater::getInstance().getPackageInfo();
-    assert(mPackage.url != "");
 
     LOG(LogInfo) << "Starting Application Updater";
 
