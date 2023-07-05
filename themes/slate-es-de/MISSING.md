@@ -43,6 +43,7 @@
 * j2me: Java 2 Micro Edition (J2ME) - consolegame.svg, controller.svg
 * kodi: Kodi home theatre software - consolegame.svg, controller.svg
 * lcdgames : LCD Handheld Games - consolegame.svg
+* lowresnx: LowRes NX Fantasy Console - consolegame.svg
 * lutris: Lutris open gaming platform - consolegame.svg, controller.svg
 * macintosh: Apple Macintosh - consolegame.svg, controller.svg
 * megaduck: Creatronic Mega Duck - consolegame.svg
@@ -73,6 +74,7 @@
 * quake: Quake - consolegame.svg, controller.svg
 * samcoupe: MGT SAM Coupé - consolegame.svg
 * satellaview: Nintendo Satellaview - consolegame.svg
+* scv: Epoch Super Cassette Vision - consolegame.svg, controller.svg
 * sgb: Nintendo Super Game Boy - consolegame.svg
 * solarus: Solarus game engine - consolegame.svg
 * spectravideo: Spectravideo - consolegame.svg, controller.svg
