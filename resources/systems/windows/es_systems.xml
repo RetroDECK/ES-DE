@@ -1869,6 +1869,7 @@
         <path>%ROMPATH%\x68000</path>
         <extension>.dim .DIM .img .IMG .d88 .D88 .88d .88D .hdm .HDM .dup .DUP .2hd .2HD .xdf .XDF .hdf .HDF .cmd .CMD .m3u .M3U .7z .7Z .zip .ZIP</extension>
         <command label="PX68k">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%\px68k_libretro.dll %ROM%</command>
+        <command label="MAME (Standalone)">%HIDEWINDOW% %RUNINBACKGROUND% %STARTDIR%=%EMUDIR% %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%\x68000 x68000 -flop1 %ROM%</command>
         <platform>x68000</platform>
         <theme>x68000</theme>
     </system>
