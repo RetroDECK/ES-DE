@@ -1,4 +1,4 @@
-<!-- Last updated with information from MAME driver file mame0251.xml -->
+<!-- Last updated with information from MAME driver file mame0256.xml -->
 <device>22vp931</device>
 <device>3c505</device>
 <device>3xtwin</device>
@@ -55,6 +55,8 @@
 <device>a2q68</device>
 <device>a2q68plus</device>
 <device>a2ramfac</device>
+<device>a2romfp</device>
+<device>a2romint</device>
 <device>a2scsi</device>
 <device>a2sd</device>
 <device>a2sider1</device>
@@ -152,6 +154,7 @@
 <device>aha1742a</device>
 <device>alice_mcx128</device>
 <device>alto2_cpu</device>
+<device>altos2_kbd</device>
 <device>amiga_ar1</device>
 <device>amiga_ar2</device>
 <device>amiga_ar3</device>
@@ -364,6 +367,9 @@
 <device>cdu415</device>
 <device>cdu561_25</device>
 <device>cdu75s</device>
+<device>centennial_sl01m_15_11194</device>
+<device>centennial_sl02m_15_11194</device>
+<device>centennial_sl04m_15_11194</device>
 <device>cffa1</device>
 <device>cfp1080s</device>
 <device>cga</device>
@@ -396,6 +402,7 @@
 <device>coco_rs232</device>
 <device>coco_scii_cc1</device>
 <device>coco_scii_cc3</device>
+<device>coco_scii</device>
 <device>coco_ssc</device>
 <device>coco_t4426</device>
 <device>coco_wpk2</device>
@@ -409,6 +416,7 @@
 <device>comx_pl80</device>
 <device>comx_prn</device>
 <device>comx_thm</device>
+<device>cp2024</device>
 <device>cp31</device>
 <device>cp400_fdc</device>
 <device>cp450_fdc</device>
@@ -442,6 +450,7 @@
 <device>dectalk_isa</device>
 <device>dg640</device>
 <device>digilog_kbd</device>
+<device>dim68k_kbd</device>
 <device>dio98543</device>
 <device>dio98544</device>
 <device>dio98550</device>
@@ -511,6 +520,7 @@
 <device>epson_tf20</device>
 <device>ergoline_kbd</device>
 <device>et4000</device>
+<device>et4000_kasan16</device>
 <device>europc_kbd</device>
 <device>ev346</device>
 <device>ex1280</device>
@@ -534,6 +544,7 @@
 <device>fdcmag</device>
 <device>filetto_cga</device>
 <device>finalchs</device>
+<device>freedom220_kbd</device>
 <device>fsd1</device>
 <device>fsd2</device>
 <device>g80_1500</device>
@@ -551,6 +562,10 @@
 <device>hdc</device>
 <device>hdc_ec1841</device>
 <device>he191_3425</device>
+<device>heath_super19_tlb</device>
+<device>heath_tlb</device>
+<device>heath_ultra_tlb</device>
+<device>heath_watz_tlb</device>
 <device>hp82900</device>
 <device>hp82937</device>
 <device>hp82939</device>
@@ -560,6 +575,7 @@
 <device>hp98046</device>
 <device>hp9845_prt</device>
 <device>hp9895</device>
+<device>hpblp</device>
 <device>human_interface</device>
 <device>i80130</device>
 <device>i8244</device>
@@ -590,10 +606,12 @@
 <device>isa_hercules</device>
 <device>isa_ibm_mda</device>
 <device>isa_ibm_pgc</device>
+<device>isa_ibm_speech</device>
 <device>isa_pcmidi</device>
 <device>isbc202</device>
 <device>isbc_215g</device>
 <device>isbc8024</device>
+<device>jaleco_vj_pc</device>
 <device>jasmin</device>
 <device>jc1310</device>
 <device>jvs13551</device>
@@ -618,11 +636,14 @@
 <device>kc_d004</device>
 <device>kc_d004_gide</device>
 <device>kc_d004gide</device>
+<device>keytronic_l2207</device>
 <device>keytronic_pc3270_at</device>
 <device>keytronic_pc3270</device>
 <device>km035</device>
+<device>ks0066_f00</device>
 <device>ks0066_f05</device>
 <device>labtam_3232</device>
+<device>labtam_8086cpu</device>
 <device>labtam_vducom</device>
 <device>labtam_z80sbc</device>
 <device>laserfdc</device>
@@ -710,6 +731,7 @@
 <device>msx_cart_easispeech</device>
 <device>msx_cart_sfg01</device>
 <device>msx_cart_sfg05</device>
+<device>msx_cart_skw01</device>
 <device>msx_moonsound</device>
 <device>mtx_cfx</device>
 <device>mtx_sdxbas</device>
@@ -719,7 +741,11 @@
 <device>mvme121</device>
 <device>mvme122</device>
 <device>mvme123</device>
+<device>mvme180</device>
+<device>mvme181</device>
+<device>mvme327a</device>
 <device>mvme350</device>
+<device>nabupc_keyboard</device>
 <device>namco50</device>
 <device>namco51</device>
 <device>namco52</device>
@@ -758,9 +784,11 @@
 <device>nb_spdq</device>
 <device>nb_vikbw</device>
 <device>nb_wspt</device>
+<device>neogs</device>
 <device>nes_rob</device>
 <device>newbrain_eim</device>
 <device>newbrain_fdc</device>
+<device>nlq401</device>
 <device>nmk004</device>
 <device>novell_dcb</device>
 <device>np600a3</device>
@@ -809,7 +837,13 @@
 <device>polyvti</device>
 <device>pr8210</device>
 <device>premier_fdc</device>
+<device>profighterqa</device>
+<device>profighterqb</device>
+<device>profighterq</device>
+<device>profighterx</device>
 <device>ps2_keybc</device>
+<device>psion_3fax</device>
+<device>psion_3link_ser</device>
 <device>psx_cd</device>
 <device>psxgboost</device>
 <device>px320a</device>
@@ -840,11 +874,13 @@
 <device>qx10_keyboard_ascii</device>
 <device>qx10_keyboard</device>
 <device>qx10_keyboard_hasci</device>
+<device>rageiidvd</device>
 <device>rc2014_micro</device>
 <device>rc2014_mini_cpm</device>
 <device>rc2014_pagable_rom</device>
 <device>rc2014_rom_ram_512k</device>
 <device>rc2014_switchable_rom</device>
+<device>riva128</device>
 <device>rolm_pdc</device>
 <device>rolm_smioc</device>
 <device>rtpc_kbd</device>
@@ -898,6 +934,7 @@
 <device>seta11leg</device>
 <device>sfd10001</device>
 <device>sfd1001</device>
+<device>sgi_kbd</device>
 <device>side116</device>
 <device>simutrek</device>
 <device>sis630_gui</device>
@@ -906,6 +943,8 @@
 <device>smoc501</device>
 <device>sms_diypaddle</device>
 <device>smvme2000</device>
+<device>sn74s262</device>
+<device>sn74s263</device>
 <device>sns_dsp1bleg</device>
 <device>sns_dsp1leg</device>
 <device>sns_dsp1leg_hi</device>
@@ -962,6 +1001,7 @@
 <device>s_smp</device>
 <device>stereo_fx</device>
 <device>stic</device>
+<device>st_kbd</device>
 <device>sv603</device>
 <device>sv806</device>
 <device>swtpc8212_device</device>
@@ -998,12 +1038,14 @@
 <device>tms32031</device>
 <device>tms32032</device>
 <device>tms32033</device>
+<device>tp881v</device>
 <device>trs80m2kb</device>
 <device>turbogx</device>
 <device>turbogxp</device>
 <device>tv950kb</device>
 <device>tv955kb</device>
 <device>tvc_hbf</device>
+<device>tvga9000</device>
 <device>ultra12f32</device>
 <device>ultra12f</device>
 <device>ultra14f</device>
@@ -1016,6 +1058,7 @@
 <device>v102_kbd</device>
 <device>v1050kb</device>
 <device>v550_kbd</device>
+<device>vector4_kbd</device>
 <device>vic1515</device>
 <device>vic1520</device>
 <device>vic20_fe3</device>
@@ -1027,6 +1070,8 @@
 <device>virge_pci</device>
 <device>voicebox</device>
 <device>votrax</device>
+<device>votrsc01a</device>
+<device>votrsc01</device>
 <device>vp700</device>
 <device>vtech_fdc</device>
 <device>vtech_rs232</device>
