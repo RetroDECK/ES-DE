@@ -158,7 +158,7 @@ bool PDFViewer::startPDFViewer(FileData* game)
     mEntryCount = std::to_string(mPages.size());
 
     mEntryNumText = std::make_unique<TextComponent>(
-        "1/" + mEntryCount, Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
+        "PAGE 1 OF " + mEntryCount, Font::get(FONT_SIZE_MINI, FONT_PATH_REGULAR), 0xAAAAAAFF);
     mEntryNumText->setOrigin(0.0f, 0.5f);
 
     if (mHelpInfoPosition == HelpInfoPosition::TOP) {
@@ -539,7 +539,7 @@ void PDFViewer::showNextPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     ++mCurrentPage;
-    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
+    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
     convertPage(mCurrentPage);
 }
 
@@ -550,7 +550,7 @@ void PDFViewer::showPreviousPage()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     --mCurrentPage;
-    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
+    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
     convertPage(mCurrentPage);
 }
 
@@ -639,7 +639,7 @@ void PDFViewer::navigateLeftTrigger()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = 1;
-    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
+    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
     convertPage(mCurrentPage);
 }
 
@@ -660,6 +660,6 @@ void PDFViewer::navigateRightTrigger()
 
     NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
     mCurrentPage = mPageCount;
-    mEntryNumText->setText(std::to_string(mCurrentPage) + "/" + mEntryCount);
+    mEntryNumText->setText("PAGE " + std::to_string(mCurrentPage) + " OF " + mEntryCount);
     convertPage(mCurrentPage);
 }
