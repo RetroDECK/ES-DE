@@ -129,9 +129,7 @@ GuiApplicationUpdater::GuiApplicationUpdater()
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 std::round(mRenderer->getScreenHeight() * 0.13f));
 
-    mBusyAnim.setSize(glm::vec2 {mRenderer->getScreenWidth(),
-                                 mRenderer->getScreenHeight() *
-                                     (mRenderer->getIsVerticalOrientation() ? 0.80f : 1.0f)});
+    mBusyAnim.setSize(mSize);
     mBusyAnim.setText("DOWNLOADING");
     mBusyAnim.onSizeChanged();
 }
@@ -336,7 +334,7 @@ bool GuiApplicationUpdater::installAppImage()
     LOG(LogInfo) << "Package was successfully installed as \"" << packageTargetFile << "\"";
 
     std::unique_lock<std::mutex> lock {mMutex};
-    mMessage = "Package was successfully installed";
+    mMessage = "Successfully installed as " + Utils::FileSystem::getFileName(packageTargetFile);
     mHasInstalled = true;
 
     return false;
@@ -393,7 +391,7 @@ void GuiApplicationUpdater::render(const glm::mat4& parentTrans)
     renderChildren(trans);
 
     if (mDownloading)
-        mBusyAnim.render(parentTrans);
+        mBusyAnim.render(trans);
 }
 
 void GuiApplicationUpdater::onSizeChanged()
