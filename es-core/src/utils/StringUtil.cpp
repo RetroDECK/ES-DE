@@ -7,8 +7,11 @@
 //  Convert characters to Unicode, upper-/lowercase conversion, string formatting etc.
 //
 
+// Suppress codecvt deprecation warnings.
 #if defined(_MSC_VER) // MSVC compiler.
 #define _SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING
+#elif defined(__APPLE__)
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
 #include "utils/StringUtil.h"
