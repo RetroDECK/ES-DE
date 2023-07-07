@@ -1499,8 +1499,6 @@ These files include all systems supported by ES-DE and provide the following sor
 * Manufacturer, release year
 * Release year
 
-To use these es_systems_sorting.xml files, simply copy any of them to your custom_systems directory.
-
 ## es_find_rules.xml
 
 This file makes it possible to define rules for where to search for the emulator binaries and emulator cores.

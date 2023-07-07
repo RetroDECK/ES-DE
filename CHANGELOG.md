@@ -4,27 +4,35 @@
 
 **Release date:** TBD
 
+### Release overview
+
+The 2.1 release brings a new look to ES-DE by changing the default menu color scheme from light to dark. There is however a setting to revert to the light color scheme if that's preferred. Scraping and viewing of PDF game manuals has also been added, with the PDF viewer being reachable from the gamelist media viewer.
+
+Miximages will now be generated with a proper image fit if the screenshot aspect ratio doesn't match the miximage frame. This will for instance occur for widescreen systems and vertically oriented arcade shooters. There are multiple new options to control this behavior in the miximage settings menu. System sorting has also been improved, making it possible to use a separate es_systems_sorting.xml file in the custom_systems directory, meaning it's no longer required to add systemsortname tags to the es_systems.xml file.
+
+For the Linux AppImage releases a built-in application updater has been added so that future versions can be installed automatically. Apart from all these changes many smaller improvements have been made and a couple of new systems have been added.
+
 ### Detailed list of changes
 
+* Added support for changing between dark and light color schemes for the menu system (with dark being the new default)
 * Added a PDF game manual viewer, accessible from the media viewer
 * Added an option to scrape game manuals using ScreenScraper
-* Added a game manual badge to indicate whether a game has a downloaded PDF manual
-* Added a separate es-pdf-convert binary to render PDF pages using Poppler (needed due to the restrictive GPL license for this library)
 * Added an application updater which downloads and installs ES-DE updates (currently only the AppImage releases are supported)
-* Added help prompts to the media viewer
-* Added trigger button support to the media viewer for jumping to the first and last entries
-* Added trigger button support to the theme downloader screenshot viewer for jumping to the first and last entries
 * Added options to the miximage generator for how to fit screenshots that do not match the aspect ratio of the miximage frame
-* Added support for changing between light and dark color schemes for the menu system
-* Added a per-system game count to the multi-scraper in addition to the total game count
-* Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
-* Added options to the video and slideshow screensavers to only include favorite games
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
 * Bundled four complete es_systems_sorting.xml files with the application (they can be found in the resources/sorting/ directory)
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
+* Added help prompts to the media viewer
+* Added trigger button support to the media viewer for jumping to the first and last entries
+* Added trigger button support to the theme downloader screenshot viewer for jumping to the first and last entries
+* Added a game manual badge to indicate whether a game has a downloaded PDF manual
+* Added options to the video and slideshow screensavers to only include favorite games
+* Added a per-system game count to the multi-scraper
+* Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
 * Added support for the LowRes NX Fantasy Console (lowresnx) game system
 * Added support for the Epoch Super Cassette Vision (scv) game system
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
+* Added an sgb (Nintendo Super Game Boy) platform to improve scraping when using ScreenScraper
 * Added MAME standalone as an alternative emulator for the amstradcpc, cdimono1 and x68000 systems
 * Added ares standalone as an alternative emulator for the n64dd system
 * Added ares [Benesse Pocket Challenge V2] standalone as an alternative emulator for the wonderswan system
@@ -34,23 +42,23 @@
 * (Linux) Added support for the official Citra AppImage release
 * (Windows) Added pcsx2-qt.exe as the primary executable name for the PCSX2 emulator
 * Added support for scraping the arduboy and ps4 systems using ScreenScraper
-* Added an sgb (Nintendo Super Game Boy) platform to improve scraping using ScreenScraper
+* Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
 * Removed the experimental status for the theme downloader
 * Simplified ApplicationUpdater by only using the release number when checking for updates
 * Added more error checking to ApplicationUpdater by checking for blank name, filename, url and md5 keys in latest_release.json
-* Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
-* Removed the custom SDL patch for the Linux AppImage builds that prevented the device virtual keyboard from being automatically displayed
-* If the SDL library release is 2.28.0 or higher, then the automatic popup of the device's virtual keyboard is now disabled
+* Removed the custom SDL patch for the AppImage builds that prevented the device's virtual keyboard from being automatically displayed
+* If the SDL library release is 2.28.0 or higher then the automatic popup of the device's virtual keyboard is now disabled
 * The SDL library version is now printed to es_log.txt on application startup
+* Added a separate es-pdf-convert binary to render PDF pages using Poppler (needed due to the restrictive GPL license for this library)
 * (Windows) A check is now performed on startup that OpenGL is actually supported by the GPU driver, to avoid crashes if it isn't
 * Added a setRawImage function to ImageComponent to load raw pixel data into textures (needed by PDFViewer)
 * Added the Poppler PDF rendering library as a dependency
 * Removed the unused graphics files resources/graphics/cartridge.svg and resources/graphics/folder.svg
 * Modified the resources/graphics/help/dpad_all.svg file to actually show all directions as available
 * Updated FFmpeg to 6.0, FreeType to 2.13.0, libgit2 to 1.6.4 and pugixml to 1.13 on Windows and macOS
-* Updated SDL to 2.28.0 on Windows, macOS and the Linux AppImage builds
+* Updated SDL to 2.28.1 on Windows, macOS and the Linux AppImage builds
 * (Windows) Updated curl to 8.1.2
-* (Windows) Changed all dependencies to not include version numbers in their directory names to simplify future updates
+* (Windows) Changed all dependencies to not include version numbers in their directory names to simplify future library updates
 * Updated LunaSVG to commit f924651b85cac47dbe15f51a4aa320461fc1d07b to fix a GCC 13 build error
 * Updated the MAME index files to include ROMs up to MAME version 0.256
 * Bundled the May 2023 release of the Mozilla TLS/SSL certificates

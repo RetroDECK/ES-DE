@@ -2427,6 +2427,10 @@ Settings for the media viewer that is accessible from the gamelist views.
 
 Controls positioning of the navigation help prompts. The available options are _top_, _bottom_ or _disabled_.
 
+**Display media types**
+
+Whether the help prompts should include the media type of the currently viewed entry.
+
 **Keep videos running when viewing images**
 
 With this option enabled, the video will continue to run when viewing the images for the game. If disabling this setting, the video will stop immediately when browsing to the first image, and it will restart when navigating back to the video.
@@ -2961,7 +2965,7 @@ If a game video is available, then this will be played automatically when launch
 
 The following media can be displayed: _video, box cover, box back cover, title screen, screenshot_, _fan art_ and _miximage_.
 
-If the game has a downloaded PDF manual then you can view it by pressing the _up_ button which will change the media viewer to PDF viewing mode. To get back to displaying videos and images when in this mode, press the _down_ button. The navigation for this mode is identical to the game media mode.
+If the game has a downloaded PDF manual then you can view it by pressing the _up_ button which will change the media viewer to PDF viewing mode. To get back to displaying videos and images when in this mode, press the _down_ button. When in PDF viewing mode it's possible to zoom in and out using the shoulder buttons. When zoomed in, the left, right, up and down buttons will pan the view. So in order to re-enable page navigation either zoom out completely or reset the view by pressing the left or right trigger button.
 
 Pressing any other button than those mentioned above closes the media viewer.
 

@@ -5,7 +5,6 @@ ES-DE is developed using an agile methodology so which features to include per r
 A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/emulationstation-de/-/boards) board, and for previous releases the [Changelog](CHANGELOG.md) contains all relevant details.
 
 **General functionality**
-* Game manual viewer (PDF documents)
 * RetroAchievements.org integration
 * "Time played" counter per game, similar to how it works in Steam
 * Bulk metadata editor
@@ -18,7 +17,6 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 
 **User interface**
 
-* Selection between light and dark color schemes for the menu system
 * Menu reorganization, possibly adding basic/advanced modes
 * Animated menu elements like switches and tick boxes
 * Simple file browsing component
@@ -30,7 +28,6 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Removal of legacy theme support
 
 **Scraper**
-* Scraping of game manuals
 * Checksum support for the scraper for exact searches and for determining when to overwrite files
 * Support for additional scraper services
 
