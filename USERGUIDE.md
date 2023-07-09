@@ -2044,10 +2044,7 @@ It's possible to change the game media directory location from within ES-DE, for
 This menu can be accessed from both the system view and gamelist view. It contains the scraper, application settings and various tools such as the input configurator and the miximage generator. Settings are saved when navigating back from any menu screen, assuming at least one setting was changed. Using the keyboard quit shortcut (Alt + F4 / Command + Q by default) will also save any pending changes.
 
 ![alt text](images/es-de_main_menu.png "ES-DE Main Menu")
-_The main menu with its multiple submenus using the default dark menu color scheme._
-
-![alt text](images/es-de_main_menu_light.png "ES-DE Main Menu, Light")
-_The main menu using the alternative light menu color scheme._
+_The main menu with its multiple submenus._
 
 Following is a breakdown of the main menu entries.
 
