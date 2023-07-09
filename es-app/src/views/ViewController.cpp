@@ -68,7 +68,7 @@ void ViewController::setMenuColors()
         mMenuColorFrameBusyComponent = 0x090909FF;
         mMenuColorPanelDimmed = 0x00000024;
 
-        mMenuColorTitle = 0x949494FF;
+        mMenuColorTitle = 0x909090FF;
         mMenuColorPrimary = 0x808080FF;
         mMenuColorSecondary = 0x939393FF;
         mMenuColorTertiary = 0x909090FF;
@@ -79,7 +79,7 @@ void ViewController::setMenuColors()
         mMenuColorSelector = 0x050505FF;
         mMenuColorSeparators = 0x303030FF;
         mMenuColorBusyComponent = 0x888888FF;
-        mMenuColorScrollIndicators = 0x909090FF;
+        mMenuColorScrollIndicators = 0x707070FF;
         mMenuColorPopupText = 0xBBBBBBFF;
 
         mMenuColorButtonFocused = 0x050505FF;
