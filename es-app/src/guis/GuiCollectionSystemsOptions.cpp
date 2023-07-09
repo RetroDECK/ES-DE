@@ -172,6 +172,7 @@ GuiCollectionSystemsOptions::GuiCollectionSystemsOptions(std::string title)
         bracketThemeCollection->setResize(
             glm::vec2 {0.0f, Font::get(FONT_SIZE_MEDIUM)->getLetterHeight()});
         bracketThemeCollection->setImage(":/graphics/arrow.svg");
+        bracketThemeCollection->setColorShift(mMenuColorPrimary);
         row.addElement(themeCollection, true);
         row.addElement(bracketThemeCollection, false);
         row.makeAcceptInputHandler([this, unusedFolders] {
