@@ -862,26 +862,31 @@ void GuiThemeDownloader::updateInfoPane()
     if (mThemeSets[mList->getCursorId()].isCloned) {
         mDownloadStatus->setText(ViewController::TICKMARK_CHAR + " INSTALLED");
         mDownloadStatus->setColor(mMenuColorGreen);
+        mDownloadStatus->setOpacity(1.0f);
     }
     else if (mThemeSets[mList->getCursorId()].invalidRepository ||
              mThemeSets[mList->getCursorId()].manuallyDownloaded) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " MANUAL DOWNLOAD");
         mDownloadStatus->setColor(mMenuColorRed);
+        mDownloadStatus->setOpacity(1.0f);
     }
     else if (mThemeSets[mList->getCursorId()].corruptRepository) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " CORRUPT");
         mDownloadStatus->setColor(mMenuColorRed);
+        mDownloadStatus->setOpacity(1.0f);
     }
     else if (mThemeSets[mList->getCursorId()].shallowRepository) {
         mDownloadStatus->setText(ViewController::CROSSEDCIRCLE_CHAR + " SHALLOW");
         mDownloadStatus->setColor(mMenuColorRed);
+        mDownloadStatus->setOpacity(1.0f);
     }
     else {
         if (mThemeSets[mList->getCursorId()].newEntry)
             mDownloadStatus->setText("NOT INSTALLED (NEW)");
         else
             mDownloadStatus->setText("NOT INSTALLED");
-        mDownloadStatus->setColor(mMenuColorSecondary);
+        mDownloadStatus->setColor(mMenuColorPrimary);
+        mDownloadStatus->setOpacity(0.7f);
     }
     if (mThemeSets[mList->getCursorId()].hasLocalChanges) {
         mLocalChanges->setText(ViewController::EXCLAMATION_CHAR + " LOCAL CHANGES");
