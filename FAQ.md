@@ -18,7 +18,7 @@ ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distribut
 
 ## What is the relationship between ES-DE and EmuDeck?
 
-[EmuDeck](http://www.emudeck.com) is an installer that installs ES-DE and a number of emulators. It's a completely separate project and it's not required in order to use ES-DE.
+[EmuDeck](http://www.emudeck.com) is an installer that installs ES-DE and a number of emulators. There is no relationship between the two projects apart from this, and it's generally not recommended to use EmuDeck as this will lead to a non-standard installation. There are few tangible benefits to using EmuDeck over a manual installation apart from some convenience for the initial setup. Instead it's recommended to setup your emulators manually which will allow you to configure everything exactly to your liking. That is also a fun and interesting experience.
 
 ## What is the relationship between ES-DE and RetroDECK?
 

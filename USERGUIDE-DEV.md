@@ -39,23 +39,7 @@ The installation procedure is just covered briefly here and may differ a bit for
 The .deb package is intended for Ubuntu but may work on other Debian-based distributions like Linux Mint and vanilla Debian. Your distribution should include a graphical package installer, but if you prefer to use the command line, run the following which will install ES-DE and resolve any dependencies:
 
 ```
-sudo apt install ./emulationstation-de-2.0.0-x64.deb
-```
-
-**Installing the Linux .rpm package**
-
-On Fedora the RPM Fusion repository is a prerequisite for the installation, it can be installed like this:
-
-```
-sudo dnf install \
-https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
-https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
-```
-
-Then you can use the graphical package installer or run this command, either method should automatically resolve the dependencies:
-
-```
-sudo dnf install ./emulationstation-de-2.0.0-x64.rpm
+sudo apt install ./emulationstation-de-2.1.0-x64.deb
 ```
 
 **Running the Linux AppImage**
@@ -63,6 +47,11 @@ sudo dnf install ./emulationstation-de-2.0.0-x64.rpm
 The AppImage release should be usable on most modern x86 64-bit Linux distributions. After download you may have to set the file as executable, such as this:
 ```
 chmod +x EmulationStation-DE-x64.AppImage
+```
+
+Or if you're using the Steam Deck AppImage:
+```
+chmod +x EmulationStation-DE-x64_SteamDeck.AppImage
 ```
 
 To run AppImage files you need libfuse2 installed, but some newer distributions like Ubuntu 22.04 LTS no longer ship with this library preinstalled. You can however easily install it like this:
@@ -88,30 +77,31 @@ There's an application log file created in the ES-DE home directory named `es_lo
 
 After ES-DE finds at least one game file, it will populate that game system and the application will start. If there are no game files, a dialog will be shown explaining that you need to install your game files into your ROMs directory. You will also be given a choice to change that ROMs directory path if you don't want to use the default one. As well you have the option to generate the complete game systems directory structure based on information in es_systems.xml.
 
-When generating the directory structure, a file named systeminfo.txt will be created in each game system folder which will provide you with some information about the system. Here's an example for the _gc_ system as seen on Unix:
+When generating the directory structure, a file named systeminfo.txt will be created in each game system folder which will provide you with some information about the system. Here's an example for the _dos_ system as seen on Unix:
 ```
 System name:
-gc
+dos
 
 Full system name:
-Nintendo GameCube
+DOS (PC)
 
 Supported file extensions:
-.ciso .CISO .dff .DFF .dol .DOL .elf .ELF .gcm .GCM .gcz .GCZ .iso .ISO .json .JSON .m3u .M3U .rvz .RVZ .tgc .TGC .wad .WAD .wbfs .WBFS .wia .WIA .7z .7Z .zip .ZIP
+.bat .BAT .com .COM .conf .CONF .cue .CUE .dosz .DOSZ .exe .EXE .iso .ISO .7z .7Z .zip .ZIP
 
 Launch command:
-%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dolphin_libretro.so %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_pure_libretro.so %ROM%
 
 Alternative launch commands:
-%EMULATOR_DOLPHIN% -b -e %ROM%
-%EMULATOR_PRIMEHACK% -b -e %ROM%
-%EMULATOR_TRIFORCE% -b -e %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_core_libretro.so %ROM%
+%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/dosbox_svn_libretro.so %ROM%
+%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-X% %ROM%
+%STARTDIR%=%GAMEDIR% %EMULATOR_DOSBOX-STAGING% %ROM%
 
 Platform (for scraping):
-gc
+dos
 
 Theme folder:
-gc
+dos
 ```
 
 This file is not needed to run ES-DE, it's only a convenience to easily see which emulators and file extensions are supported per system.
@@ -121,12 +111,15 @@ In addition to this, a file named systems.txt will be created in the root of the
 For example:
 
 ```
-gc: Nintendo GameCube
-genesis: Sega Genesis
-gx4000: Amstrad GX4000
+dos: DOS (PC)
+dragon32: Dragon Data Dragon 32
+dreamcast: Sega Dreamcast
+easyrpg: EasyRPG Game Engine
+epic: Epic Games Store
+famicom: Nintendo Family Computer
 ```
 
-If a custom es_systems.xml file is present in ~/.emulationstation/custom_systems/ any entries from this file will have their names trailed by the text _(custom system)_. So if the GameCube system in the example above would be present in the custom systems configuration file, the system would be shown as _gc (custom system)_ instead of simply _gc_. This is only applicable for the systems.txt and systeminfo.txt files, the trailing text is not applied or used anywhere else in the application.
+If a custom es_systems.xml file is present in ~/.emulationstation/custom_systems/ any entries from this file will have their names trailed by the text _(custom system)_. So if the _dos_ system in the example above would be present in the custom systems configuration file, the system would be shown as _dos (custom system)_ instead of simply _dos_. This is only applicable for the systems.txt and systeminfo.txt files, the trailing text is not applied or used anywhere else in the application.
 
 ![alt text](images/es-de_ui_easy_setup.png "ES-DE Easy Setup")
 _This is the dialog shown if no game files were found. It lets you configure the ROM directory if you don't want to use the default one, and you can also generate the game systems directory structure. Note that the directory is the physical path, and that your operating system may present this as a localized path if you are using a language other than English._
@@ -295,7 +288,7 @@ As the Steam Deck is essentially a Linux desktop computer with a custom user int
 
 Another way to install ES-DE is via [RetroDECK](http://retrodeck.net) which is shipped as a Flatpak and can be easily installed via Discover. As RetroDECK bundles both ES-DE and all its emulators inside the Flatpak you don't need to update any emulators separately or set Flatpak permissions manually. The drawback compared to running ES-DE standalone is that less systems and emulators are supported. Most popular systems should work fine though and more emulators are getting added continuously so the situation will improve over time. Also note that if going for RetroDECK you will have a non-standard ES-DE installation so some parts of this user guide will no longer apply. For documentation specific to RetroDECK, refer to their [wiki](https://github.com/XargonWan/RetroDECK/wiki).
 
-It's also possible to install ES-DE using [EmuDeck](https://www.emudeck.com) which will automatically download the latest Steam Deck-specific AppImage. Just be aware that if using EmuDeck you will have a non-standard ES-DE installation as their installer makes some customizations to paths and other settings. This guide only covers default installations so in case you see something mentioned that doesn't match your setup, make sure to contact the EmuDeck support.
+It's also possible to install ES-DE using [EmuDeck](https://www.emudeck.com) which will automatically download the latest Steam Deck-specific AppImage. Just be aware that if using EmuDeck you will have a non-standard ES-DE installation as their installer makes some customizations to paths and other settings. For this and other reasons it's therefore not recommended to use EmuDeck, it's generally better to make a manual installation of ES-DE and your emulators and set everything up exactly to your liking.
 
 Unless RetroDECK is used, Flatpak releases of some emulators may need some extra permissions to be able to launch games placed on external devices such as a memory card. This is the case for instance for melonDS and RPCS3. The easiest way to do this is by using [Flatseal](https://flathub.org/apps/details/com.github.tchx84.Flatseal). The option you need to enable is generally _All system files_ in the _Filesystem_ section. If using EmuDeck some of these settings will be applied automatically via their installer.
 
@@ -308,6 +301,8 @@ If you are unfamiliar with Unix operating systems, make sure to at least read up
 ## Specific notes for Raspberry Pi
 
 ES-DE on the Raspberry Pi requires a desktop environment, or more specifically a window manager and a sound server (like PulseAudio or PipeWire). There are no plans to add support for direct hardware access to the framebuffer or to ALSA. If you want to use your Raspberry Pi as an appliance, take a look at [RetroPie](https://retropie.org.uk), [Recalbox](https://www.recalbox.com) or [Batocera](https://batocera.org) instead.
+
+Also note that there are no prebuilt packages for the Raspberry Pi, so you will need to compile ES-DE yourself. Fortunately this is easy to do and the process is documented [here](INSTALL-DEV.md#building-on-unix).
 
 The Raspberry Pi 4/400 is the minimum recommended version and earlier boards have not been tested. The GPU memory should be set to at least 256 MiB using `raspi-config` and the GL driver must be set to `GL (Fake KMS)` or the performance will be horrible. On Raspberry Pi OS 11 the KMS option is enabled by default.
 
@@ -483,12 +478,12 @@ Opens and closes the gamelist options menu in the gamelist view.
 **Left and right shoulder buttons**\
 _(Page up / Page down)_
 
-Provides quick jumping in textlists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it. Also used as back and blankspace keys in text edit dialogs.
+Provides quick jumping in textlists and menus, jumps 10 games in the gamelists and 6 entries in the menus. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it. Also used as back and blankspace keys in text edit dialogs and for zooming in and out when viewing PDF game manuals.
 
 **Left and right trigger buttons**\
 _(Home / End)_
 
-Jumps to the first or last entries in carousels, grids and textlists as well as in menus and text edit dialogs. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it.
+Jumps to the first or last entries in carousels, grids and textlists as well as in menus and text edit dialogs. Navigates between gamelists if the _Quick system select_ option has been set to use these buttons and the primary element supports it. Also jumps to the first or last entry/page when using the media viewer.
 
 **Left and right thumbstick click**\
 _(F2 / F3)_
@@ -646,7 +641,7 @@ The following emulators are supported in AppImage format when using the bundled 
 | gc           | Triforce    | dolphin-emu-triforce*.AppImage  |
 | macintosh    | Basilisk II | BasiliskII*.AppImage            |
 | macintosh    | SheepShaver | SheepShaver*.AppImage           |
-| n3ds         | Citra       | citra-linux-*.AppImage          |
+| n3ds         | Citra       | citra-*.AppImage                |
 | n64          | RMG         | RMG*.AppImage                   |
 | n64dd        | RMG         | RMG*.AppImage                   |
 | ps2          | PCSX2       | pcsx2*-Qt.AppImage              |
@@ -866,7 +861,7 @@ Also in this case the directory will be displayed as a regular game file inside 
 
 ### Folder flattening
 
-**This functionality is experimental and may cause all sorts of issues including corrupting your gamelist.xml files, so make sure to have backups of your data prior to attempting to use this.**
+**This functionality is experimental and may cause all sorts of issues like corrupting your gamelist.xml files, so make sure to have backups of your data prior to attempting to use this.**
 
 ES-DE works according to the filesystem paradigm used on most operating systems, meaning the file and directory structure of your ROMs directory is reflected inside the application. So if you create a directory on the filesystem and place some games in there, it will be reflected inside ES-DE as a folder that you can enter and launch games from.
 
@@ -2432,7 +2427,7 @@ Controls positioning of the navigation help prompts. The available options are _
 
 **Display media types**
 
-Whether the help prompts should include the media type of the currently viewed entry.
+Whether the help prompts should display the media type for the current entry, i.e. _video, box cover, box back cover, title screen, screenshot, fan art_ or _miximage_.
 
 **Keep videos running when viewing images**
 
