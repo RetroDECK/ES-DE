@@ -76,7 +76,7 @@ void ViewController::setMenuColors()
         mMenuColorGreen = 0x449944FF;
         mMenuColorBlue = 0x4757ddff;
 
-        mMenuColorSelector = 0x050505FF;
+        mMenuColorSelector = 0x000000FF;
         mMenuColorSeparators = 0x303030FF;
         mMenuColorBusyComponent = 0x888888FF;
         mMenuColorScrollIndicators = 0x707070FF;
