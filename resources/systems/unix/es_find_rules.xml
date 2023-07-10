@@ -439,9 +439,9 @@
             <entry>pcsx2-qt</entry>
         </rule>
         <rule type="staticpath">
-            <entry>~/Applications/pcsx2*-Qt.AppImage</entry>
-            <entry>~/.local/bin/pcsx2*-Qt.AppImage</entry>
-            <entry>~/bin/pcsx2*-Qt.AppImage</entry>
+            <entry>~/Applications/pcsx2*.AppImage</entry>
+            <entry>~/.local/bin/pcsx2*.AppImage</entry>
+            <entry>~/bin/pcsx2*.AppImage</entry>
         </rule>
     </emulator>
     <emulator name="PCSX2-LEGACY">
