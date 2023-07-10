@@ -25,6 +25,9 @@ rm -rf curl*
 curl -O https://curl.se/windows/dl-8.1.2_3/curl-8.1.2_3-win64-mingw.zip
 unzip curl-8.1.2_3-win64-mingw.zip
 
+# Needed due to some kind of file system race condition that sometimes occurs on Windows.
+sleep 2
+
 if [ ! -d curl-8.1.2_3-win64-mingw ]; then
   echo "curl directory is missing, aborting."
   exit
@@ -39,6 +42,8 @@ rm -rf glew*
 
 curl -LO https://sourceforge.net/projects/glew/files/glew/2.1.0/glew-2.1.0.zip
 unzip glew-2.1.0.zip
+
+sleep 2
 
 if [ ! -d glew-2.1.0 ]; then
   echo "GLEW directory is missing, aborting."
@@ -123,8 +128,9 @@ rm -rf SDL2*
 curl -O https://libsdl.org/release/SDL2-devel-2.28.1-mingw.tar.gz
 
 tar xvzf SDL2-devel-2.28.1-mingw.tar.gz
+
 # Needed due to some kind of file system race condition that sometimes occurs on Windows.
-sleep 1
+sleep 2
 
 if [ ! -d SDL2-2.28.1 ]; then
   echo "SDL directory is missing, aborting."
@@ -143,6 +149,8 @@ rm -rf ffmpeg*
 # This package should be available for download for two years.
 curl -LO https://github.com/BtbN/FFmpeg-Builds/releases/download/autobuild-2023-05-31-12-47/ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
 unzip ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0.zip
+
+sleep 2
 
 if [ ! -d ffmpeg-n6.0-22-g549430e14d-win64-gpl-shared-6.0 ]; then
   echo "FFmpeg directory is missing, aborting."
