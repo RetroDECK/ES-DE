@@ -57,6 +57,7 @@ namespace PlatformIds
         "fds",                  // Nintendo Famicom Disk System
         "flash",                // Adobe Flash
         "fmtowns",              // Fujitsu FM Towns
+        "fpinball",             // Future Pinball
         "gameandwatch",         // Nintendo Game and Watch
         "gamecom",              // Tiger Electronics Game.com
         "gamegear",             // Sega Game Gear

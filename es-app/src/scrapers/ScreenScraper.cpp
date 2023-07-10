@@ -152,6 +152,7 @@ namespace
         {SEGA_NAOMI, 56},
         {THOMSON_MOTO, 141},
         {UZEBOX, 216},
+        {FUTURE_PINBALL, 199},
         {WATARA_SUPERVISION, 207},
         {SPECTRAVIDEO, 218},
         {PALM_OS, 219}};

@@ -214,6 +214,10 @@
         <systemsortname>Fujitsu - Console - 1993</systemsortname>
     </system>
     <system>
+        <name>fpinball</name>
+        <systemsortname>Christopher Leathley - Engine - 2005</systemsortname>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <systemsortname>Nintendo - Portable - 1980</systemsortname>
     </system>

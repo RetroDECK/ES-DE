@@ -214,6 +214,10 @@
         <systemsortname>Fujitsu - 1993</systemsortname>
     </system>
     <system>
+        <name>fpinball</name>
+        <systemsortname>Christopher Leathley - 2005</systemsortname>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <systemsortname>Nintendo - 1980</systemsortname>
     </system>

@@ -51,6 +51,7 @@ Emulators\fbneo\fbneo64.exe
 Emulators\fbneo\fbneo.exe
 Emulators\flycast\flycast.exe
 Emulators\Fuse\fuse.exe
+Emulators\Future Pinball\Future Pinball.exe
 Emulators\gargoyle\gargoyle.exe
 Emulators\Gearboy\Gearboy.exe
 Emulators\gopher2600\gopher2600_windows_amd64.exe

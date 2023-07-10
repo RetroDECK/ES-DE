@@ -595,6 +595,15 @@
         <theme>fmtowns</theme>
     </system>
     <system>
+        <name>fpinball</name>
+        <fullname>Future Pinball</fullname>
+        <path>%ROMPATH%/fpinball</path>
+        <extension>.fpt .FPT</extension>
+        <command label="Future Pinball (Standalone)">PLACEHOLDER %ROM%</command>
+        <platform>fpinball</platform>
+        <theme>fpinball</theme>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <fullname>Nintendo Game and Watch</fullname>
         <path>%ROMPATH%/gameandwatch</path>

@@ -214,6 +214,10 @@
         <systemsortname>1993</systemsortname>
     </system>
     <system>
+        <name>fpinball</name>
+        <systemsortname>2005</systemsortname>
+    </system>
+    <system>
         <name>gameandwatch</name>
         <systemsortname>1980</systemsortname>
     </system>
