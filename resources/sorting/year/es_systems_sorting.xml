@@ -182,6 +182,10 @@
         <systemsortname>2007</systemsortname>
     </system>
     <system>
+        <name>emulators</name>
+        <systemsortname>0000</systemsortname>
+    </system>
+    <system>
         <name>epic</name>
         <systemsortname>2018</systemsortname>
     </system>

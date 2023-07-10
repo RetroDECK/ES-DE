@@ -182,6 +182,10 @@
         <systemsortname>Engine - 2007</systemsortname>
     </system>
     <system>
+        <name>emulators</name>
+        <systemsortname>Folder - 0000</systemsortname>
+    </system>
+    <system>
         <name>epic</name>
         <systemsortname>Folder - 2018</systemsortname>
     </system>

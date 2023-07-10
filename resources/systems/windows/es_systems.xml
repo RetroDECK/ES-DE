@@ -506,6 +506,16 @@
         <theme>easyrpg</theme>
     </system>
     <system>
+        <name>emulators</name>
+        <fullname>Emulators</fullname>
+        <path>%ROMPATH%\emulators</path>
+        <extension>.bat .BAT .lnk .LNK</extension>
+        <command label="Suspend ES-DE">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Keep ES-DE running">%HIDEWINDOW% %ESCAPESPECIALS% %RUNINBACKGROUND% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>emulators</theme>
+    </system>
+    <system>
         <name>epic</name>
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%\epic</path>

@@ -491,6 +491,16 @@
         <theme>easyrpg</theme>
     </system>
     <system>
+        <name>emulators</name>
+        <fullname>Emulators</fullname>
+        <path>%ROMPATH%/emulators</path>
+        <extension>.app .sh</extension>
+        <command label="Suspend ES-DE">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Keep ES-DE running">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <platform>pcwindows</platform>
+        <theme>emulators</theme>
+    </system>
+    <system>
         <name>epic</name>
         <fullname>Epic Games Store</fullname>
         <path>%ROMPATH%/epic</path>
