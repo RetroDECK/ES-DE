@@ -14,7 +14,7 @@
 #define PROGRAM_VERSION_MAJOR        2
 #define PROGRAM_VERSION_MINOR        1
 #define PROGRAM_VERSION_MAINTENANCE  0
-#define PROGRAM_RELEASE_NUMBER       33
+#define PROGRAM_RELEASE_NUMBER       34
 // clang-format on
 #define PROGRAM_VERSION_STRING "2.1.0-beta"
 
