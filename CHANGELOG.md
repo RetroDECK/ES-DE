@@ -29,18 +29,26 @@ For the Linux AppImage releases a built-in application updater has been added so
 * Added options to the video and slideshow screensavers to only include favorite games
 * Added a per-system game count to the multi-scraper
 * Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
+* Added support for the Emulators (emulators) game system
+* Added support for the Hartung Game Master (gmaster) game system
 * Added support for the LowRes NX Fantasy Console (lowresnx) game system
 * Added support for the Epoch Super Cassette Vision (scv) game system
+* (Windows) Added support for the Future Pinball (fpinball) game system
+* (Windows) Added support for the Visual Pinball (vpinball) game system
 * Added the SameBoy RetroArch core as an alternative emulator for the sgb system
 * Added an sgb (Nintendo Super Game Boy) platform to improve scraping when using ScreenScraper
 * Added MAME standalone as an alternative emulator for the amstradcpc, cdimono1 and x68000 systems
 * Added ares standalone as an alternative emulator for the n64dd system
 * Added ares [Benesse Pocket Challenge V2] standalone as an alternative emulator for the wonderswan system
 * Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
+* (Linux) Changed a lot of find rules so that emulator AppImages are always searched before Flatpaks
 * (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the windows system
 * (Linux) Added the .AppImage file extension to the windows system
 * (Linux) Added support for the official Citra AppImage release
+* (Linux) Changed the PCSX2 AppImage find rule to pcsx2*.AppImage to cover for the constantly changing filenames for this package
+* (Windows) Replaced many unnecessary find rules with the ability to relocate the Emulators directory one level higher in the hierarchy
 * (Windows) Added pcsx2-qt.exe as the primary executable name for the PCSX2 emulator
+* (Windows) Added find rule entries for the xenia canary release
 * Added support for scraping the arduboy and ps4 systems using ScreenScraper
 * Improved resilience to buggy controller drivers which could previously crash the application (mostly relevant for macOS)
 * Removed the experimental status for the theme downloader
