@@ -767,6 +767,16 @@
             <entry>%ESPATH%\..\Emulators\VICE\bin\xvic.exe</entry>
         </rule>
     </emulator>
+    <emulator name="VISUAL-PINBALL">
+        <!-- Pinball simulator Visual Pinball -->
+        <rule type="systempath">
+            <entry>VPinballX.exe</entry>
+        </rule>
+        <rule type="staticpath">
+            <entry>%ESPATH%\Emulators\Visual Pinball\VPinballX.exe</entry>
+            <entry>%ESPATH%\..\Emulators\Visual Pinball\VPinballX.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="VITA3K">
         <!-- Sony PlayStation Vita emulator Vita3K -->
         <rule type="systempath">

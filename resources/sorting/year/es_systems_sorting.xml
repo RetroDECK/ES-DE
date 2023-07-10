@@ -650,6 +650,10 @@
         <systemsortname>1995</systemsortname>
     </system>
     <system>
+        <name>vpinball</name>
+        <systemsortname>2000</systemsortname>
+    </system>
+    <system>
         <name>vsmile</name>
         <systemsortname>2004</systemsortname>
     </system>

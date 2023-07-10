@@ -99,6 +99,7 @@ Emulators\VICE\x64sc.exe
 Emulators\VICE\bin\x64sc.exe
 Emulators\VICE\xvic.exe
 Emulators\VICE\bin\xvic.exe
+Emulators\Visual Pinball\VPinballX.exe
 Emulators\Vita3K\Vita3K.exe
 Emulators\xemu\xemu.exe
 Emulators\xenia\xenia.exe

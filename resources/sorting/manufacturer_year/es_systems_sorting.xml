@@ -650,6 +650,10 @@
         <systemsortname>Nintendo - 1995</systemsortname>
     </system>
     <system>
+        <name>vpinball</name>
+        <systemsortname>Visual Pinball Team - 2000</systemsortname>
+    </system>
+    <system>
         <name>vsmile</name>
         <systemsortname>VTech - 2004</systemsortname>
     </system>

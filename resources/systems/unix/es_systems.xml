@@ -1819,6 +1819,15 @@
         <theme>virtualboy</theme>
     </system>
     <system>
+        <name>vpinball</name>
+        <fullname>Visual Pinball</fullname>
+        <path>%ROMPATH%/vpinball</path>
+        <extension>.vpt .VPT .vpx .VPX</extension>
+        <command label="Visual Pinball (Standalone)">PLACEHOLDER %ROM%</command>
+        <platform>vpinball</platform>
+        <theme>vpinball</theme>
+    </system>
+    <system>
         <name>vsmile</name>
         <fullname>VTech V.Smile</fullname>
         <path>%ROMPATH%/vsmile</path>

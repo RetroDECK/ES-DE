@@ -650,6 +650,10 @@
         <systemsortname>Portable - 1995</systemsortname>
     </system>
     <system>
+        <name>vpinball</name>
+        <systemsortname>Engine - 2000</systemsortname>
+    </system>
+    <system>
         <name>vsmile</name>
         <systemsortname>Console - 2004</systemsortname>
     </system>

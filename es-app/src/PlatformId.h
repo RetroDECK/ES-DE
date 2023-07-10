@@ -139,6 +139,7 @@ namespace PlatformIds
         COMMODORE_VIC20,
         PHILIPS_VIDEOPAC,
         NINTENDO_VIRTUAL_BOY,
+        VISUAL_PINBALL,
         VTECH_VSMILE,
         GAMEENGINE_WASM4,
         NINTENDO_WII,
