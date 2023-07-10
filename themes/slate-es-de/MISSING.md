@@ -34,6 +34,7 @@
 * desktop: Desktop applications - consolegame.svg, controller.svg
 * dragon32: Dragon Data Dragon 32 - consolegame.svg, controller.svg
 * easyrpg: EasyRPG Game Engine - consolegame.svg, controller.svg
+* emulators: Emulators - consolegame.svg, controller.svg
 * epic: Epic Games Store - consolegame.svg, controller.svg
 * flash: Adobe Flash - consolegame.svg, controller.svg
 * fmtowns: Fujitsu FM Towns - consolegame.svg, controller.svg
