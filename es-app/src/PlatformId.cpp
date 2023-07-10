@@ -65,6 +65,7 @@ namespace PlatformIds
         "gbc",                  // Nintendo Game Boy Color
         "gc",                   // Nintendo GameCube
         "genesis",              // Sega Genesis
+        "gmaster",              // Hartung Game Master
         "gx4000",               // Amstrad GX4000
         "intellivision",        // Mattel Electronics Intellivision
         "lcdgames",             // LCD Handheld Games

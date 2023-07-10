@@ -246,6 +246,10 @@
         <systemsortname>Sega - Console - 1989</systemsortname>
     </system>
     <system>
+        <name>gmaster</name>
+        <systemsortname>Hartung - Portable - 1990</systemsortname>
+    </system>
+    <system>
         <name>gx4000</name>
         <systemsortname>Amstrad - Console - 1990</systemsortname>
     </system>

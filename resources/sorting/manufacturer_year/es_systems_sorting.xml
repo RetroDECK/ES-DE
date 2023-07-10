@@ -246,6 +246,10 @@
         <systemsortname>Sega - 1989</systemsortname>
     </system>
     <system>
+        <name>gmaster</name>
+        <systemsortname>Hartung - 1990</systemsortname>
+    </system>
+    <system>
         <name>gx4000</name>
         <systemsortname>Amstrad - 1990</systemsortname>
     </system>

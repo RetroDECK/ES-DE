@@ -66,6 +66,7 @@ namespace
         {GAMEENGINE_LUTRO, 206},
         {GAMEENGINE_LOWRES_NX, 244},
         {GAMEENGINE_WASM4, 262},
+        {HARTUNG_GAME_MASTER, 103},
         {APPLE_MACINTOSH, 146},
         {GOOGLE_ANDROID, 63},
         {LCD_GAMES, 75},

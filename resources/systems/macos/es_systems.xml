@@ -688,6 +688,15 @@
         <theme>genesis</theme>
     </system>
     <system>
+        <name>gmaster</name>
+        <fullname>Hartung Game Master</fullname>
+        <path>%ROMPATH%/gmaster</path>
+        <extension>.bin .BIN .7z .7Z .zip .ZIP</extension>
+        <command label="MAME (Standalone)">%STARTDIR%=~/.mame %EMULATOR_MAME% -rompath %GAMEDIR%\;%ROMPATH%/gmaster gmaster -cart %ROM%</command>
+        <platform>gmaster</platform>
+        <theme>gmaster</theme>
+    </system>
+    <system>
         <name>gx4000</name>
         <fullname>Amstrad GX4000</fullname>
         <path>%ROMPATH%/gx4000</path>

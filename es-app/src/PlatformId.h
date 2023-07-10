@@ -64,6 +64,7 @@ namespace PlatformIds
         NINTENDO_GAME_BOY_COLOR,
         NINTENDO_GAMECUBE,
         SEGA_GENESIS,
+        HARTUNG_GAME_MASTER,
         AMSTRAD_GX4000,
         INTELLIVISION,
         LCD_GAMES,
