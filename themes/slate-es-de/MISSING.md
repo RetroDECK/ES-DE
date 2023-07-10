@@ -95,6 +95,7 @@
 * vectrex: Smith Engineering Vectrex - consolegame.svg (needs simplification as it takes a long time to rasterize)
 * videopac: Magnavox Videopac (Odyssey 2) - update all info and graphics to differentiate European version from USA version
 * virtualboy: Nintendo Virtual Boy - consolegame.svg (needs simplification as it takes a long time to rasterize)
+* vpinball: Visual Pinball - consolegame.svg, controller.svg
 * vsmile: VTech V.Smile - consolegame.svg, controller.svg
 * wasm4: WASM-4 Fantasy Console - consolegame.svg, controller.svg
 * x1:  Sharp X1 - consolegame.svg
