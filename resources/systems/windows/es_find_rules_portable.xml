@@ -537,6 +537,8 @@
         <rule type="staticpath">
             <entry>%ESPATH%\Emulators\xenia\xenia.exe</entry>
             <entry>%ESPATH%\..\Emulators\xenia\xenia.exe</entry>
+            <entry>%ESPATH%\Emulators\xenia_canary\xenia_canary.exe</entry>
+            <entry>%ESPATH%\..\Emulators\xenia_canary\xenia_canary.exe</entry>
         </rule>
     </emulator>
     <emulator name="XROAR">
