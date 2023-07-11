@@ -12,7 +12,6 @@
         <rule type="systempath">
             <entry>retroarch</entry>
             <entry>org.libretro.RetroArch</entry>
-            <entry>RetroArch-Linux-x86_64.AppImage</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/RetroArch-Linux*.AppImage</entry>
