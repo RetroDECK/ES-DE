@@ -12,6 +12,7 @@
 #define ES_APP_GUIS_GUI_SCRAPER_MENU_H
 
 #include "components/MenuComponent.h"
+#include "components/SliderComponent.h"
 #include "guis/GuiSettings.h"
 #include "scrapers/Scraper.h"
 #include "views/ViewController.h"
@@ -54,6 +55,7 @@ private:
     std::shared_ptr<OptionListComponent<std::string>> mScraper;
     std::shared_ptr<OptionListComponent<GameFilterFunc>> mFilters;
     std::shared_ptr<OptionListComponent<SystemData*>> mSystems;
+    std::shared_ptr<SliderComponent> mScraperRetryOnErrorCount;
 
     MenuComponent mMenu;
 };

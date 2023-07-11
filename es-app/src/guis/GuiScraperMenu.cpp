@@ -14,7 +14,6 @@
 #include "FileSorts.h"
 #include "SystemData.h"
 #include "components/OptionListComponent.h"
-#include "components/SliderComponent.h"
 #include "components/SwitchComponent.h"
 #include "guis/GuiMsgBox.h"
 #include "guis/GuiOfflineGenerator.h"
@@ -867,15 +866,16 @@ void GuiScraperMenu::openOtherOptions()
     }
 
     // Automatic retries on error.
-    auto scraperRetryOnErrorCount = std::make_shared<SliderComponent>(0.0f, 10.0f, 1.0f);
-    scraperRetryOnErrorCount->setValue(
+    mScraperRetryOnErrorCount = std::make_shared<SliderComponent>(0.0f, 10.0f, 1.0f);
+    mScraperRetryOnErrorCount->setValue(
         static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorCount")));
-    s->addWithLabel("AUTOMATIC RETRIES ON ERROR", scraperRetryOnErrorCount);
-    s->addSaveFunc([scraperRetryOnErrorCount, s] {
-        if (scraperRetryOnErrorCount->getValue() !=
+    s->addWithLabel("AUTOMATIC RETRIES ON ERROR", mScraperRetryOnErrorCount);
+    s->addSaveFunc([this, s] {
+        if (mScraperRetryOnErrorCount->getValue() !=
             static_cast<float>(Settings::getInstance()->getInt("ScraperRetryOnErrorCount"))) {
-            Settings::getInstance()->setInt("ScraperRetryOnErrorCount",
-                                            static_cast<int>(scraperRetryOnErrorCount->getValue()));
+            Settings::getInstance()->setInt(
+                "ScraperRetryOnErrorCount",
+                static_cast<int>(mScraperRetryOnErrorCount->getValue()));
             s->setNeedsSaving();
         }
     });
@@ -894,7 +894,7 @@ void GuiScraperMenu::openOtherOptions()
         }
     });
 
-    if (scraperRetryOnErrorCount->getValue() == 0.0f) {
+    if (mScraperRetryOnErrorCount->getValue() == 0.0f) {
         scraperRetryOnErrorTimer->setEnabled(false);
         scraperRetryOnErrorTimer->setOpacity(DISABLED_OPACITY);
         scraperRetryOnErrorTimer->getParent()
@@ -1087,8 +1087,8 @@ void GuiScraperMenu::openOtherOptions()
     }
 
     // Slider callback.
-    auto scraperRetryCountFunc = [scraperRetryOnErrorCount, scraperRetryOnErrorTimer]() {
-        if (scraperRetryOnErrorCount->getValue() == 0.0f) {
+    auto scraperRetryCountFunc = [this, scraperRetryOnErrorTimer]() {
+        if (mScraperRetryOnErrorCount->getValue() == 0.0f) {
             scraperRetryOnErrorTimer->setEnabled(false);
             scraperRetryOnErrorTimer->setOpacity(DISABLED_OPACITY);
             scraperRetryOnErrorTimer->getParent()
@@ -1139,7 +1139,7 @@ void GuiScraperMenu::openOtherOptions()
         }
     };
 
-    scraperRetryOnErrorCount->setCallback(scraperRetryCountFunc);
+    mScraperRetryOnErrorCount->setCallback(scraperRetryCountFunc);
     scraperInteractive->setCallback(interactiveToggleFunc);
     scraperRespectExclusions->setCallback(excludeRecursivelyToggleFunc);
 
