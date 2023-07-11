@@ -657,6 +657,46 @@ The following emulators are supported in AppImage format when using the bundled 
 
 _RMG = Rosalie's Mupen GUI_
 
+## AppImage vs Flatpak search order on Linux
+
+As of ES-DE 2.1.0 emulator AppImages are always searched before Flatpaks while in previous releases the opposite was true.
+
+To clarify with an example, this is what the find rule entry for the Dolphin emulator looks like:
+```
+<emulator name="DOLPHIN">
+    <!-- Nintendo GameCube and Wii emulator Dolphin -->
+    <rule type="systempath">
+        <entry>dolphin-emu</entry>
+        <entry>org.DolphinEmu.dolphin-emu</entry>
+    </rule>
+    <rule type="staticpath">
+        <entry>~/Applications/Dolphin_Emulator*.AppImage</entry>
+        <entry>~/.local/bin/Dolphin_Emulator*.AppImage</entry>
+        <entry>~/bin/Dolphin_Emulator*.AppImage</entry>
+        <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
+        <entry>~/.local/share/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
+    </rule>
+</emulator>
+```
+
+The _staticpath_ rules are always parsed in the order they are defined, and as the AppImage entries are listed above the Flatpak entries, these will be searched first.
+
+There is however a workaround available to launch the Flatpak first, should you prefer that. As you can see in the above example there is also a _systempath_ entry for the Flatpak launch file, and by manually defining the path to your Flatpak bin directory you can make use of this systempath entry instead, which will always be executed before the staticpath entries.
+
+For example if using the ES-DE AppImage release, this would be the command to execute:
+```
+PATH=/var/lib/flatpak/exports/bin:~/.local/share/flatpak/exports/bin:$PATH ./EmulationStation-DE-x64.AppImage
+```
+
+Obviously you would need to change the path to the AppImage if it's not in your current working directory.
+
+You can also set the PATH variable permanently in your shell environment configuration file:
+```
+export PATH=/var/lib/flatpak/exports/bin:~/.local/share/flatpak/exports/bin:$PATH
+```
+
+Refer to your operating system documentation for more details of how the PATH environmental variable works and how to customize your shell environment.
+
 ## Using manually downloaded emulators on Linux
 
 Normally on Linux you would install emulators using either one of the established cross-distribution package formats, i.e. AppImage, Snap or Flatpak, or you would install them using the operating system repository (including the AUR if available on your OS). Less likely would be to manually build from source code and install to a standard system directory. In all these instances ES-DE should be able to find the emulator when launching a game. But in some cases you may instead manually download an emulator as an archive file to unzip somewhere on the file system. Normally you would want to place these files in your home directory, and if running a distribution that has an immutable filesystem (such as SteamOS or Fedora Silverblue), you don't even have the choice to install them to a standard system directory.

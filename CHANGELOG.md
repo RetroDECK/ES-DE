@@ -42,6 +42,7 @@ For the Linux AppImage releases a built-in application updater has been added so
 * Added ares [Benesse Pocket Challenge V2] standalone as an alternative emulator for the wonderswan system
 * Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
 * (Linux) Changed a lot of find rules so that emulator AppImages are always searched before Flatpaks
+* (Linux) Removed the AppImage systempath find rule entry for RetroArch
 * (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the windows system
 * (Linux) Added the .AppImage file extension to the windows system
 * (Linux) Added support for the official Citra AppImage release

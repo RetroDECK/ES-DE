@@ -1510,6 +1510,13 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Unix -->
 <ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>bash</entry>
+            <entry>sh</entry>
+        </rule>
+    </emulator>
     <emulator name="RETROARCH">
         <rule type="systempath">
             <entry>retroarch</entry>
@@ -1517,11 +1524,11 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
             <entry>RetroArch-Linux-x86_64.AppImage</entry>
         </rule>
         <rule type="staticpath">
+            <entry>~/Applications/RetroArch-Linux*.AppImage</entry>
+            <entry>~/.local/bin/RetroArch-Linux*.AppImage</entry>
+            <entry>~/bin/RetroArch-Linux*.AppImage</entry>
             <entry>/var/lib/flatpak/exports/bin/org.libretro.RetroArch</entry>
             <entry>~/.local/share/flatpak/exports/bin/org.libretro.RetroArch</entry>
-            <entry>~/Applications/RetroArch-Linux-x86_64.AppImage</entry>
-            <entry>~/.local/bin/RetroArch-Linux-x86_64.AppImage</entry>
-            <entry>~/bin/RetroArch-Linux-x86_64.AppImage</entry>
         </rule>
     </emulator>
     <core name="RETROARCH">
@@ -1544,7 +1551,7 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
             <entry>/usr/pkg/lib/libretro</entry>
         </rule>
     </core>
-    <emulator name="DOSBOX_STAGING">
+    <emulator name="DOSBOX-STAGING">
         <!-- DOS emulator DOSBox Staging -->
         <rule type="systempath">
             <entry>dosbox-staging</entry>
@@ -1552,6 +1559,7 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
         </rule>
         <rule type="staticpath">
             <entry>/var/lib/flatpak/exports/bin/io.github.dosbox-staging</entry>
+            <entry>~/.local/share/flatpak/exports/bin/io.github.dosbox-staging</entry>
         </rule>
     </emulator>
     <emulator name="YUZU">
@@ -1559,13 +1567,13 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
         <rule type="systempath">
             <entry>yuzu</entry>
             <entry>org.yuzu_emu.yuzu</entry>
-            <entry>yuzu.AppImage</entry>
         </rule>
         <rule type="staticpath">
-            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
             <entry>~/Applications/yuzu*.AppImage</entry>
             <entry>~/.local/bin/yuzu*.AppImage</entry>
             <entry>~/bin/yuzu*.AppImage</entry>
+            <entry>/var/lib/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
+            <entry>~/.local/share/flatpak/exports/bin/org.yuzu_emu.yuzu</entry>
         </rule>
     </emulator>
 </ruleList>
@@ -1631,6 +1639,13 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for macOS -->
 <ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>zsh</entry>
+            <entry>bash</entry>
+        </rule>
+    </emulator>
     <emulator name="RETROARCH">
         <rule type="staticpath">
             <entry>/Applications/RetroArch.app/Contents/MacOS/RetroArch</entry>
@@ -1672,6 +1687,12 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
 <?xml version="1.0"?>
 <!-- This is the ES-DE find rules configuration file for Windows -->
 <ruleList>
+    <emulator name="OS-SHELL">
+        <!-- Operating system shell -->
+        <rule type="systempath">
+            <entry>cmd.exe</entry>
+        </rule>
+    </emulator>
     <emulator name="RETROARCH">
         <rule type="winregistrypath">
             <!-- Check for an App Paths entry in the Windows Registry -->
@@ -1698,10 +1719,8 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
             <!-- Portable installation -->
             <entry>%ESPATH%\Emulators\RetroArch-Win64\retroarch.exe</entry>
             <entry>%ESPATH%\Emulators\RetroArch\retroarch.exe</entry>
-            <entry>%ESPATH%\RetroArch-Win64\retroarch.exe</entry>
-            <entry>%ESPATH%\RetroArch\retroarch.exe</entry>
-            <entry>%ESPATH%\..\RetroArch-Win64\retroarch.exe</entry>
-            <entry>%ESPATH%\..\RetroArch\retroarch.exe</entry>
+            <entry>%ESPATH%\..\Emulators\RetroArch-Win64\retroarch.exe</entry>
+            <entry>%ESPATH%\..\Emulators\RetroArch\retroarch.exe</entry>
         </rule>
     </emulator>
     <core name="RETROARCH">
@@ -1711,18 +1730,14 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
     </core>
     <emulator name="PCSX2">
         <!-- Sony PlayStation 2 emulator PCSX2 -->
-        <rule type="winregistryvalue">
-            <entry>SOFTWARE\PCSX2\Install_Dir|\pcsx2.exe</entry>
-        </rule>
         <rule type="systempath">
-            <entry>pcsx2.exe</entry>
+            <entry>pcsx2-qt.exe</entry>
+            <entry>pcsx2-qtx64.exe</entry>
+            <entry>pcsx2-qtx64-avx2.exe</entry>
         </rule>
         <rule type="staticpath">
-            <entry>C:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
-            <entry>D:\Program Files (x86)\PCSX2\pcsx2.exe</entry>
-            <entry>%ESPATH%\Emulators\PCSX2\pcsx2.exe</entry>
-            <entry>%ESPATH%\PCSX2\pcsx2.exe</entry>
-            <entry>%ESPATH%\..\PCSX2\pcsx2.exe</entry>
+            <entry>%ESPATH%\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
+            <entry>%ESPATH%\..\Emulators\PCSX2-Qt\pcsx2-qt*.exe</entry>
         </rule>
     </emulator>
     <emulator name="YUZU">
@@ -1733,8 +1748,7 @@ For reference, here are also example es_find_rules.xml files for macOS and Windo
         <rule type="staticpath">
             <entry>~\AppData\Local\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
             <entry>%ESPATH%\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
-            <entry>%ESPATH%\..\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
+            <entry>%ESPATH%\..\Emulators\yuzu\yuzu-windows-msvc\yuzu.exe</entry>
         </rule>
     </emulator>
 </ruleList>
