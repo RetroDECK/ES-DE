@@ -23,6 +23,7 @@ For the Linux AppImage releases a built-in application updater has been added so
 * Bundled four complete es_systems_sorting.xml files with the application (they can be found in the resources/sorting/ directory)
 * Placing an es_find_rules.xml file in custom_systems will now complement rather than override the bundled file
 * Added help prompts to the media viewer
+* Changed the media viewer to using linear interpolation scaling for the box cover, box back cover and fan art images
 * Added trigger button support to the media viewer for jumping to the first and last entries
 * Added trigger button support to the theme downloader screenshot viewer for jumping to the first and last entries
 * Added a game manual badge to indicate whether a game has a downloaded PDF manual
@@ -77,6 +78,7 @@ For the Linux AppImage releases a built-in application updater has been added so
 
 * (Windows) The log output time stamp was missing in es_log.txt when built using MinGW
 * The scraper auto-retry functionality was triggered when scraping manually
+* There was a small memory leak in GuiScraperMenu related to the retry sliders
 * TextureResource::initFromPixels() was not setting the source size correctly
 * The fallback to argv[0] in FileSystemUtil::setExePath() was not working correctly
 

@@ -662,7 +662,7 @@ _RMG = Rosalie's Mupen GUI_
 As of ES-DE 2.1.0 emulator AppImages are always searched before Flatpaks while in previous releases the opposite was true.
 
 To clarify with an example, this is what the find rule entry for the Dolphin emulator looks like:
-```
+```xml
 <emulator name="DOLPHIN">
     <!-- Nintendo GameCube and Wii emulator Dolphin -->
     <rule type="systempath">

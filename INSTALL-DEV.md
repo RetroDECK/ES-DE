@@ -559,7 +559,12 @@ macOS code signing is beyond the scope of this document, but the CMake option MA
 cmake -DMACOS_CODESIGN_IDENTITY="My Name" .
 ```
 
-Assuming the code signing ceritificate is properly setup in Keychain Access, the process will be automatic and the resulting DMG package can be notarized as-is. For some reason code signing fails if run via an SSH session, so in order for the cpack command to succeed it needs to run from a terminal window started via the GUI.
+Assuming the code signing ceritificate is properly setup in Keychain Access, the process will be automatic and the resulting DMG package can be notarized as-is. In order to run cpack from an SSH session you first need to run the following command:
+```
+security unlock-keychain
+```
+
+This is not required if cpack is run from a terminal window started via the desktop interface as the keychain is unlocked as part of the desktop login.
 
 **Legacy build**
 
@@ -1521,7 +1526,6 @@ Here's an example es_find_rules.xml file for Unix (this is not the complete file
         <rule type="systempath">
             <entry>retroarch</entry>
             <entry>org.libretro.RetroArch</entry>
-            <entry>RetroArch-Linux-x86_64.AppImage</entry>
         </rule>
         <rule type="staticpath">
             <entry>~/Applications/RetroArch-Linux*.AppImage</entry>
