@@ -303,7 +303,7 @@ bool GuiApplicationUpdater::installAppImage()
         return true;
     }
 
-    const std::string packageOldFile {packageTargetFile + "_OLD_" + PROGRAM_VERSION_STRING};
+    const std::string packageOldFile {packageTargetFile + "_" + PROGRAM_VERSION_STRING + ".OLD"};
 
     if (Utils::FileSystem::renameFile(packageTargetFile, packageOldFile, true)) {
         const std::string errorMessage {
