@@ -1283,7 +1283,7 @@
         <fullname>Ports</fullname>
         <path>%ROMPATH%/ports</path>
         <extension>.app .sh</extension>
-        <command label="Various">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <platform>pc, pcwindows</platform>
         <theme>ports</theme>
     </system>

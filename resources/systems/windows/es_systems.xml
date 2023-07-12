@@ -1322,7 +1322,7 @@
         <fullname>Ports</fullname>
         <path>%ROMPATH%\ports</path>
         <extension>.bat .BAT .lnk .LNK</extension>
-        <command label="Various">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
+        <command label="Shortcut or script">%HIDEWINDOW% %ESCAPESPECIALS% %EMULATOR_OS-SHELL% /C %ROM%</command>
         <platform>pc, pcwindows</platform>
         <theme>ports</theme>
     </system>

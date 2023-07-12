@@ -439,9 +439,11 @@
         <name>desktop</name>
         <fullname>Desktop Applications</fullname>
         <path>%ROMPATH%/desktop</path>
-        <extension>.desktop .sh</extension>
+        <extension>.AppImage .desktop .sh</extension>
         <command label="Suspend ES-DE">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="Keep ES-DE running">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>pcwindows</platform>
         <theme>desktop</theme>
     </system>
@@ -506,9 +508,11 @@
         <name>emulators</name>
         <fullname>Emulators</fullname>
         <path>%ROMPATH%/emulators</path>
-        <extension>.desktop .sh</extension>
+        <extension>.AppImage .desktop .sh</extension>
         <command label="Suspend ES-DE">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
         <command label="Keep ES-DE running">%RUNINBACKGROUND% %ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="AppImage (Suspend ES-DE)">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
+        <command label="AppImage (Keep ES-DE running)">%RUNINBACKGROUND% %EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>pcwindows</platform>
         <theme>emulators</theme>
     </system>
@@ -1321,8 +1325,9 @@
         <name>ports</name>
         <fullname>Ports</fullname>
         <path>%ROMPATH%/ports</path>
-        <extension>.desktop .sh</extension>
-        <command label="Various">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <extension>.AppImage .desktop .sh</extension>
+        <command label="Shortcut or script">%ENABLESHORTCUTS% %EMULATOR_OS-SHELL% %ROM%</command>
+        <command label="AppImage">%EMULATOR_OS-SHELL% -c "%ROM%"</command>
         <platform>pc, pcwindows</platform>
         <theme>ports</theme>
     </system>
