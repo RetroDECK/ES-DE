@@ -44,8 +44,9 @@ For the Linux AppImage releases a built-in application updater has been added so
 * Added the .sh file extension to the ags system on Unix and macOS and set the %STARTDIR% variable to the game directory
 * (Linux) Changed a lot of find rules so that emulator AppImages are always searched before Flatpaks
 * (Linux) Removed the AppImage systempath find rule entry for RetroArch
-* (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the windows system
-* (Linux) Added the .AppImage file extension to the windows system
+* (Linux) Added "AppImage (Suspend ES-DE)" and "AppImage (Keep ES-DE running)" as alternative emulators for the desktop and windows system
+* (Linux) Added "AppImage" as an alternative emulator for the ports system
+* (Linux) Added the .AppImage file extension to the desktop, ports and windows systems
 * (Linux) Added support for the official Citra AppImage release
 * (Linux) Changed the PCSX2 AppImage find rule to pcsx2*.AppImage to cover for the constantly changing filenames for this package
 * (Windows) Replaced many unnecessary find rules with the ability to relocate the Emulators directory one level higher in the hierarchy
