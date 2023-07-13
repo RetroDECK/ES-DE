@@ -1,8 +1,8 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
-## Version 2.1.0 (in development)
+## Version 2.1.0
 
-**Release date:** TBD
+**Release date:** 2023-07-13
 
 ### Release overview
 
@@ -16,7 +16,7 @@ For the Linux AppImage releases a built-in application updater has been added so
 
 * Added support for changing between dark and light color schemes for the menu system (with dark being the new default)
 * Added a PDF game manual viewer, accessible from the media viewer
-* Added an option to scrape game manuals using ScreenScraper
+* Added support for scraping game manuals using ScreenScraper
 * Added an application updater which downloads and installs ES-DE updates (currently only the AppImage releases are supported)
 * Added options to the miximage generator for how to fit screenshots that do not match the aspect ratio of the miximage frame
 * Added support for a dedicated es_systems_sorting.xml file to change systems sorting without having to modify es_systems.xml
@@ -82,7 +82,7 @@ For the Linux AppImage releases a built-in application updater has been added so
 * (Windows) The log output time stamp was missing in es_log.txt when built using MinGW
 * The scraper auto-retry functionality was triggered when scraping manually
 * There was a small memory leak in GuiScraperMenu related to the retry sliders
-* TextureResource::initFromPixels() was not setting the source size correctly
+* TextureResource::initFromPixels() was not setting the texture source size correctly
 * The fallback to argv[0] in FileSystemUtil::setExePath() was not working correctly
 
 ## Version 2.0.1
