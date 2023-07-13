@@ -579,10 +579,10 @@ void Window::render()
                     // clang-format on
 
                     // Also dim the background slightly.
-                    if (Settings::getInstance()->getString("MenuColorScheme") == "dark")
-                        backgroundParameters.dimming = 0.80f;
-                    else
+                    if (Settings::getInstance()->getString("MenuColorScheme") == "light")
                         backgroundParameters.dimming = 0.60f;
+                    else
+                        backgroundParameters.dimming = 0.80f;
 
                     mRenderer->shaderPostprocessing(Renderer::Shader::CORE |
                                                         Renderer::Shader::BLUR_HORIZONTAL |

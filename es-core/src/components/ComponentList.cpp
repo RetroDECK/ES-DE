@@ -311,7 +311,7 @@ void ComponentList::render(const glm::mat4& parentTrans)
     trans = glm::translate(trans, glm::vec3 {0.0f, -mCameraOffset, 0.0f});
 
     glm::mat4 loopTrans {trans};
-    const bool darkColorScheme {Settings::getInstance()->getString("MenuColorScheme") == "dark"};
+    const bool darkColorScheme {Settings::getInstance()->getString("MenuColorScheme") != "light"};
 
     // Draw selector bar if we're using the dark color scheme.
     if (mFocused && mOpacity == 1.0f && darkColorScheme) {
