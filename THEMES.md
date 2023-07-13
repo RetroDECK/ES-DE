@@ -1,4 +1,4 @@
-# EmulationStation Desktop Edition (ES-DE) v2.0 - Themes
+# EmulationStation Desktop Edition (ES-DE) v2.1 - Themes
 
 If creating theme sets specifically for ES-DE, please add `-es-de` to the repository/directory name, as in `slate-es-de`. Because ES-DE theme engine functionality has deviated greatly from the RetroPie EmulationStation fork on which it was originally based, any newer themes will not work on such older forks. At least the -es-de extension is an indicator that it's an ES-DE specific theme set. The actual theme name as defined using the `themeName` tag in capabilities.xml does of course not need to include the `-es-de` extension as that's the actual theme name that will be displayed when selecting theme sets from the _UI Settings_ menu. For example slate-es-de will be listed simply as _Slate_ in this menu.
 
@@ -16,9 +16,9 @@ https://github.com/lilbud/es-de-theme-stuff
 
 To test whether your theme set includes support for all ES-DE systems, download one of the following archives which contain ROMs directory structures fully populated with dummy files:
 
-[ROMs_ALL_Unix.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.0/tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
-[ROMs_ALL_macOS.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.0/tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
-[ROMs_ALL_Windows.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.0/tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
+[ROMs_ALL_Unix.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.1/tools/system-dirs-dummy-files/ROMs_ALL_Unix.zip)\
+[ROMs_ALL_macOS.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.1/tools/system-dirs-dummy-files/ROMs_ALL_macOS.zip)\
+[ROMs_ALL_Windows.zip](https://gitlab.com/es-de/emulationstation-de/-/blob/stable-2.1/tools/system-dirs-dummy-files/ROMs_ALL_Windows.zip)
 
 If you unzip and temporarily replace your ROMs directory with one of these, every system will be enabled on startup.
 
@@ -158,7 +158,7 @@ The directory name can be changed to whatever you like using the --prefix flag.
 
 **Logos**
 
-Likewise there's a repository of system logotypes that can also be added and used in a similar fashion as the metadata. It can be found here:
+Likewise there's a repository of system logotypes that can also be added and used in the same fashion as the metadata. It can be found here:
 
 https://gitlab.com/es-de/themes/system-logos
 
@@ -182,7 +182,6 @@ Note that the remotes are only setup for your local repository, so if you clone 
 git remote add system-metadata https://gitlab.com/es-de/themes/system-metadata.git
 git remote add system-logos https://gitlab.com/es-de/themes/system-logos.git
 ```
-
 After doing this you'll be able to pull repository updates as described above.
 
 ## Simple example theme
@@ -985,6 +984,8 @@ Just remember, _this only works if the elements have the same type._
 
 Navigation sounds are configured globally per theme set, so it needs to be defined using the special `all` view.
 It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sounds are provided by the theme, ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
+
+When fast-scrolling the textlist (by holding the up/down or shoulder buttons) the _scroll_ and _systembrowse_ sounds always play to completion before being played again, so it will sound weird if you have long samples such as those with reverb or silence added to the end. As such make sure to always use short samples for these sounds and test thoroughly with fast-scrolling. This is not an issue if using the carousel or grid elements.
 
 Example debug output:
 ```
@@ -2189,6 +2190,7 @@ Properties:
     - `broken` - Will be shown when the game is marked as broken.
     - `controller` - Will be shown and overlaid by the corresponding controller icon if a controller type has been selected for the game (using the metadata editor or via scraping).
     - `altemulator` - Will be shown when an alternative emulator is setup for the game.
+    - `manual` - Will be shown when a PDF manual has been downloaded for the game.
     - `all` - Including this value will enable all badges. If some badges have been added already they will be shown in the order they were defined and the remaining ones will be added at the end, in the order listed above. Using the `all` value can be used as a way to future-proof the theme, because if additional badges are added in future ES-DE releases, no theme updates would be needed to accomodate them. Just make sure to include space for a few extra badges in the layout, and increase the `lines` and `itemsPerLine` accordingly.
 * `controllerPos` - type: NORMALIZED_PAIR
     - The position of the controller icon relative to the parent `controller` badge.

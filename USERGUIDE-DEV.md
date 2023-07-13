@@ -137,7 +137,7 @@ Regardless of package format and operating system it's a good idea to update the
 ![alt text](images/es-de_application_updater.png "ES-DE Application Updater")
 _This is what the application updater looks like when the update process has been completed._
 
-**Linux .deb packages**
+**Linux .deb package**
 
 Upgrading ES-DE using this package type is very straightforward, just run it through the package manager of your operating system and the process should be entirely automatic.
 
@@ -2389,7 +2389,7 @@ The order in which to sort your gamelists. This can be overriden per game system
 
 **Menu color scheme**
 
-Provides a selection between a _Light_ and a _Dark_ color scheme. This will affect the entire menu system as well as the launch screen.
+Provides a selection between a _Dark_ and a _Light_ color scheme. This will affect the entire menu system as well as the launch screen.
 
 **Menu opening effect**
 
@@ -3312,7 +3312,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | wasm4                 | WASM-4 Fantasy Console                         | WASM-4                            |                                   | No           | Single .wasm file                    |
 | wii                   | Nintendo Wii                                   | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW] | No           |                                      |
 | wiiu                  | Nintendo Wii U                                 | Cemu **(Standalone)**             |                                   | No           | See the specific _Nintendo Wii U_ section elsewhere in this guide |
-| windows               | Microsoft Windows                              | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | Shortcut (.desktop/.app/.lnk) file or script |
+| windows               | Microsoft Windows                              | _Suspend ES-DE_                   | _Keep ES-DE running_,<br>_AppImage (Suspend ES-DE)_ [U],<br>_AppImage (Keep ES-DE running)_ [U] | No           | Shortcut (.desktop/.app/.lnk) file, script or AppImage |
 | wonderswan            | Bandai WonderSwan                              | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)**,<br>ares [Benesse Pocket Challenge V2] **(Standalone)** | No           | Single archive or ROM file    |
 | wonderswancolor       | Bandai WonderSwan Color                        | Beetle Cygne                      | Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file    |
 | x1                    | Sharp X1                                       | x1                                |                                   |              | Single archive or ROM file |
