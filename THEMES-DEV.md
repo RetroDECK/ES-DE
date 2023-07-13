@@ -987,6 +987,8 @@ Just remember, _this only works if the elements have the same type._
 Navigation sounds are configured globally per theme set, so it needs to be defined using the special `all` view.
 It's recommended to put these elements in a separate file and include it from the main theme file (e.g. `<include>./navigationsounds.xml</include>`). Starting ES-DE with the --debug flag will provide feedback on whether any navigation sound elements were read from the theme set. If no navigation sounds are provided by the theme, ES-DE will use the bundled navigation sounds as a fallback. This is done per sound file, so the theme could provide for example one or two custom sounds while using the bundled ES-DE sounds for the rest.
 
+When fast-scrolling the textlist (by holding the up/down or shoulder buttons) the _scroll_ and _systembrowse_ sounds always play to completion before being played again, so it will sound weird if you have long samples such as those with reverb or silence added to the end. As such make sure to always use short samples for these sounds and test thoroughly with fast-scrolling. This is not an issue if using the carousel or grid elements.
+
 Example debug output:
 ```
 Jul 12 11:28:58 Debug:  NavigationSounds::loadThemeNavigationSounds(): Theme set includes navigation sound support, loading custom sounds

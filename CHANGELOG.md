@@ -27,6 +27,8 @@ For the Linux AppImage releases a built-in application updater has been added so
 * Added trigger button support to the media viewer for jumping to the first and last entries
 * Added trigger button support to the theme downloader screenshot viewer for jumping to the first and last entries
 * Added a game manual badge to indicate whether a game has a downloaded PDF manual
+* Enabled textlist fast-scrolling for the system view
+* The textlist navigation sound will now always start playing immediately when scrolling a single entry
 * Added options to the video and slideshow screensavers to only include favorite games
 * Added a per-system game count to the multi-scraper
 * Changed the scraper auto-retry functionality to never run on non-recoverable errors such as insufficient file permissions
