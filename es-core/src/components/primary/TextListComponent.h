@@ -97,7 +97,8 @@ private:
         if (mGamelistView &&
             !NavigationSounds::getInstance().isPlayingThemeNavigationSound(SCROLLSOUND))
             NavigationSounds::getInstance().playThemeNavigationSound(SCROLLSOUND);
-        else if (!mGamelistView)
+        else if (!mGamelistView &&
+                 !NavigationSounds::getInstance().isPlayingThemeNavigationSound(SYSTEMBROWSESOUND))
             NavigationSounds::getInstance().playThemeNavigationSound(SYSTEMBROWSESOUND);
     }
     void onCursorChanged(const CursorState& state) override;
@@ -159,9 +160,7 @@ private:
 
 template <typename T>
 TextListComponent<T>::TextListComponent()
-    : IList<TextListData, T> {(std::is_same_v<T, SystemData*> ?
-                                   IList<TextListData, T>::LIST_SCROLL_STYLE_SLOW :
-                                   IList<TextListData, T>::LIST_SCROLL_STYLE_QUICK),
+    : IList<TextListData, T> {IList<TextListData, T>::LIST_SCROLL_STYLE_QUICK,
                               ListLoopType::LIST_PAUSE_AT_END}
     , mRenderer {Renderer::getInstance()}
     , mCamOffset {0.0f}
