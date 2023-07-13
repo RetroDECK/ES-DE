@@ -12,7 +12,9 @@
 #include "EmulationStation.h"
 #include "utils/PlatformUtil.h"
 
+#if !defined(__NETBSD__)
 #include <filesystem>
+#endif
 
 GuiApplicationUpdater::GuiApplicationUpdater()
     : mRenderer {Renderer::getInstance()}
@@ -223,7 +225,7 @@ bool GuiApplicationUpdater::downloadPackage()
 
     fileContents.clear();
 
-#if !defined(__APPLE__)
+#if !defined(__APPLE__) && !defined(__NETBSD__)
     std::filesystem::permissions(packageTempFile, std::filesystem::perms::owner_all |
                                                       std::filesystem::perms::group_all |
                                                       std::filesystem::perms::others_read |
