@@ -16,13 +16,13 @@ ES-DE is available for free, and will continue to be available for free. It's re
 
 ES-DE runs on Windows, macOS and BSD Unix as well as on multiple Linux distributions including Ubuntu, Fedora, Arch, Manjaro, SteamOS etc.
 
-## What is the relationship between ES-DE and EmuDeck?
-
-[EmuDeck](http://www.emudeck.com) is an installer that installs ES-DE and a number of emulators. There is no relationship between the two projects apart from this, and it's generally not recommended to use EmuDeck as this will lead to a non-standard installation. There are few tangible benefits to using EmuDeck over a manual installation apart from some convenience for the initial setup. Instead it's recommended to setup your emulators manually which will allow you to configure everything exactly to your liking. That is also a fun and interesting experience.
-
 ## What is the relationship between ES-DE and RetroDECK?
 
 ES-DE and [RetroDECK](http://retrodeck.net) are completely separate projects, but we collaborate to give the best possible user experience. RetroDECK bundles ES-DE with all emulators in the same Flatpak so you don't need to update emulators separately or set Flatpak permissions manually. It's a good idea to read the _Specific notes for Steam Deck_ section of the [User guide](USERGUIDE.md#specific-notes-for-steam-deck) if ES-DE has been installed via RetroDECK.
+
+## What is the relationship between ES-DE and EmuDeck?
+
+[EmuDeck](http://www.emudeck.com) is an installer that installs ES-DE and a number of emulators. There is no relationship between the two projects apart from this, and it's generally not recommended to use EmuDeck as this will lead to a non-standard installation. There are few tangible benefits to using EmuDeck over a manual installation apart from some convenience for the initial setup. Instead it's recommended to setup your emulators manually which will allow you to configure everything exactly to your liking. That is also a fun and interesting experience.
 
 ## What game systems/platforms and emulators are supported by ES-DE?
 
@@ -31,6 +31,10 @@ See the _Supported game systems_ section at the bottom of the [User guide](USERG
 ## Why can't I press the up button in menus to jump to the bottom row and vice versa?
 
 Menus in ES-DE are not lists but grids, sometimes there is only a list but sometimes there are buttons beneath the list. Enabling the up and down buttons to wrap around would therefore not work consistently as it would sometimes jump to the last row of the list and sometimes to a button, requiring a different number of button presses depending on the menu layout. This type of contextual navigation feels very weird in practice, especially when you have to press the up button twice to get to the bottom of a list. The solution is instead to use the shoulder buttons (which will jump six rows), or the trigger buttons (which will jump to the first and last row). These buttons work consistently throughout the application and avoid the strange side effects just mentioned.
+
+## Can I change the system sorting to not sort by full system names?
+
+Yes this is possible via an es_systems_sorting.xml file that you place in the ~/.emulationstation/custom_systems/ directory. There are four such files bundled with ES-DE which sort by  _"Hardware type, release year", "Manufacturer, hardware type, release year", "Manufacturer, release year"_ or simply _"Release year"_. You can create your own custom sorting files as well if needed. More details about this setup can be found in the _es_systems_sorting.xml_ section of the [Building and advanced configuration](INSTALL.md#es_systems_sortingxml) document.
 
 ## I don't like the default emulator for a certain system, how can I choose an alternative?
 
@@ -74,7 +78,7 @@ See the question above for a possible solution. Another approach would be to hid
 
 ## When I hide a game using the metadata editor it's not really getting hidden, is this a bug?
 
-No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
+No, by default games are not removed from the gamelists when they are hidden and are instead only marked with a much lower opacity. You need to disable the setting _Show hidden games (requires restart)_ from the _Other Settings_ menu to make them disappear entirely. The reason this option is not disabled by default is that new users could very easily make a mistake by hiding some files accidentally without realizing it, only to have the entries being immediately removed from the gamelist view. It's also good practice to hide all your games with this option enabled and verify that it's all correct before going ahead and disabling it.
 
 ## I'm using Linux or macOS and I can't find the .emulationstation directory, where is it located?
 
@@ -90,11 +94,11 @@ This release of RetroArch has multiple technical issues so it's not officially s
 
 ## How do I add more themes?
 
-Refer to the official list of [recommended theme sets](https://gitlab.com/es-de/themes/themes-list) for a selection of high-quality themes. There are also some brief instructions there on how to download and install them. More comprehensive documentation is available in the _Themes_ section of the [User guide](USERGUIDE.md#themes). A built-in theme downloader is also planned for a future release.
+You would normally use the built-in theme downloader to install additional themes. This utility can be found in the _UI Settings_ menu. There is also a [web version](https://gitlab.com/es-de/themes/themes-list) of the themes list which contains a number of additional themes not available via the theme downloader interface.
 
 ## The themes I've added don't seem to work?
 
-Most themes from Batocera, Recalbox and similar EmulationStation forks can't be used as ES-DE has a different theme engine than those applications. For the time being RetroPie themes can be used, but support for these legacy themes will be removed in a future version.
+Most themes from Batocera, Recalbox and similar EmulationStation forks can't be used as ES-DE has a different theme engine than those applications. For the time being RetroPie themes can be used, but support for these legacy themes will be removed in a future version. It's generally a good idea to stick to the themes provided via the theme downloader and the official [themes list](https://gitlab.com/es-de/themes/themes-list).
 
 ## I used to be a Batocera/Recalbox user and ES-DE can't seem to find some of my games?
 
@@ -102,7 +106,7 @@ ES-DE uses mostly the same system names as these other frontends, but there are 
 
 ## Can ES-DE update itself automatically when a new release becomes available?
 
-As of ES-DE 2.1.0 there is a built-in application updater that works with the Linux AppImage releases. And if using the AUR release then updates are handled via the operating system's package manager. Likewise if using RetroDECK, then ES-DE is updated as part of the overall RetroDECK Flatpak. For other package formats and operating systems only a version check and a notification window has been implemented, meaning the new release needs to be manually downloaded from the ES-DE website. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release). If you find the update notification messages annoying you can change the frequency of update checks between _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_ from the _Other settings_ menu.
+As of ES-DE 2.1.0 there is a built-in application updater that works with the Linux AppImage releases. And if using the AUR release then updates are handled via the operating system's package manager. Likewise if using RetroDECK, then ES-DE is updated as part of the overall RetroDECK Flatpak. For other package formats and operating systems only a version check and a notification window has been implemented, meaning the new release needs to be manually downloaded from the ES-DE website. The process to manually upgrade ES-DE is covered in the _Upgrading to a newer release_ section of the [User guide](USERGUIDE.md#upgrading-to-a-newer-release). If you find the update notification messages annoying you can change the frequency of update checks between _Always_, _Daily_, _Weekly_, _Monthly_ or _Never_ from the _Other Settings_ menu.
 
 ## I can't find any game media links in the gamelist.xml files, where is this data stored?
 
@@ -122,7 +126,7 @@ Yes to a certain extent this is supported and at least [Skraper](https://www.skr
 
 ## My controller isn't working in ES-DE, is there a way to fix this?
 
-If the controller works in other applications and games but not in ES-DE, then you may be able to get it to run in ES-DE as well. The required setup is described in detail in the _Adding custom controller profiles_ section of the [Building and advanced configuration](INSTALL.md#adding-custom-controller-profiles) document. Although not guaranteed to work, an alternative solution is to have Steam running in parallel to ES-DE and using the _Steam Controller_ functionality to present the controller as a virtual device in ES-DE. You don't need to launch ES-DE via Steam for this to work, it's enough if Steam is running in the background. If going for this, make sure to read the next question below, and also note that the Steam approach only seems to work on Linux and Windows, and not on macOS.
+If the controller works in other applications and games but not in ES-DE, then you may be able to get it to run in ES-DE as well. The required setup is described in detail in the _Adding custom controller profiles_ section of the [Building and advanced configuration](INSTALL.md#adding-custom-controller-profiles) document. If this procedure does not work, then support for your controller is probably missing in the SDL library that ES-DE uses for low-level input management. In this case you can request that it gets added via the SDL [issue tracker](https://github.com/libsdl-org/SDL/issues), which will ensure that it will work in future ES-DE releases. Although not guaranteed to work, an alternative solution is to have Steam running in parallel to ES-DE and using the _Steam Controller_ functionality to present the controller as a virtual device in ES-DE. You don't need to launch ES-DE via Steam for this to work, it's enough if Steam is running in the background. If going for this, make sure to read the next question below, and also note that the Steam approach only seems to work on Linux and Windows, and not on macOS.
 
 ## Why is every controller button press registered twice in ES-DE?
 
