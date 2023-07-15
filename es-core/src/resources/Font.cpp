@@ -532,6 +532,8 @@ std::vector<std::string> Font::getFallbackFontPaths()
         ResourceManager::getInstance().getResourcePath(":/fonts/fontawesome-webfont.ttf"));
     // This is only needed for some really rare special characters.
     fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/Ubuntu-C.ttf"));
+    // Google Noto Emoji.
+    fontPaths.push_back(ResourceManager::getInstance().getResourcePath(":/fonts/NotoEmoji.ttf"));
 
     return fontPaths;
 }
