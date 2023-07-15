@@ -240,7 +240,7 @@ void MediaViewer::findMedia()
         mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("FAN ART", true)));
 
     if ((mediaFile = mGame->getMiximagePath()) != "")
-        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("MIXIMAGE", false)));
+        mImageFiles.push_back(std::make_pair(mediaFile, ImageInfo("MIXIMAGE", true)));
 
     if (!mImageFiles.empty())
         mHasImages = true;
