@@ -630,15 +630,6 @@ void InputManager::addControllerByDeviceIndex(Window* window, int deviceIndex)
     SDL_JoystickGetGUIDString(SDL_JoystickGetGUID(joy), &guid[0], 64);
     guid.erase(guid.find('\0'));
 
-    for (auto& inputConfig : mInputConfigs) {
-        // This can occur if there are SDL bugs or controller driver bugs.
-        if (inputConfig.second->getDeviceGUIDString().substr(0, 32) == guid.substr(0, 32)) {
-            LOG(LogWarning) << "Attempted to add an existing controller entry with GUID \"" << guid
-                            << "\", buggy drivers?";
-            return;
-        }
-    }
-
     mInputConfigs[joyID] =
         std::make_unique<InputConfig>(joyID, SDL_GameControllerName(mControllers[joyID]), guid);
 
