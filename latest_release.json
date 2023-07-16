@@ -3,57 +3,57 @@
     "website": "https://es-de.org/",
     "repository": "https://gitlab.com/es-de/",
     "stable": {
-        "version": "2.1.0",
-        "release": "35",
-        "date": "2023-07-13",
+        "version": "2.1.1",
+        "release": "36",
+        "date": "2023-07-16",
         "packages": [
             {
                 "name": "WindowsPortable",
-                "filename": "EmulationStation-DE-2.1.0-x64_Portable.zip",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85365084/download",
-                "md5": "f5530fd8d0fb59a6c0dd8b0be672b835",
+                "filename": "EmulationStation-DE-2.1.1-x64_Portable.zip",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557602/download",
+                "md5": "573a704447c9e8b688f2b54a50065577",
                 "message": ""
             },
             {
                 "name": "WindowsInstaller",
-                "filename": "EmulationStation-DE-2.1.0-x64.exe",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85365047/download",
-                "md5": "754cd020c5497e9fd046e9e494e6b56b",
+                "filename": "EmulationStation-DE-2.1.1-x64.exe",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557598/download",
+                "md5": "7db30b06b32f81a95caeaf76a86012cb",
                 "message": ""
             },
             {
                 "name": "macOSApple",
-                "filename": "EmulationStation-DE-2.1.0-arm64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85364975/download",
-                "md5": "95051ea55fa6080e46a6c8bc4314a8dd",
+                "filename": "EmulationStation-DE-2.1.1-arm64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557587/download",
+                "md5": "c73110a9478ebb81016298b0e728bdf0",
                 "message": ""
             },
             {
                 "name": "macOSIntel",
-                "filename": "EmulationStation-DE-2.1.0-x64.dmg",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85365024/download",
-                "md5": "521cee623c5c72cd2eabb52255562c2c",
+                "filename": "EmulationStation-DE-2.1.1-x64.dmg",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557596/download",
+                "md5": "f88af1267a4e2d5118cf574611b53afa",
                 "message": ""
             },
             {
                 "name": "LinuxDEB",
-                "filename": "emulationstation-de-2.1.0-x64.deb",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85365006/download",
-                "md5": "f740e9f417ece31d8fc0493ab8c807c6",
+                "filename": "emulationstation-de-2.1.1-x64.deb",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557594/download",
+                "md5": "4a20e4f78c4f9be6ce93e74773f75e4e",
                 "message": ""
             },
             {
                 "name": "LinuxAppImage",
                 "filename": "EmulationStation-DE-x64.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85365115/download",
-                "md5": "af078263a289635aa56518e634650aac",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557605/download",
+                "md5": "c78b4b996eed4130c13e2db2a73ba2c6",
                 "message": ""
             },
             {
                 "name": "LinuxSteamDeckAppImage",
                 "filename": "EmulationStation-DE-x64_SteamDeck.AppImage",
-                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85365147/download",
-                "md5": "b639fabbcb6ab91e69f23980bcfec587",
+                "url": "https://gitlab.com/es-de/emulationstation-de/-/package_files/85557609/download",
+                "md5": "01751e8e816bf04cb7f37c0daa98a7e8",
                 "message": ""
             }
         ]
