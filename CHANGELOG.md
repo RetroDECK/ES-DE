@@ -1,5 +1,23 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
+## Version 2.1.1
+
+**Release date:** 2023-07-16
+
+### Release overview
+
+2.1 maintenance release. This mostly fixes a regression where some arcade controller boards stopped working, but it also includes a few other minor changes.
+
+### Detailed list of changes
+
+* Added support for a lot more emoji characters by bundling the Google Noto Emoji font
+* Changed the media viewer to using linear interpolation scaling for the miximages
+* (Linux) Added ~/.local/share/applications/ as an additional search path for AppImages and manually downloaded emulators
+
+### Bug fixes
+
+* The crash prevention for buggy controller drivers was a bit too aggressive and stopped some arcade controller boards from working
+
 ## Version 2.1.0
 
 **Release date:** 2023-07-13

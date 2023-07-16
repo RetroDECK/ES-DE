@@ -580,14 +580,14 @@ As this release of RetroArch is executed via the Steam application it's behaving
 As well, adding support for the Steam release of RetroArch for all systems that ES-DE supports requires hundreds of additional alternative emulator entries. For all these reasons there will be no official support for this release of RetroArch. If you insist on still using it, it's however quite easy to make [custom system configuration](USERGUIDE.md#game-system-customizations) entries as the setup has been partly prepared in the bundled configuration.
 
 Simply add alternative emulator entries such as the following example (which enables support for the Nestopia UE core for the nes system):
-```
+```xml
 <command label="Nestopia UE (Steam)">%RUNINBACKGROUND% %EMULATOR_STEAM% -applaunch 1118310 -L nestopia_libretro %ROM%</command>
 ```
 
 This will work on both Linux and Windows.
 
 A complete entry for the nes system could look like the following:
-```
+```xml
 <system>
     <name>nes</name>
     <fullname>Nintendo Entertainment System</fullname>
@@ -608,6 +608,7 @@ Therefore all bundled emulator configuration entries that support AppImages will
 
 ```
 ~/Applications/
+~/.local/share/applications/
 ~/.local/bin/
 ~/bin/
 ```
@@ -669,6 +670,7 @@ To clarify with an example, this is what the find rule entry for the Dolphin emu
     </rule>
     <rule type="staticpath">
         <entry>~/Applications/Dolphin_Emulator*.AppImage</entry>
+        <entry>~/.local/share/applications/Dolphin_Emulator*.AppImage</entry>
         <entry>~/.local/bin/Dolphin_Emulator*.AppImage</entry>
         <entry>~/bin/Dolphin_Emulator*.AppImage</entry>
         <entry>/var/lib/flatpak/exports/bin/org.DolphinEmu.dolphin-emu</entry>
@@ -702,6 +704,7 @@ Normally on Linux you would install emulators using either one of the establishe
 For these situations ES-DE looks for emulators in the same directories where it looks for AppImages (as explained in the section above), meaning:
 ```
 ~/Applications/
+~/.local/share/applications/
 ~/.local/bin/
 ~/bin/
 ```

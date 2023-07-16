@@ -18,7 +18,7 @@ Two theme sets (Slate and Modern) are bundled with the application, and addition
 
 ## Download
 
-The latest stable version is **2.1.0** (released 2023-07-13)
+The latest stable version is **2.1.1** (released 2023-07-16)
 
 Visit https://es-de.org/ to download ES-DE or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find all previous releases.
 

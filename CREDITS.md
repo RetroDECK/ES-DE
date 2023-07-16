@@ -108,6 +108,9 @@ https://www.gnu.org/software/freefont
 Nanum font \
 https://hangeul.naver.com
 
+Noto Emoji \
+https://fonts.google.com/noto/specimen/Noto+Emoji
+
 Ubuntu font \
 https://design.ubuntu.com/font
 
