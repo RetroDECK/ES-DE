@@ -88,29 +88,36 @@ CollectionSystemsManager* CollectionSystemsManager::getInstance()
     return &instance;
 }
 
-void CollectionSystemsManager::deinit()
+void CollectionSystemsManager::deinit(const bool shutdown)
 {
     // Don't attempt to remove any collections if no systems exist.
     if (SystemData::sSystemVector.size() > 0) {
         removeCollectionsFromDisplayedSystems();
 
         // Delete all custom collections.
-        for (std::map<std::string, CollectionSystemData, StringComparator>::const_iterator it =
-                 mCustomCollectionSystemsData.cbegin();
-             it != mCustomCollectionSystemsData.cend(); ++it)
+        for (std::map<std::string, CollectionSystemData, StringComparator>::iterator it =
+                 mCustomCollectionSystemsData.begin();
+             it != mCustomCollectionSystemsData.end(); ++it) {
             delete it->second.system;
+            it->second.system = nullptr;
+        }
 
         // Delete the custom collections bundle.
-        if (mCustomCollectionsBundle)
+        if (mCustomCollectionsBundle) {
             delete mCustomCollectionsBundle;
+            mCustomCollectionsBundle = nullptr;
+        }
 
         // Delete the auto collections systems.
-        for (auto it = mAutoCollectionSystemsData.cbegin(); // Line break.
-             it != mAutoCollectionSystemsData.cend(); ++it)
+        for (auto it = mAutoCollectionSystemsData.begin(); // Line break.
+             it != mAutoCollectionSystemsData.end(); ++it) {
             delete (*it).second.system;
+            (*it).second.system = nullptr;
+        }
     }
 
-    delete mCollectionEnvData;
+    if (shutdown)
+        delete mCollectionEnvData;
 }
 
 void CollectionSystemsManager::saveCustomCollection(SystemData* sys)

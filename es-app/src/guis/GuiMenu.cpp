@@ -65,6 +65,9 @@ GuiMenu::GuiMenu()
     if (isFullUI)
         addEntry("OTHER SETTINGS", mMenuColorPrimary, true, [this] { openOtherOptions(); });
 
+    if (isFullUI)
+        addEntry("UTILITIES", mMenuColorPrimary, true, [this] { openUtilities(); });
+
     if (!Settings::getInstance()->getBool("ForceKiosk") &&
         Settings::getInstance()->getString("UIMode") != "kiosk") {
 #if defined(__APPLE__)
@@ -1722,6 +1725,72 @@ void GuiMenu::openOtherOptions()
     applicationUpdaterFrequencyFunc(applicationUpdaterFrequency->getSelected());
     applicationUpdaterFrequency->setCallback(applicationUpdaterFrequencyFunc);
 #endif
+
+    s->setSize(mSize);
+    mWindow->pushGui(s);
+}
+
+void GuiMenu::openUtilities()
+{
+    auto s = new GuiSettings("UTILITIES");
+
+    Window* window {mWindow};
+    HelpStyle style {getHelpStyle()};
+
+    ComponentListRow row;
+
+    row.makeAcceptInputHandler([s, window, this] {
+        window->pushGui(new GuiMsgBox(
+            this->getHelpStyle(),
+            "THIS WILL RESCAN YOUR ROM DIRECTORY\n"
+            "FOR CHANGES SUCH AS ADDED OR REMOVED\n"
+            "GAMES AND SYSTEMS, PROCEED?",
+            "YES",
+            [this, window] {
+                if (CollectionSystemsManager::getInstance()->isEditing())
+                    CollectionSystemsManager::getInstance()->exitEditMode();
+                window->stopInfoPopup();
+                GuiMenu::close(true);
+                // Write any gamelist.xml changes before proceeding with the reload.
+                if (Settings::getInstance()->getString("SaveGamelistsMode") != "never") {
+                    for (auto system : SystemData::sSystemVector)
+                        system->writeMetaData();
+                }
+                window->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
+                ViewController::getInstance()->resetAll();
+                CollectionSystemsManager::getInstance()->deinit(false);
+                SystemData::loadConfig();
+                if (SystemData::sStartupExitSignal) {
+                    SDL_Event quit;
+                    quit.type = SDL_QUIT;
+                    SDL_PushEvent(&quit);
+                    return;
+                }
+                if (SystemData::sSystemVector.empty()) {
+                    // It's possible that there are no longer any games.
+                    window->invalidateCachedBackground();
+                    ViewController::getInstance()->noGamesDialog();
+                }
+                else {
+                    ViewController::getInstance()->preload();
+                    if (SystemData::sStartupExitSignal) {
+                        SDL_Event quit;
+                        quit.type = SDL_QUIT;
+                        SDL_PushEvent(&quit);
+                        return;
+                    }
+                    ViewController::getInstance()->goToStart(false);
+                }
+            },
+            "NO", nullptr));
+    });
+    auto rescanROMDirectory = std::make_shared<TextComponent>(
+        "RESCAN ROM DIRECTORY", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
+    rescanROMDirectory->setSelectable(true);
+    row.addElement(rescanROMDirectory, true);
+    s->addRow(row);
+
+    row.elements.clear();
 
     s->setSize(mSize);
     mWindow->pushGui(s);

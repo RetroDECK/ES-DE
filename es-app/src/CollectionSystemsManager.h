@@ -78,8 +78,8 @@ public:
     static CollectionSystemsManager* getInstance();
     void saveCustomCollection(SystemData* sys);
 
-    // Clean up all systems, called during application shutdown.
-    void deinit();
+    // Clean up all systems, called during application shutdown and ROM directory rescan.
+    void deinit(const bool shutdown);
 
     // Functions to load all collections into memory, and enable the active ones:
     // Load all collection systems.
@@ -137,7 +137,7 @@ public:
     const bool isEditing() const { return mIsEditingCustom; }
     const std::string& getEditingCollection() const { return mEditingCollection; }
 
-    static inline std::string myCollectionsName = "collections";
+    static inline std::string myCollectionsName {"collections"};
 
 protected:
     void trimCollectionCount(FileData* rootFolder, int limit);

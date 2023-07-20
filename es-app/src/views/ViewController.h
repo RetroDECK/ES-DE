@@ -54,6 +54,9 @@ public:
     // Used when the "ThemeSet" setting changes.
     void reloadAll();
 
+    // Reset all views, which is needed when rescanning the ROM directory.
+    void resetAll();
+
     // Navigation.
     void goToNextGamelist();
     void goToPrevGamelist();

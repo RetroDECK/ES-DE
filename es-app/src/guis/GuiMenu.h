@@ -44,6 +44,7 @@ private:
     void openConfigInput(GuiSettings* settings);
     void openCollectionSystemOptions();
     void openOtherOptions();
+    void openUtilities();
     void openQuitMenu();
 
     Renderer* mRenderer;

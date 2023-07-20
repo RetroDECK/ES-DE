@@ -1209,8 +1209,7 @@ void ViewController::render(const glm::mat4& parentTrans)
 
 void ViewController::preload()
 {
-    unsigned int systemCount {static_cast<unsigned int>(SystemData::sSystemVector.size())};
-
+    const unsigned int systemCount {static_cast<unsigned int>(SystemData::sSystemVector.size())};
     // This reduces the amount of texture pop-in when loading theme extras.
     if (!SystemData::sSystemVector.empty())
         getSystemListView();
@@ -1407,6 +1406,15 @@ void ViewController::reloadAll()
 
     mCurrentView->onShow();
     updateHelpPrompts();
+}
+
+void ViewController::resetAll()
+{
+    mGamelistViews.clear();
+    mSystemListView.reset();
+    mCurrentView.reset();
+    mPreviousView.reset();
+    mSkipView.reset();
 }
 
 std::vector<HelpPrompt> ViewController::getHelpPrompts()
