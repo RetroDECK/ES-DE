@@ -59,6 +59,7 @@ void InputManager::init()
 
     SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
     SDL_GameControllerEventState(SDL_ENABLE);
+    SDL_StopTextInput();
 
     if (!Utils::FileSystem::exists(getConfigPath())) {
         LOG(LogInfo) << "No input configuration file found, default mappings will be applied";

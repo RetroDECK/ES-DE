@@ -21,6 +21,7 @@ class TextEditComponent : public GuiComponent
 {
 public:
     TextEditComponent();
+    ~TextEditComponent();
 
     void textInput(const std::string& text, const bool pasting = false) override;
     bool input(InputConfig* config, Input input) override;

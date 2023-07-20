@@ -37,6 +37,12 @@ TextEditComponent::TextEditComponent()
     setSize(4096, mFont->getHeight() + (TEXT_PADDING_VERT * mRenderer->getScreenHeightModifier()));
 }
 
+TextEditComponent::~TextEditComponent()
+{
+    // Always disable text input when destroying this component.
+    SDL_StopTextInput();
+}
+
 void TextEditComponent::onFocusGained()
 {
     mFocused = true;
