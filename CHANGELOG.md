@@ -1,5 +1,24 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
+## Version 2.1.2 (in development)
+
+**Release date:** TBD
+
+### Release overview
+
+2.1 maintenance release.
+
+### Detailed list of changes
+
+* Added support for pasting text into the application when a text input field is focused
+* Added a new Utilities menu to the main menu
+* Added an entry to the Utilities menu for rescanning the ROM directory
+* Added theme support for the "manual" metadata type for the text element
+
+### Bug fixes
+
+* SDL_StartTextInput() was sometimes set when not actually inputting any text
+
 ## Version 2.1.1
 
 **Release date:** 2023-07-16

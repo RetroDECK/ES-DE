@@ -453,7 +453,9 @@ The built-in help system will provide a contextual summary of the available navi
 
 When editing text using the virtual keyboard but using a physical keyboard as input device instead of a controller, then there are some slight exceptions to the normal input logic. The _Enter_ key will always apply the changes and the _Escape_ key will always go back. As well, if you have mapped any regular keys to the _left_, _right_ or _down_ buttons or to the _shoulder_ or _trigger_ buttons, then these will not be usable in the text input field. You will instead have to use the virtual keyboard buttons to enter these characters. Note that this is not an issue if using the default keyboard configuration as the buttons just mentioned are then mapped to special keys only, as detailed below.
 
-Default keyboard mappings are shown in brackets.
+When editing text it's also possible to paste from the clipboard into ES-DE using Command + V on macOS and Ctrl + V or Shift + Insert on all other operating systems.
+
+Default keyboard mappings are shown in brackets below.
 
 **Up and down**\
 _(Arrow up / Arrow down)_
@@ -2769,7 +2771,16 @@ Enabling or disabling the menu when the UI mode is set to Kid. Mostly intended f
 
 With this setting enabled, there is a Quit menu shown as the last entry on the main menu which provides options to quit ES-DE, to reboot the computer or to power off the computer. With this setting disabled, there will simply be an entry to quit the application instead of the complete quit menu.
 
+### Utilities
+
+This menu contains various utility functions.
+
+**Rescan ROM directory**
+
+This menu option will rescan the ROM directory for any changes such as added or removed games and systems without having to restart the application.
+
 ### Quit / Quit EmulationStation
+
 The _Quit_ menu or _Quit EmulationStation_ entry as described by the _Show quit menu (reboot and power off entries)_ option above.
 
 If the menu is enabled, these are its entries:

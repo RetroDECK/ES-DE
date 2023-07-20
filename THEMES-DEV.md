@@ -2352,6 +2352,7 @@ Properties:
     - `completed` - Whether the game has been completed. Will be printed as either `yes` or `no`
     - `kidgame` - Whether the game is suitable for children. Will be printed as either `yes` or `no`
     - `broken` - Whether the game is broken/not working. Will be printed as either `yes` or `no`
+    - `manual` - Whether a PDF manual has been downloaded for the game. Will be printed as either `yes` or `no`
     - `playcount` - How many times the game has been played.
     - `controller` - The controller for the game. Will be blank if none has been selected.
     - `altemulator` - The alternative emulator for the game. Will be blank if none has been selected.
