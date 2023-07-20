@@ -490,12 +490,12 @@ void ComponentList::updateElementSize(const ComponentListRow& row)
         (*it)->setSize(width, (*it)->getSize().y);
 }
 
-void ComponentList::textInput(const std::string& text)
+void ComponentList::textInput(const std::string& text, const bool pasting)
 {
     if (!size())
         return;
 
-    mEntries.at(mCursor).data.elements.back().component->textInput(text);
+    mEntries.at(mCursor).data.elements.back().component->textInput(text, pasting);
 }
 
 std::vector<HelpPrompt> ComponentList::getHelpPrompts()

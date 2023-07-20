@@ -62,10 +62,10 @@ GuiComponent::~GuiComponent()
         getChild(i)->setParent(nullptr);
 }
 
-void GuiComponent::textInput(const std::string& text)
+void GuiComponent::textInput(const std::string& text, const bool pasting)
 {
     for (auto it = mChildren.cbegin(); it != mChildren.cend(); ++it)
-        (*it)->textInput(text);
+        (*it)->textInput(text, pasting);
 }
 
 bool GuiComponent::input(InputConfig* config, Input input)

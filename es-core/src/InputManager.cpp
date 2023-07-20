@@ -417,8 +417,26 @@ bool InputManager::parseEvent(const SDL_Event& event)
             return true;
         }
         case SDL_KEYDOWN: {
-            if (event.key.keysym.sym == SDLK_BACKSPACE && SDL_IsTextInputActive())
-                mWindow->textInput("\b");
+            if (SDL_IsTextInputActive()) {
+                // Paste from clipboard.
+#if defined(__APPLE__)
+                if (event.key.keysym.mod & KMOD_GUI && event.key.keysym.sym == SDLK_v) {
+#else
+                if ((event.key.keysym.mod & KMOD_CTRL && event.key.keysym.sym == SDLK_v) ||
+                    (event.key.keysym.mod & KMOD_SHIFT && event.key.keysym.sym == SDLK_INSERT)) {
+#endif
+                    if (SDL_HasClipboardText()) {
+                        char* clipboardText {SDL_GetClipboardText()};
+                        mWindow->textInput(clipboardText, true);
+                        SDL_free(clipboardText);
+                        return true;
+                    }
+                }
+
+                // Handle backspace presses.
+                if (event.key.keysym.sym == SDLK_BACKSPACE)
+                    mWindow->textInput("\b");
+            }
 
             if (event.key.repeat)
                 return false;

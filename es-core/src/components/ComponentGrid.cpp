@@ -436,11 +436,11 @@ void ComponentGrid::render(const glm::mat4& parentTrans)
     }
 }
 
-void ComponentGrid::textInput(const std::string& text)
+void ComponentGrid::textInput(const std::string& text, const bool pasting)
 {
     const GridEntry* selectedEntry {getCellAt(mCursor)};
     if (selectedEntry != nullptr && selectedEntry->canFocus)
-        selectedEntry->component->textInput(text);
+        selectedEntry->component->textInput(text, pasting);
 }
 
 void ComponentGrid::onCursorMoved(glm::ivec2 from, glm::ivec2 to)

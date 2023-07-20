@@ -63,7 +63,7 @@ public:
     GuiComponent();
     virtual ~GuiComponent();
 
-    virtual void textInput(const std::string& text);
+    virtual void textInput(const std::string& text, const bool pasting = false);
 
     // Called when input is received.
     // Return true if the input is consumed, false if it should continue to be passed

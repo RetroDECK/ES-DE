@@ -373,10 +373,10 @@ void Window::input(InputConfig* config, Input input)
     }
 }
 
-void Window::textInput(const std::string& text)
+void Window::textInput(const std::string& text, const bool pasting)
 {
     if (peekGui())
-        peekGui()->textInput(text);
+        peekGui()->textInput(text, pasting);
 }
 
 void Window::logInput(InputConfig* config, Input input)

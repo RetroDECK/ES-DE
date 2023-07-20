@@ -51,7 +51,7 @@ public:
         mPastBoundaryCallback = func;
     }
 
-    void textInput(const std::string& text) override;
+    void textInput(const std::string& text, const bool pasting = false) override;
     bool input(InputConfig* config, Input input) override;
     void update(int deltaTime) override;
     void render(const glm::mat4& parentTrans) override;

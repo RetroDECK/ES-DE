@@ -110,7 +110,7 @@ public:
     void deinit();
 
     void input(InputConfig* config, Input input);
-    void textInput(const std::string& text);
+    void textInput(const std::string& text, const bool pasting = false);
     void logInput(InputConfig* config, Input input);
     void update(int deltaTime);
     void render();

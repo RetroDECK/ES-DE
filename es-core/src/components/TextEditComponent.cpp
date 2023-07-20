@@ -71,9 +71,13 @@ void TextEditComponent::setValue(const std::string& val)
     onCursorChanged();
 }
 
-void TextEditComponent::textInput(const std::string& text)
+void TextEditComponent::textInput(const std::string& text, const bool pasting)
 {
-    if (mMaskInput)
+    if (mMaskInput && !pasting)
+        return;
+
+    // Allow pasting up to a reasonable max clipboard size.
+    if (pasting && text.length() > (isMultiline() ? 16384 : 300))
         return;
 
     if (mEditing) {
