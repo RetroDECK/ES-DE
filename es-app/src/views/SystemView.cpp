@@ -1345,6 +1345,8 @@ void SystemView::updateGameSelectors()
             else if (metadata == "broken")
                 text->setValue(
                     games.at(gameSelectorEntry)->metadata.get("broken") == "true" ? "yes" : "no");
+            else if (metadata == "manual")
+                text->setValue(games.at(gameSelectorEntry)->getManualPath() != "" ? "yes" : "no");
             else if (metadata == "playcount")
                 text->setValue(games.at(gameSelectorEntry)->metadata.get("playcount"));
             else if (metadata == "altemulator")

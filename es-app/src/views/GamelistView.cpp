@@ -849,6 +849,8 @@ void GamelistView::updateView(const CursorState& state)
                 return file->metadata.get("kidgame") == "true" ? "yes" : "no";
             else if (metadata == "broken")
                 return file->metadata.get("broken") == "true" ? "yes" : "no";
+            else if (metadata == "manual")
+                return file->getManualPath() != "" ? "yes" : "no";
             else if (metadata == "playcount")
                 return file->metadata.get("playcount");
             else if (metadata == "altemulator")
