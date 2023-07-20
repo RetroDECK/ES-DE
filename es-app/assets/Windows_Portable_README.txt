@@ -2,7 +2,7 @@ EmulationStation Desktop Edition (ES-DE) - Portable installation on Windows
 ---------------------------------------------------------------------------
 
 ES-DE release:
-2.1.1
+2.1.2
 
 Instructions:
 
