@@ -1752,7 +1752,7 @@ void GuiMenu::openUtilities()
                 window->stopInfoPopup();
                 GuiMenu::close(true);
                 // Write any gamelist.xml changes before proceeding with the reload.
-                if (Settings::getInstance()->getString("SaveGamelistsMode") != "never") {
+                if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit") {
                     for (auto system : SystemData::sSystemVector)
                         system->writeMetaData();
                 }
