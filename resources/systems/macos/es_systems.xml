@@ -617,6 +617,7 @@
         <command label="SMS Plus GX">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/smsplus_libretro.dylib %ROM%</command>
         <command label="PicoDrive">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/picodrive_libretro.dylib %ROM%</command>
         <command label="Mednafen (Standalone)">%EMULATOR_MEDNAFEN% -force_module gg %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Gear" %ROM%</command>
         <platform>gamegear</platform>
         <theme>gamegear</theme>
     </system>
@@ -636,6 +637,7 @@
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.dylib %ROM%</command>
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy" %ROM%</command>
         <platform>gb</platform>
         <theme>gb</theme>
     </system>
@@ -650,6 +652,7 @@
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
         <command label="VBA Next">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vba_next_libretro.dylib %ROM%</command>
         <command label="gpSP">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/gpsp_libretro.dylib %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Advance" %ROM%</command>
         <platform>gba</platform>
         <theme>gba</theme>
     </system>
@@ -669,6 +672,7 @@
         <command label="mGBA (Standalone)">%EMULATOR_MGBA% -f %ROM%</command>
         <command label="VBA-M">%EMULATOR_RETROARCH% -L %CORE_RETROARCH%/vbam_libretro.dylib %ROM%</command>
         <command label="VBA-M (Standalone)">%EMULATOR_VBA-M% -f %ROM%</command>
+        <command label="ares (Standalone)">%EMULATOR_ARES% --fullscreen --system "Game Boy Color" %ROM%</command>
         <platform>gbc</platform>
         <theme>gbc</theme>
     </system>
