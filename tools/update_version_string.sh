@@ -10,12 +10,13 @@
 #  The script has to be run from within the tools directory.
 #
 #  Example use:
-#  ./update_version_string.sh 1 2 0 beta1
+#  ./update_version_string.sh 2 1 0 beta
 #
 #  The following files are updated by this script:
 #  es-app/CMakeLists.txt
 #  es-app/src/EmulationStation.h
 #  es-app/assets/EmulationStation-DE_Info.plist
+#  es-app/assets/Windows_Portable_README.txt
 #
 #  This script is only intended to be used on Linux systems.
 #
@@ -112,5 +113,12 @@ NEWSTRING="<string>${1}.${2}.${3}${SUFFIX}"
 
 cat $MODIFYFILE | sed s/"${MODIFYSTRING}"/"${NEWSTRING}"/ > $TEMPFILE
 mv $TEMPFILE $MODIFYFILE
+
+##### Windows_Portable_README.txt
+
+ROW_NUM=$(grep -n "ES-DE release:" ../es-app/assets/Windows_Portable_README.txt | cut -f1 -d:)
+ROW_NUM=$((ROW_NUM+1))
+NEWSTRING=${1}.${2}.${3}${SUFFIX}
+sed -i ${ROW_NUM}s/.*/$(echo $NEWSTRING | unix2dos)/ ../es-app/assets/Windows_Portable_README.txt
 
 echo "Done updating, don't forget to run generate_man_page.sh once the binary has been compiled with the new version string."
