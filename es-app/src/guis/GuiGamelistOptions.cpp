@@ -15,7 +15,7 @@
 #include <winsock2.h>
 #endif
 
-#include "GuiGamelistOptions.h"
+#include "guis/GuiGamelistOptions.h"
 
 #include "CollectionSystemsManager.h"
 #include "FileFilterIndex.h"

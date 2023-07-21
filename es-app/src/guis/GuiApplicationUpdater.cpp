@@ -7,7 +7,7 @@
 //  Used in conjunction with ApplicationUpdater.
 //
 
-#include "GuiApplicationUpdater.h"
+#include "guis/GuiApplicationUpdater.h"
 
 #include "EmulationStation.h"
 #include "utils/PlatformUtil.h"
