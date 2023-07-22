@@ -178,10 +178,12 @@ GuiOfflineGenerator::GuiOfflineGenerator(const std::queue<FileData*>& gameQueue)
 
     mGrid.setEntry(mButtonGrid, glm::ivec2 {0, 12}, true, false, glm::ivec2 {6, 1});
 
-    // For narrower displays (e.g. in 4:3 ratio), allow the window to fill 95% of the screen
-    // width rather than the 85% allowed for wider displays.
-    float width {mRenderer->getScreenWidth() *
-                 ((mRenderer->getScreenAspectRatio() < 1.4f) ? 0.95f : 0.85f)};
+    // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
+    // the 16:9 reference.
+    const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
+    const float width {glm::clamp(0.85f * aspectValue, 0.45f,
+                                  (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.95f)) *
+                       mRenderer->getScreenWidth()};
 
     setSize(width,
             mRenderer->getScreenHeight() * (mRenderer->getIsVerticalOrientation() ? 0.52f : 0.75f));
