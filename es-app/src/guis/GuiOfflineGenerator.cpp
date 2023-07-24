@@ -309,7 +309,7 @@ void GuiOfflineGenerator::update(int deltaTime)
     }
 
     // Update the statistics.
-    mStatus->setText("RUNNING...");
+    mStatus->setText("RUNNING");
     mGameCounter->setText(std::to_string(mGamesProcessed) + " OF " + std::to_string(mTotalGames) +
                           (mTotalGames == 1 ? " GAME " : " GAMES ") + "PROCESSED");
 
