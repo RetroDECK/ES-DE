@@ -483,7 +483,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
         mRenderer->setMatrix(drawTrans);
 
         if (i == mCursor && backgroundColor != 0x00000000) {
-            mRenderer->drawRect(mSelectorHorizontalOffset, 0.0f,
+            mRenderer->drawRect(mSelectorHorizontalOffset, mSelectorVerticalOffset,
                                 entry.data.textCache->metrics.size.x, mSelectorHeight,
                                 backgroundColor, backgroundColor);
         }
@@ -498,7 +498,7 @@ template <typename T> void TextListComponent<T>::render(const glm::mat4& parentT
                 drawTrans, offset - glm::vec3 {static_cast<float>(mLoopOffset2), 0.0f, 0.0f});
             mRenderer->setMatrix(drawTrans);
             if (i == mCursor && backgroundColor != 0x00000000) {
-                mRenderer->drawRect(mSelectorHorizontalOffset, 0.0f,
+                mRenderer->drawRect(mSelectorHorizontalOffset, mSelectorVerticalOffset,
                                     entry.data.textCache->metrics.size.x, mSelectorHeight,
                                     backgroundColor, backgroundColor);
             }
