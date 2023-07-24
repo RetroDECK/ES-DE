@@ -88,8 +88,8 @@ namespace Utils
 
         time_t stringToTime(const std::string& string, const std::string& format)
         {
-            const char* s = string.c_str();
-            const char* f = format.c_str();
+            const char* s {string.c_str()};
+            const char* f {format.c_str()};
 #if defined(_WIN64)
             tm timeStruct = {0, 0, 0, 1, 0, 0, 0, 0, -1};
 #else
@@ -180,7 +180,7 @@ namespace Utils
             if (time < 82800)
                 return "19700101T000000";
 
-            const char* f = format.c_str();
+            const char* f {format.c_str()};
             tm timeStruct;
 #if defined(_WIN64)
             localtime_s(&timeStruct, &time);
@@ -247,9 +247,9 @@ namespace Utils
         int daysInMonth(const int year, const int month)
         {
 #if defined(_WIN64)
-            tm timeStruct = {0, 0, 0, 0, month, year - 1900, 0, 0, -1};
+            tm timeStruct {0, 0, 0, 0, month, year - 1900, 0, 0, -1};
 #else
-            tm timeStruct = {0, 0, 0, 0, month, year - 1900, 0, 0, -1, 0, 0};
+            tm timeStruct {0, 0, 0, 0, month, year - 1900, 0, 0, -1, 0, 0};
 #endif
             mktime(&timeStruct);
 
@@ -259,9 +259,9 @@ namespace Utils
         int daysInYear(const int year)
         {
 #if defined(_WIN64)
-            tm timeStruct = {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1};
+            tm timeStruct {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1};
 #else
-            tm timeStruct = {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1, 0, 0};
+            tm timeStruct {0, 0, 0, 0, 0, year - 1900 + 1, 0, 0, -1, 0, 0};
 #endif
             mktime(&timeStruct);
 
