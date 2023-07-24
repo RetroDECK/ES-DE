@@ -30,6 +30,7 @@
 #include "guis/GuiDetectDevice.h"
 #include "guis/GuiMediaViewerOptions.h"
 #include "guis/GuiMsgBox.h"
+#include "guis/GuiOrphanedDataCleanup.h"
 #include "guis/GuiScraperMenu.h"
 #include "guis/GuiScreensaverOptions.h"
 #include "guis/GuiTextEditKeyboardPopup.h"
@@ -1739,6 +1740,24 @@ void GuiMenu::openUtilities()
 
     ComponentListRow row;
 
+    row.addElement(std::make_shared<TextComponent>("ORPHANED DATA CLEANUP (EXPERIMENTAL)",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+    row.addElement(mMenu.makeArrow(), false);
+    row.makeAcceptInputHandler(std::bind(
+        [this] { mWindow->pushGui(new GuiOrphanedDataCleanup([&]() { close(true); })); }));
+    s->addRow(row);
+
+    row.elements.clear();
+    row.addElement(std::make_shared<TextComponent>("RESCAN ROM DIRECTORY",
+                                                   Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary),
+                   true);
+
+    // This transparent dummy arrow is only here to enable the "select" help prompt.
+    auto dummyArrow = mMenu.makeArrow();
+    dummyArrow->setOpacity(0.0f);
+    row.addElement(dummyArrow, false);
+
     row.makeAcceptInputHandler([s, window, this] {
         window->pushGui(new GuiMsgBox(
             this->getHelpStyle(),
@@ -1751,46 +1770,16 @@ void GuiMenu::openUtilities()
                     CollectionSystemsManager::getInstance()->exitEditMode();
                 window->stopInfoPopup();
                 GuiMenu::close(true);
-                // Write any gamelist.xml changes before proceeding with the reload.
+                // Write any gamelist.xml changes before proceeding with the rescan.
                 if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit") {
                     for (auto system : SystemData::sSystemVector)
                         system->writeMetaData();
                 }
-                window->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
-                ViewController::getInstance()->resetAll();
-                CollectionSystemsManager::getInstance()->deinit(false);
-                SystemData::loadConfig();
-                if (SystemData::sStartupExitSignal) {
-                    SDL_Event quit;
-                    quit.type = SDL_QUIT;
-                    SDL_PushEvent(&quit);
-                    return;
-                }
-                if (SystemData::sSystemVector.empty()) {
-                    // It's possible that there are no longer any games.
-                    window->invalidateCachedBackground();
-                    ViewController::getInstance()->noGamesDialog();
-                }
-                else {
-                    ViewController::getInstance()->preload();
-                    if (SystemData::sStartupExitSignal) {
-                        SDL_Event quit;
-                        quit.type = SDL_QUIT;
-                        SDL_PushEvent(&quit);
-                        return;
-                    }
-                    ViewController::getInstance()->goToStart(false);
-                }
+                ViewController::getInstance()->rescanROMDirectory();
             },
             "NO", nullptr));
     });
-    auto rescanROMDirectory = std::make_shared<TextComponent>(
-        "RESCAN ROM DIRECTORY", Font::get(FONT_SIZE_MEDIUM), mMenuColorPrimary);
-    rescanROMDirectory->setSelectable(true);
-    row.addElement(rescanROMDirectory, true);
     s->addRow(row);
-
-    row.elements.clear();
 
     s->setSize(mSize);
     mWindow->pushGui(s);

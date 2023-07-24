@@ -1408,13 +1408,40 @@ void ViewController::reloadAll()
     updateHelpPrompts();
 }
 
-void ViewController::resetAll()
+void ViewController::rescanROMDirectory()
 {
     mGamelistViews.clear();
     mSystemListView.reset();
     mCurrentView.reset();
     mPreviousView.reset();
     mSkipView.reset();
+
+    mWindow->renderSplashScreen(Window::SplashScreenState::SCANNING, 0.0f);
+    CollectionSystemsManager::getInstance()->deinit(false);
+    SystemData::loadConfig();
+
+    if (SystemData::sStartupExitSignal) {
+        SDL_Event quit;
+        quit.type = SDL_QUIT;
+        SDL_PushEvent(&quit);
+        return;
+    }
+
+    if (SystemData::sSystemVector.empty()) {
+        // It's possible that there are no longer any games.
+        mWindow->invalidateCachedBackground();
+        noGamesDialog();
+    }
+    else {
+        preload();
+        if (SystemData::sStartupExitSignal) {
+            SDL_Event quit;
+            quit.type = SDL_QUIT;
+            SDL_PushEvent(&quit);
+            return;
+        }
+        goToStart(false);
+    }
 }
 
 std::vector<HelpPrompt> ViewController::getHelpPrompts()
