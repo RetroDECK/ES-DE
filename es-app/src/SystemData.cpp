@@ -954,7 +954,7 @@ bool SystemData::createSystemDirectories()
     std::vector<std::string> configPaths {getConfigPath(true)};
     const std::string& rompath {FileData::getROMDirectory()};
 
-    bool onlyProcessCustomFile = false;
+    bool onlyProcessCustomFile {false};
 
     LOG(LogInfo) << "Generating ROM directory structure...";
 
@@ -1062,7 +1062,7 @@ bool SystemData::createSystemDirectories()
             std::string platform;
             std::string themeFolder;
             const std::string systemInfoFileName {"/systeminfo.txt"};
-            bool replaceInfoFile = false;
+            bool replaceInfoFile {false};
             std::ofstream systemInfoFile;
 
             name = system.child("name").text().get();
@@ -1292,8 +1292,7 @@ std::string SystemData::getGamelistPath(bool forWrite) const
 
     filePath = gamelistPath + "/gamelist.xml";
 
-    // Make sure the directory exists if we're going to write to it,
-    // or crashes will happen.
+    // Make sure the directory exists if we're going to write to it, or crashes will happen.
     if (forWrite)
         Utils::FileSystem::createDirectory(Utils::FileSystem::getParent(filePath));
     if (forWrite || Utils::FileSystem::exists(filePath))
