@@ -14,6 +14,7 @@
 #include "views/ViewController.h"
 
 #include <SDL2/SDL.h>
+#include <pugixml.hpp>
 
 GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallback)
     : mRenderer {Renderer::getInstance()}
@@ -132,6 +133,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mCompleted = false;
         mFailed = false;
         mStopProcessing = false;
+        mErrorMessage = "";
         mError->setValue("");
         mEntryCount->setValue("0");
         mStatus->setValue("RUNNING MEDIA CLEANUP");
@@ -155,6 +157,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mCompleted = false;
         mFailed = false;
         mStopProcessing = false;
+        mErrorMessage = "";
         mError->setValue("");
         mEntryCount->setValue("0");
         mStatus->setValue("RUNNING GAMELISTS CLEANUP");
@@ -186,6 +189,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mCompleted = false;
         mFailed = false;
         mStopProcessing = false;
+        mErrorMessage = "";
         mError->setValue("");
         mEntryCount->setValue("0");
         mStatus->setValue("RUNNING COLLECTIONS CLEANUP");
@@ -254,6 +258,8 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
     const std::time_t currentTime {
         std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())};
 
+    int systemCounter {0};
+
     for (auto system : SystemData::sSystemVector) {
         if (mStopProcessing)
             break;
@@ -261,9 +267,14 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
         if (system->isCollection())
             continue;
 
+        ++systemCounter;
+
+        const std::string currentSystem {system->getName() + " (" + system->getFullName() + ")"};
+        LOG(LogInfo) << "Processing system \"" << currentSystem << "\"";
+
         {
             std::unique_lock<std::mutex> lock {mMutex};
-            mCurrentSystem = system->getName() + " (" + system->getFullName() + ")";
+            mCurrentSystem = currentSystem;
         }
 
         std::vector<std::string> systemFilesRelative;
@@ -301,13 +312,16 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
         if (mStopProcessing)
             break;
 
+        int systemProcessedCount {0};
+
         if (cleanupFiles.size() > 0) {
             std::string dateString(20, '\0');
             std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime(&currentTime));
             dateString.erase(dateString.find('\0'));
             const std::string targetDirectory {mMediaDirectory + "CLEANUP/" + dateString + "/"};
 
-            LOG(LogInfo) << "Moving orphaned files to \"" << targetDirectory << "\"";
+            LOG(LogInfo) << "Moving orphaned files to \"" << targetDirectory + system->getName()
+                         << "/\"";
 
             for (auto& file : cleanupFiles) {
                 const std::string fileDirectory {
@@ -317,34 +331,51 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                 if (!Utils::FileSystem::isDirectory(fileDirectory) &&
                     !Utils::FileSystem::createDirectory(fileDirectory)) {
                     LOG(LogError) << "Couldn't create target directory \"" << fileDirectory << "\"";
-                    mErrorMessage = "COULDN'T CREATE TARGET DIRECTORY, PERMISSION PROBLEMS?";
+                    {
+                        std::unique_lock<std::mutex> lock {mMutex};
+                        mErrorMessage = "COULDN'T CREATE TARGET DIRECTORY, PERMISSION PROBLEMS?";
+                    }
                     mFailed = true;
                     mIsProcessing = false;
                     return;
                 }
                 if (Utils::FileSystem::renameFile(file, fileDirectory + "/" + fileName, false)) {
                     LOG(LogError) << "Couldn't move file \"" << file << "\"";
-                    mErrorMessage = "COULDN'T MOVE MEDIA FILE, PERMISSION PROBLEMS?";
+                    {
+                        std::unique_lock<std::mutex> lock {mMutex};
+                        mErrorMessage = "COULDN'T MOVE MEDIA FILE, PERMISSION PROBLEMS?";
+                    }
                     mFailed = true;
                     mIsProcessing = false;
                     return;
                 }
                 ++mProcessedCount;
+                ++systemProcessedCount;
             }
         }
+
+        LOG(LogInfo) << "Removed " << systemProcessedCount << " file"
+                     << (systemProcessedCount == 1 ? " " : "s ") << "for system \"" << currentSystem
+                     << "\"";
 
         SDL_Delay(500);
     }
 
     mIsProcessing = false;
     mCompleted = true;
-    LOG(LogInfo) << "GuiOrphanedDataCleanup: Completed cleanup of game media, removed "
-                 << mProcessedCount << " file" << (mProcessedCount == 1 ? "" : "s");
+    LOG(LogInfo) << "GuiOrphanedDataCleanup: Completed cleanup of game media, processed "
+                 << systemCounter << (systemCounter == 1 ? " system" : " systems") << ", removed "
+                 << mProcessedCount << (mProcessedCount == 1 ? " file" : " files");
 }
 
 void GuiOrphanedDataCleanup::cleanupGamelists()
 {
     LOG(LogInfo) << "GuiOrphanedDataCleanup: Starting cleanup of gamelist.xml files";
+
+    const std::time_t currentTime {
+        std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())};
+
+    int systemCounter {0};
 
     for (auto system : SystemData::sSystemVector) {
         if (mStopProcessing)
@@ -353,23 +384,231 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
         if (system->isCollection())
             continue;
 
+        ++systemCounter;
+
+        const std::string currentSystem {system->getName() + " (" + system->getFullName() + ")"};
+        LOG(LogInfo) << "Processing system \"" << currentSystem << "\"";
+
         {
             std::unique_lock<std::mutex> lock {mMutex};
-            mCurrentSystem = system->getName() + " (" + system->getFullName() + ")";
+            mCurrentSystem = currentSystem;
         }
 
-        if (mStopProcessing)
-            break;
+        const std::string gamelistFile {system->getGamelistPath(false)};
 
-        mNeedsReloading = true;
+        if (gamelistFile == "") {
+            LOG(LogInfo) << "System \"" << currentSystem << "\" does not have a gamelist.xml file";
+            SDL_Delay(500);
+            continue;
+        }
+
+        pugi::xml_document sourceDoc;
+#if defined(_WIN64)
+        const pugi::xml_parse_result& fileContents {
+            sourceDoc.load_file(Utils::String::stringToWideString(gamelistFile).c_str())};
+#else
+        const pugi::xml_parse_result& fileContents {sourceDoc.load_file(gamelistFile.c_str())};
+#endif
+
+        if (!fileContents) {
+            LOG(LogError) << "Couldn't parse file \"" << gamelistFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage =
+                    "COULDN'T PARSE GAMELIST.XML FILE FOR \"" + system->getName() + "\"";
+            }
+            SDL_Delay(500);
+            continue;
+        }
+
+        LOG(LogDebug) << "GuiOrphanedDataCleanup::cleanupGamelists(): Parsing file \""
+                      << gamelistFile << "\"";
+
+        const pugi::xml_node& alternativeEmulator {sourceDoc.child("alternativeEmulator")};
+        if (alternativeEmulator) {
+            LOG(LogDebug)
+                << "GuiOrphanedDataCleanup::cleanupGamelists(): Found an alternativeEmulator tag ";
+        }
+
+        const pugi::xml_node& sourceRoot {sourceDoc.child("gameList")};
+        if (!sourceRoot) {
+            LOG(LogError) << "Couldn't find a gameList tag in \"" << gamelistFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage =
+                    "COULDN'T FIND A GAMELIST TAG IN FILE FOR SYSTEM \"" + system->getName() + "\"";
+            }
+            SDL_Delay(500);
+            continue;
+        }
+
+        const std::string tempFile {Utils::FileSystem::getParent(gamelistFile) +
+                                    "/gamelist.xml_CLEANUP.tmp"};
+
+        if (Utils::FileSystem::exists(tempFile)) {
+            LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\"";
+            if (Utils::FileSystem::removeFile(tempFile)) {
+                LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
+                {
+                    std::unique_lock<std::mutex> lock {mMutex};
+                    mErrorMessage = "COULDN'T DELETE TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+                }
+                mFailed = true;
+                mIsProcessing = false;
+                return;
+            }
+        }
+
+        const std::string startPath {system->getSystemEnvData()->mStartPath};
+        int removeCount {0};
+
+        pugi::xml_document targetDoc;
+        pugi::xml_node targetRoot;
+
+        bool saveFailure {false};
+
+        if (alternativeEmulator) {
+            targetDoc.prepend_copy(alternativeEmulator);
+            if (!targetDoc.save_file(tempFile.c_str()))
+                saveFailure = true;
+        }
+
+        if (!saveFailure) {
+            targetRoot = targetDoc.append_child("gameList");
+            if (!targetDoc.save_file(tempFile.c_str()))
+                saveFailure = true;
+        }
+
+        if (saveFailure) {
+            LOG(LogError) << "Couldn't write to temporary file \"" << tempFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "COULDN'T WRITE TO TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+            }
+            // If we couldn't write to the file this will probably fail as well.
+            Utils::FileSystem::removeFile(tempFile);
+            mFailed = true;
+            mIsProcessing = false;
+            return;
+        }
+
+        const std::vector<std::string> knownTags {"game", "folder"};
+
+        // Step through every game and folder element so that the order of entries will remain
+        // in the target gamelist.xml file.
+        for (auto it = sourceRoot.begin(); it != sourceRoot.end(); ++it) {
+            const std::string tag {(*it).name()};
+            if (tag == knownTags[0] || tag == knownTags[1]) {
+                const std::string path {(*it).child("path").text().get()};
+                if (path == "") {
+                    LOG(LogInfo) << "Found invalid " << tag << " entry with missing path tag";
+                    ++removeCount;
+                }
+                else if (path.substr(0, 2) != "./") {
+                    LOG(LogInfo) << "Found invalid " << tag << " entry \"" << path << "\"";
+                    ++removeCount;
+                }
+                else if (Utils::FileSystem::exists(startPath + "/" + path)) {
+                    targetRoot.append_copy((*it));
+                }
+                else {
+                    LOG(LogInfo) << "Found orphaned " << tag << " entry \"" << path << "\"";
+                    ++removeCount;
+                }
+            }
+            else {
+                LOG(LogInfo) << "Retaining unknown tag \"" << tag << "\"";
+                targetRoot.append_copy((*it));
+            }
+        }
+
+        if (!targetDoc.save_file(tempFile.c_str())) {
+            LOG(LogError) << "Couldn't write to temporary file \"" << tempFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "COULDN'T WRITE TO TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+            }
+            Utils::FileSystem::removeFile(tempFile);
+            mFailed = true;
+            mIsProcessing = false;
+            return;
+        }
+
+        if (removeCount > 0) {
+            std::string dateString(20, '\0');
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime(&currentTime));
+            dateString.erase(dateString.find('\0'));
+            const std::string targetDirectory {
+                Utils::FileSystem::getParent(
+                    Utils::FileSystem::getParent(system->getGamelistPath(false))) +
+                "/CLEANUP/" + dateString + "/" + system->getName()};
+
+            if (!Utils::FileSystem::isDirectory(targetDirectory) &&
+                !Utils::FileSystem::createDirectory(targetDirectory)) {
+                LOG(LogError) << "Couldn't create backup directory \"" << targetDirectory << "\"";
+                {
+                    std::unique_lock<std::mutex> lock {mMutex};
+                    mErrorMessage = "COULDN'T CREATE BACKUP DIRECTORY, PERMISSION PROBLEMS?";
+                }
+                mFailed = true;
+            }
+
+            if (!mFailed) {
+                LOG(LogInfo) << "Moving old gamelist.xml file to \"" << targetDirectory << "/\"";
+
+                if (Utils::FileSystem::renameFile(gamelistFile, targetDirectory + "/gamelist.xml",
+                                                  true)) {
+                    LOG(LogError) << "Couldn't move file \"" << gamelistFile << "\"";
+                    {
+                        std::unique_lock<std::mutex> lock {mMutex};
+                        mErrorMessage = "COULDN'T MOVE OLD GAMELIST FILE, PERMISSION PROBLEMS?";
+                    }
+                    mFailed = true;
+                }
+                else if (Utils::FileSystem::renameFile(tempFile, gamelistFile, true)) {
+                    LOG(LogError) << "Couldn't move file \"" << tempFile << "\"";
+                    {
+                        std::unique_lock<std::mutex> lock {mMutex};
+                        mErrorMessage =
+                            "COULDN'T MOVE TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+                    }
+                    mFailed = true;
+                    // Attempt to move back the old gamelist.xml file, although this may fail.
+                    Utils::FileSystem::renameFile(targetDirectory + "/gamelist.xml", gamelistFile,
+                                                  true);
+                }
+                if (!mFailed)
+                    mNeedsReloading = true;
+            }
+        }
+
+        if (!mFailed)
+            mProcessedCount += removeCount;
+
+        if (Utils::FileSystem::exists(tempFile) && Utils::FileSystem::removeFile(tempFile)) {
+            LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "COULDN'T DELETE TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
+            }
+            mFailed = true;
+        }
 
         SDL_Delay(500);
+
+        if (mFailed)
+            break;
+    }
+
+    if (!mFailed) {
+        mCompleted = true;
+        LOG(LogInfo)
+            << "GuiOrphanedDataCleanup: Completed cleanup of gamelist.xml files, processed "
+            << systemCounter << (systemCounter == 1 ? " system" : " systems") << ", removed "
+            << mProcessedCount << (mProcessedCount == 1 ? " entry" : " entries");
     }
 
     mIsProcessing = false;
-    mCompleted = true;
-    LOG(LogInfo) << "GuiOrphanedDataCleanup: Completed cleanup of gamelist.xml files, removed "
-                 << mProcessedCount << (mProcessedCount == 1 ? " entry" : " entries");
 }
 
 void GuiOrphanedDataCleanup::cleanupCollections()
@@ -410,9 +649,13 @@ void GuiOrphanedDataCleanup::update(int deltaTime)
         mBusyAnim.update(deltaTime);
         if (mEntryCount->getValue() != std::to_string(mProcessedCount))
             mEntryCount->setValue(std::to_string(mProcessedCount));
+        std::unique_lock<std::mutex> lock {mMutex};
+        if (mSystemProcessing->getValue() != mCurrentSystem)
+            mSystemProcessing->setValue(mCurrentSystem);
+        if (mError->getValue() != mErrorMessage)
+            mError->setValue(mErrorMessage);
     }
-
-    if (mCompleted) {
+    else if (mCompleted) {
         std::string message {mStopProcessing ? "ABORTED" : "COMPLETED"};
         if (mCleanupType == CleanupType::MEDIA)
             message.append(" MEDIA ");
@@ -435,13 +678,11 @@ void GuiOrphanedDataCleanup::update(int deltaTime)
         else
             message.append("COLLECTIONS CLEANUP FAILED");
         mStatus->setValue(message);
-        mError->setValue(mErrorMessage);
+        {
+            std::unique_lock<std::mutex> lock {mMutex};
+            mError->setValue(mErrorMessage);
+        }
         mFailed = false;
-    }
-    else if (mIsProcessing) {
-        std::unique_lock<std::mutex> lock {mMutex};
-        if (mSystemProcessing->getValue() != mCurrentSystem)
-            mSystemProcessing->setValue(mCurrentSystem);
     }
 }
 
