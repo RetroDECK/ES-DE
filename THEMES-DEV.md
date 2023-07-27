@@ -1764,10 +1764,10 @@ Properties:
     - Color of the highlighted entry for the secondary entry type.
     - Default is the same value as `selectedColor`
 * `selectedBackgroundColor` - type: COLOR
-    - Background color of the highlighted entry for the primary entry type.
+    - Background color of the highlighted entry for the primary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is `00000000`
 * `selectedSecondaryBackgroundColor` - type: COLOR
-    - Background color of the highlighted entry for the secondary entry type.
+    - Background color of the highlighted entry for the secondary entry type. This follows the sizing of the selector bar and is expanded downwards so you'll probably want to adjust its position using `selectorVerticalOffset` if you have defined a custom selector height using `selectorHeight`
     - Default is the same value as `selectedBackgroundColor`
 * `fontPath` - type: PATH
 * `fontSize` - type: FLOAT

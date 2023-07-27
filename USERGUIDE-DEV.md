@@ -353,6 +353,33 @@ Example of a correct path tag readable by ES-DE:
 <path>./Another World.hdf</path>
 ```
 
+## Removing orphaned data
+
+Manually removing game files from the ROMs directory tree instead of deleting them from ES-DE using the metadata editor will make any corresponding scraped media files, gamelist.xml entries and custom collection entries orphaned, i.e. they will refer to non-existent files. Although this is correctly handled by ES-DE and is not causing any serious issues, it does lead to unnecessary disk space usage and it does produce log warnings in es_log.txt on application startup. If a huge amount of game files have been manually removed it can also lead to performance problems.
+
+In order to remove such unnecessary media files and configuration file entries, the _Orphaned data cleanup_ utility in the _Utilities_ menu can be used. This tool should be largely self-explanatory. Although it should generally be safe to use, unforeseen issues can occur so make sure to make backups of at least your `.emulationstation/gamelists` and `.emulationstation/collections` directories before attempting to use this tool.
+
+Note that there are no guarantees that any processed gamelist.xml files will be usable in any other applications than ES-DE. An attempt is made to retain the file structure but data unknown to ES-DE may get purged during cleanup.
+
+If the utility finds any data to be removed, a backup of the old files will be made. This will end up in a `CLEANUP` directory and will contain a date and time stamp. For example:
+```
+~/.emulationstation/gamelists/CLEANUP/2023-07-27_142830/dos/gamelist.xml
+~/.emulationstation/gamelists/CLEANUP/2023-07-27_142830/ports/gamelist.xml
+~/.emulationstation/collections/CLEANUP/2023-07-27_143216/custom-Action.cfg
+~/.emulationstation/collections/CLEANUP/2023-07-27_143216/custom-Fighting.cfg
+~/.emulationstation/downloaded_media/CLEANUP/2023-07-27_123406/atari2600/titlescreens/H.E.R.O..png
+~/.emulationstation/downloaded_media/CLEANUP/2023-07-27_123406/c64/3dboxes/Minerer 2049.crt.png
+```
+
+This means that you will need to manually delete these backup directories to free up disk space when you are certain that you no longer need the data.
+
+All files and entries that are removed are logged to `~/.emulationstation/es_log.txt` so it could be a good idea to make a backup copy of this file after running the cleanup, for future reference.
+
+Note that only systems and collections that are currently enabled will be processed by the utility.
+
+![alt text](images/es-de_orphaned_data_cleanup.png "ES-DE Orphaned Data Cleanup")
+_The Orphaned data cleanup utility after successfully removing some gamelist.xml entries._
+
 ## Running on high resolution displays
 
 ES-DE fully supports high resolution displays such as 1440p, 4K, 6K, 8K, ultrawide monitors etc. But many emulators (e.g. RetroArch) will also run using the same resolution which may cause performance problems on slower machines or when using resource intensive shaders. Although some emulator cores will have options to set their internal resolution, they still need to be scaled up to the screen resolution.
@@ -2773,11 +2800,15 @@ With this setting enabled, there is a Quit menu shown as the last entry on the m
 
 ### Utilities
 
-This menu contains various utility functions.
+This menu contains various utilities.
+
+**Orphaned data cleanup**
+
+This utility makes it possible to remove media files, gamelist.xml entries and custom collection entries that are orphaned, i.e. their corresponding game files no longer exist. How to use this utility is explained in more detail elsewhere in this document.
 
 **Rescan ROM directory**
 
-This menu option will rescan the ROM directory for any changes such as added or removed games and systems without having to restart the application.
+This utility will rescan the ROM directory for any changes such as added or removed games and systems without having to restart the application. But don't use this utility to reload changes to gamelist.xml files that you have made outside ES-DE as this can lead to data corruption. If you need to manually edit your gamelist.xml files then do this while ES-DE is shut down.
 
 ### Quit / Quit EmulationStation
 
@@ -3216,10 +3247,10 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | fpinball              | Future Pinball                                 | Future Pinball **(Standalone)** [W] |                                   | No           |                                      |
 | gameandwatch          | Nintendo Game and Watch                        | MAME Local Artwork **(Standalone)** | MAME **(Standalone)**,<br>Handheld Electronic (GW) | No           | See the specific _LCD handheld games_ section elsewhere in this guide |
 | gamecom               | Tiger Electronics Game.com                     | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file |
-| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Mednafen **(Standalone)** |              |                                      |
-| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file |
-| gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>VBA Next,<br>gpSP | No           | Single archive or ROM file |
-| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)** | No           | Single archive or ROM file |
+| gamegear              | Sega Game Gear                                 | Genesis Plus GX                   | Genesis Plus GX Wide,<br>Gearsystem,<br>SMS Plus GX,<br>PicoDrive,<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| gb                    | Nintendo Game Boy                              | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
+| gba                   | Nintendo Game Boy Advance                      | mGBA                              | mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>VBA Next,<br>gpSP,<br>ares **(Standalone)** | Yes for ares      | Single archive or ROM file |
+| gbc                   | Nintendo Game Boy Color                        | Gambatte                          | SameBoy,<br>SameBoy **(Standalone)**,<br>Gearboy,<br>Gearboy **(Standalone)** [UW],<br>TGB Dual,<br>Mesen-S,<br>bsnes,<br>mGBA,<br>mGBA **(Standalone)**,<br>VBA-M,<br>VBA-M **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | gc                    | Nintendo GameCube                              | Dolphin                           | Dolphin **(Standalone)**,<br>PrimeHack **(Standalone)** [UW],<br>Triforce **(Standalone)** [UW] | No           | Disc image file for single-disc games, .m3u playlist for multi-disc games |
 | genesis               | Sega Genesis                                   | Genesis Plus GX                   | Genesis Plus GX Wide,<br>PicoDrive,<br>BlastEm,<br>BlastEm **(Standalone)** [U],<br>Mednafen **(Standalone)**,<br>ares **(Standalone)** | No           | Single archive or ROM file |
 | gmaster               | Hartung Game Master                            | MAME **(Standalone)**             |                                   | Yes          | Single archive or ROM file |
@@ -3286,7 +3317,7 @@ The **@** symbol indicates that the emulator is _deprecated_ and will be removed
 | pv1000                | Casio PV-1000                                  | MAME **(Standalone)**             |                                   | No           | Single archive or ROM file |
 | quake                 | Quake                                          | TyrQuake                          | vitaQuake 2,<br>vitaQuake 2 [Rogue],<br>vitaQuake 2 [Xatrix],<br>vitaQuake 2 [Zaero],<br>vitaQuake 3 [UW],<br>_Shortcut or script_ | No           |                                      |
 | samcoupe              | MGT SAM Coupé                                  | SimCoupé **(Standalone)**         |                                   | No           | Single archive or ROM file |
-| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Mesen-S |              |                                      |
+| satellaview           | Nintendo Satellaview                           | Snes9x - Current                  | Snes9x 2010,<br>Snes9x **(Standalone)**,<br>bsnes,<br>bsnes-hd,<br>bsnes-mercury Accuracy,<br>bsnes **(Standalone)** [UW],<br>Mesen-S,<br>ares **(Standalone)** |              |                                      |
 | saturn                | Sega Saturn                                    | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | saturnjp              | Sega Saturn [Japan]                            | Beetle Saturn                     | Kronos [UW],<br>YabaSanshiro [UW],<br>Yabause,<br>Mednafen **(Standalone)**,<br>SSF **(Standalone)** [W] | Yes          | In separate folder interpreted as a file, with .m3u playlist if multi-disc game |
 | scummvm               | ScummVM Game Engine                            | ScummVM                           | ScummVM **(Standalone)**          | No           | See the specific _ScummVM_ section elsewhere in this guide |

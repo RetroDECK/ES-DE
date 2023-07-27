@@ -12,7 +12,6 @@ A more detailed breakdown can be found on the [Kanban](https://gitlab.com/es-de/
 * Background music
 * Controller button mappings from inside ES-DE (similar to pad2key in Batocera)
 * Localization/multi-language support
-* Audit tools to clean up orphaned gamelist entries, media files etc.
 * Auto-import tools for Steam, Lutris etc.
 
 **User interface**

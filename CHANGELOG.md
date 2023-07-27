@@ -10,13 +10,17 @@
 
 ### Detailed list of changes
 
-* Added support for pasting text into the application when a text input field is focused
+* Added support for pasting text into the application (when a text input field is focused)
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
+* Added a utility for removing orphaned data (game media, gamelist entries and custom collection entries)
+* Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
+* Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Added theme support for the "manual" metadata type for the text element
 
 ### Bug fixes
 
+* The textlist properties selectedBackgroundColor and selectedSecondaryBackgroundColor were not offset by selectorVerticalOffset
 * SDL_StartTextInput() was sometimes set when not actually inputting any text
 
 ## Version 2.1.1
