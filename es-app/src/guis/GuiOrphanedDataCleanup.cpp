@@ -714,7 +714,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
         std::ifstream configFileSource;
 
 #if defined(_WIN64)
-        configFileSource.open(Utils::String::stringToWideString(collectionFile));
+        configFileSource.open(Utils::String::stringToWideString(collectionFile).c_str());
 #else
         configFileSource.open(collectionFile);
 #endif
@@ -794,7 +794,7 @@ void GuiOrphanedDataCleanup::cleanupCollections()
             else {
                 std::ofstream configFileTarget;
 #if defined(_WIN64)
-                configFileTarget.open(Utils::String::stringToWideString(tempFile));
+                configFileTarget.open(Utils::String::stringToWideString(tempFile).c_str());
 #else
                 configFileTarget.open(tempFile);
 #endif
