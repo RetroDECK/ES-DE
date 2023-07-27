@@ -327,8 +327,14 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
         int systemProcessedCount {0};
 
         if (cleanupFiles.size() > 0) {
+            struct tm tm;
             std::string dateString(20, '\0');
-            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime(&currentTime));
+#if defined(_WIN64)
+            localtime_s(&tm, &currentTime);
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", &tm);
+#else
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime_r(&currentTime, &tm));
+#endif
             dateString.erase(dateString.find('\0'));
             const std::string targetDirectory {mMediaDirectory + "CLEANUP/" + dateString + "/"};
 
@@ -549,8 +555,14 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
         }
 
         if (removeCount > 0) {
+            struct tm tm;
             std::string dateString(20, '\0');
-            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime(&currentTime));
+#if defined(_WIN64)
+            localtime_s(&tm, &currentTime);
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", &tm);
+#else
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime_r(&currentTime, &tm));
+#endif
             dateString.erase(dateString.find('\0'));
             const std::string targetDirectory {
                 Utils::FileSystem::getParent(
@@ -733,8 +745,14 @@ void GuiOrphanedDataCleanup::cleanupCollections()
         }
 
         if (removeCount > 0) {
+            struct tm tm;
             std::string dateString(20, '\0');
-            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime(&currentTime));
+#if defined(_WIN64)
+            localtime_s(&tm, &currentTime);
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", &tm);
+#else
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime_r(&currentTime, &tm));
+#endif
             dateString.erase(dateString.find('\0'));
             const std::string targetDirectory {Utils::FileSystem::getParent(collectionFile) +
                                                "/CLEANUP/" + dateString + "/"};
