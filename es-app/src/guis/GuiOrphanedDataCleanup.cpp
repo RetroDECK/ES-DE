@@ -120,8 +120,12 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     std::vector<std::shared_ptr<ButtonComponent>> buttons;
 
     mButton1 = std::make_shared<ButtonComponent>("MEDIA", "start processing", [this]() {
-        if (mIsProcessing)
+        if (mIsProcessing && mStopProcessing)
             return;
+        if (mIsProcessing) {
+            mStopProcessing = true;
+            return;
+        }
         if (mThread) {
             mThread->join();
             mThread.reset();
@@ -137,15 +141,19 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mError->setValue("");
         mEntryCount->setValue("0");
         mStatus->setValue("RUNNING MEDIA CLEANUP");
-        mButton4->setText("STOP", "stop processing");
+        mButton1->setText("STOP", "stop processing", true, false);
         mThread = std::make_unique<std::thread>(&GuiOrphanedDataCleanup::cleanupMediaFiles, this);
     });
 
     buttons.push_back(mButton1);
 
     mButton2 = std::make_shared<ButtonComponent>("GAMELISTS", "start processing", [this]() {
-        if (mIsProcessing)
+        if (mIsProcessing && mStopProcessing)
             return;
+        if (mIsProcessing) {
+            mStopProcessing = true;
+            return;
+        }
         if (mThread) {
             mThread->join();
             mThread.reset();
@@ -161,7 +169,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mError->setValue("");
         mEntryCount->setValue("0");
         mStatus->setValue("RUNNING GAMELISTS CLEANUP");
-        mButton4->setText("STOP", "stop processing");
+        mButton2->setText("STOP", "stop processing", true, false);
         // Write any gamelist.xml changes before proceeding with the cleanup.
         if (Settings::getInstance()->getString("SaveGamelistsMode") == "on exit") {
             for (auto system : SystemData::sSystemVector)
@@ -172,8 +180,12 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     buttons.push_back(mButton2);
 
     mButton3 = std::make_shared<ButtonComponent>("COLLECTIONS", "start processing", [this]() {
-        if (mIsProcessing)
+        if (mIsProcessing && mStopProcessing)
             return;
+        if (mIsProcessing) {
+            mStopProcessing = true;
+            return;
+        }
         if (!mHasCustomCollections) {
             mError->setValue("THERE ARE NO ENABLED CUSTOM COLLECTIONS");
             return;
@@ -193,7 +205,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
         mError->setValue("");
         mEntryCount->setValue("0");
         mStatus->setValue("RUNNING COLLECTIONS CLEANUP");
-        mButton4->setText("STOP", "stop processing");
+        mButton3->setText("STOP", "stop processing", true, false);
         mThread = std::make_unique<std::thread>(&GuiOrphanedDataCleanup::cleanupCollections, this);
     });
     buttons.push_back(mButton3);
@@ -205,7 +217,6 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
                 mThread->join();
                 mThread.reset();
             }
-            mButton4->setText("CLOSE", "close");
         }
         else if (mNeedsReloading) {
             ViewController::getInstance()->rescanROMDirectory();
@@ -261,11 +272,13 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
     int systemCounter {0};
 
     for (auto system : SystemData::sSystemVector) {
-        if (mStopProcessing)
-            break;
-
         if (system->isCollection())
             continue;
+
+        if (mStopProcessing) {
+            LOG(LogInfo) << "Stop signal received, aborting...";
+            break;
+        }
 
         ++systemCounter;
 
@@ -299,6 +312,8 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
             const Utils::FileSystem::StringList& dirContent {
                 Utils::FileSystem::getDirContent(mediaTypeDir, true)};
             for (auto& mediaFile : dirContent) {
+                if (Utils::FileSystem::isDirectory(mediaFile))
+                    continue;
                 std::string relativePath {mediaFile.substr(mediaTypeDir.length() + 1)};
                 relativePath = relativePath.substr(0, relativePath.find_last_of('.'));
                 if (std::find(systemFilesRelative.cbegin(), systemFilesRelative.cend(),
@@ -308,9 +323,6 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                 }
             }
         }
-
-        if (mStopProcessing)
-            break;
 
         int systemProcessedCount {0};
 
@@ -378,11 +390,13 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
     int systemCounter {0};
 
     for (auto system : SystemData::sSystemVector) {
-        if (mStopProcessing)
-            break;
-
         if (system->isCollection())
             continue;
+
+        if (mStopProcessing) {
+            LOG(LogInfo) << "Stop signal received, aborting...";
+            break;
+        }
 
         ++systemCounter;
 
@@ -625,11 +639,13 @@ void GuiOrphanedDataCleanup::cleanupCollections()
     int systemCounter {0};
 
     for (auto& collection : CollectionSystemsManager::getInstance()->getCustomCollectionSystems()) {
-        if (mStopProcessing)
-            break;
-
         if (!collection.second.isEnabled)
             continue;
+
+        if (mStopProcessing) {
+            LOG(LogInfo) << "Stop signal received, aborting...";
+            break;
+        }
 
         ++systemCounter;
 
@@ -838,26 +854,37 @@ void GuiOrphanedDataCleanup::update(int deltaTime)
     }
     else if (mCompleted) {
         std::string message {mStopProcessing ? "ABORTED" : "COMPLETED"};
-        if (mCleanupType == CleanupType::MEDIA)
+        if (mCleanupType == CleanupType::MEDIA) {
+            mButton1->setText("MEDIA", "start processing");
             message.append(" MEDIA ");
-        else if (mCleanupType == CleanupType::GAMELISTS)
+        }
+        else if (mCleanupType == CleanupType::GAMELISTS) {
+            mButton2->setText("GAMELISTS", "start processing");
             message.append(" GAMELISTS ");
-        else
+        }
+        else {
+            mButton3->setText("COLLECTIONS", "start processing");
             message.append(" COLLECTIONS ");
+        }
         message.append("CLEANUP");
         mStatus->setValue(message);
         mSystemProcessing->setValue("");
-        mButton4->setText("CLOSE", "close");
         mCompleted = false;
     }
     else if (mFailed) {
         std::string message;
-        if (mCleanupType == CleanupType::MEDIA)
+        if (mCleanupType == CleanupType::MEDIA) {
+            mButton1->setText("MEDIA", "start processing");
             message.append("MEDIA CLEANUP FAILED");
-        else if (mCleanupType == CleanupType::GAMELISTS)
+        }
+        else if (mCleanupType == CleanupType::GAMELISTS) {
+            mButton2->setText("GAMELISTS", "start processing");
             message.append("GAMELISTS CLEANUP FAILED");
-        else
+        }
+        else {
+            mButton3->setText("COLLECTIONS", "start processing");
             message.append("COLLECTIONS CLEANUP FAILED");
+        }
         mStatus->setValue(message);
         {
             std::unique_lock<std::mutex> lock {mMutex};
@@ -907,6 +934,10 @@ void GuiOrphanedDataCleanup::onSizeChanged()
 
 bool GuiOrphanedDataCleanup::input(InputConfig* config, Input input)
 {
+    if (mIsProcessing && input.value &&
+        (config->isMappedLike("left", input) || config->isMappedLike("right", input)))
+        return true;
+
     if (input.value &&
         (config->isMappedLike("left", input) || config->isMappedLike("right", input))) {
         const int prevCursorPos {mCursorPos};
@@ -943,5 +974,9 @@ bool GuiOrphanedDataCleanup::input(InputConfig* config, Input input)
 std::vector<HelpPrompt> GuiOrphanedDataCleanup::getHelpPrompts()
 {
     std::vector<HelpPrompt> prompts {mGrid.getHelpPrompts()};
+    if (mIsProcessing) {
+        prompts.pop_back();
+        prompts.pop_back();
+    }
     return prompts;
 }
