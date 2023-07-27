@@ -319,7 +319,12 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
                 if (std::find(systemFilesRelative.cbegin(), systemFilesRelative.cend(),
                               relativePath) == systemFilesRelative.end()) {
                     cleanupFiles.emplace_back(mediaFile);
+#if defined(_WIN64)
+                    LOG(LogInfo) << "Found orphaned media file \""
+                                 << Utils::String::replace(mediaFile, "/", "\\") << "\"";
+#else
                     LOG(LogInfo) << "Found orphaned media file \"" << mediaFile << "\"";
+#endif
                 }
             }
         }
@@ -337,9 +342,14 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
 #endif
             dateString.erase(dateString.find('\0'));
             const std::string targetDirectory {mMediaDirectory + "CLEANUP/" + dateString + "/"};
-
+#if defined(_WIN64)
+            LOG(LogInfo) << "Moving orphaned files to \""
+                         << Utils::String::replace(targetDirectory, "/", "\\") + system->getName()
+                         << "\\\"";
+#else
             LOG(LogInfo) << "Moving orphaned files to \"" << targetDirectory + system->getName()
                          << "/\"";
+#endif
 
             for (auto& file : cleanupFiles) {
                 const std::string fileDirectory {
@@ -440,9 +450,13 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             SDL_Delay(500);
             continue;
         }
-
+#if defined(_WIN64)
+        LOG(LogDebug) << "GuiOrphanedDataCleanup::cleanupGamelists(): Parsing file \""
+                      << Utils::String::replace(gamelistFile, "/", "\\") << "\"";
+#else
         LOG(LogDebug) << "GuiOrphanedDataCleanup::cleanupGamelists(): Parsing file \""
                       << gamelistFile << "\"";
+#endif
 
         const pugi::xml_node& alternativeEmulator {sourceDoc.child("alternativeEmulator")};
         if (alternativeEmulator) {
@@ -580,8 +594,12 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
             }
 
             if (!mFailed) {
+#if defined(_WIN64)
+                LOG(LogInfo) << "Moving old gamelist.xml file to \""
+                             << Utils::String::replace(targetDirectory, "/", "\\") << "\\\"";
+#else
                 LOG(LogInfo) << "Moving old gamelist.xml file to \"" << targetDirectory << "/\"";
-
+#endif
                 if (Utils::FileSystem::renameFile(gamelistFile, targetDirectory + "/gamelist.xml",
                                                   true)) {
                     LOG(LogError) << "Couldn't move file \"" << gamelistFile << "\"";
@@ -683,10 +701,13 @@ void GuiOrphanedDataCleanup::cleanupCollections()
             mIsProcessing = false;
             return;
         }
-
+#if defined(_WIN64)
+        LOG(LogDebug) << "GuiOrphanedDataCleanup::cleanupCollections(): Parsing file \""
+                      << Utils::String::replace(collectionFile, "/", "\\") << "\"";
+#else
         LOG(LogDebug) << "GuiOrphanedDataCleanup::cleanupCollections(): Parsing file \""
                       << collectionFile << "\"";
-
+#endif
         // Get configuration for this custom collection.
         std::vector<std::string> validEntries;
         int removeCount {0};
@@ -791,9 +812,14 @@ void GuiOrphanedDataCleanup::cleanupCollections()
 
                 if (configFileTarget.is_open())
                     configFileTarget.close();
-
+#if defined(_WIN64)
+                LOG(LogInfo) << "Moving old \"" << Utils::FileSystem::getFileName(collectionFile)
+                             << "\" file to \""
+                             << Utils::String::replace(targetDirectory, "/", "\\") << "\"";
+#else
                 LOG(LogInfo) << "Moving old \"" << Utils::FileSystem::getFileName(collectionFile)
                              << "\" file to \"" << targetDirectory << "\"";
+#endif
 
                 if (Utils::FileSystem::renameFile(
                         collectionFile,
