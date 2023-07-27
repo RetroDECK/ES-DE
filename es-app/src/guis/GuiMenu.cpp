@@ -1758,7 +1758,7 @@ void GuiMenu::openUtilities()
     dummyArrow->setOpacity(0.0f);
     row.addElement(dummyArrow, false);
 
-    row.makeAcceptInputHandler([s, window, this] {
+    row.makeAcceptInputHandler([this, window] {
         window->pushGui(new GuiMsgBox(
             this->getHelpStyle(),
             "THIS WILL RESCAN YOUR ROM DIRECTORY\n"
