@@ -1274,8 +1274,8 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
         // If there is a %ROMPATH% variable set for the game, expand it. By doing this
         // it's possible to use either absolute ROM paths in the collection files or using
         // the path variable. The absolute ROM paths are only used for backward compatibility
-        // with old custom collections. All custom collections saved by EmulationStation-DE
-        // will use the %ROMPATH% variable instead.
+        // with old custom collections. All custom collections saved by ES-DE will use the
+        // %ROMPATH% variable instead.
         gameKey = Utils::String::replace(gameKey, "%ROMPATH%", rompath);
         gameKey = Utils::String::replace(gameKey, "//", "/");
 

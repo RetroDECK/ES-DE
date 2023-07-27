@@ -34,6 +34,7 @@
 class FileData;
 class SystemData;
 class Window;
+class GuiOrphanedDataCleanup;
 struct SystemEnvironmentData;
 
 enum CollectionSystemType {
@@ -195,6 +196,8 @@ private:
 
     std::string getCustomCollectionConfigPath(const std::string& collectionName);
     std::string getCollectionsFolder();
+
+    friend GuiOrphanedDataCleanup;
 };
 
 #endif // ES_APP_COLLECTION_SYSTEM_MANAGER_H

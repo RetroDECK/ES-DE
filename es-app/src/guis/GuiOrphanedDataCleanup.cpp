@@ -573,7 +573,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                             "COULDN'T MOVE TEMPORARY GAMELIST FILE, PERMISSION PROBLEMS?";
                     }
                     mFailed = true;
-                    // Attempt to move back the old gamelist.xml file, although this may fail.
+                    // Attempt to move back the old gamelist.xml file.
                     Utils::FileSystem::renameFile(targetDirectory + "/gamelist.xml", gamelistFile,
                                                   true);
                 }
@@ -581,6 +581,9 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
                     mNeedsReloading = true;
             }
         }
+
+        LOG(LogInfo) << "Removed " << removeCount << (removeCount == 1 ? " entry " : " entries ")
+                     << "from system \"" << currentSystem << "\"";
 
         if (!mFailed)
             mProcessedCount += removeCount;
@@ -616,6 +619,11 @@ void GuiOrphanedDataCleanup::cleanupCollections()
     LOG(LogInfo)
         << "GuiOrphanedDataCleanup: Starting cleanup of custom collections configuration files";
 
+    const std::time_t currentTime {
+        std::chrono::system_clock::to_time_t(std::chrono::system_clock::now())};
+
+    int systemCounter {0};
+
     for (auto& collection : CollectionSystemsManager::getInstance()->getCustomCollectionSystems()) {
         if (mStopProcessing)
             break;
@@ -623,23 +631,196 @@ void GuiOrphanedDataCleanup::cleanupCollections()
         if (!collection.second.isEnabled)
             continue;
 
+        ++systemCounter;
+
+        const std::string collectionName {collection.second.system->getName()};
+        LOG(LogInfo) << "Processing collection system \"" << collectionName << "\"";
+
         {
             std::unique_lock<std::mutex> lock {mMutex};
-            mCurrentSystem = collection.second.system->getName();
+            mCurrentSystem = collectionName;
         }
 
-        if (mStopProcessing)
-            break;
+        const std::string collectionFile {
+            CollectionSystemsManager::getInstance()->getCustomCollectionConfigPath(collectionName)};
 
-        mNeedsReloading = true;
+        if (!Utils::FileSystem::exists(collectionFile)) {
+            LOG(LogError) << "Couldn't find custom collection configuration file \""
+                          << collectionFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "COULDN'T FIND CUSTOM COLLECTION CONFIGURATION FILE";
+            }
+            mFailed = true;
+            mIsProcessing = false;
+            return;
+        }
+
+        LOG(LogDebug) << "GuiOrphanedDataCleanup::cleanupCollections(): Parsing file \""
+                      << collectionFile << "\"";
+
+        // Get configuration for this custom collection.
+        std::vector<std::string> validEntries;
+        int removeCount {0};
+        std::ifstream configFileSource;
+
+#if defined(_WIN64)
+        configFileSource.open(Utils::String::stringToWideString(collectionFile));
+#else
+        configFileSource.open(collectionFile);
+#endif
+        if (!configFileSource.good()) {
+            LOG(LogError) << "Couldn't open custom collection configuration file \""
+                          << collectionFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "COULDN'T OPEN CUSTOM COLLECTION CONFIGURATION FILE";
+            }
+            mFailed = true;
+            mIsProcessing = false;
+            return;
+        }
+
+        for (std::string gameKey; getline(configFileSource, gameKey);) {
+            // If there is a %ROMPATH% variable set for the game, expand it. By doing this
+            // it's possible to use either absolute ROM paths in the collection files or using
+            // the path variable. The absolute ROM paths are only used for backward compatibility
+            // with old custom collections. All custom collections saved by ES-DE will use the
+            // %ROMPATH% variable instead.
+            std::string expandedKey {
+                Utils::String::replace(gameKey, "%ROMPATH%", FileData::getROMDirectory())};
+            expandedKey = Utils::String::replace(expandedKey, "//", "/");
+            if (Utils::FileSystem::exists(expandedKey))
+                validEntries.emplace_back(gameKey);
+            else
+                ++removeCount;
+        }
+
+        if (configFileSource.is_open())
+            configFileSource.close();
+
+        const std::string tempFile {collectionFile + "_CLEANUP.tmp"};
+
+        if (Utils::FileSystem::exists(tempFile)) {
+            LOG(LogWarning) << "Found existing temporary file \"" << tempFile << "\"";
+            if (Utils::FileSystem::removeFile(tempFile)) {
+                LOG(LogError) << "Couldn't remove temporary file";
+                {
+                    std::unique_lock<std::mutex> lock {mMutex};
+                    mErrorMessage =
+                        "COULDN'T DELETE TEMPORARY COLLECTION FILE, PERMISSION PROBLEMS?";
+                }
+                mFailed = true;
+                mIsProcessing = false;
+                return;
+            }
+        }
+
+        if (removeCount > 0) {
+            std::string dateString(20, '\0');
+            std::strftime(&dateString[0], 20, "%Y-%m-%d_%H%M%S", localtime(&currentTime));
+            dateString.erase(dateString.find('\0'));
+            const std::string targetDirectory {Utils::FileSystem::getParent(collectionFile) +
+                                               "/CLEANUP/" + dateString + "/"};
+            if (!Utils::FileSystem::isDirectory(targetDirectory) &&
+                !Utils::FileSystem::createDirectory(targetDirectory)) {
+                LOG(LogError) << "Couldn't create backup directory \"" << targetDirectory << "\"";
+                {
+                    std::unique_lock<std::mutex> lock {mMutex};
+                    mErrorMessage = "COULDN'T CREATE BACKUP DIRECTORY, PERMISSION PROBLEMS?";
+                }
+                mFailed = true;
+                mIsProcessing = false;
+                return;
+            }
+            else {
+                std::ofstream configFileTarget;
+#if defined(_WIN64)
+                configFileTarget.open(Utils::String::stringToWideString(tempFile));
+#else
+                configFileTarget.open(tempFile);
+#endif
+                if (!configFileTarget.good()) {
+                    LOG(LogError) << "Couldn't write to temporary collection configuration file \""
+                                  << tempFile << "\"";
+                    {
+                        std::unique_lock<std::mutex> lock {mMutex};
+                        mErrorMessage = "COULDN'T WRITE TO TEMPORARY COLLECTION CONFIGURATION FILE";
+                    }
+                    mFailed = true;
+                    mIsProcessing = false;
+                    return;
+                }
+
+                for (auto& entry : validEntries)
+                    configFileTarget << entry << std::endl;
+
+                if (configFileTarget.is_open())
+                    configFileTarget.close();
+
+                LOG(LogInfo) << "Moving old \"" << Utils::FileSystem::getFileName(collectionFile)
+                             << "\" file to \"" << targetDirectory << "\"";
+
+                if (Utils::FileSystem::renameFile(
+                        collectionFile,
+                        targetDirectory + "/" + Utils::FileSystem::getFileName(collectionFile),
+                        true)) {
+                    LOG(LogError) << "Couldn't move file \"" << collectionFile
+                                  << "\" to backup directory";
+                    {
+                        std::unique_lock<std::mutex> lock {mMutex};
+                        mErrorMessage = "COULDN'T MOVE OLD COLLECTION FILE, PERMISSION PROBLEMS?";
+                    }
+                    // Attempt to move back the old collection file.
+                    Utils::FileSystem::renameFile(
+                        targetDirectory + Utils::FileSystem::getFileName(collectionFile),
+                        collectionFile, false);
+                    mFailed = true;
+                }
+                else if (Utils::FileSystem::renameFile(tempFile, collectionFile, true)) {
+                    LOG(LogError) << "Couldn't move file \"" << tempFile << "\"";
+                    {
+                        std::unique_lock<std::mutex> lock {mMutex};
+                        mErrorMessage =
+                            "COULDN'T MOVE TEMPORARY COLLECTION FILE, PERMISSION PROBLEMS?";
+                    }
+                    // Attempt to move back the old collection file.
+                    Utils::FileSystem::renameFile(
+                        targetDirectory + Utils::FileSystem::getFileName(collectionFile),
+                        collectionFile, true);
+                    mFailed = true;
+                }
+                if (!mFailed)
+                    mNeedsReloading = true;
+            }
+        }
+
+        LOG(LogInfo) << "Removed " << removeCount << (removeCount == 1 ? " entry " : " entries ")
+                     << "from collection system \"" << collectionName << "\"";
+
+        if (!mFailed)
+            mProcessedCount += removeCount;
+
+        if (Utils::FileSystem::exists(tempFile) && Utils::FileSystem::removeFile(tempFile)) {
+            LOG(LogError) << "Couldn't remove temporary file \"" << tempFile << "\"";
+            {
+                std::unique_lock<std::mutex> lock {mMutex};
+                mErrorMessage = "COULDN'T DELETE TEMPORARY COLLECTION FILE, PERMISSION PROBLEMS?";
+            }
+            mFailed = true;
+        }
 
         SDL_Delay(500);
+
+        if (mFailed)
+            return;
     }
 
     mIsProcessing = false;
     mCompleted = true;
     LOG(LogInfo) << "GuiOrphanedDataCleanup: Completed cleanup of custom collections configuration "
-                    "files, removed "
+                    "files, processed "
+                 << systemCounter << (systemCounter == 1 ? " system" : " systems") << ", removed "
                  << mProcessedCount << (mProcessedCount == 1 ? " entry" : " entries");
 }
 
