@@ -27,7 +27,10 @@ public:
     void onFocusGained() override;
     void onFocusLost() override;
 
-    void setText(const std::string& text, const std::string& helpText, bool upperCase = true);
+    void setText(const std::string& text,
+                 const std::string& helpText,
+                 bool upperCase = true,
+                 bool resize = true);
     const std::string& getText() const { return mText; }
 
     void setPressedFunc(std::function<void()> f) { mPressedFunc = f; }

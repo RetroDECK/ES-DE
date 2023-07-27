@@ -64,7 +64,10 @@ void ButtonComponent::onFocusLost()
         updateImage();
 }
 
-void ButtonComponent::setText(const std::string& text, const std::string& helpText, bool upperCase)
+void ButtonComponent::setText(const std::string& text,
+                              const std::string& helpText,
+                              bool upperCase,
+                              bool resize)
 {
     mText = upperCase ? Utils::String::toUpper(text) : text;
     mHelpText = helpText;
@@ -74,10 +77,12 @@ void ButtonComponent::setText(const std::string& text, const std::string& helpTe
 
     const float minWidth {mFont->sizeText("DELETE").x +
                           (12.0f * mRenderer->getScreenResolutionModifier())};
-    setSize(
-        std::max(mTextCache->metrics.size.x + (12.0f * mRenderer->getScreenResolutionModifier()),
-                 minWidth),
-        mTextCache->metrics.size.y);
+    if (resize) {
+        setSize(std::max(mTextCache->metrics.size.x +
+                             (12.0f * mRenderer->getScreenResolutionModifier()),
+                         minWidth),
+                mTextCache->metrics.size.y);
+    }
 
     updateHelpPrompts();
 }
