@@ -383,8 +383,8 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
         }
 
         LOG(LogInfo) << "Removed " << systemProcessedCount << " file"
-                     << (systemProcessedCount == 1 ? " " : "s ") << "for system \"" << currentSystem
-                     << "\"";
+                     << (systemProcessedCount == 1 ? " " : "s ") << "from system \""
+                     << currentSystem << "\"";
 
         SDL_Delay(500);
     }
@@ -739,10 +739,13 @@ void GuiOrphanedDataCleanup::cleanupCollections()
             std::string expandedKey {
                 Utils::String::replace(gameKey, "%ROMPATH%", FileData::getROMDirectory())};
             expandedKey = Utils::String::replace(expandedKey, "//", "/");
-            if (Utils::FileSystem::exists(expandedKey))
+            if (Utils::FileSystem::exists(expandedKey)) {
                 validEntries.emplace_back(gameKey);
-            else
+            }
+            else {
+                LOG(LogInfo) << "Found orphaned collection entry \"" << gameKey << "\"";
                 ++removeCount;
+            }
         }
 
         if (configFileSource.is_open())
