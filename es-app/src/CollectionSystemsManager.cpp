@@ -104,6 +104,8 @@ void CollectionSystemsManager::deinit(const bool shutdown)
             it->second.system = nullptr;
         }
 
+        mCustomCollectionSystemsData.clear();
+
         // Delete the custom collections bundle.
         if (mCustomCollectionsBundle) {
             delete mCustomCollectionsBundle;
