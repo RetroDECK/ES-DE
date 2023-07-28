@@ -84,8 +84,10 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
                                                          mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mDescriptionHeader, glm::ivec2 {1, 3}, false, true, glm::ivec2 {2, 1});
 
-    mDescription = std::make_shared<TextComponent>(mMediaDescription, Font::get(FONT_SIZE_MEDIUM),
-                                                   mMenuColorPrimary, ALIGN_LEFT, ALIGN_TOP);
+    mDescription = std::make_shared<TextComponent>(
+        mMediaDescription,
+        Font::get(mRenderer->getScreenAspectRatio() < 1.6f ? FONT_SIZE_SMALL : FONT_SIZE_MEDIUM),
+        mMenuColorPrimary, ALIGN_LEFT, ALIGN_TOP);
     mGrid.setEntry(mDescription, glm::ivec2 {1, 4}, false, true, glm::ivec2 {2, 1});
 
     mEntryCountHeader = std::make_shared<TextComponent>(
@@ -234,20 +236,27 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
 
     // Limit the width of the GUI on ultrawide monitors. The 1.778 aspect ratio value is
     // the 16:9 reference.
-    const float aspectValue {1.778f / Renderer::getScreenAspectRatio()};
-    const float width {glm::clamp(0.80f * aspectValue, 0.45f,
-                                  (mRenderer->getIsVerticalOrientation() ? 0.95f : 0.80f)) *
+    const float aspectValue {1.778f / mRenderer->getScreenAspectRatio()};
+    // Some additional size adjustments are required for different aspect ratios.
+    float multiplierY;
+    if (mRenderer->getScreenAspectRatio() < 1.0f)
+        multiplierY = 10.0f;
+    else if (mRenderer->getScreenAspectRatio() < 1.6f)
+        multiplierY = 8.0f;
+    else
+        multiplierY = 8.7f;
+
+    const float width {glm::clamp(0.80f * aspectValue, 0.40f,
+                                  (mRenderer->getScreenAspectRatio() < 1.6f ? 0.97f : 0.9f)) *
                        mRenderer->getScreenWidth()};
     setSize(width,
-            mTitle->getSize().y +
-                (FONT_SIZE_MEDIUM * 1.5f * (mRenderer->getIsVerticalOrientation() ? 9.7f : 8.7f)) +
-                mButtons->getSize().y);
+            mTitle->getSize().y + (FONT_SIZE_MEDIUM * 1.5f * multiplierY) + mButtons->getSize().y);
 
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
-                std::round(mRenderer->getScreenHeight() * 0.13f));
+                std::round(mRenderer->getScreenHeight() * 0.1f));
 
     mBusyAnim.setSize(mSize);
     mBusyAnim.setText("PROCESSING");
@@ -954,13 +963,32 @@ void GuiOrphanedDataCleanup::onSizeChanged()
 {
     const float screenSize {mRenderer->getIsVerticalOrientation() ? mRenderer->getScreenWidth() :
                                                                     mRenderer->getScreenHeight()};
+    float descSizeY;
+    float col1Size;
+
+    // Some additional size adjustments are required for different aspect ratios.
+    if (mRenderer->getScreenAspectRatio() < 1.0f) {
+        descSizeY = 12.0f;
+        col1Size = 0.36f;
+    }
+    else if (mRenderer->getScreenAspectRatio() < 1.6f) {
+        descSizeY = 9.2f;
+        col1Size = 0.28f;
+    }
+    else {
+        descSizeY = 8.8f;
+        col1Size = 0.25f;
+    }
+
     mGrid.setRowHeightPerc(0, (mTitle->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y /
                                   2.0f);
     mGrid.setRowHeightPerc(1, (mStatus->getFont()->getLetterHeight() + 2.0f) / mSize.y, false);
     mGrid.setRowHeightPerc(2, (mStatus->getFont()->getLetterHeight() * 0.5f) / mSize.y, false);
     mGrid.setRowHeightPerc(
         3, (mDescriptionHeader->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y / 4.0f);
-    mGrid.setRowHeightPerc(4, (mDescription->getFont()->getLetterHeight() * 8.5f) / mSize.y);
+
+    mGrid.setRowHeightPerc(4, (mDescription->getFont()->getLetterHeight() * descSizeY) / mSize.y);
+
     mGrid.setRowHeightPerc(5, (mStatus->getFont()->getLetterHeight() * 0.3f) / mSize.y);
     mGrid.setRowHeightPerc(
         6, (mEntryCountHeader->getFont()->getLetterHeight() + screenSize * 0.2f) / mSize.y / 4.0f);
@@ -972,7 +1000,7 @@ void GuiOrphanedDataCleanup::onSizeChanged()
     mGrid.setRowHeightPerc(10, mButtons->getSize().y / mSize.y);
 
     mGrid.setColWidthPerc(0, 0.01f);
-    mGrid.setColWidthPerc(1, 0.25f);
+    mGrid.setColWidthPerc(1, col1Size);
     mGrid.setColWidthPerc(3, 0.01f);
 
     mGrid.setSize(mSize);
