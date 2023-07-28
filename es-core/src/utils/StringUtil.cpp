@@ -621,7 +621,7 @@ namespace Utils
 
         std::wstring stringToWideString(const std::string& stringArg)
         {
-            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> stringConverter;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> stringConverter;
             try {
                 return stringConverter.from_bytes(stringArg);
             }
@@ -636,7 +636,7 @@ namespace Utils
 
         std::string wideStringToString(const std::wstring& stringArg)
         {
-            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> stringConverter;
+            std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t> stringConverter;
             try {
                 return stringConverter.to_bytes(stringArg);
             }
