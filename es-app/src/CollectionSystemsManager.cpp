@@ -38,6 +38,8 @@
 #include <pugixml.hpp>
 #include <random>
 
+#define INVALID_COLLECTION_CHARACTERS "*\",./:;<>\\|"
+
 CollectionSystemsManager::CollectionSystemsManager() noexcept
     : mWindow {Window::getInstance()}
     , mApplicationStartup {false}
@@ -551,26 +553,30 @@ std::string CollectionSystemsManager::getValidNewCollectionName(const std::strin
 {
     std::string name {inName};
 
-    // Trim leading and trailing whitespaces.
-    name = Utils::String::trim(name);
-
     if (index == 0) {
         size_t remove {std::string::npos};
-        // Get valid name.
-        while ((remove = name.find_first_not_of(
-                    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-[]()' ")) !=
-               std::string::npos)
+        // Remove invalid characters.
+        while ((remove = name.find_first_of(INVALID_COLLECTION_CHARACTERS)) != std::string::npos)
             name.erase(remove, 1);
     }
     else {
-        name += " (" + std::to_string(index) + ")";
+        name.append(" (").append(std::to_string(index)).append(")");
+        LOG(LogInfo)
+            << "A custom collection with the requested name already exists, changing name from \""
+            << inName << "\" to \"" << name << "\"";
     }
+
+    // Trim leading and trailing whitespaces.
+    name = Utils::String::trim(name);
 
     if (name == "")
         name = "new collection";
 
-    if (Utils::String::toLower(name) != Utils::String::toLower(inName)) {
-        LOG(LogInfo) << "Had to change name, from: " << inName << " to: " << name;
+    if (index == 0 && (Utils::String::toLower(name) != Utils::String::toLower(inName))) {
+        LOG(LogWarning)
+            << "Requested custom collection name contained one or more invalid characters, name "
+               "was changed from \""
+            << inName << "\" to \"" << name << "\"";
     }
 
     // Get used systems from es_systems.xml.
@@ -978,15 +984,19 @@ void CollectionSystemsManager::deleteCustomCollection(const std::string& collect
         // Remove the collection configuration file.
         std::string configFile {getCustomCollectionConfigPath(collectionName)};
         Utils::FileSystem::removeFile(configFile);
-        LOG(LogDebug) << "CollectionSystemsManager::deleteCustomCollection(): Deleted the "
-                         "configuration file '"
-                      << configFile << "'.";
-
+        LOG(LogInfo) << "Deleted custom collection \"" << collectionName << "\"";
+        LOG(LogDebug) << "CollectionSystemsManager::deleteCustomCollection(): Deleted "
+                         "configuration file \""
+#if defined(_WIN64)
+                      << Utils::String::replace(configFile, "/", "\\") << "\"";
+#else
+                      << configFile << "\"";
+#endif
         mWindow->queueInfoPopup(
             "DELETED COLLECTION '" + Utils::String::toUpper(collectionName) + "'", 5000);
     }
     else {
-        LOG(LogError) << "Attempted to delete custom collection '" + collectionName + "' " +
+        LOG(LogError) << "Attempted to delete custom collection \"" + collectionName + "\" " +
                              "which doesn't exist.";
     }
 }
@@ -1485,6 +1495,16 @@ std::vector<std::string> CollectionSystemsManager::getCollectionsFromConfigFolde
              it != dirContent.cend(); ++it) {
             if (Utils::FileSystem::isRegularFile(*it)) {
                 std::string filename {Utils::FileSystem::getFileName(*it)};
+
+                if (Utils::FileSystem::getStem(filename).find_first_of(
+                        INVALID_COLLECTION_CHARACTERS) != std::string::npos) {
+                    LOG(LogWarning)
+                        << "Found a custom collection configuration file name with at least one "
+                           "invalid character, skipping file \""
+                        << filename << "\"";
+                    continue;
+                }
+
                 if (std::find(filenames.cbegin(), filenames.cend(),
                               Utils::String::toLower(filename)) != filenames.cend()) {
                     LOG(LogWarning)

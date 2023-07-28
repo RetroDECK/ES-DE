@@ -403,6 +403,8 @@ void GuiCollectionSystemsOptions::createCustomCollection(std::string inName)
         setNeedsGoToSystem(newCollection);
     }
 
+    LOG(LogInfo) << "Created new custom collection \"" << newCollection->getName() << "\"";
+
     Window* window {mWindow};
     while (window->peekGui() && window->peekGui() != ViewController::getInstance())
         delete window->peekGui();
