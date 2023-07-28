@@ -38,7 +38,7 @@
 #include <pugixml.hpp>
 #include <random>
 
-#define INVALID_COLLECTION_CHARACTERS "*\",./:;<>\\|"
+#define INVALID_COLLECTION_CHARACTERS "*\",./:;<>\\|\n\t"
 
 CollectionSystemsManager::CollectionSystemsManager() noexcept
     : mWindow {Window::getInstance()}
