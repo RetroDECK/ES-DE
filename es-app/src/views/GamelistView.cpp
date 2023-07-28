@@ -474,13 +474,17 @@ std::vector<HelpPrompt> GamelistView::getHelpPrompts()
              !UIModeController::getInstance()->isUIModeKiosk() &&
              (Settings::getInstance()->getBool("FavoritesAddButton") ||
               CollectionSystemsManager::getInstance()->isEditing())) {
-        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
+        std::string prompt {CollectionSystemsManager::getInstance()->getEditingCollection()};
+        if (prompt.length() > 24)
+            prompt = prompt.substr(0, 22) + "...";
         prompts.push_back(HelpPrompt("y", prompt));
     }
     else if (mRoot->getSystem()->isGameSystem() &&
              mRoot->getSystem()->getThemeFolder() == "custom-collections" &&
              CollectionSystemsManager::getInstance()->isEditing()) {
-        std::string prompt = CollectionSystemsManager::getInstance()->getEditingCollection();
+        std::string prompt {CollectionSystemsManager::getInstance()->getEditingCollection()};
+        if (prompt.length() > 24)
+            prompt = prompt.substr(0, 22) + "...";
         prompts.push_back(HelpPrompt("y", prompt));
     }
     return prompts;
