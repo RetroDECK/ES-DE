@@ -55,6 +55,8 @@ public:
         const std::string platformIdentifier {" S"};
 #elif defined(RETRODECK)
         const std::string platformIdentifier {" R"};
+#elif defined(APPIMAGE_BUILD)
+        const std::string platformIdentifier {" A"};
 #elif defined(__linux__) && defined(RASPBERRY_PI)
         const std::string platformIdentifier {" P"};
 #elif defined(__linux__)
