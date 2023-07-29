@@ -12,7 +12,7 @@
 #  This script needs to run from the root of the repository.
 #
 
-export MACOSX_DEPLOYMENT_TARGET=10.14
+export MACOSX_DEPLOYMENT_TARGET=10.15
 
 # How many CPU threads to use for the compilation.
 JOBS=4

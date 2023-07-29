@@ -135,21 +135,6 @@ public:
 
         template <typename T> const T get(const std::string& prop) const
         {
-#if defined(LEGACY_MACOS)
-            if (std::is_same<T, glm::vec2>::value)
-                return *(const T*)&properties.at(prop).v;
-            else if (std::is_same<T, std::string>::value)
-                return *(const T*)&properties.at(prop).s;
-            else if (std::is_same<T, unsigned int>::value)
-                return *(const T*)&properties.at(prop).i;
-            else if (std::is_same<T, float>::value)
-                return *(const T*)&properties.at(prop).f;
-            else if (std::is_same<T, bool>::value)
-                return *(const T*)&properties.at(prop).b;
-            else if (std::is_same<T, glm::vec4>::value)
-                return *(const T*)&properties.at(prop).r;
-            return T();
-#else
             if (std::is_same<T, glm::vec2>::value)
                 return std::any_cast<const T>(properties.at(prop).v);
             else if (std::is_same<T, std::string>::value)
@@ -163,7 +148,6 @@ public:
             else if (std::is_same<T, glm::vec4>::value)
                 return std::any_cast<const T>(properties.at(prop).r);
             return T();
-#endif
         }
 
         bool has(const std::string& prop) const

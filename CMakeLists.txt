@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.13)
 if(APPLE)
     # Set this to the minimum supported macOS version, and also update
     # es-app/assets/EmulationStation-DE_Info.plist accordingly.
-    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.14 CACHE STRING "macOS deployment target")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET 10.15 CACHE STRING "macOS deployment target")
     # This optional variable is used for code signing the DMG installer.
     set(MACOS_CODESIGN_IDENTITY "" CACHE STRING "macOS code signing certificate identity")
 endif()
@@ -272,10 +272,6 @@ if(APPLE)
     if(MACOS_CODESIGN_IDENTITY)
         message("-- Code signing certificate identity: " ${MACOS_CODESIGN_IDENTITY})
     endif()
-    if(CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
-        set(BUNDLED_CERTS ON)
-        message("-- macOS version 10.13 or lower has been set, so if code signing is enabled, Hardened Runtime will not be used")
-    endif()
 endif()
 
 if(WIN32)
@@ -375,10 +371,6 @@ if(APPLE)
     else()
         add_compile_definitions(MACOS_INTEL_CPU)
     endif()
-endif()
-
-if(APPLE AND CMAKE_OSX_DEPLOYMENT_TARGET VERSION_LESS 10.14)
-    add_compile_definitions(LEGACY_MACOS)
 endif()
 
 # Affects the application updater and is used for displaying version info in the main menu.
