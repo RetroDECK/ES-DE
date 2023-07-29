@@ -250,7 +250,7 @@ void ComponentList::updateCameraOffset()
         unsigned int i {0};
         while (mCameraOffset < target && i < mEntries.size()) {
             mCameraOffset += mRowHeight;
-            if (mCameraOffset > totalHeight - mSize.y) {
+            if (mCameraOffset >= totalHeight - mSize.y) {
                 if (mSetupCompleted) {
                     if (mScrollIndicatorStatus == ComponentList::SCROLL_NONE &&
                         oldCameraOffset == 0.0f)
