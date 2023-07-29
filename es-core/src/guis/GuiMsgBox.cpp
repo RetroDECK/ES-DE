@@ -89,14 +89,14 @@ GuiMsgBox::GuiMsgBox(const HelpStyle& helpstyle,
         width = mButtonGrid->getSize().x;
     }
 
-    // Now that we know width, we can find height.
+    // Now that we know the width, we can calculate the height.
     mMsg->setSize(width, 0.0f); // mMsg->getSize.y() now returns the proper length.
     const float msgHeight {std::max(Font::get(FONT_SIZE_LARGE)->getHeight(),
                                     mMsg->getSize().y * VERTICAL_PADDING_MODIFIER)};
-    setSize(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f * mRenderer->getScreenWidthModifier()),
-            msgHeight + mButtonGrid->getSize().y);
+    setSize(std::round(width + std::ceil(HORIZONTAL_PADDING_PX * 2.0f *
+                                         mRenderer->getScreenWidthModifier())),
+            std::round(msgHeight + mButtonGrid->getSize().y));
 
-    // Center for good measure.
     setPosition((mRenderer->getScreenWidth() - mSize.x) / 2.0f,
                 (mRenderer->getScreenHeight() - mSize.y) / 2.0f);
 
@@ -133,7 +133,7 @@ void GuiMsgBox::changeText(const std::string& newText)
         width = mButtonGrid->getSize().x;
     }
 
-    // Now that we know width, we can find height.
+    // Now that we know the width, we can calculate the height.
     mMsg->setSize(width, 0.0f); // mMsg->getSize.y() now returns the proper height.
     newSize = mMsg->getSize();
     newSize.y *= VERTICAL_PADDING_MODIFIER;
@@ -169,7 +169,6 @@ void GuiMsgBox::onSizeChanged()
     mGrid.setSize(mSize);
     mGrid.setRowHeightPerc(1, mButtonGrid->getSize().y / mSize.y);
 
-    // Update messagebox size.
     mMsg->setSize(mSize.x - HORIZONTAL_PADDING_PX * 2.0f * Renderer::getScreenWidthModifier(),
                   mGrid.getRowHeight(0));
     mGrid.onSizeChanged();

@@ -433,7 +433,7 @@ void ComponentList::updateElementPosition(const ComponentListRow& row)
         const auto comp = row.elements.at(i).component;
 
         // Center vertically.
-        comp->setPosition(x, (mRowHeight - comp->getSize().y) / 2.0f + yOffset);
+        comp->setPosition(x, (mRowHeight - std::floor(comp->getSize().y)) / 2.0f + yOffset);
         x += comp->getSize().x;
     }
 }

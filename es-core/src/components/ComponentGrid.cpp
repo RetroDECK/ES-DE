@@ -60,7 +60,7 @@ float ComponentGrid::getRowHeight(int row)
     assert(row >= 0 && row < mGridSize.y);
 
     if (mRowHeights[row] != 0)
-        return mRowHeights[row] * mSize.y;
+        return std::round(mRowHeights[row] * mSize.y);
 
     // Calculate automatic height.
     float freeHeightPerc {1.0f};
@@ -71,7 +71,7 @@ float ComponentGrid::getRowHeight(int row)
             ++between;
     }
 
-    return (freeHeightPerc * mSize.y) / static_cast<float>(between);
+    return std::round((freeHeightPerc * mSize.y) / static_cast<float>(between));
 }
 
 void ComponentGrid::setColWidthPerc(int col, float width, bool update)

@@ -44,13 +44,13 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
     }
 
     // Add a padding to the box.
-    int paddingX = static_cast<int>(Renderer::getScreenWidth() * 0.03f);
-    int paddingY = static_cast<int>(Renderer::getScreenHeight() * 0.02f);
-    mSize.x = mSize.x + paddingX;
-    mSize.y = mSize.y + paddingY;
+    int paddingX {static_cast<int>(Renderer::getScreenWidth() * 0.03f)};
+    int paddingY {static_cast<int>(Renderer::getScreenHeight() * 0.02f)};
+    mSize.x += paddingX;
+    mSize.y += paddingY;
 
-    float posX = Renderer::getScreenWidth() * 0.5f - mSize.x * 0.5f;
-    float posY = Renderer::getScreenHeight() * 0.02f;
+    float posX {Renderer::getScreenWidth() * 0.5f - mSize.x * 0.5f};
+    float posY {Renderer::getScreenHeight() * 0.02f};
 
     setPosition(posX, posY, 0);
 
@@ -61,9 +61,9 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
     // We only initialize the actual time when we first start to render.
     mStartTime = 0;
 
-    mGrid = new ComponentGrid(glm::ivec2 {1, 3});
+    mGrid = new ComponentGrid(glm::ivec2 {1, 1});
     mGrid->setSize(mSize);
-    mGrid->setEntry(s, glm::ivec2 {0, 1}, false, true);
+    mGrid->setEntry(s, glm::ivec2 {0, 0}, false, true);
     addChild(mGrid);
 }
 
@@ -76,7 +76,7 @@ GuiInfoPopup::~GuiInfoPopup()
 void GuiInfoPopup::render(const glm::mat4& /*parentTrans*/)
 {
     // We use getIdentity() as we want to render on a specific window position, not on the view.
-    glm::mat4 trans {getTransform() * Renderer::getIdentity()};
+    const glm::mat4 trans {getTransform() * Renderer::getIdentity()};
     if (mRunning && updateState()) {
         // If we're still supposed to be rendering it.
         mRenderer->setMatrix(trans);
@@ -86,7 +86,7 @@ void GuiInfoPopup::render(const glm::mat4& /*parentTrans*/)
 
 bool GuiInfoPopup::updateState()
 {
-    int curTime = SDL_GetTicks();
+    const int curTime {static_cast<int>(SDL_GetTicks())};
 
     // We only initialize the actual time when we first start to render.
     if (mStartTime == 0)
