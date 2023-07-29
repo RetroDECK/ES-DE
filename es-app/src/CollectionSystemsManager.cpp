@@ -126,14 +126,20 @@ void CollectionSystemsManager::deinit(const bool shutdown)
 
 void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
 {
-    const std::string rompath {FileData::getROMDirectory()};
+#if defined(_WIN64)
+    std::string rompath {Utils::String::replace(FileData::getROMDirectory(), "\\", "/")};
+#else
+    std::string rompath {FileData::getROMDirectory()};
+#endif
+    rompath = Utils::String::replace(rompath, "//", "/");
+
     std::string name {sys->getName()};
     std::unordered_map<std::string, FileData*> games {
         sys->getRootFolder()->getChildrenByFilename()};
     bool found {mCustomCollectionSystemsData.find(name) != mCustomCollectionSystemsData.cend()};
 
     if (found) {
-        CollectionSystemData sysData = mCustomCollectionSystemsData.at(name);
+        CollectionSystemData sysData {mCustomCollectionSystemsData.at(name)};
         // Read back any entries from the configuration file for game files that are
         // currently missing, and combine them with the active content. If we wouldn't do
         // this, they would be purged from the collection. Maybe a directory has been
@@ -166,7 +172,7 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
 
         for (std::unordered_map<std::string, FileData*>::const_iterator it = games.cbegin();
              it != games.cend(); ++it) {
-            std::string path = it->first;
+            std::string path {it->first};
             // If the ROM path of the game begins with the path from the setting
             // ROMDirectory (or the default ROM directory), then replace it with %ROMPATH%.
             if (path.find(rompath) == 0)
@@ -1005,8 +1011,14 @@ void CollectionSystemsManager::deleteCustomCollection(const std::string& collect
 
 void CollectionSystemsManager::reactivateCustomCollectionEntry(FileData* game)
 {
-    std::string gamePath {
-        Utils::String::replace(game->getFullPath(), FileData::getROMDirectory(), "%ROMPATH%/")};
+#if defined(_WIN64)
+    std::string rompath {Utils::String::replace(FileData::getROMDirectory(), "\\", "/")};
+#else
+    std::string rompath {FileData::getROMDirectory()};
+#endif
+    rompath = Utils::String::replace(rompath, "//", "/");
+
+    std::string gamePath {Utils::String::replace(game->getFullPath(), rompath, "%ROMPATH%/")};
 
     // Try to read from all custom collection configuration files to see if there are any
     // matching entries for the game passed as the parameter. If so, then enable it in each
@@ -1279,7 +1291,12 @@ void CollectionSystemsManager::populateCustomCollection(CollectionSystemData* sy
 
     // Get the ROM directory, either as configured in es_settings.xml, or if no value
     // is set there, then use the default hardcoded path.
-    const std::string rompath {FileData::getROMDirectory()};
+#if defined(_WIN64)
+    std::string rompath {Utils::String::replace(FileData::getROMDirectory(), "\\", "/")};
+#else
+    std::string rompath {FileData::getROMDirectory()};
+#endif
+    rompath = Utils::String::replace(rompath, "//", "/");
 
     // Iterate list of files in the config file.
     for (std::string gameKey; getline(input, gameKey);) {
