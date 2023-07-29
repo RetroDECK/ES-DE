@@ -19,7 +19,11 @@
 * Changed ComponentList to fixed row heights which fixed many alignment issues
 * Improved the layout for the scraper and theme downloader to look more consistent across different display aspect ratios
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
+* Improved menu system font rendering on GPUs without proper texture filtering support
 * Added theme support for the "manual" metadata type for the text element
+* Replaced a number of homecooked functions in FileSystemUtil with those from the C++ standard library
+* (macOS) Changed the minimum required OS version from 10.14 "Mojave" to 10.15 "Catalina"
+* (macOS) Completely removed support for the legacy OS build
 * Updated LunaSVG to 2.3.6
 
 ### Bug fixes

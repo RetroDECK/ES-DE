@@ -480,7 +480,7 @@ This can take quite a while as multiple packages are downloaded and compiled. It
 
 Re-running macOS_dependencies_setup.sh will delete and download all dependencies again, and re-running macOS_dependencies_build.sh will clean and rebuild all packages. If you want to recompile a single package, make sure to first set the MACOSX_DEPLOYMENT_TARGET variable:
 ```
-export MACOSX_DEPLOYMENT_TARGET=10.14
+export MACOSX_DEPLOYMENT_TARGET=10.15
 ```
 
 Then manually recompile the package, for example:
@@ -552,9 +552,7 @@ Running ES-DE from the build directory may be a bit flaky as there is no Info.pl
 
 **Code signing**
 
-Due to the Apple notarization requirement implemented as of macOS 10.14.5 a build with simple code signing is needed for versions up to 10.13 and another build with both code signing and notarization is required for version 10.14 and higher.
-
-macOS code signing is beyond the scope of this document, but the CMake option MACOS_CODESIGN_IDENTITY is used to specify the code signing certificate identity, for example:
+A detailed explanation of macOS code signing is beyond the scope of this document, but the CMake option MACOS_CODESIGN_IDENTITY is used to specify the code signing certificate identity, for example:
 ```
 cmake -DMACOS_CODESIGN_IDENTITY="My Name" .
 ```
@@ -565,14 +563,6 @@ security unlock-keychain
 ```
 
 This is not required if cpack is run from a terminal window started via the desktop interface as the keychain is unlocked as part of the desktop login.
-
-**Legacy build**
-
-Normally ES-DE is meant to be built for macOS 10.14 and higher, but a legacy build for earlier operating system versions can be enabled. This has been tested with a minimum version of 10.11. It's unclear if it works with even older macOS releases.
-
-To enable a legacy build, change the CMAKE_OSX_DEPLOYMENT_TARGET variable in CMakeLists.txt from 10.14 to whatever version you would like to build for. This will disable Hardened Runtime if signing is enabled and it will add "legacy" to the DMG installer filename when running CPack. It will also enable the bundled TLS/SSL certificates. As these older macOS releases are no longer receiving patches from Apple, certificates have likely expired meaning the scraper would not work if the bundled certificates were not used.
-
-You also need to modify es-app/assets/EmulationStation-DE_Info.plist and set the key SMinimumSystemVersion to the version you're building for. And finally CMAKE_OSX_DEPLOYMENT_TARGET needs to be updated in tools/macOS_dependencies_build.sh. This script then needs to be executed to rebuild all dependencies for the configured macOS version.
 
 **Installing**
 

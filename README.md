@@ -18,7 +18,7 @@ Two theme sets (Slate and Modern) are bundled with the application, and addition
 
 ## Download
 
-Visit https://es-de.org/ to download ES-DE or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find all previous releases.
+Visit https://es-de.org/ to download the latest ES-DE release or go to the [package registry](https://gitlab.com/es-de/emulationstation-de/-/packages) where you can also find all previous releases.
 
 If you're using a Raspberry Pi or if you run FreeBSD, NetBSD or OpenBSD then you need to compile from source code as no prebuilt packages are provided for these platforms. A detailed build guide is available in [INSTALL.md](INSTALL.md).
 
