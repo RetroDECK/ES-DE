@@ -221,7 +221,7 @@ void GuiScraperSearch::onSizeChanged()
 
     if (mSearchType != ALWAYS_ACCEPT_FIRST_RESULT)
         mDescContainer->setSize(mGrid.getColWidth(1) * thumbnailCellScale + mGrid.getColWidth(2),
-                                mResultDesc->getFont()->getHeight() * 3.0f);
+                                mResultDesc->getFont()->getHeight() * 3.2f);
     else
         mDescContainer->setSize(mGrid.getColWidth(4) * thumbnailCellScale,
                                 mResultDesc->getFont()->getHeight() * 8.0f);
