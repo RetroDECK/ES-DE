@@ -11,7 +11,7 @@
     <key>CFBundleExecutable</key>
     <string>EmulationStation</string>
     <key>CFBundleGetInfoString</key>
-    <string>EmulationStation Desktop Edition 2.1.2</string>
+    <string>EmulationStation Desktop Edition 2.2.0</string>
     <key>CFBundleIconFile</key>
     <string>EmulationStation-DE.icns</string>
     <key>CFBundleName</key>
@@ -21,9 +21,9 @@
     <key>CFBundleSignature</key>
     <string>ESDE</string>
     <key>CFBundleShortVersionString</key>
-    <string>2.1.2</string>
+    <string>2.2.0-alpha</string>
     <key>CFBundleVersion</key>
-    <string>2.1.2</string>
+    <string>2.2.0-alpha</string>
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     <key>LSApplicationCategoryType</key>
