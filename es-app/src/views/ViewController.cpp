@@ -188,22 +188,24 @@ void ViewController::noGamesDialog()
             if (Settings::getInstance()->getBool("VirtualKeyboard")) {
                 mWindow->pushGui(new GuiTextEditKeyboardPopup(
                     HelpStyle(), 0.0f, "ENTER ROM DIRECTORY PATH", currentROMDirectory,
-                    [this](const std::string& newROMDirectory) {
-                        Settings::getInstance()->setString("ROMDirectory",
-                                                           Utils::String::trim(newROMDirectory));
-                        Settings::getInstance()->saveFile();
+                    [this, currentROMDirectory](const std::string& newROMDirectory) {
+                        if (currentROMDirectory != newROMDirectory) {
+                            Settings::getInstance()->setString(
+                                "ROMDirectory", Utils::String::trim(newROMDirectory));
+                            Settings::getInstance()->saveFile();
 #if defined(_WIN64)
-                        mRomDirectory =
-                            Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
+                            mRomDirectory =
+                                Utils::String::replace(FileData::getROMDirectory(), "/", "\\");
 #else
-                        mRomDirectory = FileData::getROMDirectory();
+                            mRomDirectory = FileData::getROMDirectory();
 #endif
-                        mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
-                        mWindow->pushGui(new GuiMsgBox(HelpStyle(),
-                                                       "ROM DIRECTORY SETTING SAVED, RESTART\n"
-                                                       "THE APPLICATION TO RESCAN THE SYSTEMS",
-                                                       "OK", nullptr, "", nullptr, "", nullptr,
-                                                       true, true));
+                            mNoGamesMessageBox->changeText(mNoGamesErrorMessage + mRomDirectory);
+                            mWindow->pushGui(new GuiMsgBox(HelpStyle(),
+                                                           "ROM DIRECTORY SETTING SAVED, RESTART\n"
+                                                           "THE APPLICATION TO RESCAN THE SYSTEMS",
+                                                           "OK", nullptr, "", nullptr, "", nullptr,
+                                                           true, true));
+                        }
                     },
                     false, "SAVE", "SAVE CHANGES?", "Currently configured path:",
                     currentROMDirectory, "LOAD CURRENTLY CONFIGURED PATH",
