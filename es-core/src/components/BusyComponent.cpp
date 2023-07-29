@@ -29,7 +29,7 @@ BusyComponent::BusyComponent()
 
 void BusyComponent::onSizeChanged()
 {
-    mGrid.setSize(mSize);
+    mGrid.setSize(glm::round(mSize));
 
     if (mSize.x == 0.0f || mSize.y == 0.0f)
         return;
