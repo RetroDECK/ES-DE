@@ -162,10 +162,8 @@ void CollectionSystemsManager::saveCustomCollection(SystemData* sys)
         for (std::string gameEntry; getline(configFileIn, gameEntry);) {
             std::string gamePath {Utils::String::replace(gameEntry, "%ROMPATH%", rompath)};
             gamePath = Utils::String::replace(gamePath, "//", "/");
-            // Only add the entry if it's not a regular file or a symlink, in other words
-            // only add missing files.
-            if (!Utils::FileSystem::isRegularFile(gamePath) &&
-                !Utils::FileSystem::isSymlink(gamePath))
+            // Only add the entry if it doesn't exist, i.e. only add missing files.
+            if (!Utils::FileSystem::exists(gamePath))
                 fileGameEntries.push_back(gameEntry);
         }
         configFileIn.close();
