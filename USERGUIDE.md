@@ -32,14 +32,6 @@ As for display resolutions, the minimum pixel value is 224 and the maximum is 76
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 
-**Installing the Linux .deb package**
-
-The .deb package is intended for Ubuntu but may work on other Debian-based distributions like Linux Mint and vanilla Debian. Your distribution should include a graphical package installer, but if you prefer to use the command line, run the following which will install ES-DE and resolve any dependencies:
-
-```
-sudo apt install ./emulationstation-de-2.1.0-x64.deb
-```
-
 **Running the Linux AppImage**
 
 The AppImage release should be usable on most modern x86 64-bit Linux distributions. After download you may have to set the file as executable, such as this:

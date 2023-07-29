@@ -34,14 +34,6 @@ As for display resolutions, the minimum pixel value is 224 and the maximum is 76
 
 The installation procedure is just covered briefly here and may differ a bit for your specific operating system, so in case of problems refer to your system documentation.
 
-**Installing the Linux .deb package**
-
-The .deb package is intended for Ubuntu but may work on other Debian-based distributions like Linux Mint and vanilla Debian. Your distribution should include a graphical package installer, but if you prefer to use the command line, run the following which will install ES-DE and resolve any dependencies:
-
-```
-sudo apt install ./emulationstation-de-2.1.0-x64.deb
-```
-
 **Running the Linux AppImage**
 
 The AppImage release should be usable on most modern x86 64-bit Linux distributions. After download you may have to set the file as executable, such as this:
@@ -2681,7 +2673,7 @@ If the theme set in use provides themes for custom collections, then this entry 
 
 **Create new custom collection**
 
-This lets you create a completely custom collection with a name of your choice. If the selected name collides with an existing name, a sequence number inside brackets will be appended to the collection name, such as _fighting (1)_ if a _fighting_ collection already existed. Note that custom collection names are always converted to lowercase.
+This lets you create a completely custom collection with a name of your choice. If the selected name collides with an existing name, a sequence number inside brackets will be appended to the collection name, such as _fighting (1)_ if a _fighting_ collection already existed. Note that the following characters can not be used and will be automatically removed from the collection name: `*",./:;<>\|`
 
 **Delete custom collection**
 
@@ -3100,6 +3092,8 @@ So if you have set the option _Group custom collections_ to _If unthemed_ or _Al
 To create a custom collection, go to **Game collection settings** from the main menu and choose **Create new custom collection**.
 
 Choose a name and press enter, let's use the name _Platform_ for this example.
+
+The following characters can not be used and will be automatically removed from the collection name: `*",./:;<>\|`
 
 The collection will now be created and the collection edit mode will be entered. You can now add games to the collection by navigating to any gamelist and pressing the _Y_ button. Any number of games from any of your game systems can be added. A game can also be part of multiple collections, there is no real limit for this.
 

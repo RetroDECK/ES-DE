@@ -1,25 +1,32 @@
 # EmulationStation Desktop Edition (ES-DE) - Changelog
 
-## Version 2.1.2 (in development)
+## Version 2.2.0 (in development)
 
 **Release date:** TBD
 
 ### Release overview
 
-2.1 maintenance release.
-
 ### Detailed list of changes
 
 * Added support for pasting text into the application (when a text input field is focused)
+* Added support for using most characters (including multi-byte Unicode characters) in custom collection names
 * Added a new Utilities menu to the main menu
 * Added an entry to the Utilities menu for rescanning the ROM directory
 * Added a utility for removing orphaned data (game media, gamelist entries and custom collection entries)
 * Added ares standalone as an alternative emulator for the gamegear, gb, gba, gbc and satellaview systems
+* When editing custom collections with really long names, the "Y" helpsystem text now gets abbreviated
+* Removed Linux DEB package support from ApplicationUpdater as these packages are no longer provided
+* Changed ComponentList to fixed row heights which fixed many alignment issues
+* Improved the layout for the scraper and theme downloader to look more consistent across different display aspect ratios
 * Made the miximage offline generator GUI sizing more consistent across different display aspect ratios
 * Added theme support for the "manual" metadata type for the text element
+* Updated LunaSVG to 2.3.6
 
 ### Bug fixes
 
+* (Windows) Wide string conversions were not done correctly which caused issues when filenames contained 4-byte Unicode characters
+* (Windows) Attempting to capitalize multi-byte Unicode strings crashed the application if built using the MSVC compiler
+* The camera offset in ComponentList was not correctly calculated when reaching the bottom of a list
 * The textlist properties selectedBackgroundColor and selectedSecondaryBackgroundColor were not offset by selectorVerticalOffset
 * SDL_StartTextInput() was sometimes set when not actually inputting any text
 
