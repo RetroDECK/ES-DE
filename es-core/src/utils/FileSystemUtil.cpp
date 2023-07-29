@@ -23,6 +23,7 @@
 #include "utils/PlatformUtil.h"
 #include "utils/StringUtil.h"
 
+#include <filesystem>
 #include <fstream>
 #include <regex>
 #include <string>
@@ -31,11 +32,6 @@
 #if defined(_WIN64)
 #include <Windows.h>
 #include <direct.h>
-#if defined(_MSC_VER) // MSVC compiler.
-#define stat64 _stat64
-#define S_ISREG(x) (((x)&S_IFMT) == S_IFREG)
-#define S_ISDIR(x) (((x)&S_IFMT) == S_IFDIR)
-#endif
 #else
 #include <dirent.h>
 #include <unistd.h>
@@ -72,57 +68,30 @@ namespace Utils
             const std::string& genericPath {getGenericPath(path)};
             StringList contentList;
 
-            // Only parse the directory, if it's a directory.
-            if (isDirectory(genericPath)) {
+            if (!isDirectory(genericPath))
+                return contentList;
 
+            if (recursive) {
+                for (auto& entry : std::filesystem::recursive_directory_iterator(genericPath)) {
 #if defined(_WIN64)
-                WIN32_FIND_DATAW findData;
-                const std::wstring& wildcard {Utils::String::stringToWideString(genericPath) +
-                                              L"/*"};
-                const HANDLE hFind {FindFirstFileW(wildcard.c_str(), &findData)};
-
-                if (hFind != INVALID_HANDLE_VALUE) {
-                    // Loop over all files in the directory.
-                    do {
-                        const std::string& name {
-                            Utils::String::wideStringToString(findData.cFileName)};
-                        // Ignore "." and ".."
-                        if ((name != ".") && (name != "..")) {
-                            const std::string& fullName {getGenericPath(genericPath + "/" + name)};
-                            contentList.emplace_back(fullName);
-
-                            if (recursive && isDirectory(fullName)) {
-                                contentList.sort();
-                                contentList.merge(getDirContent(fullName, true));
-                            }
-                        }
-                    } while (FindNextFileW(hFind, &findData));
-                    FindClose(hFind);
-                }
+                    contentList.emplace_back(
+                        Utils::String::wideStringToString(entry.path().generic_wstring()));
 #else
-                DIR* dir {opendir(genericPath.c_str())};
-
-                if (dir != nullptr) {
-                    struct dirent* entry;
-                    // Loop over all files in the directory.
-                    while ((entry = readdir(dir)) != nullptr) {
-                        const std::string& name(entry->d_name);
-
-                        // Ignore "." and ".."
-                        if ((name != ".") && (name != "..")) {
-                            const std::string& fullName {getGenericPath(genericPath + "/" + name)};
-                            contentList.emplace_back(fullName);
-
-                            if (recursive && isDirectory(fullName)) {
-                                contentList.sort();
-                                contentList.merge(getDirContent(fullName, true));
-                            }
-                        }
-                    }
-                    closedir(dir);
-                }
+                    contentList.emplace_back(entry.path().generic_string());
 #endif
+                }
             }
+            else {
+                for (auto& entry : std::filesystem::directory_iterator(genericPath)) {
+#if defined(_WIN64)
+                    contentList.emplace_back(
+                        Utils::String::wideStringToString(entry.path().generic_wstring()));
+#else
+                    contentList.emplace_back(entry.path().generic_string());
+#endif
+                }
+            }
+
             contentList.sort();
             return contentList;
         }
@@ -852,16 +821,10 @@ namespace Utils
         bool exists(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
-
-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
-            struct stat info;
-            return (stat(genericPath.c_str(), &info) == 0);
-#elif defined(_WIN64)
-            struct _stat64 info;
-            return (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) == 0);
+#if defined(_WIN64)
+            return std::filesystem::exists(Utils::String::stringToWideString(genericPath));
 #else
-        struct stat64 info;
-        return (stat64(genericPath.c_str(), &info) == 0);
+            return std::filesystem::exists(genericPath);
 #endif
         }
 
@@ -876,9 +839,7 @@ namespace Utils
             else if (genericPath.length() == 3 && genericPath.at(1) == ':')
                 genericPath += ".";
 
-            struct _stat64 info;
-            return (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) == 0);
-
+            return exists(genericPath);
 #else
             return false;
 #endif
@@ -887,7 +848,6 @@ namespace Utils
         bool isAbsolute(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
-
 #if defined(_WIN64)
             return ((genericPath.size() > 1) && (genericPath[1] == ':'));
 #else
@@ -898,84 +858,36 @@ namespace Utils
         bool isRegularFile(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
-
-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
-            struct stat info;
-            if (stat(genericPath.c_str(), &info) != 0)
-                return false;
-#elif defined(_WIN64)
-            struct stat64 info;
-            if (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) != 0)
-                return false;
+#if defined(_WIN64)
+            return std::filesystem::is_regular_file(Utils::String::stringToWideString(genericPath));
 #else
-        struct stat64 info;
-        if (stat64(genericPath.c_str(), &info) != 0)
-            return false;
+            return std::filesystem::is_regular_file(genericPath);
 #endif
-
-            // Check for S_IFREG attribute.
-            return (S_ISREG(info.st_mode));
         }
 
         bool isDirectory(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
-
-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
-            struct stat info;
-            if (stat(genericPath.c_str(), &info) != 0)
-                return false;
-#elif defined(_WIN64)
-            struct stat64 info;
-            if (_wstat64(Utils::String::stringToWideString(genericPath).c_str(), &info) != 0)
-                return false;
+#if defined(_WIN64)
+            return std::filesystem::is_directory(Utils::String::stringToWideString(genericPath));
 #else
-        struct stat64 info;
-        if (stat64(genericPath.c_str(), &info) != 0)
-            return false;
+            return std::filesystem::is_directory(genericPath);
 #endif
-
-            // Check for S_IFDIR attribute.
-            return (S_ISDIR(info.st_mode));
         }
 
         bool isSymlink(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
-
 #if defined(_WIN64)
-            // Check for symlink attribute.
-            const DWORD Attributes {
-                GetFileAttributesW(Utils::String::stringToWideString(genericPath).c_str())};
-            if ((Attributes != INVALID_FILE_ATTRIBUTES) &&
-                (Attributes & FILE_ATTRIBUTE_REPARSE_POINT))
-                return true;
+            return std::filesystem::is_symlink(Utils::String::stringToWideString(genericPath));
 #else
-
-#if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) || defined(__NetBSD__)
-            struct stat info;
-
-            if (lstat(genericPath.c_str(), &info) != 0)
-                return false;
-#else
-            struct stat64 info;
-
-            if (lstat64(genericPath.c_str(), &info) != 0)
-                return false;
+            return std::filesystem::is_symlink(genericPath);
 #endif
-
-            // Check for S_IFLNK attribute.
-            return (S_ISLNK(info.st_mode));
-#endif
-
-            // Not a symlink.
-            return false;
         }
 
         bool isHidden(const std::string& path)
         {
             const std::string& genericPath {getGenericPath(path)};
-
 #if defined(_WIN64)
             // Check for hidden attribute.
             const DWORD Attributes {
