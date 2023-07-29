@@ -61,9 +61,10 @@ GuiInfoPopup::GuiInfoPopup(std::string message, int duration)
     // We only initialize the actual time when we first start to render.
     mStartTime = 0;
 
-    mGrid = new ComponentGrid(glm::ivec2 {1, 1});
+    mGrid = new ComponentGrid(glm::ivec2 {1, 3});
+    mGrid->setEntry(s, glm::ivec2 {0, 1}, false, true);
+    mGrid->setRowHeightPerc(1, s->getSize().y / mSize.y);
     mGrid->setSize(mSize);
-    mGrid->setEntry(s, glm::ivec2 {0, 0}, false, true);
     addChild(mGrid);
 }
 

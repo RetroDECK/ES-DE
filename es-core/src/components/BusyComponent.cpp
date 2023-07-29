@@ -43,7 +43,7 @@ void BusyComponent::onSizeChanged()
     mGrid.setColWidthPerc(2, middleSpacerWidth / mSize.x);
     mGrid.setColWidthPerc(3, textWidth / mSize.x);
 
-    mGrid.setRowHeightPerc(1, textHeight / std::round(mSize.y));
+    mGrid.setRowHeightPerc(1, mText->getFont()->getLetterHeight() / mSize.y);
 
     mBackground.setCornerSize({16.0f * Renderer::getScreenResolutionModifier(),
                                16.0f * Renderer::getScreenResolutionModifier()});
