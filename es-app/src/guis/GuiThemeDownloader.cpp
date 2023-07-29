@@ -1088,8 +1088,9 @@ void GuiThemeDownloader::onSizeChanged()
 
     mGrid.setSize(mSize);
 
-    mCenterGrid->setSize(glm::vec2 {std::round(mSize.x), (mList->getRowHeight() * 9.0f) +
-                                                             mRenderer->getScreenHeightModifier()});
+    mCenterGrid->setSize(
+        glm::vec2 {std::round(mSize.x), (mList->getRowHeight() * 9.0f) +
+                                            std::round(mRenderer->getScreenHeightModifier())});
     mCenterGrid->setPosition(glm::vec3 {0.0f, mGrid.getRowHeight(0) + mGrid.getRowHeight(1), 0.0f});
     mBackground.fitTo(mSize);
     mScreenshot->setMaxSize(mCenterGrid->getColWidth(1) + mCenterGrid->getColWidth(2) +
