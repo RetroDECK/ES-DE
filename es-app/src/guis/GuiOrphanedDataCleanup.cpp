@@ -99,7 +99,7 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
     mGrid.setEntry(mEntryCount, glm::ivec2 {2, 6}, false, true, glm::ivec2 {1, 1});
 
     mSystemProcessingHeader = std::make_shared<TextComponent>(
-        "PROCESSING SYSTEM:", Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
+        "LAST PROCESSED SYSTEM:", Font::get(FONT_SIZE_SMALL), mMenuColorPrimary, ALIGN_LEFT);
     mGrid.setEntry(mSystemProcessingHeader, glm::ivec2 {1, 7}, false, true, glm::ivec2 {1, 1});
 
     mSystemProcessing = std::make_shared<TextComponent>("", Font::get(FONT_SIZE_SMALL),
@@ -189,7 +189,10 @@ GuiOrphanedDataCleanup::GuiOrphanedDataCleanup(std::function<void()> reloadCallb
             return;
         }
         if (!mHasCustomCollections) {
+            mStatus->setValue("COLLECTIONS CLEANUP FAILED");
             mError->setValue("THERE ARE NO ENABLED CUSTOM COLLECTIONS");
+            mEntryCount->setValue("0");
+            mSystemProcessing->setValue("");
             return;
         }
         if (mThread) {
@@ -291,7 +294,7 @@ void GuiOrphanedDataCleanup::cleanupMediaFiles()
 
         ++systemCounter;
 
-        const std::string currentSystem {system->getName() + " (" + system->getFullName() + ")"};
+        const std::string currentSystem {system->getFullName() + " (" + system->getName() + ")"};
         LOG(LogInfo) << "Processing system \"" << currentSystem << "\"";
 
         {
@@ -425,7 +428,7 @@ void GuiOrphanedDataCleanup::cleanupGamelists()
 
         ++systemCounter;
 
-        const std::string currentSystem {system->getName() + " (" + system->getFullName() + ")"};
+        const std::string currentSystem {system->getFullName() + " (" + system->getName() + ")"};
         LOG(LogInfo) << "Processing system \"" << currentSystem << "\"";
 
         {
@@ -924,7 +927,6 @@ void GuiOrphanedDataCleanup::update(int deltaTime)
         }
         message.append("CLEANUP");
         mStatus->setValue(message);
-        mSystemProcessing->setValue("");
         mCompleted = false;
     }
     else if (mFailed) {
