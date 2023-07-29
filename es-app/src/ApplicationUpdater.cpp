@@ -52,8 +52,6 @@ ApplicationUpdater::ApplicationUpdater()
     mPackageType = PackageType::LINUX_STEAM_DECK_APPIMAGE;
 #elif defined(APPIMAGE_BUILD)
     mPackageType = PackageType::LINUX_APPIMAGE;
-#elif defined(LINUX_DEB_PACKAGE)
-    mPackageType = PackageType::LINUX_DEB;
 #endif
 }
 
@@ -370,8 +368,6 @@ void ApplicationUpdater::compareVersions()
                     mPackage = package;
                 else if (mPackageType == PackageType::MACOS_INTEL && package.name == "macOSIntel")
                     mPackage = package;
-                else if (mPackageType == PackageType::LINUX_DEB && package.name == "LinuxDEB")
-                    mPackage = package;
                 else if (mPackageType == PackageType::LINUX_APPIMAGE &&
                          package.name == "LinuxAppImage")
                     mPackage = package;
@@ -408,8 +404,7 @@ void ApplicationUpdater::compareVersions()
             }
 
             if (mPackage.name != "LinuxAppImage" && mPackage.name != "LinuxSteamDeckAppImage")
-                mResults.append("\nIt can be downloaded from\n").append("https://es-de.org");
-            // mResults.append("\nFor more information visit\n").append("https://es-de.org");
+                mResults.append("\nFor more information visit\n").append("https://es-de.org");
 
             if (mPackage.message != "")
                 mResults.append("\n").append(mPackage.message);
@@ -452,8 +447,8 @@ bool ApplicationUpdater::getResults()
     }
 
     if (mNewVersion && mPackage.name == "") {
-        LOG(LogWarning)
-            << "ApplicationUpdater: Couldn't find a package type matching current platform";
+        LOG(LogDebug) << "ApplicationUpdater::getResults(): Couldn't find a package type matching "
+                         "current build";
     }
 
     return mNewVersion;

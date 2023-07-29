@@ -60,7 +60,6 @@ private:
         WINDOWS_INSTALLER,
         MACOS_APPLE,
         MACOS_INTEL,
-        LINUX_DEB,
         LINUX_APPIMAGE,
         LINUX_STEAM_DECK_APPIMAGE,
         UNKNOWN
